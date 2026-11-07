@@ -1,9 +1,13 @@
 /**
- * wb-tz2.11 (HX-ORIGINAL-GOALS-CLOSURE-R11), STANDING LEG ONLY, cut #4, the FINAL cut (orchestrator ruling R-B83, M:34371: the
- * rule-19 structural exit after refusal #3, gate-prep-13 / g10-gate-s139, gate-refused M:34363; refusal #2 was gate-prep-22 /
- * g10-gate-s127, M:31621; refusal #1 gate-prep-19 / g10-gate-s126, M:30519): the HyperUnix custody-claims census. Pi's
- * dispose/close custody tests for the HX SDK prove the CALLS, never the termination, and no Pi test or qa script hand-rolls a
- * real-process kill falsifier for the HX child in place of the SDK-owned conformance.
+ * wb-tz2.11 (HX-ORIGINAL-GOALS-CLOSURE-R11), STANDING LEG ONLY, cut #5: the restatement of the FINAL cut over the landed readers
+ * that orchestrator ruling R-B98 (M:35530) binds. Refusal #4 of cut #4 (gate-prep-4 / g10-gate-s144, gate-refused M:35515) folded
+ * its U1 and U2 members into child wb-tz2.16, whose binding-aware readers - test/helpers/hyperunix-custody-readers.ts, with their
+ * falsifier census test/workbench-hyperunix-custody-readers-census.test.ts - landed at landing 969 through the carrier wb-tz2.24
+ * (merge 4b1f528204826262ffdc648255e9f2c4b0c65b17, fold-done M:58106). Before it: R-B83 (M:34371) bound cut #4 as the FINAL cut to
+ * the fail-closed core after refusal #3 (gate-prep-13 / g10-gate-s139, M:34363); refusal #2 was gate-prep-22 / g10-gate-s127,
+ * M:31621; refusal #1 gate-prep-19 / g10-gate-s126, M:30519. The HyperUnix custody-claims census: Pi's dispose/close custody tests
+ * for the HX SDK prove the CALLS, never the termination, and no Pi test or qa script that drives HX (this census aside) carries a
+ * kill falsifier shape the landed readers read, beside the two frozen reapers R-REAPER names.
  *
  * Acceptance row pinned (bead wb-tz2.11): "Standing: the custody tests stay green and claim only call-custody, never real-child
  * termination." Statement halves pinned: Pi cites the receipt "beside its own dispose/close custody tests — which prove the
@@ -15,17 +19,23 @@
  * collecting exactly those three cases), which row C9 holds to this file.
  * ON-LANDING LEG NOT IN SCOPE: a docs/workbench row citing the HX SDK cancellation/child-process-cleanup conformance receipt
  * (artifact id + hx sha), and the census that the citation names it, wait for that receipt (HXGC-OPS-002 reads status DESIGN in
- * HyperUnix-CLI's requirements.jsonl:12, with no sdk/conformance receipt). The bead stays open for that leg.
+ * HyperUnix-CLI's requirements.jsonl:12, with no sdk/conformance receipt; re-read at cut #5 on HyperUnix-CLI origin/main 7a6489e80a:
+ * still DESIGN, and no sdk/conformance file names cancellation or child-process cleanup). The bead stays open for that leg.
  *
- * FORM OF RECORD (enumerate-the-resolvable, taken at cut #3 as refusal #2's LOOP-CAP DISCLOSURE permits, kept at cut #4): each row
- * claims exactly the read set this header enumerates for it, and a calibration plant pins each read form; every known unread
- * family is a named residual (R-*) with a pinned quiet row; a spelling outside a row's read set is a member of a residual family,
- * never a claim of that row. "Every" and "no" below range over the enumerated forms. FAIL-CLOSED CORE (cut #4, R-B83): every C2 and
- * C7 claim states exactly the reader forms its plants prove, and where a reader cannot tell which binding, alias or flag form
- * applies it reads every candidate instead of picking one - a const name reads every const declaration of it, a root naming a
- * platform global reads as that global, a wrapped command reads every word past its wrapper - so the doubt reds and never hides
- * a member. The full-surface readers (each binding resolved in its own scope, every wrapper flag form modelled) are child bead
- * wb-tz2.16's.
+ * FORM OF RECORD (enumerate-the-resolvable, taken at cut #3 as refusal #2's LOOP-CAP DISCLOSURE permits, kept at cuts #4 and #5):
+ * each row claims exactly the read set this header enumerates for it, and a calibration plant pins each read form; every known
+ * unread family is a named residual (R-*) with a pinned quiet row; a spelling outside a row's read set is a member of a residual
+ * family, never a claim of that row. "Every" and "no" below range over the enumerated forms. LANDED READERS (cut #5, R-B98):
+ * every C2 and
+ * C7 reader is the landed helper's, taken in place of cut #4's own - tampersIn and moduleMockSpecifiers for C2; passesPrefilter,
+ * hxDrivers, falsifierShapes and commandHeads for C7 - so, as that file's BINDINGS line states it on its pinned pages, a name
+ * resolves through the TypeScript binder's own symbol at its use site and a same-named declaration in another scope never answers
+ * for it (refusal #4 U1, whose members this census plants). A reader form is claimed here only as that file's header claim block
+ * states it, on its pinned pages; a form that block names NOT CLAIMED is NOT CLAIMED by this
+ * census either, and so is a tamper, driver or shape those readers do not read (their named families R-WRAPPER, R-INDIRECT and
+ * R-FLOW among them, each pinned quiet by the readers census's "RESIDUALS: the named families these readers do not read, each
+ * quiet member beside a loud control" rows). This census claims what those readers read in its judged files and in its own
+ * plants, and every C2 TAMPER FORMS, C7 DRIVER FORMS and C7 SHAPE FORMS word reads at least one of its plants.
  *
  * VOCABULARY OF RECORD (termination claims, five rows): W1 the terminate family (HXGC-OPS-002 "terminate owned child-process
  * trees"; the SDK transport's own "the owned process tree is terminated"); W2 every signal name (anchored outside: every key of
@@ -52,26 +62,20 @@
  * nativeHyperUnixFind(...) call, a registry.invoke(...) call on a const registry declared once as new CapabilityRegistry() and
  * referenced only as that receiver or as a provider-entry argument (so no stand-in capability is registered on it), or an
  * identifier declared once by const with one of those calls as its initializer and referenced in the case only as an expect
- * subject; no assertion in the suite sits outside its cases; the suite makes no assert call; no BOUND name is re-bound. CALLEES (C2
- * and C7) read through calleeChains: every dotted spelling - a member, or an element keyed by a string literal or a const binding
- * (every value of it; any other key reads <computed>) - with a root identifier also read as each name or member chain its const
- * declarations alias (every declaration), and a leading globalThis. or global. dropped. MOCKS: no call whose callee chains hold a
- * MODULE_MOCKS name (mock or doMock on vi or on vitest) has a specifier - each string value of its first argument (a literal, or
- * every value a const name reaches), or of the literal an import(...) first argument loads - that specifierTarget resolves
- * (relative to test/, root-relative, absolute under the root, else under node_modules; the extension and a trailing /index
- * dropped) to the provider or registry file or to a path inside the SDK package. TAMPERS, file-wide (every suite, hook and
- * top-level statement): no vi.spyOn other than vi.spyOn(HyperUnix, "open") (its "open" read only from a literal or from a name the
- * file declares exactly once); no GLOBAL_STUBS call (vi.stubGlobal, vi.useFakeTimers, vi.setSystemTime); no WATCHED callee
- * (vi.spyOn, the GLOBAL_STUBS, the MUTATORS, the MODULE_MOCKS) referenced other than as a call's callee (so call / apply / bind of
- * one, an alias of one, one destructured from its owner - const { assign } = Object, or a destructuring assignment, a rest element
- * counting as every member - or one passed as an argument counts); and no assignment (= or a compound operator; every target of
- * an array or object destructuring-assignment pattern, nested, spread and rest included), for-in or for-of target, delete, ++ or
- * --, nor a MUTATORS call (Object.assign / defineProperty / defineProperties / setPrototypeOf, Reflect.set / defineProperty /
- * deleteProperty / setPrototypeOf) on a member chain or name whose root is a global or an import binding. ROOTS, fail-closed: a
- * root the file declares no local of, or a root GLOBAL_NAMES holds (a property name of the running platform's globalThis) even
- * where the file declares a local of that name in some scope; a local root is followed through EVERY const declaration of its
- * name. A chain rooted at process.env, and vi.stubEnv, is the environment, which the stubbed HyperUnix.open makes inert; it is not
- * read.
+ * subject; no assertion in the suite sits outside its cases; the suite makes no assert call; no BOUND name is re-bound. MOCKS: no
+ * module mock the landed readers' moduleMockSpecifiers reads (a call whose callee chains hold a MODULE_MOCKS name - mock or doMock
+ * on vi or on vitest - with each value of its first argument, or of the import() its first argument is) names a specifier that
+ * specifierTarget resolves (relative to test/, root-relative, absolute under the root, else under node_modules; the extension and
+ * a trailing /index dropped) to the provider or registry file or to a path inside the SDK package. TAMPERS, file-wide (every
+ * suite, hook and top-level statement): the landed readers' tampersIn reads none of its C2 TAMPER FORMS in the file - spy, global
+ * stub, watched reference, destructured watched, destructuring-assigned watched, assignment, compound operator, for-of target,
+ * for-in target, delete, update, mutator call and legacy accessor definer, each as that file's claim block states it. The one spy
+ * it allows is the custody stub vi.spyOn(HyperUnix, "open"), its receiver a name bound to a named import of HyperUnix
+ * (CUSTODY_EXPORT) from an HX module; a write counts when its chain is OUTSIDE - its root, resolved through its own binding, is a
+ * global or an import binding, and a local root reads the values its own binding may hold (ROOT_FORMS), each as that file's
+ * ROOTS and ROOT_FORMS lines state it on their pinned pages; a chain under process.env, and vi.stubEnv, is the environment, which
+ * the stubbed HyperUnix.open makes inert, and is not read unless it leaves the environment object through constructor,
+ * __proto__ or prototype.
  * C3 STAND-INS ONLY: every case's callback body holds, as a top-level statement (an expression statement, or a lone const
  * declaration's initializer) before the first top-level statement that references a provider entry, a vi.spyOn(HyperUnix, "open")
  * call with a MOCKED_RETURNS return; no case calls a STUB_UNDOS member (mockRestore, mockReset) or an ALL_UNDOS restore
@@ -93,33 +97,19 @@
  * the abort listener reaches that group kill through the function's own closures: a call to a local function (directly, through
  * an alias binding, or through call / apply / bind) - abort -> stop -> kill -> process.kill(-child.pid). Every string signal
  * argument of a kill call (kill(...) or .kill(...)) in it or Pi's RF provider is a W2 term and every kill call's name a W3 term.
- * C7 NO HAND-ROLLED KILL FALSIFIER: the judged files are the test/ and qa/ sources (.ts .mts .cts .js .mjs .cjs; node_modules
- * skipped; this file excluded, it spells the detector) whose text, raw or unescaped (its JavaScript string escapes - \xHH, \uHHHH,
- * \u{H...}, legacy octal, a line continuation, any other escaped character as itself - and its %HH escapes decoded), holds
- * DRIVER_NEEDLE (hyperunix, any case; every DRIVER_TOKENS member holds it) and that hxDrivers classes by a driving form. CONST
- * NAMES, fail-closed: a "const-bound" argument or key reads EVERY value the const declarations of its name reach, alias links
- * included, so a name const-declared in several scopes drives when any of its values does (its own scope is not resolved).
- * "import": an import or export-from declaration of an HX module that is not type-only (import type / export type, or named
- * bindings each marked type), an import-equals of one (not type-only), or a call through LOADERS (import(), require,
- * module.require, vi.importActual, vi.importMock; read through calleeChains) or a created require (a call of a call) whose first
- * argument is a literal or const-bound HX module. An HX module, read after %HH decoding and posix path normalization: the SDK
- * package or a subpath of it, a path into node_modules/@hyperunix/sdk, or a path ending providers/hyperunix or hyperunix-observer.
- * "invoke": a call whose callee chains end .invoke and whose first argument is the literal or const-bound hyperunix.find.
- * "override": HYPERUNIX_HX as a member or element key (literal or const-bound) on any receiver, a destructuring or
- * destructuring-assignment key, an object-literal key, the left operand of an in, or an argument of an ENV_CALLS call or of an
- * ENV_METHODS method call (callees read through calleeChains). A judged file carries no
- * falsifier shape: F1 a kill member read (.kill, ["kill"] or a const-bound element key, on any receiver, called or not, so call /
- * apply / bind of it count; typeof x.kill in a type counts), a kill destructured, destructuring-assigned or imported, a bare
- * kill(...) call, or the literal "kill" (trimmed) outside a spawner's argument; F2 the same member forms for pid, or the literal
- * "pid"; F3 a /proc path (PROC_PATH) in a string, template part, key or regular expression, or a command whose head is a
- * PROCESS_TABLE tool by basename - a string that is no key, or a template part, split at COMMAND_SEPARATOR, each piece read past VAR=value words
- * and SHELL_KEYWORDS, through each WRAPPERS wrapper (its flags, its option table's options with their argument, its positionals;
- * an option of its command table reads the rest as a command; "--" ends the options), and into a SHELLS shell's first command flag
- * (a dash word holding c, or --command) - and, fail-closed, every fragment (each word split at quotes and "=") of every word past a
- * WRAPPERS wrapper or a SHELLS shell in head position, so a flag form the option tables do not model (su's or env's lone "-",
- * "--" after a shell's command flag, an attached or unlisted option argument) still reads its command; F4 the word ESRCH
- * (ESRCH_WORD, any case) in an identifier, member or key name read as
- * words, or in a string, template part or regular expression (escapes decoded). A defined key (an object-literal property, a
+ * C7 NO HAND-ROLLED KILL FALSIFIER: the judged files are the test/ and qa/ sources (SOURCE_FILE: .ts .mts .cts .js .mjs .cjs;
+ * node_modules skipped; this file excluded, it spells the detector) whose text the landed readers' passesPrefilter passes (raw or
+ * unescaped, it holds DRIVER_NEEDLE, hyperunix in any case; every DRIVER_TOKENS member holds it) and that their hxDrivers classes
+ * by one of its C7 DRIVER FORMS (value import, side-effect import, export-from, import-equals, dynamic import, loader call,
+ * created require, invoke, override member, override destructuring, override destructuring assignment, override object key,
+ * override in, override env call and override env method, each as that file's claim block states it). A judged file carries no
+ * F1-F4 shape their falsifierShapes reads by one of its C7 SHAPE FORMS (member, element key, type member, destructuring,
+ * destructuring assignment, import, bare call, identifier, regular expression, key, literal, /proc path, kill name literal, pid
+ * name literal and process-table command, each as that file's claim block states it; F3's command heads are commandHeads', its
+ * modelled reading through WRAPPER_FLAG_FORMS beside cut #4's fail-closed reading of every fragment past a wrapper or a shell),
+ * beside the hits KNOWN_REAPERS sets aside (R-REAPER): test/workbench-edc-render-abort-census.test.ts (F1:member, F3:/proc path)
+ * and test/workbench-fiber-host-publication-census.test.ts (F1:member), trunk censuses absent at cut #4's gate base 37adc54 that
+ * kill processes of their own; what those kills reach is NOT CLAIMED by this census. A defined key (an object-literal property, a
  * method, a class or type member) is no read of kill or pid (R-DEFINITION).
  * C8 DOCS: every .md file under docs/workbench is read as marked 18.0.11 (the repo's renderer) renders it to HTML, and this view
  * reads that HTML as a browser's default stylesheet shows it: comments render nothing (including <!--> and <!---> and a comment
@@ -132,9 +122,27 @@
  * the on-landing citation's form.
  * C9 RUN PIN: the run pin's literals name the suite, every CASES title, this file's suite and every case of this file.
  *
+ * CURES OF REFUSAL #4 (cut #5, over the landed readers; each named in the delivery note): every GP4 member refusal #4's verdict
+ * (gate-prep-4 / g10-gate-s144) names is a row of REFUSAL_4_LIFECYCLE (33 GP4-C2 lifecycle members, edits verbatim, read for
+ * exactly their recorded tampers and mocks) or REFUSAL_4_PLANTS (22 GP4-C7 files, contents and paths verbatim, read for exactly
+ * their recorded prefilter, drivers and shapes); both tables equal, id for id and in order, the GP4 rows of the readers census
+ * (the anchor outside this file, which holds its rows equal to the ids that verdict names in the tracker export), and the frozen
+ * shape pins each row by digest. Among them: U1 an import binding written in K2 while a same-named local of another scope shadows
+ * its name reads as the import (GP4-C2-01, 01b, 01d, 01e and 01f - a const, a parameter, a catch variable and a destructured
+ * binding as the shadow - each beside its unshadowed control, 01c, 01bc, 01dc and 01fc); U2 a plant for each claim word refusal
+ * #4 lists - delete (GP4-C2-04), update (05), compound operator (06 and 06b), for-in target (07), the literal "pid" (GP4-C7-12),
+ * a kill imported (11 and 11b), an ENV_METHODS override (10), a destructuring and a destructuring-assignment override key (08 and
+ * 09) and a side-effect import (02) - and for each claim word its F6 positive checks name (GP4-C2-08 to 11b, 14 to 17; GP4-C7-01,
+ * 03 to 05, 07 and 13 to 19); and the four residual-list additions: F1 a let- or parameter-aliased global (GP4-C2-02, 02b, 03 and
+ * 03b), F2 a created require bound to a const (GP4-C7-06, beside 06c), F3 an environment chain that leaves through
+ * constructor.prototype (GP4-C2-12, beside 12c) and F4 a legacy accessor definer (GP4-C2-13). Every C2 TAMPER FORMS, C7 DRIVER
+ * FORMS and C7 SHAPE FORMS word reads at least one plant, so a hollowed form reds a calibration row. TRUNK: the two censuses
+ * KNOWN_REAPERS names landed after cut #4 and red its C7 row on trunk 71b4a59; they are set aside by path, shape and form
+ * (R-REAPER), never excluded.
  * CURES OF REFUSAL #3 (cut #4, the fail-closed core; each named in the delivery note; each member a calibration plant, the gate's
- * own text where it was a code member): U1 a const name reads every const declaration of it (the shadowed SDK import, HYPERUNIX_HX
- * key and hyperunix.find invoke, and a shadowed kill key); U2 every word past a wrapper or a shell reads (su - root -c, env -,
+ * own text where it was a code member): U1 a const name read through every const declaration of it at cut #4, through its own
+ * binding at cut #5 (the shadowed SDK import, HYPERUNIX_HX key and hyperunix.find invoke, and a shadowed kill key); U2 every word
+ * past a wrapper or a shell reads (su - root -c, env -,
  * sh -c --, attached and unlisted option arguments); U3 every destructuring-assignment and for-of target is a write and MUTATORS
  * read through globalThis and const aliases (the gate's G10x, G11x, G12x, G12bx and G13x forges, plus a destructured mutator, an
  * aliased spy, a global shadowed by a local and a const-keyed module mock); U4 the prefilter reads the text unescaped and the C7
@@ -161,13 +169,15 @@
  * FROZEN SHAPE (standing rule 16): one row pins every table: VOCABULARY, CASES, CUSTODY, the matcher and subject sets, the mock,
  * guarded-target and tamper sets, the falsifier shapes and their member words, the process table, the wrappers with their option
  * tables, the shell keywords and shells, the reader patterns, the driver needles, loaders, env calls and methods, tokens and
- * reasons, the docs view's element, attribute, reference and filler sets, the near misses, the exclusions, the residual ids and
- * every plant table (id, expectation, digest).
+ * reasons, the docs view's element, attribute, reference and filler sets, the near misses, the exclusions, KNOWN_REAPERS, the
+ * landed readers' rosters it reads with (C2_FORMS, DRIVER_FORMS, SHAPE_FORMS, ROOT_FORMS, BINDING_KINDS, PROTOTYPE_LINKS,
+ * ACCESSOR_DEFINERS, CUSTODY_EXPORT, WRAPPER_FLAG_FORMS, SHELL_ARGUMENT_OPTIONS, UNESCAPE_FORMS and RESIDUAL_FAMILIES), the
+ * residual ids and every plant table (id, expectation, digest), REFUSAL_4_LIFECYCLE and REFUSAL_4_PLANTS among them.
  * RESIDUALS (each a named family with its pinned row, R-* below; the row plants a member and shows the reader quiet on it beside a
  * control the same reader catches): R-WORDING, R-UNANCHORED, R-SHAPELESS, R-COMPOSED, R-ERRNO, R-UNDRIVEN, R-ARGUMENTS, R-RUNTIME,
  * R-DEAD-PATH, R-CLAUSE, R-CITATION, R-REFERENCE, R-LOOKALIKE, R-ATTRIBUTE, R-SCOPE, R-DETACHED-COMMENT, R-WRAPPER, R-INDIRECT,
- * R-DATA-OVERRIDE, R-DEFINITION, R-ELSEWHERE, R-HELPER-REGISTRATION, R-GROUP-FORM, R-BIDI (RESIDUALS names each family; the records row
- * requires every one to have run to its end).
+ * R-DATA-OVERRIDE, R-DEFINITION, R-ELSEWHERE, R-HELPER-REGISTRATION, R-GROUP-FORM, R-BIDI, R-REAPER (RESIDUALS names each family;
+ * the records row requires every one to have run to its end).
  *
  * Display paths added: none. Test-only: spawns nothing, writes nothing, reads sources and docs and parses planted text in memory.
  */
@@ -179,10 +189,58 @@ import { fileURLToPath } from "node:url";
 import { marked } from "marked";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
+import {
+  ACCESSOR_DEFINERS,
+  BINDING_KINDS,
+  C2_FORMS,
+  CAPABILITY_ID,
+  COMMAND_SEPARATOR,
+  CUSTODY_EXPORT,
+  DRIVER_FORMS,
+  DRIVER_NEEDLE,
+  DRIVER_REASONS,
+  DRIVER_TOKENS,
+  ENV_CALLS,
+  ENV_METHODS,
+  ENVIRONMENT,
+  ESRCH_WORD,
+  falsifierShapes,
+  GLOBAL_STUBS,
+  hxDrivers,
+  LOADERS,
+  MEMBER_SHAPES,
+  MODULE_MOCKS,
+  MODULE_NEEDLES,
+  MUTATORS,
+  moduleMockSpecifiers,
+  OVERRIDE,
+  PROC_PATH,
+  PROCESS_TABLE,
+  PROTOTYPE_LINKS,
+  passesPrefilter,
+  RESIDUAL_FAMILIES,
+  ROOT_FORMS,
+  SHAPE_FORMS,
+  SHAPES,
+  SHELL_ARGUMENT_OPTIONS,
+  SHELL_COMMAND_FLAG,
+  SHELL_KEYWORDS,
+  SHELLS,
+  type ShapeHit,
+  SPAWNERS,
+  shapeForms,
+  tampersIn,
+  UNESCAPE_FORMS,
+  WATCHED,
+  WRAPPER_FLAG_FORMS,
+  WRAPPER_RULES,
+} from "./helpers/hyperunix-custody-readers.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SELF = "test/workbench-hyperunix-custody-claims.test.ts";
 const RUN_PIN = "test/workbench-hyperunix-custody-claims.census.ts";
+/** The landed readers' falsifier census: its GP4 rows are the anchor outside this file for refusal #4's member tables. */
+const READERS_CENSUS = "test/workbench-hyperunix-custody-readers-census.test.ts";
 const LIFECYCLE = "test/workbench-provider-lifecycle.test.ts";
 const HX_SUITE = "HyperUnix SDK custody";
 const RF_SUITE = "RF CLI process custody";
@@ -412,111 +470,12 @@ const FILLERS: ReadonlySet<string> = new Set([0x115f, 0x1160, 0x3164, 0xffa0].ma
 function visible(text: string): string {
   return text.replace(/\p{Default_Ignorable_Code_Point}/gu, char => (FILLERS.has(char) ? " " : ""));
 }
-const CONST_INITIALIZERS = new WeakMap<ts.SourceFile, ReadonlyMap<string, readonly ts.Expression[]>>();
-/** Every const declaration of a file that has an initializer, by name, in source order: a name const-declared in several scopes keeps every one. */
-function constInitializers(source: ts.SourceFile): ReadonlyMap<string, readonly ts.Expression[]> {
-  const cached = CONST_INITIALIZERS.get(source);
-  if (cached !== undefined) return cached;
-  const out = new Map<string, ts.Expression[]>();
-  for (const node of descendants(source)) {
-    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined && isConst(node)) out.set(node.name.text, [...(out.get(node.name.text) ?? []), node.initializer]);
-  }
-  CONST_INITIALIZERS.set(source, out);
-  return out;
-}
-const CONST_STRINGS = new WeakMap<ts.SourceFile, ReadonlyMap<string, readonly string[]>>();
-/**
- * Every const binding of a file whose initializer is a string literal, or a const alias chain ending in one, by name: a name maps
- * to the values EVERY const declaration of it reaches, each alias link followed through every declaration of its own name
- * (distinct, sorted). The binding's own scope is not resolved, so a name const-declared in several scopes reads all of its values
- * (fail-closed, refusal #3 U1: the last declaration no longer wins).
- */
-function constStrings(source: ts.SourceFile): ReadonlyMap<string, readonly string[]> {
-  const cached = CONST_STRINGS.get(source);
-  if (cached !== undefined) return cached;
-  const initializers = constInitializers(source);
-  const chained = (name: string, seen: ReadonlySet<string>): string[] =>
-    seen.has(name)
-      ? []
-      : (initializers.get(name) ?? []).flatMap(initializer => {
-          const inner = bare(initializer);
-          if (ts.isStringLiteralLike(inner)) return [inner.text];
-          return ts.isIdentifier(inner) ? chained(inner.text, new Set([...seen, name])) : [];
-        });
-  const out = new Map<string, readonly string[]>();
-  for (const name of initializers.keys()) {
-    const values = [...new Set(chained(name, new Set()))].sort();
-    if (values.length > 0) out.set(name, values);
-  }
-  CONST_STRINGS.set(source, out);
-  return out;
-}
-/** Every string a node may spell: a string literal or no-substitution template, or an identifier const-bound to one - every value its name's const declarations reach (constStrings). */
-function stringValues(node: ts.Node | undefined): readonly string[] {
-  if (node === undefined) return [];
-  const inner = bare(node);
-  if (ts.isStringLiteralLike(inner)) return [inner.text];
-  return ts.isIdentifier(inner) ? (constStrings(inner.getSourceFile()).get(inner.text) ?? []) : [];
-}
-const DECLARATION_COUNTS = new WeakMap<ts.SourceFile, ReadonlyMap<string, number>>();
-/** How many times a file declares each name, in any binding form (declaredNames: imports, variables, parameters, binding elements, functions, classes, enums). */
-function declarationCounts(source: ts.SourceFile): ReadonlyMap<string, number> {
-  const cached = DECLARATION_COUNTS.get(source);
-  if (cached !== undefined) return cached;
-  const out = new Map<string, number>();
-  for (const entry of declaredNames(source)) out.set(entry.name, (out.get(entry.name) ?? 0) + 1);
-  DECLARATION_COUNTS.set(source, out);
-  return out;
-}
-/** The value of a name the file declares exactly once, in any binding form, as a const reaching one string through names each declared once - else undefined. */
-function soleString(source: ts.SourceFile, name: string, seen: ReadonlySet<string>): string | undefined {
-  const initializers = constInitializers(source).get(name) ?? [];
-  const initializer = initializers[0];
-  if (initializer === undefined || initializers.length !== 1 || seen.has(name) || declarationCounts(source).get(name) !== 1) return undefined;
-  const inner = bare(initializer);
-  if (ts.isStringLiteralLike(inner)) return inner.text;
-  return ts.isIdentifier(inner) ? soleString(source, inner.text, new Set([...seen, name])) : undefined;
-}
-/** The ONE string a node spells, or undefined: a literal, or an identifier soleString resolves - so an exemption never follows a name the file declares twice (fail-closed). */
-function stringValue(node: ts.Node | undefined): string | undefined {
-  if (node === undefined) return undefined;
-  const inner = bare(node);
-  if (ts.isStringLiteralLike(inner)) return inner.text;
-  return ts.isIdentifier(inner) ? soleString(inner.getSourceFile(), inner.text, new Set()) : undefined;
-}
 /** A callee as dotted text: property access and string-keyed element access both read as a.b (an element key reads as its member). */
 function calleeName(expression: ts.Expression): string {
   const inner = bare(expression);
   if (ts.isPropertyAccessExpression(inner)) return `${calleeName(inner.expression)}.${inner.name.text}`;
   if (ts.isElementAccessExpression(inner) && ts.isStringLiteralLike(inner.argumentExpression)) return `${calleeName(inner.expression)}.${inner.argumentExpression.text}`;
   return ts.isIdentifier(inner) ? inner.text : `<${ts.SyntaxKind[inner.kind]}>`;
-}
-/** A leading read of the global object through itself (globalThis. or global.), which a callee chain drops: globalThis.Object.assign reads Object.assign. */
-const GLOBAL_PREFIX = /^(?:(?:globalThis|global)\.)+/;
-const unglobal = (chain: string): string => chain.replace(GLOBAL_PREFIX, "");
-const isChainExpression = (node: ts.Node): boolean => {
-  const inner = bare(node);
-  return ts.isIdentifier(inner) || ts.isPropertyAccessExpression(inner) || ts.isElementAccessExpression(inner);
-};
-/**
- * Every dotted spelling a callee may have: a property access, and an element access keyed by a string literal or a const binding
- * (every value of it, stringValues; any other key reads <computed>), each read as a.b; a root identifier also reads as each name
- * or member chain its const declarations alias (every declaration, cycle-guarded); a leading globalThis. or global. is dropped
- * (refusal #3 U3: Object.assign reached through globalThis or through a const alias of Object reads as Object.assign).
- */
-function calleeChains(expression: ts.Node, seen: ReadonlySet<string> = new Set()): readonly string[] {
-  const inner = bare(expression);
-  let chains: readonly string[];
-  if (ts.isPropertyAccessExpression(inner)) chains = calleeChains(inner.expression, seen).map(base => `${base}.${inner.name.text}`);
-  else if (ts.isElementAccessExpression(inner)) {
-    const keys = stringValues(inner.argumentExpression);
-    const bases = calleeChains(inner.expression, seen);
-    chains = (keys.length > 0 ? keys : ["<computed>"]).flatMap(key => bases.map(base => `${base}.${key}`));
-  } else if (ts.isIdentifier(inner)) {
-    const aliases = seen.has(inner.text) ? [] : (constInitializers(inner.getSourceFile()).get(inner.text) ?? []).filter(isChainExpression);
-    chains = [inner.text, ...aliases.flatMap(alias => calleeChains(alias, new Set([...seen, inner.text])))];
-  } else chains = [`<${ts.SyntaxKind[inner.kind]}>`];
-  return [...new Set(chains.map(unglobal))];
 }
 
 // ---- comments ---------------------------------------------------------------------------------------------------------
@@ -809,8 +768,6 @@ const BOUND: ReadonlyMap<string, string> = new Map([
   ["registerHyperUnixFind", PROVIDER_MODULE],
   ["CapabilityRegistry", REGISTRY_MODULE],
 ]);
-/** The module-mock calls, read through calleeName (assembled: this file spells none of its own) and the modules no custody file may mock. */
-const MODULE_MOCKS: ReadonlySet<string> = new Set(["vi", "vitest"].flatMap(owner => ["mock", "doMock"].map(member => `${owner}.${member}`)));
 const GUARDED_MODULES: readonly string[] = [SDK_MODULE, PROVIDER_MODULE, REGISTRY_MODULE];
 const SPECIFIER_EXTENSION = /\.(?:[cm]?[jt]s|[jt]sx)$/;
 /** The repository path a specifier names from the lifecycle file: relative, root-relative or absolute under the root, else a package under node_modules; the extension and a trailing /index dropped. */
@@ -865,141 +822,11 @@ function reboundNames(source: ts.SourceFile): string[] {
     .filter(entry => BOUND.has(entry.name) && !(entry.kind === "import" && entry.from === BOUND.get(entry.name)))
     .map(entry => `${entry.name} :${entry.line} (${entry.kind}${entry.from === undefined ? "" : ` from ${entry.from}`})`);
 }
-/** A module mock's specifiers: its first argument's string values (stringValues), or those of the string an import(...) argument loads. */
-function mockSpecifiers(argument: ts.Expression | undefined): readonly string[] {
-  const inner = argument === undefined ? undefined : bare(argument);
-  if (inner !== undefined && ts.isCallExpression(inner) && inner.expression.kind === ts.SyntaxKind.ImportKeyword) return stringValues(inner.arguments[0]);
-  return stringValues(inner);
-}
 /** Every module mock (a call whose calleeChains hold a MODULE_MOCKS name) with a specifier value that resolves to a guarded module (specifierTarget). */
 function moduleMocks(source: ts.SourceFile): string[] {
-  return callsIn(source).flatMap(call => {
-    const mock = calleeChains(call.expression).find(name => MODULE_MOCKS.has(name));
-    if (mock === undefined) return [];
-    return mockSpecifiers(call.arguments[0])
-      .filter(specifier => isGuardedTarget(specifierTarget(specifier)))
-      .map(specifier => `${mock}(${specifier}) :${lineOf(source, call)}`);
-  });
-}
-/** The vitest calls that stub a global; vi.stubEnv sets the environment and is read with process.env below. */
-const GLOBAL_STUBS: ReadonlySet<string> = new Set(["vi.stubGlobal", "vi.useFakeTimers", "vi.setSystemTime"]);
-/** The Object / Reflect calls that mutate the object their first argument names. */
-const MUTATORS: ReadonlySet<string> = new Set(["Object.assign", "Object.defineProperty", "Object.defineProperties", "Object.setPrototypeOf", "Reflect.set", "Reflect.defineProperty", "Reflect.deleteProperty", "Reflect.setPrototypeOf"]);
-/** The callees whose reference anywhere but as a call's callee is itself a tamper (call / apply / bind, an alias, an argument). */
-const WATCHED: ReadonlySet<string> = new Set(["vi.spyOn", ...GLOBAL_STUBS, ...MUTATORS, ...MODULE_MOCKS]);
-/** The process environment: a chain rooted here is environment, which a stubbed HyperUnix.open makes inert. */
-const ENVIRONMENT = "process.env";
-const IMPORT_KINDS: ReadonlySet<string> = new Set(["import", "ImportClause", "NamespaceImport", "ImportEqualsDeclaration"]);
-/** The names a file declares itself (variables, parameters, functions, classes, enums), imports left out. */
-function localNames(source: ts.SourceFile): ReadonlySet<string> {
-  return new Set(declaredNames(source).filter(entry => !IMPORT_KINDS.has(entry.kind)).map(entry => entry.name));
-}
-/** The names of the running platform's global object: a root spelling one of them reads as that global even where the file declares a local of the same name in some scope (the shadowing scope is not resolved: fail-closed). */
-const GLOBAL_NAMES: ReadonlySet<string> = new Set(Object.getOwnPropertyNames(globalThis));
-/**
- * Every member chain a node may write, as dotted text, whose root is a global or an import binding: a root the file declares no
- * local of, or one GLOBAL_NAMES holds; a local root followed through EVERY const declaration of its name (its aliases); a key spelled
- * through a const binding read as every value of it (stringValues; any other key reads <computed>, never the environment).
- */
-function outsideChains(node: ts.Node, source: ts.SourceFile, locals: ReadonlySet<string>, seen: ReadonlySet<string> = new Set()): readonly string[] {
-  const inner = bare(node);
-  if (ts.isPropertyAccessExpression(inner) || ts.isElementAccessExpression(inner)) {
-    const keys = ts.isPropertyAccessExpression(inner) ? [inner.name.text] : stringValues(inner.argumentExpression);
-    return outsideChains(inner.expression, source, locals, seen).flatMap(base => (keys.length > 0 ? keys : ["<computed>"]).map(key => `${base}.${key}`));
-  }
-  if (!ts.isIdentifier(inner)) return [];
-  const own = !locals.has(inner.text) || GLOBAL_NAMES.has(inner.text) ? [inner.text] : [];
-  const aliases = seen.has(inner.text) ? [] : (constInitializers(source).get(inner.text) ?? []);
-  return [...new Set([...own, ...aliases.flatMap(alias => outsideChains(alias, source, locals, new Set([...seen, inner.text])))])];
-}
-const isEnvironment = (chain: string): boolean => {
-  const path = unglobal(chain);
-  return path === ENVIRONMENT || path.startsWith(`${ENVIRONMENT}.`);
-};
-/**
- * The targets a write names: the expression itself, or every element of an array or object destructuring-assignment pattern (nested,
- * spread / rest included; a shorthand property's own name). A default inside a pattern (x = v) is an assignment the walk reads by
- * itself, so it adds nothing here (refusal #3 U3: [JSON.parse] = [forged] and ({ parse: JSON.parse } = ...) name JSON.parse).
- */
-function assignmentTargets(target: ts.Node): ts.Node[] {
-  const inner = bare(target);
-  if (ts.isArrayLiteralExpression(inner)) return inner.elements.flatMap(element => (ts.isOmittedExpression(element) ? [] : assignmentTargets(ts.isSpreadElement(element) ? element.expression : element)));
-  if (ts.isObjectLiteralExpression(inner)) {
-    return inner.properties.flatMap((property): ts.Node[] => {
-      if (ts.isPropertyAssignment(property)) return assignmentTargets(property.initializer);
-      if (ts.isShorthandPropertyAssignment(property)) return [property.name];
-      return ts.isSpreadAssignment(property) ? assignmentTargets(property.expression) : [];
-    });
-  }
-  if (ts.isBinaryExpression(inner) && inner.operatorToken.kind === ts.SyntaxKind.EqualsToken) return [];
-  return [inner];
-}
-/** The member chains a destructuring pattern reads from the chains its source spells: each key under each base (a rest element reads base.*), nested patterns followed. */
-function patternMembers(pattern: ts.Node, bases: readonly string[]): string[] {
-  const inner = bare(pattern);
-  const under = (keys: readonly string[]): string[] => keys.flatMap(key => bases.map(base => `${base}.${key}`));
-  if (ts.isObjectBindingPattern(inner)) {
-    return inner.elements.flatMap(element => (element.dotDotDotToken !== undefined ? under(["*"]) : patternMembers(element.name, under(keyTexts(element.propertyName ?? element.name)))));
-  }
-  if (ts.isObjectLiteralExpression(inner)) {
-    return inner.properties.flatMap((property): string[] => {
-      if (ts.isSpreadAssignment(property)) return under(["*"]);
-      if (ts.isPropertyAssignment(property)) return patternMembers(property.initializer, under(keyTexts(property.name)));
-      return ts.isShorthandPropertyAssignment(property) ? under([property.name.text]) : [];
-    });
-  }
-  return [...bases];
-}
-/** The WATCHED names a list of member chains holds; a rest read (base.*) holds every WATCHED name under its base. */
-const watchedIn = (members: readonly string[]): string[] =>
-  members.map(unglobal).flatMap(member => (member.endsWith(".*") ? [...WATCHED].filter(name => name.startsWith(member.slice(0, -1))) : WATCHED.has(member) ? [member] : []));
-/**
- * Every write to a global or an import binding anywhere in a file: a vi.spyOn beside HyperUnix.open, a GLOBAL_STUBS call, an
- * assignment (each target of a destructuring pattern included), a for-in / for-of target, a delete or update of a chain rooted
- * outside the file, or a MUTATORS call on one - the environment left out; and every WATCHED callee read other than as a call's
- * callee, a destructured alias of one included. Callees read through calleeChains.
- */
-function tampersIn(source: ts.SourceFile): string[] {
-  const locals = localNames(source);
-  const outside = (node: ts.Node): readonly string[] => outsideChains(node, source, locals).filter(chain => !isEnvironment(chain));
-  return descendants(source).flatMap((node): string[] => {
-    const at = (what: string): string[] => [`${what} :${lineOf(source, node)}`];
-    if (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) {
-      const watched = calleeChains(node).find(name => WATCHED.has(name));
-      if (watched !== undefined) {
-        let link: ts.Node = node;
-        while (ts.isParenthesizedExpression(link.parent)) link = link.parent;
-        if (!(ts.isCallExpression(link.parent) && link.parent.expression === link)) return at(`${watched} referenced as a value`);
-      }
-    }
-    if (ts.isVariableDeclaration(node) && !ts.isIdentifier(node.name) && node.initializer !== undefined) {
-      return watchedIn(patternMembers(node.name, calleeChains(node.initializer))).flatMap(name => at(`${name} referenced as a value`));
-    }
-    if (ts.isCallExpression(node)) {
-      const callees = calleeChains(node.expression);
-      const stub = callees.find(name => GLOBAL_STUBS.has(name));
-      if (stub !== undefined) return at(stub);
-      if (callees.includes("vi.spyOn")) {
-        const [target, method] = node.arguments;
-        const open = target !== undefined && ts.isIdentifier(bare(target)) && (bare(target) as ts.Identifier).text === "HyperUnix" && stringValue(method) === "open";
-        return open ? [] : at(`vi.spyOn(${target?.getText() ?? ""})`);
-      }
-      const mutator = callees.find(name => MUTATORS.has(name));
-      return mutator === undefined ? [] : outside(node.arguments[0] ?? node).flatMap(chain => at(`${mutator}(${chain})`));
-    }
-    if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment) {
-      const aliased = node.operatorToken.kind === ts.SyntaxKind.EqualsToken && !isChainExpression(node.left) ? watchedIn(patternMembers(node.left, calleeChains(node.right))) : [];
-      return [...assignmentTargets(node.left).flatMap(outside).flatMap(chain => at(`${chain} assigned`)), ...aliased.flatMap(name => at(`${name} referenced as a value`))];
-    }
-    if ((ts.isForOfStatement(node) || ts.isForInStatement(node)) && !ts.isVariableDeclarationList(node.initializer)) {
-      return assignmentTargets(node.initializer).flatMap(outside).flatMap(chain => at(`${chain} assigned`));
-    }
-    if (ts.isDeleteExpression(node)) return outside(node.expression).flatMap(chain => at(`${chain} deleted`));
-    if ((ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && (node.operator === ts.SyntaxKind.PlusPlusToken || node.operator === ts.SyntaxKind.MinusMinusToken)) {
-      return outside(node.operand).flatMap(chain => at(`${chain} updated`));
-    }
-    return [];
-  });
+  return moduleMockSpecifiers(source)
+    .filter(entry => isGuardedTarget(specifierTarget(entry.specifier)))
+    .map(entry => `${entry.mock}(${entry.specifier}) :${entry.line}`);
 }
 
 function declarationsIn(scope: ts.Node): Map<string, ts.VariableDeclaration[]> {
@@ -1246,349 +1073,31 @@ function plantedSuiteHits(text: string): string[] {
 
 // ---- falsifier shapes -------------------------------------------------------------------------------------------------
 
-const SHAPES = ["F1", "F2", "F3", "F4"] as const;
-type Shape = (typeof SHAPES)[number];
-interface ShapeHit {
-  readonly shape: Shape;
-  readonly line: number;
-  readonly form: string;
-}
-/** The member names whose read is a falsifier shape (a Map: a plain object would answer inherited names such as toString). */
-const MEMBER_SHAPES: ReadonlyMap<string, Shape> = new Map<string, Shape>([
-  ["kill", "F1"],
-  ["pid", "F2"],
-  ["ESRCH", "F4"],
-]);
-/** Process-table tools: a command headed by one probes whether a process still runs. */
-const PROCESS_TABLE = ["ps", "pgrep", "pkill", "kill", "killall", "pidof", "pstree", "pwdx", "lsof", "fuser"] as const;
-const PROCESS_TABLE_SET: ReadonlySet<string> = new Set(PROCESS_TABLE);
-/** A wrapper's option table: the options that take a separate argument, the positional words before its command, and the options whose argument is itself a command. */
-interface WrapperRule {
-  readonly arguments: readonly string[];
-  readonly positionals: number;
-  readonly commands: readonly string[];
-}
-const rule = (args: readonly string[], positionals = 0, commands: readonly string[] = []): WrapperRule => ({ arguments: args, positionals, commands });
-/** The command wrappers F3 reads through, each with its option table (every other dash word is a flag; "--" ends the options). */
-const WRAPPER_RULES: ReadonlyArray<readonly [string, WrapperRule]> = [
-  ["env", rule(["-u", "--unset", "-C", "--chdir"], 0, ["-S", "--split-string"])],
-  ["exec", rule(["-a"])],
-  ["command", rule([])],
-  ["builtin", rule([])],
-  ["nohup", rule([])],
-  ["setsid", rule([])],
-  ["sudo", rule(["-u", "--user", "-g", "--group", "-h", "--host", "-p", "--prompt", "-C", "--close-from", "-D", "--chdir", "-r", "--role", "-t", "--type", "-U", "--other-user", "-T", "--command-timeout", "-R", "--chroot"])],
-  ["doas", rule(["-u", "-C", "-a"])],
-  ["su", rule(["-s", "--shell", "-g", "--group", "-G", "--supp-group", "-w", "--whitelist-environment"], 1, ["-c", "--command"])],
-  ["runuser", rule(["-u", "--user", "-g", "--group", "-G", "--supp-group", "-s", "--shell", "-w", "--whitelist-environment"], 0, ["-c", "--command"])],
-  ["nice", rule(["-n", "--adjustment"])],
-  ["ionice", rule(["-c", "--class", "-n", "--classdata"])],
-  ["chrt", rule(["-T", "--sched-runtime", "-P", "--sched-period", "-D", "--sched-deadline"], 1)],
-  ["taskset", rule([], 1)],
-  ["timeout", rule(["-s", "--signal", "-k", "--kill-after"], 1)],
-  ["stdbuf", rule(["-i", "--input", "-o", "--output", "-e", "--error"])],
-  ["unbuffer", rule([])],
-  ["chroot", rule(["--userspec", "--groups"], 1)],
-  ["flock", rule(["-w", "--timeout", "-E", "--conflict-exit-code"], 1, ["-c", "--command"])],
-  ["watch", rule(["-n", "--interval", "-q", "--equexit"])],
-  ["strace", rule(["-e", "-o", "-p", "-s", "-u", "-E", "-a", "-b", "-I", "-O", "-S", "-X", "-P"])],
-  ["xargs", rule(["-a", "--arg-file", "-d", "--delimiter", "-E", "-e", "--eof", "-I", "-i", "--replace", "-L", "-l", "--max-lines", "-n", "--max-args", "-P", "--max-procs", "-s", "--max-chars", "--process-slot-var"])],
-  ["busybox", rule([])],
-  ["time", rule(["-f", "--format", "-o", "--output"])],
-];
-const WRAPPERS: ReadonlyMap<string, WrapperRule> = new Map(WRAPPER_RULES);
-/** Shell reserved words after which the next word is a command head. */
-const SHELL_KEYWORDS = ["!", "if", "then", "else", "elif", "do", "while", "until", "coproc", "eval"] as const;
-const SHELL_KEYWORD_SET: ReadonlySet<string> = new Set(SHELL_KEYWORDS);
-/** Shells: the text after the first flag word holding c (or fish's --command) among a shell's words is a command. */
-const SHELLS = ["sh", "bash", "dash", "zsh", "ksh", "mksh", "ash", "fish", "csh", "tcsh"] as const;
-const SHELL_SET: ReadonlySet<string> = new Set(SHELLS);
-const SHELL_COMMAND_FLAG = /^(?:-[A-Za-z]*c[A-Za-z]*|--command)$/;
-/** Shell separators: each piece between them is its own command. */
-const COMMAND_SEPARATOR = /\$\(|[;&|\n`(){}]/;
-/** Process-spawning calls: a literal in their arguments (or in an argv array they are given) is a command. */
-const SPAWNERS = ["spawn", "spawnSync", "exec", "execSync", "execFile", "execFileSync", "fork"] as const;
-const SPAWNER_SET: ReadonlySet<string> = new Set(SPAWNERS);
-const PROC_PATH = /(?:^|\/)proc(?:\/|$)/i;
-/** Case-insensitive, so a regular expression with the i flag (/esrch/i) still reads. */
-const ESRCH_WORD = /(?<![A-Za-z0-9_])esrch(?![A-Za-z0-9_])/i;
 
-/** The names a property, binding or member key may spell: its own text, or a computed key's string values (stringValues). */
-function keyTexts(name: ts.Node | undefined): readonly string[] {
-  if (name === undefined) return [];
-  if (ts.isIdentifier(name) || ts.isPrivateIdentifier(name) || ts.isStringLiteralLike(name) || ts.isNumericLiteral(name)) return [name.text];
-  return ts.isComputedPropertyName(name) ? stringValues(name.expression) : [];
-}
-/** Whether an object-literal property is part of a destructuring-assignment target ({ pid } = child, for ({ pid } of list)). */
-function inAssignmentTarget(property: ts.Node): boolean {
-  let link: ts.Node = property.parent;
-  while (
-    link.parent !== undefined &&
-    (ts.isPropertyAssignment(link.parent) ||
-      ts.isShorthandPropertyAssignment(link.parent) ||
-      ts.isSpreadAssignment(link.parent) ||
-      ts.isObjectLiteralExpression(link.parent) ||
-      ts.isArrayLiteralExpression(link.parent) ||
-      ts.isSpreadElement(link.parent) ||
-      ts.isParenthesizedExpression(link.parent))
-  ) {
-    link = link.parent;
-  }
-  const parent = link.parent;
-  if (parent === undefined) return false;
-  if (ts.isBinaryExpression(parent)) return parent.operatorToken.kind === ts.SyntaxKind.EqualsToken && parent.left === link;
-  return (ts.isForOfStatement(parent) || ts.isForInStatement(parent)) && parent.initializer === link;
-}
 /** The member a node reads, and the form it reads it in. */
-/** The member a node reads - every name its key may spell (an element or computed key reads each of its string values) - and the form it reads it in. */
-function memberRead(node: ts.Node): { readonly names: readonly string[]; readonly form: string } | undefined {
-  const read = (names: readonly string[], form: string): { readonly names: readonly string[]; readonly form: string } | undefined => (names.length === 0 ? undefined : { names, form });
-  if (ts.isPropertyAccessExpression(node)) return read([node.name.text], "member");
-  if (ts.isElementAccessExpression(node)) return read(stringValues(node.argumentExpression), "element key");
-  if (ts.isQualifiedName(node)) return read([node.right.text], "type member");
-  if (ts.isBindingElement(node) && ts.isObjectBindingPattern(node.parent)) return read(keyTexts(node.propertyName ?? node.name), "destructuring");
-  if ((ts.isShorthandPropertyAssignment(node) || ts.isPropertyAssignment(node)) && ts.isObjectLiteralExpression(node.parent) && inAssignmentTarget(node)) return read(keyTexts(node.name), "destructuring assignment");
-  if (ts.isImportSpecifier(node) || ts.isExportSpecifier(node)) return read([(node.propertyName ?? node.name).text], "import");
-  return undefined;
-}
-/** Whether an identifier is the name position of its parent's member read (memberRead reads it there). */
-function isMemberName(node: ts.Identifier | ts.PrivateIdentifier): boolean {
-  const parent = node.parent;
-  if (ts.isPropertyAccessExpression(parent)) return parent.name === node;
-  if (ts.isQualifiedName(parent)) return parent.right === node;
-  if (ts.isBindingElement(parent)) return parent.name === node || parent.propertyName === node;
-  if (ts.isImportSpecifier(parent) || ts.isExportSpecifier(parent)) return true;
-  if (ts.isShorthandPropertyAssignment(parent) || ts.isPropertyAssignment(parent)) return parent.name === node;
-  return false;
-}
-/** Whether a string literal is a member key (an element-access key, or a property, binding, computed or import key). */
-function isKeyLiteral(node: ts.Node): boolean {
-  const parent = node.parent;
-  if (parent === undefined) return false;
-  if (ts.isElementAccessExpression(parent)) return parent.argumentExpression === node;
-  if (ts.isComputedPropertyName(parent) || ts.isImportSpecifier(parent) || ts.isExportSpecifier(parent)) return true;
-  if (ts.isBindingElement(parent)) return parent.propertyName === node;
-  if (ts.isPropertyAssignment(parent) || ts.isPropertySignature(parent) || ts.isPropertyDeclaration(parent) || ts.isMethodDeclaration(parent)) return parent.name === node;
-  return false;
-}
-/** Whether a literal sits where a process-spawning call reads a command: an argument, or an element of an argv array given to it. */
-function inSpawnPosition(node: ts.Node): boolean {
-  const link: ts.Node = ts.isArrayLiteralExpression(node.parent) ? node.parent : node;
-  const call = link.parent;
-  if (call === undefined || !ts.isCallExpression(call) || !call.arguments.some(argument => argument === link)) return false;
-  const callee = call.expression;
-  const name = ts.isIdentifier(callee) ? callee.text : ts.isPropertyAccessExpression(callee) ? callee.name.text : "";
-  return SPAWNER_SET.has(name);
-}
-/** The words after a wrapper, past its flags, its options with their arguments and its positionals: the rest from the command head on, or the command an option of its command table carries. */
-function pastWrapper(words: readonly string[], wrapper: WrapperRule): { readonly rest: readonly string[]; readonly command: string | undefined } {
-  let index = 0;
-  let positionals = wrapper.positionals;
-  let options = true;
-  while (index < words.length) {
-    const word = words[index] ?? "";
-    if (options && word === "--") {
-      options = false;
-      index += 1;
-    } else if (options && wrapper.commands.includes(word)) {
-      return { rest: [], command: words.slice(index + 1).join(" ") };
-    } else if (options && word.length > 1 && word.startsWith("-")) {
-      index += wrapper.arguments.includes(word) ? 2 : 1;
-    } else if (positionals > 0) {
-      positionals -= 1;
-      index += 1;
-    } else {
-      break;
-    }
-  }
-  return { rest: words.slice(index), command: undefined };
-}
-/** Where a word splits into the fragments the fail-closed wrapped read checks: an attached option argument (-S'ps or --command=ps) is its own fragment. */
-const ATTACHED_SPLIT = /['"=]/;
-/** Every fragment of the words past a WRAPPERS wrapper or a SHELLS shell (each word split at ATTACHED_SPLIT), by basename - the fail-closed read of a wrapped command (refusal #3 U2). */
-function wrappedWords(words: readonly string[]): string[] {
-  return words
-    .flatMap(word => word.split(ATTACHED_SPLIT))
-    .filter(fragment => fragment.length > 0)
-    .map(fragment => fragment.slice(fragment.lastIndexOf("/") + 1));
-}
-/**
- * The head (by basename) of every command a text spells: split at COMMAND_SEPARATOR, past VAR=value words, SHELL_KEYWORDS and
- * WRAPPERS (pastWrapper), into a shell's command flag - and, fail-closed, every fragment of every word past a WRAPPERS wrapper or a
- * SHELLS shell in head position (wrappedWords), so a flag form outside a wrapper's option table (su's or env's lone "-"), or "--"
- * after a shell's command flag, never hides the command after it.
- */
-function commandHeads(text: string): string[] {
-  const heads: string[] = [];
-  for (const command of text.split(COMMAND_SEPARATOR)) {
-    let words: readonly string[] = command
-      .trim()
-      .split(/\s+/)
-      .map(word => word.replace(/^['"]+|['"]+$/g, ""))
-      .filter(word => word.length > 0);
-    while (words.length > 0) {
-      const [first = "", ...rest] = words;
-      const base = first.slice(first.lastIndexOf("/") + 1);
-      if (/^[A-Za-z_][A-Za-z0-9_]*=/.test(first) || SHELL_KEYWORD_SET.has(first)) {
-        words = rest;
-        continue;
-      }
-      const wrapper = WRAPPERS.get(base);
-      if (wrapper !== undefined || SHELL_SET.has(base)) heads.push(...wrappedWords(rest));
-      if (wrapper !== undefined) {
-        const after = pastWrapper(rest, wrapper);
-        if (after.command !== undefined) {
-          heads.push(...commandHeads(after.command));
-          break;
-        }
-        words = after.rest;
-        continue;
-      }
-      if (SHELL_SET.has(base)) {
-        const flag = rest.findIndex(word => SHELL_COMMAND_FLAG.test(word));
-        if (flag >= 0) heads.push(...commandHeads(rest.slice(flag + 1).join(" ")));
-        break;
-      }
-      heads.push(base);
-      break;
-    }
-  }
-  return heads;
-}
-/** F1 a kill member read; F2 a pid member read; F3 a process-table probe; F4 ESRCH - every form the C7 header lists. */
-function falsifierShapes(source: ts.SourceFile): ShapeHit[] {
-  return descendants(source).flatMap((node): ShapeHit[] => {
-    const hit = (shape: Shape, form: string): ShapeHit[] => [{ shape, line: lineOf(source, node), form }];
-    const member = memberRead(node);
-    if (member !== undefined) {
-      const shape = member.names.map(name => MEMBER_SHAPES.get(name) ?? (ESRCH_WORD.test(identifierWords(name)) ? "F4" : undefined)).find(found => found !== undefined);
-      return shape === undefined ? [] : hit(shape, member.form);
-    }
-    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "kill") return hit("F1", "bare call");
-    if ((ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) && ESRCH_WORD.test(identifierWords(node.text)) && !(isMemberName(node) && memberRead(node.parent) !== undefined)) return hit("F4", "identifier");
-    if (ts.isRegularExpressionLiteral(node)) {
-      const text = regexText(node.text);
-      if (ESRCH_WORD.test(text)) return hit("F4", "regular expression");
-      return PROC_PATH.test(text) ? hit("F3", "/proc path") : [];
-    }
-    if (ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node)) {
-      if (isKeyLiteral(node)) {
-        if (ESRCH_WORD.test(identifierWords(node.text)) && memberRead(node.parent) === undefined) return hit("F4", "key");
-        return PROC_PATH.test(node.text) ? hit("F3", "/proc path") : [];
-      }
-      const text = node.text;
-      if (ESRCH_WORD.test(text)) return hit("F4", "literal");
-      if (PROC_PATH.test(text)) return hit("F3", "/proc path");
-      const word = text.trim();
-      if (word === "kill" && !inSpawnPosition(node)) return hit("F1", "kill name literal");
-      if (word === "pid") return hit("F2", "pid name literal");
-      if (commandHeads(text).some(head => PROCESS_TABLE_SET.has(head))) return hit("F3", "process-table command");
-    }
-    return [];
-  });
-}
-const shapeForms = (hits: readonly ShapeHit[]): string[] => hits.map(hit => `${hit.shape}:${hit.form}`).sort();
 
 // ---- HX drivers -------------------------------------------------------------------------------------------------------
 
 /** The files C7 never judges, each with its reason. */
 const EXCLUDED = [SELF] as const;
-const MODULE_NEEDLES = ["providers/hyperunix", "hyperunix-observer"] as const;
-const CAPABILITY_ID = "hyperunix.find";
-const OVERRIDE = "HYPERUNIX_HX";
-const MODULE_PATTERNS: readonly RegExp[] = MODULE_NEEDLES.map(needle => new RegExp(`/${needle.replace(/[./-]/g, match => `\\${match}`)}(?:\\.[cm]?[jt]s)?$`));
-/** A path into the installed SDK package (refusal #3 F5: ../node_modules/@hyperunix/sdk/dist/index.js is the file the package's "." export resolves to). */
-const SDK_PATH = new RegExp(`(?:^|/)node_modules/${SDK_MODULE.replace(/[./-]/g, match => `\\${match}`)}(?:/|$)`);
-/** A specifier as a resolver may read it: every %HH escape decoded and the path normalized (posix), so providers/./hyperunix and hyper%75nix name the provider. */
-function normalizedSpecifier(specifier: string): string {
-  const decoded = specifier.replace(/%([0-9A-Fa-f]{2})/g, (_whole: string, hex: string) => String.fromCharCode(Number.parseInt(hex, 16)));
-  return decoded.length === 0 ? decoded : posix.normalize(decoded);
-}
-/** An HX module: the SDK package or a subpath of it, a path into node_modules/@hyperunix/sdk, or a path ending providers/hyperunix or hyperunix-observer - read after normalizedSpecifier. */
-const HX_MODULE = (specifier: string): boolean => {
-  const path = normalizedSpecifier(specifier);
-  return path === SDK_MODULE || path.startsWith(`${SDK_MODULE}/`) || SDK_PATH.test(path) || MODULE_PATTERNS.some(pattern => pattern.test(path));
-};
-/** The calls that load a module (beside a dynamic import and a created require, whose callee is itself a call), read through calleeName. */
-const LOADERS: ReadonlySet<string> = new Set(["require", "module.require", "vi.importActual", "vi.importMock"]);
-/** The calls that read or set an environment variable named by an argument, and the methods that test for one. */
-const ENV_CALLS: ReadonlySet<string> = new Set([
-  "vi.stubEnv",
-  "Reflect.get",
-  "Reflect.set",
-  "Reflect.has",
-  "Reflect.deleteProperty",
-  "Reflect.defineProperty",
-  "Reflect.getOwnPropertyDescriptor",
-  "Object.defineProperty",
-  "Object.getOwnPropertyDescriptor",
-  "Object.hasOwn",
-]);
-const ENV_METHODS: ReadonlySet<string> = new Set(["hasOwnProperty", "propertyIsEnumerable"]);
-/** The classifier's own tokens: every one holds DRIVER_NEEDLE (the frozen shape checks it), so every driving form's text does. */
-const DRIVER_TOKENS: readonly string[] = [SDK_MODULE, ...MODULE_NEEDLES, CAPABILITY_ID, OVERRIDE];
-/** Text every HX driver carries, in any case: a source is parsed only when its text, raw or unescaped, holds it (passesPrefilter). */
-const DRIVER_NEEDLE = /hyperunix/i;
-const DRIVER_REASONS = ["import", "invoke", "override"] as const;
-function isLoaderCall(call: ts.CallExpression): boolean {
-  return call.expression.kind === ts.SyntaxKind.ImportKeyword || calleeChains(call.expression).some(name => LOADERS.has(name)) || ts.isCallExpression(call.expression);
-}
-/** An import or export declaration erased at compile time: import type / export type, or named bindings every one of which is marked type (no default or namespace binding). */
-function isTypeOnlyDeclaration(node: ts.ImportDeclaration | ts.ExportDeclaration): boolean {
-  if (ts.isExportDeclaration(node)) {
-    const clause = node.exportClause;
-    return node.isTypeOnly || (clause !== undefined && ts.isNamedExports(clause) && clause.elements.length > 0 && clause.elements.every(element => element.isTypeOnly));
-  }
-  const clause = node.importClause;
-  if (clause === undefined) return false;
-  if (clause.isTypeOnly) return true;
-  const named = clause.namedBindings;
-  return clause.name === undefined && named !== undefined && ts.isNamedImports(named) && named.elements.length > 0 && named.elements.every(element => element.isTypeOnly);
-}
-/** How a source drives HX (DRIVER_REASONS): it imports or loads an HX module, invokes hyperunix.find, or reads or sets the HYPERUNIX_HX override. */
-function hxDrivers(source: ts.SourceFile): string[] {
-  const reasons = new Set<string>();
-  for (const node of descendants(source)) {
-    if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier !== undefined && ts.isStringLiteralLike(node.moduleSpecifier) && HX_MODULE(node.moduleSpecifier.text) && !isTypeOnlyDeclaration(node)) {
-      reasons.add("import");
-    }
-    if (ts.isImportEqualsDeclaration(node) && !node.isTypeOnly && ts.isExternalModuleReference(node.moduleReference) && stringValues(node.moduleReference.expression).some(HX_MODULE)) reasons.add("import");
-    if (ts.isCallExpression(node)) {
-      const firsts = stringValues(node.arguments[0]);
-      const callees = calleeChains(node.expression);
-      if (firsts.some(HX_MODULE) && isLoaderCall(node)) reasons.add("import");
-      if (firsts.includes(CAPABILITY_ID) && callees.some(callee => callee.endsWith(".invoke"))) reasons.add("invoke");
-      const envCall = callees.some(callee => ENV_CALLS.has(callee) || ENV_METHODS.has(callee.slice(callee.lastIndexOf(".") + 1)));
-      if (envCall && node.arguments.some(argument => stringValues(argument).includes(OVERRIDE))) reasons.add("override");
-    }
-    if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.InKeyword && stringValues(node.left).includes(OVERRIDE)) reasons.add("override");
-    const member = memberRead(node);
-    if (member?.names.includes(OVERRIDE) && member.form !== "import") reasons.add("override");
-    if (ts.isObjectLiteralExpression(node) && node.properties.some(property => !ts.isSpreadAssignment(property) && keyTexts(property.name).includes(OVERRIDE))) reasons.add("override");
-  }
-  return [...reasons].sort();
-}
 /**
- * A source's text with its JavaScript string escapes decoded (\xHH, \uHHHH, \u{H...}, a legacy octal escape, a line continuation,
- * and any other escaped character read as itself) and every %HH escape decoded, so an escaped or percent-encoded spelling of
- * DRIVER_NEEDLE still reads (refusal #3 U4: the classifier decodes a specifier's escapes, so the prefilter does too).
+ * The judged files whose F1-F4 hits C7 sets aside (R-REAPER): two trunk censuses, landed after cut #4, that import the HX provider
+ * to register a stand-in reader and kill processes of their own - the render-abort census reads a pids file, checks each pid's
+ * /proc cmdline and kills it; the host-publication census kills the no-op child it spawned. Each is pinned by its path and its
+ * hits' shape:form list (no line), so a hit beside them, a changed hit or a missing file reds C7 or R-REAPER.
  */
-function unescaped(text: string): string {
-  const controls: Readonly<Record<string, string>> = { b: "\b", f: "\f", n: "\n", r: "\r", t: "\t", v: "\v" };
-  const decoded = text.replace(
-    /\\(?:x([0-9A-Fa-f]{2})|u\{([0-9A-Fa-f]{1,6})\}|u([0-9A-Fa-f]{4})|([0-7]{1,3})|(\r\n|[\n\r\u2028\u2029])|([\s\S]))/g,
-    (_whole: string, hex: string | undefined, braced: string | undefined, unicode: string | undefined, octal: string | undefined, continuation: string | undefined, other: string | undefined) => {
-      const digits = hex ?? braced ?? unicode;
-      if (digits !== undefined) return codePoint(Number.parseInt(digits, 16));
-      if (octal !== undefined) return String.fromCharCode(Number.parseInt(octal, 8));
-      if (continuation !== undefined) return "";
-      return controls[other ?? ""] ?? other ?? "";
-    },
-  );
-  return decoded.replace(/%([0-9A-Fa-f]{2})/g, (_whole: string, hex: string) => String.fromCharCode(Number.parseInt(hex, 16)));
+interface Reaper {
+  readonly path: string;
+  readonly hits: readonly string[];
 }
-/** Whether C7 parses a source: its text, raw or unescaped, holds DRIVER_NEEDLE. */
-const passesPrefilter = (text: string): boolean => DRIVER_NEEDLE.test(text) || DRIVER_NEEDLE.test(unescaped(text));
+const KNOWN_REAPERS: readonly Reaper[] = [
+  { path: "test/workbench-edc-render-abort-census.test.ts", hits: ["F1:member", "F3:/proc path"] },
+  { path: "test/workbench-fiber-host-publication-census.test.ts", hits: ["F1:member"] },
+];
+/** The file names the C7 walk judges: .ts, .mts, .cts, .js, .mjs and .cjs. */
+const SOURCE_FILE = /\.[cm]?[jt]s$/;
+/** Whether a repository path is one the C7 walk reads: under test/ or qa/, a SOURCE_FILE name, no node_modules segment. */
+const isWalkedPath = (path: string): boolean => /^(?:test|qa)\//.test(path) && SOURCE_FILE.test(path) && !path.split("/").includes("node_modules");
 /** Every .ts / .mts / .cts / .js / .mjs / .cjs source under a repository directory, node_modules skipped, sorted. */
 function sourcesUnder(directory: string): string[] {
   const out: string[] = [];
@@ -1597,7 +1106,7 @@ function sourcesUnder(directory: string): string[] {
       if (name === "node_modules") continue;
       const path = `${relativeDirectory}/${name}`;
       if (statSync(join(ROOT, path)).isDirectory()) walk(path);
-      else if (/\.[cm]?[jt]s$/.test(name)) out.push(path);
+      else if (SOURCE_FILE.test(name)) out.push(path);
     }
   };
   walk(directory);
@@ -1621,6 +1130,20 @@ interface JudgedFile {
   readonly hits: readonly ShapeHit[];
 }
 let JUDGED: { readonly sources: readonly string[]; readonly judged: readonly JudgedFile[] } | undefined;
+/** The ids of the readers census's rows for one refusal #4 prefix (GP4-C2 or GP4-C7), in its order. */
+function gateRows(prefix: string): string[] {
+  return [...read(READERS_CENSUS).matchAll(new RegExp(`\\{ id: "(${prefix}-[0-9a-z]+)", label:`, "g"))].map(match => match[1] ?? "");
+}
+/** A judged file's hits beside its KNOWN_REAPERS entry: each frozen shape:form set aside once, every other hit kept. */
+function unknownHits(entry: JudgedFile): ShapeHit[] {
+  const known = [...(KNOWN_REAPERS.find(reaper => reaper.path === entry.path)?.hits ?? [])];
+  return entry.hits.filter(hit => {
+    const at = known.indexOf(`${hit.shape}:${hit.form}`);
+    if (at < 0) return true;
+    known.splice(at, 1);
+    return false;
+  });
+}
 function judgedDrivers(): { readonly sources: readonly string[]; readonly judged: readonly JudgedFile[] } {
   if (JUDGED !== undefined) return JUDGED;
   const sources = [...sourcesUnder("test"), ...sourcesUnder("qa")];
@@ -2132,6 +1655,12 @@ const RESIDUALS: readonly Residual[] = [
     family:
       "text a browser lays out right to left (a bdo element, a dir attribute, or a run of bidi controls, which the view drops as Default_Ignorable) is read in its logical order, so a claim stored reversed reads quiet",
   },
+  {
+    id: "R-REAPER",
+    rows: "C7",
+    family:
+      "a judged file's F1-F4 hits frozen in KNOWN_REAPERS by path, shape and form (the kill code of two trunk censuses that kill processes of their own) are set aside by C7, so what those kills reach is not read; a hit beside them, a changed hit or a file no longer judged reads loud",
+  },
 ];
 const residualTitle = (residual: Residual): string => `${residual.id} (${residual.rows}): ${residual.family}`;
 function residualNamed(id: string): Residual {
@@ -2300,6 +1829,90 @@ const DRIVER_PLANTS: readonly DriverPlant[] = [
   { id: "global-object loader", code: `const sdk = global.require("${SDK_MODULE}");`, reasons: ["import"] },
   { id: "octal-escaped needle letter", code: 'import { HyperUnix } from "@hyper\\165nix/sdk";', reasons: ["import"] },
 ];
+interface LifecycleMember {
+  readonly id: string;
+  readonly label: string;
+  readonly edits: readonly { readonly anchor: string; readonly replacement: string }[];
+  readonly tampers: readonly string[];
+  readonly mocks: readonly string[];
+}
+/**
+ * Refusal #4's lifecycle members (gate-prep-4 / g10-gate-s144), verbatim: each is planted in a lifecycle copy by its edits, in
+ * order, and read for exactly its recorded tampers and mocks. The set and its order equal the GP4-C2 rows of the readers census,
+ * the anchor outside this file (READERS_CENSUS).
+ */
+const REFUSAL_4_LIFECYCLE: readonly LifecycleMember[] = [
+  { id: "GP4-C2-01", label: "import-binding root shadowed by a same-named local elsewhere (hxSdk.HyperUnix.open written in K2; const hxSdk in a helper)", edits: [{ anchor: "import { nativeReactiveFiberPreview } from \"../src/workbench/providers/reactivefiber.js\";", replacement: "import { nativeReactiveFiberPreview } from \"../src/workbench/providers/reactivefiber.js\";\nimport * as hxSdk from \"@hyperunix/sdk\";" }, { anchor: "function deferred<T>() {", replacement: "function hxSdkLabel(): string {\n  const hxSdk = \"label\";\n  return hxSdk;\n}\nfunction deferred<T>() {" }, { anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    const realOpen = hxSdk.HyperUnix.open;\n    hxSdk.HyperUnix.open = realOpen;" }], tampers: ["hxSdk.HyperUnix.open assigned"], mocks: [] },
+  { id: "GP4-C2-01c", label: "control: the same import-binding write without the shadowing helper", edits: [{ anchor: "import { nativeReactiveFiberPreview } from \"../src/workbench/providers/reactivefiber.js\";", replacement: "import { nativeReactiveFiberPreview } from \"../src/workbench/providers/reactivefiber.js\";\nimport * as hxSdk from \"@hyperunix/sdk\";" }, { anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    const realOpen = hxSdk.HyperUnix.open;\n    hxSdk.HyperUnix.open = realOpen;" }], tampers: ["hxSdk.HyperUnix.open assigned"], mocks: [] },
+  { id: "GP4-C2-01b", label: "import-binding root (non-BOUND named import nativeReactiveFiberPreview) shadowed by a local parameter elsewhere", edits: [{ anchor: "function deferred<T>() {", replacement: "function rfLabel(nativeReactiveFiberPreview: unknown): unknown {\n  return nativeReactiveFiberPreview;\n}\nfunction deferred<T>() {" }, { anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    (nativeReactiveFiberPreview as unknown as { forged: boolean }).forged = true;" }], tampers: ["nativeReactiveFiberPreview.forged assigned"], mocks: [] },
+  { id: "GP4-C2-01bc", label: "control: the same named-import member write without the shadowing parameter", edits: [{ anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    (nativeReactiveFiberPreview as unknown as { forged: boolean }).forged = true;" }], tampers: ["nativeReactiveFiberPreview.forged assigned"], mocks: [] },
+  { id: "GP4-C2-02", label: "let-aliased global root (let json = JSON; json.parse = forged)", edits: [{ anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    let json = JSON;\n    json.parse = (() => native) as typeof JSON.parse;" }], tampers: ["JSON.parse assigned"], mocks: [] },
+  { id: "GP4-C2-03", label: "parameter-aliased global root (patchParse(JSON, forged) writes target.parse)", edits: [{ anchor: "function deferred<T>() {", replacement: "function patchParse(target: { parse: unknown }, value: unknown): void {\n  target.parse = value;\n}\nfunction deferred<T>() {" }, { anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    patchParse(JSON, (() => native) as typeof JSON.parse);" }], tampers: ["JSON.parse assigned"], mocks: [] },
+  { id: "GP4-C2-04", label: "delete of a global member (claim word delete)", edits: [{ anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    delete (Reflect as unknown as Record<string, unknown>).hxProbe;" }], tampers: ["Reflect.hxProbe deleted"], mocks: [] },
+  { id: "GP4-C2-05", label: "update of a global member (claim word update, ++)", edits: [{ anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    (globalThis as unknown as { hxCount: number }).hxCount++;" }], tampers: ["globalThis.hxCount updated"], mocks: [] },
+  { id: "GP4-C2-06", label: "logical compound assignment on a global member (JSON.parse &&= forged)", edits: [{ anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    JSON.parse &&= (() => native) as typeof JSON.parse;" }], tampers: ["JSON.parse assigned"], mocks: [] },
+  { id: "GP4-C2-06b", label: "arithmetic compound assignment on a global member ((globalThis as ...).hxCount += 1)", edits: [{ anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    (globalThis as unknown as { hxCount: number }).hxCount += 1;" }], tampers: ["globalThis.hxCount assigned"], mocks: [] },
+  { id: "GP4-C2-07", label: "for-in target on a global member (claim word for-in)", edits: [{ anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    for ((JSON as unknown as { tag: string }).tag in { x: 1 }) break;" }], tampers: ["JSON.tag assigned"], mocks: [] },
+  { id: "GP4-C2-08", label: "Reflect.set mutator call on a global (claim word Reflect.set)", edits: [{ anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    Reflect.set(JSON, \"parse\", (() => native) as typeof JSON.parse);" }], tampers: ["Reflect.set(JSON)"], mocks: [] },
+  { id: "GP4-C2-09", label: "Object.setPrototypeOf mutator call on a global", edits: [{ anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    Object.setPrototypeOf(JSON, { parse: () => native });" }], tampers: ["Object.setPrototypeOf(JSON)"], mocks: [] },
+  { id: "GP4-C2-09b", label: "Object.defineProperties mutator call on a global", edits: [{ anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    Object.defineProperties(JSON, { parse: { value: () => native } });" }], tampers: ["Object.defineProperties(JSON)"], mocks: [] },
+  { id: "GP4-C2-09c", label: "Reflect.deleteProperty mutator call on a global", edits: [{ anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    Reflect.deleteProperty(JSON, \"hxProbe\");" }], tampers: ["Reflect.deleteProperty(JSON)"], mocks: [] },
+  { id: "GP4-C2-10", label: "WATCHED callee passed as an argument (claim word 'passed as an argument')", edits: [{ anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    const relay = (f: unknown): unknown => f;\n    relay(Object.assign);" }], tampers: ["Object.assign referenced as a value"], mocks: [] },
+  { id: "GP4-C2-11", label: "apply of a WATCHED callee (vi.spyOn.apply)", edits: [{ anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    vi.spyOn.apply(vi, [JSON, \"parse\"] as never);" }], tampers: ["vi.spyOn referenced as a value"], mocks: [] },
+  { id: "GP4-C2-11b", label: "bind of a WATCHED mutator (Object.assign.bind)", edits: [{ anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    Object.assign.bind(null, JSON)({ parse: () => native });" }], tampers: ["Object.assign referenced as a value"], mocks: [] },
+  { id: "GP4-C2-12", label: "environment-rooted chain reaching a global prototype (process.env.constructor.prototype.hxForged = true)", edits: [{ anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    (process.env as unknown as { constructor: { prototype: Record<string, unknown> } }).constructor.prototype.hxForged = true;" }], tampers: ["process.env.constructor.prototype.hxForged assigned"], mocks: [] },
+  { id: "GP4-C2-12c", label: "control: the same prototype write rooted at Object (Object.prototype.hxForged)", edits: [{ anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    (Object.prototype as unknown as Record<string, unknown>).hxForged = true;" }], tampers: ["Object.prototype.hxForged assigned"], mocks: [] },
+  { id: "GP4-C2-13", label: "legacy accessor definer on a global (JSON.__defineGetter__)", edits: [{ anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    (JSON as unknown as { __defineGetter__(name: string, get: () => unknown): void }).__defineGetter__(\"parse\", () => () => native);" }], tampers: ["__defineGetter__(JSON)"], mocks: [] },
+  { id: "GP4-C2-14", label: "SDK module mock through a const name declared twice (every value read)", edits: [{ anchor: "function deferred<T>() {", replacement: "function mockSdk(): void {\n  const M = \"@hyperunix/sdk\";\n  vi" + ".mock(M);\n}\nfunction mockLabel(): string {\n  const M = \"label\";\n  return M;\n}\nfunction deferred<T>() {" }], tampers: [], mocks: ["vi" + ".mock(@hyperunix/sdk)"] },
+  { id: "GP4-C2-15", label: "SDK module mock through vitest" + ".mock (MODULE_MOCKS on vitest)", edits: [{ anchor: "import { nativeReactiveFiberPreview } from \"../src/workbench/providers/reactivefiber.js\";", replacement: "import { nativeReactiveFiberPreview } from \"../src/workbench/providers/reactivefiber.js\";\nimport { vitest } from \"vitest\";" }, { anchor: "function deferred<T>() {", replacement: "vitest" + ".mock(\"@hyperunix/sdk\", async importOriginal => await importOriginal());\nfunction deferred<T>() {" }], tampers: [], mocks: ["vitest" + ".mock(@hyperunix/sdk)"] },
+  { id: "GP4-C2-16", label: "vi.stubGlobal call (claim word, no plant)", edits: [{ anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    vi.stubGlobal(\"hxProbe\", 1);" }], tampers: ["vi.stubGlobal"], mocks: [] },
+  { id: "GP4-C2-16b", label: "vi.setSystemTime call (claim word, no plant)", edits: [{ anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    vi.setSystemTime(0);" }], tampers: ["vi.setSystemTime"], mocks: [] },
+  { id: "GP4-C2-17", label: "SDK module mock through vi" + ".doMock with a subpath specifier", edits: [{ anchor: "function deferred<T>() {", replacement: "vi" + ".doMock(\"@hyperunix/sdk/dist/index.js\", async importOriginal => await importOriginal());\nfunction deferred<T>() {" }], tampers: [], mocks: ["vi" + ".doMock(@hyperunix/sdk/dist/index.js)"] },
+  { id: "GP4-C2-02b", label: "let-aliased global root, non-colliding name (let jsonAlias = JSON; jsonAlias.parse = forged)", edits: [{ anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    let jsonAlias = JSON;\n    jsonAlias.parse = (() => native) as typeof JSON.parse;" }], tampers: ["JSON.parse assigned"], mocks: [] },
+  { id: "GP4-C2-01d", label: "SDK namespace import shadowed by a const elsewhere, MUTATORS call on its chain (Object.assign(hxSdk.HyperUnix, ...))", edits: [{ anchor: "import { nativeReactiveFiberPreview } from \"../src/workbench/providers/reactivefiber.js\";", replacement: "import { nativeReactiveFiberPreview } from \"../src/workbench/providers/reactivefiber.js\";\nimport * as hxSdk from \"@hyperunix/sdk\";" }, { anchor: "function deferred<T>() {", replacement: "function hxSdkLabel(): string {\n  const hxSdk = \"label\";\n  return hxSdk;\n}\nfunction deferred<T>() {" }, { anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    Object.assign(hxSdk.HyperUnix, { open: hxSdk.HyperUnix.open });" }], tampers: ["Object.assign(hxSdk.HyperUnix)"], mocks: [] },
+  { id: "GP4-C2-01dc", label: "control: the same MUTATORS call without the shadowing helper", edits: [{ anchor: "import { nativeReactiveFiberPreview } from \"../src/workbench/providers/reactivefiber.js\";", replacement: "import { nativeReactiveFiberPreview } from \"../src/workbench/providers/reactivefiber.js\";\nimport * as hxSdk from \"@hyperunix/sdk\";" }, { anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    Object.assign(hxSdk.HyperUnix, { open: hxSdk.HyperUnix.open });" }], tampers: ["Object.assign(hxSdk.HyperUnix)"], mocks: [] },
+  { id: "GP4-C2-01e", label: "SDK namespace import shadowed by a catch-clause variable elsewhere (hxSdk.HyperUnix.open written in K2)", edits: [{ anchor: "import { nativeReactiveFiberPreview } from \"../src/workbench/providers/reactivefiber.js\";", replacement: "import { nativeReactiveFiberPreview } from \"../src/workbench/providers/reactivefiber.js\";\nimport * as hxSdk from \"@hyperunix/sdk\";" }, { anchor: "function deferred<T>() {", replacement: "function hxSdkCatch(): unknown {\n  try {\n    return 1;\n  } catch (hxSdk) {\n    return hxSdk;\n  }\n}\nfunction deferred<T>() {" }, { anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    const realOpen = hxSdk.HyperUnix.open;\n    hxSdk.HyperUnix.open = realOpen;" }], tampers: ["hxSdk.HyperUnix.open assigned"], mocks: [] },
+  { id: "GP4-C2-01f", label: "named import shadowed by a destructured binding elsewhere (registerFurnaceRunInspect member write in K2)", edits: [{ anchor: "function deferred<T>() {", replacement: "function furnaceLabel(): unknown {\n  const { registerFurnaceRunInspect } = { registerFurnaceRunInspect: 1 };\n  return registerFurnaceRunInspect;\n}\nfunction deferred<T>() {" }, { anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    (registerFurnaceRunInspect as unknown as { forged: boolean }).forged = true;" }], tampers: ["registerFurnaceRunInspect.forged assigned"], mocks: [] },
+  { id: "GP4-C2-01fc", label: "control: the same named-import member write without the shadowing binding", edits: [{ anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    (registerFurnaceRunInspect as unknown as { forged: boolean }).forged = true;" }], tampers: ["registerFurnaceRunInspect.forged assigned"], mocks: [] },
+  { id: "GP4-C2-03b", label: "parameter-aliased global root via an arrow helper inside K2 ((t => { t.parse = forged })(JSON))", edits: [{ anchor: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };", replacement: "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };\n    ((target: { parse: unknown }) => { target.parse = (() => native) as typeof JSON.parse; })(JSON);" }], tampers: ["JSON.parse assigned"], mocks: [] },
+];
+interface PlantMember {
+  readonly id: string;
+  readonly label: string;
+  readonly path: string;
+  readonly content: string;
+  readonly prefilter: boolean;
+  readonly drivers: readonly string[];
+  readonly shapes: readonly string[];
+}
+/**
+ * Refusal #4's C7 members (gate-prep-4 / g10-gate-s144), verbatim: each a whole planted file at its own path, read for exactly
+ * its recorded prefilter, drivers and shapes. The set and its order equal the GP4-C7 rows of the readers census (READERS_CENSUS).
+ */
+const REFUSAL_4_PLANTS: readonly PlantMember[] = [
+  { id: "GP4-C7-01", label: "named value re-export of the SDK + kill", path: "test/workbench-zz-gp4-plant.test.ts", content: "export { HyperUnix } from \"@hyperunix/sdk\";\nexport const alive = (child: { pid: number }): boolean => {\n  process.kill(child.pid, 0);\n  return true;\n};\n", prefilter: true, drivers: ["import"], shapes: ["F1:member", "F2:member"] },
+  { id: "GP4-C7-02", label: "side-effect import of the SDK + kill", path: "test/workbench-zz-gp4-plant.test.ts", content: "import \"@hyperunix/sdk\";\nexport const alive = (child: { pid: number }): boolean => {\n  process.kill(child.pid, 0);\n  return true;\n};\n", prefilter: true, drivers: ["import"], shapes: ["F1:member", "F2:member"] },
+  { id: "GP4-C7-03", label: "namespace re-export of the SDK + kill", path: "test/workbench-zz-gp4-plant.test.ts", content: "export * as sdk from \"@hyperunix/sdk\";\nexport const alive = (child: { pid: number }): boolean => {\n  process.kill(child.pid, 0);\n  return true;\n};\n", prefilter: true, drivers: ["import"], shapes: ["F1:member", "F2:member"] },
+  { id: "GP4-C7-04", label: "module.require of the SDK + kill (LOADERS member, no plant)", path: "test/workbench-zz-gp4-plant.test.ts", content: "declare const module: { require(id: string): unknown };\nexport const sdk = module.require(\"@hyperunix/sdk\");\nexport const alive = (child: { pid: number }): boolean => {\n  process.kill(child.pid, 0);\n  return true;\n};\n", prefilter: true, drivers: ["import"], shapes: ["F1:member", "F2:member"] },
+  { id: "GP4-C7-05", label: "optional-call require of the SDK + kill", path: "test/workbench-zz-gp4-plant.test.ts", content: "declare const require: ((id: string) => unknown) | undefined;\nexport const sdk = require?.(\"@hyperunix/sdk\");\nexport const alive = (child: { pid: number }): boolean => {\n  process.kill(child.pid, 0);\n  return true;\n};\n", prefilter: true, drivers: ["import"], shapes: ["F1:member", "F2:member"] },
+  { id: "GP4-C7-06", label: "created require bound to a const (const load = createRequire(...); load(SDK)) + kill", path: "test/workbench-zz-gp4-plant.test.ts", content: "import { createRequire } from \"node:module\";\nconst load = createRequire(import.meta.url);\nexport const sdk = load(\"@hyperunix/sdk\");\nexport const alive = (child: { pid: number }): boolean => {\n  process.kill(child.pid, 0);\n  return true;\n};\n", prefilter: true, drivers: ["import"], shapes: ["F1:member", "F2:member"] },
+  { id: "GP4-C7-06c", label: "control: created require bound to the name require", path: "test/workbench-zz-gp4-plant.test.ts", content: "import { createRequire } from \"node:module\";\nconst require = createRequire(import.meta.url);\nexport const sdk = require(\"@hyperunix/sdk\");\nexport const alive = (child: { pid: number }): boolean => {\n  process.kill(child.pid, 0);\n  return true;\n};\n", prefilter: true, drivers: ["import"], shapes: ["F1:member", "F2:member"] },
+  { id: "GP4-C7-07", label: "Object.hasOwn override + kill (ENV_CALLS member, no plant)", path: "test/workbench-zz-gp4-plant.test.ts", content: "export const set = Object.hasOwn(process.env, \"HYPERUNIX_HX\");\nexport const alive = (child: { pid: number }): boolean => {\n  process.kill(child.pid, 0);\n  return true;\n};\n", prefilter: true, drivers: ["override"], shapes: ["F1:member", "F2:member"] },
+  { id: "GP4-C7-08", label: "destructuring key override with a default + kill (no plant)", path: "test/workbench-zz-gp4-plant.test.ts", content: "const { HYPERUNIX_HX: hx = \"\" } = process.env;\nexport const bin = hx;\nexport const alive = (child: { pid: number }): boolean => {\n  process.kill(child.pid, 0);\n  return true;\n};\n", prefilter: true, drivers: ["override"], shapes: ["F1:member", "F2:member"] },
+  { id: "GP4-C7-09", label: "destructuring-assignment key override + kill (no plant)", path: "test/workbench-zz-gp4-plant.test.ts", content: "let hx: string | undefined;\n({ HYPERUNIX_HX: hx } = process.env);\nexport const bin = (): string | undefined => hx;\nexport const alive = (child: { pid: number }): boolean => {\n  process.kill(child.pid, 0);\n  return true;\n};\n", prefilter: true, drivers: ["override"], shapes: ["F1:member", "F2:member"] },
+  { id: "GP4-C7-10", label: "ENV_METHODS override (process.env.hasOwnProperty) + kill (no plant)", path: "test/workbench-zz-gp4-plant.test.ts", content: "export const set = process.env.hasOwnProperty(\"HYPERUNIX_HX\");\nexport const alive = (child: { pid: number }): boolean => {\n  process.kill(child.pid, 0);\n  return true;\n};\n", prefilter: true, drivers: ["override"], shapes: ["F1:member", "F2:member"] },
+  { id: "GP4-C7-10b", label: "ENV_METHODS override via Object.prototype.hasOwnProperty.call (R-DATA-OVERRIDE/R-INDIRECT reading) + kill", path: "test/workbench-zz-gp4-plant.test.ts", content: "export const set = Object.prototype.hasOwnProperty.call(process.env, \"HYPERUNIX_HX\");\nexport const alive = (child: { pid: number }): boolean => {\n  process.kill(child.pid, 0);\n  return true;\n};\n", prefilter: true, drivers: [], shapes: ["F1:member", "F2:member"] },
+  { id: "GP4-C7-11", label: "F1 kill imported from node:process (claim form 'imported', no plant)", path: "test/workbench-zz-gp4-plant.test.ts", content: "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const sdk = HyperUnix;\nimport { kill } from \"node:process\";\nexport const probe = (id: number): boolean => kill(id, 0);\n", prefilter: true, drivers: ["import"], shapes: ["F1:bare call", "F1:import"] },
+  { id: "GP4-C7-11b", label: "F1 kill imported under an alias (import { kill as signal })", path: "test/workbench-zz-gp4-plant.test.ts", content: "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const sdk = HyperUnix;\nimport { kill as signal } from \"node:process\";\nexport const probe = (id: number): boolean => signal(id, 0);\n", prefilter: true, drivers: ["import"], shapes: ["F1:import"] },
+  { id: "GP4-C7-12", label: "F2 pid name literal only (claim form the literal pid, no plant)", path: "test/workbench-zz-gp4-plant.test.ts", content: "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const sdk = HyperUnix;\nexport const field = (child: Record<string, number>): number | undefined => child[\"p\" + \"id\"] ?? Reflect.get(child, \"pid\");\n", prefilter: true, drivers: ["import"], shapes: ["F2:pid name literal"] },
+  { id: "GP4-C7-13", label: "F3 wrapped tool in a template tail after a substitution", path: "test/workbench-zz-gp4-plant.test.ts", content: "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const sdk = HyperUnix;\nimport { execSync } from \"node:child_process\";\nexport const probe = (secs: number): Buffer => execSync(`timeout $" + "{secs} pgrep hx`);\n", prefilter: true, drivers: ["import"], shapes: ["F3:process-table command"] },
+  { id: "GP4-C7-14", label: "F4 ESRCH in a template part", path: "test/workbench-zz-gp4-plant.test.ts", content: "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const sdk = HyperUnix;\nexport const gone = (code: string): string => `$" + "{code}: ESRCH`;\n", prefilter: true, drivers: ["import"], shapes: ["F4:literal"] },
+  { id: "GP4-C7-15", label: "judged qa .mjs file (SDK import + kill)", path: "qa/workbench/zz-gp4-plant.mjs", content: "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const sdk = HyperUnix;\nexport const alive = child => { process.kill(child.pid, 0); return true; };\n", prefilter: true, drivers: ["import"], shapes: ["F1:member", "F2:member"] },
+  { id: "GP4-C7-16", label: "judged nested .cts file under test/fixtures (SDK import + kill)", path: "test/fixtures/zz-gp4/plant.cts", content: "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const sdk = HyperUnix;\nexport const alive = (child: { pid: number }): boolean => {\n  process.kill(child.pid, 0);\n  return true;\n};\n", prefilter: true, drivers: ["import"], shapes: ["F1:member", "F2:member"] },
+  { id: "GP4-C7-17", label: "F1 kill member on an HX-observer re-export file (export * from observer + kill)", path: "test/workbench-zz-gp4-plant.test.ts", content: "export * from \"../src/workbench/hyperunix-observer.js\";\nexport const stop = (child: { kill(signal: string): void }): void => child.kill(\"SIGTERM\");\n", prefilter: true, drivers: ["import"], shapes: ["F1:member"] },
+  { id: "GP4-C7-18", label: "F3 command inside a shell -lc combined flag", path: "test/workbench-zz-gp4-plant.test.ts", content: "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const sdk = HyperUnix;\nimport { execSync } from \"node:child_process\";\nexport const probe = (): Buffer => execSync(\"bash -lc 'pkill -0 hx'\");\n", prefilter: true, drivers: ["import"], shapes: ["F3:process-table command"] },
+  { id: "GP4-C7-19", label: "F3 nohup + VAR=value before the tool", path: "test/workbench-zz-gp4-plant.test.ts", content: "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const sdk = HyperUnix;\nimport { execSync } from \"node:child_process\";\nexport const probe = (): Buffer => execSync(\"LC_ALL=C nohup pidof hx\");\n", prefilter: true, drivers: ["import"], shapes: ["F3:process-table command"] },
+];
 interface PagePlant {
   readonly id: string;
   readonly markdown: string;
@@ -2410,8 +2023,6 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
         mutators: [...MUTATORS],
         watched: [...WATCHED],
         environment: ENVIRONMENT,
-        importKinds: [...IMPORT_KINDS],
-        globalNames: ["globalThis", "global", "JSON", "Object", "Reflect", "process"].every(name => GLOBAL_NAMES.has(name)),
       },
       undos: { stub: [...STUB_UNDOS], all: [...ALL_UNDOS] },
       registrars: [...REGISTRARS],
@@ -2422,8 +2033,23 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
       keywords: [...SHELL_KEYWORDS],
       shells: [...SHELLS],
       spawners: [...SPAWNERS],
-      patterns: [SHELL_COMMAND_FLAG.source, COMMAND_SEPARATOR.source, PROC_PATH.source, ESRCH_WORD.source, SPECIFIER_EXTENSION.source, GLOBAL_PREFIX.source, ATTACHED_SPLIT.source, SDK_PATH.source],
+      patterns: [SHELL_COMMAND_FLAG.source, COMMAND_SEPARATOR.source, PROC_PATH.source, ESRCH_WORD.source, SPECIFIER_EXTENSION.source, SOURCE_FILE.source],
       excluded: [...EXCLUDED],
+      reapers: KNOWN_REAPERS.map(reaper => `${reaper.path}=${reaper.hits.join("+")}`),
+      readerForms: {
+        c2: C2_FORMS.map(form => form.word),
+        drivers: DRIVER_FORMS.map(form => `${form.word}:${form.reason}`),
+        shapes: SHAPE_FORMS.map(form => form.word),
+        roots: [...ROOT_FORMS],
+        bindings: [...BINDING_KINDS],
+        prototypeLinks: [...PROTOTYPE_LINKS],
+        definers: [...ACCESSOR_DEFINERS],
+        custody: CUSTODY_EXPORT,
+        wrapperFlags: [...WRAPPER_FLAG_FORMS],
+        shellArguments: [...SHELL_ARGUMENT_OPTIONS],
+        unescapes: [...UNESCAPE_FORMS],
+        residuals: RESIDUAL_FAMILIES.map(family => family.id),
+      },
       drivers: {
         needles: [...MODULE_NEEDLES],
         capability: CAPABILITY_ID,
@@ -2449,6 +2075,8 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
       falsifierPlants: FALSIFIER_PLANTS.map(plant => `${plant.id}=${plant.shapes.join("+")}#${digest(plant.code)}`),
       driverPlants: DRIVER_PLANTS.map(plant => `${plant.id}=${plant.reasons.join("+")}#${digest(plant.code)}`),
       pagePlants: PAGE_PLANTS.map(plant => `${plant.id}=${plant.hits.length}/${plant.refusals.join("+")}#${digest(plant.markdown)}`),
+      refusal4Lifecycle: REFUSAL_4_LIFECYCLE.map(member => `${member.id}=${[...member.mocks, ...member.tampers].join("+")}#${digest(JSON.stringify(member.edits))}`),
+      refusal4Plants: REFUSAL_4_PLANTS.map(plant => `${plant.id}=${plant.drivers.join("+")}/${plant.shapes.join("+")}#${digest(`${plant.path}\n${plant.content}`)}`),
     }).toStrictEqual({
       shaped: true,
       distinct: true,
@@ -2523,8 +2151,6 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
           "vitest.doMock",
         ],
         environment: "process.env",
-        importKinds: ["import", "ImportClause", "NamespaceImport", "ImportEqualsDeclaration"],
-        globalNames: true,
       },
       undos: { stub: ["mockRestore", "mockReset"], all: ["vi.restoreAllMocks", "vi.resetAllMocks"] },
       registrars: ["describe", "suite", "it", "test"],
@@ -2566,11 +2192,56 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
         "(?:^|\\/)proc(?:\\/|$)",
         "(?<![A-Za-z0-9_])esrch(?![A-Za-z0-9_])",
         "\\.(?:[cm]?[jt]s|[jt]sx)$",
-        "^(?:(?:globalThis|global)\\.)+",
-        "['\"=]",
-        "(?:^|\\/)node_modules\\/@hyperunix\\/sdk(?:\\/|$)",
+        "\\.[cm]?[jt]s$",
       ],
       excluded: [SELF],
+      reapers: ["test/workbench-edc-render-abort-census.test.ts=F1:member+F3:/proc path", "test/workbench-fiber-host-publication-census.test.ts=F1:member"],
+      readerForms: {
+        c2: ["spy", "global stub", "watched reference", "destructured watched", "destructuring-assigned watched", "assignment", "compound operator", "for-of target", "for-in target", "delete", "update", "mutator call", "legacy accessor definer"],
+        drivers: [
+          "value import:import",
+          "side-effect import:import",
+          "export-from:import",
+          "import-equals:import",
+          "dynamic import:import",
+          "loader call:import",
+          "created require:import",
+          "invoke:invoke",
+          "override member:override",
+          "override destructuring:override",
+          "override destructuring assignment:override",
+          "override object key:override",
+          "override in:override",
+          "override env call:override",
+          "override env method:override",
+        ],
+        shapes: [
+          "member",
+          "element key",
+          "type member",
+          "destructuring",
+          "destructuring assignment",
+          "import",
+          "bare call",
+          "identifier",
+          "regular expression",
+          "key",
+          "literal",
+          "/proc path",
+          "kill name literal",
+          "pid name literal",
+          "process-table command",
+        ],
+        roots: ["initializer", "reassignment", "destructured", "for-of element", "parameter default", "call argument", "immediately invoked", "call() argument"],
+        bindings: ["import", "global", "local"],
+        prototypeLinks: ["constructor", "__proto__", "prototype"],
+        definers: ["__defineGetter__", "__defineSetter__"],
+        custody: "HyperUnix",
+        wrapperFlags: ["lone dash", "options end", "option argument", "attached argument", "long value", "short cluster", "command option", "shell command flag", "shell options end", "shell option argument"],
+        shellArguments: ["-o", "+o", "-O", "+O", "--rcfile", "--init-file"],
+        unescapes: ["hex escape", "unicode escape", "braced unicode escape", "legacy octal escape", "line continuation", "escaped character", "percent escape"],
+        residuals: ["R-WRAPPER", "R-INDIRECT", "R-FLOW"],
+      },
       drivers: {
         needles: ["providers/hyperunix", "hyperunix-observer"],
         capability: "hyperunix.find",
@@ -2715,6 +2386,7 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
         "R-HELPER-REGISTRATION:C1",
         "R-GROUP-FORM:C6",
         "R-BIDI:C8",
+        "R-REAPER:C7",
       ],
       falsifierPlants: [
         "U1(a) childGone=F2:destructuring+F3:/proc path#e1a951873ff2",
@@ -2831,6 +2503,65 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
         "variation selector=1/#5b7066b4633f",
         "Hangul filler=0/#cd9595872435",
       ],
+      refusal4Lifecycle: [
+        "GP4-C2-01=hxSdk.HyperUnix.open assigned#09b8285562de",
+        "GP4-C2-01c=hxSdk.HyperUnix.open assigned#f0ec37fb7ad1",
+        "GP4-C2-01b=nativeReactiveFiberPreview.forged assigned#4d4215ec036c",
+        "GP4-C2-01bc=nativeReactiveFiberPreview.forged assigned#620de74bed65",
+        "GP4-C2-02=JSON.parse assigned#30816f86a95b",
+        "GP4-C2-03=JSON.parse assigned#86f96c808d04",
+        "GP4-C2-04=Reflect.hxProbe deleted#1fcd39b1c303",
+        "GP4-C2-05=globalThis.hxCount updated#cd5ec704fd34",
+        "GP4-C2-06=JSON.parse assigned#66ee954a2e6f",
+        "GP4-C2-06b=globalThis.hxCount assigned#51bfc027a802",
+        "GP4-C2-07=JSON.tag assigned#fa091f29914a",
+        "GP4-C2-08=Reflect.set(JSON)#c998b689b060",
+        "GP4-C2-09=Object.setPrototypeOf(JSON)#e608dfa3f294",
+        "GP4-C2-09b=Object.defineProperties(JSON)#86beccd665fd",
+        "GP4-C2-09c=Reflect.deleteProperty(JSON)#34fe8e453c06",
+        "GP4-C2-10=Object.assign referenced as a value#9b5a69d706cf",
+        "GP4-C2-11=vi.spyOn referenced as a value#a0a472130f36",
+        "GP4-C2-11b=Object.assign referenced as a value#b5894e1bbc72",
+        "GP4-C2-12=process.env.constructor.prototype.hxForged assigned#78f01e985227",
+        "GP4-C2-12c=Object.prototype.hxForged assigned#7564c4e196d7",
+        "GP4-C2-13=__defineGetter__(JSON)#ce315e5921df",
+        "GP4-C2-14=vi" + ".mock(@hyperunix/sdk)#44add4df618e",
+        "GP4-C2-15=vitest" + ".mock(@hyperunix/sdk)#564443cacf8d",
+        "GP4-C2-16=vi.stubGlobal#b3296d489f87",
+        "GP4-C2-16b=vi.setSystemTime#a10d954c9737",
+        "GP4-C2-17=vi" + ".doMock(@hyperunix/sdk/dist/index.js)#359a67e48a96",
+        "GP4-C2-02b=JSON.parse assigned#e31883bfad3f",
+        "GP4-C2-01d=Object.assign(hxSdk.HyperUnix)#d872ec10d352",
+        "GP4-C2-01dc=Object.assign(hxSdk.HyperUnix)#7cfa3bc60b9e",
+        "GP4-C2-01e=hxSdk.HyperUnix.open assigned#a89e61826e82",
+        "GP4-C2-01f=registerFurnaceRunInspect.forged assigned#cacdcd83c3f7",
+        "GP4-C2-01fc=registerFurnaceRunInspect.forged assigned#d9e9a04d9b52",
+        "GP4-C2-03b=JSON.parse assigned#c188772183f9",
+      ],
+      refusal4Plants: [
+        "GP4-C7-01=import/F1:member+F2:member#9e28657fb6a2",
+        "GP4-C7-02=import/F1:member+F2:member#64bfc4c37dfe",
+        "GP4-C7-03=import/F1:member+F2:member#10d28d92763d",
+        "GP4-C7-04=import/F1:member+F2:member#2f47d012398b",
+        "GP4-C7-05=import/F1:member+F2:member#45685078aaee",
+        "GP4-C7-06=import/F1:member+F2:member#7cfc39a8ae5f",
+        "GP4-C7-06c=import/F1:member+F2:member#9b4c91ee8ed0",
+        "GP4-C7-07=override/F1:member+F2:member#74f997e0c711",
+        "GP4-C7-08=override/F1:member+F2:member#0b592b452ba1",
+        "GP4-C7-09=override/F1:member+F2:member#f6e73d2c4fe8",
+        "GP4-C7-10=override/F1:member+F2:member#d34a05616ced",
+        "GP4-C7-10b=/F1:member+F2:member#987f7dfcb86e",
+        "GP4-C7-11=import/F1:bare call+F1:import#772fd4aed4f1",
+        "GP4-C7-11b=import/F1:import#eb3de7a829dc",
+        "GP4-C7-12=import/F2:pid name literal#0ddc6812985b",
+        "GP4-C7-13=import/F3:process-table command#0a69f2e8b60f",
+        "GP4-C7-14=import/F4:literal#c9cc3d28e59d",
+        "GP4-C7-15=import/F1:member+F2:member#3264c8f50e66",
+        "GP4-C7-16=import/F1:member+F2:member#d1cfecf34b00",
+        "GP4-C7-17=import/F1:member#6043390e7317",
+        "GP4-C7-18=import/F3:process-table command#21e8b969c3ea",
+        "GP4-C7-19=import/F3:process-table command#9915df23a2f6",
+      ],
     });
   });
 
@@ -2927,7 +2658,7 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
     ]);
   });
 
-  it("C2 call custody only: every assertion in the suite sits in one of its cases and is a mock-call assertion on a const stand-in or an outcome assertion on the provider's own result (a direct provider or registry call, or a const binding of one used only as an expect subject); no BOUND name is re-bound; no call whose callee chains (literal or const-bound keys, every const alias, globalThis dropped) hold a MODULE_MOCKS name (mock or doMock on vi or on vitest) names a specifier value that resolves to the provider, the registry or the SDK package; and the file holds no vi.spyOn beside vi.spyOn(HyperUnix, \"open\"), no vi.stubGlobal, vi.useFakeTimers or vi.setSystemTime call, no reference to one of those callees, a MUTATORS call or a module mock other than as a callee (a destructured alias included), and no assignment (every destructuring-pattern target included), for-in or for-of target, delete, update or Object / Reflect mutator call on a chain rooted at a global (a platform global name even where a local elsewhere shadows it) or an import binding outside process.env", { timeout: CENSUS_TIMEOUT }, () => {
+  it("C2 call custody only: every assertion in the suite sits in one of its cases and is a mock-call assertion on a const stand-in or an outcome assertion on the provider's own result (a direct provider or registry call, or a const binding of one used only as an expect subject); no BOUND name is re-bound; no module mock the landed readers' moduleMockSpecifiers reads (mock or doMock on vi or on vitest) names a specifier value that resolves to the provider, the registry or the SDK package; and the landed readers' tampersIn reads no tamper in the file by any of its C2 TAMPER FORMS (a spy beside the custody stub vi.spyOn(HyperUnix, \"open\"), a global stub, a watched reference, a destructured or destructuring-assigned watched member, an assignment, a compound operator, a for-of or for-in target, a delete, an update, a mutator call or a legacy accessor definer, a write counted when its chain's root, resolved through its own binding, is a global or an import binding outside process.env)", { timeout: CENSUS_TIMEOUT }, () => {
     const reading = suiteReading(parse(LIFECYCLE));
     const judged = reading.cases.reduce((sum, entry) => sum + entry.pins.length, 0);
     expect({ cases: reading.cases.length, judged: judged >= 6, violations: reading.violations, mocks: reading.mocks, tampers: reading.tampers, asserts: reading.asserts, rebound: reading.rebound }).toStrictEqual({
@@ -2941,7 +2672,7 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
     });
   });
 
-  it("C2 calibration: a reassigned, let-bound, re-declared or mutated subject, a stand-in registration on the registry, a module mock of the provider or registry through its .js or .ts specifier, an import() argument or a const-bound callee key, a file-level, in-case or aliased spy, a spy whose method name a twice-declared const spells, a global assigned or forged and restored (plainly, by array or object destructuring assignment, through a for-of target, through globalThis.Object.assign or a const alias of Object), an aliased global, a global shadowed by a local elsewhere, an alias whose name an earlier const also declares, a mutator call, fake timers, a patched import member, an assertion in a hook of the suite, a spy through call and an aliased, destructured, destructuring-assigned or rest-destructured mutator each read as a violation, and an environment write reads as none", { timeout: CENSUS_TIMEOUT }, () => {
+  it("C2 calibration: a reassigned, let-bound, re-declared or mutated subject, a stand-in registration on the registry, a module mock of the provider or registry through its .js or .ts specifier, an import() argument or a const-bound callee key, a file-level, in-case or aliased spy, a spy whose method name a twice-declared const spells, a global assigned or forged and restored (plainly, by array or object destructuring assignment, through a for-of target, through globalThis.Object.assign or a const alias of Object), an aliased global, a global shadowed by a local elsewhere, an alias whose name an earlier const also declares, a mutator call, fake timers, a patched import member, an assertion in a hook of the suite, a spy through call and an aliased, destructured, destructuring-assigned or rest-destructured mutator each read as a violation, and an environment write reads as none; every one of refusal #4's 33 lifecycle members (REFUSAL_4_LIFECYCLE, gate-prep-4's GP4-C2 edits verbatim - an import binding written in K2 while a same-named const, parameter, catch variable or destructured binding of another scope shadows its name, each beside its unshadowed control, and every claim word and residual-list addition refusal #4 names) reads exactly its recorded tampers and mocks, the member ids equal the readers census's GP4-C2 rows, and every C2 TAMPER FORMS word of the landed readers reads at least one of these plants", { timeout: CENSUS_TIMEOUT }, () => {
     const text = read(LIFECYCLE);
     const plants: ReadonlyArray<readonly [string, string]> = [
       ["U8 reassigned let", plantedText(text, K2_ANCHOR, `let result: unknown = await nativeHyperUnixFind(process.cwd(), "hx.fs/regular-file");\n    result = native;`)],
@@ -3000,53 +2731,67 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
         plantedText(plantedText(text, "function deferred<T>() {", "function helper(): unknown {\n  const json = {};\n  return json;\n}\nfunction deferred<T>() {"), K2_ANCHOR, `const json = JSON;\n    json.parse = (() => native) as typeof JSON.parse;\n    ${K2_ANCHOR}`),
       ],
     ];
-    const readings = plants.map(([id, planted]) => {
-      const reading = suiteReading(parseText("planted-lifecycle.test.ts", planted));
+    const members = REFUSAL_4_LIFECYCLE.map(member => [member.id, member.edits.reduce((out, edit) => plantedText(out, edit.anchor, edit.replacement), text)] as const);
+    const sources = [...plants, ...members].map(([id, planted]) => ({ id, source: parseText("planted-lifecycle.test.ts", planted) }));
+    const readings = sources.map(({ id, source }) => {
+      const reading = suiteReading(source);
       return {
         id,
         defects: [...reading.violations.map(line => line.slice(line.lastIndexOf(": ") + 2)), ...reading.mocks.map(line => line.split(" ")[0] ?? ""), ...reading.tampers.map(line => line.split(" :")[0] ?? "")],
       };
     });
-    expect(readings).toStrictEqual([
-      { id: "U8 reassigned let", defects: ["result is not a const binding"] },
-      { id: "let binding", defects: ["result is not a const binding"] },
-      { id: "re-declared subject", defects: ["result is declared 2 times in the case"] },
-      { id: "mutated subject", defects: ["result is used outside its allowed positions (1 uses)"] },
-      { id: "stand-in registration", defects: ["registry is used outside its allowed positions (1 uses)"] },
-      { id: "module mock of the provider", defects: [`vi.${"mock"}(${PROVIDER_MODULE})`] },
-      { id: "global spy", defects: ["vi.spyOn(JSON)"] },
-      { id: "r2 U3 provider mock through the .ts specifier", defects: [`vi.${"mock"}(../src/workbench/providers/hyperunix.ts)`] },
-      { id: "r2 U3 registry mock through the .ts specifier", defects: [`vi.${"mock"}(../src/workbench/capability-registry.ts)`] },
-      { id: "r2 F4 provider mock through an import() argument", defects: [`vi.${"mock"}(${PROVIDER_MODULE})`] },
-      { id: "r2 U4 global assigned in K2", defects: ["JSON.parse assigned"] },
-      { id: "r2 U4 global forged and restored in K2", defects: ["JSON.parse assigned", "JSON.parse assigned"] },
-      { id: "r2 F3 file-level spy before the suite", defects: ["vi.spyOn(JSON)"] },
-      { id: "spy on another HyperUnix member", defects: ["vi.spyOn(HyperUnix)"] },
-      { id: "aliased global", defects: ["JSON.parse assigned"] },
-      { id: "mutator call", defects: ["Object.defineProperty(JSON)"] },
-      { id: "fake timers", defects: ["vi.useFakeTimers"] },
-      { id: "patched import member", defects: ["HyperUnix.open assigned"] },
-      { id: "environment write", defects: [] },
-      { id: "assertion in a hook of the suite", defects: ["an assertion outside the suite's cases"] },
-      { id: "spy through call", defects: ["vi.spyOn referenced as a value"] },
-      { id: "mutator aliased", defects: ["Object.defineProperty referenced as a value"] },
-      { id: "r3 U3(a) array-destructuring forge and restore", defects: ["JSON.parse assigned", "JSON.parse assigned"] },
-      { id: "r3 U3(b) object-destructuring forge and restore", defects: ["JSON.parse assigned", "JSON.parse assigned"] },
-      { id: "r3 U3(c) globalThis.Object.assign forge and restore", defects: ["Object.assign(JSON)", "Object.assign(JSON)"] },
-      { id: "r3 U3(d) Object.assign through a const alias", defects: ["Object.assign(JSON)", "Object.assign(JSON)"] },
-      { id: "r3 F3 for-of target forge and restore", defects: ["JSON.parse assigned", "JSON.parse assigned"] },
-      { id: "destructured mutator alias", defects: ["Object.defineProperty referenced as a value"] },
-      { id: "aliased spy", defects: ["vi.spyOn(JSON)"] },
-      { id: "global shadowed by a local elsewhere", defects: ["JSON.parse assigned"] },
-      { id: "const-keyed module mock", defects: [`vi.${"mock"}(${PROVIDER_MODULE})`] },
-      { id: "spy method named by a twice-declared const", defects: ["vi.spyOn(HyperUnix)"] },
-      {
-        id: "rest-destructured owner",
-        defects: ["Reflect.set referenced as a value", "Reflect.defineProperty referenced as a value", "Reflect.deleteProperty referenced as a value", "Reflect.setPrototypeOf referenced as a value"],
-      },
-      { id: "destructuring-assigned mutator alias", defects: ["Object.assign referenced as a value"] },
-      { id: "alias whose name an earlier const also declares", defects: ["JSON.parse assigned"] },
-    ]);
+    /** Every C2 TAMPER FORMS word that reads none of these plants (each form read alone): a hollowed form lands here. */
+    const uncoveredC2 = C2_FORMS.filter(form => !sources.some(({ source }) => tampersIn(source, [form]).length > 0)).map(form => form.word);
+    expect({
+      uncovered: uncoveredC2,
+      readings,
+    }).toStrictEqual({
+      uncovered: [],
+      readings: [
+        { id: "U8 reassigned let", defects: ["result is not a const binding"] },
+        { id: "let binding", defects: ["result is not a const binding"] },
+        { id: "re-declared subject", defects: ["result is declared 2 times in the case"] },
+        { id: "mutated subject", defects: ["result is used outside its allowed positions (1 uses)"] },
+        { id: "stand-in registration", defects: ["registry is used outside its allowed positions (1 uses)"] },
+        { id: "module mock of the provider", defects: [`vi.${"mock"}(${PROVIDER_MODULE})`] },
+        { id: "global spy", defects: ["vi.spyOn(JSON)"] },
+        { id: "r2 U3 provider mock through the .ts specifier", defects: [`vi.${"mock"}(../src/workbench/providers/hyperunix.ts)`] },
+        { id: "r2 U3 registry mock through the .ts specifier", defects: [`vi.${"mock"}(../src/workbench/capability-registry.ts)`] },
+        { id: "r2 F4 provider mock through an import() argument", defects: [`vi.${"mock"}(${PROVIDER_MODULE})`] },
+        { id: "r2 U4 global assigned in K2", defects: ["JSON.parse assigned"] },
+        { id: "r2 U4 global forged and restored in K2", defects: ["JSON.parse assigned", "JSON.parse assigned"] },
+        { id: "r2 F3 file-level spy before the suite", defects: ["vi.spyOn(JSON)"] },
+        { id: "spy on another HyperUnix member", defects: ["vi.spyOn(HyperUnix)"] },
+        { id: "aliased global", defects: ["JSON.parse assigned"] },
+        { id: "mutator call", defects: ["Object.defineProperty(JSON)"] },
+        { id: "fake timers", defects: ["vi.useFakeTimers"] },
+        { id: "patched import member", defects: ["HyperUnix.open assigned"] },
+        { id: "environment write", defects: [] },
+        { id: "assertion in a hook of the suite", defects: ["an assertion outside the suite's cases"] },
+        { id: "spy through call", defects: ["vi.spyOn referenced as a value"] },
+        { id: "mutator aliased", defects: ["Object.defineProperty referenced as a value"] },
+        { id: "r3 U3(a) array-destructuring forge and restore", defects: ["JSON.parse assigned", "JSON.parse assigned"] },
+        { id: "r3 U3(b) object-destructuring forge and restore", defects: ["JSON.parse assigned", "JSON.parse assigned"] },
+        { id: "r3 U3(c) globalThis.Object.assign forge and restore", defects: ["Object.assign(JSON)", "Object.assign(JSON)"] },
+        { id: "r3 U3(d) Object.assign through a const alias", defects: ["Object.assign(JSON)", "Object.assign(JSON)"] },
+        { id: "r3 F3 for-of target forge and restore", defects: ["JSON.parse assigned", "JSON.parse assigned"] },
+        { id: "destructured mutator alias", defects: ["Object.defineProperty referenced as a value"] },
+        { id: "aliased spy", defects: ["vi.spyOn(JSON)"] },
+        { id: "global shadowed by a local elsewhere", defects: ["JSON.parse assigned"] },
+        { id: "const-keyed module mock", defects: [`vi.${"mock"}(${PROVIDER_MODULE})`] },
+        { id: "spy method named by a twice-declared const", defects: ["vi.spyOn(HyperUnix)"] },
+        {
+          id: "rest-destructured owner",
+          defects: ["Reflect.set referenced as a value", "Reflect.defineProperty referenced as a value", "Reflect.deleteProperty referenced as a value", "Reflect.setPrototypeOf referenced as a value"],
+        },
+        { id: "destructuring-assigned mutator alias", defects: ["Object.assign referenced as a value"] },
+        { id: "alias whose name an earlier const also declares", defects: ["JSON.parse assigned"] },
+        ...gateRows("GP4-C2").map(id => {
+          const member = REFUSAL_4_LIFECYCLE.find(entry => entry.id === id);
+          return { id, defects: member === undefined ? ["<no REFUSAL_4_LIFECYCLE row>"] : [...member.mocks, ...member.tampers] };
+        }),
+      ],
+    });
   });
 
   it("C3 stand-in clients only: every case's callback holds, as a top-level statement before the first top-level statement that references a provider entry, a vi.spyOn(HyperUnix, \"open\") call with a mocked return, no case calls a STUB_UNDOS member or an ALL_UNDOS restore, and HyperUnix is the file's import from @hyperunix/sdk", { timeout: CENSUS_TIMEOUT }, () => {
@@ -3198,18 +2943,18 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
     ]);
   });
 
-  it("C7 no hand-rolled kill falsifier: no test or qa file whose text, raw or unescaped, holds the needle hyperunix (any case) and that the classifier's driving forms class as driving HX (a value import, export or import-equals of an HX module, a LOADERS call whose specifier is a literal or const-bound - every const declaration of its name read, fail-closed - a hyperunix.find invoke, or a HYPERUNIX_HX override form) carries an F1-F4 shape in a form the header enumerates, a wrapped command read fail-closed past its wrapper", { timeout: CENSUS_TIMEOUT }, () => {
+  it("C7 no hand-rolled kill falsifier: no test or qa file other than this census whose text, raw or unescaped, holds the needle hyperunix (any case) and that the landed readers' hxDrivers classes as driving HX by any of its C7 DRIVER FORMS (an import, invoke or override form) carries an F1-F4 shape the landed readers' falsifierShapes reads by any of its C7 SHAPE FORMS, a command read through commandHeads, beside the hits KNOWN_REAPERS sets aside (R-REAPER)", { timeout: CENSUS_TIMEOUT }, () => {
     const { sources, judged } = judgedDrivers();
     const paths = judged.map(entry => entry.path);
     expect({
       floor: judged.length >= JUDGED_FLOOR,
       anchored: [LIFECYCLE, "test/workbench-hyperunix-observer.test.ts", "test/workbench-hyperunix-graduation-vocabulary-census.test.ts"].every(path => paths.includes(path)),
       selfExcluded: !paths.includes(SELF) && sources.includes(SELF),
-      hits: judged.flatMap(entry => entry.hits.map(hit => `${entry.path}:${hit.line} ${hit.shape} (${hit.form})`)),
+      hits: judged.flatMap(entry => unknownHits(entry).map(hit => `${entry.path}:${hit.line} ${hit.shape} (${hit.form})`)),
     }).toStrictEqual({ floor: true, anchored: true, selfExcluded: true, hits: [] });
   });
 
-  it("C7 calibration: the detector finds the SDK transport's and the RF provider's kill code and every planted member, refusal #1's, #2's and #3's among them, in its own shape and form, and the classifier classes each driving form, a const-bound, const-shadowed, escaped or node_modules-path specifier and an env-call override among them, each passing the prefilter, but never a capability-id or override data literal, a module mock, a type-only import or a type position alone", { timeout: CENSUS_TIMEOUT }, () => {
+  it("C7 calibration: the detector finds the SDK transport's and the RF provider's kill code and every planted member, refusal #1's, #2's and #3's among them, in its own shape and form, and the classifier classes each driving form, a const-bound, const-shadowed, escaped or node_modules-path specifier and an env-call override among them, each passing the prefilter, but never a capability-id or override data literal, a module mock, a type-only import or a type position alone; every one of refusal #4's 22 plant members (REFUSAL_4_PLANTS, gate-prep-4's GP4-C7 files verbatim, each at a path the C7 walk reads) reads exactly its recorded prefilter, drivers and shapes, the member ids equal the readers census's GP4-C7 rows, and every C7 DRIVER FORMS and SHAPE FORMS word of the landed readers reads at least one of these plants", { timeout: CENSUS_TIMEOUT }, () => {
     const sdk = shapeCounts(falsifierShapes(parse(SDK_TRANSPORT)));
     const rf = shapeCounts(falsifierShapes(parse(RF_PROVIDER)));
     const falsifiers = FALSIFIER_PLANTS.map(plant => {
@@ -3217,17 +2962,34 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
       return { id: plant.id, drivers: hxDrivers(source), shapes: shapeForms(falsifierShapes(source)) };
     });
     const drivers = DRIVER_PLANTS.map(plant => ({ id: plant.id, reasons: hxDrivers(parseText("planted-driver.test.ts", `${plant.code}\n`)), prefiltered: passesPrefilter(plant.code) }));
+    const files = REFUSAL_4_PLANTS.map(plant => ({ plant, source: parseText(plant.path, plant.content) }));
+    const driverSources = [...DRIVER_PLANTS.map(plant => parseText("planted-driver.test.ts", `${plant.code}\n`)), ...files.map(entry => entry.source)];
+    const shapeSources = [...FALSIFIER_PLANTS.map(plant => parseText("planted-falsifier.test.ts", `${HX_HEAD}${plant.code}\n`)), ...files.map(entry => entry.source)];
+    /** Every C7 DRIVER FORMS and SHAPE FORMS word that reads none of these plants (each form read alone): a hollowed form lands here. */
+    const uncoveredC7 = {
+      drivers: DRIVER_FORMS.filter(form => !driverSources.some(source => hxDrivers(source, [form]).length > 0)).map(form => form.word),
+      shapes: SHAPE_FORMS.filter(form => !shapeSources.some(source => falsifierShapes(source, [form]).length > 0)).map(form => form.word),
+    };
     expect({
+      uncovered: uncoveredC7,
+      unwalked: REFUSAL_4_PLANTS.filter(plant => !isWalkedPath(plant.path)).map(plant => plant.id),
       sdk: { F1: (sdk.F1 ?? 0) > 0, F2: (sdk.F2 ?? 0) > 0, F4: (sdk.F4 ?? 0) > 0 },
       rf: (rf.F1 ?? 0) > 0,
       falsifiers,
       drivers,
+      refusal4: files.map(({ plant, source }) => ({ id: plant.id, prefiltered: passesPrefilter(plant.content), drivers: hxDrivers(source), shapes: shapeForms(falsifierShapes(source)) })),
       lifecycle: hxDrivers(parse(LIFECYCLE)),
     }).toStrictEqual({
+      uncovered: { drivers: [], shapes: [] },
+      unwalked: [],
       sdk: { F1: true, F2: true, F4: true },
       rf: true,
       falsifiers: FALSIFIER_PLANTS.map(plant => ({ id: plant.id, drivers: ["import"], shapes: [...plant.shapes] })),
       drivers: DRIVER_PLANTS.map(plant => ({ id: plant.id, reasons: [...plant.reasons], prefiltered: true })),
+      refusal4: gateRows("GP4-C7").map(id => {
+        const plant = REFUSAL_4_PLANTS.find(entry => entry.id === id);
+        return plant === undefined ? { id, prefiltered: false, drivers: ["<no REFUSAL_4_PLANTS row>"], shapes: [] } : { id, prefiltered: plant.prefilter, drivers: [...plant.drivers], shapes: [...plant.shapes] };
+      }),
       lifecycle: ["import", "invoke", "override"],
     });
   });
@@ -3269,7 +3031,7 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
       cases: own.length,
       residualRows: own.filter(entry => entry.title.startsWith("R-")).map(entry => entry.title),
       unpinned: needed.filter(title => !pinned.has(title)),
-    }).toStrictEqual({ suites: [SUITE], cases: 45, residualRows: RESIDUALS.map(residualTitle), unpinned: [] });
+    }).toStrictEqual({ suites: [SUITE], cases: 46, residualRows: RESIDUALS.map(residualTitle), unpinned: [] });
   });
 
   // ---- residual rows: each plants a member of its family, shows the reader quiet on it, and shows the same reader catching a control ----
@@ -3585,6 +3347,20 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
     const loud = pageHits('Note: <bdo dir="ltr">HX children are terminated.</bdo>');
     expect({ quiet: quiet.map(reading => [...reading.hits, ...reading.refusals]), loud: [...loud.hits, ...loud.refusals] }).toStrictEqual({ quiet: [[], [], []], loud: ["Note: HX children are terminated."] });
     RAN.add(residualNamed("R-BIDI").id);
+  });
+
+  it("R-REAPER (C7): a judged file's F1-F4 hits frozen in KNOWN_REAPERS by path, shape and form (the kill code of two trunk censuses that kill processes of their own) are set aside by C7, so what those kills reach is not read; a hit beside them, a changed hit or a file no longer judged reads loud", { timeout: CENSUS_TIMEOUT }, () => {
+    const { judged } = judgedDrivers();
+    const quiet = KNOWN_REAPERS.map(reaper => {
+      const entry = judged.find(candidate => candidate.path === reaper.path);
+      return { path: reaper.path, hits: entry === undefined ? [] : shapeForms(entry.hits), unknown: entry === undefined ? ["not judged"] : unknownHits(entry).map(hit => `${hit.shape}:${hit.form}`) };
+    });
+    const first = KNOWN_REAPERS[0];
+    if (first === undefined) throw new Error("KNOWN_REAPERS is empty");
+    const planted = parseText(first.path, `${read(first.path)}\nexport const reapAgain = (child: { kill(): void }): void => child.kill();\n`);
+    const loud = unknownHits({ path: first.path, drivers: hxDrivers(planted), hits: falsifierShapes(planted) }).map(hit => `${hit.shape}:${hit.form}`);
+    expect({ quiet, loud }).toStrictEqual({ quiet: KNOWN_REAPERS.map(reaper => ({ path: reaper.path, hits: [...reaper.hits], unknown: [] })), loud: ["F1:member"] });
+    RAN.add(residualNamed("R-REAPER").id);
   });
 
   it("records: every residual row ran its own case to its end", () => {
