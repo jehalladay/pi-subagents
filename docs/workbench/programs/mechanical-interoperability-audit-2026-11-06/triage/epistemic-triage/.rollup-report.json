@@ -1,0 +1,1159 @@
+{
+ "claims_total": 459,
+ "status_counts": {
+  "ESTABLISHED": 183,
+  "NON-EPISTEMIC": 236,
+  "SUPPORTED": 38,
+  "REFUTED": 2
+ },
+ "kind_counts": {
+  "OBSERVATION": 144,
+  "DEFINITION": 31,
+  "NORMATIVE": 170,
+  "INFERENCE": 28,
+  "FORMAL_DERIVATION": 2,
+  "PROPOSAL": 36,
+  "HYPOTHESIS": 4,
+  "SOURCE_REPORT": 44
+ },
+ "material": 343,
+ "overclaims": [
+  "C1204",
+  "C1214",
+  "C1217",
+  "C1244",
+  "C1305",
+  "C1345",
+  "C1406",
+  "C1537",
+  "C1550",
+  "C1628"
+ ],
+ "overclaims_count": 10,
+ "supersedes_faithful": {
+  "None": 142,
+  "True": 314,
+  "False": 3
+ },
+ "rows_with_supersedes": 312,
+ "supersedes_edges": 621,
+ "prior_ids_superseded": 328,
+ "missing_to_settle_rows": [
+  "C1114",
+  "C1133",
+  "C1154",
+  "C1162",
+  "C1176",
+  "C1197",
+  "C1215",
+  "C1217",
+  "C1255",
+  "C1503",
+  "C1524",
+  "C1543",
+  "C1548",
+  "C1549",
+  "C1550",
+  "C1557",
+  "C1588",
+  "C1609",
+  "C1617",
+  "C1627",
+  "C1628"
+ ],
+ "status_by_part": {
+  "01": {
+   "ESTABLISHED": 84,
+   "NON-EPISTEMIC": 20,
+   "SUPPORTED": 19
+  },
+  "02": {
+   "SUPPORTED": 11,
+   "NON-EPISTEMIC": 78,
+   "ESTABLISHED": 39
+  },
+  "03": {
+   "NON-EPISTEMIC": 80,
+   "ESTABLISHED": 3,
+   "REFUTED": 2,
+   "SUPPORTED": 2
+  },
+  "04": {
+   "NON-EPISTEMIC": 58,
+   "ESTABLISHED": 57,
+   "SUPPORTED": 6
+  }
+ },
+ "status_by_group": {
+  "g01": {
+   "ESTABLISHED": 84,
+   "NON-EPISTEMIC": 20,
+   "SUPPORTED": 19
+  },
+  "g02": {
+   "SUPPORTED": 11,
+   "NON-EPISTEMIC": 78,
+   "ESTABLISHED": 39
+  },
+  "g03": {
+   "NON-EPISTEMIC": 138,
+   "ESTABLISHED": 60,
+   "REFUTED": 2,
+   "SUPPORTED": 8
+  }
+ },
+ "kind_x_status": {
+  "DEFINITION|ESTABLISHED": 1,
+  "DEFINITION|NON-EPISTEMIC": 29,
+  "DEFINITION|REFUTED": 1,
+  "FORMAL_DERIVATION|ESTABLISHED": 2,
+  "HYPOTHESIS|SUPPORTED": 4,
+  "INFERENCE|ESTABLISHED": 18,
+  "INFERENCE|SUPPORTED": 10,
+  "NORMATIVE|NON-EPISTEMIC": 170,
+  "OBSERVATION|ESTABLISHED": 125,
+  "OBSERVATION|NON-EPISTEMIC": 1,
+  "OBSERVATION|REFUTED": 1,
+  "OBSERVATION|SUPPORTED": 17,
+  "PROPOSAL|NON-EPISTEMIC": 36,
+  "SOURCE_REPORT|ESTABLISHED": 37,
+  "SOURCE_REPORT|SUPPORTED": 7
+ },
+ "relations_total": 1458,
+ "relations_by_type": {
+  "SUPPORTS": 414,
+  "DEPENDS_ON": 262,
+  "SUPERSEDES": 626,
+  "JOINTLY_SUPPORTS": 7,
+  "ENTAILS": 2,
+  "CONTRADICTS": 11,
+  "CONFLICTS_WITH": 35,
+  "SAME_ORIGIN_AS": 60,
+  "DERIVED_FROM": 16,
+  "SPECIALIZES": 1,
+  "GENERALIZES": 2,
+  "TEMPORAL_DEFEATER": 7,
+  "NARROWS": 15
+ },
+ "relations_by_group": {
+  "g01": 679,
+  "g02": 252,
+  "g03": 394,
+  "rollup": 133
+ },
+ "relations_cross_group": 102,
+ "relations_prior_link": 630,
+ "evidence_total": 626,
+ "evidence_by_source_type": {
+  "ARTIFACT_PROGRAM_DOC": 99,
+  "PROBE_OUTPUT": 75,
+  "PI_PRODUCER_RECEIPT": 37,
+  "PI_CODE": 106,
+  "PI_TEST": 11,
+  "MW_CODE_OR_CONTRACT": 70,
+  "MW_HISTORICAL_RECEIPT_OR_STATE_DOC": 5,
+  "PRIOR_TRIAGE_LEDGER": 116,
+  "PRIOR_PI_PROGRAM_DOC": 6,
+  "MW_TEST": 7,
+  "MW_COMPANION_PROGRAM_NOV4": 2,
+  "PI_REPO_DOC": 9,
+  "PI_AGENT_FEEDBACK": 14,
+  "ARTIFACT_SKILL": 29,
+  "MW_REPO_DOC": 2,
+  "BEADS_STORE": 7,
+  "MW_COMPANION_PROGRAM_TIP": 13,
+  "ARTIFACT_HOSTING_GUIDE": 8,
+  "MW_COMPANION_SKILL": 4,
+  "PI_CI_CONFIG": 2,
+  "PI_MANIFEST_OR_AGENTS": 2,
+  "TRIAGE_CORPUS_SELF": 2
+ },
+ "evidence_by_pin": {
+  "pi@d7666a76f561": 482,
+  "mw@97e18068f399": 123,
+  "mw-tip@6e15a4245d3f": 20,
+  "out/epistemic-triage": 1
+ },
+ "lens_rows": 99,
+ "lens_effects": {
+  "SUPPORTS": 71,
+  "DRIFT": 8,
+  "NARROWS": 15,
+  "UNDETERMINED": 2,
+  "CONTRADICTS": 3
+ },
+ "lens_corpus_defect_rows": 4,
+ "lens_id_resolution_notes": [
+  "C1252 -> C1204(part-02): lens cited C1252; no part holds that sentence under C1252; resolved by content to the 02:5 claim C1204(part-02)",
+  "C1245 -> C1245(part-01): lens text says 02-feedback for C1245, but the W11 blanket-absence norm is 01:42 C1245(part-01); the 02:27 C1245 (selectors) does not fit the finding"
+ ],
+ "families": {
+  "F01-worktree-P0": {
+   "core": "cleanupWorktree force-removes the worktree and reports hasChanges:false when a preservation step fails",
+   "members": [
+    "C1122",
+    "C1130",
+    "C1131",
+    "C1132",
+    "C1133",
+    "C1136",
+    "C1137",
+    "C1542",
+    "C1423",
+    "C1477",
+    "C1478"
+   ],
+   "norms": [
+    "C1134",
+    "C1135",
+    "C1306",
+    "C1333",
+    "C1358",
+    "C1621",
+    "C1479"
+   ],
+   "groups": [
+    "g01",
+    "g02",
+    "g03"
+   ],
+   "statuses": {
+    "ESTABLISHED": 11
+   },
+   "weaker_members": [],
+   "verdict": "CONSISTENT"
+  },
+  "F02-detached-grants": {
+   "core": "both registered detached Claude launchers pass grants:[] while local-detached validateRequest requires claude:invoke / claude:tool:* for a Claude backend",
+   "members": [
+    "C1119",
+    "C1120",
+    "C1150",
+    "C1151",
+    "C1152",
+    "C1153",
+    "C1154",
+    "C1155",
+    "C1424",
+    "C1480",
+    "C1481"
+   ],
+   "norms": [
+    "C1307"
+   ],
+   "groups": [
+    "g01",
+    "g03"
+   ],
+   "statuses": {
+    "ESTABLISHED": 11
+   },
+   "weaker_members": [],
+   "verdict": "CONSISTENT"
+  },
+  "F03-cancel-race-hypothesis": {
+   "core": "a per-agent skip/retry issued while a first-spawn beforeDispatch is awaited can be missed (hypothesis, unreproduced)",
+   "members": [
+    "C1160",
+    "C1161",
+    "C1162",
+    "C1543",
+    "C1425",
+    "C1482",
+    "C1483"
+   ],
+   "norms": [
+    "C1164",
+    "C1617",
+    "C1618",
+    "C1308",
+    "C1309"
+   ],
+   "groups": [
+    "g01",
+    "g02",
+    "g03"
+   ],
+   "statuses": {
+    "ESTABLISHED": 2,
+    "SUPPORTED": 5
+   },
+   "weaker_members": [
+    "C1162 SUPPORTED: can / may (hypothesis wording; mechanism code-witnessed, outcome not reproduced - 'not run')",
+    "C1543 SUPPORTED: may (hypothesis; unreproduced)",
+    "C1425 SUPPORTED: modal only (may / is consistent with) (hypothesis)",
+    "C1482 SUPPORTED: modal only (may / is consistent with) (hypothesis)",
+    "C1483 SUPPORTED: evidence-qualified (the available evidence indicates)"
+   ],
+   "verdict": "CONSISTENT (wording-dependent: the weaker rows carry a weaker artifact wording or an unreproduced/prospective half, recorded on the row)"
+  },
+  "F04-replay-basis-gaps": {
+   "core": "the Claude host replayBasis omits Git base commit/tree, skill/instruction bytes, provider versions and effect references",
+   "members": [
+    "C1114",
+    "C1170",
+    "C1171",
+    "C1172",
+    "C1173",
+    "C1174",
+    "C1176",
+    "C1426"
+   ],
+   "norms": [
+    "C1310",
+    "C1363"
+   ],
+   "groups": [
+    "g01",
+    "g03"
+   ],
+   "statuses": {
+    "SUPPORTED": 2,
+    "ESTABLISHED": 6
+   },
+   "weaker_members": [
+    "C1114 SUPPORTED: evidence indicates (two gap families with different warrants: replay gaps ESTABLISHED by enumeration; per-agent startup gap a code-witnessed",
+    "C1176 SUPPORTED: evidence indicates (gap established; 'incomplete for Pi-hosted Mechanical functions' is prospective - no such function is hosted at the pin)"
+   ],
+   "verdict": "CONSISTENT (wording-dependent: the weaker rows carry a weaker artifact wording or an unreproduced/prospective half, recorded on the row)"
+  },
+  "F04b-mw-app-local-identities": {
+   "core": "MW 97e18068 adds prompt/config and gate-manifest digests that are app-local, not cross-host replay authority",
+   "members": [
+    "C1175",
+    "C1213",
+    "C1486"
+   ],
+   "norms": [],
+   "groups": [
+    "g01",
+    "g03"
+   ],
+   "statuses": {
+    "ESTABLISHED": 3
+   },
+   "weaker_members": [],
+   "verdict": "CONSISTENT"
+  },
+  "F05-descriptor-repair": {
+   "core": "MW commit 1f29daa7 repaired development.v1.json schema refs; the Nov-4 mismatch was true at 0c78e253 and is false at 97e18068",
+   "members": [
+    "C1200",
+    "C1201",
+    "C1202",
+    "C1203",
+    "C1206",
+    "C1531",
+    "C1532",
+    "C1417",
+    "C1439",
+    "C1473",
+    "C1474",
+    "C1475",
+    "C1580"
+   ],
+   "norms": [
+    "C1204"
+   ],
+   "groups": [
+    "g01",
+    "g02",
+    "g03"
+   ],
+   "statuses": {
+    "ESTABLISHED": 13
+   },
+   "weaker_members": [],
+   "verdict": "CONSISTENT"
+  },
+  "F06-mw-cancel-pre-dispatch": {
+   "core": "MW f7c0a943 added signal?: AbortSignal honoured only at pre-dispatch barriers and not forwarded to the Claude SDK session",
+   "members": [
+    "C1210",
+    "C1211",
+    "C1212",
+    "C1214",
+    "C1218",
+    "C1533",
+    "C1534",
+    "C1535",
+    "C1536",
+    "C1484",
+    "C1485"
+   ],
+   "norms": [],
+   "groups": [
+    "g01",
+    "g02",
+    "g03"
+   ],
+   "statuses": {
+    "ESTABLISHED": 10,
+    "SUPPORTED": 1
+   },
+   "weaker_members": [
+    "C1214 SUPPORTED (overclaims): evidence indicates (scope: host-initiated cancel of the running Claude SDK implement session; a Forge-gate cancel is READ by the host, which"
+   ],
+   "verdict": "CONSISTENT (wording-dependent: the weaker rows carry a weaker artifact wording or an unreproduced/prospective half, recorded on the row)"
+  },
+  "F07-hx-probe-wb-f3wd": {
+   "core": "the committed wb-f3wd receipt records exit 3 / exit 0 / exit 4 legs, verdict task-scope-unsupported at hx 0.1.0, Git-census named not blocked",
+   "members": [
+    "C1220",
+    "C1221",
+    "C1222",
+    "C1223",
+    "C1224",
+    "C1225",
+    "C1550",
+    "C1551",
+    "C1626",
+    "C1627",
+    "C1454",
+    "C1455",
+    "C1487"
+   ],
+   "norms": [
+    "C1628",
+    "C1488"
+   ],
+   "groups": [
+    "g01",
+    "g02",
+    "g03"
+   ],
+   "statuses": {
+    "ESTABLISHED": 11,
+    "SUPPORTED": 2
+   },
+   "weaker_members": [
+    "C1550 SUPPORTED (overclaims): the receipt records; evidence indicates",
+    "C1627 SUPPORTED: evidence indicates"
+   ],
+   "verdict": "CONSISTENT (wording-dependent: the weaker rows carry a weaker artifact wording or an unreproduced/prospective half, recorded on the row)"
+  },
+  "F08-wb-muip-census": {
+   "core": "the committed wb-muip receipt records a searched-scope absence of a joined Pi-run/MW-outcome/Forge-op/source-pin witness with global reading UNDETERMINED",
+   "members": [
+    "C1253",
+    "C1254",
+    "C1255",
+    "C1548",
+    "C1549",
+    "C1420",
+    "C1492",
+    "C1493"
+   ],
+   "norms": [
+    "C1256"
+   ],
+   "groups": [
+    "g01",
+    "g02",
+    "g03"
+   ],
+   "statuses": {
+    "ESTABLISHED": 8
+   },
+   "weaker_members": [],
+   "verdict": "CONSISTENT"
+  },
+  "F09-no-mechanical-host": {
+   "core": "at the pin Pi registers no Mechanical function host; workflow_execute refuses kind != script before launch",
+   "members": [
+    "C1111",
+    "C1116",
+    "C1141",
+    "C1143",
+    "C1144",
+    "C1147",
+    "C1181",
+    "C1182",
+    "C1538",
+    "C1557",
+    "C1561",
+    "C1419",
+    "C1434",
+    "C1441",
+    "C1468",
+    "C1469",
+    "C1470"
+   ],
+   "norms": [],
+   "groups": [
+    "g01",
+    "g02",
+    "g03"
+   ],
+   "statuses": {
+    "ESTABLISHED": 17
+   },
+   "weaker_members": [],
+   "verdict": "CONSISTENT"
+  },
+  "F10-collective-event-W11-stale": {
+   "core": "src/workbench/collective-event.ts exists (read-only boundary, unwired) and feature-matrix.md:112 is stale at the pin",
+   "members": [
+    "C1129",
+    "C1243",
+    "C1244",
+    "C1537",
+    "C1539",
+    "C1389",
+    "C1461"
+   ],
+   "norms": [
+    "C1245",
+    "C1555",
+    "C1460",
+    "C1343"
+   ],
+   "groups": [
+    "g01",
+    "g02",
+    "g03"
+   ],
+   "statuses": {
+    "ESTABLISHED": 5,
+    "SUPPORTED": 2
+   },
+   "weaker_members": [
+    "C1244 SUPPORTED (overclaims): is stale at the pin (the W11 sentence is false at d7666a76); 'overlooked' as an authorial oversight is not supported - the sentence predates",
+    "C1537 SUPPORTED (overclaims): evidence indicates (module-level)"
+   ],
+   "verdict": "CONSISTENT (wording-dependent: the weaker rows carry a weaker artifact wording or an unreproduced/prospective half, recorded on the row)"
+  },
+  "F11-mw-packaged-consumer": {
+   "core": "@mechanical/development-rig declares a CLI bin and no exports/main; no stable host API export exists for Pi",
+   "members": [
+    "C1190",
+    "C1191",
+    "C1192",
+    "C1193",
+    "C1197",
+    "C1557"
+   ],
+   "norms": [],
+   "groups": [
+    "g01",
+    "g02"
+   ],
+   "statuses": {
+    "ESTABLISHED": 5,
+    "SUPPORTED": 1
+   },
+   "weaker_members": [
+    "C1197 SUPPORTED: evidence indicates ('incomplete' is relative to the program's consumer requirement; the manifest facts are established)"
+   ],
+   "verdict": "CONSISTENT (wording-dependent: the weaker rows carry a weaker artifact wording or an unreproduced/prospective half, recorded on the row)"
+  },
+  "F12-companion-at-tip": {
+   "core": "the MW companion program/skill the Pi program cites exists only at mw-tip 6e15a4245d3f, not at the stated baseline 97e18068",
+   "members": [
+    "C1406",
+    "C1465"
+   ],
+   "norms": [
+    "C1562",
+    "C1311",
+    "C1322",
+    "C1323",
+    "C1324",
+    "C1325",
+    "C1326",
+    "C1327",
+    "C1328",
+    "C1498",
+    "C1499",
+    "C1376"
+   ],
+   "groups": [
+    "g02",
+    "g03"
+   ],
+   "statuses": {
+    "ESTABLISHED": 2
+   },
+   "weaker_members": [],
+   "verdict": "CONSISTENT at mw-tip only; every member and every norm citing the companion carries the tip-only pin note (K105)"
+  },
+  "F13-program-self-report-no-execution": {
+   "core": "the program executed nothing (static audit; docs-only commit)",
+   "members": [
+    "C1101",
+    "C1102",
+    "C1257",
+    "C1387",
+    "C1388",
+    "C1428"
+   ],
+   "norms": [],
+   "groups": [
+    "g01",
+    "g03"
+   ],
+   "statuses": {
+    "ESTABLISHED": 3,
+    "NON-EPISTEMIC": 1,
+    "SUPPORTED": 2
+   },
+   "weaker_members": [
+    "C1388 SUPPORTED: evidence-qualified (the available evidence indicates)",
+    "C1428 SUPPORTED: evidence-qualified (the available evidence indicates)"
+   ],
+   "verdict": "CONSISTENT (wording-dependent: the weaker rows carry a weaker artifact wording or an unreproduced/prospective half, recorded on the row)"
+  },
+  "F14-baselines-and-drift": {
+   "core": "Pi baseline 278c8f79 is the direct parent of d7666a76 (docs-only); MW 97e18068 is an ancestor of origin/main with two docs-only commits past it",
+   "members": [
+    "C1106",
+    "C1206",
+    "C1402",
+    "C1403",
+    "C1404"
+   ],
+   "norms": [],
+   "groups": [
+    "g01",
+    "g03"
+   ],
+   "statuses": {
+    "ESTABLISHED": 5
+   },
+   "weaker_members": [],
+   "verdict": "CONSISTENT"
+  },
+  "F15-no-github-ci": {
+   "core": "'No GitHub CI' is false as an inventory statement for pi-subagents (ci.yml exists); true as the norm 'no NEW GitHub CI'",
+   "members": [
+    "C1345"
+   ],
+   "norms": [
+    "C1346",
+    "C1433",
+    "C14115"
+   ],
+   "groups": [
+    "g03"
+   ],
+   "statuses": {
+    "REFUTED": 1
+   },
+   "weaker_members": [
+    "C1345 REFUTED (overclaims): narrowed: 'the program adds no GitHub CI and designates Forge as its gate; pi-subagents' pre-existing .github/workflows/ci.yml runs lint/typ"
+   ],
+   "verdict": "REFUTED observation vs consistent narrowed norms (K115)"
+  },
+  "F16-semaphores-no-global-bound": {
+   "core": "per-run semaphores give no global bound across workflows/functions/Furnace attempts",
+   "members": [
+    "C1240",
+    "C1241",
+    "C1242"
+   ],
+   "norms": [
+    "C1624"
+   ],
+   "groups": [
+    "g01",
+    "g02"
+   ],
+   "statuses": {
+    "ESTABLISHED": 1,
+    "SUPPORTED": 2
+   },
+   "weaker_members": [
+    "C1241 SUPPORTED: evidence indicates (prospective: no function dispatch exists at the pin; any would inherit per-run semaphores)",
+    "C1242 SUPPORTED: evidence indicates"
+   ],
+   "verdict": "CONSISTENT (wording-dependent: the weaker rows carry a weaker artifact wording or an unreproduced/prospective half, recorded on the row)"
+  },
+  "F17-node-not-shell": {
+   "core": "node() dispatches a capability through a registry; the Nov-4 anti-shell sentence was normative",
+   "members": [
+    "C1145",
+    "C1540",
+    "C1541"
+   ],
+   "norms": [],
+   "groups": [
+    "g01",
+    "g02"
+   ],
+   "statuses": {
+    "NON-EPISTEMIC": 1,
+    "ESTABLISHED": 2
+   },
+   "weaker_members": [],
+   "verdict": "CONSISTENT (wording-dependent: the weaker rows carry a weaker artifact wording or an unreproduced/prospective half, recorded on the row)"
+  },
+  "F18-selectors-not-deployed": {
+   "core": "neither profile nor mode request-side selector is a deployed ABI; the proposed selectors are proposals",
+   "members": [
+    "C1545",
+    "C1561",
+    "C1572"
+   ],
+   "norms": [
+    "C1546",
+    "C1576",
+    "C1498",
+    "C1499",
+    "C1458"
+   ],
+   "groups": [
+    "g02",
+    "g03"
+   ],
+   "statuses": {
+    "ESTABLISHED": 3
+   },
+   "weaker_members": [],
+   "verdict": "CONSISTENT"
+  },
+  "F19-rf-preview-vs-committed-context": {
+   "core": "Pi's RF --no-commit preview yields no committed render ID and cannot stand in for MW's committed task context",
+   "members": [
+    "C1226",
+    "C1227",
+    "C1228",
+    "C1229",
+    "C1230",
+    "C1231",
+    "C1457"
+   ],
+   "norms": [
+    "C1615"
+   ],
+   "groups": [
+    "g01",
+    "g02",
+    "g03"
+   ],
+   "statuses": {
+    "ESTABLISHED": 6,
+    "SUPPORTED": 1
+   },
+   "weaker_members": [
+    "C1457 SUPPORTED: evidence-qualified (the available evidence indicates)"
+   ],
+   "verdict": "CONSISTENT (wording-dependent: the weaker rows carry a weaker artifact wording or an unreproduced/prospective half, recorded on the row)"
+  },
+  "F20-mw-historical-receipts-2026-10-15": {
+   "core": "MW's Claude/Git/Forge, RF and Furnace live receipts are dated 2026-10-15 and do not prove Pi hosting",
+   "members": [
+    "C1126",
+    "C1251",
+    "C1418",
+    "C1490",
+    "C1491"
+   ],
+   "norms": [],
+   "groups": [
+    "g01",
+    "g03"
+   ],
+   "statuses": {
+    "SUPPORTED": 2,
+    "ESTABLISHED": 3
+   },
+   "weaker_members": [
+    "C1126 SUPPORTED: evidence indicates (code present; 'historical runs' rests on 2026-10-15 receipts in qa/integration/, not re-run)",
+    "C1251 SUPPORTED: evidence indicates (dated receipts exist; not re-run)"
+   ],
+   "verdict": "CONSISTENT (wording-dependent: the weaker rows carry a weaker artifact wording or an unreproduced/prospective half, recorded on the row)"
+  }
+ },
+ "ksets": {
+  "K101": {
+   "title": "README:22 'Critical before an effectful run' vs the BEAD-PLAN graph the program orders reused",
+   "status": "CONTESTED (two normative orderings in one lineage)",
+   "claims": [
+    "C1427",
+    "C1304",
+    "C1316",
+    "C1552",
+    "C1340"
+   ],
+   "from": [
+    "K-g03-01",
+    "lens-negative[20]"
+   ]
+  },
+  "K102": {
+   "title": "'Never remove or weaken a safety test' vs B-preserve acceptance 'no false-clean' and the committed lossy characterization test",
+   "status": "CONTESTED within the Nov-6 text; reconcilable by the BEAD-PLAN rule 8 it incorporates by reference",
+   "claims": [
+    "C1344",
+    "C1306",
+    "C1333",
+    "C1358",
+    "C1621",
+    "C1542",
+    "C1133",
+    "C1135"
+   ],
+   "from": [
+    "K-g03-02",
+    "KG02-N06",
+    "lens-negative[9]"
+   ]
+  },
+  "K103": {
+   "title": "MW-R1..R7 track labels, 'Mechanical-owned' header and dropped external gates vs the Nov-4 mw-* tracks / wb-1zn2 / MW-R3 dependency of 'native cancel'",
+   "status": "UNRECONCILED omission (label vocabularies unmapped; external gates absent from Stage rows); not a factual contradiction",
+   "claims": [
+    "C1322",
+    "C1323",
+    "C1324",
+    "C1325",
+    "C1326",
+    "C1327",
+    "C1328",
+    "C1304",
+    "C1315",
+    "C1362",
+    "C1319",
+    "C1367"
+   ],
+   "from": [
+    "K-g03-03",
+    "lens-negative[21]"
+   ]
+  },
+  "K104": {
+   "title": "doc 03:19 alias ban ('profile'/'mode') vs hosting.md:17 'host modes', MW companion SKILL:26 and the shipped MW result-side `mode` member",
+   "status": "RECONCILED by semantic split (request-side selector vs prose / result-side literal); artifact consistency defect owed to wb-12x1 / wb-w8fk",
+   "claims": [
+    "C1576",
+    "C1545",
+    "C1555",
+    "C1458",
+    "C1498",
+    "C1499"
+   ],
+   "from": [
+    "KG02-N02",
+    "K-g03-04",
+    "lens-logic[9]",
+    "lens-negative[16]"
+   ]
+  },
+  "K105": {
+   "title": "Companion MW program cited at a baseline where it does not exist (unpinned moving-ref links)",
+   "status": "RECONCILED by version split (true at mw-tip, false at the stated baseline); pin/baseline defect of the artifact",
+   "claims": [
+    "C1406",
+    "C1562",
+    "C1465",
+    "C1311",
+    "C1322",
+    "C1323",
+    "C1324",
+    "C1325",
+    "C1326",
+    "C1327",
+    "C1328",
+    "C1498",
+    "C1499",
+    "C1376"
+   ],
+   "from": [
+    "KG02-N01",
+    "lens-provenance[7]",
+    "lens-scope[3]",
+    "lens-logic[7]",
+    "lens-negative[15]"
+   ]
+  },
+  "K106": {
+   "title": "Execution-axis value set silently revised against the Nov-4 proposal (C0562)",
+   "status": "RECONCILED by version split (later proposal supersedes); fidelity defect (unmarked change; cancelled execution unplaced)",
+   "claims": [
+    "C1606"
+   ],
+   "from": [
+    "KG02-N03"
+   ]
+  },
+  "K107": {
+   "title": "'Update stale user-facing current guidance' vs feature-matrix.md:112 still false at the pin",
+   "status": "not a factual contradiction; an unmet norm at the artifact pin (wb-12x1)",
+   "claims": [
+    "C1555",
+    "C1539",
+    "C1537",
+    "C1245",
+    "C1389",
+    "C1343",
+    "C1460"
+   ],
+   "from": [
+    "KG02-N04",
+    "lens-scope[9]",
+    "lens-negative[4]"
+   ]
+  },
+  "K108": {
+   "title": "'overlooked existing collective-event.ts' vs the dates (the W11 sentence predates the file)",
+   "status": "RECONCILED by temporal split (stale, not overlooked)",
+   "claims": [
+    "C1244",
+    "C1245",
+    "C1129"
+   ],
+   "from": [
+    "KG01-02"
+   ]
+  },
+  "K109": {
+   "title": "'CORRECTED, not open P0' names a priority the superseded Pi row (C0199, P1) never carried",
+   "status": "RECONCILED by source split (the P0 is the MW companion's MW-P0)",
+   "claims": [
+    "C1204",
+    "C1200",
+    "C1203"
+   ],
+   "from": [
+    "KG01-01"
+   ]
+  },
+  "K110": {
+   "title": "Pin-relative absence / present-tense claims vs unlanded machine branches that already change the cited files",
+   "status": "not a contradiction at the pins; standing TEMPORAL/SCOPE defeater carried on every affected row",
+   "claims": [
+    "C1111",
+    "C1114",
+    "C1116",
+    "C1119",
+    "C1120",
+    "C1122",
+    "C1130",
+    "C1131",
+    "C1132",
+    "C1133",
+    "C1136",
+    "C1137",
+    "C1141",
+    "C1143",
+    "C1144",
+    "C1147",
+    "C1150",
+    "C1151",
+    "C1152",
+    "C1153",
+    "C1154",
+    "C1155",
+    "C1170",
+    "C1171",
+    "C1172",
+    "C1173",
+    "C1174",
+    "C1176",
+    "C1181",
+    "C1182",
+    "C1419",
+    "C1423",
+    "C1424",
+    "C1426",
+    "C1434",
+    "C1441",
+    "C1468",
+    "C1469",
+    "C1470",
+    "C1477",
+    "C1478",
+    "C1480",
+    "C1481",
+    "C1538",
+    "C1542",
+    "C1557",
+    "C1561"
+   ],
+   "from": [
+    "KG01-03"
+   ]
+  },
+  "K111": {
+   "title": "'Mid-session cancel ... remain to implement' vs a recorded mid-gate Forge-operation cancel (MW docs/10:141)",
+   "status": "RECONCILED by semantic split (Claude SDK session vs Forge gate leg)",
+   "claims": [
+    "C1214",
+    "C1218",
+    "C1485",
+    "C1536"
+   ],
+   "from": [
+    "KG01-04",
+    "lens-negative[14]"
+   ]
+  },
+  "K112": {
+   "title": "'no-duplicate effects remain to implement' vs the Git-source publication idempotency fingerprint",
+   "status": "RECONCILED by scope split (per-effect-type fingerprint vs host-level guarantee)",
+   "claims": [
+    "C1217"
+   ],
+   "from": [
+    "KG01-05"
+   ]
+  },
+  "K113": {
+   "title": "Ledger proposition 'develop/developLive options' vs the component the signal was added to",
+   "status": "RECONCILED by narrowing; extraction defect, not an artifact defect",
+   "claims": [
+    "C1210",
+    "C1533"
+   ],
+   "from": [
+    "KG01-06",
+    "lens-fidelity[16]"
+   ]
+  },
+  "K114": {
+   "title": "Cancel-race norms stated imperatively while the motivating race is an unreproduced hypothesis; the parked-barrier apparatus already exists for the run-wide signal (F10)",
+   "status": "RECONCILED (design target vs sequencing; wb-9v02 first)",
+   "claims": [
+    "C1162",
+    "C1164",
+    "C1543",
+    "C1617",
+    "C1618",
+    "C1308",
+    "C1309",
+    "C1425",
+    "C1482"
+   ],
+   "from": [
+    "KG01-07",
+    "KG02-N05",
+    "lens-negative[7]"
+   ]
+  },
+  "K115": {
+   "title": "'No GitHub CI' (04:35) vs pi-subagents' committed ci.yml and the same commit's 'no new GitHub CI' (README:28, SKILL:30)",
+   "status": "RESOLVED by scope split; C1345 REFUTED as an observation (regresses Nov-4 M047)",
+   "claims": [
+    "C1345",
+    "C1346",
+    "C1433",
+    "C14115"
+   ],
+   "from": [
+    "K-g03-05",
+    "lens-negative[5]"
+   ]
+  },
+  "K116": {
+   "title": "'All rows below are proposed work, not already delivered' (04:3) vs two closed beads with landed receipts",
+   "status": "RESOLVED by narrowing; C1305 REFUTED as a universal",
+   "claims": [
+    "C1305",
+    "C1321"
+   ],
+   "from": [
+    "K-g03-06"
+   ]
+  },
+  "K117": {
+   "title": "Program baselines (README:3) vs the Nov-4 pins carried by the bead descriptions the program binds work to (epic wb-1a3t: pi b27829e6 / mw f7c0a943)",
+   "status": "not a contradiction; pin inconsistency between program and ledger-in-repo (owner re-pin owed)",
+   "claims": [
+    "C1552",
+    "C1301",
+    "C1494",
+    "C1402",
+    "C1403"
+   ],
+   "from": [
+    "lens-negative[29]",
+    "KG02 scope note C1252"
+   ]
+  }
+ },
+ "propagation_log": [
+  {
+   "refuted": "C1345",
+   "dependant": "C1346",
+   "dependant_status": "NON-EPISTEMIC",
+   "kind": "NORMATIVE",
+   "result": "derivation broken; conclusion recomputed from independent warrant (see rationale)",
+   "rationale": "Norm; premise C1345 fails as a fact, but the norm has independent authority (AGENTS.md:167); conclusion not weakened. Presuppositions: Pi has forge.toml at the pin: ESTABLISHED; AGENTS.md:167 mandates"
+  },
+  {
+   "premise": "C1126",
+   "premise_status": "SUPPORTED",
+   "conclusion": "C1127",
+   "conclusion_status": "ESTABLISHED",
+   "check": "ESTABLISHED conclusion over a weaker premise: independent warrant required",
+   "rationale": "grep -rl pi-subagents over rig and package sources -> 0; prior C0153."
+  },
+  {
+   "premise": "C1214",
+   "premise_status": "SUPPORTED",
+   "conclusion": "C1218",
+   "conclusion_status": "ESTABLISHED",
+   "check": "ESTABLISHED conclusion over a weaker premise: independent warrant required",
+   "rationale": "Entailed by C1210-C1212: a signal exists, is honoured at three barriers, is not forwarded. 'Partial' is the exact word. Prior C0229 split (presence refuted, mid-run generality supported) is restated faithfully. The P1 la"
+  },
+  {
+   "premise": "C1537",
+   "premise_status": "SUPPORTED",
+   "conclusion": "C1539",
+   "conclusion_status": "ESTABLISHED",
+   "check": "ESTABLISHED conclusion over a weaker premise: independent warrant required",
+   "rationale": "Deductive from the module's existence. Counterevidence preserved: feature-matrix.md:112 (not touched by d7666a76) still carries the unqualified absence sentence."
+  },
+  {
+   "premise": "C1550",
+   "premise_status": "SUPPORTED",
+   "conclusion": "C1551",
+   "conclusion_status": "ESTABLISHED",
+   "check": "ESTABLISHED conclusion over a weaker premise: independent warrant required",
+   "rationale": "Receipt line 12-13 and 15 verbatim."
+  },
+  {
+   "premise": "C1543",
+   "premise_status": "SUPPORTED",
+   "conclusion": "C1556",
+   "conclusion_status": "ESTABLISHED",
+   "check": "ESTABLISHED conclusion over a weaker premise: independent warrant required",
+   "rationale": "Verbatim."
+  },
+  {
+   "premise": "C1550",
+   "premise_status": "SUPPORTED",
+   "conclusion": "C1556",
+   "conclusion_status": "ESTABLISHED",
+   "check": "ESTABLISHED conclusion over a weaker premise: independent warrant required",
+   "rationale": "Verbatim."
+  },
+  {
+   "premise": "C1550",
+   "premise_status": "SUPPORTED",
+   "conclusion": "C1626",
+   "conclusion_status": "ESTABLISHED",
+   "check": "ESTABLISHED conclusion over a weaker premise: independent warrant required",
+   "rationale": "Receipt line 12 and the JSON observations verbatim."
+  }
+ ],
+ "remediation_rows": 23,
+ "remediation_classes": {
+  "NARROW_SCOPE": 7,
+  "ADD_SOURCE": 1,
+  "ADD_TEMPORAL_QUALIFIER": 5,
+  "SURFACE_DISAGREEMENT": 3,
+  "ADD_MISSING_PREMISE": 6,
+  "DOWNGRADE_MODALITY": 1
+ },
+ "duplicate_permitted_wordings": {
+  "at the pins (pi@d7666a76f561; mw@97e18068f399) mechanicalworkflows provides an ordinary `develop(services,request)` function.": [
+   "C1415",
+   "C1437"
+  ]
+ },
+ "dossiers": 343,
+ "anchor_only_rows": [],
+ "counterevidence_rows": 30,
+ "scope_restriction_rows": 88
+}
