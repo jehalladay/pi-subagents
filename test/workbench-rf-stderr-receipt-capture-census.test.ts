@@ -86,7 +86,14 @@
  * (C1-ARGV-RETURNS's shell arm under exec and execSync) in the modules its rows plant, exactly as they write them, byte for byte,
  * and Pi's own launch, narrows C1-OPTIONS and G2-STDIO to spawn with an args array as its second argument, the data listener to one
  * added by on and the bare use to the two kinds its rows plant, and names every other launch, launcher shape, listener and kind
- * NOT CLAIMED. Where a
+ * NOT CLAIMED. Gate refusal #11 measured C1-DECLARATION-REFERENCES's reference entries still claimed per rf launch while every row
+ * that plants a reference plants its launch under spawn, by spawn's own name, with the string rf as its first argument, in a
+ * module-level function declaration - so its hollows GP3-D1, GP3-D2, GP3-D3 and GP3-D5 (references read only under spawn, only in a
+ * function declaration, only by a launcher's own or local name and only with the string rf first) kept the census green while its
+ * plants realized them - and orchestrator ruling R-B653 bound the next cut to move only that launch bound. Cut #12 changes no
+ * reader and no row: it writes the references C1-DECLARATION-REFERENCES claims as those to the declaration of each rf launch under
+ * spawn in a module-level function declaration among the modules its rows plant, exactly as they write them, byte for byte, and
+ * names the references of every other launch NOT CLAIMED. Where a
  * reader meets what it cannot resolve - a launch program, a module specifier, a load, an argv binding, a builder or an
  * identifier - it reads <opaque ...> or unresolved, a new member of a pinned list, never a pass, save the routes a named residual
  * states (R-OPAQUE-LAUNCHER, R-OPAQUE-LOADER, R-OPAQUE-REGISTRATION). Those two blocks are the claims verbatim: ANCHOR holds each
@@ -98,8 +105,9 @@
  * trunk 108a202, landing 987; cut #7 by seat ws-04, run g10-work-s219 at trunk fd8f71c, landing 991; cut #8 by seat ws-04, run
  * g10-work-s226 at trunk b45f46a, landing 993; cut #9 by seat ws-04, run g10-work-s226 at trunk 1b707ef, landing 1002; cut #10
  * by seat ws-06, run g10-work-s228 at trunk c4e8f82, landing 1004; cut #11 by seat ws-03, run g10-work-s230 at trunk 600a253,
- * landing 1011; providers/reactivefiber.ts is byte-identical at all eleven and at 04123dc, sha256/16 d8b764b855600103 over
- * its 203 lines; cuts #6 to #11 move no reader, so every witness reads as at cut #5; every C1 and G2 witness
+ * landing 1011; cut #12 by seat ws-07, run g10-work-s233 at trunk fd90f9d, landing 1014; providers/reactivefiber.ts is
+ * byte-identical at all twelve and at 04123dc, sha256/16 d8b764b855600103 over its 203 lines; cuts #6 to #12 move no reader,
+ * so every witness reads as at cut #5; every C1 and G2 witness
  * below reads
  * the same under cut #4's C1-NAME-RESOLUTION as under cut #3's by-name read, and under cut #5's landed reader as under cut #4's:
  * the swap alone, every row and witness kept, moved 10 row readings in 4 of the 44 cases, all of them falsifier rows, which cut #5
@@ -386,10 +394,17 @@
  *    its rows write it (byte for byte), of a module-level function declaration with export alone and with export default, of a
  *    method with no modifier in a module-level class declaration with export and in a class expression and an object literal that
  *    each initialize an exported module-level const, and of a module-level const, with and without export, bound to an arrow with a
- *    block body and to a function expression with no name; in another file a named import, renaming it and not, a default import, a
- *    call by name, a call through a namespace member by name and by literal key, a string and a no-substitution template each, and
- *    a value as a const's initializer; and in the launching file an export specifier, renaming it and not; every other parameter or
- *    reference form, the parameters of a function declaration that carries no export modifier (one an export specifier exports
+ *    block body and to a function expression with no name; for each rf launch under spawn in a module-level function declaration
+ *    among the modules its rows plant, exactly as they write them, byte for byte (each such module one launch, the only rf launch
+ *    among its row's modules, a call by spawn's own name, its callee bare, with the string rf as its first argument, the
+ *    declaration with export alone, with export default, or with no modifier and an export specifier naming it), the references to
+ *    that declaration: in another file a named import, renaming it and not, a default import, a call by name, a call through a
+ *    namespace member by name and by literal key, a string and a no-substitution template each, and a value as a const's
+ *    initializer; and in the launching file an export specifier, renaming it and not; every other parameter or reference form, the
+ *    references to the declaration of every other launch (one under spawnSync, execFile, execFileSync, exec, execSync, fork or
+ *    process.execve, by another route or callee form, with another first argument, in another declaration, a method or a
+ *    module-level const bound to an arrow or function expression among them, or beside another launch in its module or among its
+ *    row's modules), the parameters of a function declaration that carries no export modifier (one an export specifier exports
  *    among them) and of a method in a container without export, an optional call or member access (?.) and a value in any other
  *    position among them, is NOT CLAIMED by this census.
  *  C1-DECLARATION-TEXT: C1 (g) reads, per rf launch, its declaration's line count and sha256/16 over those lines (for a launch at
@@ -3310,7 +3325,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "C1-DECLARATION-REFERENCES",
     pin: "C1",
-    words: "C1 (d) reads, per rf launch, its declaration's parameters and every src reference to that declaration by its name - an identifier or a literal key (a string or a no-substitution template) - as a call with its arity, a value, an import or an export. It claims that reading exactly at the forms its rows plant: the parameters of the declaration, exactly as its rows write it (byte for byte), of a module-level function declaration with export alone and with export default, of a method with no modifier in a module-level class declaration with export and in a class expression and an object literal that each initialize an exported module-level const, and of a module-level const, with and without export, bound to an arrow with a block body and to a function expression with no name; in another file a named import, renaming it and not, a default import, a call by name, a call through a namespace member by name and by literal key, a string and a no-substitution template each, and a value as a const's initializer; and in the launching file an export specifier, renaming it and not; every other parameter or reference form, the parameters of a function declaration that carries no export modifier (one an export specifier exports among them) and of a method in a container without export, an optional call or member access (?.) and a value in any other position among them, is NOT CLAIMED by this census.",
+    words: "C1 (d) reads, per rf launch, its declaration's parameters and every src reference to that declaration by its name - an identifier or a literal key (a string or a no-substitution template) - as a call with its arity, a value, an import or an export. It claims that reading exactly at the forms its rows plant: the parameters of the declaration, exactly as its rows write it (byte for byte), of a module-level function declaration with export alone and with export default, of a method with no modifier in a module-level class declaration with export and in a class expression and an object literal that each initialize an exported module-level const, and of a module-level const, with and without export, bound to an arrow with a block body and to a function expression with no name; for each rf launch under spawn in a module-level function declaration among the modules its rows plant, exactly as they write them, byte for byte (each such module one launch, the only rf launch among its row's modules, a call by spawn's own name, its callee bare, with the string rf as its first argument, the declaration with export alone, with export default, or with no modifier and an export specifier naming it), the references to that declaration: in another file a named import, renaming it and not, a default import, a call by name, a call through a namespace member by name and by literal key, a string and a no-substitution template each, and a value as a const's initializer; and in the launching file an export specifier, renaming it and not; every other parameter or reference form, the references to the declaration of every other launch (one under spawnSync, execFile, execFileSync, exec, execSync, fork or process.execve, by another route or callee form, with another first argument, in another declaration, a method or a module-level const bound to an arrow or function expression among them, or beside another launch in its module or among its row's modules), the parameters of a function declaration that carries no export modifier (one an export specifier exports among them) and of a method in a container without export, an optional call or member access (?.) and a value in any other position among them, is NOT CLAIMED by this census.",
     falsifier: async () => ({
       calls: launchingDeclarations([
         plant("control.ts", ["export function render(root: string, commit = false): void {", '  spawn("rf", ["--workspace", root, ...(commit ? [] : ["--no-commit"])]);', "}"]),
