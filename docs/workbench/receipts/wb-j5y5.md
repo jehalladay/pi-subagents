@@ -100,3 +100,57 @@ mutant EAT-R085: silently accept a skipped live producer tier -> 1 failed | 197 
 mutant EAT-R086: accept a fabricated wb identifier -> 1 failed | 197 passed | 9 skipped (207), the real-tree rows filtered out; accept an omitted not-run label -> 12 failed | 186 passed | 9 skipped (207); read a fence whose info string only starts with mwi-release -> 3 failed | 204 passed (207); read a block nested in a blockquote -> 1 failed | 206 passed (207)
 mutant EAT-R087: accept a global status row appended to TRACEABILITY -> 2 failed | 196 passed | 9 skipped (207), the real-tree rows filtered out; refuse a new index only under the receipts -> 1 failed | 206 passed (207); refuse a new index only under docs/workbench/ -> 1 failed | 206 passed (207)
 ```
+
+## 2026-11-07 cut #3, the respin of refusal #2 (the frozen claim words in the enumerate form; the rendered-view words pinned)
+
+Seat ws-06 of run g10-work-s233 cut this respin on trunk fd90f9d3a9c7e9c1a7bab2690885cddc4424c9f9 (landing 1014), merged into the branch over cut #2 (8f5ccac12119ecd817de1771efb7432c02f06487), which PREP F refused as refusal #2. Rulings R-B641 and R-B654 froze the claim words of the validator and its test at a second-stage cap (rule 19(c)), so this cut takes the enumerate-the-resolvable form for them. The rendered-view words are at rung 1 of their own guard.
+
+What changed:
+
+- The validator's code is unchanged. Its doc comments now claim only the forms the test pins, and they name those forms. The header has a THE PINNED SET paragraph, a THE SEAMS paragraph and a THE GATE ENVELOPE paragraph, and its rendered-view, CLI and NOT CLAIMED paragraphs list the pinned forms. A RESIDUALS section names three escape families, and the test holds that section to its own residual table.
+- U1, the envelope predicates. PREDICATE_FORMS pins the one passing value of each of the four predicates, and it pins every listed form as refused: the field left out, null, the empty string, another word, another case, a padded value, a longer word, a one-element array and a value of another type. This kills GP1 to GP4.
+- U2, the seam spellings. The test pins seams with a digit, with underscores, in one and in two subdirectories and with an inner dot, and declared tiers with a digit or a leading digit. It pins each character that may sit just before or just after a test path, and it pins a path with nothing between test/ and its suffix. This kills GP5 to GP8. A forge run tier spelled with another character is the residual R-TIER-TRUNCATED.
+- U3, the CLI revisions and the witness words. The test pins `--commit` and `--head` written as HEAD or as a 12-hex abbreviation, `--base HEAD~1`, and an unknown revision for `--head` or `--commit`. It pins each EAT-R085 finding a live or closed claim can carry beside W11 turned landed-gated, an EAT-R083 or EAT-R086 finding alone, and one clean claim beside a refused one. This kills GP9, GP10 and GP13.
+- U4, the absence and pointer words. The test pins the absence words' boundaries on both sides and each separator between binding and host, in the singular and the plural. It pins design-only, partial, an unknown status, a status in another case and a block without a status line, each with undisclosed absent pointers. This kills GP11, GP12 and GP14. Other spellings of an absence statement are the residual R-ABSENCE-OTHER-WORDS.
+- U5, the rendered view. The test pins both hard line breaks, a blockquote, a nested blockquote and a lazy continuation, links (inline, with a title, with a code-span text, and full, collapsed and shortcut references) and an autolink, both in renderedText and as a stale W11 absence statement. This kills GN1 to GN3. A reference whose definition lies outside the W11 section is the residual R-REFDEF-OUTSIDE.
+- A one-edit discovery battery over the module's code lines ran 650 mutants against cut #2, and 133 survived. They sat in the release-block field readers, the forge.toml readers, the W11 heading and table readers, the rendered view, the receipt scope, the pointer rules and the CLI. Under this cut 85 of them are killed by new rows. 46 are equivalent, each with its reason in the delivery note, and 2 differ only on a form the header names NOT CLAIMED (a path removed from the index but kept in the working tree).
+
+This entry narrows the claim lines of the two entries above. Where they say "a gate envelope passes only when", the claim is the pinned forms of THE GATE ENVELOPE in the validator's header and the test's PREDICATE_FORMS. Where they name seams, revisions or markup, the claim is the forms the header's paragraphs name. Any other form is NOT CLAIMED.
+
+What this entry does not claim:
+
+- No slice is live, and no Mechanical invocation exists. The validator calls no Mechanical code.
+- A form that the header and the test rows do not name is NOT CLAIMED. The three residuals are named families with pinned quiet rows, not claims.
+- The project skill and the program docs are still absent at this base (both land with wb-12x1), so this cut updates neither, and its release block names both as blockers.
+
+```mwi-release
+contract: workbench.mwi-release/v1
+program: mechanical-workflows-interop-2026-11-04
+bead: wb-j5y5
+slice: PI-7
+slice status: partial
+requirements: EAT-R082, EAT-R083, EAT-R084, EAT-R085, EAT-R086, EAT-R087
+real infrastructure gate: none
+baseline sha / source paths: fd90f9d3a9c7e9c1a7bab2690885cddc4424c9f9; qa/workbench/mwi-release.mjs (doc comments only), test/workbench-mwi-release.test.ts, docs/workbench/receipts/wb-j5y5.md
+specific behavior to change: cure refusal #2 of cut #2: state the validator's claim words as exactly the forms its test pins (the enumerate form of rule 19(c) for the words frozen at R-B641), pin each refusal #2 member and each non-equivalent one-edit survivor red-first, and name the escape families the validator is quiet on as residuals with quiet rows and live twins; no judge changes behavior
+owner repo and producer authority: Pi (pi-subagents); the validator reads forge's build result envelope (result-envelope/v1), forge.toml, the in-tree bead export and Git, and calls no producer
+supported API/version confirmed by installed code: marked 18.0.11 (its Lexer, which qa/workbench/receipts-index.mjs also uses) and git 2.50.1; no producer API is called
+one negative reproducer and one positive journey: negative: each of refusal #2's 17 members and each of the 85 killed survivors of a one-edit discovery battery on cut #2 is refused by at least one row of the cut #3 test; positive: the control receipt, the control envelope and the slice cut pass, and node qa/workbench/mwi-release.mjs --base fd90f9d3a9c7e9c1a7bab2690885cddc4424c9f9 over this cut's working tree exits 0 with no finding, judging the three release blocks of this receipt, closure open without an envelope
+observed code vs planned code: observed: the validator and its tests; planned: none in this cut
+permissions, effects, cancellation and retention: none: the judges are pure; the CLI reads Git and files and writes only stdout and stderr
+native evidence/identity and no-false-PASS predicate: the pinned forms of THE GATE ENVELOPE in qa/workbench/mwi-release.mjs's header and the test's PREDICATE_FORMS: status success, data.gate_verdict PASS, data.gate_passed true and one passed step per [build] gate leg each pass, and every listed other form is refused; with data.gated_commit the candidate, data.invocation present with empty only and skip lists and path ., and ids.command_id cmd_ and twelve lower-case hex digits
+timing/resource budget and control behavior: not run: no timing claim; every vitest run here is capped with VITEST_MAX_THREADS=8 VITEST_MAX_FORKS=8
+Forge commands run and exact outcomes: the lint and typing steps ran under the seat's ritual of record, whose Furnace run and attempt ids (or its typed fallback) are on the delivery note's ritual line and on the ledger's ritual-check row for run g10-work-s233, over the seat worktree tree that holds every delivered byte of this cut (trunk fd90f9d merged into cut #2, plus the cut #3 bytes, uncommitted); that clean claim excludes qa/workbench/mwi-release.mjs, which biome's files.includes (src/**/*.ts, test/**/*.ts) leaves unlinted and tsconfig.test.json's checkJs false leaves untype-checked, in the ritual and in the complete gate alike; a one-off tsc 6.0.3 --ignoreConfig --allowJs --checkJs --strict --types node run over the module reads 0 errors; the complete gate (forge build --require-complete --no-replay --keep-going --json) is not run by this seat, because the machine gate lane runs it on the collected commit
+docs, skill, source map, feature matrix and receipt updates: docs/workbench/receipts/wb-j5y5.md (this entry); docs/workbench/feature-matrix.md is unchanged by this cut (the W11 row of cut #1 and the Not claimed W11 line of cut #2 stand, and the docs mutants of cut #2 still anchor on them)
+remaining blockers and next safe independent cut: .agents/skills/pi-mechanical-interop/SKILL.md and docs/workbench/programs/mechanical-workflows-interop-2026-11-04/ are absent at base fd90f9d (both land with wb-12x1), so this cut updates neither; the next safe independent cut is any program bead's first cut, with a release block in its receipt
+red command: VITEST_MAX_THREADS=8 VITEST_MAX_FORKS=8 ./node_modules/.bin/vitest run test/workbench-mwi-release.test.ts
+red result: 83 failed | 374 passed (457), the cut #3 test against the cut #3 module with refusal #2's 17 members applied together (GP5 to GP7 and GP11 to GP12 as one composite edit each); the cut #2 test against the same module reads 0 failed | 198 passed | 9 skipped (207), the real-tree rows filtered out
+first failing assertion: expected [ 'red-not-seam' ] to deeply equal []
+positive rerun: VITEST_MAX_THREADS=8 VITEST_MAX_FORKS=8 ./node_modules/.bin/vitest run test/workbench-mwi-release.test.ts -> 457 passed (457)
+mutant EAT-R082: let a claim with an EAT-R085 finding other than a closing-gate one witness W11 (refusal #2 member GP13) -> 8 failed | 449 passed (457); drop a blockquote's lines from the rendered view (GN2) -> 5 failed | 452 passed (457); require the blockers line of a partial claim only (GP14) -> 6 failed | 451 passed (457)
+mutant EAT-R083: drop the digits from the seam path class (GP5) -> 5 failed | 452 passed (457); drop the digits from the forge run tier class (GP8) -> 3 failed | 454 passed (457)
+mutant EAT-R084: pass every envelope status but failure (GP1) -> 14 failed | 443 passed (457); accept a required leg's step without a status (GP4) -> 1 failed | 456 passed (457)
+mutant EAT-R085: drop the digits from a gate name's first part (A013) -> 1 failed | 456 passed (457); drop the start anchor of the full-sha pattern (A003) -> 4 failed | 453 passed (457)
+mutant EAT-R086: swap the duplicate and malformed line rules (A108) -> 1 failed | 456 passed (457); parse a whitespace-only bead export line as JSON (A243) -> 1 failed | 456 passed (457)
+mutant EAT-R087: judge an added path that holds the receipts directory anywhere as a receipt (A487) -> 1 failed | 456 passed (457); refuse an index added under any directory named docs (A483) -> 1 failed | 456 passed (457)
+```

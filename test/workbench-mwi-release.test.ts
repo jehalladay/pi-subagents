@@ -7,12 +7,20 @@
  * to the judge as an input the judge must refuse. The W11 block pins the rendered view the W11 rules read, and the receipt-scope
  * block pins which release blocks a cut adds. The CLI block runs
  * qa/workbench/mwi-release.mjs end to end over scratch Git repositories: a working-tree cut, a committed cut, the host-module
- * discovery and the usage errors. The last block judges the real tree: its release receipts, the W11 section and the Not claimed
- * W11 line of docs/workbench/feature-matrix.md, the matrix's status legend and forge.toml's declared tiers.
+ * discovery, the revision spellings and the usage errors. The last block judges the real tree: its release receipts, the W11
+ * section and the Not claimed W11 line of docs/workbench/feature-matrix.md, the matrix's status legend and forge.toml's declared
+ * tiers.
+ *
+ * Cut #3 (refusal #2; the enumerate-the-resolvable form of rule 19(c) for the claim words frozen at R-B641, the rendered-view
+ * words at rung 1): each "pinned ... forms" block enumerates, row by row, the forms one family of the module's claim words names
+ * (the envelope predicates, the seam spellings, the witness forms, the absence spellings, the pointer statuses, the rendered
+ * markup, and the field, forge.toml, heading and rendered-view forms a one-edit discovery battery left unpinned on cut #2); the
+ * residual block names the escape families the validator is quiet on, each with its quiet rows at their exact readings and a
+ * live twin, and holds the module header's RESIDUALS section to the same ids and families.
  *
  * NOT CLAIMED by this file: a live slice or any Mechanical invocation (the program has none); that every program bead's receipt
  * carries a release block (the real-tree block judges each receipt that carries one); rendering by a markdown engine other than
- * marked, the lexer the validator reads with.
+ * marked, the lexer the validator reads with; any form a block's title and rows do not name.
  */
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -58,6 +66,7 @@ import {
   w11Section,
   w11Statuses,
 } from "../qa/workbench/mwi-release.mjs";
+import { nonRepoScratch } from "./helpers/non-repo-scratch.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 installScratchLeakGuard();
@@ -220,6 +229,10 @@ describe("the release block (workbench.mwi-release/v1)", () => {
       .map((finding) => finding.rule)
       .sort();
     expect(rules).toEqual(["field-duplicate", "line-malformed"]);
+  });
+
+  it("runs no CLI when the validator is imported as a module: the process exit code stays unset", () => {
+    expect(process.exitCode ?? 0).toBe(0);
   });
 
   it("refuses a block of another contract or another program", () => {
@@ -396,6 +409,96 @@ describe("EAT-R083 each behavior cut retains a preimplementation failing consume
   });
 });
 
+/** Seams of the pinned spellings (refusal #2 U2, members GP5-GP7): a census file with a digit, a test in a subdirectory with an
+ * inner dot, a test two subdirectories deep with digits, and a test with underscores in a subdirectory. */
+const SPELLED_SEAMS: readonly string[] = ["test/workbench-docs12-example.census.ts", "test/e2e/workflow.e2e.test.ts", "test/unit/v2/a1.test.ts", "test/fixture_set/snake_case.test.ts"];
+/** forge run tiers of the pinned spellings (refusal #2 U2, member GP8): tiers with a digit, as forge.toml declares furnace-vc4-live
+ * and e2e, a tier that begins with a digit, and a one-character tier. */
+const SPELLED_TIERS: readonly string[] = ["furnace-vc4-live", "e2e", "x", "2pass"];
+const spelledContext = {
+  ...blockContext,
+  fileExists: (path: string) => path === SEAM || SPELLED_SEAMS.includes(path),
+  forgeTiers: new Set([...FORGE_TIERS, ...SPELLED_TIERS]),
+};
+/** The findings of the control block whose red command is `command` and whose positive rerun reruns it, under spelledContext. */
+function seamFindings(command: string): Finding[] {
+  const [block] = parseReleaseBlocks(receiptOf(setRows(GOOD_ROWS, [["red command", command], ["positive rerun", `${command} -> 12 passed (12)`]])));
+  return [...receiptBlockFindings(block, spelledContext)];
+}
+function seamRules(command: string): string[] {
+  return seamFindings(command)
+    .map((finding) => finding.rule)
+    .sort();
+}
+
+describe("EAT-R083 pinned seam spellings (refusal #2 U2; the R-B641 set in the enumerate form)", () => {
+  it.each(SPELLED_SEAMS)("reads the held test path %s as a real seam", (seam) => {
+    expect(seamRules(`./node_modules/.bin/vitest run ${seam}`)).toEqual([]);
+    expect(seamRules(`./node_modules/.bin/vitest run ./${seam}`)).toEqual([]);
+  });
+
+  it.each(SPELLED_TIERS)("reads forge run %s, a declared tier, as a real seam", (tier) => {
+    expect(seamRules(`forge run ${tier}`)).toEqual([]);
+  });
+
+  it.each([
+    ["a census file with a digit", "./node_modules/.bin/vitest run test/workbench-docs13-absent.census.ts", "test/workbench-docs13-absent.census.ts"],
+    ["a test in a subdirectory with an inner dot", "./node_modules/.bin/vitest run test/e2e/absent.e2e.test.ts", "test/e2e/absent.e2e.test.ts"],
+    ["a forge run tier with a digit", "forge run furnace-vc5-live", "forge run furnace-vc5-live"],
+  ])("reads %s the tree does not hold as that whole seam, missing", (_form, command, seam) => {
+    expect(seamFindings(command).map((finding) => `${finding.rule}: ${finding.detail}`)).toEqual([`seam-missing: ${seam}`]);
+  });
+
+  it.each([
+    ["a letter", `./node_modules/.bin/vitest run con${SEAM}`],
+    ["a digit", `./node_modules/.bin/vitest run v2${SEAM}`],
+    ["an underscore", `./node_modules/.bin/vitest run my_${SEAM}`],
+    ["a dot", `./node_modules/.bin/vitest run ../${SEAM}`],
+    ["a slash", `./node_modules/.bin/vitest run src/${SEAM}`],
+    ["a hyphen", `./node_modules/.bin/vitest run pre-${SEAM}`],
+  ])("names no seam when the test/ path follows %s", (_char, command) => {
+    expect(seamRules(command)).toEqual(["red-not-seam"]);
+  });
+
+  it.each([
+    ["a letter", `./node_modules/.bin/vitest run ${SEAM}x`],
+    ["a digit", `./node_modules/.bin/vitest run ${SEAM}2`],
+    ["an underscore", `./node_modules/.bin/vitest run ${SEAM}_x`],
+    ["a dot", `./node_modules/.bin/vitest run ${SEAM}.bak`],
+    ["a slash", `./node_modules/.bin/vitest run ${SEAM}/`],
+    ["a hyphen", `./node_modules/.bin/vitest run ${SEAM}-old`],
+  ])("names no seam when the .test.ts path is followed by %s", (_char, command) => {
+    expect(seamRules(command)).toEqual(["red-not-seam"]);
+  });
+
+  it.each([
+    ["a letter before forge", "myforge run lint"],
+    ["a digit before forge", "2forge run lint"],
+    ["an underscore before forge", "_forge run lint"],
+    ["two spaces after forge", "forge  run lint"],
+    ["two spaces after run", "forge run  lint"],
+  ])("names no forge run tier with %s", (_form, command) => {
+    expect(seamRules(command)).toEqual(["red-not-seam"]);
+  });
+
+  it("reads the forge run tier after a hyphen, which is no word character", () => {
+    expect(seamRules("-forge run lint")).toEqual([]);
+  });
+
+  it.each(["test/.test.ts", "test/.census.ts"])("names no seam for %s, a path with nothing between test/ and its suffix", (path) => {
+    expect(seamRules(`./node_modules/.bin/vitest run ${path}`)).toEqual(["red-not-seam"]);
+  });
+
+  it.each([
+    ["a colon and a line number", `./node_modules/.bin/vitest run ${SEAM}:12`],
+    ["double quotes", `./node_modules/.bin/vitest run "${SEAM}"`],
+    ["parentheses", `(./node_modules/.bin/vitest run ${SEAM})`],
+    ["a space and a flag", `./node_modules/.bin/vitest run ${SEAM} --reporter=dot`],
+  ])("reads the held seam when it is bounded by %s", (_bound, command) => {
+    expect(seamRules(command)).toEqual([]);
+  });
+});
+
 /** A forge build result envelope shaped like the gate of record's (result-envelope/v1, the seven [build] gate legs). */
 function envelopeOf(mutate: (envelope: GateEnvelope) => void = () => {}): GateEnvelope {
   const envelope: GateEnvelope = {
@@ -550,6 +653,48 @@ describe("EAT-R084 each code cut carries the machine-accepted Forge gate receipt
   it("refuses to judge without a full candidate sha or without required legs", () => {
     expect(() => gateEnvelopeFindings(envelopeOf(), { candidate: "abab", requiredLegs: LEGS })).toThrow(/candidate/);
     expect(() => gateEnvelopeFindings(envelopeOf(), { candidate: CANDIDATE, requiredLegs: [] })).toThrow(/required legs/);
+  });
+});
+
+/** A field planted as left out of the envelope (no JSON value is this symbol). */
+const LEFT_OUT = Symbol("left out");
+type PredicateField = "status" | "gate_verdict" | "gate_passed" | "step status";
+/** Sets `key` of `target` to `value`, or removes the key when `value` is LEFT_OUT. */
+function plant(target: Record<string, unknown>, key: string, value: unknown): void {
+  if (value === LEFT_OUT) Reflect.deleteProperty(target, key);
+  else target[key] = value;
+}
+/** The control envelope with one predicate field planted: its status, data.gate_verdict, data.gate_passed or the status of the
+ * test leg's step. */
+function envelopeWith(field: PredicateField, value: unknown): unknown {
+  const envelope = JSON.parse(JSON.stringify(envelopeOf())) as Record<string, unknown> & { data: Record<string, unknown> & { steps: Array<Record<string, unknown>> } };
+  if (field === "status") plant(envelope, "status", value);
+  else if (field === "step status") {
+    for (const step of envelope.data.steps) if (step.name === "test") plant(step, "status", value);
+  } else plant(envelope.data, field, value);
+  return envelope;
+}
+function shownValue(value: unknown): string {
+  return value === LEFT_OUT ? "left out" : JSON.stringify(value);
+}
+/**
+ * The pinned forms of EAT-R084's four predicates (refusal #2 U1, members GP1-GP4; the R-B641 set in the enumerate form): each
+ * passes with exactly one value, and every form listed here is refused with the rule beside it. A form not listed is NOT CLAIMED.
+ */
+const PREDICATE_FORMS: ReadonlyArray<readonly [PredicateField, unknown, string, readonly unknown[]]> = [
+  ["status", "success", "gate-not-pass", [LEFT_OUT, null, "", "failure", "cancelled", "skipped", "Success", "SUCCESS", " success", "success ", "successful", "unsuccessful", ["success"], true, 1]],
+  ["gate_verdict", "PASS", "gate-not-pass", [LEFT_OUT, null, "", "FAIL", "pass", "Pass", " PASS", "PASS ", "PASSED", "NOPASS", ["PASS"], true, 1]],
+  ["gate_passed", true, "gate-not-pass", [LEFT_OUT, null, false, 0, 1, "true", "TRUE", "1", "", [true], [1]]],
+  ["step status", "passed", "gate-leg-not-passed", [LEFT_OUT, null, "", "failed", "skipped", "not_run", "success", "Passed", "PASSED", " passed", "passed ", "passed-with-warnings", "unpassed", "pass", ["passed"], true, 1]],
+];
+
+describe("EAT-R084 pinned predicate forms (refusal #2 U1; the R-B641 set in the enumerate form)", () => {
+  it.each(PREDICATE_FORMS.map(([field, value]) => [field, shownValue(value), value] as const))("passes an envelope whose %s is %s, the one passing value", (field, _shown, value) => {
+    expect(gateRules(envelopeWith(field, value))).toEqual([]);
+  });
+
+  it.each(PREDICATE_FORMS.flatMap(([field, , rule, values]) => values.map((value) => [field, shownValue(value), rule, value] as const)))("refuses an envelope whose %s is %s with %s", (field, _shown, rule, value) => {
+    expect(gateRules(envelopeWith(field, value))).toEqual([rule]);
   });
 });
 
@@ -838,6 +983,137 @@ describe("EAT-R082 each slice cut updates W11 and the project skill to its evide
   });
 });
 
+const W11_LANDED_LIVE = featureMatrix("| Hosted develop() | landed-gated | live gate PI-DETACHED-GRANTS | caveat |");
+/** The rules of a slice cut whose receipt holds `rows` and whose W11 row turns landed-gated, judged against the candidate. */
+function landedRules(...blocks: Rows[]): string[] {
+  const receipt = ["# wb-good: a good bead", "", ...blocks.flatMap((rows, index) => [`## 2026-11-06 cut ${index + 1}`, "", blockOf(rows), ""])].join("\n");
+  return cutRules(BASE_TREE, treeWith({ ...SLICE_CUT, [RECEIPT]: receipt, [FEATURE_MATRIX_PATH]: W11_LANDED_LIVE }), { candidate: CANDIDATE });
+}
+
+describe("EAT-R082 pinned witness forms (refusal #2 U3, member GP13; the R-B641 set in the enumerate form)", () => {
+  // A live or closed claim witnesses W11 landed-gated when it is judged against a candidate commit and its block has no EAT-R085
+  // finding. Pinned: each EAT-R085 finding a closing claim can carry leaves W11 unwitnessed; an EAT-R083 or EAT-R086 finding
+  // alone does not; one clean closing claim beside a refused one witnesses.
+  it.each([
+    ["live", "an unknown slice", setRow(claimOf("live"), "slice", "PI-8"), ["slice-unknown"]],
+    ["live", "a malformed gate name", claimOf("live", setRows(LIVE_GATE, [["real infrastructure gate", "PI-DETACHED-GRANTS-"]])), ["gate-name-malformed"]],
+    ["live", "an unknown gate tier", claimOf("live", setRows(LIVE_GATE, [["gate tier", "rumour"]])), ["gate-tier-unknown"]],
+    ["live", "no gate tier line", claimOf("live", setRow(LIVE_GATE, "gate tier", undefined)), ["gate-tier-unknown"]],
+    ["live", "an unknown gate result", claimOf("live", setRows(LIVE_GATE, [["gate result", "green"]])), ["gate-result-unknown"]],
+    ["live", "no gate result line", claimOf("live", setRow(LIVE_GATE, "gate result", undefined)), ["gate-result-unknown"]],
+    ["live", "a fixture-only gate", claimOf("live", setRows(LIVE_GATE, [["gate tier", "fixture"]])), ["closing-gate-fixture-only"]],
+    ["live", "a historical gate tier", claimOf("live", setRows(LIVE_GATE, [["gate tier", "historical"]])), ["closing-gate-historical"]],
+    ["live", "a gate run at another commit", claimOf("live", setRows(LIVE_GATE, [["gate commit", OLDER]])), ["closing-gate-historical"]],
+    ["live", "a failed gate", claimOf("live", setRows(LIVE_GATE, [["gate result", "fail"]])), ["closing-gate-fail"]],
+    ["live", "a skipped gate", claimOf("live", setRows(LIVE_GATE, [["gate result", "skipped"]])), ["closing-gate-skipped"]],
+    ["live", "an unavailable gate", claimOf("live", setRows(LIVE_GATE, [["gate result", "unavailable"]])), ["closing-gate-unavailable"]],
+    ["live", "a gate not run", claimOf("live", setRows(LIVE_GATE, [["gate result", "not-run"]])), ["closing-gate-not-run"]],
+    ["live", "no full gate commit", claimOf("live", setRows(LIVE_GATE, [["gate commit", "abab"]])), ["closing-gate-commit-missing"]],
+    ["live", "no command receipt", claimOf("live", setRows(LIVE_GATE, [["gate receipt", "exit 0"]])), ["closing-gate-receipt-missing"]],
+    ["live", "no named gate", claimOf("live", [["real infrastructure gate", "none"]]), ["closing-gate-unnamed"]],
+    ["live", "no gate line", setRow(claimOf("live", []), "real infrastructure gate", undefined), ["closing-gate-unnamed", "gate-line-missing"]],
+    ["closed", "an unknown gate tier", claimOf("closed", setRows(LIVE_GATE, [["gate tier", "rumour"]])), ["gate-tier-unknown"]],
+    ["closed", "a malformed gate name", claimOf("closed", setRows(LIVE_GATE, [["real infrastructure gate", "PI-DETACHED-GRANTS-"]])), ["gate-name-malformed"]],
+  ])("leaves W11 landed-gated unwitnessed by a %s claim with %s", (_status, _finding, rows, rules) => {
+    expect(landedRules(rows)).toEqual([...rules, "w11-landed-gated-unwitnessed"].sort());
+  });
+
+  it.each([
+    ["an EAT-R083 finding (a red result line left out)", setRow(claimOf("live"), "red result", undefined), ["tdd-leg-missing"]],
+    ["an EAT-R086 finding (an empty owner line)", setRow(claimOf("live"), "owner repo and producer authority", ""), ["field-empty"]],
+  ])("lets a live claim with %s alone witness W11 landed-gated", (_finding, rows, rules) => {
+    expect(landedRules(rows)).toEqual(rules);
+  });
+
+  it("lets one clean live claim witness W11 landed-gated beside a live claim refused with an EAT-R085 finding, in either order", () => {
+    const refused = claimOf("live", setRows(LIVE_GATE, [["gate tier", "rumour"]]));
+    expect(landedRules(refused, claimOf("live"))).toEqual(["gate-tier-unknown"]);
+    expect(landedRules(claimOf("live"), refused)).toEqual(["gate-tier-unknown"]);
+  });
+});
+
+/** A W11 section whose one row is neutral and whose `statement` lines follow its table. */
+function w11With(statement: readonly string[]): string {
+  return matrixOf([...TABLE_HEAD, "| Hosted develop() | planned | e | c |", "", ...statement]);
+}
+/** The W11 rules of a cut that adds a host module naming MechanicalWorkflows under a W11 section holding `statement`. */
+function staleRules(statement: readonly string[]): string[] {
+  const base = treeWith({ [FEATURE_MATRIX_PATH]: w11With(statement) });
+  return cutRules(base, treeWith({ [HOST_MODULE]: "// the MechanicalWorkflows function host\n" }, base));
+}
+
+describe("EAT-R082 pinned absence spellings (refusal #2 U4, members GP11, GP12; the R-B641 set in the enumerate form)", () => {
+  // The absence words are "no binding host" and "no binding-host", singular or plural, in any case, each a whole phrase: a word
+  // character before "no" or after "host"/"hosts" makes it no absence statement. Pinned below on each side and each separator.
+  it.each([
+    ["a word ending in no before it (singular)", "An Arduino binding host is out of scope."],
+    ["a word ending in no before it (plural)", "Arduino binding hosts are out of scope."],
+    ["a word continuing host (singular)", "No binding hostname is configured."],
+    ["a word continuing hosts (plural)", "No binding hostsfile is configured."],
+    ["a word continuing host past ed", "No binding hosted copy exists."],
+    ["an underscore between binding and host", "No binding_host exists."],
+    ["no separator between binding and host", "No bindinghost exists."],
+    ["two hyphens between binding and host", "No binding--host exists."],
+    ["no space between no and binding", "Nobinding host exists."],
+  ])("reads %s as no absence statement", (_form, line) => {
+    expect(staleRules([line])).toEqual([]);
+  });
+
+  it.each([
+    ["at a sentence end", "No binding host."],
+    ["in parentheses", "(no binding host)"],
+    ["before an apostrophe", "No binding host's code exists."],
+    ["before a hyphenated word", "No binding host-side code exists."],
+    ["with a whitespace run between its words", "No binding   host exists."],
+    ["in the plural before an apostrophe", "No binding hosts' list exists."],
+    ["in the hyphenated plural at a sentence end", "No binding-hosts."],
+  ])("reads the absence words %s as a stale absence statement", (_form, line) => {
+    expect(staleRules([line])).toEqual(["w11-absence-stale"]);
+  });
+});
+
+describe("EAT-R082 pinned pointer statuses (refusal #2 U4, member GP14; the R-B641 set in the enumerate form)", () => {
+  // A pointer absent at base and head refuses a live or closed claim (pinned above) and must be named on the blockers line of
+  // every other claim. Pinned here: design-only, partial, an unknown status, a status in another case and a status line left out.
+  const base = treeWithout(BASE_TREE, SKILL_PATH, README);
+  const head = (rows: Rows) => treeWith({ [RECEIPT]: receiptOf(rows), [FEATURE_MATRIX_PATH]: featureMatrix(W11_EVIDENCED) }, base);
+  const disclosedLine = `${SKILL_PATH} and ${PROGRAM_DOCS_DIR} are absent at base`;
+  it.each([
+    ["design-only", []],
+    ["partial", []],
+    ["shipped", ["status-unknown"]],
+    ["Partial", ["status-unknown"]],
+    [undefined, ["status-unknown"]],
+  ])("refuses a claim of status %s whose blockers line names neither absent pointer, and accepts it once both are named", (status, statusRules) => {
+    const rows = setRow(GOOD_ROWS, "slice status", status);
+    expect(cutRules(base, head(rows))).toEqual(["docs-absent-undisclosed", "skill-absent-undisclosed", ...statusRules].sort());
+    expect(cutRules(base, head(setRow(rows, BLOCKERS_LINE, disclosedLine)))).toEqual(statusRules);
+  });
+
+  it("accepts a slice cut that adds the skill and the program docs absent at base and names both on its docs line", () => {
+    const base = treeWithout(BASE_TREE, SKILL_PATH, README);
+    expect(cutRules(base, treeWith(SLICE_CUT, base))).toEqual([]);
+  });
+
+  it("reads a changed path that only begins with the skill path as no skill update", () => {
+    expect(cutRules(BASE_TREE, treeWith({ ...SLICE_CUT, [SKILL_PATH]: BASE_TREE[SKILL_PATH], [`${SKILL_PATH}.orig`]: "# a backup\n" }))).toEqual(["same-cut-skill"]);
+  });
+
+  it("reads a changed path that holds the program docs directory below another directory as no program docs update", () => {
+    const nested = `archive/${README}`;
+    expect(cutRules(BASE_TREE, treeWith({ ...SLICE_CUT, [README]: BASE_TREE[README], [nested]: "# an archived copy\n" }))).toEqual(["same-cut-docs"]);
+  });
+
+  it.each(["design-only", "shipped"])("refuses a %s claim whose blockers line names the absent W11 matrix only when it does not", (status) => {
+    const noMatrix = treeWithout(BASE_TREE, FEATURE_MATRIX_PATH);
+    const rows = setRow(GOOD_ROWS, "slice status", status);
+    const statusRules = status === "shipped" ? ["status-unknown"] : [];
+    const cut = (blockers: string) => cutRules(noMatrix, treeWith({ ...treeWithout(SLICE_CUT, FEATURE_MATRIX_PATH), [RECEIPT]: receiptOf(setRow(rows, BLOCKERS_LINE, blockers)) }, noMatrix));
+    expect(cut("none")).toEqual(["w11-absent-undisclosed", ...statusRules].sort());
+    expect(cut(`${FEATURE_MATRIX_PATH} is absent at base`)).toEqual(statusRules);
+  });
+});
+
 describe("the W11 section in the rendered view (the view every W11 rule reads)", () => {
   it("reads a level-3 subsection as part of the W11 section, so a landed-gated row under it is refused", () => {
     const matrix = matrixOf([...TABLE_HEAD, W11_EVIDENCED, "", "### Status update 2026-11-06", "", ...TABLE_HEAD, W11_LANDED]);
@@ -947,6 +1223,43 @@ describe("the W11 section in the rendered view (the view every W11 rule reads)",
   });
 });
 
+describe("the rendered view: pinned markup forms (refusal #2 U5, members GN1-GN3; the rendered-view set at rung 1)", () => {
+  // Pinned: a hard line break (two trailing spaces or a backslash) and a soft one read as a space; a blockquote, a nested one and a
+  // lazy continuation read as their lines; a link (inline, with a title, with a code-span text, full, collapsed and shortcut
+  // reference with its definition in the same text) and an autolink read as their text. The rest of markdown is NOT CLAIMED
+  // beyond the forms pinned in the block above.
+  it.each([
+    ["a hard line break of two trailing spaces", ["No binding  ", "host exists."]],
+    ["a hard line break of a backslash", ["No binding\\", "host exists."]],
+    ["a soft line break", ["No binding", "host exists."]],
+    ["a blockquote", ["> No binding host exists."]],
+    ["a blockquote nested in a blockquote", ["> > No binding host exists."]],
+    ["a blockquote's lazy continuation line", ["> No binding", "host exists."]],
+    ["an inline link with a code-span text", ["No [`binding`](#w11) host exists."]],
+    ["an inline link with a title", ['No [binding](#w11 "the binding") host exists.']],
+    ["a full reference link", ["No [binding][b] host exists.", "", "[b]: #w11"]],
+    ["a collapsed reference link", ["No [binding][] host exists.", "", "[binding]: #w11"]],
+    ["a shortcut reference link", ["No [binding] host exists.", "", "[binding]: #w11"]],
+  ])("renders %s as one line of its text", (_form, lines) => {
+    expect(renderedText(lines.join("\n"))).toBe("No binding host exists.");
+  });
+
+  it("renders an autolink as its URL text", () => {
+    expect(renderedText("Ask <https://binding.example.invalid> first.\n")).toBe("Ask https://binding.example.invalid first.");
+  });
+
+  it.each([
+    ["a hard line break of two trailing spaces", ["No binding  ", "host exists."]],
+    ["a hard line break of a backslash", ["No binding\\", "host exists."]],
+    ["a blockquote", ["> No binding host exists."]],
+    ["a blockquote nested in a blockquote", ["> > No binding host exists."]],
+    ["an inline link with a code-span text", ["No [`binding`](#w11) host exists."]],
+    ["a full reference link defined inside the W11 section", ["No [binding][b] host exists.", "", "[b]: #w11"]],
+  ])("refuses a stale no-binding-host statement written with %s once a host module names MechanicalWorkflows", (_form, statement) => {
+    expect(staleRules(statement)).toEqual(["w11-absence-stale"]);
+  });
+});
+
 describe("the release blocks a cut adds to a per-bead receipt", () => {
   const prose = "# wb-good: a good bead\n\n## 2026-11-05 first cut\n\nprose only\n";
   const entry = (rows: Rows) => `\n## 2026-11-06 next cut\n\n${blockOf(rows)}\n`;
@@ -986,6 +1299,14 @@ describe("the release blocks a cut adds to a per-bead receipt", () => {
     const nested = `${RECEIPTS_DIR}mwi/wb-good.md`;
     const base = treeWith({ [nested]: prose });
     const verdict = judgeCut(cutOf(base, treeWith({ [nested]: `${prose}${entry(setRow(GOOD_ROWS, "red result", undefined))}` }, base)));
+    expect(verdict.findings).toEqual([]);
+    expect(verdict.receipts).toEqual([]);
+  });
+
+  it("judges no block of a path outside docs/workbench/receipts/ whose name ends like a per-bead receipt's", () => {
+    const outside = "docs/workbench/notes/xxxwb-good.md";
+    expect(outside.slice(RECEIPTS_DIR.length)).toBe("wb-good.md");
+    const verdict = judgeCut(cutOf(BASE_TREE, treeWith({ [outside]: receiptOf(setRow(GOOD_ROWS, "red result", undefined)) })));
     expect(verdict.findings).toEqual([]);
     expect(verdict.receipts).toEqual([]);
   });
@@ -1032,6 +1353,198 @@ describe("EAT-R087 program cuts leave historical TRACEABILITY and shared receipt
     expect(cutRules(BASE_TREE, treeWith({ [`${RECEIPTS_DIR}status.md`]: "| slice | status |\n" }))).toEqual(["receipt-not-per-bead"]);
     expect(cutRules(BASE_TREE, treeWith({ [`${RECEIPTS_DIR}mwi/wb-good.md`]: plainReceipt }))).toEqual(["receipt-not-per-bead"]);
     expect(cutRules(BASE_TREE, treeWith({ [`${RECEIPTS_DIR}wb-fabricated.md`]: "# wb-fabricated: x\n\n## 2026-11-06 r\n" }))).toEqual(["receipt-bead-not-real"]);
+  });
+
+  it("names the receipt on a finding of a receipt's block, and no receipt on a finding of the cut's paths", () => {
+    const [blockFinding] = judgeCut(cutOf(BASE_TREE, treeWith({ ...SLICE_CUT, [RECEIPT]: receiptOf(setRow(GOOD_ROWS, "red result", undefined)) }))).findings;
+    expect([blockFinding.rule, blockFinding.receipt]).toEqual(["tdd-leg-missing", RECEIPT]);
+    const [pathFinding] = judgeCut(cutOf(BASE_TREE, treeWith({ [TRACEABILITY_PATH]: "# rewritten\n" }))).findings;
+    expect(Object.keys(pathFinding)).toEqual(["requirement", "rule", "detail"]);
+  });
+
+  it("judges no added path that holds the receipts directory below another directory as a receipt", () => {
+    expect(cutRules(BASE_TREE, treeWith({ [`archive/${RECEIPTS_DIR}status.md`]: "| slice | status |\n" }))).toEqual([]);
+  });
+
+  it("refuses to judge a gate envelope without a candidate commit", () => {
+    expect(() => judgeCut(cutOf(BASE_TREE, treeWith(SLICE_CUT), { envelope: envelopeOf() }))).toThrow("a gate envelope is judged against a candidate commit");
+  });
+
+  it("names a deleted TRACEABILITY deleted and a rewritten one different from the cut base", () => {
+    const details = (head: Tree) => judgeCut(cutOf(BASE_TREE, head)).findings.map((finding) => finding.detail);
+    expect(details(treeWithout(BASE_TREE, TRACEABILITY_PATH))).toEqual([`${TRACEABILITY_PATH} is deleted: the historical record is frozen`]);
+    expect(details(treeWith({ [TRACEABILITY_PATH]: "# rewritten\n" }))).toEqual([`${TRACEABILITY_PATH} differs from the cut base: the historical record is frozen`]);
+  });
+
+  it("refuses no index added outside docs/ at the repository root", () => {
+    expect(cutRules(BASE_TREE, treeWith({ "src/docs/index.md": "- status\n", "examples/docs/INDEX.md": "- status\n" }))).toEqual([]);
+  });
+});
+
+describe("pinned field forms of the release block judges (the discovery battery's survivors on cut #2, each now a row)", () => {
+  it("reads a label with spaces before its colon as the trimmed label", () => {
+    const [block] = parseReleaseBlocks(["```mwi-release", "bead : wb-good", "  slice:PI-7", "```", ""].join("\n"));
+    expect([...block.fields.entries()]).toEqual([
+      ["bead", "wb-good"],
+      ["slice", "PI-7"],
+    ]);
+  });
+
+  it("names a repeated label field-duplicate and a line without a label line-malformed, each alone", () => {
+    const duplicate = receiptBlockFindings(parseReleaseBlocks(receiptOf(GOOD_ROWS).replace("```\n", "bead: wb-good\n```\n"))[0], blockContext);
+    expect(duplicate.map((finding) => `${finding.rule}: ${finding.detail}`)).toEqual(["field-duplicate: bead"]);
+    const malformed = receiptBlockFindings(parseReleaseBlocks(receiptOf(GOOD_ROWS).replace("```\n", "a line without a label\n```\n"))[0], blockContext);
+    expect(malformed.map((finding) => `${finding.rule}: ${finding.detail}`)).toEqual(["line-malformed: a line without a label"]);
+  });
+
+  it.each([...TDD_FIELDS])("refuses an empty '%s' leg as not run", (leg) => {
+    expect(rulesOf(setRow(GOOD_ROWS, leg, ""))).toEqual(["tdd-leg-not-run"]);
+  });
+
+  it("reads a not-run label only at the start of a leg's value", () => {
+    expect(rulesOf(setRow(GOOD_ROWS, "red result", "9 failed | 3 passed (12); two suites were not run"))).toEqual([]);
+    expect(rulesOf(setRow(GOOD_ROWS, "first failing assertion", "the leg was not run: expected [] to equal [ 'x' ]"))).toEqual([]);
+  });
+
+  it.each([
+    ["a count of 10", "10 failed | 2 passed (12)", []],
+    ["a count of 100", "100 failed | 2 passed (102)", []],
+    ["a count with a leading zero", "01 failed | 11 passed (12)", ["red-not-failing"]],
+    ["the word failed run into another word", "1 failedover | 11 passed (12)", ["red-not-failing"]],
+  ])("reads a red result with %s", (_form, result, rules) => {
+    expect(rulesOf(setRow(GOOD_ROWS, "red result", result))).toEqual(rules);
+  });
+
+  it.each([
+    ["a count of 10", "10 passed (10)", []],
+    ["a count with a leading zero", "012 passed (12)", ["rerun-not-green"]],
+    ["the word passed run into another word", "12 passedover (12)", ["rerun-not-green"]],
+  ])("reads a positive rerun with %s", (_form, passed, rules) => {
+    expect(rulesOf(setRow(GOOD_ROWS, "positive rerun", `./node_modules/.bin/vitest run ${SEAM} -> ${passed}`))).toEqual(rules);
+  });
+
+  it("reads a mutant count line whose label holds the word mutant after its start as no mutant line", () => {
+    expect(rulesOf(setRow(GOOD_ROWS, "surviving mutant count", "0"))).toEqual([]);
+  });
+
+  it.each([
+    ["one character before a full sha", `x${CANDIDATE}`],
+    ["one hex digit after a full sha", `${CANDIDATE}0`],
+  ])("refuses a closing gate commit of %s as no full 40-hex commit", (_form, commit) => {
+    expect(rulesOf(claimOf("live", setRows(LIVE_GATE, [["gate commit", commit]])))).toEqual(["closing-gate-commit-missing"]);
+  });
+
+  it.each([
+    ["a leading upper-case letter before a full sha", `A${CANDIDATE}`],
+    ["one hex digit after a full sha", `${CANDIDATE}0`],
+  ])("refuses to judge a block against a candidate of %s", (_form, candidate) => {
+    const [block] = parseReleaseBlocks(receiptOf(GOOD_ROWS));
+    expect(() => receiptBlockFindings(block, { ...blockContext, candidate })).toThrow(/full 40-hex/);
+    expect(() => gateEnvelopeFindings(envelopeOf(), { candidate, requiredLegs: LEGS })).toThrow(/candidate/);
+  });
+
+  it("fails closed without a fileExists reader instead of skipping the real-seam check, even for a block that names no seam", () => {
+    const missing = undefined as unknown as (path: string) => boolean;
+    for (const rows of [GOOD_ROWS, setRow(GOOD_ROWS, "red command", "not run: the seam needs the installed host")]) {
+      const [block] = parseReleaseBlocks(receiptOf(rows));
+      expect(() => receiptBlockFindings(block, { ...blockContext, fileExists: missing })).toThrow("receiptBlockFindings needs a fileExists reader for the seam paths");
+    }
+  });
+
+  it("skips a bead export line that holds only whitespace", () => {
+    expect([...readBeadIds('{"id":"wb-a1"}\n   \n\t\n{"id":"wb-a2"}\n')]).toEqual(["wb-a1", "wb-a2"]);
+  });
+
+  it.each(["PI2-GRANTS", "PI-V2", "A-1", "PI-DETACHED-GRANTS2"])("accepts the gate name %s (upper-case letters and digits in hyphenated parts)", (name) => {
+    expect(rulesOf(claimOf("partial", setRows(LIVE_GATE, [["real infrastructure gate", name]])))).toEqual([]);
+  });
+
+  it.each(["PI-DETACHED-GRANTSx", "2PI-GRANTS", "PI--GRANTS", "PI-DETACHED_GRANTS", "PI-DETACHED-GRANTS-"])("refuses the malformed gate name %s", (name) => {
+    expect(rulesOf(claimOf("partial", setRows(LIVE_GATE, [["real infrastructure gate", name]])))).toEqual(["gate-name-malformed"]);
+  });
+});
+
+describe("pinned forge.toml readings (the discovery battery's survivors on cut #2, each now a row)", () => {
+  it.each([
+    ["a gate line with a trailing comment", '[build]\ngate = ["lint", "test"] # the gate of record\n', ["lint", "test"]],
+    ["a gate line after a line that only ends in gate =", '[build]\nxgate = ["a"]\ngate = ["lint"]\n', ["lint"]],
+    ["an empty leg name in the gate array", '[build]\ngate = ["lint", ""]\n', ["lint"]],
+  ])("reads the [build] gate legs of %s", (_form, toml, legs) => {
+    expect(requiredGateLegs(toml)).toEqual(legs);
+  });
+
+  it("fails closed on a [build] gate line followed by text other than a comment", () => {
+    expect(() => requiredGateLegs('[build]\ngate = ["lint"] trailing\n')).toThrow(/\[build\] gate/);
+  });
+
+  it("reads [build.commands.<tier>] tables written indented, with upper-case letters, digits or an underscore, and nothing else as a tier", () => {
+    const toml = ['[build]', 'gate = ["lint"]', "", "  [build.commands.indented]", "[build.commands.Live2]", "[build.commands.a_b]", "x[build.commands.prefixed]", "[build.commands.suffixed] extra", "[build.commands.]", ""].join("\n");
+    expect([...declaredForgeTiers(toml)].sort()).toEqual(["Live2", "a_b", "indented", "lint"]);
+  });
+});
+
+describe("pinned W11 heading and rendered-view forms (the discovery battery's survivors on cut #2, each now a row)", () => {
+  it.each([
+    ["a heading beginning W110", "## W110: Another feature"],
+    ["a heading beginning W11a", "## W11a: Another feature"],
+    ["a heading naming W11 after its first word", "## Notes on W11"],
+  ])("reads %s as no W11 heading, so the W11 section is still found", (_form, heading) => {
+    const matrix = matrixOf([...TABLE_HEAD, W11_LANDED], { after: [heading, "", "text"] });
+    expect(w11Headings(matrix)).toEqual([W11_TITLE]);
+    expect(sliceRules(matrix)).toEqual(["w11-landed-gated-unwitnessed"]);
+  });
+
+  it("reads a heading beginning W11 and a hyphen as a second W11 heading", () => {
+    const matrix = matrixOf([...TABLE_HEAD, W11_EVIDENCED], { after: ["## W11-extra: more", "", "text"] });
+    expect(w11Headings(matrix)).toEqual([W11_TITLE, "W11-extra: more"]);
+    expect(sliceRules(matrix)).toEqual(["w11-heading-not-unique"]);
+  });
+
+  it.each([
+    ["inline HTML before the text", "<i></i> No binding host exists."],
+    ["inline HTML after the text", "No binding host exists. <i></i>"],
+  ])("renders a paragraph with %s without the space the HTML leaves", (_form, line) => {
+    expect(renderedText(line)).toBe("No binding host exists.");
+  });
+
+  it("reads the Status and Feature cells of a W11 table whose first column is Status", () => {
+    const matrix = matrixOf(["| Status | Feature |", "| --- | --- |", "| landed-gated | Hosted develop() |"]);
+    expect(w11Rows(w11Section(matrix) ?? "")).toEqual([{ feature: "Hosted develop()", status: "landed-gated" }]);
+    expect(sliceRules(matrix)).toEqual(["w11-landed-gated-unwitnessed"]);
+  });
+
+  it("reads a W11 status cell that begins with inline HTML as its status", () => {
+    const matrix = matrixOf([...TABLE_HEAD, "| Hosted develop() | <i></i> landed-gated | e | c |"]);
+    expect(w11Statuses(w11Section(matrix) ?? "")).toEqual(["landed-gated"]);
+  });
+
+  it.each([
+    ["an upper-case hexadecimal reference", "&#X41;", "A"],
+    ["an upper-case hexadecimal digit", "&#x4A;", "J"],
+    ["a decimal reference of seven digits", "&#0000065;", "A"],
+  ])("decodes %s", (_form, reference, character) => {
+    expect(renderedText(`x${reference}y\n`)).toBe(`x${character}y`);
+  });
+
+  it.each(["&#00000065;", "&#x0000041;"])("keeps %s, a reference with more digits than its form allows, as written", (reference) => {
+    expect(renderedText(`x${reference}y\n`)).toBe(`x${reference}y`);
+  });
+
+  it("decodes the smallest decimal reference above 0, and keeps &#0; as written", () => {
+    expect(renderedText("x&#1;y &#0;\n")).toBe(`x${String.fromCodePoint(1)}y &#0;`);
+  });
+
+  it("finds a section whose heading is the first token of the markdown", () => {
+    expect(markdownSection("## Part\n\ntext\n\n## Next\n", "Part")).toBe("## Part\n\ntext\n\n");
+  });
+
+  it.each([
+    ["a fenced code block", ["```", "No binding host exists.", "```"]],
+    ["an indented code block", ["    No binding host exists."]],
+    ["an ATX heading", ["### No binding host exists."]],
+    ["a setext heading", ["No binding host exists.", "---"]],
+  ])("renders %s as one line of its text", (_form, lines) => {
+    expect(renderedText(lines.join("\n"))).toBe("No binding host exists.");
   });
 });
 
@@ -1216,6 +1729,19 @@ describe("the CLI judges a real Git cut (scratch repository)", () => {
     expect(flagValue.stderr).toMatch(/--base needs a value/);
   });
 
+  it("exits 2 outside a Git work tree, with git's message on the first stderr line and the usage on the second", () => {
+    const outside = nonRepoScratch("mwi-release-outside-");
+    try {
+      const run = cli(outside.dir, "--base", "HEAD");
+      expect(run.status).toBe(2);
+      const lines = run.stderr.split("\n");
+      expect(lines[0]).toMatch(/^mwi-release: not inside a Git work tree: \S/);
+      expect(lines.slice(1)).toEqual(["usage: node qa/workbench/mwi-release.mjs --base <rev> [--head <rev>] [--commit <rev>] [--gate-envelope <path>]", ""]);
+    } finally {
+      outside.dispose();
+    }
+  });
+
   it("exits 2 without a bead export, and on an envelope judged against a forge.toml that declares no [build] gate", () => {
     const { repo, base } = repoAtBase();
     rmSync(join(repo, ".beads", "issues.jsonl"));
@@ -1240,6 +1766,214 @@ describe("the CLI judges a real Git cut (scratch repository)", () => {
     const run = cli(repo, ...argv(base));
     expect(run.status).toBe(2);
     expect(run.stderr).toContain(`${flag} given twice`);
+  });
+
+  // Refusal #2 U3 (members GP9, GP10; the R-B641 set in the enumerate form): the pinned revision spellings of --base, --head and
+  // --commit are a full sha, a 12-hex abbreviation and HEAD (HEAD~1 for --base); each is resolved by git before it is compared or
+  // printed. Other spellings are NOT CLAIMED.
+  it.each([
+    ["HEAD", (head: string) => ["--head", head, "--commit", "HEAD"]],
+    ["a 12-hex abbreviation", (head: string) => ["--head", head, "--commit", head.slice(0, 12)]],
+  ])("resolves --commit written as %s to the cut's head commit and closes the cut on its gate envelope", (_spelling, argv) => {
+    const { repo, base } = repoAtBase();
+    writeTree(repo, SLICE_CUT);
+    const head = commitAll(repo);
+    const run = cli(repo, "--base", base, ...argv(head), "--gate-envelope", envelopeFile(head));
+    expect(run.status, run.stderr).toBe(0);
+    expect(run.verdict?.candidate).toBe(head);
+    expect(run.verdict?.closure).toEqual({ state: "closable", reasons: [] });
+  });
+
+  it.each([
+    ["HEAD", (head: string) => ["--head", "HEAD", "--commit", head]],
+    ["a 12-hex abbreviation", (head: string) => ["--head", head.slice(0, 12), "--commit", "HEAD"]],
+  ])("resolves --head written as %s to the commit it names, and closes the cut on its gate envelope", (_spelling, argv) => {
+    const { repo, base } = repoAtBase();
+    writeTree(repo, SLICE_CUT);
+    const head = commitAll(repo);
+    const run = cli(repo, "--base", base, ...argv(head), "--gate-envelope", envelopeFile(head));
+    expect(run.status, run.stderr).toBe(0);
+    expect(run.verdict?.head).toBe(head);
+    expect(run.verdict?.candidate).toBe(head);
+    expect(run.verdict?.closure).toEqual({ state: "closable", reasons: [] });
+  });
+
+  it("prints the resolved commits of --base HEAD~1 and --head HEAD, never the spellings", () => {
+    const { repo, base } = repoAtBase();
+    writeTree(repo, SLICE_CUT);
+    const head = commitAll(repo);
+    const run = cli(repo, "--base", "HEAD~1", "--head", "HEAD");
+    expect(run.status, run.stderr).toBe(0);
+    expect([run.verdict?.base, run.verdict?.head, run.verdict?.candidate]).toEqual([base, head, null]);
+    expect(run.verdict?.receipts).toEqual([RECEIPT]);
+  });
+
+  it.each(["--head", "--commit"])("exits 2 on an unknown revision given to %s", (flag) => {
+    const { repo, base } = repoAtBase();
+    const argv = flag === "--head" ? ["--head", "no-such-revision"] : ["--head", base, "--commit", "no-such-revision"];
+    const run = cli(repo, "--base", base, ...argv);
+    expect(run.status).toBe(2);
+    expect(run.stderr).toContain("unknown revision no-such-revision");
+  });
+
+  // The discovery battery's CLI survivors on cut #2 (each now a row): the candidate error's wording, the change letters of a real
+  // Git cut (an added shared index, a receipt the base holds that the cut appends to), untracked files beside a committed head,
+  // an unknown flag given a value, and the missing --base message.
+  it("names the --head it compared, or that no --head names one, when --commit is not the cut's head commit", () => {
+    const { repo, base } = repoAtBase();
+    writeTree(repo, SLICE_CUT);
+    const head = commitAll(repo);
+    const other = cli(repo, "--base", base, "--head", head, "--commit", base, "--gate-envelope", envelopeFile(base));
+    expect(other.stderr.split("\n")[0]).toBe(`mwi-release: --commit ${base} is not the cut's head commit (--head ${head}): the candidate is the head of the cut`);
+    const headless = cli(repo, "--base", base, "--commit", head, "--gate-envelope", envelopeFile(head));
+    expect(headless.stderr.split("\n")[0]).toBe(`mwi-release: --commit ${head} is not the cut's head commit (no --head names one): the candidate is the head of the cut`);
+  });
+
+  it("refuses a shared index the cut adds, committed or in the working tree", () => {
+    const { repo, base } = repoAtBase();
+    writeTree(repo, { [`${RECEIPTS_DIR}INDEX.md`]: "- [wb-good](wb-good.md)\n" });
+    const working = cli(repo, "--base", base);
+    expect(working.status, working.stderr).toBe(1);
+    expect(working.verdict?.findings.map((finding) => finding.rule)).toEqual(["shared-index-added"]);
+    const head = commitAll(repo);
+    const committed = cli(repo, "--base", base, "--head", head);
+    expect(committed.status, committed.stderr).toBe(1);
+    expect(committed.verdict?.findings.map((finding) => finding.rule)).toEqual(["shared-index-added"]);
+  });
+
+  it("judges only the block a cut appends to a receipt the base holds, and refuses a bad appended block", () => {
+    const old = receiptOf(setRow(GOOD_ROWS, "red result", undefined));
+    const { repo, base } = repoAtBase({ [RECEIPT]: old });
+    writeTree(repo, { ...SLICE_CUT, [RECEIPT]: `${old}\n## 2026-11-07 next cut\n\n${blockOf(GOOD_ROWS)}\n` });
+    const good = commitAll(repo);
+    const run = cli(repo, "--base", base, "--head", good);
+    expect(run.status, run.stderr).toBe(0);
+    expect(run.verdict?.receipts).toEqual([RECEIPT]);
+    expect(run.verdict?.findings).toEqual([]);
+    writeTree(repo, { [RECEIPT]: `${old}\n## 2026-11-07 next cut\n\n${blockOf(setRow(GOOD_ROWS, "positive rerun", undefined))}\n` });
+    const bad = commitAll(repo);
+    const refused = cli(repo, "--base", base, "--head", bad);
+    expect(refused.status, refused.stderr).toBe(1);
+    expect(refused.verdict?.findings.map((finding) => finding.rule)).toEqual(["tdd-leg-missing"]);
+  });
+
+  it("judges a committed head without the untracked files of the working tree", () => {
+    const { repo, base } = repoAtBase();
+    writeTree(repo, SLICE_CUT);
+    const head = commitAll(repo);
+    writeTree(repo, { [`${RECEIPTS_DIR}INDEX.md`]: "- [wb-good](wb-good.md)\n" });
+    const run = cli(repo, "--base", base, "--head", head);
+    expect(run.status, run.stderr).toBe(0);
+    expect(run.verdict?.findings).toEqual([]);
+  });
+
+  it("reads a flag value that holds two hyphens after its start as the value", () => {
+    const { repo, base } = repoAtBase();
+    writeTree(repo, SLICE_CUT);
+    const head = commitAll(repo);
+    const outside = makeScratch("mwi-release-envelope-");
+    roots.push(outside);
+    const path = join(outside, "gate--envelope.json");
+    writeFileSync(path, JSON.stringify(envelopeOf((envelope) => Object.assign(envelope.data, { gated_commit: head }))));
+    const run = cli(repo, "--base", base, "--head", head, "--commit", head, "--gate-envelope", path);
+    expect(run.status, run.stderr).toBe(0);
+    expect(run.verdict?.closure).toEqual({ state: "closable", reasons: [] });
+  });
+
+  it("exits 2 on an unknown flag given a value, and names a missing --base", () => {
+    const { repo, base } = repoAtBase();
+    const unknown = cli(repo, "--base", base, "--unknown", "x");
+    expect(unknown.status).toBe(2);
+    expect(unknown.stderr.split("\n")[0]).toBe("mwi-release: unknown argument --unknown");
+    const noBase = cli(repo, "--head", base);
+    expect(noBase.status).toBe(2);
+    expect(noBase.stderr.split("\n")[0]).toBe("mwi-release: --base is required");
+  });
+
+  it("finds a host module whose text holds the letters mechanical inside another word, in any case (biomechanical, MECHANICALLY)", () => {
+    const { repo, base } = repoAtBase();
+    writeTree(repo, { [`${HOSTS_DIR}motion.ts`]: "// a biomechanical model\n", [`${HOSTS_DIR}deep/x.ts`]: "// MECHANICALLY generated\n" });
+    const run = cli(repo, "--base", base);
+    expect(run.status, run.stderr).toBe(1);
+    expect(run.verdict?.findings.map((finding) => finding.detail)).toEqual([`W11 states that no binding host exists while ${HOSTS_DIR}deep/x.ts, ${HOSTS_DIR}motion.ts names MechanicalWorkflows`]);
+  });
+});
+
+const ZERO_WIDTH_SPACE = String.fromCodePoint(0x200b);
+const CYRILLIC_O = String.fromCodePoint(0x043e);
+interface Residual {
+  readonly id: string;
+  readonly family: string;
+  /** The quiet rows: inputs of the family and the exact reading the validator gives each, without the rule the family escapes. */
+  readonly quiet: ReadonlyArray<readonly [string, () => string[], readonly string[]]>;
+  /** The live twin: the nearest pinned input, which the validator refuses with that rule. */
+  readonly twin: readonly [string, () => string[]];
+  readonly rule: string;
+}
+/** A slice-cut red command `command` rerun as the same command, judged under the control context. */
+function tierRules(command: string): string[] {
+  return rulesOf(setRows(GOOD_ROWS, [["red command", command], ["positive rerun", `${command} -> 2 passed (2)`]]));
+}
+/**
+ * The named RESIDUALS of the validator (the enumerate form of rule 19(c)): escape families inside the claimed subject that the
+ * validator is quiet on, each with pinned quiet rows and a live twin. The module header's RESIDUALS section names the same ids in
+ * the same order (the last row below reads it).
+ */
+const RESIDUALS: readonly Residual[] = [
+  {
+    id: "R-ABSENCE-OTHER-WORDS",
+    family: "a W11 absence statement not written with the absence words in one rendered line",
+    rule: "w11-absence-stale",
+    quiet: [
+      ["a paraphrase", () => staleRules(["There is no host that binds MechanicalWorkflows."]), []],
+      ["the words split across two table cells", () => staleRules([...TABLE_HEAD, "| Hosted develop() | planned | No binding | host exists. |"]), []],
+      ["the words split across two paragraphs", () => staleRules(["No binding", "", "host exists."]), []],
+      ["a zero-width space inside a word", () => staleRules([`No bind${ZERO_WIDTH_SPACE}ing host exists.`]), []],
+      ["a Cyrillic letter in place of a Latin one", () => staleRules([`N${CYRILLIC_O} binding host exists.`]), []],
+    ],
+    twin: ["the absence words in one line", () => staleRules(["No binding host exists."])],
+  },
+  {
+    id: "R-REFDEF-OUTSIDE",
+    family: "a reference link in the W11 section whose definition lies outside the section (the section is lexed alone)",
+    rule: "w11-absence-stale",
+    quiet: [["its definition after the W12 section", () => {
+      const matrix = matrixOf([...TABLE_HEAD, "| Hosted develop() | planned | e | c |", "", "No [binding][b] host exists."], { after: ["[b]: #w11"] });
+      const base = treeWith({ [FEATURE_MATRIX_PATH]: matrix });
+      return cutRules(base, treeWith({ [HOST_MODULE]: "// the MechanicalWorkflows function host\n" }, base));
+    }, []]],
+    twin: ["its definition inside the W11 section", () => staleRules(["No [binding][b] host exists.", "", "[b]: #w11"])],
+  },
+  {
+    id: "R-TIER-TRUNCATED",
+    family: "a forge run tier spelled with a character other than a lower-case ASCII letter, a digit or a hyphen, read only up to that character",
+    rule: "seam-missing",
+    quiet: [
+      ["an underscore after a declared tier", () => tierRules("forge run test_extra"), []],
+      ["an upper-case letter after a declared tier", () => tierRules("forge run testX"), []],
+      ["a dot after a declared tier", () => tierRules("forge run test.extra"), []],
+    ],
+    twin: ["a hyphen after a declared tier", () => tierRules("forge run test-extra")],
+  },
+];
+
+describe("the named residuals (rule 19(c), the enumerate form): each family's quiet rows and its live twin", () => {
+  it.each(RESIDUALS.flatMap((residual) => residual.quiet.map(([form, read, reading]) => [residual.id, form, residual.rule, read, reading] as const)))("residual %s quiet row (%s): read without %s, as its pinned reading", (_id, _form, rule, read, reading) => {
+    expect(reading).not.toContain(rule);
+    expect(read()).toEqual(reading);
+  });
+
+  it.each(RESIDUALS.map((residual) => [residual.id, residual.twin[0], residual.rule, residual.twin[1]] as const))("residual %s live twin (%s): refused with %s", (_id, _form, rule, read) => {
+    expect(read()).toEqual([rule]);
+  });
+
+  it("the module header names exactly these residuals, in order, each with its family", () => {
+    const header = readFileSync(SCRIPT, "utf8").split("*/")[0];
+    const section = header.slice(header.indexOf(" * RESIDUALS"));
+    expect(header.indexOf(" * RESIDUALS")).toBeGreaterThan(0);
+    expect([...section.matchAll(/\bR-[A-Z0-9]+(?:-[A-Z0-9]+)+\b/g)].map((match) => match[0])).toEqual(RESIDUALS.map((residual) => residual.id));
+    const flat = section.replace(/\s*\n \*\s*/g, " ");
+    for (const residual of RESIDUALS) expect(flat, residual.id).toContain(`${residual.id}: ${residual.family}`);
   });
 });
 
@@ -1284,8 +2018,8 @@ describe("the real tree", () => {
 
   it("wb-j5y5's receipt lands slice PI-7 explicitly partial with all six requirements tied to red mutants", () => {
     const blocks = parseReleaseBlocks(readFileSync(join(REPO, RECEIPTS_DIR, "wb-j5y5.md"), "utf8"));
-    // One release block per cut entry: cut #1 (9c3cd835) and cut #2 (the respin of refusal #1).
-    expect(blocks).toHaveLength(2);
+    // One release block per cut entry: cut #1 (9c3cd835), cut #2 (the respin of refusal #1) and cut #3 (the respin of refusal #2).
+    expect(blocks).toHaveLength(3);
     for (const { fields } of blocks) {
       expect([fields.get("bead"), fields.get("slice"), fields.get("slice status"), fields.get("real infrastructure gate")]).toEqual(["wb-j5y5", "PI-7", "partial", "none"]);
       expect(fields.get("requirements")).toBe("EAT-R082, EAT-R083, EAT-R084, EAT-R085, EAT-R086, EAT-R087");

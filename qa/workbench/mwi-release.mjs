@@ -9,13 +9,20 @@
  * Pure node: no src/ or dist/ import. The judges are pure functions of their inputs; only readCutFromGit and the CLI read Git or
  * the file system.
  *
+ * THE PINNED SET (cut #3; the enumerate-the-resolvable form of rule 19(c) for the claim words frozen at R-B641, and the
+ * rendered-view words at rung 1 of their own guard): every positive sentence of this module claims the forms
+ * test/workbench-mwi-release.test.ts pins, and each names those forms. A form a sentence does not name is NOT CLAIMED. The escape
+ * families inside the claimed subject that the validator is known to be quiet on are the RESIDUALS at the end of this comment;
+ * each has quiet rows and a live twin in the test.
+ *
  * THE RELEASE BLOCK. A release receipt is a per-bead receipt, docs/workbench/receipts/<bead-id>.md. Its release blocks are the
  * fenced code blocks (a backtick or a tilde fence) at the TOP LEVEL of its markdown whose info string, as marked reads it
- * (trimmed), is exactly `mwi-release`: a longer info string (`mwi-releases`, `mwi-release v2`) or another case (`MWI-RELEASE`)
- * is no release block, and a fenced block inside a list item or a blockquote is not read. Every release block is read; the
- * validator does not count blocks per receipt entry. Each non-blank line of a block is one `label: value` field whose label ends
- * at the first colon; blank lines are skipped, and a non-blank line without a label and a repeated label are kept as the block's
- * malformed entries. Its fields:
+ * (trimmed), is exactly `mwi-release`. Pinned as no release block: the info strings `mwi-releases`, `mwi-release extra`,
+ * `mwi-release-v2`, `xmwi-release`, `MWI-RELEASE` and `Mwi-Release`, and a fenced block inside a blockquote, a nested blockquote,
+ * a bulleted list item or an ordered list item; pinned as read: a tilde fence and an info string padded with spaces. Every release
+ * block is read; the validator does not count blocks per receipt entry. Each non-blank line of a block is one `label: value` field
+ * whose label ends at the first colon; blank lines are skipped, and a non-blank line without a label (an empty label included) and
+ * a repeated label are kept as the block's malformed entries. Its fields:
  *  - the claim: contract (workbench.mwi-release/v1), program, bead, slice (PI-0..PI-7), slice status (design-only, partial, live,
  *    closed), requirements (the EAT ids the cut serves) and real infrastructure gate (a gate name such as PI-DETACHED-GRANTS, or
  *    `none`); a named gate adds gate tier, gate result, gate commit and gate receipt;
@@ -24,31 +31,77 @@
  *  - the red-first legs: red command, red result, first failing assertion, positive rerun, and one `mutant <EAT id>` line per
  *    listed requirement.
  *
- * THE RENDERED VIEW. Every docs rule reads markdown as marked's lexer renders it (renderedText): inline markup (code spans,
- * emphasis, links) reads as its text, the character references &#NN; &#xNN; &amp; &lt; &gt; &quot; &apos; &nbsp; read as the
- * characters they render, a whitespace run reads as one space, and raw HTML (an HTML comment included) reads as nothing. A section
- * is found by its heading's rendered text (markdownSection): an ATX heading with a closing sequence, an indented ATX heading and a
- * setext heading are the same heading, while a heading inside an HTML comment, a fenced block or an indented code block is none.
+ * THE SEAMS a red command names (EAT-R083): each test file path and each forge run tier the command spells. A test file path is a
+ * run of ASCII letters, digits, '_', '.', '/' and '-' that begins test/, holds at least one of those characters next, and ends
+ * .test.ts or .census.ts, with no such character just before it (an optional ./ before test/ is dropped) and none just after it.
+ * Pinned as seams: a path with a digit, with underscores, in one and in two subdirectories, with an inner dot, with a ./ prefix,
+ * and bounded by a colon, double quotes, parentheses or a space; pinned as no seam: a path that follows a letter, a digit, '_',
+ * '.', '/' or '-', a path followed by one of them, a path with nothing between test/ and its suffix, and a path outside test/. A
+ * forge run tier is read after the words `forge run ` (one space after each word, and no word character just before forge) as the
+ * longest run of lower-case ASCII letters, digits and '-' whose first character is a letter or a digit. Pinned: a tier with a
+ * digit, a tier that begins with a digit, a one-character tier and a hyphenated tier; a hyphen before forge, which is no word
+ * character; and as no tier, a letter, a digit or an underscore just before forge, and two spaces after forge or after run. A seam
+ * is real when the head tree holds its file, or when forge.toml declares its tier as a [build] gate leg or a
+ * [build.commands.<tier>] table (declaredForgeTiers).
+ *
+ * THE GATE ENVELOPE (EAT-R084). Its four predicates each pass exactly one value: the envelope's status the string success,
+ * data.gate_verdict the string PASS, data.gate_passed the boolean true, and the status of each required leg's one step the string
+ * passed. Pinned as refused, for each of the three string predicates: the field left out, null, the empty string, another word,
+ * the passing word in another case, padded with a space before it or after it, inside a longer word, as a one-element array, and
+ * true and 1 in its place; for gate_passed: the field left out, null, false, 0, 1, the strings true, TRUE, 1 and the empty
+ * string, and the arrays [true] and [1]. The full list is the test's PREDICATE_FORMS. Its other conditions are listed at
+ * gateEnvelopeFindings.
+ *
+ * THE RENDERED VIEW. Every docs rule reads markdown as marked's Lexer tokenizes it (renderedText) and reads the tokens as text.
+ * Pinned: a code span reads as its text with its character references kept; emphasis, strong emphasis, a backslash escape, an
+ * inline link (with a title, with a code-span text), a full, collapsed or shortcut reference link whose definition is in the same
+ * lexed text, and an autolink read as their text; the character references &#NN; (up to seven digits), &#xNN; and &#XNN; (up to
+ * six hex digits of either case), &amp; &lt; &gt; &quot; &apos; &nbsp; read as the characters they render (a number of 0 or above
+ * 0x10FFFF is kept as written, and so is a named reference not listed); a fenced or an indented code block and a heading read as
+ * their text; a whitespace run reads as one space, and so do a soft line break and a hard one (two trailing spaces or a
+ * backslash); raw HTML (a block, an HTML comment and inline HTML) reads as nothing; a blockquote, a nested blockquote and a lazy
+ * continuation line read as their lines; a table reads one line per row with its cells joined by " | ", a list one line per item.
+ * A section is found by its heading's rendered text (markdownSection): an ATX heading with a closing sequence, an indented ATX
+ * heading and a setext heading are the same heading, while a heading inside an HTML comment, a fenced block or an indented code
+ * block is none. A section is lexed alone (RESIDUALS: R-REFDEF-OUTSIDE).
  *
  * CLI:
  *   node qa/workbench/mwi-release.mjs --base <rev> [--head <rev>] [--commit <rev>] [--gate-envelope <path>]
  * judges the cut <base>..<head> of the Git repository holding the current directory (any directory of its work tree) and prints
  * one workbench.mwi-release/v1 verdict as JSON on stdout. Without --head the head is the working tree, with the untracked files
- * that the repository's ignore rules do not exclude. --commit names the candidate commit, which is the cut's head commit: it needs
- * --head resolving to the same commit. --gate-envelope names the `forge build --json` envelope of the complete gate run on the
- * candidate and needs --commit (EAT-R084). Each flag is given at most once, each with a value.
+ * that the repository's ignore rules do not exclude. Each revision is resolved by git to its commit before it is compared or
+ * printed; pinned spellings: a full sha, a 12-hex abbreviation and HEAD for --head and --commit, and HEAD~1 for --base. --commit
+ * names the candidate commit, which is the cut's head commit: it needs --head resolving to the same commit. --gate-envelope names
+ * the `forge build --json` envelope of the complete gate run on the candidate and needs --commit (EAT-R084). Each flag is given
+ * at most once, each with a value.
  *   exit 0: no finding (closure may still be open; the verdict says why)
  *   exit 1: findings
  *   exit 2: a usage error (an unknown, repeated or valueless flag; no --base; --gate-envelope without --commit; --commit without
- *           --head or naming another commit; an unknown revision) or an unreadable input (the gate envelope, the bead export
- *           .beads/issues.jsonl, forge.toml's [build] gate when an envelope is judged)
+ *           --head or naming another commit; an unknown revision for --base, --head or --commit; a directory outside any Git work
+ *           tree) or an unreadable input (the gate envelope, the bead export .beads/issues.jsonl, forge.toml's [build] gate when an
+ *           envelope is judged); stderr then holds the message (git's own message after a colon when git refused; pinned: one line
+ *           outside a work tree) and, last, the usage line
  *
  * NOT CLAIMED: a live slice or any Mechanical invocation (the validator calls no Mechanical code); a count of release blocks per
- * receipt entry; rendering by any markdown engine other than marked; what a symlink under src/workbench/hosts/ points at (a host
- * file is read as the text Git or the file system gives); a gate envelope's selection accounting, replay or warm-memo state
- * (EAT-R084 reads the invocation's only, skip and path and each required leg's step; its keep_going and verb are not read); a
- * forge run tier declared other than as a [build] gate leg or a [build.commands.<tier>] table of forge.toml; a W11 absence
- * statement written in other words than "no binding host" or "no binding-host" (singular or plural).
+ * receipt entry; rendering by any markdown engine other than marked, and every markdown construct the rendered view above does
+ * not name (an image, a strikethrough and a footnote among them); a revision spelling the CLI paragraph does not name; what a
+ * symlink under src/workbench/hosts/ points at (a host file is read as the text Git or the file system gives); a gate envelope's
+ * selection accounting, replay or warm-memo state (EAT-R084 reads the invocation's only, skip and path and each required leg's
+ * step; its keep_going and verb are not read), and a predicate form PREDICATE_FORMS does not list; a forge run tier declared other
+ * than as a [build] gate leg or a [build.commands.<tier>] table of forge.toml; a test file path or a forge run tier spelled with a
+ * character the seam paragraph does not name; how the working-tree cut reads a path removed from the index but kept in the
+ * working tree (git rm --cached).
+ *
+ * RESIDUALS (named families; each has pinned quiet rows and a live twin in the test's RESIDUALS table):
+ *  - R-ABSENCE-OTHER-WORDS: a W11 absence statement not written with the absence words in one rendered line (quiet: a
+ *    paraphrase, the words split across two table cells or two paragraphs, a zero-width space inside a word, a Cyrillic letter in
+ *    place of a Latin one; twin: the absence words in one line, refused w11-absence-stale).
+ *  - R-REFDEF-OUTSIDE: a reference link in the W11 section whose definition lies outside the section (the section is lexed
+ *    alone) (quiet: its definition after the W12 section, read as its bracketed source; twin: its definition inside the W11
+ *    section, refused w11-absence-stale).
+ *  - R-TIER-TRUNCATED: a forge run tier spelled with a character other than a lower-case ASCII letter, a digit or a hyphen, read
+ *    only up to that character (quiet: an underscore, an upper-case letter or a dot after the declared tier test, read as test and
+ *    accepted; twin: a hyphen after it, read whole and refused seam-missing).
  */
 import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync, statSync } from "node:fs";
@@ -214,9 +267,9 @@ export function parseReleaseBlocks(markdown) {
 }
 
 /**
- * The seams a command names: each test file path under test/ that ends in .test.ts or .census.ts (an optional ./ prefix is
- * dropped) and each `forge run <tier>` with a lower-case tier name. A seam is real when the head tree holds its file, or when
- * forge.toml declares its tier (declaredForgeTiers).
+ * The seams a command names, as THE SEAMS above reads them (the pinned spellings are listed there): each test file path that
+ * begins test/ and ends .test.ts or .census.ts, and each `forge run <tier>`. A seam is real when the head tree holds its file, or
+ * when forge.toml declares its tier (declaredForgeTiers).
  * @param {string} command
  * @returns {string[]}
  */
@@ -227,8 +280,9 @@ function seamsOf(command) {
 }
 
 /**
- * Judges one release block (EAT-R083, EAT-R085, EAT-R086). The bead export and the declared forge run tiers are required: the
- * real-bead and the real-seam checks are never skipped.
+ * Judges one release block (EAT-R083, EAT-R085, EAT-R086). The bead export, a fileExists reader and the declared forge run tiers
+ * are required, whether or not the block names a seam: the real-bead and the real-seam checks are never skipped. A candidate, when
+ * given, is a full 40-hex commit sha (40 lower-case hex digits, nothing before or after them).
  * @param {ReleaseBlock} block
  * @param {BlockContext} ctx
  * @returns {Finding[]}
@@ -412,11 +466,11 @@ export function declaredForgeTiers(toml) {
 /**
  * EAT-R084: "Read machine receipt keyed to exact candidate commit with required Forge build legs; failed/not-run gate or receipt
  * for another commit refuses close. No CI substitution." Mutant: "Accept exit echo or an old commit gate as this cut PASS."
- * `envelope` is the parsed `forge build --json` result envelope of the complete gate. It passes only when it is a forge build
- * result-envelope/v1 envelope with a data record, its data.gated_commit is the candidate, its status is success, its
- * data.gate_verdict is PASS and data.gate_passed is true, each required leg has exactly one step and its status is passed, its
- * data.invocation is present with only and skip as empty lists and path . (the package root), and ids.command_id is a cmd_ id
- * (cmd_ and twelve lower-case hex digits).
+ * `envelope` is the parsed `forge build --json` result envelope of the complete gate. It passes when it is a forge build
+ * result-envelope/v1 envelope with a data record, its data.gated_commit is the candidate, its four predicates pass (THE GATE
+ * ENVELOPE above: status success, data.gate_verdict PASS, data.gate_passed true, and one step with status passed for each
+ * required leg; their pinned refused forms are listed there), its data.invocation is present with only and skip as empty lists
+ * and path . (the package root), and ids.command_id is a cmd_ id (cmd_ and twelve lower-case hex digits).
  * @param {unknown} envelope
  * @param {{ readonly candidate: string, readonly requiredLegs: ReadonlyArray<string> }} options
  * @returns {Finding[]}
@@ -609,7 +663,8 @@ export function w11Section(matrix) {
 
 /**
  * Every body row of every table of a W11 section (a table nested in a blockquote or a list item too), in the rendered view: the
- * cells under its header cells reading Feature and Status ("" when the table has no such header cell).
+ * cells under its header cells reading Feature and Status, in whichever columns they stand ("" when the table has no such header
+ * cell).
  * @param {string} section
  * @returns {W11Row[]}
  */
@@ -649,13 +704,20 @@ export function w11Html(section) {
 
 /**
  * EAT-R082's W11 rules over the base and head W11 sections (w11Section), each read in the rendered view. `witnessed` is true when
- * the cut holds a live or closed slice claim judged against a candidate commit whose named producer gate passed at that candidate
- * (the claim has no EAT-R085 finding).
+ * a block the cut adds holds a live or closed slice claim, the cut is judged against a candidate commit, and that block has no
+ * EAT-R085 finding (so its named producer gate passed at that candidate). Pinned: each EAT-R085 finding a live or closed claim can
+ * carry leaves it false; an EAT-R083 or an EAT-R086 finding alone does not; one such clean claim beside a refused one makes it
+ * true; a claim judged without a candidate leaves it false and the closure open (unkeyed).
  *  - w11-landed-gated-unwitnessed: a head row reads landed-gated while no base row with the same Feature cell does, unwitnessed;
  *  - w11-status-unknown: a head row's Status cell is none of MATRIX_STATUSES ("" when its table has no Status column);
  *  - w11-html: the head section holds raw HTML (its rendered view would not be its whole text);
- *  - w11-absence-stale: the head section states that no binding host exists (the words "no binding host" or "no binding-host",
- *    singular or plural, in any case) while a host module names MechanicalWorkflows.
+ *  - w11-absence-stale: the head section states that no binding host exists (the absence words "no binding host" or
+ *    "no binding-host", singular or plural, in any case, as a whole phrase in one rendered line: no word character just before
+ *    no or just after host or hosts, and one space or one hyphen between binding and host) while a host module names
+ *    MechanicalWorkflows. Pinned as no absence statement: a word ending in no before it, a word continuing host or hosts, an
+ *    underscore, two hyphens or nothing between binding and host, and no space between no and binding; pinned as one: the phrase
+ *    at a sentence end, in parentheses, before an apostrophe or a hyphenated word, with a whitespace run inside it, hyphenated, in
+ *    upper case, with emphasis or a character reference inside it, and in the plural. Other spellings are R-ABSENCE-OTHER-WORDS.
  * @param {{ readonly baseSection?: string, readonly headSection?: string, readonly hostModules: ReadonlyArray<string>, readonly witnessed: boolean }} input
  * @returns {Finding[]}
  */
@@ -685,7 +747,9 @@ export function w11Findings(input) {
  * Judges a cut base..head: EAT-R087 over its added and immutable paths; EAT-R082/R083/R085/R086 over each release block of a
  * changed per-bead receipt that the receipt did not already hold at the cut base, text for text (an appended, an inserted and an
  * edited block alike; a block the base already holds is not judged again); the W11 rules and the W11 heading's uniqueness; and
- * EAT-R084 over the machine gate envelope when one is supplied.
+ * EAT-R084 over the machine gate envelope when one is supplied (judged against the cut's candidate commit; without a candidate it
+ * throws). A finding of a receipt's block names that receipt (`receipt`); a finding of the cut's paths, of W11 or of the envelope
+ * carries no `receipt` key.
  * @param {Cut} cut
  * @returns {CutVerdict}
  */
@@ -727,7 +791,9 @@ export function judgeCut(cut) {
   // Each pointer of each judged block: a pointer present at base or head must change in the cut (W11: its rendered section, so an
   // edit that changes no rendered text is no update; the skill: its file; the program docs: any path under the directory) and be
   // named on the block's docs line; a pointer absent at base and head refuses a live or closed claim and must be named on the
-  // blockers line of any other claim.
+  // blockers line of any other claim (pinned: design-only, partial, an unknown status, a status in another case and a block
+  // without a status line). Pinned as present: a pointer at base and head, and a pointer the cut adds. Pinned as no update: a
+  // changed path that only begins with the skill path, and a path that holds the program docs directory below another directory.
   const headMatrix = cut.text.head(FEATURE_MATRIX_PATH);
   const sections = { base: w11Section(cut.text.base(FEATURE_MATRIX_PATH) ?? ""), head: w11Section(headMatrix ?? "") };
   const w11 = { base: sections.base === undefined ? undefined : renderedText(sections.base), head: sections.head === undefined ? undefined : renderedText(sections.head) };
@@ -811,8 +877,9 @@ function gitOut(cwd, args, what) {
 /**
  * Reads the cut <base>..<head> (head undefined: the working tree, untracked files included unless ignored) of the repository
  * holding `repo`. The host modules are the files under src/workbench/hosts/, at any depth (the working tree: every tracked and
- * every untracked, not ignored file; a committed head: every blob git ls-tree -r lists), whose text holds the word mechanical in
- * any case: a host module that names MechanicalWorkflows (MechanicalWorkflows, @mechanical/workflows-development).
+ * every untracked, not ignored file; a committed head: every blob git ls-tree -r lists), whose text holds the letters mechanical
+ * in any case, inside another word too: a host module that names MechanicalWorkflows (pinned: MechanicalWorkflows,
+ * @mechanical/workflows-development, biomechanical and MECHANICALLY).
  * @param {{ readonly repo: string, readonly base: string, readonly head?: string, readonly candidate?: string, readonly envelopePath?: string }} options
  * @returns {Cut & { readonly base: string, readonly head?: string }}
  */
