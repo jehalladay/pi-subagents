@@ -3,13 +3,15 @@
  *
  * Bead acceptance (1), quoted: "at FW_EXPORT_SOFT_CEILING bytes (default 95 MiB) the push path refuses rc 2 BEFORE any git push with ONE
  * typed line naming the blob path and byte size; selftest leg plants a scratch repo with an oversized tracked blob and asserts the typed
- * refusal". Owner shape element 4: the guard "covers the MAIN export AND each shard". The family judged is exactly .beads/issues.jsonl
- * and every blob under .beads/archive/; the objects judged are the ones a push of <tip> would send: `git rev-list --objects <tip>
- * --not <excluded...>`. The hook excludes each line's remote sha when this repository has that commit (G10) and every
- * remote-tracking ref of the remote it is called for (G11), so a blob the remote already holds is not judged again, and it prints one
- * typed line per oversized blob however many of its lines would push that blob (G12). A large blob outside the family is NOT
- * CLAIMED by this guard (G6 pins that boundary). Wiring the guard into the machine's collect and land-chain push paths lives outside
- * this repository; here the push path is git itself, through the hook (G7).
+ * refusal". Owner shape element 4: the guard "covers the MAIN export AND each shard". The family judged is every blob a pushed commit
+ * writes to .beads/issues.jsonl or below .beads/archive/ (G2-G4; a merge's own write, G18), whatever other path also holds it (G17);
+ * the objects judged are the ones a push of <tip> would send: `git rev-list --objects <tip> --not <excluded...>` (G5, G19). The hook excludes each line's remote sha when this repository has that commit (G10) and every
+ * remote-tracking ref of the remote it is called for (G11), so a blob reachable from an excluded commit is not judged, and one typed
+ * line is printed per oversized blob however many of the hook's lines (G12) or family paths (G14) would send it. A large blob outside
+ * the family is NOT CLAIMED by this guard (G6 and G16 pin that boundary: other paths, and a tree object below .beads/archive/). A push
+ * the hook cannot judge exits 3 unless a judged push refuses at the ceiling, which exits 2 (G13); usage errors and unknown verbs exit
+ * 3 with their usage line (G15). Wiring the guard into the machine's collect and land-chain push paths lives outside this repository;
+ * here the push path is git itself, through the hook (G7).
  * Every case runs in a throwaway repository from the scratch helper with an explicit child environment, with the ceiling lowered
  * through FW_EXPORT_SOFT_CEILING so no case writes a 95 MiB file.
  */
@@ -97,7 +99,7 @@ const refusal = (path: string, blob: string, bytes: number, ceiling: number): st
 const stderrLines = (r: SpawnSyncReturns<string>): string[] => r.stderr.split("\n").filter(line => line.length > 0);
 
 describe("wb-294d export-size guard: the soft ceiling", () => {
-  it("G1 the default is 95 MiB = 99,614,720 bytes; a positive whole number in FW_EXPORT_SOFT_CEILING replaces it; zero, a negative, a fraction, a word, an exponent, a padded or zero-led number and one past 2^53 refuse (rc 3 at the CLI)", () => {
+  it("G1 the default is 95 MiB = 99,614,720 bytes; a positive whole number in FW_EXPORT_SOFT_CEILING replaces it; zero, a negative, a fraction, a word, an exponent, a padded or zero-led number and one past 2^53 refuse (rc 3 at guard and at pre-push here; compact's is the compaction suite's K8)", () => {
     expect(DEFAULT_SOFT_CEILING).toBe(99_614_720);
     expect(softCeiling({})).toEqual({ ok: true, bytes: 99_614_720 });
     expect(softCeiling({ [CEILING_ENV]: "" })).toEqual({ ok: true, bytes: 99_614_720 });
@@ -111,6 +113,10 @@ describe("wb-294d export-size guard: the soft ceiling", () => {
     const r = repo.guard([tip], "ten");
     expect(r.status).toBe(3);
     expect(stderrLines(r)).toEqual([`tracker-export: ${CEILING_ENV} must be a positive whole number of bytes (got "ten"); nothing is pushed`]);
+    const hook = spawnSync(process.execPath, [TOOL, "pre-push", "origin", repo.remote], { cwd: repo.dir, env: childEnv(repo.home, { [CEILING_ENV]: "ten" }), input: `refs/heads/main ${tip} refs/heads/main ${"0".repeat(40)}\n`, encoding: "utf8" });
+    expect(hook.status).toBe(3);
+    expect(stderrLines(hook)).toEqual([`tracker-export: ${CEILING_ENV} must be a positive whole number of bytes (got "ten"); nothing is pushed`]);
+    expect(hook.stdout).toBe("");
   });
 });
 
@@ -159,6 +165,67 @@ describe("wb-294d export-size guard: the CLI a push path calls before git push",
     const r = repo.guard([tip], "600");
     expect(r.status).toBe(0);
     expect(r.stderr).toBe("");
+  });
+
+  it("G16 the family is the repository paths .beads/issues.jsonl and .beads/archive/*, blobs only: another directory's .beads/issues.jsonl, .beads/issues.jsonl.bak, .beads/archive-old/, a file named .beads/archive and a tree object below .beads/archive/ larger than the ceiling are not judged", () => {
+    const repo = makeRepo();
+    const smallFiles = Object.fromEntries(Array.from({ length: 40 }, (_, index) => [`.beads/archive/sub/f${String(index).padStart(3, "0")}`, 1]));
+    // Distinct sizes, so each path holds its own blob (one blob would be listed once, by one of its paths).
+    const tip = repo.commit({ "sub/.beads/issues.jsonl": 5000, ".beads/issues.jsonl.bak": 5001, ".beads/archive-old/issues-closed-2026-11.jsonl": 5002, ...smallFiles, [MAIN]: 10 }, "outside the family");
+    const tree = repo.git("rev-parse", `${tip}:.beads/archive/sub`);
+    expect(Number(repo.git("cat-file", "-s", tree))).toBeGreaterThan(600);
+    const r = repo.guard([tip], "600");
+    expect(r.status).toBe(0);
+    expect(r.stderr).toBe("");
+    const fileRepo = makeRepo();
+    const fileTip = fileRepo.commit({ ".beads/archive": 5003, [MAIN]: 10 }, "a file named .beads/archive");
+    const file = fileRepo.guard([fileTip], "600");
+    expect(file.status).toBe(0);
+    expect(file.stderr).toBe("");
+  });
+
+  it("G17 SHARED BLOB: an oversized export whose bytes another path also holds - one the object listing meets first - is judged by the family path a pushed commit writes it to", () => {
+    const repo = makeRepo();
+    const tip = repo.commit({ ".beads/archive-old/copy.jsonl": 900, [MAIN]: 900 }, "the export's bytes at a path the listing meets first");
+    const blob = repo.blobOf(tip, MAIN);
+    expect(repo.blobOf(tip, ".beads/archive-old/copy.jsonl")).toBe(blob);
+    expect(repo.git("rev-list", "--objects", tip).split("\n").filter(line => line.startsWith(`${blob} `))).toEqual([`${blob} .beads/archive-old/copy.jsonl`]);
+    const r = repo.guard([tip], "600");
+    expect(r.status).toBe(2);
+    expect(stderrLines(r)).toEqual([refusal(MAIN, blob, 900, 600)]);
+  });
+
+  it("G18 MERGE: an oversized export that only a merge commit writes - its own change, against each parent - is judged", () => {
+    const repo = makeRepo();
+    const base = repo.commit({ [MAIN]: 10 }, "base");
+    repo.git("checkout", "-q", "-b", "side");
+    repo.commit({ "src/side.ts": 3 }, "side");
+    repo.git("checkout", "-q", "main");
+    repo.commit({ "src/main.ts": 4 }, "main");
+    repo.git("merge", "-q", "--no-commit", "side");
+    writeFileSync(join(repo.dir, MAIN), "x".repeat(900));
+    repo.git("add", "--", MAIN);
+    repo.git("commit", "-q", "-m", "a merge that writes the export");
+    const tip = repo.git("rev-parse", "HEAD");
+    expect(repo.git("rev-list", "--parents", "-n", "1", tip).split(" ")).toHaveLength(3);
+    const r = repo.guard([tip, "--not", base], "600");
+    expect(r.status).toBe(2);
+    expect(stderrLines(r)).toEqual([refusal(MAIN, repo.blobOf(tip, MAIN), 900, 600)]);
+  });
+
+  it("G19 NOT SENT: a pushed commit that writes back an export blob an excluded commit already holds sends no such blob and passes; the same push with nothing excluded refuses", () => {
+    const repo = makeRepo();
+    const old = repo.commit({ [MAIN]: 900 }, "an oversized export the remote already holds");
+    repo.git("rm", "-q", "--", MAIN);
+    repo.git("commit", "-q", "-m", "the export removed");
+    const tip = repo.commit({ [MAIN]: 900 }, "the same bytes written back");
+    expect(repo.blobOf(tip, MAIN)).toBe(repo.blobOf(old, MAIN));
+    const excluded = repo.guard([tip, "--not", old], "600");
+    expect(excluded.status).toBe(0);
+    expect(excluded.stderr).toBe("");
+    const whole = repo.guard([tip], "600");
+    expect(whole.status).toBe(2);
+    expect(stderrLines(whole)).toEqual([refusal(MAIN, repo.blobOf(tip, MAIN), 900, 600)]);
   });
 
   it("G8 an unresolvable tip cannot be judged and refuses rc 3 (never passes open)", () => {
@@ -252,5 +319,59 @@ describe("wb-294d export-size guard as the git pre-push hook (the push itself ne
     const r = hookIn(repo, "origin", `refs/heads/a ${tip} refs/heads/a ${zeros}\nrefs/heads/b ${tip} refs/heads/b ${zeros}\n`);
     expect(r.status).toBe(2);
     expect(stderrLines(r)).toEqual([refusal(SHARD, repo.blobOf(tip, SHARD), 900, 600)]);
+  });
+
+  it("G13 a push the hook cannot judge exits 3 with its typed line, unless a judged push refuses at the ceiling: then the exit is 2 with both lines, and a malformed line beside such a push exits 2 as well", () => {
+    const repo = makeRepo();
+    repo.commit({ [MAIN]: 10 }, "base");
+    const tip = repo.commit({ [SHARD]: 900 }, "large shard");
+    const zeros = "0".repeat(40);
+    const ghost = "1234567890abcdef1234567890abcdef12345678";
+    const unjudged = `tracker-export: could not judge a push of ${ghost} (git rev-list --objects ${ghost} exited 128); nothing is pushed`;
+    const alone = hookIn(repo, "origin", `refs/heads/g ${ghost} refs/heads/g ${zeros}\n`);
+    expect(alone.status).toBe(3);
+    expect(stderrLines(alone)).toEqual([unjudged]);
+    const both = hookIn(repo, "origin", `refs/heads/g ${ghost} refs/heads/g ${zeros}\nrefs/heads/b ${tip} refs/heads/b ${zeros}\n`);
+    expect(both.status).toBe(2);
+    expect(stderrLines(both)).toEqual([unjudged, refusal(SHARD, repo.blobOf(tip, SHARD), 900, 600)]);
+    const bad = "refs/heads/main not-a-sha refs/heads/main";
+    const malformed = hookIn(repo, "origin", `${bad}\nrefs/heads/b ${tip} refs/heads/b ${zeros}\n`);
+    expect(malformed.status).toBe(2);
+    expect(stderrLines(malformed)).toEqual([`tracker-export: malformed pre-push line refused (${bad.length} chars); nothing is pushed`, refusal(SHARD, repo.blobOf(tip, SHARD), 900, 600)]);
+  });
+
+  it("G14 one typed line per oversized blob however many family paths hold it: the same bytes at the main export and in a shard print one line, naming one of those family paths", () => {
+    const repo = makeRepo();
+    const tip = repo.commit({ [MAIN]: 900, [SHARD]: 900 }, "the same 900 bytes at two family paths");
+    const blob = repo.blobOf(tip, MAIN);
+    expect(repo.blobOf(tip, SHARD)).toBe(blob);
+    const r = repo.guard([tip], "600");
+    expect(r.status).toBe(2);
+    const lines = stderrLines(r);
+    expect(lines).toHaveLength(1);
+    expect([refusal(MAIN, blob, 900, 600), refusal(SHARD, blob, 900, 600)]).toContain(lines[0]);
+  });
+
+  it("G15 USAGE: guard with no tip or two, or with an unknown or valueless option, pre-push with no remote or three arguments, and an unknown verb or none exit 3 with their usage line and nothing on stdout", () => {
+    const repo = makeRepo();
+    const tip = repo.commit({ [MAIN]: 10 }, "base");
+    const run = (args: readonly string[]): SpawnSyncReturns<string> => spawnSync(process.execPath, [TOOL, ...args], { cwd: repo.dir, env: childEnv(repo.home), input: "", encoding: "utf8" });
+    const cases: readonly [readonly string[], string][] = [
+      [["guard"], "tracker-export: usage: guard <tip> [--not <rev>]...; nothing is pushed"],
+      [["guard", tip, tip], "tracker-export: usage: guard <tip> [--not <rev>]...; nothing is pushed"],
+      [["guard", tip, "--force"], "tracker-export: usage: guard <tip> [--not <rev>]...; nothing is pushed"],
+      [["guard", tip, "--not"], "tracker-export: usage: guard <tip> [--not <rev>]...; nothing is pushed"],
+      [["guard", "--not", tip], "tracker-export: usage: guard <tip> [--not <rev>]...; nothing is pushed"],
+      [["pre-push"], "tracker-export: usage: pre-push <remote> [<url>] (git pre-push hook; ref lines on stdin); nothing is pushed"],
+      [["pre-push", "origin", repo.remote, "extra"], "tracker-export: usage: pre-push <remote> [<url>] (git pre-push hook; ref lines on stdin); nothing is pushed"],
+      [["frobnicate"], "tracker-export: usage: compact | rehydrate | guard | pre-push (see the header of qa/workbench/tracker-export.mjs)"],
+      [[], "tracker-export: usage: compact | rehydrate | guard | pre-push (see the header of qa/workbench/tracker-export.mjs)"],
+    ];
+    for (const [args, usage] of cases) {
+      const r = run(args);
+      expect(r.status, args.join(" ")).toBe(3);
+      expect(stderrLines(r), args.join(" ")).toEqual([usage]);
+      expect(r.stdout).toBe("");
+    }
   });
 });

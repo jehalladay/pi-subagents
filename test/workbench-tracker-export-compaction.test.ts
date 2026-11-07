@@ -17,9 +17,11 @@
  * and `updated_at` (bd import rewrites an existing issue only when a row's updated_at is strictly newer, and fills an absent one with
  * the import time - so a stub without it would bump every closed bead it touched; measured with a scratch bd 1.1.0-rc.1 store).
  * "The store" here is its projection: the full `bd export` text. No case reads or writes a bead store.
+ * Each case's title claims what its assertions check and no more; the module header (qa/workbench/tracker-export.mjs) cites these case
+ * ids (C, R, K, T, S) beside the guard suite's (G) for every sentence it claims, and names what it does not claim.
  */
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, symlinkSync, utimesSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
@@ -100,7 +102,7 @@ function cli(args: readonly string[], env: NodeJS.ProcessEnv = {}): ReturnType<t
 }
 
 describe("wb-294d compaction: stub rows, month shards, round trip (owner shape elements 1-3)", () => {
-  it("C1 STUB SHAPE: every closed row becomes exactly the stub fields it has, in bd's order, with its own values and no body", () => {
+  it("C1 STUB SHAPE: every closed fixture row - its keys in the export's order - becomes exactly the stub fields it has, in that order, with its own values and no body field", () => {
     expect([...STUB_FIELDS]).toEqual(EXPECTED_STUB_FIELDS);
     const full = textOf(fixtureRows());
     const result = compactTrackerExport({ full, shards: new Map(), now: "2026-11-03T12:00:00Z" });
@@ -132,7 +134,7 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
     expect(result.main.endsWith("\n")).toBe(true);
   });
 
-  it("C3 FIRST COMPACTION: each closed full line goes to the shard of its UTC close month, in export order; the round trip is byte-equal", () => {
+  it("C3 FIRST COMPACTION: with no shard yet, each closed full line whose UTC close month is at or before the run's goes to that month's shard, in export order; the round trip is byte-equal", () => {
     const rows = fixtureRows();
     const full = textOf(rows);
     const result = compactTrackerExport({ full, shards: new Map(), now: "2026-11-03T12:00:00Z" });
@@ -201,6 +203,19 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
     expect([...later.appended.entries()]).toEqual([["issues-closed-2026-12.jsonl", ["wb-c6"]]]);
   });
 
+  it("C5b NO SHARD BEHIND THE NEWEST: a late row of a past month that has no shard but is at or before the newest existing shard's month goes to the run month's shard, and no shard of its month is created", () => {
+    const rows = [row("wb-s9", "closed", { closed_at: "2026-09-10T00:00:00Z" }), row("wb-s11", "closed", { closed_at: "2026-11-10T00:00:00Z" })];
+    const first = compactTrackerExport({ full: textOf(rows), shards: new Map(), now: "2026-11-20T00:00:00Z" });
+    if (!first.ok) throw new Error(first.lines.join("\n"));
+    expect([...first.shards.keys()]).toEqual(["issues-closed-2026-09.jsonl", "issues-closed-2026-11.jsonl"]);
+    const later = [...rows, row("wb-s10", "closed", { closed_at: "2026-10-10T00:00:00Z" })];
+    const second = compactTrackerExport({ full: textOf(later), shards: first.shards, now: "2026-12-05T00:00:00Z" });
+    if (!second.ok) throw new Error(second.lines.join("\n"));
+    expect([...second.appended.entries()]).toEqual([["issues-closed-2026-12.jsonl", ["wb-s10"]]]);
+    expect([...second.shards.keys()]).toEqual(["issues-closed-2026-09.jsonl", "issues-closed-2026-11.jsonl", "issues-closed-2026-12.jsonl"]);
+    expect(rehydrateTrackerText(second.main, second.shards)).toBe(textOf(later));
+  });
+
   it("C6 IDEMPOTENT + REOPEN: an unchanged export appends nothing; a reopened bead is a full row again with no new archive line, read as itself though its metadata holds a status key", () => {
     const rows = fixtureRows();
     const first = compactTrackerExport({ full: textOf(rows), shards: new Map(), now: "2026-11-03T12:00:00Z" });
@@ -242,10 +257,15 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
     expect(under.ok).toBe(true);
   });
 
-  it("C8 MALFORMED: an unparseable line, a row without a string id or status, a duplicate id, or a closed row already in stub shape refuses as malformed", () => {
+  it("C8 MALFORMED: an unparseable line, a line that is not a JSON object, a row without a non-empty string id or without a string status, a duplicate id, or a closed row already in stub shape refuses as malformed", () => {
     const good = textOf(fixtureRows());
     const cases: readonly [string, string][] = [
       ["not json", `${good}{"id":\n`],
+      ["null", `${good}null\n`],
+      ["an array", `${good}[1]\n`],
+      ["a number", `${good}5\n`],
+      ["a string", `${good}"text"\n`],
+      ["an empty id", `${good}${JSON.stringify({ _type: "issue", id: "", status: "open", title: "x" })}\n`],
       ["no id", `${good}${JSON.stringify({ _type: "issue", status: "open", title: "x" })}\n`],
       ["no status", `${good}${JSON.stringify({ _type: "issue", id: "wb-x", title: "x" })}\n`],
       ["duplicate", `${good}${lineOf(row("wb-o1", "open"))}\n`],
@@ -258,14 +278,47 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
     }
   });
 
-  it("C9 REFUSED INPUTS: a run stamp that is not a UTC timestamp, a shard name that is not a month shard's (a day shard's included) and a shard line that does not parse each refuse as malformed with one typed line", () => {
+  it("C9 REFUSED INPUTS: a run stamp that is not a UTC stamp (each form below), a shard name that is not a month shard's (a day shard's included), a non-empty shard that does not end with a newline and a shard line that does not parse as a JSON object with a string id each refuse as malformed with one typed line; an empty shard is read as holding no line", () => {
     const full = textOf(fixtureRows());
     const shard = `${lineOf(row("wb-c2", "closed", { closed_at: "2026-11-03T08:00:00Z" }))}\n`;
+    const stamps = [
+      "not-a-stamp",
+      "2026",
+      "Nov 3 2026",
+      "2026-11-03",
+      "2026-11-03T12:00:00",
+      "2026-11-03T12:00Z",
+      "2026-11-03t12:00:00z",
+      "2026-11-03 12:00:00Z",
+      "2026-11-03T12:00:00+0200",
+      "2026-11-03T12:00:00.1234567890Z",
+      "2026-02-29T00:00:00Z",
+      "2026-11-31T00:00:00Z",
+      "2026-13-01T00:00:00Z",
+      "2026-00-10T00:00:00Z",
+      "2026-11-00T00:00:00Z",
+      "2026-11-03T24:00:00Z",
+      "2026-11-03T12:60:00Z",
+      "2026-11-03T12:00:60Z",
+      "2026-11-03T12:00:00+24:00",
+      "2026-11-03T12:00:00+01:60",
+      "9999-12-31T23:30:00-01:00",
+    ];
+    for (const now of stamps) {
+      expect(compactTrackerExport({ full, shards: new Map(), now }), now).toEqual({ ok: false, code: "malformed", lines: [`tracker-export: REFUSED the run stamp "${now}" is not a UTC timestamp; nothing is written`] });
+    }
+    const empty = compactTrackerExport({ full, shards: new Map([["issues-closed-2026-11.jsonl", ""]]), now: "2026-11-03T12:00:00Z" });
+    if (!empty.ok) throw new Error(empty.lines.join("\n"));
+    // The empty 2026-11 shard is the newest existing shard, so wb-c1 (closed 2026-10) goes to the run month's shard with the rest.
+    expect([...empty.appended.entries()]).toEqual([["issues-closed-2026-11.jsonl", ["wb-c1", "wb-c2", "wb-c3"]]]);
+    expect(empty.shards.get("issues-closed-2026-11.jsonl")).toBe([1, 2, 4].map(index => `${lineOf(fixtureRows()[index] ?? {})}\n`).join(""));
     const cases: readonly [string, { now: string; shards: Map<string, string> }, string][] = [
-      ["a run stamp that is no timestamp", { now: "not-a-stamp", shards: new Map() }, 'tracker-export: REFUSED the run stamp "not-a-stamp" is not a UTC timestamp; nothing is written'],
       ["a day shard's name", { now: "2026-11-03T12:00:00Z", shards: new Map([["issues-closed-2026-11-03.jsonl", shard]]) }, "tracker-export: REFUSED issues-closed-2026-11-03.jsonl is not a month shard name (issues-closed-YYYY-MM.jsonl); nothing is written"],
       ["a file of another name", { now: "2026-11-03T12:00:00Z", shards: new Map([["README.md", "# shards\n"]]) }, "tracker-export: REFUSED README.md is not a month shard name (issues-closed-YYYY-MM.jsonl); nothing is written"],
       ["a shard line that does not parse", { now: "2026-11-03T12:00:00Z", shards: new Map([["issues-closed-2026-11.jsonl", `${shard}{"id":\n`]]) }, "tracker-export: archived issues-closed-2026-11.jsonl line 2 does not parse; nothing is written"],
+      ["a shard line that is no object", { now: "2026-11-03T12:00:00Z", shards: new Map([["issues-closed-2026-11.jsonl", `${shard}[1]\n`]]) }, "tracker-export: archived issues-closed-2026-11.jsonl line 2 is not a JSON object; nothing is written"],
+      ["a shard line with no id", { now: "2026-11-03T12:00:00Z", shards: new Map([["issues-closed-2026-11.jsonl", `${shard}{"status":"closed"}\n`]]) }, "tracker-export: archived issues-closed-2026-11.jsonl line 2 has no string id; nothing is written"],
+      ["a shard without a final newline", { now: "2026-11-03T12:00:00Z", shards: new Map([["issues-closed-2026-11.jsonl", shard.replace(/\n$/, "")]]) }, "tracker-export: REFUSED .beads/archive/issues-closed-2026-11.jsonl does not end with a newline (a shard holds whole lines); nothing is written"],
     ];
     for (const [label, input, line] of cases) {
       const result = compactTrackerExport({ full, ...input });
@@ -304,6 +357,64 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
     if (!result.ok) throw new Error(result.lines.join("\n"));
     expect(result.main.endsWith("\n")).toBe(false);
     expect(rehydrateTrackerText(result.main, result.shards)).toBe(full);
+  });
+
+  it("C13 FUTURE CLOSE MONTH: a close month after the run's counts as the run's month - the row goes to the run month's shard and no shard of a later month is created", () => {
+    const rows = [row("wb-o1", "open"), row("wb-f1", "closed", { closed_at: "2026-12-02T00:00:00Z" })];
+    const result = compactTrackerExport({ full: textOf(rows), shards: new Map(), now: "2026-11-20T00:00:00Z" });
+    if (!result.ok) throw new Error(result.lines.join("\n"));
+    expect([...result.shards.keys()]).toEqual(["issues-closed-2026-11.jsonl"]);
+    expect([...result.appended.entries()]).toEqual([["issues-closed-2026-11.jsonl", ["wb-f1"]]]);
+    expect(rehydrateTrackerText(result.main, result.shards)).toBe(textOf(rows));
+  });
+
+  it("C14 NO UTC CLOSE STAMP: a closed row with no close stamp, a zone-less one, one on a day that does not exist, a non-stamp or a number goes to the run month's shard", () => {
+    const missing = row("wb-n1", "closed");
+    delete missing.closed_at;
+    const rows = [
+      row("wb-o1", "open"),
+      missing,
+      row("wb-n2", "closed", { closed_at: "2026-10-15T10:00:00" }),
+      row("wb-n3", "closed", { closed_at: "2026-09-31T10:00:00Z" }),
+      row("wb-n4", "closed", { closed_at: "last tuesday" }),
+      row("wb-n5", "closed", { closed_at: 1_790_000_000 }),
+    ];
+    const result = compactTrackerExport({ full: textOf(rows), shards: new Map(), now: "2026-11-20T00:00:00Z" });
+    if (!result.ok) throw new Error(result.lines.join("\n"));
+    expect([...result.appended.entries()]).toEqual([["issues-closed-2026-11.jsonl", ["wb-n1", "wb-n2", "wb-n3", "wb-n4", "wb-n5"]]]);
+    expect(rehydrateTrackerText(result.main, result.shards)).toBe(textOf(rows));
+  });
+
+  it("C15 BLANK LINE: a blank line of the full export stays a blank line of the main export, in its place, and the round trip is byte-equal", () => {
+    const rows = fixtureRows();
+    const full = `${lineOf(rows[0] ?? {})}\n\n${rows.slice(1).map(lineOf).join("\n")}\n`;
+    const result = compactTrackerExport({ full, shards: new Map(), now: "2026-11-03T12:00:00Z" });
+    if (!result.ok) throw new Error(result.lines.join("\n"));
+    const mainLines = result.main.split("\n");
+    expect(mainLines.length).toBe(full.split("\n").length);
+    expect(mainLines[1]).toBe("");
+    expect(mainLines.filter(line => line === "")).toHaveLength(2);
+    expect(rehydrateTrackerText(result.main, result.shards)).toBe(full);
+  });
+
+  it("C16 RUN STAMP FORMS: a fraction of 1 to 9 digits, Z and a +HH:MM or -HH:MM offset are UTC stamps, the offset applied before the run's month is taken; a leap day is a calendar day", () => {
+    const missing = row("wb-n0", "closed");
+    delete missing.closed_at;
+    const full = textOf([missing]);
+    const cases: readonly [string, string][] = [
+      ["2026-11-03T12:00:00.1Z", "issues-closed-2026-11.jsonl"],
+      ["2026-11-03T12:00:00.123456789Z", "issues-closed-2026-11.jsonl"],
+      ["2026-11-03T12:00:00+00:00", "issues-closed-2026-11.jsonl"],
+      ["2026-12-01T01:00:00+02:00", "issues-closed-2026-11.jsonl"],
+      ["2026-11-30T23:30:00-01:00", "issues-closed-2026-12.jsonl"],
+      ["2026-12-31T23:59:59-00:01", "issues-closed-2027-01.jsonl"],
+      ["2028-02-29T12:00:00Z", "issues-closed-2028-02.jsonl"],
+    ];
+    for (const [now, shard] of cases) {
+      const result = compactTrackerExport({ full, shards: new Map(), now });
+      if (!result.ok) throw new Error(`${now}: ${result.lines.join("\n")}`);
+      expect([...result.shards.keys()], now).toEqual([shard]);
+    }
   });
 });
 
@@ -345,7 +456,7 @@ describe("wb-294d rehydrating reader: the one read every export reader routes th
     expect(() => trackerExportText(main)).toThrow("issues-closed-2026-11.jsonl line 2");
   });
 
-  it("R4 SHARD FILES ONLY: a file of another name beside the shards (a README, a day shard's name) is never read - beside the shards the read is the full export, with no shard it is the main export unchanged", () => {
+  it("R4 SHARD FILES ONLY: a file of another name beside the shards (a README, a day shard's name), and a symlink or a directory of a month shard's name, is never read - beside the shards the read is the full export, with no shard file it is the main export unchanged", () => {
     const dir = scratch("tracker-export-reader-");
     const archive = join(dir, ".beads", "archive");
     mkdirSync(archive, { recursive: true });
@@ -356,7 +467,11 @@ describe("wb-294d rehydrating reader: the one read every export reader routes th
     writeFileSync(main, result.main);
     writeFileSync(join(archive, "README.md"), "# the closed rows' bodies\n");
     writeFileSync(join(archive, "issues-closed-2026-11-03.jsonl"), `${lineOf(row("wb-c2", "closed", { notes: "a day shard's stale body" }))}\n`);
-    expect(trackerExportText(main), "no month shard beside the main export: its bytes unchanged").toBe(result.main);
+    const elsewhere = join(dir, "stale-body.jsonl");
+    writeFileSync(elsewhere, `${lineOf(row("wb-c2", "closed", { notes: "a symlinked stale body" }))}\n`);
+    symlinkSync(elsewhere, join(archive, "issues-closed-2026-09.jsonl"));
+    mkdirSync(join(archive, "issues-closed-2026-08.jsonl"));
+    expect(trackerExportText(main), "no month shard file beside the main export: its bytes unchanged").toBe(result.main);
     for (const [name, text] of result.shards) writeFileSync(join(archive, name), text);
     expect(trackerExportText(main)).toBe(textOf(rows));
   });
@@ -390,6 +505,84 @@ describe("wb-294d rehydrating reader: the one read every export reader routes th
     const main = join(dir, ".beads", "issues.jsonl");
     writeFileSync(main, reopened);
     expect(trackerExportText(main)).toBe(reopened);
+  });
+
+  it("R7 UNARCHIVED STUB: beside an archive a closed stub whose id no shard holds reads as itself, while a stub whose id a shard holds reads as its archived line", () => {
+    const dir = scratch("tracker-export-reader-");
+    mkdirSync(join(dir, ".beads", "archive"), { recursive: true });
+    const open = row("wb-o1", "open");
+    const held = row("wb-c1", "closed", { closed_at: "2026-11-02T00:00:00Z" });
+    const compacted = compactTrackerExport({ full: textOf([open, held]), shards: new Map(), now: "2026-11-03T12:00:00Z" });
+    if (!compacted.ok) throw new Error(compacted.lines.join("\n"));
+    const heldStub = linesOf(compacted.main)[1] ?? "";
+    const orphan = JSON.stringify({ _type: "issue", id: "wb-x9", title: "title of wb-x9", status: "closed", updated_at: "2026-11-03T10:00:05Z", closed_at: "2026-11-03T10:00:00Z", close_reason: "no shard holds it" });
+    for (const [name, text] of compacted.shards) writeFileSync(join(dir, ".beads", "archive", name), text);
+    const main = join(dir, ".beads", "issues.jsonl");
+    writeFileSync(main, `${lineOf(open)}\n${orphan}\n${heldStub}\n`);
+    expect(trackerExportText(main)).toBe(`${lineOf(open)}\n${orphan}\n${lineOf(held)}\n`);
+  });
+
+  it("R8 SPACED STUB: a stub line whose JSON is spaced is a STUB line all the same - beside a shard holding its full line it reads as that line", () => {
+    const dir = scratch("tracker-export-reader-");
+    mkdirSync(join(dir, ".beads", "archive"), { recursive: true });
+    const held = row("wb-c2", "closed", { closed_at: "2026-11-03T08:00:00Z" });
+    const compacted = compactTrackerExport({ full: textOf([held]), shards: new Map(), now: "2026-11-03T12:00:00Z" });
+    if (!compacted.ok) throw new Error(compacted.lines.join("\n"));
+    for (const [name, text] of compacted.shards) writeFileSync(join(dir, ".beads", "archive", name), text);
+    const stub = parsed(linesOf(compacted.main)[0] ?? "{}");
+    const spaced = `{${Object.entries(stub).map(([key, value]) => `${JSON.stringify(key)}: ${JSON.stringify(value)}`).join(", ")}}`;
+    expect(spaced).toContain('"status": "closed"');
+    const main = join(dir, ".beads", "issues.jsonl");
+    writeFileSync(main, `${spaced}\n`);
+    expect(trackerExportText(main)).toBe(`${lineOf(held)}\n`);
+  });
+
+  it("R9 ARCHIVE NOT A DIRECTORY: a file named archive beside the main export holds no shard - the read is the main export unchanged", () => {
+    const dir = scratch("tracker-export-reader-");
+    mkdirSync(join(dir, ".beads"));
+    const compacted = compactTrackerExport({ full: textOf(fixtureRows()), shards: new Map(), now: "2026-11-03T12:00:00Z" });
+    if (!compacted.ok) throw new Error(compacted.lines.join("\n"));
+    writeFileSync(join(dir, ".beads", "archive"), [...compacted.shards.values()].join(""));
+    const main = join(dir, ".beads", "issues.jsonl");
+    writeFileSync(main, compacted.main);
+    expect(trackerExportText(main)).toBe(compacted.main);
+    expect(rehydrateTrackerExport(compacted.main, main)).toBe(compacted.main);
+  });
+
+  it("R10 READ MEMO: a process reads the shards again when a shard's size or modification time changes or a shard is added; a rewrite that keeps names, sizes and modification times reads as the earlier content", () => {
+    const dir = scratch("tracker-export-reader-");
+    const archive = join(dir, ".beads", "archive");
+    mkdirSync(archive, { recursive: true });
+    const rows = fixtureRows();
+    const compacted = compactTrackerExport({ full: textOf(rows), shards: new Map(), now: "2026-11-03T12:00:00Z" });
+    if (!compacted.ok) throw new Error(compacted.lines.join("\n"));
+    const main = join(dir, ".beads", "issues.jsonl");
+    writeFileSync(main, compacted.main);
+    const shard = join(archive, "issues-closed-2026-11.jsonl");
+    const pinned = 1_790_000_000;
+    for (const [name, text] of compacted.shards) {
+      writeFileSync(join(archive, name), text);
+      utimesSync(join(archive, name), pinned, pinned);
+    }
+    expect(trackerExportText(main)).toBe(textOf(rows));
+    const original = compacted.shards.get("issues-closed-2026-11.jsonl") ?? "";
+    const sameSize = original.replace("notes body of wb-c3", "NOTES BODY OF WB-C3");
+    expect(sameSize).not.toBe(original);
+    expect(Buffer.byteLength(sameSize)).toBe(Buffer.byteLength(original));
+    const sameSizeRows = rows.map(r => (r.id === "wb-c3" ? { ...r, notes: "NOTES BODY OF WB-C3" } : r));
+    writeFileSync(shard, sameSize);
+    utimesSync(shard, pinned, pinned);
+    expect(trackerExportText(main), "names, sizes and modification times kept: the earlier content").toBe(textOf(rows));
+    utimesSync(shard, pinned + 60, pinned + 60);
+    expect(trackerExportText(main), "a modification time changed: read again").toBe(textOf(sameSizeRows));
+    const longer = original.replace("notes body of wb-c3", "notes body of wb-c3, longer");
+    writeFileSync(shard, longer);
+    utimesSync(shard, pinned + 60, pinned + 60);
+    expect(trackerExportText(main), "a size changed: read again").toBe(textOf(rows.map(r => (r.id === "wb-c3" ? { ...r, notes: "notes body of wb-c3, longer" } : r))));
+    const added = row("wb-c1", "closed", { closed_at: "2026-10-31T23:59:59Z", updated_at: "2026-11-01T00:00:10Z", notes: "a later body from a new shard" });
+    writeFileSync(join(archive, "issues-closed-2026-12.jsonl"), `${lineOf(added)}\n`);
+    utimesSync(join(archive, "issues-closed-2026-12.jsonl"), pinned, pinned);
+    expect(trackerExportText(main), "a shard added: read again").toBe(textOf(rows.map(r => (r.id === "wb-c3" ? { ...r, notes: "notes body of wb-c3, longer" } : r.id === "wb-c1" ? added : r))));
   });
 });
 
@@ -449,16 +642,143 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", () =
     expect(readdirSync(beads)).toEqual([]);
   });
 
-  it("K5 compact reads only the archive's month shards: a file of another name in it is neither an input nor touched", () => {
+  it("K5 compact reads only the archive's month shard files: a file of another name, or a directory of a shard's name, in it is neither an input nor touched", () => {
     const { beads, full } = beadsDir();
     mkdirSync(join(beads, "archive"));
     writeFileSync(join(beads, "archive", "README.md"), "# the closed rows' bodies\n");
+    mkdirSync(join(beads, "archive", "issues-closed-2026-09.jsonl"));
     const run = cli(["compact", "--full", full, "--beads", beads, "--now", "2026-11-03T12:00:00Z"]);
     expect(run.stderr).toBe("");
     expect(run.status).toBe(0);
-    expect(readdirSync(join(beads, "archive")).sort()).toEqual(["README.md", "issues-closed-2026-10.jsonl", "issues-closed-2026-11.jsonl"]);
+    expect(readdirSync(join(beads, "archive")).sort()).toEqual(["README.md", "issues-closed-2026-09.jsonl", "issues-closed-2026-10.jsonl", "issues-closed-2026-11.jsonl"]);
+    expect(readdirSync(join(beads, "archive", "issues-closed-2026-09.jsonl"))).toEqual([]);
     expect(readFileSync(join(beads, "archive", "README.md"), "utf8")).toBe("# the closed rows' bodies\n");
     expect(cli(["rehydrate", "--beads", beads]).stdout).toBe(readFileSync(full, "utf8"));
+  });
+
+  it("K6 USAGE: compact and rehydrate refuse a missing, repeated or unknown option, an option whose value is missing or starts with a dash, and a positional argument with exit 3 and their usage line, printing nothing on stdout and writing nothing", () => {
+    const { beads, full } = beadsDir();
+    const stamp = "2026-11-03T12:00:00Z";
+    const compactUsage = "tracker-export: usage: compact --full <full export file> --beads <.beads dir> [--now <UTC stamp>]; nothing is written\n";
+    const compactCases: readonly (readonly string[])[] = [
+      [],
+      ["--beads", beads],
+      ["--full", full],
+      ["--full", full, "--beads", beads, "extra"],
+      ["--full", full, "--full", full, "--beads", beads],
+      ["--full", full, "--beads", beads, "--beads", beads],
+      ["--full", full, "--beads", beads, "--now", stamp, "--now", stamp],
+      ["--full", full, "--beads", beads, "--force"],
+      ["--full", full, "--beads"],
+      ["--full", "--beads", beads],
+      ["--full", full, "--beads", beads, "--now", "-01:00"],
+    ];
+    for (const args of compactCases) {
+      const run = cli(["compact", ...args]);
+      expect(run.status, args.join(" ")).toBe(3);
+      expect(run.stderr, args.join(" ")).toBe(compactUsage);
+      expect(run.stdout).toBe("");
+      expect(readdirSync(beads)).toEqual([]);
+    }
+    const rehydrateUsage = "tracker-export: usage: rehydrate --beads <.beads dir>\n";
+    const rehydrateCases: readonly (readonly string[])[] = [[], [beads], ["--beads"], ["--beads", beads, "--beads", beads], ["--beads", beads, "extra"], ["--full", full]];
+    for (const args of rehydrateCases) {
+      const run = cli(["rehydrate", ...args]);
+      expect(run.status, args.join(" ")).toBe(3);
+      expect(run.stderr, args.join(" ")).toBe(rehydrateUsage);
+      expect(run.stdout).toBe("");
+    }
+  });
+
+  it("K7 rehydrate exits 3 with the typed line, printing nothing on stdout, when the read throws: a month shard holding a line that does not parse, and a missing main export", () => {
+    const { beads, full } = beadsDir();
+    expect(cli(["compact", "--full", full, "--beads", beads, "--now", "2026-11-03T12:00:00Z"]).status).toBe(0);
+    const shard = join(beads, "archive", "issues-closed-2026-11.jsonl");
+    const lines = linesOf(readFileSync(shard, "utf8")).length;
+    writeFileSync(shard, `${readFileSync(shard, "utf8")}{"id":\n`);
+    const corrupt = cli(["rehydrate", "--beads", beads]);
+    expect(corrupt.status).toBe(3);
+    expect(corrupt.stdout).toBe("");
+    expect(corrupt.stderr).toBe(`tracker-export: could not rehydrate (tracker-export: archived issues-closed-2026-11.jsonl line ${lines + 1} does not parse)\n`);
+    const empty = beadsDir();
+    const missing = cli(["rehydrate", "--beads", empty.beads]);
+    expect(missing.status).toBe(3);
+    expect(missing.stdout).toBe("");
+    expect(String(missing.stderr)).toMatch(/^tracker-export: could not rehydrate \(ENOENT[^\n]*\)\n$/);
+  });
+
+  it("K8 compact with an FW_EXPORT_SOFT_CEILING that is not a positive whole number exits 3 with the typed line and writes nothing", () => {
+    const { beads, full } = beadsDir();
+    for (const bad of ["0", "ten", "-5", "1e3", "012"]) {
+      const run = cli(["compact", "--full", full, "--beads", beads, "--now", "2026-11-03T12:00:00Z"], { FW_EXPORT_SOFT_CEILING: bad });
+      expect(run.status, bad).toBe(3);
+      expect(run.stderr).toBe(`tracker-export: FW_EXPORT_SOFT_CEILING must be a positive whole number of bytes (got "${bad}"); nothing is written\n`);
+      expect(run.stdout).toBe("");
+      expect(readdirSync(beads)).toEqual([]);
+    }
+  });
+
+  it("K9 compact exits 3 with the typed line and writes nothing when it cannot read its full export: a missing file, and a directory", () => {
+    const { dir, beads } = beadsDir();
+    for (const input of [join(dir, "absent.jsonl"), dir]) {
+      const run = cli(["compact", "--full", input, "--beads", beads, "--now", "2026-11-03T12:00:00Z"]);
+      expect(run.status, input).toBe(3);
+      expect(String(run.stderr)).toMatch(/^tracker-export: could not read the inputs \([^\n]+\); nothing is written\n$/);
+      expect(run.stdout).toBe("");
+      expect(readdirSync(beads)).toEqual([]);
+    }
+  });
+
+  it("K10 compact exits 3 with the round-trip line and writes nothing when its own archive would not read back as the full export", () => {
+    const { beads, full } = beadsDir();
+    const rows = fixtureRows();
+    const older = rows.find(r => r.id === "wb-c2") ?? {};
+    mkdirSync(join(beads, "archive"));
+    const shard = join(beads, "archive", "issues-closed-2026-12.jsonl");
+    writeFileSync(shard, `${lineOf(older)}\n`);
+    writeFileSync(full, textOf(rows.map(r => (r.id === "wb-c2" ? { ...r, notes: "a note the run must not lose", updated_at: "2026-11-20T00:00:00Z" } : r))));
+    const run = cli(["compact", "--full", full, "--beads", beads, "--now", "2026-11-20T06:00:00Z"]);
+    expect(run.status).toBe(3);
+    expect(run.stderr).toBe("tracker-export: REFUSED the compacted export does not rehydrate to the full export it was cut from; nothing is written\n");
+    expect(run.stdout).toBe("");
+    expect(readdirSync(beads)).toEqual(["archive"]);
+    expect(readdirSync(join(beads, "archive"))).toEqual(["issues-closed-2026-12.jsonl"]);
+    expect(readFileSync(shard, "utf8")).toBe(`${lineOf(older)}\n`);
+  });
+
+  it("K11 without --now the run stamp is the current time: the receipt's now lies between the clock read before and after the run, and a row with no close stamp goes to the shard of that UTC month", () => {
+    const { beads, full } = beadsDir();
+    const missing = row("wb-n0", "closed");
+    delete missing.closed_at;
+    writeFileSync(full, textOf([row("wb-o1", "open"), missing]));
+    const before = Date.now();
+    const run = cli(["compact", "--full", full, "--beads", beads]);
+    const after = Date.now();
+    expect(run.stderr).toBe("");
+    expect(run.status).toBe(0);
+    const now = String((JSON.parse(String(run.stdout)) as Row).now);
+    expect(Date.parse(now)).toBeGreaterThanOrEqual(before);
+    expect(Date.parse(now)).toBeLessThanOrEqual(after);
+    expect(readdirSync(join(beads, "archive"))).toEqual([`issues-closed-${now.slice(0, 7)}.jsonl`]);
+    expect([new Date(before).toISOString().slice(0, 7), new Date(after).toISOString().slice(0, 7)]).toContain(now.slice(0, 7));
+  });
+
+  it("K12 --now is judged as a UTC stamp in any process time zone: a stamp with no zone, a date and a year exit 3 writing nothing, and a stamp with a zone names its UTC month under TZ=UTC and TZ=Pacific/Kiritimati", () => {
+    for (const zone of ["UTC", "Pacific/Kiritimati"]) {
+      const { beads, full } = beadsDir();
+      for (const bad of ["2026", "2026-11-03", "2026-11-30T15:00:00"]) {
+        const run = cli(["compact", "--full", full, "--beads", beads, "--now", bad], { TZ: zone });
+        expect(run.status, `${zone} ${bad}`).toBe(3);
+        expect(run.stderr).toBe(`tracker-export: REFUSED the run stamp "${bad}" is not a UTC timestamp; nothing is written\n`);
+        expect(readdirSync(beads)).toEqual([]);
+      }
+      const missing = row("wb-n0", "closed");
+      delete missing.closed_at;
+      writeFileSync(full, textOf([missing]));
+      const run = cli(["compact", "--full", full, "--beads", beads, "--now", "2026-11-30T15:00:00Z"], { TZ: zone });
+      expect(run.status, zone).toBe(0);
+      expect(readdirSync(join(beads, "archive")), zone).toEqual(["issues-closed-2026-11.jsonl"]);
+    }
   });
 });
 
@@ -480,14 +800,32 @@ describe("wb-294d round trip over the tracked export (owner element 3, read thro
     expect(closedIds.length).toBeGreaterThan(0);
     for (const id of closedIds) expect(archived.get(id), id).toBe(fullById.get(id));
     const stubs = new Map(mainLines.map(parsed).filter(r => r.status === "closed").map(r => [String(r.id), r]));
+    const closedSet = new Set(closedIds);
     const edges = fullLines
       .map(parsed)
       .flatMap(r => (Array.isArray(r.dependencies) ? r.dependencies : []))
       .map(edge => (edge !== null && typeof edge === "object" && !Array.isArray(edge) ? String(edge.depends_on_id) : ""))
-      .filter(target => stubs.has(target));
+      .filter(target => closedSet.has(target));
     expect(edges.length).toBeGreaterThan(0);
-    for (const target of edges) expect(stubs.get(target)?.status, target).toBe("closed");
+    for (const target of edges) {
+      const stub = stubs.get(target);
+      expect(stub?.status, target).toBe("closed");
+      expect(Object.keys(stub ?? {}).every(key => EXPECTED_STUB_FIELDS.includes(key)), target).toBe(true);
+    }
     expect(Buffer.byteLength(result.main)).toBeLessThan(DEFAULT_SOFT_CEILING);
     for (const [name, text] of result.shards) expect(Buffer.byteLength(text), name).toBeLessThan(DEFAULT_SOFT_CEILING);
   }, 180_000);
+});
+
+describe("wb-294d module source: what it runs", () => {
+  it("S1 ONLY GIT: the module's only child process is git - every spawnSync call names \"git\", spawnSync is all it imports from node:child_process, and it calls no other process launcher", () => {
+    const source = readFileSync(TOOL, "utf8");
+    const calls = [...source.matchAll(/\bspawnSync\(\s*([^,)]*)/g)].map(match => match[1] ?? "");
+    expect(calls.length).toBeGreaterThan(0);
+    expect(calls.filter(call => call !== '"git"')).toEqual([]);
+    expect(source.match(/from "node:child_process"/g)).toEqual(['from "node:child_process"']);
+    expect(source).toMatch(/^import \{ spawnSync \} from "node:child_process";$/m);
+    // A launcher is called by its bare name; RegExp exec calls (UTC_STAMP.exec, SHARD_FILE.exec) are member calls.
+    expect(source).not.toMatch(/(?<![.\w])(?:exec|execFile|execSync|execFileSync|fork|spawn)\s*\(|child_process"\)|\bimport\s*\(/);
+  });
 });
