@@ -1609,11 +1609,11 @@ export default function (pi: ExtensionAPI, injected: SubagentsExtensionInjection
   // With no per-result note by design, the model would have every reason to go
   // on reporting a `pi-agent-*` branch that was never created.
   const isolationGuideline = isWorktreeIsolationEnabled()
-    ? `\n- Use isolation: "worktree" to give the agent its own git worktree (safe parallel file modifications); leave it unset, or pass "off", for none. The worktree is removed when the agent finishes; if it made changes, they are committed to a branch and the branch is named in the result.`
+    ? `\n- Use isolation: "worktree" to give the agent its own git worktree (safe parallel file modifications); leave it unset, or pass "off", for none. When the agent finishes, any changes it made are committed to a branch named in the result and the worktree is removed; if Git preservation fails, no branch is created and the worktree is kept instead, with the agent's work in it.`
     : "";
 
   const isolationCompactGuideline = isWorktreeIsolationEnabled()
-    ? `\n- isolation: "worktree" gives the agent its own git worktree (removed on completion); changes land on a branch named in the result.`
+    ? `\n- isolation: "worktree" gives the agent its own git worktree; on completion, changes land on a branch named in the result and the worktree is removed, but if Git preservation fails, the worktree is kept and no branch is created.`
     : "";
 
   // Compact Agent tool description (#91, `toolDescriptionMode: "compact"`) —
