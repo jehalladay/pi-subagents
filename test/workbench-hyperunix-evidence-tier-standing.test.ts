@@ -4097,9 +4097,9 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       if (judgedTexts[module] !== texts[module]) parsedModules.delete(key);
       return [departures, file];
     };
-    // verdictJudgments: for each sameParseReading() reading that reads a verdict (its text's parse in hand), its module, its
-    // planted text and the departures its verdict line reads (its judgment), in the order T2 gives them; THE CALL'S JUDGMENT,
-    // below, reads the judges' call's from it.
+    // verdictJudgments (wb-ant2 cut #8, refusal #7's U1): the list THE CALL'S JUDGMENT, below, reads, and this census claims
+    // of it only what that row reads: one record for the decoder module and the judges' call text, holding no departure. What
+    // it holds for any other reading, and in what order, is NOT CLAIMED by this census.
     const verdictJudgments: (readonly [module: ConsultedModule, text: string, departures: readonly string[]])[] = [];
     const sameParseReading = (module: ConsultedModule, name: string, planted: string, statement: string): string => {
       const member = name.slice(name.indexOf('.') + 1);
