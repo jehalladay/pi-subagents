@@ -346,7 +346,7 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
     // this host's policy basis, and SDK node effects are admitted per journaled
     // effect class rather than replayed the way agents are. A reading that is
     // not measured with a well-formed digest declines replay outright, agent
-    // answers and node reads alike: an absence can never be matched (wb-413a).
+    // answers and node reads alike (wb-413a).
     replaySafe: dependencies === undefined || replayDependenciesMeasured(dependencies),
     replayBasis,
     async spawnAgent(request) {

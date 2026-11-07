@@ -14,7 +14,7 @@
  * journals its own row under its own host's basis, so resumedWith also reads that row's readings and a row can say which
  * reading moved and which stayed equal.
  *
- * Claimed here, each by its rows, and nothing wider (cut #3: the enumerate form of the R-B646 claim set):
+ * Claimed here, each by its rows, and nothing wider (cut #4: the R-B646 claim set after its structural exit, R-B664):
  *  - EAT-R017, the Git candidate forms that move the source reading at the registered path: a tracked file's working
  *    bytes at the top level (W-R017), one and two directories down (W-R017-NESTED), and dot-named at the top level, in a
  *    dot-named directory and in a subdirectory (W-R017-DOT); a tracked file deleted from the working tree
@@ -23,19 +23,22 @@
  *    the same tree and a committed change (W-R017). A Git-ignored file leaves the source reading equal
  *    (W-R018-LOCAL-SOURCE, W-R018-PROJECT). The source reading is unknown outside Git (W-R020) and for a committed
  *    symlink (W-R020-CANDIDATE);
- *  - EAT-R018, the instruction reading at the registered path: a user skill and a user CLAUDE.md under CLAUDE_CONFIG_DIR
- *    (W-R018), a Git-ignored CLAUDE.local.md under the local source (W-R018-LOCAL, W-R018-LOCAL-SOURCE), a Git-ignored
- *    project skill (W-R018-PROJECT), a user CLAUDE.md under <home>/.claude with CLAUDE_CONFIG_DIR unset (W-R018-HOME)
- *    and under a relative CLAUDE_CONFIG_DIR resolved against the cwd (W-R018-RELATIVE-CONFIG);
+ *  - EAT-R018, the instruction reading at the registered path, each row naming its setting sources: a user skill and a
+ *    user CLAUDE.md under CLAUDE_CONFIG_DIR (W-R018), a Git-ignored CLAUDE.local.md under the local source
+ *    (W-R018-LOCAL, W-R018-LOCAL-SOURCE), a Git-ignored project skill (W-R018-PROJECT), a user CLAUDE.md under the
+ *    sandbox's absolute <home>/.claude with CLAUDE_CONFIG_DIR unset (W-R018-HOME) and under a relative
+ *    CLAUDE_CONFIG_DIR resolved against the cwd (W-R018-RELATIVE-CONFIG);
  *  - EAT-R019, the provider reading at the registered path: the user settings.json and the local settings.local.json
- *    (W-R019), and the user settings.json under <home>/.claude (W-R018-HOME);
+ *    (W-R019), and the user settings.json under the sandbox's absolute <home>/.claude (W-R018-HOME);
  *  - EAT-R020 at the registered path: an unknown source reading (W-R020, W-R020-CANDIDATE) and an unknown instruction
  *    reading (W-R020-INSTRUCTIONS) replay nothing.
  * RESIDUALS (named, each with its pinned quiet row): R-ENV-SELECTED-PROVIDER W-Q-ENV-PROVIDER; R-NESTED-MEMORY
  * W-Q-NESTED-MEMORY; R-IGNORED-SOURCE W-R018-LOCAL-SOURCE, W-R018-PROJECT.
  * NOT CLAIMED by this suite: which identity the registered path hands the provider reader (one test process cannot vary
  * its installed SDK artifacts or its registered provider contracts); Git candidate forms other than those listed above
- * (more than 2000 paths or 32 MiB, a path the survey cannot read, other path spellings); a live SDK session.
+ * (more than 2000 paths or 32 MiB, a path the survey cannot read, other path spellings); a live SDK session. NOT CLAIMED
+ * and routed to wb-6b3z (R-B664, the structural exit of the R-B646 claim set): which setting sources the readings read
+ * when the run names none, and a relative home.
  */
 import { execFileSync } from "node:child_process";
 import { mkdirSync, symlinkSync, unlinkSync, writeFileSync } from "node:fs";
@@ -330,7 +333,7 @@ describe("wb-413a wiring: the embedded host's replay basis carries the measured 
     expect(moved.readings.provider).toEqual(recorded.provider);
   }, 60_000);
 
-  it("W-R018-HOME: with CLAUDE_CONFIG_DIR unset the user source reads <home>/.claude, so a memory file there moves the instruction reading", async () => {
+  it("W-R018-HOME: with CLAUDE_CONFIG_DIR unset the user source reads the sandbox's absolute <home>/.claude, so a memory file there moves the instruction reading", async () => {
     delete process.env[CONFIG_ENV];
     const booted = await boot({ settingSources: ["user"] });
     const home = process.env.HOME;

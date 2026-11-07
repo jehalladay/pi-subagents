@@ -2592,8 +2592,10 @@ Terse command-style prompts produce shallow, generic work.
   /**
    * wb-413a: the readings the run's Claude host replays under (replay-dependencies.ts, whose module doc lists the Git
    * candidate forms claimed): the source reading of the cwd's HEAD with the identity capture's Git candidate, and the
-   * instruction and provider readings of the run's setting sources under claudeUserConfigDir (CLAUDE_CONFIG_DIR, else
-   * ~/.claude). Which identity the provider reading is handed here is NOT CLAIMED (one process cannot vary its SDK).
+   * instruction and provider readings of the setting sources the run names (as the wiring suite names them: user,
+   * project, local, and user with local) under claudeUserConfigDir (CLAUDE_CONFIG_DIR, else ~/.claude). NOT CLAIMED:
+   * which identity the provider reading is handed here (one process cannot vary its SDK), and which sources the readings
+   * read when the run names none (R-B664, routed to wb-6b3z).
    */
   function claudeReplayDependencies(ctx: ExtensionContext, task: WorkflowTask, settings: WorkbenchSettings,
     input: IdentityCaptureInput): ClaudeReplayDependencies {

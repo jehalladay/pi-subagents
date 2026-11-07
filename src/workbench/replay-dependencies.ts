@@ -10,17 +10,23 @@
  *    file Git does not ignore at the top level, in a subdirectory and dot-named, a new commit over the same tree and a
  *    committed change each move the reading; a Git-ignored file leaves it equal; it is unknown outside Git and for a
  *    committed symlink;
- *  - instructions (instructionDependency): what readFiles reads at the paths instructionPaths names for each enabled
- *    setting source, its CLAUDE_INSTRUCTION_LOCATIONS and its CLAUDE_ANCESTOR_MEMORY files; with no source enabled it
- *    names no path and reads no file;
+ *  - instructions (instructionDependency): what readFiles reads at the paths instructionPaths names for the sources it
+ *    is handed, each source's CLAUDE_INSTRUCTION_LOCATIONS and CLAUDE_ANCESTOR_MEMORY files; handed no source, it names
+ *    no path and reads no file;
  *  - provider (providerDependency): the runtime artifact digest and the provider contract digest of the identity it is
- *    handed, and what readFiles reads at each enabled source's setting file (CLAUDE_SETTINGS_LOCATIONS).
+ *    handed, and what readFiles reads at the setting file (CLAUDE_SETTINGS_LOCATIONS) of each source it is handed.
  *
- * A reading is MEASURED, a digest of what was read, or UNKNOWN, a fixed reason and no digest. An unknown reading is
- * never turned into a digest: two runs that could not measure a dependency would otherwise compare equal on that absence
- * and hand back a stale coding or verification answer. replayDependenciesMeasured is true only for three measured
- * readings with well-formed digests, and the Claude host permits settled replay only then, so "cannot measure" declines
- * replay instead of matching.
+ * A reading is MEASURED, a digest of what was read, or UNKNOWN, a fixed reason and no digest. replayDependenciesMeasured
+ * is true only for three measured readings with well-formed digests, and the Claude host permits settled replay only
+ * then, so a reading a reader returns unknown declines replay instead of matching. Which conditions a reader returns
+ * unknown is claimed only at the forms its export doc and readFiles name, as the readers suite plants them.
+ *
+ * NOT CLAIMED (R-B664, the structural exit of the R-B646 claim set; the fail-closed basis core is owned by wb-6b3z):
+ * that every condition the process cannot measure reads unknown, among them a named path the process may not stat, a
+ * link below a location naming a path below a regular file and any read error no row plants; which reason a link back
+ * to a directory inside a location gives; whether a directory first reached through a link, or through two links, is
+ * read again; a relative cwd or config directory handed without the user source; which sources src/index.ts hands the
+ * readers when the run names none; and the default config directory for a relative home.
  */
 import { createHash } from "node:crypto";
 import { readdirSync, readFileSync, realpathSync, type Stats, statSync } from "node:fs";
@@ -36,7 +42,7 @@ export type ReplayDependency =
 export interface ClaudeReplayDependencies {
   /** HEAD's commit and tree with the candidate digest (sourceDependency). */
   readonly source: ReplayDependency;
-  /** The bytes at the instruction paths of the enabled setting sources (instructionDependency). */
+  /** What readFiles reads at the instruction paths of the sources instructionDependency is handed. */
   readonly instructions: ReplayDependency;
   /** The handed identity's runtime artifact and provider contract digests and the setting files (providerDependency). */
   readonly provider: ReplayDependency;
@@ -83,7 +89,8 @@ export const CLAUDE_SETTINGS_LOCATIONS: SourceTable = Object.freeze({
 /**
  * A file reader's budget, counted over the whole reading: each regular file readFiles reads, at any path the reading
  * names, counts one file and its size in bytes, and a reading with more files or more bytes than the budget is unknown
- * (dependency-over-budget), never a digest of part of the files.
+ * (dependency-over-budget), never a digest of part of the files. How a file reached through two paths of one reading
+ * counts is NOT CLAIMED.
  */
 export interface DependencyReadLimits {
   readonly files: number;
@@ -134,11 +141,12 @@ export function sourceDependency(
 }
 
 /**
- * The paths the instruction reading reads, in order: for each enabled source in source order (user, project, local),
- * its CLAUDE_INSTRUCTION_LOCATIONS under its base (configDir for "user", the cwd for "project" and "local"), then its
- * CLAUDE_ANCESTOR_MEMORY files in each proper ancestor of the cwd, nearest first, ending at the filesystem root: the
- * ancestors the cwd's own segments spell, at any depth a path within Linux's 4096-byte PATH_MAX can hold (2047
- * one-letter levels at most). The order and repetition of `sources` do not change the paths.
+ * The paths the instruction reading reads, in order, for an absolute cwd in normal form (one node:path's resolve leaves
+ * as it is): for each source handed, in source order (user, project, local), its CLAUDE_INSTRUCTION_LOCATIONS under its
+ * base (configDir for "user", the cwd for "project" and "local"), then its CLAUDE_ANCESTOR_MEMORY files in each proper
+ * ancestor of the cwd, nearest first, ending at the filesystem root: the ancestors the cwd's own segments spell, at any
+ * depth a path within Linux's 4096-byte PATH_MAX can hold (2047 one-letter levels at most). The order and repetition of
+ * `sources` do not change the paths. A relative cwd, or one not in normal form, is NOT CLAIMED.
  */
 export function instructionPaths(cwd: string, sources: readonly ClaudeSettingSource[], configDir: string): string[] {
   const paths: string[] = [];
@@ -153,10 +161,12 @@ export function instructionPaths(cwd: string, sources: readonly ClaudeSettingSou
 }
 
 /**
- * The instruction reading: what readFiles reads at the paths instructionPaths names for the enabled sources, whatever
- * order or repetition the run named them in. Unknown, by a fixed reason, when a source is not user, project or local
- * (setting-source-unrecognized), when the cwd or the config directory is not absolute (instruction-base-not-absolute),
- * and in the cases readFiles names.
+ * The instruction reading: what readFiles reads at the paths instructionPaths names for the sources it is handed,
+ * whatever order or repetition they come in. Unknown, by a fixed reason, when a source is not user, project or local,
+ * alone or beside a known one (setting-source-unrecognized); with the user source handed, when the cwd or the config
+ * directory is not absolute (instruction-base-not-absolute); and in the forms readFiles names. Which reason a reading
+ * meeting two of these conditions gives is NOT CLAIMED; so is a relative cwd or config directory handed without the
+ * user source (R-B664, routed to wb-6b3z).
  */
 export function instructionDependency(
   cwd: string,
@@ -173,10 +183,13 @@ export function instructionDependency(
 
 /**
  * The provider reading: the runtime artifact digest and the provider contract digest of the identity it is handed, and
- * what readFiles reads at each enabled source's setting file under the source's base. Unknown, by a fixed reason, when
- * no identity is handed or either digest is not sha256: and 64 lowercase hex digits (provider-identity-unmeasured), when a
- * source is not user, project or local (setting-source-unrecognized), when the cwd or the config directory is not
- * absolute (setting-base-not-absolute), and in the cases readFiles names.
+ * what readFiles reads at the setting file of each source it is handed, under the source's base. Unknown, by a fixed
+ * reason, when no identity is handed or either digest is not sha256: and 64 lowercase hex digits
+ * (provider-identity-unmeasured); when a source is not user, project or local, alone or beside a known one
+ * (setting-source-unrecognized); with the user source handed, when the cwd or the config directory is not absolute
+ * (setting-base-not-absolute); and in the forms readFiles names. Which reason a reading meeting two of these conditions
+ * gives is NOT CLAIMED; so is a relative cwd or config directory handed without the user source (R-B664, routed to
+ * wb-6b3z).
  */
 export function providerDependency(
   identity: { readonly runtimeArtifactDigest: string; readonly providerContractDigest: string } | undefined,
@@ -203,9 +216,10 @@ export function providerDependency(
 }
 
 /**
- * The user config directory both readers read under the "user" source: CLAUDE_CONFIG_DIR when it is set to anything but
- * the empty string (a whitespace-only value is a relative path), resolved against the cwd when relative, else
- * <home>/.claude.
+ * The user config directory both readers read under the "user" source, for an absolute cwd and an absolute home:
+ * CLAUDE_CONFIG_DIR when it is set to anything but the empty string, an absolute value in normal form as it is and a
+ * relative one (a whitespace-only value among them) resolved against the cwd; else <home>/.claude. An absolute value not
+ * in normal form, a relative cwd and a relative home are NOT CLAIMED (the relative home: R-B664, routed to wb-6b3z).
  */
 export function claudeUserConfigDir(env: Readonly<Record<string, string | undefined>>, home: string, cwd: string): string {
   const configured = env.CLAUDE_CONFIG_DIR;
@@ -255,12 +269,20 @@ interface FileReading {
  * Read each named path in order, following symbolic links: a regular file by its bytes; a directory as a "directory"
  * mark and then the entries its listing names in UTF-16 code-unit name order, each subdirectory the same way (the names
  * claimed are those the readers suite plants, dot-named files and directories among them; other names are NOT
- * CLAIMED); a missing path, a dangling link and a path below a regular file as absent. A directory reached a second
- * time through a link that is not below it is read again. The whole reading is unknown, by a fixed reason, for: a FIFO or
- * a link to a character device, entries that are neither a regular file nor a directory (dependency-not-a-file); an
- * entry the process cannot read, list or search, and two links naming each other (dependency-unreadable); a directory
- * reached again below itself (dependency-cycle); a reading past its budget (dependency-over-budget,
- * DependencyReadLimits); and a directory MAX_DEPTH levels below a named path (dependency-over-budget).
+ * CLAIMED); a missing named path, a named path below a regular file and a link below a location naming a missing path
+ * as absent. A directory reached first by its own name and a second time through one link that sorts after it and is
+ * not below it is read again. The whole reading is unknown, by a fixed reason, for these forms one level below a
+ * directory location: a FIFO and a link to a character device (dependency-not-a-file); a directory or a file the process
+ * may not read, a directory it may list but not search that holds an entry, and two links naming each other
+ * (dependency-unreadable); and a link back to the location's own directory (dependency-cycle). It is unknown too for a
+ * reading past its budget (dependency-over-budget, DependencyReadLimits) and for a directory MAX_DEPTH levels below a
+ * named path (dependency-over-budget).
+ *
+ * NOT CLAIMED (R-B664, routed to wb-6b3z, the fail-closed basis core): a named path the process may not stat, and any
+ * other read error no row plants; a link below a location naming a path below a regular file; which reason a link back
+ * to a directory inside the location gives; and whether a directory first reached through a link, or reached through
+ * two links, is read again. Also NOT CLAIMED: a socket, a block device, and the reason for any of these forms at
+ * another depth.
  */
 function readFiles(paths: readonly string[], limits: DependencyReadLimits): FileReading[] {
   const readings: FileReading[] = [];

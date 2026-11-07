@@ -5,34 +5,44 @@
  * in test/workbench-claude-replay-dependencies.test.ts, which judges the host's use of these readings.
  *
  * Each row here judges one reader over real files in scratch directories, or a pure path list. This suite claims what
- * its rows pin, and nothing wider (cut #3: the enumerate form of the R-B646 claim set):
+ * its rows pin, and nothing wider (cut #4: the R-B646 claim set after its structural exit, R-B664):
  *  - the source reading (EAT-R017) composes the HEAD commit, the HEAD tree and the candidate digest it is handed and
  *    moves with each one alone (R-SRC-EQUAL, R-SRC-COMMIT/TREE/DIRTY); it is unknown by fixed reasons for a candidate
  *    not measured or empty and a HEAD missing or lacking its commit or tree (R-SRC-UNKNOWN, R-SRC-UNKNOWN-REASONS);
  *    which Git forms move the candidate is test/workbench-replay-dependencies-wiring.test.ts's claim;
- *  - instructionPaths (EAT-R018) is written out for a three-level cwd, the filesystem root and no source (R-INS-PATHS),
- *    and derived from the cwd's own segments for a 2047-level cwd and cwds below the home directory, a scratch in the
- *    temp directory and the working directory (R-INS-PATHS-DEEP); the instruction reading moves with a file at each instruction location and at each memory file
- *    of the parent and the grandparent (R-INS-<source>, R-INS-PATHS-READ), of the fourth and fifth proper ancestors
- *    (R-INS-ANCESTOR-FAR) and at and above a Git work tree's root (R-INS-ANCESTOR-ABOVE-GIT); with no source enabled it
- *    names no path (R-INS-ISOLATION, R-INS-ISOLATION-ALL); a disabled source's files leave it alone, in any source order
- *    (R-INS-SCOPE, R-INS-SCOPE-ALL); a missing path reads as absent (R-INS-ABSENT); links are followed (R-INS-SYMLINK,
+ *  - instructionPaths (EAT-R018), for an absolute cwd in normal form, is written out for a three-level cwd, the
+ *    filesystem root and no source (R-INS-PATHS), and derived from the cwd's own segments for a 2047-level cwd and cwds
+ *    below the home directory, a scratch in the temp directory and the working directory (R-INS-PATHS-DEEP); the
+ *    instruction reading moves with a file at each instruction location and at each memory file of the parent and the
+ *    grandparent (R-INS-<source>, R-INS-PATHS-READ), of the fourth and fifth proper ancestors (R-INS-ANCESTOR-FAR) and
+ *    at and above a Git work tree's root (R-INS-ANCESTOR-ABOVE-GIT); handed no source it names no path
+ *    (R-INS-ISOLATION, R-INS-ISOLATION-ALL); a disabled source's files leave it alone, in any source order (R-INS-SCOPE,
+ *    R-INS-SCOPE-ALL); a missing path reads as absent (R-INS-ABSENT); links are followed (R-INS-SYMLINK,
  *    R-INS-SYMLINK-FILE); a .claude that is a regular file reads as absent below it (R-INS-BELOW-FILE);
  *  - the provider reading (EAT-R019) moves with each handed digest alone (R-PRV-VERSION) and with each enabled source's
  *    setting file and no other source's (R-PRV-SETTINGS-<source>); it refuses a missing or malformed identity
  *    (R-PRV-UNKNOWN, R-PRV-IDENTITY); a .claude that is a regular file reads as absent below it (R-PRV-BELOW-FILE);
  *  - both file readers walk a directory location as R-WALK-* pin: the exact readings of one planted tree each
- *    (R-WALK-instructions-exact, R-WALK-provider-exact), dot-named entries, a directory reached a second time through a
- *    link, a config directory that is a regular file, and two links naming each other (R-WALK-<reader>-*);
+ *    (R-WALK-instructions-exact, R-WALK-provider-exact), dot-named entries, a directory reached first by its own name
+ *    and a second time through one link that sorts after it, a config directory that is a regular file, and two links
+ *    naming each other (R-WALK-<reader>-*);
  *  - an unmeasurable dependency (EAT-R020) is an UNKNOWN reading with a fixed reason and no digest, never an empty or
  *    stable digest standing in for one (the requirement's adversarial mutant), in the cases R-UNK-* pin for both file
  *    readers, budgets counted within one location and across locations and sources among them;
+ *  - the table shapes, each tied to an anchor outside its own literals (R-INS-PLANTS-SHAPE, R-PRV-SETTINGS-SHAPE,
+ *    R-WALK-SHAPE, R-UNK-CASES-SHAPE, R-UNK-READERS-SHAPE);
  *  - the helpers: the config directory (R-CONFIG-DIR, R-CONFIG-DIR-BLANK), the measured shape (R-MEASURED,
  *    R-MEASURED-SHAPES, R-READING-SHAPE), the default budget (R-BUDGET-TABLE) and the source names (R-SOURCES).
  * RESIDUALS (named, each with its pinned quiet row): R-UNLISTED-CONFIG-FILES R-Q-UNLISTED-CONFIG; R-IMPORTED-MEMORY
  * R-Q-IMPORTED-MEMORY; R-NESTED-MEMORY R-Q-NESTED-MEMORY; R-MANAGED-POLICY R-Q-MANAGED-POLICY.
- * NOT CLAIMED by this suite: entry names other than those its rows plant; a cwd string longer than Linux's
- * 4096-byte PATH_MAX holds; a socket or a block device below a location.
+ * NOT CLAIMED by this suite: entry names other than those its rows plant; a cwd string longer than Linux's 4096-byte
+ * PATH_MAX holds, a relative cwd and one not in normal form; a socket or a block device below a location; the reason
+ * of an unknown form at another depth than its row plants; an absolute CLAUDE_CONFIG_DIR not in normal form; which
+ * reason a reading meeting two unknown conditions gives. NOT CLAIMED and routed to wb-6b3z (R-B664, the structural exit
+ * of the R-B646 claim set; the child owns the fail-closed basis core): a named path the process may not stat, and any
+ * read error no row plants; a link below a location naming a path below a regular file; which reason a link back to a
+ * directory inside a location gives; whether a directory first reached through a link, or through two links, is read
+ * again; a relative cwd or config directory handed without the user source; a relative home.
  * The locations are written out literally below rather than read back from the module, so dropping one from the module's
  * table reds both the frozen table row and that location's own row; R-INS-PLANTS-SHAPE ties the plant rows back to the
  * module's tables, so dropping a plant row reds as well.
@@ -40,7 +50,7 @@
 
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { appendFileSync, chmodSync, existsSync, lstatSync, mkdirSync, readdirSync, rmSync, type Stats, statSync, symlinkSync, writeFileSync } from "node:fs";
+import { appendFileSync, chmodSync, existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, rmSync, type Stats, statSync, symlinkSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { dirname, isAbsolute, join, resolve } from "node:path";
 import type { SettingSource } from "@anthropic-ai/claude-agent-sdk";
@@ -139,6 +149,28 @@ function expectUnknown(reading: ReplayDependency): void {
 function expectUnknownBecause(reading: ReplayDependency, reason: string): void {
   expectUnknown(reading);
   expect(reading).toEqual({ state: "unknown", reason });
+}
+
+/** The module function a walk or unknown-reading table row runs: one of its two file readers. */
+type FileReader = typeof instructionDependency | typeof providerDependency;
+/**
+ * The module's file readers, read from its source text rather than from this suite: each exported function whose body
+ * calls readFiles, in source order (the anchor the walk and unknown-reading tables are tied to, outside their literals).
+ */
+function moduleFileReaders(): string[] {
+  const source = readFileSync(new URL("../src/workbench/replay-dependencies.ts", import.meta.url), "utf8");
+  return [...source.matchAll(/^export function (\w+)\([\s\S]*?^}$/gm)].filter(match => match[0].includes("readFiles(")).map(match => match[1] ?? "");
+}
+/**
+ * The names a list of this bead's receipt gives: the last receipt line carrying `label`, read after the label up to the
+ * full stop and split at its commas (the anchor of the unknown-case table, outside this suite's literals).
+ */
+function receiptList(label: string): string[] {
+  const receipt = readFileSync(new URL("../docs/workbench/receipts/wb-413a.md", import.meta.url), "utf8");
+  const line = receipt.split("\n").filter(text => text.includes(label)).at(-1);
+  if (line === undefined) return [];
+  const after = line.slice(line.indexOf(label) + label.length);
+  return after.slice(0, after.indexOf(".")).split(",").map(name => name.trim()).filter(name => name !== "");
 }
 
 describe("wb-413a source reading: the HEAD commit, the HEAD tree and the handed candidate digest (EAT-R017)", () => {
@@ -258,7 +290,7 @@ describe("wb-413a instruction reading: the bytes at the instruction paths (EAT-R
     expect(digestFrom(instructionDependency(at.cwd, ["user"], at.config))).not.toBe(v1);
   });
 
-  it("R-INS-UNKNOWN: a FIFO, a directory cycle, a walk past an explicit budget of files or of bytes and an unrecognized source each make the instruction reading unknown, never a partial or empty digest", () => {
+  it("R-INS-UNKNOWN: a FIFO below the project skills location, a link two levels below the user skills location back to that location, a walk past an explicit budget of files or of bytes and an unrecognized source each make the instruction reading unknown, never a partial or empty digest", () => {
     const fifo = layout();
     mkdirSync(join(fifo.cwd, ".claude", "skills"), { recursive: true });
     execFileSync("mkfifo", [join(fifo.cwd, ".claude", "skills", "pipe")]);
@@ -546,6 +578,19 @@ describe("wb-413a provider reading: the handed identity's two digests and the se
     });
   }
 
+  it("R-PRV-SETTINGS-SHAPE: the setting-file rows, written out (frozen shape), plant every setting file of CLAUDE_SETTINGS_LOCATIONS once, at its source's base", () => {
+    expect(SETTINGS.map(([source, relative, base]) => `${source}|${base}|${relative}`)).toEqual(["user|config|settings.json", "project|cwd|.claude/settings.json", "local|cwd|.claude/settings.local.json"]);
+    // Anchored outside the literal above: the module's own table says which setting rows must exist, and how many.
+    let expected = 0;
+    for (const [source, locations] of Object.entries(CLAUDE_SETTINGS_LOCATIONS)) {
+      for (const location of locations) {
+        expected += 1;
+        expect(SETTINGS.filter(([s, relative, base]) => s === source && relative === location && base === (source === "user" ? "config" : "cwd")), `${source} ${location}`).toHaveLength(1);
+      }
+    }
+    expect(SETTINGS).toHaveLength(expected);
+  });
+
   it("R-PRV-UNKNOWN: no invocation identity, an empty or bare-prefix digest, or a FIFO at the user setting file is an unknown reading", () => {
     const at = layout();
     expectUnknown(providerDependency(undefined, at.cwd, [], at.config));
@@ -578,10 +623,10 @@ describe("wb-413a provider reading: the handed identity's two digests and the se
 describe("wb-413a walks of both file readers below a directory location (EAT-R018, EAT-R019)", () => {
   const identity = { runtimeArtifactDigest: digestOf("installed SDK artifacts v1"), providerContractDigest: digestOf("provider contracts v1") };
   type Read = (at: Layout, sources?: readonly string[]) => ReplayDependency;
-  /** [reader, the location it reads under the user source (below the config directory), a reading of it]. */
-  const WALKERS: readonly (readonly ["instructions" | "provider", string, Read])[] = [
-    ["instructions", "skills", (at, sources = ["user"]) => instructionDependency(at.cwd, sources, at.config)],
-    ["provider", "settings.json", (at, sources = ["user"]) => providerDependency(identity, at.cwd, sources, at.config)],
+  /** [reader, the location it reads under the user source (below the config directory), a reading of it, its module reader]. */
+  const WALKERS: readonly (readonly ["instructions" | "provider", string, Read, FileReader])[] = [
+    ["instructions", "skills", (at, sources = ["user"]) => instructionDependency(at.cwd, sources, at.config), instructionDependency],
+    ["provider", "settings.json", (at, sources = ["user"]) => providerDependency(identity, at.cwd, sources, at.config), providerDependency],
   ];
   /** One path written as v1, then as v2, then as v1 again: the reading moves and comes back. */
   function expectMovesAndRestores(at: Layout, read: Read, path: string): void {
@@ -600,7 +645,7 @@ describe("wb-413a walks of both file readers below a directory location (EAT-R01
       for (const relative of [".index.md", "review/.notes.md", ".drafts/plan.md", ".drafts/.hidden.md"]) expectMovesAndRestores(at, read, join(dir, relative));
     });
 
-    it(`R-WALK-${reader}-diamond: below the ${location} location, a directory reached a second time through a link that is not below it is read again: the ${reader} reading is measured, moves with that directory's bytes, and moves when the second link goes`, () => {
+    it(`R-WALK-${reader}-diamond: below the ${location} location, a directory reached first by its own name and a second time through one link that sorts after it and is not below it is read again: the ${reader} reading is measured, moves with that directory's bytes, and moves when the link goes`, () => {
       const at = layout();
       const dir = join(at.config, location);
       write(join(dir, "a", "entry.md"), "shared entry v1");
@@ -632,6 +677,12 @@ describe("wb-413a walks of both file readers below a directory location (EAT-R01
       expectUnknownBecause(read(at), "dependency-unreadable");
     });
   }
+
+  it("R-WALK-SHAPE: the walk rows' readers, written out (frozen shape), are the module's file readers as its source text names them (each exported function that calls readFiles), one walker each", () => {
+    expect(WALKERS.map(([reader, location, , fileReader]) => `${reader}|${location}|${fileReader.name}`)).toEqual(["instructions|skills|instructionDependency", "provider|settings.json|providerDependency"]);
+    // Anchored outside the literal above: the module's source text names its file readers.
+    expect(WALKERS.map(([, , , fileReader]) => fileReader.name)).toEqual(moduleFileReaders());
+  });
 
   /** A file reading as the module records it: the path and the sha256 of the bytes planted there. */
   const file = (path: string, text: string): { path: string; digest: string } => ({ path, digest: digestOf(text) });
@@ -736,27 +787,49 @@ describe("wb-413a walks of both file readers below a directory location (EAT-R01
 describe("wb-413a unknown readings of both file readers, by fixed reasons (EAT-R020)", () => {
   const identity = { runtimeArtifactDigest: digestOf("installed SDK artifacts v1"), providerContractDigest: digestOf("provider contracts v1") };
   type Read = (at: Layout, sources?: readonly string[], limits?: DependencyReadLimits) => ReplayDependency;
-  /** [reader, the location it reads under the user source (below the config directory), a reading of it]. */
-  const READERS: readonly (readonly ["instructions" | "provider", string, Read])[] = [
-    ["instructions", "skills", (at, sources = ["user"], limits) => instructionDependency(at.cwd, sources, at.config, limits)],
-    ["provider", "settings.json", (at, sources = ["user"], limits) => providerDependency(identity, at.cwd, sources, at.config, limits)],
+  /** [reader, the location it reads under the user source (below the config directory), a reading of it, its module reader]. */
+  const READERS: readonly (readonly ["instructions" | "provider", string, Read, FileReader])[] = [
+    ["instructions", "skills", (at, sources = ["user"], limits) => instructionDependency(at.cwd, sources, at.config, limits), instructionDependency],
+    ["provider", "settings.json", (at, sources = ["user"], limits) => providerDependency(identity, at.cwd, sources, at.config, limits), providerDependency],
   ];
-  /** [case, what is planted below the location (a directory), the fixed reason]. */
-  const CASES: readonly (readonly [string, (dir: string) => void, string])[] = [
-    ["not-a-file", dir => { execFileSync("mkfifo", [join(dir, "pipe")]); }, "dependency-not-a-file"],
-    ["device", dir => { symlinkSync("/dev/null", join(dir, "null")); }, "dependency-not-a-file"],
-    ["cycle", dir => { symlinkSync(dir, join(dir, "again")); }, "dependency-cycle"],
-    ["unreadable-directory", dir => { write(join(dir, "locked", "entry.md"), "locked"); chmodSync(join(dir, "locked"), 0o000); }, "dependency-unreadable"],
-    ["unreadable-file", dir => { write(join(dir, "locked.md"), "locked"); chmodSync(join(dir, "locked.md"), 0o000); }, "dependency-unreadable"],
-    // Listable but not searchable (mode r--): the walk names the entry inside it, and statting that entry is refused.
-    ["unsearchable-directory", dir => { write(join(dir, "dark", "entry.md"), "dark"); chmodSync(join(dir, "dark"), 0o400); }, "dependency-unreadable"],
+  /** The plant of each unknown case, one level below the location directory `dir`; each is named, so the frozen shape of CASES holds it. */
+  function plantFifo(dir: string): void {
+    execFileSync("mkfifo", [join(dir, "pipe")]);
+  }
+  function plantDeviceLink(dir: string): void {
+    symlinkSync("/dev/null", join(dir, "null"));
+  }
+  function plantSelfLink(dir: string): void {
+    symlinkSync(dir, join(dir, "again"));
+  }
+  function plantLockedDirectory(dir: string): void {
+    write(join(dir, "locked", "entry.md"), "locked");
+    chmodSync(join(dir, "locked"), 0o000);
+  }
+  function plantLockedFile(dir: string): void {
+    write(join(dir, "locked.md"), "locked");
+    chmodSync(join(dir, "locked.md"), 0o000);
+  }
+  /** Listable but not searchable (mode r--): the walk names the entry inside it, and statting that entry is refused. */
+  function plantListableDirectory(dir: string): void {
+    write(join(dir, "dark", "entry.md"), "dark");
+    chmodSync(join(dir, "dark"), 0o400);
+  }
+  /** [case, what is planted one level below the location (a directory), its plant, the fixed reason]. */
+  const CASES: readonly (readonly [string, string, (dir: string) => void, string])[] = [
+    ["not-a-file", "a FIFO", plantFifo, "dependency-not-a-file"],
+    ["device", "a link to a character device", plantDeviceLink, "dependency-not-a-file"],
+    ["cycle", "a link back to the location's own directory", plantSelfLink, "dependency-cycle"],
+    ["unreadable-directory", "a directory the process may not read", plantLockedDirectory, "dependency-unreadable"],
+    ["unreadable-file", "a file the process may not read", plantLockedFile, "dependency-unreadable"],
+    ["unsearchable-directory", "a directory the process may list but not search, holding an entry", plantListableDirectory, "dependency-unreadable"],
   ];
   /** Thirty-one directory levels below a location: the deepest level a walk reads directories at. */
   const LEVELS = Array.from({ length: 31 }, (_, level) => `level-${String(level + 1).padStart(2, "0")}`);
 
   for (const [reader, location, read] of READERS) {
-    for (const [name, plant, reason] of CASES) {
-      it(`R-UNK-${reader}-${name}: ${name} below the ${location} location is an unknown ${reader} reading (${reason})`, () => {
+    for (const [name, what, plant, reason] of CASES) {
+      it(`R-UNK-${reader}-${name}: ${what}, one level below the ${location} location, is an unknown ${reader} reading (${reason})`, () => {
         const at = layout();
         const dir = join(at.config, location);
         mkdirSync(dir, { recursive: true });
@@ -812,15 +885,39 @@ describe("wb-413a unknown readings of both file readers, by fixed reasons (EAT-R
       const at = layout();
       expectUnknownBecause(read(at, ["managed"]), "setting-source-unrecognized");
       expectUnknownBecause(read(at, ["user", "managed"]), "setting-source-unrecognized");
+      // A known name in another case or with a trailing space, and the empty name, are not known names either.
+      for (const unrecognized of ["User", "user ", ""]) {
+        expectUnknownBecause(read(at, [unrecognized]), "setting-source-unrecognized");
+        expectUnknownBecause(read(at, ["user", unrecognized]), "setting-source-unrecognized");
+      }
     });
   }
 
-  it("R-UNK-relative: a relative cwd or config directory is an unknown reading for both file readers", () => {
+  it("R-UNK-relative: with the user source handed, a relative cwd and a relative config directory are each an unknown reading for both file readers", () => {
     const at = layout();
     expectUnknownBecause(instructionDependency("repo/pkg", ["user"], at.config), "instruction-base-not-absolute");
     expectUnknownBecause(instructionDependency(at.cwd, ["user"], "config"), "instruction-base-not-absolute");
     expectUnknownBecause(providerDependency(identity, "repo/pkg", ["user"], at.config), "setting-base-not-absolute");
     expectUnknownBecause(providerDependency(identity, at.cwd, ["user"], "config"), "setting-base-not-absolute");
+  });
+
+  it("R-UNK-CASES-SHAPE: the unknown cases each file reader plants one level below its location, written out (frozen shape) with their plants and reasons, are the cases this bead's receipt lists, one row each", () => {
+    expect(CASES.map(([name, what, plant, reason]) => `${name}|${reason}|${plant.name}|${what}`)).toEqual([
+      "not-a-file|dependency-not-a-file|plantFifo|a FIFO",
+      "device|dependency-not-a-file|plantDeviceLink|a link to a character device",
+      "cycle|dependency-cycle|plantSelfLink|a link back to the location's own directory",
+      "unreadable-directory|dependency-unreadable|plantLockedDirectory|a directory the process may not read",
+      "unreadable-file|dependency-unreadable|plantLockedFile|a file the process may not read",
+      "unsearchable-directory|dependency-unreadable|plantListableDirectory|a directory the process may list but not search, holding an entry",
+    ]);
+    // Anchored outside the literal above: the receipt lists the one-level cases this suite claims.
+    expect(CASES.map(([name]) => name)).toEqual(receiptList("(CASES, R-UNK-CASES-SHAPE):"));
+  });
+
+  it("R-UNK-READERS-SHAPE: the unknown rows' readers, written out (frozen shape), are the module's file readers as its source text names them (each exported function that calls readFiles), one row each", () => {
+    expect(READERS.map(([reader, location, , fileReader]) => `${reader}|${location}|${fileReader.name}`)).toEqual(["instructions|skills|instructionDependency", "provider|settings.json|providerDependency"]);
+    // Anchored outside the literal above: the module's source text names its file readers.
+    expect(READERS.map(([, , , fileReader]) => fileReader.name)).toEqual(moduleFileReaders());
   });
 });
 
@@ -852,11 +949,12 @@ describe("wb-413a budgets counted over the whole reading (EAT-R020)", () => {
 });
 
 describe("wb-413a reading helpers", () => {
-  it("R-CONFIG-DIR: an unset and an empty CLAUDE_CONFIG_DIR give <home>/.claude, an absolute one is itself, and a relative one is resolved against the cwd", () => {
+  it("R-CONFIG-DIR: for an absolute home and cwd, an unset and an empty CLAUDE_CONFIG_DIR give <home>/.claude, an absolute one in normal form is itself, and a relative one is resolved against the cwd", () => {
     expect(claudeUserConfigDir({}, "/home/operator", "/work/repo")).toBe("/home/operator/.claude");
     expect(claudeUserConfigDir({ CLAUDE_CONFIG_DIR: "" }, "/home/operator", "/work/repo")).toBe("/home/operator/.claude");
     expect(claudeUserConfigDir({ CLAUDE_CONFIG_DIR: "/etc/claude-profile" }, "/home/operator", "/work/repo")).toBe("/etc/claude-profile");
     expect(claudeUserConfigDir({ CLAUDE_CONFIG_DIR: "profile" }, "/home/operator", "/work/repo")).toBe("/work/repo/profile");
+    expect(claudeUserConfigDir({ CLAUDE_CONFIG_DIR: "../alt" }, "/home/operator", "/work/repo")).toBe("/work/alt");
   });
 
   it("R-CONFIG-DIR-BLANK: a whitespace-only CLAUDE_CONFIG_DIR (a space, a tab, two spaces) is set and not the empty string, so it is resolved against the cwd as a relative path", () => {
