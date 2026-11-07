@@ -25,8 +25,10 @@
  * that every condition the process cannot measure reads unknown, among them a named path the process may not stat, a
  * link below a location naming a path below a regular file and any read error no row plants; which reason a link back
  * to a directory inside a location gives; whether a directory first reached through a link, or through two links, is
- * read again; a relative cwd or config directory handed with any sources but the user source alone; which sources
- * src/index.ts hands the readers when the run names none; and the default config directory for a relative home.
+ * read again; a relative cwd or config directory handed with any sources but the user source alone, a relative cwd
+ * handed beside a relative config directory, and a relative cwd or config directory other than the two strings the
+ * readers suite plants (R-UNK-relative: the cwd repo/pkg, the config directory config); which sources src/index.ts
+ * hands the readers when the run names none; and the default config directory for a relative home.
  */
 import { createHash } from "node:crypto";
 import { readdirSync, readFileSync, realpathSync, type Stats, statSync } from "node:fs";
@@ -164,11 +166,13 @@ export function instructionPaths(cwd: string, sources: readonly ClaudeSettingSou
  * The instruction reading: what readFiles reads at the paths instructionPaths names for the sources it is handed,
  * whatever order or repetition they come in. Unknown, by a fixed reason, when a source is managed, User, "user " or the
  * empty name (none of them user, project or local), handed alone or beside one known source, before or after it
- * (setting-source-unrecognized); with the user source handed alone, when the cwd or the config directory is not
- * absolute (instruction-base-not-absolute); and in the forms readFiles names. Which reason a reading meeting two of
+ * (setting-source-unrecognized); with the user source handed alone, when the cwd is the relative repo/pkg and the
+ * config directory absolute, or the cwd absolute and the config directory the relative config, as R-UNK-relative
+ * plants them (instruction-base-not-absolute); and in the forms readFiles names. Which reason a reading meeting two of
  * these conditions gives is NOT CLAIMED; so are any other unrecognized name, an unrecognized name beside two or more
- * sources or beside another unrecognized name, and a relative cwd or config directory handed with any sources but the
- * user source alone (the last: R-B664, routed to wb-6b3z).
+ * sources or beside another unrecognized name, and (R-B664, routed to wb-6b3z) a relative cwd or config directory
+ * handed with any sources but the user source alone, a relative cwd beside a relative config directory, and any other
+ * relative string for either.
  */
 export function instructionDependency(
   cwd: string,
@@ -189,11 +193,12 @@ export function instructionDependency(
  * reason, when no identity is handed or either digest is not sha256: and 64 lowercase hex digits
  * (provider-identity-unmeasured); when a source is managed, User, "user " or the empty name (none of them user, project
  * or local), handed alone or beside one known source, before or after it (setting-source-unrecognized); with the user
- * source handed alone, when the cwd or the config directory is not absolute (setting-base-not-absolute); and in the
+ * source handed alone, when the cwd is the relative repo/pkg and the config directory absolute, or the cwd absolute
+ * and the config directory the relative config, as R-UNK-relative plants them (setting-base-not-absolute); and in the
  * forms readFiles names. Which reason a reading meeting two of these conditions gives is NOT CLAIMED; so are any other
- * unrecognized name, an unrecognized name beside two or more sources or beside another unrecognized name, and a
- * relative cwd or config directory handed with any sources but the user source alone (the last: R-B664, routed to
- * wb-6b3z).
+ * unrecognized name, an unrecognized name beside two or more sources or beside another unrecognized name, and
+ * (R-B664, routed to wb-6b3z) a relative cwd or config directory handed with any sources but the user source alone, a
+ * relative cwd beside a relative config directory, and any other relative string for either.
  */
 export function providerDependency(
   identity: { readonly runtimeArtifactDigest: string; readonly providerContractDigest: string } | undefined,

@@ -5,7 +5,7 @@
  * in test/workbench-claude-replay-dependencies.test.ts, which judges the host's use of these readings.
  *
  * Each row here judges one reader over real files in scratch directories, or a pure path list. This suite claims what
- * its rows pin, and nothing wider (cut #5: the R-B646 claim set after its structural exit, R-B664, and the
+ * its rows pin, and nothing wider (cut #6: the R-B646 claim set after its structural exit, R-B664, and the
  * setting-source-unrecognized claim set R-B673 binds):
  *  - the source reading (EAT-R017) composes the HEAD commit, the HEAD tree and the candidate digest it is handed and
  *    moves with each one alone (R-SRC-EQUAL, R-SRC-COMMIT/TREE/DIRTY); it is unknown by fixed reasons for a candidate
@@ -34,8 +34,8 @@
  *    setting-source names managed, User, 'user ' and the empty name, each handed alone or before or after one known
  *    source (R-UNK-<reader>-source, R-UNK-<reader>-source-beside);
  *  - the table shapes, each tied to an anchor outside its own literals (R-INS-PLANTS-SHAPE, R-PRV-SETTINGS-SHAPE,
- *    R-WALK-SHAPE, R-UNK-CASES-SHAPE, R-UNK-READERS-SHAPE), R-UNK-CASES-SHAPE to every line of this bead's receipt
- *    that carries its label;
+ *    R-WALK-SHAPE, R-UNK-CASES-SHAPE, R-UNK-READERS-SHAPE, R-UNK-SOURCE-BESIDE-SHAPE), R-UNK-CASES-SHAPE and
+ *    R-UNK-SOURCE-BESIDE-SHAPE to every line of this bead's receipt that carries its label;
  *  - the helpers: the config directory (R-CONFIG-DIR, R-CONFIG-DIR-BLANK), the measured shape (R-MEASURED,
  *    R-MEASURED-SHAPES, R-READING-SHAPE), the default budget (R-BUDGET-TABLE) and the source names (R-SOURCES).
  * RESIDUALS (named, each with its pinned quiet row): R-UNLISTED-CONFIG-FILES R-Q-UNLISTED-CONFIG; R-IMPORTED-MEMORY
@@ -49,7 +49,8 @@
  * the process may not stat, and any read error no row plants; a link below a location naming a path below a regular
  * file; which reason a link back to a directory inside a location gives; whether a directory first reached through a
  * link, or through two links, is read again; a relative cwd or config directory handed with any sources but the user
- * source alone; a relative home.
+ * source alone, a relative cwd beside a relative config directory, and a relative cwd or config directory other than
+ * the two strings R-UNK-relative plants; a relative home.
  * The locations are written out literally below rather than read back from the module, so dropping one from the module's
  * table reds both the frozen table row and that location's own row; R-INS-PLANTS-SHAPE ties the plant rows back to the
  * module's tables, so dropping a plant row reds as well.
@@ -182,6 +183,28 @@ function receiptLists(label: string): string[][] {
     .map(line => {
       const after = line.slice(line.indexOf(label) + label.length);
       return after.slice(0, after.indexOf(".")).split(",").map(name => name.trim()).filter(name => name !== "");
+    });
+}
+/** One receipt anchor of the source-beside judged set: its unrecognized names and its orders. */
+interface BesideAnchor {
+  readonly names: readonly string[];
+  readonly orders: readonly string[];
+}
+/**
+ * The source-beside anchors of this bead's receipt, one per receipt line carrying `label`, in receipt order: each line's
+ * text between the first two backquotes after the label, read as JSON (the anchor of the source-beside judged set,
+ * outside this suite's literals; a JSON list holds the trailing-space name and the empty name, which the comma lists of
+ * receiptLists drop). Every such line is read, as receiptLists reads its label's lines (refusal #5 F3).
+ */
+function receiptBesideAnchors(label: string): BesideAnchor[] {
+  const receipt = readFileSync(new URL("../docs/workbench/receipts/wb-413a.md", import.meta.url), "utf8");
+  return receipt
+    .split("\n")
+    .filter(text => text.includes(label))
+    .map(line => {
+      const after = line.slice(line.indexOf(label) + label.length);
+      const open = after.indexOf("`");
+      return JSON.parse(after.slice(open + 1, after.indexOf("`", open + 1))) as BesideAnchor;
     });
 }
 
@@ -863,6 +886,19 @@ describe("wb-413a unknown readings of both file readers, by fixed reasons (EAT-R
   ];
   /** Thirty-one directory levels below a location: the deepest level a walk reads directories at. */
   const LEVELS = Array.from({ length: 31 }, (_, level) => `level-${String(level + 1).padStart(2, "0")}`);
+  /** The four unrecognized setting-source names the source-beside rows hand beside a known source. */
+  const UNRECOGNIZED: readonly string[] = ["managed", "User", "user ", ""];
+  /** Where a source-beside list puts the unrecognized name: after the known source, then before it. */
+  const ORDERS: readonly string[] = ["after", "before"];
+  /**
+   * The judged set of R-UNK-<reader>-source-beside, one source list per reading: each UNRECOGNIZED name, in each of the
+   * ORDERS, beside each known source, the known sources the keys of the module's own table (R-SOURCES pins those keys to
+   * the SDK's three names). R-UNK-SOURCE-BESIDE-SHAPE writes it out and ties it to this bead's receipt (refusal #5 F3:
+   * the set the rows judged had no frozen shape and no anchor outside them).
+   */
+  const BESIDE: readonly (readonly string[])[] = Object.keys(CLAUDE_SETTINGS_LOCATIONS).flatMap(known =>
+    UNRECOGNIZED.flatMap(name => ORDERS.map(order => (order === "after" ? [known, name] : [name, known]))),
+  );
 
   for (const [reader, location, read] of READERS) {
     for (const [name, what, plant, reason] of CASES) {
@@ -933,18 +969,15 @@ describe("wb-413a unknown readings of both file readers, by fixed reasons (EAT-R
 
     it(`R-UNK-${reader}-source-beside: each of those four names handed before or after one known source (user, project and local, the keys of the module's own tables) is an unknown ${reader} reading (setting-source-unrecognized)`, () => {
       const at = layout();
-      // The known sources come from the module's table, outside this row's literals (R-SOURCES pins its keys to the SDK's three names).
-      for (const known of Object.keys(CLAUDE_SETTINGS_LOCATIONS)) {
-        for (const unrecognized of ["managed", "User", "user ", ""]) {
-          for (const sources of [[known, unrecognized], [unrecognized, known]]) {
-            expect(read(at, sources), JSON.stringify(sources)).toEqual({ state: "unknown", reason: "setting-source-unrecognized" });
-          }
-        }
+      // The judged set is BESIDE (the known sources the module's table keys, R-SOURCES), written out and anchored outside
+      // this suite by R-UNK-SOURCE-BESIDE-SHAPE; the same 24 lists, in the same order, as the loops of cut #5.
+      for (const sources of BESIDE) {
+        expect(read(at, sources), JSON.stringify(sources)).toEqual({ state: "unknown", reason: "setting-source-unrecognized" });
       }
     });
   }
 
-  it("R-UNK-relative: with the user source handed alone, a relative cwd and a relative config directory are each an unknown reading for both file readers", () => {
+  it("R-UNK-relative: with the user source handed alone, the relative cwd repo/pkg beside an absolute config directory and an absolute cwd beside the relative config directory config are each an unknown reading for both file readers", () => {
     const at = layout();
     expectUnknownBecause(instructionDependency("repo/pkg", ["user"], at.config), "instruction-base-not-absolute");
     expectUnknownBecause(instructionDependency(at.cwd, ["user"], "config"), "instruction-base-not-absolute");
@@ -972,6 +1005,22 @@ describe("wb-413a unknown readings of both file readers, by fixed reasons (EAT-R
     expect(READERS.map(([reader, location, , fileReader]) => `${reader}|${location}|${fileReader.name}`)).toEqual(["instructions|skills|instructionDependency", "provider|settings.json|providerDependency"]);
     // Anchored outside the literal above: the module's source text names its file readers.
     expect(READERS.map(([, , , fileReader]) => fileReader.name)).toEqual(moduleFileReaders());
+  });
+
+  it("R-UNK-SOURCE-BESIDE-SHAPE: the source-beside rows' judged set, written out (frozen shape), is each name in each order that every line of this bead's receipt carrying the SOURCE-BESIDE label lists, beside each key of the module's settings table", () => {
+    expect(BESIDE.map(sources => JSON.stringify(sources))).toEqual([
+      '["user","managed"]', '["managed","user"]', '["user","User"]', '["User","user"]', '["user","user "]', '["user ","user"]', '["user",""]', '["","user"]',
+      '["project","managed"]', '["managed","project"]', '["project","User"]', '["User","project"]', '["project","user "]', '["user ","project"]', '["project",""]', '["","project"]',
+      '["local","managed"]', '["managed","local"]', '["local","User"]', '["User","local"]', '["local","user "]', '["user ","local"]', '["local",""]', '["","local"]',
+    ]);
+    // Anchored outside the literal above: every receipt line carrying the label names the four names and the two orders,
+    // and the known sources are the module's table keys, so a name or an order dropped from the table and from the
+    // literal together still reds against the receipt (refusal #5 F3: GT2-01, GT2-02, GT2-03).
+    const anchors = receiptBesideAnchors("(SOURCE-BESIDE, R-UNK-SOURCE-BESIDE-SHAPE):");
+    expect(anchors.length).toBeGreaterThan(0);
+    for (const { names, orders } of anchors) {
+      expect(BESIDE).toEqual(Object.keys(CLAUDE_SETTINGS_LOCATIONS).flatMap(known => names.flatMap(name => orders.map(order => (order === "after" ? [known, name] : [name, known])))));
+    }
   });
 });
 
