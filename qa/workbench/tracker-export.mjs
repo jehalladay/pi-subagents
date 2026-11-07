@@ -73,10 +73,13 @@
  *       of 1 to 9 digits, then Z or an offset +HH:MM / -HH:MM, every field in range (a calendar day; hour 00-23; minute and second
  *       00-59; offset hour 00-23 and offset minute 00-59), its offset applied (C9, C16, K12). Exit 2 at the soft ceiling (K3). Exit 3
  *       on a usage error (K6), a bad FW_EXPORT_SOFT_CEILING (K8), an input it cannot read (K9), a run stamp that is not a UTC stamp
- *       (K4, K12), a malformed export (K3, C8) or a shard whose text compactTrackerExport refuses as malformed (C9) and a round trip
- *       that is not byte-equal (K10). It writes nothing when it exits 2 or 3 (K3, K4, K6, K8, K9, K10). Over a shard holding a line
- *       that begins with the export's own line prefix and does not parse, the exits of compact and rehydrate are NOT CLAIMED
- *       (refusal #3 of wb-294d: W-GP4-03, 03b): wb-137f's (R-B677).
+ *       (K4, K12), the one malformed export K3 plants - a full export whose only line is `{not json` - and a round trip that is not
+ *       byte-equal (K10). It writes nothing when it exits 2 or 3 (K3, K4, K6, K8, K9, K10). Which exit compact gives, and what it
+ *       writes, over a full export malformed in any form but K3's - the forms C8 plants at compactTrackerExport, a duplicate id among
+ *       them (refusal #4 of wb-294d, F3: GP2-K03) - and over a shard whose text compactTrackerExport refuses as malformed - the shard
+ *       texts C9 plants at the function (refusal #4 of wb-294d, U1: GP2-K01, GP2-K02) - is NOT CLAIMED at the CLI: wb-137f's, with
+ *       its CLI pins (R-B677). Over a shard holding a line that begins with the export's own line prefix and does not parse, the
+ *       exits of compact and rehydrate are NOT CLAIMED (refusal #3 of wb-294d: W-GP4-03, 03b): wb-137f's (R-B677).
  *   node qa/workbench/tracker-export.mjs rehydrate --beads <.beads dir>
  *       prints trackerExportText(<dir>/issues.jsonl) on stdout (K2); exit 3, printing nothing on stdout, on a usage error (K6) and
  *       when the read throws (K7).
@@ -93,14 +96,17 @@
  *         chmod +x "$(git rev-parse --git-path hooks)/pre-push"
  *   Any other verb, or none, exits 3 with the verbs' usage line (G15).
  *
- * RESIDUALS: none claimed at this cut; the modes refusal #3 of wb-294d realized against these words close the NOT CLAIMED list.
+ * RESIDUALS: none claimed at this cut; the modes refusals #3 and #4 of wb-294d realized against these words close the NOT CLAIMED
+ * list.
  * NOT CLAIMED: the machine wiring named above; line ends other than a bare newline and text that is not UTF-8; two compactions of one
  * .beads directory at once, and a crash while one writes; an archive directory, shard or export the process cannot list or read (the
  * read throws; the compaction exits 3, K9); what the tracker's importer does with a main export (STUB FIELDS above is a measurement);
  * a family blob a successful `git rev-list --objects` lists that `git cat-file` cannot size; a submodule entry at a family path; a
  * directory at the name of the shard a run appends to (refusal #3 of wb-294d, F8: W-GP4-04); and the modes that refusal realized
  * against these words, all wb-137f's by the structural exit R-B677: its U1-U4 witnesses (W-GP4-01, 01b, 01c, 02, 02b, 02c, 03, 03b,
- * 05 and 05b), each NOT CLAIMED at its site above, and its F5 members (GP4-M03, M04, M06, M07, M09, M10, M11 and M12).
+ * 05 and 05b), each NOT CLAIMED at its site above, and its F5 members (GP4-M03, M04, M06, M07, M09, M10, M11 and M12); and the
+ * modes refusal #4 realized against the CLI words, wb-137f's by the same exit: its U1 members GP2-K01 and GP2-K02 (C9's shard
+ * texts at the CLI, W2) and its F3 member GP2-K03 (a duplicate-id export at the CLI, W3), each NOT CLAIMED at the CLI above.
  */
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readdirSync, readFileSync, realpathSync, renameSync, statSync, writeFileSync } from "node:fs";

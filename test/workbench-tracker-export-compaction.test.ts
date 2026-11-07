@@ -620,17 +620,19 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", () =
     expect(run.stdout).toBe(readFileSync(full, "utf8"));
   });
 
-  it("K3 at the soft ceiling compact exits 2 with the typed line and writes nothing; a malformed export exits 3 and writes nothing", () => {
+  it("K3 at the soft ceiling compact exits 2 with the typed line and writes nothing; a full export whose only line is {not json exits 3 and writes nothing", () => {
     const { beads, full } = beadsDir();
     const refused = cli(["compact", "--full", full, "--beads", beads, "--now", "2026-11-03T12:00:00Z"], { FW_EXPORT_SOFT_CEILING: "64" });
     expect(refused.status).toBe(2);
     expect(String(refused.stderr)).toMatch(/^tracker-export: REFUSED \S+issues\.jsonl would be \d+ bytes, at or over the soft ceiling of 64 bytes \(FW_EXPORT_SOFT_CEILING\); nothing is written$/m);
     expect(existsSync(join(beads, "issues.jsonl"))).toBe(false);
     expect(existsSync(join(beads, "archive"))).toBe(false);
+    expect(readdirSync(beads)).toEqual([]);
     writeFileSync(full, "{not json\n");
     const malformed = cli(["compact", "--full", full, "--beads", beads, "--now", "2026-11-03T12:00:00Z"]);
     expect(malformed.status).toBe(3);
     expect(existsSync(join(beads, "issues.jsonl"))).toBe(false);
+    expect(readdirSync(beads)).toEqual([]);
   });
 
   it("K4 a --now that is not a UTC timestamp exits 3 with the typed line and writes nothing", () => {
