@@ -102,8 +102,8 @@ export type ControlDecision =
   | { readonly decision: "denied"; readonly category: CapabilityErrorCategory; readonly reason: string; readonly policy: ControlDenyPolicy }
   | { readonly decision: "permitted"; readonly receipt: RequestedControlReceipt };
 
-/** The workbench.capabilityGrants grammar settings.ts enforces: explicit namespace:permission, no wildcard. */
-const GRANT = /^[a-z][a-z0-9.-]*:[a-z][a-z0-9.-]*$/;
+/** The workbench.capabilityGrants grammar settings.ts enforces: explicit namespace:permission, or one exact claude:tool:<name> Claude tool right (wb-wupg), no wildcard. */
+const GRANT = /^(?:[a-z][a-z0-9.-]*:[a-z][a-z0-9.-]*|claude:tool:[A-Za-z][A-Za-z0-9_-]{0,63})$/;
 const OUTCOMES: readonly ControlOutcome[] = Object.freeze(["completed", "failed", "cancelled", "unknown"]);
 const NATIVE_REF_BYTES = 4096;
 /**

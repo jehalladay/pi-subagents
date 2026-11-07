@@ -412,7 +412,7 @@ function sanitize(raw: unknown): SubagentsSettings {
     }
     if (config.capabilityGrants !== undefined && (!Array.isArray(config.capabilityGrants) ||
       config.capabilityGrants.length > 64 || !config.capabilityGrants.every(grant =>
-        typeof grant === "string" && /^[a-z][a-z0-9.-]*:[a-z][a-z0-9.-]*$/.test(grant) && !grant.includes("\n")))) {
+        typeof grant === "string" && /^(?:[a-z][a-z0-9.-]*:[a-z][a-z0-9.-]*|claude:tool:[A-Za-z][A-Za-z0-9_-]{0,63})$/.test(grant) && !grant.includes("\n")))) {
       throw new Error("workbench.capabilityGrants must be a finite array of explicit namespace:permission identifiers without wildcards.");
     }
     if (config.reactivefiberWorkspaceRoot !== undefined && !isCleanAbsolutePath(config.reactivefiberWorkspaceRoot)) {
