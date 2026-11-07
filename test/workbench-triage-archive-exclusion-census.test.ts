@@ -73,7 +73,18 @@
  *   with each of the 256 characters before that character (no site after an ASCII letter, digit or underscore; 98816 sites after each
  *   other character); no site for either name followed by any character but an opening parenthesis, even with an opening parenthesis
  *   after that character; and a site for either name called with each of the 256 characters after its opening parenthesis, the line
- *   ending there (512 sites). Another spelling of the clause is NOT CLAIMED of W1 (W3 reads the other from-clause spellings). Which
+ *   ending there (512 sites). Over W1_TEXTS it also reads the clause, and no site, for refusal #5's four statement forms around the
+ *   clause: the import with no semicolon after the clause (a newline right after its closing quote mark), the namespace import
+ *   (import * as triageArchive), the import spread over three lines (its specifier on a line of its own, the clause on the last line
+ *   after the closing brace and a space) and the import followed by a type import of no specifiers from the same clause (the clause
+ *   held twice); and for the clause as the whole text (nothing before its from, nothing after its closing quote mark). Its clause
+ *   battery rows are one text per character of the 256 characters U+0000 to U+00FF, the clause with that character right before its
+ *   from and right after its closing quote mark, and the reader reads the clause, and no site, in each of the 256 texts. Another
+ *   spelling of the clause is NOT CLAIMED of W1 (W3 reads the other from-clause spellings). Which text around the clause makes the
+ *   reader read it in any other text than the controls' and the clause battery rows' texts, a WALKERS census's own text among them,
+ *   is NOT CLAIMED of W1: for example a run of two or more characters right before its from or right after its closing quote mark
+ *   that no row's text holds there, a pair of different characters on its two sides that no row's text holds there, a character
+ *   above U+00FF there, and the clause held three or more times. Which
  *   characters around a name make a call site on any other line than the controls' and the battery rows' lines, a WALKERS census's
  *   own lines among them, is NOT CLAIMED of W1: for example a third character before a name on its line, a second character after its
  *   opening parenthesis, a character above U+00FF before or after a name, and a run of two or more characters between a name and an
@@ -410,7 +421,7 @@ const pairsBefore = (seconds: readonly string[]): string[] => LATIN_1.flatMap(fi
 /** A W1 battery text: one line per entry of `characters` (a character, or a pair of characters) and helper name, `spell` placing it beside the name. */
 const siteBattery = (characters: readonly string[], spell: (character: string, name: string) => string): string =>
   characters.flatMap(character => ["withoutTriageArchive", "isTriageArchivePath"].map(name => spell(character, name))).join("\n");
-/** W1's controls: the reader over the from clause spelled other ways, over names and calls a call site must not be, and its call-site batteries. */
+/** W1's controls: the reader over the from clause spelled other ways and in other statements, over names and calls a call site must not be, its call-site batteries and its clause battery (one text per character). */
 const W1_TEXTS: readonly ImportText[] = [
   { file: "control: the import with single quote marks", imports: false, sites: 0, text: "import { x } from './helpers/triage-archive.js';\n" },
   { file: "control: the import with the .ts ending", imports: false, sites: 0, text: 'import { x } from "./helpers/triage-archive.ts";\n' },
@@ -436,6 +447,16 @@ const W1_TEXTS: readonly ImportText[] = [
     sites: 2,
     text: "// through a namespace import: archive.withoutTriageArchive(paths)\n// an optional namespace: archive?.withoutTriageArchive(paths)\n",
   },
+  { file: "control: refusal #5's import with no semicolon after the clause", imports: true, sites: 0, text: 'import { withoutTriageArchive } from "./helpers/triage-archive.js"\n' },
+  { file: "control: refusal #5's namespace import", imports: true, sites: 0, text: 'import * as triageArchive from "./helpers/triage-archive.js";\n' },
+  { file: "control: refusal #5's import spread over three lines", imports: true, sites: 0, text: 'import {\n  withoutTriageArchive,\n} from "./helpers/triage-archive.js";\n' },
+  {
+    file: "control: refusal #5's import followed by a type import of no specifiers, the clause held twice",
+    imports: true,
+    sites: 0,
+    text: 'import { withoutTriageArchive } from "./helpers/triage-archive.js";\nimport type {} from "./helpers/triage-archive.js";\n',
+  },
+  { file: "control: the clause as the whole text", imports: true, sites: 0, text: 'from "./helpers/triage-archive.js"' },
   { file: "battery: each name called after each ASCII letter, digit and underscore", imports: false, sites: 0, text: siteBattery(ASCII_WORD, (character, name) => `${character}${name}(x);`) },
   { file: "battery: each name called after each other character U+0000 to U+00FF", imports: false, sites: 386, text: siteBattery(LATIN_1.filter(character => !ASCII_WORD.includes(character)), (character, name) => `${character}${name}(x);`) },
   {
@@ -468,6 +489,12 @@ const W1_TEXTS: readonly ImportText[] = [
       (pair, name) => `${pair}${name}(x);`,
     ),
   },
+  ...LATIN_1.map(character => ({
+    file: "clause battery: the clause with a character U+0000 to U+00FF right before its from and right after its closing quote mark",
+    imports: true,
+    sites: 0,
+    text: `${character}from "./helpers/triage-archive.js"${character}`,
+  })),
 ];
 
 /** A control input of a counting reader: its id, the count the reader must read, and the text it reads. */
@@ -1103,12 +1130,21 @@ describe("wb-cbt4 census: the master-side triage-archive reconciliation (owner s
       "control: the specifier imported without a from clause:false:0",
       "control: refusal #4's calls with no argument, a quoted argument and a space after the opening parenthesis:false:3",
       "control: refusal #4's calls through a namespace and through an optional namespace:false:2",
+      "control: refusal #5's import with no semicolon after the clause:true:0",
+      "control: refusal #5's namespace import:true:0",
+      "control: refusal #5's import spread over three lines:true:0",
+      "control: refusal #5's import followed by a type import of no specifiers, the clause held twice:true:0",
+      "control: the clause as the whole text:true:0",
       "battery: each name called after each ASCII letter, digit and underscore:false:0",
       "battery: each name called after each other character U+0000 to U+00FF:false:386",
       "battery: each name followed by each character U+0000 to U+00FF but an opening parenthesis, then by one:false:0",
       "battery: each name called with each character U+0000 to U+00FF after its opening parenthesis, the line ending there:false:512",
       "battery: each name called after each ASCII letter, digit and underscore, with each character U+0000 to U+00FF before it:false:0",
       "battery: each name called after each other character U+0000 to U+00FF, with each character U+0000 to U+00FF before it:false:98816",
+      ...Array.from(
+        { length: 256 },
+        () => "clause battery: the clause with a character U+0000 to U+00FF right before its from and right after its closing quote mark:true:0",
+      ),
     ]);
     expect(W2_TEXTS.map(entry => `${entry.id}:${entry.reads}`)).toEqual([
       "the line in the opening block:1",
