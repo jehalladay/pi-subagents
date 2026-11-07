@@ -96,7 +96,10 @@ function thrownBy(read: () => unknown): string {
   return "no throw";
 }
 
-/** Every entry below `root`, in name order: a directory as `<path>/`, a symlink as `<path> -> <target>`, a file as `<path> = <text>`. */
+/**
+ * Every entry below `root`, in name order: a directory as `<path>/`, a symlink as `<path> -> <target>`, a FIFO as `<path> (fifo)` - never
+ * opened, since a read of a FIFO waits for a writer - and a file as `<path> = <text>`.
+ */
 function snapshot(root: string): string[] {
   const out: string[] = [];
   const walk = (rel: string): void => {
@@ -108,6 +111,8 @@ function snapshot(root: string): string[] {
       } else if (stat.isDirectory()) {
         out.push(`${path}/`);
         walk(path);
+      } else if (stat.isFIFO()) {
+        out.push(`${path} (fifo)`);
       } else {
         out.push(`${path} = ${readFileSync(join(root, path), "utf8")}`);
       }
@@ -128,9 +133,82 @@ function fixtureRows(): Row[] {
   ];
 }
 
+/** One CLI run; a child that outlives 120 s is killed, so a read that waits (of a FIFO) fails its case instead of hanging the run. */
 function cli(args: readonly string[], env: NodeJS.ProcessEnv = {}): ReturnType<typeof spawnSync> {
-  return spawnSync(process.execPath, [TOOL, ...args], { cwd: REPO, encoding: "utf8", env: { PATH: process.env.PATH, ...env } });
+  return spawnSync(process.execPath, [TOOL, ...args], { cwd: REPO, encoding: "utf8", env: { PATH: process.env.PATH, ...env }, timeout: 120_000 });
 }
+
+/**
+ * Lines of whitespace alone - none of them empty - that C8 plants in a full export and R3 and C9 in a shard (W8-02 of wb-137f refusal
+ * #1); the characters past the space and the tab are written by code point.
+ */
+const WHITESPACE_LINES: readonly (readonly [label: string, line: string])[] = [
+  ["W8-02 a line of one space", " "],
+  ["a line of one tab", "\t"],
+  ["a line of spaces and a tab", "  \t "],
+  ["a line of a vertical tab", String.fromCodePoint(0x0b)],
+  ["a line of a form feed", String.fromCodePoint(0x0c)],
+  ["a line of a no-break space", String.fromCodePoint(0xa0)],
+  ["a line of a byte order mark", String.fromCodePoint(0xfeff)],
+  ["a line of a line separator", String.fromCodePoint(0x2028)],
+];
+
+/**
+ * The shard lines R3 and C9 plant, each a non-empty line that must fail the parse, beside the reason its typed Error names (W-GP4-01..03b
+ * of wb-294d refusal #3; W8-01 and W8-02 of wb-137f refusal #1). The four prefix forms open with the export's own line prefix.
+ */
+const BAD_SHARD_LINES: readonly (readonly [label: string, line: string, reason: string])[] = [
+  ["the prefix form cut short", '{"_type":"issue","id":"wb-c2","title":"title of wb-c2","status":"closed"', "does not parse"],
+  ["the prefix form followed by other text", `${lineOf(row("wb-c2", "closed", { closed_at: "2026-11-03T08:00:00Z" }))} garbage`, "does not parse"],
+  ["the prefix form with an id holding an invalid escape", '{"_type":"issue","id":"wb-\\q","title":"t","status":"closed"}', "does not parse"],
+  ["the prefix form with an empty id", '{"_type":"issue","id":"","title":"t","status":"closed"}', "has no string id"],
+  ["no prefix, cut short", '{"id":', "does not parse"],
+  ["no prefix, followed by other text", '{"id":"wb-c2","status":"closed"} garbage', "does not parse"],
+  ["no prefix, an id holding an invalid escape", '{"id":"wb-\\q","status":"closed"}', "does not parse"],
+  ["no prefix, an empty id", '{"id":"","status":"closed"}', "has no string id"],
+  ["an array", "[1]", "is not a JSON object"],
+  ["null", "null", "is not a JSON object"],
+  ["a number", "5", "is not a JSON object"],
+  ["no id", '{"status":"closed"}', "has no string id"],
+  ["a number id", '{"_type":"issue","id":7,"status":"closed"}', "has no string id"],
+  ["a line that opens like a comment", "# a note", "does not parse"],
+  ...WHITESPACE_LINES.map(([label, line]) => [label, line, "does not parse"] as const),
+];
+
+/** The whole shards a layout sets beside its planted shard: a sealed month's older body of wb-c1, and the fixture's own shard lines. */
+const WHOLE_SHARDS: ReadonlyMap<string, string> = new Map([
+  ["issues-closed-2026-09.jsonl", `${lineOf(row("wb-c1", "closed", { closed_at: "2026-09-30T00:00:00Z", notes: "an older body of wb-c1" }))}\n`],
+  ["issues-closed-2026-10.jsonl", `${lineOf(fixtureRows()[1] ?? {})}\n`],
+  ["issues-closed-2026-11.jsonl", `${lineOf(fixtureRows()[2] ?? {})}\n${lineOf(fixtureRows()[4] ?? {})}\n`],
+]);
+
+/**
+ * Where R3 and C9 plant a shard, by name - the order the shards are read in: the only shard, the older and the newer of two, and the
+ * middle of three; every other shard of the layout is whole.
+ */
+const SHARD_LAYOUTS: readonly (readonly [label: string, plant: string, whole: readonly string[]])[] = [
+  ["the only shard", "issues-closed-2026-11.jsonl", []],
+  ["the older of two shards", "issues-closed-2026-10.jsonl", ["issues-closed-2026-11.jsonl"]],
+  ["the newer of two shards", "issues-closed-2026-11.jsonl", ["issues-closed-2026-10.jsonl"]],
+  ["the middle of three shards", "issues-closed-2026-10.jsonl", ["issues-closed-2026-09.jsonl", "issues-closed-2026-11.jsonl"]],
+];
+
+/** The shards of one layout: its whole shards, then the planted shard holding `text`. */
+const layoutShards = (plant: string, whole: readonly string[], text: string): Map<string, string> =>
+  new Map([...whole.map(name => [name, WHOLE_SHARDS.get(name) ?? ""] as const), [plant, text] as const]);
+
+/** Two whole rows of a planted shard, and the same two rows with an empty line between them. */
+const PLANT_ROWS = `${lineOf(row("wb-c3", "closed"))}\n${lineOf(row("wb-c4", "closed"))}\n`;
+const PLANT_ROWS_EMPTY_LINE = `${lineOf(row("wb-c3", "closed"))}\n\n${lineOf(row("wb-c4", "closed"))}\n`;
+
+/** A planted shard with `bad` at line 1, before a whole row, or at line 2, between two whole rows. */
+const PLANT_AT: readonly (readonly [at: number, text: (bad: string) => string])[] = [
+  [1, bad => `${bad}\n${lineOf(row("wb-c3", "closed"))}\n`],
+  [2, bad => `${lineOf(row("wb-c3", "closed"))}\n${bad}\n${lineOf(row("wb-c4", "closed"))}\n`],
+];
+
+/** The four prefix forms of BAD_SHARD_LINES, which K3 and K7 plant in the older of two month shards at the CLI. */
+const PREFIX_FORMS = BAD_SHARD_LINES.filter(([label]) => label.startsWith("the prefix form"));
 
 describe("wb-294d compaction: stub rows, month shards, round trip (owner shape elements 1-3)", () => {
   it("C1 STUB SHAPE: every closed fixture row - its keys in the export's order - becomes exactly the stub fields it has, in that order, with its own values and no body field", () => {
@@ -288,10 +366,11 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
     expect(under.ok).toBe(true);
   });
 
-  it("C8 MALFORMED: an unparseable line, a line that is not a JSON object, a row without a non-empty string id or without a string status, a duplicate id, or a closed row already in stub shape refuses as malformed", () => {
+  it("C8 MALFORMED: an unparseable line (a line of whitespace alone too), a line that is not a JSON object, a row without a non-empty string id or without a string status, a duplicate id, or a closed row already in stub shape refuses as malformed", () => {
     const good = textOf(fixtureRows());
     const cases: readonly [string, string][] = [
       ["not json", `${good}{"id":\n`],
+      ...WHITESPACE_LINES.map(([label, line]) => [label, `${good}${line}\n`] as [string, string]),
       ["null", `${good}null\n`],
       ["an array", `${good}[1]\n`],
       ["a number", `${good}5\n`],
@@ -309,7 +388,7 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
     }
   });
 
-  it("C9 REFUSED INPUTS: each form below refuses as malformed with one typed line - a run stamp that is not a UTC stamp (an instant outside the years 0000-9999 too), a shard name that is not a month shard's (a day shard's, a month 00 or 13), a non-empty shard not ending with a newline, a non-empty shard line not parsing whole as a JSON object with a non-empty string id (four open with the export's own line prefix); an empty shard, and an empty line between two rows, hold no line", () => {
+  it("C9 REFUSED INPUTS: each form below refuses as malformed with one typed line - a run stamp that is not a UTC stamp (an instant outside the years 0000-9999 too), a shard name that is not a month shard's (a day shard's, a month 00 or 13), a non-empty shard not ending with a newline, a non-empty shard line not parsing whole as a JSON object with a non-empty string id (four open with the export's own line prefix; each of R3's forms, at line 1 and at line 2), the shard the only one, the older or the newer of two or the middle of three; an empty shard, and an empty line between two rows, hold no line, in each of those shards", () => {
     const full = textOf(fixtureRows());
     const shard = `${lineOf(row("wb-c2", "closed", { closed_at: "2026-11-03T08:00:00Z" }))}\n`;
     const stamps = [
@@ -365,6 +444,34 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
     for (const [label, input, line] of cases) {
       const result = compactTrackerExport({ full, ...input });
       expect(result, label).toEqual({ ok: false, code: "malformed", lines: [line] });
+    }
+    // wb-137f refusal #1 (U1 W8-01, U2 W8-02, U5): each shard-line form in each layout, at line 1 and at line 2 between two rows; a
+    // non-empty shard not ending with a newline in each layout; an empty line between two rows in each layout holds no line.
+    const now = "2026-11-03T12:00:00Z";
+    for (const [layout, plant, whole] of SHARD_LAYOUTS) {
+      for (const [label, bad, reason] of BAD_SHARD_LINES) {
+        for (const [at, text] of PLANT_AT) {
+          expect(compactTrackerExport({ full, shards: layoutShards(plant, whole, text(bad)), now }), `${layout}: ${label} at line ${at}`).toEqual({
+            ok: false,
+            code: "malformed",
+            lines: [`tracker-export: archived ${plant} line ${at} ${reason}; nothing is written`],
+          });
+        }
+      }
+      expect(compactTrackerExport({ full, shards: layoutShards(plant, whole, PLANT_ROWS.replace(/\n$/, "")), now }), `${layout}: a shard not ending with a newline`).toEqual({
+        ok: false,
+        code: "malformed",
+        lines: [`tracker-export: REFUSED .beads/archive/${plant} does not end with a newline (a shard holds whole lines); nothing is written`],
+      });
+      const emptyShard = compactTrackerExport({ full, shards: layoutShards(plant, whole, ""), now });
+      if (!emptyShard.ok) throw new Error(`${layout}: an empty shard: ${emptyShard.lines.join("\n")}`);
+      const appendedToPlant = (emptyShard.appended.get(plant) ?? []).map(id => `${lineOf(fixtureRows().find(r => r.id === id) ?? {})}\n`).join("");
+      expect(emptyShard.shards.get(plant), `${layout}: an empty shard holds no line - after the run it holds only what the run appended`).toBe(appendedToPlant);
+      const withEmptyLine = compactTrackerExport({ full, shards: layoutShards(plant, whole, PLANT_ROWS_EMPTY_LINE), now });
+      const without = compactTrackerExport({ full, shards: layoutShards(plant, whole, PLANT_ROWS), now });
+      if (!withEmptyLine.ok) throw new Error(`${layout}: ${withEmptyLine.lines.join("\n")}`);
+      if (!without.ok) throw new Error(`${layout}: ${without.lines.join("\n")}`);
+      expect([withEmptyLine.main, [...withEmptyLine.appended]], `${layout}: an empty line between two rows holds no line`).toEqual([without.main, [...without.appended]]);
     }
   });
 
@@ -427,7 +534,7 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
     expect(rehydrateTrackerText(result.main, result.shards)).toBe(textOf(rows));
   });
 
-  it("C15 BLANK LINE: a blank line of the full export stays a blank line of the main export, in its place, and the round trip is byte-equal", () => {
+  it("C15 EMPTY LINE: an empty line (no character at all) of the full export stays an empty line of the main export, in its place, and the round trip is byte-equal", () => {
     const rows = fixtureRows();
     const full = `${lineOf(rows[0] ?? {})}\n\n${rows.slice(1).map(lineOf).join("\n")}\n`;
     const result = compactTrackerExport({ full, shards: new Map(), now: "2026-11-03T12:00:00Z" });
@@ -489,7 +596,7 @@ describe("wb-294d rehydrating reader: the one read every export reader routes th
     expect(rehydrateTrackerExport("", main)).toBe("");
   });
 
-  it("R3 CORRUPT SHARD: every non-empty shard line is parsed whole - a line that does not parse (cut short, followed by other text, or with an id holding an invalid escape: each with the export's own line prefix and without it), is not a JSON object (an array, null, a number) or has no non-empty string id (none, an empty one with and without the prefix, a number) fails the read with one Error naming the shard and the line; an empty line between two rows holds no row and is skipped", () => {
+  it("R3 CORRUPT SHARD: every non-empty shard line is parsed whole, in the only shard, the older and the newer of two and the middle of three, at line 1 and at line 2 between two rows - a line that does not parse (cut short, followed by other text, or with an id holding an invalid escape: each with the export's own line prefix and without it; a line that opens like a comment; a line of whitespace alone), is not a JSON object (an array, null, a number) or has no non-empty string id (none, an empty one with and without the prefix, a number) fails the read with one Error naming the shard and the line; an empty line between two rows holds no row and is skipped, in each of those shards", () => {
     const dir = scratch("tracker-export-reader-");
     mkdirSync(join(dir, ".beads", "archive"), { recursive: true });
     const main = join(dir, ".beads", "issues.jsonl");
@@ -529,6 +636,24 @@ describe("wb-294d rehydrating reader: the one read every export reader routes th
     expect(linesOf(readFileSync(join(blank, ".beads", "archive", "issues-closed-2026-11.jsonl"), "utf8"))).toHaveLength(2);
     expect(readFileSync(join(blank, ".beads", "archive", "issues-closed-2026-11.jsonl"), "utf8")).toContain("\n\n");
     expect(trackerExportText(join(blank, ".beads", "issues.jsonl")), "an empty line between two rows is skipped").toBe(textOf(fixtureRows()));
+    // wb-137f refusal #1 (U1 W8-01, U2 W8-02): each form in each layout, at line 1 and at line 2 between two rows; in each layout an
+    // empty line between two rows reads as the same shard without it.
+    for (const [layout, plant, whole] of SHARD_LAYOUTS) {
+      const plantIn = (text: string): string => {
+        const at = scratch("tracker-export-reader-");
+        mkdirSync(join(at, ".beads", "archive"), { recursive: true });
+        const atMain = join(at, ".beads", "issues.jsonl");
+        writeFileSync(atMain, compacted.main);
+        for (const [name, shardText] of layoutShards(plant, whole, text)) writeFileSync(join(at, ".beads", "archive", name), shardText);
+        return atMain;
+      };
+      for (const [label, bad, reason] of BAD_SHARD_LINES) {
+        for (const [at, text] of PLANT_AT) {
+          expect(thrownBy(() => trackerExportText(plantIn(text(bad)))), `${layout}: ${label} at line ${at}`).toBe(`Error: tracker-export: archived ${plant} line ${at} ${reason}`);
+        }
+      }
+      expect(trackerExportText(plantIn(PLANT_ROWS_EMPTY_LINE)), `${layout}: an empty line between two rows is skipped`).toBe(trackerExportText(plantIn(PLANT_ROWS)));
+    }
   });
 
   it("R4 SHARD FILES ONLY: a file of another name beside the shards (a README, a day shard's name, a month 00 or a month 13 name), and a symlink or a directory of a month shard's name, is never read - beside the shards the read is the full export, with no shard file it is the main export unchanged", () => {
@@ -629,7 +754,7 @@ describe("wb-294d rehydrating reader: the one read every export reader routes th
     expect(rehydrateTrackerExport(compacted.main, main)).toBe(compacted.main);
   });
 
-  it("R10 READ MEMO: a process reads the shards again when a shard's size or modification time changes or a shard is added; a rewrite that keeps names, sizes and modification times reads as the earlier content", () => {
+  it("R10 READ MEMO: a process reads the shards again when a shard's size or modification time changes or a shard is added; a rewrite that keeps names, sizes and modification times reads as the earlier content; another archive directory, whose shards keep the names, sizes and modification times of shards read before, is read on its own", () => {
     const dir = scratch("tracker-export-reader-");
     const archive = join(dir, ".beads", "archive");
     mkdirSync(archive, { recursive: true });
@@ -663,6 +788,20 @@ describe("wb-294d rehydrating reader: the one read every export reader routes th
     writeFileSync(join(archive, "issues-closed-2026-12.jsonl"), `${lineOf(added)}\n`);
     utimesSync(join(archive, "issues-closed-2026-12.jsonl"), pinned, pinned);
     expect(trackerExportText(main), "a shard added: read again").toBe(textOf(rows.map(r => (r.id === "wb-c3" ? { ...r, notes: "notes body of wb-c3, longer" } : r.id === "wb-c1" ? added : r))));
+    // wb-137f refusal #1 F5 (W8-06): two archive directories whose shards share names, sizes and modification times, read one after the other.
+    const [first = "", second = ""] = [0, 1].map(() => {
+      const at = scratch("tracker-export-reader-");
+      mkdirSync(join(at, ".beads", "archive"), { recursive: true });
+      writeFileSync(join(at, ".beads", "issues.jsonl"), compacted.main);
+      return at;
+    });
+    for (const [name, text] of compacted.shards) {
+      writeFileSync(join(first, ".beads", "archive", name), text);
+      writeFileSync(join(second, ".beads", "archive", name), name === "issues-closed-2026-11.jsonl" ? sameSize : text);
+      for (const at of [first, second]) utimesSync(join(at, ".beads", "archive", name), pinned, pinned);
+    }
+    expect(trackerExportText(join(first, ".beads", "issues.jsonl")), "W8-06: the first archive directory").toBe(textOf(rows));
+    expect(trackerExportText(join(second, ".beads", "issues.jsonl")), "W8-06: another archive directory with the same shard names, sizes and modification times").toBe(textOf(sameSizeRows));
   });
 });
 
@@ -707,7 +846,7 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", () =
     expect(String(unterminated.stdout).endsWith("\n")).toBe(false);
   });
 
-  it("K3 at the soft ceiling compact exits 2 with the typed line and writes nothing; a malformed export, and a month shard holding a line in the export's own line prefix form that does not parse, exit 3 with the typed line and write nothing", () => {
+  it("K3 at the soft ceiling compact exits 2 with the typed line and writes nothing; a malformed export, a month shard holding a line in the export's own line prefix form that does not parse, and each of the four prefix forms (cut short, followed by other text, an id holding an invalid escape, an empty id) in the older of two month shards, exit 3 with the typed line naming the shard and write nothing", () => {
     const { beads, full } = beadsDir();
     const refused = cli(["compact", "--full", full, "--beads", beads, "--now", "2026-11-03T12:00:00Z"], { FW_EXPORT_SOFT_CEILING: "64" });
     expect(refused.status).toBe(2);
@@ -733,6 +872,30 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", () =
     expect(readdirSync(beads)).toEqual(["archive"]);
     expect(readdirSync(join(beads, "archive"))).toEqual(["issues-closed-2026-11.jsonl"]);
     expect(readFileSync(shard, "utf8")).toBe(cutShort);
+    // wb-137f refusal #1 (U1, W8-01): each prefix form in the OLDER of two month shards, beside a whole running-month shard.
+    for (const [label, bad, reason] of PREFIX_FORMS) {
+      const state = beadsDir();
+      const archive = join(state.beads, "archive");
+      mkdirSync(archive);
+      const older = `${bad}\n`;
+      const newer = WHOLE_SHARDS.get("issues-closed-2026-11.jsonl") ?? "";
+      writeFileSync(join(archive, "issues-closed-2026-10.jsonl"), older);
+      writeFileSync(join(archive, "issues-closed-2026-11.jsonl"), newer);
+      const run = cli(["compact", "--full", state.full, "--beads", state.beads, "--now", "2026-11-03T12:00:00Z"]);
+      expect(run.status, label).toBe(3);
+      expect(run.stdout, label).toBe("");
+      expect(run.stderr, label).toBe(`tracker-export: archived issues-closed-2026-10.jsonl line 1 ${reason}; nothing is written\n`);
+      expect(readdirSync(state.beads), label).toEqual(["archive"]);
+      expect(
+        readdirSync(archive)
+          .sort()
+          .map(name => [name, readFileSync(join(archive, name), "utf8")]),
+        label,
+      ).toEqual([
+        ["issues-closed-2026-10.jsonl", older],
+        ["issues-closed-2026-11.jsonl", newer],
+      ]);
+    }
   });
 
   it("K4 a --now that is not a UTC timestamp exits 3 with the typed line and writes nothing", () => {
@@ -811,7 +974,7 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", () =
     }
   });
 
-  it("K7 rehydrate exits 3 with the typed line, printing nothing on stdout, when the read throws: a month shard holding a line that does not parse (one with no prefix, and two in the export's own line prefix form: cut short, and an id holding an invalid escape), and a missing main export", () => {
+  it("K7 rehydrate exits 3 with the typed line, printing nothing on stdout, when the read throws: a month shard holding a line that does not parse (one with no prefix, and two in the export's own line prefix form: cut short, and an id holding an invalid escape - each appended to the newer of the two shards a compaction wrote), each of the four prefix forms (cut short, followed by other text, an id holding an invalid escape, an empty id) appended to the older of the two, and a missing main export", () => {
     const { beads, full } = beadsDir();
     expect(cli(["compact", "--full", full, "--beads", beads, "--now", "2026-11-03T12:00:00Z"]).status).toBe(0);
     const shard = join(beads, "archive", "issues-closed-2026-11.jsonl");
@@ -835,6 +998,19 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", () =
       expect(read.status, label).toBe(3);
       expect(read.stdout, label).toBe("");
       expect(read.stderr, label).toBe(`tracker-export: could not rehydrate (tracker-export: archived issues-closed-2026-11.jsonl line ${count + 1} does not parse)\n`);
+    }
+    // wb-137f refusal #1 (U1): each prefix form appended to the OLDER of the two month shards a compaction wrote.
+    for (const [label, bad, reason] of PREFIX_FORMS) {
+      const state = beadsDir();
+      expect(cli(["compact", "--full", state.full, "--beads", state.beads, "--now", "2026-11-03T12:00:00Z"]).status, label).toBe(0);
+      expect(readdirSync(join(state.beads, "archive")).sort(), label).toEqual(["issues-closed-2026-10.jsonl", "issues-closed-2026-11.jsonl"]);
+      const at = join(state.beads, "archive", "issues-closed-2026-10.jsonl");
+      const count = linesOf(readFileSync(at, "utf8")).length;
+      writeFileSync(at, `${readFileSync(at, "utf8")}${bad}\n`);
+      const read = cli(["rehydrate", "--beads", state.beads]);
+      expect(read.status, label).toBe(3);
+      expect(read.stdout, label).toBe("");
+      expect(read.stderr, label).toBe(`tracker-export: could not rehydrate (tracker-export: archived issues-closed-2026-10.jsonl line ${count + 1} ${reason})\n`);
     }
     const empty = beadsDir();
     const missing = cli(["rehydrate", "--beads", empty.beads]);
@@ -950,7 +1126,7 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", () =
     expect([past, running].map(path => [lstatSync(path).ino, lstatSync(path).mtimeMs, readFileSync(path, "utf8")])).toEqual(shardsBefore);
   });
 
-  it("K14 NOT A FILE: when a path compact would write - a shard it appends to, or the main export - exists and is not a regular file (a directory, or a symlink to a file), compact exits 3 with one typed line per such path, shards in name order and then the main export, printing nothing on stdout and writing nothing", () => {
+  it("K14 NOT A FILE: when a path compact would write - a shard it appends to, or the main export - exists and is not a regular file (a directory, a symlink to a file, a symlink to a directory, a dangling symlink, or a FIFO), compact exits 3 with one typed line per such path, shards in name order and then the main export, printing nothing on stdout and writing nothing", () => {
     const variants: readonly (readonly [string, (beads: string, dir: string) => string[]])[] = [
       [
         "W-GP4-04 a directory at the running month's shard name",
@@ -1001,6 +1177,41 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", () =
           const at = [join(beads, "archive", "issues-closed-2026-10.jsonl"), join(beads, "issues.jsonl")];
           for (const path of at) mkdirSync(path, { recursive: true });
           return at;
+        },
+      ],
+      [
+        "W8-03 a FIFO at the main export",
+        beads => {
+          const at = join(beads, "issues.jsonl");
+          expect(spawnSync("mkfifo", [at]).status).toBe(0);
+          return [at];
+        },
+      ],
+      [
+        "a FIFO at the running month's shard name",
+        beads => {
+          mkdirSync(join(beads, "archive"));
+          const at = join(beads, "archive", "issues-closed-2026-11.jsonl");
+          expect(spawnSync("mkfifo", [at]).status).toBe(0);
+          return [at];
+        },
+      ],
+      [
+        "a dangling symlink at the main export",
+        (beads, dir) => {
+          const at = join(beads, "issues.jsonl");
+          symlinkSync(join(dir, "no-such-target.jsonl"), at);
+          return [at];
+        },
+      ],
+      [
+        "a symlink to a directory at the past month's shard name",
+        (beads, dir) => {
+          mkdirSync(join(beads, "archive"));
+          mkdirSync(join(dir, "target-dir"));
+          const at = join(beads, "archive", "issues-closed-2026-10.jsonl");
+          symlinkSync(join(dir, "target-dir"), at);
+          return [at];
         },
       ],
     ];

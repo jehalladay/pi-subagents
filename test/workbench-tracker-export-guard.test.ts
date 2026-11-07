@@ -265,7 +265,7 @@ describe("wb-294d export-size guard as the git pre-push hook (the push itself ne
     expect(remoteHead(repo)).toBe(tip);
   });
 
-  it("G9 the hook judges every stdin line, skips a deleted-ref line, refuses a malformed line rc 3 - three fields, and with one typed line each: two or five fields, a sha one digit short, an upper-case sha - and judges past an unknown remote sha", () => {
+  it("G9 the hook judges every stdin line, skips a deleted-ref line, refuses a malformed line rc 3 - three fields, and with one typed line each: two or five fields, a local or a remote sha one digit short, an upper-case local or remote sha - and judges past an unknown remote sha", () => {
     const repo = makeRepo();
     const base = repo.commit({ [MAIN]: 10 }, "base");
     const tip = repo.commit({ [SHARD]: 900 }, "large shard");
@@ -279,7 +279,16 @@ describe("wb-294d export-size guard as the git pre-push hook (the push itself ne
     expect(stderrLines(both)).toEqual([refusal(SHARD, repo.blobOf(tip, SHARD), 900, 600)]);
     expect(hook("refs/heads/main not-a-sha refs/heads/main\n").status).toBe(3);
     expect(base.toUpperCase()).not.toBe(base);
-    const malformed = [`refs/heads/main ${tip}`, `refs/heads/main ${tip} refs/heads/main ${base} extra`, `refs/heads/main ${tip.slice(1)} refs/heads/main ${base}`, `refs/heads/main ${tip} refs/heads/main ${base.toUpperCase()}`];
+    expect(tip.toUpperCase()).not.toBe(tip);
+    // wb-137f refusal #1 (U4, W8-04/W8-05): each sha form at both positions - the local sha one digit short or upper-case, and the remote.
+    const malformed = [
+      `refs/heads/main ${tip}`,
+      `refs/heads/main ${tip} refs/heads/main ${base} extra`,
+      `refs/heads/main ${tip.slice(1)} refs/heads/main ${base}`,
+      `refs/heads/main ${tip} refs/heads/main ${base.toUpperCase()}`,
+      `refs/heads/main ${tip.toUpperCase()} refs/heads/main ${base}`,
+      `refs/heads/main ${tip} refs/heads/main ${base.slice(1)}`,
+    ];
     for (const bad of malformed) {
       const refused = hook(`${bad}\n`);
       expect(refused.status, bad).toBe(3);
