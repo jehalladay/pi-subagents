@@ -733,7 +733,7 @@ function scanBeads(lines: readonly string[]): string[] {
   }
   return findings;
 }
-const exportLines = (): string[] => readFileSync(join(ROOT, BEAD_EXPORT), "utf8").split("\n");
+const exportLines = (): string[] => trackerExportText(join(ROOT, BEAD_EXPORT)).split("\n");
 function exportRow(lines: readonly string[], id: string): Readonly<Record<string, unknown>> | undefined {
   for (const line of lines) {
     const parsed = line.trim() === "" ? undefined : parseJson(line);
@@ -2688,3 +2688,5 @@ describe("rf undetermined premise census (wb-pfxo.11, RF-COMPOSITIONAL-ASSEMBLY-
     expect(here, "this case is registered last").toBe(walked.length - 1);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

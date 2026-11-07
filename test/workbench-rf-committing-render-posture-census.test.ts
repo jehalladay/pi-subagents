@@ -474,7 +474,7 @@ function listItem(text: string): string {
 }
 /** The bead's own export row (title and description only: later store writes change neither). */
 function exportRow(): { title: string; description: string } {
-  const rows = readFileSync(join(REPO, EXPORT), "utf8")
+  const rows = trackerExportText(join(REPO, EXPORT))
     .split("\n")
     .filter((line) => line.trim() !== "")
     .map((line): unknown => JSON.parse(line));
@@ -2641,3 +2641,5 @@ describe("wb-jwc.5: the committing rf render posture, pinned while Pi registers 
     expect([...cited].sort()).toStrictEqual([...Object.keys(PLANTED_FORMS), ...Object.keys(PLANTED_REFUSED), ...Object.keys(PLANTED_EXCEPTED), ...pages].sort());
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

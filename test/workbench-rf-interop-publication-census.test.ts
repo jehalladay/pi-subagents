@@ -425,7 +425,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   },
 };
 function beadNotes(): string {
-  for (const line of readFileSync(join(REPO, ".beads/issues.jsonl"), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, ".beads/issues.jsonl")).split("\n")) {
     if (!line.includes(BEAD)) continue;
     const value: unknown = JSON.parse(line);
     if (value !== null && typeof value === "object" && "id" in value && value.id === BEAD && "notes" in value && typeof value.notes === "string") return value.notes;
@@ -509,3 +509,5 @@ describe("wb-fb2z.2 absent interop publication census (TSX-COMPONENT-ASSEMBLY-R2
     expect([...REACHED].sort()).toEqual([...ROSTER.rows.flatMap(row => row.pins.map(pin => pin.id)), CLAIMS_BOUND].sort());
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

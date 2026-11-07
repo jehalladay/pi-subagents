@@ -1233,7 +1233,9 @@
        "formulas",
        "formulas"
       ],
-      "exportReaders": []
+      "exportReaders": [
+       "qa/workbench/tracker-export.mjs"
+      ]
      }
     },
     {

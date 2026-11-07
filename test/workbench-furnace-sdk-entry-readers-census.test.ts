@@ -3103,7 +3103,7 @@ function evidenceOf(plant: Plant): string {
 
 /** The bead's own row of the tracker export: its description and notes. */
 function beadRow(): { readonly description: string; readonly notes: string } {
-  const text = readFileSync(join(REPO, EXPORT), "utf8");
+  const text = trackerExportText(join(REPO, EXPORT));
   const key = `"id":"${BEAD}"`;
   const at = text.indexOf(key);
   if (at < 0 || text.indexOf(key, at + key.length) >= 0) throw new Error(`${EXPORT} must hold exactly one ${BEAD} row`);
@@ -3281,3 +3281,5 @@ describe("wb-lrz.8 each-liveness: the closing tally", () => {
     expect(Object.fromEntries(REACHED), "the key every case and plant recorded at its last line").toEqual({ cases: [...FIXED_CASES], plant: Object.keys(PAGES) });
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

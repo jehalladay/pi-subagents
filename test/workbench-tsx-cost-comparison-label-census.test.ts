@@ -1023,7 +1023,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
 };
 
 function beadNotes(): string {
-  for (const line of readFileSync(join(REPO, BEAD_EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, BEAD_EXPORT)).split("\n")) {
     if (!line.includes(BEAD)) continue;
     const value: unknown = JSON.parse(line);
     if (value !== null && typeof value === "object" && "id" in value && value.id === BEAD && "notes" in value && typeof value.notes === "string") return value.notes;
@@ -1121,3 +1121,5 @@ describe("wb-csbt.4 TSX SDK + RFCLI cost comparison label census (TSX-RESOURCE-E
     expect([...REACHED].sort(byName)).toEqual(ROSTER.rows.flatMap(row => row.pins.map(pin => pin.id)).sort(byName));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

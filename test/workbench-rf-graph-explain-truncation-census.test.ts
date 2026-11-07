@@ -1548,7 +1548,7 @@ interface ExportRow {
   readonly fields: Readonly<Record<string, unknown>>;
 }
 function exportRow(): ExportRow {
-  for (const line of readFileSync(join(REPO, ".beads", "issues.jsonl"), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, ".beads", "issues.jsonl")).split("\n")) {
     if (!line.includes(`"id":"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === BEAD && typeof row.description === "string") return { description: row.description, fields: row };
@@ -1951,3 +1951,5 @@ describe("wb-2j3.10 rf graph explain truncation census (RFCLI-PERFORMANCE-MATHEM
     expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(row => row.pins));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

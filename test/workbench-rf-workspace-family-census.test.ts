@@ -138,7 +138,7 @@ function expectWalkFloor(root: keyof typeof WALK_FLOORS, read: readonly string[]
 
 /** The title of this census's row in the tracked bead export; throws when the export holds no such row. */
 function filingTitle(): string {
-  for (const line of readFileSync(join(ROOT, BEAD_EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(ROOT, BEAD_EXPORT)).split("\n")) {
     if (!line.includes(`"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (row !== null && typeof row === "object" && "id" in row && row.id === BEAD && "title" in row && typeof row.title === "string") return row.title;
@@ -397,3 +397,5 @@ describe("rf workspace family census (wb-o4h0.3, RF-FEDERATED-WORKSPACES-R4)", (
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

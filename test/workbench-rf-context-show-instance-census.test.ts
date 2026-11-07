@@ -1476,7 +1476,7 @@ function outcomeOf(entry: Case): Json {
 
 /** The tracked bead export's rows. */
 function exportRows(): { [key: string]: unknown }[] {
-  return textOf(BEAD_EXPORT)
+  return rehydrateTrackerExport(textOf(BEAD_EXPORT), BEAD_EXPORT)
     .split("\n")
     .filter(line => line.trim() !== "")
     .map(line => JSON.parse(line) as unknown)
@@ -1752,7 +1752,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     return { exit: unknown.exit, ...reading };
   },
   F1: async () => {
-    const rows = textOf(BEAD_EXPORT)
+    const rows = rehydrateTrackerExport(textOf(BEAD_EXPORT), BEAD_EXPORT)
       .split("\n")
       .filter(line => line.trim() !== "")
       .map(line => JSON.parse(line) as unknown);
@@ -1951,3 +1951,5 @@ describe("wb-pfxo.9 context show instance census (RF-COMPOSITIONAL-ASSEMBLY-R10,
     expect(walkedFindings(WALKED, listedSrc().length), "every src-walk pin walked src and read every module git lists (WALKED)").toEqual([]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

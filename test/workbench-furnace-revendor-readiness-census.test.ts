@@ -2755,7 +2755,7 @@ const reached = (site: string, key: string): void => {
 
 /** The bead's own row of the tracker export: its description and notes. */
 function beadRow(): { readonly description: string; readonly notes: string } {
-  const text = readFileSync(join(REPO, EXPORT), "utf8");
+  const text = trackerExportText(join(REPO, EXPORT));
   const key = `"id":"${BEAD}"`;
   const at = text.indexOf(key);
   if (at < 0 || text.indexOf(key, at + key.length) >= 0) throw new Error(`${EXPORT} must hold exactly one ${BEAD} row`);
@@ -2955,3 +2955,5 @@ describe("wb-lrz.4 each-liveness: the closing tally", () => {
     });
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

@@ -1228,7 +1228,7 @@ interface ExportRow {
   readonly title: string;
   readonly notes: string;
 }
-const exportText = lazy((): string => textOf(EXPORT));
+const exportText = lazy((): string => rehydrateTrackerExport(textOf(EXPORT), join(REPO, EXPORT)));
 /** One row of the tracker export (one JSON object per line), found by its id. */
 function exportRow(id: string, text: string = exportText()): ExportRow {
   for (const line of text.split("\n")) {
@@ -2930,3 +2930,5 @@ describe("wb-021.1 APO surface effect census (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R
     expect(accepted, "the claims bound: no pin's live witness shows another pin's claims").toEqual([]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";
