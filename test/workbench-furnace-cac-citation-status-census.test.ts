@@ -283,6 +283,7 @@
  *
  * Display paths added: none (test-only; src/ is read, never edited). Scratch: D1 composes makeScratch/removeScratch with the leak
  * guard installed; docs, src, .beads and git objects are otherwise only read.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -295,6 +296,7 @@ import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { anchorProse, anchorRules, anchorTables, ELEMENT, headerOf, shownText, UNSHOWN } from "./helpers/furnace-cac-citation-status-readers.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+import { withoutTriageArchive } from "./helpers/triage-archive.js";
 
 installScratchLeakGuard();
 
@@ -958,18 +960,20 @@ function admits(scope: Scope, path: string): boolean {
 /** git's tracked list of a scope under a root (the working tree's index, or a tree-ish at REPO). */
 function scopeList(root: string, scope: Scope, treeish?: string): string[] {
   const args = treeish === undefined ? ["ls-files", "-z"] : ["ls-tree", "-r", "-z", "--name-only", treeish];
-  return execFileSync("git", args, { cwd: root, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 })
-    .split("\0")
-    .filter(path => path.length > 0 && admits(scope, path))
-    .sort();
+  return withoutTriageArchive(
+    execFileSync("git", args, { cwd: root, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 })
+      .split("\0")
+      .filter(path => path.length > 0 && admits(scope, path)),
+  ).sort();
 }
 /** The scope's walk root read from the filesystem: the outside anchor of git's list under that root. */
 function scopeWalk(root: string, scope: Scope): string[] {
-  return readdirSync(join(root, scope.walk), { recursive: true, withFileTypes: true })
-    .filter(entry => entry.isFile())
-    .map(entry => relative(root, join(entry.parentPath, entry.name)))
-    .filter(path => admits(scope, path))
-    .sort();
+  return withoutTriageArchive(
+    readdirSync(join(root, scope.walk), { recursive: true, withFileTypes: true })
+      .filter(entry => entry.isFile())
+      .map(entry => relative(root, join(entry.parentPath, entry.name)))
+      .filter(path => admits(scope, path)),
+  ).sort();
 }
 /** Every blob of a tree-ish's paths through one git cat-file --batch call. */
 function treeTexts(treeish: string, paths: readonly string[]): FileText[] {
@@ -1375,10 +1379,11 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
   },
   D2: () => {
     const pages = scopeList(REPO, SCOPES.documents).filter(path => path.startsWith(WORKBENCH) && !path.startsWith(RECEIPTS));
-    const workbench = execFileSync("git", ["ls-files", "-z", "--", "docs/workbench"], { cwd: REPO, encoding: "utf8" })
-      .split("\0")
-      .filter(path => path.length > 0 && !path.startsWith(RECEIPTS))
-      .sort();
+    const workbench = withoutTriageArchive(
+      execFileSync("git", ["ls-files", "-z", "--", "docs/workbench"], { cwd: REPO, encoding: "utf8" })
+        .split("\0")
+        .filter(path => path.length > 0 && !path.startsWith(RECEIPTS)),
+    ).sort();
     expect(pages, "the documents scope holds every docs/workbench page outside receipts/").toEqual(workbench);
     expect(pages.length, `floor: ${FLOORS.workbench} docs/workbench pages`).toBeGreaterThanOrEqual(FLOORS.workbench);
     const live = textOf(FEATURE_MATRIX);

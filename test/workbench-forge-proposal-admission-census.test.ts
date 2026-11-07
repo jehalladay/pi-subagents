@@ -118,6 +118,7 @@
  *
  * Display paths added: none. Test-only: the planted trees live in makeScratch scratch; src, docs, the SDK, the bead export and the
  * roster are only read; the provider client, the operation connection and the projection are in-memory seams.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { spawnSync } from "node:child_process";
 import { existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -146,6 +147,7 @@ import { ObservationProjection, type ObservationScope } from "../src/workbench/o
 import { registerForgeGateStatus } from "../src/workbench/providers/forge.js";
 import { MEASURED_ROW } from "./helpers/forge-last-result-state.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+import { isTriageArchivePath, withoutTriageArchive } from "./helpers/triage-archive.js";
 
 installScratchLeakGuard(afterAll);
 
@@ -311,6 +313,7 @@ function walk(root: string, entry: string): Walk {
   const files: string[] = [];
   const symlinks: string[] = [];
   const visit = (path: string): void => {
+    if (isTriageArchivePath(path)) return;
     const stat = lstatSync(join(root, path));
     if (stat.isSymbolicLink()) symlinks.push(path);
     else if (stat.isDirectory()) for (const name of readdirSync(join(root, path)).sort()) visit(`${path}/${name}`);
@@ -699,8 +702,8 @@ function scopeReading(scope: string): JsonObject {
   const hit = readings.filter(reading => reading.hits.length > 0);
   const grep = literal(["-i", "-E", NEEDLE_PATTERN, "--", scope]);
   const tracked = spawnSync("git", ["ls-files", "-z", "--", scope], { cwd: REPO, encoding: "utf8" });
-  const listed = tracked.status === 0 ? tracked.stdout.split("\0").filter(Boolean) : [];
-  const grepFiles = unique(grep.lines.map(fileOf)).sort();
+  const listed = tracked.status === 0 ? withoutTriageArchive(tracked.stdout.split("\0").filter(Boolean)) : [];
+  const grepFiles = withoutTriageArchive(unique(grep.lines.map(fileOf))).sort();
   const controls = scope === "src" ? srcControls() : scope === "test" ? testControls() : docsControls();
   const root = plantTree(controls);
   const planted = walk(root, scope).files;
