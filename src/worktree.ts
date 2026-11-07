@@ -4,6 +4,7 @@
  * Creates a temporary git worktree so the agent works on an isolated copy of the repo.
  * On completion, if no changes were made, the worktree is cleaned up.
  * If changes exist, a branch is created and returned in the result.
+ * If a preservation step fails, the worktree is kept instead, in the forms WorktreePreservationFailedResult lists.
  *
  * Every git call goes through `pi.exec` (async) rather than `execFileSync`: a
  * worktree copy can take seconds, and a session that spawns several isolated
@@ -52,14 +53,44 @@ export function isWorktreeIsolationEnabled(): boolean {
   return worktreeIsolationEnabled;
 }
 
-export interface WorktreeCleanupResult {
-  /** Whether changes were found in the worktree. */
-  hasChanges: boolean;
-  /** Branch name if changes were committed. */
-  branch?: string;
-  /** Worktree path if it was kept. */
-  path?: string;
+/** The clean variant of WorktreeCleanupResult (see cleanupWorktree). */
+export interface WorktreeCleanResult {
+  hasChanges: false;
+  branch?: undefined;
+  path?: undefined;
+  preservationFailed?: undefined;
+  diagnostic?: undefined;
 }
+
+/** The preserved variant of WorktreeCleanupResult (see cleanupWorktree). */
+export interface WorktreePreservedResult {
+  hasChanges: true;
+  branch: string;
+  path: string;
+  preservationFailed?: undefined;
+  diagnostic?: undefined;
+}
+
+/**
+ * The variant cleanupWorktree's outer catch returns when a preservation step fails (wb-5ik5; EAT-R001, EAT-R002): the
+ * worktree is kept, `path` is its root, the variant names no branch, and `diagnostic` is the failure's text. The claim
+ * is exactly the forms the PF rows of test/worktree.test.ts plant (each row's step and failure), and nothing wider;
+ * those rows fail the steps `git status --porcelain`, `git add -A`, `git commit`, `git rev-parse HEAD` (run when the
+ * status is empty) and the suffixed `git branch` retry (run once the agent's own branch name is refused). For those
+ * forms the result is exactly this variant, the directory keeps the agent's bytes, no preservation branch exists, and
+ * `diagnostic` is the failing call's stderr trimmed, or `git <args> failed (exit <code>)` when that stderr is blank;
+ * when the exec call rejects, it is the rejection's text trimmed, or "git failed without a message" when that is
+ * blank. For the branch step the failing call is the retry, never the refusal of the agent's own name.
+ */
+export interface WorktreePreservationFailedResult {
+  hasChanges: true;
+  preservationFailed: true;
+  path: string;
+  diagnostic: string;
+  branch?: undefined;
+}
+
+export type WorktreeCleanupResult = WorktreeCleanResult | WorktreePreservedResult | WorktreePreservationFailedResult;
 
 /**
  * Run git and return its trimmed stdout, throwing on failure so callers keep
@@ -121,6 +152,8 @@ export async function createWorktree(
  * Clean up a worktree after agent completion.
  * - If no changes: remove worktree entirely.
  * - If changes exist: create a branch, commit changes, return branch info.
+ * - If a preservation step fails: keep the worktree and return
+ *   WorktreePreservationFailedResult (its doc gives the pinned forms).
  */
 export async function cleanupWorktree(
   pi: ExtensionAPI,
@@ -174,11 +207,19 @@ export async function cleanupWorktree(
       branch: worktree.branch,
       path: worktree.path,
     };
-  } catch {
-    // Best effort cleanup on error
-    try { await removeWorktree(pi, cwd, worktree.path); } catch { /* ignore */ }
-    return { hasChanges: false };
+  } catch (err) {
+    // A preservation step failed: keep the worktree and return the failed
+    // variant (EAT-R001/EAT-R002; the pinned forms are on
+    // WorktreePreservationFailedResult). Before wb-5ik5 this catch
+    // force-removed the worktree and returned `{ hasChanges: false }`.
+    return { hasChanges: true, preservationFailed: true, path: worktree.path, diagnostic: diagnosticOf(err) };
   }
+}
+
+/** The thrown error's text, trimmed, or "git failed without a message" when that is blank; the claim is the forms the PF rows of test/worktree.test.ts plant. */
+function diagnosticOf(err: unknown): string {
+  const text = err instanceof Error ? err.message : String(err);
+  return text.trim() || "git failed without a message";
 }
 
 /**
