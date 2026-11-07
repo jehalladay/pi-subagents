@@ -1,5 +1,8 @@
 # @tintinweb/pi-subagents
 
+**Bead-machine field-convergence program (proposed, 2026-11-07):** [This repository's design, implementation work packages and agent-skill acceptance](docs/workbench/programs/bead-machine-field-convergence-2026-11-07/README.md). Start locally; no Library design checkout is required.
+
+
 > **MechanicalWorkflows integration (design program):** [Cross-repository audit and W11 execution plan](docs/workbench/programs/mechanical-workflows-interop-2026-11-04/README.md). Pi Workbench currently launches script definitions, not Mechanical `develop()` function definitions. No cross-repository native end-to-end run is claimed; the program identifies missing function dispatch, descriptor binding, source/effect proof and the staged path to acceptance.
 
 
