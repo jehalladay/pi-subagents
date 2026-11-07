@@ -149,3 +149,68 @@
 | R-SPLIT-JOIN | EAT-R080 | QUIET-SPLIT-JOIN |
 | R-DECLARED-PROVENANCE | EAT-R081 | QUIET-DECLARED-PROVENANCE |
 | R-VERDICT-SPELLING | EAT-R081 | QUIET-VERDICT-SPELLING |
+
+## 2026-11-07 receipt: wb-349y, the R694 follow-up of landing 1022, pins the four parts outside the closed comments of one html token and inside the first of two comments (machine seat ws-13, run g10-work-s237)
+
+- Follow-up: wb-349y carries the wb-caoo gate's F1 (leads) and F2 (rides). This entry's cut adds rows to R080-COMMENT-TEXT only; the judges, every other case, the declared scope and range, the roster and the residual families are unchanged.
+- F1 (leads): no row held the four parts outside the closed comments of one html token, so the comment pattern made greedy (each html token read only up to its first comment) kept the census green. R080-COMMENT-TEXT now holds four such tokens, each a witness: the four parts on a line of their own before the comment line of a div block and after a closed comment on a block line (each lexed as one html token holding one comment), and between two closed comments on a block line and on a line of their own between the two comment lines of a div block (each lexed as one html token holding two).
+- F2 (rides): the two-comment rows held the four parts in the second comment only, so an html token dropping only its last comment kept the census green. R080-COMMENT-TEXT now also holds the four parts inside the first of two comments, on a block line holding both and in a div block holding both on lines of their own (each lexed as one html token holding two): no witness and no partial.
+- Live reading, measured on this cut's tree (trunk ea21fb1 plus this cut): 220 entries in 60 files (163 receipt entries, 54 TRACEABILITY sections, 3 JSON receipts), 110 dated and 110 undated, 8 out of range (entries 1, 2 and 3 of docs/workbench/receipts/wb-5ik5.md, entry 2 of wb-f3wd.md, entry 3 of wb-wupg.md, and entries 2, 3 and 4 of this receipt), 0 witnesses and 129 partials (120 with a source pin only, 5 with a run id and a pin, 3 with an operation id and a pin, 1 with all three): searched-scope absence, global UNDETERMINED.
+- Changes: this receipt stays append-only (standing rule 15). This entry carries both tables for this cut's state, R080-COMMENT-TEXT's count 43 in place of 31, and the census reads the last entry.
+
+| Test | Row | Kind | Assertions |
+| --- | --- | --- | --- |
+| R080-NEVER-RAN-MUTANT | EAT-R080 | claim | 5 |
+| R080-EMPTY-UNREAD | EAT-R080 | claim | 3 |
+| R080-VOCABULARY | EAT-R080 | claim | 2 |
+| R080-JOINED-WITNESS | EAT-R080 | claim | 5 |
+| R080-NEEDS-PI-RUN | EAT-R080 | claim | 4 |
+| R080-NEEDS-OUTCOME | EAT-R080 | claim | 4 |
+| R080-NEEDS-OPERATION | EAT-R080 | claim | 4 |
+| R080-NEEDS-PIN | EAT-R080 | claim | 4 |
+| R080-ONE-PART-PARTIAL | EAT-R080 | claim | 9 |
+| R080-OUTCOME-TOKENS | EAT-R080 | claim | 4 |
+| R080-RANGE-BOUNDS | EAT-R080 | claim | 6 |
+| R080-UNDATED-READ | EAT-R080 | claim | 3 |
+| R080-MARKDOWN-ENTRIES | EAT-R080 | claim | 5 |
+| R080-HEADING-FORMS | EAT-R080 | claim | 5 |
+| R080-FENCED-HEADING | EAT-R080 | claim | 6 |
+| R080-COMMENT-TEXT | EAT-R080 | claim | 43 |
+| R080-CONTAINER-TEXT | EAT-R080 | claim | 4 |
+| R080-JSON-ENTRY | EAT-R080 | claim | 6 |
+| R080-UNDECLARED-STORE | EAT-R080 | claim | 1 |
+| R080-LIVE-STORES | EAT-R080 | claim | 14 |
+| R080-LIVE-PLANTED | EAT-R080 | claim | 9 |
+| R081-FIXTURE-MUTANT | EAT-R081 | claim | 4 |
+| R081-ADAPTER-CONDITIONAL | EAT-R081 | claim | 2 |
+| R081-PAIRING-WITNESSED | EAT-R081 | claim | 3 |
+| R081-SCOPED-NON-OBSERVATION | EAT-R081 | claim | 3 |
+| R081-NEEDS-PRODUCER | EAT-R081 | claim | 2 |
+| R081-NEEDS-OPERATION | EAT-R081 | claim | 2 |
+| R081-NEEDS-PAIRING-FIELDS | EAT-R081 | claim | 2 |
+| R081-NO-FAILED-GATE | EAT-R081 | claim | 3 |
+| R081-FIXTURE-NEVER-UPGRADES | EAT-R081 | claim | 3 |
+| R081-CONTRACT-CONSISTENCY | EAT-R081 | claim | 1 |
+| R081-RECORDED-PROBE | EAT-R081 | claim | 15 |
+| QUIET-OUTCOME-WORDS | EAT-R080 | quiet | 2 |
+| QUIET-PI-REFERENCE | EAT-R080 | quiet | 2 |
+| QUIET-SPELLING | EAT-R080 | quiet | 7 |
+| QUIET-SPLIT-JOIN | EAT-R080 | quiet | 2 |
+| QUIET-DECLARED-PROVENANCE | EAT-R081 | quiet | 2 |
+| QUIET-VERDICT-SPELLING | EAT-R081 | quiet | 3 |
+| CHECK-FROZEN-SHAPE | - | check | 2 |
+| CHECK-TILING | - | check | 78 |
+| CHECK-ROSTER | - | check | 20 |
+| CHECK-EXPORT-ANCHOR | - | check | 3 |
+| CHECK-J03-ANCHOR | - | check | 3 |
+| CHECK-LIVE-SCOPE | - | check | 6 |
+| CHECK-RECEIPT-ANCHOR | - | check | 7 |
+
+| Residual family | Row | Quiet row |
+| --- | --- | --- |
+| R-OUTCOME-WORDS | EAT-R080 | QUIET-OUTCOME-WORDS |
+| R-PI-REFERENCE | EAT-R080 | QUIET-PI-REFERENCE |
+| R-SPELLING | EAT-R080 | QUIET-SPELLING |
+| R-SPLIT-JOIN | EAT-R080 | QUIET-SPLIT-JOIN |
+| R-DECLARED-PROVENANCE | EAT-R081 | QUIET-DECLARED-PROVENANCE |
+| R-VERDICT-SPELLING | EAT-R081 | QUIET-VERDICT-SPELLING |
