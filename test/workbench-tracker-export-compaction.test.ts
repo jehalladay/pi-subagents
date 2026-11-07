@@ -278,7 +278,7 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
     }
   });
 
-  it("C9 REFUSED INPUTS: a run stamp that is not a UTC stamp (each form below), a shard name that is not a month shard's (a day shard's included), a non-empty shard that does not end with a newline and a shard line that does not parse as a JSON object with a string id each refuse as malformed with one typed line; an empty shard is read as holding no line", () => {
+  it("C9 REFUSED INPUTS: a run stamp that is not a UTC stamp (each form below), the shard names of a day shard (issues-closed-2026-11-03.jsonl) and README.md, a non-empty shard that does not end with a newline and the shard lines {\"id\":, [1] and {\"status\":\"closed\"} after a full line each refuse as malformed with one typed line; an empty shard is read as holding no line", () => {
     const full = textOf(fixtureRows());
     const shard = `${lineOf(row("wb-c2", "closed", { closed_at: "2026-11-03T08:00:00Z" }))}\n`;
     const stamps = [
@@ -447,7 +447,7 @@ describe("wb-294d rehydrating reader: the one read every export reader routes th
     expect(rehydrateTrackerExport("", main)).toBe("");
   });
 
-  it("R3 CORRUPT SHARD: a shard line that does not parse fails the read loudly, naming the shard and line", () => {
+  it("R3 CORRUPT SHARD: the shard line {\"id\": after a full line fails the read loudly, naming the shard and line", () => {
     const dir = scratch("tracker-export-reader-");
     mkdirSync(join(dir, ".beads", "archive"), { recursive: true });
     const main = join(dir, ".beads", "issues.jsonl");
@@ -690,7 +690,7 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", () =
     }
   });
 
-  it("K7 rehydrate exits 3 with the typed line, printing nothing on stdout, when the read throws: a month shard holding a line that does not parse, and a missing main export", () => {
+  it("K7 rehydrate exits 3 with the typed line, printing nothing on stdout, when the read throws: a month shard whose last line is {\"id\":, and a missing main export", () => {
     const { beads, full } = beadsDir();
     expect(cli(["compact", "--full", full, "--beads", beads, "--now", "2026-11-03T12:00:00Z"]).status).toBe(0);
     const shard = join(beads, "archive", "issues-closed-2026-11.jsonl");

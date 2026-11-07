@@ -20,6 +20,9 @@
  *                                             a blank line kept blank (C15) - ending with a newline exactly when the full export
  *                                             does (C2, C12).
  *   archive/issues-closed-YYYY-MM.jsonl       append-only month SHARDS holding closed rows' full export lines, unchanged (C3).
+ *                                             Which file names the reader and the compaction take as a month shard's, beyond the
+ *                                             names the cases plant, is NOT CLAIMED: a name whose MM is 00 or 13 (refusal #3 of
+ *                                             wb-294d, W-GP4-05 and W-GP4-05b) is wb-137f's (R-B677).
  * ROUTING. A closed row's period is the UTC month of its close stamp (C3, C3b), or the run's month when the row has no close stamp
  * that is a UTC stamp (C14) or its close month is after the run's (C13). The row goes to its period's shard when the period is the
  * run's month or newer than every shard that exists before the run (C3, C4b, C5), and otherwise - a month before the run's and at or
@@ -44,7 +47,9 @@
  * id has an archived line is replaced by that id's latest archived line (R2), and every other line is kept as it is: a full closed
  * row (R5), a stub-shaped row that is not closed (R6, C6), a stub whose id no shard holds (R7). So a main export the compaction wrote
  * reads as the full export it was cut from (R2, K2). Only shard files are read: a file of another name, and a symlink or a directory
- * of a shard's name, beside them is not (R4). A shard line that does not parse throws, naming the shard and the line (R3). A process
+ * of a shard's name, beside them is not (R4). The shard line R3 plants, `{"id":` after a full line, throws, naming the shard and the
+ * line (R3); what the read does with any other shard line that does not parse is NOT CLAIMED - a line that begins with the export's
+ * own line prefix (refusal #3 of wb-294d: W-GP4-01, 01b, 01c) is wb-137f's, with the archived line's parse (R-B677). A process
  * reads the shards once and reads them again when the archive's shard names, or a shard's size or modification time, change; a
  * rewrite that keeps all three reads as the earlier content (R10). rehydrateTrackerExport(text, path) is the same for a text a
  * reader already read from path (R2).
@@ -68,8 +73,10 @@
  *       of 1 to 9 digits, then Z or an offset +HH:MM / -HH:MM, every field in range (a calendar day; hour 00-23; minute and second
  *       00-59; offset hour 00-23 and offset minute 00-59), its offset applied (C9, C16, K12). Exit 2 at the soft ceiling (K3). Exit 3
  *       on a usage error (K6), a bad FW_EXPORT_SOFT_CEILING (K8), an input it cannot read (K9), a run stamp that is not a UTC stamp
- *       (K4, K12), a malformed export or shard (K3, C8, C9) and a round trip that is not byte-equal (K10). It writes nothing when it
- *       exits 2 or 3 (K3, K4, K6, K8, K9, K10).
+ *       (K4, K12), a malformed export (K3, C8) or a shard whose text compactTrackerExport refuses as malformed (C9) and a round trip
+ *       that is not byte-equal (K10). It writes nothing when it exits 2 or 3 (K3, K4, K6, K8, K9, K10). Over a shard holding a line
+ *       that begins with the export's own line prefix and does not parse, the exits of compact and rehydrate are NOT CLAIMED
+ *       (refusal #3 of wb-294d: W-GP4-03, 03b): wb-137f's (R-B677).
  *   node qa/workbench/tracker-export.mjs rehydrate --beads <.beads dir>
  *       prints trackerExportText(<dir>/issues.jsonl) on stdout (K2); exit 3, printing nothing on stdout, on a usage error (K6) and
  *       when the read throws (K7).
@@ -86,11 +93,14 @@
  *         chmod +x "$(git rev-parse --git-path hooks)/pre-push"
  *   Any other verb, or none, exits 3 with the verbs' usage line (G15).
  *
- * RESIDUALS: none known at this cut - every mode this header names is claimed by its cited cases or listed below as NOT CLAIMED.
+ * RESIDUALS: none claimed at this cut; the modes refusal #3 of wb-294d realized against these words close the NOT CLAIMED list.
  * NOT CLAIMED: the machine wiring named above; line ends other than a bare newline and text that is not UTF-8; two compactions of one
  * .beads directory at once, and a crash while one writes; an archive directory, shard or export the process cannot list or read (the
  * read throws; the compaction exits 3, K9); what the tracker's importer does with a main export (STUB FIELDS above is a measurement);
- * a family blob a successful `git rev-list --objects` lists that `git cat-file` cannot size; a submodule entry at a family path.
+ * a family blob a successful `git rev-list --objects` lists that `git cat-file` cannot size; a submodule entry at a family path; a
+ * directory at the name of the shard a run appends to (refusal #3 of wb-294d, F8: W-GP4-04); and the modes that refusal realized
+ * against these words, all wb-137f's by the structural exit R-B677: its U1-U4 witnesses (W-GP4-01, 01b, 01c, 02, 02b, 02c, 03, 03b,
+ * 05 and 05b), each NOT CLAIMED at its site above, and its F5 members (GP4-M03, M04, M06, M07, M09, M10, M11 and M12).
  */
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readdirSync, readFileSync, realpathSync, renameSync, statSync, writeFileSync } from "node:fs";
@@ -369,12 +379,16 @@ export function trackerExportText(mainPath) {
 
 /**
  * Compacts a full export against the existing shards: the main export, every shard after the run, and what was appended where (C3,
- * C4, C4b). Refuses as "malformed" on a run stamp that is not a UTC stamp (C9), a shard name that is not a month shard's (C9), a
- * shard that does not end with a newline or holds a line that does not parse as a JSON object with a string id (C9), a malformed
- * export (C8) and a stub-shaped closed row in the input - a main export passed where the full export belongs (C8); as "oversize" on a
+ * C4, C4b). Refuses as "malformed" on a run stamp that is not a UTC stamp (C9), a shard name C9 plants that is not a month shard's (a
+ * day shard's, README.md: C9), a shard that does not end with a newline or holds a line C9 plants that does not parse as a JSON object
+ * with a string id (`{"id":`, `[1]` or `{"status":"closed"}` after a full line: C9), a malformed export (C8) and a stub-shaped
+ * closed row in the input - a main export passed where the full export belongs (C8); as "oversize" on a
  * main export or shard at or over the ceiling (C7); as "round-trip" when the compacted export does not rehydrate to the full export
  * (C10). The CLI then writes nothing (K3, K4, K10). A change to a shard that existed before the run and is of a month before the
  * run's refuses as "sealed": a backstop the routing rule never reaches, since no run appends to such a shard, so no case reaches it.
+ * Which other shard names and shard lines it refuses as malformed is NOT CLAIMED: a name whose MM is 00 or 13 (refusal #3 of
+ * wb-294d: W-GP4-05), a line that begins with the export's own line prefix and does not parse or holds an empty id (W-GP4-02, 02b,
+ * 02c) and a line without that prefix whose id is empty (GP4-M11) are wb-137f's, with the archived line's parse (R-B677).
  * @param {{ full: string, shards: ReadonlyMap<string, string>, now: string, ceiling?: number, root?: string }} input
  * @returns {CompactResult}
  */
