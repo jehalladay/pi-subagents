@@ -42,16 +42,19 @@
  *   fence that a shorter tilde run does not close, a fence never closed) opens no entry, so a join after a fenced line dated
  *   before the range is read in its own dated entry and found; control: the same lines less the two fence lines split at that
  *   line, whose entry is out of range, and the join is never read; fenced code text is read.
- * - R080-COMMENT-TEXT (wb-prv7 F1, the gate's W-COMMENT; wb-caoo, the wb-prv7 gate's F1 and F2): HTML comment text is not read:
- *   the four parts inside a comment block are no witness and no partial, a level-2 line inside the block opens no entry, and the
- *   entry's text keeps the comment; the four parts inside the second of two comments that one html token holds (a block line
- *   holding both, a div block holding both on lines of their own, each lexed as one html token holding two) are no witness and
- *   no partial; a part inside an inline comment in a paragraph, a heading, a list item, a block quote, a table cell, emphasis or
- *   link text is not read (the other three parts are its entry's partial); a comment block never closed runs to the receipt's
- *   end (no entry opens after it, nothing after it is read); controls: the four parts are a witness outside any comment, inside
- *   a comment form in fenced code, indented code (lexed as one indented code block) or a code span (code renders its text),
- *   after an empty comment (<!--> or <!--->) opening their line, and after an inline opener never closed (marked reads it as
- *   text).
+ * - R080-COMMENT-TEXT (wb-prv7 F1, the gate's W-COMMENT; wb-caoo, the wb-prv7 gate's F1 and F2; wb-349y, the wb-caoo gate's F1
+ *   and F2): HTML comment text is not read: the four parts inside a comment block are no witness and no partial, a level-2 line
+ *   inside the block opens no entry, and the entry's text keeps the comment; the four parts inside the first, or inside the
+ *   second, of two comments that one html token holds (a block line holding both, a div block holding both on lines of their
+ *   own, each lexed as one html token holding two) are no witness and no partial; a part inside an inline comment in a
+ *   paragraph, a heading, a list item, a block quote, a table cell, emphasis or link text is not read (the other three parts are
+ *   its entry's partial); a comment block never closed runs to the receipt's end (no entry opens after it, nothing after it is
+ *   read); controls: the four parts are a witness outside any comment, inside one html token too (on a line of their own before
+ *   the comment line of a div block, or after a closed comment on a block line, each lexed as one html token holding one;
+ *   between two closed comments on a block line, or on a line of their own between the two comment lines of a div block, each
+ *   lexed as one html token holding two), inside a comment form in fenced code, indented code (lexed as one indented code block)
+ *   or a code span (code renders its text), after an empty comment (<!--> or <!--->) opening their line, and after an inline
+ *   opener never closed (marked reads it as text).
  * - R080-CONTAINER-TEXT (wb-prv7 F1, the join's containers): a list is read item by item, a table cell by cell with its header
  *   row read, and a block quote line by line, so a component at an item's or a cell's edge is read and a two-line block quote
  *   reads both lines; a token's own raw text around its children is read (a pin in a link's destination).
@@ -506,6 +509,35 @@ const CASES: readonly Case[] = [
         ).toEqual([["html", 2]]);
         const record = judgePriorRuns(SCOPE, markdownEntries("store-a", "r.md", `## 2026-10-20 a\n\n${body}\n`));
         expect([record.witnesses, record.partials], `${where}: the four parts in the second comment are no witness and no partial`).toEqual([[], []]);
+      }
+      const firstOfTwo: readonly (readonly [string, string])[] = [
+        ["a block line holding two comments, the parts in the first", `<!-- ${JOINED} --> <!-- a note -->`],
+        ["a div block holding two comment lines, the parts in the first", ["<div>", `<!-- ${JOINED} -->`, "<!-- a note -->", "</div>"].join("\n")],
+      ];
+      for (const [where, body] of firstOfTwo) {
+        expect(
+          new Lexer().lex(body).map((token) => [token.type, token.raw.split("<!--").length - 1]),
+          `${where}: one html token holding both comments`,
+        ).toEqual([["html", 2]]);
+        const record = judgePriorRuns(SCOPE, markdownEntries("store-a", "r.md", `## 2026-10-20 a\n\n${body}\n`));
+        expect([record.witnesses, record.partials], `${where}: the four parts in the first comment are no witness and no partial`).toEqual([[], []]);
+      }
+      const outsideComments: readonly (readonly [string, number, string])[] = [
+        ["a div block, the parts on a line of their own before the comment line", 1, ["<div>", JOINED, "<!-- a note -->", "</div>"].join("\n")],
+        ["a block line, the parts after a closed comment", 1, `<!-- a note --> ${JOINED}`],
+        ["a block line, the parts between two closed comments", 2, `<!-- a --> ${JOINED} <!-- b -->`],
+        ["a div block, the parts on a line of their own between two comment lines", 2, ["<div>", "<!-- a -->", JOINED, "<!-- b -->", "</div>"].join("\n")],
+      ];
+      for (const [where, comments, body] of outsideComments) {
+        expect(
+          new Lexer().lex(body).map((token) => [token.type, token.raw.split("<!--").length - 1]),
+          `${where}: one html token holding ${comments === 1 ? "one comment" : "two comments"}`,
+        ).toEqual([["html", comments]]);
+        const record = judgePriorRuns(SCOPE, markdownEntries("store-a", "r.md", `## 2026-10-20 a\n\n${body}\n`));
+        expect(
+          [record.verdict, record.global, record.witnesses, record.partials],
+          `${where}: the four parts outside the comments are a witness`,
+        ).toEqual(["found-witness", "WITNESSED", ["r.md#1"], []]);
       }
       const visible = textWithout("source-pin");
       const comment = `<!-- ${PARTS["source-pin"]} -->`;
