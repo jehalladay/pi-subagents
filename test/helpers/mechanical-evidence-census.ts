@@ -10,7 +10,8 @@
  * an entry carrying all four join components (a Pi workflow run id, a Mechanical domain outcome token, a native Forge
  * operation id, a source pin), and returns found-witness or searched-scope-absence. Its global reading is WITNESSED only beside
  * a witness and UNDETERMINED otherwise: the vocabulary has no universal-absence word, and the declared unread (external) stores
- * are carried into every record.
+ * are carried into every record. A markdown store's entries are its top-level level-2 sections as marked's lexer reads them,
+ * and their HTML comment text is never read (markdownEntries, wb-prv7).
  *
  * EAT-R081 ("The Forge transport probe MUST settle the exit-zero failed-gate premise from producer evidence"):
  * judgeTransportPairing admits only native transcripts (declared source native-transcript, a forge identity with version and
@@ -20,6 +21,7 @@
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
+import { Lexer, type Token, type Tokens } from "marked";
 
 /** EAT-R080 verdict words: a found witness, or absence over the searched scope only. */
 export const PRIOR_RUN_VERDICTS = ["found-witness", "searched-scope-absence"] as const;
@@ -47,7 +49,7 @@ export const COMPONENT_PATTERNS: Readonly<Record<JoinComponent, RegExp>> = {
   "source-pin": /(?<![A-Za-z0-9_-])(?=[0-9a-f]{0,39}[0-9])(?=[0-9a-f]{0,39}[a-f])[0-9a-f]{7,40}(?![A-Za-z0-9_-])/,
 };
 
-/** markdown-entries: the level-2 entries of every *.md file (or of the one file named); json-files: one entry per *.json file. */
+/** markdown-entries: the top-level level-2 entries of every *.md file (or of the one file named), read through marked (markdownEntries); json-files: one entry per *.json file. */
 export type StoreShape = "markdown-entries" | "json-files";
 const SHAPE_SUFFIX: Readonly<Record<StoreShape, string>> = { "markdown-entries": ".md", "json-files": ".json" };
 
@@ -74,6 +76,8 @@ export interface StoreEntry {
   readonly ref: string;
   readonly date: string | null;
   readonly text: string;
+  /** The text the join reads where it is not `text`: a markdown entry's tokens as joinTextOf reads them, HTML comments unread (markdownEntries). Absent, the join reads `text`. */
+  readonly readText?: string;
 }
 export interface EntryReading {
   readonly ref: string;
@@ -119,7 +123,6 @@ export const PRIOR_RUN_SCOPE: PriorRunScope = {
 };
 
 const DAY = /^\d{4}-\d{2}-\d{2}$/;
-const DATED_HEADING = /^## (\d{4}-\d{2}-\d{2})(?!\d)/;
 const LEADING_DAY = /^(\d{4}-\d{2}-\d{2})(?!\d)/;
 
 /** The components `text` carries, in JOIN_COMPONENTS order. */
@@ -127,26 +130,69 @@ export function joinComponentsOf(text: string): JoinComponent[] {
   return JOIN_COMPONENTS.filter((component) => COMPONENT_PATTERNS[component].test(text));
 }
 
+const isHeading = (token: Token): token is Tokens.Heading => token.type === "heading";
+const isList = (token: Token): token is Tokens.List => token.type === "list";
+const isTable = (token: Token): token is Tokens.Table => token.type === "table";
+/** An HTML comment as marked's html rules read one: `<!-->`, `<!--->`, or `<!--` through the next `-->` (or its token's end). */
+const COMMENT = /<!--(?:-?>|[\s\S]*?(?:-->|$))/g;
+
+function childrenOf(token: Token): readonly Token[] {
+  const value: unknown = (token as { tokens?: unknown }).tokens;
+  return Array.isArray(value) ? (value as Token[]) : [];
+}
+
 /**
- * A markdown receipt's entries: the preamble before the first level-2 heading is entry 0 (when there is one), the k-th
- * level-2 heading opens entry k and runs to the next one or the end. An entry is dated when its heading begins with
- * YYYY-MM-DD. The entries' texts joined by LF are the input text.
+ * The text the join reads of marked tokens: their raw text less every HTML comment marked reads as html. An html token (a block,
+ * or inline at any depth) drops its comments; a list reads its items and a table its cells (its header's first), one per line,
+ * and a block quote its children; any other token with children keeps its own raw text around theirs; a leaf keeps its raw
+ * text, so code (fenced, indented or a code span) is read with any comment form it shows, since code renders its text.
+ */
+function joinTextOf(tokens: readonly Token[]): string {
+  return tokens.map(joinTextOfToken).join("");
+}
+function joinTextOfToken(token: Token): string {
+  if (token.type === "html") return token.raw.replace(COMMENT, "");
+  if (isList(token)) return token.items.map((item) => joinTextOf(item.tokens)).join("\n");
+  if (isTable(token)) return [...token.header, ...token.rows.flat()].map((cell) => joinTextOf(cell.tokens)).join("\n");
+  const children = childrenOf(token);
+  if (children.length === 0) return token.raw;
+  if (token.type === "blockquote") return joinTextOf(children);
+  const inner = children.map((child) => child.raw).join("");
+  const at = token.raw.indexOf(inner);
+  if (at < 0) throw new Error(`a ${token.type} token whose children's text is not inside its own`);
+  return `${token.raw.slice(0, at)}${joinTextOf(children)}${token.raw.slice(at + inner.length)}`;
+}
+
+/**
+ * A markdown receipt's entries, read through marked's lexer: the top-level level-2 headings it reads (ATX or setext; never a
+ * line inside fenced or indented code, an HTML block or comment, a list item or a block quote) split the receipt. The preamble
+ * before the first such heading is entry 0 (when there is one), the k-th heading opens entry k and runs to the next one or the
+ * end. An entry is dated when its heading's text begins with YYYY-MM-DD. An entry's text is its lines, so the entries' texts
+ * joined by LF are the input text (a CRLF pair is one line end; a lone carriage return, a line end to marked but not to the LF
+ * split, is refused); the join reads its readText, the entry's tokens as joinTextOf reads them (HTML comments unread).
  */
 export function markdownEntries(store: string, ref: string, text: string): StoreEntry[] {
   const lines = text.split("\n");
-  const heads: number[] = [];
-  lines.forEach((line, index) => {
-    if (line.startsWith("## ")) heads.push(index);
-  });
-  const segments: { readonly index: number; readonly from: number; readonly to: number }[] = [];
-  if (heads[0] !== 0) segments.push({ index: 0, from: 0, to: heads[0] ?? lines.length });
+  const tokens = new Lexer().lex(text);
+  const starts: number[] = [];
+  let line = 0;
+  for (const token of tokens) {
+    starts.push(line);
+    line += token.raw.split("\n").length - 1;
+  }
+  if (line !== lines.length - 1) throw new Error(`${ref}: marked reads ${line + 1} lines where the LF split reads ${lines.length} (a lone carriage return)`);
+  const heads = tokens.flatMap((token, index) => (isHeading(token) && token.depth === 2 ? [index] : []));
+  const segments: { readonly index: number; readonly first: number; readonly end: number }[] = [];
+  if (heads[0] !== 0) segments.push({ index: 0, first: 0, end: heads[0] ?? tokens.length });
   heads.forEach((head, k) => {
-    segments.push({ index: k + 1, from: head, to: heads[k + 1] ?? lines.length });
+    segments.push({ index: k + 1, first: head, end: heads[k + 1] ?? tokens.length });
   });
-  return segments.map(({ index, from, to }) => {
-    const body = lines.slice(from, to);
-    const heading = index === 0 ? undefined : body[0];
-    return { store, ref: `${ref}#${index}`, date: heading?.match(DATED_HEADING)?.[1] ?? null, text: body.join("\n") };
+  return segments.map(({ index, first, end }) => {
+    const head = index === 0 ? undefined : tokens[first];
+    const from = index === 0 ? 0 : (starts[first] ?? lines.length);
+    const to = starts[end] ?? lines.length;
+    const date = head !== undefined && isHeading(head) ? (head.text.match(LEADING_DAY)?.[1] ?? null) : null;
+    return { store, ref: `${ref}#${index}`, date, text: lines.slice(from, to).join("\n"), readText: joinTextOf(tokens.slice(first, end)) };
   });
 }
 
@@ -198,7 +244,7 @@ export function judgePriorRuns(scope: PriorRunScope, entries: readonly StoreEntr
     }
     counts.set(entry.store, count + 1);
     if (entry.date === null) undated += 1;
-    const components = joinComponentsOf(entry.text);
+    const components = joinComponentsOf(entry.readText ?? entry.text);
     if (components.length === JOIN_COMPONENTS.length) witnesses.push(entry.ref);
     else if (components.length > 0) partials.push({ ref: entry.ref, store: entry.store, date: entry.date, components });
   }
