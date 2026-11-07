@@ -622,8 +622,8 @@
  * (none, no write read), DEEP RUNS AT EVERY MIDDLE POSITION on a callee four bare block statements deep after the decoder
  * module's penultimate top-level statement (misread, no write read), its position reading on a write so deep after the module's
  * last top-level statement (its last), its place reading on a text planting another statement before its statement (none),
- * its parse release on its two decoder readings alone (THE PARSE RELEASE: no parse-cache entry for its decoder plant after its
- * reading, the installed decoder text's entry held after its own; after its other readings NOT CLAIMED) and its verdict reading
+ * its parse release NOT CLAIMED (the parse-release set the guard R-B663 bound as its GUARD A, which refusal #6, outbox
+ * O:2257, exits to the structural-exit child the orchestrator's typed row files) and its verdict reading
  * (THE VERDICT EXACT: the
  * &&= statement so deep after that penultimate statement, in a text also spelling eval, in one also writing parseFrameJson and
  * in one also spelling checkStream as a string, each after the module's last statement, and parseFrameJson so written after that
@@ -4082,11 +4082,9 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     // form, and the two read DEEP RUNS AT A MIDDLE
     // POSITION's 80 plants and P-DEEP4-MID2 alike. Which text a verdict is judged on and which parse its place and writes are read
     // from (the judged-text identity set the guard R-B627 bound, which the structural-exit ruling R-B652 moves to the child
-    // wb-5bua) is NOT CLAIMED by this census. THE PARSE RELEASE (wb-ant2 cut #5, refusal #4's U1, narrowed to its pin): after
-    // the judges' reading of their decoder plant below (releasePlant), parsedModules, the parse cache keyed by module and text,
-    // holds no entry for that plant's text, and after their reading of the installed decoder text itself it holds the entry for
-    // that installed text; what parsedModules holds after any other reading sameParseReading() or judgedParse() gives (each of
-    // the 2620 controls' among them) is NOT CLAIMED by this census. THE PLACES HELD: the 2620
+    // wb-5bua) is NOT CLAIMED by this census. What parsedModules, the parse cache keyed by module and text, holds after any
+    // reading sameParseReading() or judgedParse() gives (the parse-release set the guard R-B663 bound as its GUARD A, which
+    // refusal #6, outbox O:2257, exits to its structural-exit child) is NOT CLAIMED by this census. THE PLACES HELD: the 2620
     // readings are exactly one for each HOLDER, each of &&= and = (the operators the NESTED BINDINGS and NESTED PLAIN BINDINGS
     // sweeps write by, read by the parser), each of the DEEP_RUNS and each place of its module past its second but its last,
     // those places run against the parser's count of the installed module (SDK_BYTES holds its text), not against the sweep's
@@ -4099,10 +4097,15 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       if (judgedTexts[module] !== texts[module]) parsedModules.delete(key);
       return [departures, file];
     };
+    // verdictJudgments: for each sameParseReading() reading that reads a verdict (its text's parse in hand), its module, its
+    // planted text and the departures its verdict line reads (its judgment), in the order T2 gives them; THE CALL'S JUDGMENT,
+    // below, reads the judges' call's from it.
+    const verdictJudgments: (readonly [module: ConsultedModule, text: string, departures: readonly string[]])[] = [];
     const sameParseReading = (module: ConsultedModule, name: string, planted: string, statement: string): string => {
       const member = name.slice(name.indexOf('.') + 1);
       const [departures, file] = judgedParse(module, planted);
       if (file === undefined) return `${module} ${name} unjudged`;
+      verdictJudgments.push([module, planted, departures]);
       const place = file.statements.findIndex(top => top.getText() === statement);
       const at = file.statements[place];
       const verdict = isDeepStrictEqual(departures, [`${name}: spelled outside a call (binding)`]) ? 'binding' : 'misread';
@@ -4129,46 +4132,28 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     // The judges fire: the sweep's on a statement calling the HOLDER four bare block statements deep after the decoder module's
     // penultimate top-level statement (misread, and no write read: the call writes nothing), its position reading on the &&=
     // statement so deep planted after the module's last top-level statement (read at its last, a place outside this sweep's), and
-    // its place reading on a text planting another statement before its statement (none, so no write read); and THE PARSE
-    // RELEASE's two readings: the &&= statement four bare block statements deep planted after the decoder module's penultimate
-    // top-level statement (releasePlant), with no entry for its text in parsedModules after its reading, and the installed
-    // decoder text itself, with its entry held in parsedModules after its own reading (each read right after its reading, before
-    // afterStatement() parses the installed module again).
+    // its place reading on a text planting another statement before its statement (none, so no write read). What parsedModules
+    // holds after these readings is NOT CLAIMED (the parse-release set refusal #6, O:2257, exits to its structural-exit child).
     const decoderLast = decoderStatements.length - 1;
     const everyText = (after: number, statement: string): string =>
       afterStatement('protocol/decoder.js', after, statement.replace('<name>', () => 'checkStream'));
     const everyControl = (after: number, statement: string): string =>
       sameParseReading('protocol/decoder.js', 'checkStream', everyText(after, statement), statement.replace('<name>', () => 'checkStream'));
     const judgesCall = inBlocks(4, '<name>([]);');
-    const releasePlant = afterStatement('protocol/decoder.js', decoderLast - 1, inBlocks(4, 'checkStream &&= undefined;'));
-    sameParseReading('protocol/decoder.js', 'checkStream', releasePlant, inBlocks(4, 'checkStream &&= undefined;'));
-    const releasedPlant = !parsedModules.has(`protocol/decoder.js\n${releasePlant}`);
-    // THE PARSE RELEASE OVER EVERY KEY (wb-ant2 cut #6, refusal #5's U1, pinned red-first): read at that same point, after the
-    // judges' reading of releasePlant and before their reading of the installed decoder text, no key parsedModules holds spells
-    // the plant's text anywhere in it (after a module name, as the gate's GP5-REL-CROSSKEY result.js key and its
-    // GP5-REL-CROSSKEY-QUERY protocol/query.js key held it, alone, or before a name) and none of its values, the parses it
-    // holds, has that text as its text, so THE PARSE RELEASE's no entry for that plant's text is read under every key. What any
-    // other store holds, and what a parsedModules whose Map methods are replaced holds, is NOT CLAIMED by this census.
-    const plantEntries = [...parsedModules].filter(([key, file]) => key.includes(releasePlant) || file.text === releasePlant).length;
-    expect(plantEntries).toBe(0);
-    sameParseReading('protocol/decoder.js', 'checkStream', decoderText, inBlocks(4, 'checkStream &&= undefined;'));
-    const keptInstalled = parsedModules.has(`protocol/decoder.js\n${decoderText}`);
-    // THE KEEP'S PARSE (wb-ant2 cut #6, pinned red-first): the entry THE PARSE RELEASE says parsedModules holds for the
-    // installed decoder text after the judges' reading of it, under that text's protocol/decoder.js key, holds a parse whose
-    // text is that installed text.
-    const keptParse = parsedModules.get(`protocol/decoder.js\n${decoderText}`)?.text === decoderText;
-    expect(keptParse).toBe(true);
     expect([everyControl(decoderLast - 1, judgesCall), everyControl(decoderLast, inBlocks(4, nestedStatement)),
-      everyControl(decoderLast - 1, `void 0;\n${inBlocks(4, nestedStatement)}`), releasedPlant, keptInstalled])
+      everyControl(decoderLast - 1, `void 0;\n${inBlocks(4, nestedStatement)}`)])
       .toStrictEqual([`protocol/decoder.js checkStream misread at ${decoderLast}`,
-      `protocol/decoder.js checkStream binding at ${decoderLast + 1} &&= 4 4 nested last`, 'protocol/decoder.js checkStream binding at -1', true, true]);
-    // THE CALL'S JUDGMENT (wb-ant2 cut #5, refusal #4's U2, pinned): the judges' call above (judgesCall, the statement calling the
-    // HOLDER four bare block statements deep, planted by everyText() after the decoder module's penultimate top-level statement)
-    // departs not at all, read from judgedParse() as THE VERDICT EXACT's premises below are and from the acceptance reading
+      `protocol/decoder.js checkStream binding at ${decoderLast + 1} &&= 4 4 nested last`, 'protocol/decoder.js checkStream binding at -1']);
+    // THE CALL'S JUDGMENT (wb-ant2 cut #5, refusal #4's U2; cut #7, refusal #6's U2, enumerated, pinned red-first): the judges'
+    // call above (judgesCall, the statement calling the HOLDER four bare block statements deep, planted by everyText() after the
+    // decoder module's penultimate top-level statement) departs not at all in the judgment the judges' row reads its misread
+    // verdict from (verdictJudgments holds one record for that text, the judges' row's, and it holds no departure), in this
+    // row's own judgedParse() reading of that text, read as THE VERDICT EXACT's premises below are, and in the acceptance reading
     // itself (readingWith()).
     const judgesCallText = everyText(decoderLast - 1, judgesCall);
-    expect([judgedParse('protocol/decoder.js', judgesCallText)[0], departing(readingWith(texts, 'protocol/decoder.js', judgesCallText), acceptance)])
-      .toStrictEqual([[], []]);
+    expect([verdictJudgments.filter(([module, text]) => module === 'protocol/decoder.js' && text === judgesCallText).map(([, , departures]) => departures),
+      judgedParse('protocol/decoder.js', judgesCallText)[0], departing(readingWith(texts, 'protocol/decoder.js', judgesCallText), acceptance)])
+      .toStrictEqual([[[]], [], []]);
     // THE VERDICT EXACT (wb-ant2 cut #3, refusal #2 U2, rung 1 of the 'only so' verdict-exactness claim set the guard R-B635
     // binds): a control reads binding only on a judgment departing in exactly the one departure naming its HOLDER's write in the
     // binding form. The &&= statement four bare block statements deep, planted after the decoder module's penultimate top-level
