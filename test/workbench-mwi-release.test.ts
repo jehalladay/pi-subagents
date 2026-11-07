@@ -24,6 +24,11 @@
  * holds the header's pin lines to its own rows, id, input and result alike; the member block realizes refusal #3's U5 and U6
  * members on the W11 rules as the gate realized them.
  *
+ * Cut #5 (refusal #4; the W11 table and heading reader words in the enumerate-the-resolvable form of rule 19(c) at their
+ * second-stage cap, the w11-html bullet's words at rung 1): the pin-list block gains RV67-RV71, FV41-FV42, TR13-TR16 and
+ * WR29-WR65: at least one row for the realized witness of each of refusal #4's U1, U2 and U3 members and of eight of its record
+ * F5's nine NOT CLAIMED members, and WR64-WR65 for w11Statuses; the header's pin lines are held to those rows as before.
+ *
  * NOT CLAIMED by this file: a live slice or any Mechanical invocation (the program has none); that every program bead's receipt
  * carries a release block (the real-tree block judges each receipt that carries one); rendering by a markdown engine other than
  * marked, the lexer the validator reads with; any form a block's title and rows do not name.
@@ -2010,6 +2015,7 @@ const EM_SPACE = String.fromCodePoint(0x2003);
 const IDEOGRAPHIC_SPACE = String.fromCodePoint(0x3000);
 const BYTE_ORDER_MARK = String.fromCodePoint(0xfeff);
 const LINE_SEPARATOR = String.fromCodePoint(0x2028);
+const SOFT_HYPHEN = String.fromCodePoint(0xad);
 /**
  * THE RENDERED VIEW pins RV (refusal #3 U5 at the R-B654 (2) guard's second-stage cap; cut #4 in the enumerate-the-resolvable form
  * of rule 19(c)): each row is one markdown input and the text renderedText gives it. The module header's RV lines are these rows.
@@ -2081,6 +2087,13 @@ const RENDERED_PINS: ReadonlyArray<readonly [string, string, string]> = [
   ["RV64", "No binding\vhost exists.", "No binding host exists."],
   ["RV65", `No binding${BYTE_ORDER_MARK}host exists.`, "No binding host exists."],
   ["RV66", `No binding${LINE_SEPARATOR}host exists.`, "No binding host exists."],
+  // Cut #5 (refusal #4): a whole table of three body rows (member GP8-T1) and of five columns (GP8-T2), and record F5's
+  // GP8-B5 (a zero-width space kept), GP8-B7 (inline HTML read as nothing, with no space for it) and GP8-B10 (&#173; decoded).
+  ["RV67", "| Feature | Status |\n| --- | --- |\n| a | b |\n| c | d |\n| e | f |", "Feature | Status\na | b\nc | d\ne | f"],
+  ["RV68", "| a | b | c | d | e |\n| --- | --- | --- | --- | --- |\n| 1 | 2 | 3 | 4 | 5 |", "a | b | c | d | e\n1 | 2 | 3 | 4 | 5"],
+  ["RV69", `No binding${ZERO_WIDTH_SPACE}host exists.`, `No binding${ZERO_WIDTH_SPACE}host exists.`],
+  ["RV70", "No binding<span></span>host exists.", "No bindinghost exists."],
+  ["RV71", "x&#173;y", `x${SOFT_HYPHEN}y`],
 ];
 /** THE RENDERED VIEW pins RH: each row is one markdown input and the texts headingTexts gives it. The header's RH lines are these rows. */
 const HEADING_PINS: ReadonlyArray<readonly [string, string, readonly string[]]> = [
@@ -2139,6 +2152,9 @@ const FIELD_PINS: ReadonlyArray<readonly [string, string, string, readonly strin
   ["FV38", "real infrastructure gate", "nones", ["gate-name-malformed", "gate-result-unknown", "gate-tier-unknown"]],
   ["FV39", "real infrastructure gate", "none.", ["gate-name-malformed", "gate-result-unknown", "gate-tier-unknown"]],
   ["FV40", "real infrastructure gate", "", ["gate-line-missing"]],
+  // Cut #5: record F5's GP8-F1 (a space inside the contract) and GP8-F2 (the gate n/a read as none).
+  ["FV41", "contract", "workbench.mwi-release/ v1", ["contract-mismatch"]],
+  ["FV42", "real infrastructure gate", "n/a", ["gate-name-malformed", "gate-result-unknown", "gate-tier-unknown"]],
   ["FG01", "gate tier", "producer", []],
   ["FG02", "gate tier", "fixture", []],
   ["FG03", "gate tier", "historical", []],
@@ -2179,6 +2195,11 @@ const TRACEABILITY_PINS: ReadonlyArray<readonly [string, string | undefined, str
   ["TR10", TRACE, TRACE, []],
   ["TR11", undefined, undefined, []],
   ["TR12", `${TRACE}| WB-002 | planned |\n`, TRACE.replace("| WB-001 | planned |\n", "| WB-002 | planned |\n| WB-001 | planned |\n"), ["traceability-changed"]],
+  // Cut #5: record F5's GP8-I1 (an empty TRACEABILITY read as an absent one) and GP8-I3 (one emptied or blanked).
+  ["TR13", undefined, "", ["traceability-changed"]],
+  ["TR14", "", undefined, ["traceability-changed"]],
+  ["TR15", TRACE, "", ["traceability-changed"]],
+  ["TR16", TRACE, "\n", ["traceability-changed"]],
 ];
 /** A TRACEABILITY text as the header writes it: BASE for the test's base text, BASE + <json> for an append, else its JSON (null: absent). */
 function traceShown(text: string | undefined): string {
@@ -2198,6 +2219,29 @@ function w11Of(body: readonly string[]): string {
 const LIST_TABLE: readonly string[] = [...TABLE_HEAD, W11_EVIDENCED, "", ...[...TABLE_HEAD, W11_LANDED].map((line, at) => (at === 0 ? `- ${line}` : `  ${line}`))];
 const HEADER_CELL_HTML: readonly string[] = ["| Feature | Status <i>x</i> | Evidence | Caveats |", "| --- | --- | --- | --- |", W11_EVIDENCED];
 const DUPLICATE_W11 = matrixOf([...TABLE_HEAD, W11_PLANNED], { after: [W11_HEADING, "", "dup"] });
+/**
+ * Refusal #4's W11 table inputs (cut #5): three body rows whose third turns landed-gated, a landed-gated row before a planned
+ * one, an all-empty body row, a table without a Feature column, Feature in the third column, Status in the fifth, an empty first
+ * header cell, HTML in the first header cell and a whitespace run inside a Feature cell.
+ */
+const THREE_BODY_ROWS: readonly string[] = [...TABLE_HEAD, "| A | planned | e | c |", "| B | planned | e | c |", "| C | landed-gated | e | c |"];
+const LANDED_FIRST: readonly string[] = [...TABLE_HEAD, "| C | landed-gated | e | c |", "| A | planned | e | c |"];
+const EMPTY_BODY_ROW: readonly string[] = [...TABLE_HEAD, "| X | planned | e | c |", "|  |  |  |  |"];
+const FEATURELESS: readonly string[] = ["| Status | Evidence |", "| --- | --- |", "| Planned | e |"];
+const FEATURE_THIRD: readonly string[] = ["| Evidence | Caveats | Feature | Status |", "| --- | --- | --- | --- |", "| e | c | X | landed-gated |"];
+const STATUS_FIFTH: readonly string[] = ["| Feature | Evidence | Caveats | Notes | Status |", "| --- | --- | --- | --- | --- |", "| X | e | c | n | planned |"];
+const EMPTY_HEADER_CELL: readonly string[] = ["|  | Feature | Status |", "| --- | --- | --- |", "| n | X | planned |"];
+const FIRST_HEADER_CELL_HTML: readonly string[] = ["| Feature <i>x</i> | Status |", "| --- | --- |", "| Hosted develop() | planned |"];
+const SPACED_FEATURE: readonly string[] = [...TABLE_HEAD, "| Hosted  develop() | landed-gated | e | c |"];
+/** Refusal #4's matrices (cut #5): one that holds no W11 heading, and one whose second W11 heading follows 70 other headings. */
+const NO_W11_MATRIX = "# Workbench release feature matrix\n\n## W10: ReactiveFiber\n\ntext\n";
+const LONG_MATRIX = matrixOf([...TABLE_HEAD, W11_PLANNED], { after: [Array.from({ length: 70 }, (_, at) => `## H${at}`).join("\n\n"), "", W11_HEADING, "", "dup"] });
+const DUPLICATE_TREE = treeWith({ [FEATURE_MATRIX_PATH]: DUPLICATE_W11 });
+const LONG_TREE = treeWith({ [FEATURE_MATRIX_PATH]: LONG_MATRIX });
+/** The W11 section of the slice-cut matrix whose W11 table is TABLE_HEAD over W11_EVIDENCED, followed by the line `after`. */
+function evidencedWith(after: string): readonly string[] {
+  return [...TABLE_HEAD, W11_EVIDENCED, "", after];
+}
 /** A W11 row of the slice-cut matrix whose Status cell reads `status`. */
 function statusRow(status: string): string {
   return `| Hosted develop() | ${status} | No binding host exists: no module under src/workbench/hosts/ names MechanicalWorkflows; PI-7 partial. | caveat |`;
@@ -2270,6 +2314,91 @@ const READER_PINS: readonly ReaderPin[] = [
     read: () => w11Rows(w11Of(["| Feature | Feature | Status |", "| --- | --- | --- |", "| Hosted develop() | other | planned |"])),
     result: [{ feature: "Hosted develop()", status: "planned" }],
   },
+  // Cut #5, refusal #4 U1 (the U6 (c) words at their second-stage cap; the enumerate-the-resolvable form of rule 19(c)): body-row
+  // coverage (members GP8-R2, GP8-R3, GP8-T1), an all-empty body row (GP8-R7), head-row coverage (GP8-S1, GP8-S2, and two
+  // unknown rows), a row without a Feature cell (GP8-S4), a matrix the cut adds (GP8-U4), a matrix in a cut that changes no path
+  // (GP8-U6) and a long matrix (GP8-H3).
+  {
+    id: "WR29",
+    reader: "w11Rows",
+    read: () => w11Rows(w11Of(THREE_BODY_ROWS)),
+    result: [
+      { feature: "A", status: "planned" },
+      { feature: "B", status: "planned" },
+      { feature: "C", status: "landed-gated" },
+    ],
+  },
+  { id: "WR30", reader: "sliceRules", read: () => sliceRules(matrixOf(THREE_BODY_ROWS)), result: ["w11-landed-gated-unwitnessed"] },
+  {
+    id: "WR31",
+    reader: "w11Rows",
+    read: () => w11Rows(w11Of(LANDED_FIRST)),
+    result: [
+      { feature: "C", status: "landed-gated" },
+      { feature: "A", status: "planned" },
+    ],
+  },
+  { id: "WR32", reader: "sliceRules", read: () => sliceRules(matrixOf(LANDED_FIRST)), result: ["w11-landed-gated-unwitnessed"] },
+  {
+    id: "WR33",
+    reader: "w11Rows",
+    form: "|  |  |  |  |",
+    read: () => w11Rows(w11Of(EMPTY_BODY_ROW)),
+    result: [
+      { feature: "X", status: "planned" },
+      { feature: "", status: "" },
+    ],
+  },
+  { id: "WR34", reader: "sliceRules", form: "|  |  |  |  |", read: () => sliceRules(matrixOf(EMPTY_BODY_ROW)), result: ["w11-status-unknown"] },
+  { id: "WR35", reader: "sliceRules", read: () => sliceRules(matrixOf([...TABLE_HEAD, "| A | planned | e | c |", "| B | Planned | e | c |"])), result: ["w11-status-unknown"] },
+  { id: "WR36", reader: "sliceRules", read: () => sliceRules(matrixOf([...TABLE_HEAD, "| B | Planned | e | c |", "| A | planned | e | c |"])), result: ["w11-status-unknown"] },
+  { id: "WR37", reader: "sliceRules", read: () => sliceRules(matrixOf([...TABLE_HEAD, "| A | Planned | e | c |", "| B | planned | e | c |", "| C | PLANNED | e | c |"])), result: ["w11-status-unknown", "w11-status-unknown"] },
+  { id: "WR38", reader: "w11Rows", form: "| Status | Evidence |", read: () => w11Rows(w11Of(FEATURELESS)), result: [{ feature: "", status: "Planned" }] },
+  { id: "WR39", reader: "sliceRules", form: "| Status | Evidence |", read: () => sliceRules(matrixOf(FEATURELESS)), result: ["w11-status-unknown"] },
+  { id: "WR40", reader: "judgeCut", read: () => cutRules(treeWithout(BASE_TREE, FEATURE_MATRIX_PATH), DUPLICATE_TREE), result: ["w11-heading-not-unique"] },
+  { id: "WR41", reader: "judgeCut", read: () => cutRules(DUPLICATE_TREE, DUPLICATE_TREE), result: ["w11-heading-not-unique"] },
+  { id: "WR42", reader: "w11Headings", read: () => w11Headings(LONG_MATRIX), result: [W11_TITLE, W11_TITLE] },
+  { id: "WR43", reader: "judgeCut", read: () => cutRules(LONG_TREE, treeWith({ "src/x.ts": "x\n" }, LONG_TREE)), result: ["w11-heading-not-unique"] },
+  // Cut #5, refusal #4 U2: column location (members GP8-R5, GP8-R6, GP8-T2, GP8-T4) and a head matrix with no W11 heading or
+  // empty (GP8-U1, GP8-U3).
+  { id: "WR44", reader: "w11Rows", form: "| Evidence | Caveats | Feature | Status |", read: () => w11Rows(w11Of(FEATURE_THIRD)), result: [{ feature: "X", status: "landed-gated" }] },
+  {
+    id: "WR45",
+    reader: "w11Findings",
+    form: "| Evidence | Caveats | Feature | Status |",
+    read: () => w11Findings({ baseSection: w11Of([...TABLE_HEAD, "| X | landed-gated | e | c |"]), headSection: w11Of(FEATURE_THIRD), hostModules: [], witnessed: false }),
+    result: [],
+  },
+  { id: "WR46", reader: "w11Rows", form: "| Feature | Evidence | Caveats | Notes | Status |", read: () => w11Rows(w11Of(STATUS_FIFTH)), result: [{ feature: "X", status: "planned" }] },
+  { id: "WR47", reader: "sliceRules", form: "| Feature | Evidence | Caveats | Notes | Status |", read: () => sliceRules(matrixOf(STATUS_FIFTH)), result: [] },
+  { id: "WR48", reader: "w11Rows", form: "|  | Feature | Status |", read: () => w11Rows(w11Of(EMPTY_HEADER_CELL)), result: [{ feature: "X", status: "planned" }] },
+  { id: "WR49", reader: "sliceRules", form: "|  | Feature | Status |", read: () => sliceRules(matrixOf(EMPTY_HEADER_CELL)), result: [] },
+  { id: "WR50", reader: "judgeCut", read: () => cutRules(BASE_TREE, treeWith({ [FEATURE_MATRIX_PATH]: NO_W11_MATRIX })), result: ["w11-heading-not-unique"] },
+  { id: "WR51", reader: "judgeCut", form: "", read: () => cutRules(BASE_TREE, treeWith({ [FEATURE_MATRIX_PATH]: "" })), result: ["w11-heading-not-unique"] },
+  // Cut #5, refusal #4 U3 (the w11-html bullet's words, the U6 (d) guard at rung 1): members GP8-X3, GP8-W2, GP8-X4, GP8-X5 and
+  // GP8-X6, each read by w11Html and judged w11-html.
+  { id: "WR52", reader: "w11Html", form: "a<br>b", read: () => w11Html(w11Of(evidencedWith("a<br>b"))), result: ["<br>"] },
+  { id: "WR53", reader: "sliceRules", form: "a<br>b", read: () => sliceRules(matrixOf(evidencedWith("a<br>b"))), result: ["w11-html"] },
+  { id: "WR54", reader: "w11Html", form: "| Feature <i>x</i> | Status |", read: () => w11Html(w11Of(FIRST_HEADER_CELL_HTML)), result: ["<i>", "</i>"] },
+  { id: "WR55", reader: "sliceRules", form: "| Feature <i>x</i> | Status |", read: () => sliceRules(matrixOf(FIRST_HEADER_CELL_HTML)), result: ["w11-html"] },
+  { id: "WR56", reader: "w11Html", form: "### Status <b>x</b>", read: () => w11Html(w11Of(evidencedWith("### Status <b>x</b>"))), result: ["<b>", "</b>"] },
+  { id: "WR57", reader: "sliceRules", form: "### Status <b>x</b>", read: () => sliceRules(matrixOf(evidencedWith("### Status <b>x</b>"))), result: ["w11-html"] },
+  { id: "WR58", reader: "w11Html", form: "see [<b>x</b>](#y)", read: () => w11Html(w11Of(evidencedWith("see [<b>x</b>](#y)"))), result: ["<b>", "</b>"] },
+  { id: "WR59", reader: "sliceRules", form: "see [<b>x</b>](#y)", read: () => sliceRules(matrixOf(evidencedWith("see [<b>x</b>](#y)"))), result: ["w11-html"] },
+  { id: "WR60", reader: "w11Html", form: "a *<b>x</b>* c", read: () => w11Html(w11Of(evidencedWith("a *<b>x</b>* c"))), result: ["<b>", "</b>"] },
+  { id: "WR61", reader: "sliceRules", form: "a *<b>x</b>* c", read: () => sliceRules(matrixOf(evidencedWith("a *<b>x</b>* c"))), result: ["w11-html"] },
+  // Cut #5, refusal #4 record F5's GP8-T3 (NOT CLAIMED at cut #4, pinned here): a whitespace run inside a Feature cell; and the
+  // Status cells w11Statuses reads.
+  { id: "WR62", reader: "w11Rows", form: "| Hosted  develop() | landed-gated | e | c |", read: () => w11Rows(w11Of(SPACED_FEATURE)), result: [{ feature: "Hosted develop()", status: "landed-gated" }] },
+  {
+    id: "WR63",
+    reader: "w11Findings",
+    form: "| Hosted  develop() | landed-gated | e | c |",
+    read: () => w11Findings({ baseSection: w11Of([...TABLE_HEAD, "| Hosted develop() | landed-gated | e | c |"]), headSection: w11Of(SPACED_FEATURE), hostModules: [], witnessed: false }),
+    result: [],
+  },
+  { id: "WR64", reader: "w11Statuses", read: () => w11Statuses(w11Of(THREE_BODY_ROWS)), result: ["planned", "planned", "landed-gated"] },
+  { id: "WR65", reader: "w11Statuses", form: "|  |  |  |  |", read: () => w11Statuses(w11Of(EMPTY_BODY_ROW)), result: ["planned", ""] },
 ];
 
 /** The sentence of the module header that states what the pin lists claim. */
@@ -2284,7 +2413,7 @@ const LIST_HEADINGS: readonly string[] = [
   "WR lines: <reader> over the case's input (its pinned form, when one short line shows it) gives <result>.",
 ];
 
-describe("the pin lists of the module header (refusal #3 U5 in the enumerate form, U6 (a)-(c) at rung 1): every pin line is a case here", () => {
+describe("the pin lists of the module header (U5 and, from cut #5, U6 (c) in the enumerate form; U6 (a), (b) and (d) at rung 1): every pin line is a case here", () => {
   it.each(RENDERED_PINS)("%s: renderedText(%j) reads %j", (_id, markdown, text) => {
     expect(renderedText(markdown)).toBe(text);
   });
@@ -2420,9 +2549,9 @@ describe("the real tree", () => {
 
   it("wb-j5y5's receipt lands slice PI-7 explicitly partial with all six requirements tied to red mutants", () => {
     const blocks = parseReleaseBlocks(readFileSync(join(REPO, RECEIPTS_DIR, "wb-j5y5.md"), "utf8"));
-    // One release block per cut entry: cut #1 (9c3cd835), cut #2 (the respin of refusal #1), cut #3 (the respin of refusal #2) and
-    // cut #4 (the respin of refusal #3).
-    expect(blocks).toHaveLength(4);
+    // One release block per cut entry: cut #1 (9c3cd835), cut #2 (the respin of refusal #1), cut #3 (the respin of refusal #2),
+    // cut #4 (the respin of refusal #3) and cut #5 (the respin of refusal #4).
+    expect(blocks).toHaveLength(5);
     for (const { fields } of blocks) {
       expect([fields.get("bead"), fields.get("slice"), fields.get("slice status"), fields.get("real infrastructure gate")]).toEqual(["wb-j5y5", "PI-7", "partial", "none"]);
       expect(fields.get("requirements")).toBe("EAT-R082, EAT-R083, EAT-R084, EAT-R085, EAT-R086, EAT-R087");

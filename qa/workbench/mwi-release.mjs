@@ -24,6 +24,17 @@
  * The claim words frozen at R-B641 are not restated by this cut: refusal #3 asks for their structural exit to a child bead (its
  * F13 (1)), and this cut leaves them as cut #3 wrote them.
  *
+ * CUT #5 (the respin of refusal #4). The W11 table and heading reader words (U6 (c)) are at their second-stage cap, so they take
+ * the enumerate-the-resolvable form of rule 19(c); the words of the w11-html bullet (refusal #4 U3, the U6 (d) guard) are at rung
+ * 1. Each of these entries carries its own bound, written on the entry: tableCells, w11Rows, w11Statuses, w11Html, the
+ * w11-status-unknown and w11-html bullets of w11Findings and judgeCut's heading-uniqueness clause each claim exactly the pin
+ * lines they name, and an input no such line holds is NOT CLAIMED (walkTokens and headingTexts carry their bounds from cut #4).
+ * Each member of refusal #4's U1, U2 and U3 is refused by a pin line: U1 by WR29-WR43, U2 by WR44-WR51 and U3 by WR52-WR61. Eight
+ * of the nine members its record F5 reads as NOT CLAIMED are pin lines too: GP8-T3 at WR62-WR63, GP8-B5, GP8-B7 and GP8-B10 at
+ * RV69-RV71, GP8-I1 and GP8-I3 at TR13-TR16, and GP8-F1 and GP8-F2 at FV41-FV42; RV67 and RV68 read whole tables of three body
+ * rows and of five columns. The ninth, GP8-B9 (a strikethrough), stays NOT CLAIMED by name. This cut adds no residual. The claim
+ * words frozen at R-B641 stay as cut #3 wrote them: their structural exit, requested at refusal #3, is not yet typed.
+ *
  * THE RELEASE BLOCK. A release receipt is a per-bead receipt, docs/workbench/receipts/<bead-id>.md. Its release blocks are the
  * fenced code blocks (a backtick or a tilde fence) at the TOP LEVEL of its markdown whose info string, as marked reads it
  * (trimmed), is exactly `mwi-release`. Pinned as no release block: the info strings `mwi-releases`, `mwi-release extra`,
@@ -162,6 +173,11 @@
  *   RV64 "No binding\u000bhost exists." -> "No binding host exists."
  *   RV65 "No binding\ufeffhost exists." -> "No binding host exists."
  *   RV66 "No binding\u2028host exists." -> "No binding host exists."
+ *   RV67 "| Feature | Status |\n| --- | --- |\n| a | b |\n| c | d |\n| e | f |" -> "Feature | Status\na | b\nc | d\ne | f"
+ *   RV68 "| a | b | c | d | e |\n| --- | --- | --- | --- | --- |\n| 1 | 2 | 3 | 4 | 5 |" -> "a | b | c | d | e\n1 | 2 | 3 | 4 | 5"
+ *   RV69 "No binding\u200bhost exists." -> "No binding\u200bhost exists."
+ *   RV70 "No binding<span></span>host exists." -> "No bindinghost exists."
+ *   RV71 "x&#173;y" -> "x\u00ady"
  *   RH01 "## W11:  MechanicalWorkflows binding host" -> ["W11: MechanicalWorkflows binding host"]
  *   RH02 "## W11:\tMechanicalWorkflows binding host" -> ["W11: MechanicalWorkflows binding host"]
  *   RH03 "## A ##" -> ["A"]
@@ -212,6 +228,8 @@
  *   FV38 real infrastructure gate "nones" -> ["gate-name-malformed","gate-result-unknown","gate-tier-unknown"]
  *   FV39 real infrastructure gate "none." -> ["gate-name-malformed","gate-result-unknown","gate-tier-unknown"]
  *   FV40 real infrastructure gate "" -> ["gate-line-missing"]
+ *   FV41 contract "workbench.mwi-release/ v1" -> ["contract-mismatch"]
+ *   FV42 real infrastructure gate "n/a" -> ["gate-name-malformed","gate-result-unknown","gate-tier-unknown"]
  *   FG01 gate tier "producer" -> []
  *   FG02 gate tier "fixture" -> []
  *   FG03 gate tier "historical" -> []
@@ -239,6 +257,10 @@
  *   TR10 BASE -> BASE: []
  *   TR11 null -> null: []
  *   TR12 BASE + "| WB-002 | planned |\n" -> "# Traceability\n\n| ID | Status |\n| --- | --- |\n| WB-002 | planned |\n| WB-001 | planned |\n": ["traceability-changed"]
+ *   TR13 null -> "": ["traceability-changed"]
+ *   TR14 "" -> null: ["traceability-changed"]
+ *   TR15 BASE -> "": ["traceability-changed"]
+ *   TR16 BASE -> "\n": ["traceability-changed"]
  * WR lines: <reader> over the case's input (its pinned form, when one short line shows it) gives <result>.
  *   WR01 headingTexts "# a\n\n## b\n\n### c\n\n#### d\n\n##### e\n\n###### f" -> ["a","b","c","d","e","f"]
  *   WR02 headingTexts "> ## B" -> ["B"]
@@ -268,6 +290,43 @@
  *   WR26 w11Html "| Hosted develop() | <b>planned</b> | e | c |" -> ["<b>","</b>"]
  *   WR27 judgeCut -> ["w11-heading-not-unique"]
  *   WR28 w11Rows "| Feature | Feature | Status |" -> [{"feature":"Hosted develop()","status":"planned"}]
+ *   WR29 w11Rows -> [{"feature":"A","status":"planned"},{"feature":"B","status":"planned"},{"feature":"C","status":"landed-gated"}]
+ *   WR30 sliceRules -> ["w11-landed-gated-unwitnessed"]
+ *   WR31 w11Rows -> [{"feature":"C","status":"landed-gated"},{"feature":"A","status":"planned"}]
+ *   WR32 sliceRules -> ["w11-landed-gated-unwitnessed"]
+ *   WR33 w11Rows "|  |  |  |  |" -> [{"feature":"X","status":"planned"},{"feature":"","status":""}]
+ *   WR34 sliceRules "|  |  |  |  |" -> ["w11-status-unknown"]
+ *   WR35 sliceRules -> ["w11-status-unknown"]
+ *   WR36 sliceRules -> ["w11-status-unknown"]
+ *   WR37 sliceRules -> ["w11-status-unknown","w11-status-unknown"]
+ *   WR38 w11Rows "| Status | Evidence |" -> [{"feature":"","status":"Planned"}]
+ *   WR39 sliceRules "| Status | Evidence |" -> ["w11-status-unknown"]
+ *   WR40 judgeCut -> ["w11-heading-not-unique"]
+ *   WR41 judgeCut -> ["w11-heading-not-unique"]
+ *   WR42 w11Headings -> ["W11: MechanicalWorkflows binding host","W11: MechanicalWorkflows binding host"]
+ *   WR43 judgeCut -> ["w11-heading-not-unique"]
+ *   WR44 w11Rows "| Evidence | Caveats | Feature | Status |" -> [{"feature":"X","status":"landed-gated"}]
+ *   WR45 w11Findings "| Evidence | Caveats | Feature | Status |" -> []
+ *   WR46 w11Rows "| Feature | Evidence | Caveats | Notes | Status |" -> [{"feature":"X","status":"planned"}]
+ *   WR47 sliceRules "| Feature | Evidence | Caveats | Notes | Status |" -> []
+ *   WR48 w11Rows "|  | Feature | Status |" -> [{"feature":"X","status":"planned"}]
+ *   WR49 sliceRules "|  | Feature | Status |" -> []
+ *   WR50 judgeCut -> ["w11-heading-not-unique"]
+ *   WR51 judgeCut "" -> ["w11-heading-not-unique"]
+ *   WR52 w11Html "a<br>b" -> ["<br>"]
+ *   WR53 sliceRules "a<br>b" -> ["w11-html"]
+ *   WR54 w11Html "| Feature <i>x</i> | Status |" -> ["<i>","</i>"]
+ *   WR55 sliceRules "| Feature <i>x</i> | Status |" -> ["w11-html"]
+ *   WR56 w11Html "### Status <b>x</b>" -> ["<b>","</b>"]
+ *   WR57 sliceRules "### Status <b>x</b>" -> ["w11-html"]
+ *   WR58 w11Html "see [<b>x</b>](#y)" -> ["<b>","</b>"]
+ *   WR59 sliceRules "see [<b>x</b>](#y)" -> ["w11-html"]
+ *   WR60 w11Html "a *<b>x</b>* c" -> ["<b>","</b>"]
+ *   WR61 sliceRules "a *<b>x</b>* c" -> ["w11-html"]
+ *   WR62 w11Rows "| Hosted  develop() | landed-gated | e | c |" -> [{"feature":"Hosted develop()","status":"landed-gated"}]
+ *   WR63 w11Findings "| Hosted  develop() | landed-gated | e | c |" -> []
+ *   WR64 w11Statuses -> ["planned","planned","landed-gated"]
+ *   WR65 w11Statuses "|  |  |  |  |" -> ["planned",""]
  *
  * RESIDUALS (named families; each has pinned quiet rows and a live twin in the test's RESIDUALS table):
  *  - R-ABSENCE-OTHER-WORDS: a W11 absence statement not written with the absence words in one rendered line (quiet: a
@@ -746,7 +805,9 @@ function inlineText(tokens) {
 }
 
 /**
- * The rendered cells of a table token, one array per row, its header row first (RV56; WR10-WR16 read its header row).
+ * The rendered cells of a table token, one array per row, its header row first. Its readings are claimed only through
+ * renderedText and w11Rows, exactly as the RV and WR pin lines give them (RV56, RV67 and RV68 read whole tables), and an input no
+ * pin line holds is NOT CLAIMED.
  * @param {Record<string, unknown>} table
  * @returns {string[][]}
  */
@@ -839,9 +900,10 @@ export function w11Section(matrix) {
 }
 
 /**
- * The body rows of the tables of a W11 section, in the rendered view: the cells under its header cells reading Feature and
- * Status, in whichever columns they stand ("" when the table has no such header cell). Its readings of a table nested in a list
- * item and of the header cells are claimed exactly as WR08, WR10-WR16 and WR28 give them.
+ * The rows of the tables of a W11 section, in the rendered view: for each body row, its cells under the header cells reading
+ * Feature and Status ("" when the table has no such header cell). Its readings are claimed exactly as the WR pin lines that call
+ * w11Rows give them (WR08, WR10-WR12, WR14-WR16, WR28, WR29, WR31, WR33, WR38, WR44, WR46, WR48 and WR62), and an input no such
+ * line holds is NOT CLAIMED.
  * @param {string} section
  * @returns {W11Row[]}
  */
@@ -859,7 +921,8 @@ export function w11Rows(section) {
 }
 
 /**
- * The Status cell of every row of a W11 section's tables (w11Rows).
+ * The Status cells of the rows w11Rows reads in a W11 section, in its order; its readings are claimed exactly as WR64 and WR65
+ * give them, and an input no WR line holds is NOT CLAIMED.
  * @param {string} section
  * @returns {string[]}
  */
@@ -868,8 +931,8 @@ export function w11Statuses(section) {
 }
 
 /**
- * The raw HTML a W11 section holds, one entry per html token walkTokens yields; its readings are claimed exactly as WR21 and
- * WR23-WR26 give them.
+ * The raw HTML a W11 section holds, one entry per html token walkTokens yields; its readings are claimed exactly as WR21,
+ * WR23-WR26, WR52, WR54, WR56, WR58 and WR60 give them, and an input no WR line holds is NOT CLAIMED.
  * @param {string} section
  * @returns {string[]}
  */
@@ -887,9 +950,11 @@ export function w11Html(section) {
  * carry leaves it false; an EAT-R083 or an EAT-R086 finding alone does not; one such clean claim beside a refused one makes it
  * true; a claim judged without a candidate leaves it false and the closure open (unkeyed).
  *  - w11-landed-gated-unwitnessed: a head row reads landed-gated while no base row with the same Feature cell does, unwitnessed;
- *  - w11-status-unknown: a head row's Status cell is not exactly one of MATRIX_STATUSES ("" when its table has no Status column;
- *    WR13 and WR17-WR20);
- *  - w11-html: the head section holds raw HTML (its rendered view would not be its whole text);
+ *  - w11-status-unknown: a head row's Status cell is not exactly one of MATRIX_STATUSES ("" when its table has no Status column),
+ *    one finding per such row, over the rows w11Rows reads; claimed exactly as WR13, WR17-WR20, WR22, WR34-WR37, WR39, WR47 and
+ *    WR49 give it, and an input no WR line holds is NOT CLAIMED;
+ *  - w11-html: w11Html reads at least one html token in the head section (raw HTML, so its rendered view would not be its whole
+ *    text); claimed exactly as WR22, WR53, WR55, WR57, WR59 and WR61 give it, and an input no WR line holds is NOT CLAIMED;
  *  - w11-absence-stale: the head section states that no binding host exists (the absence words "no binding host" or
  *    "no binding-host", singular or plural, in any case, as a whole phrase in one rendered line: no word character just before
  *    no or just after host or hosts, and one space or one hyphen between binding and host) while a host module names
@@ -926,7 +991,9 @@ export function w11Findings(input) {
  * Judges a cut base..head: EAT-R087 over its added and immutable paths; EAT-R082/R083/R085/R086 over each release block of a
  * changed per-bead receipt that the receipt did not already hold at the cut base, text for text (an appended, an inserted and an
  * edited block alike; a block the base already holds is not judged again); the W11 rules and the W11 heading's uniqueness, the
- * latter over the head feature matrix whether or not the cut changes it (WR27); and
+ * latter whenever the head holds the feature matrix, whether the cut adds, changes or leaves it (w11-heading-not-unique:
+ * w11Section finds no W11 section in the head matrix, as for a matrix with no W11 heading, an empty one or one with two; claimed
+ * exactly as WR07, WR27, WR40, WR41, WR43, WR50 and WR51 give it, and an input no WR line holds is NOT CLAIMED); and
  * EAT-R084 over the machine gate envelope when one is supplied (judged against the cut's candidate commit; without a candidate it
  * throws). A finding of a receipt's block names that receipt (`receipt`); a finding of the cut's paths, of W11 or of the envelope
  * carries no `receipt` key.
