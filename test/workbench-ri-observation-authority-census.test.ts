@@ -94,6 +94,7 @@
  * the control's own value is read as the interpreter's, so no host-specific name enters a witness.
  * HARDENING (wb-roxk): the block after ROWS adds the computed-load, wrapped-launch and environment readings, an outside anchor, records.
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src is only read.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -112,6 +113,7 @@ import { sourceStructure } from "./helpers/census.js";
 import { fullShapeRf } from "./helpers/rf-render-fixture.js";
 import { scanRfLaunches } from "./helpers/rf-workspace-family.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+import { withoutTriageArchive } from "./helpers/triage-archive.js";
 
 installScratchLeakGuard(afterAll);
 type JsonObject = { [key: string]: JsonValue };
@@ -234,7 +236,7 @@ const scans = new Map<string, RootScan>();
 function scanOf(root: string): RootScan {
   const cached = scans.get(root);
   if (cached !== undefined) return cached;
-  const files = filesBelow(join(REPO, root)).map(file => relative(REPO, file));
+  const files = withoutTriageArchive(filesBelow(join(REPO, root)).map(file => relative(REPO, file)));
   const scan = { files, texts: new Map(files.map(file => [file, readFileSync(join(REPO, file), "utf8")])) };
   scans.set(root, scan);
   return scan;
