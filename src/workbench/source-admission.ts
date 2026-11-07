@@ -19,9 +19,10 @@
  *    measured, else its refusal is returned;
  * 6. attestation (EAT-R027): host.attestation is an object host.authority minted (attestation-absent), whose workspace is that
  *    canonical root (attestation-other-workspace) and whose sourceIdentity is that identity's digest (attestation-stale);
- * 7. the writer lease (EAT-R024, writer-held): host.leases.acquire(that canonical root, request.invocationId) returns a lease,
- *    which it does not while another invocation id's lease holds that root (see WriterLeases); a second admission of the
- *    invocation id whose lease holds that root is NOT CLAIMED;
+ * 7. the writer lease (EAT-R024, writer-held): host.leases.acquire(that canonical root, request.invocationId) returns a lease;
+ *    while inv-a's lease holds that root, the suite's admissions of inv-b and inv-c there do not get one (see WriterLeases),
+ *    and what an admission of any other invocation id meets while a lease holds the root (the holder's own id, or one that
+ *    differs from it only in letter case, among them) is NOT CLAIMED;
  * 8. the admission wait: host.admissionWait, when set, is called with host.signal and resolves; a rejection refuses
  *    admission-cancelled when host.signal is aborted by then and admission-refused otherwise;
  * 9. cancellation (admission-cancelled): host.signal is not aborted;
@@ -295,11 +296,18 @@ function gateManifestOf(root: string, manifest: string): { readonly path: string
 }
 
 /**
- * EAT-R023: the canonical root of the caller's workspace, checked in this order. authorizedRoot and workspace must be absolute
- * clean text and git a function (malformed-request); both must resolve by realpath (workspace-unresolvable); the workspace's
- * realpath must be the authorized root's realpath or inside it, judged by contains and never by a string prefix
- * (workspace-outside-root); and it must be the root git reports for it, so a subdirectory of a worktree is refused
- * (workspace-not-worktree-root).
+ * EAT-R023: the canonical root of the caller's workspace, judged by these clauses: authorizedRoot and workspace are absolute
+ * clean text and git is a function (malformed-request); both resolve by realpath (workspace-unresolvable); the workspace's
+ * realpath is the authorized root's realpath or inside it, judged by contains and never by a string prefix
+ * (workspace-outside-root); and it is the root git reports for it, so a subdirectory of a worktree is refused
+ * (workspace-not-worktree-root). The calls the suite pins, with every argument a call does not name valid: a path that is not
+ * absolute clean text in a form the suite plants (a relative path, one holding U+000A, one over 4096 UTF-8 bytes, a value that
+ * is not a string), none of which resolves by realpath, refuses malformed-request, as does a git that is a string; a missing
+ * workspace or authorized root refuses workspace-unresolvable; a workspace outside the root refuses workspace-outside-root, also
+ * when it is a subdirectory of its own worktree; and a subdirectory of a worktree, or a reader that throws or answers with no
+ * Buffer, refuses workspace-not-worktree-root. Which refusal answers any other call is NOT CLAIMED, among them a path that is
+ * not absolute clean text yet resolves by realpath, a git that is not a function beside a path that does not resolve or a
+ * workspace outside the root, and a workspace that is not absolute clean text beside an authorized root that does not resolve.
  */
 export function confineWorkspace(authorizedRoot: string, workspace: string, git: SourceGitReader): WorkspaceConfinement {
   if (!absolutePath(authorizedRoot) || !absolutePath(workspace) || typeof git !== "function") return refusal("malformed-request");
@@ -312,15 +320,23 @@ export function confineWorkspace(authorizedRoot: string, workspace: string, git:
 }
 
 /**
- * EAT-R022 and EAT-R026: measures one workspace through the reader, in this order. canonicalRoot must be absolute clean text, the
- * gate manifest clean text and git a function (malformed-request). Then, each refusing source-unmeasurable: the root git reports
- * for canonicalRoot must be canonicalRoot by realpath; git must report the same Git directory plainly and with
- * --git-dir=<canonicalRoot>/.git, so a reader whose GIT_DIR names another repository is refused; HEAD^{commit} and HEAD^{tree}
- * must answer object ids; every entry git ls-files -v -z lists must carry the tag "H " (assume-unchanged, skip-worktree and
- * unmerged entries carry other tags); and git status must answer. A git status record refuses dirty-base with the counts (see
- * SourceDirtiness), and last the gate manifest must measure (gate-manifest-unavailable; see gateManifestOf). Dirtiness is read
- * from git status alone, so an edit git status does not list is measured clean (the suite's residual family UNLISTED-EDITS pins
- * two such edits). HEAD equality alone never admits.
+ * EAT-R022 and EAT-R026: measures one workspace through the reader, judged by these clauses: canonicalRoot is absolute clean
+ * text, the gate manifest clean text and git a function (malformed-request); each refusing source-unmeasurable, the root git
+ * reports for canonicalRoot is canonicalRoot by realpath, git reports the same Git directory plainly and with
+ * --git-dir=<canonicalRoot>/.git (so a reader whose GIT_DIR names another repository is refused), HEAD^{commit} and
+ * HEAD^{tree} answer object ids, every entry git ls-files -v -z lists carries the tag "H " (assume-unchanged, skip-worktree and
+ * unmerged entries carry other tags), and git status answers; git status lists no record (dirty-base, with the counts: see
+ * SourceDirtiness); and the gate manifest measures (gate-manifest-unavailable; see gateManifestOf). Dirtiness is read from git
+ * status alone, so an edit git status does not list is measured clean (the suite's residual family UNLISTED-EDITS pins two such
+ * edits). HEAD equality alone never admits. The calls the suite pins, with every argument a call does not name valid: a
+ * relative canonicalRoot or one that is not a string, and a git that is a string, refuse malformed-request (each also fails the
+ * worktree-root clause), and so does a gate manifest that is not clean text in a form the suite plants on the clean worktree
+ * ws, none of which measures; each source-unmeasurable clause refuses when it is the one that fails, and so do an unmerged entry
+ * that git status lists and a symlink alias of the worktree root whose declared manifest resolves outside it; a git status
+ * record refuses dirty-base, also when the gate manifest is missing; and a manifest the suite plants that does not measure
+ * refuses gate-manifest-unavailable. Which refusal answers any other call is NOT CLAIMED, among them a gate manifest that is not
+ * clean text beside a failing clause other than its own measurement (a root that is not the worktree root, a misreporting or
+ * silent reader, or a dirty base) and an absolute canonicalRoot that is not clean text.
  */
 export function measureSourceIdentity(canonicalRoot: string, gateManifest: string, git: SourceGitReader): SourceMeasurement {
   if (!absolutePath(canonicalRoot) || !cleanText(gateManifest) || typeof git !== "function") return refusal("malformed-request");
@@ -368,12 +384,13 @@ export class WriteBoundaryAuthority {
 }
 
 /**
- * EAT-R024: the host's writer leases, keyed by canonical root. acquire grants a root's lease while no lease holds that root, and
- * answers undefined to an invocation id other than the holder's while a lease holds it; what acquire answers the invocation id
- * whose lease holds the root is NOT CLAIMED. Leases of different roots are independent, so taking or releasing one root's lease
- * leaves every other root's as it was. release frees a root only for the very object acquire returned while it still holds
- * that root, so a released lease, or a copy naming the same root and invocation, frees nothing. admitSourceWrite keys the lease
- * by the canonical root it measured, never by the caller's spelling of the workspace.
+ * EAT-R024: the host's writer leases, keyed by canonical root. acquire grants a root's lease while no lease holds that root; while
+ * inv-a's lease holds a root, it answers undefined to the suite's inv-b and inv-c, and what it answers any other invocation id
+ * while a lease holds the root (the holder's own id, or one that differs from it only in letter case, among them) is NOT
+ * CLAIMED. Leases of different roots are independent, so taking or releasing one root's lease leaves every other root's as it
+ * was. release frees a root only for the very object acquire returned while it still holds that root, so a released lease, or a
+ * copy naming the same root and invocation, frees nothing. admitSourceWrite keys the lease by the canonical root it measured,
+ * never by the caller's spelling of the workspace.
  */
 export class WriterLeases {
   readonly #held = new Map<string, WriterLease>();
@@ -420,7 +437,7 @@ function boundaryOf(host: SourceAdmissionHost, identity: SourceIdentity): { read
   return { decision: "attested", operatorId: attestation.operatorId };
 }
 
-/** Admits one write by the rules the module comment lists, in that order. */
+/** Admits one write by the rules the module comment lists. */
 export async function admitSourceWrite<T>(request: SourceWriteRequest, host: SourceAdmissionHost, dispatch: (grant: SourceWriteGrant) => Promise<T>): Promise<SourceAdmissionOutcome<T>> {
   if (!plainObject(request) || !cleanText(request.invocationId) || typeof dispatch !== "function") return refusal("malformed-request");
   if (host.signal?.aborted) return refusal("admission-cancelled");

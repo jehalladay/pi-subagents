@@ -11,7 +11,10 @@
  * callback, so "no write-capable host dispatch", "refusal before SDK dispatch" and "no child write capability" each read as zero
  * calls to it; a SourceWriteGrant is only ever what that callback receives. Every refusal is asserted whole: its code, the fixed
  * reason of that code (REASON below) and, on dirty-base only, the dirty counts. Every admission a case expects to refuse is
- * asserted to make zero calls to its dispatch.
+ * asserted to make zero calls to its dispatch. Every argument an entry below does not name is valid as the suite builds it (the
+ * authorized root, the clean worktree ws under it and its committed gate manifest, the suite's reader, inv-a's request that
+ * asks for writes, and the host's attestation of ws), so an entry pins the refusal of the failure it plants, and of a second
+ * failure only where it names one; the NOT CLAIMED list below names the pairs of failing clauses no entry pins.
  *
  * PINNED READER SET (case id: assertion target).
  * - EAT-R022 "Pi MUST refuse a dirty implementation base." Acceptance: "Set tracked, staged or untracked edits at admission;
@@ -27,7 +30,8 @@
  *   staged 2). R022-ASSUME-UNCHANGED, R022-SKIP-WORKTREE, R022-UNMERGED: an index entry that git ls-files -v tags other than "H "
  *   refuses source-unmeasurable, also when git status lists it (UNMERGED); each case reads the tag first (h, S, M). R022-NO-HEAD:
  *   a repository whose HEAD names no commit refuses source-unmeasurable. R022-ROOT-ONLY: measureSourceIdentity on a
- *   subdirectory, a symlink alias and a dot spelling of the worktree root refuses source-unmeasurable. R022-TOPLEVEL-ALIAS: a
+ *   subdirectory (src, whose own index.ts is the declared manifest), a symlink alias (whose declared manifest resolves outside
+ *   the alias) and a dot spelling of the worktree root refuses source-unmeasurable. R022-TOPLEVEL-ALIAS: a
  *   reader that reports the worktree root through a symlink alias measures the canonical root. R022-MISDIRECTED-GIT: a reader
  *   whose GIT_DIR names another repository refuses source-unmeasurable. R022-REPOSITORY-FORMS: a linked worktree (the .git file
  *   git worktree add writes), a .git file naming a relative Git directory with an LF ending and with a CRLF ending, and a .git
@@ -52,7 +56,9 @@
  *   worktree root git reports for it. R023-WRONG, R023-SIBLING, R023-ESCAPE: refusal workspace-outside-root although the operator
  *   attested that workspace (WRONG also for a subdirectory of the outside worktree). R023-PARENT: the authorized root's parent
  *   refuses workspace-outside-root. R023-SUBDIR: a subdirectory of a worktree refuses workspace-not-worktree-root.
- *   R023-RELATIVE: a relative path refuses malformed-request. R023-UNRESOLVABLE: a missing workspace (inside or outside the root)
+ *   R023-RELATIVE: the relative workspace path "authorized/ws", under the suite's authorized root, refuses malformed-request
+ *   (that path does not resolve by realpath either).
+ *   R023-UNRESOLVABLE: a missing workspace (inside or outside the root)
  *   and a missing authorized root refuse workspace-unresolvable. R023-ALIAS-INSIDE: a symlink that resolves inside the root
  *   dispatches against the canonical root. R023-ROOT-ALIAS: an authorized root given as a symlink to the root dispatches.
  *   R023-SPACED-NAME: a workspace whose directory name holds a space, a non-ASCII letter and a trailing space dispatches against
@@ -61,9 +67,9 @@
  *   the workspace itself confines and dispatches.
  * - EAT-R024 "Pi MUST bind a single writer to each materialized workspace." Acceptance: "Admit two invocation IDs for the same
  *   canonical workspace; at most one writer lease is granted; cancellation releases only the lease it owns." Mutant: "Allocate
- *   lease by caller alias instead of canonical root." Pinned reading: while one invocation id's lease holds a canonical root,
- *   another invocation id's acquire of that root answers undefined and its admission there that passes rules 1-6 refuses
- *   writer-held, and leases of different roots are independent. R024-ALIAS: while inv-a writes, inv-b's admission through a
+ *   lease by caller alias instead of canonical root." Pinned reading: while inv-a's lease holds a canonical root, the acquire of
+ *   that root by inv-b or inv-c answers undefined and their admissions there that pass rules 1-6 refuse writer-held, and leases
+ *   of different roots are independent. R024-ALIAS: while inv-a writes, inv-b's admission through a
  *   symlink alias and inv-c's through a dot spelling of the same workspace refuse writer-held. R024-CANCEL-OWN: a refused
  *   invocation's cancellation leaves the holder's lease; the holder's cancellation
  *   releases it. R024-STALE: a released lease never releases the next holder's lease. R024-FOREIGN: a copy naming the held root
@@ -108,21 +114,25 @@
  *   workspace.
  * - General: GEN-PRE-ABORTED (admission-cancelled, no lease), GEN-WAIT-REFUSED (admission-refused, lease released),
  *   GEN-WAIT-CANCELLED (a wait that rejects because the signal aborted refuses admission-cancelled, lease released),
- *   GEN-DISPATCH-THROWS (the error propagates, lease released), GEN-MALFORMED (an invocation reference that is "" or " ", holds
- *   any one of the code points U+0000-U+001F and U+007F, or exceeds 4096 UTF-8 bytes as one-, two-, three- or four-byte text
- *   refuses malformed-request), GEN-MALFORMED-BLANK (the case first derives, by scanning every code point, the set that
- *   String.prototype.trim() removes; each of those code points alone, and all of them together, refuse malformed-request as an
- *   invocation reference and as a gate manifest, and throw a validation CapabilityError as an operator id and as a lease
- *   invocation), GEN-MALFORMED-TYPES (undefined, null, a number, a boolean, an object and an array as the invocation reference,
- *   the workspace, the authorized root, the gate manifest, measureSourceIdentity's root and manifest, confineWorkspace's paths,
- *   an operator id and a lease's root and invocation refuse malformed-request or throw a validation CapabilityError, never
- *   another error), GEN-CLEAN-TEXT (4096 UTF-8 bytes of one-, two-, three- and four-byte text dispatch), GEN-CLEAN-TEXT-FORMS
+ *   GEN-DISPATCH-THROWS (the error propagates, lease released), GEN-MALFORMED (on an otherwise valid admission, an invocation
+ *   reference that is "" or " ", holds any one of the code points U+0000-U+001F and U+007F, or exceeds 4096 UTF-8 bytes as one-,
+ *   two-, three- or four-byte text refuses malformed-request), GEN-MALFORMED-BLANK (the case first derives, by scanning every
+ *   code point, the set that String.prototype.trim() removes; each of those code points alone, and all of them together, refuse
+ *   malformed-request as an invocation reference on an otherwise valid admission and as measureSourceIdentity's gate manifest
+ *   of the clean worktree ws, and throw a validation CapabilityError as an operator id and as a lease invocation),
+ *   GEN-MALFORMED-TYPES (undefined, null, a number, a boolean, an object and an array as the invocation reference, the
+ *   workspace, the authorized root, the gate manifest, measureSourceIdentity's root and manifest, confineWorkspace's paths, an
+ *   operator id and a lease's root and invocation, each beside otherwise valid arguments, refuse malformed-request or throw a
+ *   validation CapabilityError, never another error), GEN-CLEAN-TEXT (4096 UTF-8 bytes of one-, two-, three- and four-byte
+ *   text dispatch), GEN-CLEAN-TEXT-FORMS
  *   (content between the code points trim() removes that lie outside U+0000-U+001F, and U+0020, U+007E, U+0080, U+009F and
  *   U+00A0 inside content, dispatch as an invocation reference, attest as an operator id and acquire as a lease invocation),
- *   GEN-MALFORMED-SHAPES (a request that is null, a string, the array [request] (prototype Array.prototype) or a class instance,
- *   a dispatch or reader that is a string, a relative authorized root, an absolute workspace or root path holding U+000A or over
- *   4096 UTF-8 bytes, and measureSourceIdentity's relative root, unclean manifest ("", " ", two holding U+000A, one of 4097
- *   UTF-8 bytes) or string reader refuse malformed-request), GEN-NULL-PROTOTYPE-REQUEST (a
+ *   GEN-MALFORMED-SHAPES (each beside otherwise valid arguments: a request that is null, a string, the array [request]
+ *   (prototype Array.prototype) or a class instance, a dispatch or reader that is a string, the relative authorized root
+ *   "authorized", an absolute workspace or root path holding U+000A or over 4096 UTF-8 bytes, and measureSourceIdentity's
+ *   relative root "authorized/ws", unclean manifest of ws ("", " ", two holding U+000A, one of 4097 UTF-8 bytes) or string
+ *   reader refuse malformed-request; none of those paths resolves by realpath and none of those manifests measures),
+ *   GEN-NULL-PROTOTYPE-REQUEST (a
  *   null-prototype request object dispatches), GEN-READER-FAILS (a reader that throws or answers with no Buffer at its first
  *   call is a refusal, never a rejection), GEN-REASON-FIXED (the reason names neither the caller's workspace nor its invocation).
  *   Rule order (the eleven rules of the module comment): each of these cases fails the two rules it names and no rule before them,
@@ -152,11 +162,19 @@
  *   host's, and of the variables that point git at other files only GIT_DIR (R022-MISDIRECTED-GIT) is pinned.
  * - Mount points are NOT CLAIMED by this suite: confinement judges realpaths, and a realpath does not see through a mount.
  * - Paths on a platform whose path separator is not "/", and case-insensitive file systems, are NOT CLAIMED by this suite.
- * - A second acquire or admission by the invocation id whose writer lease holds the root, and what another invocation id's
- *   admission meets after such a re-entry, are NOT CLAIMED by this suite: every case that asks for a held root asks with an
- *   invocation id other than the holder's.
+ * - What acquire or an admission answers an invocation id other than inv-b and inv-c while inv-a's lease holds the root (the
+ *   holder's own id, a second acquire or admission by it and what another id meets after such a re-entry, and an id that
+ *   differs from the holder's only in letter case, among them) is NOT CLAIMED by this suite: every case that asks for a held
+ *   root asks with inv-b or inv-c while inv-a holds it.
  * - Which code answers when a request fails two rules at a pair of clauses no rule-order case fails (rule 1's plain-object and
  *   dispatch clauses against rule 2's cancellation among them) is NOT CLAIMED by this suite.
+ * - Which refusal confineWorkspace answers a call that fails two of its clauses no entry names together (a reader that is not a
+ *   function beside a workspace or authorized root that does not resolve or a workspace outside the root, and a workspace that
+ *   is not absolute clean text beside an authorized root that does not resolve, among them), and what a path that is not
+ *   absolute clean text yet resolves by realpath gets, are NOT CLAIMED by this suite.
+ * - Which refusal measureSourceIdentity answers a call that fails two of its clauses no entry names together (a gate manifest
+ *   that is not clean text beside a root that is not the worktree root, a misreporting or silent reader, or a dirty base, among
+ *   them), and what an absolute canonicalRoot that is not clean text gets, are NOT CLAIMED by this suite.
  * - Whether a plain or null-prototype policy with an own allowWrites data member true, other than { allowWrites: true } and its
  *   null-prototype copy, asks for writes (a non-enumerable, non-writable or frozen member, or a policy with other members, among
  *   them) is NOT CLAIMED by this suite.
@@ -841,7 +859,7 @@ describe("EAT-R023: the workspace's realpath must be the authorized root's realp
     expect(grants).toHaveLength(0);
   });
 
-  it("R023-RELATIVE: a relative workspace path refuses malformed-request", async () => {
+  it('R023-RELATIVE: the relative workspace path "authorized/ws" under the authorized root refuses malformed-request', async () => {
     const { grants, dispatch } = recorder();
     const outcome = await admitSourceWrite(requestFor("authorized/ws"), hostFor(authority.attest(OPERATOR, identityOf(ws))), dispatch);
     expectRefused(outcome, "malformed-request");
@@ -912,7 +930,7 @@ describe("EAT-R023: the workspace's realpath must be the authorized root's realp
   });
 });
 
-describe("EAT-R024: while one invocation id's lease holds a canonical workspace root, other invocation ids are refused it, and leases of different roots are independent", { timeout: CASE_MS }, () => {
+describe("EAT-R024: while inv-a's lease holds a canonical workspace root, inv-b and inv-c are refused it, and leases of different roots are independent", { timeout: CASE_MS }, () => {
   it("R024-ALIAS: while inv-a writes, inv-b through a symlink alias and inv-c through a dot spelling of the same workspace refuse writer-held", async () => {
     const alias = join(root, "alias");
     symlinkSync(ws, alias);
@@ -1424,7 +1442,7 @@ describe("admission lifecycle: cancellation, a refusing wait, a throwing dispatc
     expect(leases.holder(ws)).toBeUndefined();
   });
 
-  it('GEN-MALFORMED: an invocation reference that is "" or " ", holds a code point of U+0000-U+001F or U+007F, or exceeds 4096 UTF-8 bytes refuses malformed-request', async () => {
+  it('GEN-MALFORMED: on an otherwise valid admission, an invocation reference that is "" or " ", holds a code point of U+0000-U+001F or U+007F, or exceeds 4096 UTF-8 bytes refuses malformed-request', async () => {
     const attestation = authority.attest(OPERATOR, identityOf(ws));
     const { grants, dispatch } = recorder();
     const controls = [...Array.from({ length: 0x20 }, (_, codePoint) => codePoint), 0x7f].map(codePoint => `inv${String.fromCodePoint(codePoint)}x`);
@@ -1436,7 +1454,7 @@ describe("admission lifecycle: cancellation, a refusing wait, a throwing dispatc
     expect(grants).toHaveLength(0);
   });
 
-  it('GEN-MALFORMED-BLANK: text that String.prototype.trim() reduces to "" is refused as an invocation reference, gate manifest, operator id and lease invocation', async () => {
+  it('GEN-MALFORMED-BLANK: on the clean worktree ws, text that String.prototype.trim() reduces to "" is refused as an invocation reference, gate manifest, operator id and lease invocation', async () => {
     const removed: number[] = [];
     for (let codePoint = 0; codePoint <= 0x10ffff; codePoint += 1) {
       if (codePoint >= 0xd800 && codePoint <= 0xdfff) continue;
@@ -1457,7 +1475,7 @@ describe("admission lifecycle: cancellation, a refusing wait, a throwing dispatc
     expect(leases.holder(ws)).toBeUndefined();
   });
 
-  it("GEN-MALFORMED-TYPES: a value that is not a string where text is required refuses malformed-request or throws a validation CapabilityError", async () => {
+  it("GEN-MALFORMED-TYPES: beside otherwise valid arguments, a value that is not a string where text is required refuses malformed-request or throws a validation CapabilityError", async () => {
     const identity = identityOf(ws);
     const attestation = authority.attest(OPERATOR, identity);
     const { grants, dispatch } = recorder();
@@ -1514,7 +1532,7 @@ describe("admission lifecycle: cancellation, a refusing wait, a throwing dispatc
     expect(grants.map(grant => grant.invocationId)).toEqual(references);
   });
 
-  it("GEN-MALFORMED-SHAPES: a null, string, Array.prototype array or class-instance request, a string dispatch or reader, or a relative root refuses malformed-request", async () => {
+  it("GEN-MALFORMED-SHAPES: beside otherwise valid arguments, a null, string, Array.prototype array or class-instance request, a string dispatch or reader, a relative root, a U+000A-holding or oversized path and an unclean manifest refuse malformed-request", async () => {
     const attestation = authority.attest(OPERATOR, identityOf(ws));
     const { grants, dispatch } = recorder();
     class RequestObject {
