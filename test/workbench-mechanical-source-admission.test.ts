@@ -57,13 +57,15 @@
  *   dispatches against the canonical root. R023-ROOT-ALIAS: an authorized root given as a symlink to the root dispatches.
  *   R023-SPACED-NAME: a workspace whose directory name holds a space, a non-ASCII letter and a trailing space dispatches against
  *   that canonical root. R023-CONFINE: confineWorkspace itself answers the sibling and the workspace. R023-DOTDOT-NAME: a
- *   workspace inside the root whose name starts with ".." confines and dispatches. R023-ROOT-ITSELF: an authorized root that is
+ *   workspace inside the root named "..ws" confines and dispatches. R023-ROOT-ITSELF: an authorized root that is
  *   the workspace itself confines and dispatches.
  * - EAT-R024 "Pi MUST bind a single writer to each materialized workspace." Acceptance: "Admit two invocation IDs for the same
  *   canonical workspace; at most one writer lease is granted; cancellation releases only the lease it owns." Mutant: "Allocate
- *   lease by caller alias instead of canonical root." Pinned reading: one lease per canonical root, and leases of different roots
- *   are independent. R024-ALIAS: while one invocation writes, a symlink alias and a dot spelling of the same workspace refuse
- *   writer-held. R024-CANCEL-OWN: a refused invocation's cancellation leaves the holder's lease; the holder's cancellation
+ *   lease by caller alias instead of canonical root." Pinned reading: while one invocation id's lease holds a canonical root,
+ *   another invocation id's acquire of that root answers undefined and its admission there that passes rules 1-6 refuses
+ *   writer-held, and leases of different roots are independent. R024-ALIAS: while inv-a writes, inv-b's admission through a
+ *   symlink alias and inv-c's through a dot spelling of the same workspace refuse writer-held. R024-CANCEL-OWN: a refused
+ *   invocation's cancellation leaves the holder's lease; the holder's cancellation
  *   releases it. R024-STALE: a released lease never releases the next holder's lease. R024-FOREIGN: a copy naming the held root
  *   and invocation, and a released lease of the same invocation id after it acquired the root again, release nothing.
  *   R024-VALIDATION: acquire throws a validation CapabilityError with its exact message, and takes no lease, for a relative
@@ -88,16 +90,17 @@
  *   path, a ../ path, a path that leaves the workspace and comes back through an outside symlink, a symlink out of it, a
  *   directory and an unreadable file refuse gate-manifest-unavailable. R026-NOT-REGULAR: a FIFO refuses
  *   gate-manifest-unavailable. R026-BOUND: a 1048576-byte manifest measures and a 1048577-byte one refuses
- *   gate-manifest-unavailable. R026-DOTDOT-MANIFEST: committed manifests whose path starts with ".." (a file, and a file in a
- *   directory whose name does) measure with that path.
+ *   gate-manifest-unavailable. R026-DOTDOT-MANIFEST: the committed manifests "..gate.toml" and "..d/gate.toml" measure with
+ *   that path.
  * - EAT-R027 "Pi MUST require an operator-attested write boundary." Acceptance: "Launch with allowWrites:true but absent host
  *   attestation; assert no child write capability. An attestation for another workspace also refuses." Mutant: "Trust JSON policy
  *   as authorization." R027-ABSENT: allowWrites:true and no attestation refuses attestation-absent. R027-POLICY-COPY: an
  *   attestation copied into the JSON policy is not read. R027-FORGED: an equal-shaped copy in the host slot is not minted.
  *   R027-FOREIGN-AUTHORITY: another authority's attestation is not this host's. R027-OTHER-WORKSPACE: refusal
- *   attestation-other-workspace. R027-NOT-REQUESTED: no policy, allowWrites false, "true", 1, an array, an own accessor (never
- *   called), an inherited member and a class instance each refuse writes-not-requested. R027-REQUESTED: a plain and a
- *   null-prototype policy with own allowWrites true dispatch. R027-WITHDRAWN: an attestation withdrawn while admission waits
+ *   attestation-other-workspace. R027-NOT-REQUESTED: no policy, allowWrites false, "true", 1, the array [{ allowWrites: true }]
+ *   (prototype Array.prototype), an own accessor (never called), an inherited member and a class instance each refuse
+ *   writes-not-requested. R027-REQUESTED: the policy { allowWrites: true } and its null-prototype copy dispatch. R027-WITHDRAWN:
+ *   an attestation withdrawn while admission waits
  *   refuses. R027-REATTESTED: an attestation replaced while admission waits is read again (the grant names the new operator).
  *   R027-UNMEASURED: attest throws a validation CapabilityError with its exact message for an identity the host did not measure
  *   and for the operator ids "", " ", two holding U+000A and one of 4097 UTF-8 bytes. R027-ATTESTED: the grant carries the operator and is frozen, and the
@@ -116,18 +119,20 @@
  *   another error), GEN-CLEAN-TEXT (4096 UTF-8 bytes of one-, two-, three- and four-byte text dispatch), GEN-CLEAN-TEXT-FORMS
  *   (content between the code points trim() removes that lie outside U+0000-U+001F, and U+0020, U+007E, U+0080, U+009F and
  *   U+00A0 inside content, dispatch as an invocation reference, attest as an operator id and acquire as a lease invocation),
- *   GEN-MALFORMED-SHAPES (a request that is not a plain object, a dispatch or reader that is not a function, a relative
- *   authorized root, an absolute workspace or root path holding U+000A or over 4096 UTF-8 bytes, and measureSourceIdentity's
- *   relative root, unclean manifest ("", " ", two holding U+000A, one of 4097 UTF-8 bytes) or non-function reader refuse
- *   malformed-request), GEN-NULL-PROTOTYPE-REQUEST (a
+ *   GEN-MALFORMED-SHAPES (a request that is null, a string, the array [request] (prototype Array.prototype) or a class instance,
+ *   a dispatch or reader that is a string, a relative authorized root, an absolute workspace or root path holding U+000A or over
+ *   4096 UTF-8 bytes, and measureSourceIdentity's relative root, unclean manifest ("", " ", two holding U+000A, one of 4097
+ *   UTF-8 bytes) or string reader refuse malformed-request), GEN-NULL-PROTOTYPE-REQUEST (a
  *   null-prototype request object dispatches), GEN-READER-FAILS (a reader that throws or answers with no Buffer at its first
  *   call is a refusal, never a rejection), GEN-REASON-FIXED (the reason names neither the caller's workspace nor its invocation).
  *   Rule order (the eleven rules of the module comment): each of these cases fails the two rules it names and no rule before them,
- *   and expects the code of the first: GEN-ORDER-SHAPE-CANCEL (1, 2), GEN-ORDER-CANCEL-REQUEST (2, 3), GEN-ORDER-REQUEST-CONFINE
+ *   and expects the code of the first: GEN-ORDER-SHAPE-CANCEL (1, 2: rule 1's invocationId clause, an invocationId of "", with an
+ *   aborted signal), GEN-ORDER-CANCEL-REQUEST (2, 3), GEN-ORDER-REQUEST-CONFINE
  *   (3, 4), GEN-ORDER-CONFINE-MEASURE (4, 5), GEN-ORDER-MEASURE-ATTEST (5, 6), GEN-ORDER-ATTEST-LEASE (6, 7),
  *   GEN-ORDER-LEASE-WAIT (7, 8; the wait is never called, while the same wait is called and refuses once the lease is free),
  *   GEN-WAIT-CANCELLED (8, 9; rule 8's code for a signal aborted by then is admission-cancelled), GEN-ORDER-WAIT-CANCEL (9, 10)
- *   and GEN-ORDER-REMEASURE-REATTEST (10, 11), so each adjacent pair of the eleven rules has a case. GEN-ORDER-WAIT-REFUSED fails
+ *   and GEN-ORDER-REMEASURE-REATTEST (10, 11), so each adjacent pair of the eleven rules has a case at the clauses it fails;
+ *   which code answers for any other pair of failing clauses is NOT CLAIMED (see below). GEN-ORDER-WAIT-REFUSED fails
  *   rules 8 and 10 (admission-refused), and GEN-ORDER-STATUS-MANIFEST fails git status and the gate manifest within rule 5
  *   (dirty-base).
  *
@@ -147,6 +152,19 @@
  *   host's, and of the variables that point git at other files only GIT_DIR (R022-MISDIRECTED-GIT) is pinned.
  * - Mount points are NOT CLAIMED by this suite: confinement judges realpaths, and a realpath does not see through a mount.
  * - Paths on a platform whose path separator is not "/", and case-insensitive file systems, are NOT CLAIMED by this suite.
+ * - A second acquire or admission by the invocation id whose writer lease holds the root, and what another invocation id's
+ *   admission meets after such a re-entry, are NOT CLAIMED by this suite: every case that asks for a held root asks with an
+ *   invocation id other than the holder's.
+ * - Which code answers when a request fails two rules at a pair of clauses no rule-order case fails (rule 1's plain-object and
+ *   dispatch clauses against rule 2's cancellation among them) is NOT CLAIMED by this suite.
+ * - Whether a plain or null-prototype policy with an own allowWrites data member true, other than { allowWrites: true } and its
+ *   null-prototype copy, asks for writes (a non-enumerable, non-writable or frozen member, or a policy with other members, among
+ *   them) is NOT CLAIMED by this suite.
+ * - An array whose prototype is Object.prototype or null, as a request or as a policy, is NOT CLAIMED by this suite.
+ * - Whether a string the cases do not plant is clean text (one holding another code point inside its content, U+200B or the
+ *   bidi controls U+061C, U+200E, U+200F, U+202A-U+202E and U+2066-U+2069 among them) is NOT CLAIMED by this suite.
+ * - Whether a relative path the cases do not plant is inside a root (a workspace or manifest named "...ws" among them) is NOT
+ *   CLAIMED by this suite.
  */
 import { type ChildProcess, execFileSync, spawn } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -875,7 +893,7 @@ describe("EAT-R023: the workspace's realpath must be the authorized root's realp
     expect(confineWorkspace(root, `${ws}/.`, gitReader)).toEqual({ decision: "confined", canonicalRoot: ws });
   });
 
-  it('R023-DOTDOT-NAME: a workspace inside the root whose name starts with ".." confines and dispatches', async () => {
+  it('R023-DOTDOT-NAME: a workspace inside the root named "..ws" confines and dispatches', async () => {
     const dotted = fixtureRepo(join(root, "..ws"));
     expect(dotted).toBe(`${root}/..ws`);
     expect(confineWorkspace(root, dotted, gitReader)).toEqual({ decision: "confined", canonicalRoot: dotted });
@@ -894,8 +912,8 @@ describe("EAT-R023: the workspace's realpath must be the authorized root's realp
   });
 });
 
-describe("EAT-R024: one writer lease per canonical workspace root, and leases of different roots are independent", { timeout: CASE_MS }, () => {
-  it("R024-ALIAS: while one invocation writes, an alias and a dot spelling of the same workspace refuse writer-held", async () => {
+describe("EAT-R024: while one invocation id's lease holds a canonical workspace root, other invocation ids are refused it, and leases of different roots are independent", { timeout: CASE_MS }, () => {
+  it("R024-ALIAS: while inv-a writes, inv-b through a symlink alias and inv-c through a dot spelling of the same workspace refuse writer-held", async () => {
     const alias = join(root, "alias");
     symlinkSync(ws, alias);
     const attestation = authority.attest(OPERATOR, identityOf(ws));
@@ -1197,7 +1215,7 @@ describe("EAT-R026: the gate manifest digest is part of the source identity", { 
     expectRefused(measureSourceIdentity(ws, "ignored/over.toml", gitReader), "gate-manifest-unavailable");
   });
 
-  it('R026-DOTDOT-MANIFEST: committed gate manifests whose path starts with ".." measure with that path', () => {
+  it('R026-DOTDOT-MANIFEST: the committed gate manifests "..gate.toml" and "..d/gate.toml" measure with that path', () => {
     const bytes = '[gate]\nsteps = ["test"]\n';
     writeFileSync(join(ws, "..gate.toml"), bytes);
     mkdirSync(join(ws, "..d"));
@@ -1286,7 +1304,7 @@ describe("EAT-R027: writes need an operator attestation the host minted for this
     expect(grants).toHaveLength(0);
   });
 
-  it("R027-REQUESTED: a plain and a null-prototype policy with an own allowWrites data member true dispatch", async () => {
+  it("R027-REQUESTED: the policy { allowWrites: true } and its null-prototype copy dispatch", async () => {
     const attestation = authority.attest(OPERATOR, identityOf(ws));
     const { grants, dispatch } = recorder();
     const nullPrototype: JsonValue = Object.assign(Object.create(null), { allowWrites: true });
@@ -1496,7 +1514,7 @@ describe("admission lifecycle: cancellation, a refusing wait, a throwing dispatc
     expect(grants.map(grant => grant.invocationId)).toEqual(references);
   });
 
-  it("GEN-MALFORMED-SHAPES: a request that is not a plain object, a dispatch or reader that is not a function, or a relative root refuses malformed-request", async () => {
+  it("GEN-MALFORMED-SHAPES: a null, string, Array.prototype array or class-instance request, a string dispatch or reader, or a relative root refuses malformed-request", async () => {
     const attestation = authority.attest(OPERATOR, identityOf(ws));
     const { grants, dispatch } = recorder();
     class RequestObject {
@@ -1564,7 +1582,7 @@ describe("admission lifecycle: cancellation, a refusing wait, a throwing dispatc
     expect(grants).toHaveLength(0);
   });
 
-  it("GEN-ORDER-SHAPE-CANCEL: a malformed request that is also cancelled refuses malformed-request", async () => {
+  it('GEN-ORDER-SHAPE-CANCEL: an invocationId of "" with an aborted signal refuses malformed-request', async () => {
     const abort = new AbortController();
     abort.abort();
     const { grants, dispatch } = recorder();

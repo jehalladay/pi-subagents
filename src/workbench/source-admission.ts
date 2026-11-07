@@ -4,18 +4,24 @@
  * its function host does not exist yet). The header of test/workbench-mechanical-source-admission.test.ts names the case that
  * pins each form these comments state, the residual family whose quiet rows it pins, and the forms it does not claim.
  *
- * admitSourceWrite(request, host, dispatch) calls dispatch at most once, with the one grant it mints, after these rules pass in
- * this order; otherwise it returns the refusal of the first rule that fails and does not call dispatch:
+ * admitSourceWrite(request, host, dispatch) calls dispatch at most once, with the one grant it mints, after the rules below
+ * pass; a request that fails one of them gets that rule's refusal, and dispatch is not called. When a request fails two rules,
+ * the refusal is the earlier rule's for the clause pairs the suite header's rule-order cases fail (one case for each adjacent
+ * pair of rules); which refusal answers for any other pair of failing clauses (rule 1's plain-object and dispatch clauses
+ * against rule 2's cancellation among them) is NOT CLAIMED. The rules, numbered as the rule-order cases name them:
  * 1. request shape (malformed-request): request is a plain object whose invocationId is clean text, and dispatch is a function;
  * 2. cancellation (admission-cancelled): host.signal is not aborted;
- * 3. the write request (writes-not-requested): request.policy asks for writes (see writesRequested); asking grants nothing;
+ * 3. the write request (writes-not-requested): request.policy asks for writes (see writesRequested for the policies the suite
+ *    pins); asking grants nothing;
  * 4. confinement (EAT-R023): confineWorkspace(host.authorizedRoot, request.workspace, host.git) answers confined, else its
  *    refusal is returned;
  * 5. measurement (EAT-R022, EAT-R026): measureSourceIdentity(the confined canonical root, host.gateManifest, host.git) answers
  *    measured, else its refusal is returned;
  * 6. attestation (EAT-R027): host.attestation is an object host.authority minted (attestation-absent), whose workspace is that
  *    canonical root (attestation-other-workspace) and whose sourceIdentity is that identity's digest (attestation-stale);
- * 7. the writer lease (EAT-R024, writer-held): host.leases.acquire(that canonical root, request.invocationId) returns a lease;
+ * 7. the writer lease (EAT-R024, writer-held): host.leases.acquire(that canonical root, request.invocationId) returns a lease,
+ *    which it does not while another invocation id's lease holds that root (see WriterLeases); a second admission of the
+ *    invocation id whose lease holds that root is NOT CLAIMED;
  * 8. the admission wait: host.admissionWait, when set, is called with host.signal and resolves; a rejection refuses
  *    admission-cancelled when host.signal is aborted by then and admission-refused otherwise;
  * 9. cancellation (admission-cancelled): host.signal is not aborted;
@@ -178,7 +184,10 @@ function refusal(code: SourceAdmissionCode): SourceAdmissionRefusal {
   return Object.freeze({ decision: "refused", code, reason: REASONS[code] });
 }
 
-/** An object whose prototype is Object.prototype or null; an array is not one. */
+/**
+ * An object whose prototype is Object.prototype or null; an array whose prototype is Array.prototype is not one. Whether an
+ * array whose prototype is Object.prototype or null is one is NOT CLAIMED.
+ */
 function plainObject(value: unknown): value is Record<string, unknown> {
   if (typeof value !== "object" || value === null || Array.isArray(value)) return false;
   const prototype = Object.getPrototypeOf(value);
@@ -186,8 +195,11 @@ function plainObject(value: unknown): value is Record<string, unknown> {
 }
 
 /**
- * Clean text: a string that String.prototype.trim() does not reduce to "", of at most 4096 UTF-8 bytes, with no code point in
- * U+0000-U+001F or U+007F.
+ * Clean text, in the forms the suite pins: a string is not clean text when String.prototype.trim() reduces it to "", when it is
+ * over 4096 UTF-8 bytes, or when it holds a code point in U+0000-U+001F or U+007F; the four 4096-byte GEN-CLEAN-TEXT references
+ * and the GEN-CLEAN-TEXT-FORMS strings are clean text. Whether any other string is clean text (one holding another code point
+ * inside its content, U+200B or the bidi controls U+061C, U+200E, U+200F, U+202A-U+202E and U+2066-U+2069 among them) is NOT
+ * CLAIMED.
  */
 function cleanText(value: unknown): value is string {
   return typeof value === "string" && value.trim() !== "" && Buffer.byteLength(value) <= TEXT_BYTES && !/[\u0000-\u001f\u007f]/.test(value);
@@ -198,9 +210,11 @@ function absolutePath(value: unknown): value is string {
 }
 
 /**
- * Whether path is root or inside it, judged by path.relative(root, path): "" (root itself) is inside, and so is any other
- * relative path that is not "..", does not start with "../" and is not absolute. So a sibling that only shares root's prefix is
- * outside, and a child whose name starts with ".." is inside.
+ * Whether path is root or inside it, judged by path.relative(root, path) and never by a string prefix: "" (root itself) is
+ * inside, and ".." or a relative path that starts with "../" is outside, so a sibling that only shares root's prefix is outside.
+ * The other relative paths the suite plants are inside, among them a workspace named "..ws" (R023-DOTDOT-NAME) and the two
+ * manifest paths that start with ".." (R026-DOTDOT-MANIFEST); whether every other relative path is inside (a name such as
+ * "...ws" among them) is NOT CLAIMED.
  */
 function contains(root: string, path: string): boolean {
   const rel = relative(root, path);
@@ -354,11 +368,12 @@ export class WriteBoundaryAuthority {
 }
 
 /**
- * EAT-R024: the host's writer leases, keyed by canonical root. acquire grants a root's lease while no lease holds that root and
- * answers undefined while one does; leases of different roots are independent, so taking or releasing one root's lease leaves
- * every other root's as it was. release frees a root only for the very object acquire returned while it still holds that root,
- * so a released lease, or a copy naming the same root and invocation, frees nothing. admitSourceWrite keys the lease by the
- * canonical root it measured, never by the caller's spelling of the workspace.
+ * EAT-R024: the host's writer leases, keyed by canonical root. acquire grants a root's lease while no lease holds that root, and
+ * answers undefined to an invocation id other than the holder's while a lease holds it; what acquire answers the invocation id
+ * whose lease holds the root is NOT CLAIMED. Leases of different roots are independent, so taking or releasing one root's lease
+ * leaves every other root's as it was. release frees a root only for the very object acquire returned while it still holds
+ * that root, so a released lease, or a copy naming the same root and invocation, frees nothing. admitSourceWrite keys the lease
+ * by the canonical root it measured, never by the caller's spelling of the workspace.
  */
 export class WriterLeases {
   readonly #held = new Map<string, WriterLease>();
@@ -387,7 +402,9 @@ export class WriterLeases {
 
 /**
  * The JSON policy asks for writes only when it is a plain object (see plainObject) with an own allowWrites data member whose
- * value is exactly true; an accessor is never called. It never authorizes them.
+ * value is exactly true; an accessor is never called. It never authorizes them. The suite pins two policies that ask,
+ * { allowWrites: true } and its null-prototype copy; whether any other plain object with an own allowWrites data member true
+ * asks (a non-enumerable, non-writable or frozen member, or an object with other members, among them) is NOT CLAIMED.
  */
 function writesRequested(policy: unknown): boolean {
   if (!plainObject(policy)) return false;
