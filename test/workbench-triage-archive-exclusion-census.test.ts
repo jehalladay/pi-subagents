@@ -7,12 +7,19 @@
  * test/helpers/triage-archive.ts, which holds the predicate (isTriageArchivePath, withoutTriageArchive), the npm line
  * (TRIAGE_ARCHIVE) and the header line each walking census carries (ARCHIVE_SCOPE_LINE).
  *
+ * FORM (cut #3, the enumerate-the-resolvable form of standing rule 19(c), ruling R-B666): each reader below claims what its rows pin
+ * and nothing wider - its live input and its control table, read by the one reader in one expression, so the controls judge the
+ * reader the live reading uses. Each entry spells the reader's rule only as far as its rows pin it; a spelling no row pins is NOT
+ * CLAIMED. The NAMED RESIDUALS below are the known escapes, each a named family with a pinned quiet row.
+ *
  * PINNED READER SET (claim form: each case by id in this file, its assertion target, the result it holds). Each case declares its
- * assertion count first (expect.assertions), and npm run test passes --expect.requireAssertions. A reading with controls runs one
- * reader over its live input and over its control inputs in one expression, so the controls judge the reader the live reading
- * uses; each reader is claimed on those inputs only.
- * - N1 archiveLineCount (the lines of a text that are TRIAGE_ARCHIVE once trimmed) reads 1 over the root .npmignore and, over the
- *   N1_TEXTS controls, 2 over a text holding that line twice and 0 over lines holding it inside a longer line.
+ * assertion count first (expect.assertions), and npm run test passes --expect.requireAssertions.
+ * - N1 archiveLineCount counts the lines of a text (the text split at each newline) that equal TRIAGE_ARCHIVE once trimmed. It reads
+ *   1 over the root .npmignore, and over the N1_TEXTS controls: 2 for a text holding the line twice; 1 for the line after two spaces
+ *   and a tab, and for the line before two spaces, a tab and a carriage return; 0 for the line inside a longer line (after an
+ *   exclamation mark, before two stars, after a number sign and a space), for the line with a space inside it, and for the line
+ *   upper-cased. Any other character at a line's ends is NOT CLAIMED, and so is whether npm honours a padded line (N2 packs with the
+ *   root .npmignore itself).
  * - N2 (master-shaped fixture) npm pack --dry-run over a scratch package shaped like master (M1's live pages and archive), with the
  *   root .npmignore copied in, packs the manifest and the live pages and no archive path; the packed-path classifier of
  *   qa/workbench/package-boundary.mjs reports nothing.
@@ -36,41 +43,86 @@
  *   and through withoutTriageArchive both keep exactly the live pages; over the same tree plus one file git's .git/info/exclude
  *   names, the same reader reads the walk holding that file and git's listing not. Outside anchor: the SHAPES phrases tile the
  *   shape items of wb-12x1's spec-ruling note in .beads/issues.jsonl (each item of its shape-assumption list, then its
- *   package-smoke item), one each in order. holds encodes each shape: no-heading a .md file whose text does not open with "# ",
- *   not-markdown a file whose path does not end .md, shebang-py a .py file whose text opens with "#!", deep a .md file whose path
- *   has more than five segments, jsonl a .jsonl file; by holds, the fixture's archive files holding each shape are exactly
- *   HOLDERS, and over the HOLDS_CONTROLS files, on each side of each encoding, holds reads as each row says.
- * - W1 each WALKERS census imports from ./helpers/triage-archive.js and holds exactly its pinned count of call sites of
- *   withoutTriageArchive and isTriageArchivePath.
- * - W2 scopeLineCount reads 1 over each WALKERS census: the lines that are ARCHIVE_SCOPE_LINE in the comment block the text opens
- *   with (the text's first characters are a slash and two stars; the block ends at its first star-slash), each line read with its
- *   comment prefix (leading whitespace, a star, at most one space) and its trailing whitespace removed. Over the W2_TEXTS controls
- *   the same reader reads 1 for the line in such a block, 2 for it twice there, and 0 for it in a later block, after a first line
- *   of code, in a block opening with one star, without its star, indented further, inside a longer line, after a prefix, and with
- *   its case changed.
- * - W3 outside anchor: helperImporters, over test/ read from disk, finds exactly the WALKERS censuses and this file - the .ts files
- *   below test/ holding a from clause whose relative specifier, joined to the file's directory with a .js or .ts ending dropped, is
- *   test/helpers/triage-archive (the reader reads text: a from clause inside a comment counts too). Over the W3_FILES control tree
- *   the same reader finds the import from test/, the re-export from a helper file, the import from a nested directory, and the
- *   single-quoted, the extensionless and the .ts-ending imports, and not an import of another helper, of a module whose name only
- *   begins with the helper's, or of a module outside test/.
+ *   package-smoke item), one each in order. holds encodes each shape, and the HOLDS_CONTROLS rows pin each side of each encoding:
+ *   no-heading, a file whose path ends .md and whose text does not open with a number sign and a space (held by texts opening
+ *   "#B", "## C", a number sign and a tab, a newline or a space before the heading, and a first line that is no heading; not held
+ *   by a text opening "# A", nor by a .txt, a .MD or a .xmd file); not-markdown, a file whose path does not end .md (held by .mdx,
+ *   .MD and .xmd files; not by a .md file); shebang-py, a file whose path ends .py and whose text opens with "#!" (held by texts
+ *   opening "#!/usr/bin/env python3" and "#!python3"; not by "#!" on a later line, after a newline or after a space, nor by a .sh or
+ *   a .xpy file); deep, a file whose path ends .md and has more than five segments (held by six and by seven; not by five, nor by a
+ *   .json or a .xmd file of six); jsonl, a file whose path ends .jsonl (held by a .jsonl file; not by .json, .jsonl.gz or .xjsonl).
+ *   By holds, the fixture's archive files holding each shape are exactly HOLDERS. Any other spelling of a path or a text is NOT
+ *   CLAIMED of holds.
+ * - W1 reads each WALKERS census, and the W1_TEXTS controls, in one expression: whether the text holds the from clause
+ *   from "./helpers/triage-archive.js" spelled exactly so (double quote marks, one space, the .js ending), and how many call sites of
+ *   withoutTriageArchive and isTriageArchivePath it holds, a call site being the name directly followed by an opening parenthesis
+ *   and preceded by no ASCII letter, digit or underscore. Each WALKERS census holds the clause and exactly its pinned count of call
+ *   sites. Over W1_TEXTS it reads no clause for the import with single quote marks, for the import with the .ts ending and for the
+ *   helper's path named in a comment; the clause and two sites for a call of each function beside the import's specifiers; and no
+ *   site for names that only hold a function's name (a letter, a digit or an underscore before it, a letter after it) or for a call
+ *   with a space before its parenthesis. Another spelling of the clause or of a call is NOT CLAIMED of W1 (W3 reads the other from-clause spellings).
+ * - W2 scopeLineCount counts the lines equal to ARCHIVE_SCOPE_LINE in the comment block a text opens with: the block is there when
+ *   the text's first three characters are a slash and two stars and a star-slash follows them, and it runs from those three
+ *   characters to that first star-slash. Each line of the block (the block split at each newline) is read with its comment prefix
+ *   and its trailing spaces, tabs and carriage returns removed; the prefix is a run of up to eight spaces and tabs, then a star, then
+ *   one space when one follows the star. It reads 1 over each WALKERS census, and over the W2_TEXTS controls: 1 for the line in
+ *   such a block after a space, a star and a space; after a star and a space at the line's start; after two spaces, after a tab and
+ *   after eight spaces and tabs, then a star and a space; right after a space and a star; right after the block's opening stars, and
+ *   after a space, a star and a space on that opening line; before two spaces and a tab; and in a block with carriage-return line
+ *   endings; 2 for the line twice there; and 0 for the line in a later block, after a first line of code, after a newline or a space
+ *   before the block, in a block opening with one star, in a block that never closes, without its star, after its star and a tab,
+ *   after its star and two or three spaces, after two stars, inside a longer line, after a prefix, with a star and two spaces inside
+ *   it and no prefix, and with its case changed. Any other spelling of a prefix, an opening or a line's end is
+ *   NOT CLAIMED of scopeLineCount.
+ * - W3 outside anchor: helperImporters, over test/ read from disk, finds exactly the WALKERS censuses and this file. It reads the
+ *   regular files below test/ whose names end .ts (a .d.ts file among them) and finds each whose text holds a from clause: the word
+ *   from, then a run of up to three spaces, tabs or newlines (an empty run too), then a specifier between two equal quote marks,
+ *   double or single, that starts with a dot and, joined to the file's directory with a .js or .ts ending dropped, is
+ *   test/helpers/triage-archive. The reader reads text, so a from clause inside a comment counts too. Over the W3_FILES control tree
+ *   the same reader finds the import from test/, the re-export from a helper file, the import from a nested directory, the
+ *   single-quoted, the extensionless and the .ts-ending imports, the import through a helpers/../helpers/ specifier, a clause in a
+ *   line comment and in a block comment, a .d.ts re-export, and a clause with no space, with a tab and with a newline and two
+ *   spaces before its specifier; and it finds no import of another helper, of a module whose name only begins with the helper's, of
+ *   a module outside test/, of the helper with an .mjs ending or with a specifier that does not start with a dot, no clause with
+ *   unequal quote marks, no word that only ends with from, no capitalized From, no .mts importer and no .ts importer outside test/,
+ *   and not the helper file itself. Its R-W3-NO-FROM quiet rows are below.
  * - V1 outside anchor: exportRow reads the wb-cbt4 row of .beads/issues.jsonl, and quotesRationale reads its description quoting
  *   OWNER_RATIONALE between quote marks, character for character; over the V1_TEXTS controls the same reader reads no quotation for
  *   the quote with its tail, its head, its case, its spacing or its dash changed, or with either quote mark missing; over the
- *   EXPORT_TEXT control exportRow reads the row whose own id is the bead's, not an earlier or a later row naming it in a nested id. The
- *   description's clauses tile the ROWS requirement phrases in order: clausesOf reads each line that is a lowercase letter in
- *   parentheses, a space, the clause and a closing ; or . (the clause), and each line opening with a capitalized word, one or more
- *   lowercase words, a colon, a space and a quote mark (its label); over the CLAUSE_TEXT control it reads a third lettered line and
- *   a two-word label, and nothing of a one-word label, of a lettered line without its closing mark, or of a letter mid-line.
+ *   EXPORT_TEXT control exportRow reads the row whose own id is the bead's, not an earlier or a later row naming it in a nested id.
+ *   The description's clauses tile the ROWS requirement phrases in order. clausesOf reads each line of a text (the text split at
+ *   each newline) as a lettered line, a quoting line or nothing. A lettered line is, at the line's start, an opening parenthesis, a
+ *   lowercase letter, a closing parenthesis and a space, then a clause of one to four hundred characters, then a semicolon or a full
+ *   stop as the line's last character; it reads its clause. A quoting line is, at the line's start, a capitalized word (a capital
+ *   letter and one to twenty-nine lowercase letters), then one to twenty-four lowercase words of one to thirty letters, each after
+ *   one space, then a colon, a space and a double quote mark; it reads the words before the colon (its label). Over the CLAUSE_ROWS
+ *   controls, each text read alone, clausesOf reads as each row says: the clause of a lettered line for every letter a to z, closing
+ *   with a semicolon and with a full stop, of one and of four hundred characters; the label of a quoting line for every capital A to
+ *   Z, of one, nine and twenty-four lowercase words, and of a thirty-letter capitalized word with a thirty-letter lowercase word; and
+ *   nothing of a one-word label, a lettered line without its closing mark or closing with a comma or a colon, a letter in
+ *   parentheses mid-line, an uppercase letter or a digit in the parentheses, no space after the closing parenthesis, an indented
+ *   lettered line or label, a label starting lowercase or with a capitalized second word, a label without the space after its
+ *   colon or before a single quote mark, a label whose capitalized word is one letter, and the R-V1-OTHER-LINE quiet rows below. A
+ *   longer clause, label or word, and any other line form, are NOT CLAIMED of clausesOf.
  * - F1 (standing rule 16 frozen shape) ROWS, ARCHIVE_ROWS, LIVE_ROWS, SHAPES, WALKERS and the control tables N1_TEXTS,
- *   HOLDS_CONTROLS, W2_TEXTS, W3_FILES and V1_TEXTS as literals derived at this cut.
+ *   HOLDS_CONTROLS, W1_TEXTS, W2_TEXTS, W3_FILES, V1_TEXTS and CLAUSE_ROWS as literals derived at this cut.
  * - R1 every ROWS pin is a case of this file that ran to its end, once, in row order, then F1.
  *
+ * NAMED RESIDUALS (the known escapes within the claimed subjects; each a named family with a pinned quiet row that reads quiet, so
+ * the row reds if the reader starts to catch the family or the row is dropped from F1; a newly found escape is a residual-list
+ * addition unless it contradicts a pinned claim):
+ * - R-W3-NO-FROM: a .ts file below test/ that imports the helper without a from clause (a side-effect import, an import() call or a
+ *   require() call) is no importer to helperImporters, so it escapes W3's outside anchor. Quiet rows: W3_FILES test/y.test.ts
+ *   (import()), test/z.test.ts (require()) and test/za.test.ts (a side-effect import), each read as no importer.
+ * - R-V1-OTHER-LINE: a deliverable the bead's description spells in a line form clausesOf reads as nothing (a bulleted item, a
+ *   numbered item) adds no clause, so the tiling still holds and that deliverable escapes V1's outside anchor. Quiet row:
+ *   CLAUSE_ROWS "quiet row R-V1-OTHER-LINE", a bulleted and a numbered deliverable, read as nothing.
+ *
  * THE WALKERS: the 20 censuses whose walks the archive turned red, measured at trunk fd90f9d3 with master 6f7a366d's 457 archive
- * files tracked in the working tree (their blob ids equal master's; the archive tree is the same at 85c9b80f, ee51aa6c and
- * 0b25e14e): 20 files | 40 tests red at the base (the pins the archive hit, with the records or registration cases those pins
- * feed), each file green on that tree with this cut (its full default tier reads 0 failed); each routes those walks, with any
- * listing a walk is held equal to, through the helper and carries ARCHIVE_SCOPE_LINE.
+ * files tracked in the working tree (their blob ids equal master's; the archive tree deb70b9f is the same at 85c9b80f, ee51aa6c,
+ * 0b25e14e and d7666a76): 20 files | 40 tests red at the base (the pins the archive hit, with the records or registration cases
+ * those pins feed), each file green on that tree with this cut (its full default tier reads 0 failed); each routes those walks, with
+ * any listing a walk is held equal to, through the helper and carries ARCHIVE_SCOPE_LINE.
  *
  * WHY THE ROOT .npmignore: the measured cure placed '<program>/triage/' in a new docs/workbench/programs/.npmignore. That file is
  * itself a docs/workbench file outside the archive, so the live-doc walks judge it: tracked over this cut on the master-shaped tree
@@ -91,11 +143,13 @@
  *   the page edits), are NOT CLAIMED by this census.
  * - A path that is not repository-relative and "/"-separated, and a spelling of a path outside the helper's PINNED FORMS, are NOT
  *   CLAIMED by this census: P1-P3 judge one path per pinned form, and the helper's comment bounds its own claims the same way.
- * - An import of the helper from outside test/, from a file whose name does not end .ts, or through import() or require() is NOT
- *   CLAIMED by this census: W3 reads from clauses of the .ts files below test/.
+ * - An import of the helper from outside test/, or from a file below test/ whose name does not end .ts or that is no regular file
+ *   (a symbolic link), is NOT CLAIMED by this census: W3 reads the regular .ts files below test/ (its qa/ and .mts rows read as no
+ *   importer). An import without a from clause is the residual R-W3-NO-FROM above.
  * - A reader's reading of an input other than its live input and its listed controls is NOT CLAIMED by this census.
  * - The removal of a control row together with its F1 element is NOT CLAIMED as killed by this census: the control tables
- *   (N1_TEXTS, HOLDS_CONTROLS, W2_TEXTS, W3_FILES, V1_TEXTS) are falsifiers of this file's own readers, and F1 is their only anchor.
+ *   (N1_TEXTS, HOLDS_CONTROLS, W1_TEXTS, W2_TEXTS, W3_FILES, V1_TEXTS, CLAUSE_ROWS) are falsifiers of this file's own readers, and
+ *   F1 is their only anchor.
  * - package-smoke's own run over the repository is NOT CLAIMED by this census: N2 and N3 judge a scratch package; the gate step
  *   runs package-smoke itself.
  */
@@ -220,7 +274,7 @@ const SHAPES: readonly Shape[] = [
   { id: "deep", phrase: "pages deeper than its depth pin" },
   { id: "jsonl", phrase: "25 *.jsonl files" },
 ];
-/** Whether a fixture file holds a shape (the directories between docs/ and a page count toward its depth). */
+/** Whether a fixture file holds a shape (the directories between docs/ and a page count toward its depth; the spellings M1 above pins). */
 function holds(shape: string, file: FileText): boolean {
   if (shape === "no-heading") return file.path.endsWith(".md") && !file.text.startsWith("# ");
   if (shape === "not-markdown") return !file.path.endsWith(".md");
@@ -242,7 +296,7 @@ interface HoldsControl extends FileText {
   /** Whether holds must read this file as holding the shape (M1). */
   readonly holds: boolean;
 }
-/** M1's holds controls: for each shape, files on each side of its encoding. */
+/** M1's holds controls: for each shape, files on each side of its encoding, each spelling the path's ending or the text's opening one way. */
 const HOLDS_CONTROLS: readonly HoldsControl[] = [
   { shape: "no-heading", holds: false, path: "docs/a.md", text: "# A\n" },
   { shape: "no-heading", holds: true, path: "docs/b.md", text: "#B\n" },
@@ -258,6 +312,22 @@ const HOLDS_CONTROLS: readonly HoldsControl[] = [
   { shape: "deep", holds: false, path: "docs/a/b/c/d/l.json", text: "{}\n" },
   { shape: "jsonl", holds: true, path: "docs/m.jsonl", text: "{}\n" },
   { shape: "jsonl", holds: false, path: "docs/n.json", text: "{}\n" },
+  { shape: "no-heading", holds: true, path: "docs/o.md", text: "\n# O\n" },
+  { shape: "no-heading", holds: true, path: "docs/p.md", text: " # P\n" },
+  { shape: "no-heading", holds: true, path: "docs/q.md", text: "#\tQ\n" },
+  { shape: "no-heading", holds: true, path: "docs/r.md", text: "R\n# R\n" },
+  { shape: "no-heading", holds: false, path: "docs/s.MD", text: "S\n" },
+  { shape: "no-heading", holds: false, path: "docs/ad.xmd", text: "AD\n" },
+  { shape: "not-markdown", holds: true, path: "docs/t.MD", text: "# T\n" },
+  { shape: "not-markdown", holds: true, path: "docs/u.xmd", text: "# U\n" },
+  { shape: "shebang-py", holds: true, path: "docs/v.py", text: "#!python3\n" },
+  { shape: "shebang-py", holds: false, path: "docs/w.py", text: "\n#!/usr/bin/env python3\n" },
+  { shape: "shebang-py", holds: false, path: "docs/x.py", text: " #!/usr/bin/env python3\n" },
+  { shape: "shebang-py", holds: false, path: "docs/aa.xpy", text: "#!/bin/sh\n" },
+  { shape: "deep", holds: true, path: "docs/a/b/c/d/e/y.md", text: "# Y\n" },
+  { shape: "deep", holds: false, path: "docs/a/b/c/d/ac.xmd", text: "# AC\n" },
+  { shape: "jsonl", holds: false, path: "docs/z.jsonl.gz", text: "{}\n" },
+  { shape: "jsonl", holds: false, path: "docs/ab.xjsonl", text: "{}\n" },
 ];
 
 interface Walker {
@@ -288,6 +358,22 @@ const WALKERS: readonly Walker[] = [
   { file: "test/workbench-tsx-h2-proposed-api-census.test.ts", sites: 1 },
   { file: "test/workbench-urr-core-gate-census.test.ts", sites: 2 },
 ];
+/** A W1 input: its file (a control's id), whether it must hold HELPER_IMPORT, its call-site count, and its text. */
+interface ImportText {
+  readonly file: string;
+  readonly imports: boolean;
+  readonly sites: number;
+  readonly text: string;
+}
+/** W1's controls: the reader over the from clause spelled other ways, and over names and calls a call site must not be. */
+const W1_TEXTS: readonly ImportText[] = [
+  { file: "control: the import with single quote marks", imports: false, sites: 0, text: "import { x } from './helpers/triage-archive.js';\n" },
+  { file: "control: the import with the .ts ending", imports: false, sites: 0, text: 'import { x } from "./helpers/triage-archive.ts";\n' },
+  { file: "control: the helper's path named in a comment", imports: false, sites: 0, text: "// test/helpers/triage-archive.ts\n" },
+  { file: "control: a call of each function beside the import's specifiers", imports: true, sites: 2, text: `import { isTriageArchivePath, withoutTriageArchive } ${HELPER_IMPORT};\nisTriageArchivePath(a);\nwithoutTriageArchive(b);\n` },
+  { file: "control: names that only hold a function's name", imports: false, sites: 0, text: "myisTriageArchivePath(a);\n_withoutTriageArchive(b);\n2isTriageArchivePath(c);\nisTriageArchivePathX(d);\n" },
+  { file: "control: a call with a space before its parenthesis", imports: false, sites: 0, text: "isTriageArchivePath (a);\n" },
+];
 
 /** A control input of a counting reader: its id, the count the reader must read, and the text it reads. */
 interface CountText {
@@ -295,10 +381,14 @@ interface CountText {
   readonly reads: number;
   readonly text: string;
 }
-/** N1's controls: archiveLineCount over a text holding the TRIAGE_ARCHIVE line twice, and over lines holding it inside a longer line. */
+/** N1's controls: archiveLineCount over the TRIAGE_ARCHIVE line twice, padded at each end, inside a longer line, split by a space and upper-cased. */
 const N1_TEXTS: readonly CountText[] = [
   { id: "control: the line twice", reads: 2, text: `docs/\n${TRIAGE_ARCHIVE}\n# a comment\n${TRIAGE_ARCHIVE}\n` },
   { id: "control: the line inside a longer line", reads: 0, text: `!${TRIAGE_ARCHIVE}\n${TRIAGE_ARCHIVE}**\n# ${TRIAGE_ARCHIVE}\n` },
+  { id: "control: the line after two spaces and a tab", reads: 1, text: `  \t${TRIAGE_ARCHIVE}\n` },
+  { id: "control: the line before two spaces, a tab and a carriage return", reads: 1, text: `${TRIAGE_ARCHIVE}  \t\r\n` },
+  { id: "control: the line with a space inside it", reads: 0, text: `${TRIAGE_ARCHIVE.replace("/triage/", "/ triage/")}\n` },
+  { id: "control: the line upper-cased", reads: 0, text: `${TRIAGE_ARCHIVE.toUpperCase()}\n` },
 ];
 
 /** A comment block a text opens with, holding the given lines. */
@@ -315,13 +405,31 @@ const W2_TEXTS: readonly CountText[] = [
   { id: "control: the line inside a longer line", reads: 0, text: block([`${ARCHIVE_SCOPE_LINE} More.`]) },
   { id: "control: the line after a prefix", reads: 0, text: block([`See: ${ARCHIVE_SCOPE_LINE}`]) },
   { id: "control: the line with its case changed", reads: 0, text: block([ARCHIVE_SCOPE_LINE.replace("ARCHIVE SCOPE", "Archive scope")]) },
+  { id: "control: the line after a newline before the block", reads: 0, text: `\n${block([ARCHIVE_SCOPE_LINE])}` },
+  { id: "control: the line after a space before the block", reads: 0, text: ` ${block([ARCHIVE_SCOPE_LINE])}` },
+  { id: "control: the line in a block that never closes", reads: 0, text: `/**\n * ${ARCHIVE_SCOPE_LINE}\n` },
+  { id: "control: the line after its star and a tab", reads: 0, text: `/**\n *\t${ARCHIVE_SCOPE_LINE}\n */\n` },
+  { id: "control: the line after its star and two spaces", reads: 0, text: `/**\n *  ${ARCHIVE_SCOPE_LINE}\n */\n` },
+  { id: "control: the line after two stars", reads: 0, text: `/**\n ** ${ARCHIVE_SCOPE_LINE}\n */\n` },
+  { id: "control: the line after a star and a space at the line's start", reads: 1, text: `/**\n* ${ARCHIVE_SCOPE_LINE}\n */\n` },
+  { id: "control: the line after two spaces, a star and a space", reads: 1, text: `/**\n  * ${ARCHIVE_SCOPE_LINE}\n */\n` },
+  { id: "control: the line after a tab, a star and a space", reads: 1, text: `/**\n\t* ${ARCHIVE_SCOPE_LINE}\n */\n` },
+  { id: "control: the line after eight spaces and tabs, a star and a space", reads: 1, text: `/**\n \t  \t   * ${ARCHIVE_SCOPE_LINE}\n */\n` },
+  { id: "control: the line right after a space and a star", reads: 1, text: `/**\n *${ARCHIVE_SCOPE_LINE}\n */\n` },
+  { id: "control: the line right after the block's opening stars", reads: 1, text: `/**${ARCHIVE_SCOPE_LINE}\n */\n` },
+  { id: "control: the line after a space, a star and a space on the block's opening line", reads: 1, text: `/** * ${ARCHIVE_SCOPE_LINE}\n */\n` },
+  { id: "control: the line with a star and two spaces inside it and no prefix", reads: 0, text: `/**\n${ARCHIVE_SCOPE_LINE.replace("ARCHIVE SCOPE", "ARCHIVE*  SCOPE")}\n */\n` },
+  { id: "control: the line before two spaces and a tab", reads: 1, text: block([`${ARCHIVE_SCOPE_LINE}  \t`]) },
+  { id: "control: the line in a block with carriage-return line endings", reads: 1, text: `/**\r\n * ${ARCHIVE_SCOPE_LINE}\r\n */\r\n` },
 ];
 
 interface ImporterFile extends FileText {
   /** Whether helperImporters must find this file (W3). */
   readonly importer: boolean;
+  /** The NAMED RESIDUAL this row is a quiet row of, when it is one (W3). */
+  readonly residual?: string;
 }
-/** W3's control tree: files below a scratch test/, each spelling a from clause one way. */
+/** W3's control tree: files below a scratch test/ (and one beside it, under qa/), each spelling a from clause, or an import without one, one way. */
 const W3_FILES: readonly ImporterFile[] = [
   { path: "test/a.test.ts", importer: true, text: 'import { readFileSync } from "node:fs";\nimport { isTriageArchivePath } from "./helpers/triage-archive.js";\n' },
   { path: "test/helpers/b.ts", importer: true, text: 'export { isTriageArchivePath } from "./triage-archive.js";\n' },
@@ -333,6 +441,23 @@ const W3_FILES: readonly ImporterFile[] = [
   { path: "test/i.test.ts", importer: false, text: 'import { x } from "./helpers/triage-archive-extra.js";\n' },
   { path: "test/j.test.ts", importer: false, text: 'import { x } from "../helpers/triage-archive.js";\n' },
   { path: "test/helpers/triage-archive.ts", importer: false, text: "export const TRIAGE_ARCHIVE = 1;\n" },
+  { path: "test/k.test.ts", importer: true, text: '// import { isTriageArchivePath } from "./helpers/triage-archive.js";\n' },
+  { path: "test/l.test.ts", importer: true, text: '/* import { isTriageArchivePath } from "./helpers/triage-archive.js"; */\n' },
+  { path: "test/m.d.ts", importer: true, text: 'export { isTriageArchivePath } from "./helpers/triage-archive.js";\n' },
+  { path: "test/n.test.ts", importer: true, text: 'import { isTriageArchivePath } from"./helpers/triage-archive.js";\n' },
+  { path: "test/o.test.ts", importer: true, text: 'import { isTriageArchivePath } from\n  "./helpers/triage-archive.js";\n' },
+  { path: "test/p.test.ts", importer: true, text: 'import { isTriageArchivePath } from\t"./helpers/triage-archive.js";\n' },
+  { path: "test/q.test.ts", importer: true, text: 'import { isTriageArchivePath } from "./helpers/../helpers/triage-archive.js";\n' },
+  { path: "test/r.test.ts", importer: false, text: 'import { x } from "./helpers/triage-archive.mjs";\n' },
+  { path: "test/s.test.ts", importer: false, text: "import { x } from \"./helpers/triage-archive.js';\n" },
+  { path: "test/t.test.ts", importer: false, text: '// xfrom "./helpers/triage-archive.js"\n' },
+  { path: "test/u.test.ts", importer: false, text: '// From "./helpers/triage-archive.js"\n' },
+  { path: "test/v.test.ts", importer: false, text: 'import { x } from "helpers/triage-archive.js";\n' },
+  { path: "test/w.mts", importer: false, text: 'import { x } from "./helpers/triage-archive.js";\n' },
+  { path: "qa/x.ts", importer: false, text: 'import { x } from "../test/helpers/triage-archive.js";\n' },
+  { path: "test/y.test.ts", importer: false, residual: "R-W3-NO-FROM", text: 'await import("./helpers/triage-archive.js");\n' },
+  { path: "test/z.test.ts", importer: false, residual: "R-W3-NO-FROM", text: 'require("./helpers/triage-archive.js");\n' },
+  { path: "test/za.test.ts", importer: false, residual: "R-W3-NO-FROM", text: 'import "./helpers/triage-archive.js";\n' },
 ];
 
 /** A control input of a yes-or-no reader: its id, the reading it must give, and the text it reads. */
@@ -358,9 +483,37 @@ const EXPORT_TEXT = [
   JSON.stringify({ id: BEAD, description: "the bead's own row" }),
   JSON.stringify({ id: "wb-later", description: "a later row", links: [{ id: BEAD }] }),
 ].join("\n");
-/** V1's clausesOf control, and the clauses it must read from it. */
-const CLAUSE_TEXT = ["(a) one clause;", "(b) two clause.", "(c) three clause.", 'Label words: "q"', 'Note: "q"', "(d) no closing mark", "Lead in (e) mid-line."].join("\n");
-const CLAUSE_READS: readonly string[] = ["one clause", "two clause", "three clause", "Label words"];
+/** A control input of clausesOf: its id, its text, and the clauses and labels clausesOf must read from it, in order. */
+interface ClauseRow {
+  readonly id: string;
+  readonly text: string;
+  readonly reads: readonly string[];
+}
+const LOWERCASE = [..."abcdefghijklmnopqrstuvwxyz"];
+const UPPERCASE = LOWERCASE.map(letter => letter.toUpperCase());
+const LONG_CLAUSE = "y".repeat(400);
+const LONG_LABEL = `A${"b".repeat(29)} ${"c".repeat(30)}`;
+const MANY_WORDS_LABEL = `Label ${LOWERCASE.slice(0, 24).join(" ")}`;
+/** V1's clausesOf controls, each text read alone: the lettered and quoting line forms at their pinned bounds, and lines read as nothing. */
+const CLAUSE_ROWS: readonly ClauseRow[] = [
+  { id: "lettered lines closing with a semicolon and a full stop", text: "(a) one clause;\n(b) two clause.\n(c) three clause.", reads: ["one clause", "two clause", "three clause"] },
+  { id: "a lettered line for every letter a to z", text: LOWERCASE.map(letter => `(${letter}) clause ${letter}.`).join("\n"), reads: LOWERCASE.map(letter => `clause ${letter}`) },
+  { id: "lettered clauses of one and of four hundred characters", text: `(a) x.\n(b) ${LONG_CLAUSE};`, reads: ["x", LONG_CLAUSE] },
+  { id: "labels of one, nine and twenty-four lowercase words", text: ['Label words: "q"', 'Note on the way the archive is to be kept: "q"', `${MANY_WORDS_LABEL}: "q"`].join("\n"), reads: ["Label words", "Note on the way the archive is to be kept", MANY_WORDS_LABEL] },
+  { id: "a label for every capital A to Z", text: UPPERCASE.map(capital => `${capital}b words: "q"`).join("\n"), reads: UPPERCASE.map(capital => `${capital}b words`) },
+  { id: "a label of a thirty-letter capitalized word and a thirty-letter lowercase word", text: `${LONG_LABEL}: "q"`, reads: [LONG_LABEL] },
+  { id: "control: a one-word label", text: 'Note: "q"', reads: [] },
+  { id: "control: a lettered line without its closing mark", text: "(d) no closing mark", reads: [] },
+  { id: "control: lettered lines closing with a comma and a colon", text: "(e) a comma ending,\n(f) a colon ending:", reads: [] },
+  { id: "control: a letter in parentheses mid-line", text: "Lead in (e) mid-line.", reads: [] },
+  { id: "control: an uppercase letter and a digit in the parentheses", text: "(A) a capital letter.\n(1) a digit.", reads: [] },
+  { id: "control: no space after the closing parenthesis", text: "(g)no space.", reads: [] },
+  { id: "control: an indented lettered line and an indented label", text: ' (h) an indented line.\n Label words: "q"', reads: [] },
+  { id: "control: labels starting lowercase and with a capitalized second word", text: 'label words: "q"\nLabel Words: "q"', reads: [] },
+  { id: "control: labels without the space after the colon and before a single quote mark", text: 'Label words:"q"\nLabel words: \'q\'', reads: [] },
+  { id: "control: a label whose capitalized word is one letter", text: 'L words: "q"', reads: [] },
+  { id: "quiet row R-V1-OTHER-LINE: a bulleted and a numbered deliverable", text: "- a bulleted deliverable.\n1. a numbered deliverable.", reads: [] },
+];
 
 const REACHED: string[] = [];
 /** The cases that spawn npm or git or read every test file and the tracker export: a loaded host must not time them out. */
@@ -371,10 +524,10 @@ const CALLS = /\b(withoutTriageArchive|isTriageArchivePath)\(/g;
 /** The helper calls in a source text, by function (an import specifier is no call). */
 const callsIn = (text: string): string[] => [...text.matchAll(CALLS)].map(match => match[1] ?? "");
 
-/** N1's reader: the lines of a text that are TRIAGE_ARCHIVE once trimmed. */
+/** N1's reader: the lines of a text that are TRIAGE_ARCHIVE once trimmed (the spellings N1 above pins). */
 const archiveLineCount = (text: string): number => text.split("\n").filter(line => line.trim() === TRIAGE_ARCHIVE).length;
 
-/** The comment block a text opens with, line by line, each line's comment prefix and trailing whitespace removed. */
+/** The lines of the comment block a text opens with, each with its comment prefix and its trailing whitespace removed (the spellings W2 above pins). */
 function headerLines(text: string): string[] {
   const end = text.indexOf("*/");
   if (!text.startsWith("/**") || end < 0) return [];
@@ -445,8 +598,8 @@ function tsFilesBelow(root: string, directory: string): string[] {
     .map(entry => relative(root, join(entry.parentPath, entry.name)).split("\\").join("/"))
     .sort();
 }
-const FROM = /\bfrom\s+(["'])([^"']+)\1/g;
-/** Whether a file's text holds a from clause whose relative specifier, joined to the file's directory with a .js or .ts ending dropped, is the helper. */
+const FROM = /\bfrom\s*(["'])([^"']+)\1/g;
+/** Whether a file's text holds a from clause whose specifier starts with a dot and, joined to the file's directory with a .js or .ts ending dropped, is the helper (the spellings W3 above pins). */
 function importsHelper(file: string, text: string): boolean {
   return [...text.matchAll(FROM)].some(match => {
     const specifier = match[2] ?? "";
@@ -472,7 +625,7 @@ function exportRow(id: string, text: string): { description: string; notes: stri
 }
 /** V1's reader: whether a text quotes OWNER_RATIONALE between quote marks, character for character. */
 const quotesRationale = (text: string): boolean => text.includes(`"${OWNER_RATIONALE}"`);
-/** V1's clause reader: each lettered line's clause, and the label of each line that introduces a quotation. */
+/** V1's clause reader: each lettered line's clause, and the label of each quoting line (the forms and bounds V1 above pins). */
 function clausesOf(description: string): string[] {
   return description.split("\n").flatMap(line => {
     const lettered = /^\([a-z]\) (.+)[;.]$/.exec(line);
@@ -639,11 +792,14 @@ describe("wb-cbt4 census: the master-side triage-archive reconciliation (owner s
 
   it("W1", () => {
     expect.assertions(1);
-    const measured = WALKERS.map(walker => {
-      const text = read(walker.file);
+    const inputs: readonly ImportText[] = [...WALKERS.map(walker => ({ file: walker.file, imports: true, sites: walker.sites, text: read(walker.file) })), ...W1_TEXTS];
+    const measured = inputs.map(walker => {
+      const { text } = walker;
       return { file: walker.file, imports: text.includes(HELPER_IMPORT), sites: callsIn(text).length };
     });
-    expect(measured, "each walking census imports the helper and holds its pinned call sites").toEqual(WALKERS.map(walker => ({ file: walker.file, imports: true, sites: walker.sites })));
+    expect(measured, "each walking census holds the from clause and its pinned call sites, and each control reads as its row says").toEqual(
+      inputs.map(walker => ({ file: walker.file, imports: walker.imports, sites: walker.sites })),
+    );
     REACHED.push("W1");
   });
 
@@ -677,16 +833,16 @@ describe("wb-cbt4 census: the master-side triage-archive reconciliation (owner s
       inputs.map(input => `${input.id}: ${quotesRationale(input.text)}`),
       "the bead quotes OWNER_RATIONALE verbatim, and no control quotation reads as it",
     ).toEqual(inputs.map(input => `${input.id}: ${input.quotes}`));
-    const [clauses, controlClauses] = [description, CLAUSE_TEXT].map(text => clausesOf(text));
+    const [clauses, ...controlClauses] = [description, ...CLAUSE_ROWS.map(entry => entry.text)].map(text => clausesOf(text));
     expect(
-      { tiling: clauses.join(" "), control: controlClauses },
-      "the bead's clauses tile the ROWS requirement phrases, in order, and the control's clauses are CLAUSE_READS",
-    ).toEqual({ tiling: ROWS.map(entry => entry.requirement).join(" "), control: CLAUSE_READS });
+      { tiling: clauses.join(" "), controls: CLAUSE_ROWS.map((entry, index) => `${entry.id}: ${JSON.stringify(controlClauses[index])}`) },
+      "the bead's clauses tile the ROWS requirement phrases, in order, and each CLAUSE_ROWS text reads as its row says",
+    ).toEqual({ tiling: ROWS.map(entry => entry.requirement).join(" "), controls: CLAUSE_ROWS.map(entry => `${entry.id}: ${JSON.stringify(entry.reads)}`) });
     REACHED.push("V1");
   }, SPAWNING_CASE_TIMEOUT_MS);
 
   it("F1", () => {
-    expect.assertions(10);
+    expect.assertions(12);
     expect(ROWS.map(row => `${row.id}|${row.requirement}|${row.pins.join(",")}`)).toEqual([
       "A|the measured .npmignore '*/triage/' package-smoke cure|N1,N2,N3",
       "B|an EXPLICIT owner-specified archive-path exclusion for docs/workbench/programs/*/triage/|P1,P2,P3,M1",
@@ -746,7 +902,14 @@ describe("wb-cbt4 census: the master-side triage-archive reconciliation (owner s
       "test/workbench-tsx-h2-proposed-api-census.test.ts:1",
       "test/workbench-urr-core-gate-census.test.ts:2",
     ]);
-    expect(N1_TEXTS.map(entry => `${entry.id}:${entry.reads}`)).toEqual(["control: the line twice:2", "control: the line inside a longer line:0"]);
+    expect(N1_TEXTS.map(entry => `${entry.id}:${entry.reads}`)).toEqual([
+      "control: the line twice:2",
+      "control: the line inside a longer line:0",
+      "control: the line after two spaces and a tab:1",
+      "control: the line before two spaces, a tab and a carriage return:1",
+      "control: the line with a space inside it:0",
+      "control: the line upper-cased:0",
+    ]);
     expect(HOLDS_CONTROLS.map(entry => `${entry.shape}|${entry.path}:${entry.holds}`)).toEqual([
       "no-heading|docs/a.md:false",
       "no-heading|docs/b.md:true",
@@ -762,6 +925,30 @@ describe("wb-cbt4 census: the master-side triage-archive reconciliation (owner s
       "deep|docs/a/b/c/d/l.json:false",
       "jsonl|docs/m.jsonl:true",
       "jsonl|docs/n.json:false",
+      "no-heading|docs/o.md:true",
+      "no-heading|docs/p.md:true",
+      "no-heading|docs/q.md:true",
+      "no-heading|docs/r.md:true",
+      "no-heading|docs/s.MD:false",
+      "no-heading|docs/ad.xmd:false",
+      "not-markdown|docs/t.MD:true",
+      "not-markdown|docs/u.xmd:true",
+      "shebang-py|docs/v.py:true",
+      "shebang-py|docs/w.py:false",
+      "shebang-py|docs/x.py:false",
+      "shebang-py|docs/aa.xpy:false",
+      "deep|docs/a/b/c/d/e/y.md:true",
+      "deep|docs/a/b/c/d/ac.xmd:false",
+      "jsonl|docs/z.jsonl.gz:false",
+      "jsonl|docs/ab.xjsonl:false",
+    ]);
+    expect(W1_TEXTS.map(entry => `${entry.file}:${entry.imports}:${entry.sites}`)).toEqual([
+      "control: the import with single quote marks:false:0",
+      "control: the import with the .ts ending:false:0",
+      "control: the helper's path named in a comment:false:0",
+      "control: a call of each function beside the import's specifiers:true:2",
+      "control: names that only hold a function's name:false:0",
+      "control: a call with a space before its parenthesis:false:0",
     ]);
     expect(W2_TEXTS.map(entry => `${entry.id}:${entry.reads}`)).toEqual([
       "the line in the opening block:1",
@@ -774,8 +961,24 @@ describe("wb-cbt4 census: the master-side triage-archive reconciliation (owner s
       "control: the line inside a longer line:0",
       "control: the line after a prefix:0",
       "control: the line with its case changed:0",
+      "control: the line after a newline before the block:0",
+      "control: the line after a space before the block:0",
+      "control: the line in a block that never closes:0",
+      "control: the line after its star and a tab:0",
+      "control: the line after its star and two spaces:0",
+      "control: the line after two stars:0",
+      "control: the line after a star and a space at the line's start:1",
+      "control: the line after two spaces, a star and a space:1",
+      "control: the line after a tab, a star and a space:1",
+      "control: the line after eight spaces and tabs, a star and a space:1",
+      "control: the line right after a space and a star:1",
+      "control: the line right after the block's opening stars:1",
+      "control: the line after a space, a star and a space on the block's opening line:1",
+      "control: the line with a star and two spaces inside it and no prefix:0",
+      "control: the line before two spaces and a tab:1",
+      "control: the line in a block with carriage-return line endings:1",
     ]);
-    expect(W3_FILES.map(entry => `${entry.path}:${entry.importer}`)).toEqual([
+    expect(W3_FILES.map(entry => `${entry.path}:${entry.importer}${entry.residual === undefined ? "" : `:${entry.residual}`}`)).toEqual([
       "test/a.test.ts:true",
       "test/helpers/b.ts:true",
       "test/c/d.test.ts:true",
@@ -786,6 +989,23 @@ describe("wb-cbt4 census: the master-side triage-archive reconciliation (owner s
       "test/i.test.ts:false",
       "test/j.test.ts:false",
       "test/helpers/triage-archive.ts:false",
+      "test/k.test.ts:true",
+      "test/l.test.ts:true",
+      "test/m.d.ts:true",
+      "test/n.test.ts:true",
+      "test/o.test.ts:true",
+      "test/p.test.ts:true",
+      "test/q.test.ts:true",
+      "test/r.test.ts:false",
+      "test/s.test.ts:false",
+      "test/t.test.ts:false",
+      "test/u.test.ts:false",
+      "test/v.test.ts:false",
+      "test/w.mts:false",
+      "qa/x.ts:false",
+      "test/y.test.ts:false:R-W3-NO-FROM",
+      "test/z.test.ts:false:R-W3-NO-FROM",
+      "test/za.test.ts:false:R-W3-NO-FROM",
     ]);
     expect(V1_TEXTS.map(entry => `${entry.id}:${entry.quotes}`)).toEqual([
       "control: its tail changed:false",
@@ -795,6 +1015,25 @@ describe("wb-cbt4 census: the master-side triage-archive reconciliation (owner s
       "control: its dash changed:false",
       "control: its opening quote mark missing:false",
       "control: its closing quote mark missing:false",
+    ]);
+    expect(CLAUSE_ROWS.map(entry => `${entry.id}:${entry.reads.length}`)).toEqual([
+      "lettered lines closing with a semicolon and a full stop:3",
+      "a lettered line for every letter a to z:26",
+      "lettered clauses of one and of four hundred characters:2",
+      "labels of one, nine and twenty-four lowercase words:3",
+      "a label for every capital A to Z:26",
+      "a label of a thirty-letter capitalized word and a thirty-letter lowercase word:1",
+      "control: a one-word label:0",
+      "control: a lettered line without its closing mark:0",
+      "control: lettered lines closing with a comma and a colon:0",
+      "control: a letter in parentheses mid-line:0",
+      "control: an uppercase letter and a digit in the parentheses:0",
+      "control: no space after the closing parenthesis:0",
+      "control: an indented lettered line and an indented label:0",
+      "control: labels starting lowercase and with a capitalized second word:0",
+      "control: labels without the space after the colon and before a single quote mark:0",
+      "control: a label whose capitalized word is one letter:0",
+      "quiet row R-V1-OTHER-LINE: a bulleted and a numbered deliverable:0",
     ]);
     REACHED.push("F1");
   });
