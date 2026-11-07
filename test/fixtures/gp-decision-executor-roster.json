@@ -19001,31 +19001,46 @@
           "assignments": 65536,
           "distinct": 65536,
           "misread": 0,
-          "mismatched": []
+          "mismatched": [],
+          "named": [
+            "F1"
+          ]
         },
         "F2": {
           "assignments": 65536,
           "distinct": 65536,
           "misread": 0,
-          "mismatched": []
+          "mismatched": [],
+          "named": [
+            "F2"
+          ]
         },
         "F3": {
           "assignments": 65536,
           "distinct": 65536,
           "misread": 0,
-          "mismatched": []
+          "mismatched": [],
+          "named": [
+            "F3"
+          ]
         },
         "F4": {
           "assignments": 65536,
           "distinct": 65536,
           "misread": 0,
-          "mismatched": []
+          "mismatched": [],
+          "named": [
+            "F4"
+          ]
         },
         "F5": {
           "assignments": 65536,
           "distinct": 65536,
           "misread": 0,
-          "mismatched": []
+          "mismatched": [],
+          "named": [
+            "F5"
+          ]
         }
       },
       "wholeReadingsByDashedName": {
@@ -19038,6 +19053,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F1-x-188-exec-a1-t1\"], named [\"F1\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "F2": {
@@ -19049,6 +19067,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F2-x-188-exec-a1-t1\"], named [\"F2\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F2\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F2\"]"
+          ],
+          "named": [
+            "F2"
           ]
         },
         "F3": {
@@ -19060,6 +19081,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F3-x-188-exec-a1-t1\"], named [\"F3\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F3\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F3\"]"
+          ],
+          "named": [
+            "F3"
           ]
         },
         "F4": {
@@ -19071,6 +19095,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F4-x-188-exec-a1-t1\"], named [\"F4\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F4\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F4\"]"
+          ],
+          "named": [
+            "F4"
           ]
         },
         "F5": {
@@ -19082,6 +19109,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F5-x-188-exec-a1-t1\"], named [\"F5\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F5\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F5\"]"
+          ],
+          "named": [
+            "F5"
           ]
         }
       },
@@ -19095,6 +19125,9 @@
             "first call other, own, own, own; second call both, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
             "first call both, own, own, own; second call both, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
             "first call neither, own, own, own; second call both, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "X02's form": {
@@ -19106,6 +19139,9 @@
             "first call other, own, own, own; second call both, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
             "first call both, own, own, own; second call both, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
             "first call neither, own, own, own; second call both, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "X03's form": {
@@ -19117,6 +19153,9 @@
             "first call own, other, own, own; second call own, own, own, both: carried [[true,false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t2\"], named [\"F1\"]",
             "first call own, both, own, own; second call own, own, own, both: carried [[true,false,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
             "first call own, neither, own, own; second call own, own, own, both: carried [[true,false,true,true],[true,true,true,true]], shared [], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "X04's form": {
@@ -19128,6 +19167,9 @@
             "first call neither, own, both, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
             "first call other, other, both, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\",\"inv-F1-188-exec-a1-t2\"], named [\"F1\"]",
             "first call neither, other, both, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t2\"], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "X05's form": {
@@ -19139,6 +19181,9 @@
             "first call other, own, other, own; second call own, own, own, own: carried [[false,true,false,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
             "first call own, other, other, own; second call own, own, own, own: carried [[true,false,false,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a1-t2\"], named [\"F1\"]",
             "first call other, other, other, own; second call own, own, own, own: carried [[false,false,false,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a1-t2\",\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "an own request unread": {
@@ -19150,6 +19195,9 @@
             "first call other, own, own, own; second call neither, own, own, own: carried [[false,false,true,true],[false,true,true,true]], shared [], named [\"F1\"]",
             "first call both, own, own, own; second call neither, own, own, own: carried [[false,false,true,true],[false,true,true,true]], shared [], named [\"F1\"]",
             "first call neither, own, own, own; second call neither, own, own, own: carried [[false,false,true,true],[false,true,true,true]], shared [], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "the shared ids reversed": {
@@ -19161,6 +19209,9 @@
             "first call other, own, other, own; second call own, own, own, own: carried [[false,true,false,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
             "first call own, other, other, own; second call own, own, own, own: carried [[true,false,false,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a1-t2\"], named [\"F1\"]",
             "first call other, other, other, own; second call own, own, own, own: carried [[false,false,false,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a1-t2\",\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "the first shared id misspelled": {
@@ -19172,6 +19223,9 @@
             "first call own, other, own, own; second call own, own, own, own: carried [[true,false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t2x\"], named [\"F1\"]",
             "first call other, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1x\",\"inv-F1-188-exec-a1-t2\"], named [\"F1\"]",
             "first call both, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t2x\"], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "the second shared id misspelled": {
@@ -19183,6 +19237,9 @@
             "first call other, own, other, own; second call own, own, own, own: carried [[false,true,false,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\",\"inv-F1-188-exec-a2-t2x\"], named [\"F1\"]",
             "first call own, other, other, own; second call own, own, own, own: carried [[true,false,false,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t2\",\"inv-F1-188-exec-a2-t2x\"], named [\"F1\"]",
             "first call other, other, other, own; second call own, own, own, own: carried [[false,false,false,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\",\"inv-F1-188-exec-a1-t2x\",\"inv-F1-188-exec-a2-t2\"], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "the third shared id misspelled": {
@@ -19194,6 +19251,9 @@
             "first call other, other, own, other; second call own, own, own, own: carried [[false,false,true,false],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\",\"inv-F1-188-exec-a1-t2\",\"inv-F1-188-exec-a2-t3x\"], named [\"F1\"]",
             "first call other, own, other, other; second call own, own, own, own: carried [[false,true,false,false],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\",\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a2-t3x\"], named [\"F1\"]",
             "first call own, other, other, other; second call own, own, own, own: carried [[true,false,false,false],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t2\",\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a2-t3x\"], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "the fourth shared id misspelled": {
@@ -19205,6 +19265,9 @@
             "first call own, other, other, other; second call other, own, own, own: carried [[true,false,false,false],[false,true,true,true]], shared [\"inv-F1-187-exec-a1-t1\",\"inv-F1-188-exec-a1-t2\",\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a2-t3x\"], named [\"F1\"]",
             "first call other, own, other, other; second call own, other, own, own: carried [[false,true,false,false],[true,false,true,true]], shared [\"inv-F1-188-exec-a1-t1\",\"inv-F1-187-exec-a1-t2\",\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a2-t3x\"], named [\"F1\"]",
             "first call own, own, other, other; second call other, other, own, own: carried [[true,true,false,false],[false,false,true,true]], shared [\"inv-F1-187-exec-a1-t1\",\"inv-F1-187-exec-a1-t2\",\"inv-F1-188-exec-a2-t2\",\"inv-F1-188-exec-a2-t3x\"], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "the last shared id dropped": {
@@ -19216,6 +19279,9 @@
             "first call own, other, own, own; second call own, own, own, own: carried [[true,false,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
             "first call other, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
             "first call both, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "an extra carried row": {
@@ -19227,6 +19293,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "the first call's row one value longer": {
@@ -19238,6 +19307,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true,false],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true,false],[true,true,true,true]], shared [], named [\"F1\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true,false],[true,true,true,true]], shared [], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "the second call's row one value longer": {
@@ -19249,6 +19321,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,false]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,false]], shared [], named [\"F1\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,false]], shared [], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "the name twice": {
@@ -19260,6 +19335,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\",\"F1\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\",\"F1\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\",\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "the name misspelled": {
@@ -19271,6 +19349,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1x\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1x\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1x\"]"
+          ],
+          "named": [
+            "F1x"
           ]
         },
         "the first call's row one value shorter": {
@@ -19282,6 +19363,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true],[true,true,true,true]], shared [], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "the second call's row one value shorter": {
@@ -19293,6 +19377,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true]], shared [], named [\"F1\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true]], shared [], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "a carried row missing": {
@@ -19304,6 +19391,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true]], shared [], named [\"F1\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true]], shared [], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "a shared id more": {
@@ -19315,6 +19405,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\",\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "no name": {
@@ -19326,7 +19419,8 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named []",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named []",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named []"
-          ]
+          ],
+          "named": []
         },
         "the name gaining a final ~": {
           "assignments": 65536,
@@ -19337,6 +19431,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1~\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1~\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1~\"]"
+          ],
+          "named": [
+            "F1~"
           ]
         },
         "the name gaining a leading ~": {
@@ -19348,6 +19445,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"~F1\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"~F1\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"~F1\"]"
+          ],
+          "named": [
+            "~F1"
           ]
         },
         "the name in another case": {
@@ -19359,6 +19459,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"f1\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"f1\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"f1\"]"
+          ],
+          "named": [
+            "f1"
           ]
         },
         "the name without its last character": {
@@ -19370,6 +19473,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F\"]"
+          ],
+          "named": [
+            "F"
           ]
         },
         "the name without its first character": {
@@ -19381,6 +19487,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"1\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"1\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"1\"]"
+          ],
+          "named": [
+            "1"
           ]
         },
         "another drive's name": {
@@ -19392,6 +19501,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F2\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F2\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F2\"]"
+          ],
+          "named": [
+            "F2"
           ]
         },
         "every other request read carried": {
@@ -19403,6 +19515,9 @@
             "first call own, other, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t2\"], named [\"F1\"]",
             "first call other, other, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\",\"inv-F1-188-exec-a1-t2\"], named [\"F1\"]",
             "first call both, other, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t2\"], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "every both request read carried": {
@@ -19414,6 +19529,9 @@
             "first call both, other, own, own; second call own, own, own, own: carried [[true,false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t2\"], named [\"F1\"]",
             "first call own, both, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
             "first call other, both, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "every neither request read carried": {
@@ -19425,6 +19543,9 @@
             "first call neither, other, own, own; second call own, own, own, own: carried [[true,false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t2\"], named [\"F1\"]",
             "first call neither, both, own, own; second call own, own, own, own: carried [[true,false,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
             "first call own, neither, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "every own request read not carried": {
@@ -19436,6 +19557,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,false,false,false],[false,false,false,false]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,false,false,false],[false,false,false,false]], shared [], named [\"F1\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,false,false,false],[false,false,false,false]], shared [], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "a third row, the first call's again": {
@@ -19447,6 +19571,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[false,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[false,true,true,true]], shared [], named [\"F1\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[false,true,true,true]], shared [], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "a third row of four carried values": {
@@ -19458,6 +19585,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "a third row of four values not carried": {
@@ -19469,6 +19599,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[false,false,false,false]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[false,false,false,false]], shared [], named [\"F1\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[false,false,false,false]], shared [], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "the first call's row one value longer, a fifth value carried": {
@@ -19480,6 +19613,9 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
         },
         "the second call's row one value longer, a fifth value carried": {
@@ -19491,7 +19627,727 @@
             "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
             "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,true]], shared [], named [\"F1\"]",
             "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,true]], shared [], named [\"F1\"]"
+          ],
+          "named": [
+            "F1"
           ]
+        }
+      },
+      "wholeReadingsOfSerialOfForms": {
+        "F1": {
+          "a third call, the second call's again": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true],[false,false,false,false]], shared [], named [\"F1\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[false,false,false,false]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[false,false,false,false]], shared [], named [\"F1\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[false,false,false,false]], shared [], named [\"F1\"]"
+            ],
+            "named": [
+              "F1"
+            ]
+          },
+          "the second call missing": {
+            "assignments": 65536,
+            "distinct": 256,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true]], shared [], named [\"F1\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true]], shared [], named [\"F1\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true]], shared [], named [\"F1\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true]], shared [], named [\"F1\"]"
+            ],
+            "named": [
+              "F1"
+            ]
+          },
+          "the first call without its last request": {
+            "assignments": 65536,
+            "distinct": 16384,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true],[true,true,true,true]], shared [], named [\"F1\"]"
+            ],
+            "named": [
+              "F1"
+            ]
+          },
+          "the second call without its last request": {
+            "assignments": 65536,
+            "distinct": 16384,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true]], shared [], named [\"F1\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true]], shared [], named [\"F1\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true]], shared [], named [\"F1\"]"
+            ],
+            "named": [
+              "F1"
+            ]
+          },
+          "the first call with its first request again after its last": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true,false],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\",\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true,false],[true,true,true,true]], shared [], named [\"F1\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true,false],[true,true,true,true]], shared [], named [\"F1\"]"
+            ],
+            "named": [
+              "F1"
+            ]
+          },
+          "the second call with its first request again after its last": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true,true]], shared [], named [\"F1\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,true]], shared [], named [\"F1\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,true]], shared [], named [\"F1\"]"
+            ],
+            "named": [
+              "F1"
+            ]
+          },
+          "the two serials swapped": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65280,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[false,false,false,false],[false,false,false,false]], shared [], named [\"F1\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[true,false,false,false],[false,false,false,false]], shared [\"inv-F1-188-exec-a1-t1\"], named [\"F1\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,false,false,false],[false,false,false,false]], shared [], named [\"F1\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,false,false,false],[false,false,false,false]], shared [], named [\"F1\"]"
+            ],
+            "named": [
+              "F1"
+            ]
+          },
+          "the second call's invocationIds each with an x after it": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 27120,
+            "mismatched": [
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
+              "first call own, other, own, own; second call own, own, own, own: carried [[true,false,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
+              "first call other, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [], named [\"F1\"]",
+              "first call both, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [], named [\"F1\"]"
+            ],
+            "named": [
+              "F1"
+            ]
+          },
+          "every invocationId with an x after it": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 27120,
+            "mismatched": [
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1x\"], named [\"F1\"]",
+              "first call own, other, own, own; second call own, own, own, own: carried [[true,false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t2x\"], named [\"F1\"]",
+              "first call other, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t1x\",\"inv-F1-188-exec-a1-t2x\"], named [\"F1\"]",
+              "first call both, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F1-188-exec-a1-t2x\"], named [\"F1\"]"
+            ],
+            "named": [
+              "F1"
+            ]
+          },
+          "the second call's invocationIds under another drive's name": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true]], shared [], named [\"F1\",\"F2\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\",\"F2\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\",\"F2\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F1\",\"F2\"]"
+            ],
+            "named": [
+              "F1",
+              "F2"
+            ]
+          }
+        },
+        "F2": {
+          "a third call, the second call's again": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true],[false,false,false,false]], shared [], named [\"F2\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[false,false,false,false]], shared [\"inv-F2-188-exec-a1-t1\"], named [\"F2\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[false,false,false,false]], shared [], named [\"F2\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[false,false,false,false]], shared [], named [\"F2\"]"
+            ],
+            "named": [
+              "F2"
+            ]
+          },
+          "the second call missing": {
+            "assignments": 65536,
+            "distinct": 256,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true]], shared [], named [\"F2\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true]], shared [], named [\"F2\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true]], shared [], named [\"F2\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true]], shared [], named [\"F2\"]"
+            ],
+            "named": [
+              "F2"
+            ]
+          },
+          "the first call without its last request": {
+            "assignments": 65536,
+            "distinct": 16384,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true],[true,true,true,true]], shared [], named [\"F2\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true],[true,true,true,true]], shared [\"inv-F2-188-exec-a1-t1\"], named [\"F2\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true],[true,true,true,true]], shared [], named [\"F2\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true],[true,true,true,true]], shared [], named [\"F2\"]"
+            ],
+            "named": [
+              "F2"
+            ]
+          },
+          "the second call without its last request": {
+            "assignments": 65536,
+            "distinct": 16384,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true]], shared [], named [\"F2\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true]], shared [\"inv-F2-188-exec-a1-t1\"], named [\"F2\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true]], shared [], named [\"F2\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true]], shared [], named [\"F2\"]"
+            ],
+            "named": [
+              "F2"
+            ]
+          },
+          "the first call with its first request again after its last": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true,true],[true,true,true,true]], shared [], named [\"F2\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true,false],[true,true,true,true]], shared [\"inv-F2-188-exec-a1-t1\",\"inv-F2-188-exec-a1-t1\"], named [\"F2\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true,false],[true,true,true,true]], shared [], named [\"F2\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true,false],[true,true,true,true]], shared [], named [\"F2\"]"
+            ],
+            "named": [
+              "F2"
+            ]
+          },
+          "the second call with its first request again after its last": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true,true]], shared [], named [\"F2\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,true]], shared [\"inv-F2-188-exec-a1-t1\"], named [\"F2\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,true]], shared [], named [\"F2\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,true]], shared [], named [\"F2\"]"
+            ],
+            "named": [
+              "F2"
+            ]
+          },
+          "the two serials swapped": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65280,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[false,false,false,false],[false,false,false,false]], shared [], named [\"F2\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[true,false,false,false],[false,false,false,false]], shared [\"inv-F2-188-exec-a1-t1\"], named [\"F2\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,false,false,false],[false,false,false,false]], shared [], named [\"F2\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,false,false,false],[false,false,false,false]], shared [], named [\"F2\"]"
+            ],
+            "named": [
+              "F2"
+            ]
+          },
+          "the second call's invocationIds each with an x after it": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 27120,
+            "mismatched": [
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F2\"]",
+              "first call own, other, own, own; second call own, own, own, own: carried [[true,false,true,true],[true,true,true,true]], shared [], named [\"F2\"]",
+              "first call other, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [], named [\"F2\"]",
+              "first call both, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [], named [\"F2\"]"
+            ],
+            "named": [
+              "F2"
+            ]
+          },
+          "every invocationId with an x after it": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 27120,
+            "mismatched": [
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F2-188-exec-a1-t1x\"], named [\"F2\"]",
+              "first call own, other, own, own; second call own, own, own, own: carried [[true,false,true,true],[true,true,true,true]], shared [\"inv-F2-188-exec-a1-t2x\"], named [\"F2\"]",
+              "first call other, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F2-188-exec-a1-t1x\",\"inv-F2-188-exec-a1-t2x\"], named [\"F2\"]",
+              "first call both, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F2-188-exec-a1-t2x\"], named [\"F2\"]"
+            ],
+            "named": [
+              "F2"
+            ]
+          },
+          "the second call's invocationIds under another drive's name": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true]], shared [], named [\"F2\",\"F3\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F2\",\"F3\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F2\",\"F3\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F2\",\"F3\"]"
+            ],
+            "named": [
+              "F2",
+              "F3"
+            ]
+          }
+        },
+        "F3": {
+          "a third call, the second call's again": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true],[false,false,false,false]], shared [], named [\"F3\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[false,false,false,false]], shared [\"inv-F3-188-exec-a1-t1\"], named [\"F3\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[false,false,false,false]], shared [], named [\"F3\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[false,false,false,false]], shared [], named [\"F3\"]"
+            ],
+            "named": [
+              "F3"
+            ]
+          },
+          "the second call missing": {
+            "assignments": 65536,
+            "distinct": 256,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true]], shared [], named [\"F3\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true]], shared [], named [\"F3\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true]], shared [], named [\"F3\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true]], shared [], named [\"F3\"]"
+            ],
+            "named": [
+              "F3"
+            ]
+          },
+          "the first call without its last request": {
+            "assignments": 65536,
+            "distinct": 16384,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true],[true,true,true,true]], shared [], named [\"F3\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true],[true,true,true,true]], shared [\"inv-F3-188-exec-a1-t1\"], named [\"F3\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true],[true,true,true,true]], shared [], named [\"F3\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true],[true,true,true,true]], shared [], named [\"F3\"]"
+            ],
+            "named": [
+              "F3"
+            ]
+          },
+          "the second call without its last request": {
+            "assignments": 65536,
+            "distinct": 16384,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true]], shared [], named [\"F3\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true]], shared [\"inv-F3-188-exec-a1-t1\"], named [\"F3\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true]], shared [], named [\"F3\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true]], shared [], named [\"F3\"]"
+            ],
+            "named": [
+              "F3"
+            ]
+          },
+          "the first call with its first request again after its last": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true,true],[true,true,true,true]], shared [], named [\"F3\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true,false],[true,true,true,true]], shared [\"inv-F3-188-exec-a1-t1\",\"inv-F3-188-exec-a1-t1\"], named [\"F3\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true,false],[true,true,true,true]], shared [], named [\"F3\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true,false],[true,true,true,true]], shared [], named [\"F3\"]"
+            ],
+            "named": [
+              "F3"
+            ]
+          },
+          "the second call with its first request again after its last": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true,true]], shared [], named [\"F3\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,true]], shared [\"inv-F3-188-exec-a1-t1\"], named [\"F3\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,true]], shared [], named [\"F3\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,true]], shared [], named [\"F3\"]"
+            ],
+            "named": [
+              "F3"
+            ]
+          },
+          "the two serials swapped": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65280,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[false,false,false,false],[false,false,false,false]], shared [], named [\"F3\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[true,false,false,false],[false,false,false,false]], shared [\"inv-F3-188-exec-a1-t1\"], named [\"F3\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,false,false,false],[false,false,false,false]], shared [], named [\"F3\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,false,false,false],[false,false,false,false]], shared [], named [\"F3\"]"
+            ],
+            "named": [
+              "F3"
+            ]
+          },
+          "the second call's invocationIds each with an x after it": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 27120,
+            "mismatched": [
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F3\"]",
+              "first call own, other, own, own; second call own, own, own, own: carried [[true,false,true,true],[true,true,true,true]], shared [], named [\"F3\"]",
+              "first call other, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [], named [\"F3\"]",
+              "first call both, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [], named [\"F3\"]"
+            ],
+            "named": [
+              "F3"
+            ]
+          },
+          "every invocationId with an x after it": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 27120,
+            "mismatched": [
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F3-188-exec-a1-t1x\"], named [\"F3\"]",
+              "first call own, other, own, own; second call own, own, own, own: carried [[true,false,true,true],[true,true,true,true]], shared [\"inv-F3-188-exec-a1-t2x\"], named [\"F3\"]",
+              "first call other, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F3-188-exec-a1-t1x\",\"inv-F3-188-exec-a1-t2x\"], named [\"F3\"]",
+              "first call both, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F3-188-exec-a1-t2x\"], named [\"F3\"]"
+            ],
+            "named": [
+              "F3"
+            ]
+          },
+          "the second call's invocationIds under another drive's name": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true]], shared [], named [\"F3\",\"F4\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F3\",\"F4\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F3\",\"F4\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F3\",\"F4\"]"
+            ],
+            "named": [
+              "F3",
+              "F4"
+            ]
+          }
+        },
+        "F4": {
+          "a third call, the second call's again": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true],[false,false,false,false]], shared [], named [\"F4\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[false,false,false,false]], shared [\"inv-F4-188-exec-a1-t1\"], named [\"F4\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[false,false,false,false]], shared [], named [\"F4\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[false,false,false,false]], shared [], named [\"F4\"]"
+            ],
+            "named": [
+              "F4"
+            ]
+          },
+          "the second call missing": {
+            "assignments": 65536,
+            "distinct": 256,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true]], shared [], named [\"F4\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true]], shared [], named [\"F4\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true]], shared [], named [\"F4\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true]], shared [], named [\"F4\"]"
+            ],
+            "named": [
+              "F4"
+            ]
+          },
+          "the first call without its last request": {
+            "assignments": 65536,
+            "distinct": 16384,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true],[true,true,true,true]], shared [], named [\"F4\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true],[true,true,true,true]], shared [\"inv-F4-188-exec-a1-t1\"], named [\"F4\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true],[true,true,true,true]], shared [], named [\"F4\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true],[true,true,true,true]], shared [], named [\"F4\"]"
+            ],
+            "named": [
+              "F4"
+            ]
+          },
+          "the second call without its last request": {
+            "assignments": 65536,
+            "distinct": 16384,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true]], shared [], named [\"F4\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true]], shared [\"inv-F4-188-exec-a1-t1\"], named [\"F4\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true]], shared [], named [\"F4\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true]], shared [], named [\"F4\"]"
+            ],
+            "named": [
+              "F4"
+            ]
+          },
+          "the first call with its first request again after its last": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true,true],[true,true,true,true]], shared [], named [\"F4\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true,false],[true,true,true,true]], shared [\"inv-F4-188-exec-a1-t1\",\"inv-F4-188-exec-a1-t1\"], named [\"F4\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true,false],[true,true,true,true]], shared [], named [\"F4\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true,false],[true,true,true,true]], shared [], named [\"F4\"]"
+            ],
+            "named": [
+              "F4"
+            ]
+          },
+          "the second call with its first request again after its last": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true,true]], shared [], named [\"F4\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,true]], shared [\"inv-F4-188-exec-a1-t1\"], named [\"F4\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,true]], shared [], named [\"F4\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,true]], shared [], named [\"F4\"]"
+            ],
+            "named": [
+              "F4"
+            ]
+          },
+          "the two serials swapped": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65280,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[false,false,false,false],[false,false,false,false]], shared [], named [\"F4\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[true,false,false,false],[false,false,false,false]], shared [\"inv-F4-188-exec-a1-t1\"], named [\"F4\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,false,false,false],[false,false,false,false]], shared [], named [\"F4\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,false,false,false],[false,false,false,false]], shared [], named [\"F4\"]"
+            ],
+            "named": [
+              "F4"
+            ]
+          },
+          "the second call's invocationIds each with an x after it": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 27120,
+            "mismatched": [
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F4\"]",
+              "first call own, other, own, own; second call own, own, own, own: carried [[true,false,true,true],[true,true,true,true]], shared [], named [\"F4\"]",
+              "first call other, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [], named [\"F4\"]",
+              "first call both, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [], named [\"F4\"]"
+            ],
+            "named": [
+              "F4"
+            ]
+          },
+          "every invocationId with an x after it": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 27120,
+            "mismatched": [
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F4-188-exec-a1-t1x\"], named [\"F4\"]",
+              "first call own, other, own, own; second call own, own, own, own: carried [[true,false,true,true],[true,true,true,true]], shared [\"inv-F4-188-exec-a1-t2x\"], named [\"F4\"]",
+              "first call other, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F4-188-exec-a1-t1x\",\"inv-F4-188-exec-a1-t2x\"], named [\"F4\"]",
+              "first call both, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F4-188-exec-a1-t2x\"], named [\"F4\"]"
+            ],
+            "named": [
+              "F4"
+            ]
+          },
+          "the second call's invocationIds under another drive's name": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true]], shared [], named [\"F4\",\"F5\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F4\",\"F5\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F4\",\"F5\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F4\",\"F5\"]"
+            ],
+            "named": [
+              "F4",
+              "F5"
+            ]
+          }
+        },
+        "F5": {
+          "a third call, the second call's again": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true],[false,false,false,false]], shared [], named [\"F5\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[false,false,false,false]], shared [\"inv-F5-188-exec-a1-t1\"], named [\"F5\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[false,false,false,false]], shared [], named [\"F5\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true],[false,false,false,false]], shared [], named [\"F5\"]"
+            ],
+            "named": [
+              "F5"
+            ]
+          },
+          "the second call missing": {
+            "assignments": 65536,
+            "distinct": 256,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true]], shared [], named [\"F5\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true]], shared [], named [\"F5\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true]], shared [], named [\"F5\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true]], shared [], named [\"F5\"]"
+            ],
+            "named": [
+              "F5"
+            ]
+          },
+          "the first call without its last request": {
+            "assignments": 65536,
+            "distinct": 16384,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true],[true,true,true,true]], shared [], named [\"F5\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true],[true,true,true,true]], shared [\"inv-F5-188-exec-a1-t1\"], named [\"F5\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true],[true,true,true,true]], shared [], named [\"F5\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true],[true,true,true,true]], shared [], named [\"F5\"]"
+            ],
+            "named": [
+              "F5"
+            ]
+          },
+          "the second call without its last request": {
+            "assignments": 65536,
+            "distinct": 16384,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true]], shared [], named [\"F5\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true]], shared [\"inv-F5-188-exec-a1-t1\"], named [\"F5\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true]], shared [], named [\"F5\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true]], shared [], named [\"F5\"]"
+            ],
+            "named": [
+              "F5"
+            ]
+          },
+          "the first call with its first request again after its last": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true,true],[true,true,true,true]], shared [], named [\"F5\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true,false],[true,true,true,true]], shared [\"inv-F5-188-exec-a1-t1\",\"inv-F5-188-exec-a1-t1\"], named [\"F5\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true,false],[true,true,true,true]], shared [], named [\"F5\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true,false],[true,true,true,true]], shared [], named [\"F5\"]"
+            ],
+            "named": [
+              "F5"
+            ]
+          },
+          "the second call with its first request again after its last": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true,true]], shared [], named [\"F5\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,true]], shared [\"inv-F5-188-exec-a1-t1\"], named [\"F5\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,true]], shared [], named [\"F5\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true,true]], shared [], named [\"F5\"]"
+            ],
+            "named": [
+              "F5"
+            ]
+          },
+          "the two serials swapped": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65280,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[false,false,false,false],[false,false,false,false]], shared [], named [\"F5\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[true,false,false,false],[false,false,false,false]], shared [\"inv-F5-188-exec-a1-t1\"], named [\"F5\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,false,false,false],[false,false,false,false]], shared [], named [\"F5\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,false,false,false],[false,false,false,false]], shared [], named [\"F5\"]"
+            ],
+            "named": [
+              "F5"
+            ]
+          },
+          "the second call's invocationIds each with an x after it": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 27120,
+            "mismatched": [
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F5\"]",
+              "first call own, other, own, own; second call own, own, own, own: carried [[true,false,true,true],[true,true,true,true]], shared [], named [\"F5\"]",
+              "first call other, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [], named [\"F5\"]",
+              "first call both, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [], named [\"F5\"]"
+            ],
+            "named": [
+              "F5"
+            ]
+          },
+          "every invocationId with an x after it": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 27120,
+            "mismatched": [
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [\"inv-F5-188-exec-a1-t1x\"], named [\"F5\"]",
+              "first call own, other, own, own; second call own, own, own, own: carried [[true,false,true,true],[true,true,true,true]], shared [\"inv-F5-188-exec-a1-t2x\"], named [\"F5\"]",
+              "first call other, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F5-188-exec-a1-t1x\",\"inv-F5-188-exec-a1-t2x\"], named [\"F5\"]",
+              "first call both, other, own, own; second call own, own, own, own: carried [[false,false,true,true],[true,true,true,true]], shared [\"inv-F5-188-exec-a1-t2x\"], named [\"F5\"]"
+            ],
+            "named": [
+              "F5"
+            ]
+          },
+          "the second call's invocationIds under another drive's name": {
+            "assignments": 65536,
+            "distinct": 65536,
+            "misread": 65536,
+            "mismatched": [
+              "first call own, own, own, own; second call own, own, own, own: carried [[true,true,true,true],[true,true,true,true]], shared [], named [\"F5\",\"F1\"]",
+              "first call other, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F5\",\"F1\"]",
+              "first call both, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F5\",\"F1\"]",
+              "first call neither, own, own, own; second call own, own, own, own: carried [[false,true,true,true],[true,true,true,true]], shared [], named [\"F5\",\"F1\"]"
+            ],
+            "named": [
+              "F5",
+              "F1"
+            ]
+          }
         }
       }
     },
