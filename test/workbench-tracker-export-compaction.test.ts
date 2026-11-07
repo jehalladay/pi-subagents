@@ -620,7 +620,9 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", () =
     expect(run.stdout).toBe(readFileSync(full, "utf8"));
   });
 
-  it("K3 at the soft ceiling compact exits 2 with the typed line and writes nothing; a full export whose only line is {not json exits 3 and writes nothing", () => {
+  // What compact writes anywhere outside the .beads directory at K3's two plants - the full export file and the directory that holds
+  // .beads among them - is NOT CLAIMED by K3 (refusal #5 of wb-294d, U1: GP3-W01, GP3-W02, GP3-W03 and GP3-W04).
+  it("K3 at the soft ceiling compact exits 2 with the typed line and leaves the .beads directory empty; a full export whose only line is {not json exits 3 and leaves the .beads directory empty", () => {
     const { beads, full } = beadsDir();
     const refused = cli(["compact", "--full", full, "--beads", beads, "--now", "2026-11-03T12:00:00Z"], { FW_EXPORT_SOFT_CEILING: "64" });
     expect(refused.status).toBe(2);
