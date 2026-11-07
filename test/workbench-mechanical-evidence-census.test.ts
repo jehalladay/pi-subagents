@@ -42,13 +42,16 @@
  *   fence that a shorter tilde run does not close, a fence never closed) opens no entry, so a join after a fenced line dated
  *   before the range is read in its own dated entry and found; control: the same lines less the two fence lines split at that
  *   line, whose entry is out of range, and the join is never read; fenced code text is read.
- * - R080-COMMENT-TEXT (wb-prv7 F1, the gate's W-COMMENT): HTML comment text is not read: the four parts inside a comment block
- *   are no witness and no partial, a level-2 line inside the block opens no entry, and the entry's text keeps the comment; a
- *   part inside an inline comment in a paragraph, a heading, a list item, a block quote, a table cell, emphasis or link text is
- *   not read (the other three parts are its entry's partial); a comment block never closed runs to the receipt's end (no entry
- *   opens after it, nothing after it is read); controls: the four parts are a witness outside any comment, inside a comment form
- *   in fenced code or a code span (code renders its text), after an empty comment (<!--> or <!--->) opening their line, and
- *   after an inline opener never closed (marked reads it as text).
+ * - R080-COMMENT-TEXT (wb-prv7 F1, the gate's W-COMMENT; wb-caoo, the wb-prv7 gate's F1 and F2): HTML comment text is not read:
+ *   the four parts inside a comment block are no witness and no partial, a level-2 line inside the block opens no entry, and the
+ *   entry's text keeps the comment; the four parts inside the second of two comments that one html token holds (a block line
+ *   holding both, a div block holding both on lines of their own, each lexed as one html token holding two) are no witness and
+ *   no partial; a part inside an inline comment in a paragraph, a heading, a list item, a block quote, a table cell, emphasis or
+ *   link text is not read (the other three parts are its entry's partial); a comment block never closed runs to the receipt's
+ *   end (no entry opens after it, nothing after it is read); controls: the four parts are a witness outside any comment, inside
+ *   a comment form in fenced code, indented code (lexed as one indented code block) or a code span (code renders its text),
+ *   after an empty comment (<!--> or <!--->) opening their line, and after an inline opener never closed (marked reads it as
+ *   text).
  * - R080-CONTAINER-TEXT (wb-prv7 F1, the join's containers): a list is read item by item, a table cell by cell with its header
  *   row read, and a block quote line by line, so a component at an item's or a cell's edge is read and a two-line block quote
  *   reads both lines; a token's own raw text around its children is read (a pin in a link's destination).
@@ -106,7 +109,10 @@
  * stays); an edit made in this file and the receipt anchor together (a later dated entry appended to
  * docs/workbench/receipts/wb-muip.md) is NOT CLAIMED, the append being the visible act a gate judges; an assertion edited or
  * replaced in place while its test's count holds is NOT CLAIMED (the record counts assertions, never their content); the record
- * itself skipped, inverted or cut short is NOT CLAIMED (no test reads the tree after it).
+ * itself skipped, inverted or cut short is NOT CLAIMED (no test reads the tree after it). wb-caoo adds: an html token holding
+ * more than two comments is NOT CLAIMED by this census (the pinned tokens hold two); a comment form other than one closed
+ * comment inside code (an empty comment or an opener never closed, in fenced code, indented code or a code span) is NOT
+ * CLAIMED by this census (each code control shows one closed comment).
  *
  * RESIDUALS (rule 19(d): a named family plus a pinned quiet row, a case that reds when the quiet reading changes):
  * - R-OUTCOME-WORDS (QUIET-OUTCOME-WORDS): the fourth outcome docs/workbench/01 J03 names, indeterminate, is an ordinary word and
@@ -489,6 +495,18 @@ const CASES: readonly Case[] = [
       expect(entries[1]?.text, "the entry's text keeps the comment").toContain(JOINED);
       const hidden = judgePriorRuns(SCOPE, entries);
       expect([hidden.verdict, hidden.global, hidden.witnesses, hidden.partials]).toEqual(["searched-scope-absence", "UNDETERMINED", [], []]);
+      const twoComments: readonly (readonly [string, string])[] = [
+        ["a block line holding two comments", `<!-- a note --> <!-- ${JOINED} -->`],
+        ["a div block holding two comment lines", ["<div>", "<!-- a note -->", `<!-- ${JOINED} -->`, "</div>"].join("\n")],
+      ];
+      for (const [where, body] of twoComments) {
+        expect(
+          new Lexer().lex(body).map((token) => [token.type, token.raw.split("<!--").length - 1]),
+          `${where}: one html token holding both comments`,
+        ).toEqual([["html", 2]]);
+        const record = judgePriorRuns(SCOPE, markdownEntries("store-a", "r.md", `## 2026-10-20 a\n\n${body}\n`));
+        expect([record.witnesses, record.partials], `${where}: the four parts in the second comment are no witness and no partial`).toEqual([[], []]);
+      }
       const visible = textWithout("source-pin");
       const comment = `<!-- ${PARTS["source-pin"]} -->`;
       const placements: readonly (readonly [string, string])[] = [
@@ -514,10 +532,16 @@ const CASES: readonly Case[] = [
         "a comment block never closed runs to the receipt's end",
       ).toEqual(["r.md#1"]);
       expect(judgePriorRuns(SCOPE, unclosed).witnesses).toEqual([]);
+      const indented = `    <!-- ${JOINED} -->`;
+      expect(
+        new Lexer().lex(`## 2026-10-20 a\n\n${indented}\n`).flatMap((token) => (token.type === "code" ? [(token as Tokens.Code).codeBlockStyle ?? "fenced"] : [])),
+        "the indented-code control lexes as one indented code block",
+      ).toEqual(["indented"]);
       const controls: readonly (readonly [string, string])[] = [
         ["no comment", JOINED],
         ["fenced code", ["```", `<!-- ${JOINED} -->`, "```"].join("\n")],
         ["code span", `\`<!-- ${JOINED} -->\``],
+        ["indented code", indented],
         ["after an empty comment <!-->", `<!--> ${JOINED}`],
         ["after an empty comment <!--->", `<!---> ${JOINED}`],
         ["after an inline opener never closed, which marked reads as text", `a <!-- ${JOINED}`],
