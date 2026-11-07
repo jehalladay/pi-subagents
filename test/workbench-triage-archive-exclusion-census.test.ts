@@ -7,10 +7,11 @@
  * test/helpers/triage-archive.ts, which holds the predicate (isTriageArchivePath, withoutTriageArchive), the npm line
  * (TRIAGE_ARCHIVE) and the header line each walking census carries (ARCHIVE_SCOPE_LINE).
  *
- * FORM (cut #3, the enumerate-the-resolvable form of standing rule 19(c), ruling R-B666): each reader below claims what its rows pin
- * and nothing wider - its live input and its control table, read by the one reader in one expression, so the controls judge the
- * reader the live reading uses. Each entry spells the reader's rule only as far as its rows pin it; a spelling no row pins is NOT
- * CLAIMED. The NAMED RESIDUALS below are the known escapes, each a named family with a pinned quiet row.
+ * FORM (cut #3, the enumerate-the-resolvable form of standing rule 19(c), ruling R-B666; kept by cut #4, the respin of refusal #3,
+ * which pins V1's clause reader and W1's call-site rule with battery rows): each reader below claims what its rows pin and nothing
+ * wider - its live input and its control table, read by the one reader in one expression, so the controls judge the reader the live
+ * reading uses. Each entry spells the reader's rule only as far as its rows pin it; a spelling no row pins is NOT CLAIMED. The NAMED
+ * RESIDUALS below are the known escapes, each a named family with a pinned quiet row.
  *
  * PINNED READER SET (claim form: each case by id in this file, its assertion target, the result it holds). Each case declares its
  * assertion count first (expect.assertions), and npm run test passes --expect.requireAssertions.
@@ -55,12 +56,20 @@
  *   CLAIMED of holds.
  * - W1 reads each WALKERS census, and the W1_TEXTS controls, in one expression: whether the text holds the from clause
  *   from "./helpers/triage-archive.js" spelled exactly so (double quote marks, one space, the .js ending), and how many call sites of
- *   withoutTriageArchive and isTriageArchivePath it holds, a call site being the name directly followed by an opening parenthesis
- *   and preceded by no ASCII letter, digit or underscore. Each WALKERS census holds the clause and exactly its pinned count of call
- *   sites. Over W1_TEXTS it reads no clause for the import with single quote marks, for the import with the .ts ending and for the
- *   helper's path named in a comment; the clause and two sites for a call of each function beside the import's specifiers; and no
- *   site for names that only hold a function's name (a letter, a digit or an underscore before it, a letter after it) or for a call
- *   with a space before its parenthesis. Another spelling of the clause or of a call is NOT CLAIMED of W1 (W3 reads the other from-clause spellings).
+ *   withoutTriageArchive and isTriageArchivePath it holds, a call site being the name, in that case, directly followed by an
+ *   opening parenthesis and preceded by no ASCII letter, digit or underscore (or by nothing, at the text's start). The reader reads
+ *   text, so a call inside a comment or a string counts too. Each WALKERS census holds the clause and exactly its pinned count of
+ *   call sites. Over W1_TEXTS it reads no clause for the import with single quote marks, for the import with the .ts ending and for
+ *   the helper's path named in a comment; the clause and two sites for a call of each function beside the import's specifiers; one
+ *   site for a call at the text's start; three sites for calls in a line comment, in a block comment and in a string; no site for
+ *   names that only hold a function's name (a letter, a digit or an underscore before it, a letter after it), for the names with
+ *   their case changed, for a call with a space before its parenthesis and for a call with type arguments or an optional call; and,
+ *   in its battery rows (one line per character and name, for each of the 256 characters U+0000 to U+00FF), no site for either name
+ *   called after an ASCII letter, digit or underscore, a site for either name called after each other character (386 sites), and no
+ *   site for either name followed by any character but an opening parenthesis, even with an opening parenthesis after that
+ *   character. Another spelling of the clause is NOT CLAIMED of W1 (W3 reads the other from-clause spellings), and neither is a
+ *   character above U+00FF before or after a name, nor a run of two or more characters between a name and an opening parenthesis
+ *   other than the type-argument and optional-call controls.
  * - W2 scopeLineCount counts the lines equal to ARCHIVE_SCOPE_LINE in the comment block a text opens with: the block is there when
  *   the text's first three characters are a slash and two stars and a star-slash follows them, and it runs from those three
  *   characters to that first star-slash. Each line of the block (the block split at each newline) is read with its comment prefix
@@ -91,19 +100,34 @@
  *   the quote with its tail, its head, its case, its spacing or its dash changed, or with either quote mark missing; over the
  *   EXPORT_TEXT control exportRow reads the row whose own id is the bead's, not an earlier or a later row naming it in a nested id.
  *   The description's clauses tile the ROWS requirement phrases in order. clausesOf reads each line of a text (the text split at
- *   each newline) as a lettered line, a quoting line or nothing. A lettered line is, at the line's start, an opening parenthesis, a
- *   lowercase letter, a closing parenthesis and a space, then a clause of one to four hundred characters, then a semicolon or a full
- *   stop as the line's last character; it reads its clause. A quoting line is, at the line's start, a capitalized word (a capital
- *   letter and one to twenty-nine lowercase letters), then one to twenty-four lowercase words of one to thirty letters, each after
- *   one space, then a colon, a space and a double quote mark; it reads the words before the colon (its label). Over the CLAUSE_ROWS
- *   controls, each text read alone, clausesOf reads as each row says: the clause of a lettered line for every letter a to z, closing
- *   with a semicolon and with a full stop, of one and of four hundred characters; the label of a quoting line for every capital A to
- *   Z, of one, nine and twenty-four lowercase words, and of a thirty-letter capitalized word with a thirty-letter lowercase word; and
- *   nothing of a one-word label, a lettered line without its closing mark or closing with a comma or a colon, a letter in
+ *   each newline, U+000A, and at no other character from U+0000 to U+00FF) as a lettered line, a quoting line or nothing. A
+ *   lettered line is, at the line's start, an opening parenthesis, an ASCII lowercase letter (a to z), a closing parenthesis and a
+ *   space, then a clause of one to four hundred characters none of which is a carriage return, then a semicolon or a full stop as
+ *   the line's last character; it reads its clause. A quoting line is, at the line's start, a capitalized word (an ASCII capital, A
+ *   to Z, then one to twenty-nine ASCII lowercase letters), then one to twenty-four words of one to thirty ASCII lowercase letters,
+ *   each after one space, then a colon, a space and a double quote mark; it reads the words before the colon (its label). Over the
+ *   CLAUSE_ROWS controls, each text read alone, clausesOf reads as each row says: the clause of a lettered line for every letter a
+ *   to z, closing with a semicolon and with a full stop, of one and of four hundred characters; the label of a quoting line for
+ *   every capital A to Z, of one, nine and twenty-four lowercase words, and of a thirty-letter capitalized word with a
+ *   thirty-letter lowercase word; nothing of a one-word label, a label without its colon, a lettered line with an empty clause,
+ *   without its opening parenthesis, without its letter, without its closing mark or closing with a comma or a colon, a letter in
  *   parentheses mid-line, an uppercase letter or a digit in the parentheses, no space after the closing parenthesis, an indented
- *   lettered line or label, a label starting lowercase or with a capitalized second word, a label without the space after its
- *   colon or before a single quote mark, a label whose capitalized word is one letter, and the R-V1-OTHER-LINE quiet rows below. A
- *   longer clause, label or word, and any other line form, are NOT CLAIMED of clausesOf.
+ *   lettered line or label, a label starting lowercase or with a capitalized second word, a label without the space after its colon
+ *   or before a single quote mark, a label whose capitalized word is one letter, and the R-V1-OTHER-LINE quiet rows below; and, in
+ *   its battery rows (one line per character, for each of the 256 characters U+0000 to U+00FF placed at one position of a line
+ *   form), a lettered line only with a newline before it (so the line starts after it), an opening parenthesis as its first
+ *   character, an ASCII lowercase letter as its second, a closing parenthesis as its third, a space as its fourth and a semicolon
+ *   or a full stop as its last, and after its closing full stop only a newline (the line ends there) or a further semicolon or full
+ *   stop (which then closes the line, its clause ending with the first); with the character added inside its parentheses, before or
+ *   after its letter, never, and added after its closing parenthesis only when it is a space (which then opens the clause); a
+ *   clause of that one character, and that character between two clause characters, for every character but a newline and a
+ *   carriage return; and a quoting line only with a newline before it, an ASCII capital as its first character, an ASCII lowercase
+ *   letter as its second and as the first letter of the word after its capitalized word, a space after its capitalized word, a
+ *   colon after its label, a space after the colon and a double quote mark after that space; with the character added after its
+ *   capital, after its capitalized word, before or after its word, only when it is an ASCII lowercase letter (which then lengthens
+ *   that word); and with the character added after the colon never, and added after the space after it only when it is a double
+ *   quote mark. A longer clause, label or word, a character above U+00FF in a line, and any other line form, are NOT CLAIMED of
+ *   clausesOf.
  * - F1 (standing rule 16 frozen shape) ROWS, ARCHIVE_ROWS, LIVE_ROWS, SHAPES, WALKERS and the control tables N1_TEXTS,
  *   HOLDS_CONTROLS, W1_TEXTS, W2_TEXTS, W3_FILES, V1_TEXTS and CLAUSE_ROWS as literals derived at this cut.
  * - R1 every ROWS pin is a case of this file that ran to its end, once, in row order, then F1.
@@ -114,9 +138,12 @@
  * - R-W3-NO-FROM: a .ts file below test/ that imports the helper without a from clause (a side-effect import, an import() call or a
  *   require() call) is no importer to helperImporters, so it escapes W3's outside anchor. Quiet rows: W3_FILES test/y.test.ts
  *   (import()), test/z.test.ts (require()) and test/za.test.ts (a side-effect import), each read as no importer.
- * - R-V1-OTHER-LINE: a deliverable the bead's description spells in a line form clausesOf reads as nothing (a bulleted item, a
- *   numbered item) adds no clause, so the tiling still holds and that deliverable escapes V1's outside anchor. Quiet row:
- *   CLAUSE_ROWS "quiet row R-V1-OTHER-LINE", a bulleted and a numbered deliverable, read as nothing.
+ * - R-V1-OTHER-LINE: a deliverable the bead's description spells in a line form clausesOf reads as nothing adds no clause, so the
+ *   tiling still holds and that deliverable escapes V1's outside anchor. Its pinned members, each a quiet row read as nothing: a
+ *   bulleted and a numbered item (CLAUSE_ROWS "quiet row R-V1-OTHER-LINE: a bulleted and a numbered deliverable"); refusal #3's
+ *   witness lines, a lettered line whose letter is U+00E9, a label whose capital is U+00C9, a label whose word holds U+00E7 and a
+ *   lettered line whose clause holds a carriage return (CLAUSE_ROWS "quiet row R-V1-OTHER-LINE: refusal #3's witness lines"); and
+ *   each battery line V1 above reads as nothing.
  *
  * THE WALKERS: the 20 censuses whose walks the archive turned red, measured at trunk fd90f9d3 with master 6f7a366d's 457 archive
  * files tracked in the working tree (their blob ids equal master's; the archive tree deb70b9f is the same at 85c9b80f, ee51aa6c,
@@ -365,7 +392,14 @@ interface ImportText {
   readonly sites: number;
   readonly text: string;
 }
-/** W1's controls: the reader over the from clause spelled other ways, and over names and calls a call site must not be. */
+/** The 256 characters U+0000 to U+00FF in code order: the alphabet the W1 and V1 batteries spell, one line per character. */
+const LATIN_1: readonly string[] = Array.from({ length: 256 }, (_, code) => String.fromCodePoint(code));
+/** The 63 ASCII letters, digits and underscore: the characters a W1 call site may not follow. */
+const ASCII_WORD: readonly string[] = [..."abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"];
+/** A W1 battery text: one line per character and helper name, `spell` placing the character beside the name. */
+const siteBattery = (characters: readonly string[], spell: (character: string, name: string) => string): string =>
+  characters.flatMap(character => ["withoutTriageArchive", "isTriageArchivePath"].map(name => spell(character, name))).join("\n");
+/** W1's controls: the reader over the from clause spelled other ways, over names and calls a call site must not be, and its call-site batteries. */
 const W1_TEXTS: readonly ImportText[] = [
   { file: "control: the import with single quote marks", imports: false, sites: 0, text: "import { x } from './helpers/triage-archive.js';\n" },
   { file: "control: the import with the .ts ending", imports: false, sites: 0, text: 'import { x } from "./helpers/triage-archive.ts";\n' },
@@ -373,6 +407,21 @@ const W1_TEXTS: readonly ImportText[] = [
   { file: "control: a call of each function beside the import's specifiers", imports: true, sites: 2, text: `import { isTriageArchivePath, withoutTriageArchive } ${HELPER_IMPORT};\nisTriageArchivePath(a);\nwithoutTriageArchive(b);\n` },
   { file: "control: names that only hold a function's name", imports: false, sites: 0, text: "myisTriageArchivePath(a);\n_withoutTriageArchive(b);\n2isTriageArchivePath(c);\nisTriageArchivePathX(d);\n" },
   { file: "control: a call with a space before its parenthesis", imports: false, sites: 0, text: "isTriageArchivePath (a);\n" },
+  { file: "control: a call at the text's start", imports: false, sites: 1, text: "withoutTriageArchive(a);\n" },
+  { file: "control: the names with their case changed", imports: false, sites: 0, text: "WithoutTriageArchive(a);\nIsTriageArchivePath(b);\nWITHOUTTRIAGEARCHIVE(c);\nistriagearchivepath(d);\n" },
+  { file: "control: calls in a line comment, a block comment and a string", imports: false, sites: 3, text: '// withoutTriageArchive(a);\n/* isTriageArchivePath(b); */\nconst s = "withoutTriageArchive(c)";\n' },
+  { file: "control: a call with type arguments and an optional call", imports: false, sites: 0, text: "withoutTriageArchive<string[]>(a);\nisTriageArchivePath?.(b);\n" },
+  { file: "battery: each name called after each ASCII letter, digit and underscore", imports: false, sites: 0, text: siteBattery(ASCII_WORD, (character, name) => `${character}${name}(x);`) },
+  { file: "battery: each name called after each other character U+0000 to U+00FF", imports: false, sites: 386, text: siteBattery(LATIN_1.filter(character => !ASCII_WORD.includes(character)), (character, name) => `${character}${name}(x);`) },
+  {
+    file: "battery: each name followed by each character U+0000 to U+00FF but an opening parenthesis, then by one",
+    imports: false,
+    sites: 0,
+    text: siteBattery(
+      LATIN_1.filter(character => character !== "("),
+      (character, name) => `${name}${character}(x);`,
+    ),
+  },
 ];
 
 /** A control input of a counting reader: its id, the count the reader must read, and the text it reads. */
@@ -494,7 +543,20 @@ const UPPERCASE = LOWERCASE.map(letter => letter.toUpperCase());
 const LONG_CLAUSE = "y".repeat(400);
 const LONG_LABEL = `A${"b".repeat(29)} ${"c".repeat(30)}`;
 const MANY_WORDS_LABEL = `Label ${LOWERCASE.slice(0, 24).join(" ")}`;
-/** V1's clausesOf controls, each text read alone: the lettered and quoting line forms at their pinned bounds, and lines read as nothing. */
+/** The characters a lettered line's clause may not hold: the newline splits the text, and the clause reader stops at a carriage return. */
+const NOT_IN_A_CLAUSE: readonly string[] = ["\n", "\r"];
+/** A CLAUSE_ROWS battery row: one line per character of LATIN_1, `line` spelling it at one position of a line form; `reading` is what clausesOf must read from that line, or undefined for nothing. */
+function battery(id: string, line: (character: string, code: number) => string, reading: (character: string, code: number) => string | undefined): ClauseRow {
+  return {
+    id,
+    text: LATIN_1.map((character, code) => line(character, code)).join("\n"),
+    reads: LATIN_1.flatMap((character, code) => {
+      const found = reading(character, code);
+      return found === undefined ? [] : [found];
+    }),
+  };
+}
+/** V1's clausesOf controls, each text read alone: the lettered and quoting line forms at their pinned bounds, lines read as nothing, and a battery row per position. */
 const CLAUSE_ROWS: readonly ClauseRow[] = [
   { id: "lettered lines closing with a semicolon and a full stop", text: "(a) one clause;\n(b) two clause.\n(c) three clause.", reads: ["one clause", "two clause", "three clause"] },
   { id: "a lettered line for every letter a to z", text: LOWERCASE.map(letter => `(${letter}) clause ${letter}.`).join("\n"), reads: LOWERCASE.map(letter => `clause ${letter}`) },
@@ -513,6 +575,44 @@ const CLAUSE_ROWS: readonly ClauseRow[] = [
   { id: "control: labels without the space after the colon and before a single quote mark", text: 'Label words:"q"\nLabel words: \'q\'', reads: [] },
   { id: "control: a label whose capitalized word is one letter", text: 'L words: "q"', reads: [] },
   { id: "quiet row R-V1-OTHER-LINE: a bulleted and a numbered deliverable", text: "- a bulleted deliverable.\n1. a numbered deliverable.", reads: [] },
+  { id: "control: lettered lines with an empty clause", text: "(a) .\n(b) ;", reads: [] },
+  { id: "control: lettered lines without the opening parenthesis and without the letter", text: "a) no opening parenthesis.\n() no letter.", reads: [] },
+  { id: "control: a label without its colon", text: 'Label words "q"', reads: [] },
+  {
+    id: "quiet row R-V1-OTHER-LINE: refusal #3's witness lines",
+    text: [`(${String.fromCodePoint(0xe9)}) a fourth deliverable.`, `${String.fromCodePoint(0xc9)}tat of the archive kept: "x"`, `Note on the fa${String.fromCodePoint(0xe7)}ade of the archive: "x"`, "(d) a fourth\rdeliverable."].join("\n"),
+    reads: [],
+  },
+  battery("battery: the character before a lettered line", (character, code) => `${character}(a) clause ${code}.`, (character, code) => (character === "\n" ? `clause ${code}` : undefined)),
+  battery("battery: a lettered line's first character", (character, code) => `${character}a) clause ${code}.`, (character, code) => (character === "(" ? `clause ${code}` : undefined)),
+  battery("battery: a lettered line's second character", (character, code) => `(${character}) clause ${code}.`, (character, code) => (LOWERCASE.includes(character) ? `clause ${code}` : undefined)),
+  battery("battery: a lettered line's third character", (character, code) => `(a${character} clause ${code}.`, (character, code) => (character === ")" ? `clause ${code}` : undefined)),
+  battery("battery: a lettered line's fourth character", (character, code) => `(a)${character}clause ${code}.`, (character, code) => (character === " " ? `clause ${code}` : undefined)),
+  battery("battery: a character added before a lettered line's letter", (character, code) => `(${character}a) clause ${code}.`, () => undefined),
+  battery("battery: a character added after a lettered line's letter", (character, code) => `(a${character}) clause ${code}.`, () => undefined),
+  battery("battery: a character added after a lettered line's closing parenthesis", (character, code) => `(a)${character} clause ${code}.`, (character, code) => (character === " " ? ` clause ${code}` : undefined)),
+  battery("battery: a clause of one character", character => `(a) ${character}.`, character => (NOT_IN_A_CLAUSE.includes(character) ? undefined : character)),
+  battery("battery: a character between two clause characters", character => `(a) x${character}y.`, character => (NOT_IN_A_CLAUSE.includes(character) ? undefined : `x${character}y`)),
+  battery("battery: a lettered line's last character", (character, code) => `(a) clause ${code}${character}`, (character, code) => (character === ";" || character === "." ? `clause ${code}` : undefined)),
+  battery(
+    "battery: the character after a lettered line's closing full stop",
+    (character, code) => `(a) clause ${code}.${character}`,
+    (character, code) => (character === "\n" ? `clause ${code}` : character === ";" || character === "." ? `clause ${code}.` : undefined),
+  ),
+  battery("battery: the character before a quoting line", character => `${character}Label words: "q"`, character => (character === "\n" ? "Label words" : undefined)),
+  battery("battery: a quoting line's first character", character => `${character}b words: "q"`, character => (UPPERCASE.includes(character) ? `${character}b words` : undefined)),
+  battery("battery: a quoting line's second character", character => `A${character} words: "q"`, character => (LOWERCASE.includes(character) ? `A${character} words` : undefined)),
+  battery("battery: the character after a label's capitalized word", character => `Label${character}words: "q"`, character => (character === " " ? "Label words" : undefined)),
+  battery("battery: the first letter of a label's word", character => `Label ${character}ords: "q"`, character => (LOWERCASE.includes(character) ? `Label ${character}ords` : undefined)),
+  battery("battery: the character after a label", character => `Label words${character} "q"`, character => (character === ":" ? "Label words" : undefined)),
+  battery("battery: the character after a label's colon", character => `Label words:${character}"q"`, character => (character === " " ? "Label words" : undefined)),
+  battery("battery: the character after the space after a label's colon", character => `Label words: ${character}q"`, character => (character === '"' ? "Label words" : undefined)),
+  battery("battery: a character added after a label's capital", character => `L${character}abel words: "q"`, character => (LOWERCASE.includes(character) ? `L${character}abel words` : undefined)),
+  battery("battery: a character added after a label's capitalized word", character => `Label${character} words: "q"`, character => (LOWERCASE.includes(character) ? `Label${character} words` : undefined)),
+  battery("battery: a character added before a label's word", character => `Label ${character}words: "q"`, character => (LOWERCASE.includes(character) ? `Label ${character}words` : undefined)),
+  battery("battery: a character added after a label's word", character => `Label words${character}: "q"`, character => (LOWERCASE.includes(character) ? `Label words${character}` : undefined)),
+  battery("battery: a character added after a label's colon", character => `Label words:${character} "q"`, () => undefined),
+  battery("battery: a character added after the space after a label's colon", character => `Label words: ${character}"q"`, character => (character === '"' ? "Label words" : undefined)),
 ];
 
 const REACHED: string[] = [];
@@ -949,6 +1049,13 @@ describe("wb-cbt4 census: the master-side triage-archive reconciliation (owner s
       "control: a call of each function beside the import's specifiers:true:2",
       "control: names that only hold a function's name:false:0",
       "control: a call with a space before its parenthesis:false:0",
+      "control: a call at the text's start:false:1",
+      "control: the names with their case changed:false:0",
+      "control: calls in a line comment, a block comment and a string:false:3",
+      "control: a call with type arguments and an optional call:false:0",
+      "battery: each name called after each ASCII letter, digit and underscore:false:0",
+      "battery: each name called after each other character U+0000 to U+00FF:false:386",
+      "battery: each name followed by each character U+0000 to U+00FF but an opening parenthesis, then by one:false:0",
     ]);
     expect(W2_TEXTS.map(entry => `${entry.id}:${entry.reads}`)).toEqual([
       "the line in the opening block:1",
@@ -1034,6 +1141,36 @@ describe("wb-cbt4 census: the master-side triage-archive reconciliation (owner s
       "control: labels without the space after the colon and before a single quote mark:0",
       "control: a label whose capitalized word is one letter:0",
       "quiet row R-V1-OTHER-LINE: a bulleted and a numbered deliverable:0",
+      "control: lettered lines with an empty clause:0",
+      "control: lettered lines without the opening parenthesis and without the letter:0",
+      "control: a label without its colon:0",
+      "quiet row R-V1-OTHER-LINE: refusal #3's witness lines:0",
+      "battery: the character before a lettered line:1",
+      "battery: a lettered line's first character:1",
+      "battery: a lettered line's second character:26",
+      "battery: a lettered line's third character:1",
+      "battery: a lettered line's fourth character:1",
+      "battery: a character added before a lettered line's letter:0",
+      "battery: a character added after a lettered line's letter:0",
+      "battery: a character added after a lettered line's closing parenthesis:1",
+      "battery: a clause of one character:254",
+      "battery: a character between two clause characters:254",
+      "battery: a lettered line's last character:2",
+      "battery: the character after a lettered line's closing full stop:3",
+      "battery: the character before a quoting line:1",
+      "battery: a quoting line's first character:26",
+      "battery: a quoting line's second character:26",
+      "battery: the character after a label's capitalized word:1",
+      "battery: the first letter of a label's word:26",
+      "battery: the character after a label:1",
+      "battery: the character after a label's colon:1",
+      "battery: the character after the space after a label's colon:1",
+      "battery: a character added after a label's capital:26",
+      "battery: a character added after a label's capitalized word:26",
+      "battery: a character added before a label's word:26",
+      "battery: a character added after a label's word:26",
+      "battery: a character added after a label's colon:0",
+      "battery: a character added after the space after a label's colon:1",
     ]);
     REACHED.push("F1");
   });
