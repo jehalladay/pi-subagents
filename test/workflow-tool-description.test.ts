@@ -165,3 +165,81 @@ describe("the node() reconcile contract it documents (wb-g8f part B.5)", () => {
     expect(description).not.toContain("Node calls are never replayed from the agent journal");
   });
 });
+
+// wb-5ik5 (landing 1017) made cleanupWorktree keep the worktree when Git
+// preservation fails: no branch is created and the agent's work stays in the
+// directory. wb-x6be (landing 1023) rewrote the Agent tool's isolation lines for
+// that case, and its gate finding F4 (follow-up wb-jvy7) found four more texts
+// that still said the worktree is always removed: this description's agent()
+// isolation clause, the header bullet of tool-description.ts for it, item 2 of
+// the gated-fix.js example's header, and the doc comment on
+// WorkflowSpawnResult.cwd in src/workflow/runtime.ts. Each case below holds one
+// of those texts' replacements word for word and its old words absent. The
+// cases pin the words only; the failed-preservation behaviour the words describe
+// is pinned by wb-5ik5's own rows (the PF rows of test/worktree.test.ts).
+describe("the worktree-removal texts for a failed Git preservation (wb-jvy7)", () => {
+  const readRepoFile = (path: string): string =>
+    readFileSync(fileURLToPath(new URL(`../${path}`, import.meta.url)), "utf8");
+  const ISOLATION_CLAUSE =
+    "opts.isolation: 'worktree' runs the agent in a fresh git worktree — EXPENSIVE (setup time + disk per agent), use ONLY when agents mutate files in parallel and would otherwise conflict; the worktree is removed when the agent settles, its changes preserved on a branch; if Git preservation fails, no branch is created and the worktree is kept instead, with the agent's work in it.";
+  /** The header comment's deviation bullet for `isolation`, line by line. */
+  const HEADER_ISOLATION_BULLET = [
+    " *   - `isolation` removes the worktree on settle, changes kept on a branch;",
+    " *     if Git preservation fails, no branch is created and the worktree is kept.",
+  ];
+  /** Item 2 of gated-fix.js's header comment, line by line, through the blank comment line that ends it. */
+  const GATED_FIX_ISOLATION_ITEM = [
+    ' *   2. `isolation: "worktree"` is deliberately not used here. An isolated child\'s',
+    " *      worktree is committed to a branch and removed when it settles (if Git",
+    " *      preservation fails, no branch is created and the worktree is kept), so",
+    " *      a later agent would verify the main tree and could pass while the fix it",
+    " *      was checking lives somewhere else. Isolation is for parallel writers that",
+    " *      would collide; a serial fix-then-verify chain wants one shared tree.",
+    " *",
+  ];
+  /** The last lines of WorkflowSpawnResult.cwd's doc comment, through the field itself. */
+  const CWD_DOC_TAIL = [
+    "   * Usually unset for a worktree child even so: the copy is removed during the",
+    "   * child's own settle (a failed Git preservation keeps it instead), so it is",
+    "   * normally gone by the time this is read. That is what {@link gate} is for.",
+    "   */",
+    "  cwd?: string;",
+  ];
+
+  it('JV1 fullWorkflowToolDescription has one opts.isolation clause, ISOLATION_CLAUSE, and no "its changes preserved on a branch."', () => {
+    expect(description.split("opts.isolation:")).toHaveLength(2);
+    const start = description.indexOf("opts.isolation:");
+    const end = description.indexOf(" opts.gate:", start);
+    expect(end).toBeGreaterThan(start);
+    expect(description.slice(start, end)).toBe(ISOLATION_CLAUSE);
+    expect(description).not.toContain("its changes preserved on a branch.");
+  });
+
+  it("JV2 src/workflow/tool-description.ts has one header bullet for `isolation`, HEADER_ISOLATION_BULLET, and not its old one-line form", () => {
+    const lines = readRepoFile("src/workflow/tool-description.ts").split("\n");
+    const at = lines.findIndex(line => line.startsWith(" *   - `isolation`"));
+    expect(lines.filter(line => line.startsWith(" *   - `isolation`"))).toHaveLength(1);
+    expect(lines.slice(at, at + HEADER_ISOLATION_BULLET.length)).toEqual(HEADER_ISOLATION_BULLET);
+    expect(lines[at + HEADER_ISOLATION_BULLET.length]).not.toMatch(/^ \* {5}\S/);
+    expect(lines).not.toContain(" *   - `isolation` removes the worktree on settle, changes kept on a branch.");
+  });
+
+  it('JV3 examples/workflows/gated-fix.js has one item 2, GATED_FIX_ISOLATION_ITEM, and no "removed when it settles, so"', () => {
+    const source = readRepoFile("examples/workflows/gated-fix.js");
+    const lines = source.split("\n");
+    const at = lines.findIndex(line => line.startsWith(" *   2. "));
+    expect(lines.filter(line => line.startsWith(" *   2. "))).toHaveLength(1);
+    expect(lines.slice(at, at + GATED_FIX_ISOLATION_ITEM.length)).toEqual(GATED_FIX_ISOLATION_ITEM);
+    expect(source).not.toContain("removed when it settles, so");
+  });
+
+  it("JV4 src/workflow/runtime.ts has one cwd field, its doc comment ending in CWD_DOC_TAIL, and no \"child's own settle, so it no longer exists\"", () => {
+    const source = readRepoFile("src/workflow/runtime.ts");
+    const lines = source.split("\n");
+    const field = lines.indexOf("  cwd?: string;");
+    expect(lines.filter(line => line === "  cwd?: string;")).toHaveLength(1);
+    expect(field).toBeGreaterThanOrEqual(CWD_DOC_TAIL.length - 1);
+    expect(lines.slice(field - CWD_DOC_TAIL.length + 1, field + 1)).toEqual(CWD_DOC_TAIL);
+    expect(source).not.toContain("child's own settle, so it no longer exists");
+  });
+});
