@@ -54,22 +54,31 @@
  *   .json or a .xmd file of six); jsonl, a file whose path ends .jsonl (held by a .jsonl file; not by .json, .jsonl.gz or .xjsonl).
  *   By holds, the fixture's archive files holding each shape are exactly HOLDERS. Any other spelling of a path or a text is NOT
  *   CLAIMED of holds.
- * - W1 reads each WALKERS census, and the W1_TEXTS controls, in one expression: whether the text holds the from clause
- *   from "./helpers/triage-archive.js" spelled exactly so (double quote marks, one space, the .js ending), and how many call sites of
- *   withoutTriageArchive and isTriageArchivePath it holds, a call site being the name, in that case, directly followed by an
- *   opening parenthesis and preceded by no ASCII letter, digit or underscore (or by nothing, at the text's start). The reader reads
- *   text, so a call inside a comment or a string counts too. Each WALKERS census holds the clause and exactly its pinned count of
- *   call sites. Over W1_TEXTS it reads no clause for the import with single quote marks, for the import with the .ts ending and for
- *   the helper's path named in a comment; the clause and two sites for a call of each function beside the import's specifiers; one
- *   site for a call at the text's start; three sites for calls in a line comment, in a block comment and in a string; no site for
- *   names that only hold a function's name (a letter, a digit or an underscore before it, a letter after it), for the names with
- *   their case changed, for a call with a space before its parenthesis and for a call with type arguments or an optional call; and,
- *   in its battery rows (one line per character and name, for each of the 256 characters U+0000 to U+00FF), no site for either name
- *   called after an ASCII letter, digit or underscore, a site for either name called after each other character (386 sites), and no
- *   site for either name followed by any character but an opening parenthesis, even with an opening parenthesis after that
- *   character. Another spelling of the clause is NOT CLAIMED of W1 (W3 reads the other from-clause spellings), and neither is a
- *   character above U+00FF before or after a name, nor a run of two or more characters between a name and an opening parenthesis
- *   other than the type-argument and optional-call controls.
+ * - W1 reads each WALKERS census, and the W1_TEXTS controls, in one expression: whether the text holds the from clause from
+ *   "./helpers/triage-archive.js" spelled exactly so (double quote marks, one space, the .js ending), and how many call sites of
+ *   withoutTriageArchive and isTriageArchivePath it holds. Each WALKERS census holds the clause and exactly its pinned count of call
+ *   sites, as the reader counts them. Over W1_TEXTS it reads no clause for the import with single quote marks, for the import with
+ *   the .ts ending, for the helper's path named in a comment, for the import with no space, two spaces, a tab or a newline before its
+ *   specifier, and for the specifier imported without a from clause (a side-effect import and an import() call); the clause and two
+ *   sites for a call of each function beside the import's specifiers; one site for a call at the text's start; three sites for calls
+ *   in a line comment, in a block comment and in a string; three sites for refusal #4's calls with no argument, with a quoted
+ *   argument and with a space after the opening parenthesis, each in a line comment; two sites for its calls through a namespace and
+ *   through an optional namespace, each in a line comment; and no site for names that only hold a function's name (a letter, a digit
+ *   or an underscore before it, a letter after it), for the names with their case changed, for a call with a space before its
+ *   parenthesis and for a call with type arguments or an optional call. Its battery rows spell one line per helper name and per
+ *   character, or pair of characters, of the 256 characters U+0000 to U+00FF, each line after a newline or at the text's start, and
+ *   on those lines the reader counts a site exactly where the name, in that case, is directly followed by an opening parenthesis and
+ *   directly preceded by no ASCII letter, digit or underscore (or by nothing, at the text's start): no site for either name called
+ *   after an ASCII letter, digit or underscore, and a site for either name called after each other character (386 sites); the same
+ *   with each of the 256 characters before that character (no site after an ASCII letter, digit or underscore; 98816 sites after each
+ *   other character); no site for either name followed by any character but an opening parenthesis, even with an opening parenthesis
+ *   after that character; and a site for either name called with each of the 256 characters after its opening parenthesis, the line
+ *   ending there (512 sites). Another spelling of the clause is NOT CLAIMED of W1 (W3 reads the other from-clause spellings). Which
+ *   characters around a name make a call site on any other line than the controls' and the battery rows' lines, a WALKERS census's
+ *   own lines among them, is NOT CLAIMED of W1: for example a third character before a name on its line, a second character after its
+ *   opening parenthesis, a character above U+00FF before or after a name, and a run of two or more characters between a name and an
+ *   opening parenthesis other than the type-argument and optional-call controls. An edit of a W1_TEXTS row's text that keeps the
+ *   row's reading is NOT CLAIMED as killed by this census: F1 holds each row's id and readings, not its text.
  * - W2 scopeLineCount counts the lines equal to ARCHIVE_SCOPE_LINE in the comment block a text opens with: the block is there when
  *   the text's first three characters are a slash and two stars and a star-slash follows them, and it runs from those three
  *   characters to that first star-slash. Each line of the block (the block split at each newline) is read with its comment prefix
@@ -396,7 +405,9 @@ interface ImportText {
 const LATIN_1: readonly string[] = Array.from({ length: 256 }, (_, code) => String.fromCodePoint(code));
 /** The 63 ASCII letters, digits and underscore: the characters a W1 call site may not follow. */
 const ASCII_WORD: readonly string[] = [..."abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"];
-/** A W1 battery text: one line per character and helper name, `spell` placing the character beside the name. */
+/** Every pair of a LATIN_1 character and one of `seconds`, the LATIN_1 character first: the two characters W1's pair batteries place before a name. */
+const pairsBefore = (seconds: readonly string[]): string[] => LATIN_1.flatMap(first => seconds.map(second => `${first}${second}`));
+/** A W1 battery text: one line per entry of `characters` (a character, or a pair of characters) and helper name, `spell` placing it beside the name. */
 const siteBattery = (characters: readonly string[], spell: (character: string, name: string) => string): string =>
   characters.flatMap(character => ["withoutTriageArchive", "isTriageArchivePath"].map(name => spell(character, name))).join("\n");
 /** W1's controls: the reader over the from clause spelled other ways, over names and calls a call site must not be, and its call-site batteries. */
@@ -411,6 +422,20 @@ const W1_TEXTS: readonly ImportText[] = [
   { file: "control: the names with their case changed", imports: false, sites: 0, text: "WithoutTriageArchive(a);\nIsTriageArchivePath(b);\nWITHOUTTRIAGEARCHIVE(c);\nistriagearchivepath(d);\n" },
   { file: "control: calls in a line comment, a block comment and a string", imports: false, sites: 3, text: '// withoutTriageArchive(a);\n/* isTriageArchivePath(b); */\nconst s = "withoutTriageArchive(c)";\n' },
   { file: "control: a call with type arguments and an optional call", imports: false, sites: 0, text: "withoutTriageArchive<string[]>(a);\nisTriageArchivePath?.(b);\n" },
+  { file: "control: the import with no space, two spaces, a tab or a newline before its specifier", imports: false, sites: 0, text: 'import { a } from"./helpers/triage-archive.js";\nimport { b } from  "./helpers/triage-archive.js";\nimport { c } from\t"./helpers/triage-archive.js";\nimport { d } from\n"./helpers/triage-archive.js";\n' },
+  { file: "control: the specifier imported without a from clause", imports: false, sites: 0, text: 'import "./helpers/triage-archive.js";\nconst m = await import("./helpers/triage-archive.js");\n' },
+  {
+    file: "control: refusal #4's calls with no argument, a quoted argument and a space after the opening parenthesis",
+    imports: false,
+    sites: 3,
+    text: '// a walk over no paths: withoutTriageArchive()\n// isTriageArchivePath("docs/workbench/programs/p/triage") reads true\n// withoutTriageArchive( paths ) keeps the live paths\n',
+  },
+  {
+    file: "control: refusal #4's calls through a namespace and through an optional namespace",
+    imports: false,
+    sites: 2,
+    text: "// through a namespace import: archive.withoutTriageArchive(paths)\n// an optional namespace: archive?.withoutTriageArchive(paths)\n",
+  },
   { file: "battery: each name called after each ASCII letter, digit and underscore", imports: false, sites: 0, text: siteBattery(ASCII_WORD, (character, name) => `${character}${name}(x);`) },
   { file: "battery: each name called after each other character U+0000 to U+00FF", imports: false, sites: 386, text: siteBattery(LATIN_1.filter(character => !ASCII_WORD.includes(character)), (character, name) => `${character}${name}(x);`) },
   {
@@ -420,6 +445,27 @@ const W1_TEXTS: readonly ImportText[] = [
     text: siteBattery(
       LATIN_1.filter(character => character !== "("),
       (character, name) => `${name}${character}(x);`,
+    ),
+  },
+  {
+    file: "battery: each name called with each character U+0000 to U+00FF after its opening parenthesis, the line ending there",
+    imports: false,
+    sites: 512,
+    text: siteBattery(LATIN_1, (character, name) => `${name}(${character}`),
+  },
+  {
+    file: "battery: each name called after each ASCII letter, digit and underscore, with each character U+0000 to U+00FF before it",
+    imports: false,
+    sites: 0,
+    text: siteBattery(pairsBefore(ASCII_WORD), (pair, name) => `${pair}${name}(x);`),
+  },
+  {
+    file: "battery: each name called after each other character U+0000 to U+00FF, with each character U+0000 to U+00FF before it",
+    imports: false,
+    sites: 98816,
+    text: siteBattery(
+      pairsBefore(LATIN_1.filter(character => !ASCII_WORD.includes(character))),
+      (pair, name) => `${pair}${name}(x);`,
     ),
   },
 ];
@@ -1053,9 +1099,16 @@ describe("wb-cbt4 census: the master-side triage-archive reconciliation (owner s
       "control: the names with their case changed:false:0",
       "control: calls in a line comment, a block comment and a string:false:3",
       "control: a call with type arguments and an optional call:false:0",
+      "control: the import with no space, two spaces, a tab or a newline before its specifier:false:0",
+      "control: the specifier imported without a from clause:false:0",
+      "control: refusal #4's calls with no argument, a quoted argument and a space after the opening parenthesis:false:3",
+      "control: refusal #4's calls through a namespace and through an optional namespace:false:2",
       "battery: each name called after each ASCII letter, digit and underscore:false:0",
       "battery: each name called after each other character U+0000 to U+00FF:false:386",
       "battery: each name followed by each character U+0000 to U+00FF but an opening parenthesis, then by one:false:0",
+      "battery: each name called with each character U+0000 to U+00FF after its opening parenthesis, the line ending there:false:512",
+      "battery: each name called after each ASCII letter, digit and underscore, with each character U+0000 to U+00FF before it:false:0",
+      "battery: each name called after each other character U+0000 to U+00FF, with each character U+0000 to U+00FF before it:false:98816",
     ]);
     expect(W2_TEXTS.map(entry => `${entry.id}:${entry.reads}`)).toEqual([
       "the line in the opening block:1",
