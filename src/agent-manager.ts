@@ -24,8 +24,9 @@ import { assignHandle, handleBase } from "./mention.js";
 import { describeModel } from "./model-resolver.js";
 import type { AgentInvocation, AgentRecord, AgentTombstone, IsolationMode, MentionResolution, SubagentType, ThinkingLevel } from "./types.js";
 import { addUsage, type LifetimeUsage } from "./usage.js";
+import { sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "./workbench/redaction.js";
 import type { CompiledSchema } from "./workflow/json-schema.js";
-import { cleanupWorktree, createWorktree, isWorktreeIsolationEnabled, pruneWorktrees, } from "./worktree.js";
+import { cleanupWorktree, createWorktree, isWorktreeIsolationEnabled, pruneWorktrees, type WorktreePreservationFailedResult, } from "./worktree.js";
 
 export type OnAgentComplete = (record: AgentRecord) => void;
 export type OnAgentStart = (record: AgentRecord) => void;
@@ -358,6 +359,21 @@ async function shutdownChildSession(session: AgentSession | undefined): Promise<
   } catch { /* a partial session must degrade, not take the teardown down with it */ }
   // Always, even on timeout: disposal is what this function ultimately exists to do.
   try { session?.dispose?.(); } catch { /* ignore */ }
+}
+
+/**
+ * The note for a failed preservation (wb-5ik5, EAT-R003): the variant's diagnostic, its kept path and, when given,
+ * `repo`, each rendered by sanitizeWorkbenchText(value, WORKBENCH_TEXT_LIMIT, "label"). The settlement of a resolved
+ * run appends it to the record's result, with the caller-supplied cwd as `repo` and none for the parent session's own
+ * cwd; the settlement of a rejected run and a stop during worktree creation append none. The claim is the forms the
+ * ST rows of test/worktree-preservation-settlement.test.ts and the E2E-R003 and NOTE rows of
+ * test/worktree-preservation-failure-e2e.test.ts plant, and nothing wider.
+ */
+export function preservationFailureNote(result: WorktreePreservationFailedResult, repo: string | undefined): string {
+  const label = (value: string) => sanitizeWorkbenchText(value, WORKBENCH_TEXT_LIMIT, "label");
+  const repoNote = repo !== undefined ? ` (a worktree of \`${label(repo)}\`)` : "";
+  return `\n\n---\nWorktree preservation failed: ${label(result.diagnostic)}\n` +
+    `Nothing was saved to a branch. The agent's work is kept in its worktree at \`${label(result.path)}\`${repoNote}; recover it from there.`;
 }
 
 export class AgentManager {
@@ -899,6 +915,11 @@ export class AgentManager {
             // what a human reads, so the note still belongs on it.
             record.result = (record.result ?? "") +
               `\n\n---\nChanges saved to branch \`${wtResult.branch}\`${repoNote}. Merge with: \`git merge ${wtResult.branch}\`${customCwd !== undefined ? ` (run in \`${baseCwd}\`)` : ""}`;
+          } else if (wtResult.preservationFailed) {
+            // A failed preservation: append the note for the stored variant, with
+            // the caller-supplied cwd as its repo (EAT-R003; the pinned forms are
+            // on preservationFailureNote).
+            record.result = (record.result ?? "") + preservationFailureNote(wtResult, customCwd !== undefined ? baseCwd : undefined);
           }
         }
 
