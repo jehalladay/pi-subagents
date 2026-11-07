@@ -11,14 +11,28 @@
  * wait, lands after the one dispatch the final decision permits is invoked. Other scheduling forms are NOT CLAIMED. No
  * decision taken at entry is carried across the wait.
  *
- * Authority comes from the host alone: the grants the operator configured and the effective principal and session.
- * The request, its input, its JSON policy and the reviewed definition's metadata never confer a right.
- *   EAT-R028  workbench:execute must be held; a definition the adopted contract binds never confers it.
- *   EAT-R029  the exact host-issued action grant the adopted contract binds to the definition must be held, matched by
- *             string equality. Pinned stand-ins that never pass: another function's grant, a sibling action, the same
- *             permission under another namespace, a namespace sibling, a shorter spelling, longer spellings through a
- *             hyphen, a dot or a digit, the exact action extended by 1 to 232 repeated letters at either end, and every
- *             one-character insertion, deletion or substitution of it. Other spellings are NOT CLAIMED.
+ * At the pinned rows, authority comes from the host's two reads, the grants the operator configured and the effective
+ * principal and session: the suite's JSON policies and inputs that name grants, permissions, authority, reviewed,
+ * actionGrant, principal, sessionId or identity confer no grant and override no identity field, and the reviewed
+ * definition's adopted binding confers no execute right. Other request shapes are NOT CLAIMED.
+ *   EAT-R028  pinned rows: the otherwise authorized request without workbench:execute refuses at entry, before any wait,
+ *             as missing-execute-grant, with zero loader and provider calls, and so does that request holding each pinned
+ *             stand-in in its place (workbench:detach, workbench:design, the shorter spelling workbench:exec,
+ *             fixture-fn:execute, org.workbench:execute, workbench:execute extended by -all, .sub or 2). At decision, each
+ *             spelling the suite's 10 extension forms make of it within 256 characters, held in its place, refuses as
+ *             missing-execute-grant, and each one-character insertion, deletion or substitution of it over the grammar's
+ *             38 characters refuses as missing-execute-grant or as unknown-permission-data. Other spellings and holdings
+ *             are NOT CLAIMED.
+ *   EAT-R029  at the pinned rows, the exact action grant the adopted contract binds to the definition, held with
+ *             workbench:execute, passes, and each pinned stand-in held in its place refuses as
+ *             missing-function-action-grant: the other bound function's grant, the sibling action fixture-fn:develop-read,
+ *             the namespace sibling fixture-fn:write, the shorter spelling fixture-fn:develop, the adopted permission under
+ *             the namespace other-fn, org.fixture-fn:develop-write, the exact action extended by -all, -admin, .sub, 2 or
+ *             22, by 1 to 232 repeated letters a at either end, and by each of the suite's 10 extension forms (six at the
+ *             tail and four at the head of its namespace and of its permission) at every length within 256 characters.
+ *             Each one-character insertion, deletion or substitution of it over the grammar's 38 characters refuses, as
+ *             missing-function-action-grant when adoption admits the spelling and as unknown-permission-data when it does
+ *             not. Other spellings and holdings are NOT CLAIMED.
  *   EAT-R030  the effective principal and session at dispatch must each equal the one read at entry, field by field.
  *   EAT-R031  the grants are read again at dispatch, so a grant revoked during the wait refuses.
  *
@@ -146,9 +160,13 @@ function own(record: Record<string, unknown>, key: string): unknown {
   return descriptor && Object.hasOwn(descriptor, "value") ? descriptor.value : undefined;
 }
 /**
- * The clean-text check: a non-blank string of at most 256 bytes that stripUnsafeText leaves unchanged. Pinned: each Unicode
- * code point, U+0000 to U+10FFFF, inserted alone into a definition id and into a principal, judged against stripUnsafeText,
- * and the listed escape, blank and byte-bound rows. Other multi-unit texts are NOT CLAIMED.
+ * The clean-text check, for a definition id, a principal and a session. Pinned readings: each Unicode code point, U+0000
+ * to U+10FFFF, as the whole text of each of the three, is clean exactly when String.prototype.trim leaves it non-empty
+ * and stripUnsafeText leaves it unchanged; inserted alone into the definition id fixture.<u>.v1, the principal
+ * local-operator:1000:<u> and the session s<u>1, exactly when stripUnsafeText leaves the text unchanged; 1 to 512 ASCII
+ * letters a and 1 to 256 characters U+00E9 are clean in each of the three exactly when they hold at most 256 bytes; the
+ * suite's 52 texts made only of the 17 blanks stripUnsafeText keeps are refused in each of the three; and the listed
+ * escape, control, bidi-override, default-ignorable, blank and byte-bound rows. Other texts are NOT CLAIMED.
  */
 function cleanText(value: unknown): value is string {
   return typeof value === "string" && value.trim() !== "" && Buffer.byteLength(value) <= TEXT_BYTES && stripUnsafeText(value) === value;
@@ -164,7 +182,7 @@ function invalid(message: string): never {
 /**
  * Adopts the exact action grants a producer contract binds, one per reviewed definition. Throws on a binding list that
  * is not an array of 1 to 64 bindings, on a binding that is not a plain object holding exactly definitionId and
- * actionGrant as own data properties, on a definition id that is not clean text, on a spelling outside the seam's grammar
+ * actionGrant as own data properties, on a definition id the clean-text check refuses at its pinned readings, on a spelling outside the seam's grammar
  * or longer than 256 characters, on a Pi workbench grant and on a definition or grant bound twice. The returned contract,
  * its binding list and each binding
  * are frozen, and only a contract returned here is honored by decideFunctionAuthority.

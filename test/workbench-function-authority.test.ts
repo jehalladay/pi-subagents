@@ -27,7 +27,15 @@
  * named member, and narrows the describes to their pinned rows. NOT CLAIMED by this suite: rule-order fault forms, reason
  * pairs, grammar spellings, workflow_execute host reads and final-boundary scheduling forms beyond the enumerated rows;
  * multi-unit unsafe text beyond the listed rows; action-grant spellings beyond the enumerated EAT-R029 rows and sweeps.
- * No residual is named: every known-unpinned form of refusal #2 is pinned by a row below.
+ * No residual is named: every known-unpinned form of refusal #2 is pinned by a row below. Cut #4 (the respin of refusal
+ * #3 under ruling R-B665) takes GUARD A (the clean-text words) and GUARD B (the EAT-R029 exactness words) in the
+ * enumerate-the-resolvable form: it adds the clean-text describe and the EAT-R029 stand-in rows and sweeps below
+ * red-first (each new case but the trim and sanitizer control fails on the gate's blind stub, and each of refusal #3's
+ * GUARD A and GUARD B members fails on one of them), and narrows the clean-text and EAT-R029 titles to their pinned rows. No
+ * residual is named for either guard: each form refusal #3 recorded against them is pinned by a row below. Cut #4 also
+ * pins the EAT-R028 stand-ins for workbench:execute with the same sweeps and narrows the EAT-R028 titles to their pinned
+ * rows. Clean-text readings, and action-grant or workbench:execute spellings or holdings, beyond those rows are NOT
+ * CLAIMED. R-B665 exits the R-B642 set to wb-m83p, which owns it; cut #4 does not restate it.
  *
  * No spelling is adopted, so the production contract is unadopted and refuses every function dispatch (the B-authority row of
  * BEAD-PLAN.md lands "partial - enforcement seams land now; exact action grammar blocked on MW-CONTRACT"). The adopted contracts
@@ -196,8 +204,65 @@ function deepFreeze<T>(value: T): T {
   return Object.freeze(value);
 }
 
-describe("EAT-R028: a function dispatch requires workbench:execute (wb-201v)", () => {
-  it("refuses an otherwise authorized function request without workbench:execute before any wait, with zero loader and provider calls", async () => {
+/** The 10 extension forms of the EAT-R028 and EAT-R029 sweeps: six extend a part at its tail, four at its head; each keeps the grammar. */
+const LETTERS = "abcdefghijklmnopqrstuvwxyz";
+const DIGITS = "0123456789";
+const cycled = (alphabet: string, length: number) => alphabet.repeat(Math.ceil(length / alphabet.length)).slice(0, length);
+const EXTENSIONS: readonly (readonly [string, "head" | "tail", (length: number) => string])[] = [
+  ["a hyphen and letters", "tail", length => `-${cycled(LETTERS, length)}`],
+  ["a dot and letters", "tail", length => `.${cycled(LETTERS, length)}`],
+  ["a hyphen and digits", "tail", length => `-${cycled(DIGITS, length)}`],
+  ["a dot and digits", "tail", length => `.${cycled(DIGITS, length)}`],
+  ["digits", "tail", length => cycled(DIGITS, length)],
+  ["letters", "tail", length => cycled(LETTERS, length)],
+  ["letters and a hyphen", "head", length => `${cycled(LETTERS, length)}-`],
+  ["letters and a dot", "head", length => `${cycled(LETTERS, length)}.`],
+  ["letters", "head", length => cycled(LETTERS, length)],
+  ["the letter a and digits", "head", length => `a${cycled(DIGITS, length)}`],
+];
+
+/** Each spelling the 10 forms make of a namespace:permission grant, at every length that keeps it within 256 characters. */
+function extendedSpellings(grant: string): Set<string> {
+  const [namespace = "", permission = ""] = grant.split(":");
+  const spellings = new Set<string>();
+  for (const [, side, extend] of EXTENSIONS) {
+    for (let length = 1; grant.length + extend(length).length <= 256; length += 1) {
+      const extension = extend(length);
+      if (side === "tail") spellings.add(`${namespace}${extension}:${permission}`).add(`${namespace}:${permission}${extension}`);
+      else spellings.add(`${extension}${namespace}:${permission}`).add(`${namespace}:${extension}${permission}`);
+    }
+  }
+  return spellings;
+}
+
+/** Each one-character insertion, deletion or substitution of a spelling over the grammar's 38 characters. */
+function oneCharacterEdits(spelling: string): Set<string> {
+  const alphabet = [..."abcdefghijklmnopqrstuvwxyz0123456789.-"];
+  const edits = new Set<string>();
+  for (let index = 0; index <= spelling.length; index += 1) {
+    for (const char of alphabet) edits.add(`${spelling.slice(0, index)}${char}${spelling.slice(index)}`);
+    if (index < spelling.length) {
+      edits.add(`${spelling.slice(0, index)}${spelling.slice(index + 1)}`);
+      for (const char of alphabet) edits.add(`${spelling.slice(0, index)}${char}${spelling.slice(index + 1)}`);
+    }
+  }
+  edits.delete(spelling);
+  return edits;
+}
+
+/** How many decisions refuse under each policy (an authorization is tallied under its grant). */
+function tally(decide: (spelling: string) => ReturnType<typeof decideFunctionAuthority>, spellings: Iterable<string>): Record<string, number> {
+  const outcomes: Record<string, number> = {};
+  for (const spelling of spellings) {
+    const decision = decide(spelling);
+    const outcome = decision.decision === "refused" ? decision.policy : `authorized by ${spelling}`;
+    outcomes[outcome] = (outcomes[outcome] ?? 0) + 1;
+  }
+  return outcomes;
+}
+
+describe("EAT-R028: workbench:execute at the enumerated rows and sweeps (wb-201v)", () => {
+  it("refuses the otherwise authorized function request without workbench:execute before any wait, with zero loader and provider calls", async () => {
     const h = harness({ grants: [ACTION] });
     const wait = parked();
     const result = await h.run(admissionFor(), CONTRACT, wait.park);
@@ -207,7 +272,7 @@ describe("EAT-R028: a function dispatch requires workbench:execute (wb-201v)", (
     expect(h.provider).not.toHaveBeenCalled();
   });
 
-  it("a reviewed definition the adopted contract binds confers no execute right, and a JSON policy or input that claims one confers none either", async () => {
+  it("a reviewed definition the adopted contract binds confers no execute right, and neither does the pinned JSON policy (naming it under grants, permissions and authority, with reviewed true) or the pinned input (naming it under grants)", async () => {
     const h = harness({ grants: [ACTION] });
     const claims: JsonValue = { grants: [EXECUTE_GRANT, ACTION], permissions: [EXECUTE_GRANT], authority: EXECUTE_GRANT, reviewed: true };
     for (const admission of [admissionFor(), admissionFor(FUNCTION_ID, claims), admissionFor(FUNCTION_ID, undefined, { task: "t", grants: [EXECUTE_GRANT] })]) {
@@ -230,9 +295,39 @@ describe("EAT-R028: a function dispatch requires workbench:execute (wb-201v)", (
     expect(h.loader).not.toHaveBeenCalled();
     expect(h.provider).not.toHaveBeenCalled();
   });
+
+  it.each([
+    ["Pi's own workbench:detach", DETACH_GRANT],
+    ["Pi's own workbench:design", "workbench:design"],
+    ["the shorter spelling workbench:exec", "workbench:exec"],
+    ["workbench:execute extended by -all", `${EXECUTE_GRANT}-all`],
+    ["workbench:execute extended by .sub", `${EXECUTE_GRANT}.sub`],
+    ["workbench:execute extended by the digit 2", `${EXECUTE_GRANT}2`],
+    ["the permission execute under the namespace fixture-fn", "fixture-fn:execute"],
+    ["the parent-qualified namespace org.workbench", "org.workbench:execute"],
+  ])("the otherwise authorized request holding %s (%s) in place of workbench:execute refuses before any wait as missing-execute-grant, with zero loader and provider calls", async (_what, grant) => {
+    const h = harness({ grants: [grant, ACTION] });
+    const wait = parked();
+    expect(refusalOf(await h.run(admissionFor(), CONTRACT, wait.park))).toEqual({ stage: "entry", policy: "missing-execute-grant", category: "authorization" });
+    expect(wait.park).not.toHaveBeenCalled();
+    expect(h.loader).not.toHaveBeenCalled();
+    expect(h.provider).not.toHaveBeenCalled();
+  });
+
+  it("the otherwise authorized request holding in place of workbench:execute each spelling the 10 listed forms make of it (six at the tail and four at the head of its namespace and of its permission, at every length that keeps it within 256 characters) refuses as missing-execute-grant, and each one-character insertion, deletion or substitution of it over the grammar's 38 characters refuses as missing-execute-grant or as unknown permission data", () => {
+    const admission = admissionFor();
+    const decide = (grant: string) => decideFunctionAuthority({ admission, contract: CONTRACT, entered: HOST, current: { grants: [grant, ACTION], identity: HOST } });
+    const extended = extendedSpellings(EXECUTE_GRANT);
+    expect(extended.size).toBe(4766);
+    expect(tally(decide, extended)).toEqual({ "missing-execute-grant": extended.size });
+    const edits = oneCharacterEdits(EXECUTE_GRANT);
+    const outcomes = tally(decide, edits);
+    expect(Object.keys(outcomes).sort()).toEqual(["missing-execute-grant", "unknown-permission-data"]);
+    expect(outcomes["missing-execute-grant"]).toBeGreaterThan(1000);
+  });
 });
 
-describe("EAT-R029: a function dispatch requires the exact host-issued function action grant (wb-201v)", () => {
+describe("EAT-R029: the exact host-issued function action grant at the enumerated rows and sweeps (wb-201v)", () => {
   it("refuses a reviewed definition held with workbench:execute and no action grant", async () => {
     const h = harness({ grants: [EXECUTE_GRANT] });
     expect(refusalOf(await h.run(admissionFor()))).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
@@ -241,13 +336,13 @@ describe("EAT-R029: a function dispatch requires the exact host-issued function 
   });
 
   it.each([
-    ["another function's action grant", OTHER_FUNCTION_ACTION],
-    ["another action of the same function", "fixture-fn:develop-read"],
-    ["a longer spelling that begins with the exact action", `${ACTION}-all`],
-    ["a longer spelling that extends the exact action through a dot", `${ACTION}.sub`],
-    ["a longer spelling that extends the exact action through a digit", `${ACTION}2`],
-    ["a shorter spelling the exact action begins with", "fixture-fn:develop"],
-    ["a namespace sibling", "fixture-fn:write"],
+    ["the other bound function's action grant", OTHER_FUNCTION_ACTION],
+    ["the sibling action develop-read", "fixture-fn:develop-read"],
+    ["the exact action extended by -all", `${ACTION}-all`],
+    ["the exact action extended by .sub", `${ACTION}.sub`],
+    ["the exact action extended by the digit 2", `${ACTION}2`],
+    ["the shorter spelling develop, which the exact action begins with", "fixture-fn:develop"],
+    ["the namespace sibling write", "fixture-fn:write"],
   ])("refuses %s in the adopted action's namespace (%s)", async (_what, grant) => {
     const h = harness({ grants: [EXECUTE_GRANT, grant] });
     expect(refusalOf(await h.run(admissionFor()))).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
@@ -255,14 +350,14 @@ describe("EAT-R029: a function dispatch requires the exact host-issued function 
     expect(h.provider).not.toHaveBeenCalled();
   });
 
-  it("refuses the adopted permission under another namespace (other-fn:develop-write): the namespace is part of the exact spelling", async () => {
+  it("refuses the adopted permission under the namespace other-fn (other-fn:develop-write)", async () => {
     const h = harness({ grants: [EXECUTE_GRANT, "other-fn:develop-write"] });
     expect(refusalOf(await h.run(admissionFor()))).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
     expect(h.loader).not.toHaveBeenCalled();
     expect(h.provider).not.toHaveBeenCalled();
   });
 
-  it("only the adopted exact action passes: one loader and one provider call, resting on exactly the two grants", async () => {
+  it("the adopted exact action held among four grants passes: one loader and one provider call, resting on exactly the two grants, while workbench:execute and that action refuse the other bound definition", async () => {
     const h = harness({ grants: ["forge:inspect", OTHER_FUNCTION_ACTION, ACTION, EXECUTE_GRANT] });
     const result = await h.run(admissionFor());
     expect(result).toEqual({
@@ -278,7 +373,7 @@ describe("EAT-R029: a function dispatch requires the exact host-issued function 
     expect(other.loader).not.toHaveBeenCalled();
   });
 
-  it("reads the action grant from host context only: a JSON policy or input that names it confers nothing", async () => {
+  it("a JSON policy naming the action grant under grants and actionGrant, or an input naming it under actionGrant, confers nothing", async () => {
     const h = harness({ grants: [EXECUTE_GRANT] });
     for (const admission of [admissionFor(FUNCTION_ID, { grants: [ACTION], actionGrant: ACTION }), admissionFor(FUNCTION_ID, undefined, { task: "t", actionGrant: ACTION })]) {
       expect(refusalOf(await h.run(admission))).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
@@ -286,7 +381,7 @@ describe("EAT-R029: a function dispatch requires the exact host-issued function 
     expect(h.loader).not.toHaveBeenCalled();
   });
 
-  it("the production contract is unadopted (MW-CONTRACT): every function dispatch refuses, whatever grants are held", async () => {
+  it("the production contract is unadopted (MW-CONTRACT): held with workbench:execute and both fixture action grants, both fixture definitions refuse as function-action-unadopted", async () => {
     expect(FUNCTION_ACTION_CONTRACT).toEqual({ state: "unadopted", blockedOn: "MW-CONTRACT" });
     const h = harness({ grants: [EXECUTE_GRANT, ACTION, OTHER_FUNCTION_ACTION] });
     for (const id of [FUNCTION_ID, OTHER_FUNCTION_ID]) {
@@ -296,7 +391,7 @@ describe("EAT-R029: a function dispatch requires the exact host-issued function 
     expect(h.provider).not.toHaveBeenCalled();
   });
 
-  it("a definition the adopted contract does not bind, and a contract object that never went through adoption, refuse as unadopted", async () => {
+  it("the unbound definition fixture.unbound.v1, and the pinned forged contract (a frozen adopted-shaped object that never went through adoption), refuse as unadopted", async () => {
     const h = harness({ grants: [EXECUTE_GRANT, ACTION] });
     expect(refusalOf(await h.run(admissionFor("fixture.unbound.v1")))).toEqual({ stage: "entry", policy: "function-action-unadopted", category: "unavailable" });
     const forged: FunctionActionContract = Object.freeze({ state: "adopted", bindings: Object.freeze([Object.freeze({ definitionId: FUNCTION_ID, actionGrant: ACTION })]) });
@@ -304,7 +399,7 @@ describe("EAT-R029: a function dispatch requires the exact host-issued function 
     expect(h.loader).not.toHaveBeenCalled();
   });
 
-  it("no one-character insertion, deletion or substitution of the exact action stands in for it: each refuses, as a missing action grant when the grammar admits it", () => {
+  it("no one-character insertion, deletion or substitution of the exact action over the grammar's 38 characters stands in for it: each refuses as a missing action grant or as unknown permission data", () => {
     const alphabet = [..."abcdefghijklmnopqrstuvwxyz0123456789.-"];
     const variants = new Set<string>();
     for (let index = 0; index <= ACTION.length; index += 1) {
@@ -325,7 +420,7 @@ describe("EAT-R029: a function dispatch requires the exact host-issued function 
     expect(outcomes.get("missing-function-action-grant")).toBeGreaterThan(1000);
   });
 
-  it("the exact action extended by 1 to 232 repeated letters at either end, up to the 256-character bound, never stands in", () => {
+  it("the exact action extended by 1 to 232 repeated letters a at either end, up to the 256-character bound, never stands in", () => {
     const refused: string[] = [];
     for (let count = 1; count <= 256 - ACTION.length; count += 1) {
       for (const variant of [`${ACTION}${"a".repeat(count)}`, `${"a".repeat(count)}${ACTION}`]) {
@@ -347,6 +442,41 @@ describe("EAT-R029: a function dispatch requires the exact host-issued function 
       }
     }
     expect(authorized).toEqual([]);
+  });
+
+  it.each([
+    ["the parent-qualified namespace org.fixture-fn", "org.fixture-fn:develop-write"],
+    ["the exact action extended by -admin", `${ACTION}-admin`],
+    ["the exact action extended by the digits 22", `${ACTION}22`],
+  ])("refuses the stand-in %s (%s)", async (_what, grant) => {
+    const h = harness({ grants: [EXECUTE_GRANT, grant] });
+    expect(refusalOf(await h.run(admissionFor()))).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
+    expect(h.loader).not.toHaveBeenCalled();
+    expect(h.provider).not.toHaveBeenCalled();
+  });
+
+  it("the exact action extended by each of the 10 listed forms (six at the tail and four at the head of its namespace and of its permission), at every length that keeps it within 256 characters, refuses as missing-function-action-grant", () => {
+    const admission = admissionFor();
+    const variants = extendedSpellings(ACTION);
+    expect(variants.size).toBe(4626);
+    expect(tally(variant => decideFunctionAuthority({ admission, contract: CONTRACT, entered: HOST, current: { grants: [EXECUTE_GRANT, variant], identity: HOST } }), variants)).toEqual({ "missing-function-action-grant": variants.size });
+  });
+
+  it("each one-character insertion, deletion or substitution of the exact action over the grammar's 38 characters refuses as missing-function-action-grant when adoption admits the spelling, and as unknown-permission-data when adoption refuses it", () => {
+    const admission = admissionFor();
+    const mismatches: string[] = [];
+    const counts = { admitted: 0, refused: 0 };
+    for (const variant of oneCharacterEdits(ACTION)) {
+      const admitted = adoptable(variant);
+      counts[admitted ? "admitted" : "refused"] += 1;
+      const expected = admitted ? "missing-function-action-grant" : "unknown-permission-data";
+      const decision = decideFunctionAuthority({ admission, contract: CONTRACT, entered: HOST, current: { grants: [EXECUTE_GRANT, variant], identity: HOST } });
+      const outcome = decision.decision === "refused" ? decision.policy : "authorized";
+      if (outcome !== expected) mismatches.push(`${variant}: ${outcome}, expected ${expected}`);
+    }
+    expect(mismatches).toEqual([]);
+    expect(counts.admitted).toBeGreaterThan(1000);
+    expect(counts.refused).toBeGreaterThan(0);
   });
 });
 
@@ -501,8 +631,8 @@ describe("the action grammar: adoption judged against Pi grant settings and the 
 
   const MALFORMED: readonly (readonly [string, unknown])[] = [
     ["an empty binding list", []],
-    ["a blank definition id", [{ definitionId: " ", actionGrant: ACTION }]],
-    ["a definition id with an escape", [{ definitionId: `${FUNCTION_ID}\u001b[0m`, actionGrant: ACTION }]],
+    ["a definition id of one ASCII space", [{ definitionId: " ", actionGrant: ACTION }]],
+    ["a definition id ending in the escape sequence ESC [0m", [{ definitionId: `${FUNCTION_ID}\u001b[0m`, actionGrant: ACTION }]],
     ["a binding with an extra member", [{ definitionId: FUNCTION_ID, actionGrant: ACTION, grants: [EXECUTE_GRANT] }]],
     ["a binding list that is not an array", { 0: { definitionId: FUNCTION_ID, actionGrant: ACTION }, length: 1 }],
     ["a null binding", [null]],
@@ -593,14 +723,14 @@ describe("EAT-R030: a changed effective principal or session refuses the dispatc
   });
 
   it.each([
-    ["a blank principal", { principal: " ", sessionId: "s1" }],
+    ["a principal of one ASCII space", { principal: " ", sessionId: "s1" }],
     ["a missing session", { principal: HOST.principal }],
     ["a non-text session", { principal: HOST.principal, sessionId: 1 }],
     ["a principal of 257 bytes in 256 characters", { principal: `${"a".repeat(255)}\u00e9`, sessionId: "s1" }],
-    ["a principal carrying an escape", { principal: `${HOST.principal}\u001b[0m`, sessionId: "s1" }],
-    ["a principal carrying a BEL C0 control", { principal: `${HOST.principal}${String.fromCodePoint(7)}`, sessionId: "s1" }],
-    ["a principal carrying a bidi override", { principal: `${HOST.principal}${String.fromCodePoint(0x202e)}`, sessionId: "s1" }],
-    ["a principal carrying a default-ignorable point", { principal: `${HOST.principal}${String.fromCodePoint(0x200b)}`, sessionId: "s1" }],
+    ["a principal ending in the escape sequence ESC [0m", { principal: `${HOST.principal}\u001b[0m`, sessionId: "s1" }],
+    ["a principal ending in U+0007 (a BEL C0 control)", { principal: `${HOST.principal}${String.fromCodePoint(7)}`, sessionId: "s1" }],
+    ["a principal ending in U+202E (a bidi override)", { principal: `${HOST.principal}${String.fromCodePoint(0x202e)}`, sessionId: "s1" }],
+    ["a principal ending in U+200B (a default-ignorable point)", { principal: `${HOST.principal}${String.fromCodePoint(0x200b)}`, sessionId: "s1" }],
   ])("denies %s as unknown identity data before any dispatch", async (_what, identity) => {
     const dispatch = vi.fn(async () => "ran");
     const host = { grants: () => [EXECUTE_GRANT, ACTION], identity: () => identity } as unknown as FunctionAuthorityHost;
@@ -799,15 +929,15 @@ describe("adoptFunctionActions: the binding list's bounds and each binding's mem
   });
 
   it.each([
-    ["a BEL C0 control", 7],
-    ["a bidi override", 0x202e],
-    ["a default-ignorable point", 0x200b],
-  ])("a definition id carrying %s is not clean text", (_what, codePoint) => {
+    ["U+0007 (a BEL C0 control)", 7],
+    ["U+202E (a bidi override)", 0x202e],
+    ["U+200B (a default-ignorable point)", 0x200b],
+  ])("a definition id ending in %s is not clean text", (_what, codePoint) => {
     const definitionId = `${FUNCTION_ID}${String.fromCodePoint(codePoint)}`;
     expect(() => adoptFunctionActions([{ definitionId, actionGrant: ACTION }])).toThrow(/clean definition id/);
   });
 
-  it("each Unicode code point, U+0000 to U+10FFFF, inserted alone into a definition id and into a principal, is clean text exactly when stripUnsafeText leaves the text unchanged", () => {
+  it("each Unicode code point, U+0000 to U+10FFFF, inserted alone into the definition id fixture.<u>.v1 and into the principal local-operator:1000:<u>, is clean text exactly when stripUnsafeText leaves the text unchanged", () => {
     const admission = admissionFor();
     const disagreements: string[] = [];
     let unsafe = 0;
@@ -833,12 +963,116 @@ describe("adoptFunctionActions: the binding list's bounds and each binding's mem
     expect(unsafe).toBeGreaterThan(6000);
   }, 120_000);
 
-  it("a definition id is at most 256 bytes, counted in bytes: 256 ASCII bytes are adopted, 257 bytes in 256 characters throw", () => {
+  it("a definition id at the 256-byte bound, counted in bytes: 256 ASCII bytes are adopted, 257 bytes in 256 characters throw", () => {
     const at256 = `fixture.${"a".repeat(248)}`;
     const wide = `${"a".repeat(255)}é`;
     expect([Buffer.byteLength(at256), Buffer.byteLength(wide), wide.length]).toEqual([256, 257, 256]);
     expect(adoptFunctionActions([{ definitionId: at256, actionGrant: ACTION }]).state).toBe("adopted");
     expect(() => adoptFunctionActions([{ definitionId: wide, actionGrant: ACTION }])).toThrow(/clean definition id/);
+  });
+});
+
+describe("clean text: the enumerated readings of a definition id, a principal and a session (wb-201v)", () => {
+  /** The 25 code points String.prototype.trim removes, and the 17 of them that stripUnsafeText keeps. */
+  const TRIMMED = [0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x20, 0xa0, 0x1680, 0x2000, 0x2001, 0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x2007, 0x2008, 0x2009, 0x200a, 0x2028, 0x2029, 0x202f, 0x205f, 0x3000, 0xfeff];
+  const KEPT_BLANKS = [0x20, 0xa0, 0x1680, 0x2000, 0x2001, 0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x2007, 0x2008, 0x2009, 0x200a, 0x202f, 0x205f, 0x3000];
+
+  /** Whether a definition id, a principal and a session each take the text: adoption, then a known identity at decision. */
+  function fieldsTake(admission: ExecuteAdmission, text: string): boolean[] {
+    let adopted = true;
+    try {
+      adoptFunctionActions([{ definitionId: text, actionGrant: ACTION }]);
+    } catch (error) {
+      if (!(error instanceof CapabilityError && /clean definition id/.test(error.message))) throw error;
+      adopted = false;
+    }
+    const known = (identity: FunctionIdentity): boolean => {
+      const decision = decideFunctionAuthority({ admission, contract: CONTRACT, entered: identity, current: { grants: [EXECUTE_GRANT, ACTION], identity } });
+      if (decision.decision === "authorized") return true;
+      if (decision.policy === "unknown-identity-data") return false;
+      throw new Error(`unexpected ${decision.policy} refusal`);
+    };
+    return [adopted, known({ principal: text, sessionId: HOST.sessionId }), known({ principal: HOST.principal, sessionId: text })];
+  }
+
+  it("String.prototype.trim removes 25 code points (U+0009 to U+000D, U+0020, U+00A0, U+1680, U+2000 to U+200A, U+2028, U+2029, U+202F, U+205F, U+3000 and U+FEFF), and stripUnsafeText keeps 17 of them (U+0020, U+00A0, U+1680, U+2000 to U+200A, U+202F, U+205F and U+3000)", () => {
+    const trimmed: number[] = [];
+    for (let codePoint = 0; codePoint <= 0x10ffff; codePoint += 1) if (String.fromCodePoint(codePoint).trim() === "") trimmed.push(codePoint);
+    expect(trimmed).toEqual(TRIMMED);
+    expect(TRIMMED.filter(codePoint => stripUnsafeText(String.fromCodePoint(codePoint)) === String.fromCodePoint(codePoint))).toEqual(KEPT_BLANKS);
+  });
+
+  it("each Unicode code point, U+0000 to U+10FFFF, as the whole text of a definition id, a principal or a session, is clean text exactly when String.prototype.trim leaves it non-empty and stripUnsafeText leaves it unchanged", () => {
+    const admission = admissionFor();
+    const disagreements: string[] = [];
+    let refused = 0;
+    for (let codePoint = 0; codePoint <= 0x10ffff; codePoint += 1) {
+      const unit = String.fromCodePoint(codePoint);
+      const clean = unit.trim() !== "" && stripUnsafeText(unit) === unit;
+      if (!clean) refused += 1;
+      const taken = fieldsTake(admission, unit);
+      if (taken.some(field => field !== clean)) disagreements.push(`${codePoint.toString(16)}: ${taken.join(",")}`);
+      if (disagreements.length > 20) break;
+    }
+    expect(disagreements).toEqual([]);
+    expect(refused).toBeGreaterThan(6000);
+  }, 120_000);
+
+  it("each Unicode code point, U+0000 to U+10FFFF, inserted alone into the session s<u>1, is clean text exactly when stripUnsafeText leaves the session unchanged", () => {
+    const admission = admissionFor();
+    const disagreements: string[] = [];
+    for (let codePoint = 0; codePoint <= 0x10ffff; codePoint += 1) {
+      const sessionId = `s${String.fromCodePoint(codePoint)}1`;
+      // Entered as HOST, so a clean session reads as a changed identity and an unclean one as unknown identity data.
+      const decision = decideFunctionAuthority({ admission, contract: CONTRACT, entered: HOST, current: { grants: [EXECUTE_GRANT, ACTION], identity: { principal: HOST.principal, sessionId } } });
+      const known = decision.decision === "refused" && decision.policy === "changed-effective-identity";
+      if (known !== (stripUnsafeText(sessionId) === sessionId)) disagreements.push(codePoint.toString(16));
+      if (disagreements.length > 20) break;
+    }
+    expect(disagreements).toEqual([]);
+  }, 120_000);
+
+  it("a definition id, a principal or a session made only of the 17 blanks stripUnsafeText keeps is refused: each blank repeated 2 times, 3 times and up to 256 bytes, and all 17 in code-point order", () => {
+    const admission = admissionFor();
+    const texts = KEPT_BLANKS.flatMap(codePoint => {
+      const unit = String.fromCodePoint(codePoint);
+      return [unit.repeat(2), unit.repeat(3), unit.repeat(Math.floor(256 / Buffer.byteLength(unit)))];
+    });
+    texts.push(String.fromCodePoint(...KEPT_BLANKS));
+    expect(texts).toHaveLength(52);
+    expect(texts.filter(text => Buffer.byteLength(text) > 256)).toEqual([]);
+    const taken = texts.filter(text => fieldsTake(admission, text).some(field => field)).map(text => [...text].map(unit => unit.codePointAt(0)?.toString(16)).join(" "));
+    expect(taken).toEqual([]);
+  });
+
+  it("1 to 512 ASCII letters a, and 1 to 256 characters U+00E9, as a definition id, a principal or a session, are clean text exactly when they hold at most 256 bytes", () => {
+    const admission = admissionFor();
+    const disagreements: string[] = [];
+    for (const [unit, most] of [["a", 512], ["é", 256]] as const) {
+      for (let count = 1; count <= most; count += 1) {
+        const text = unit.repeat(count);
+        const clean = Buffer.byteLength(text) <= 256;
+        const taken = fieldsTake(admission, text);
+        if (taken.some(field => field !== clean)) disagreements.push(`${unit.codePointAt(0)?.toString(16)} x ${count}: ${taken.join(",")}`);
+      }
+    }
+    expect(disagreements).toEqual([]);
+  });
+
+  it.each([
+    ["ending in the escape sequence ESC [0m", `${HOST.sessionId}\u001b[0m`],
+    ["ending in U+0007 (a BEL C0 control)", `${HOST.sessionId}${String.fromCodePoint(7)}`],
+    ["ending in U+202E (a bidi override)", `${HOST.sessionId}${String.fromCodePoint(0x202e)}`],
+    ["ending in U+200B (a default-ignorable point)", `${HOST.sessionId}${String.fromCodePoint(0x200b)}`],
+    ["of one ASCII space", " "],
+    ["of one U+3000 ideographic space", String.fromCodePoint(0x3000)],
+    ["of 257 bytes in 256 characters", `${"a".repeat(255)}é`],
+  ])("denies a session %s as unknown identity data before any dispatch", async (_what, sessionId) => {
+    const dispatch = vi.fn(async () => "ran");
+    const host: FunctionAuthorityHost = { grants: () => [EXECUTE_GRANT, ACTION], identity: () => ({ principal: HOST.principal, sessionId }) };
+    const result = await dispatchFunctionWithAuthority({ admission: admissionFor(), contract: CONTRACT, host, dispatch });
+    expect(refusalOf(result)).toEqual({ stage: "entry", policy: "unknown-identity-data", category: "authorization" });
+    expect(dispatch).not.toHaveBeenCalled();
   });
 });
 
