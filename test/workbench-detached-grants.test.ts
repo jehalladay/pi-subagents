@@ -67,16 +67,20 @@
  * of test/workbench-claude-tool-grants.test.ts, and every other mode the seat knows is outside the rows, in the NOT
  * CLAIMED sentence.
  */
+import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { type ExtensionContext, getAgentDir } from "@earendil-works/pi-coding-agent";
+import { marked, type Token, type Tokens } from "marked";
 import { afterEach, describe, expect, it } from "vitest";
 import subagentsExtension from "../src/index.js";
 import { inspectWorkflowSource } from "../src/workbench/designer.js";
 import type { DetachedLaunchRequest, DetachedReceipt, DetachedSnapshot } from "../src/workbench/hosts/local-detached.js";
 import { ctx, hermeticDir, makePi, textOf } from "./helpers/boot-extension.js";
+import { type DocsSection, docsSection } from "./helpers/census.js";
 import { DetachedTimingLapse, HOST_HOOK_TIMEOUT_MS, markTimingLapse, pollFor, reportAfterCleanup } from "./helpers/detached-timing.js";
+import { sectionSource } from "./helpers/docs-section-source.js";
 
 const SETTINGS_TOOL = "Read";
 const ROLE_TOOL = "Grep";
@@ -569,19 +573,46 @@ describe("cut #3 C6: the R2- rows and the witnesses this file's leading comment 
 
 /**
  * wb-ghki (the R694 follow-up of landing 1019, gate cmd_67a7e6181626, F1): the residual accounting of this file's leading
- * comment and of the wb-wupg receipt counted refusal #1's U5 planted readers G13 and G13b as pinned. Both now say they are
- * NOT CLAIMED, and the named-residuals sentences except them. The member set is held to the receipt's entry 2, the landed
- * line that narrowed them out of the src scan's words, so it is anchored outside this case's own literals.
+ * comment and of the wb-wupg receipt counted refusal #1's U5 planted readers G13 and G13b as pinned; both now say they are
+ * NOT CLAIMED, and the named-residuals sentences except them. Cut #2 (refusal #1 of cut #1 93de2a41, gate run
+ * g10-gate-s236, items U1 to U4) replaces cut #1's one case with the three below, and each claims only what its title
+ * names. The planted readers entry 2's falsification item names are PLANTED_READERS, so the set the other two cases hold
+ * the leading comment's two sentences and the wb-ghki entry's two items to is anchored outside their own literals, in a
+ * landed receipt line.
+ * The receipt is read as it renders (marked 18): a heading counts wherever it renders, inside a list item or a block quote
+ * too, by its text with markup and HTML dropped and letter case ignored; each entry is bound by docsSection (its full
+ * heading exactly once in the rendered view, under the receipt's title, up to the next level-1 or level-2 heading or EOF),
+ * and an entry that carries HTML is refused. An entry's texts are its top-level list items and its other blocks, as they
+ * render. The member ids read are the forms the refusals name their members in: G and a number with an optional b, and CT
+ * and a number (refusal #1), and GP, a number, a hyphen, a capital letter and a number (refusal #2).
+ * NOT CLAIMED by these cases: a heading, label or member id spelled with a character reference or a look-alike code point;
+ * a line nested inside another item of an entry, which renders as part of that item's text; a member id in any other form
+ * (the seat battery ids, the witness ids, the unmet item ids such as U5); any entry of the receipt but entry 2 and the
+ * wb-ghki entry, cut #2's own entry among them; and a coordinated edit of a pinned text together with its literal here
+ * (the wb-ghki entry's digest among them) that keeps G13 and G13b the member ids named.
  */
 const PLANTED_READERS: readonly string[] = ["G13", "G13b"];
+const RECEIPT = new URL("../docs/workbench/receipts/wb-wupg.md", import.meta.url);
+const RECEIPT_TITLE = "wb-wupg: [MWI-detached-grants] Repair both registered detached Claude grant producers";
+const ENTRY_2_KEY = "2026-11-06 respin (cut #2):";
+const ENTRY_2_HEADING = `${ENTRY_2_KEY} refusal #1's claim facets pinned through both producers (machine seat ws-03)`;
+const ENTRY_2_FALSIFICATION = "Falsification on the cut #2 tree";
+const ENTRY_2_PLANTED = "The planted readers G13b and G13 are NOT CLAIMED by the narrowed scan words and were not re-run.";
+const GHKI_ENTRY_KEY = "2026-11-07 receipt: wb-ghki,";
+const GHKI_ENTRY_HEADING = `${GHKI_ENTRY_KEY} the R694 follow-up of landing 1019, names refusal #1's planted readers G13 and G13b NOT CLAIMED (machine seat ws-16, run g10-work-s235)`;
+/** The sha-256 of the wb-ghki entry's source (sectionSource), trailing white space trimmed: cut #1's entry, as cut #2 keeps it. */
+const GHKI_ENTRY_SHA256 = "3fad117e93c2d0dff8f180ad1f3d0e6ba3473d5f7efe2381b0c1c6a92853d9a2";
+const HEADER_NOT_CLAIMED =
+  "NOT CLAIMED by this file: a settings shape, held right list, launch input, JSON policy, reviewed script or workflow_detached params other than its rows'; the order of the members of an admitted config or role (toEqual does not read it); a detached agent() answered by the Claude SDK; refusal #1's U5 planted readers G13 (a capabilityGrants grammar reader spelled with escaped hyphens, beside the delivered one in src/workbench/execute.ts) and G13b (the same reader as a new module), whose class test/workbench-claude-tool-grants.test.ts's NOT CLAIMED sentence names (wb-ghki).";
 const HEADER_NAMED_RESIDUALS =
   "NAMED RESIDUALS: none - every realized member of refusals #1 and #2 but G13 and G13b is pinned by a row of this file or of test/workbench-claude-tool-grants.test.ts, and every other mode the seat knows is outside the rows, in the NOT CLAIMED sentence.";
-const ENTRY_2_HEADING = "## 2026-11-06 respin (cut #2):";
-const GHKI_ENTRY_HEADING = "## 2026-11-07 receipt: wb-ghki,";
-const RECEIPT_NOT_CLAIMED = "- NOT CLAIMED: refusal #1's U5 planted readers G13 and G13b.";
-const RECEIPT_NAMED_RESIDUALS = "- Named residuals: none (every realized member of refusals #1 and #2 but G13 and G13b is pinned by a row).";
-/** The refusal member ids (G, a number and an optional b) a text names, once each, sorted. */
-const membersNamed = (text: string): string[] => [...new Set(text.match(/\bG[0-9]+b?\b/g) ?? [])].sort();
+const RECEIPT_NOT_CLAIMED =
+  "NOT CLAIMED: refusal #1's U5 planted readers G13 and G13b. Their class, a module that parses the grammar under another spelling and a second reader inside a module READERS lists, is in the NOT CLAIMED sentence of test/workbench-claude-tool-grants.test.ts.";
+const RECEIPT_NAMED_RESIDUALS = "Named residuals: none (every realized member of refusals #1 and #2 but G13 and G13b is pinned by a row).";
+/** The member ids a text names in the refusals' forms (G<n> or G<n>b and CT<n>, refusal #1; GP<n>-<letter><n>, refusal #2), once each, sorted. */
+const membersNamed = (text: string): string[] => [...new Set(text.match(/\b(?:G[0-9]+b?|CT[0-9]+|GP[0-9]+-[A-Z][0-9]+)\b/g) ?? [])].sort();
+const occurrences = (text: string, pattern: RegExp): number => text.match(pattern)?.length ?? 0;
+const opensWith = (text: string, key: string): boolean => text.toLowerCase().startsWith(key.toLowerCase());
 /** This file's leading comment as one line: each line's leading comment marker dropped, the lines joined by single spaces. */
 function leadingCommentProse(): string {
   const comment = readFileSync(fileURLToPath(import.meta.url), "utf8").split("*/", 1)[0] ?? "";
@@ -591,35 +622,71 @@ function leadingCommentProse(): string {
     .filter(line => line !== "")
     .join(" ");
 }
-/** The lines of the wb-wupg receipt's entry whose heading starts with `heading`, up to the next entry heading. */
-function receiptEntryLines(heading: string): string[] {
-  const lines = readFileSync(fileURLToPath(new URL("../docs/workbench/receipts/wb-wupg.md", import.meta.url)), "utf8").split("\n");
-  const start = lines.findIndex(line => line.startsWith(heading));
-  if (start < 0) return [];
-  const end = lines.findIndex((line, index) => index > start && line.startsWith("## "));
-  return lines.slice(start, end < 0 ? undefined : end);
+const isHeadingToken = (token: Token): token is Tokens.Heading => token.type === "heading";
+const isListToken = (token: Token): token is Tokens.List => token.type === "list";
+const isBlockquoteToken = (token: Token): token is Tokens.Blockquote => token.type === "blockquote";
+/** The text inline tokens render: an HTML token none, a line break a space, markup its children's text. */
+function inlineText(tokens: readonly Token[]): string {
+  let out = "";
+  for (const token of tokens) {
+    if (token.type === "html") continue;
+    if (token.type === "br") out += " ";
+    else if ("tokens" in token && Array.isArray(token.tokens) && token.tokens.length > 0) out += inlineText(token.tokens);
+    else if ("text" in token && typeof token.text === "string") out += token.text;
+  }
+  return out;
 }
-/** The members entry 2's falsification line says it narrowed out: its sentence from "The planted readers" on. */
-function entry2PlantedReaders(): string[] {
-  const line = receiptEntryLines(ENTRY_2_HEADING).find(text => text.startsWith("- Falsification on the cut #2 tree")) ?? "";
-  const at = line.indexOf("The planted readers");
-  return at < 0 ? [] : membersNamed(line.slice(at));
+/** Every heading a page renders, in document order and at any nesting depth (inside a list item or a block quote too): its level and its text, white space collapsed. */
+function renderedHeadings(tokens: readonly Token[]): { readonly depth: number; readonly text: string }[] {
+  return tokens.flatMap(token => {
+    if (isHeadingToken(token)) return [{ depth: token.depth, text: inlineText(token.tokens).replace(/\s+/g, " ").trim() }];
+    if (isListToken(token)) return token.items.flatMap(item => renderedHeadings(item.tokens));
+    if (isBlockquoteToken(token)) return renderedHeadings(token.tokens);
+    return [];
+  });
 }
+/** The headings of the receipt that open with key, letter case ignored. */
+const headingsOpening = (markdown: string, key: string) => renderedHeadings(marked.lexer(markdown)).filter(heading => opensWith(heading.text, key));
+/** An entry's texts as they render, in order: each top-level list item's and every other block's (an HTML block renders none). */
+const entryTexts = (section: DocsSection): string[] =>
+  section.blocks.flatMap(block => (block.kind === "list" ? block.items.map(item => item.text) : block.kind === "html" ? [] : [block.text]));
+const sha256Of = (text: string): string => createHash("sha256").update(text, "utf8").digest("hex");
 
 describe("wb-ghki: refusal #1's planted readers G13 and G13b in the residual accounting", () => {
-  it("the leading comment's NOT CLAIMED and NAMED RESIDUALS sentences, and the NOT CLAIMED and Named residuals lines of the wb-wupg receipt's wb-ghki entry, each name exactly G13 and G13b, the planted readers the receipt's entry 2 narrowed out; the two named-residuals sentences are the pinned words", () => {
-    expect(entry2PlantedReaders()).toEqual(PLANTED_READERS);
+  it("entry 2 of the wb-wupg receipt, as it renders: exactly one heading opens with '2026-11-06 respin (cut #2):' (letter case ignored) and it is entry 2's own level-2 heading under the receipt's title; the entry carries no HTML, exactly one of its texts opens with 'Falsification on the cut #2 tree', and that item's sentence from 'The planted readers' on is the pinned sentence and names exactly the member ids G13 and G13b", () => {
+    const markdown = readFileSync(RECEIPT, "utf8");
+    expect(headingsOpening(markdown, ENTRY_2_KEY), "entry 2's heading key").toEqual([{ depth: 2, text: ENTRY_2_HEADING }]);
+    const section = docsSection(markdown, ENTRY_2_HEADING, 2, [RECEIPT_TITLE]);
+    expect({ why: section.why, hasHtml: section.hasHtml }, "entry 2's binding").toEqual({ why: "", hasHtml: false });
+    const falsification = entryTexts(section).filter(text => text.startsWith(ENTRY_2_FALSIFICATION));
+    expect(falsification.length, "entry 2's falsification items").toBe(1);
+    const item = falsification[0] ?? "";
+    const at = item.indexOf("The planted readers");
+    const planted = at < 0 ? "" : item.slice(at);
+    expect(planted, "entry 2's planted-readers sentence").toBe(ENTRY_2_PLANTED);
+    expect(membersNamed(planted), "entry 2's planted readers").toEqual(PLANTED_READERS);
+  });
+
+  it("this file's leading comment: 'NOT CLAIMED by this file:' and 'NAMED RESIDUALS:' each occur once (letter case ignored), its NOT CLAIMED and NAMED RESIDUALS sentences are the pinned words, and each names exactly the member ids G13 and G13b", () => {
     const comment = leadingCommentProse();
-    const notClaimed = comment.slice(comment.indexOf("NOT CLAIMED by this file:"), comment.indexOf("NAMED RESIDUALS:"));
+    expect([occurrences(comment, /not claimed by this file:/gi), occurrences(comment, /named residuals:/gi)], "the comment's sentence openings").toEqual([1, 1]);
+    const notClaimed = comment.slice(comment.indexOf("NOT CLAIMED by this file:"), comment.indexOf("NAMED RESIDUALS:")).trim();
     const namedResiduals = comment.slice(comment.indexOf("NAMED RESIDUALS:"));
-    expect(membersNamed(notClaimed)).toEqual(PLANTED_READERS);
-    expect(membersNamed(namedResiduals)).toEqual(PLANTED_READERS);
-    expect(namedResiduals).toBe(HEADER_NAMED_RESIDUALS);
-    const entry = receiptEntryLines(GHKI_ENTRY_HEADING);
-    const notClaimedLines = entry.filter(line => line.startsWith("- NOT CLAIMED:"));
-    expect(notClaimedLines.map(line => line.startsWith(RECEIPT_NOT_CLAIMED))).toEqual([true]);
-    expect(notClaimedLines.map(line => membersNamed(line))).toEqual([PLANTED_READERS]);
-    const namedResidualsLines = entry.filter(line => line.startsWith(RECEIPT_NAMED_RESIDUALS));
-    expect(namedResidualsLines.map(line => membersNamed(line))).toEqual([PLANTED_READERS]);
+    expect([notClaimed, namedResiduals], "the comment's two sentences").toEqual([HEADER_NOT_CLAIMED, HEADER_NAMED_RESIDUALS]);
+    expect([notClaimed, namedResiduals].map(membersNamed), "the comment's members").toEqual([PLANTED_READERS, PLANTED_READERS]);
+  });
+
+  it("the wb-ghki entry of the wb-wupg receipt, as it renders: exactly one heading opens with '2026-11-07 receipt: wb-ghki,' (letter case ignored) and it is the entry's own level-2 heading under the receipt's title; the entry carries no HTML; exactly one of its texts opens with 'NOT CLAIMED:' and exactly one with 'Named residuals:' (letter case ignored), each the pinned item and each naming exactly the member ids G13 and G13b; and the entry's source has the pinned sha-256", () => {
+    const markdown = readFileSync(RECEIPT, "utf8");
+    expect(headingsOpening(markdown, GHKI_ENTRY_KEY), "the wb-ghki entry's heading key").toEqual([{ depth: 2, text: GHKI_ENTRY_HEADING }]);
+    const section = docsSection(markdown, GHKI_ENTRY_HEADING, 2, [RECEIPT_TITLE]);
+    expect({ why: section.why, hasHtml: section.hasHtml }, "the wb-ghki entry's binding").toEqual({ why: "", hasHtml: false });
+    const texts = entryTexts(section);
+    const notClaimed = texts.filter(text => opensWith(text, "NOT CLAIMED:"));
+    const namedResiduals = texts.filter(text => opensWith(text, "Named residuals:"));
+    expect([notClaimed, namedResiduals], "the wb-ghki entry's two items").toEqual([[RECEIPT_NOT_CLAIMED], [RECEIPT_NAMED_RESIDUALS]]);
+    expect([...notClaimed, ...namedResiduals].map(membersNamed), "the wb-ghki entry's members").toEqual([PLANTED_READERS, PLANTED_READERS]);
+    const source = sectionSource(markdown, GHKI_ENTRY_HEADING);
+    expect({ why: source.why, sha256: sha256Of(source.source.trimEnd()) }, "the wb-ghki entry's source").toEqual({ why: "", sha256: GHKI_ENTRY_SHA256 });
   });
 });
