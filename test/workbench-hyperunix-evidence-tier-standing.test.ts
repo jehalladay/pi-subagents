@@ -4143,8 +4143,21 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     const releasePlant = afterStatement('protocol/decoder.js', decoderLast - 1, inBlocks(4, 'checkStream &&= undefined;'));
     sameParseReading('protocol/decoder.js', 'checkStream', releasePlant, inBlocks(4, 'checkStream &&= undefined;'));
     const releasedPlant = !parsedModules.has(`protocol/decoder.js\n${releasePlant}`);
+    // THE PARSE RELEASE OVER EVERY KEY (wb-ant2 cut #6, refusal #5's U1, pinned red-first): read at that same point, after the
+    // judges' reading of releasePlant and before their reading of the installed decoder text, no key parsedModules holds spells
+    // the plant's text anywhere in it (after a module name, as the gate's GP5-REL-CROSSKEY result.js key and its
+    // GP5-REL-CROSSKEY-QUERY protocol/query.js key held it, alone, or before a name) and none of its values, the parses it
+    // holds, has that text as its text, so THE PARSE RELEASE's no entry for that plant's text is read under every key. What any
+    // other store holds, and what a parsedModules whose Map methods are replaced holds, is NOT CLAIMED by this census.
+    const plantEntries = [...parsedModules].filter(([key, file]) => key.includes(releasePlant) || file.text === releasePlant).length;
+    expect(plantEntries).toBe(0);
     sameParseReading('protocol/decoder.js', 'checkStream', decoderText, inBlocks(4, 'checkStream &&= undefined;'));
     const keptInstalled = parsedModules.has(`protocol/decoder.js\n${decoderText}`);
+    // THE KEEP'S PARSE (wb-ant2 cut #6, pinned red-first): the entry THE PARSE RELEASE says parsedModules holds for the
+    // installed decoder text after the judges' reading of it, under that text's protocol/decoder.js key, holds a parse whose
+    // text is that installed text.
+    const keptParse = parsedModules.get(`protocol/decoder.js\n${decoderText}`)?.text === decoderText;
+    expect(keptParse).toBe(true);
     expect([everyControl(decoderLast - 1, judgesCall), everyControl(decoderLast, inBlocks(4, nestedStatement)),
       everyControl(decoderLast - 1, `void 0;\n${inBlocks(4, nestedStatement)}`), releasedPlant, keptInstalled])
       .toStrictEqual([`protocol/decoder.js checkStream misread at ${decoderLast}`,
