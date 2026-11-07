@@ -1,23 +1,26 @@
 /**
  * wb-wupg (MWI B-detached-grants, EAT-R012/EAT-R013): the exact Claude tool right the local-detached preflight checks,
  * `claude:tool:<name>` (validateRequest, src/workbench/hosts/local-detached.ts: one exact grant per configured Claude
- * tool), is a form workbench.capabilityGrants admits, so the operator can authorize the exact SDK tool rights a detached
- * Claude launch needs (test/workbench-detached-grants.test.ts drives those launches through the registered tools).
+ * tool), as the six src modules READERS lists read it in a workbench.capabilityGrants list, so the operator can hold the
+ * tool rights the detached Claude launches of test/workbench-detached-grants.test.ts need.
  *
- * The form is exact: `claude:tool:` and one tool name, a letter and then up to 63 letters, digits, `_` or `-` (built-in
- * names such as Read, MCP names such as mcp__docs__search or mcp__docs-v2__search). No right MALFORMED_TOOL_GRANTS lists
- * reads as one: a wildcard, a rule pattern, an extra segment, a leading digit, `_` or `-`, a leading or trailing space or
- * tab, a leading or inner NUL, a leading or trailing newline, a prefix in another case, or a name past 64 characters.
- * Each of the six modules READERS lists reads the form the same way through the entry point its row calls, so holding a
- * tool right never turns that module's whole grant list into unknown permission data, and a malformed tool right still
- * does in every one of them.
- *
- * The src scan holds READERS to the src modules whose source carries the grammar's exact spellings, BASE_FORM and
- * TOOL_FORM below: a module that adds those spellings without a row, or a row whose module no longer carries them, reds
- * here. A module that parses the capabilityGrants grammar under any other spelling (an escaped hyphen, a reordered
- * character class, a pattern built at run time) is NOT CLAIMED by this scan, and neither is a second grammar reader
- * inside a module READERS already lists: the rows judge each listed module only through the entry point they call
- * (refusal #1 of cut #1 1c3cc1a4, item U5, narrowed here).
+ * The tool right's form, as each READERS module spells it (TOOL_FORM below): `claude:tool:`, a letter, then up to 63
+ * letters, digits, `_` or `-`. Cut #3 (refusal #2 of cut #2 0f18bc3f, item U5, member GP7-F1 and its witness W-F1; the
+ * second-stage cap R-B657, the enumerate-the-resolvable form) adds CONTROL_TOOL_GRANTS and narrows every claim of this
+ * file to its lists. CLAIMED, through the entry point each READERS row calls and beside that row's base grants:
+ *   - each TOOL_GRANTS right leaves the row's answer for its base grants alone unchanged, and that answer is not the
+ *     row's unknown-permission-data answer;
+ *   - each MALFORMED_TOOL_GRANTS right gets the row's unknown-permission-data answer;
+ *   - each CONTROL_TOOL_GRANTS right gets it too: claude:tool:Read with one character of CONTROLS - which a row here
+ *     holds equal to the Unicode Cc category, U+0000 to U+001F and U+007F to U+009F - before the right, before the tool
+ *     name, after its R or after its d.
+ * The src scan: the .ts files under src/ whose text carries BASE_FORM are exactly the READERS modules, in READERS order,
+ * and so are the .ts files under src/ whose text carries TOOL_FORM.
+ * NOT CLAIMED by this file: a right outside those three lists (another character, place or number of characters); a
+ * module outside READERS, and a file under src/ that is not a .ts file; a module that parses the capabilityGrants grammar
+ * under any other spelling (an escaped hyphen, a reordered character class, a pattern built at run time), and a second
+ * grammar reader inside a module READERS already lists (refusal #1 of cut #1 1c3cc1a4, item U5: the rows judge each
+ * listed module only through the entry point they call). NAMED RESIDUALS: none.
  */
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative } from "node:path";
@@ -43,6 +46,12 @@ const MALFORMED_TOOL_GRANTS: readonly string[] = [
   `claude:tool:${"T".repeat(65)}`, "claude:tool:-Read", "Claude:tool:Read", `claude:tool:${TAB}Read`, `claude:tool:Read${TAB}`,
   `claude:tool:${NUL}Read`, `claude:tool:Re${NUL}ad`, `claude:tool:${LF}Read`,
 ];
+/** The Unicode Cc category, U+0000 to U+001F and U+007F to U+009F, one string each (cut #3). */
+const CONTROLS: readonly string[] = [...Array.from({ length: 0x20 }, (_, code) => code), ...Array.from({ length: 0x21 }, (_, offset) => 0x7f + offset)].map(code =>
+  String.fromCodePoint(code),
+);
+/** claude:tool:Read with one character of CONTROLS before the right, before the tool name, after its R and after its d (cut #3, W-F1). */
+const CONTROL_TOOL_GRANTS: readonly string[] = CONTROLS.flatMap(control => [`${control}claude:tool:Read`, `claude:tool:${control}Read`, `claude:tool:R${control}ead`, `claude:tool:Read${control}`]);
 const NOW = "2026-11-06T00:00:00Z";
 const DIGEST = `sha256:${"ab".repeat(32)}`;
 
@@ -131,8 +140,8 @@ function sourcesCarrying(form: string): string[] {
   return carrying.sort();
 }
 
-describe("the exact claude:tool:<name> grant form, read the same way by each READERS module", () => {
-  it("READERS is exactly the src modules whose source carries the grammar's exact spelling, and every one of them carries the exact tool form", () => {
+describe("the claude:tool:<name> rights TOOL_GRANTS, MALFORMED_TOOL_GRANTS and CONTROL_TOOL_GRANTS list, as each READERS module reads them", () => {
+  it("READERS is exactly the .ts files under src/ whose text carries BASE_FORM, and exactly those whose text carries TOOL_FORM", () => {
     expect(READERS.map(reader => reader.module)).toEqual([
       "src/settings.ts", "src/workbench/claude-capability-tools.ts", "src/workbench/control.ts", "src/workbench/execute.ts",
       "src/workbench/reconcile-decision.ts", "src/workbench/validate-reply.ts",
@@ -141,13 +150,28 @@ describe("the exact claude:tool:<name> grant form, read the same way by each REA
     expect(sourcesCarrying(TOOL_FORM)).toEqual(READERS.map(reader => reader.module));
   });
 
-  it.each(READERS.map(reader => [reader.module, reader] as const))("%s: an exact tool right beside its grants changes nothing, so it is never unknown permission data", (_module, reader) => {
+  it.each(READERS.map(reader => [reader.module, reader] as const))("%s: each TOOL_GRANTS right beside the row's base grants leaves its answer unchanged, and that answer is not unknown permission data", (_module, reader) => {
     const held = reader.outcome(reader.base);
     expect(held).not.toBe(reader.unknown);
     for (const tool of TOOL_GRANTS) expect(reader.outcome([...reader.base, tool]), tool).toBe(held);
   });
 
-  it.each(READERS.map(reader => [reader.module, reader] as const))("%s: a malformed tool right is still unknown permission data, never a partial grant", (_module, reader) => {
+  it.each(READERS.map(reader => [reader.module, reader] as const))("%s: each MALFORMED_TOOL_GRANTS right beside the row's base grants is unknown permission data, never a partial grant", (_module, reader) => {
     for (const malformed of MALFORMED_TOOL_GRANTS) expect(reader.outcome([...reader.base, malformed]), JSON.stringify(malformed)).toBe(reader.unknown);
+  });
+
+  it("cut #3: CONTROLS is exactly the Unicode Cc category, and CONTROL_TOOL_GRANTS holds each of its characters in each of the four places", () => {
+    const category: string[] = [];
+    for (let code = 0; code <= 0x10ffff; code++) {
+      const character = String.fromCodePoint(code);
+      if (/^\p{Cc}$/u.test(character)) category.push(character);
+    }
+    expect(CONTROLS).toEqual(category);
+    expect(CONTROL_TOOL_GRANTS).toHaveLength(4 * category.length);
+    expect(new Set(CONTROL_TOOL_GRANTS).size).toBe(CONTROL_TOOL_GRANTS.length);
+  });
+
+  it.each(READERS.map(reader => [reader.module, reader] as const))("cut #3 W-F1, %s: each CONTROL_TOOL_GRANTS right beside the row's base grants is unknown permission data", (_module, reader) => {
+    for (const control of CONTROL_TOOL_GRANTS) expect(reader.outcome([...reader.base, control]), JSON.stringify(control)).toBe(reader.unknown);
   });
 });

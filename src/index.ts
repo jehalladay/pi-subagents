@@ -2619,14 +2619,10 @@ Terse command-style prompts produce shallow, generic work.
     return [{ provider: "pi-workflow", type: "task", id: runId, ...referenceScope(launch.scope.workspace) }];
   }
   /**
-   * The Claude half of a registered detached launch (wb-wupg, MWI EAT-R012/EAT-R013), for both producers. The config is
-   * the Claude settings members the detached host accepts - the model, the tools and the roles, each role as the settings
-   * hold it - each only when the settings hold it (a launch request is a JSON value, so an undefined member never crosses
-   * the preflight). The grants are claude:invoke and then one claude:tool:<name> per distinct tool name in the settings
-   * tools and then in each role's tools, in that order, each forwarded only when the operator's capabilityGrants hold it;
-   * no other right the operator holds is forwarded. Nothing is read from the script, its input or the model's JSON
-   * policy, and nothing is decided here: the preflight stays the one denial, so a right the operator did not grant, or a
-   * role member the detached host does not carry (capabilities), refuses there before any child.
+   * The Claude half of a registered detached launch, its Claude config and its grants, for both producers (wb-wupg, MWI
+   * EAT-R012/EAT-R013). What it returns is claimed only for the settings, held rights and launches that
+   * test/workbench-detached-grants.test.ts pins through both producers, as that file's header lists them; for any other
+   * settings shape, held right list or launch it is NOT CLAIMED here.
    */
   function detachedClaudeLaunch(ctx: ExtensionContext, settings: WorkbenchSettings | undefined) {
     const tools = settings?.tools ?? [];

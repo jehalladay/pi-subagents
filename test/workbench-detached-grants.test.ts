@@ -1,7 +1,8 @@
 /**
- * wb-wupg (MWI B-detached-grants, slice PI-6, closure gate PI-DETACHED-GRANTS): both registered detached Claude grant
- * producers in src/index.ts - the workflow_execute detached launcher and the workflow_detached tool - hand the REAL
- * local-detached preflight (validateRequest, src/workbench/hosts/local-detached.ts) host-validated bounded grants.
+ * wb-wupg (MWI B-detached-grants, slice PI-6, closure gate PI-DETACHED-GRANTS): the two registered detached Claude
+ * grant producers in src/index.ts - the workflow_execute detached launcher and the workflow_detached tool - and what the
+ * REAL local-detached preflight (validateRequest, src/workbench/hosts/local-detached.ts) admits from each of them for the
+ * launches this file's rows make.
  *
  * Requirements, from docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/requirements/
  * ATOMIC-REQUIREMENTS.md at master 0b25e14e, each pinned by the describe block named after it:
@@ -15,18 +16,18 @@
  *     unchanged validator denial before launch." Mutant: "Remove the local-detached claude:invoke check."
  *
  * The operator authorizes each right in workbench.capabilityGrants: workbench:execute, workbench:detach, claude:invoke
- * and one claude:tool:<name> per distinct tool name the settings tools or a role's tools name (the exact spelling the
- * preflight checks; the grant form itself is pinned by test/workbench-claude-tool-grants.test.ts). workbench:observe,
- * held where a row reads a host's terminal state, is the observation right and never a launch right.
+ * and the claude:tool:<name> rights a row holds (the exact spelling the preflight checks; the grant form itself is
+ * test/workbench-claude-tool-grants.test.ts's). workbench:observe is held only by the rows that read a host's terminal
+ * state through workflow_detached's inspect, and no row's admitted grants carry it.
  *
  * Every launch here is real and goes through the registered Pi tools only: the tool reaches the real preflight through
  * workbenchNative().launchDetachedWorkflow, and an admitted launch spawns the compiled child host (dist/, which the
  * gate's build step makes before its test step) and runs the reviewed pure script to completion. What a launch carried
  * is read from the host's own admission record, the boot pin the launcher writes into the reserved invocation
  * directory (invocation.json, after the preflight and before the spawn), and its terminal state is read through
- * workflow_detached's inspect. A refused launch is witnessed by its reply carrying the preflight's own words and by the
- * detached root holding no reserved invocation directory: the launcher reserves the directory before it spawns a child,
- * and the preflight runs before both. The reviewed script calls no agent(), so no Claude SDK query runs: the live legs
+ * workflow_detached's inspect. A launch the preflight refuses is witnessed by its reply carrying the preflight's own
+ * words and by the detached root holding no reserved invocation directory: the launcher reserves the directory before it
+ * spawns a child, and the preflight runs before both. The reviewed script calls no agent(), so no Claude SDK query runs: the live legs
  * of PI-DETACHED-GRANTS (a detached agent() answered by the Claude SDK) are NOT run by this file.
  *
  * This suite is a member of the detached-* family (test/workbench-detached-timing-guard.test.ts, wb-maza): every timed
@@ -34,26 +35,37 @@
  * strict marker (markTimingLapse), and the hook that stops hosts waits for their exit under HOST_HOOK_TIMEOUT_MS and
  * reports a lapse only after its cleanup (reportAfterCleanup).
  *
- * Cut #2 (refusal #1 of cut #1 1c3cc1a4, guard R-B644: the cut's own claim words were wider than its pins) pins the
- * facets those words name through BOTH producers (the PRODUCERS rows at the end of this file), and reads the admitted
- * Claude config and grants with toEqual, never as a subset:
- *   U1 settings members: the model, tools and roles members each reach the admitted config only when the settings hold
- *     them (the CONFIG_ROWS hold different subsets, the empty one included), each role as the settings hold it (a role's
- *     own model and effort included), and a role that declares capabilities, a member the detached host does not carry,
- *     is refused by the unchanged preflight before any child.
- *   U2 exact rights: claude:invoke, then one claude:tool:<name> per distinct tool name in the settings tools and then in
- *     each role's tools, in that order, also when the operator holds them in the reverse order; two settings tools, two
- *     roles and one role with two tools each forward every right, a tool named more than once forwards one, a Claude
- *     right the operator holds that the config does not name is never forwarded, and each right of the five-tool SEVERAL
- *     config removed in turn refuses.
- *   U3 sources: rights carried in workflow_execute's input, or declared by the reviewed script itself (its meta and its
- *     body), never stand in for a missing host right; the JSON policy and workflow_detached's params rows are EAT-R014's.
- *   U4 deterministic facet: once the operator switches the settings to the pi backend (settings are read on every call),
- *     workflow_execute's detached launch is deterministic and carries no Claude config and no grant, also with every
- *     Claude right forged in its policy and input; workflow_detached's deterministic default is EAT-R013's control.
+ * Cut #2 (refusal #1 of cut #1 1c3cc1a4, guard R-B644) added the PRODUCERS rows below for refusal #1's items. Cut #3
+ * (refusal #2 of cut #2 0f18bc3f; the second-stage cap of the R-B644 set, R-B657; the enumerate-the-resolvable form)
+ * pins each member refusal #2 realized through the witness refusal #2 paired with it - the R2- rows: W-S1, W-S2, W-S3,
+ * W-S4, W-M1, W-I1, W-P1 and W-D1 (W-F1 is test/workbench-claude-tool-grants.test.ts's) - and narrows every claim of
+ * this file to its rows. CLAIMED, each by its rows only, through each of the two producers unless a row names one, each admitted
+ * Claude config and grant list read with toEqual:
+ *   C1 each CONFIG_ROWS row: the real preflight admits exactly the row's claude member as the Claude config and exactly
+ *     the row's grants in the row's order, and the child host runs the reviewed source to completion;
+ *   C2 each SOURCE_ROWS row: with FORGED_LAUNCH carried where the row puts it (workflow_execute's input or JSON policy,
+ *     the reviewed script's meta and body, or beside workflow_detached's params) and the host holding FORGED_RIGHTS,
+ *     the real preflight admits exactly DEFAULT_CLAUDE and CLAUDE_RIGHTS, and the child host runs the reviewed source
+ *     to completion;
+ *   C3 each refusal row - the EAT-R012, EAT-R013 and EAT-R014 removals, the role that declares capabilities, each SEVERAL
+ *     right removed, and cut #2's input and declaring-script removals: the reply carries the words or the code the row
+ *     names, and no invocation directory is reserved;
+ *   C4 each deterministic row - workflow_detached with no backend parameter (EAT-R013's control) and with backend
+ *     deterministic named (DETERMINISTIC_ROWS: nothing, or FORGED_CLAUDE, FORGED_RIGHTS and a policy beside its params), and
+ *     workflow_execute after its settings switch to the pi backend, with nothing or with FORGED in its policy and its
+ *     input: the launch is admitted with backend deterministic, grants [] and no claude member, and runs to completion;
+ *   C5 the EAT-R012 and EAT-R013 launch rows and cut #2's declaring-script control: what each asserts (the EAT rows
+ *     read the admitted request with toMatchObject; DEFAULT_CLAUDE's exact config is C1's first row);
+ *   C6 the R2- rows of CONFIG_ROWS, SOURCE_ROWS and DETERMINISTIC_ROWS are the frozen R2_ROWS list, in order, and the
+ *     witness ids they name are exactly those this comment names, W-F1 aside.
+ * NOT CLAIMED by this file: a settings shape, held right list, launch input, JSON policy, reviewed script or
+ * workflow_detached params other than its rows'; the order of the members of an admitted config or role (toEqual does
+ * not read it); a detached agent() answered by the Claude SDK. NAMED RESIDUALS: none - each realized member of refusals
+ * #1 and #2 is pinned by a row, and every other mode the seat knows is outside the rows, in the NOT CLAIMED sentence.
  */
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { type ExtensionContext, getAgentDir } from "@earendil-works/pi-coding-agent";
 import { afterEach, describe, expect, it } from "vitest";
 import subagentsExtension from "../src/index.js";
@@ -305,6 +317,15 @@ const ROLE_MEMBERS = { reviewer: { prompt: REVIEW, tools: [ROLE_TOOL], model: MO
 const TWO_ROLES = { reviewer: { prompt: REVIEW, tools: [ROLE_TOOL] }, writer: { prompt: WRITE, tools: ["LS"] } };
 const TWO_TOOL_ROLE = { reviewer: { prompt: REVIEW, tools: [ROLE_TOOL, "LS"] } };
 const NAMED_TWICE = { reviewer: { prompt: REVIEW, tools: [SETTINGS_TOOL, ROLE_TOOL] }, writer: { prompt: WRITE, tools: [ROLE_TOOL] } };
+const LF = String.fromCodePoint(10);
+/** Cut #3, W-S3: the writer role holds no tools member. */
+const TOOLLESS_WRITER = { reviewer: { prompt: REVIEW, tools: [ROLE_TOOL] }, writer: { prompt: WRITE } };
+/** Cut #3, W-S4: the reviewer's prompt with two leading spaces, a line break inside and two trailing spaces. */
+const SPACED_PROMPT = { reviewer: { prompt: `  ${REVIEW}${LF}${WRITE}  `, tools: [ROLE_TOOL] } };
+/** Cut #3: the reviewer role holds an empty tools member. */
+const EMPTY_ROLE_TOOLS = { reviewer: { prompt: REVIEW, tools: [] } };
+/** Cut #3: the reviewer role names Grep twice. */
+const GREP_TWICE = { reviewer: { prompt: REVIEW, tools: [ROLE_TOOL, ROLE_TOOL] } };
 /** A reviewed source that declares every Claude right itself, in its meta and in its body, and still computes 42. */
 const DECLARING_SCRIPT = `export const meta={name:"detached-grants",description:"reviewed pure computation",grants:${JSON.stringify(CLAUDE_RIGHTS)},backend:"claude"}; const grants=${JSON.stringify(CLAUDE_RIGHTS)}; return grants.length === 3 ? 42 : 0;`;
 
@@ -336,6 +357,15 @@ const CONFIG_ROWS: readonly ConfigRow[] = [
   { row: "U2 one role with two tools", settings: { tools: [SETTINGS_TOOL], roles: TWO_TOOL_ROLE }, held: [...CLAUDE_RIGHTS, toolRight("LS")], claude: { tools: [SETTINGS_TOOL], roles: TWO_TOOL_ROLE }, grants: [...CLAUDE_RIGHTS, toolRight("LS")] },
   { row: "U2 a tool named by the settings and by two roles", settings: { tools: [SETTINGS_TOOL], roles: NAMED_TWICE }, held: CLAUDE_RIGHTS, claude: { tools: [SETTINGS_TOOL], roles: NAMED_TWICE }, grants: CLAUDE_RIGHTS },
   { row: "U2 the SEVERAL config, its rights held in the reverse order", settings: SEVERAL, held: [...SEVERAL_RIGHTS].reverse(), claude: SEVERAL, grants: SEVERAL_RIGHTS },
+  // Cut #3: refusal #2's U1, U2 and U6 members (GP7-S1 to GP7-S4, GP7-M1), each row the witness paired with its member.
+  { row: "R2-U1 W-S3 the writer role holding no tools member beside the reviewer role", settings: { tools: [SETTINGS_TOOL], roles: TOOLLESS_WRITER }, held: CLAUDE_RIGHTS, claude: { tools: [SETTINGS_TOOL], roles: TOOLLESS_WRITER }, grants: CLAUDE_RIGHTS },
+  { row: "R2-U1 W-S4 the reviewer's prompt with leading spaces, a line break and trailing spaces", settings: { tools: [SETTINGS_TOOL], roles: SPACED_PROMPT }, held: CLAUDE_RIGHTS, claude: { tools: [SETTINGS_TOOL], roles: SPACED_PROMPT }, grants: CLAUDE_RIGHTS },
+  { row: "R2-U1 the reviewer role holding an empty tools member", settings: { tools: [SETTINGS_TOOL], roles: EMPTY_ROLE_TOOLS }, held: [INVOKE, SETTINGS_TOOL_GRANT], claude: { tools: [SETTINGS_TOOL], roles: EMPTY_ROLE_TOOLS }, grants: [INVOKE, SETTINGS_TOOL_GRANT] },
+  { row: "R2-U6 W-S1 the settings tools member empty beside the reviewer role", settings: { tools: [], roles: ROLES }, held: [INVOKE, ROLE_TOOL_GRANT], claude: { tools: [], roles: ROLES }, grants: [INVOKE, ROLE_TOOL_GRANT] },
+  { row: "R2-U6 W-S2 the settings roles member empty beside the settings tool Read", settings: { tools: [SETTINGS_TOOL], roles: {} }, held: [INVOKE, SETTINGS_TOOL_GRANT], claude: { tools: [SETTINGS_TOOL], roles: {} }, grants: [INVOKE, SETTINGS_TOOL_GRANT] },
+  { row: "R2-U6 the settings tools and roles members both empty", settings: { tools: [], roles: {} }, held: [INVOKE], claude: { tools: [], roles: {} }, grants: [INVOKE] },
+  { row: "R2-U2 W-M1 Read named twice in the settings tools", settings: { tools: [SETTINGS_TOOL, SETTINGS_TOOL], roles: ROLES }, held: CLAUDE_RIGHTS, claude: { tools: [SETTINGS_TOOL, SETTINGS_TOOL], roles: ROLES }, grants: CLAUDE_RIGHTS },
+  { row: "R2-U2 Grep named twice in the reviewer role's tools", settings: { tools: [SETTINGS_TOOL], roles: GREP_TWICE }, held: CLAUDE_RIGHTS, claude: { tools: [SETTINGS_TOOL], roles: GREP_TWICE }, grants: CLAUDE_RIGHTS },
 ];
 
 /**
@@ -359,7 +389,7 @@ function switchBackend({ dir, settings }: Booted, workflowAgentBackend: "pi" | "
   writeFileSync(join(dir, ".pi", "subagents.json"), JSON.stringify({ ...settings, workbench: { ...settings.workbench, workflowAgentBackend } }));
 }
 
-describe("cut #2 U1/U2: both producers forward the settings members the detached host accepts and exactly the rights its preflight demands", () => {
+describe("cut #2 U1/U2 and cut #3: through both producers, each CONFIG_ROWS row's admitted Claude config and grants, and each refusal row cut #2 added", () => {
   it.each(PRODUCERS.flatMap(producer => CONFIG_ROWS.map(row => [producer, row.row, row] as const)))(
     "%s, %s: the real preflight admits exactly that Claude config and those grants, and the child host runs the reviewed source",
     async (producer, _row, { settings, held, claude, grants }) => {
@@ -390,7 +420,7 @@ describe("cut #2 U1/U2: both producers forward the settings members the detached
   );
 });
 
-describe("cut #2 U3: rights the input or the reviewed script carry never stand in for a missing host right", () => {
+describe("cut #2 U3: the rights each row carries in workflow_execute's input or declares in the reviewed script never stand in for the host right the row removes", () => {
   it.each([
     [INVOKE, INVOKE_DENIAL],
     [SETTINGS_TOOL_GRANT, TOOL_DENIAL],
@@ -432,4 +462,103 @@ describe("cut #2 U4: workflow_execute's deterministic facet", () => {
     expect(request).toMatchObject({ backend: "deterministic", grants: [] });
     expect(request).not.toHaveProperty("claude");
   }, 60_000);
+});
+
+// Cut #3: refusal #2's U3 members (GP7-I1, GP7-P1) and U4 member (GP7-D1), each pinned through its paired witness.
+
+/** A Claude config none of whose values the settings hold. */
+const FORGED_CLAUDE = { model: "claude-wupg-forged-model", tools: ["Bash"], roles: { forger: { prompt: "Forge the reviewed change.", tools: ["Bash"] } } };
+/** Every Claude right the settings demand, and claude:tool:Bash, which they do not name. */
+const FORGED_RIGHTS: readonly string[] = [...CLAUDE_RIGHTS, toolRight("Bash")];
+/** A Claude config, rights and a backend, as a launch's own data may carry them. */
+const FORGED_LAUNCH = { claude: FORGED_CLAUDE, grants: FORGED_RIGHTS, backend: "claude" };
+/** A reviewed source that carries FORGED_LAUNCH in its meta and in its body, and still computes 42. */
+const FORGING_SCRIPT = `export const meta={name:"detached-grants",description:"reviewed pure computation",claude:${JSON.stringify(FORGED_CLAUDE)},grants:${JSON.stringify(FORGED_RIGHTS)},backend:"claude"}; const forged=${JSON.stringify(FORGED_LAUNCH)}; return forged.grants.length === 4 ? 42 : 0;`;
+
+interface SourceRow {
+  /** Where the row's launch carries FORGED_LAUNCH. */
+  readonly row: string;
+  readonly producer: Producer;
+  /** The reviewed source the row saves. */
+  readonly script: string;
+  /** What the row's launch passes beside its producer's own parameters. */
+  readonly extra: Readonly<Record<string, unknown>>;
+}
+const SOURCE_ROWS: readonly SourceRow[] = [
+  { row: "R2-U3 W-I1 FORGED_LAUNCH in workflow_execute's input", producer: "workflow_execute", script: PURE_SCRIPT, extra: { input: { n: 1, ...FORGED_LAUNCH } } },
+  { row: "R2-U3 W-P1 FORGED_LAUNCH as workflow_execute's JSON policy", producer: "workflow_execute", script: PURE_SCRIPT, extra: { policy: FORGED_LAUNCH } },
+  { row: "R2-U3 FORGED_LAUNCH in the reviewed script's meta and body, through workflow_execute", producer: "workflow_execute", script: FORGING_SCRIPT, extra: {} },
+  { row: "R2-U3 FORGED_LAUNCH in the reviewed script's meta and body, through workflow_detached", producer: "workflow_detached", script: FORGING_SCRIPT, extra: {} },
+  { row: "R2-U3 FORGED_LAUNCH's members, a policy and an input beside workflow_detached's params", producer: "workflow_detached", script: PURE_SCRIPT, extra: { ...FORGED_LAUNCH, policy: FORGED_LAUNCH, input: FORGED_LAUNCH } },
+];
+
+describe("cut #3 R2-U3: the SOURCE_ROWS launches carry FORGED_LAUNCH, and the admitted Claude config and grants are the settings'", () => {
+  it.each(SOURCE_ROWS.map(row => [row.row, row] as const))(
+    "%s, the host holding FORGED_RIGHTS: the real preflight admits exactly DEFAULT_CLAUDE and CLAUDE_RIGHTS, and the child host runs the reviewed source",
+    async (_row, { producer, script, extra }) => {
+      const booted = await boot([...TOOL_RIGHTS[producer], ...FORGED_RIGHTS, OBSERVE], DEFAULT_CLAUDE, script);
+      const request = await admittedLaunch(booted, await launchClaude(booted, producer, { ...extra }));
+      expect(request.backend).toBe("claude");
+      expect(request.claude).toEqual(DEFAULT_CLAUDE);
+      expect(request.grants).toEqual(CLAUDE_RIGHTS);
+    },
+    60_000,
+  );
+});
+
+interface DeterministicRow {
+  /** What the row's workflow_detached launch, backend deterministic named, passes beside its params. */
+  readonly row: string;
+  readonly extra: Readonly<Record<string, unknown>>;
+}
+const DETERMINISTIC_ROWS: readonly DeterministicRow[] = [
+  { row: "R2-U4 W-D1 workflow_detached with backend deterministic named and nothing beside its params", extra: {} },
+  {
+    row: "R2-U4 workflow_detached with backend deterministic named and FORGED_CLAUDE, FORGED_RIGHTS and a policy beside its params",
+    extra: { claude: FORGED_CLAUDE, grants: [...FORGED_RIGHTS], policy: FORGED_LAUNCH },
+  },
+];
+
+describe("cut #3 R2-U4: workflow_detached with backend deterministic named", () => {
+  it.each(DETERMINISTIC_ROWS.map(row => [row.row, row] as const))(
+    "%s, the host holding FORGED_RIGHTS: the launch is admitted with backend deterministic, grants [] and no claude member, and runs to completion",
+    async (_row, { extra }) => {
+      const booted = await boot([...TOOL_RIGHTS.workflow_detached, ...FORGED_RIGHTS, OBSERVE]);
+      const request = await admittedLaunch(booted, await launchDetached(booted, "wb-wupg-deterministic", { backend: "deterministic", ...extra }));
+      expect(request).toMatchObject({ backend: "deterministic", grants: [] });
+      expect(request).not.toHaveProperty("claude");
+    },
+    60_000,
+  );
+});
+
+/** The witness ids (W-<letter><digit>) a text names, once each, sorted. */
+const witnessesNamed = (text: string): string[] => [...new Set(text.match(/\bW-[A-Z][0-9]\b/g) ?? [])].sort();
+/** Cut #3's R2- rows, frozen: CONFIG_ROWS's, then SOURCE_ROWS's, then DETERMINISTIC_ROWS's, each in table order. */
+const R2_ROWS: readonly string[] = [
+  "R2-U1 W-S3 the writer role holding no tools member beside the reviewer role",
+  "R2-U1 W-S4 the reviewer's prompt with leading spaces, a line break and trailing spaces",
+  "R2-U1 the reviewer role holding an empty tools member",
+  "R2-U6 W-S1 the settings tools member empty beside the reviewer role",
+  "R2-U6 W-S2 the settings roles member empty beside the settings tool Read",
+  "R2-U6 the settings tools and roles members both empty",
+  "R2-U2 W-M1 Read named twice in the settings tools",
+  "R2-U2 Grep named twice in the reviewer role's tools",
+  "R2-U3 W-I1 FORGED_LAUNCH in workflow_execute's input",
+  "R2-U3 W-P1 FORGED_LAUNCH as workflow_execute's JSON policy",
+  "R2-U3 FORGED_LAUNCH in the reviewed script's meta and body, through workflow_execute",
+  "R2-U3 FORGED_LAUNCH in the reviewed script's meta and body, through workflow_detached",
+  "R2-U3 FORGED_LAUNCH's members, a policy and an input beside workflow_detached's params",
+  "R2-U4 W-D1 workflow_detached with backend deterministic named and nothing beside its params",
+  "R2-U4 workflow_detached with backend deterministic named and FORGED_CLAUDE, FORGED_RIGHTS and a policy beside its params",
+];
+
+describe("cut #3 C6: the R2- rows and the witnesses this file's leading comment names", () => {
+  it("the R2- rows of CONFIG_ROWS, SOURCE_ROWS and DETERMINISTIC_ROWS are R2_ROWS in order, and the witness ids they name are exactly the leading comment's, W-F1 aside", () => {
+    const rows = [...CONFIG_ROWS, ...SOURCE_ROWS, ...DETERMINISTIC_ROWS].map(row => row.row).filter(row => row.startsWith("R2-"));
+    expect(rows).toEqual(R2_ROWS);
+    const leadingComment = readFileSync(fileURLToPath(import.meta.url), "utf8").split("*/", 1)[0] ?? "";
+    expect(witnessesNamed(rows.join("\n"))).toEqual(witnessesNamed(leadingComment).filter(id => id !== "W-F1"));
+    expect(witnessesNamed(rows.join("\n"))).toEqual(["W-D1", "W-I1", "W-M1", "W-P1", "W-S1", "W-S2", "W-S3", "W-S4"]);
+  });
 });
