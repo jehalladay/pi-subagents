@@ -24,9 +24,10 @@
  * dispatchPools). Real operating-system process counts and a live multi-workflow load journey are the B-telemetry bead's
  * PI-MULTIWORKFLOW-LOAD gate and are not read here.
  *
- * Cut #2, the respin after the first gate's refusal, adds cases that pin the claims of the cut's own words the refusal found
- * unpinned, and further claims of those words, each case titled by the behavior it pins; docs/workbench/receipts/wb-ny54.md
- * maps the cases to the refusal items they cure.
+ * Cut #2 added cases for the claims of the cut's own words that the first gate's refusal found unpinned. Cut #3, the
+ * enumerate-the-resolvable form under the R-B660 cap, adds cases for refusal #2's unmet items and riding findings and narrows
+ * titles to the bounds their cases assert; docs/workbench/receipts/wb-ny54.md maps every case to the claim it pins and lists
+ * the named residuals and what is NOT CLAIMED.
  */
 import { performance } from "node:perf_hooks";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -356,8 +357,8 @@ const NONPOSITIVE_OR_NONINTEGER: ReadonlyArray<readonly [string, number]> = [
   ["Infinity", Number.POSITIVE_INFINITY],
 ];
 
-describe("EAT-R073 nonpositive or noninteger concurrency settings are refused at the call, never hung on", () => {
-  it.each(NONPOSITIVE_OR_NONINTEGER)("R073-CONCURRENCY-%s: runWorkflow rejects concurrency %s, typed and immediately, before any dispatch", async (_name, value) => {
+describe("EAT-R073 nonpositive or noninteger run and host limits are refused, typed, and never hung on", () => {
+  it.each(NONPOSITIVE_OR_NONINTEGER)("R073-CONCURRENCY-%s: runWorkflow rejects concurrency %s with a WorkflowRuntimeError naming it, without hanging, and dispatches nothing", async (_name, value) => {
     const { host, meter, open } = meteredHost();
     // Open: a dispatched agent finishes, so only a zero-permit semaphore can hang the run.
     open();
@@ -369,7 +370,7 @@ describe("EAT-R073 nonpositive or noninteger concurrency settings are refused at
     expect(meter.spawned).toEqual([]);
   }, RUNS_TIMEOUT_MS);
 
-  it.each(["agentCap", "itemCap", "nestedCap"] as const satisfies readonly RunCap[])("R073-CAPS-%s: every nonpositive or noninteger value is refused the same way", async cap => {
+  it.each(["agentCap", "itemCap", "nestedCap"] as const satisfies readonly RunCap[])("R073-CAPS-%s: every nonpositive or noninteger value is refused with a WorkflowRuntimeError naming the cap, and nothing is dispatched", async cap => {
     const { host, meter, open } = meteredHost();
     open();
     const outcomes: string[] = [];
@@ -416,7 +417,7 @@ describe("EAT-R073 nonpositive or noninteger concurrency settings are refused at
     expect(budgetOf(withLimit(field, 1)).snapshot().queueDeadlineMs).toBe(field === "queueDeadlineMs" ? 1 : LIMITS.queueDeadlineMs);
   });
 
-  it("R073-DEADLINE-CEILING: the queue deadline stops at setTimeout's ceiling, which a longer deadline would silently undercut", () => {
+  it("R073-DEADLINE-CEILING: the queue deadline accepts setTimeout's ceiling, 2147483647 ms, and one more is refused with a HostAdmissionError", () => {
     expect(budgetOf({ queueDeadlineMs: HOST_ADMISSION_MAX_DEADLINE_MS }).snapshot().queueDeadlineMs).toBe(2_147_483_647);
     expect(() => budgetOf({ queueDeadlineMs: HOST_ADMISSION_MAX_DEADLINE_MS + 1 })).toThrow(HostAdmissionError);
   });
@@ -475,7 +476,7 @@ describe("EAT-R073 nonpositive or noninteger concurrency settings are refused at
     expect(nested.error).toContain(`Workflow exceeded its cap of ${WORKFLOW_NESTED_CAP} nested workflow() calls.`);
   }, RUNS_TIMEOUT_MS);
 
-  it("R073-SAFE-INTEGER: a host pool limit or a run limit may be any positive safe integer, 2^31 and Number.MAX_SAFE_INTEGER included, and 2^53 is refused, typed, as each of them and as the queue deadline", async () => {
+  it("R073-SAFE-INTEGER: a host pool limit accepts 2^31 and Number.MAX_SAFE_INTEGER, a run limit accepts Number.MAX_SAFE_INTEGER, and 2^53 is refused, typed, as each of them and as the queue deadline", async () => {
     for (const field of ["sdkQueries", "childProcesses", "forgeOperations"] as const) {
       const limits = [2 ** 31, Number.MAX_SAFE_INTEGER].map(value => budgetOf(withLimit(field, value)).snapshot().pools[POOL_OF[field]].limit);
       expect([field, ...limits]).toEqual([field, 2 ** 31, Number.MAX_SAFE_INTEGER]);
@@ -525,6 +526,32 @@ describe("EAT-R073 nonpositive or noninteger concurrency settings are refused at
     (await queued).release();
     expect(inFlightOf(budget)).toEqual([0, 0, 0]);
   });
+
+  it("R073-IMMEDIATE: a nonpositive or noninteger concurrency, agentCap, itemCap or nestedCap makes runWorkflow's promise reject before a 0 ms timer set just before the call fires", async () => {
+    const { host, meter, open } = meteredHost();
+    open();
+    const outcomes: string[] = [];
+    const expected: string[] = [];
+    for (const limit of ["concurrency", "agentCap", "itemCap", "nestedCap"] as const) {
+      for (const [name, value] of NONPOSITIVE_OR_NONINTEGER) {
+        const controller = new AbortController();
+        // Set before the call, so a refusal that waits for a timer of its own comes after this one.
+        const timer = sleep(0).then(() => "timer");
+        const run = start(agentFanOut(`now-${limit}-${name}`, 1), { host, signal: controller.signal, ...withRunLimit(limit, value) }).then(
+          () => "resolved",
+          () => "rejected",
+        );
+        const first = await Promise.race([run, timer]);
+        // A run that did not reject is stopped, so no worker outlives the case.
+        controller.abort();
+        await run;
+        outcomes.push(`${limit}:${name}:${first}`);
+        expected.push(`${limit}:${name}:rejected`);
+      }
+    }
+    expect(outcomes).toEqual(expected);
+    expect(meter.spawned).toEqual([]);
+  }, RUNS_TIMEOUT_MS);
 });
 
 describe("EAT-R074 one host budget bounds simultaneous invocations, pool by pool", () => {
@@ -585,7 +612,7 @@ describe("EAT-R074 one host budget bounds simultaneous invocations, pool by pool
     expect(budget.snapshot().pools["forge-operations"]).toMatchObject({ inFlight: 0, peakInFlight: 1, queued: 0, admitted: 6 });
   }, RUNS_TIMEOUT_MS);
 
-  it("R074-SEPARATE: every pool holds its own limit at once under a mixed fan-out of three runs", async () => {
+  it("R074-SEPARATE: under a mixed fan-out of three runs no pool exceeds its own limit, sampled and at the peaks, and every dispatch completes", async () => {
     const budget = budgetOf({ sdkQueries: 2, childProcesses: 3, forgeOperations: 1 });
     const { host, meter, open } = meteredHost();
     const progress: WorkflowEntry[] = [];
@@ -666,6 +693,19 @@ describe("EAT-R074 one host budget bounds simultaneous invocations, pool by pool
       [1, 0, 0, 0],
     ]);
   }, RUNS_TIMEOUT_MS);
+
+  it("R074-PEAK-IN-FLIGHT: peakInFlight keeps the highest in-flight count the pool has reached when the load falls and rises again: three leases taken, two released and one more taken read inFlight 2 and peakInFlight 3", async () => {
+    const budget = budgetOf({ sdkQueries: 3 });
+    const leases = [await budget.acquire(["sdk-queries"]), await budget.acquire(["sdk-queries"]), await budget.acquire(["sdk-queries"])];
+    leases[0]?.release();
+    leases[1]?.release();
+    const again = await budget.acquire(["sdk-queries"]);
+    const loaded = budget.snapshot().pools["sdk-queries"];
+    expect([loaded.inFlight, loaded.peakInFlight]).toEqual([2, 3]);
+    again.release();
+    leases[2]?.release();
+    expect(budget.snapshot().pools["sdk-queries"]).toMatchObject({ inFlight: 0, peakInFlight: 3, admitted: 4 });
+  });
 });
 
 describe("EAT-R075 a queued dispatch reports the cap it waits on and for how long, and the queue deadline refuses it, typed", () => {
@@ -711,7 +751,7 @@ describe("EAT-R075 a queued dispatch reports the cap it waits on and for how lon
     expect(budget.snapshot().pools["forge-operations"]).toMatchObject({ inFlight: 0, queued: 0, admitted: 3 });
   });
 
-  it("R075-DEADLINE: an agent still queued at the deadline is refused, typed, and never dispatched; the run fails rather than fans out", async () => {
+  it("R075-DEADLINE: an agent still queued at the deadline is never dispatched, and its run fails with the refusal's text naming the pool rather than fanning out", async () => {
     const budget = budgetOf({ sdkQueries: 1, queueDeadlineMs: 80 });
     const { host, meter, open } = meteredHost();
     const first = start('return await agent("A-0");', { host, hostAdmission: budget });
@@ -761,7 +801,7 @@ describe("EAT-R075 a queued dispatch reports the cap it waits on and for how lon
     expect(budget.snapshot().pools["sdk-queries"].inFlight).toBe(0);
   });
 
-  it("R075-UNIT-WHOLE-WAIT: the queue deadline bounds the whole wait of one request across its pools: admitted late to its first pool, it is refused on its second when the deadline it started with passes, and hands the first back", async () => {
+  it("R075-UNIT-WHOLE-WAIT: one queue deadline covers a request's whole wait across its pools: admitted to its first pool about 380 ms into a 500 ms deadline, it is refused on its second between 20 ms before and 200 ms after that deadline, not a fresh one, and hands the first back", async () => {
     const deadline = 500;
     const budget = budgetOf({ sdkQueries: 1, childProcesses: 1, queueDeadlineMs: deadline });
     const sdk = await budget.acquire(["sdk-queries"]);
@@ -792,7 +832,7 @@ describe("EAT-R075 a queued dispatch reports the cap it waits on and for how lon
     expect(inFlightOf(budget)).toEqual([0, 0, 0]);
   });
 
-  it("R075-UNIT-DEADLINE-BOUND: the longest one request waits is its queue deadline: still queued, it is refused at the deadline and not later", async () => {
+  it("R075-UNIT-DEADLINE-BOUND: a request still queued at a 400 ms queue deadline is refused between 20 ms before and 240 ms after it", async () => {
     const deadline = 400;
     const budget = budgetOf({ sdkQueries: 1, queueDeadlineMs: deadline });
     const held = await budget.acquire(["sdk-queries"]);
@@ -804,6 +844,21 @@ describe("EAT-R075 a queued dispatch reports the cap it waits on and for how lon
     expect(waited).toBeGreaterThanOrEqual(deadline - 20);
     // Twice the deadline would refuse it at about 800 ms.
     expect(waited).toBeLessThan(deadline + 240);
+  });
+
+  it("R075-UNIT-DEADLINE-LONG: a request still queued at a 2000 ms queue deadline is refused between 20 ms before and 240 ms after it", async () => {
+    const deadline = 2000;
+    const budget = budgetOf({ sdkQueries: 1, queueDeadlineMs: deadline });
+    const held = await budget.acquire(["sdk-queries"]);
+    const began = performance.now();
+    const code = await budget.acquire(["sdk-queries"]).then(admittedThenReleased, codeOf);
+    const waited = since(began);
+    held.release();
+    expect(code).toBe("admission-deadline");
+    expect(waited).toBeGreaterThanOrEqual(deadline - 20);
+    // 1.4 times the deadline would refuse it at about 2800 ms, and 1.12 times at about 2240 ms.
+    expect(waited).toBeLessThan(deadline + 240);
+    expect(budget.snapshot().pools["sdk-queries"]).toMatchObject({ inFlight: 0, queued: 0, refused: 1 });
   });
 
   it("R075-UNIT-ORDER: pools are taken one at a time in HOST_ADMISSION_POOLS order whatever order a request names them in: two requests naming them in opposite orders are both admitted, and a request waiting on its first pool holds none of the later ones", async () => {
@@ -1090,6 +1145,81 @@ describe("EAT-R075 a queued dispatch reports the cap it waits on and for how lon
     expect(nestedReports).toEqual([{ kind: "agent", index: 0, pool: "sdk-queries", limit: 1, inFlight: 1, ahead: 0, waitedMs: 0 }]);
     expect(nested.waited).toBeGreaterThanOrEqual(deadline - 20);
     expect(budget.snapshot().pools["sdk-queries"]).toMatchObject({ inFlight: 0, queued: 0, admitted: 1, refused: 1 });
+  }, RUNS_TIMEOUT_MS);
+
+  it("R075-AGENT-REFUSAL-FATAL: an agent refused at the queue deadline inside parallel() or pipeline() fails the run with the refusal's text: neither folds the refusal into null, and no agent is dispatched", async () => {
+    const budget = budgetOf({ sdkQueries: 1, queueDeadlineMs: 80 });
+    const held = await budget.acquire(["sdk-queries"]);
+    const { host, meter, open } = meteredHost();
+    open();
+    const outcomes: (string | boolean | undefined)[][] = [];
+    for (const body of ['return await parallel([() => agent("FA-0")]);', 'return await pipeline(["x"], () => agent("FA-1"));']) {
+      const result = await start(body, { host, hostAdmission: budget });
+      outcomes.push([result.status, result.error?.includes("Host admission refused"), result.error?.includes("sdk-queries")]);
+    }
+    held.release();
+    expect(outcomes).toEqual([
+      ["failed", true, true],
+      ["failed", true, true],
+    ]);
+    expect(meter.spawned).toEqual([]);
+    expect(budget.snapshot().pools["sdk-queries"]).toMatchObject({ inFlight: 0, queued: 0, refused: 2 });
+  }, RUNS_TIMEOUT_MS);
+
+  it("R075-NODE-REFUSAL-FATAL: a forge.* node refused at the queue deadline inside parallel() or pipeline() fails the run with an unavailable diagnostic carrying the refusal's text: neither folds the refusal into null, and no node is dispatched", async () => {
+    const budget = budgetOf({ forgeOperations: 1, queueDeadlineMs: 80 });
+    const held = await budget.acquire(["forge-operations"]);
+    const { host, meter, open } = meteredHost();
+    open();
+    const outcomes: (string | boolean | undefined)[][] = [];
+    for (const body of [
+      'return await parallel([() => node("forge.gate.status", {}, { label: "FN-0" })]);',
+      'return await pipeline(["x"], () => node("forge.gate.status", {}, { label: "FN-1" }));',
+    ]) {
+      const result = await start(body, { host, hostAdmission: budget });
+      outcomes.push([result.status, result.capabilityError?.category, result.capabilityError?.message.includes("Host admission refused")]);
+    }
+    held.release();
+    expect(outcomes).toEqual([
+      ["failed", "unavailable", true],
+      ["failed", "unavailable", true],
+    ]);
+    expect(meter.nodes).toEqual([]);
+    const pools = budget.snapshot().pools;
+    expect([pools["forge-operations"].refused, ...inFlightOf(budget)]).toEqual([2, 0, 0, 0]);
+  }, RUNS_TIMEOUT_MS);
+
+  it("R075-REFUSAL-CAUGHT: a script's own try/catch catches an agent's and a node's queue-deadline refusal, each carrying the refusal's text, and the run then completes with neither dispatched", async () => {
+    const budget = budgetOf({ sdkQueries: 1, forgeOperations: 1, queueDeadlineMs: 80 });
+    const held = await budget.acquire(["sdk-queries", "forge-operations"]);
+    const { host, meter, open } = meteredHost();
+    open();
+    const script = [
+      "const caught = [];",
+      'try { await agent("FC-0"); caught.push("agent:dispatched"); } catch (error) { caught.push("agent:" + String(error).includes("Host admission refused")); }',
+      'try { await node("forge.gate.status", {}, { label: "FC-forge" }); caught.push("node:dispatched"); } catch (error) { caught.push("node:" + String(error).includes("Host admission refused")); }',
+      "return caught;",
+    ].join("\n");
+    const result = await start(script, { host, hostAdmission: budget });
+    held.release();
+    expect([result.status, result.value]).toEqual(["completed", ["agent:true", "node:true"]]);
+    expect([meter.spawned, meter.nodes]).toEqual([[], []]);
+    const pools = budget.snapshot().pools;
+    expect([pools["sdk-queries"].refused, pools["forge-operations"].refused, ...inFlightOf(budget)]).toEqual([1, 1, 0, 0, 0]);
+  }, RUNS_TIMEOUT_MS);
+
+  it("R075-AGENT-REFUSED-ROW: an agent refused at the queue deadline leaves its last row in state error carrying the refusal's exact text, which its run's error carries too", async () => {
+    const budget = budgetOf({ sdkQueries: 1, queueDeadlineMs: 80 });
+    const held = await budget.acquire(["sdk-queries"]);
+    const { host, open } = meteredHost();
+    open();
+    const progress: WorkflowEntry[] = [];
+    const result = await start('return await agent("FR-0");', { host, hostAdmission: budget }, progress);
+    held.release();
+    const refusal = "Host admission refused: the 80ms queue deadline passed while waiting for sdk-queries (limit 1, 1 in flight).";
+    const last = agentRows(progress).at(-1);
+    expect([result.status, last?.state, last?.error]).toEqual(["failed", "error", refusal]);
+    expect(result.error).toContain(refusal);
   }, RUNS_TIMEOUT_MS);
 });
 
@@ -1439,4 +1569,60 @@ describe("EAT-R076 a cancelled queued invocation leaves the line before dispatch
     const pools = budget.snapshot().pools;
     expect(HOST_ADMISSION_POOLS.map(pool => [pools[pool].admitted, pools[pool].inFlight, pools[pool].queued])).toEqual([[0, 0, 0], [0, 0, 0], [0, 0, 0]]);
   });
+
+  it("R076-NODE-HANDOFF-FAILURE: a forge.* node whose slot arrives in the same tick its run settles by failure is never dispatched and hands both of its pools back", async () => {
+    const budget = budgetOf({ forgeOperations: 1 });
+    const held = await budget.acquire(["forge-operations"]);
+    const { host, meter, open } = meteredHost();
+    open();
+    let waitingAtSettle: HostAdmissionPool[] | undefined;
+    const result = await runWorkflow({
+      script: `${HEAD}const queued = node("forge.gate.status", {}, { label: "HF-forge" });\nqueued.catch(() => null);\nlog("settle-now");\nreturn await queued;`,
+      host,
+      hostAdmission: budget,
+      onProgress: entries => {
+        if (waitingAtSettle !== undefined || !entries.some(entry => entry.type === "workflow_log" && entry.message === "settle-now")) return;
+        // The node waits on the Forge slot: the slot is handed to it, and the host's observer then fails the run in the same tick.
+        waitingAtSettle = budget.waiting().map(wait => wait.pool);
+        held.release();
+        throw new Error("the host's progress observer failed");
+      },
+    });
+    await sleep(20);
+    expect(waitingAtSettle).toEqual(["forge-operations"]);
+    expect([result.status, result.error?.includes("the host's progress observer failed")]).toEqual(["failed", true]);
+    expect(meter.nodes).toEqual([]);
+    const pools = budget.snapshot().pools;
+    // The slot did reach the node (admitted 2, none cancelled in line), and went straight back with its host child.
+    expect([pools["forge-operations"].inFlight, pools["child-processes"].inFlight, pools["forge-operations"].admitted, pools["forge-operations"].cancelledWhileQueued]).toEqual([0, 0, 2, 0]);
+  }, RUNS_TIMEOUT_MS);
+
+  it("R076-AGENT-HANDOFF-failure: an agent whose host slot arrives in the same tick its run settles by failure is never dispatched and hands its host slots back", async () => {
+    const budget = budgetOf({ childProcesses: 1 });
+    const held = await budget.acquire(["child-processes"]);
+    const { host, meter, open } = meteredHost();
+    open();
+    let waitingAtSettle: HostAdmissionPool[] | undefined;
+    const result = await runWorkflow({
+      script: `${HEAD}const queued = agent("HG-0");\nqueued.catch(() => null);\nlog("settle-now");\nreturn await queued;`,
+      host,
+      hostAdmission: budget,
+      onProgress: entries => {
+        if (waitingAtSettle !== undefined || !entries.some(entry => entry.type === "workflow_log" && entry.message === "settle-now")) return;
+        // Admitted at once to sdk-queries, HG-0 waits on host children: the slot is handed to it, and the host's observer then
+        // fails the run in the same tick.
+        waitingAtSettle = budget.waiting().map(wait => wait.pool);
+        held.release();
+        throw new Error("the host's progress observer failed");
+      },
+    });
+    await sleep(20);
+    expect(waitingAtSettle).toEqual(["child-processes"]);
+    expect([result.status, result.error?.includes("the host's progress observer failed")]).toEqual(["failed", true]);
+    expect(meter.spawned).toEqual([]);
+    const pools = budget.snapshot().pools;
+    expect(HOST_ADMISSION_POOLS.map(pool => pools[pool].inFlight)).toEqual([0, 0, 0]);
+    // The slot did reach HG-0 (admitted, never cancelled in line) and went straight back.
+    expect([pools["child-processes"].admitted, pools["child-processes"].cancelledWhileQueued]).toEqual([2, 0]);
+  }, RUNS_TIMEOUT_MS);
 });

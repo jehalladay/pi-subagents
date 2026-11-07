@@ -5,10 +5,9 @@
  *
  * A run's own semaphores bound one script and nothing else: runWorkflow builds a fresh pair per call, so two scripts running
  * at once each get their whole limit. A HostAdmission is built once by the host and handed to every run it starts, so its
- * pools are the one place the host's totals are counted. It is a counter and a first-in-first-out line per pool, not a
- * second scheduler: it never orders runs against each other, never prioritises, retries or starts work. A run asks for the
- * pools a dispatch is charged to last, after the run's own permit and before that dispatch, and dispatches only once every
- * pool has admitted it.
+ * pools count the dispatches of all of them. It is a count and a first-in-first-out line per pool, not a second scheduler:
+ * it admits, queues and refuses requests, and starts no work. A run asks for the pools a dispatch is charged to last, after
+ * the run's own permit and before that dispatch, and dispatches only once every pool has admitted it.
  *
  * Three pools, each with its own limit (see {@link dispatchPools} for the charge of each dispatch):
  *  - sdk-queries: owned agent queries, one per agent() dispatch;
@@ -16,10 +15,15 @@
  *    in a child process and every native provider runs its CLI in one; a Pi-backend child runs in-process and is charged all
  *    the same, so the pool bounds what the host may start, not what an operating system counted;
  *  - forge-operations: native Forge operations, one per live node dispatch in the `forge.` capability namespace.
- * The queue deadline bounds the whole wait of one request. Past it the request is refused, typed, and leaves the line.
+ *
+ * One queue deadline runs from a request's call across every pool it names. A request still waiting when its deadline's
+ * timer fires is refused, typed (admission-deadline, naming the pool it waits on), hands back every pool it had taken and
+ * leaves the line. On the real clock the suite pins that refusal between 20 ms before and 240 ms after a 400 ms and a
+ * 2000 ms deadline, and between 20 ms before and 200 ms after a 500 ms deadline spent across two pools; a tighter bound,
+ * and any bound on another deadline, is not claimed.
  *
  * Pools are taken one at a time in HOST_ADMISSION_POOLS order and held while the next is awaited, so two requests can never
- * wait on each other in a cycle. A cancelled or refused request leaves the line at once and hands back every pool it had
+ * wait on each other in a cycle. A request cancelled on its signal leaves the line at once and hands back every pool it had
  * taken. A released slot passes straight to the oldest waiter, so the count never dips below what is running.
  */
 
@@ -29,7 +33,7 @@ import { performance } from "node:perf_hooks";
 export const HOST_ADMISSION_POOLS = Object.freeze(["sdk-queries", "child-processes", "forge-operations"] as const);
 export type HostAdmissionPool = (typeof HOST_ADMISSION_POOLS)[number];
 
-/** setTimeout's own ceiling: a longer deadline would fire at once instead of late. */
+/** The longest queue deadline a budget accepts: setTimeout's ceiling, past which Node sets a timer's delay to 1 ms. */
 export const HOST_ADMISSION_MAX_DEADLINE_MS = 2_147_483_647;
 
 /** The separately configured limits: each a positive safe integer (Number.isSafeInteger, at least 1), the queue deadline at most HOST_ADMISSION_MAX_DEADLINE_MS. */
@@ -40,18 +44,18 @@ export interface HostAdmissionLimits {
   readonly childProcesses: number;
   /** Native Forge operations in flight: live node dispatches in the `forge.` namespace. */
   readonly forgeOperations: number;
-  /** The longest one request may wait for admission before it is refused. */
+  /** The queue deadline, in milliseconds from a request's call (see the module comment for how closely its refusal is pinned). */
   readonly queueDeadlineMs: number;
 }
 
 export type HostAdmissionErrorCode = "invalid-limit" | "unknown-pool" | "admission-deadline" | "admission-cancelled";
 
-/** A typed refusal: an invalid limit or request, a wait past the queue deadline, or a wait cancelled by its caller. */
+/** A typed refusal: an invalid limit (invalid-limit), an invalid request (unknown-pool), the queue deadline (admission-deadline), or a request cancelled on its caller's signal (admission-cancelled). */
 export class HostAdmissionError extends Error {
   constructor(
     readonly code: HostAdmissionErrorCode,
     message: string,
-    /** The pool the request was waiting on when it was refused or cancelled. */
+    /** For admission-deadline, and for admission-cancelled while queued: the pool the request was waiting on. */
     readonly pool?: HostAdmissionPool,
   ) {
     super(message);
@@ -237,7 +241,7 @@ export class HostAdmission {
     return HOST_ADMISSION_POOLS.filter(name => requested.includes(name)).map(name => this.pool(name));
   }
 
-  /** One slot of `pool`, now or in line, before `deadlineAt`. */
+  /** One slot of `pool`: at once, or in line until a release admits it, the deadline's timer refuses it or the signal cancels it. */
   private take(pool: Pool, deadlineAt: number, request: HostAdmissionRequest): Promise<void> {
     const { signal } = request;
     if (signal?.aborted) return Promise.reject(cancelled(pool.name));

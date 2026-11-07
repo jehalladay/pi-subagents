@@ -343,10 +343,10 @@ export interface RunWorkflowOptions {
   onProgress?(entries: readonly WorkflowEntry[]): void;
   /**
    * Agents this run may have in flight at once. Like the three caps, a positive
-   * safe integer (Number.isSafeInteger, at least 1): anything else is refused at
-   * the call with a WorkflowRuntimeError, before anything is dispatched, rather
-   * than parking every agent behind a semaphore with no permits (wb-ny54,
-   * EAT-R073).
+   * safe integer (Number.isSafeInteger, at least 1): anything else makes
+   * runWorkflow reject with a WorkflowRuntimeError before a 0 ms timer set just
+   * before the call fires, and before anything is dispatched, rather than
+   * parking every agent behind a semaphore with no permits (wb-ny54, EAT-R073).
    */
   concurrency?: number;
   agentCap?: number;
@@ -355,11 +355,14 @@ export interface RunWorkflowOptions {
    * The host's admission budget, shared by every run the host starts at once
    * (wb-ny54, EAT-R074..EAT-R076). Each agent dispatch and each live node
    * dispatch waits for the pools it is charged to (admission.ts dispatchPools)
-   * last, after this run's own permit and before the dispatch; a wait
-   * refused at the queue deadline dispatches nothing and fails the run (an
-   * agent's refusal is a fatal error, a node's an `unavailable` CapabilityError),
-   * and a skip or the run's end takes a queued wait out of the line. Absent, a
-   * run is bounded by its own semaphores only, as before.
+   * last, after this run's own permit and before the dispatch; a call replayed
+   * from the resume journal takes none. A wait refused at the queue deadline
+   * dispatches nothing and answers the call with a fatal error (an agent's
+   * carries the refusal's text, a node's is an `unavailable` CapabilityError):
+   * awaited directly or inside parallel() or pipeline(), it fails the run, and
+   * the script's own try/catch can still catch it. A skip takes an agent's wait
+   * out of the line, and the run's end takes every wait it has queued out.
+   * Absent, a run is bounded by its own semaphores only.
    */
   hostAdmission?: HostAdmission;
   /** Told when one of this run's dispatches queues on {@link hostAdmission}: the pool, its load, the line ahead. */
@@ -1231,7 +1234,9 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
           // queues on the host for more agents than its own limit starts.
           // A skip or the run's end takes the wait out of the host's line at
           // once; a wait refused at the queue deadline dispatches nothing and
-          // fails the run with a fatal error, as the agent cap does.
+          // answers the call with a fatal error, as the agent cap does:
+          // awaited directly or inside parallel() or pipeline() it fails the
+          // run, and the script's own try/catch can still catch it.
           let lease: HostAdmissionLease | undefined;
           if (hostAdmission !== undefined) {
             const leaveLine = new AbortController();
@@ -1261,8 +1266,9 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
               live.wake = undefined;
               admissionAbort.signal.removeEventListener("abort", cancelWait);
             }
-            // Paused, skipped or ended while queued on the host: the slots
-            // arrived, and go straight back, exactly as the run's own permit.
+            // Paused, skipped or ended (by abort or by failure) while queued on
+            // the host: the slots arrived, and go straight back, exactly as the
+            // run's own permit.
             if (aborted || settled || isPaused() || intent() === "skip") {
               lease.release();
               semaphore.release();
@@ -1686,8 +1692,10 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       }
       // The host's shared pools, last, after the run's node permit and before
       // the dispatch, as for an agent (wb-ny54): a refused wait dispatches
-      // nothing and writes no dispatched marker, and the run's end takes a
-      // queued wait out of the line.
+      // nothing, writes no dispatched marker and answers the call with a fatal
+      // `unavailable` CapabilityError; the run's end takes a queued wait out of
+      // the line, and a node whose slots arrive as its run ends, by abort or by
+      // failure, is not dispatched.
       let lease: HostAdmissionLease | undefined;
       if (hostAdmission !== undefined) {
         try {
