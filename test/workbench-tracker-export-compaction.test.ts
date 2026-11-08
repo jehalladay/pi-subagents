@@ -21,7 +21,8 @@
  * ids (C, R, K, T, S, P) beside the guard suite's (G) for every sentence it claims, and names what it does not claim. P1 holds the plant
  * tables' shape and the module header's PLANTED SHARD LINES block equal to them (wb-137f refusal #2 F4); P2 holds the cut #4 tables
  * (UTF8_CHARACTERS, NAMES_OUTSIDE_THE_FORM, SHARD_NAMES_IN_THE_FORM, STATUSES_NOT_CLOSED, FIELDS_BEYOND_STUB) equal to the module
- * header's CUT #4 PLANT TABLES lists, and K14 its variant labels to the header's K14 variants list (wb-137f refusal #3).
+ * header's CUT #4 PLANT TABLES lists, and K14 its variant labels to the header's K14 variants list (wb-137f refusal #3); K3 holds its
+ * ceiling plant labels equal to the header's K3 CEILING PLANTS list (wb-xkto, refusal #4 of wb-137f).
  */
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -254,6 +255,14 @@ function utf8Rows(): Row[] {
   return fixtureRows().map(r =>
     r.id === "wb-o1" ? { ...r, title: `wb-o1 ${UTF8_TEXT}` } : r.id === "wb-c1" || r.id === "wb-c2" ? { ...r, title: `${String(r.id)} ${UTF8_TEXT}`, notes: `notes of ${String(r.id)}: ${UTF8_TEXT}` } : r.id === "wb-c3" ? { ...r, notes: UTF8_TEXT } : r,
   );
+}
+
+/**
+ * K3's big-shard fixture with UTF8_TEXT after its closed row's note (wb-xkto, refusal #4 of wb-137f U2): its one month shard outweighs
+ * its ASCII main export and holds more UTF-8 bytes than UTF-16 code units. C7 and K3 plant it at the ceiling.
+ */
+function utf8BigShardRows(): Row[] {
+  return [row("wb-o1", "open"), row("wb-c9", "closed", { closed_at: "2026-11-03T08:00:00Z", notes: `${"x".repeat(4000)} ${UTF8_TEXT}` })];
 }
 
 /** The text of a file decoded as UTF-8 by a decoder of its own: invalid UTF-8 throws, and a byte order mark is kept. */
@@ -490,7 +499,7 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
     expect(rehydrateTrackerText(third.main, third.shards)).toBe(textOf(reopened));
   });
 
-  it("C7 CEILING: a main export, a shard the run appends to, or a shard it does not append to that would be at the soft ceiling after the run refuses as oversize with one typed line per file, naming path and bytes; one byte over every file passes", () => {
+  it("C7 CEILING: a main export, a shard the run appends to, or a shard it does not append to that would be at the soft ceiling after the run refuses as oversize with one typed line per file, naming path and bytes - its UTF-8 bytes, over the fixture's ASCII rows and over rows holding text beyond ASCII, whose UTF-8 bytes outnumber their UTF-16 code units (the UTF-8 fixture's main export, the UTF-8 big-shard fixture's shard the run appends to, and a sealed month's shard holding UTF8_TEXT that the run does not append to, each alone at its ceiling); one byte over every file passes", () => {
     const full = textOf(fixtureRows());
     const open = compactTrackerExport({ full, shards: new Map(), now: "2026-11-03T12:00:00Z" });
     if (!open.ok) throw new Error(open.lines.join("\n"));
@@ -525,6 +534,34 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
     const passes = compactTrackerExport({ full, shards: new Map([["issues-closed-2026-09.jsonl", big]]), now: "2026-11-03T12:00:00Z", ceiling: bigBytes + 1 });
     if (!passes.ok) throw new Error(passes.lines.join("\n"));
     expect(passes.appended.has("issues-closed-2026-09.jsonl")).toBe(false);
+    // wb-xkto (refusal #4 of wb-137f, U2: GP45-04, GP45-05; witness W-GP45-04/05): the ceiling counts UTF-8 bytes. Each file below holds
+    // text beyond ASCII - more UTF-8 bytes than UTF-16 code units - and is alone at its ceiling: the UTF-8 fixture's main export, the
+    // UTF-8 big-shard fixture's shard the run appends to, and a sealed month's shard the run does not append to. Each refuses as oversize
+    // with the one typed line naming its UTF-8 bytes, and one byte over it passes.
+    const unitsUnderBytes = (text: string): boolean => text.length < Buffer.byteLength(text);
+    const oversizeLine = (file: string, bytes: number): string => `tracker-export: REFUSED .beads/${file} would be ${bytes} bytes, at or over the soft ceiling of ${bytes} bytes (FW_EXPORT_SOFT_CEILING); nothing is written`;
+    const utf8Full = textOf(utf8Rows());
+    const utf8Open = compactTrackerExport({ full: utf8Full, shards: new Map(), now: "2026-11-03T12:00:00Z" });
+    if (!utf8Open.ok) throw new Error(utf8Open.lines.join("\n"));
+    const utf8MainBytes = Buffer.byteLength(utf8Open.main);
+    expect([unitsUnderBytes(utf8Open.main), [...utf8Open.shards.values()].every(shard => Buffer.byteLength(shard) < utf8MainBytes)], "the UTF-8 main export: more bytes than code units, every shard under it").toEqual([true, true]);
+    expect(compactTrackerExport({ full: utf8Full, shards: new Map(), now: "2026-11-03T12:00:00Z", ceiling: utf8MainBytes }), "the UTF-8 main export at its ceiling").toEqual({ ok: false, code: "oversize", lines: [oversizeLine("issues.jsonl", utf8MainBytes)] });
+    expect(compactTrackerExport({ full: utf8Full, shards: new Map(), now: "2026-11-03T12:00:00Z", ceiling: utf8MainBytes + 1 }).ok, "one byte over the UTF-8 main export").toBe(true);
+    const bigFull = textOf(utf8BigShardRows());
+    const bigOpen = compactTrackerExport({ full: bigFull, shards: new Map(), now: "2026-11-03T12:00:00Z" });
+    if (!bigOpen.ok) throw new Error(bigOpen.lines.join("\n"));
+    const appendedShard = bigOpen.shards.get("issues-closed-2026-11.jsonl") ?? "";
+    const appendedBytes = Buffer.byteLength(appendedShard);
+    expect([bigOpen.appended.has("issues-closed-2026-11.jsonl"), unitsUnderBytes(appendedShard), Buffer.byteLength(bigOpen.main) < appendedBytes], "the UTF-8 big shard: appended to, more bytes than code units, the main export under it").toEqual([true, true, true]);
+    expect(compactTrackerExport({ full: bigFull, shards: new Map(), now: "2026-11-03T12:00:00Z", ceiling: appendedBytes }), "the UTF-8 shard the run appends to at its ceiling").toEqual({ ok: false, code: "oversize", lines: [oversizeLine("archive/issues-closed-2026-11.jsonl", appendedBytes)] });
+    expect(compactTrackerExport({ full: bigFull, shards: new Map(), now: "2026-11-03T12:00:00Z", ceiling: appendedBytes + 1 }).ok, "one byte over the UTF-8 shard the run appends to").toBe(true);
+    const sealedUtf8 = `${lineOf(row("wb-c9", "closed", { closed_at: "2026-09-15T00:00:00Z", notes: `${"x".repeat(4096)} ${UTF8_TEXT}` }))}\n`;
+    const sealedBytes = Buffer.byteLength(sealedUtf8);
+    expect([unitsUnderBytes(sealedUtf8), sealedBytes > Math.max(mainBytes, shardBytes)], "the sealed UTF-8 shard: more bytes than code units, over every file the run writes").toEqual([true, true]);
+    expect(compactTrackerExport({ full, shards: new Map([["issues-closed-2026-09.jsonl", sealedUtf8]]), now: "2026-11-03T12:00:00Z", ceiling: sealedBytes }), "the sealed UTF-8 shard at its ceiling").toEqual({ ok: false, code: "oversize", lines: [oversizeLine("archive/issues-closed-2026-09.jsonl", sealedBytes)] });
+    const sealedPasses = compactTrackerExport({ full, shards: new Map([["issues-closed-2026-09.jsonl", sealedUtf8]]), now: "2026-11-03T12:00:00Z", ceiling: sealedBytes + 1 });
+    if (!sealedPasses.ok) throw new Error(sealedPasses.lines.join("\n"));
+    expect(sealedPasses.appended.has("issues-closed-2026-09.jsonl"), "one byte over the sealed UTF-8 shard: passes, not appended to").toBe(false);
   });
 
   it("C8 MALFORMED: each line below refuses as malformed - an unparseable line (each of the eight lines of whitespace alone among them), null, an array, a number or a string, a row whose id is none, empty, a number or null, a row whose status is none, a number or null, a duplicate id, and a closed row already in stub shape; that closed row with one field of FIELDS_BEYOND_STUB added (each alone) is not in stub shape and compacts, its stub without the field and its shard line the row's", () => {
@@ -1113,7 +1150,7 @@ describe("wb-294d rehydrating reader: the one read every export reader routes th
     expect(rehydrateTrackerExport(compacted.main, main)).toBe(compacted.main);
   });
 
-  it("R10 READ MEMO: a process reads the shards again when a shard's size or modification time changes - the last shard by name, or an older one; the modification time moved by 60 s, by 0.5 s inside one second, or by 0.3 ms inside one millisecond - or a shard is added (after the others, or before them), renamed (its size and modification time kept) or removed (the last one, or an older one); a rewrite that keeps names, sizes and modification times reads as the earlier content, the last shard's or an older one's; another archive directory, whose shards keep the names, sizes and modification times of shards read before, is read on its own; and a main export rewritten at the same length - in its first line, then in its last - is read again, as is another text of the same length given to rehydrateTrackerExport", () => {
+  it("R10 READ MEMO: a process reads the shards again when a shard's size or modification time changes - the last shard by name, or an older one; the modification time moved by 60 s, by 0.5 s inside one second, or by 0.3 ms inside one millisecond - or a shard is added (after the others, or before them), renamed (its size and modification time kept) or removed (the last one, or an older one); a rewrite that keeps names, sizes and modification times reads as the earlier content, the last shard's or an older one's; another archive directory, whose shards keep the names, sizes and modification times of shards read before, is read on its own; and a main export rewritten at the same length between two reads - in its first line, then in its last, in its middle line, at its first character and at its last character - is read again, as is another text of the same length given to rehydrateTrackerExport", () => {
     const dir = scratch("tracker-export-reader-");
     const archive = join(dir, ".beads", "archive");
     mkdirSync(archive, { recursive: true });
@@ -1269,6 +1306,24 @@ describe("wb-294d rehydrating reader: the one read every export reader routes th
     writeFileSync(fineMain, lastEdit);
     expect(trackerExportText(fineMain), "the last line rewritten at the same length: read again").toBe(`${c8Line.replace("title of wb-c8", "TITLE OF WB-C8")}\n${lineOf(c9(fineBodies.older))}\n${lineOf(c9(fineBodies.older))}\n`);
     expect(rehydrateTrackerExport(firstEdit, fineMain), "another text of the same length given to rehydrateTrackerExport").toBe(`${c8Line.replace("title of wb-c8", "TITLE OF WB-C8")}\n${lineOf(c9(fineBodies.older))}\n${lineOf(c1(fineBodies.last))}\n`);
+    // wb-xkto (refusal #4 of wb-137f, U3: GP45-12, witness W-GP45-12): the main export rewritten at the same length between two reads -
+    // in its middle line (wb-c9's stub becomes wb-c1's), at its first character ('{' of wb-c8's stub becomes '[': a line that does not
+    // parse, kept as it is, R12's kind) and at its last character (its final newline becomes 'x': wb-c1's stub line no longer parses and
+    // is kept as it is) - each after a read of the main export as written, is read again.
+    const asWritten = olderStubs.main;
+    const sameLength: readonly (readonly [label: string, rewrite: string, read: string])[] = [
+      ["in its middle line", `${c8Line}\n${c9Line.replace('"id":"wb-c9"', '"id":"wb-c1"')}\n${c1Line}\n`, `${c8Line}\n${lineOf(c1(fineBodies.last))}\n${lineOf(c1(fineBodies.last))}\n`],
+      ["at its first character", `[${asWritten.slice(1)}`, `[${c8Line.slice(1)}\n${lineOf(c9(fineBodies.older))}\n${lineOf(c1(fineBodies.last))}\n`],
+      ["at its last character", `${asWritten.slice(0, -1)}x`, `${c8Line}\n${lineOf(c9(fineBodies.older))}\n${c1Line}x`],
+    ];
+    expect(asWritten.endsWith("\n"), "the main export as written ends with its newline").toBe(true);
+    for (const [label, rewrite, read] of sameLength) {
+      expect([rewrite.length, rewrite === asWritten], `${label}: the same length, another text`).toEqual([asWritten.length, false]);
+      writeFileSync(fineMain, asWritten);
+      expect(trackerExportText(fineMain), `${label}: the main export as written`).toBe(fineRead());
+      writeFileSync(fineMain, rewrite);
+      expect(trackerExportText(fineMain), `${label}: rewritten at the same length, read again`).toBe(read);
+    }
   });
 
   it("R11 UNTERMINATED LAST LINE: trackerExportText and rehydrateTrackerText parse a shard's last line though no newline ends it - a whole row there is read as that row, and the prefix form cut short there fails the read with one Error naming the shard and the line - in each layout of SHARD_LAYOUTS", () => {
@@ -1328,11 +1383,15 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", { ti
     return { dir, beads, full };
   }
 
-  it("K1 compact writes the main export and the month shards, prints one JSON receipt line, and a re-run with no change appends nothing - over the fixture's rows, and over rows holding each character of UTF8_CHARACTERS in both month shards, where each shard keeps its bytes", () => {
+  it("K1 compact writes the main export and the month shards, prints one JSON receipt line ended by a newline and nothing else on stdout, and a re-run with no change appends nothing - over the fixture's rows, and over rows holding each character of UTF8_CHARACTERS in both month shards, where each shard keeps its bytes", () => {
     const { beads, full } = beadsDir();
     const run = cli(["compact", "--full", full, "--beads", beads, "--now", "2026-11-03T12:00:00Z"]);
     expect(run.stderr).toBe("");
     expect(run.status).toBe(0);
+    // wb-xkto (refusal #4 of wb-137f, F4 rider: GP45-06): stdout is the receipt's own JSON text and one newline, nothing else - no
+    // carriage return, no second line - at each run below.
+    const oneLine = (stdout: unknown): boolean => String(stdout) === `${JSON.stringify(JSON.parse(String(stdout)))}\n`;
+    expect(oneLine(run.stdout), "the first run's receipt line").toBe(true);
     const receipt = JSON.parse(String(run.stdout)) as Row;
     expect(receipt).toMatchObject({ verb: "compact", rows: 5, stubs: 3, appended: { "issues-closed-2026-10.jsonl": 1, "issues-closed-2026-11.jsonl": 2 }, shards: 2, sealedUnchanged: true, roundTrip: true });
     expect(readdirSync(join(beads, "archive")).sort()).toEqual(["issues-closed-2026-10.jsonl", "issues-closed-2026-11.jsonl"]);
@@ -1340,19 +1399,20 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", { ti
     expect(linesOf(mainAfter).filter(line => parsed(line).status === "closed").every(line => !("notes" in parsed(line)))).toBe(true);
     const again = cli(["compact", "--full", full, "--beads", beads, "--now", "2026-11-03T13:00:00Z"]);
     expect(again.status).toBe(0);
+    expect(oneLine(again.stdout), "the re-run's receipt line").toBe(true);
     expect((JSON.parse(String(again.stdout)) as Row).appended).toEqual({});
     expect(readFileSync(join(beads, "issues.jsonl"), "utf8")).toBe(mainAfter);
     // wb-137f refusal #3 U1 (GP1-17): the CLI reads its shards back as UTF-8 - a re-run appends nothing and rewrites no shard.
     const utf8 = beadsDir();
     writeFileSync(utf8.full, textOf(utf8Rows()));
     const first = cli(["compact", "--full", utf8.full, "--beads", utf8.beads, "--now", "2026-11-03T12:00:00Z"]);
-    expect([first.status, first.stderr]).toEqual([0, ""]);
+    expect([first.status, first.stderr, oneLine(first.stdout)]).toEqual([0, "", true]);
     expect((JSON.parse(String(first.stdout)) as Row).appended).toEqual({ "issues-closed-2026-10.jsonl": 1, "issues-closed-2026-11.jsonl": 2 });
     const shardBytes = () => ["issues-closed-2026-10.jsonl", "issues-closed-2026-11.jsonl"].map(name => readFileSync(join(utf8.beads, "archive", name)));
     const before = shardBytes();
     for (const bytes of before) expect(bytes.length, "a shard holds bytes beyond ASCII").toBeGreaterThan(bytes.toString("utf8").length);
     const rerun = cli(["compact", "--full", utf8.full, "--beads", utf8.beads, "--now", "2026-11-03T13:00:00Z"]);
-    expect([rerun.status, rerun.stderr]).toEqual([0, ""]);
+    expect([rerun.status, rerun.stderr, oneLine(rerun.stdout)]).toEqual([0, "", true]);
     expect((JSON.parse(String(rerun.stdout)) as Row).appended, "UTF8_CHARACTERS: the re-run appends nothing").toEqual({});
     expect(shardBytes(), "UTF8_CHARACTERS: each shard keeps its bytes").toEqual(before);
   });
@@ -1388,7 +1448,7 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", { ti
   // #6 of wb-294d, U1: the ceiling domain beyond K3's five ceiling plants); so is the CLI over a full export {not json with no final
   // newline (refusal #6 of wb-294d, F5: GP3P-D1 and GP3P-D3). The big-shard fixture is one open row and one closed row whose
   // 4,000-character note makes its one month shard outweigh its main export.
-  it("K3 at each of its five soft-ceiling plants - the fixture's main export and both its month shards over a 64-byte ceiling; the fixture's main export alone over its ceiling; the fixture's main export alone exactly at its ceiling; the big-shard fixture's one month shard alone over its ceiling; the big-shard fixture's one month shard alone exactly at its ceiling - compact exits 2, prints nothing on stdout, prints on stderr exactly one typed line for each file at or over the ceiling, naming the file under --beads and the bytes the unrefused run writes to it, and leaves the .beads directory empty; a full export whose text is {not json and a newline exits 3 with the typed line and leaves the .beads directory empty; a month shard whose only line is the prefix form cut short, and each of the four prefix forms (cut short, followed by other text, an id holding an invalid escape, an empty id) and the six comment forms (opening with #, //, /*, --, ; or <!--) as line 1 of the older of two month shards, exit 3 with the typed line naming the shard and write nothing", ({ task }) => {
+  it("K3 at each of its seven soft-ceiling plants - the fixture's main export and both its month shards over a 64-byte ceiling; the fixture's main export alone over its ceiling; the fixture's main export alone exactly at its ceiling; the big-shard fixture's one month shard alone over its ceiling; the big-shard fixture's one month shard alone exactly at its ceiling; the UTF-8 fixture's main export alone exactly at its ceiling; the UTF-8 big-shard fixture's one month shard alone exactly at its ceiling - compact exits 2, prints nothing on stdout, prints on stderr exactly one typed line for each file at or over the ceiling, naming the file under --beads and the bytes the unrefused run writes to it - its UTF-8 bytes, which outnumber its UTF-16 code units at the two UTF-8 plants - and leaves the .beads directory empty; a full export whose text is {not json and a newline exits 3 with the typed line and leaves the .beads directory empty; a month shard whose only line is the prefix form cut short, and each of the four prefix forms (cut short, followed by other text, an id holding an invalid escape, an empty id) and the six comment forms (opening with #, //, /*, --, ; or <!--) as line 1 of the older of two month shards, exit 3 with the typed line naming the shard and write nothing", ({ task }) => {
     const { beads, full } = beadsDir();
     const refused = cli(["compact", "--full", full, "--beads", beads, "--now", "2026-11-03T12:00:00Z"], { FW_EXPORT_SOFT_CEILING: "64" });
     expect(refused.status).toBe(2);
@@ -1443,18 +1503,30 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", { ti
       ]);
     }
     // The five ceiling plants (refusal #6 of wb-294d, U1: GP3P-A1, A2, A3, A4 and B3; F5: GP3P-B1 and B2). A plant's forms read each
-    // file the unrefused run writes against the plant's ceiling: over it, exactly at it, or under it.
-    const inputs = { fixture: textOf(fixtureRows()), bigShard: textOf([row("wb-o1", "open"), row("wb-c9", "closed", { closed_at: "2026-11-03T08:00:00Z", notes: "x".repeat(4000) })]) };
+    // file the unrefused run writes against the plant's ceiling: over it, exactly at it, or under it. wb-xkto (refusal #4 of wb-137f,
+    // U2: GP45-04, GP45-05; witness W-GP45-04/05) adds two plants over rows holding text beyond ASCII, the UTF-8 fixture's and the
+    // UTF-8 big-shard fixture's, whose file at the ceiling holds more UTF-8 bytes than UTF-16 code units.
+    const inputs = {
+      fixture: textOf(fixtureRows()),
+      bigShard: textOf([row("wb-o1", "open"), row("wb-c9", "closed", { closed_at: "2026-11-03T08:00:00Z", notes: "x".repeat(4000) })]),
+      utf8: textOf(utf8Rows()),
+      utf8BigShard: textOf(utf8BigShardRows()),
+    };
     type Input = keyof typeof inputs;
+    /** The inputs whose rows hold text beyond ASCII (wb-xkto): at their plants each file at or over the ceiling has fewer UTF-16 code units than UTF-8 bytes. */
+    const beyondAscii: ReadonlySet<Input> = new Set<Input>(["utf8", "utf8BigShard"]);
+    /** The UTF-16 code units of each file the unrefused run writes, by input, read from disk beside its bytes. */
+    const unitsOf = new Map<Input, ReadonlyMap<string, number>>();
     /** The bytes of each file compact writes for the input when nothing refuses (the default ceiling), read from disk: main export first, then the shards in name order. */
     const unrefused = (input: Input): ReadonlyMap<string, number> => {
       const layout = beadsDir();
       writeFileSync(layout.full, inputs[input]);
       expect(cli(["compact", "--full", layout.full, "--beads", layout.beads, "--now", "2026-11-03T12:00:00Z"]).status, `the unrefused run over the ${input} input`).toBe(0);
       const shards = readdirSync(join(layout.beads, "archive")).sort();
+      unitsOf.set(input, new Map([["issues.jsonl", readFileSync(join(layout.beads, "issues.jsonl"), "utf8").length], ...shards.map((name): [string, number] => [`archive/${name}`, readFileSync(join(layout.beads, "archive", name), "utf8").length])]));
       return new Map([["issues.jsonl", readFileSync(join(layout.beads, "issues.jsonl")).length], ...shards.map((name): [string, number] => [`archive/${name}`, readFileSync(join(layout.beads, "archive", name)).length])]);
     };
-    const written = { fixture: unrefused("fixture"), bigShard: unrefused("bigShard") };
+    const written = { fixture: unrefused("fixture"), bigShard: unrefused("bigShard"), utf8: unrefused("utf8"), utf8BigShard: unrefused("utf8BigShard") };
     const bytesOf = (sizes: ReadonlyMap<string, number>, file: string): number => sizes.get(file) ?? Number.NaN;
     const plants: readonly { readonly plant: string; readonly input: Input; readonly ceiling: (sizes: ReadonlyMap<string, number>) => number; readonly forms: readonly string[] }[] = [
       { plant: "the fixture's main export and both its month shards over a 64-byte ceiling", input: "fixture", ceiling: () => 64, forms: ["issues.jsonl:over", "archive/issues-closed-2026-10.jsonl:over", "archive/issues-closed-2026-11.jsonl:over"] },
@@ -1462,14 +1534,20 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", { ti
       { plant: "the fixture's main export alone exactly at its ceiling", input: "fixture", ceiling: sizes => bytesOf(sizes, "issues.jsonl"), forms: ["issues.jsonl:at", "archive/issues-closed-2026-10.jsonl:under", "archive/issues-closed-2026-11.jsonl:under"] },
       { plant: "the big-shard fixture's one month shard alone over its ceiling", input: "bigShard", ceiling: sizes => bytesOf(sizes, "issues.jsonl") + 1, forms: ["issues.jsonl:under", "archive/issues-closed-2026-11.jsonl:over"] },
       { plant: "the big-shard fixture's one month shard alone exactly at its ceiling", input: "bigShard", ceiling: sizes => bytesOf(sizes, "archive/issues-closed-2026-11.jsonl"), forms: ["issues.jsonl:under", "archive/issues-closed-2026-11.jsonl:at"] },
+      { plant: "the UTF-8 fixture's main export alone exactly at its ceiling", input: "utf8", ceiling: sizes => bytesOf(sizes, "issues.jsonl"), forms: ["issues.jsonl:at", "archive/issues-closed-2026-10.jsonl:under", "archive/issues-closed-2026-11.jsonl:under"] },
+      { plant: "the UTF-8 big-shard fixture's one month shard alone exactly at its ceiling", input: "utf8BigShard", ceiling: sizes => bytesOf(sizes, "archive/issues-closed-2026-11.jsonl"), forms: ["issues.jsonl:under", "archive/issues-closed-2026-11.jsonl:at"] },
     ];
-    expect(plants.map(entry => `${entry.input}|${entry.plant}|${entry.forms.join(",")}`), "K3's five ceiling plants (frozen shape)").toEqual([
+    expect(plants.map(entry => `${entry.input}|${entry.plant}|${entry.forms.join(",")}`), "K3's seven ceiling plants (frozen shape)").toEqual([
       "fixture|the fixture's main export and both its month shards over a 64-byte ceiling|issues.jsonl:over,archive/issues-closed-2026-10.jsonl:over,archive/issues-closed-2026-11.jsonl:over",
       "fixture|the fixture's main export alone over its ceiling|issues.jsonl:over,archive/issues-closed-2026-10.jsonl:under,archive/issues-closed-2026-11.jsonl:under",
       "fixture|the fixture's main export alone exactly at its ceiling|issues.jsonl:at,archive/issues-closed-2026-10.jsonl:under,archive/issues-closed-2026-11.jsonl:under",
       "bigShard|the big-shard fixture's one month shard alone over its ceiling|issues.jsonl:under,archive/issues-closed-2026-11.jsonl:over",
       "bigShard|the big-shard fixture's one month shard alone exactly at its ceiling|issues.jsonl:under,archive/issues-closed-2026-11.jsonl:at",
+      "utf8|the UTF-8 fixture's main export alone exactly at its ceiling|issues.jsonl:at,archive/issues-closed-2026-10.jsonl:under,archive/issues-closed-2026-11.jsonl:under",
+      "utf8BigShard|the UTF-8 big-shard fixture's one month shard alone exactly at its ceiling|issues.jsonl:under,archive/issues-closed-2026-11.jsonl:at",
     ]);
+    // wb-xkto: the plant labels against the module header's K3 CEILING PLANTS list, an anchor outside the suite.
+    expect(headerList("K3 ceiling plants"), "the module header's K3 ceiling plants").toEqual(plants.map(entry => entry.plant));
     // The title is the outside anchor of the plant table: its plant list is the table's plants, in order, and its count is theirs.
     expect(task.name.split(" - ")[1]?.split("; "), "the title names exactly K3's ceiling plants, in order").toEqual(plants.map(entry => entry.plant));
     expect(task.name.startsWith(`K3 at each of its ${["no", "one", "two", "three", "four", "five", "six", "seven"][plants.length]} soft-ceiling plants - `), "the title counts K3's ceiling plants").toBe(true);
@@ -1483,6 +1561,9 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", { ti
       expect(run.status, plant).toBe(2);
       expect(run.stdout, plant).toBe("");
       const typed = forms.filter(form => !form.endsWith(":under")).map(form => form.slice(0, form.lastIndexOf(":")));
+      if (beyondAscii.has(input)) {
+        for (const file of typed) expect(unitsOf.get(input)?.get(file) ?? Number.NaN, `${plant}: ${file} holds fewer UTF-16 code units than UTF-8 bytes`).toBeLessThan(bytesOf(sizes, file));
+      }
       expect(run.stderr, plant).toBe(
         typed.map(file => `tracker-export: REFUSED ${layout.beads}/${file} would be ${bytesOf(sizes, file)} bytes, at or over the soft ceiling of ${ceiling} bytes (FW_EXPORT_SOFT_CEILING); nothing is written\n`).join(""),
       );

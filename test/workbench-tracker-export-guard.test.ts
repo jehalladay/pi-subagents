@@ -1,21 +1,25 @@
 /**
  * wb-294d (g10.24-K1): the pre-push size guard over the tracker export family of qa/workbench/tracker-export.mjs.
  *
- * Bead acceptance (1), quoted: "at FW_EXPORT_SOFT_CEILING bytes (default 95 MiB) the push path refuses rc 2 BEFORE any git push with ONE
- * typed line naming the blob path and byte size; selftest leg plants a scratch repo with an oversized tracked blob and asserts the typed
- * refusal". Owner shape element 4: the guard "covers the MAIN export AND each shard". The family judged is every blob a pushed commit
- * writes to .beads/issues.jsonl or below .beads/archive/ (G2-G4; a merge's own write, G18), whatever other path also holds it (G17);
- * the objects judged are the ones a push of <tip> would send: `git rev-list --objects <tip> --not <excluded...>` (G5, G19). The hook excludes each line's remote sha when this repository has that commit (G10) and every
- * remote-tracking ref of the remote it is called for (G11), so a blob reachable from an excluded commit is not judged, and one typed
- * line is printed per oversized blob however many of the hook's lines (G12) or family paths (G14) would send it. A large blob outside
- * the family is NOT CLAIMED by this guard (G6 and G16 pin that boundary: other paths, and a tree object below .beads/archive/). A push
- * the hook cannot judge exits 3 unless a judged push refuses at the ceiling, which exits 2 (G13); usage errors and unknown verbs exit
- * 3 with their usage line (G15). Wiring the guard into the machine's collect and land-chain push paths lives outside this repository;
- * here the push path is git itself, through the hook (G7).
+ * Bead acceptance (1), quoted: "at FW_EXPORT_SOFT_CEILING bytes (default 95 MiB) the push path refuses rc 2 BEFORE any git push with
+ * ONE typed line naming the blob path and byte size; selftest leg plants a scratch repo with an oversized tracked blob and asserts the
+ * typed refusal". Owner shape element 4: the guard "covers the MAIN export AND each shard". The family judged is every blob a pushed
+ * commit writes to .beads/issues.jsonl or below .beads/archive/ (G2-G4; a merge's own write, G18), whatever other path also holds it
+ * (G17); the objects judged are the ones a push of <tip> would send: `git rev-list --objects <tip> --not <excluded...>` (G5, G19). The
+ * hook judges each line's push of its local sha - one that begins and ends with 0 and is not all zeros among them - and skips a
+ * deleted ref's forty or sixty-four zeros (G9). It excludes each line's remote sha when this repository has it as a commit - a commit
+ * the case makes, and a root commit whose sha begins and ends with 0 - but not a remote sha naming the export's blob or its commit's
+ * tree (G10), and it excludes every remote-tracking ref of the remote it is called for (G11), so a blob reachable from an excluded
+ * commit is not judged, and one typed line is printed per oversized blob however many of the hook's lines (G12) or family paths (G14)
+ * would send it. A large blob outside the family is NOT CLAIMED by this guard (G6 and G16 pin that boundary: other paths, and a tree
+ * object below .beads/archive/). A push the hook cannot judge exits 3 unless a judged push refuses at the ceiling, which exits 2
+ * (G13); usage errors and unknown verbs exit 3 with their usage line (G15). Wiring the guard into the machine's collect and land-chain
+ * push paths lives outside this repository; here the push path is git itself, through the hook (G7).
  * Every case runs in a throwaway repository from the scratch helper with an explicit child environment, with the ceiling lowered
  * through FW_EXPORT_SOFT_CEILING so no case writes a 95 MiB file.
  */
 import { execFileSync, type SpawnSyncReturns, spawnSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { chmodSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
@@ -97,6 +101,29 @@ const refusal = (path: string, blob: string, bytes: number, ceiling: number): st
   `tracker-export: REFUSED ${path} blob ${blob.slice(0, 12)} is ${bytes} bytes, at or over the soft ceiling of ${ceiling} bytes (${CEILING_ENV}); nothing is pushed`;
 
 const stderrLines = (r: SpawnSyncReturns<string>): string[] => r.stderr.split("\n").filter(line => line.length > 0);
+
+/** A sha that begins and ends with 0 and is not all zeros: the form a test of the deleted ref's all-zeros sha must tell apart from it. */
+const ZERO_LED = /^0[0-9a-f]{38}0$/;
+
+/**
+ * wb-xkto (refusal #4 of wb-137f, U1: GP45-01): writes a ROOT commit of `repo`'s index whose sha has the ZERO_LED form and returns its
+ * sha; HEAD is not moved. The commit object is built here under a fixed author and committer stamp, a counter in its message ground
+ * until the sha1 of the object, computed here, has that form; git hash-object -w writes it and must return the same sha. With no parent
+ * and a fixed tree the commit is the same on every run, so the plant never depends on the run's clock (refusal #4 U1: the suite's
+ * other commit shas change from run to run).
+ */
+function zeroLedRootCommit(repo: Repo, message: string): string {
+  const tree = repo.git("write-tree");
+  for (let counter = 0; counter < 1_000_000; counter += 1) {
+    const body = `tree ${tree}\nauthor t <t@example.invalid> 1793750400 +0000\ncommitter t <t@example.invalid> 1793750400 +0000\n\n${message} ${counter}\n`;
+    const sha = createHash("sha1").update(`commit ${Buffer.byteLength(body)}\0${body}`).digest("hex");
+    if (!ZERO_LED.test(sha)) continue;
+    const written = execFileSync("git", ["hash-object", "-t", "commit", "-w", "--stdin"], { cwd: repo.dir, env: childEnv(repo.home), input: body, encoding: "utf8" }).trim();
+    expect(written, "git's sha of the commit object built here").toBe(sha);
+    return sha;
+  }
+  throw new Error("no commit sha of the ZERO_LED form within the counter's range");
+}
 
 describe("wb-294d export-size guard: the soft ceiling", () => {
   it("G1 the default is 95 MiB = 99,614,720 bytes; a positive whole number in FW_EXPORT_SOFT_CEILING replaces it, 2^53 - 1 the largest; zero, a negative, a fraction, a word, an exponent, a padded or zero-led number, 2^53 and one past 2^53 refuse (rc 3 at guard and at pre-push here; compact's is the compaction suite's K8)", () => {
@@ -259,7 +286,9 @@ describe("wb-294d export-size guard: the CLI a push path calls before git push",
   });
 });
 
-describe("wb-294d export-size guard as the git pre-push hook (the push itself never reaches the remote)", () => {
+// wb-xkto: G9 and G10 grew by their zero-led sha plants (G9 ran 1.9 s at load1 193 under the 5 s default the complete gate's test
+// step leaves); the describe carries the compaction CLI describe's bound.
+describe("wb-294d export-size guard as the git pre-push hook (the push itself never reaches the remote)", { timeout: 120_000 }, () => {
   function install(repo: Repo): void {
     const hook = join(repo.dir, ".git", "hooks", "pre-push");
     mkdirSync(dirname(hook), { recursive: true });
@@ -286,7 +315,7 @@ describe("wb-294d export-size guard as the git pre-push hook (the push itself ne
     expect(remoteHead(repo)).toBe(tip);
   });
 
-  it("G9 the hook judges every stdin line, skips a deleted-ref line, refuses a malformed line rc 3 - three fields, and with one typed line each: two or five fields, a local or a remote sha one digit short, an upper-case local or remote sha - and judges past an unknown remote sha", () => {
+  it("G9 the hook judges each planted stdin line's push of its local sha - the base commit's line, two lines at once, a line whose remote sha this repository lacks, and a line whose local sha begins and ends with 0 and is not all zeros (a root commit writing the oversized shard) - and skips a deleted-ref line, whose local sha is forty zeros or sixty-four zeros; it refuses a malformed line rc 3 - three fields, and with one typed line each: two or five fields, a local or a remote sha one digit short, an upper-case local or remote sha", () => {
     const repo = makeRepo();
     const base = repo.commit({ [MAIN]: 10 }, "base");
     const tip = repo.commit({ [SHARD]: 900 }, "large shard");
@@ -317,12 +346,22 @@ describe("wb-294d export-size guard as the git pre-push hook (the push itself ne
     }
     const unknownRemote = hook(`refs/heads/main ${tip} refs/heads/main ${"f".repeat(40)}\n`);
     expect(unknownRemote.status).toBe(2);
+    // wb-xkto (refusal #4 of wb-137f, U1: GP45-01, witness W-GP45-01a): a local sha that begins and ends with 0 and is not all zeros is
+    // a push, judged like any other - a root commit of the index above, which writes the oversized shard - and the deleted ref's sha of
+    // sixty-four zeros is skipped like forty.
+    const zeroLed = zeroLedRootCommit(repo, "the oversized shard at a sha that begins and ends with 0");
+    expect([ZERO_LED.test(zeroLed), /^0+$/.test(zeroLed)], "the local sha begins and ends with 0 and is not all zeros").toEqual([true, false]);
+    const zeroLedPush = hook(`refs/heads/z ${zeroLed} refs/heads/z ${zeros}\n`);
+    expect(zeroLedPush.status).toBe(2);
+    expect(stderrLines(zeroLedPush)).toEqual([refusal(SHARD, repo.blobOf(zeroLed, SHARD), 900, 600)]);
+    const deleted64 = hook(`(delete) ${"0".repeat(64)} refs/heads/gone ${base}\n`);
+    expect([deleted64.status, deleted64.stderr]).toEqual([0, ""]);
   });
 
   const hookIn = (repo: Repo, remote: string, stdin: string): SpawnSyncReturns<string> =>
     spawnSync(process.execPath, [TOOL, "pre-push", remote, repo.remote], { cwd: repo.dir, env: childEnv(repo.home, { [CEILING_ENV]: "600" }), input: stdin, encoding: "utf8" });
 
-  it("G10 the hook excludes a line's remote sha that this repository has: an oversized export only that commit holds is not judged again, and the same push from a new ref is", () => {
+  it("G10 the hook excludes a line's remote sha when this repository has it as a commit - a commit the case makes, and a root commit whose sha begins and ends with 0 and is not all zeros: an oversized export only that commit holds is not judged again, and the same push from a new ref is; a remote sha naming the oversized export's blob or the tree of the commit that holds it - objects this repository has that are not commits - is not excluded and the push is judged", () => {
     const repo = makeRepo();
     const old = repo.commit({ [MAIN]: 900 }, "an oversized export the remote already holds");
     const tip = repo.commit({ "src/b.ts": 5 }, "a later commit that does not touch the export");
@@ -332,6 +371,31 @@ describe("wb-294d export-size guard as the git pre-push hook (the push itself ne
     const fresh = hookIn(repo, "origin", `refs/heads/main ${tip} refs/heads/main ${"0".repeat(40)}\n`);
     expect(fresh.status).toBe(2);
     expect(stderrLines(fresh)).toEqual([refusal(MAIN, repo.blobOf(old, MAIN), 900, 600)]);
+    // wb-xkto (refusal #4 of wb-137f, U1: GP45-01, witness W-GP45-01b): the remote's commit has a sha that begins and ends with 0 - a
+    // root commit holding the oversized export - and is excluded like any known commit; (F5 rider: GP45-13, witness W-GP45-13) a remote
+    // sha naming the oversized export's blob, or the tree of the commit that holds it, is no commit, so it is not excluded and the push
+    // is judged.
+    const zeroRepo = makeRepo();
+    mkdirSync(join(zeroRepo.dir, ".beads"), { recursive: true });
+    writeFileSync(join(zeroRepo.dir, MAIN), "x".repeat(900));
+    zeroRepo.git("add", "--", MAIN);
+    const zeroOld = zeroLedRootCommit(zeroRepo, "an oversized export the remote already holds, at a sha that begins and ends with 0");
+    expect([ZERO_LED.test(zeroOld), /^0+$/.test(zeroOld)], "the remote sha begins and ends with 0 and is not all zeros").toEqual([true, false]);
+    zeroRepo.git("update-ref", "HEAD", zeroOld);
+    const zeroTip = zeroRepo.commit({ "src/b.ts": 5 }, "a later commit that does not touch the export");
+    expect(zeroRepo.git("rev-parse", `${zeroTip}^`)).toBe(zeroOld);
+    const zeroKnown = hookIn(zeroRepo, "origin", `refs/heads/main ${zeroTip} refs/heads/main ${zeroOld}\n`);
+    expect([zeroKnown.status, zeroKnown.stderr]).toEqual([0, ""]);
+    const blob = zeroRepo.blobOf(zeroOld, MAIN);
+    expect(zeroRepo.git("cat-file", "-t", blob)).toBe("blob");
+    const notCommit = hookIn(zeroRepo, "origin", `refs/heads/main ${zeroTip} refs/heads/main ${blob}\n`);
+    expect(notCommit.status).toBe(2);
+    expect(stderrLines(notCommit)).toEqual([refusal(MAIN, blob, 900, 600)]);
+    const tree = zeroRepo.git("rev-parse", `${zeroOld}^{tree}`);
+    expect(zeroRepo.git("cat-file", "-t", tree)).toBe("tree");
+    const notCommitTree = hookIn(zeroRepo, "origin", `refs/heads/main ${zeroTip} refs/heads/main ${tree}\n`);
+    expect(notCommitTree.status).toBe(2);
+    expect(stderrLines(notCommitTree)).toEqual([refusal(MAIN, blob, 900, 600)]);
   });
 
   it("G11 the hook excludes every remote-tracking ref of the remote it is called for: a new branch over a commit origin already tracks passes, the same line for another remote does not", () => {
