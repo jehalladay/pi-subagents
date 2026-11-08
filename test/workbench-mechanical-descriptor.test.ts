@@ -50,6 +50,13 @@
  * are COMPUTED SCANS (every BMP code point through each exported grammar, every ASCII code point through the boundary). A case
  * title reads under the module header's FORM: it claims the forms its case plants.
  *
+ * Follow-up cut (wb-mqpz; the R694 follow-up of the wb-ocie landing 1037 gate, its finding F1) plants the five forms that gate
+ * realized on the boundary outside cut #3's tables (its witnesses WG01-WG05, each a form cut #3 left NOT CLAIMED), each case
+ * red-first under the gate member it realizes: R007-21 (WG04, an own __proto__ member inside implementation; GX04), R007-22
+ * (WG03, several absent members; GX03), R008-13 (WG02, a COMPUTED SCAN through the boundary of the fullwidth compatibility
+ * form of each code point of a valid digest; GX02), R009-11 (WG01, the same scan over each reviewed schema name; GX01) and
+ * R010-14 (WG05, an own accessor export; GX17).
+ *
  * Display paths added: none (the boundary returns closed-vocabulary diagnostics and composes no label or reply text).
  */
 import { execFileSync } from "node:child_process";
@@ -630,6 +637,19 @@ describe("wb-ocie EAT-R007: Pi reads the exact producer descriptor file", () => 
       "status status-unsupported loads=0",
     ]);
   });
+
+  it("R007-21 an implementation carrying an own member named __proto__ beside package and export (the gate's WG04 form; JSON.parse keeps __proto__ as an own member, the name MEMBER_NAME_FORMS plants at the top level) is refused implementation member-unexpected with zero loads", async () => {
+    const text = rendered(implementationValue("__proto__", "planted"));
+    expect(Object.keys(implementationOf(JSON.parse(text) as DescriptorObject)), "the planted implementation holds an own __proto__ member").toEqual(["package", "export", "__proto__"]);
+    expect(await loadedReadingOf(text)).toBe("implementation member-unexpected loads=0");
+  });
+
+  it("R007-22 absent members are judged in the producer file's order (the gate's WG03 form): with id and status absent the refusal is id member-missing with zero loads, and with id, implementation, inputSchema, outputSchema, bindings and status all absent and each cured in turn from the first, the refusal names each next absent member, ending admitted", async () => {
+    expect(await loadedReadingOf(rendered(without("id", "status")))).toBe("id member-missing loads=0");
+    const absent: readonly Fault[] = REQUIRED_MEMBERS.map(name => ({ reading: `${name} member-missing`, edit: without(name) }));
+    expect(absent.map(({ reading }) => reading)).toEqual(["id member-missing", "implementation member-missing", "inputSchema member-missing", "outputSchema member-missing", "bindings member-missing", "status member-missing"]);
+    expect(await ladderOf(absent)).toEqual([...absent.map(({ reading }) => reading), "admitted"]);
+  });
 });
 
 describe("wb-ocie EAT-R008: Pi refuses artifact bytes that differ from their SHA-256 pin", () => {
@@ -802,6 +822,28 @@ describe("wb-ocie EAT-R008: Pi refuses artifact bytes that differ from their SHA
     const isHexDigit = (point: number): boolean => (point >= 0x30 && point <= 0x39) || (point >= 0x61 && point <= 0x66);
     expect(readings).toEqual(Array.from({ length: 128 }, (_, point) => (isHexDigit(point) ? "descriptor unreadable" : "pin pin-malformed")));
   });
+
+  it("R008-13 COMPUTED SCAN of compatibility forms through the boundary (the gate's WG02 form): with each of the 71 code points of a valid digest (sha256: and its 64 hex digits), one place at a time, replaced by its fullwidth compatibility form, which NFKC maps back to that digest, each of the 142 pins (either digest member in turn) is refused pin-malformed with zero loads before any file is read", async () => {
+    const { options } = plant();
+    const absent = join(options.approvedRoot, "absent.json");
+    const planted: { readonly at: string; readonly pin: MechanicalReleasePin }[] = [];
+    for (const member of ["descriptorDigest", "artifactDigest"] as const) {
+      const digest = options.pin[member];
+      for (let at = 0; at < digest.length; at += 1) {
+        const form = `${digest.slice(0, at)}${fullwidthOf(digest.charAt(at))}${digest.slice(at + 1)}`;
+        expect(form.normalize("NFKC"), `${member} ${at}: NFKC maps the form back to the digest`).toBe(digest);
+        planted.push({ at: `${member} ${at}`, pin: { ...options.pin, [member]: form } });
+      }
+    }
+    const readings = await Promise.all(
+      planted.map(async ({ at, pin }) => {
+        const outcome = await refusalOf({ ...options, descriptorPath: absent, pin });
+        return `${at} ${diagnosticReading(outcome.diagnostic)} loads=${outcome.loads}`;
+      }),
+    );
+    expect(readings).toEqual(planted.map(({ at }) => `${at} pin pin-malformed loads=0`));
+    expect(planted).toHaveLength(142);
+  });
 });
 
 /** The noncanonical forms one schema reference is mutated to; each must be refused before import. */
@@ -924,6 +966,21 @@ describe("wb-ocie EAT-R009: Pi refuses noncanonical schema references", () => {
     const inGrammar = (point: number): boolean => `${grammar}.-`.includes(String.fromCodePoint(point));
     expect(readings).toEqual(Array.from({ length: 128 }, (_, point) => `inputSchema ${inGrammar(point) ? "schema-ref-unknown" : "schema-ref-noncanonical"} loads=0`));
   });
+
+  it("R009-11 COMPUTED SCAN of compatibility forms through the boundary (the gate's WG01 form): with each code point of each reviewed name, one place at a time, replaced by its fullwidth compatibility form, which NFKC maps back to the reviewed name, each of the 68 references is refused schema-ref-noncanonical in its own member with zero loads: nothing is normalized first", async () => {
+    const planted: { readonly member: "inputSchema" | "outputSchema"; readonly at: number; readonly form: string }[] = [];
+    for (const member of ["inputSchema", "outputSchema"] as const) {
+      const name = REVIEWED[member];
+      for (let at = 0; at < name.length; at += 1) {
+        const form = `${name.slice(0, at)}${fullwidthOf(name.charAt(at))}${name.slice(at + 1)}`;
+        expect(form.normalize("NFKC"), `${member} ${at}: NFKC maps the form back to the reviewed name`).toBe(name);
+        planted.push({ member, at, form });
+      }
+    }
+    const readings = await Promise.all(planted.map(async ({ member, at, form }) => `${member} ${at} ${await loadedReadingOf(rendered(memberValue(member, form)))}`));
+    expect(readings).toEqual(planted.map(({ member, at }) => `${member} ${at} ${member} schema-ref-noncanonical loads=0`));
+    expect(planted).toHaveLength(68);
+  });
 });
 
 /** The package mutations R010-2 judges, frozen by R010-8. */
@@ -1043,6 +1100,34 @@ describe("wb-ocie EAT-R010: Pi refuses a package or export outside its fixed all
 
   it("R010-13 the implementation value forms are frozen by name: twenty-one", () => {
     expect(IMPLEMENTATION_VALUE_FORMS.map(({ form }) => form)).toEqual(["package a one-element list", "package a nested list", "package upper-case", "package padded before", "package an npm: alias spelling", "package a soft hyphen inside", "package a fullwidth solidus", "package a line break after", "package a number", "package null", "export a one-element list", "export a nested list", "export capitalized", "export upper-case", "export padded before", "export a prefixed name", "export a soft hyphen inside", "export a fullwidth first letter", "export a line break after", "export a number", "export null"]);
+  });
+
+  it("R010-14 an own accessor member is read through its getter (the gate's WG05 form): a loader result whose develop is an own accessor returning a function is admitted with that function as the reviewed export, the getter run once and the export uncalled, and one whose accessor returns a string is refused export-missing", async () => {
+    let getterRuns = 0;
+    let exportCalls = 0;
+    const develop = (): string => {
+      exportCalls += 1;
+      return "called";
+    };
+    const accessor: unknown = Object.defineProperty({}, "develop", {
+      enumerable: true,
+      get: () => {
+        getterRuns += 1;
+        return develop;
+      },
+    });
+    const { loader, calls } = fixedLoader(accessor);
+    const outcome = await admitMechanicalEntrypoint(plant().options, loader);
+    expect({ reading: readingOfOutcome(outcome), loads: calls.length, getterRuns, exportCalls, returned: outcome.ok && outcome.exported === develop }).toEqual({
+      reading: "admitted",
+      loads: 1,
+      getterRuns: 1,
+      exportCalls: 0,
+      returned: true,
+    });
+    const notAFunction: unknown = Object.defineProperty({}, "develop", { enumerable: true, get: () => "planted develop" });
+    const second = fixedLoader(notAFunction);
+    expect(readingOfOutcome(await admitMechanicalEntrypoint(plant().options, second.loader))).toBe("loaded export-missing");
   });
 });
 
