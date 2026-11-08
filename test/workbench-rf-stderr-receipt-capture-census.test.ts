@@ -146,7 +146,21 @@
  * each of its forms in an argv the stand-in records NOT CLAIMED, and G2-SINKS's as its row's reading alone (the one warning its row
  * emits, alone in the recording its row makes), each of its forms in a recording that holds another warning or is made around
  * either arm's launch NOT CLAIMED; it states OWED's premise exactly for every C1 item (C1-DECLARATION-REFERENCES's row modules in
- * its row's order, C1-RUNTIME-ARGV planting no module) and bounds R-PROTOTYPE-PATCH's C1 (f) reading to today's witness. Where a
+ * its row's order, C1-RUNTIME-ARGV planting no module) and bounds R-PROTOTYPE-PATCH's C1 (f) reading to today's witness. Gate
+ * refusal #17 measured the src instruments' own words still claimed wider than T2's control: the read set's six script
+ * extensions and its declaration-file exclusion (CASES, sourceFiles' doc and T2's message) while the control planted .ts, .mts
+ * and .cjs files read and .d.ts, .d.mts and .json files not read, and the embedded reader's every src string or template that
+ * calls require( or getBuiltinModule( (CASES, embeddedSources' doc and T2's message) while the control planted one
+ * no-substitution template that calls require( - so its hollows GP6-RS-NOJS, GP6-RS-NOCTS and GP6-RS-DCTS (no .js or .mjs file
+ * read, no .cts file read, a .d.cts file read) and GP6-EMB-NOGBM and GP6-EMB-NOSTRING (getBuiltinModule( dropped, no plain
+ * string read) kept the census green while its plants realized them, and, riding them, G1's stderr-listener locator words named
+ * listen methods and receivers the control never planted (GP6-G1-ON-ONLY, GP6-G1-FIRST-ONLY and GP6-G1-CHILD-ONLY). Cut #18
+ * changes no reader and no row: T2's control adds a .cts, a .js and an .mjs file, a .d.cts file and a .ts file a subdirectory
+ * down; a double-quoted and a single-quoted string that call require(, a no-substitution template and a double-quoted string
+ * that call getBuiltinModule( and a string that calls neither; and a provider text holding a stderr data listener under each
+ * other listen method and under an alias receiver, beside an end listener. T0 holds the read set equal to an independent
+ * listing of src and the worker's inlined source as src's one embedded module, and the three readers' words are restated to
+ * exactly those forms and today's src, every other form NOT CLAIMED. Where a
  * reader meets what it cannot resolve - a launch program, a module specifier, a load, an argv binding, a builder or an
  * identifier - it reads <opaque ...> or unresolved, a new member of a pinned list, never a pass, save the routes a named residual
  * states (R-OPAQUE-LAUNCHER, R-OPAQUE-LOADER, R-OPAQUE-REGISTRATION). Those two blocks are the claims verbatim: ANCHOR holds each
@@ -161,9 +175,10 @@
  * landing 1011; cut #12 by seat ws-07, run g10-work-s233 at trunk fd90f9d, landing 1014; cut #13 by seat ws-10, run g10-work-s233
  * at trunk fd90f9d, landing 1014; cut #14 by seat ws-05, run g10-work-s237 at trunk 7f54a59, landing 1020; cut #15 by seat ws-01,
  * run g10-work-s237 at trunk ea21fb1, landing 1024; cut #16 by seat ws-08, run g10-work-s237 at trunk 8ed3a73, landing 1028; cut
- * #17 by seat ws-01, run g10-work-s237 at trunk 4c21b67, landing 1029; providers/reactivefiber.ts is byte-identical at all
- * seventeen and at 04123dc, sha256/16 d8b764b855600103 over its 203 lines; cuts #6 to #17 move no reader, so every witness reads as
- * at cut #5; every C1 and G2 witness below reads
+ * #17 by seat ws-01, run g10-work-s237 at trunk 4c21b67, landing 1029; cut #18 by seat ws-12, run g10-work-s238 at trunk
+ * ab08609, landing 1030; providers/reactivefiber.ts is byte-identical at all eighteen and at 04123dc, sha256/16
+ * d8b764b855600103 over its 203 lines; cuts #6 to #18 move no reader, so every witness reads as at cut #5; every C1 and G2
+ * witness below reads
  * the same under cut #4's C1-NAME-RESOLUTION as under cut #3's by-name read, and under cut #5's landed reader as under cut #4's:
  * the swap alone, every row and witness kept, moved 10 row readings in 4 of the 44 cases, all of them falsifier rows, which cut #5
  * restates).
@@ -200,9 +215,11 @@
  * owed; whether a src that gains a committing rf invocation moves C1's reading is NOT CLAIMED by this census, each C1 item claiming
  * its reading in its row's reading alone) or STANDING (it holds today and must keep holding).
  *  capture (ACCEPTANCE[0]). C1 UNTIL-THEN, read from src and at run time: exactly the C1-* items of ENUMERATION. The src
- *    readers parse (TypeScript AST) every script file under src (.ts, .mts, .cts, .js, .mjs, .cjs; declaration files excluded)
- *    and, as a module of its own, the text of every src string or template that calls require( or getBuiltinModule( (today
- *    only the workflow worker's inlined source, which the host evaluates with new Worker(..., { eval: true })); the argv
+ *    readers parse (TypeScript AST) today's script files under src, every one of them (each is .ts today; T0 holds the read
+ *    set equal to an independent listing of src), and, as a module of its own, the workflow worker's inlined source, src's one
+ *    embedded module today (a template that calls require(, which the host evaluates with new Worker(..., { eval: true }); T0
+ *    holds it); the two readers' other forms are claimed only as T2's control plants them (sourceFiles' and embeddedSources'
+ *    docs name each), and every other file or embedded form is NOT CLAIMED by this census; the argv
  *    binding and its builder resolve through TypeScript's checker over the launching file alone, every other identifier through
  *    the landed reader as C1-NAME-RESOLUTION states. C1's witness holds (a) the rf launch sites, (b) the launch inventory, (b2)
  *    the child_process module sites and the opaque loads, (c) each rf launch's argv reading, its builder's lines and the
@@ -236,9 +253,11 @@
  *    Sinks: the preview reading under all three receipt forms on stderr (their bytes read) is exactly {contract, source,
  *    workspaceRoot} carrying the stdout ids alone, and neither kill's error names an rf id.
  * T0: the readings are live (the stand-in is the only PATH entry, src holds the surfaces, the worker's embedded source is in the
- * read set, the stimulus is every receipt line). ENUMERATION: one case per item, its falsifier caught by its pin's own reader,
- * so a hollowed reader reds the item that names its route. T2 and T3: the instruments read their controls (the read set,
- * embedded sources, G1's AST locators, the export and journal readers; an untouched planted child reads as the reference does).
+ * read set as src's one embedded module, the read set equals an independent listing of src's script files, the stimulus is
+ * every receipt line). ENUMERATION: one case per item, its falsifier caught by its pin's own reader, so a hollowed reader reds the
+ * item that names its route. T2 and T3: the instruments read their controls (the read set, embedded sources and G1's AST
+ * locators, each claimed only at the inputs its control writes, exactly as it writes them, and at today's src as T0 and G1 hold
+ * it; the export and journal readers; an untouched planted child reads as the reference does).
  * RESIDUALS: each named residual's quiet row reads quiet. ANCHOR: the ENUMERATION and RESIDUALS blocks below are the tables'
  * rows, word for word (an anchor outside both tables' literals); BINDING: each item's falsifier calls a reader its words'
  * clause tag (C1 (a) ... (g), G2 (static) or (run time)) names, so a falsifier swapped onto another clause's reader reds. A1 the
@@ -784,7 +803,7 @@
 import { ChildProcess, spawn } from "node:child_process";
 import { createHash } from "node:crypto";
 import { subscribe, unsubscribe } from "node:diagnostics_channel";
-import { chmodSync, existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { Socket } from "node:net";
 import { delimiter, dirname, join, relative } from "node:path";
 import { PassThrough, Readable } from "node:stream";
@@ -867,6 +886,24 @@ const STDERR_AT_PIN: readonly string[] = [
   '        if(stderrBytes>MAX_BYTES) stop("stderr");',
   "      });",
 ];
+/** T2's control for G1's stderr-listener locator: the statements it plants after the provider's launch line, in this order. */
+const LISTENER_PLANTS: readonly string[] = [
+  '  child.stderr.once("data",()=>{});',
+  '  child.stderr.addListener("data",()=>{});',
+  '  child.stderr.prependListener("data",()=>{});',
+  '  child.stderr.prependOnceListener("data",()=>{});',
+  "  const alias=child;",
+  '  alias.stderr.on("data",()=>{});',
+  '  child.stderr.on("end",()=>{});',
+];
+/** The planted statements G1's stderr-listener locator reads as blocks, each a one-line block, in source order. */
+const LISTENER_PLANTS_LOCATED: readonly string[] = [
+  '  child.stderr.once("data",()=>{});',
+  '  child.stderr.addListener("data",()=>{});',
+  '  child.stderr.prependListener("data",()=>{});',
+  '  child.stderr.prependOnceListener("data",()=>{});',
+  '  alias.stderr.on("data",()=>{});',
+];
 /** The rf launch's argv builder as measured at trunk b3d410f (providers/reactivefiber.ts:111-116), verbatim (C1 (c)). */
 const ARGV_BUILDER_TODAY: readonly string[] = [
   "function renderArgv(selector:ReactiveFiberRenderSelector,workspaceRoot:string):string[] {",
@@ -936,7 +973,13 @@ interface SourceText {
   readonly path: string;
   readonly text: string;
 }
-/** Every script file under a directory (.ts, .mts, .cts, .js, .mjs, .cjs), declaration files excluded. */
+/**
+ * The script files under a directory, claimed only as T0 and T2 pin them: under src, today's script files, every one of them (each
+ * is .ts today; T0 holds them equal to listedScripts' independent listing); in the tree T2's control writes, exactly as it writes
+ * it, a top-level file named with each of the extensions .ts, .mts, .cts, .js, .mjs and .cjs and a .ts file one subdirectory down
+ * are read, and a top-level .d.ts, .d.mts, .d.cts or .json file is not. Every other name, extension, declaration form, depth, link
+ * and tree is NOT CLAIMED by this census.
+ */
 function sourceFiles(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) =>
     entry.isDirectory()
@@ -945,6 +988,22 @@ function sourceFiles(dir: string): string[] {
         ? [join(dir, entry.name)]
         : [],
   );
+}
+/** The six script extensions and the three declaration-file suffixes T0's independent listing spells out (no pattern shared with sourceFiles). */
+const SCRIPT_SUFFIXES: readonly string[] = [".ts", ".mts", ".cts", ".js", ".mjs", ".cjs"];
+const DECLARATION_SUFFIXES: readonly string[] = [".d.ts", ".d.mts", ".d.cts"];
+/**
+ * T0's independent listing of a directory: the file entries fs's own recursive readdir lists under it whose names end with one of
+ * SCRIPT_SUFFIXES and with none of DECLARATION_SUFFIXES, as repository paths, sorted; claimed only at src as T0 reads it today.
+ */
+function listedScripts(dir: string): string[] {
+  return readdirSync(dir, { recursive: true, withFileTypes: true })
+    .filter(
+      (entry) =>
+        entry.isFile() && SCRIPT_SUFFIXES.some((suffix) => entry.name.endsWith(suffix)) && !DECLARATION_SUFFIXES.some((suffix) => entry.name.endsWith(suffix)),
+    )
+    .map((entry) => relative(REPO, join(entry.parentPath, entry.name)).split("\\").join("/"))
+    .sort();
 }
 function srcTree(): SourceText[] {
   const files = sourceFiles(join(REPO, "src"))
@@ -960,9 +1019,14 @@ function parsed(file: SourceText): ts.SourceFile {
   return ts.createSourceFile(file.path, file.text, ts.ScriptTarget.Latest, true);
 }
 /**
- * Source text a src module carries inside a string or template that calls require( or getBuiltinModule( (the workflow worker's
- * inlined CommonJS source, which the host evaluates with new Worker(..., { eval: true })), read as a module of its own: a
- * template's substitutions read as `undefined`.
+ * Source text a module carries inside a string or template, read as a module of its own, claimed only as T0 and T2 pin it: in src,
+ * the workflow worker's inlined CommonJS source, a template with substitutions that calls require( (the host evaluates it with new
+ * Worker(..., { eval: true })), src's one embedded module today (T0); in the modules T2's control plants, exactly as it writes
+ * them, byte for byte, a module-level const initialized with a no-substitution template, a double-quoted string or a
+ * single-quoted string that calls require(, or with a no-substitution template or a double-quoted string that calls
+ * getBuiltinModule(, each read, and one initialized with a double-quoted string that calls neither, not read. Every other string
+ * or template form, position, spelling and module, and the text a template's substitution reads as, are NOT CLAIMED by this
+ * census.
  */
 function embeddedSources(file: SourceText): SourceText[] {
   const source = parsed(file);
@@ -1559,7 +1623,14 @@ function custodyBlock(file: SourceText): string[] {
   const last = statements[end];
   return first === undefined || last === undefined || end < start ? [] : linesOf(file, source, first, last);
 }
-/** G1: every `<x>.stderr.<listen>("data", ...)` statement in nativeReactiveFiberRender, located by AST, as its lines. */
+/**
+ * G1: the `<x>.stderr.<listen>("data", ...)` expression statements in nativeReactiveFiberRender, located by AST, each as its lines,
+ * claimed only as G1 and T2 pin them: in today's src, the one stderr data listener G1 byte-pins; in the provider text T2's control
+ * writes, exactly as it writes it, byte for byte, the statements calling once, addListener, prependListener and
+ * prependOnceListener on child.stderr and on on an alias's stderr, each located, in source order before today's listener, and one
+ * calling on with "end", not located. Every other statement form, receiver, listen method, event spelling, order and function is
+ * NOT CLAIMED by this census.
+ */
 function stderrListenerBlocks(file: SourceText): string[][] {
   const source = parsed(file);
   const owner = functionNamed(source, "nativeReactiveFiberRender");
@@ -4392,13 +4463,24 @@ function headerBlock(label: string): Array<{ readonly id: string; readonly words
 const reached: PinId[] = [];
 
 describe("wb-jwc.7 rf stderr receipt-capture census (until Pi has a committing rf capability)", () => {
-  it("T0: the readings are live: the stand-in is the only PATH entry and runs on this node, src holds the surfaces and the worker's embedded source, the receipt lines spell the stderr ids", async () => {
+  it("T0: the readings are live: the stand-in is the only PATH entry and runs on this node, src holds the surfaces and the worker's embedded source (src's one embedded module), the read set equals an independent listing of src's script files, the receipt lines spell the stderr ids", async () => {
     const files = srcTree();
     expect(files.map((file) => file.path)).toEqual(expect.arrayContaining([PROVIDER, RUNTIME]));
     expect(
       files.filter((file) => /^src\/workflow\/worker-source\.ts#embedded@[0-9]+$/.test(file.path)),
       "the workflow worker's inlined source is read as an embedded module",
     ).toHaveLength(1);
+    expect(
+      files
+        .map((file) => file.path)
+        .filter((path) => !path.includes("#embedded@"))
+        .sort(),
+      "the read set is every src script file an independent listing finds",
+    ).toStrictEqual(listedScripts(join(REPO, "src")));
+    expect(
+      files.map((file) => file.path).filter((path) => path.includes("#embedded@")),
+      "the workflow worker's inlined source is src's one embedded module",
+    ).toStrictEqual([expect.stringMatching(/^src\/workflow\/worker-source\.ts#embedded@[0-9]+$/)]);
     const probe = await withStandIn("settle", async (rf) => ({
       path: process.env.PATH?.split(delimiter) ?? [],
       dir: rf.dir,
@@ -4423,21 +4505,34 @@ describe("wb-jwc.7 rf stderr receipt-capture census (until Pi has a committing r
       expect(await item.falsifier(), `${item.id}: ${item.words}`).toStrictEqual(item.caught);
     }, 120_000);
 
-  it("T2: the src instruments read their controls (the read set, embedded sources, G1's AST locators, the export parsers, the journal readers)", () => {
+  it("T2: the src instruments read their controls (the read set, embedded sources and G1's AST locators, each at the inputs its control writes; the export parsers, the journal readers)", () => {
     const tree = makeScratch("rf-receipt-capture-src-");
     try {
-      for (const name of ["a.ts", "b.mts", "c.cjs", "d.d.ts", "e.d.mts", "f.json"]) writeFileSync(join(tree, name), "");
+      for (const name of ["a.ts", "b.mts", "c.cjs", "d.d.ts", "e.d.mts", "f.json", "g.cts", "h.js", "i.mjs", "j.d.cts"]) writeFileSync(join(tree, name), "");
+      mkdirSync(join(tree, "k"));
+      writeFileSync(join(tree, "k", "l.ts"), "");
       expect(
         sourceFiles(tree)
           .map((file) => relative(tree, file))
           .sort(),
-        "every script file is read; declaration files and data are not",
-      ).toStrictEqual(["a.ts", "b.mts", "c.cjs"]);
+        "in the tree this control writes, a file named with each of the six script extensions is read, and a .ts file a subdirectory down; a .d.ts, .d.mts, .d.cts or .json file is not",
+      ).toStrictEqual(["a.ts", "b.mts", "c.cjs", "g.cts", "h.js", "i.mjs", "k/l.ts"]);
     } finally {
       removeScratch(tree);
     }
     const embedded = plant("worker.ts", ["export const SOURCE = `", 'const cp = require("node:child_process");', 'cp.spawn("rf", ["context", "render"]);', "`;"]);
-    expect(embeddedSources(embedded).map((file) => file.path), "a string that calls require reads as an embedded module").toStrictEqual(["worker.ts#embedded@1"]);
+    expect(embeddedSources(embedded).map((file) => file.path), "a no-substitution template that calls require( reads as an embedded module").toStrictEqual(["worker.ts#embedded@1"]);
+    const strings = plant("strings.ts", [
+      'export const DOUBLE = "const cp = require(\'node:child_process\'); cp.spawn(\'rf\', [\'context\', \'render\']);";',
+      "export const SINGLE = 'const cp = require(\"node:child_process\"); cp.spawn(\"rf\", [\"context\", \"render\"]);';",
+      'export const BUILTIN = `const cp = process.getBuiltinModule("node:child_process"); cp.spawn("rf", ["context", "render"]);`;',
+      'export const BUILTIN_DOUBLE = "const cp = process.getBuiltinModule(\'node:child_process\'); cp.spawn(\'rf\', [\'context\', \'render\']);";',
+      'export const NEITHER = "const cp = 1;";',
+    ]);
+    expect(
+      embeddedSources(strings).map((file) => file.path),
+      "a double-quoted and a single-quoted string that call require(, and a no-substitution template and a double-quoted string that call getBuiltinModule(, each read as an embedded module; a double-quoted string that calls neither does not",
+    ).toStrictEqual(["strings.ts#embedded@1", "strings.ts#embedded@2", "strings.ts#embedded@3", "strings.ts#embedded@4"]);
     expect(launchSites(embeddedSources(embedded)), "a launch inside embedded source is a launch").toStrictEqual(["worker.ts#embedded@1:<module>:spawn"]);
     expect(moduleSites(embeddedSources(embedded), CHILD_PROCESS), "an embedded module's child_process load is a module site").toStrictEqual(["worker.ts#embedded@1:<module>:call require:node:child_process"]);
     const changed = { path: PROVIDER, text: readFileSync(join(REPO, PROVIDER), "utf8").replace("},500);", "},5000);") };
@@ -4449,6 +4544,15 @@ describe("wb-jwc.7 rf stderr receipt-capture census (until Pi has a committing r
         .replace("export async function nativeReactiveFiberPreview(", `/*\n${CUSTODY_AT_PIN.join("\n")}\n*/\nexport async function nativeReactiveFiberPreview(`),
     };
     expect(custodyBlock(decoy), "a commented decoy of the pinned text is never the located block").not.toStrictEqual([...CUSTODY_AT_PIN]);
+    const providerText = readFileSync(join(REPO, PROVIDER), "utf8");
+    const launchLine = providerText.indexOf("  const child=spawn(");
+    const afterLaunch = providerText.indexOf("\n", launchLine) + 1;
+    expect(launchLine, "the planted listeners go in after the provider's one launch line").toBeGreaterThan(0);
+    const listening = { path: PROVIDER, text: `${providerText.slice(0, afterLaunch)}${LISTENER_PLANTS.join("\n")}\n${providerText.slice(afterLaunch)}` };
+    expect(
+      stderrListenerBlocks(listening),
+      "in the provider text this control writes, once, addListener, prependListener and prependOnceListener on child.stderr and on on an alias's stderr each locate as a block, in source order before today's listener; an end listener does not",
+    ).toStrictEqual([...LISTENER_PLANTS_LOCATED.map((line) => [line]), [...STDERR_AT_PIN]]);
     expect(rangesOf("providers/reactivefiber.ts:1-2,5-9@x")).toStrictEqual([
       [1, 2],
       [5, 9],
