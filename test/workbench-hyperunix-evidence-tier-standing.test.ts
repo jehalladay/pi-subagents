@@ -72,7 +72,13 @@
  * on a judgment departing in exactly the one departure naming its HOLDER's binding form (THE VERDICT EXACT), how a verdict reads
  * any other list of departures NOT CLAIMED, and its cut #4, after the structural-exit ruling R-B652 at its refusal #3, which text
  * a verdict is judged on and which parse its place and writes are read from (the judged-text identity set the guard R-B627
- * bound, which that ruling moves to the child wb-5bua) NOT CLAIMED, leaving the acceptance reading unchanged): each case
+ * bound, which that ruling moves to the child wb-5bua) NOT CLAIMED, leaving the acceptance reading unchanged; and wb-5bua, that
+ * child, pins the text each of those 2620 controls is judged on (T2's THE JUDGED TEXT ITSELF): acceptanceOf() records each
+ * call's module texts and reading while that sweep reads its controls, and the record holds exactly one call for each control,
+ * in the controls' order, reading its planted text byte for byte in its module's place and the installed text in each other
+ * consulted module's, each control's verdict the one verdictOf() reads from that call's reading, which judgment a verdict
+ * equal to that one is computed from and which parse its place and writes are read from NOT CLAIMED, leaving the acceptance
+ * reading unchanged): each case
  * claims exactly the cells and
  * pins it
  * runs, each pin is a falsifier this file executes, T2 claims what the decoder accepts read where it decides it, declared text, the
@@ -181,7 +187,8 @@
  *      declaration and its leading comment, byte-identical, its planted decoder's sha256 pinned, departing as that cell does) and
  *      after each top-level statement of its module but its first and its last, so at each of its middle positions past its
  *      second (2620 controls, wb-ant2: 44 in result.js, 34 in protocol/query.js and 30 in protocol/decoder.js, the penultimate
- *      included, each read at its place as T2's THE CONTROLS' READING reads it, which text it is judged on NOT CLAIMED, for its
+ *      included, each read at its place as T2's THE CONTROLS' READING reads it, its one acceptanceOf() call in the sweep's
+ *      record reading its planted text byte for byte as T2's THE JUDGED TEXT ITSELF holds it, for its
  *      write's operator, run of blocks, run
  *      of bare block statements, context and top-level position, the 2620 readings exactly one for each HOLDER, each of &&= and
  *      =, each of the DEEP_RUNS and each such place, those places run against the parser's count of the installed module, which
@@ -582,7 +589,8 @@
  * each, and the 80 DEEP_RUNS plants after each module's first top-level statement (wb-imm0), read so from the text their judge
  * reads, are exactly the HOLDERS times those operators times the DEEP_RUNS at that module's second top-level statement, one plant
  * each, and the 2620 after each later top-level statement but its last (wb-ant2), read so as T2's THE CONTROLS' READING reads
- * them, which text each is judged on NOT CLAIMED,
+ * them, each with its one acceptanceOf() call in the sweep's record reading its planted text byte for byte as T2's THE JUDGED
+ * TEXT ITSELF holds it (wb-5bua),
  * exactly those times each place of the module past its second but its last, those places the parser's count of the installed
  * module, one plant each. LIVENESS: each
  * judgment is one
@@ -623,11 +631,15 @@
  * module's penultimate top-level statement (misread, no write read), its position reading on a write so deep after the module's
  * last top-level statement (its last), its place reading on a text planting another statement before its statement (none),
  * its parse release NOT CLAIMED (the parse-release set the guard R-B663 bound as its GUARD A, which refusal #6, outbox
- * O:2257, exits to the structural-exit child the orchestrator's typed row files) and its verdict reading
+ * O:2257, exits to the structural-exit child the orchestrator's typed row files), its verdict reading
  * (THE VERDICT EXACT: the
  * &&= statement so deep after that penultimate statement, in a text also spelling eval, in one also writing parseFrameJson and
  * in one also spelling checkStream as a string, each after the module's last statement, and parseFrameJson so written after that
- * penultimate statement instead, each misread at that place, beside the binding the statement alone reads), and the class and eval
+ * penultimate statement instead, each misread at that place, beside the binding the statement alone reads) and its judged-text
+ * reading (THE JUDGED TEXT ITSELF: on the sweep's first control, a missing call, a call reading its statement moved after its
+ * text's end, one reading another consulted module's text with that statement after its end, one with the installed modules'
+ * reading and a second call, each named, one call of its own text with its own reading, not named, and on its first two
+ * controls their own calls recorded in the other order, both named), and the class and eval
  * statements on the class in its own module and on eval spelled as a string), firstFrame()
  * (a first frame-form line whose read location is another copy's URL or a file under
  * SDK_DIST outside the pinned modules reads as that URL, one whose read location is a pinned module's own URL by its path from
@@ -1688,6 +1700,10 @@ function checkSite(holder: ts.FunctionLikeDeclaration): {readonly table: string;
   });
   return found.length === 1 && constIn(holder, 'body')?.getText() === 'frame.body' ? found[0] : undefined;
 }
+/** THE JUDGED TEXT ITSELF's record (wb-5bua): while T2 holds a list here (around its DEEP RUNS AT EVERY MIDDLE POSITION sweep
+ * only), acceptanceOf() appends to it, for each call, the module texts that call reads and the reading it returns, in call
+ * order; while it holds none, no call records anything. */
+let judgedLog: (readonly [texts: ModuleTexts, reading: AcceptanceReading])[] | undefined;
 /** The acceptance reading over three module texts (the installed ones, or a planted copy). Each HOLDER is declared once (one
  * declaration declarationsOf() counts, and no member of its class whose name memberName() does not read, each as T2 pins it in
  * its TWICE_CELLS and UNREAD_FORMS plants and its 23 positions only) with its pinned text and
@@ -1710,7 +1726,8 @@ function checkSite(holder: ts.FunctionLikeDeclaration): {readonly table: string;
  * and their site (pinned for its REFERENCE_FORMS plants only). Each failure is a departure, and a part of acceptance whose sites
  * are not all read reads empty: the
  * envelope (the set's members and UNRECORDED) needs the filter and the refusal, the bodies the dispatch and the check, a table kind
- * its dispatch. */
+ * its dispatch. While judgedLog holds a list, each call appends its texts and the reading it returns there (T2's THE JUDGED TEXT
+ * ITSELF). */
 function acceptanceOf(texts: ModuleTexts): AcceptanceReading {
   const departures: string[] = [];
   const spans: Record<string, Span> = {};
@@ -1827,7 +1844,9 @@ function acceptanceOf(texts: ModuleTexts): AcceptanceReading {
       : spellingForm(node) === 'identifier' ? 'elsewhere' : `elsewhere-${spellingForm(node)}`));
     if (found.length !== 2) departures.push(`${name}: ${found.length} references (${formsOf(found)})`);
   }
-  return {envelope, bodies, dispatched, sites, lists, references, spans, departures};
+  const reading: AcceptanceReading = {envelope, bodies, dispatched, sites, lists, references, spans, departures};
+  judgedLog?.push([texts, reading]);
+  return reading;
 }
 /** The callees of the HOLDERS, each written <module>#<name>: a function or class (as its constructor) the holder's module declares,
  * a name it imports, or a method of the holder's own class called on this or of a module class whose instance a local const holds;
@@ -2077,8 +2096,9 @@ const NESTINGS: readonly (readonly [label: string, before: string, after: string
  * statement (one for each HOLDER, operator and run, 80) after its module's first top-level statement, so at its second, a middle
  * one, and reads each so from the text its judge reads (80 controls), beside the landing-941 gate's P-DEEP4-MID2, byte-identical;
  * and (wb-ant2) plants each after each later top-level statement of its module but its last, so at each of its middle positions
- * past its second, and reads each so as T2's THE CONTROLS' READING reads it (2620 controls; which text each is judged on NOT
- * CLAIMED). A run of more than eight blocks and a run of four to eight that is not all bare block statements are NOT CLAIMED. */
+ * past its second, and reads each so as T2's THE CONTROLS' READING reads it (2620 controls), and (wb-5bua) records each one's
+ * acceptanceOf() call, one per control, reading its planted text byte for byte (T2's THE JUDGED TEXT ITSELF). A run of more than eight blocks
+ * and a run of four to eight that is not all bare block statements are NOT CLAIMED. */
 const DEEP_RUNS: readonly number[] = [4, 5, 6, 7, 8];
 /** A statement text nested in an unbroken run of bare block statements, each brace on its own line, as the NESTINGS' block inside
  * a block inside a block wraps it for a run of three. */
@@ -4080,9 +4100,10 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     // is so pinned at every top-level position of its HOLDER's module. THE CONTROLS' READING (wb-ant2 cut #4): sameParseReading()
     // reads each control's verdict, its place and its writes, as the judges below read; the reading has deepMiddleReading()'s
     // form, and the two read DEEP RUNS AT A MIDDLE
-    // POSITION's 80 plants and P-DEEP4-MID2 alike. Which text a verdict is judged on and which parse its place and writes are read
-    // from (the judged-text identity set the guard R-B627 bound, which the structural-exit ruling R-B652 moves to the child
-    // wb-5bua) is NOT CLAIMED by this census. What parsedModules, the parse cache keyed by module and text, holds after any
+    // POSITION's 80 plants and P-DEEP4-MID2 alike. Which text a verdict is judged on (the judged-text identity set the guard R-B627
+    // bound, which the structural-exit ruling R-B652 moves to the child wb-5bua) is THE JUDGED TEXT ITSELF's (below), and which
+    // parse its place and writes are read from is NOT CLAIMED by this census. What parsedModules, the parse cache keyed by module
+    // and text, holds after any
     // reading sameParseReading() or judgedParse() gives (the parse-release set the guard R-B663 bound as its GUARD A, which
     // refusal #6, outbox O:2257, exits to its structural-exit child) is NOT CLAIMED by this census. THE PLACES HELD: the 2620
     // readings are exactly one for each HOLDER, each of &&= and = (the operators the NESTED BINDINGS and NESTED PLAIN BINDINGS
@@ -4121,9 +4142,57 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
         return [module, name, afterStatement(module, after, spelled), spelled] as const;
       }))));
     expect(deepEveryPlants.length).toBe(2620);
-    expect(deepEveryPlants.map(plant => sameParseReading(...plant)).sort()).toStrictEqual(HOLDERS.flatMap(({module, name}) =>
+    judgedLog = [];
+    const everyReadings = deepEveryPlants.map(plant => sameParseReading(...plant));
+    const everyJudged = judgedLog ?? [];
+    judgedLog = undefined;
+    expect([...everyReadings].sort()).toStrictEqual(HOLDERS.flatMap(({module, name}) =>
       parsedModule(module, texts[module]).statements.slice(2).flatMap((_, index) => nestedOperators.flatMap(operator => DEEP_RUNS.map(run =>
         `${module} ${name} binding at ${index + 2} ${operator} ${run} ${run} nested middle`)))).sort());
+    // THE JUDGED TEXT ITSELF (wb-5bua, the child the structural-exit ruling R-B652 files at wb-ant2's refusal #3 for the
+    // judged-text identity set the guard R-B627 bound): while the sweep above reads its 2620 controls, acceptanceOf() records
+    // each call's module texts and the reading it returns (judgedLog, a list only around that sweep), and misjudged() holds
+    // that record to the controls: exactly one call for each control, in the controls' order, reading the control's planted
+    // text byte for byte in its module's place and the installed text in each other consulted module's, and each control's
+    // verdict (the word sameParseReading() reads it with) the one verdictOf() reads from that call's reading. misjudged() names
+    // each control with no call (unjudged), with a call reading any other module text (text) or with another verdict
+    // (verdict), and the calls past the controls' count (surplus); after the sweep the record takes no further call. Which
+    // judgment a control's verdict is computed from, when it is the one verdictOf() reads from its call's reading, and which
+    // parse its place and writes are read from are NOT CLAIMED by this census.
+    const verdictOf = (name: string, reading: AcceptanceReading): string =>
+      isDeepStrictEqual(departing(reading, acceptance), [`${name}: spelled outside a call (binding)`]) ? 'binding' : 'misread';
+    const misjudged = (plants: readonly (readonly [ConsultedModule, string, string, string])[], verdicts: readonly string[],
+      judgedCalls: readonly (readonly [ModuleTexts, AcceptanceReading])[]): string[] => [...plants.flatMap(([module, name, planted], index) => {
+        const call = judgedCalls[index];
+        if (call === undefined) return [`${index} unjudged`];
+        if (CONSULTED.some(consulted => call[0][consulted] !== (consulted === module ? planted : texts[consulted]))) return [`${index} text`];
+        return verdicts[index] === verdictOf(name, call[1]) ? [] : [`${index} verdict`];
+      }), ...(judgedCalls.length > plants.length ? [`surplus ${judgedCalls.length - plants.length}`] : [])];
+    expect(misjudged(deepEveryPlants, everyReadings.map(reading => reading.split(' ')[2] ?? ''), everyJudged)).toStrictEqual([]);
+    // The judge fires: on the sweep's first control, misjudged() names it unjudged for no call, text for a call reading its
+    // statement moved after its text's end (refusal #2's GP8-V3 text) and for one reading its text beside another consulted
+    // module's text with that statement after its end, verdict for a call reading its text with the installed modules' reading
+    // (no departure, so misread, against the binding its own reading gives), and the second of two calls reading its text with
+    // its own reading as surplus, and names nothing for one such call; on the sweep's first two controls, it names both (text)
+    // for their own calls recorded in the other order.
+    const [firstModule, firstName, firstPlanted, firstStatement] = deepEveryPlants[0] ?? (['result.js', '', '', ''] as const);
+    const firstTexts: ModuleTexts = {...texts, [firstModule]: firstPlanted};
+    const firstReading = readingWith(texts, firstModule, firstPlanted);
+    const otherModule = CONSULTED.find(module => module !== firstModule) ?? firstModule;
+    const ownCall = [firstTexts, firstReading] as const;
+    const firstVerdicts = [verdictOf(firstName, firstReading)];
+    const firstMisjudged = (calls: readonly (readonly [ModuleTexts, AcceptanceReading])[]): string[] =>
+      misjudged(deepEveryPlants.slice(0, 1), firstVerdicts, calls);
+    const [secondModule, secondName, secondPlanted] = deepEveryPlants[1] ?? (['result.js', '', '', ''] as const);
+    const secondCall = [{...texts, [secondModule]: secondPlanted}, readingWith(texts, secondModule, secondPlanted)] as const;
+    expect([firstVerdicts, firstMisjudged([]),
+      firstMisjudged([[{...texts, [firstModule]: `${firstPlanted.replace(`\n${firstStatement}`, () => '')}\n${firstStatement}`}, firstReading]]),
+      firstMisjudged([[{...firstTexts, [otherModule]: `${texts[otherModule]}\n${firstStatement}`}, firstReading]]),
+      firstMisjudged([[firstTexts, acceptance]]), firstMisjudged([ownCall, ownCall]), firstMisjudged([ownCall]),
+      misjudged(deepEveryPlants.slice(0, 2), [...firstVerdicts, verdictOf(secondName, secondCall[1])], [secondCall, ownCall])])
+      .toStrictEqual([['binding'], ['0 unjudged'], ['0 text'], ['0 text'], ['0 verdict'], ['surplus 1'], [], ['0 text', '1 text']]);
+    // The record took no call after the sweep: the two readings above are not in it.
+    expect(everyJudged.length).toBe(deepEveryPlants.length);
     // The two readings read alike: over DEEP RUNS AT A MIDDLE POSITION's 80 plants and P-DEEP4-MID2, sameParseReading() reads
     // exactly what deepMiddleReading() reads.
     expect([...deepMiddlePlants, ['protocol/decoder.js', 'checkStream', d4Planted, d4Statement] as const]
