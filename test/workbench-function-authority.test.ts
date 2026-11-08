@@ -109,6 +109,16 @@
  * request shapes are NOT CLAIMED. No residual is named: each of the four members refusal #8 recorded against the two
  * receipt sentences (U1's two and U2's two) fails one of these rows. Cut #9 keeps the frozen sets (R-B669's
  * host-authority words, GUARD A and GUARD B) and refusal #7's cure byte-stable, and does not restate the R-B642 set.
+ * Follow-up wb-s3lg (the R694 carry of landing 1031: F1 leads, F2 rides) holds the two cut #9 tables to an anchor outside
+ * this suite: the cut #9 entry of docs/workbench/receipts/wb-201v.md, whose pinned reader set lists, in its own spelling,
+ * the 6 listed other fields with each field's listed values and the 6 listed array caller policies. One row in each cut #9
+ * describe reads that entry (its heading exactly once, up to the next entry heading) and requires the table, spelled as
+ * the entry spells it, to equal the entry's list in order; the array row also reads the entry's count of definition
+ * kinds. Red-first, each of the landing-1031 gate's two coordinated CT6 hollows, 0 failed at cut #9, fails one of these
+ * rows: GP3-CT6-ARRAY-POLICY-ROW (the policy [{}] cut from ARRAY_POLICIES, its frozen-shape literal and the length pin)
+ * and GP3-CT6-FIELD-VALUE-PIN (workbench:detach cut from OTHER_FIELDS and the field frozen-shape literal). A hollow that
+ * also edits the receipt entry is NOT CLAIMED by these rows (standing rule 15 refuses a removed receipt line), and the
+ * boundary describe's host scenarios and decision readings are NOT CLAIMED by these rows.
  *
  * No spelling is adopted, so the production contract is unadopted and refuses every function dispatch (the B-authority row of
  * BEAD-PLAN.md lands "partial - enforcement seams land now; exact action grammar blocked on MW-CONTRACT"). The adopted contracts
@@ -2081,6 +2091,30 @@ describe("the landing-1019 contact (wb-wupg): the host grant read takes the 4 li
   });
 });
 
+/**
+ * The anchor outside this suite that the two cut #9 tables are held to (wb-s3lg, the R694 carry of landing 1031): the cut #9
+ * entry of docs/workbench/receipts/wb-201v.md, whose pinned reader set lists each table's rows in the receipt's own spelling.
+ */
+const CUT_9_ENTRY_HEADING = "## 2026-11-07 receipt: cut #9, the respin of gate refusal #8, the boundary-reads and array-policy words (machine seat ws-14, base 4c21b67)";
+/** The wb-201v receipt's cut #9 entry: how many receipt lines are its heading, and its text from that heading to the next entry heading or the end of the file. */
+function cut9ReceiptEntry(): { readonly headings: number; readonly entry: string } {
+  const lines = readFileSync(join(dirname(fileURLToPath(import.meta.url)), "..", "docs/workbench/receipts/wb-201v.md"), "utf8").split("\n");
+  const start = lines.indexOf(CUT_9_ENTRY_HEADING);
+  const next = lines.findIndex((line, index) => index > start && line.startsWith("## "));
+  return { headings: lines.filter(line => line === CUT_9_ENTRY_HEADING).length, entry: start === -1 ? "" : lines.slice(start, next === -1 ? undefined : next).join("\n") };
+}
+/** The receipt's names for the two fixture strings it does not spell out: the action (its cut #9 entry says so) and the plain note. */
+const RECEIPT_NAMES: ReadonlyMap<string, string> = new Map([
+  [ACTION, "the action"],
+  ["A plain note naming no seat token.", "a plain note"],
+]);
+/** A JSON value as the receipt spells it in a code span: strings bare or by the receipt's name, keys bare, members joined by ", ". */
+function inReceiptWords(value: JsonValue): string {
+  if (Array.isArray(value)) return `[${value.map(inReceiptWords).join(", ")}]`;
+  if (value !== null && typeof value === "object") return `{${Object.entries(value).map(([key, member]) => `${key}: ${inReceiptWords(member)}`).join(", ")}}`;
+  return typeof value === "string" ? (RECEIPT_NAMES.get(value) ?? value) : String(value);
+}
+
 describe("the boundary at the listed rows: an admission handed to it that differs from the listed admission in one of the admission's 6 listed other fields, at each of that field's listed values, ends at each of the 4 listed host scenarios and is decided at each of the 4 listed decision readings as the listed admission does, in each host mode, read whole (wb-201v)", () => {
   const HOST_MODES = ["embedded", "detached"] as const;
   type HostMode = (typeof HOST_MODES)[number];
@@ -2175,6 +2209,26 @@ describe("the boundary at the listed rows: an admission handed to it that differ
     }
   });
 
+  /** A listed value as the receipt's cut #9 entry spells it. */
+  function inReceiptEntry(value: ListedValue): string {
+    if (value === REMOVED) return "removed";
+    if (value === OTHER_HOST_MODE) return "the other host mode";
+    if (value === "") return "the empty string";
+    if (value === `sha256:${"cd".repeat(32)}`) return "`sha256:` then `cd` 32 times";
+    return `\`${inReceiptWords(value)}\``;
+  }
+
+  it("the table's outside anchor: the 6 listed other fields, each with its listed values in order, are the fields and values the cut #9 entry of docs/workbench/receipts/wb-201v.md lists for the listed admission, in that entry's spelling, and the action that entry names is the fixture action (wb-s3lg)", () => {
+    const { headings, entry } = cut9ReceiptEntry();
+    const listing = /Its (\d+) listed other fields and their listed values: (.+?)\. The action is the fixture spelling `([^`]+)`\./.exec(entry);
+    expect({ headings, count: listing?.[1], action: listing?.[3], fields: listing?.[2]?.split(/; (?:and )?/) }).toEqual({
+      headings: 1,
+      count: String(OTHER_FIELDS.length),
+      action: ACTION,
+      fields: OTHER_FIELDS.map(([field, values]) => `\`${field}\` (${values.map(inReceiptEntry).join(", ")})`),
+    });
+  });
+
   it("in each host mode, each listed value changes the listed admission in exactly its own field, and the 4 listed host scenarios end the listed admission differently (one dispatch resting on local-operator:1000:s1 / s1, a refusal at entry as missing-execute-grant, one at entry as missing-function-action-grant and one at dispatch as changed-effective-identity), and the 4 listed decision readings decide it as authorized, missing-execute-grant, missing-function-action-grant and changed-effective-identity", async () => {
     for (const hostMode of HOST_MODES) {
       const listed = listedAdmission(hostMode);
@@ -2247,6 +2301,17 @@ describe("decideExecute's policy rule at the listed rows: in each host mode, the
     const source = readFileSync(join(SOURCE_ROOT, "src/workbench/execute.ts"), "utf8");
     const listed = /^const DEFINITION_KINDS: readonly string\[\] = \[([^\]]*)\];$/m.exec(source);
     expect([...(listed?.[1] ?? "").matchAll(/"([^"]*)"/g)].map(match => match[1])).toEqual([...LISTED_KINDS]);
+  });
+
+  it("the table's outside anchor: the 6 listed array caller policies, in order, are the array caller policies the cut #9 entry of docs/workbench/receipts/wb-201v.md lists in its array-policy frozen-shape row, in that entry's spelling, and that row's count of definition kinds is the 3 listed kinds (wb-s3lg)", () => {
+    const { headings, entry } = cut9ReceiptEntry();
+    const listing = /a literal pins the (\d+) listed array caller policies, each an array \((.+?)\), and the (\d+) listed definition kinds/.exec(entry);
+    expect({ headings, count: listing?.[1], kinds: listing?.[3], policies: [...(listing?.[2] ?? "").matchAll(/`([^`]*)`/g)].map(match => match[1]) }).toEqual({
+      headings: 1,
+      count: String(ARRAY_POLICIES.length),
+      kinds: String(LISTED_KINDS.length),
+      policies: ARRAY_POLICIES.map(inReceiptWords),
+    });
   });
 
   it("control: in each host mode, the listed request of each of the 3 listed definition kinds carrying the caller policy {} is admitted, with the policy {} echoed", () => {

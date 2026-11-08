@@ -44,6 +44,17 @@ export const PROGRESS_BYTES = 4096;
 const REPO = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
 /**
+ * The shapes the journey reads from the runtime it is handed, each named here: the parts this module reads of
+ * src/workflow/telemetry.ts WorkflowStageRecord, src/workflow/runtime.ts WorkflowAdmissionWait, src/workflow/admission.ts
+ * HostAdmissionPoolCounts, and the HostAdmission class.
+ * @typedef {{ readonly stage: string, readonly durationMs: number }} JourneyStageRecord
+ * @typedef {{ readonly kind: string }} JourneyAdmissionWait
+ * @typedef {{ readonly inFlight: number, readonly peakInFlight: number, readonly queued: number, readonly cancelledWhileQueued: number }} JourneyPoolCounts
+ * @typedef {{ snapshot(): { readonly pools: Readonly<Record<string, JourneyPoolCounts>> } }} JourneyBudget
+ * @typedef {{ runWorkflow: Function, HostAdmission: new (limits: typeof LIMITS) => JourneyBudget }} JourneyRuntime
+ */
+
+/**
  * The script every run executes: FLOOD_ROWS log rows, then two agents and one forge.gate.status node in parallel.
  * @param {string} tag letters and digits only
  * @returns {string}
@@ -156,17 +167,17 @@ function waitSummary(values) {
  * One phase: `runs` simultaneous runs of journeyScript sharing one HostAdmission over LIMITS, the fixture host's valve held
  * until the shared SDK pool is full; with `cancel`, one more run is aborted while its first agent is queued on the budget
  * before the valve opens.
- * @param {{ runWorkflow: Function, HostAdmission: new (limits: typeof LIMITS) => any }} impl
+ * @param {JourneyRuntime} impl
  * @param {{ runs: number, holdMs: number, cancel: boolean }} plan
  */
 async function measurePhase(impl, plan) {
   const budget = new impl.HostAdmission(LIMITS);
   const { host, meter, open } = meteredHost(plan.holdMs);
-  /** @type {Array<{ stage: string, durationMs: number, bytes: number }>} */
+  /** @type {JourneyStageRecord[]} */
   const stages = [];
   /** Every admission-wait report of the phase, the cancelled run's included. */
   let queuedReports = 0;
-  const telemetry = { progressBytes: PROGRESS_BYTES, onStage: (/** @type {any} */ record) => { stages.push(record); } };
+  const telemetry = { progressBytes: PROGRESS_BYTES, onStage: (/** @type {JourneyStageRecord} */ record) => { stages.push(record); } };
   const memoryBefore = process.memoryUsage();
   const startedAt = performance.now();
   const runs = [];
@@ -182,7 +193,7 @@ async function measurePhase(impl, plan) {
     let agentQueued = false;
     const cancelRun = impl.runWorkflow({
       script: journeyScript("cancel"), host, hostAdmission: budget, concurrency: RUN_CONCURRENCY, signal: controller.signal, telemetry,
-      onAdmissionWait: (/** @type {any} */ wait) => {
+      onAdmissionWait: (/** @type {JourneyAdmissionWait} */ wait) => {
         queuedReports++;
         cancelReports++;
         if (wait.kind === "agent") agentQueued = true;
@@ -200,7 +211,7 @@ async function measurePhase(impl, plan) {
   const snapshot = budget.snapshot();
   const counts = results.map((result) => result.telemetry?.progress);
   const sum = (/** @type {string} */ key) => counts.reduce((total, count) => total + (count?.[key] ?? 0), 0);
-  const pools = /** @type {Record<string, any>} */ (snapshot.pools);
+  const pools = snapshot.pools;
   return {
     runs: plan.runs,
     statuses: results.map((result) => result.status),
@@ -227,7 +238,7 @@ async function measurePhase(impl, plan) {
 /**
  * The journey: a baseline phase (the script alone, one run) and a load phase (LOAD_RUNS simultaneous runs and one queued
  * cancel), each on its own budget over LIMITS and its own fixture host.
- * @param {{ runWorkflow: Function, HostAdmission: new (limits: typeof LIMITS) => any }} impl
+ * @param {JourneyRuntime} impl
  * @param {{ holdMs?: number }} [options]
  */
 export async function runLoadJourney(impl, options = {}) {

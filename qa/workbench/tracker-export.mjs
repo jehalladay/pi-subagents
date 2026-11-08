@@ -160,12 +160,15 @@
  *       offset minute 00-59, C16 taking +23:59 and -23:59), its offset applied, and the instant inside the years 0000-9999 (C16 takes
  *       the first instant of 0000 and the last of 9999) (C9, C16, K12). Exit 2 at the soft ceiling (K3). Exit 3 on a usage error (K6),
  *       a bad FW_EXPORT_SOFT_CEILING (K8), a full export it cannot read - a missing file, a directory (K9) - a run stamp that is not a
- *       UTC stamp (K4, K12), a malformed export (K3: a line that is not JSON) or shard (K3: the prefix form cut short as the only
- *       shard's line, and the four prefix forms and the six comment forms PLANTED SHARD LINES names as the older of two shards'
- *       line), a round trip that is not byte-equal (K10), and a path it would write - a shard it appends to, or the main export -
+ *       UTC stamp (K4, K12), the one malformed export K3 plants - a full export whose only line is `{not json` - and the malformed
+ *       shards K3 plants (the prefix form cut short as the only shard's line, and the four prefix forms and the six comment forms
+ *       PLANTED SHARD LINES names as the older of two shards' line), a round trip that is not byte-equal (K10), and a path it would
+ *       write - a shard it appends to, or the main export -
  *       that exists and is a directory, a symlink (to a file, to a directory, or dangling) or a FIFO, one typed line per such path,
  *       shards in name order and then the main export, also when the full export lists the later month's closed row first (K14). It
- *       writes nothing when it exits 2 or 3 (K3, K4, K6, K8, K9, K10, K14).
+ *       writes nothing when it exits 2 or 3 (K3, K4, K6, K8, K9, K10, K14). Which exit compact gives, and what it writes, over a
+ *       full export malformed in any form but K3's - the forms C8 plants at compactTrackerExport, a duplicate id among them
+ *       (refusal #4 of wb-294d, F3: GP2-K03) - is NOT CLAIMED at the CLI.
  *   node qa/workbench/tracker-export.mjs rehydrate --beads <.beads dir>
  *       prints trackerExportText(<dir>/issues.jsonl) on stdout as it is, adding no final newline (K2), the full export's UTF-8 bytes
  *       for rows holding each character UTF-8 CHARACTERS lists (K2); exit 3, printing nothing on stdout, on a usage error (K6) and

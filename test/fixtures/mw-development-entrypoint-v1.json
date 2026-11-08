@@ -1,0 +1,18 @@
+{
+  "schema": "mechanical-workflows/entrypoint/v1",
+  "id": "mechanical.development.develop.v1",
+  "implementation": {
+    "package": "@mechanical/workflows-development",
+    "export": "develop"
+  },
+  "inputSchema": "development-request.v1.schema.json",
+  "outputSchema": "development-outcome.v1.schema.json",
+  "bindings": [
+    "discover",
+    "compileContext",
+    "implement",
+    "verify"
+  ],
+  "status": "descriptor-only",
+  "note": "No remote host loader or generic invocation transport is implemented. Artifact binding belongs to the deployment host."
+}

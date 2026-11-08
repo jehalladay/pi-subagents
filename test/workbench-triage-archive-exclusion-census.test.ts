@@ -939,7 +939,7 @@ describe("wb-cbt4 census: the master-side triage-archive reconciliation (owner s
 
   it("M1", () => {
     expect.assertions(5);
-    const items = shapeItems(exportRow(SHAPE_BEAD, read(EXPORT)).notes);
+    const items = shapeItems(exportRow(SHAPE_BEAD, trackerExportText(join(REPO, EXPORT))).notes);
     expect(
       items.map(item => SHAPES.filter(shape => item.includes(shape.phrase)).map(shape => shape.id)),
       "the SHAPES phrases tile the shape items of wb-12x1's note, one each in order",
@@ -998,7 +998,7 @@ describe("wb-cbt4 census: the master-side triage-archive reconciliation (owner s
 
   it("V1", () => {
     expect.assertions(3);
-    const [row, control] = [read(EXPORT), EXPORT_TEXT].map(text => exportRow(BEAD, text));
+    const [row, control] = [trackerExportText(join(REPO, EXPORT)), EXPORT_TEXT].map(text => exportRow(BEAD, text));
     expect(control.description, "exportRow reads the row whose own id is the bead's").toBe("the bead's own row");
     const { description } = row;
     const inputs: readonly QuoteText[] = [{ id: "the wb-cbt4 row's description", quotes: true, text: description }, ...V1_TEXTS];
@@ -1269,3 +1269,5 @@ describe("wb-cbt4 census: the master-side triage-archive reconciliation (owner s
     expect(REACHED, "every ROWS pin ran to its end once, in row order, then the frozen shape").toEqual([...ROWS.flatMap(row => row.pins), "F1"]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

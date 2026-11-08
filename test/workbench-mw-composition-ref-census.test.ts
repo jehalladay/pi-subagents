@@ -19,7 +19,8 @@
  * that read. A form this header does not list is not claimed. A known unread form is a named RESIDUAL with a pinned quiet row;
  * beside every reading, the FAIL CLOSED readers refuse every planted src file, manifest or lock that holds the package scope in
  * any form (FC-SCOPE) and every planted src module that names a composition field in any of the forms FC-FIELD reads, and find
- * no scope in today's src files, package.json or locks and no composition field in today's src modules (each live check the
+ * no scope in today's src files (a bound file's one bound text cut out: MW_SCOPE_MODULES), package.json or locks and no
+ * composition field in today's src modules (each live check the
  * real part of a ROUTED CALL that reads the plants after the real files, held on today's tree only: PLANTS below); a form found
  * later is a residual-list addition (rule 14), not a claim.
  *
@@ -293,7 +294,20 @@
  *     scope is refused: R-LOAD-FORM's rows but require-template-substitution (its scope is assembled from a substitution),
  *     R-SPEC-FORM's jsr:, overrides and npm:-infix rows, R-LOCK-NESTING's, R-MODULE-KIND's .ts.md file and R-JSDOC-TYPE's module;
  *     live, no src file's text (T1's failClosed) and no text of package.json or either lock (each held under its path) holds the
- *     scope today.
+ *     scope today. MW_SCOPE_MODULES (wb-ocie; ENUMERATED by its cut #3 under the R-B655 second-stage cap) binds a src path to
+ *     one bound text (its literal member): the module whose path is that path by string equality is read on its text with the
+ *     bound text cut out once (a split on its characters), the parts on either side joined as one text, and a module text
+ *     holding the bound text other than exactly once reads as holding the scope. The binding is claimed for exactly the readings T1
+ *     holds, live and in memory, and no more. Live: each bound path is a src file git lists and its text holds its bound text
+ *     exactly once, so a binding whose file leaves the listing, or whose bound text leaves or doubles, reds T1. In memory (the
+ *     readings listed at holdsScopeIn): under the bound path, the bound text once reads clear, in a line or a block comment too
+ *     (the binding is textual), and the bound text absent or twice, beside a scope occurrence or joined across the cut into one,
+ *     its four respellings and the six other texts of MW_SCOPE_TEXT_FORMS read as holding the scope; the bound text once under
+ *     each of the four cut #2 paths and the seventeen MW_SCOPE_PATH_FORMS reads as holding the scope. A path form or text form T1
+ *     does not hold is NOT CLAIMED, and so is whether the bound text sits in a string literal. Today it binds
+ *     src/workbench/mechanical-descriptor.ts (the mechanical-workflows-interop B-descriptor boundary, EAT-R010) to the reviewed
+ *     package's name in double quotes, the one text in which its fixed allowlist spells the package; T1's import reading holds
+ *     that no src module loads an @mechanical/ name.
  *   FC-FIELD (B1's witness): fieldNames reads, with B's own field tests, each identifier or #private name, each string literal
  *     or template without substitution wherever it sits, and each id member of every planted src module (closedHits, through
  *     liveFieldNames over that one module, in its pin's failClosed after the src files), so every unread construction form over a
@@ -1559,9 +1573,78 @@ function fieldNames(module: Module): string[] {
   visit(source);
   return out;
 }
-/** A module's fail-closed hits, src paths only: "scope" when its text holds the scope (any src file), and "field <line> <name>" per field it names (a src module). */
+/**
+ * The src paths bound to hold the package scope (wb-ocie), each bound to one exact text, its literal member: the B-descriptor
+ * boundary's fixed allowlist spells its reviewed package (EAT-R010) as the package name in double quotes. A row applies to the
+ * module whose path equals its module (string equality); T1 holds the bound text once under each other path it lists (the four
+ * cut #2 paths and MW_SCOPE_PATH_FORMS) as holding the scope, and a path form it does not list is NOT CLAIMED. Any other src
+ * file that holds the scope is refused (FC-SCOPE). T1 holds each row live: the path is a src file git lists, and its text holds
+ * the bound text exactly once.
+ */
+const MW_SCOPE_MODULES: readonly { readonly module: string; readonly literal: string }[] = [
+  { module: "src/workbench/mechanical-descriptor.ts", literal: '"@mechanical/workflows-development"' },
+];
+/** Code points the cut #3 forms plant that are not printable ASCII, built from their numbers (never written raw). */
+const SCOPE_SOFT_HYPHEN = String.fromCodePoint(0xad);
+const SCOPE_ZERO_WIDTH_SPACE = String.fromCodePoint(0x200b);
+const SCOPE_FULLWIDTH_SOLIDUS = String.fromCodePoint(0xff0f);
+const SCOPE_FULLWIDTH_AT = String.fromCodePoint(0xff20);
+/**
+ * The path forms (wb-ocie cut #3; refusal #2's CN01/CN02 plants PN01 and PN02 first) T1 plants beside the bound path in memory:
+ * under each, the bound text once reads as holding the scope.
+ */
+const MW_SCOPE_PATH_FORMS: readonly { readonly form: string; readonly path: (bound: string) => string }[] = [
+  { form: "a longer path ending with the bound path", path: bound => `src/x/${bound}` },
+  { form: "its part below src/ under another directory", path: bound => `src/x/${bound.slice("src/".length)}` },
+  { form: "its part below src/ alone", path: bound => bound.slice("src/".length) },
+  { form: "its last segment alone", path: bound => bound.slice(bound.lastIndexOf("/") + 1) },
+  { form: "the end of its last segment", path: bound => bound.slice(bound.lastIndexOf("-") + 1) },
+  { form: "a leading ./", path: bound => `./${bound}` },
+  { form: "a leading /", path: bound => `/${bound}` },
+  { form: "a dot segment", path: bound => bound.replace("/", "/./") },
+  { form: "a dot-dot segment that returns", path: bound => bound.replace("src/", "src/x/../") },
+  { form: "a doubled separator", path: bound => bound.replace("/", "//") },
+  { form: "backslash separators", path: bound => bound.split("/").join("\\") },
+  { form: "padded before", path: bound => ` ${bound}` },
+  { form: "padded after", path: bound => `${bound} ` },
+  { form: "a soft hyphen inside", path: bound => bound.replace("/", `/${SCOPE_SOFT_HYPHEN}`) },
+  { form: "a zero width space inside", path: bound => bound.replace("/", `/${SCOPE_ZERO_WIDTH_SPACE}`) },
+  { form: "a fullwidth solidus", path: bound => bound.replace("/", SCOPE_FULLWIDTH_SOLIDUS) },
+  { form: "the empty path", path: () => "" },
+];
+/**
+ * The bound-text forms (wb-ocie cut #3) T1 plants under the bound path in memory: the bound text once in a comment reads clear
+ * (the binding is textual); each other text, which does not hold the bound text's exact characters, reads as holding the scope.
+ */
+const MW_SCOPE_TEXT_FORMS: readonly { readonly form: string; readonly text: (bound: string) => string; readonly holds: boolean }[] = [
+  { form: "the bound text once in a line comment", text: bound => `// ${bound}\n`, holds: false },
+  { form: "the bound text once in a block comment", text: bound => `/* ${bound} */\n`, holds: false },
+  { form: "padded inside its quotes", text: bound => `" ${bound.slice(1)}`, holds: true },
+  { form: "an escaped at sign", text: bound => `"\\u0040${bound.slice(2)}`, holds: true },
+  { form: "a fullwidth at sign", text: bound => `"${SCOPE_FULLWIDTH_AT}${bound.slice(2)}`, holds: true },
+  { form: "a soft hyphen inside", text: bound => bound.replace("/", `/${SCOPE_SOFT_HYPHEN}`), holds: true },
+  { form: "a zero width space inside", text: bound => bound.replace("/", `/${SCOPE_ZERO_WIDTH_SPACE}`), holds: true },
+  { form: "a line break inside", text: bound => bound.replace("/", "/\n"), holds: true },
+];
+/**
+ * FC-SCOPE's reading of one src file: whether its text holds the scope (holdsScope). A module whose path equals a
+ * MW_SCOPE_MODULES path is read on its text with its bound text cut out once, the parts on either side joined as one text, and
+ * reads as holding the scope when its text holds the bound text other than exactly once. T1 holds in memory, and this claims no
+ * more: the bound text once reads clear, in a line or a block comment too; the bound text absent or twice, beside a scope
+ * occurrence after or before it, joined across the cut into a scope occurrence, respelled (a template, single quotes, unquoted,
+ * upper-case) or in one of the six other texts of MW_SCOPE_TEXT_FORMS reads as holding the scope, and so does the bound text once
+ * under another path: the same last segment in another directory, a name that ends with that segment, a longer path, the path
+ * upper-case, and the seventeen MW_SCOPE_PATH_FORMS.
+ */
+const holdsScopeIn = (module: Module): boolean => {
+  const bound = MW_SCOPE_MODULES.find(entry => entry.module === module.path);
+  if (bound === undefined) return holdsScope(module.text);
+  const parts = module.text.split(bound.literal);
+  return parts.length !== 2 || holdsScope(parts.join(""));
+};
+/** A module's fail-closed hits, src paths only: "scope" when its text holds the scope (any src file; holdsScopeIn), and "field <line> <name>" per field it names (a src module). */
 const closedHits = (module: Module): string[] =>
-  inSrc(module.path) ? [...(holdsScope(module.text) ? ["scope"] : []), ...liveFieldNames([module]).map(site => `field ${site.slice(module.path.length + 1)}`)] : [];
+  inSrc(module.path) ? [...(holdsScopeIn(module) ? ["scope"] : []), ...liveFieldNames([module]).map(site => `field ${site.slice(module.path.length + 1)}`)] : [];
 /** A text's FC-SCOPE hit: "scope" when it holds the scope (a manifest's or lock's text as written, or a planted one's JSON text). */
 const closedText = (text: string): string[] => (holdsScope(text) ? ["scope"] : []);
 /** A planted module (or a planted path outside src) under the id its pin's witness reads it by. */
@@ -2123,10 +2206,56 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     for (const plant of plants) controls[plant.id] = sites.filter(site => plantOf(site) === plant.id && isMwName(specOf(site))).map(specOf);
     // FAIL CLOSED (FC-SCOPE), two ROUTED CALLS (wb-h6th): every listed src file's text, then the planted modules' (failClosed),
     // and package.json's and both locks' texts, then the planted manifests' and locks' (failClosedJson); no real file holds the
-    // scope today, whatever form holds it, and each plant's hits come from the same call as the real files'.
+    // scope today, whatever form holds it (a MW_SCOPE_MODULES file read with its one bound text cut out), and each plant's hits
+    // come from the same call as the real files'.
     const closedSrc = failClosed(plants);
     const closedManifests = failClosedJson(["package.json", ...locks.map(lock => lock.path)]);
     expect(closedSrc.scope, "FC-SCOPE: no src file holds the scope").toEqual([]);
+    // The binding (wb-ocie): a bound path holding its bound text once and nothing else reads as clear, and the same path with the
+    // bound text absent, twice, or beside another scope occurrence reads as holding the scope.
+    for (const { module, literal } of MW_SCOPE_MODULES) {
+      const read = (text: string): boolean => holdsScopeIn({ path: module, text });
+      expect([read(literal), read(""), read(`${literal}${literal}`), read(`${literal} ${CONSTANTS.mwScope}`)], `FC-SCOPE binding of ${module}`).toEqual([false, true, true, true]);
+    }
+    // Live (wb-ocie cut #2, U1(a)): each bound path is a src file git lists and its text holds its bound text exactly once, so a
+    // binding whose file leaves the listing, or whose bound text leaves or doubles in the file, reds here.
+    for (const { module, literal } of MW_SCOPE_MODULES) {
+      const live = src.find(entry => entry.path === module);
+      expect(live === undefined ? "not listed" : live.text.split(literal).length - 1, `FC-SCOPE binding of ${module}: git lists it and its text holds the bound text once`).toBe(1);
+    }
+    // In memory (wb-ocie cut #2, U1(b)): the readings holdsScopeIn's header lists, each under the bound path or another path.
+    for (const { module, literal } of MW_SCOPE_MODULES) {
+      const read = (text: string, path: string = module): boolean => holdsScopeIn({ path, text });
+      const scope = CONSTANTS.mwScope;
+      const unquoted = literal.slice(1, -1);
+      const segment = module.slice(module.lastIndexOf("/") + 1);
+      expect(
+        {
+          once: read(literal),
+          scopeBefore: read(`${scope} ${literal}`),
+          joinedAcrossTheCut: read(`${scope.slice(0, 3)}${literal}${scope.slice(3)}`),
+          respelled: [`\`${unquoted}\``, `'${unquoted}'`, unquoted, literal.toUpperCase()].map(text => read(text)),
+          otherPath: [`src/other/${segment}`, `src/zz-${segment}`, `${module}x`, module.toUpperCase()].map(path => read(literal, path)),
+        },
+        `FC-SCOPE binding of ${module}: position, cut, spelling and path`,
+      ).toEqual({ once: false, scopeBefore: true, joinedAcrossTheCut: true, respelled: [true, true, true, true], otherPath: [true, true, true, true] });
+    }
+    // In memory (wb-ocie cut #3, the enumerate form under the R-B655 cap on GUARD 1): the bound text once under each of the
+    // MW_SCOPE_PATH_FORMS (CN01's PN01 and CN02's PN02 first) reads as holding the scope, and so does each MW_SCOPE_TEXT_FORMS text
+    // under the bound path but the bound text once in a comment, which reads clear; both tables are frozen by name.
+    for (const { module, literal } of MW_SCOPE_MODULES) {
+      const read = (text: string, path: string = module): boolean => holdsScopeIn({ path, text });
+      expect(
+        Object.fromEntries(MW_SCOPE_PATH_FORMS.map(({ form, path }) => [form, path(module) !== module && read(literal, path(module))])),
+        `FC-SCOPE binding of ${module}: the cut #3 path forms`,
+      ).toEqual(Object.fromEntries(MW_SCOPE_PATH_FORMS.map(({ form }) => [form, true])));
+      expect(
+        Object.fromEntries(MW_SCOPE_TEXT_FORMS.map(({ form, text }) => [form, read(text(literal))])),
+        `FC-SCOPE binding of ${module}: the cut #3 bound-text forms`,
+      ).toEqual(Object.fromEntries(MW_SCOPE_TEXT_FORMS.map(({ form, holds }) => [form, holds])));
+    }
+    expect(MW_SCOPE_PATH_FORMS.map(({ form }) => form), "the cut #3 path forms, frozen by name").toEqual(["a longer path ending with the bound path", "its part below src/ under another directory", "its part below src/ alone", "its last segment alone", "the end of its last segment", "a leading ./", "a leading /", "a dot segment", "a dot-dot segment that returns", "a doubled separator", "backslash separators", "padded before", "padded after", "a soft hyphen inside", "a zero width space inside", "a fullwidth solidus", "the empty path"]);
+    expect(MW_SCOPE_TEXT_FORMS.map(({ form }) => form), "the cut #3 bound-text forms, frozen by name").toEqual(["the bound text once in a line comment", "the bound text once in a block comment", "padded inside its quotes", "an escaped at sign", "a fullwidth at sign", "a soft hyphen inside", "a zero width space inside", "a line break inside"]);
     expect(
       Object.entries(closedManifests.manifests).flatMap(([path, hits]) => (hits.length > 0 ? [path] : [])),
       "FC-SCOPE: no manifest or lock holds the scope",
