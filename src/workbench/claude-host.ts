@@ -19,6 +19,7 @@ import { resolveWorkflowSource } from "../workflow/saved.js";
 import type { CapabilityRegistry } from "./capability-registry.js";
 import { CLAUDE_CAPABILITY_TOOL_NAMES, createCuratedTools } from "./claude-capability-tools.js";
 import { sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "./redaction.js";
+import { type ClaudeReplayDependencies, replayDependenciesMeasured } from "./replay-dependencies.js";
 
 /** SDK query injection exists for the fixture integration suite, not a fallback backend. */
 export type ClaudeQuery = (params: { prompt: string; options: Options }) => AsyncIterable<SDKMessage>;
@@ -53,6 +54,14 @@ export interface ClaudeWorkflowHostOptions {
   onQueryLive?: (call: ClaudeCallIdentity, seam: { interrupt(): Promise<unknown> }) => void;
   /** Fired in the query's own finally, pairing every onQueryLive so a wiring registry never leaks an ended query. */
   onQueryDone?: (call: ClaudeCallIdentity) => void;
+  /**
+   * wb-413a (EAT-R017..EAT-R020): the source, instruction and provider readings of replay-dependencies.ts, three
+   * dependencies an answer has beyond its payload and the policy above. They join the replay basis as its ninth
+   * element, so a recorded agent answer is not reused under a changed reading and a journaled read runs live under one,
+   * and while any reading is not measured with a well-formed digest the host permits no settled replay at all, neither
+   * of an agent answer nor of a journaled node read. Absent, the basis is the eight policy elements alone.
+   */
+  replayDependencies?: ClaudeReplayDependencies;
 }
 
 /**
@@ -156,13 +165,17 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
   const tools = config.tools ?? [];
   const permissionMode = config.permissionMode ?? "dontAsk";
   /**
-   * Everything an agent answer depends on beyond its own call payload. Journal
-   * entries record it, and the runtime replays only under an equal basis, so a
-   * changed model pin, permission mode, tool list, role set, grant set or
-   * workspace declines the cache (the L4 contract in
+   * The basis an agent answer is replayed under, beyond its own call payload.
+   * Journal entries record it, and the runtime replays only under an equal
+   * basis, so a changed model pin, permission mode, tool list, role set, grant
+   * set or workspace declines the cache (the L4 contract in
    * workbench-host-contract.test.ts). Per-run identity — invocationId, signal,
-   * observers — is deliberately not part of it.
+   * observers — is deliberately not part of it. Readings the embedding host
+   * supplies (replayDependencies) follow the eight policy elements as one ninth
+   * element, {source, instructions, provider} in that order, each reading as
+   * supplied (wb-413a).
    */
+  const dependencies = config.replayDependencies;
   const replayBasis = JSON.stringify([
     config.cwd,
     config.model ?? null,
@@ -172,6 +185,7 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
     config.roles ?? null,
     config.grants ?? null,
     config.principal ?? null,
+    ...(dependencies === undefined ? [] : [{ source: dependencies.source, instructions: dependencies.instructions, provider: dependencies.provider }]),
   ]);
 
   async function invoke(
@@ -330,8 +344,10 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
   return {
     // Settled-agent prefix replay is safe here because every entry carries
     // this host's policy basis, and SDK node effects are admitted per journaled
-    // effect class rather than replayed the way agents are.
-    replaySafe: true,
+    // effect class rather than replayed the way agents are. A reading that is
+    // not measured with a well-formed digest declines replay outright, agent
+    // answers and node reads alike (wb-413a).
+    replaySafe: dependencies === undefined || replayDependenciesMeasured(dependencies),
     replayBasis,
     async spawnAgent(request) {
       const result = await invoke(request.agentId, request.prompt, request, undefined, request.onResolved);
