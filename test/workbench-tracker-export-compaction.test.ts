@@ -620,9 +620,16 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", () =
     expect(run.stdout).toBe(readFileSync(full, "utf8"));
   });
 
-  // What compact writes anywhere outside the .beads directory at K3's two plants - the full export file and the directory that holds
+  // What compact writes anywhere outside the .beads directory at K3's plants - the full export file and the directory that holds
   // .beads among them - is NOT CLAIMED by K3 (refusal #5 of wb-294d, U1: GP3-W01, GP3-W02, GP3-W03 and GP3-W04).
-  it("K3 at the soft ceiling compact exits 2 with the typed line and leaves the .beads directory empty; a full export whose only line is {not json exits 3 and leaves the .beads directory empty", () => {
+  // K3 claims nothing beyond its plants. At any other ceiling form - another set of files at or over the ceiling (two shards without
+  // the main export, the main export with one shard, one file exactly at the ceiling and another over it), a shard that exists before
+  // the run at or over the ceiling, and a --beads path spelled other than K3's absolute scratch path (relative, ending with a slash, or
+  // holding a character outside printable ASCII) - compact's exit, stdout, stderr and .beads directory are NOT CLAIMED by K3 (refusal
+  // #6 of wb-294d, U1: the ceiling domain beyond K3's five ceiling plants); so is the CLI over a full export {not json with no final
+  // newline (refusal #6 of wb-294d, F5: GP3P-D1 and GP3P-D3). The big-shard fixture is one open row and one closed row whose
+  // 4,000-character note makes its one month shard outweigh its main export.
+  it("K3 at each of its five soft-ceiling plants - the fixture's main export and both its month shards over a 64-byte ceiling; the fixture's main export alone over its ceiling; the fixture's main export alone exactly at its ceiling; the big-shard fixture's one month shard alone over its ceiling; the big-shard fixture's one month shard alone exactly at its ceiling - compact exits 2, prints nothing on stdout, prints on stderr exactly one typed line for each file at or over the ceiling, naming the file under --beads and the bytes the unrefused run writes to it, and leaves the .beads directory empty; a full export whose text is {not json and a newline exits 3 and leaves the .beads directory empty", ({ task }) => {
     const { beads, full } = beadsDir();
     const refused = cli(["compact", "--full", full, "--beads", beads, "--now", "2026-11-03T12:00:00Z"], { FW_EXPORT_SOFT_CEILING: "64" });
     expect(refused.status).toBe(2);
@@ -635,7 +642,53 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", () =
     expect(malformed.status).toBe(3);
     expect(existsSync(join(beads, "issues.jsonl"))).toBe(false);
     expect(readdirSync(beads)).toEqual([]);
-  });
+    // The five ceiling plants (refusal #6 of wb-294d, U1: GP3P-A1, A2, A3, A4 and B3; F5: GP3P-B1 and B2). A plant's forms read each
+    // file the unrefused run writes against the plant's ceiling: over it, exactly at it, or under it.
+    const inputs = { fixture: textOf(fixtureRows()), bigShard: textOf([row("wb-o1", "open"), row("wb-c9", "closed", { closed_at: "2026-11-03T08:00:00Z", notes: "x".repeat(4000) })]) };
+    type Input = keyof typeof inputs;
+    /** The bytes of each file compact writes for the input when nothing refuses (the default ceiling), read from disk: main export first, then the shards in name order. */
+    const unrefused = (input: Input): ReadonlyMap<string, number> => {
+      const layout = beadsDir();
+      writeFileSync(layout.full, inputs[input]);
+      expect(cli(["compact", "--full", layout.full, "--beads", layout.beads, "--now", "2026-11-03T12:00:00Z"]).status, `the unrefused run over the ${input} input`).toBe(0);
+      const shards = readdirSync(join(layout.beads, "archive")).sort();
+      return new Map([["issues.jsonl", readFileSync(join(layout.beads, "issues.jsonl")).length], ...shards.map((name): [string, number] => [`archive/${name}`, readFileSync(join(layout.beads, "archive", name)).length])]);
+    };
+    const written = { fixture: unrefused("fixture"), bigShard: unrefused("bigShard") };
+    const bytesOf = (sizes: ReadonlyMap<string, number>, file: string): number => sizes.get(file) ?? Number.NaN;
+    const plants: readonly { readonly plant: string; readonly input: Input; readonly ceiling: (sizes: ReadonlyMap<string, number>) => number; readonly forms: readonly string[] }[] = [
+      { plant: "the fixture's main export and both its month shards over a 64-byte ceiling", input: "fixture", ceiling: () => 64, forms: ["issues.jsonl:over", "archive/issues-closed-2026-10.jsonl:over", "archive/issues-closed-2026-11.jsonl:over"] },
+      { plant: "the fixture's main export alone over its ceiling", input: "fixture", ceiling: sizes => bytesOf(sizes, "archive/issues-closed-2026-11.jsonl") + 1, forms: ["issues.jsonl:over", "archive/issues-closed-2026-10.jsonl:under", "archive/issues-closed-2026-11.jsonl:under"] },
+      { plant: "the fixture's main export alone exactly at its ceiling", input: "fixture", ceiling: sizes => bytesOf(sizes, "issues.jsonl"), forms: ["issues.jsonl:at", "archive/issues-closed-2026-10.jsonl:under", "archive/issues-closed-2026-11.jsonl:under"] },
+      { plant: "the big-shard fixture's one month shard alone over its ceiling", input: "bigShard", ceiling: sizes => bytesOf(sizes, "issues.jsonl") + 1, forms: ["issues.jsonl:under", "archive/issues-closed-2026-11.jsonl:over"] },
+      { plant: "the big-shard fixture's one month shard alone exactly at its ceiling", input: "bigShard", ceiling: sizes => bytesOf(sizes, "archive/issues-closed-2026-11.jsonl"), forms: ["issues.jsonl:under", "archive/issues-closed-2026-11.jsonl:at"] },
+    ];
+    expect(plants.map(entry => `${entry.input}|${entry.plant}|${entry.forms.join(",")}`), "K3's five ceiling plants (frozen shape)").toEqual([
+      "fixture|the fixture's main export and both its month shards over a 64-byte ceiling|issues.jsonl:over,archive/issues-closed-2026-10.jsonl:over,archive/issues-closed-2026-11.jsonl:over",
+      "fixture|the fixture's main export alone over its ceiling|issues.jsonl:over,archive/issues-closed-2026-10.jsonl:under,archive/issues-closed-2026-11.jsonl:under",
+      "fixture|the fixture's main export alone exactly at its ceiling|issues.jsonl:at,archive/issues-closed-2026-10.jsonl:under,archive/issues-closed-2026-11.jsonl:under",
+      "bigShard|the big-shard fixture's one month shard alone over its ceiling|issues.jsonl:under,archive/issues-closed-2026-11.jsonl:over",
+      "bigShard|the big-shard fixture's one month shard alone exactly at its ceiling|issues.jsonl:under,archive/issues-closed-2026-11.jsonl:at",
+    ]);
+    // The title is the outside anchor of the plant table: its plant list is the table's plants, in order, and its count is theirs.
+    expect(task.name.split(" - ")[1]?.split("; "), "the title names exactly K3's ceiling plants, in order").toEqual(plants.map(entry => entry.plant));
+    expect(task.name.startsWith(`K3 at each of its ${["no", "one", "two", "three", "four", "five", "six", "seven"][plants.length]} soft-ceiling plants - `), "the title counts K3's ceiling plants").toBe(true);
+    for (const { plant, input, ceiling: ceilingOf, forms } of plants) {
+      const sizes = written[input];
+      const ceiling = ceilingOf(sizes);
+      expect([...sizes].map(([file, bytes]) => `${file}:${bytes > ceiling ? "over" : bytes === ceiling ? "at" : "under"}`), `${plant}: the plant's forms`).toEqual(forms);
+      const layout = beadsDir();
+      writeFileSync(layout.full, inputs[input]);
+      const run = cli(["compact", "--full", layout.full, "--beads", layout.beads, "--now", "2026-11-03T12:00:00Z"], { FW_EXPORT_SOFT_CEILING: String(ceiling) });
+      expect(run.status, plant).toBe(2);
+      expect(run.stdout, plant).toBe("");
+      const typed = forms.filter(form => !form.endsWith(":under")).map(form => form.slice(0, form.lastIndexOf(":")));
+      expect(run.stderr, plant).toBe(
+        typed.map(file => `tracker-export: REFUSED ${layout.beads}/${file} would be ${bytesOf(sizes, file)} bytes, at or over the soft ceiling of ${ceiling} bytes (FW_EXPORT_SOFT_CEILING); nothing is written\n`).join(""),
+      );
+      expect(readdirSync(layout.beads), plant).toEqual([]);
+    }
+  }, 60_000);
 
   it("K4 a --now that is not a UTC timestamp exits 3 with the typed line and writes nothing", () => {
     const { beads, full } = beadsDir();
