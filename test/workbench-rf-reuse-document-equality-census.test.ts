@@ -887,7 +887,7 @@ function unscannedMarkdownDirectories(): string[] {
 
 /** The tracked bead export's row for this bead, parsed. */
 function exportRow(): JsonObject {
-  for (const line of textOf(EXPORT_PATH).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(EXPORT_PATH), EXPORT_PATH).split("\n")) {
     if (!line.includes(`"${BEAD}"`)) continue;
     const row = JSON.parse(line) as JsonValue;
     if (isObject(row) && row.id === BEAD) return objectOf(row, `${BEAD} export row`);
@@ -1266,3 +1266,5 @@ describe("wb-pfxo.4 rf reuse is never document equality census (RF-COMPOSITIONAL
     });
   }
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

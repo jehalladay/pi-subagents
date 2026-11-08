@@ -377,7 +377,7 @@ const LIVE: Source = {
   tracked: () => listed(),
   read: path => {
     try {
-      return readFileSync(join(REPO, path));
+      return path === CANARY ? Buffer.from(trackerExportText(join(REPO, CANARY)), "utf8") : readFileSync(join(REPO, path));
     } catch (error) {
       if (error instanceof Error && "code" in error && error.code === "ENOENT") return undefined;
       throw error;
@@ -442,7 +442,7 @@ function excerpt(site: (typeof EXCERPT_SITES)[number]): string {
   return Buffer.from(held.textBase64, "base64").toString("utf8");
 }
 function beadNotes(): string {
-  for (const line of readFileSync(join(REPO, ".beads/issues.jsonl"), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, ".beads/issues.jsonl")).split("\n")) {
     if (!line.includes(BEAD)) continue;
     const value: unknown = JSON.parse(line);
     if (value !== null && typeof value === "object" && "id" in value && value.id === BEAD && "notes" in value && typeof value.notes === "string") return value.notes;
@@ -1175,3 +1175,5 @@ describe("wb-ojm5.1 GP schema identity census (GPC-GRAPH-NATIVE-LLM-RLP-R1)", ()
     expect([...REACHED].sort()).toEqual(ROSTER.rows.flatMap(row => row.pins.map(pin => pin.id)).sort());
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

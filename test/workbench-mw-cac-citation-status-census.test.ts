@@ -1016,7 +1016,7 @@ function unbound(section: string, holder: string): string[] {
 
 /** The bead's own row in the tracker export. */
 function beadNotes(bead: string): string {
-  for (const line of textOf(EXPORT).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(EXPORT), join(REPO, EXPORT)).split("\n")) {
     if (!line.includes(`"id":"${bead}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === bead && typeof row.notes === "string") return row.notes;
@@ -1024,7 +1024,7 @@ function beadNotes(bead: string): string {
   return "";
 }
 function beadTitle(bead: string): string {
-  for (const line of textOf(EXPORT).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(EXPORT), join(REPO, EXPORT)).split("\n")) {
     if (!line.includes(`"id":"${bead}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === bead && typeof row.title === "string") return row.title;
@@ -1748,3 +1748,5 @@ describe("wb-kku9.2 MW cac-workflow-composition citation-status census (MW-CAC-W
     ).toEqual([]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

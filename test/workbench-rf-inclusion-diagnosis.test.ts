@@ -333,7 +333,7 @@ function rosterWitness(pin: string): Json {
 /** The notes of each named bead's row in the committed store export, read in one pass: the anchor outside this census and its roster. */
 function exportNotes(beads: readonly string[]): ReadonlyMap<string, string> {
   const notes = new Map<string, string>();
-  for (const line of readFileSync(EXPORT_PATH, 'utf8').split('\n')) {
+  for (const line of trackerExportText(EXPORT_PATH).split('\n')) {
     const bead = beads.find(id => line.includes(`"id":"${id}"`) || line.includes(`"id": "${id}"`));
     if (bead === undefined || notes.has(bead)) continue;
     const entry: unknown = JSON.parse(line);
@@ -922,3 +922,5 @@ describe('wb-hs2j.1 rf inclusion diagnosis census (RF-REACTIVE-CONTEXT-ASSEMBLY-
     JUDGE.finished = true;
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

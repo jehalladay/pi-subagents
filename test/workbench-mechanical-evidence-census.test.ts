@@ -1080,7 +1080,7 @@ describe("wb-muip evidence census: EAT-R080 prior-run census and EAT-R081 Forge 
   });
 
   it("outside anchor: this bead's row of the tracked export names exactly the census rows' requirement ids, in order", () => {
-    const rows = repoText(EXPORT)
+    const rows = rehydrateTrackerExport(repoText(EXPORT), join(REPO, EXPORT))
       .split("\n")
       .filter((line) => line.includes(`"id":"${BEAD}"`))
       .map((line) => JSON.parse(line) as { readonly id?: unknown; readonly description?: unknown })
@@ -1169,3 +1169,5 @@ describe("wb-muip evidence census: EAT-R080 prior-run census and EAT-R081 Forge 
     expect(ENDS, "every test before this one reached its end with the receipt anchor's assertion count, in run order").toEqual(receiptAnchor().tests.map((test) => `${test.id}:${test.assertions}`));
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

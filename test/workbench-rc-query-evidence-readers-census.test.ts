@@ -488,7 +488,7 @@ const PAGES_DRAWN = new Set<string>();
 const isRecord = (value: unknown): value is Record<string, unknown> => value !== null && typeof value === "object" && !Array.isArray(value);
 /** A bead's row in the tracked export: this census's bead unless another is named. */
 function exportRow(bead = BEAD): { readonly title: string; readonly description: string; readonly notes: string } {
-  for (const line of readFileSync(join(REPO, EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, EXPORT)).split("\n")) {
     if (line.trim() === "") continue;
     const row: unknown = JSON.parse(line);
     if (isRecord(row) && row.id === bead) return { title: String(row.title), description: String(row.description), notes: String(row.notes) };
@@ -1930,3 +1930,5 @@ describe("records", () => {
     expect(headerClaim("CARRIER REFUSAL #1"), "CARRIER REFUSAL #1 says where the record stands, as the carrier's row holds it").toContain(carrierProvenance(lines));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

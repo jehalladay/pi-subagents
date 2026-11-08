@@ -415,7 +415,7 @@ interface BeadRow {
 }
 /** A bead's row in the tracked bead export (the owner filing's by default), found by id on a line that parses. */
 function readBeadRow(id: string = BEAD): BeadRow {
-  for (const line of readFileSync(join(REPO, BEAD_EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, BEAD_EXPORT)).split("\n")) {
     if (!line.includes(id)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === id && typeof row.title === "string" && typeof row.notes === "string") return { title: row.title, notes: row.notes };
@@ -1839,3 +1839,5 @@ describe("wb-hs2j.2 rf context read structure census (RF-REACTIVE-CONTEXT-ASSEMB
     expect(REACHED, "every pin's case reached its end, in row order").toEqual(ROWS.flatMap(row => row.pins));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

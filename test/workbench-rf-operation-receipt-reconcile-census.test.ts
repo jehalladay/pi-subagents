@@ -510,7 +510,7 @@ const isRecord = (value: unknown): value is Record<string, unknown> => typeof va
 
 /** The bead's description in the tracker export: the owner filing. */
 function filingText(): string {
-  for (const line of readFileSync(join(ROOT, ".beads/issues.jsonl"), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(ROOT, ".beads/issues.jsonl")).split("\n")) {
     if (!line.includes(`"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isRecord(row) && row.id === BEAD && typeof row.description === "string") return row.description;
@@ -1794,3 +1794,5 @@ describe("wb-jwc.6 the rf operation-receipt reconcile read: honesty core, standi
     expect(REACHED.pins, "the pin cases that reached their last statement this run").toStrictEqual(pinIds);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

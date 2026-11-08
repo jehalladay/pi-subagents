@@ -432,7 +432,7 @@ interface ExportRow {
   readonly notes: string;
 }
 /** One row of the tracker export (one JSON object per line), found by its id; the untitled probe cuts its title to the requirement-id prefix. */
-function exportRow(id: string, text: string = textOf(EXPORT)): ExportRow {
+function exportRow(id: string, text: string = rehydrateTrackerExport(textOf(EXPORT), join(REPO, EXPORT))): ExportRow {
   for (const line of text.split("\n")) {
     if (!line.includes(id)) continue;
     const parsed: unknown = JSON.parse(line);
@@ -1106,7 +1106,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     return json({ overRead, readerForms, pageForms, quietForms });
   },
   Q1: () => {
-    const exportMentions = mentionsIn(textOf(EXPORT)).length;
+    const exportMentions = mentionsIn(rehydrateTrackerExport(textOf(EXPORT), join(REPO, EXPORT))).length;
     expect(exportMentions, "the tracker export spells the program (the bead's own row)").toBeGreaterThanOrEqual(1);
     return json({ residual: "R-TRACKER", exportSpellsProgram: exportMentions >= 1, exportListed: git(["ls-files", EXPORT]).toString("utf8").trim() === EXPORT, trackerExcluded: docsListing().excluded.includes(EXPORT) });
   },
@@ -1453,3 +1453,5 @@ describe("wb-021.3 APO export census (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R3, until
     expect(shown, "the claims bound: no pin's live witness shows another pin's claims").toEqual([]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

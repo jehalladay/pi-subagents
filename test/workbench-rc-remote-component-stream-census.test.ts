@@ -578,7 +578,7 @@ interface BeadRow {
 }
 /** The owner filing's row in the tracked bead export, found by id on a line that parses. */
 function readBeadRow(): BeadRow {
-  for (const line of readFileSync(join(REPO, BEAD_EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, BEAD_EXPORT)).split("\n")) {
     if (!line.includes(BEAD)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === BEAD && typeof row.title === "string" && typeof row.notes === "string") return { title: row.title, notes: row.notes };
@@ -1998,3 +1998,5 @@ describe("wb-5ltg.3 gated ReactiveComponents remote-output consumer census (RC-N
     ).toEqual([]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

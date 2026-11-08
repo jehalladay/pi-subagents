@@ -1773,7 +1773,7 @@ function rosterWitness(pin: string): JsonValue {
 
 /** A bead's row in the tracker export: its description and notes. */
 function exportRow(id: string): { description: string; notes: string } {
-  for (const line of readFileSync(EXPORT_PATH, "utf8").split("\n")) {
+  for (const line of trackerExportText(EXPORT_PATH).split("\n")) {
     if (line.trim() === "") continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === id) return { description: typeof row.description === "string" ? row.description : "", notes: typeof row.notes === "string" ? row.notes : "" };
@@ -2411,3 +2411,5 @@ describe("wb-pyel.7 Fiber host-publication readers census (SDK-EVIDENCE-DIRECTED
     expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(row => row.pins));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

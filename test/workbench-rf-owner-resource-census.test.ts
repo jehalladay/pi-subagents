@@ -118,8 +118,8 @@
  * SCOPE: the excerpt, the fields and the grammars are producer facts at 6a251bf73af5; Pi vendors no rf source, so a
  * producer-side change is seen only when an rf pin-bump re-reads them. ownerIdentity is the rule a future surface must match;
  * the surface itself waits for GATING_ARTIFACTS, and no reader is added or faked here. EXCLUDED, never read by row B: .git (the
- * object store), node_modules (installed third-party code) and the tracker's record files .beads/issues.jsonl and
- * .beads/interactions.jsonl (bead text and its change log, which quote the refuted descriptor - PREP F13).
+ * object store), node_modules (installed third-party code) and the tracker's record files .beads/issues.jsonl, .beads/archive and
+ * .beads/interactions.jsonl (bead text, the closed beads' archived bodies (wb-294d) and its change log, which quote the refuted descriptor - PREP F13).
  *
  * Display paths added: none. Test-only: nothing is written, and the one child process is git ls-files (GIT_LISTING), which only
  * reads the repo.
@@ -341,7 +341,7 @@ function rosterWitness(pin: string): Json {
 
 /** The Acceptance text of this bead's notes in the tracked bead export, from "(a)" through the period before "Related:". The
  * record is found by its id, never by one serialization of its key, so a spaced re-export reads the same (PREP F7, X3). */
-function exportedAcceptance(exported: string = readFileSync(BEADS_EXPORT, "utf8")): string {
+function exportedAcceptance(exported: string = trackerExportText(BEADS_EXPORT)): string {
   for (const line of exported.split("\n")) {
     if (!line.includes(BEAD)) continue;
     const parsed: unknown = JSON.parse(line);
@@ -561,9 +561,9 @@ function scanRoot(scan: ScanRoot, family: RegExp, spelled: string): Json {
   return { pin: scan.pin, family: familyId(family), root: scan.root, floor: scan.floor, anchorFile: scan.anchorFile, anchorToken: scan.anchorToken, floorMet, anchorRead, unwalked, unreadWhole: notWhole, links: [], hits };
 }
 
-/** Never read by row B: the object store, installed third-party code, and the tracker's record files (bead text and its change
- * log quote the refuted descriptor, PREP F13). Every other top-level entry outside SCAN_ROOTS is B6's. */
-const EXCLUDED: readonly string[] = [".git", "node_modules", ".beads/issues.jsonl", ".beads/interactions.jsonl"];
+/** Never read by row B: the object store, installed third-party code, and the tracker's record files (bead text, the closed beads'
+ * archived bodies under .beads/archive (wb-294d) and its change log quote the refuted descriptor, PREP F13). Every other top-level entry outside SCAN_ROOTS is B6's. */
+const EXCLUDED: readonly string[] = [".git", "node_modules", ".beads/issues.jsonl", ".beads/archive", ".beads/interactions.jsonl"];
 /** B6's floors (measured at base 893fe06: 36 entries and 71 files outside SCAN_ROOTS, EXCLUDED and the gitignored local
  * outputs; at aa6d65d for wb-4nvi, 36 entries and 72 git-listed files) and the files it must read. */
 const REST_FLOOR = { entries: 25, files: 55 };
@@ -1087,7 +1087,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     return { pin: "B3", gaps };
   },
   X3: async () => {
-    const exported = readFileSync(BEADS_EXPORT, "utf8");
+    const exported = trackerExportText(BEADS_EXPORT);
     const spaced = spacedExport(exported);
     const witness = { bead: BEAD, respaced: spaced !== exported && !spaced.includes(`"id":"${BEAD}"`), sameAcceptance: exportedAcceptance(spaced) === exportedAcceptance(exported) };
     expect(witness, "the export reader misses this bead's record once it is re-serialized with spaced separators").toStrictEqual({ bead: BEAD, respaced: true, sameAcceptance: true });
@@ -1193,3 +1193,5 @@ describe("wb-a9l2.3 OwnerResource seven-field census (RF-HARNESS2-FEDERATED-PEER
     for (const { pin } of rosterPins) expect(REACHED.get(pin), `${pin}'s recorded witness against the roster`).toStrictEqual(rosterWitness(pin));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

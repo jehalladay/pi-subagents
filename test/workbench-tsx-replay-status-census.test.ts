@@ -1008,7 +1008,7 @@ const NEVER_SYNTHESIZE = [
 
 /** The bead's own notes in the tracker export, the acceptance text rows A to D quote. */
 function beadNotes(): string {
-  for (const line of textOf(join(REPO, ".beads", "issues.jsonl")).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(join(REPO, ".beads", "issues.jsonl")), join(REPO, ".beads", "issues.jsonl")).split("\n")) {
     if (!line.includes(`"id":"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === BEAD && typeof row.notes === "string") return row.notes;
@@ -1318,7 +1318,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     return { words: vocabularyIn(composed), label: LABEL_SPELLING.test(composed), code: CODE_SPELLING.test(composed) };
   },
   Q4: async () => {
-    const export_ = textOf(join(REPO, ".beads", "issues.jsonl"));
+    const export_ = rehydrateTrackerExport(textOf(join(REPO, ".beads", "issues.jsonl")), join(REPO, ".beads", "issues.jsonl"));
     return {
       roots: SURFACE_ROOTS.map(scan => scan.root),
       beadsSpellDrift: export_.includes(DRIFT_CODE),
@@ -1472,3 +1472,5 @@ describe("wb-fb2z.4 TSX replay status census (TSX-COMPONENT-ASSEMBLY-R4)", () =>
     ).toStrictEqual(Object.fromEntries(Object.entries(owed).map(([application, entry]) => [application, entry.record])));
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

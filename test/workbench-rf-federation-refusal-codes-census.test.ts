@@ -452,7 +452,7 @@ function rosterWitness(pin: string): JsonValue {
 let exportLines: string[] | undefined;
 /** A bead's row in the tracked bead export: its title and notes (the export is read once per run, however many rows are read). */
 function exportRow(bead: string): { title: string; notes: string } {
-  exportLines ??= readFileSync(EXPORT_PATH, "utf8").split("\n");
+  exportLines ??= trackerExportText(EXPORT_PATH).split("\n");
   for (const line of exportLines) {
     if (!line.includes(`"${bead}"`)) continue;
     const row: unknown = JSON.parse(line);
@@ -1458,3 +1458,5 @@ describe("wb-tnz5.3 rf federation refusal codes census (RF-CERTIFIED-FEDERATED-R
     expect(REACHED, "the judged set, the anchors and every pin reached their ends, in order, with their pinned assertion counts").toEqual([...ROSTER.reached]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

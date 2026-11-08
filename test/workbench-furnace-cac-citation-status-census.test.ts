@@ -1087,7 +1087,7 @@ function scopeLeg(id: ScopeId, plant: FileText, liveness: (files: readonly strin
 
 /** The bead's own row in the tracker export. */
 function beadRow(bead: string): { title: string; notes: string } {
-  for (const line of textOf(EXPORT).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(EXPORT), join(REPO, EXPORT)).split("\n")) {
     if (!line.includes(`"id":"${bead}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === bead && typeof row.title === "string") return { title: row.title, notes: typeof row.notes === "string" ? row.notes : "" };
@@ -2163,3 +2163,5 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
     expect(ENDS, "every non-pin case before this one reached its end, in run order, with its pinned assertion count").toEqual([...ROSTER.ends]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

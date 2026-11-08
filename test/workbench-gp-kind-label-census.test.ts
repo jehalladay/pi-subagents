@@ -1219,7 +1219,7 @@ interface BeadRow {
 }
 /** A filing's row in the tracked bead export (the owner filing's, or the follow-up's), found by id on a line that parses. */
 function readBeadRow(id: string): BeadRow {
-  for (const line of readFileSync(join(REPO, BEAD_EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, BEAD_EXPORT)).split("\n")) {
     if (!line.includes(id)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === id && typeof row.title === "string" && typeof row.notes === "string") return { title: row.title, notes: row.notes };
@@ -1747,3 +1747,5 @@ describe("wb-gxd7.4 gp kind-label census (GPC-FEEDBACK-CONTRACT-AUDIT-R4)", () =
     expect(ASSERTED, "the judged set and every pin reached their ends with their pinned assertion counts, each pin's witness comparisons included, in run order").toEqual([...ROSTER.assertions]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

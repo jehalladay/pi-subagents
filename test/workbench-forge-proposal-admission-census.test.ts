@@ -372,7 +372,7 @@ let filingCache: Filing | undefined;
 /** The owner filing, read from the wb-6ps1.1 row of the tracked bead export (first occurrences: appended notes come later). */
 function ownerFiling(): Filing {
   if (filingCache !== undefined) return filingCache;
-  const rows: unknown[] = readFileSync(join(REPO, EXPORT_FILE), "utf8").split("\n").filter(line => line.includes(`"id":"${BEAD}"`)).map(line => JSON.parse(line) as unknown);
+  const rows: unknown[] = trackerExportText(join(REPO, EXPORT_FILE)).split("\n").filter(line => line.includes(`"id":"${BEAD}"`)).map(line => JSON.parse(line) as unknown);
   const row = rows.find(entry => isObject(entry) && entry.id === BEAD);
   if (!isObject(row) || typeof row.title !== "string" || typeof row.notes !== "string") throw new Error(`the bead export holds no ${BEAD} row with notes`);
   const notes = row.notes;
@@ -1667,3 +1667,5 @@ describe("wb-6ps1.1 forge proposal admission census (the program filing's R1, ab
     expect(REACHED, "every pin reached its end, in row order, with its pinned assertion count").toEqual([...ROSTER.reached]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";
