@@ -10,12 +10,13 @@
  * CHARACTERS lists read back unchanged at the reader and at the CLI (R1, R2, K1, K2, K13) - and the tracked export reads as its own
  * file's UTF-8 text, compacted to files reads back, and compacts twice at the CLI with nothing appended the second time (T1).
  * wb-xkto (the structural-exit child of wb-137f, ruling R-B715; refusal #4 of wb-137f): the words of the pre-push hook, the soft
- * ceiling and the read memo claim their planted forms - a local and a known remote sha that begin and end with 0 (G9, G10), files
- * holding text beyond ASCII at the ceiling, which counts UTF-8 bytes (C7, K3), and a main export rewritten at the same length at its
- * first and at its last character and in its middle line (R10).
- * Cut #2 (refusal #1 of wb-xkto): those words claim the forms its gate named as well - a deleted-ref line beside a line that pushes,
- * and three malformed deleted-ref lines (G9), a push that is not a fast-forward over a known commit (G10), each plant C7 CEILING
- * PLANTS lists (C7), and two swaps of a main export's lines and a rewrite in the last line of a main export no newline ends (R10).
+ * ceiling and the read memo claim their planted forms - the root commit G9 builds as a local sha and the root commit G10 builds as a
+ * known remote sha, each sha beginning and ending with 0 (G9, G10), files holding text beyond ASCII at the ceiling, which counts UTF-8
+ * bytes (C7, K3), and a main export rewritten at the same length at its first and at its last character and in its middle line (R10).
+ * Cut #2 (refusal #1 of wb-xkto): those words claim the forms its gate named as well - G9's deleted-ref line of forty zeros before and
+ * after its line that pushes the oversized shard, and G9's three malformed deleted-ref lines (G9), G10's push of a commit over its
+ * sibling, the remote's commit, which is not a fast-forward (G10), each plant C7 CEILING PLANTS lists (C7), and two swaps of a main
+ * export's lines and a rewrite in the last line of a main export no newline ends (R10).
  *
  * WHY (measured at trunk fd90f9d3, not a case: the tracked export moves). The tracker's export writes every bead, closed ones with
  * their whole bodies, into the tracked .beads/issues.jsonl: 95,821,804 bytes there (1,304 rows; the 1,179 closed rows 93,125,889
@@ -229,20 +230,22 @@
  *       judges a push of <tip> that excludes every <rev> (G2-G6); exit 3 on a usage error (G15), a bad FW_EXPORT_SOFT_CEILING (G1)
  *       and a tip git cannot list (G8).
  *   node qa/workbench/tracker-export.mjs pre-push <remote> [<url>]
- *       the git pre-push hook (G7): reads git's `<local ref> <local sha> <remote ref> <remote sha>` lines on stdin and judges each
- *       line's push of its local sha - G9 plants the base commit's line, two lines at once, a line whose remote sha this repository
- *       lacks, a line whose local sha begins and ends with 0 and is not all zeros, and a line that pushes after a deleted-ref line and
- *       before one - excluding the line's remote sha when this repository has it as a commit - G10 plants a commit the case makes that
- *       the local sha descends from, a root commit whose sha begins and ends with 0 and is not all zeros, and a commit that is no
- *       ancestor of the local sha (a push that is not a fast-forward, its local side writing no family blob) - but not a remote sha
- *       naming a blob or a tree, the oversized export's blob or the tree of the commit holding it (G10), and excluding every
- *       remote-tracking ref of <remote>, --remotes=<remote> (G11); a line whose local sha is all zeros - forty zeros, or sixty-four -
- *       is a deleted ref: it pushes nothing and is skipped - G9 plants it alone on stdin, and before and after a line that pushes,
- *       whose push is judged (G9). Exit 3 on a usage error (G15), a bad FW_EXPORT_SOFT_CEILING (G1), a malformed line (G9: one of two,
- *       three or five fields, or one whose local or remote sha is one digit short of 40 or in upper case - each sha form planted at
- *       both positions - and three deleted-ref lines: three fields with forty zeros, forty zeros beside a remote sha one digit short,
- *       and sixty-four zeros beside an upper-case remote sha) and a push it cannot judge (G13) - unless a judged push refuses at the
- *       soft ceiling, when the exit is 2 (G13). Install once per clone:
+ *       the git pre-push hook (G7): reads git's `<local ref> <local sha> <remote ref> <remote sha>` lines on stdin and judges the
+ *       push of the local sha of each line that pushes on these stdins G9 plants - the base commit's line alone, its two lines at
+ *       once, its line alone whose remote sha, forty f's, this repository lacks, its line alone of the root commit G9 builds, whose
+ *       sha begins and ends with 0 and is not all zeros, and its line that pushes the oversized shard after its deleted-ref line of
+ *       forty zeros and before it - excluding, on each stdin G10 plants, the line's remote sha when this repository has it as a
+ *       commit - the local sha's parent, the root commit G10 builds as the local sha's parent, whose sha begins and ends with 0 and
+ *       is not all zeros, and the remote's commit beside the local sha, both children of one base commit (a push that is not a
+ *       fast-forward, its local side writing no family blob) - but not the remote sha G10 plants naming the oversized export's blob
+ *       or the tree of the commit holding it (G10), and excluding, on G11's stdin, the remote-tracking ref G11 plants for <remote>
+ *       (G11); G9's deleted-ref lines - `(delete)`, a local sha of zeros and the base commit as the remote sha - of forty zeros and
+ *       of sixty-four, each alone on stdin, exit 0 (G9). Exit 3 on the usage errors G15 plants (no remote, and three arguments), on
+ *       the FW_EXPORT_SOFT_CEILING "ten" G1 plants, on each malformed line G9 plants alone on stdin (one of two, three or five
+ *       fields, or one whose local or remote sha is one digit short of 40 or in upper case - each sha form planted at both positions
+ *       - and three deleted-ref lines: three fields with forty zeros, forty zeros beside a remote sha one digit short, and sixty-four
+ *       zeros beside an upper-case remote sha) and on G13's push it cannot judge, of a local sha this repository lacks, alone on
+ *       stdin - unless, on G13's stdins, a judged push refuses at the soft ceiling, when the exit is 2 (G13). Install once per clone:
  *         printf '#!/bin/sh\nexec node %s pre-push "$@"\n' "$PWD/qa/workbench/tracker-export.mjs" > "$(git rev-parse --git-path hooks)/pre-push"
  *         chmod +x "$(git rev-parse --git-path hooks)/pre-push"
  *   Any other verb, or none, exits 3 with the verbs' usage line (G15).
@@ -263,9 +266,16 @@
  * a device file of a shard's name in the archive directory (R4 and K5 plant only symlinks and directories there), and a socket or a
  * device file at a path compact would write (K14 plants directories, symlinks and FIFOs); a sha of 64 hex digits at the pre-push hook
  * other than the deleted ref's sixty-four zeros - one digit short, in upper case, or a push (G9 plants 40-digit shas beside those
- * zeros); a local or a remote sha of a form G9 and G10 do not plant, and a remote sha naming a tag object, at the pre-push hook; at
- * the pre-push hook, a deleted-ref line malformed in a form G9 does not plant, more than one deleted-ref line or one between two lines
- * that push, and a push that is not a fast-forward whose local side writes a family blob; at compactTrackerExport, a ceiling form C7
+ * zeros); at the pre-push hook, a stdin, a local or a remote sha and a history no G case plants - another sha that begins and ends
+ * with 0, another remote sha this repository lacks, another remote sha naming a blob or a tree, a remote sha naming a tag object and
+ * a remote-tracking ref G11 does not plant among them; at the pre-push hook, a deleted-ref line G9 does not plant - one of sixty-four
+ * zeros beside a line that pushes (refusal #2 of wb-xkto, U1: GX9-01, GX9-02), one whose remote sha is a commit holding an oversized
+ * blob, with whether another line's push excludes that commit (U2: GX9-03), one malformed in a form G9 does not plant - forty zeros
+ * beside an upper-case remote sha, sixty-four zeros beside a remote sha one digit short, sixty-four zeros and three fields (U3:
+ * GX9-04, GX9-05, GX9-06) - more than one deleted-ref line, and one between two lines that push; at the pre-push hook, a known remote
+ * commit G10 does not plant - another ancestor of the local sha than its parent, a commit that descends from the local sha (a rewind,
+ * U4: GX9-10) and a commit no ancestry joins to it - and a push that is not a fast-forward whose local side writes a family blob; at
+ * compactTrackerExport, a ceiling form C7
  * CEILING PLANTS does not list - another set of files at or over the ceiling, a file more than one byte over it, another fixture -
  * beyond the fixture's run-month shard and main export C7 sets each at its own ceiling; at
  * the CLI, a ceiling form K3 CEILING PLANTS does not list - another set of files at or over the ceiling (two shards without the main
