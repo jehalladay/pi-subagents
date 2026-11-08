@@ -46,7 +46,11 @@
  *   undefined, a throw or a string - refuses source-unmeasurable for every call of the measurement, as does a HEAD answer that is
  *   no object id, is upper-cased or is one hex digit too long or too short; over a tracked edit with status unanswered, and over
  *   an assume-unchanged edit with ls-files unanswered, the admission dispatches nothing. R022-IGNORED: an ignored build file is
- *   not an edit (one dispatch).
+ *   not an edit (one dispatch). R022-READER-FINAL-LF: a reader whose LF-ending answers carry no final LF (the five rev-parse
+ *   answers of a measurement) measures the identity the suite's reader measures, and its admission dispatches with that
+ *   identity; a reader whose LF-ending answers end with a second LF refuses source-unmeasurable. R022-OBJECT-ID-LEADING-ZERO: a
+ *   HEAD^{commit} or HEAD^{tree} answer that is the real id with its first digit replaced by 0, or forty 0 digits, measures as
+ *   that id.
  *   RESIDUAL UNLISTED-EDITS (named family, pinned quiet rows): an edit the measurement's git status call does not list is measured
  *   clean. R022-STAT-TRUST: under core.checkStat=minimal a same-size edit whose mtime is restored is listed by no git status, and
  *   the measurement answers the identity it answered before the edit. R022-CLEAN-FILTER: under a configured clean filter that
@@ -65,11 +69,13 @@
  *   R023-SPACED-NAME: a workspace whose directory name holds a space, a non-ASCII letter and a trailing space dispatches against
  *   that canonical root. R023-CONFINE: confineWorkspace itself answers the sibling and the workspace. R023-DOTDOT-NAME: a
  *   workspace inside the root named "..ws" confines and dispatches. R023-ROOT-ITSELF: an authorized root that is
- *   the workspace itself confines and dispatches.
+ *   the workspace itself confines and dispatches. R023-DOT-NAMES: the worktrees inside the root named "...ws", "..." and ".ws"
+ *   confine, and "...ws" dispatches against its canonical root.
  * - EAT-R024 "Pi MUST bind a single writer to each materialized workspace." Acceptance: "Admit two invocation IDs for the same
  *   canonical workspace; at most one writer lease is granted; cancellation releases only the lease it owns." Mutant: "Allocate
  *   lease by caller alias instead of canonical root." Pinned reading: while inv-a's lease holds a canonical root, the acquire of
- *   that root by inv-b or inv-c answers undefined and their admissions there that pass rules 1-6 refuse writer-held, and the
+ *   that root by inv-b, inv-c or an id R024-HOLDER-ID-LEASES plants answers undefined and the admissions there of inv-b, inv-c,
+ *   inv-a itself and INV-A that pass rules 1-6 refuse writer-held, and the
  *   leases of the root pairs the entries below plant are independent in the forms each entry names: ws and its sibling ws2, ws
  *   and each of the two roots the suite plants inside it (sub and inner), ws and WS, and the three roots r1, r2 and r3; whether
  *   the leases of any other pair of roots are independent is NOT CLAIMED (see below). R024-ALIAS: while inv-a writes, inv-b's
@@ -96,6 +102,11 @@
  *   worktrees ws and WS, two directories on this file system), each pair in either order: while inv-a writes on the first
  *   root, inv-b's admission on the second dispatches against it; when inv-b's write ends, holder answers inv-a and undefined,
  *   and inv-c's admission on the first refuses writer-held; and when inv-a's write ends, no lease holds the first.
+ *   R024-HOLDER-ID-LEASES: while inv-a holds ws, acquire answers undefined to inv-a itself, INV-A, Inv-A, inv-A, " inv-a",
+ *   "inv-a ", inv-a2, inv-aa and inv-, holder answers inv-a after each, and inv-a's own lease then frees ws.
+ *   R024-HOLDER-ID-ADMISSION: while inv-a writes on ws, inv-a's second admission on ws and through a symlink alias, then INV-A's
+ *   admission and then inv-b's, each refuse writer-held with holder still answering inv-a and no dispatch; when inv-a's write
+ *   ends, its dispatch was the only writer at any moment and no lease holds ws.
  * - EAT-R025 "Pi MUST recheck the source basis after asynchronous admission." Acceptance: "Park admission, change commit/tree,
  *   gate manifest or tracked bytes, release; assert refusal before SDK dispatch." Mutant: "Check source only before await."
  *   R025-COMMIT (commit and tree), R025-AMEND (commit, same tree), R025-GATE (gate manifest bytes), R025-TRACKED (tracked bytes):
@@ -120,7 +131,10 @@
  *   R027-FOREIGN-AUTHORITY: another authority's attestation is not this host's. R027-OTHER-WORKSPACE: refusal
  *   attestation-other-workspace. R027-NOT-REQUESTED: no policy, allowWrites false, "true", 1, the array [{ allowWrites: true }]
  *   (prototype Array.prototype), an own accessor (never called), an inherited member and a class instance each refuse
- *   writes-not-requested. R027-REQUESTED: the policy { allowWrites: true } and its null-prototype copy dispatch. R027-WITHDRAWN:
+ *   writes-not-requested. R027-REQUESTED: the policy { allowWrites: true } and its null-prototype copy dispatch.
+ *   R027-REQUESTED-FORMS: the plain and null-prototype objects whose own allowWrites data member true has each of the eight
+ *   combinations of the enumerable, writable and configurable attributes, the frozen, sealed and non-extensible
+ *   { allowWrites: true }, and { allowWrites: true, foo: 1 } dispatch, one grant each (20 policies). R027-WITHDRAWN:
  *   an attestation withdrawn while admission waits
  *   refuses. R027-REATTESTED: an attestation replaced while admission waits is read again (the grant names the new operator).
  *   R027-REREAD-OTHER-WORKSPACE, R027-REREAD-STALE, R027-REREAD-UNMINTED (rule 11): while the admission waits (inv-a's lease
@@ -165,10 +179,29 @@
  *   admission refuse workspace-not-worktree-root, with no dispatch and no lease, and the measurement refuse
  *   source-unmeasurable; one that answers one call of the measurement alone as a Uint8Array or as such an object refuses
  *   source-unmeasurable for each such call), GEN-REASON-FIXED (the reason names neither the caller's workspace nor its
- *   invocation).
+ *   invocation), GEN-ARRAY-PROTOTYPES (an empty and a one-element array whose prototype is Object.prototype, and the same two
+ *   with a null prototype: carrying an own allowWrites true as the policy each refuses writes-not-requested, and carrying the
+ *   request's members as the request each refuses malformed-request; no dispatch, no lease), GEN-CLEAN-TEXT-SCAN (for every
+ *   code point from U+0000 to U+10FFFF outside U+0000-U+001F and U+007F, the lone surrogates included, the text "a", that
+ *   code point, "b" is a lease invocation acquire takes and release frees, an operator id attest mints, and the invocation
+ *   reference of a request that asks for no writes, which refuses writes-not-requested at rule 3; for each code point in
+ *   U+0000-U+001F and U+007F the same text throws the validation CapabilityError as a lease invocation and as an operator id
+ *   and refuses malformed-request as an invocation reference), GEN-CONFINE-ORDER (confineWorkspace, and the admission with the
+ *   same host, refuse malformed-request for each of these pairs: a reader that is the string "git", undefined or a plain
+ *   object beside a missing workspace, a missing authorized root, a workspace outside the root, a subdirectory of ws and ws
+ *   itself; a workspace that is the relative path "relative/ws", holds U+000A or is over 4096 UTF-8 bytes beside a missing
+ *   authorized root; and an authorized root that is the relative path "authorized", holds U+000A or is over 4096 UTF-8 bytes
+ *   beside a missing workspace), GEN-MEASURE-ORDER (measureSourceIdentity refuses malformed-request for each unclean gate
+ *   manifest "", " ", one holding U+000A and one of 4097 UTF-8 bytes beside a root that is a subdirectory of its worktree, a
+ *   silent reader, a reader whose GIT_DIR names another repository, a HEAD commit answer that is no object id, an
+ *   assume-unchanged entry, an unanswered git status and a dirty base; and the admission with that gate manifest and no host
+ *   attestation refuses malformed-request over the assume-unchanged entry, the unanswered git status and the dirty base).
  *   Rule order (the eleven rules of the module comment): each of these cases fails the two rules it names and no rule before them,
  *   and expects the code of the first: GEN-ORDER-SHAPE-CANCEL (1, 2: rule 1's invocationId clause, an invocationId of "", with an
- *   aborted signal), GEN-ORDER-CANCEL-REQUEST (2, 3), GEN-ORDER-REQUEST-CONFINE
+ *   aborted signal), GEN-ORDER-PLAIN-CANCEL (1, 2: rule 1's plain-object clause, a class-instance request, a request whose
+ *   prototype is another object and an array carrying the request's members, each with the clean invocationId inv-a, with an
+ *   aborted signal), GEN-ORDER-DISPATCH-CANCEL (1, 2: rule 1's dispatch clause, a dispatch that is a string, undefined, null, a
+ *   number or a plain object, with an aborted signal), GEN-ORDER-CANCEL-REQUEST (2, 3), GEN-ORDER-REQUEST-CONFINE
  *   (3, 4), GEN-ORDER-CONFINE-MEASURE (4, 5), GEN-ORDER-MEASURE-ATTEST (5, 6), GEN-ORDER-ATTEST-LEASE (6, 7),
  *   GEN-ORDER-LEASE-WAIT (7, 8; the wait is never called, while the same wait is called and refuses once the lease is free),
  *   GEN-WAIT-CANCELLED (8, 9; rule 8's code for a signal aborted by then is admission-cancelled), GEN-ORDER-WAIT-CANCEL (9, 10)
@@ -194,28 +227,26 @@
  *   host's, and of the variables that point git at other files only GIT_DIR (R022-MISDIRECTED-GIT) is pinned.
  * - Mount points are NOT CLAIMED by this suite: confinement judges realpaths, and a realpath does not see through a mount.
  * - Paths on a platform whose path separator is not "/", and case-insensitive file systems, are NOT CLAIMED by this suite.
- * - What acquire or an admission answers an invocation id other than inv-b and inv-c while inv-a's lease holds the root (the
- *   holder's own id, a second acquire or admission by it and what another id meets after such a re-entry, and an id that
- *   differs from the holder's only in letter case, among them) is NOT CLAIMED by this suite: every case that asks for a held
- *   root asks with inv-b or inv-c while inv-a holds it.
+ * - What acquire answers, while inv-a's lease holds the root, an invocation id other than inv-b, inv-c and the ids
+ *   R024-HOLDER-ID-LEASES plants, and what an admission there of an invocation id other than inv-b, inv-c, inv-a and INV-A
+ *   meets, are NOT CLAIMED by this suite.
  * - Whether the leases of a pair of roots other than ws and ws2, ws and sub, ws and inner, ws and WS, and r1, r2 and r3 are
  *   independent is NOT CLAIMED by this suite.
- * - Which code answers when a request fails two rules at a pair of clauses no rule-order case fails (rule 1's plain-object and
- *   dispatch clauses against rule 2's cancellation among them) is NOT CLAIMED by this suite.
- * - Which refusal confineWorkspace answers a call that fails two of its clauses no entry names together (a reader that is not a
- *   function beside a workspace or authorized root that does not resolve or a workspace outside the root, and a workspace that
- *   is not absolute clean text beside an authorized root that does not resolve, among them), and what a path that is not
- *   absolute clean text yet resolves by realpath gets, are NOT CLAIMED by this suite.
- * - Which refusal measureSourceIdentity answers a call that fails two of its clauses no entry names together (a gate manifest
- *   that is not clean text beside a root that is not the worktree root, a misreporting or silent reader, or a dirty base, among
- *   them), and what an absolute canonicalRoot that is not clean text gets, are NOT CLAIMED by this suite.
- * - Whether a plain or null-prototype policy with an own allowWrites data member true, other than { allowWrites: true } and its
- *   null-prototype copy, asks for writes (a non-enumerable, non-writable or frozen member, or a policy with other members, among
- *   them) is NOT CLAIMED by this suite.
- * - An array whose prototype is Object.prototype or null, as a request or as a policy, is NOT CLAIMED by this suite.
- * - Whether a string the cases do not plant is clean text (one holding another code point inside its content, U+200B or the
- *   bidi controls U+061C, U+200E, U+200F, U+202A-U+202E and U+2066-U+2069 among them) is NOT CLAIMED by this suite.
- * - Whether a relative path the cases do not plant is inside a root (a workspace or manifest named "...ws" among them) is NOT
+ * - Which code answers when a request fails two rules at a pair of clauses no rule-order case fails, or in a form the
+ *   rule-order case of that pair does not plant, is NOT CLAIMED by this suite.
+ * - Which refusal confineWorkspace answers a call that fails two of its clauses in a pair no entry plants (GEN-CONFINE-ORDER
+ *   names the pairs it plants), and what a path that is not absolute clean text yet resolves by realpath gets, are NOT
+ *   CLAIMED by this suite.
+ * - Which refusal measureSourceIdentity answers a call that fails two of its clauses in a pair no entry plants
+ *   (GEN-MEASURE-ORDER names the pairs it plants), and what an absolute canonicalRoot that is not clean text gets, are NOT
+ *   CLAIMED by this suite.
+ * - Whether a plain or null-prototype policy with an own allowWrites data member true, other than the policies R027-REQUESTED
+ *   and R027-REQUESTED-FORMS plant, asks for writes is NOT CLAIMED by this suite.
+ * - An array other than those GEN-MALFORMED-SHAPES, R027-NOT-REQUESTED, GEN-ARRAY-PROTOTYPES and GEN-ORDER-PLAIN-CANCEL
+ *   plant, as a request or as a policy, is NOT CLAIMED by this suite.
+ * - Whether a string the cases do not plant is clean text (one holding two code points outside U+0000-U+001F and U+007F inside
+ *   its content, or one such code point at an end, among them) is NOT CLAIMED by this suite.
+ * - Whether a relative path the cases do not plant is inside a root (a manifest named "...gate.toml" among them) is NOT
  *   CLAIMED by this suite.
  * - What a request that fails a rule in a form no entry above plants through admitSourceWrite gets (which refusal, and
  *   whether dispatch is called) is NOT CLAIMED by this suite: each entry pins the forms it plants.
@@ -881,6 +912,39 @@ describe("EAT-R022: a base whose git status lists a record is refused before any
     expect(grants).toHaveLength(1);
   });
 
+  it("R022-READER-FINAL-LF: a reader whose answers carry no final LF measures the identity the suite's reader measures, and one whose LF-ending answers end with a second LF refuses source-unmeasurable", async () => {
+    const expected = identityOf(ws);
+    let stripped = 0;
+    const withoutFinalLf: SourceGitReader = (directory, args) => {
+      const output = gitReader(directory, args);
+      if (output === undefined || output.at(-1) !== 0x0a) return output;
+      stripped += 1;
+      return output.subarray(0, -1);
+    };
+    expect(measureSourceIdentity(ws, "forge.toml", withoutFinalLf)).toStrictEqual({ decision: "measured", identity: expected });
+    expect(stripped).toBe(5);
+    const { grants, dispatch } = recorder();
+    await expect(admitSourceWrite(requestFor(ws), hostFor(authority.attest(OPERATOR, expected), { git: withoutFinalLf }), dispatch)).resolves.toMatchObject({ decision: "dispatched" });
+    expect(grants.map(grant => grant.identity.digest)).toEqual([expected.digest]);
+    const secondLf: SourceGitReader = (directory, args) => {
+      const output = gitReader(directory, args);
+      return output !== undefined && output.at(-1) === 0x0a ? Buffer.concat([output, Buffer.from("\n")]) : output;
+    };
+    expectRefused(measureSourceIdentity(ws, "forge.toml", secondLf), "source-unmeasurable");
+  });
+
+  it("R022-OBJECT-ID-LEADING-ZERO: a HEAD commit or tree answer that is the real id with its first digit replaced by 0, and the all-zero id of 40 digits, measure as those ids", () => {
+    const head = { commit: git(ws, "rev-parse", "HEAD^{commit}"), tree: git(ws, "rev-parse", "HEAD^{tree}") };
+    for (const member of ["commit", "tree"] as const) {
+      for (const id of [`0${head[member].slice(1)}`, "0".repeat(40)]) {
+        const rewritten: SourceGitReader = (directory, args) => (args.includes(`HEAD^{${member}}`) ? Buffer.from(`${id}\n`) : gitReader(directory, args));
+        const measured = measureSourceIdentity(ws, "forge.toml", rewritten);
+        const ids = measured.decision === "measured" ? [measured.identity.commit, measured.identity.tree] : measured;
+        expect(ids, `${member} ${id}`).toEqual(member === "commit" ? [id, head.tree] : [head.commit, id]);
+      }
+    }
+  });
+
   it("R022-STAT-TRUST: under core.checkStat=minimal a same-size edit whose mtime is restored is listed by no git status and measured clean (residual UNLISTED-EDITS)", () => {
     git(ws, "config", "core.checkStat", "minimal");
     const old = new Date("2020-01-01T00:00:00Z");
@@ -1025,6 +1089,18 @@ describe("EAT-R023: the workspace's realpath must be the authorized root's realp
     const outcome = await admitSourceWrite(requestFor(ws), hostFor(authority.attest(OPERATOR, identityOf(ws)), { authorizedRoot: ws }), dispatch);
     expect(outcome).toMatchObject({ decision: "dispatched" });
     expect(grants.map(grant => grant.identity.canonicalRoot)).toEqual([ws]);
+  });
+
+  it('R023-DOT-NAMES: workspaces inside the root named "...ws", "..." and ".ws" confine, and "...ws" dispatches against that canonical root', async () => {
+    for (const name of ["...ws", "...", ".ws"]) {
+      const named = fixtureRepo(join(root, name));
+      expect(named, name).toBe(`${root}/${name}`);
+      expect(confineWorkspace(root, named, gitReader), name).toEqual({ decision: "confined", canonicalRoot: named });
+    }
+    const tripleDot = join(root, "...ws");
+    const { grants, dispatch } = recorder();
+    await expect(admitSourceWrite(requestFor(tripleDot), hostFor(authority.attest(OPERATOR, identityOf(tripleDot))), dispatch)).resolves.toMatchObject({ decision: "dispatched" });
+    expect(grants.map(grant => [grant.identity.canonicalRoot, grant.invocationId])).toEqual([[tripleDot, "inv-a"]]);
   });
 });
 
@@ -1212,6 +1288,49 @@ describe("EAT-R024: while inv-a's lease holds a canonical workspace root, inv-b 
     expect(lstatSync(upper).ino).not.toBe(lstatSync(ws).ino);
     await expectIndependentWrites(ws, upper);
     await expectIndependentWrites(upper, ws);
+  });
+
+  it('R024-HOLDER-ID-LEASES: while inv-a holds ws, acquire answers undefined to inv-a itself, INV-A, Inv-A, inv-A, " inv-a", "inv-a ", inv-a2, inv-aa and inv-, and inv-a\'s own lease still frees ws', () => {
+    const held = leases.acquire(ws, "inv-a");
+    expect(held).toMatchObject({ canonicalRoot: ws, invocationId: "inv-a" });
+    for (const invocationId of ["inv-a", "INV-A", "Inv-A", "inv-A", " inv-a", "inv-a ", "inv-a2", "inv-aa", "inv-"]) {
+      expect(leases.acquire(ws, invocationId), JSON.stringify(invocationId)).toBeUndefined();
+      expect(leases.holder(ws), JSON.stringify(invocationId)).toBe("inv-a");
+    }
+    if (held === undefined) return;
+    expect(leases.release(held)).toBe(true);
+    expect(leases.holder(ws)).toBeUndefined();
+  });
+
+  it("R024-HOLDER-ID-ADMISSION: while inv-a writes on ws, inv-a's second admission on ws and through a symlink alias, and INV-A's admission, refuse writer-held, and inv-b's admission after them still refuses writer-held", async () => {
+    const alias = join(root, "alias");
+    symlinkSync(ws, alias);
+    const attestation = authority.attest(OPERATOR, identityOf(ws));
+    const writing = deferred();
+    let writers = 0;
+    let peak = 0;
+    const pending = admitSourceWrite(requestFor(ws, "inv-a"), hostFor(attestation), async () => {
+      writers += 1;
+      peak = Math.max(peak, writers);
+      await writing.promise;
+      writers -= 1;
+      return "a";
+    });
+    expect(leases.holder(ws)).toBe("inv-a");
+    const others = recorder();
+    for (const [workspace, invocationId] of [
+      [ws, "inv-a"],
+      [alias, "inv-a"],
+      [ws, "INV-A"],
+      [ws, "inv-b"],
+    ] as const) {
+      expectRefused(await admitSourceWrite(requestFor(workspace, invocationId), hostFor(attestation), others.dispatch), "writer-held", undefined, `${invocationId} on ${workspace}`);
+      expect(leases.holder(ws), `${invocationId} on ${workspace}`).toBe("inv-a");
+    }
+    expect(others.grants).toHaveLength(0);
+    writing.resolve();
+    await expect(pending).resolves.toMatchObject({ decision: "dispatched", value: "a" });
+    expect([peak, leases.holder(ws)]).toEqual([1, undefined]);
   });
 });
 
@@ -1597,6 +1716,28 @@ describe("EAT-R027: writes need an operator attestation the host minted for this
     const outcome = await admitSourceWrite(requestFor(other.canonicalRoot), hostFor(attestation), dispatch);
     expectRefused(outcome, "attestation-other-workspace");
     expect(grants).toHaveLength(0);
+  });
+
+  it("R027-REQUESTED-FORMS: plain and null-prototype policies whose own allowWrites data member true has each combination of the enumerable, writable and configurable attributes, the frozen, sealed and non-extensible { allowWrites: true }, and { allowWrites: true, foo: 1 } dispatch", async () => {
+    const attestation = authority.attest(OPERATOR, identityOf(ws));
+    const policies: [string, unknown][] = [];
+    for (const prototype of [Object.prototype, null]) {
+      for (const enumerable of [true, false]) {
+        for (const writable of [true, false]) {
+          for (const configurable of [true, false]) {
+            const policy: unknown = Object.defineProperty(Object.create(prototype), "allowWrites", { value: true, enumerable, writable, configurable });
+            policies.push([`${prototype === null ? "null-prototype" : "plain"} enumerable=${enumerable} writable=${writable} configurable=${configurable}`, policy]);
+          }
+        }
+      }
+    }
+    policies.push(["frozen", Object.freeze({ allowWrites: true })], ["sealed", Object.seal({ allowWrites: true })], ["non-extensible", Object.preventExtensions({ allowWrites: true })], ["foo member", { allowWrites: true, foo: 1 }]);
+    expect(policies).toHaveLength(20);
+    const { grants, dispatch } = recorder();
+    for (const [label, policy] of policies) {
+      await expect(admitSourceWrite(requestFor(ws, "inv-a", policy as JsonValue), hostFor(attestation), dispatch), label).resolves.toMatchObject({ decision: "dispatched" });
+    }
+    expect(grants.map(grant => grant.invocationId)).toEqual(policies.map(() => "inv-a"));
   });
 });
 
@@ -1997,5 +2138,172 @@ describe("admission lifecycle: cancellation, a refusing wait, a throwing dispatc
     expectRefused(await pending, "source-changed");
     expect(grants).toHaveLength(0);
     expect(leases.holder(ws)).toBeUndefined();
+  });
+
+  it("GEN-ARRAY-PROTOTYPES: an empty and a one-element array whose prototype is Object.prototype or null are not plain objects: carrying an own allowWrites true as the policy each refuses writes-not-requested, and carrying the request members as the request each refuses malformed-request", async () => {
+    const attestation = authority.attest(OPERATOR, identityOf(ws));
+    const { grants, dispatch } = recorder();
+    for (const prototype of [Object.prototype, null]) {
+      for (const elements of [[], [requestFor(ws)]]) {
+        const label = `${elements.length === 0 ? "empty" : "one-element"} array, ${prototype === null ? "null prototype" : "Object.prototype"}`;
+        const policy: unknown = Object.setPrototypeOf(Object.assign([...elements], { allowWrites: true }), prototype);
+        const request: unknown = Object.setPrototypeOf(Object.assign([...elements], requestFor(ws)), prototype);
+        expect([Array.isArray(policy), Array.isArray(request), Object.getPrototypeOf(policy) === prototype, Object.getPrototypeOf(request) === prototype], label).toEqual([true, true, true, true]);
+        expectRefused(await admitSourceWrite(requestFor(ws, "inv-a", policy as JsonValue), hostFor(attestation), dispatch), "writes-not-requested", undefined, `policy, ${label}`);
+        expectRefused(await admitSourceWrite(request as SourceWriteRequest, hostFor(attestation), dispatch), "malformed-request", undefined, `request, ${label}`);
+      }
+    }
+    expect(grants).toHaveLength(0);
+    expect(leases.holder(ws)).toBeUndefined();
+  });
+
+  it("GEN-ORDER-PLAIN-CANCEL: a class-instance request, a request whose prototype is another object and an array carrying the request members, each with the clean invocationId inv-a and an aborted signal, refuse malformed-request", async () => {
+    const abort = new AbortController();
+    abort.abort();
+    class RequestObject {
+      readonly invocationId = "inv-a";
+      readonly workspace = ws;
+      readonly policy = { allowWrites: true };
+    }
+    const requests: readonly (readonly [string, unknown])[] = [
+      ["class instance", new RequestObject()],
+      ["prototype object", Object.assign(Object.create({ inherited: true }), requestFor(ws))],
+      ["array", Object.assign([], requestFor(ws))],
+    ];
+    const { grants, dispatch } = recorder();
+    for (const [label, request] of requests) {
+      expectRefused(await admitSourceWrite(request as SourceWriteRequest, hostFor(authority.attest(OPERATOR, identityOf(ws)), { signal: abort.signal }), dispatch), "malformed-request", undefined, label);
+    }
+    expect(grants).toHaveLength(0);
+    expect(leases.holder(ws)).toBeUndefined();
+  });
+
+  it("GEN-ORDER-DISPATCH-CANCEL: a dispatch that is a string, undefined, null, a number or a plain object, with an aborted signal, refuses malformed-request", async () => {
+    const abort = new AbortController();
+    abort.abort();
+    const attestation = authority.attest(OPERATOR, identityOf(ws));
+    for (const [label, notDispatch] of [
+      ["string", "dispatch"],
+      ["undefined", undefined],
+      ["null", null],
+      ["number", 1],
+      ["plain object", {}],
+    ] as const) {
+      expectRefused(await admitSourceWrite(requestFor(ws), hostFor(attestation, { signal: abort.signal }), notDispatch as unknown as (grant: SourceWriteGrant) => Promise<string>), "malformed-request", undefined, label);
+    }
+    expect(leases.holder(ws)).toBeUndefined();
+  });
+
+  it("GEN-CLEAN-TEXT-SCAN: for every code point outside U+0000-U+001F and U+007F, the text a, that code point, b is clean text as a lease invocation, an operator id and an invocation reference, and for each code point inside them it is not", async () => {
+    const identity = identityOf(ws);
+    const host = hostFor(authority.attest(OPERATOR, identity));
+    const { grants, dispatch } = recorder();
+    const mismatches: string[] = [];
+    let cleanPoints = 0;
+    let uncleanPoints = 0;
+    for (let point = 0; point <= 0x10ffff; point += 1) {
+      const text = `a${String.fromCodePoint(point)}b`;
+      const clean = point > 0x1f && point !== 0x7f;
+      if (clean) cleanPoints += 1;
+      else uncleanPoints += 1;
+      let leaseReading: string;
+      try {
+        const lease = leases.acquire(ws, text);
+        leaseReading = lease !== undefined && lease.invocationId === text && leases.release(lease) ? "leased" : "no lease";
+      } catch (error) {
+        leaseReading = error instanceof CapabilityError && error.category === "validation" && error.message === LEASE_VALIDATION ? "validation" : "other error";
+      }
+      let operatorReading: string;
+      try {
+        operatorReading = authority.attest(text, identity).operatorId === text ? "attested" : "other operator";
+      } catch (error) {
+        operatorReading = error instanceof CapabilityError && error.category === "validation" && error.message === ATTEST_OPERATOR ? "validation" : "other error";
+      }
+      const admission = await admitSourceWrite(requestFor(ws, text, {}), host, dispatch);
+      const admissionReading = admission.decision === "refused" ? admission.code : admission.decision;
+      const expected = clean ? ["leased", "attested", "writes-not-requested"] : ["validation", "validation", "malformed-request"];
+      if (leaseReading !== expected[0] || operatorReading !== expected[1] || admissionReading !== expected[2]) mismatches.push(`U+${point.toString(16)}: ${leaseReading}, ${operatorReading}, ${admissionReading}`);
+    }
+    expect(mismatches.slice(0, 16)).toEqual([]);
+    expect(mismatches).toHaveLength(0);
+    expect([cleanPoints, uncleanPoints]).toEqual([0x110000 - 33, 33]);
+    expect(grants).toHaveLength(0);
+    expect(leases.holder(ws)).toBeUndefined();
+  });
+
+  it("GEN-CONFINE-ORDER: confineWorkspace and the admission refuse malformed-request when a reader that is not a function, a workspace that is not absolute clean text or an authorized root that is not absolute clean text meets a later failing clause", async () => {
+    const attestation = authority.attest(OPERATOR, identityOf(ws));
+    const { grants, dispatch } = recorder();
+    const missingWorkspace = join(root, "missing");
+    const missingRoot = join(base, "no-such-root");
+    const elsewhere = fixtureRepo(join(base, "elsewhere"));
+    const subdirectory = join(ws, "src");
+    const later: readonly (readonly [string, string, string])[] = [
+      ["a missing workspace", root, missingWorkspace],
+      ["a missing authorized root", missingRoot, ws],
+      ["a workspace outside the root", root, elsewhere],
+      ["a subdirectory of ws", root, subdirectory],
+      ["ws itself", root, ws],
+    ];
+    for (const [readerLabel, notReader] of [
+      ["the string git", "git"],
+      ["undefined", undefined],
+      ["a plain object", {}],
+    ] as const) {
+      const reader = notReader as unknown as SourceGitReader;
+      for (const [label, authorizedRoot, workspace] of later) {
+        expectRefused(confineWorkspace(authorizedRoot, workspace, reader), "malformed-request", undefined, `${readerLabel} beside ${label}`);
+        expectRefused(await admitSourceWrite(requestFor(workspace), hostFor(attestation, { authorizedRoot, git: reader }), dispatch), "malformed-request", undefined, `admission: ${readerLabel} beside ${label}`);
+      }
+    }
+    const oversized = `/${"a".repeat(4096)}`;
+    for (const workspace of ["relative/ws", join(root, "ws\nnext"), oversized]) {
+      const label = `workspace ${JSON.stringify(workspace.slice(0, 24))} beside a missing authorized root`;
+      expectRefused(confineWorkspace(missingRoot, workspace, gitReader), "malformed-request", undefined, label);
+      expectRefused(await admitSourceWrite(requestFor(workspace), hostFor(attestation, { authorizedRoot: missingRoot }), dispatch), "malformed-request", undefined, `admission: ${label}`);
+    }
+    for (const authorizedRoot of ["authorized", `${root}\n`, oversized]) {
+      const label = `authorized root ${JSON.stringify(authorizedRoot.slice(0, 24))} beside a missing workspace`;
+      expectRefused(confineWorkspace(authorizedRoot, missingWorkspace, gitReader), "malformed-request", undefined, label);
+      expectRefused(await admitSourceWrite(requestFor(missingWorkspace), hostFor(attestation, { authorizedRoot }), dispatch), "malformed-request", undefined, `admission: ${label}`);
+    }
+    expect(grants).toHaveLength(0);
+    expect(leases.holder(ws)).toBeUndefined();
+  });
+
+  it("GEN-MEASURE-ORDER: measureSourceIdentity refuses malformed-request when a gate manifest that is not clean text meets each later failing clause of the measurement, and so does an admission with that gate manifest and no host attestation over the index, status and dirty-base clauses", async () => {
+    const subdirectory = join(ws, "src");
+    const other = fixtureRepo(join(base, "other"));
+    const hidden = fixtureRepo(join(root, "hidden"));
+    git(hidden, "update-index", "--assume-unchanged", "README.md");
+    writeFileSync(join(hidden, "README.md"), "# hidden edit\n");
+    const dirty = fixtureRepo(join(root, "dirty"));
+    writeFileSync(join(dirty, "notes.txt"), "untracked\n");
+    const statusSilent = faulty(args => args.includes("status"), "undefined");
+    const later: readonly (readonly [string, string, SourceGitReader])[] = [
+      ["a subdirectory of ws", subdirectory, gitReader],
+      ["a silent reader", ws, () => undefined],
+      ["a reader whose GIT_DIR names another repository", ws, readerWith({ GIT_DIR: join(other, ".git") })],
+      ["a HEAD commit answer that is no object id", ws, faulty(args => args.includes("HEAD^{commit}"), "junk")],
+      ["an assume-unchanged entry", hidden, gitReader],
+      ["an unanswered git status", ws, statusSilent],
+      ["a dirty base", dirty, gitReader],
+    ];
+    for (const [label, canonicalRoot, reader] of later) {
+      for (const manifest of UNCLEAN_TEXT) {
+        expectRefused(measureSourceIdentity(canonicalRoot, manifest, reader), "malformed-request", undefined, `${JSON.stringify(manifest.slice(0, 12))} beside ${label}`);
+      }
+    }
+    const { grants, dispatch } = recorder();
+    for (const [label, workspace, reader] of [
+      ["an assume-unchanged entry", hidden, gitReader],
+      ["an unanswered git status", ws, statusSilent],
+      ["a dirty base", dirty, gitReader],
+    ] as const) {
+      for (const manifest of UNCLEAN_TEXT) {
+        expectRefused(await admitSourceWrite(requestFor(workspace), hostFor(undefined, { gateManifest: manifest, git: reader }), dispatch), "malformed-request", undefined, `admission: ${JSON.stringify(manifest.slice(0, 12))} beside ${label}`);
+      }
+    }
+    expect(grants).toHaveLength(0);
   });
 });
