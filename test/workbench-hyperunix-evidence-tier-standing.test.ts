@@ -72,7 +72,20 @@
  * on a judgment departing in exactly the one departure naming its HOLDER's binding form (THE VERDICT EXACT), how a verdict reads
  * any other list of departures NOT CLAIMED, and its cut #4, after the structural-exit ruling R-B652 at its refusal #3, which text
  * a verdict is judged on and which parse its place and writes are read from (the judged-text identity set the guard R-B627
- * bound, which that ruling moves to the child wb-5bua) NOT CLAIMED, leaving the acceptance reading unchanged): each case
+ * bound, which that ruling moves to the child wb-5bua) NOT CLAIMED, leaving the acceptance reading unchanged; and wb-5bua, that
+ * child, pins the text each of those 2620 controls is judged on (T2's THE JUDGED TEXT ITSELF): while that sweep reads its
+ * controls, acceptanceOf() records for each call the module texts it read (a frozen copy it takes once, at its start, and judges
+ * alone, by its own parse of each text) and the reading it returns (frozen), in a record only acceptanceOf() appends to, handed
+ * back frozen when the sweep ends (its cut #2, refusal #1's U1: a caller's write to its own object after the call, an argument
+ * whose text reads otherwise on a later read, a parse put in parsedModules under the planted text's key or an installed text's,
+ * a write to a reading, to a plant or to the installed texts, and a second record each leave the record holding what the call
+ * read, or throw), and
+ * the record holds exactly one call for each control, in the controls' order, reading its planted text byte for byte in its
+ * module's place and the installed text in each other consulted module's, each control's verdict the one verdictOf() reads
+ * from that call's reading, which judgment a verdict equal to that one is computed from, which parse its place and writes are
+ * read from and a judgment that rebinds or rewrites code a reading runs (one of this file's functions, the TypeScript parser's,
+ * or a built-in function or prototype) NOT CLAIMED, leaving the acceptance reading unchanged):
+ * each case
  * claims exactly the cells and
  * pins it
  * runs, each pin is a falsifier this file executes, T2 claims what the decoder accepts read where it decides it, declared text, the
@@ -181,7 +194,9 @@
  *      declaration and its leading comment, byte-identical, its planted decoder's sha256 pinned, departing as that cell does) and
  *      after each top-level statement of its module but its first and its last, so at each of its middle positions past its
  *      second (2620 controls, wb-ant2: 44 in result.js, 34 in protocol/query.js and 30 in protocol/decoder.js, the penultimate
- *      included, each read at its place as T2's THE CONTROLS' READING reads it, which text it is judged on NOT CLAIMED, for its
+ *      included, each read at its place as T2's THE CONTROLS' READING reads it, its one acceptanceOf() call in the sweep's
+ *      record reading its planted text byte for byte (the frozen copy that call read and judged) as T2's THE JUDGED TEXT ITSELF
+ *      holds it, for its
  *      write's operator, run of blocks, run
  *      of bare block statements, context and top-level position, the 2620 readings exactly one for each HOLDER, each of &&= and
  *      =, each of the DEEP_RUNS and each such place, those places run against the parser's count of the installed module, which
@@ -582,7 +597,8 @@
  * each, and the 80 DEEP_RUNS plants after each module's first top-level statement (wb-imm0), read so from the text their judge
  * reads, are exactly the HOLDERS times those operators times the DEEP_RUNS at that module's second top-level statement, one plant
  * each, and the 2620 after each later top-level statement but its last (wb-ant2), read so as T2's THE CONTROLS' READING reads
- * them, which text each is judged on NOT CLAIMED,
+ * them, each with its one acceptanceOf() call in the sweep's record reading its planted text byte for byte (the frozen copy that
+ * call read and judged) as T2's THE JUDGED TEXT ITSELF holds it (wb-5bua),
  * exactly those times each place of the module past its second but its last, those places the parser's count of the installed
  * module, one plant each. LIVENESS: each
  * judgment is one
@@ -623,11 +639,21 @@
  * module's penultimate top-level statement (misread, no write read), its position reading on a write so deep after the module's
  * last top-level statement (its last), its place reading on a text planting another statement before its statement (none),
  * its parse release NOT CLAIMED (the parse-release set the guard R-B663 bound as its GUARD A, which refusal #6, outbox
- * O:2257, exits to the structural-exit child the orchestrator's typed row files) and its verdict reading
+ * O:2257, exits to the structural-exit child the orchestrator's typed row files), its verdict reading
  * (THE VERDICT EXACT: the
  * &&= statement so deep after that penultimate statement, in a text also spelling eval, in one also writing parseFrameJson and
  * in one also spelling checkStream as a string, each after the module's last statement, and parseFrameJson so written after that
- * penultimate statement instead, each misread at that place, beside the binding the statement alone reads), and the class and eval
+ * penultimate statement instead, each misread at that place, beside the binding the statement alone reads) and its judged-text
+ * reading (THE JUDGED TEXT ITSELF: on the sweep's first control, a missing call, a call reading its statement moved after its
+ * text's end, one reading another consulted module's text with that statement after its end, one with the installed modules'
+ * reading and a second call, each named, one call of its own text with its own reading, not named, and on its first two
+ * controls their own calls recorded in the other order, both named; and, wb-5bua cut #2, on its first control a call reading
+ * its statement moved after its text's end or before its start through an object its caller writes the planted text into once
+ * the call returns, and a call reading an argument whose text reads the moved-after text first and the planted text later,
+ * each named, that call reading each module text once and returning the moved-after text's reading, a parse of that text put
+ * under the planted text's key and one of another module's installed text with a write of its HOLDER after its end put under
+ * that text's key each leaving the planted text's reading unmoved, a second record refused, and the sweep's record, a reading,
+ * the plants and the installed texts frozen throughout), and the class and eval
  * statements on the class in its own module and on eval spelled as a string), firstFrame()
  * (a first frame-form line whose read location is another copy's URL or a file under
  * SDK_DIST outside the pinned modules reads as that URL, one whose read location is a pinned module's own URL by its path from
@@ -1379,7 +1405,8 @@ type ModuleTexts = Readonly<Record<ConsultedModule, string>>;
 function moduleText(name: ConsultedModule): string {
   return readFileSync(new URL(name, SDK_DIST), 'utf8');
 }
-const installedTexts = (): ModuleTexts => ({'result.js': moduleText('result.js'), 'protocol/query.js': moduleText('protocol/query.js'),
+/** The three installed modules' texts, frozen (T2's THE JUDGED TEXT ITSELF holds its record to them). */
+const installedTexts = (): ModuleTexts => Object.freeze({'result.js': moduleText('result.js'), 'protocol/query.js': moduleText('protocol/query.js'),
   'protocol/decoder.js': moduleText('protocol/decoder.js')});
 /** A HOLDER: a function on decodeResultStream's path that parses, copies, filters, feeds, dispatches or refuses a frame's keys, named
  * as its module declares it (a StreamChecker method as StreamChecker.<method>), with the sha256 of its whole text. */
@@ -1688,147 +1715,208 @@ function checkSite(holder: ts.FunctionLikeDeclaration): {readonly table: string;
   });
   return found.length === 1 && constIn(holder, 'body')?.getText() === 'frame.body' ? found[0] : undefined;
 }
-/** The acceptance reading over three module texts (the installed ones, or a planted copy). Each HOLDER is declared once (one
- * declaration declarationsOf() counts, and no member of its class whose name memberName() does not read, each as T2 pins it in
- * its TWICE_CELLS and UNREAD_FORMS plants and its 23 positions only) with its pinned text and
- * written by no name the modules spell (outside the HOLDERS' text its own module spells its name only at a declaration counted for
- * it or where calledOrImported() holds, its class is spelled in no other consulted module, and no module spells eval, each
- * departure naming its forms, as T2 pins it in its WRITE_FORMS, written, compound, nested compound, middle compound, nested
- * written and deep compound rows, SPELLED_STATEMENTS, BINDING_STATEMENTS (each also after each module's first top-level
- * statement, and the &&=
- * statement of the latter and the plain assignment of the former nested in each of the NESTINGS and in each of the DEEP_RUNS
- * (in a DEEP_RUNS run also after each top-level statement of its module but its last), and after each top-level statement of
- * its module but its last), the compound cell's statement, with its seat key and with the deep key, at each of the decoder
- * module's middle positions and P-DEEP4-MID2's, CLASS_FORMS, CLASS_STATEMENTS,
- * eval, parenthesized-eval and EVAL_STATEMENTS plants only, any other statement NOT CLAIMED); each
- * consulted site is read by its shape, its sets' names read from it; the
- * set the filter tests, the dispatched set and the table the check consults are read as string literals in their declared
- * containers (pinned for an element in each of the 13 ELEMENT_FORMS, each as its one text, at each position of each key list, and for
- * a Set subclass's constructor, only); and the two module-level ones are each read at the one
- * declaration of its name among the decoder module's top-level statements (moduleConstIn(), pinned for a top-level block, a
- * switch case, the 18 NESTINGS and a top-level var redeclaration only) and spelled in the three modules only at that declaration
- * and their site (pinned for its REFERENCE_FORMS plants only). Each failure is a departure, and a part of acceptance whose sites
- * are not all read reads empty: the
- * envelope (the set's members and UNRECORDED) needs the filter and the refusal, the bodies the dispatch and the check, a table kind
- * its dispatch. */
-function acceptanceOf(texts: ModuleTexts): AcceptanceReading {
-  const departures: string[] = [];
-  const spans: Record<string, Span> = {};
-  const holders = new Map<string, ts.FunctionLikeDeclaration>();
-  const counted = new Set<ts.Node>();
-  for (const holder of HOLDERS) {
-    const found = declarationsOf(parsedModule(holder.module, texts[holder.module]), holder.name);
-    for (const declaration of found) {
-      const node = nameNode(declaration);
-      if (node !== undefined) counted.add(node);
-    }
-    const only = found.length === 1 ? found[0] : undefined;
-    if (only === undefined) {
-      departures.push(`${holder.name}: ${found.length} declarations (${found.map(declarationForm).join(', ')})`);
-      continue;
-    }
-    if (ts.isFunctionDeclaration(only) || ts.isMethodDeclaration(only)) holders.set(holder.name, only);
-    spans[holder.name] = [holder.module, only.getStart(), only.getEnd()];
-    if (sha256(Buffer.from(only.getText(), 'utf8')) !== holder.sha256) departures.push(`${holder.name}: text`);
-  }
-  // A member of a class holding a HOLDER whose name memberName() does not read (one built at run time could be a HOLDER's) departs,
-  // naming the form of each such member (unreadForm()): pinned for the 11 UNREAD_FORMS members and a static block at each of the
-  // class's positions only, any other kind, form or position NOT CLAIMED.
-  const classes = new Map<string, ts.ClassDeclaration>();
-  for (const {module, name} of HOLDERS) {
-    const owner = name.includes('.') ? name.slice(0, name.indexOf('.')) : undefined;
-    const declaration = parsedModule(module, texts[module]).statements.find((statement): statement is ts.ClassDeclaration =>
-      ts.isClassDeclaration(statement) && statement.name?.text === owner);
-    if (owner !== undefined && declaration !== undefined) classes.set(owner, declaration);
-  }
-  for (const [owner, declaration] of classes) {
-    const unread = declaration.members.filter(member => memberName(member) === undefined);
-    if (unread.length > 0) departures.push(`${owner}: a member whose name is not read (${formsOf(unread.map(unreadForm))})`);
-  }
-  // No name the modules spell writes a HOLDER: outside the HOLDERS' text its own module spells its name only at a declaration
-  // counted above or as a callee or a named import, its class is spelled in no other consulted module, and no module spells eval;
-  // each departure names its forms (writeForm(), spellingForm(), evalForm()): pinned for T2's WRITE_FORMS, written, compound,
-  // nested compound, middle compound, nested written and deep compound rows, its SPELLED_STATEMENTS and BINDING_STATEMENTS at each
-  // HOLDER module's
-  // start, after its first top-level statement and at its end, BINDING_STATEMENTS' &&= statement and SPELLED_STATEMENTS' plain
-  // assignment nested in each of the NESTINGS at its start and end and in each of the DEEP_RUNS there and after each of its
-  // top-level statements but its last, and unnested after each of its top-level statements but its last, the compound cell's
-  // statement, with its seat key
-  // and with the deep key, at each of the decoder module's middle positions and P-DEEP4-MID2's, its CLASS_FORMS and
-  // CLASS_STATEMENTS, and its eval rows
-  // and EVAL_STATEMENTS
-  // only, any other statement or spelling NOT CLAIMED.
-  const spellings = (module: ConsultedModule, name: string): readonly ts.Node[] => spellingsIn(parsedModule(module, texts[module]), name);
-  const inHolders = (module: ConsultedModule, node: ts.Node): boolean => HOLDERS.some(({name}) => within(spans[name], module, node.getStart()));
-  for (const holder of HOLDERS) {
-    const member = holder.name.slice(holder.name.indexOf('.') + 1);
-    const strays = spellings(holder.module, member).filter(node => !inHolders(holder.module, node) && !counted.has(node) && !calledOrImported(node));
-    if (strays.length > 0) departures.push(`${holder.name}: spelled outside a call (${formsOf(strays.map(writeForm))})`);
-  }
-  for (const owner of classes.keys()) {
-    const home = HOLDERS.find(({name}) => name.startsWith(`${owner}.`))?.module;
-    const forms = CONSULTED.flatMap(module => module === home ? [] : spellings(module, owner).map(spellingForm));
-    if (CONSULTED.some(module => module !== home && spellings(module, owner).length > 0)) departures.push(`${owner}: spelled outside its module (${formsOf(forms)})`);
-  }
-  for (const module of CONSULTED) {
-    const evals = spellings(module, 'eval').filter(node => ts.isIdentifier(node));
-    if (spellings(module, 'eval').some(node => ts.isIdentifier(node))) departures.push(`${module}: eval (${formsOf(evals.map(evalForm))})`);
-  }
-  const sites: Record<string, string> = {};
-  const read = <T extends {readonly span: readonly [number, number]}>(id: string, module: ConsultedModule, holder: string,
-    reader: (node: ts.FunctionLikeDeclaration) => T | undefined): T | undefined => {
-    const node = holders.get(holder);
-    const site = node === undefined ? undefined : reader(node);
-    if (site === undefined) departures.push(`${id}: not read`);
-    else {
-      spans[id] = [module, site.span[0], site.span[1]];
-      sites[id] = texts[module].slice(site.span[0], site.span[1]);
-    }
-    return site;
+/** A call THE JUDGED TEXT ITSELF records (wb-5bua): the three module texts the call read, as it read them, and the reading it
+ * returned, each frozen. */
+type JudgedCall = readonly [texts: ModuleTexts, reading: AcceptanceReading];
+/** THE JUDGED TEXT ITSELF's judge and record (wb-5bua; its cut #2 cures refusal #1's U1, a record that read its caller's own
+ * object after the call): acceptanceOf() and judgedDuring() share this closure, so no other code reaches the record they keep
+ * or the installed texts' parses acceptanceOf() judges by, and a call judges any other text by a parse it makes itself, never
+ * one read from parsedModules. While judgedDuring() runs a function (T2 runs its DEEP RUNS AT EVERY MIDDLE POSITION
+ * sweep so, and nothing else), each acceptanceOf() call appends to the record the frozen copy of the module texts it read and
+ * the frozen reading it returns, in call order; when the function returns, judgedDuring() returns its result with the record,
+ * frozen. A second record is refused while one is open, and outside a run no call records anything. */
+const {acceptanceOf, judgedDuring} = ((): {
+  readonly acceptanceOf: (texts: ModuleTexts) => AcceptanceReading;
+  readonly judgedDuring: <T>(run: () => T) => readonly [result: T, calls: readonly JudgedCall[]];
+} => {
+  let record: JudgedCall[] | undefined;
+  let installed: ReadonlyMap<ConsultedModule, readonly [text: string, file: ts.SourceFile]> | undefined;
+  /** The parse acceptanceOf() judges a module text by: the installed text's, parsed here once, or for any other text a parse made
+   * for that call, which it also sets in parsedModules (where the readers that read a planted copy's parse after its judgment
+   * find it) but never reads back. */
+  const judgedFile = (module: ConsultedModule, text: string): ts.SourceFile => {
+    installed ??= new Map(CONSULTED.map(name => {
+      const own = moduleText(name);
+      return [name, [own, ts.createSourceFile(name, own, ts.ScriptTarget.Latest, true, ts.ScriptKind.JS)]] as const;
+    }));
+    const own = installed.get(module);
+    if (own !== undefined && own[0] === text) return own[1];
+    const file = ts.createSourceFile(module, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);
+    parsedModules.set(`${module}\n${text}`, file);
+    return file;
   };
-  const filter = read('filter', 'protocol/query.js', 'parseFrameLine', filterSite);
-  const refusal = read('envelope-refusal', 'protocol/decoder.js', 'StreamChecker.feed', refusalSite);
-  const dispatch = read('dispatch', 'protocol/decoder.js', 'StreamChecker.feed', dispatchSite);
-  const check = read('check', 'protocol/decoder.js', 'StreamChecker.payload', checkSite);
-  const lists: string[] = [];
-  const declared = (name: string, module: ConsultedModule, initializer: ts.Expression | undefined): ts.Expression | undefined => {
-    if (initializer !== undefined) {
-      lists.push(name);
-      spans[name] = [module, initializer.getStart(), initializer.getEnd()];
+  /** A value with every array and object it holds frozen, itself included. */
+  const frozen = <T>(value: T): T => {
+    if (typeof value === 'object' && value !== null) {
+      for (const inner of Object.values(value) as unknown[]) frozen(inner);
+      Object.freeze(value);
     }
-    return initializer;
+    return value;
   };
-  const frameLine = holders.get('parseFrameLine');
-  const known = filter === undefined || refusal === undefined || frameLine === undefined ? undefined
-    : literalMembers(setLiteral(declared(filter.set, 'protocol/query.js', constIn(frameLine, filter.set))), filter.set, departures);
-  const envelope = known === undefined ? [] : known.includes(UNRECORDED) ? known : [...known, UNRECORDED];
-  const decoder = parsedModule('protocol/decoder.js', texts['protocol/decoder.js']);
-  const dispatched = dispatch === undefined ? []
-    : literalMembers(setLiteral(declared(dispatch.set, 'protocol/decoder.js', moduleConstIn(decoder, dispatch.set))), dispatch.set, departures);
-  const bodies: Record<string, readonly string[]> = {};
-  if (check !== undefined && dispatch !== undefined) {
-    const table = declared(check.table, 'protocol/decoder.js', moduleConstIn(decoder, check.table));
-    const frozen = table !== undefined && ts.isCallExpression(table) && table.expression.getText() === 'Object.freeze'
-      && table.arguments.length === 1 ? table.arguments[0] : undefined;
-    if (frozen === undefined || !ts.isObjectLiteralExpression(frozen)) departures.push(`${check.table}: not read`);
-    else {
-      for (const property of frozen.properties) {
-        const kind = ts.isPropertyAssignment(property) && (ts.isIdentifier(property.name) || ts.isStringLiteral(property.name))
-          ? property.name.text : undefined;
-        if (kind === undefined || !ts.isPropertyAssignment(property)) departures.push(`${check.table}: a member that is not a key list (${tableMemberForm(property)})`);
-        else if (!dispatched.includes(kind)) departures.push(`${check.table}.${kind}: not dispatched`);
-        else bodies[kind] = literalMembers(property.initializer, `${check.table}.${kind}`, departures);
+  /** The acceptance reading over three module texts (the installed ones, or a planted copy). Each HOLDER is declared once (one
+   * declaration declarationsOf() counts, and no member of its class whose name memberName() does not read, each as T2 pins it in
+   * its TWICE_CELLS and UNREAD_FORMS plants and its 23 positions only) with its pinned text and
+   * written by no name the modules spell (outside the HOLDERS' text its own module spells its name only at a declaration counted for
+   * it or where calledOrImported() holds, its class is spelled in no other consulted module, and no module spells eval, each
+   * departure naming its forms, as T2 pins it in its WRITE_FORMS, written, compound, nested compound, middle compound, nested
+   * written and deep compound rows, SPELLED_STATEMENTS, BINDING_STATEMENTS (each also after each module's first top-level
+   * statement, and the &&=
+   * statement of the latter and the plain assignment of the former nested in each of the NESTINGS and in each of the DEEP_RUNS
+   * (in a DEEP_RUNS run also after each top-level statement of its module but its last), and after each top-level statement of
+   * its module but its last), the compound cell's statement, with its seat key and with the deep key, at each of the decoder
+   * module's middle positions and P-DEEP4-MID2's, CLASS_FORMS, CLASS_STATEMENTS,
+   * eval, parenthesized-eval and EVAL_STATEMENTS plants only, any other statement NOT CLAIMED); each
+   * consulted site is read by its shape, its sets' names read from it; the
+   * set the filter tests, the dispatched set and the table the check consults are read as string literals in their declared
+   * containers (pinned for an element in each of the 13 ELEMENT_FORMS, each as its one text, at each position of each key list, and for
+   * a Set subclass's constructor, only); and the two module-level ones are each read at the one
+   * declaration of its name among the decoder module's top-level statements (moduleConstIn(), pinned for a top-level block, a
+   * switch case, the 18 NESTINGS and a top-level var redeclaration only) and spelled in the three modules only at that declaration
+   * and their site (pinned for its REFERENCE_FORMS plants only). Each failure is a departure, and a part of acceptance whose sites
+   * are not all read reads empty: the
+   * envelope (the set's members and UNRECORDED) needs the filter and the refusal, the bodies the dispatch and the check, a table kind
+   * its dispatch. The call reads each consulted module's text from its argument once, at its start, judges that frozen copy alone
+   * by its own parse of each text (judgedFile()) and returns the reading frozen; while judgedDuring() runs, it appends that copy and
+   * that reading to the record (T2's THE JUDGED TEXT ITSELF). */
+  function acceptanceOf(given: ModuleTexts): AcceptanceReading {
+    const texts: ModuleTexts = Object.freeze({'result.js': given['result.js'], 'protocol/query.js': given['protocol/query.js'],
+      'protocol/decoder.js': given['protocol/decoder.js']});
+    const files: Readonly<Record<ConsultedModule, ts.SourceFile>> = {'result.js': judgedFile('result.js', texts['result.js']),
+      'protocol/query.js': judgedFile('protocol/query.js', texts['protocol/query.js']),
+      'protocol/decoder.js': judgedFile('protocol/decoder.js', texts['protocol/decoder.js'])};
+    const departures: string[] = [];
+    const spans: Record<string, Span> = {};
+    const holders = new Map<string, ts.FunctionLikeDeclaration>();
+    const counted = new Set<ts.Node>();
+    for (const holder of HOLDERS) {
+      const found = declarationsOf(files[holder.module], holder.name);
+      for (const declaration of found) {
+        const node = nameNode(declaration);
+        if (node !== undefined) counted.add(node);
+      }
+      const only = found.length === 1 ? found[0] : undefined;
+      if (only === undefined) {
+        departures.push(`${holder.name}: ${found.length} declarations (${found.map(declarationForm).join(', ')})`);
+        continue;
+      }
+      if (ts.isFunctionDeclaration(only) || ts.isMethodDeclaration(only)) holders.set(holder.name, only);
+      spans[holder.name] = [holder.module, only.getStart(), only.getEnd()];
+      if (sha256(Buffer.from(only.getText(), 'utf8')) !== holder.sha256) departures.push(`${holder.name}: text`);
+    }
+    // A member of a class holding a HOLDER whose name memberName() does not read (one built at run time could be a HOLDER's) departs,
+    // naming the form of each such member (unreadForm()): pinned for the 11 UNREAD_FORMS members and a static block at each of the
+    // class's positions only, any other kind, form or position NOT CLAIMED.
+    const classes = new Map<string, ts.ClassDeclaration>();
+    for (const {module, name} of HOLDERS) {
+      const owner = name.includes('.') ? name.slice(0, name.indexOf('.')) : undefined;
+      const declaration = files[module].statements.find((statement): statement is ts.ClassDeclaration =>
+        ts.isClassDeclaration(statement) && statement.name?.text === owner);
+      if (owner !== undefined && declaration !== undefined) classes.set(owner, declaration);
+    }
+    for (const [owner, declaration] of classes) {
+      const unread = declaration.members.filter(member => memberName(member) === undefined);
+      if (unread.length > 0) departures.push(`${owner}: a member whose name is not read (${formsOf(unread.map(unreadForm))})`);
+    }
+    // No name the modules spell writes a HOLDER: outside the HOLDERS' text its own module spells its name only at a declaration
+    // counted above or as a callee or a named import, its class is spelled in no other consulted module, and no module spells eval;
+    // each departure names its forms (writeForm(), spellingForm(), evalForm()): pinned for T2's WRITE_FORMS, written, compound,
+    // nested compound, middle compound, nested written and deep compound rows, its SPELLED_STATEMENTS and BINDING_STATEMENTS at each
+    // HOLDER module's
+    // start, after its first top-level statement and at its end, BINDING_STATEMENTS' &&= statement and SPELLED_STATEMENTS' plain
+    // assignment nested in each of the NESTINGS at its start and end and in each of the DEEP_RUNS there and after each of its
+    // top-level statements but its last, and unnested after each of its top-level statements but its last, the compound cell's
+    // statement, with its seat key
+    // and with the deep key, at each of the decoder module's middle positions and P-DEEP4-MID2's, its CLASS_FORMS and
+    // CLASS_STATEMENTS, and its eval rows
+    // and EVAL_STATEMENTS
+    // only, any other statement or spelling NOT CLAIMED.
+    const spellings = (module: ConsultedModule, name: string): readonly ts.Node[] => spellingsIn(files[module], name);
+    const inHolders = (module: ConsultedModule, node: ts.Node): boolean => HOLDERS.some(({name}) => within(spans[name], module, node.getStart()));
+    for (const holder of HOLDERS) {
+      const member = holder.name.slice(holder.name.indexOf('.') + 1);
+      const strays = spellings(holder.module, member).filter(node => !inHolders(holder.module, node) && !counted.has(node) && !calledOrImported(node));
+      if (strays.length > 0) departures.push(`${holder.name}: spelled outside a call (${formsOf(strays.map(writeForm))})`);
+    }
+    for (const owner of classes.keys()) {
+      const home = HOLDERS.find(({name}) => name.startsWith(`${owner}.`))?.module;
+      const forms = CONSULTED.flatMap(module => module === home ? [] : spellings(module, owner).map(spellingForm));
+      if (CONSULTED.some(module => module !== home && spellings(module, owner).length > 0)) departures.push(`${owner}: spelled outside its module (${formsOf(forms)})`);
+    }
+    for (const module of CONSULTED) {
+      const evals = spellings(module, 'eval').filter(node => ts.isIdentifier(node));
+      if (spellings(module, 'eval').some(node => ts.isIdentifier(node))) departures.push(`${module}: eval (${formsOf(evals.map(evalForm))})`);
+    }
+    const sites: Record<string, string> = {};
+    const read = <T extends {readonly span: readonly [number, number]}>(id: string, module: ConsultedModule, holder: string,
+      reader: (node: ts.FunctionLikeDeclaration) => T | undefined): T | undefined => {
+      const node = holders.get(holder);
+      const site = node === undefined ? undefined : reader(node);
+      if (site === undefined) departures.push(`${id}: not read`);
+      else {
+        spans[id] = [module, site.span[0], site.span[1]];
+        sites[id] = texts[module].slice(site.span[0], site.span[1]);
+      }
+      return site;
+    };
+    const filter = read('filter', 'protocol/query.js', 'parseFrameLine', filterSite);
+    const refusal = read('envelope-refusal', 'protocol/decoder.js', 'StreamChecker.feed', refusalSite);
+    const dispatch = read('dispatch', 'protocol/decoder.js', 'StreamChecker.feed', dispatchSite);
+    const check = read('check', 'protocol/decoder.js', 'StreamChecker.payload', checkSite);
+    const lists: string[] = [];
+    const declared = (name: string, module: ConsultedModule, initializer: ts.Expression | undefined): ts.Expression | undefined => {
+      if (initializer !== undefined) {
+        lists.push(name);
+        spans[name] = [module, initializer.getStart(), initializer.getEnd()];
+      }
+      return initializer;
+    };
+    const frameLine = holders.get('parseFrameLine');
+    const known = filter === undefined || refusal === undefined || frameLine === undefined ? undefined
+      : literalMembers(setLiteral(declared(filter.set, 'protocol/query.js', constIn(frameLine, filter.set))), filter.set, departures);
+    const envelope = known === undefined ? [] : known.includes(UNRECORDED) ? known : [...known, UNRECORDED];
+    const decoder = files['protocol/decoder.js'];
+    const dispatched = dispatch === undefined ? []
+      : literalMembers(setLiteral(declared(dispatch.set, 'protocol/decoder.js', moduleConstIn(decoder, dispatch.set))), dispatch.set, departures);
+    const bodies: Record<string, readonly string[]> = {};
+    if (check !== undefined && dispatch !== undefined) {
+      const table = declared(check.table, 'protocol/decoder.js', moduleConstIn(decoder, check.table));
+      const frozen = table !== undefined && ts.isCallExpression(table) && table.expression.getText() === 'Object.freeze'
+        && table.arguments.length === 1 ? table.arguments[0] : undefined;
+      if (frozen === undefined || !ts.isObjectLiteralExpression(frozen)) departures.push(`${check.table}: not read`);
+      else {
+        for (const property of frozen.properties) {
+          const kind = ts.isPropertyAssignment(property) && (ts.isIdentifier(property.name) || ts.isStringLiteral(property.name))
+            ? property.name.text : undefined;
+          if (kind === undefined || !ts.isPropertyAssignment(property)) departures.push(`${check.table}: a member that is not a key list (${tableMemberForm(property)})`);
+          else if (!dispatched.includes(kind)) departures.push(`${check.table}.${kind}: not dispatched`);
+          else bodies[kind] = literalMembers(property.initializer, `${check.table}.${kind}`, departures);
+        }
       }
     }
+    const references = [dispatch?.set, check?.table].flatMap(name => name === undefined ? [] : [name]);
+    for (const name of references) {
+      const found = CONSULTED.flatMap(module => spellings(module, name).map(node => module === spans[name]?.[0] ? spellingForm(node)
+        : spellingForm(node) === 'identifier' ? 'elsewhere' : `elsewhere-${spellingForm(node)}`));
+      if (found.length !== 2) departures.push(`${name}: ${found.length} references (${formsOf(found)})`);
+    }
+    const reading: AcceptanceReading = frozen({envelope, bodies, dispatched, sites, lists, references, spans, departures});
+    record?.push(Object.freeze([texts, reading] as const));
+    return reading;
   }
-  const references = [dispatch?.set, check?.table].flatMap(name => name === undefined ? [] : [name]);
-  for (const name of references) {
-    const found = CONSULTED.flatMap(module => spellings(module, name).map(node => module === spans[name]?.[0] ? spellingForm(node)
-      : spellingForm(node) === 'identifier' ? 'elsewhere' : `elsewhere-${spellingForm(node)}`));
-    if (found.length !== 2) departures.push(`${name}: ${found.length} references (${formsOf(found)})`);
+  /** Runs a function with the record open (none may be open already) and returns its result with the calls acceptanceOf() made
+   * while it ran, in call order, frozen; the record is closed when the function returns or throws. */
+  function judgedDuring<T>(run: () => T): readonly [result: T, calls: readonly JudgedCall[]] {
+    if (record !== undefined) throw new Error('judgedDuring: a record is already open');
+    const calls: JudgedCall[] = [];
+    record = calls;
+    try {
+      return [run(), Object.freeze([...calls])];
+    } finally {
+      record = undefined;
+    }
   }
-  return {envelope, bodies, dispatched, sites, lists, references, spans, departures};
-}
+  return {acceptanceOf, judgedDuring};
+})();
 /** The callees of the HOLDERS, each written <module>#<name>: a function or class (as its constructor) the holder's module declares,
  * a name it imports, or a method of the holder's own class called on this or of a module class whose instance a local const holds;
  * sorted, each once. */
@@ -2077,8 +2165,10 @@ const NESTINGS: readonly (readonly [label: string, before: string, after: string
  * statement (one for each HOLDER, operator and run, 80) after its module's first top-level statement, so at its second, a middle
  * one, and reads each so from the text its judge reads (80 controls), beside the landing-941 gate's P-DEEP4-MID2, byte-identical;
  * and (wb-ant2) plants each after each later top-level statement of its module but its last, so at each of its middle positions
- * past its second, and reads each so as T2's THE CONTROLS' READING reads it (2620 controls; which text each is judged on NOT
- * CLAIMED). A run of more than eight blocks and a run of four to eight that is not all bare block statements are NOT CLAIMED. */
+ * past its second, and reads each so as T2's THE CONTROLS' READING reads it (2620 controls), and (wb-5bua) records each one's
+ * acceptanceOf() call, one per control, the frozen copy of the texts it read and judged reading its planted text byte for byte
+ * (T2's THE JUDGED TEXT ITSELF). A run of more than eight blocks
+ * and a run of four to eight that is not all bare block statements are NOT CLAIMED. */
 const DEEP_RUNS: readonly number[] = [4, 5, 6, 7, 8];
 /** A statement text nested in an unbroken run of bare block statements, each brace on its own line, as the NESTINGS' block inside
  * a block inside a block wraps it for a run of three. */
@@ -4080,9 +4170,10 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     // is so pinned at every top-level position of its HOLDER's module. THE CONTROLS' READING (wb-ant2 cut #4): sameParseReading()
     // reads each control's verdict, its place and its writes, as the judges below read; the reading has deepMiddleReading()'s
     // form, and the two read DEEP RUNS AT A MIDDLE
-    // POSITION's 80 plants and P-DEEP4-MID2 alike. Which text a verdict is judged on and which parse its place and writes are read
-    // from (the judged-text identity set the guard R-B627 bound, which the structural-exit ruling R-B652 moves to the child
-    // wb-5bua) is NOT CLAIMED by this census. What parsedModules, the parse cache keyed by module and text, holds after any
+    // POSITION's 80 plants and P-DEEP4-MID2 alike. Which text a verdict is judged on (the judged-text identity set the guard R-B627
+    // bound, which the structural-exit ruling R-B652 moves to the child wb-5bua) is THE JUDGED TEXT ITSELF's (below), and which
+    // parse its place and writes are read from is NOT CLAIMED by this census. What parsedModules, the parse cache keyed by module
+    // and text, holds after any
     // reading sameParseReading() or judgedParse() gives (the parse-release set the guard R-B663 bound as its GUARD A, which
     // refusal #6, outbox O:2257, exits to its structural-exit child) is NOT CLAIMED by this census. THE PLACES HELD: the 2620
     // readings are exactly one for each HOLDER, each of &&= and = (the operators the NESTED BINDINGS and NESTED PLAIN BINDINGS
@@ -4115,15 +4206,138 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
           ? [`${ts.tokenToString(node.parent.operatorToken.kind) ?? ''} ${blockRun(node)} ${bareRun(node)} ${writeContext(node)} ${writePosition(node)}`]
           : [])].join(' ');
     };
-    const deepEveryPlants = HOLDERS.flatMap(({module, name}) => Array.from({length: parsedModule(module, texts[module]).statements.length - 2},
+    const deepEveryPlants = Object.freeze(HOLDERS.flatMap(({module, name}) => Array.from({length: parsedModule(module, texts[module]).statements.length - 2},
       (_, index) => index + 1).flatMap(after => [nestedStatement, plainStatement].flatMap(statement => DEEP_RUNS.map(run => {
         const spelled = inBlocks(run, statement).replace('<name>', () => name.slice(name.indexOf('.') + 1));
-        return [module, name, afterStatement(module, after, spelled), spelled] as const;
-      }))));
+        return Object.freeze([module, name, afterStatement(module, after, spelled), spelled] as const);
+      })))));
     expect(deepEveryPlants.length).toBe(2620);
-    expect(deepEveryPlants.map(plant => sameParseReading(...plant)).sort()).toStrictEqual(HOLDERS.flatMap(({module, name}) =>
+    const [everyReadings, everyJudged] = judgedDuring(() => deepEveryPlants.map(plant => sameParseReading(...plant)));
+    expect([...everyReadings].sort()).toStrictEqual(HOLDERS.flatMap(({module, name}) =>
       parsedModule(module, texts[module]).statements.slice(2).flatMap((_, index) => nestedOperators.flatMap(operator => DEEP_RUNS.map(run =>
         `${module} ${name} binding at ${index + 2} ${operator} ${run} ${run} nested middle`)))).sort());
+    // THE JUDGED TEXT ITSELF (wb-5bua, the child the structural-exit ruling R-B652 files at wb-ant2's refusal #3 for the
+    // judged-text identity set the guard R-B627 bound; its cut #2 cures its refusal #1's U1): the sweep above runs inside
+    // judgedDuring(), so for each acceptanceOf() call its 2620 controls make the record holds the module texts that call read
+    // (a frozen copy it took once, at its start, and judged alone, by its own parse of each text, never by one another caller
+    // put in parsedModules) and the reading it returned (frozen), in a list only acceptanceOf() appends to, handed back frozen
+    // when the sweep ends; the plants and the installed texts are frozen. misjudged() holds that record to the controls:
+    // exactly one call for each control, in the controls' order, reading the control's planted text byte for byte in its
+    // module's place and the installed text in each other consulted module's, and each control's verdict (the word
+    // sameParseReading() reads it with) the one verdictOf() reads from that call's reading. misjudged() names each control
+    // with no call (unjudged), with a call reading any other module text (text) or with another verdict (verdict), and the
+    // calls past the controls' count (surplus); after the sweep the record takes no further call. So a judgment of any other
+    // text puts the text it read in the record (refusal #1's GP29-A1-ALIAS-END and GP29-A2-ALIAS-START, which judge through an
+    // object they write the planted text into once the call returns, leave their moved texts there), and a write to a
+    // reading, to the record handed back, to a plant or to the installed texts throws. Which judgment a control's verdict is
+    // computed from, when it is the one verdictOf() reads from its call's reading (a judgment made before the sweep's record
+    // opens included), which parse its place and writes are read from, and a judgment that rebinds or rewrites code a reading
+    // runs (one of this file's functions, the TypeScript parser's, or a built-in function or prototype) are NOT CLAIMED by this
+    // census.
+    const verdictOf = (name: string, reading: AcceptanceReading): string =>
+      isDeepStrictEqual(departing(reading, acceptance), [`${name}: spelled outside a call (binding)`]) ? 'binding' : 'misread';
+    const misjudged = (plants: readonly (readonly [ConsultedModule, string, string, string])[], verdicts: readonly string[],
+      judgedCalls: readonly JudgedCall[]): string[] => [...plants.flatMap(([module, name, planted], index) => {
+        const call = judgedCalls[index];
+        if (call === undefined) return [`${index} unjudged`];
+        if (CONSULTED.some(consulted => call[0][consulted] !== (consulted === module ? planted : texts[consulted]))) return [`${index} text`];
+        return verdicts[index] === verdictOf(name, call[1]) ? [] : [`${index} verdict`];
+      }), ...(judgedCalls.length > plants.length ? [`surplus ${judgedCalls.length - plants.length}`] : [])];
+    expect(misjudged(deepEveryPlants, everyReadings.map(reading => reading.split(' ')[2] ?? ''), everyJudged)).toStrictEqual([]);
+    // The judge fires: on the sweep's first control, misjudged() names it unjudged for no call, text for a call reading its
+    // statement moved after its text's end (refusal #2's GP8-V3 text) and for one reading its text beside another consulted
+    // module's text with that statement after its end, verdict for a call reading its text with the installed modules' reading
+    // (no departure, so misread, against the binding its own reading gives), and the second of two calls reading its text with
+    // its own reading as surplus, and names nothing for one such call; on the sweep's first two controls, it names both (text)
+    // for their own calls recorded in the other order.
+    const [firstModule, firstName, firstPlanted, firstStatement] = deepEveryPlants[0] ?? (['result.js', '', '', ''] as const);
+    const firstTexts: ModuleTexts = {...texts, [firstModule]: firstPlanted};
+    const firstReading = readingWith(texts, firstModule, firstPlanted);
+    const otherModule = CONSULTED.find(module => module !== firstModule) ?? firstModule;
+    const ownCall = [firstTexts, firstReading] as const;
+    const firstVerdicts = [verdictOf(firstName, firstReading)];
+    const firstMisjudged = (calls: readonly (readonly [ModuleTexts, AcceptanceReading])[]): string[] =>
+      misjudged(deepEveryPlants.slice(0, 1), firstVerdicts, calls);
+    const [secondModule, secondName, secondPlanted] = deepEveryPlants[1] ?? (['result.js', '', '', ''] as const);
+    const secondCall = [{...texts, [secondModule]: secondPlanted}, readingWith(texts, secondModule, secondPlanted)] as const;
+    expect([firstVerdicts, firstMisjudged([]),
+      firstMisjudged([[{...texts, [firstModule]: `${firstPlanted.replace(`\n${firstStatement}`, () => '')}\n${firstStatement}`}, firstReading]]),
+      firstMisjudged([[{...firstTexts, [otherModule]: `${texts[otherModule]}\n${firstStatement}`}, firstReading]]),
+      firstMisjudged([[firstTexts, acceptance]]), firstMisjudged([ownCall, ownCall]), firstMisjudged([ownCall]),
+      misjudged(deepEveryPlants.slice(0, 2), [...firstVerdicts, verdictOf(secondName, secondCall[1])], [secondCall, ownCall])])
+      .toStrictEqual([['binding'], ['0 unjudged'], ['0 text'], ['0 text'], ['0 verdict'], ['surplus 1'], [], ['0 text', '1 text']]);
+    // The record took no call after the sweep: the two readings above are not in it.
+    expect(everyJudged.length).toBe(deepEveryPlants.length);
+    // The record is what each call read (cut #2, refusal #1's U1): on the sweep's first control, misjudged() names text for a
+    // call reading its statement moved after its text's end (GP29-A1-ALIAS-END's text) or before its start (GP29-A2-ALIAS-START's)
+    // through an object its caller writes the planted text into once the call returns, and for a call reading an argument whose
+    // own-module text reads the moved-after text first and the planted text on every later read, which call reads each consulted
+    // module's text once, in CONSULTED's order, and returns the moved-after text's own reading; a parse of the moved-after text
+    // put in parsedModules under the planted text's key, or a parse of another consulted module's installed text with a write
+    // of one of its HOLDERS after its end put under that installed text's key, leaves the planted text's reading unmoved (the
+    // call judges by its own parses); a second record opened while one is open is refused; and the sweep's record, the reading
+    // a call returns, the plants and the installed texts are frozen through every array and object they hold.
+    const movedAfter = `${firstPlanted.replace(`\n${firstStatement}`, () => '')}\n${firstStatement}`;
+    const movedBefore = `${firstStatement}\n${firstPlanted.replace(`\n${firstStatement}`, () => '')}`;
+    const aliasedCalls = (built: string): readonly JudgedCall[] => {
+      const [, calls] = judgedDuring(() => {
+        const aliased: Record<ConsultedModule, string> = {...texts, [firstModule]: built};
+        acceptanceOf(aliased);
+        aliased[firstModule] = firstPlanted;
+      });
+      parsedModules.delete(`${firstModule}\n${built}`);
+      return calls;
+    };
+    const shiftingReads: ConsultedModule[] = [];
+    const shiftingText = (module: ConsultedModule): string => {
+      shiftingReads.push(module);
+      return module !== firstModule ? texts[module] : shiftingReads.filter(read => read === module).length === 1 ? movedAfter : firstPlanted;
+    };
+    const shifting: ModuleTexts = {
+      get 'result.js'() {
+        return shiftingText('result.js');
+      },
+      get 'protocol/query.js'() {
+        return shiftingText('protocol/query.js');
+      },
+      get 'protocol/decoder.js'() {
+        return shiftingText('protocol/decoder.js');
+      },
+    };
+    const [shiftingReading, shiftingCalls] = judgedDuring(() => acceptanceOf(shifting));
+    parsedModules.delete(`${firstModule}\n${movedAfter}`);
+    const movedAfterReading = readingWith(texts, firstModule, movedAfter);
+    const plantedKey = `${firstModule}\n${firstPlanted}`;
+    const placedUnder = (key: string, module: ConsultedModule, placed: string): AcceptanceReading => {
+      const held = new Map([key, plantedKey].map(name => [name, parsedModules.get(name)] as const));
+      parsedModules.set(key, ts.createSourceFile(module, placed, ts.ScriptTarget.Latest, true, ts.ScriptKind.JS));
+      const reading = acceptanceOf(firstTexts);
+      for (const [name, file] of held) {
+        if (file === undefined) parsedModules.delete(name);
+        else parsedModules.set(name, file);
+      }
+      return reading;
+    };
+    const placedReading = placedUnder(plantedKey, firstModule, movedAfter);
+    const otherHolder = HOLDERS.find(({module, name}) => module === otherModule && !name.includes('.'))?.name ?? '';
+    const placedOtherReading = placedUnder(`${otherModule}\n${texts[otherModule]}`, otherModule, `${texts[otherModule]}\n${otherHolder} = undefined;`);
+    const reopened = ((): string => {
+      try {
+        judgedDuring(() => judgedDuring(() => 0));
+        return 'opened';
+      } catch (error) {
+        return error instanceof Error ? error.message : String(error);
+      }
+    })();
+    const frozenThrough = (value: unknown): boolean => typeof value !== 'object' || value === null
+      || (Object.isFrozen(value) && (Object.values(value) as unknown[]).every(frozenThrough));
+    expect([misjudged(deepEveryPlants.slice(0, 1), firstVerdicts, aliasedCalls(movedAfter)),
+      misjudged(deepEveryPlants.slice(0, 1), firstVerdicts, aliasedCalls(movedBefore)),
+      misjudged(deepEveryPlants.slice(0, 1), firstVerdicts, shiftingCalls), shiftingReads,
+      isDeepStrictEqual(shiftingReading, movedAfterReading), otherHolder, isDeepStrictEqual(placedReading, firstReading),
+      isDeepStrictEqual(placedOtherReading, firstReading), reopened, [everyJudged, firstReading, deepEveryPlants, texts].map(frozenThrough)])
+      .toStrictEqual([['0 text'], ['0 text'], ['0 text'], CONSULTED, true, 'parseFrameLine', true, true,
+        'judgedDuring: a record is already open', [true, true, true, true]]);
     // The two readings read alike: over DEEP RUNS AT A MIDDLE POSITION's 80 plants and P-DEEP4-MID2, sameParseReading() reads
     // exactly what deepMiddleReading() reads.
     expect([...deepMiddlePlants, ['protocol/decoder.js', 'checkStream', d4Planted, d4Statement] as const]
