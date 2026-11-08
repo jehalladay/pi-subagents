@@ -99,12 +99,14 @@ const refusal = (path: string, blob: string, bytes: number, ceiling: number): st
 const stderrLines = (r: SpawnSyncReturns<string>): string[] => r.stderr.split("\n").filter(line => line.length > 0);
 
 describe("wb-294d export-size guard: the soft ceiling", () => {
-  it("G1 the default is 95 MiB = 99,614,720 bytes; a positive whole number in FW_EXPORT_SOFT_CEILING replaces it; zero, a negative, a fraction, a word, an exponent, a padded or zero-led number and one past 2^53 refuse (rc 3 at guard and at pre-push here; compact's is the compaction suite's K8)", () => {
+  it("G1 the default is 95 MiB = 99,614,720 bytes; a positive whole number in FW_EXPORT_SOFT_CEILING replaces it, 2^53 - 1 the largest; zero, a negative, a fraction, a word, an exponent, a padded or zero-led number, 2^53 and one past 2^53 refuse (rc 3 at guard and at pre-push here; compact's is the compaction suite's K8)", () => {
     expect(DEFAULT_SOFT_CEILING).toBe(99_614_720);
     expect(softCeiling({})).toEqual({ ok: true, bytes: 99_614_720 });
     expect(softCeiling({ [CEILING_ENV]: "" })).toEqual({ ok: true, bytes: 99_614_720 });
     expect(softCeiling({ [CEILING_ENV]: "4096" })).toEqual({ ok: true, bytes: 4096 });
-    for (const bad of ["0", "-5", "1.5", "abc", "1e3", " 12", "012", "9007199254740993"]) {
+    // wb-137f refusal #3 U6 (GP1-07): 2^53 - 1 is the largest ceiling; 2^53 refuses like 2^53 + 1.
+    expect(softCeiling({ [CEILING_ENV]: "9007199254740991" })).toEqual({ ok: true, bytes: Number.MAX_SAFE_INTEGER });
+    for (const bad of ["0", "-5", "1.5", "abc", "1e3", " 12", "012", "9007199254740992", "9007199254740993"]) {
       const result = softCeiling({ [CEILING_ENV]: bad });
       expect(result.ok, bad).toBe(false);
     }
@@ -142,13 +144,32 @@ describe("wb-294d export-size guard: the CLI a push path calls before git push",
     expect(stderrLines(r)).toEqual([refusal(SHARD, repo.blobOf(tip, SHARD), 500, 400)]);
   });
 
-  it("G4 every oversized blob in the pushed range gets its own line - an intermediate commit's blob is caught though the tip shrank it", () => {
+  it("G4 every oversized blob in the pushed range gets its own line - an intermediate commit's blob is caught though the tip shrank it, and two commits that write two different oversized blobs to one path - of two sizes, and of one size - print two lines, one per blob", () => {
     const repo = makeRepo();
     const big = repo.commit({ [MAIN]: 900 }, "a big export");
     const tip = repo.commit({ [MAIN]: 20, [SHARD]: 700 }, "export shrunk, shard large");
     const r = repo.guard([tip], "600");
     expect(r.status).toBe(2);
     expect(stderrLines(r).sort()).toEqual([refusal(MAIN, repo.blobOf(big, MAIN), 900, 600), refusal(SHARD, repo.blobOf(tip, SHARD), 700, 600)].sort());
+    // wb-137f refusal #3 U5 (GP1-10): two oversized blobs, each written to .beads/issues.jsonl by its own commit.
+    const twice = makeRepo();
+    const one = twice.commit({ [MAIN]: 900 }, "one oversized export");
+    const two = twice.commit({ [MAIN]: 901 }, "another oversized export at the same path");
+    expect(twice.blobOf(two, MAIN)).not.toBe(twice.blobOf(one, MAIN));
+    const both = twice.guard([two], "600");
+    expect(both.status).toBe(2);
+    expect(stderrLines(both).sort()).toEqual([refusal(MAIN, twice.blobOf(one, MAIN), 900, 600), refusal(MAIN, twice.blobOf(two, MAIN), 901, 600)].sort());
+    // The same, two blobs of one size: 900 bytes of x, then 900 bytes of y.
+    const sized = makeRepo();
+    const xs = sized.commit({ [MAIN]: 900 }, "an oversized export of x");
+    writeFileSync(join(sized.dir, MAIN), "y".repeat(900));
+    sized.git("add", "--", MAIN);
+    sized.git("commit", "-q", "-m", "an oversized export of y, of the same size");
+    const ys = sized.git("rev-parse", "HEAD");
+    expect(sized.blobOf(ys, MAIN)).not.toBe(sized.blobOf(xs, MAIN));
+    const equal = sized.guard([ys], "600");
+    expect(equal.status).toBe(2);
+    expect(stderrLines(equal).sort()).toEqual([refusal(MAIN, sized.blobOf(xs, MAIN), 900, 600), refusal(MAIN, sized.blobOf(ys, MAIN), 900, 600)].sort());
   });
 
   it("G5 objects reachable from a --not <rev> are not judged: an oversized export blob only an excluded commit holds passes", () => {

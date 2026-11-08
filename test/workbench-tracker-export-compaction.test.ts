@@ -19,12 +19,14 @@
  * "The store" here is its projection: the full `bd export` text. No case reads or writes a bead store.
  * Each case's title claims what its assertions check and no more; the module header (qa/workbench/tracker-export.mjs) cites these case
  * ids (C, R, K, T, S, P) beside the guard suite's (G) for every sentence it claims, and names what it does not claim. P1 holds the plant
- * tables' shape and the module header's PLANTED SHARD LINES block equal to them (wb-137f refusal #2 F4).
+ * tables' shape and the module header's PLANTED SHARD LINES block equal to them (wb-137f refusal #2 F4); P2 holds the cut #4 tables
+ * (UTF8_CHARACTERS, NAMES_OUTSIDE_THE_FORM, SHARD_NAMES_IN_THE_FORM, STATUSES_NOT_CLOSED, FIELDS_BEYOND_STUB) equal to the module
+ * header's CUT #4 PLANT TABLES lists, and K14 its variant labels to the header's K14 variants list (wb-137f refusal #3).
  */
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, readlinkSync, renameSync, symlinkSync, unlinkSync, utimesSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
 import {
@@ -230,6 +232,100 @@ const COMMENT_FORMS = BAD_SHARD_LINES.filter(([label]) => label.startsWith("a li
 const CLI_FORMS = [...PREFIX_FORMS, ...COMMENT_FORMS];
 
 /**
+ * The characters beyond ASCII that R1, R2, K1, K2, K13 and C2 plant in rows' text (wb-137f refusal #3 U1, GP1-15/16/17), each written
+ * by code point under its label: a two-byte, a three-byte and a four-byte UTF-8 character, a no-break space, a letter with a combining
+ * mark after it, and a line separator inside a JSON string. P2 holds this table's shape and the module header's list of it.
+ */
+const UTF8_CHARACTERS: readonly (readonly [label: string, text: string])[] = [
+  ["U+00E9", String.fromCodePoint(0xe9)],
+  ["U+2014", String.fromCodePoint(0x2014)],
+  ["U+1F600", String.fromCodePoint(0x1f600)],
+  ["U+00A0", String.fromCodePoint(0xa0)],
+  ["U+0065 U+0301", `e${String.fromCodePoint(0x301)}`],
+  ["U+2028", String.fromCodePoint(0x2028)],
+];
+
+/** A text holding every character of UTF8_CHARACTERS, and the byte order mark R1 sets before a main export's first line. */
+const UTF8_TEXT = `text beyond ASCII: ${UTF8_CHARACTERS.map(([, text]) => text).join(" ")}`;
+const BYTE_ORDER_MARK = String.fromCodePoint(0xfeff);
+
+/** The fixture with UTF8_TEXT in an open row's title, in a closed row's title and notes in each close month, and in a third closed row. */
+function utf8Rows(): Row[] {
+  return fixtureRows().map(r =>
+    r.id === "wb-o1" ? { ...r, title: `wb-o1 ${UTF8_TEXT}` } : r.id === "wb-c1" || r.id === "wb-c2" ? { ...r, title: `${String(r.id)} ${UTF8_TEXT}`, notes: `notes of ${String(r.id)}: ${UTF8_TEXT}` } : r.id === "wb-c3" ? { ...r, notes: UTF8_TEXT } : r,
+  );
+}
+
+/** The text of a file decoded as UTF-8 by a decoder of its own: invalid UTF-8 throws, and a byte order mark is kept. */
+const utf8Of = (path: string): string => new TextDecoder("utf-8", { fatal: true, ignoreBOM: true }).decode(readFileSync(path));
+
+/** The shard files of the archive directory beside a main export, each decoded by utf8Of: regular files of the shard form, by name. */
+function shardFilesBeside(main: string): [string, string][] {
+  const archive = join(dirname(main), "archive");
+  if (!existsSync(archive) || !lstatSync(archive).isDirectory()) return [];
+  return readdirSync(archive, { withFileTypes: true })
+    .filter(entry => entry.isFile() && /^issues-closed-\d{4}-(?:0[1-9]|1[0-2])\.jsonl$/.test(entry.name))
+    .map(entry => [entry.name, utf8Of(join(archive, entry.name))] as [string, string])
+    .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+}
+
+/** How many lines two texts differ in, line by line: a count to report, never a diff of two exports. */
+function differingLines(a: string, b: string): number {
+  const left = a.split("\n");
+  const right = b.split("\n");
+  let count = 0;
+  for (let index = 0; index < Math.max(left.length, right.length); index += 1) if (left[index] !== right[index]) count += 1;
+  return count;
+}
+
+/**
+ * File names outside the shard form issues-closed-YYYY-MM.jsonl (YYYY four digits, MM 01 to 12) that R4 plants beside a main export,
+ * C9 passes to compactTrackerExport and K5 plants in the archive at the CLI (wb-137f refusal #3 U2, GP1-01..05): each is a regular
+ * file of a stale body, never a shard. P2 holds this table's shape and the module header's list of it.
+ */
+const NAMES_OUTSIDE_THE_FORM: readonly string[] = [
+  "README.md",
+  "issues-closed-2026-11-03.jsonl",
+  "issues-closed-2026-00.jsonl",
+  "issues-closed-2026-13.jsonl",
+  "issues-closed-2026-14.jsonl",
+  "issues-closed-2026-20.jsonl",
+  "issues-closed-2026-1.jsonl",
+  "issues-closed-2026-.jsonl",
+  "issues-closed-202611.jsonl",
+  "issues-closed-202-11.jsonl",
+  "issues-closed-20261-11.jsonl",
+  "issues-closed-YYYY-11.jsonl",
+  "issues-closed-2026-11.jsonl.bak",
+  "old-issues-closed-2026-11.jsonl",
+  "ISSUES-CLOSED-2026-11.JSONL",
+  "issues-closed-2026-11.json",
+  "issues-closed-2026-11xjsonl",
+];
+
+/** Shard file names in the form that R4 and C9 plant as each archive's only shard: each month 01 to 12, and the years 0000, 1999 and 9999. P2 holds this table. */
+const SHARD_NAMES_IN_THE_FORM: readonly string[] = [
+  ...Array.from({ length: 12 }, (_, index) => `issues-closed-2026-${String(index + 1).padStart(2, "0")}.jsonl`),
+  "issues-closed-0000-01.jsonl",
+  "issues-closed-1999-01.jsonl",
+  "issues-closed-9999-12.jsonl",
+];
+
+/**
+ * Statuses that are not "closed" which R6 sets on a stub-shaped row beside an archive and C2 on a full row (wb-137f refusal #3 U4,
+ * GP1-08): two in other letter cases, "closed" with a space or a tab around it, with a newline after it, and inside a longer word.
+ * P2 holds this table's shape (each as its JSON string) and the module header's list of it.
+ */
+const STATUSES_NOT_CLOSED: readonly string[] = ["open", "Closed", "CLOSED", "closed ", " closed", "closed\t", "closed\n", "unclosed", "closedx"];
+
+/**
+ * Fields beyond STUB_FIELDS that R5 adds, one at a time, to a closed row of STUB_FIELDS beside an archive, and C8 to such a row in a
+ * full export (wb-137f refusal #3 U4, GP1-09): an underscore field, two body fields, another stamp field, a number, an array, a longer
+ * name that begins with a stub field's name, and a shorter one inside a stub field's name. P2 holds this table and the module header's list of it.
+ */
+const FIELDS_BEYOND_STUB: readonly string[] = ["_note", "notes", "description", "created_at", "priority", "labels", "titles", "type"];
+
+/**
  * A list the module header names in its PLANTED SHARD LINES block, read back: the text after `  <key>: ` on its line, joined with its
  * continuation lines (indented four spaces past the comment's "* "), split at " | ". An absent key reads as no list.
  */
@@ -270,7 +366,7 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
     expect(closed.every(stub => "updated_at" in stub)).toBe(true);
   });
 
-  it("C2 NON-CLOSED BYTE-EQUAL: every non-closed line of the main export is its full-export line, in the full export's row order", () => {
+  it("C2 NON-CLOSED BYTE-EQUAL: every non-closed line of the main export is its full-export line, in the full export's row order - the fixture's, a row with each status of STATUSES_NOT_CLOSED, rows holding UTF8_CHARACTERS, a line of spaced JSON and a line holding a \\u escape; and a closed line of spaced JSON goes to its shard byte for byte", () => {
     const rows = fixtureRows();
     const full = textOf(rows);
     const result = compactTrackerExport({ full, shards: new Map(), now: "2026-11-03T12:00:00Z" });
@@ -280,6 +376,19 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
     const openLines = rows.filter(r => r.status !== "closed").map(lineOf);
     expect(mainLines.filter(line => parsed(line).status !== "closed")).toEqual(openLines);
     expect(result.main.endsWith("\n")).toBe(true);
+    // wb-137f refusal #3 U1 and U4 (GP1-08 at the compaction's own status test): lines that are not closed, kept as they are.
+    const statusLines = STATUSES_NOT_CLOSED.map((status, index) => lineOf(row(`wb-s${index}`, status)));
+    const spaced = `{"_type": "issue", "id": "wb-sp", "title": "a spaced line", "status": "open"}`;
+    const escaped = `{"_type":"issue","id":"wb-es","title":"an escape: caf\\u00e9","status":"open"}`;
+    expect(JSON.parse(escaped).title).toBe(`an escape: caf${String.fromCodePoint(0xe9)}`);
+    const kept = [...statusLines, ...textOf(utf8Rows().filter(r => r.status !== "closed")).split("\n").filter(line => line.length > 0), spaced, escaped];
+    const closedSpaced = `{"_type": "issue", "id": "wb-cs", "title": "a spaced closed line", "status": "closed", "closed_at": "2026-11-02T00:00:00Z", "notes": "a body"}`;
+    const mixed = `${[...kept, closedSpaced].join("\n")}\n`;
+    const compacted = compactTrackerExport({ full: mixed, shards: new Map(), now: "2026-11-03T12:00:00Z" });
+    if (!compacted.ok) throw new Error(compacted.lines.join("\n"));
+    expect(linesOf(compacted.main).slice(0, kept.length), "each line that is not closed, byte for byte").toEqual(kept);
+    expect([...compacted.shards], "the spaced closed line, byte for byte, in its month's shard").toEqual([["issues-closed-2026-11.jsonl", `${closedSpaced}\n`]]);
+    expect(rehydrateTrackerText(compacted.main, compacted.shards)).toBe(mixed);
   });
 
   it("C3 FIRST COMPACTION: with no shard yet, each closed full line whose UTC close month is at or before the run's goes to that month's shard, in export order; the round trip is byte-equal", () => {
@@ -418,7 +527,7 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
     expect(passes.appended.has("issues-closed-2026-09.jsonl")).toBe(false);
   });
 
-  it("C8 MALFORMED: each line below refuses as malformed - an unparseable line (each of the eight lines of whitespace alone among them), null, an array, a number or a string, a row whose id is none, empty, a number or null, a row whose status is none, a number or null, a duplicate id, and a closed row already in stub shape", () => {
+  it("C8 MALFORMED: each line below refuses as malformed - an unparseable line (each of the eight lines of whitespace alone among them), null, an array, a number or a string, a row whose id is none, empty, a number or null, a row whose status is none, a number or null, a duplicate id, and a closed row already in stub shape; that closed row with one field of FIELDS_BEYOND_STUB added (each alone) is not in stub shape and compacts, its stub without the field and its shard line the row's", () => {
     const good = textOf(fixtureRows());
     const cases: readonly [string, string][] = [
       ["not json", `${good}{"id":\n`],
@@ -443,9 +552,19 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
       expect(result.ok, label).toBe(false);
       if (!result.ok) expect(result.code, label).toBe("malformed");
     }
+    // wb-137f refusal #3 U4 (GP1-09): the stub row above with one field beyond STUB_FIELDS is a full closed row.
+    const stubRow: Row = { _type: "issue", id: "wb-s1", title: "stub", status: "closed", updated_at: "2026-11-03T10:00:05Z", closed_at: "2026-11-03T10:00:00Z", close_reason: "r" };
+    for (const field of FIELDS_BEYOND_STUB) {
+      const extended = lineOf({ ...stubRow, [field]: "a field beyond the stub fields" });
+      const result = compactTrackerExport({ full: `${good}${extended}\n`, shards: new Map(), now: "2026-11-03T12:00:00Z" });
+      if (!result.ok) throw new Error(`${field}: ${result.lines.join("\n")}`);
+      expect(linesOf(result.main).at(-1), `${field}: its stub`).toBe(lineOf(stubRow));
+      expect(linesOf(result.shards.get("issues-closed-2026-11.jsonl") ?? "").at(-1), `${field}: its shard line`).toBe(extended);
+      expect(rehydrateTrackerText(result.main, result.shards), field).toBe(`${good}${extended}\n`);
+    }
   });
 
-  it("C9 REFUSED INPUTS: each form below refuses as malformed with one typed line - 23 run stamps that are not UTC stamps (a fraction of no digit and an instant outside the years 0000-9999 among them), a shard name that is not a month shard's (a day shard's, a month 00 or 13, a README), a non-empty shard not ending with a newline in each layout of SHARD_LAYOUTS, and each of the 27 lines of BAD_SHARD_LINES at each position of PLANT_AT (line 1, 2 or 3) in each layout of SHARD_LAYOUTS (the only shard, the older or the newer of two, the middle of three), naming the shard, the line and the reason; an empty shard, and an empty line between two rows, hold no line, in each of those layouts", () => {
+  it("C9 REFUSED INPUTS: each form below refuses as malformed with one typed line - 24 run stamps that are not UTC stamps (a fraction of no digit, an instant outside the years 0000-9999 and February 29 of 2100, a century year that is not a leap year, among them), a shard name that is not a month shard's (a day shard's, a month 00 or 13, a README, and each name of NAMES_OUTSIDE_THE_FORM alone), while each name of SHARD_NAMES_IN_THE_FORM alone is a shard's, a non-empty shard not ending with a newline in each layout of SHARD_LAYOUTS, and each of the 27 lines of BAD_SHARD_LINES at each position of PLANT_AT (line 1, 2 or 3) in each layout of SHARD_LAYOUTS (the only shard, the older or the newer of two, the middle of three), naming the shard, the line and the reason; an empty shard, and an empty line between two rows, hold no line, in each of those layouts", () => {
     const full = textOf(fixtureRows());
     const shard = `${lineOf(row("wb-c2", "closed", { closed_at: "2026-11-03T08:00:00Z" }))}\n`;
     const stamps = [
@@ -472,6 +591,7 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
       "2026-11-03T12:00:00+01:60",
       "9999-12-31T23:30:00-01:00",
       "0000-01-01T00:30:00+01:00",
+      "2100-02-29T00:00:00Z",
     ];
     for (const now of stamps) {
       expect(compactTrackerExport({ full, shards: new Map(), now }), now).toEqual({ ok: false, code: "malformed", lines: [`tracker-export: REFUSED the run stamp "${now}" is not a UTC timestamp; nothing is written`] });
@@ -503,9 +623,24 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
       const result = compactTrackerExport({ full, ...input });
       expect(result, label).toEqual({ ok: false, code: "malformed", lines: [line] });
     }
+    // wb-137f refusal #3 U2 (GP1-01..05): each name outside the form alone refuses; each name in the form alone is accepted as a shard
+    // (it holds a body of wb-x1, an id the full export does not carry) and comes back with its text as its prefix.
+    for (const name of NAMES_OUTSIDE_THE_FORM) {
+      expect(compactTrackerExport({ full, shards: new Map([[name, shard]]), now: "2026-11-03T12:00:00Z" }), name).toEqual({
+        ok: false,
+        code: "malformed",
+        lines: [`tracker-export: REFUSED ${name} is not a month shard name (issues-closed-YYYY-MM.jsonl); nothing is written`],
+      });
+    }
+    const other = `${lineOf(row("wb-x1", "closed", { closed_at: "2026-11-01T00:00:00Z" }))}\n`;
+    for (const name of SHARD_NAMES_IN_THE_FORM) {
+      const result = compactTrackerExport({ full, shards: new Map([[name, other]]), now: "2026-11-03T12:00:00Z" });
+      if (!result.ok) throw new Error(`${name}: ${result.lines.join("\n")}`);
+      expect(result.shards.get(name)?.startsWith(other), `${name}: accepted as a shard, its text kept as its prefix`).toBe(true);
+    }
     // wb-137f refusals #1 (U1 W8-01, U2 W8-02, U5) and #2 (U1 W2-02a/W2-02b): each shard-line form in each layout, at each position of
     // PLANT_AT; a non-empty shard not ending with a newline in each layout; an empty line between two rows in each layout holds no line.
-    expect(stamps).toHaveLength(23);
+    expect(stamps).toHaveLength(24);
     const now = "2026-11-03T12:00:00Z";
     for (const [layout, plant, whole] of SHARD_LAYOUTS) {
       for (const [label, bad, reason] of BAD_SHARD_LINES) {
@@ -559,12 +694,19 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
     expect(rehydrateTrackerText(result.main, result.shards)).toBe(full);
   });
 
-  it("C12 NO FINAL NEWLINE: a full export without a final newline compacts to a main export without one and reads back as the same bytes", () => {
+  it("C12 NO FINAL NEWLINE: a full export without a final newline compacts to a main export without one and reads back as the same bytes; the empty full export compacts to the empty main export with no shard, and a full export of one empty line to that line", () => {
     const full = textOf(fixtureRows()).replace(/\n$/, "");
     const result = compactTrackerExport({ full, shards: new Map(), now: "2026-11-03T12:00:00Z" });
     if (!result.ok) throw new Error(result.lines.join("\n"));
     expect(result.main.endsWith("\n")).toBe(false);
     expect(rehydrateTrackerText(result.main, result.shards)).toBe(full);
+    // wb-137f refusal #3 U6 (GP1-14): the empty full export, and one empty line.
+    for (const text of ["", "\n"]) {
+      const empty = compactTrackerExport({ full: text, shards: new Map(), now: "2026-11-03T12:00:00Z" });
+      if (!empty.ok) throw new Error(`${JSON.stringify(text)}: ${empty.lines.join("\n")}`);
+      expect([empty.main, empty.shards.size, empty.appended.size, empty.rows, empty.stubs], JSON.stringify(text)).toEqual([text, 0, 0, 0, 0]);
+      expect(rehydrateTrackerText(empty.main, empty.shards), JSON.stringify(text)).toBe(text);
+    }
   });
 
   it("C13 FUTURE CLOSE MONTH: a close month after the run's counts as the run's month - the row goes to the run month's shard and no shard of a later month is created", () => {
@@ -605,7 +747,7 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
     expect(rehydrateTrackerText(result.main, result.shards)).toBe(full);
   });
 
-  it("C16 RUN STAMP FORMS: a fraction of 1 to 9 digits, Z and a +HH:MM or -HH:MM offset are UTC stamps, the offset applied before the run's month is taken; a leap day is a calendar day", () => {
+  it("C16 RUN STAMP FORMS: a fraction of 1 to 9 digits, Z and a +HH:MM or -HH:MM offset are UTC stamps, the offset applied before the run's month is taken - offsets of +23:59 and -23:59 among them; a leap day is a calendar day, February 29 of 2028 and of 2000; the last day of a 31-day, a 30-day and a 28-day month is one; and the first instant of the year 0000 and the last of 9999 are inside the years 0000-9999", () => {
     const missing = row("wb-n0", "closed");
     delete missing.closed_at;
     const full = textOf([missing]);
@@ -617,6 +759,15 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
       ["2026-11-30T23:30:00-01:00", "issues-closed-2026-12.jsonl"],
       ["2026-12-31T23:59:59-00:01", "issues-closed-2027-01.jsonl"],
       ["2028-02-29T12:00:00Z", "issues-closed-2028-02.jsonl"],
+      // wb-137f refusal #3 U6 (GP1-13 and the other edges of the CLI's stamp words).
+      ["2000-02-29T12:00:00Z", "issues-closed-2000-02.jsonl"],
+      ["2026-12-01T12:00:00+23:59", "issues-closed-2026-11.jsonl"],
+      ["2026-11-30T12:00:00-23:59", "issues-closed-2026-12.jsonl"],
+      ["2026-01-31T00:00:00Z", "issues-closed-2026-01.jsonl"],
+      ["2026-04-30T00:00:00Z", "issues-closed-2026-04.jsonl"],
+      ["2026-02-28T00:00:00Z", "issues-closed-2026-02.jsonl"],
+      ["0000-01-01T00:00:00Z", "issues-closed-0000-01.jsonl"],
+      ["9999-12-31T23:59:59.999999999Z", "issues-closed-9999-12.jsonl"],
     ];
     for (const [now, shard] of cases) {
       const result = compactTrackerExport({ full, shards: new Map(), now });
@@ -693,7 +844,7 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
 });
 
 describe("wb-294d rehydrating reader: the one read every export reader routes through", () => {
-  it("R1 NO ARCHIVE: trackerExportText returns the main export's bytes unchanged (string path or file URL)", () => {
+  it("R1 NO ARCHIVE: trackerExportText returns the main export's bytes unchanged as UTF-8 text - ASCII rows, rows holding each character of UTF8_CHARACTERS, and those rows led by a byte order mark - given a string path or a file URL", () => {
     const dir = scratch("tracker-export-reader-");
     mkdirSync(join(dir, ".beads"));
     const main = join(dir, ".beads", "issues.jsonl");
@@ -701,9 +852,22 @@ describe("wb-294d rehydrating reader: the one read every export reader routes th
     writeFileSync(main, text);
     expect(trackerExportText(main)).toBe(text);
     expect(trackerExportText(pathToFileURL(main))).toBe(text);
+    // wb-137f refusal #3 U1 (GP1-16): the main export's own text beyond ASCII, read with no archive beside it.
+    for (const [label, utf8] of [
+      ["UTF8_CHARACTERS", textOf(utf8Rows())],
+      ["UTF8_CHARACTERS led by a byte order mark", `${BYTE_ORDER_MARK}${textOf(utf8Rows())}`],
+    ] as const) {
+      writeFileSync(main, utf8);
+      expect(readFileSync(main).length, `${label}: the file holds bytes beyond ASCII`).toBeGreaterThan(utf8.length);
+      for (const at of [main, pathToFileURL(main)]) {
+        expect(trackerExportText(at), `${label}: ${String(at)}`).toBe(utf8);
+        expect(Buffer.from(trackerExportText(at), "utf8").equals(readFileSync(main)), `${label}: the bytes, ${String(at)}`).toBe(true);
+      }
+      expect(trackerExportText(main), `${label}: the file's text, decoded by a UTF-8 decoder of the suite's own`).toBe(utf8Of(main));
+    }
   });
 
-  it("R2 ARCHIVE: beside an archive directory the stub lines read as their latest archived lines - the full export, byte for byte - through trackerExportText and rehydrateTrackerExport, each given a string path or a file URL (one whose path holds a space among them)", () => {
+  it("R2 ARCHIVE: beside an archive directory the stub lines read as their latest archived lines - the full export, byte for byte - through trackerExportText and rehydrateTrackerExport, each given a string path or a file URL (one whose path holds a space among them); and so does a compaction of rows holding each character of UTF8_CHARACTERS, read from its main export and shard files", () => {
     const dir = scratch("tracker-export-reader-");
     mkdirSync(join(dir, ".beads", "archive"), { recursive: true });
     const rows = fixtureRows();
@@ -732,6 +896,23 @@ describe("wb-294d rehydrating reader: the one read every export reader routes th
     expect(pathToFileURL(spacedMain).href).toContain("a%20dir%20with%20spaces");
     expect(trackerExportText(pathToFileURL(spacedMain)), "trackerExportText given a file URL whose path holds a space").toBe(textOf(later));
     expect(rehydrateTrackerExport(second.main, pathToFileURL(spacedMain)), "rehydrateTrackerExport given a file URL whose path holds a space").toBe(textOf(later));
+    // wb-137f refusal #3 U1 (GP1-15, GP1-16): the stubs and both month shards hold text beyond ASCII, read back from the files.
+    const utf8 = scratch("tracker-export-reader-");
+    mkdirSync(join(utf8, ".beads", "archive"), { recursive: true });
+    const utf8Full = textOf(utf8Rows());
+    const utf8Compacted = compactTrackerExport({ full: utf8Full, shards: new Map(), now: "2026-11-03T12:00:00Z" });
+    if (!utf8Compacted.ok) throw new Error(utf8Compacted.lines.join("\n"));
+    const utf8Main = join(utf8, ".beads", "issues.jsonl");
+    writeFileSync(utf8Main, utf8Compacted.main);
+    for (const [name, text] of utf8Compacted.shards) writeFileSync(join(utf8, ".beads", "archive", name), text);
+    expect([...utf8Compacted.shards.keys()]).toEqual(["issues-closed-2026-10.jsonl", "issues-closed-2026-11.jsonl"]);
+    for (const path of [utf8Main, ...[...utf8Compacted.shards.keys()].map(name => join(utf8, ".beads", "archive", name))]) {
+      const bytes = readFileSync(path);
+      expect(bytes.length, `${path} holds bytes beyond ASCII`).toBeGreaterThan(bytes.toString("utf8").length);
+    }
+    expect(trackerExportText(utf8Main), "UTF8_CHARACTERS: trackerExportText").toBe(utf8Full);
+    expect(trackerExportText(pathToFileURL(utf8Main)), "UTF8_CHARACTERS: trackerExportText given a file URL").toBe(utf8Full);
+    expect(rehydrateTrackerExport(utf8Of(utf8Main), utf8Main), "UTF8_CHARACTERS: rehydrateTrackerExport").toBe(utf8Full);
   });
 
   it("R3 CORRUPT SHARD: each of the 27 lines of BAD_SHARD_LINES - the four prefix forms (cut short, followed by other text, an id holding an invalid escape, an empty id) and the same four without the prefix, an array, null, a number, no id, a number id, the six comment forms (opening with #, //, /*, --, ; or <!--) and the eight lines of whitespace alone - at each position of PLANT_AT (line 1, 2 or 3) in each layout of SHARD_LAYOUTS (the only shard, the older or the newer of two, the middle of three) fails trackerExportText with one Error naming the shard, the line and the reason; an empty line between two rows holds no row and is skipped, in each of those layouts", () => {
@@ -794,7 +975,7 @@ describe("wb-294d rehydrating reader: the one read every export reader routes th
     }
   });
 
-  it("R4 SHARD FILES ONLY: a file of another name beside the shards (a README, a day shard's name, a month 00 or a month 13 name), a symlink of a month shard's name - to a file, to a directory, or dangling - and a directory of one, is never read - beside the shards the read is the full export, with no shard file it is the main export unchanged", () => {
+  it("R4 SHARD FILES ONLY: a file of another name beside the shards (a README, a day shard's name, a month 00 or a month 13 name, and each name of NAMES_OUTSIDE_THE_FORM alone), a symlink of a month shard's name - to a file, to a directory, or dangling - and a directory of one, is never read - beside the shards the read is the full export, with no shard file it is the main export unchanged; a regular file of each name of SHARD_NAMES_IN_THE_FORM, alone beside the main export, is read", () => {
     const dir = scratch("tracker-export-reader-");
     const archive = join(dir, ".beads", "archive");
     mkdirSync(archive, { recursive: true });
@@ -817,9 +998,29 @@ describe("wb-294d rehydrating reader: the one read every export reader routes th
     expect(trackerExportText(main), "no month shard file beside the main export: its bytes unchanged").toBe(result.main);
     for (const [name, text] of result.shards) writeFileSync(join(archive, name), text);
     expect(trackerExportText(main)).toBe(textOf(rows));
+    // wb-137f refusal #3 U2 (GP1-01..05): each name of NAMES_OUTSIDE_THE_FORM alone beside the main export, holding a stale body of
+    // wb-c2, is not read - nor beside the shards; each name of SHARD_NAMES_IN_THE_FORM alone, holding the same body, is read.
+    const stale = `${lineOf(row("wb-c2", "closed", { notes: "a stale body of wb-c2" }))}`;
+    const withStale = linesOf(result.main).map(line => (parsed(line).id === "wb-c2" ? stale : line));
+    expect(withStale).not.toEqual(linesOf(result.main));
+    const beside = (names: readonly string[], shards: ReadonlyMap<string, string>): string => {
+      const at = scratch("tracker-export-reader-");
+      mkdirSync(join(at, ".beads", "archive"), { recursive: true });
+      writeFileSync(join(at, ".beads", "issues.jsonl"), result.main);
+      for (const name of names) writeFileSync(join(at, ".beads", "archive", name), `${stale}\n`);
+      for (const [name, text] of shards) writeFileSync(join(at, ".beads", "archive", name), text);
+      return join(at, ".beads", "issues.jsonl");
+    };
+    for (const name of NAMES_OUTSIDE_THE_FORM) {
+      expect(trackerExportText(beside([name], new Map())), `${name} alone: not read`).toBe(result.main);
+      expect(trackerExportText(beside([name], result.shards)), `${name} beside the shards: not read`).toBe(textOf(rows));
+    }
+    for (const name of SHARD_NAMES_IN_THE_FORM) {
+      expect(trackerExportText(beside([name], new Map())), `${name} alone: read`).toBe(`${withStale.join("\n")}\n`);
+    }
   });
 
-  it("R5 FULL ROWS STAY: beside an archive a closed row that is not a stub reads as itself, never as an archived line of its id", () => {
+  it("R5 FULL ROWS STAY: beside an archive a closed row that is not a stub reads as itself, never as an archived line of its id - a full row, and a row of wb-c2's stub fields with one field of FIELDS_BEYOND_STUB added (each alone)", () => {
     const dir = scratch("tracker-export-reader-");
     mkdirSync(join(dir, ".beads", "archive"), { recursive: true });
     const rows = fixtureRows();
@@ -831,9 +1032,18 @@ describe("wb-294d rehydrating reader: the one read every export reader routes th
     const main = join(dir, ".beads", "issues.jsonl");
     writeFileSync(main, textOf(later));
     expect(trackerExportText(main)).toBe(textOf(later));
+    // wb-137f refusal #3 U4 (GP1-09): wb-c2's stub with one field beyond STUB_FIELDS is a full row, kept though a shard holds wb-c2.
+    const stub = parsed(linesOf(first.main).find(line => parsed(line).id === "wb-c2") ?? "{}");
+    expect(Object.keys(stub).every(key => STUB_FIELDS.includes(key))).toBe(true);
+    for (const field of FIELDS_BEYOND_STUB) {
+      expect(STUB_FIELDS.includes(field), field).toBe(false);
+      const extended = `${JSON.stringify({ ...stub, [field]: "a field beyond the stub fields" })}\n`;
+      writeFileSync(main, extended);
+      expect(trackerExportText(main), `${field}: read as itself`).toBe(extended);
+    }
   });
 
-  it("R6 NOT CLOSED STAYS: beside an archive a stub-shaped row that is not closed reads as itself, never as an archived line of its id - an open one, though a dependency edge of it spells a closed status, and one whose status is \"Closed\" (the status is compared exactly)", () => {
+  it("R6 NOT CLOSED STAYS: beside an archive a stub-shaped row that is not closed reads as itself, never as an archived line of its id - an open one, though a dependency edge of it spells a closed status, one whose status is \"Closed\", and one with each status of STATUSES_NOT_CLOSED (other letter cases, a space or a tab around \"closed\", a newline after it, a longer word)", () => {
     const dir = scratch("tracker-export-reader-");
     mkdirSync(join(dir, ".beads", "archive"), { recursive: true });
     const rows = fixtureRows();
@@ -851,6 +1061,14 @@ describe("wb-294d rehydrating reader: the one read every export reader routes th
     const capital = `${JSON.stringify({ _type: "issue", id: "wb-c2", title: "title of wb-c2", status: "Closed", updated_at: "2026-11-03T10:00:05Z", closed_at: "2026-11-03T08:00:00Z", close_reason: "landing of wb-c2" })}\n`;
     writeFileSync(main, capital);
     expect(trackerExportText(main), 'a status of "Closed" is not "closed"').toBe(capital);
+    // wb-137f refusal #3 U4 (GP1-08): wb-c2's stub with each status of STATUSES_NOT_CLOSED, a shard holding wb-c2's closed line.
+    const stub = parsed(linesOf(first.main).find(line => parsed(line).id === "wb-c2") ?? "{}");
+    for (const status of STATUSES_NOT_CLOSED) {
+      expect(status, JSON.stringify(status)).not.toBe("closed");
+      const line = `${JSON.stringify({ ...stub, status })}\n`;
+      writeFileSync(main, line);
+      expect(trackerExportText(main), `status ${JSON.stringify(status)} is not "closed"`).toBe(line);
+    }
   });
 
   it("R7 UNARCHIVED STUB: beside an archive a closed stub whose id no shard holds reads as itself, while a stub whose id a shard holds reads as its archived line", () => {
@@ -895,7 +1113,7 @@ describe("wb-294d rehydrating reader: the one read every export reader routes th
     expect(rehydrateTrackerExport(compacted.main, main)).toBe(compacted.main);
   });
 
-  it("R10 READ MEMO: a process reads the shards again when a shard's size or modification time changes - the last shard by name, or an older one - or a shard is added (after the others, or before them), renamed (its size and modification time kept) or removed (the last one, or an older one); a rewrite that keeps names, sizes and modification times reads as the earlier content, the last shard's or an older one's; another archive directory, whose shards keep the names, sizes and modification times of shards read before, is read on its own", () => {
+  it("R10 READ MEMO: a process reads the shards again when a shard's size or modification time changes - the last shard by name, or an older one; the modification time moved by 60 s, by 0.5 s inside one second, or by 0.3 ms inside one millisecond - or a shard is added (after the others, or before them), renamed (its size and modification time kept) or removed (the last one, or an older one); a rewrite that keeps names, sizes and modification times reads as the earlier content, the last shard's or an older one's; another archive directory, whose shards keep the names, sizes and modification times of shards read before, is read on its own; and a main export rewritten at the same length - in its first line, then in its last - is read again, as is another text of the same length given to rehydrateTrackerExport", () => {
     const dir = scratch("tracker-export-reader-");
     const archive = join(dir, ".beads", "archive");
     mkdirSync(archive, { recursive: true });
@@ -1003,6 +1221,54 @@ describe("wb-294d rehydrating reader: the one read every export reader routes th
     expect(trackerExportText(olderMain), "a shard added before the others: read again").toBe(olderRead(lineOf(c8), "body CCCC, longer"));
     unlinkSync(join(olderArchive, "issues-closed-2026-08.jsonl"));
     expect(trackerExportText(olderMain), "an older shard removed: read again").toBe(olderRead(c8Stub, "body CCCC, longer"));
+    // wb-137f refusal #3 U3 (GP1-06): a same-size rewrite whose modification time moves by 0.5 s inside one whole second, or by 0.3 ms
+    // inside one whole millisecond - at the last shard by name (wb-c1's) and at an older one (wb-c9's) - is read again.
+    const fine = scratch("tracker-export-reader-");
+    const fineArchive = join(fine, ".beads", "archive");
+    mkdirSync(fineArchive, { recursive: true });
+    const fineMain = join(fine, ".beads", "issues.jsonl");
+    writeFileSync(fineMain, olderStubs.main);
+    const fineShards = { older: join(fineArchive, "issues-closed-2026-10.jsonl"), last: join(fineArchive, "issues-closed-2026-11.jsonl") };
+    const fineBodies = { older: "body AAAA", last: "body BBBB" };
+    const fineText = (at: "older" | "last", body: string): string => `${lineOf(at === "older" ? c9(body) : c1(body))}\n`;
+    const fineRead = (): string => `${c8Stub}\n${lineOf(c9(fineBodies.older))}\n${lineOf(c1(fineBodies.last))}\n`;
+    const wholeSecond = pinned + 1000;
+    const steps = [
+      ["0.5 s inside one second", wholeSecond + 0.1, wholeSecond + 0.6, (ms: number) => Math.floor(ms / 1000)],
+      ["0.3 ms inside one millisecond", wholeSecond + 0.0001, wholeSecond + 0.0004, (ms: number) => Math.floor(ms)],
+    ] as const;
+    let round = 0;
+    for (const at of ["last", "older"] as const) {
+      for (const [step, before, after, unit] of steps) {
+        round += 1;
+        for (const where of ["older", "last"] as const) {
+          writeFileSync(fineShards[where], fineText(where, fineBodies[where]));
+          utimesSync(fineShards[where], before, before);
+        }
+        expect(trackerExportText(fineMain), `${at}, ${step}: the first read`).toBe(fineRead());
+        const was = lstatSync(fineShards[at]);
+        fineBodies[at] = `body ${String(round).repeat(4)}`;
+        writeFileSync(fineShards[at], fineText(at, fineBodies[at]));
+        utimesSync(fineShards[at], after, after);
+        const now = lstatSync(fineShards[at]);
+        expect([now.size, now.mtimeMs === was.mtimeMs, unit(now.mtimeMs)], `${at}, ${step}: the size kept, the modification time moved inside one unit`).toEqual([was.size, false, unit(was.mtimeMs)]);
+        expect(trackerExportText(fineMain), `${at}, ${step}: read again`).toBe(fineRead());
+      }
+    }
+    // wb-137f refusal #3 U3 (GP1-11): the main export rewritten at the same length between two reads, the shards unchanged - first in
+    // its first line (wb-c8's stub, which no shard holds), then in its last (wb-c1's stub becomes wb-c9's) - is read again; and another
+    // text of the same length given to rehydrateTrackerExport is its own.
+    expect(trackerExportText(fineMain), "the main export as written").toBe(fineRead());
+    const [c8Line = "", c9Line = "", c1Line = ""] = linesOf(olderStubs.main);
+    const firstEdit = `${c8Line.replace("title of wb-c8", "TITLE OF WB-C8")}\n${c9Line}\n${c1Line}\n`;
+    const lastEdit = `${c8Line.replace("title of wb-c8", "TITLE OF WB-C8")}\n${c9Line}\n${c1Line.replace('"id":"wb-c1"', '"id":"wb-c9"')}\n`;
+    expect([firstEdit.length, lastEdit.length]).toEqual([olderStubs.main.length, olderStubs.main.length]);
+    expect(lastEdit).not.toBe(firstEdit);
+    writeFileSync(fineMain, firstEdit);
+    expect(trackerExportText(fineMain), "the first line rewritten at the same length: read again").toBe(`${c8Line.replace("title of wb-c8", "TITLE OF WB-C8")}\n${lineOf(c9(fineBodies.older))}\n${lineOf(c1(fineBodies.last))}\n`);
+    writeFileSync(fineMain, lastEdit);
+    expect(trackerExportText(fineMain), "the last line rewritten at the same length: read again").toBe(`${c8Line.replace("title of wb-c8", "TITLE OF WB-C8")}\n${lineOf(c9(fineBodies.older))}\n${lineOf(c9(fineBodies.older))}\n`);
+    expect(rehydrateTrackerExport(firstEdit, fineMain), "another text of the same length given to rehydrateTrackerExport").toBe(`${c8Line.replace("title of wb-c8", "TITLE OF WB-C8")}\n${lineOf(c9(fineBodies.older))}\n${lineOf(c1(fineBodies.last))}\n`);
   });
 
   it("R11 UNTERMINATED LAST LINE: trackerExportText and rehydrateTrackerText parse a shard's last line though no newline ends it - a whole row there is read as that row, and the prefix form cut short there fails the read with one Error naming the shard and the line - in each layout of SHARD_LAYOUTS", () => {
@@ -1050,7 +1316,9 @@ describe("wb-294d rehydrating reader: the one read every export reader routes th
   });
 });
 
-describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", () => {
+// Each case below spawns the CLI up to some tens of times; at the 5 s default a loaded host (load1 136 when the run began) timed K5
+// out at 5.8 s and K7 ran 4.1 s, so the block carries its own bound, as T1 does.
+describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", { timeout: 120_000 }, () => {
   function beadsDir(): { readonly dir: string; readonly beads: string; readonly full: string } {
     const dir = scratch("tracker-export-cli-");
     const beads = join(dir, ".beads");
@@ -1060,7 +1328,7 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", () =
     return { dir, beads, full };
   }
 
-  it("K1 compact writes the main export and the month shards, prints one JSON receipt line, and a re-run with no change appends nothing", () => {
+  it("K1 compact writes the main export and the month shards, prints one JSON receipt line, and a re-run with no change appends nothing - over the fixture's rows, and over rows holding each character of UTF8_CHARACTERS in both month shards, where each shard keeps its bytes", () => {
     const { beads, full } = beadsDir();
     const run = cli(["compact", "--full", full, "--beads", beads, "--now", "2026-11-03T12:00:00Z"]);
     expect(run.stderr).toBe("");
@@ -1074,9 +1342,22 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", () =
     expect(again.status).toBe(0);
     expect((JSON.parse(String(again.stdout)) as Row).appended).toEqual({});
     expect(readFileSync(join(beads, "issues.jsonl"), "utf8")).toBe(mainAfter);
+    // wb-137f refusal #3 U1 (GP1-17): the CLI reads its shards back as UTF-8 - a re-run appends nothing and rewrites no shard.
+    const utf8 = beadsDir();
+    writeFileSync(utf8.full, textOf(utf8Rows()));
+    const first = cli(["compact", "--full", utf8.full, "--beads", utf8.beads, "--now", "2026-11-03T12:00:00Z"]);
+    expect([first.status, first.stderr]).toEqual([0, ""]);
+    expect((JSON.parse(String(first.stdout)) as Row).appended).toEqual({ "issues-closed-2026-10.jsonl": 1, "issues-closed-2026-11.jsonl": 2 });
+    const shardBytes = () => ["issues-closed-2026-10.jsonl", "issues-closed-2026-11.jsonl"].map(name => readFileSync(join(utf8.beads, "archive", name)));
+    const before = shardBytes();
+    for (const bytes of before) expect(bytes.length, "a shard holds bytes beyond ASCII").toBeGreaterThan(bytes.toString("utf8").length);
+    const rerun = cli(["compact", "--full", utf8.full, "--beads", utf8.beads, "--now", "2026-11-03T13:00:00Z"]);
+    expect([rerun.status, rerun.stderr]).toEqual([0, ""]);
+    expect((JSON.parse(String(rerun.stdout)) as Row).appended, "UTF8_CHARACTERS: the re-run appends nothing").toEqual({});
+    expect(shardBytes(), "UTF8_CHARACTERS: each shard keeps its bytes").toEqual(before);
   });
 
-  it("K2 rehydrate prints the full export from the main export and its shards, byte for byte: with a final newline when the export ends with one, and without one when it does not", () => {
+  it("K2 rehydrate prints the full export from the main export and its shards, byte for byte: with a final newline when the export ends with one, and without one when it does not, and over rows holding each character of UTF8_CHARACTERS", () => {
     const { beads, full } = beadsDir();
     expect(cli(["compact", "--full", full, "--beads", beads, "--now", "2026-11-03T12:00:00Z"]).status).toBe(0);
     const run = cli(["rehydrate", "--beads", beads]);
@@ -1089,6 +1370,13 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", () =
     expect(unterminated.status).toBe(0);
     expect(unterminated.stdout).toBe(readFileSync(bare.full, "utf8"));
     expect(String(unterminated.stdout).endsWith("\n")).toBe(false);
+    // wb-137f refusal #3 U1 (GP1-15, GP1-16 at the CLI): the printed bytes are the full export's UTF-8 bytes.
+    const utf8 = beadsDir();
+    writeFileSync(utf8.full, textOf(utf8Rows()));
+    expect(cli(["compact", "--full", utf8.full, "--beads", utf8.beads, "--now", "2026-11-03T12:00:00Z"]).status).toBe(0);
+    const printed = spawnSync(process.execPath, [TOOL, "rehydrate", "--beads", utf8.beads], { cwd: REPO, env: { PATH: process.env.PATH }, timeout: 120_000 });
+    expect(printed.status).toBe(0);
+    expect(Buffer.compare(printed.stdout, readFileSync(utf8.full)), "UTF8_CHARACTERS: the printed bytes").toBe(0);
   });
 
   it("K3 at the soft ceiling compact exits 2 with the typed line and writes nothing; a malformed export, a month shard holding a line in the export's own line prefix form that does not parse, and each of the four prefix forms (cut short, followed by other text, an id holding an invalid escape, an empty id) and the six comment forms (opening with #, //, /*, --, ; or <!--) as line 1 of the older of two month shards, exit 3 with the typed line naming the shard and write nothing", () => {
@@ -1154,7 +1442,7 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", () =
     expect(readdirSync(beads)).toEqual([]);
   });
 
-  it("K5 compact reads only the archive's month shard files: a file of another name (a README, a month 13 name), a directory of a shard's name, and a symlink of a shard's name to a file outside the archive, in it are neither inputs nor touched", () => {
+  it("K5 compact reads only the archive's month shard files: a file of another name (a README, a month 13 name, and the names of NAMES_OUTSIDE_THE_FORM together in one archive, each holding a stale body of wb-c2), a directory of a shard's name, and a symlink of a shard's name to a file outside the archive, in it are neither inputs nor touched", () => {
     const { beads, full } = beadsDir();
     mkdirSync(join(beads, "archive"));
     writeFileSync(join(beads, "archive", "README.md"), "# the closed rows' bodies\n");
@@ -1185,6 +1473,19 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", () =
     expect(readFileSync(elsewhere, "utf8")).toBe(stale);
     expect(readFileSync(join(archive, "issues-closed-2026-13.jsonl"), "utf8")).toBe(thirteen);
     expect(cli(["rehydrate", "--beads", linked.beads]).stdout).toBe(readFileSync(linked.full, "utf8"));
+    // wb-137f refusal #3 U2 (GP1-01..05 at the CLI): the names outside the form together in one archive, each a regular file of a
+    // stale body of wb-c2 - one compaction and one read, so a mutant that admits any one of them changes the receipt or the round trip.
+    const state = beadsDir();
+    mkdirSync(join(state.beads, "archive"));
+    const bodies = new Map(NAMES_OUTSIDE_THE_FORM.map(name => [name, `${lineOf(row("wb-c2", "closed", { notes: `a stale body in ${name}` }))}\n`]));
+    for (const [name, body] of bodies) writeFileSync(join(state.beads, "archive", name), body);
+    const named = cli(["compact", "--full", state.full, "--beads", state.beads, "--now", "2026-11-03T12:00:00Z"]);
+    expect([named.status, named.stderr]).toEqual([0, ""]);
+    const namedReceipt = JSON.parse(String(named.stdout)) as Row;
+    expect([namedReceipt.shards, namedReceipt.appended]).toEqual([2, { "issues-closed-2026-10.jsonl": 1, "issues-closed-2026-11.jsonl": 2 }]);
+    expect(readdirSync(join(state.beads, "archive")).sort()).toEqual([...NAMES_OUTSIDE_THE_FORM, "issues-closed-2026-10.jsonl", "issues-closed-2026-11.jsonl"].sort());
+    for (const [name, body] of bodies) expect(readFileSync(join(state.beads, "archive", name), "utf8"), `${name}: untouched`).toBe(body);
+    expect(cli(["rehydrate", "--beads", state.beads]).stdout).toBe(readFileSync(state.full, "utf8"));
   });
 
   it("K6 USAGE: compact and rehydrate refuse a missing, repeated or unknown option, an option whose value is missing or starts with a dash, and a positional argument with exit 3 and their usage line, printing nothing on stdout and writing nothing", () => {
@@ -1341,7 +1642,7 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", () =
     }
   });
 
-  it("K13 WRITES: compact writes the main export and each shard it appends to, each whole by a rename over its path - so each is a new file and no temporary file stays in the .beads directory - and never writes a shard it does not append to: a past month's shard beside an append, and both shards of a run that appends nothing, keep their inode, bytes and modification time", () => {
+  it("K13 WRITES: compact writes the main export and each shard it appends to, each whole by a rename over its path - so each is a new file and no temporary file stays in the .beads directory - and never writes a shard it does not append to: a past month's shard beside an append, and both shards of a run that appends nothing, keep their inode, bytes and modification time; over rows holding each character of UTF8_CHARACTERS the shard a run appends to keeps its old bytes as the prefix of its new ones", () => {
     const { beads, full } = beadsDir();
     expect(cli(["compact", "--full", full, "--beads", beads, "--now", "2026-11-03T12:00:00Z"]).status).toBe(0);
     const past = join(beads, "archive", "issues-closed-2026-10.jsonl");
@@ -1372,9 +1673,29 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", () =
     expect(idle.status).toBe(0);
     expect((JSON.parse(String(idle.stdout)) as Row).appended).toEqual({});
     expect([past, running].map(path => [lstatSync(path).ino, lstatSync(path).mtimeMs, readFileSync(path, "utf8")])).toEqual(shardsBefore);
+    // wb-137f refusal #3 U1 (GP1-17 against C4b's words at the CLI): the running month's shard holds text beyond ASCII; wb-c2 gains a
+    // note and the run appends its new line - the shard's old bytes stay its prefix, byte for byte, and the past month's shard is kept.
+    const utf8 = beadsDir();
+    const utf8Rowset = utf8Rows();
+    writeFileSync(utf8.full, textOf(utf8Rowset));
+    expect(cli(["compact", "--full", utf8.full, "--beads", utf8.beads, "--now", "2026-11-03T12:00:00Z"]).status).toBe(0);
+    const utf8Past = join(utf8.beads, "archive", "issues-closed-2026-10.jsonl");
+    const utf8Running = join(utf8.beads, "archive", "issues-closed-2026-11.jsonl");
+    const pastBytesBefore = readFileSync(utf8Past);
+    const runningBefore = readFileSync(utf8Running);
+    expect(runningBefore.length, "the running month's shard holds bytes beyond ASCII").toBeGreaterThan(runningBefore.toString("utf8").length);
+    const noted = utf8Rowset.map(r => (r.id === "wb-c2" ? { ...r, notes: `${String(r.notes)} + a note after the first run`, updated_at: "2026-11-04T00:00:00Z" } : r));
+    writeFileSync(utf8.full, textOf(noted));
+    const appendRun = cli(["compact", "--full", utf8.full, "--beads", utf8.beads, "--now", "2026-11-04T12:00:00Z"]);
+    expect([appendRun.status, appendRun.stderr]).toEqual([0, ""]);
+    expect((JSON.parse(String(appendRun.stdout)) as Row).appended).toEqual({ "issues-closed-2026-11.jsonl": 1 });
+    const runningAfter = readFileSync(utf8Running);
+    expect(Buffer.compare(runningAfter.subarray(0, runningBefore.length), runningBefore), "the old bytes are the new bytes' prefix").toBe(0);
+    expect(runningAfter.subarray(runningBefore.length).toString("utf8"), "the appended line").toBe(`${lineOf(noted.find(r => r.id === "wb-c2") ?? {})}\n`);
+    expect(Buffer.compare(readFileSync(utf8Past), pastBytesBefore), "the past month's shard keeps its bytes").toBe(0);
   });
 
-  it("K14 NOT A FILE: when a path compact would write - a shard it appends to, or the main export - exists and is not a regular file (a directory, a symlink to a file, a symlink to a directory, a dangling symlink, or a FIFO), compact exits 3 with one typed line per such path, shards in name order and then the main export - also when the full export lists the later month's closed row first - printing nothing on stdout and writing nothing", () => {
+  it("K14 NOT A FILE: when a path compact would write - a shard it appends to, or the main export - exists and is not a regular file (a directory, a symlink to a file, a symlink to a directory, a dangling symlink, or a FIFO), compact exits 3 with one typed line per such path, shards in name order and then the main export - also when the full export lists the later month's closed row first - printing nothing on stdout and writing nothing; its variants are the module header's K14 variants list", () => {
     const variants: readonly (readonly [string, (beads: string, dir: string) => string[]])[] = [
       [
         "W-GP4-04 a directory at the running month's shard name",
@@ -1486,6 +1807,8 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", () =
       "a dangling symlink at the main export",
       "a symlink to a directory at the past month's shard name",
     ]);
+    // wb-137f refusal #3 F4 (the seat's H10 of cut #3): the variant labels against the module header's list, outside the suite.
+    expect(headerList("K14 variants"), "the module header's K14 variants").toEqual(variants.map(([label]) => label));
     for (const [label, plant] of variants) {
       const { dir, beads, full } = beadsDir();
       const blocked = plant(beads, dir);
@@ -1516,9 +1839,14 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", () =
 });
 
 describe("wb-294d round trip over the tracked export (owner element 3, read through the rehydrating reader)", () => {
-  it("T1 the tracked export compacts under the ceiling and rehydrates byte-equal; non-closed rows byte-equal; every closed row recoverable by id; every edge into a closed bead resolves to its stub", () => {
+  it("T1 the tracked export compacts under the ceiling and rehydrates byte-equal; non-closed rows byte-equal; every closed row recoverable by id; every edge into a closed bead resolves to its stub; its read equals the tracked file's text decoded as UTF-8 by the suite's own decoder; the compaction, written to files, reads back as that export; and the CLI compacting it twice appends nothing the second time and keeps each shard's bytes", () => {
     const full = trackerExportText(TRACKED_EXPORT);
-    const result = compactTrackerExport({ full, shards: new Map(), now: new Date().toISOString() });
+    // wb-137f refusal #3 U1 (GP1-16 on the repository's own export): the read against the suite's own UTF-8 decode of the file - of
+    // its shard files too, when an archive beside it holds any (the tracked layout holds none at this cut).
+    const decoded = rehydrateTrackerText(utf8Of(TRACKED_EXPORT), shardFilesBeside(TRACKED_EXPORT));
+    expect([full === decoded, differingLines(full, decoded)], "the read equals the tracked file's UTF-8 text").toEqual([true, 0]);
+    const now = new Date().toISOString();
+    const result = compactTrackerExport({ full, shards: new Map(), now });
     if (!result.ok) throw new Error(result.lines.join("\n"));
     expect(rehydrateTrackerText(result.main, result.shards)).toBe(full);
     const fullLines = linesOf(full);
@@ -1547,6 +1875,26 @@ describe("wb-294d round trip over the tracked export (owner element 3, read thro
     }
     expect(Buffer.byteLength(result.main)).toBeLessThan(DEFAULT_SOFT_CEILING);
     for (const [name, text] of result.shards) expect(Buffer.byteLength(text), name).toBeLessThan(DEFAULT_SOFT_CEILING);
+    // wb-137f refusal #3 U1 (GP1-15 and GP1-17 on the repository's own export): the CLI compacts the export to files - the same bytes
+    // as the compaction above - which read back as the export; a second run appends nothing and keeps each shard's bytes.
+    const dir = scratch("tracker-export-tracked-");
+    const beads = join(dir, ".beads");
+    mkdirSync(beads);
+    const fullPath = join(dir, "full.jsonl");
+    writeFileSync(fullPath, full);
+    const first = cli(["compact", "--full", fullPath, "--beads", beads, "--now", now]);
+    expect([first.status, first.stderr]).toEqual([0, ""]);
+    expect(Buffer.compare(readFileSync(join(beads, "issues.jsonl")), Buffer.from(result.main, "utf8")), "the CLI's main export").toBe(0);
+    expect(readdirSync(join(beads, "archive")).sort()).toEqual([...result.shards.keys()]);
+    const shardBytes = (): Buffer[] => [...result.shards.keys()].map(name => readFileSync(join(beads, "archive", name)));
+    const written = shardBytes();
+    expect(written.map((bytes, index) => Buffer.compare(bytes, Buffer.from([...result.shards.values()][index] ?? "", "utf8"))), "the CLI's shards").toEqual(written.map(() => 0));
+    const readBack = trackerExportText(join(beads, "issues.jsonl"));
+    expect([readBack === full, differingLines(readBack, full)], "the files read back as the export").toEqual([true, 0]);
+    const again = cli(["compact", "--full", fullPath, "--beads", beads, "--now", now]);
+    expect([again.status, again.stderr]).toEqual([0, ""]);
+    expect((JSON.parse(String(again.stdout)) as Row).appended, "the second run appends nothing").toEqual({});
+    expect(shardBytes().map((bytes, index) => Buffer.compare(bytes, written[index] ?? Buffer.alloc(0))), "each shard keeps its bytes").toEqual(written.map(() => 0));
   }, 180_000);
 });
 
@@ -1611,6 +1959,65 @@ describe("wb-137f plant tables: their shape, and the module header's list of the
     // planted line, or a row dropped from the table and from every literal above, reds here.
     const tables = JSON.stringify({ BAD_SHARD_LINES, SHARD_LAYOUTS, PLANT_AT: PLANT_AT.map(([at, label, text]) => [at, label, text("BAD")]) });
     expect(headerList("plant tables sha256"), "the module header's digest of the plant tables").toEqual([createHash("sha256").update(tables).digest("hex")]);
+  });
+});
+
+describe("wb-137f cut #4 plant tables: their shape, and the module header's lists of them (refusal #3 U1, U2, U4)", () => {
+  it("P2 PLANT TABLES: UTF8_CHARACTERS, NAMES_OUTSIDE_THE_FORM, SHARD_NAMES_IN_THE_FORM, STATUSES_NOT_CLOSED and FIELDS_BEYOND_STUB hold exactly the rows below, and the module header lists each of them exactly, in its table's order, under its own key", () => {
+    const codePoints = (text: string): string => [...text].map(char => `U+${(char.codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0")}`).join(" ");
+    expect(UTF8_CHARACTERS.map(([label, text]) => [label, codePoints(text)])).toEqual([
+      ["U+00E9", "U+00E9"],
+      ["U+2014", "U+2014"],
+      ["U+1F600", "U+1F600"],
+      ["U+00A0", "U+00A0"],
+      ["U+0065 U+0301", "U+0065 U+0301"],
+      ["U+2028", "U+2028"],
+    ]);
+    expect(UTF8_CHARACTERS.map(([, text]) => Buffer.byteLength(text))).toEqual([2, 3, 4, 2, 3, 3]);
+    expect(codePoints(BYTE_ORDER_MARK)).toBe("U+FEFF");
+    expect(NAMES_OUTSIDE_THE_FORM).toEqual([
+      "README.md",
+      "issues-closed-2026-11-03.jsonl",
+      "issues-closed-2026-00.jsonl",
+      "issues-closed-2026-13.jsonl",
+      "issues-closed-2026-14.jsonl",
+      "issues-closed-2026-20.jsonl",
+      "issues-closed-2026-1.jsonl",
+      "issues-closed-2026-.jsonl",
+      "issues-closed-202611.jsonl",
+      "issues-closed-202-11.jsonl",
+      "issues-closed-20261-11.jsonl",
+      "issues-closed-YYYY-11.jsonl",
+      "issues-closed-2026-11.jsonl.bak",
+      "old-issues-closed-2026-11.jsonl",
+      "ISSUES-CLOSED-2026-11.JSONL",
+      "issues-closed-2026-11.json",
+      "issues-closed-2026-11xjsonl",
+    ]);
+    expect(SHARD_NAMES_IN_THE_FORM).toEqual([
+      "issues-closed-2026-01.jsonl",
+      "issues-closed-2026-02.jsonl",
+      "issues-closed-2026-03.jsonl",
+      "issues-closed-2026-04.jsonl",
+      "issues-closed-2026-05.jsonl",
+      "issues-closed-2026-06.jsonl",
+      "issues-closed-2026-07.jsonl",
+      "issues-closed-2026-08.jsonl",
+      "issues-closed-2026-09.jsonl",
+      "issues-closed-2026-10.jsonl",
+      "issues-closed-2026-11.jsonl",
+      "issues-closed-2026-12.jsonl",
+      "issues-closed-0000-01.jsonl",
+      "issues-closed-1999-01.jsonl",
+      "issues-closed-9999-12.jsonl",
+    ]);
+    expect(STATUSES_NOT_CLOSED.map(status => JSON.stringify(status))).toEqual(['"open"', '"Closed"', '"CLOSED"', '"closed "', '" closed"', '"closed\\t"', '"closed\\n"', '"unclosed"', '"closedx"']);
+    expect(FIELDS_BEYOND_STUB).toEqual(["_note", "notes", "description", "created_at", "priority", "labels", "titles", "type"]);
+    expect(headerList("UTF-8 characters"), "the module header's UTF-8 characters list").toEqual(UTF8_CHARACTERS.map(([label]) => label));
+    expect(headerList("names outside the form"), "the module header's names outside the form").toEqual([...NAMES_OUTSIDE_THE_FORM]);
+    expect(headerList("shard names in the form"), "the module header's shard names in the form").toEqual([...SHARD_NAMES_IN_THE_FORM]);
+    expect(headerList("statuses not closed"), "the module header's statuses not closed").toEqual(STATUSES_NOT_CLOSED.map(status => JSON.stringify(status)));
+    expect(headerList("fields beyond STUB_FIELDS"), "the module header's fields beyond STUB_FIELDS").toEqual([...FIELDS_BEYOND_STUB]);
   });
 });
 
