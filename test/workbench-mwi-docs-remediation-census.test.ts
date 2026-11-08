@@ -81,8 +81,18 @@
  * is named by its own text; the breadth beyond the twins is NOT CLAIMED. Red-first, it pins how marked's lexer gives the
  * twins placed by laterSection and laterTightSection (refusal #6 F4): W09C's text as the heading, a space token and the
  * table; WGP2C5-W1b's as the heading and then the table; WGP2C5-W1a's as the heading, the table, a space token and the
- * second table. The six pages are unchanged. The cut paragraphs above record what each cut added; what this census
- * claims is THE PINNED SET below, bounded by its HIDDEN and NOT CLAIMED paragraphs.
+ * second table. The six pages are unchanged.
+ *
+ * CUT #8 (seat ws-11 of g10-work-s238, 2026-11-08, trunk 1edd8626 merged into the branch): the respin of gate refusal #7
+ * (gate record of g10-gate-s241 on cut #7 230cc2ce), cured at the parent by narrowing as ruling R-B711 orders (the
+ * NARROW-FIRST alternative). Cut #7's words "a code block fenced by three backticks" named more fences than the one
+ * code-block twin plants (refusal #7 U1-U3: a fence indented, a fence with an info string, a longer closing fence);
+ * this cut narrows the table count's code-block words to that twin as planted - the table's text between an opening
+ * and a closing fence line that are each "```" and nothing else - and names every other code block NOT CLAIMED.
+ * Red-first, it pins the code-block twin's lexed shape and its code token's raw text, and the sizes of the dated-entry
+ * runs (refusal #7 F7); it narrows the table count title's block-quote words to WNESTED's own (refusal #7 F5) and names
+ * LATER_ENTRY in the twins title (refusal #7 F6). The six pages are unchanged. The cut paragraphs above record what
+ * each cut added; what this census claims is THE PINNED SET below, bounded by its HIDDEN and NOT CLAIMED paragraphs.
  *
  * THE PINNED SET (the claim form; test/workbench-mwi-docs-remediation-census.test.ts, cases in registration order):
  * - "the reading": the six pages are files git would commit - committable lists a named path when it is tracked (in the
@@ -146,7 +156,7 @@
  *   row with an extra ACCEPTANCE segment before the real one (WE1b) or a copy of it after the real one, and with an extra
  *   SURFACES segment after or before the real one.
  * - "receipt anchor": docs/workbench/receipts/wb-12x1.md as committed passes the anchor - its last dated entry, the
- *   cut #7 entry under the heading line "## 2026-11-08 receipt: cut #7, ..." (at the line's start, one space after "##",
+ *   cut #8 entry under the heading line "## 2026-11-08 receipt: cut #8, ..." (at the line's start, one space after "##",
  *   no closing sequence), holds one census table, after a blank line, whose header cells are the eight RECEIPT_COLUMNS
  *   (Requirement, Row, Claim, Where, Kind, Pins, Existing sha-256 and Repair sha-256) in that order and whose rows equal
  *   ROWS in order and both ways (each wording by its full sha256, so the receipt spells none of the text this census
@@ -178,17 +188,24 @@
  *   unit outside its class but the line feed and the carriage return (SWEPT: U+0000-U+00FF, the 23 WHITESPACE units,
  *   U+2010-U+2015, U+2212, U+FE58, U+FE63, U+FF0D and every \p{Nd} code unit above U+00FF), each of the three groups a
  *   digit short or a digit long (the six spellings the case lists, "## 202-11-08 receipt" to "## 2026-11-088 receipt"),
- *   the date after "receipt " ("## receipt 2026-11-08"), and each SWEPT unit outside \s (but "#") before the date.
+ *   the date after "receipt " ("## receipt 2026-11-08"), and each SWEPT unit outside \s (but "#") before the date. The
+ *   case pins those runs' sizes (refusal #7 F7): the five runs it reads hold 5, 65,533, 65,533, 65,511 and 7,013
+ *   headings (65,533: the 65,536 code units but three; 65,511: all but the 25 that \s matches; 7,013: the ten date
+ *   positions, then the seven spellings, then 618 units before the date), SWEPT holds 649 units, and the near-miss run
+ *   tries 637 units at each digit position and 646 at each of the two hyphens.
  * - "receipt anchor's table count": the anchor fails with "holds 2 tables" on LATER_ENTRY whose table follows its heading
  *   line with a second table after a blank line (WGP2C5-W1a: its text lexes as the heading, the table, a space token and
- *   the second table); on LATER_ENTRY holding, after a blank line, the table and then, after another, a copy with "> "
- *   before each of its lines (WNESTED) or a copy in a one-item list marked by each of the five LIST_MARKERS ("-", "*",
+ *   the second table); on LATER_ENTRY holding, after a blank line, the table and then, after another, a copy each of
+ *   whose lines starts with "> " (WNESTED) or a copy in a one-item list marked by each of the five LIST_MARKERS ("-", "*",
  *   "+", "1." and "1)": the marker, "the table again:", a blank line, then the table indented to the item's content -
  *   two spaces after a bullet, three after "1." or "1)" - which marked gives as a one-item list whose item holds a
  *   paragraph and the table); on a later "## Notes" heading followed after a blank line by the table or by that "> "
  *   copy; and on a later "### 2026-11-08 receipt: a sub-entry" or "### Notes" heading followed after a blank line by the
  *   table. It passes LATER_ENTRY holding, after a blank line, the table and then, after another, the table's text in a
- *   code block fenced by three backticks with no info string: that text does not count.
+ *   code block whose opening and closing fence lines are each "```" and nothing else (the code-block twin: no indent, no
+ *   info string, no fourth backtick, nothing after either fence), which marked gives as the heading, a space token, the
+ *   table, a space token and one code token whose raw text is the line "```", the table's text and the line "```" (both
+ *   pinned): that text does not count.
  * - "receipt anchor's columns": LATER_ENTRY holding, after a blank line, the census rows under each of these 23 headers,
  *   none of them RECEIPT_COLUMNS in order, holds no census table (the anchor fails with "holds 0 tables"): each of the
  *   eight columns with "x" appended and with its last character dropped (16 twins), Requirement and Row swapped with their
@@ -250,9 +267,13 @@
  * twins (each spelling followed by a note and by the census table), its dated-entry runs and its top-level headings
  * twins (WQ1 and WQ2's five LIST_MARKERS twins, each with its table twin); how many census tables a later entry holds -
  * the receipt anchor twins (W09C, WGP2C5-W1b, the table twice) and its table count twins (WGP2C5-W1a, WNESTED, the five
- * list-item copies, the later "## Notes" heading and the two later depth-3 headings, the code block fenced by three
- * backticks); where the twins place the table (after a blank line, or on its heading's next line) - the lexed shapes of
- * W09C, WGP2C5-W1b and WGP2C5-W1a (a twin helper that spells a blank line after the heading, or none, reds them); its
+ * list-item copies, the later "## Notes" heading and the two later depth-3 headings, the code-block twin whose two fence
+ * lines are each "```" and nothing else); where the twins place the table (after a blank line, or on its heading's next
+ * line) - the lexed shapes of W09C, WGP2C5-W1b and WGP2C5-W1a (a twin helper that spells a blank line after the heading,
+ * or none, reds them); the code-block twin's spelling - its lexed shape and its code token's raw text (a fence indented,
+ * given an info string, closed by four backticks or followed by spaces reds the raw-text pin); the dated-entry runs'
+ * "each" - the run size pins (a date position left unswept, a code-unit run stopped short, a depth or a spelling
+ * dropped reds them); its
  * header "the eight RECEIPT_COLUMNS in that order" - the receipt anchor's columns (23 twins) and the twins'
  * "Existing sha256" column; its "in order and both ways" - the receipt anchor twins (M001's and M002's rows swapped,
  * M050's row twice or dropped, an "x" appended to M001's cell in each of the eight columns); the outside anchor's
@@ -301,9 +322,11 @@
  * differs from RECEIPT_COLUMNS otherwise than the columns twins differ. Of a later census table, a wrong cell other than
  * an "x" appended to one of M001's cells (a wrong cell on another row, or a cell whose letters change case, for two), a
  * row more or fewer other than M050's row twice or dropped (a row whose Row cell names no census row, for one), and the
- * table's text in a code block other than one fenced by three backticks (a tilde fence or an indented code block, for
- * two) are NOT CLAIMED by this census: ruling R-B711 reads that breadth of the exited receipt-anchor set as the
- * structural-exit child wb-1gdq's. A standing
+ * table's text in any code block other than the code-block twin (a tilde fence, an indented code block, a fence line
+ * indented one to three spaces, an opening fence with an info string such as "md", a closing fence of four or more
+ * backticks, a space or tab after either fence, a code block placed otherwise than after the table and a blank line in
+ * LATER_ENTRY, or one holding other text than the table's, for eight) are NOT CLAIMED by this census: ruling R-B711
+ * reads that breadth of the exited receipt-anchor set as the structural-exit child wb-1gdq's. A standing
  * text moved past the page's end by more than the one line the sweep reads is NOT CLAIMED by this census.
  * RESIDUAL (named family + pinned quiet row; rule 19(d)): R-PARAPHRASE - the predicate is the exact REMEDIATION wording, so
  * an overstrong claim restated in other words, split over two lines, broken by Markdown emphasis or restated in other
@@ -1608,7 +1631,7 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
     receiptAnchor(receiptText());
   });
 
-  it("receipt anchor twins: a later dated entry holding one census table equal to ROWS after a blank line or on its heading's next line (lexed shapes pinned) passes; one without it, with it twice, with Existing sha-256 renamed Existing sha256, M001's and M002's rows swapped, M050's row twice or dropped, or an 'x' appended to one M001 cell fails; a later '## Notes', '### 2026-11-08 receipt: a sub-entry' or '## 2026-11-08x receipt' section leaves the last dated entry in force", () => {
+  it("receipt anchor twins: LATER_ENTRY holding one census table equal to ROWS after a blank line or on its heading's next line (lexed shapes pinned) passes; one without it, with it twice, with Existing sha-256 renamed Existing sha256, M001's and M002's rows swapped, M050's row twice or dropped, or an 'x' appended to one M001 cell fails; a later '## Notes', '### 2026-11-08 receipt: a sub-entry' or '## 2026-11-08x receipt' section leaves the last dated entry in force", () => {
     const live = receiptText();
     const expected = ROWS.map(receiptRowOf);
     const table = tableText(expected);
@@ -1651,7 +1674,12 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
     const live = receiptText();
     const note = "- A later note.";
     const table = tableText(ROWS.map(receiptRowOf));
-    const run = (headings: readonly string[]): string => `${live}\n${headings.join("\n")}\n`;
+    /** The sizes of the later runs, in the order the case reads them (refusal #7 F7: a run cut short reds the size pin). */
+    const runSizes: number[] = [];
+    const run = (headings: readonly string[]): string => {
+      runSizes.push(headings.length);
+      return `${live}\n${headings.join("\n")}\n`;
+    };
     const unitsBut = (skip: (unit: number) => boolean): string[] => Array.from({ length: 0x10000 }, (_, unit) => unit).filter(unit => !skip(unit)).map(unit => String.fromCharCode(unit));
     const blank = (unit: number): boolean => /\s/.test(String.fromCharCode(unit));
     expect(() => receiptAnchor(laterSection(live, "## 2026-11-08", note)), "a later depth-2 heading that is the date alone opens an entry").toThrow(/holds 0 tables/);
@@ -1685,19 +1713,30 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
     const date = "2026-11-08";
     /** SWEPT: the code units the near-miss run tries at each date position and before the date. */
     const swept = [...Array.from({ length: 0x100 }, (_, unit) => unit), ...WHITESPACE, 0x2010, 0x2011, 0x2012, 0x2013, 0x2014, 0x2015, 0x2212, 0xfe58, 0xfe63, 0xff0d, ...Array.from({ length: 0x10000 }, (_, unit) => unit).filter(unit => unit > 0xff && /\p{Nd}/u.test(String.fromCharCode(unit)))];
+    /** How many near-miss spellings the run tries at each of the ten date positions. */
+    const perPosition: number[] = [];
     for (let at = 0; at < date.length; at += 1) {
+      const before = near.length;
       for (const unit of swept) {
         const char = String.fromCharCode(unit);
         if (unit === 0xa || unit === 0xd || (date[at] === "-" ? char === "-" : /^[0-9]$/.test(char))) continue;
         near.push(`## ${date.slice(0, at)}${char}${date.slice(at + 1)} receipt`);
       }
+      perPosition.push(near.length - before);
     }
     near.push("## 202-11-08 receipt", "## 20266-11-08 receipt", "## 2026-1-08 receipt", "## 2026-111-08 receipt", "## 2026-11-8 receipt", "## 2026-11-088 receipt", "## receipt 2026-11-08");
     for (const unit of swept) if (!blank(unit) && unit !== 0x23) near.push(`## ${String.fromCharCode(unit)}2026-11-08 receipt`);
     expect(() => receiptAnchor(run(near)), "a later run of near-miss dates: each of the ten date positions holding each swept code unit outside its class, a group a digit short or long, the date after other text, and each swept code unit outside \\s (but #) before the date").not.toThrow();
+    // The run sizes (refusal #7 F7). 0x10000 - 3: every UTF-16 code unit but the space, the line feed and the carriage
+    // return; 0x10000 - 25: every unit outside \s. SWEPT: 256 + 23 + 10 + 360 units (U+0000-U+00FF, WHITESPACE, the ten
+    // dash and minus units, the \p{Nd} units above U+00FF). 637: SWEPT but the ten ASCII digits, the line feed and the
+    // carriage return; 646: SWEPT but "-", the line feed and the carriage return; 618: SWEPT but its 30 \s units and "#".
+    expect(swept, "SWEPT's size").toHaveLength(649);
+    expect(perPosition, "the near-miss spellings tried at each of the ten date positions (646 at the two hyphens)").toEqual([637, 637, 637, 637, 646, 637, 637, 646, 637, 637]);
+    expect(runSizes, "the five later runs' sizes: the depths, the two code-unit runs after the date, the units outside \\s and the near-miss dates").toEqual([5, 0x10000 - 3, 0x10000 - 3, 0x10000 - 25, 8 * 637 + 2 * 646 + 7 + 618]);
   }, 120_000);
 
-  it("receipt anchor's table count: a later entry holding a second census table - after the first on its heading's next line (that lexed shape pinned), in a block quote marked '> ', in a one-item list marked by each of the five LIST_MARKERS ('-', '*', '+', '1.', '1)'), in a later '## Notes' section or under a later '### 2026-11-08 receipt: a sub-entry' or '### Notes' heading - fails, while the table's text in a code block fenced by three backticks is code", () => {
+  it("receipt anchor's table count: a later entry holding a second census table - after the first on its heading's next line (lexed shape pinned), in a copy whose lines each start '> ', in a one-item list marked by each of the five LIST_MARKERS ('-', '*', '+', '1.', '1)'), or under a later '## Notes', '### 2026-11-08 receipt: a sub-entry' or '### Notes' heading - fails, while LATER_ENTRY's table, a blank line and its text between two lines each exactly '```' passes (shape pinned)", () => {
     const live = receiptText();
     const table = tableText(ROWS.map(receiptRowOf));
     const quoted = table.split("\n").map(line => `> ${line}`).join("\n");
@@ -1719,7 +1758,10 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
     expect(() => receiptAnchor(laterSection(live, "## Notes", quoted)), "a later undated section holding a block-quoted census table").toThrow(/holds 2 tables/);
     expect(() => receiptAnchor(laterSection(live, "### 2026-11-08 receipt: a sub-entry", table)), "a later depth-3 dated heading holding a second census table").toThrow(/holds 2 tables/);
     expect(() => receiptAnchor(laterSection(live, "### Notes", table)), "a later undated depth-3 heading holding a second census table").toThrow(/holds 2 tables/);
-    expect(() => receiptAnchor(laterSection(live, LATER_ENTRY, `${table}\n\n\`\`\`\n${table}\n\`\`\``)), "a later dated entry holding the table and its text in a code block").not.toThrow();
+    const fenced = laterSection(live, LATER_ENTRY, `${table}\n\n\`\`\`\n${table}\n\`\`\``);
+    expect(laterShapeOf(fenced), "the code-block twin's text: the heading, a space token, the table, a space token, then one code token").toEqual(["heading", "space", "table", "space", "code"]);
+    expect(new Lexer({ gfm: true }).lex(fenced).at(-1)?.raw, "that code token's raw text: the line ```, the table's text and the line ```, nothing else").toBe(`\`\`\`\n${table}\n\`\`\`\n`);
+    expect(() => receiptAnchor(fenced), "the code-block twin: a later dated entry holding the table and its text between two fence lines each exactly ```").not.toThrow();
   });
 
   it("receipt anchor's columns: a later dated entry whose table header is not the eight RECEIPT_COLUMNS in order - any one column with 'x' appended or its last character dropped, Requirement and Row swapped, a ninth column, the last column dropped, Requirement in lower case, or Existing sha-256's space doubled or written as a tab or a no-break space - holds no census table", () => {
