@@ -17,6 +17,7 @@
 
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import {
   WORKFLOW_AGENT_CAP,
@@ -166,25 +167,76 @@ describe("the node() reconcile contract it documents (wb-g8f part B.5)", () => {
   });
 });
 
-// The four texts that the F4 carry of wb-x6be landing 1023 named (follow-up
-// wb-jvy7, R694) now say a failed Git preservation keeps the worktree: the
-// agent() isolation clause of this description, the `isolation` bullet in the
-// opening comment of src/workflow/tool-description.ts, item 2 in the opening
-// comment of examples/workflows/gated-fix.js, and the end of the doc comment on
-// WorkflowSpawnResult.cwd in src/workflow/runtime.ts. JV1 to JV4 pin these four
-// texts in this order, one case for each. A form that a case does not assert is
-// not claimed, and neither is the failed-preservation behaviour itself (the PF
-// rows of test/worktree.test.ts pin that).
+// wb-jvy7 census header (cut #3, written in the rule-14 enumerate-the-resolvable
+// form after refusal #2). The four texts that the F4 carry of wb-x6be landing
+// 1023 named (follow-up wb-jvy7, R694) now say a failed Git preservation keeps
+// the worktree: the agent() isolation clause of this description, the
+// `isolation` bullet in the opening comment of src/workflow/tool-description.ts,
+// item 2 in the opening comment of examples/workflows/gated-fix.js, and the end
+// of the doc comment on the "  cwd?: string;" property signature of the
+// WorkflowSpawnResult interface in src/workflow/runtime.ts. JV1 to JV4 pin these
+// four texts in this order, one case for each, and each case claims what its
+// title says. Three structural words are read with TypeScript's own scanner and
+// syntax tree: a file's opening comment is the comment openingComment() reads,
+// the WorkflowSpawnResult interface is the declaration spawnResultInterface()
+// reads, and the doc comment on a property signature is the JSDoc comment that
+// ts.getJSDocCommentsAndTags returns for it (the last /** comment between it
+// and the token before it). A form that a case does not assert is NOT CLAIMED
+// by this census, and neither is the failed-preservation behaviour itself (the
+// PF rows of test/worktree.test.ts pin that).
+// RESIDUALS: none. The known modes that refusal #2 named are pinned by these
+// readings, not left as residuals: an opening comment that closes mid-line
+// (LG2-P1, LG2-P2), a WorkflowSpawnResult interface that closes on a line other
+// than an exact "}" (LG2-P3), and a decoy "export interface WorkflowSpawnResult {"
+// line before the real declaration (LG2-P3b).
 describe("wb-jvy7: the four F4 texts on a failed Git preservation", () => {
   const readRepoFile = (path: string): string =>
     readFileSync(fileURLToPath(new URL(`../${path}`, import.meta.url)), "utf8");
-  // openingComment(): the file's lines from line 1, asserted to be "/**",
-  // through the first line that is exactly " */", asserted to exist.
-  const openingComment = (lines: string[]): string[] => {
+  // lineAt(): the 0-based index of the line that holds a position of a text.
+  const lineAt = (text: string, position: number): number => text.slice(0, position).split("\n").length - 1;
+  // openingComment(): a file's opening comment, as whole lines. The opening
+  // comment is the first comment range of ts.getLeadingCommentRanges(text, 0)
+  // (TypeScript's scanner), asserted to exist, to start at the file's first
+  // character and to be a multi-line comment, in a file whose line 1 is exactly
+  // "/**". Its lines are the file's lines from line 1 through the line that holds
+  // the comment's last character.
+  const openingComment = (text: string): string[] => {
+    const lines = text.split("\n");
     expect(lines[0]).toBe("/**");
-    const end = lines.indexOf(" */");
-    expect(end).toBeGreaterThan(0);
-    return lines.slice(0, end + 1);
+    const ranges = ts.getLeadingCommentRanges(text, 0) ?? [];
+    expect(ranges.length).toBeGreaterThan(0);
+    const [first] = ranges;
+    expect(first.pos).toBe(0);
+    expect(first.kind).toBe(ts.SyntaxKind.MultiLineCommentTrivia);
+    return lines.slice(0, lineAt(text, first.end - 1) + 1);
+  };
+  // spawnResultInterface(): the WorkflowSpawnResult interface of a source text.
+  // The text is parsed with ts.createSourceFile (parent nodes set), every
+  // interface declaration named WorkflowSpawnResult anywhere in the syntax tree
+  // is collected, and there must be exactly one: a top-level statement of the
+  // file whose first line is exactly "export interface WorkflowSpawnResult {".
+  const spawnResultInterface = (text: string): { declaration: ts.InterfaceDeclaration; file: ts.SourceFile } => {
+    const file = ts.createSourceFile("runtime.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+    const declarations: ts.InterfaceDeclaration[] = [];
+    const visit = (node: ts.Node): void => {
+      if (ts.isInterfaceDeclaration(node) && node.name.text === "WorkflowSpawnResult") declarations.push(node);
+      ts.forEachChild(node, visit);
+    };
+    visit(file);
+    expect(declarations.length).toBe(1);
+    const [declaration] = declarations;
+    expect(ts.isSourceFile(declaration.parent)).toBe(true);
+    expect(text.split("\n")[lineAt(text, declaration.getStart(file))]).toBe("export interface WorkflowSpawnResult {");
+    return { declaration, file };
+  };
+  // namedCwd(): whether an interface member is named cwd: by an identifier, by a
+  // string literal (quoted, or a template with no substitutions), or by a
+  // computed key that is such a string literal.
+  const namedCwd = (member: ts.TypeElement): boolean => {
+    const name = member.name;
+    if (name === undefined) return false;
+    if (ts.isComputedPropertyName(name)) return ts.isStringLiteralLike(name.expression) && name.expression.text === "cwd";
+    return (ts.isIdentifier(name) || ts.isStringLiteralLike(name)) && name.text === "cwd";
   };
   // prose(): the text lower-cased (toLowerCase), each line stripped of its
   // leading whitespace and then of the "*" and "/" characters that follow it,
@@ -254,7 +306,10 @@ describe("wb-jvy7: the four F4 texts on a failed Git preservation", () => {
   it("JV2 src/workflow/tool-description.ts: the one line of its opening comment that ISOLATION matches is HEADER_ISOLATION_BULLET's first line, ADDITIONS_LINE follows HEADER_ISOLATION_BULLET's two lines, and prose() of the file holds no \"`isolation` removes the worktree on settle, changes kept on a branch.\"", () => {
     const source = readRepoFile("src/workflow/tool-description.ts");
     const lines = source.split("\n");
-    expect(openingComment(lines).filter(line => ISOLATION.test(line))).toEqual([HEADER_ISOLATION_BULLET[0]]);
+    const comment = openingComment(source);
+    expect(comment.filter(line => ISOLATION.test(line))).toEqual([HEADER_ISOLATION_BULLET[0]]);
+    const inComment = comment.indexOf(HEADER_ISOLATION_BULLET[0]);
+    expect(comment.slice(inComment, inComment + HEADER_ISOLATION_BULLET.length + 1)).toEqual([...HEADER_ISOLATION_BULLET, ADDITIONS_LINE]);
     const at = lines.findIndex(line => line.startsWith(" *   - `isolation`"));
     expect(lines.filter(line => line.startsWith(" *   - `isolation`"))).toHaveLength(1);
     expect(lines.slice(at, at + HEADER_ISOLATION_BULLET.length)).toEqual(HEADER_ISOLATION_BULLET);
@@ -267,7 +322,10 @@ describe("wb-jvy7: the four F4 texts on a failed Git preservation", () => {
   it("JV3 examples/workflows/gated-fix.js: the one line of its opening comment that ITEM_2 matches is GATED_FIX_ISOLATION_ITEM's first line, ARGS_LINE follows GATED_FIX_ISOLATION_ITEM's seven lines, and prose() of the file holds no \"removed when it settles, so\"", () => {
     const source = readRepoFile("examples/workflows/gated-fix.js");
     const lines = source.split("\n");
-    expect(openingComment(lines).filter(line => ITEM_2.test(line))).toEqual([GATED_FIX_ISOLATION_ITEM[0]]);
+    const comment = openingComment(source);
+    expect(comment.filter(line => ITEM_2.test(line))).toEqual([GATED_FIX_ISOLATION_ITEM[0]]);
+    const inComment = comment.indexOf(GATED_FIX_ISOLATION_ITEM[0]);
+    expect(comment.slice(inComment, inComment + GATED_FIX_ISOLATION_ITEM.length + 1)).toEqual([...GATED_FIX_ISOLATION_ITEM, ARGS_LINE]);
     const at = lines.findIndex(line => line.startsWith(" *   2. "));
     expect(lines.filter(line => line.startsWith(" *   2. "))).toHaveLength(1);
     expect(lines.slice(at, at + GATED_FIX_ISOLATION_ITEM.length)).toEqual(GATED_FIX_ISOLATION_ITEM);
@@ -282,10 +340,13 @@ describe("wb-jvy7: the four F4 texts on a failed Git preservation", () => {
     expect(lines.filter(line => CWD_LINE.test(line))).toEqual(["  cwd?: string;"]);
     const field = lines.indexOf("  cwd?: string;");
     expect(lines.filter(line => line === "  cwd?: string;")).toHaveLength(1);
-    const open = lines.indexOf("export interface WorkflowSpawnResult {");
-    expect(open).toBeGreaterThanOrEqual(0);
-    expect(field).toBeGreaterThan(open);
-    expect(field).toBeLessThan(lines.indexOf("}", open));
+    const { declaration, file } = spawnResultInterface(source);
+    const members = declaration.members.filter(namedCwd);
+    expect(members.map(member => [ts.isPropertySignature(member), lineAt(source, member.getStart(file)), member.getText(file)])).toEqual([[true, field, "cwd?: string;"]]);
+    const docs = ts.getJSDocCommentsAndTags(members[0]).filter(ts.isJSDoc);
+    expect(docs.length).toBe(1);
+    expect(lineAt(source, docs[0].end - 1)).toBe(field - 1);
+    expect(lineAt(source, docs[0].pos)).toBeLessThanOrEqual(field - CWD_DOC_TAIL.length + 1);
     expect(field).toBeGreaterThanOrEqual(CWD_DOC_TAIL.length - 1);
     expect(lines.slice(field - CWD_DOC_TAIL.length + 1, field + 1)).toEqual(CWD_DOC_TAIL);
     expect(source).not.toContain("child's own settle, so it no longer exists");
