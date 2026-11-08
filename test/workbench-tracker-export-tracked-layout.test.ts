@@ -5,6 +5,8 @@
  * NOT CLAIMED: what the tracker's importer (bd import) does with these files; whether a later export is compacted before it is
  * committed (the machine's hop, outside this repository); the bytes of a shard of a month after 2026-10; an edge whose depends_on_id
  * names no row of the main export; a shard line whose id has no row in the main export.
+ * Also NOT CLAIMED: the FULL-rows half of owner shape element 1 (the main export keeps FULL rows for non-closed beads), and each part
+ * of element 3 that compares the tracked files with the store (the non-closed set byte-equal store-vs-export among them).
  */
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";

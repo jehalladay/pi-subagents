@@ -133,7 +133,8 @@ function zeroLedRootCommit(repo: Repo, message: string): string {
   throw new Error("no commit sha of the ZERO_LED form within the counter's range");
 }
 
-describe("wb-294d export-size guard: the soft ceiling", () => {
+// wb-eiwp: G1 grew by its guard-CLI plants; the describe carries the pre-push describe's bound.
+describe("wb-294d export-size guard: the soft ceiling", { timeout: 120_000 }, () => {
   it("G1 the default is 95 MiB = 99,614,720 bytes; a positive whole number in FW_EXPORT_SOFT_CEILING replaces it, 2^53 - 1 the largest; zero, a negative, a fraction, a word, an exponent, a padded or zero-led number, 2^53 and one past 2^53 refuse (rc 3 at guard and, for the word 'ten', at pre-push here; compact's is the compaction suite's K8)", () => {
     expect(DEFAULT_SOFT_CEILING).toBe(99_614_720);
     expect(softCeiling({})).toEqual({ ok: true, bytes: 99_614_720 });
@@ -141,7 +142,9 @@ describe("wb-294d export-size guard: the soft ceiling", () => {
     expect(softCeiling({ [CEILING_ENV]: "4096" })).toEqual({ ok: true, bytes: 4096 });
     // wb-137f refusal #3 U6 (GP1-07): 2^53 - 1 is the largest ceiling; 2^53 refuses like 2^53 + 1.
     expect(softCeiling({ [CEILING_ENV]: "9007199254740991" })).toEqual({ ok: true, bytes: Number.MAX_SAFE_INTEGER });
-    for (const bad of ["0", "-5", "1.5", "abc", "1e3", " 12", "012", "9007199254740992", "9007199254740993"]) {
+    // wb-eiwp: '+12' (a plus sign) and '12 ' (padded at its end) join the list.
+    const bads = ["0", "-5", "+12", "1.5", "abc", "1e3", " 12", "12 ", "012", "9007199254740992", "9007199254740993"];
+    for (const bad of bads) {
       const result = softCeiling({ [CEILING_ENV]: bad });
       expect(result.ok, bad).toBe(false);
     }
@@ -150,6 +153,19 @@ describe("wb-294d export-size guard: the soft ceiling", () => {
     const r = repo.guard([tip], "ten");
     expect(r.status).toBe(3);
     expect(stderrLines(r)).toEqual([`tracker-export: ${CEILING_ENV} must be a positive whole number of bytes (got "ten"); nothing is pushed`]);
+    // wb-eiwp (F2 of wb-xkto's landing 1041: GX10-09 trimmed the value at the guard CLI only): each value the loop above refuses at
+    // softCeiling() is planted at the guard CLI too - rc 3, the typed line naming the value, nothing on stdout - and 2^53 - 1 there
+    // is taken: the 10-byte export under it passes rc 0 silently.
+    for (const bad of bads) {
+      const refused = repo.guard([tip], bad);
+      expect(refused.status, bad).toBe(3);
+      expect(stderrLines(refused), bad).toEqual([`tracker-export: ${CEILING_ENV} must be a positive whole number of bytes (got "${bad}"); nothing is pushed`]);
+      expect(refused.stdout, bad).toBe("");
+    }
+    const largest = repo.guard([tip], "9007199254740991");
+    expect(largest.status).toBe(0);
+    expect(largest.stderr).toBe("");
+    expect(largest.stdout).toBe("");
     const hook = spawnSync(process.execPath, [TOOL, "pre-push", "origin", repo.remote], { cwd: repo.dir, env: childEnv(repo.home, { [CEILING_ENV]: "ten" }), input: `refs/heads/main ${tip} refs/heads/main ${"0".repeat(40)}\n`, encoding: "utf8" });
     expect(hook.status).toBe(3);
     expect(stderrLines(hook)).toEqual([`tracker-export: ${CEILING_ENV} must be a positive whole number of bytes (got "ten"); nothing is pushed`]);
