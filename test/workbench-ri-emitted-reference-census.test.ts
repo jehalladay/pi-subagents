@@ -661,7 +661,7 @@ interface BeadRow {
 }
 /** A row of the tracked bead export (the owner filing's by default), found by id on a line that parses. */
 function readBeadRow(id: string = BEAD): BeadRow {
-  for (const line of readFileSync(join(REPO, BEAD_EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, BEAD_EXPORT)).split("\n")) {
     if (!line.includes(`"id":"${id}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === id && typeof row.title === "string" && typeof row.notes === "string") return { title: row.title, notes: row.notes };
@@ -1804,3 +1804,5 @@ describe("wb-tz4r.6 RI emitted-reference census (RI-UNIFIED-DECISION-INFERENCE-R
     expect(COUNTED, "every pin's case made the assertions the roster counts for it, once its witness compare held").toEqual(ROSTER.counted);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

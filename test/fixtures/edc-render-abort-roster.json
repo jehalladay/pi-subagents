@@ -454,7 +454,8 @@
       "../src/workbench/providers/reactivefiber.js { nativeReactiveFiberPreview, nativeReactiveFiberRender, REACTIVE_FIBER_CONTRACT_SOURCE, REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, registerReactiveFiberRender }",
       "./helpers/edc-static-reach-readers.js * as READERS",
       "./helpers/rf-render-fixture.js { fullShapeRf }",
-      "./helpers/scratch.js { installScratchLeakGuard, makeScratch, removeScratch }"
+      "./helpers/scratch.js { installScratchLeakGuard, makeScratch, removeScratch }",
+      "../qa/workbench/tracker-export.mjs { trackerExportText }"
     ],
     "topLevelCalls": [
       "installScratchLeakGuard()",
@@ -1333,9 +1334,9 @@
               "readers": 35,
               "tsconfig": "tsconfig.test.json",
               "moduleResolution": "Bundler",
-              "named": 17,
+              "named": 18,
               "topLevel": {
-                "importDeclarations": 17,
+                "importDeclarations": 18,
                 "declaring": 186,
                 "declared": 186,
                 "calls": 3

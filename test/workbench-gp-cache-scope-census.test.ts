@@ -1145,7 +1145,7 @@ function producerLine(id: string): ProducerLine {
 
 /** The bead's row in the tracker export: its title and its notes, the filing's text. */
 function filing(): { readonly title: string; readonly notes: string } {
-  for (const line of textOf(".beads/issues.jsonl").split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(".beads/issues.jsonl"), join(REPO, ".beads/issues.jsonl")).split("\n")) {
     if (!line.includes(`"id":"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isRecord(row) && row.id === BEAD && typeof row.title === "string" && typeof row.notes === "string") return { title: row.title, notes: row.notes };
@@ -1543,3 +1543,5 @@ describe("wb-ojm5.2 GP cache scope census (GPC-GRAPH-NATIVE-LLM-RLP-R2)", () => 
     expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(row => row.pins));
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

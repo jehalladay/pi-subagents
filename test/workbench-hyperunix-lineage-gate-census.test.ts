@@ -940,7 +940,7 @@ function declarationFiles(dir: string): string[] {
 
 /** The tracked bead export's description for `id` (never its notes: a later note append never moves this census). */
 function exportDescription(id: string): string {
-  for (const line of textOf(BEAD_EXPORT).split('\n')) {
+  for (const line of rehydrateTrackerExport(textOf(BEAD_EXPORT), join(REPO, BEAD_EXPORT)).split('\n')) {
     if (!line.includes(`"id":"${id}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isRecord(row) && row.id === id && typeof row.description === 'string') return row.description;
@@ -1744,3 +1744,5 @@ describe('wb-4ap.13 HyperUnix lineage gate census (standing leg)', () => {
     expect(RESIDUALS.map(item => item.quiet)).toStrictEqual(ROWS.find(row => row.id === 'Q')?.pins);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

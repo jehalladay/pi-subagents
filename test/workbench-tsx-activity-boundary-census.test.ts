@@ -1476,7 +1476,7 @@ let rowCache: { readonly title: string; readonly filing: string } | undefined;
 /** The owner filing's row of the tracked bead export (36 MB at the cut's base), read once: its title and its citation line. */
 function beadRow(): { readonly title: string; readonly filing: string } {
   if (rowCache !== undefined) return rowCache;
-  for (const line of readFileSync(join(REPO, BEAD_EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, BEAD_EXPORT)).split("\n")) {
     if (!line.includes(BEAD)) continue;
     const value: unknown = JSON.parse(line);
     if (value !== null && typeof value === "object" && "id" in value && value.id === BEAD && "notes" in value && typeof value.notes === "string" && "title" in value && typeof value.title === "string") {
@@ -1781,3 +1781,5 @@ describe("wb-km7q.6 TSX ActivityBoundary adoption census (SDK-REACTIVE-FIBER-ADA
     expect([...REACHED].sort(byName)).toEqual(ROSTER.rows.flatMap(row => row.pins.map(pin => pin.id)).sort(byName));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

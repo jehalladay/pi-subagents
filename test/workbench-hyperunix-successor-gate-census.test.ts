@@ -275,7 +275,7 @@ function readFiling(rows: readonly string[]): Filing {
     },
   };
 }
-const FILING_ROWS = filingRows(readFileSync(join(ROOT, ".beads/issues.jsonl"), "utf8"));
+const FILING_ROWS = filingRows(trackerExportText(join(ROOT, ".beads/issues.jsonl")));
 const FILING = readFiling(FILING_ROWS);
 
 /** The tag each family accepts today, from its source of truth: the registered provider's contract and the vendored SDK's tag. */
@@ -1112,7 +1112,7 @@ const PIN_LINES: readonly string[] = [
     "..., ...source}, ..., ...top}; sha256_16 05325573944ccc40",
   "S test/workbench-hyperunix-observer.test.ts run pin | the census tier collects the run pin that judges the cited case's registration in " +
     "the gate's own test report, and the run pin's bytes are the ones measured at the cut | " +
-    "test/workbench-hyperunix-successor-gate-run-pin.census.ts sha256_16 4287eecead0c1422: the census tier runs vitest run --config " +
+    "test/workbench-hyperunix-successor-gate-run-pin.census.ts sha256_16 1e6adb0160bfbedb: the census tier runs vitest run --config " +
     "vitest.census.config.ts, whose config holds only the defineConfig import and its default export, a test object of allowOnly false and " +
     "include [\"test/**/*.census.ts\"], one glob matching test/workbench-hyperunix-successor-gate-run-pin.census.ts",
   "C src/workbench/hyperunix-observer.ts | the file's representation-tag spellings and its role | carrier: whole hyperunix.result/1 @ const REPRESENTATION",
@@ -1640,3 +1640,5 @@ describe("HyperUnix result-representation successor gate (wb-tz2.3 R3, standing 
     expect(shown(new Map([["src/workbench/assembled.ts", assembled]]))).toEqual([]);
   }, READ_TIMEOUT);
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

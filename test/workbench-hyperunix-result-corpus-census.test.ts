@@ -882,7 +882,7 @@ function rowFields(text: string): { readonly rows: number; readonly title: unkno
 /** The bead's own export row: the rows whose id is the bead's counted before any field is read (exactly one), then that row's
  * title and description, which must be strings (later store writes change neither). */
 function exportRow(): { title: string; description: string } {
-  const { rows, title, description } = rowFields(readFileSync(join(REPO, EXPORT), "utf8"));
+  const { rows, title, description } = rowFields(trackerExportText(join(REPO, EXPORT)));
   expect(rows, "the export holds exactly one row whose id is the bead's (counted by id, before any field is read)").toBe(1);
   if (typeof title !== "string" || typeof description !== "string") throw new Error(`the export row of ${BEAD} carries no string title and description`);
   return { title, description };
@@ -2301,3 +2301,5 @@ describe("wb-tz2.7 HyperUnix result-corpus census (until a consumer-facing hyper
     expect([...QUIETED].sort(), "every residual's quiet row ran to its end").toStrictEqual(Object.keys(QUIET).sort());
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

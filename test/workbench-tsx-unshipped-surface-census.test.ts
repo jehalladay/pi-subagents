@@ -982,7 +982,7 @@ async function spawnedArgv(selector: ReactiveFiberRenderSelector): Promise<strin
 
 /** The tracked bead export's row for `id` (every line must parse; a malformed export is refused, never skipped). */
 function exportRow(id: string): { [key: string]: unknown } {
-  const rows = textOf(join(REPO, BEAD_EXPORT))
+  const rows = rehydrateTrackerExport(textOf(join(REPO, BEAD_EXPORT)), join(REPO, BEAD_EXPORT))
     .split("\n")
     .filter(line => line.trim() !== "")
     .map((line, index): unknown => {
@@ -1571,3 +1571,5 @@ describe("wb-if7q.1 unshipped TSX surface census (TSX-NATIVE-INTERFACES-AND-PORT
     expect([...REACHED].sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

@@ -259,7 +259,7 @@ const REACHED = new Set<string>();
 let notesMemo: string | undefined;
 function filing(): string {
   if (notesMemo !== undefined) return notesMemo;
-  for (const line of readFileSync(join(REPO, EXPORT_FILE), 'utf8').split('\n')) {
+  for (const line of trackerExportText(join(REPO, EXPORT_FILE)).split('\n')) {
     if (!line.includes(BEAD)) continue;
     const value: unknown = JSON.parse(line);
     if (isRecord(value) && value.id === BEAD && typeof value.notes === 'string') {
@@ -1287,3 +1287,5 @@ describe('wb-z3ft.2 HX cost-certificate posture census (HX-CERTIFIED-STRUCTURAL-
     expect([...REACHED].sort()).toEqual(pinIds());
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

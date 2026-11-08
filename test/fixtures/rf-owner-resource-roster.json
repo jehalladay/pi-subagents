@@ -56,7 +56,7 @@
         {"id": "B3", "witness": {"pin": "B3", "family": "019263b5ad484158", "root": "docs", "floor": 50, "anchorFile": "workbench/13-contracts-and-config.md", "anchorToken": "reactivefiber.render.preview", "floorMet": true, "anchorRead": true, "unwalked": [], "unreadWhole": [], "links": [], "hits": []}},
         {"id": "B4", "witness": {"pin": "B4", "family": "019263b5ad484158", "root": "qa", "floor": 50, "anchorFile": "workbench/receipts-index.mjs", "anchorToken": "docs/workbench/receipts", "floorMet": true, "anchorRead": true, "unwalked": [], "unreadWhole": [], "links": [], "hits": []}},
         {"id": "B5", "witness": {"pin": "B5", "family": "019263b5ad484158", "descriptorFloorMet": true, "hits": []}},
-        {"id": "B6", "witness": {"pin": "B6", "family": "019263b5ad484158", "excluded": [".git", "node_modules", ".beads/issues.jsonl", ".beads/interactions.jsonl"], "floor": {"entries": 25, "files": 55}, "floorMet": true, "anchorsRead": true, "unwalked": [], "unreadWhole": [], "links": [], "hits": []}}
+        {"id": "B6", "witness": {"pin": "B6", "family": "019263b5ad484158", "excluded": [".git", "node_modules", ".beads/issues.jsonl", ".beads/archive", ".beads/interactions.jsonl"], "floor": {"entries": 25, "files": 55}, "floorMet": true, "anchorsRead": true, "unwalked": [], "unreadWhole": [], "links": [], "hits": []}}
       ]
     },
     {

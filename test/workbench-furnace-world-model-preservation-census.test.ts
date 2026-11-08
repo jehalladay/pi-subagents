@@ -535,7 +535,7 @@ function srcFiles(): { path: string; text: string }[] {
 let exported: readonly unknown[] | undefined;
 /** Every export row, parsed once per run (the export is large, and A1 reads it for its own row and for every title). */
 function exportRows(): readonly unknown[] {
-  exported ??= readFileSync(join(REPO, EXPORT), "utf8")
+  exported ??= trackerExportText(join(REPO, EXPORT))
     .split("\n")
     .filter(line => line.trim() !== "")
     .map((line): unknown => JSON.parse(line));
@@ -2602,3 +2602,5 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
     expect(new Set(registered).size, "and once").toBe(registered.length);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

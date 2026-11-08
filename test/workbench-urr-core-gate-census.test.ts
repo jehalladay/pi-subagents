@@ -4250,7 +4250,7 @@ let exportCache: Map<string, ExportRow> | undefined;
 function exportRows(): Map<string, ExportRow> {
   if (exportCache !== undefined) return exportCache;
   exportCache = rowsById(
-    readFileSync(EXPORT_PATH, "utf8")
+    trackerExportText(EXPORT_PATH)
       .split("\n")
       .filter(line => line.trim().length > 0)
       .map(line => JSON.parse(line) as unknown),
@@ -4264,7 +4264,7 @@ function rowsById(rows: readonly unknown[]): Map<string, ExportRow> {
 }
 /** The tracked export's lines (each a bead's row as bd writes it). */
 function exportLines(): string[] {
-  return readFileSync(EXPORT_PATH, "utf8")
+  return trackerExportText(EXPORT_PATH)
     .split("\n")
     .filter(line => line.trim().length > 0);
 }
@@ -5344,3 +5344,5 @@ describe("wb-2wiv.1 portable Fiber core gate census (SDK-UNIVERSAL-REACTIVE-REND
     expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(row => row.pins));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

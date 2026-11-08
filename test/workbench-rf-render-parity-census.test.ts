@@ -997,7 +997,7 @@ function mentionsOf(text: string): Mention[] {
 
 /** The owner filing: the notes of this bead's row in the tracked bead export. */
 function filingNotes(): string {
-  for (const line of textOf(BEAD_EXPORT).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(BEAD_EXPORT), BEAD_EXPORT).split("\n")) {
     if (line.trim() === "") continue;
     let parsed: unknown;
     try {
@@ -1434,3 +1434,5 @@ describe("wb-fb2z.1 render-parity census (TSX-COMPONENT-ASSEMBLY-R1, absent-toda
     });
   }
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

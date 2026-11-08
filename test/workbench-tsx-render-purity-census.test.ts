@@ -363,7 +363,7 @@ interface BeadRow {
 let beadRow: BeadRow | undefined;
 function readBeadRow(): BeadRow {
   if (beadRow !== undefined) return beadRow;
-  for (const entry of readFileSync(join(REPO, BEAD_EXPORT), "utf8").split("\n")) {
+  for (const entry of trackerExportText(join(REPO, BEAD_EXPORT)).split("\n")) {
     if (!entry.includes(`"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(entry);
     if (typeof row === "object" && row !== null && "id" in row && row.id === BEAD && "title" in row && "notes" in row) {
@@ -1192,3 +1192,5 @@ describe("wb-km7q.5 TSX render-purity census (SDK-REACTIVE-FIBER-ADAPTIVE-COMPUT
     expect(REACHED, "every pin's case reached its end, in row order").toEqual(ROWS.flatMap(entry => entry.pins));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";
