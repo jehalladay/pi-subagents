@@ -1165,7 +1165,8 @@
        "src/agent-runner.ts"
       ],
       "skillRootSpellers": [
-       "src/skill-loader.ts"
+       "src/skill-loader.ts",
+       "src/workbench/replay-dependencies.ts"
       ],
       "preloadCallers": [
        "src/agent-runner.ts"
