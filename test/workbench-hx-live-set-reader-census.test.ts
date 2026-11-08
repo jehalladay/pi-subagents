@@ -1878,7 +1878,7 @@ let exportRows: ReadonlyMap<string, { readonly description: string; readonly not
 function beadRow(id: string): { readonly description: string; readonly notes: string } | undefined {
   if (exportRows === undefined) {
     const rows = new Map<string, { readonly description: string; readonly notes: string }>();
-    for (const line of textOf(EXPORT).split("\n")) {
+    for (const line of rehydrateTrackerExport(textOf(EXPORT), join(ROOT, EXPORT)).split("\n")) {
       if (!line.includes(`"id":"${BEAD}"`) && !line.includes(`"id":"${PARENT}"`) && !line.includes(`"id":"${CARRIER}"`)) continue;
       const row = JSON.parse(line) as { readonly id?: unknown; readonly description?: unknown; readonly notes?: unknown };
       if (typeof row.id === "string") rows.set(row.id, { description: typeof row.description === "string" ? row.description : "", notes: typeof row.notes === "string" ? row.notes : "" });
@@ -2702,3 +2702,5 @@ describe(SUITE, () => {
     expect(row.pins.length).toBeGreaterThan(1);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

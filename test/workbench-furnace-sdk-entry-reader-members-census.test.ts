@@ -538,7 +538,7 @@ function rowItems(row: Row): string[] {
 }
 /** A bead's description and notes, read from its row in the tracked tracker export. */
 function exportRow(bead: string): { readonly description: string; readonly notes: string } {
-  for (const line of readFileSync(join(REPO, EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, EXPORT)).split("\n")) {
     if (!line.includes(`"id":"${bead}"`)) continue;
     const value: unknown = JSON.parse(line);
     if (typeof value !== "object" || value === null || !("id" in value) || value.id !== bead) continue;
@@ -693,3 +693,5 @@ describe("wb-lrz.9 furnace-sdk entry-reader members census (test/helpers/furnace
     });
   }
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

@@ -317,7 +317,7 @@ interface Clause {
 /** The bead's description in the tracked store export: the anchor outside this census. Its notes and status are never read, so
  * a notes or status write cannot red the census; an edit of the description itself reds the judged set by design. */
 function exportDescription(): string {
-  for (const line of readFileSync(EXPORT_PATH, "utf8").split("\n")) {
+  for (const line of trackerExportText(EXPORT_PATH).split("\n")) {
     if (!line.includes(`"id":"${BEAD}"`) && !line.includes(`"id": "${BEAD}"`)) continue;
     const entry: unknown = JSON.parse(line);
     if (isObject(entry) && entry.id === BEAD && typeof entry.description === "string") return entry.description;
@@ -1871,3 +1871,5 @@ describe("wb-973.13 rf definition-source census (SWARM-CONTEXT-GRAPH-R13, the un
     ).toEqual([]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

@@ -236,7 +236,7 @@ const byName = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
 // ------------------------------------------------------------------------------------------------------------- the bead row
 interface BeadRow { readonly title: string; readonly notes: string }
 function beadRow(): BeadRow {
-  for (const line of readFileSync(join(REPO, BEAD_EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, BEAD_EXPORT)).split("\n")) {
     if (!line.includes(`"${BEAD}"`)) continue;
     const value: unknown = JSON.parse(line);
     if (value === null || typeof value !== "object" || !("id" in value) || value.id !== BEAD) continue;
@@ -845,3 +845,5 @@ describe("wb-b9n.3 Forge CAC label census (FORGE-CAC-EVIDENCE-ASSURANCE-R7)", ()
     expect([...REACHED].sort(byName)).toEqual(ROSTER.rows.flatMap(row => row.pins.map(pin => pin.id)).sort(byName));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

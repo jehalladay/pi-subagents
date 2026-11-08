@@ -15,10 +15,23 @@
  * `key=value` pairs separated by "; ", the keys exactly COST_FIELDS, or the whole of `<fields>` is `not run: <why>`.
  *
  * THE CENSUS. historicalFigureFindings reads the rendered view of a markdown file (mwi-release.mjs renderedText, one line per
- * paragraph, heading, list item, table row and fenced-block line) and flags a line holding one of the two October figures in
- * a pinned spelling (HISTORICAL_FIGURES) beside a present-tense cost verb (PRESENT_COST_VERB) unless the line names that
- * figure's own report date. programCensusFiles lists what the census reads: every markdown file under docs/workbench/programs/
- * and every per-bead receipt that carries an mwi-release block.
+ * paragraph, heading, list item, table row and fenced block: a fenced block's lines are joined into one line, so the rows of
+ * one block are judged together, R164-CENSUS-FENCED-BLOCK) and flags a line holding one of the two October figures in a pinned
+ * spelling (HISTORICAL_FIGURES) beside a present-tense cost verb (PRESENT_COST_VERB) unless the line names that figure's own
+ * report date. programCensusFiles lists what the census reads: every markdown file under docs/workbench/programs/ and every
+ * per-bead receipt that carries an mwi-release block.
+ *
+ * RESIDUALS. EAT-R164 asks the census to flag either figure used with a present-tense cost verb "outside a dated-history
+ * clause"; the census reads that as "on a rendered line that does not name the figure's own report date". Two escape families
+ * that this reading leaves quiet are named here, each with pinned quiet rows and a live twin in the test (case ids
+ * R164-RESIDUAL-*):
+ *  - R164-RESIDUAL-DATE-ELSEWHERE: an October figure stated as a current cost on a rendered line that also names the figure's
+ *    own report date in another clause (quiet: "The current install cost is 398 s, the same as the 2026-10-20 report.", and a
+ *    fenced block whose one row states the figure as a current cost while another row names its report date; twin: the same
+ *    sentence and the same block naming no report date, each flagged);
+ *  - R164-RESIDUAL-HEADER-VERB: a table whose present-tense cost verb is in a header cell while the figure is in a body cell
+ *    (quiet: a header cell "install now takes" over a body cell "398 s"; twin: the verb in the body cell beside the figure,
+ *    flagged).
  *
  * Pure node, no src/ or dist/ import. What each judge refuses and passes is what test/workbench-mechanical-cost-figures.test.ts
  * pins (case ids R164-*); a form no case holds is NOT CLAIMED.

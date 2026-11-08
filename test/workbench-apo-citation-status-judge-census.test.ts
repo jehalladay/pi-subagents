@@ -190,11 +190,11 @@
  * observations, not an independent oracle. Display paths added: none. No scratch allocated, no source/docs edited.
  */
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";
 import { BLANK, bindingOf, type Citing, causesOf, type FileKind, FOOTNOTE, judgeFiles, NEGATION_BEFORE, READS } from "./helpers/apo-citation-status-judge.js";
 
 interface Probe {
@@ -1001,7 +1001,7 @@ function codePointsWhere(holds: (char: string) => boolean): number[] {
 const hex = (point: number): string => `U+${point.toString(16).toUpperCase().padStart(4, "0")}`;
 /** A bead's row in the tracker export, the outside record ANCHOR reads: its description (when it has one) and its notes. */
 function exportRow(id: string): { readonly description: string; readonly notes: string } {
-  const records: unknown[] = readFileSync(join(REPO, ".beads/issues.jsonl"), "utf8").trim().split("\n").map(line => JSON.parse(line) as unknown);
+  const records: unknown[] = trackerExportText(join(REPO, ".beads/issues.jsonl")).trim().split("\n").map(line => JSON.parse(line) as unknown);
   const row = records.find(value => typeof value === "object" && value !== null && "id" in value && value.id === id);
   if (typeof row !== "object" || row === null || !("notes" in row) || typeof row.notes !== "string") throw new Error(`${id} notes absent`);
   return { description: "description" in row && typeof row.description === "string" ? row.description : "", notes: row.notes };

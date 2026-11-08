@@ -1620,7 +1620,7 @@ interface ExportRow {
   readonly notes: string;
 }
 function exportRow(id: string): ExportRow {
-  const rows = readFileSync(join(REPO, ".beads", "issues.jsonl"), "utf8")
+  const rows = trackerExportText(join(REPO, ".beads", "issues.jsonl"))
     .split("\n")
     .filter(line => line.trim().length > 0)
     .map((line): unknown => JSON.parse(line))
@@ -1731,3 +1731,5 @@ describe("wb-b04.1 world-model authority census (FURNACE-WORLD-MODEL-TRACE-ADAPT
     expect(pins.map(pin => [pin.id, [...(LIVE.get(pin.id) ?? [])].sort()])).toEqual(pins.map(pin => [pin.id, [...pin.subjects]]));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

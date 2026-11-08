@@ -473,7 +473,7 @@ let beadRow: BeadRow | undefined;
 /** The owner filing's row in the tracked bead export, found by id on a line that parses; read once. */
 function readBeadRow(): BeadRow {
   if (beadRow !== undefined) return beadRow;
-  for (const line of readFileSync(join(REPO, BEAD_EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, BEAD_EXPORT)).split("\n")) {
     if (!line.includes(BEAD)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === BEAD && typeof row.title === "string" && typeof row.notes === "string") {
@@ -1518,3 +1518,5 @@ describe("wb-if7q.3 TSX host paint and commit census (TSX-NATIVE-INTERFACES-AND-
     expect([...suites, ...titles].filter(name => PURITY_CLAIM.test(name) || ATOMICITY_CLAIM.test(name)), "registered titles naming an armed vocabulary").toEqual([]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

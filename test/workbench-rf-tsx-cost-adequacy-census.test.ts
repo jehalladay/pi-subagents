@@ -347,7 +347,7 @@ let filingMemo: string | undefined;
 /** The description of the bead's row (its notes are later seats' records, never read). */
 function filing(): string {
   if (filingMemo !== undefined) return filingMemo;
-  for (const line of readFileSync(join(REPO, EXPORT_FILE), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, EXPORT_FILE)).split("\n")) {
     if (!line.includes(`"${BEAD}"`)) continue;
     const value: unknown = JSON.parse(line);
     if (isRecord(value) && value.id === BEAD && typeof value.description === "string") {
@@ -1820,3 +1820,5 @@ describe("wb-693.8 rf TSX cost-adequacy census (RF-TSX-AND-EMBEDDING-R10, the un
     expect([...REACHED].sort()).toEqual(pinIds());
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

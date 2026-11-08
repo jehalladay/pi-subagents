@@ -1148,7 +1148,7 @@ function parseExport(source: string): ExportReading {
 let store: ExportReading | undefined;
 /** The tracked export's reading, taken once. */
 function liveStore(): ExportReading {
-  store ??= parseExport(readFileSync(join(REPO, BEAD_EXPORT), "utf8"));
+  store ??= parseExport(trackerExportText(join(REPO, BEAD_EXPORT)));
   return store;
 }
 const fieldOf = (row: BeadRecord, field: string): string => row.fields[field] ?? "";
@@ -1895,3 +1895,5 @@ describe("wb-csbt.1 TSX skip and cache deferral census (TSX-RESOURCE-EFFICIENCY-
     expect([...suites, ...titles].filter(name => familiesIn(name).length > 0), "registered titles naming a family").toEqual([]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

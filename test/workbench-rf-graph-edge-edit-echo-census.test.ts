@@ -341,7 +341,7 @@ function rosterWitness(pin: string): JsonValue {
 
 /** The owner filing's acceptance clauses, read from the wb-pfxo.7 row of the tracked bead export: "(a) ...", "(b) ...", "(c) ...". */
 function ownerClauses(): string[] {
-  const rows: unknown[] = textOf(EXPORT_PATH).split("\n").filter(entry => entry.includes(`"id":"${BEAD}"`)).map(entry => JSON.parse(entry) as unknown);
+  const rows: unknown[] = rehydrateTrackerExport(textOf(EXPORT_PATH), EXPORT_PATH).split("\n").filter(entry => entry.includes(`"id":"${BEAD}"`)).map(entry => JSON.parse(entry) as unknown);
   const row = rows.find(entry => isObject(entry) && entry.id === BEAD);
   if (!isObject(row)) throw new Error(`the bead export holds no ${BEAD} row`);
   const notes = typeof row.notes === "string" ? row.notes : "";
@@ -1142,3 +1142,5 @@ describe("wb-pfxo.7 rf graph edge-edit echo census (RF-COMPOSITIONAL-ASSEMBLY-R8
     ).toStrictEqual({ rosterOrder: [...ROSTER.tests], twice: [], here: walked.length - 1, irregular: [] });
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

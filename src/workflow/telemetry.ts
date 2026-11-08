@@ -97,7 +97,8 @@ export type WorkflowStage = (typeof WORKFLOW_STAGES)[number];
 /**
  * One measured stage of a run (runtime.ts reports one as each stage ends, through `telemetry.onStage`):
  *  - admission: an agent's or a node's wait on the host's shared admission that ended with a lease; durationMs is the lease's
- *    own monotonic wait (admission.ts `waitedMs`) and bytes is 0 (R078-ADMISSION-ROLLBACK, for an agent);
+ *    own monotonic wait (admission.ts `waitedMs`) and bytes is 0 (R078-ADMISSION-ROLLBACK for an agent, R078-ADMISSION-NODE for
+ *    a node);
  *  - load: a nested `workflow()` call's `host.loadWorkflow`; bytes are the UTF-8 bytes of the script it returned, of the message
  *    of the refusal it returned, or of the message it threw (R078-LOAD-ROLLBACK);
  *  - sdk: an agent's `host.spawnAgent` call, up to its answer; bytes are the UTF-8 bytes of the answer's text, of its error when
@@ -105,7 +106,8 @@ export type WorkflowStage = (typeof WORKFLOW_STAGES)[number];
  *    (R078-SDK-ROLLBACK, R078-NATIVE-IDS, R078-FAILED-SDK); a later throw on the same dispatch (its gate) adds no second sdk
  *    record (R078-GATE-THROWS);
  *  - gate: an agent's gate command when the runtime runs it through `host.runGate` and the call answers; bytes are the UTF-8
- *    bytes of its output (R078-GATE-ROLLBACK); a call that throws reports no gate stage (R078-GATE-THROWS);
+ *    bytes of its output (R078-GATE-ROLLBACK, and R078-GATE-INDEX for two agents at once, each at its own position); a call
+ *    that throws reports no gate stage (R078-GATE-THROWS);
  *  - node: a capability node's `host.callNode`, up to its answer; bytes are the UTF-8 bytes of the answer's JSON text, or of the
  *    message the call rejected with, and nativeId is the producer id native-evidence.ts reads from the answer, when it reads one
  *    (R078-NODE-ROLLBACK, R078-NODE-NO-NATIVE); a non-read node refused because its dispatched journal row could not be

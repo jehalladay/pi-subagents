@@ -125,7 +125,7 @@ const phrasesOf = (list: string): string[] => list.replace(/^a /, '').split(/, |
 /** The title of id's one row in the tracked bead export; the row's notes are never read, so a later note append never moves M1b. */
 function exportTitle(id: string): string {
   const titles: string[] = [];
-  for (const line of readFileSync(new URL('../.beads/issues.jsonl', import.meta.url), 'utf8').split('\n')) {
+  for (const line of trackerExportText(new URL('../.beads/issues.jsonl', import.meta.url)).split('\n')) {
     if (!line.includes(`"id":"${id}"`)) continue;
     const row = JSON.parse(line) as JsonValue;
     if (isJsonRecord(row) && row.id === id && typeof row.title === 'string') titles.push(row.title);
@@ -570,3 +570,5 @@ describe('wb-3ht.1 HyperUnix consumed-field manifest (evidence-projection R5, st
     expect(outside(otherMember)).toStrictEqual(['source.status', 'source.status.exit_code']);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

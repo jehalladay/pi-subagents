@@ -177,8 +177,8 @@ export interface WorkflowSpawnResult {
    * runs commands by default.
    *
    * Usually unset for a worktree child even so: the copy is removed during the
-   * child's own settle, so it no longer exists by the time this is read. That
-   * is what {@link gate} is for.
+   * child's own settle (a failed Git preservation keeps it instead), so it is
+   * normally gone by the time this is read. That is what {@link gate} is for.
    */
   cwd?: string;
   /**
@@ -266,15 +266,22 @@ export interface WorkflowHost {
    */
   readonly replaySafe?: boolean;
   /**
-   * Opaque digest of the host policy an agent result or node read depends on
-   * beyond its own call payload — model pin, permission mode, tools, roles,
-   * grants, cwd, provider manifest.
+   * Opaque text naming the host policy an agent result or node read depends
+   * on beyond its own call payload. Each host records its own dimensions, and
+   * no dimension is common to every host (wb-413a, EAT-R162):
+   *  - the Claude host records: cwd, model pin, permission mode, setting
+   *    sources, tools, roles, grants, principal, source reading, instruction
+   *    reading, provider reading (the last three only when the embedding host
+   *    hands replay dependencies);
+   *  - the detached host records: contract, backend, workspace, principal,
+   *    grants, provider manifest, local provider, inner host basis;
+   *  - the legacy host records none.
    *
    * Recorded on every entry this run writes, agent and node alike, and
    * required to match on replay, so a resume under a changed policy declines
-   * the cache instead of handing back answers produced under another
-   * contract. A host that records none (the legacy host) matches entries that
-   * carry none, byte-for-byte as before.
+   * the cache instead of handing back answers produced under another policy.
+   * A host that records none (the legacy host) matches entries that carry
+   * none, byte-for-byte as before.
    */
   readonly replayBasis?: string;
   /** Host-only capability dispatch. The worker never receives a provider client. */

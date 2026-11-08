@@ -130,7 +130,7 @@ function pinsOf(names: readonly string[]): CasePin[] {
 
 describe("wb-tz2.3 HyperUnix successor gate run pin: the S row's registration leg, judged from the gate's own test report", () => {
   it("FROZEN: the standing names frozen here are exactly the ones the owner filing's Standing item derives", () => {
-    const derived = derivedNames(readFileSync(join(ROOT, ".beads/issues.jsonl"), "utf8"));
+    const derived = derivedNames(trackerExportText(join(ROOT, ".beads/issues.jsonl")));
     expect(derived).toEqual([...STANDING]);
     expect(STANDING.map(titleOf)).toEqual([
       "H5: refuses contract hyperunix.find/v2 with a typed validation error and no snapshot",
@@ -189,3 +189,5 @@ describe("wb-tz2.3 HyperUnix successor gate run pin: the S row's registration le
     expect(derivedNames(exported(`ACCEPTANCE: ["Standing: a.", "Standing: b."]`))).toEqual(["<2 Standing items>"]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

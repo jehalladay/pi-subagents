@@ -387,7 +387,7 @@ interface ExportRow {
   readonly notes: string;
 }
 function exportRow(id: string): ExportRow {
-  for (const line of readFileSync(join(REPO, EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, EXPORT)).split("\n")) {
     if (line.trim() === "") continue;
     const row = JSON.parse(line) as { id?: unknown; title?: unknown; description?: unknown; notes?: unknown };
     if (row.id === id && typeof row.title === "string" && typeof row.description === "string") return { title: row.title, description: row.description, notes: typeof row.notes === "string" ? row.notes : "" };
@@ -571,3 +571,5 @@ describe("wb-jwc.11 and wb-un88: the SEALED scan reads refusal #6's instantiatio
     expect(cited).toStrictEqual(ROWS.flatMap((row) => row.pins));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";
