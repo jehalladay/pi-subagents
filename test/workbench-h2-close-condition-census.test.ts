@@ -856,7 +856,7 @@ function seamMembers(): string[] {
 
 /** A bead's own notes in the tracker export: wb-4nut.6's carry the acceptance text rows A to C quote, wb-zoq7's the gate's plants. */
 function notesOf(id: string): string {
-  for (const line of textOf(join(REPO, ".beads", "issues.jsonl")).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(join(REPO, ".beads", "issues.jsonl")), join(REPO, ".beads", "issues.jsonl")).split("\n")) {
     if (!line.includes(`"id":"${id}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === id && typeof row.notes === "string") return row.notes;
@@ -1120,7 +1120,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   },
   Q8: async () => {
     const census = textOf(fileURLToPath(import.meta.url));
-    const exported = textOf(join(REPO, ".beads", "issues.jsonl"));
+    const exported = rehydrateTrackerExport(textOf(join(REPO, ".beads", "issues.jsonl")), join(REPO, ".beads", "issues.jsonl"));
     const judged = executableFiles().map(file => relative(REPO, file));
     return json({
       scanned: SCAN_ROOTS.map(scan => scan.root),
@@ -1230,3 +1230,5 @@ describe("wb-4nut.6 H2 close-condition census (TSX-HARNESS2-REACTIVE-EVOLUTION-R
     expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(row => row.pins));
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

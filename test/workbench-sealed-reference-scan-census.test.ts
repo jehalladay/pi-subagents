@@ -1570,7 +1570,7 @@ function measured(pins: readonly string[]): { readonly forms: string[]; readonly
 /* ---------------------------------------------------------------- ANCHORS */
 
 function exportRow(): { readonly title: string; readonly description: string; readonly notes: string } {
-  for (const line of readFileSync(join(REPO, EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, EXPORT)).split("\n")) {
     if (line.trim() === "") continue;
     const row = JSON.parse(line) as { id?: unknown; title?: unknown; description?: unknown; notes?: unknown };
     if (row.id === BEAD && typeof row.title === "string" && typeof row.description === "string") return { title: row.title, description: row.description, notes: typeof row.notes === "string" ? row.notes : "" };
@@ -1776,3 +1776,5 @@ describe("wb-jwc.8: the SEALED reference scan follows qualified, import-equals, 
     expect(residualParagraph()).toStrictEqual(roster);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

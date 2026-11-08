@@ -205,11 +205,11 @@
  * Display paths added: none (test-only). No scratch is allocated; the tracker export is only read, and every plant, IDS copy and
  * READ_LOG entry is built in memory; no src, docs or receipt is edited.
  */
-import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { marked, type Tokens } from "marked";
 import { describe, expect, it } from "vitest";
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";
 import { inlineRendered, type Piece } from "./helpers/urr-alt-read.js";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -468,7 +468,7 @@ function rowProbes(row: Row): Probe[] {
 /** The descriptions and notes of the named beads, read from their rows in the tracked tracker export. */
 function exportRows(...beads: string[]): Map<string, ExportRow> {
   const rows = new Map<string, ExportRow>();
-  for (const line of readFileSync(join(REPO, EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, EXPORT)).split("\n")) {
     if (!beads.some(id => line.includes(`"id":"${id}"`))) continue;
     const value: unknown = JSON.parse(line);
     if (typeof value !== "object" || value === null || !("id" in value) || typeof value.id !== "string" || !beads.includes(value.id)) continue;

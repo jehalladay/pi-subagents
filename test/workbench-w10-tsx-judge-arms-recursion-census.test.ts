@@ -678,7 +678,7 @@ const exportRows = new Map<string, { readonly description: string; readonly note
 function exportRow(bead: string): { readonly description: string; readonly notes: string } {
   const known = exportRows.get(bead);
   if (known !== undefined) return known;
-  for (const line of readFileSync(join(REPO, EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, EXPORT)).split("\n")) {
     if (!line.includes(`"id":"${bead}"`)) continue;
     const value: unknown = JSON.parse(line);
     if (typeof value !== "object" || value === null || !("id" in value) || value.id !== bead) continue;
@@ -969,3 +969,5 @@ describe("wb-37o9 recursion census (test/helpers/w10-tsx-judge-arms.ts): REAL, C
     });
   }
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

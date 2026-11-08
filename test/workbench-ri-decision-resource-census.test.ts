@@ -799,7 +799,7 @@ function siteCount(text: string): number {
 
 /** The tracked bead export's row for `id` (every line must parse; a malformed export is refused, never skipped). */
 function exportRow(id: string): { [key: string]: unknown } {
-  const rows = readFileSync(join(REPO, BEAD_EXPORT), "utf8")
+  const rows = trackerExportText(join(REPO, BEAD_EXPORT))
     .split("\n")
     .filter(line => line.trim() !== "")
     .map((line, index): unknown => {
@@ -1242,3 +1242,5 @@ describe("wb-tz4r.1 RI decision resource census (RI-UNIFIED-DECISION-INFERENCE-R
     expect(REACHED, "every pin reached its end, in row order, with its pinned assertion count").toEqual([...ROSTER.reached]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

@@ -239,7 +239,7 @@ interface ExportRow {
 }
 /** The bead's own row in the tracker export. */
 function exportRow(): ExportRow {
-  for (const line of readFileSync(join(ROOT, EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(ROOT, EXPORT)).split("\n")) {
     if (!line.includes(`"${BEAD}"`)) continue;
     const row = JSON.parse(line) as { id?: unknown; title?: unknown; notes?: unknown };
     if (row.id === BEAD && typeof row.title === "string") return { title: row.title, notes: typeof row.notes === "string" ? row.notes : "" };
@@ -717,3 +717,5 @@ describe("APO snapshot census (wb-021.2, MW-ADAPTIVE-POLICY-ORGANIZATIONS-R2): j
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(readEntry), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

@@ -311,7 +311,7 @@ describe("EAT-R086 each bead receipt preserves commands, versions, refs and actu
   });
 
   it("reads the real bead ids from the in-tree bead export: wb-j5y5 and its epic are real, a fabricated id is not", () => {
-    const ids = readBeadIds(readFileSync(join(REPO, ".beads", "issues.jsonl"), "utf8"));
+    const ids = readBeadIds(trackerExportText(join(REPO, ".beads", "issues.jsonl")));
     expect(ids.has("wb-j5y5")).toBe(true);
     expect(ids.has("wb-1a3t")).toBe(true);
     expect(ids.has("wb-fabricated")).toBe(false);
@@ -2532,7 +2532,7 @@ function realW11(): { readonly raw: string; readonly text: string } {
 
 describe("the real tree", () => {
   it("every release receipt under docs/workbench/receipts/ passes the receipt judges, wb-j5y5's own among them", () => {
-    const beadIds = readBeadIds(readFileSync(join(REPO, ".beads", "issues.jsonl"), "utf8"));
+    const beadIds = readBeadIds(trackerExportText(join(REPO, ".beads", "issues.jsonl")));
     const forgeTiers = declaredForgeTiers(readFileSync(join(REPO, "forge.toml"), "utf8"));
     const judged: string[] = [];
     for (const name of readdirSync(join(REPO, RECEIPTS_DIR)).sort()) {
@@ -2617,3 +2617,5 @@ describe("the real tree", () => {
     expect(/\bno binding[- ]host\b/i.test(line)).toBe(realHostModules().length === 0);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

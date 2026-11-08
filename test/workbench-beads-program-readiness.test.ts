@@ -1393,7 +1393,7 @@ const notesRead = new Map<string, string>();
 function notesOf(bead: string): string {
   const cached = notesRead.get(bead);
   if (cached !== undefined) return cached;
-  const text = readFileSync(join(REPO, '.beads', 'issues.jsonl'), 'utf8');
+  const text = trackerExportText(join(REPO, '.beads', 'issues.jsonl'));
   const key = `"id":"${bead}"`;
   for (let at = text.indexOf(key); at !== -1; at = text.indexOf(key, at + key.length)) {
     const end = text.indexOf('\n', at);
@@ -2391,3 +2391,5 @@ describe('wb-4nut.5 reader hygiene', () => {
     expect(child(await read(bd(blocks), programOf(H2)), 'rftsx-rupqh')).toMatchObject({ready: true, waitingOn: []});
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

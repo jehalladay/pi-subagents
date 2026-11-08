@@ -762,7 +762,7 @@ function exportRecord(id: string): ExportRecord {
   const cached = RECORDS.get(id);
   if (cached !== undefined) return cached;
   const needle = `"id":"${id}"`;
-  const entry = read(EXPORT)
+  const entry = rehydrateTrackerExport(read(EXPORT), join(ROOT, EXPORT))
     .split("\n")
     .filter(line => line.includes(needle))
     .map(line => JSON.parse(line) as Record<string, unknown>)
@@ -8244,3 +8244,5 @@ describe(SUITE, () => {
     });
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

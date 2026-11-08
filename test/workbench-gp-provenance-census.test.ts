@@ -197,7 +197,7 @@ const readRoster = (): Roster => readJson(ROSTER_FIXTURE) as Roster;
 
 /** A bead's notes in the tracked bead export (.beads/issues.jsonl), "" when its row is absent. */
 function beadNotes(id: string): string {
-  const rows = readFileSync(join(ROOT, ".beads/issues.jsonl"), "utf8")
+  const rows = trackerExportText(join(ROOT, ".beads/issues.jsonl"))
     .split("\n")
     .filter((line) => line.trim() !== "")
     .map((line) => JSON.parse(line) as { id?: unknown; notes?: unknown });
@@ -374,7 +374,7 @@ describe("gp provenance census (wb-gxd7.5, GPC-FEEDBACK-CONTRACT-AUDIT-R5)", () 
   }
 
   it("bead: the four acceptance clauses this census arms are the bead's own words, each judged by its tables", () => {
-    const rows = readFileSync(join(ROOT, ".beads/issues.jsonl"), "utf8")
+    const rows = trackerExportText(join(ROOT, ".beads/issues.jsonl"))
       .split("\n")
       .filter((line) => line.trim() !== "")
       .map((line) => JSON.parse(line) as { id?: unknown; notes?: unknown });
@@ -781,3 +781,5 @@ describe("gp provenance census (wb-gxd7.5, GPC-FEEDBACK-CONTRACT-AUDIT-R5)", () 
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

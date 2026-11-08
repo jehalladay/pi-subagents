@@ -165,7 +165,7 @@ function subjects(blocks: readonly RenderedBlock[]): string[] {
 
 /** This bead's row of .beads/issues.jsonl: the description and the notes the anchors read. */
 function beadRow(): { readonly description: string; readonly notes: string } {
-  const records: unknown[] = readFileSync(join(REPO, ".beads/issues.jsonl"), "utf8").trim().split("\n").map(line => JSON.parse(line) as unknown);
+  const records: unknown[] = trackerExportText(join(REPO, ".beads/issues.jsonl")).trim().split("\n").map(line => JSON.parse(line) as unknown);
   const row = records.find(value => typeof value === "object" && value !== null && "id" in value && value.id === "wb-aalz");
   if (typeof row !== "object" || row === null || !("description" in row) || typeof row.description !== "string") throw new Error("wb-aalz description absent");
   if (!("notes" in row) || typeof row.notes !== "string") throw new Error("wb-aalz notes absent");
@@ -780,3 +780,5 @@ describe("wb-aalz docs/09 nested rendered subject census: the PAIRS, INVERSION, 
     });
   }
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

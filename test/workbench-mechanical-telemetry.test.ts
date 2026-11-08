@@ -25,7 +25,14 @@
  * NOT CLAIMED by this suite: memory the caller's onProgress consumer retains; memory the script realm retains (agent answers
  * the script keeps); the runtime's other per-run state (labels, open launches); a stage for a call replayed from the resume
  * journal; the bytes of a node stage whose answer fails output validation; a stage of an agent re-dispatched after a pause or
- * a retry; any clock other than performance.now(); the producer leg of PI-MULTIWORKFLOW-LOAD.
+ * a retry; any clock other than performance.now(); the producer leg of PI-MULTIWORKFLOW-LOAD; the durationMs of a progress
+ * row no case names (a replayed agent's or node's row, an acknowledged or an uncertain node's row, and a row written before
+ * its host call, such as an admission refusal or an agent skipped before dispatch); which whole number a row's durationMs
+ * holds, the nearest one or the one below or above the measure (a case that names a row pins a whole number of
+ * milliseconds and, where it names the timed host call, one no less than that call's whole milliseconds); for an agent's
+ * admission stage and a load stage, an index read from the run's running count of agents or loads when the stage ends rather
+ * than from the call itself (only R078-GATE-INDEX, R078-NODE-INDEX and R078-ADMISSION-NODE count a later call before a
+ * stage ends, for the sdk, gate, node and node admission stages).
  */
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
@@ -207,7 +214,7 @@ describe("EAT-R077: a run given telemetry.progressBytes retains at most that man
 });
 
 describe("EAT-R078: each stage a run reports is timed on the monotonic clock and carries its own bytes and its provider's own id", () => {
-  it("R078-SDK-ROLLBACK: an agent whose host call rolls the wall clock back 60 s reports an sdk stage no shorter than that call on the monotonic clock, and its done row's durationMs is not negative", async () => {
+  it("R078-SDK-ROLLBACK: an agent whose host call rolls the wall clock back 60 s reports an sdk stage no shorter than that call on the monotonic clock, and its done row's durationMs is a whole number of milliseconds, not negative", async () => {
     freezeWallClock();
     const windows: number[] = [];
     const received: WorkflowEntry[] = [];
@@ -224,7 +231,25 @@ describe("EAT-R078: each stage a run reports is timed on the monotonic clock and
     expect(sdk[0]?.durationMs).toBeGreaterThanOrEqual(windows[0] ?? Number.POSITIVE_INFINITY);
     expect(sdk[0]?.durationMs).toBeLessThan(60_000);
     const done = agentRows(received).find(row => row.state === "done");
+    expect(Number.isInteger(done?.durationMs)).toBe(true);
     expect(done?.durationMs).toBeGreaterThanOrEqual(Math.floor(windows[0] ?? Number.POSITIVE_INFINITY));
+  }, 30_000);
+
+  it("R078-SDK-FAILED-ROLLBACK: an agent whose host call rolls the wall clock back 60 s and answers not ok writes one error row, whose durationMs is a whole number of milliseconds no less than that call's whole milliseconds", async () => {
+    freezeWallClock();
+    const windows: number[] = [];
+    const received: WorkflowEntry[] = [];
+    const host: WorkflowHost = {
+      async spawnAgent() { windows.push(await rolledHold()); return { ok: false, error: "provider refused" }; },
+      abortAgent() {},
+    };
+    const result = await run('return await agent("refused");', { host }, received);
+    expect(result.status).toBe("completed");
+    expect(result.value).toBeNull();
+    const failed = agentRows(received).filter(row => row.state === "error");
+    expect(failed.map(row => row.error)).toEqual(["provider refused"]);
+    expect(Number.isInteger(failed[0]?.durationMs)).toBe(true);
+    expect(failed[0]?.durationMs).toBeGreaterThanOrEqual(Math.floor(windows[0] ?? Number.POSITIVE_INFINITY));
   }, 30_000);
 
   it("R078-GATE-ROLLBACK: a gate the runtime runs through host.runGate while the wall clock rolls back 60 s reports a gate stage no shorter than that call, with its output's UTF-8 bytes and no native id", async () => {
@@ -247,7 +272,50 @@ describe("EAT-R078: each stage a run reports is timed on the monotonic clock and
     expect(gate[0]?.durationMs).toBeLessThan(60_000);
   }, 30_000);
 
-  it("R078-NODE-ROLLBACK: a forge.gate.status node whose host call rolls the wall clock back 60 s reports a node stage no shorter than that call, joined to the operation id of its answer, and its done row's durationMs is not negative", async () => {
+  it("R078-GATE-INDEX: two gated agents whose host calls are in flight at once each report one sdk stage and one gate stage at their own position, carrying the UTF-8 bytes of their own answer and of their own gate output", async () => {
+    const { records, telemetry } = stageProbe();
+    const received: WorkflowEntry[] = [];
+    const outputs = new Map<string, string>();
+    const answers = new Map<string, string>();
+    let inFlight = 0;
+    let peakInFlight = 0;
+    let bothIn: () => void = () => {};
+    const together = new Promise<void>(resolve => { bothIn = resolve; });
+    const host: WorkflowHost = {
+      async spawnAgent(request) {
+        inFlight++;
+        peakInFlight = Math.max(peakInFlight, inFlight);
+        if (inFlight === 2) bothIn();
+        let fallback: ReturnType<typeof setTimeout> | undefined;
+        await Promise.race([together, new Promise<void>(resolve => { fallback = setTimeout(resolve, 5_000); })]);
+        clearTimeout(fallback);
+        inFlight--;
+        const text = `built ${request.prompt}`;
+        answers.set(request.agentId, text);
+        return { ok: true, text };
+      },
+      abortAgent() {},
+      async runGate(_command, gateOptions) {
+        const output = `gate ok ${"\u2713".repeat(outputs.size + 1)}`;
+        outputs.set(gateOptions.agentId, output);
+        return { ok: true, output };
+      },
+    };
+    const result = await run('return await parallel([() => agent("gated-a", { gate: "npm test" }), () => agent("gated-bb", { gate: "npm test" })]);', { host, concurrency: 2, telemetry }, received);
+    expect(result.status).toBe("completed");
+    expect(peakInFlight).toBe(2);
+    const done = agentRows(received).filter(row => row.state === "done").sort((a, b) => a.index - b.index);
+    expect(done.map(row => row.index)).toEqual([0, 1]);
+    expect(new Set(done.map(row => Buffer.byteLength(outputs.get(row.agentId ?? "") ?? "", "utf8"))).size).toBe(2);
+    const answerBytes = (row: WorkflowAgentEntry): number => Buffer.byteLength(answers.get(row.agentId ?? "") ?? "", "utf8");
+    expect(done.map(answerBytes)).toEqual([Buffer.byteLength("built gated-a", "utf8"), Buffer.byteLength("built gated-bb", "utf8")]);
+    const sdk = records.filter(record => record.stage === "sdk").sort((a, b) => a.index - b.index);
+    expect(sdk).toEqual(done.map((row, at) => ({ stage: "sdk", kind: "agent", index: row.index, durationMs: sdk[at]?.durationMs, bytes: answerBytes(row) })));
+    const gate = records.filter(record => record.stage === "gate").sort((a, b) => a.index - b.index);
+    expect(gate).toEqual(done.map((row, at) => ({ stage: "gate", kind: "agent", index: row.index, durationMs: gate[at]?.durationMs, bytes: Buffer.byteLength(outputs.get(row.agentId ?? "") ?? "", "utf8") })));
+  }, 30_000);
+
+  it("R078-NODE-ROLLBACK: a forge.gate.status node whose host call rolls the wall clock back 60 s reports a node stage no shorter than that call, joined to the operation id of its answer, and its done row's durationMs is a whole number of milliseconds, not negative", async () => {
     freezeWallClock();
     const windows: number[] = [];
     const received: WorkflowEntry[] = [];
@@ -268,7 +336,62 @@ describe("EAT-R078: each stage a run reports is timed on the monotonic clock and
     expect(node[0]?.durationMs).toBeGreaterThanOrEqual(windows[0] ?? Number.POSITIVE_INFINITY);
     expect(node[0]?.durationMs).toBeLessThan(60_000);
     const done = nodeRows(received).find(row => row.state === "done");
+    expect(Number.isInteger(done?.durationMs)).toBe(true);
     expect(done?.durationMs).toBeGreaterThanOrEqual(Math.floor(windows[0] ?? Number.POSITIVE_INFINITY));
+  }, 30_000);
+
+  it("R078-NODE-REJECTED-ROLLBACK: a node whose host call rolls the wall clock back 60 s and then rejects writes one error row, whose durationMs is a whole number of milliseconds no less than that call's whole milliseconds", async () => {
+    freezeWallClock();
+    const windows: number[] = [];
+    const received: WorkflowEntry[] = [];
+    const host: WorkflowHost = {
+      async spawnAgent() { return { ok: true, text: "unused" }; },
+      abortAgent() {},
+      async callNode() { windows.push(await rolledHold()); throw new Error("transport down"); },
+      describeNodeEffect: () => "read",
+    };
+    const result = await run('try { await node("hyperunix.find", {}, { label: "down" }); } catch { return "rejected"; }\nreturn "answered";', { host }, received);
+    expect(result.status).toBe("completed");
+    expect(result.value).toBe("rejected");
+    const failed = nodeRows(received).filter(row => row.state === "error");
+    expect(failed.map(row => row.error)).toEqual(["transport down"]);
+    expect(Number.isInteger(failed[0]?.durationMs)).toBe(true);
+    expect(failed[0]?.durationMs).toBeGreaterThanOrEqual(Math.floor(windows[0] ?? Number.POSITIVE_INFINITY));
+  }, 30_000);
+
+  it("R078-NODE-INDEX: two forge.gate.status nodes whose host calls are in flight at once each report one node stage at their own position, joined to the operation id of their own answer", async () => {
+    const { records, telemetry } = stageProbe();
+    const received: WorkflowEntry[] = [];
+    const operations: Readonly<Record<string, string>> = { first: `op-${"b2".repeat(16)}`, second: `op-${"c3".repeat(16)}` };
+    let inFlight = 0;
+    let peakInFlight = 0;
+    let bothIn: () => void = () => {};
+    const together = new Promise<void>(resolve => { bothIn = resolve; });
+    const host: WorkflowHost = {
+      async spawnAgent() { return { ok: true, text: "unused" }; },
+      abortAgent() {},
+      async callNode(request) {
+        inFlight++;
+        peakInFlight = Math.max(peakInFlight, inFlight);
+        if (inFlight === 2) bothIn();
+        let fallback: ReturnType<typeof setTimeout> | undefined;
+        await Promise.race([together, new Promise<void>(resolve => { fallback = setTimeout(resolve, 5_000); })]);
+        clearTimeout(fallback);
+        inFlight--;
+        return { contract: "forge.gate.status/v1", source: { operation_id: operations[request.label], status: "passed" } };
+      },
+      describeNodeEffect: () => "read",
+    };
+    const result = await run('return await parallel([() => node("forge.gate.status", {}, { label: "first" }), () => node("forge.gate.status", {}, { label: "second" })]);', { host, telemetry }, received);
+    expect(result.status).toBe("completed");
+    expect(peakInFlight).toBe(2);
+    const done = nodeRows(received).filter(row => row.state === "done").sort((a, b) => a.index - b.index);
+    expect(done.map(row => [row.index, row.label])).toEqual([[0, "first"], [1, "second"]]);
+    const node = records.filter(record => record.stage === "node").sort((a, b) => a.index - b.index);
+    expect(node).toEqual(done.map((row, at) => {
+      const answer = { contract: "forge.gate.status/v1", source: { operation_id: operations[row.label], status: "passed" } };
+      return { stage: "node", kind: "node", index: row.index, durationMs: node[at]?.durationMs, bytes: bytesOf(answer), nativeId: operations[row.label] };
+    }));
   }, 30_000);
 
   it("R078-LOAD-ROLLBACK: a nested workflow() whose host.loadWorkflow rolls the wall clock back 60 s reports a load stage no shorter than that call with the loaded script's UTF-8 bytes; a refused load reports its message's bytes and a thrown one the thrown message's, each with no native id", async () => {
@@ -327,6 +450,38 @@ describe("EAT-R078: each stage a run reports is timed on the monotonic clock and
     for (const record of admission) expect(record.durationMs).toBeGreaterThanOrEqual(0);
     const queued = admission.find(record => record.index === indexOf("queued"));
     expect(queued).toEqual({ stage: "admission", kind: "agent", index: indexOf("queued"), durationMs: queued?.durationMs, bytes: 0 });
+    expect(queued?.durationMs).toBeGreaterThanOrEqual(30);
+    expect(queued?.durationMs).toBeLessThan(60_000);
+  }, 30_000);
+
+  it("R078-ADMISSION-NODE: a forge.gate.status node queued on a one-operation Forge budget while the holder node rolls the wall clock back 60 s, and a later node is dispatched, reports an admission stage of kind node at its own position, of its monotonic wait, at least 30 ms, with 0 bytes", async () => {
+    freezeWallClock();
+    const { records, telemetry } = stageProbe();
+    const received: WorkflowEntry[] = [];
+    const hostAdmission = new HostAdmission({ sdkQueries: 8, childProcesses: 8, forgeOperations: 1, queueDeadlineMs: 30_000 });
+    const host: WorkflowHost = {
+      async spawnAgent() { return { ok: true, text: "unused" }; },
+      abortAgent() {},
+      async callNode(request) {
+        if (request.label === "holder") await rolledHold(80);
+        return { contract: "forge.gate.status/v1", source: { status: "passed" } };
+      },
+      describeNodeEffect: () => "read",
+    };
+    const body = 'return await parallel([() => node("forge.gate.status", {}, { label: "holder" }), () => node("forge.gate.status", {}, { label: "queued" }), () => node("hyperunix.find", {}, { label: "later" })]);';
+    const result = await run(body, { host, hostAdmission, telemetry }, received);
+    expect(result.status).toBe("completed");
+    const indexOf = (label: string): number | undefined => nodeRows(received).find(row => row.label === label)?.index;
+    expect([indexOf("holder"), indexOf("queued"), indexOf("later")]).toEqual([0, 1, 2]);
+    const admission = records.filter(record => record.stage === "admission");
+    expect(admission.map(record => record.kind)).toEqual(["node", "node", "node"]);
+    expect(admission.map(record => record.index).sort((a, b) => a - b)).toEqual([0, 1, 2]);
+    for (const record of admission) {
+      expect(record.durationMs).toBeGreaterThanOrEqual(0);
+      expect(record.bytes).toBe(0);
+    }
+    const queued = admission.find(record => record.index === indexOf("queued"));
+    expect(queued).toEqual({ stage: "admission", kind: "node", index: indexOf("queued"), durationMs: queued?.durationMs, bytes: 0 });
     expect(queued?.durationMs).toBeGreaterThanOrEqual(30);
     expect(queued?.durationMs).toBeLessThan(60_000);
   }, 30_000);
@@ -397,7 +552,7 @@ describe("EAT-R078: each stage a run reports is timed on the monotonic clock and
     for (const record of records) expect("nativeId" in record).toBe(false);
   }, 30_000);
 
-  it("R078-NODE-NOT-DISPATCHED: a non-read node refused because its dispatched journal row could not be written reports no node stage, and its error row's durationMs is not negative though the wall clock rolled back 60 s at the refused write", async () => {
+  it("R078-NODE-NOT-DISPATCHED: a non-read node refused because its dispatched journal row could not be written reports no node stage, and its error row's durationMs is a whole number of milliseconds, not negative though the wall clock rolled back 60 s at the refused write", async () => {
     freezeWallClock();
     const { records, telemetry } = stageProbe();
     const received: WorkflowEntry[] = [];
@@ -416,6 +571,7 @@ describe("EAT-R078: each stage a run reports is timed on the monotonic clock and
     expect(records.filter(record => record.stage === "node")).toEqual([]);
     const refused = nodeRows(received).find(row => row.state === "error");
     expect(refused?.error).toContain("was not dispatched: its dispatched journal row could not be written");
+    expect(Number.isInteger(refused?.durationMs)).toBe(true);
     expect(refused?.durationMs).toBeGreaterThanOrEqual(0);
   }, 30_000);
 

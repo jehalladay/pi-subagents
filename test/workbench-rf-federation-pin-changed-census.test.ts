@@ -1378,7 +1378,7 @@ const PIN_REFUSAL: Refusal = { category: "unavailable", message: `RF render refu
 
 /** wb-tnz5.5's notes in the tracker export; the cases read them through two append-only paragraphs only, never whole. */
 function beadNotes(): string {
-  for (const line of textOf(TRACKER_EXPORT).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(TRACKER_EXPORT), TRACKER_EXPORT).split("\n")) {
     if (!line.includes(`"id":"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === BEAD && typeof row.notes === "string") return row.notes;
@@ -2291,3 +2291,5 @@ describe("wb-tnz5.5 rf federation pin-changed census (RF-CERTIFIED-FEDERATED-REA
     expect(REACHED, "every pin reached its witness compare after its own pinned number of assertions, in row order").toEqual([...ROSTER.reached]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

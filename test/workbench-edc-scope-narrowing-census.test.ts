@@ -1624,7 +1624,7 @@ function constants(): JsonValue {
 // ---- the bead's own text ----
 
 function exportRow(): { title: string; notes: string } {
-  for (const line of readFileSync(join(REPO, ".beads", "issues.jsonl"), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, ".beads", "issues.jsonl")).split("\n")) {
     if (!line.includes(`"id":"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === BEAD && typeof row.title === "string" && typeof row.notes === "string") return { title: row.title, notes: row.notes };
@@ -2094,3 +2094,5 @@ describe("wb-pyel.6 EDC scope-narrowing census (SDK-EVIDENCE-DIRECTED-COMPUTATIO
     expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(entry => entry.pins.map(pin => pin.id)));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

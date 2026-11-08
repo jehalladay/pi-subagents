@@ -351,7 +351,7 @@ function rfBullet(): { readonly items: readonly string[]; readonly text: string;
 
 /** The tracked bead export's row of this bead: its title and notes (the owner filing leads the notes). */
 function exportRow(): { readonly title: string; readonly notes: string } {
-  for (const line of textOf(BEAD_EXPORT, "export").split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(BEAD_EXPORT, "export"), join(REPO, BEAD_EXPORT)).split("\n")) {
     if (!line.includes(`"${BEAD}"`)) continue;
     const row = JSON.parse(line) as JsonObject;
     if (row.id === BEAD && typeof row.title === "string" && typeof row.notes === "string") return { title: row.title, notes: row.notes };
@@ -700,3 +700,5 @@ describe("wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WO
     ).toStrictEqual({ outer: [SUITE], titles: [...ROSTER.tests], twice: [], here: walked.length - 1, irregular: [], unreached: [], reached: ROSTER.reached });
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

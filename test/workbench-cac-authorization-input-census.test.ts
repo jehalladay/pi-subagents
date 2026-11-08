@@ -503,7 +503,7 @@ const claim = (id: string): string => sha256(ROWS.flatMap(row => row.pins).find(
 // --- the owner's text: the filing in the tracked export --------------------------------------------------------------------------------
 /** The bead's notes in the tracked export, whole (the census needs exactly one row for the bead, with notes). */
 function beadNotes(bead: string): string {
-  const rows = readRepo(EXPORT_FILE)
+  const rows = rehydrateTrackerExport(readRepo(EXPORT_FILE), join(REPO, EXPORT_FILE))
     .split("\n")
     .filter(line => line.includes(`"${bead}"`))
     .map(line => JSON.parse(line) as { readonly id?: unknown; readonly notes?: unknown })
@@ -2633,3 +2633,5 @@ describe("wb-rdlh.1 Library design-program authorization-input census (LIBRARY-C
     expect([...QUIETED].sort()).toEqual(Object.keys(QUIET).sort());
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

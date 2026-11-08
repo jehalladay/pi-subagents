@@ -391,7 +391,7 @@ const IMPORTS: readonly string[] = [
   "../src/workbench/providers/reactivefiber.js { nativeReactiveFiberPreview, nativeReactiveFiberRender, REACTIVE_FIBER_CONTRACT_SOURCE, REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, registerReactiveFiberRender }",
   "./helpers/edc-static-reach-readers.js * as READERS",
   "./helpers/rf-render-fixture.js { fullShapeRf }",
-  "./helpers/scratch.js { installScratchLeakGuard, makeScratch, removeScratch }",
+  "./helpers/scratch.js { installScratchLeakGuard, makeScratch, removeScratch }", "../qa/workbench/tracker-export.mjs { trackerExportText }",
 ];
 /** This file's top-level statements that neither import nor declare a name, in source order, as topLevelToken reads them (A5
  * holds this file's own source to it). */
@@ -1913,7 +1913,7 @@ function renderIds(descriptors: readonly CapabilityDescriptor[]): string[] {
 // ---- the bead's export row ----
 
 function exportRow(): { title: string; notes: string } {
-  for (const line of readFileSync(join(REPO, ".beads", "issues.jsonl"), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, ".beads", "issues.jsonl")).split("\n")) {
     if (!line.includes(`"id":"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === BEAD && typeof row.title === "string" && typeof row.notes === "string") return { title: row.title, notes: row.notes };
@@ -2459,3 +2459,5 @@ describe("wb-pyel.5 render-abort falsifier (SDK-EVIDENCE-DIRECTED-COMPUTATION-R1
     expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(row => row.pins));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

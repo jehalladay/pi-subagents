@@ -520,7 +520,7 @@ function isRecord(value: unknown): value is { readonly [key: string]: unknown } 
 /** The tracker export's rows for `ids` (one JSON object per line), read once. */
 function exportRows(ids: readonly string[]): Map<string, ExportRow> {
   const rows = new Map<string, ExportRow>();
-  for (const line of readFileSync(join(REPO, EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, EXPORT)).split("\n")) {
     const id = ids.find(candidate => line.includes(`"id":${JSON.stringify(candidate)},`));
     if (id === undefined) continue;
     const parsed: unknown = JSON.parse(line);
@@ -840,3 +840,5 @@ describe("wb-v03p rf GraphPolicy-context readers census: the moved readers' lite
     });
   }
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

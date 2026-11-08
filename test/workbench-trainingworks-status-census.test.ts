@@ -1068,7 +1068,7 @@ const MATRIX_HEADER = "| Feature | Status | Evidence | Caveats |";
 
 /** The bead's own notes in the tracker export. */
 function beadNotes(): string {
-  for (const line of textOf(".beads/issues.jsonl").split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(".beads/issues.jsonl"), join(REPO, ".beads/issues.jsonl")).split("\n")) {
     if (!line.includes(`"id":"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === BEAD && typeof row.notes === "string") return row.notes;
@@ -1771,3 +1771,5 @@ describe("wb-4wmu.1 TrainingWorks status census (BEADS-TRAININGWORKS-R1)", () =>
     expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(row => row.pins));
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

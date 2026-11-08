@@ -1234,7 +1234,8 @@
        "formulas"
       ],
       "exportReaders": [
-       "qa/workbench/mwi-release.mjs"
+       "qa/workbench/mwi-release.mjs",
+       "qa/workbench/tracker-export.mjs"
       ]
      }
     },

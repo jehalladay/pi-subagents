@@ -1243,7 +1243,7 @@ function readsBeforeExecuting(step: StepReading): boolean {
 
 /** The bead's own notes in the tracker export, the acceptance text rows A to C quote. */
 function beadNotes(): string {
-  for (const line of textOf(join(REPO, ".beads", "issues.jsonl")).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(join(REPO, ".beads", "issues.jsonl")), join(REPO, ".beads", "issues.jsonl")).split("\n")) {
     if (!line.includes(`"id":"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === BEAD && typeof row.notes === "string") return row.notes;
@@ -2960,3 +2960,5 @@ describe("wb-kku9.3 Beads claim re-check census (MW-CAC-WORKFLOW-COMPOSITION-R3)
     expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(row => row.pins));
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";
