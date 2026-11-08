@@ -58,9 +58,20 @@
  * a census table copy in such a list item (U2, GP14-T1 and GP14-T2) - with the receipt anchor's words narrowed to
  * exactly the containers its twins spell; the fences of four backticks and four tildes indented three spaces (refusal #4
  * F4, GP14-H1); and the plant liveness pins (refusal #4 F7: HIDDEN_PLANTS pinned by its snippets, PLANTED counting the
- * plants each run asserted, LISTED the list twins each case asserted). The six pages are unchanged. The cut paragraphs
- * above record what each cut added; what this census claims is THE PINNED SET below, bounded by its HIDDEN and NOT
- * CLAIMED paragraphs.
+ * plants each run asserted, LISTED the list twins each case asserted). The six pages are unchanged.
+ *
+ * CUT #6 (seat ws-14 of g10-work-s237, 2026-11-08, trunk merged into the branch from 4c21b67b on): the respin of gate
+ * refusal #5 (gate record of g10-gate-s239 on cut #5 52a68e02), authored in the enumerate-the-resolvable form (standing
+ * rule 19(c)) for the R-B636 set under its cap of record (ruling R-B672) and for the HIDDEN set under its second-stage
+ * cap. Red-first, this cut adds: a later dated entry whose census table follows its heading line with no blank line
+ * between, once alone (it passes) and once with a second table after it (U1, GP2C5-W1); later dated depth-2 headings
+ * indented one, two or three spaces, closed by " #" or " ##", or with a tab or two spaces after "##" - each opening an
+ * entry, so the anchor fails without the table and passes with it (U2, GP2C5-I1, GP2C5-C1, GP2C5-T1, GP2C5-S2) - and
+ * the same both ways for the four dated-heading spellings the census already planted; a later undated depth-3 heading
+ * holding a second census table; and, for the list twins, LISTED read back from the very text each twin asserted
+ * (refusal #5 F4). The receipt anchor's words are narrowed to exactly its twins: what the anchor reads of any other
+ * receipt text is NOT CLAIMED. The six pages are unchanged. The cut paragraphs above record what each cut added; what
+ * this census claims is THE PINNED SET below, bounded by its HIDDEN and NOT CLAIMED paragraphs.
  *
  * THE PINNED SET (the claim form; test/workbench-mwi-docs-remediation-census.test.ts, cases in registration order):
  * - "the reading": the six pages are files git would commit - committable lists a named path when it is tracked (in the
@@ -123,26 +134,28 @@
  * - "outside anchor segments": the anchor fails, with "has 2 ACCEPTANCE segments" or "has 2 SURFACES segments", on the
  *   row with an extra ACCEPTANCE segment before the real one (WE1b) or a copy of it after the real one, and with an extra
  *   SURFACES segment after or before the real one.
- * - "receipt anchor": the last dated entry of docs/workbench/receipts/wb-12x1.md (the last top-level depth-2 heading - a
- *   heading of the receipt's own token list; of a dated heading nested in a container this census claims exactly what
- *   the receipt anchor's top-level headings twins spell, a heading inside a block quote (WQ1) or opening a one-item list
- *   marked by one of the five LIST_MARKERS, each opening no entry - whose text, as marked's lexer gives it, matches
- *   /^\d{4}-\d{2}-\d{2}(?: |$)/ - four, two and two ASCII digits joined by hyphen-minus at its start, then a space or its
- *   end - and everything after it) holds exactly one census table, every token after that heading walked (of a nested
- *   copy this census claims exactly what the receipt anchor's table count twins spell: a block-quoted copy (WNESTED) and
- *   a copy in a one-item list marked by one of the five LIST_MARKERS count; a code block's text is code) - a table whose
- *   header cells, as marked's lexer gives their text, are the eight RECEIPT_COLUMNS (Requirement, Row, Claim, Where,
- *   Kind, Pins, Existing sha-256 and Repair sha-256) in that order, as far as the receipt anchor's columns case reads
- *   them - and its rows equal ROWS in order and both ways (each wording by its full sha256, so the receipt spells none of
- *   the text this census judges).
+ * - "receipt anchor": docs/workbench/receipts/wb-12x1.md as committed passes the anchor - its last dated entry, the
+ *   cut #6 entry under the heading line "## 2026-11-08 receipt: cut #6, ..." (at the line's start, one space after "##",
+ *   no closing sequence), holds one census table, after a blank line, whose header cells are the eight RECEIPT_COLUMNS
+ *   (Requirement, Row, Claim, Where, Kind, Pins, Existing sha-256 and Repair sha-256) in that order and whose rows equal
+ *   ROWS in order and both ways (each wording by its full sha256, so the receipt spells none of the text this census
+ *   judges). Of any other receipt text, this census claims exactly what the twins of the five receipt anchor cases below
+ *   spell (the receipt anchor twins, its dated entries, table count, columns and top-level headings): which later heading
+ *   opens an entry, how many census tables a later entry holds and which header is the census header are claimed for
+ *   those twins and for no other text.
  * - "receipt anchor twins": the anchor passes the receipt as committed and with a later dated entry holding the same
- *   table, a later undated section, a later depth-3 dated heading or a later heading whose date runs into other text (the
- *   last three without the table), and fails on a later dated entry without the table, with the table twice, with a
+ *   table after a blank line (W09C) or on its heading's next line (WGP2C5-W1b), a later undated section, a later depth-3
+ *   dated heading or a later heading whose date runs into other text (the last three without the table), and fails on a
+ *   later dated entry without the table, with the table twice, with a
  *   renamed column, with M001's and M002's rows swapped, with a row more or a row fewer, or with one wrong cell in any of
  *   the eight columns.
- * - "receipt anchor's dated entries": a later top-level depth-2 heading that is the date alone, the date then a space and more text,
- *   a shape-valid non-calendar date ("2026-13-45") or a setext depth-2 dated heading opens an entry (so the anchor fails
- *   without the table); and the last dated entry stays in force through a later setext depth-1 dated heading and through
+ * - "receipt anchor's dated entries": each of these later top-level dated depth-2 headings opens an entry - followed by a
+ *   note the anchor fails with "holds 0 tables", followed by the census table it passes: "## 2026-11-08" (the date
+ *   alone), "## 2026-11-08 receipt" (the date then a space and more text), "## 2026-13-45 receipt" (a shape-valid
+ *   non-calendar date), the setext heading "2026-11-08 receipt" underlined "---", and the date then a space and text
+ *   after "##" indented one, two or three spaces (WGP2C5-I1a's shape), closed by " #" or by " ##" (WGP2C5-C1a's), or with
+ *   a tab (WGP2C5-T1a's) or two spaces (WGP2C5-S2a's) between "##" and the date; and the last dated entry stays in force
+ *   through a later setext depth-1 dated heading and through
  *   later runs of headings that open none: dated headings at depths 1 and 3 to 6 (WD1's shape); depth-2 headings whose
  *   date is followed by each UTF-16 code unit but the space, the line feed and the carriage return, then "receipt" (WD2's
  *   colon and WD3's tab among them), or then a space and "receipt"; depth-2 headings whose date is followed by each code
@@ -150,17 +163,19 @@
  *   unit outside its class but the line feed and the carriage return (SWEPT: U+0000-U+00FF, the 23 WHITESPACE units,
  *   U+2010-U+2015, U+2212, U+FE58, U+FE63, U+FF0D and every \p{Nd} code unit above U+00FF), a group a digit short or
  *   long, the date after other text, and each SWEPT unit outside \s (but "#") before the date.
- * - "receipt anchor's table count": the anchor fails with "holds 2 tables" on a later dated entry holding the table and a
+ * - "receipt anchor's table count": the anchor fails with "holds 2 tables" on a later dated entry whose table follows its
+ *   heading line with a second table after a blank line (WGP2C5-W1a), on a later dated entry holding the table and a
  *   block-quoted copy (WNESTED) or a copy in a one-item list marked by each of the five LIST_MARKERS ("-", "*", "+", "1."
  *   and "1)": the marker, "the table again:", a blank line, then the table indented to the item's content - two spaces
  *   after a bullet, three after "1." or "1)" - which marked gives as a one-item list whose item holds a paragraph and the
- *   table), on a later undated section holding a second census table or a block-quoted one, and on a later depth-3 dated
- *   heading holding a second one; the table's text in a code block does not count.
- * - "receipt anchor's columns": a later dated entry holding the census rows under a header that is not RECEIPT_COLUMNS
- *   in order holds no census table (the anchor fails with "holds 0 tables"): each of the eight columns with a character
- *   added ("x") and with its last character dropped (16 twins), Requirement and Row swapped with their cells, a ninth
- *   column (Note), the last column dropped with its cells, Requirement in lower case, and Existing sha-256 with its space
- *   doubled, written as a tab or written as a no-break space (23 twins, the count pinned).
+ *   table), on a later undated section holding a second census table or a block-quoted one, and on a later depth-3
+ *   heading, dated ("### 2026-11-08 receipt: a sub-entry") or undated ("### Notes"), holding a second one; the table's
+ *   text in a code block does not count.
+ * - "receipt anchor's columns": a later dated entry holding the census rows under each of these 23 headers, none of them
+ *   RECEIPT_COLUMNS in order, holds no census table (the anchor fails with "holds 0 tables"): each of the eight columns
+ *   with a character added ("x") and with its last character dropped (16 twins), Requirement and Row swapped with their
+ *   cells, a ninth column (Note), the last column dropped with its cells, Requirement in lower case, and Existing sha-256
+ *   with its space doubled, written as a tab or written as a no-break space (23 twins, the count pinned).
  * - "receipt anchor's top-level headings": a later depth-2 dated heading inside a block quote (WQ1, "> ## 2026-11-08
  *   receipt: ...") or opening a one-item list marked by each of the five LIST_MARKERS (WQ2's "- ## 2026-11-08 receipt:
  *   ..." and its twins after "*", "+", "1." and "1)", each of which marked gives as a one-item list - ordered after "1."
@@ -190,7 +205,9 @@
  * - "records": every row's case and every row's sweep ran and reached its predicate; the hidden-forms, title and
  *   whitespace plant runs asserted every plant on every page (PLANTED counts the plants each run asserted: "<page> forms
  *   14", "<page> titles 12" and "<page> whitespace 295"); and the receipt anchor's list twins asserted each of the five
- *   LIST_MARKERS in both cases (LISTED: "heading <marker>" and "table <marker>", against a literal of the five markers).
+ *   LIST_MARKERS in each of their three twins (LISTED: "heading-note <marker>", "heading-table <marker>" and "table
+ *   <marker>", each marker read back by marked's lexer from the very text the anchor was asserted on - the source of
+ *   that text's last top-level list, up to its first space - against a literal of the five markers).
  * HIDDEN (the forms a reader is not shown, or that this census does not read as shown; SHOWN fails closed on them): a page
  * holds a HIDDEN form when hiddenFormsOf (marked's GFM lexer, every token walked) finds one, and the pinned set is
  * exactly the plants the cases above spell, each added after a blank line at the end of a page (and html also where
@@ -207,17 +224,21 @@
  * the straddle rows, ELSEWHERE, RESTORE and absent's bounds (each bound at the first character in and out); SHOWN -
  * HIDDEN-COMMENT, HIDDEN-ATTRIBUTE, the hidden-forms plants, the whitespace plants and the title plants (each HIDDEN
  * family by its own plants, and BARE_WHITESPACE by marked's own reading of the bare destination); the reading's "never
- * ignored" and "on disk" - the reading's plants; the receipt anchor's "last dated entry" - the receipt anchor twins, its
- * dated-entry runs and its top-level headings (WQ1 and WQ2's five LIST_MARKERS twins, each with its table twin); its
- * "exactly one table" and the nested copies it counts - the receipt anchor twins and its table count (WNESTED and the
- * five list-item copies); its header "the eight RECEIPT_COLUMNS in that order" - the
- * receipt anchor's columns (23 twins) and the twins' renamed column; its "in order and both ways" - the receipt anchor
- * twins; the outside anchor's "the row whose id is
+ * ignored" and "on disk" - the reading's plants; the receipt anchor over the committed receipt - the receipt anchor case
+ * itself, and the export anchor and the frozen shape for its rows; the receipt anchor's reading of a later entry,
+ * claimed for its twins only, each twin its own falsifier: which later heading opens an entry - its dated entries
+ * twins (each spelling followed by a note and by the census table), its dated-entry runs and its top-level headings
+ * twins (WQ1 and WQ2's five LIST_MARKERS twins, each with its table twin); how many census tables a later entry holds -
+ * the receipt anchor twins (W09C, WGP2C5-W1b, the table twice) and its table count twins (WGP2C5-W1a, WNESTED, the five
+ * list-item copies, the later undated and depth-3 sections, the code block); its header "the eight RECEIPT_COLUMNS in
+ * that order" - the receipt anchor's columns (23 twins) and the twins' renamed column; its "in order and both ways" - the
+ * receipt anchor twins; the outside anchor's "the row whose id is
  * wb-12x1" and "exactly the 50 ... in order" - the outside anchor twins; its "one ACCEPTANCE segment" and "one SURFACES
  * segment" - the outside anchor segments; and for the table itself the frozen shape, the export anchor and the receipt anchor
  * (a row deleted, a pin deleted, a phrase shortened or a row swapped reds at least one of them; a row deleted from every
  * literal of this file reds both anchors). The records' "every plant" and "each of the five LIST_MARKERS" - records: a
- * plant run or a list-twin loop cut short, or a marker dropped from LIST_MARKERS, leaves PLANTED or LISTED short.
+ * plant run or a list-twin loop cut short, or a marker dropped from LIST_MARKERS, leaves PLANTED or LISTED short, and a
+ * list twin asserted on another marker's text records that marker, so LISTED misses its own.
  *
  * NOT CLAIMED (scope sentences): EAT-R004 - the landing of the corrected program and the triage on trunk, and its
  * qa/workbench/mechanical-docs-cut journey - is NOT CLAIMED by this census (owner ruling M:60615 (1): the triage half reads
@@ -247,7 +268,13 @@
  * WNESTED and the LIST_MARKERS twins) - another list marker or start number, a list of two or more items, a heading on
  * an item's later line, another indent, a nested list or block quote, a list inside a block quote or a block quote inside
  * a list item, another container (a table cell, an HTML block), or other heading or item text than the twins' own - is
- * NOT CLAIMED by this census. A standing
+ * NOT CLAIMED by this census. How the receipt anchor reads a receipt text spelled otherwise than the twins of its five
+ * cases is NOT CLAIMED by this census - for example a dated depth-2 heading indented otherwise, with another run of
+ * spaces or tabs between "##" and the date, another closing sequence or whitespace after it, or a setext underline of
+ * another length or indent; a census table placed otherwise than after a blank line under its heading or on the
+ * heading's next line; a second census table placed otherwise than the table count twins place it (under a heading of
+ * another depth or text, after a thematic break, inside an HTML block or a nested container); or a census header that
+ * differs from RECEIPT_COLUMNS otherwise than the columns twins differ. A standing
  * text moved past the page's end by more than the one line the sweep reads is NOT CLAIMED by this census.
  * RESIDUAL (named family + pinned quiet row; rule 19(d)): R-PARAPHRASE - the predicate is the exact REMEDIATION wording, so
  * an overstrong claim restated in other words, split over two lines, broken by Markdown emphasis or restated in other
@@ -1229,9 +1256,9 @@ const EXPORT_TWINS: readonly { readonly name: string; readonly from: string; rea
 ];
 
 const sha256 = (text: string): string => createHash("sha256").update(text, "utf8").digest("hex");
-/** The receipt's census table as cell texts: the one table with RECEIPT_COLUMNS after the receipt text's last top-level
- * dated entry heading (marked's lexer; every token after that heading walked). What this census claims of a nested
- * heading or a nested copy is exactly the receipt anchor's top-level headings and table count twins. */
+/** The receipt's census table as cell texts, as this census reads a receipt text. What it claims of that reading is the
+ * committed receipt and exactly the twins of the five receipt anchor cases (the header's "receipt anchor" bullet); the
+ * reading of any other text is NOT CLAIMED. */
 function receiptTableOf(text: string): string[][] {
   const tokens = new Lexer({ gfm: true }).lex(text);
   let last = -1;
@@ -1262,6 +1289,8 @@ const tableText = (rows: readonly (readonly string[])[], columns: readonly strin
   [columns, columns.map(() => "---"), ...rows].map(cells => `| ${cells.join(" | ")} |`).join("\n");
 /** The receipt text with a later section appended: its heading, a blank line and its body. */
 const laterSection = (text: string, heading: string, body: string): string => `${text}\n${heading}\n\n${body}\n`;
+/** The receipt text with a later section appended whose body follows its heading line, with no blank line between. */
+const laterTightSection = (text: string, heading: string, body: string): string => `${text}\n${heading}\n${body}\n`;
 const LATER_ENTRY = "## 2026-11-08 receipt: a later entry (an in-memory twin)";
 /** The list-item markers of the receipt anchor's list twins: the three bullet characters and the two ordered-list
  * delimiters after the number 1. */
@@ -1280,8 +1309,19 @@ const SWEPT_ROWS = new Set<string>();
 /** The plants each plant run asserted, per page: "<page> forms <n>", "<page> titles <n>" and "<page> whitespace <n>", n
  * counting the plants the run asserted. */
 const PLANTED = new Set<string>();
-/** The receipt anchor's list twins each case asserted: "heading <marker>" and "table <marker>". */
+/** The receipt anchor's list twins each case asserted: "heading-note <marker>", "heading-table <marker>" and "table
+ * <marker>", each marker read back from the text the anchor was asserted on. */
 const LISTED = new Set<string>();
+/** The marker of a text's last top-level list, read back by marked's GFM lexer: that list's source up to its first space. */
+const lastListMarkerOf = (text: string): string => {
+  const lists = new Lexer({ gfm: true }).lex(text).filter(token => token.type === "list");
+  return /^\S+/.exec(lists[lists.length - 1]?.raw ?? "")?.[0] ?? "no list";
+};
+/** The receipt anchor over one list twin's text; LISTED records the twin and the list marker that same text spells. */
+function listTwinAnchor(twin: "heading-note" | "heading-table" | "table", text: string): void {
+  LISTED.add(`${twin} ${lastListMarkerOf(text)}`);
+  receiptAnchor(text);
+}
 
 describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMEDIATION rows on the six landed program and skill pages, each by its stands pin (and its absent pin on the 47 edit and same-edit rows), red under the requirement's adversarial mutants", () => {
   it("the reading: the six pages are files git would commit, every page key is a row's, and every Where is a line range on its page", () => {
@@ -1533,13 +1573,14 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
     receiptAnchor(receiptText());
   });
 
-  it("receipt anchor twins: a later dated entry must hold exactly one census table equal to ROWS in order and both ways, while a later undated, depth-3 or undated-date section leaves the last dated entry in force", () => {
+  it("receipt anchor twins: a later dated entry holding one census table equal to ROWS in order and both ways, after a blank line or on its heading's next line, passes, and one without it, with it twice or with it edited fails, while a later undated, depth-3 or undated-date section leaves the last dated entry in force", () => {
     const live = receiptText();
     const expected = ROWS.map(receiptRowOf);
     const table = tableText(expected);
     const note = "- A later note.";
     expect(() => receiptAnchor(live), "the receipt as committed").not.toThrow();
     expect(() => receiptAnchor(laterSection(live, LATER_ENTRY, table)), "W09C: a later dated entry with the same table").not.toThrow();
+    expect(() => receiptAnchor(laterTightSection(live, LATER_ENTRY, table)), "WGP2C5-W1b: a later dated entry whose table follows its heading line").not.toThrow();
     expect(() => receiptAnchor(laterSection(live, "## Notes", note)), "a later undated section").not.toThrow();
     expect(() => receiptAnchor(laterSection(live, "### 2026-11-08 receipt: a sub-entry", note)), "a later depth-3 dated heading").not.toThrow();
     expect(() => receiptAnchor(laterSection(live, "## 2026-11-08x receipt", note)), "a later heading whose date runs into other text").not.toThrow();
@@ -1569,9 +1610,10 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
     expect(() => exportAnchor(twinOf(live.description.replace(surfaces, () => `SURFACES: none | ${surfaces}`))), "an extra SURFACES segment before the real one").toThrow(/has 2 SURFACES segments/);
   }, 60_000);
 
-  it("receipt anchor's dated entries: a later top-level depth-2 heading that is the date alone, the date then a space and text, a shape-only date or a setext depth-2 dated heading opens an entry, and the later runs this case spells (other depths, other code units after the date, near-miss dates) open none", () => {
+  it("receipt anchor's dated entries: a later top-level depth-2 heading that is the date alone, the date then a space and text, a shape-only date, a setext depth-2 dated heading, or the date and text after '##' indented one to three spaces, closed by ' #' or ' ##', or with a tab or two spaces after '##', opens an entry (failing without the table, passing with it), and the later runs this case spells (other depths, other code units after the date, near-miss dates) open none", () => {
     const live = receiptText();
     const note = "- A later note.";
+    const table = tableText(ROWS.map(receiptRowOf));
     const run = (headings: readonly string[]): string => `${live}\n${headings.join("\n")}\n`;
     const unitsBut = (skip: (unit: number) => boolean): string[] => Array.from({ length: 0x10000 }, (_, unit) => unit).filter(unit => !skip(unit)).map(unit => String.fromCharCode(unit));
     const blank = (unit: number): boolean => /\s/.test(String.fromCharCode(unit));
@@ -1579,6 +1621,24 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
     expect(() => receiptAnchor(laterSection(live, "## 2026-11-08 receipt", note)), "a later depth-2 heading whose date is followed by a space opens an entry").toThrow(/holds 0 tables/);
     expect(() => receiptAnchor(laterSection(live, "## 2026-13-45 receipt", note)), "the shape is read, never the calendar").toThrow(/holds 0 tables/);
     expect(() => receiptAnchor(laterSection(live, "2026-11-08 receipt\n---", note)), "a later setext depth-2 dated heading opens an entry").toThrow(/holds 0 tables/);
+    expect(() => receiptAnchor(laterSection(live, "## 2026-11-08", table)), "a later depth-2 heading that is the date alone, then the table").not.toThrow();
+    expect(() => receiptAnchor(laterSection(live, "## 2026-11-08 receipt", table)), "a later depth-2 heading whose date is followed by a space, then the table").not.toThrow();
+    expect(() => receiptAnchor(laterSection(live, "## 2026-13-45 receipt", table)), "a later shape-only dated heading, then the table").not.toThrow();
+    expect(() => receiptAnchor(laterSection(live, "2026-11-08 receipt\n---", table)), "a later setext depth-2 dated heading, then the table").not.toThrow();
+    expect(() => receiptAnchor(laterSection(live, " ## 2026-11-08 receipt: a later entry under a heading indented one space", note)), "a later dated heading indented one space opens an entry").toThrow(/holds 0 tables/);
+    expect(() => receiptAnchor(laterSection(live, " ## 2026-11-08 receipt: a later entry under a heading indented one space", table)), "a later dated heading indented one space, then the table").not.toThrow();
+    expect(() => receiptAnchor(laterSection(live, "  ## 2026-11-08 receipt: a later entry under a heading indented two spaces", note)), "a later dated heading indented two spaces opens an entry").toThrow(/holds 0 tables/);
+    expect(() => receiptAnchor(laterSection(live, "  ## 2026-11-08 receipt: a later entry under a heading indented two spaces", table)), "a later dated heading indented two spaces, then the table").not.toThrow();
+    expect(() => receiptAnchor(laterSection(live, "   ## 2026-11-08 receipt: a later entry under an indented heading", note)), "WGP2C5-I1a: a later dated heading indented three spaces opens an entry").toThrow(/holds 0 tables/);
+    expect(() => receiptAnchor(laterSection(live, "   ## 2026-11-08 receipt: a later entry under an indented heading", table)), "WGP2C5-I1b: a later dated heading indented three spaces, then the table").not.toThrow();
+    expect(() => receiptAnchor(laterSection(live, "## 2026-11-08 receipt: a later entry with a closing sequence #", note)), "a later dated heading closed by ' #' opens an entry").toThrow(/holds 0 tables/);
+    expect(() => receiptAnchor(laterSection(live, "## 2026-11-08 receipt: a later entry with a closing sequence #", table)), "a later dated heading closed by ' #', then the table").not.toThrow();
+    expect(() => receiptAnchor(laterSection(live, "## 2026-11-08 receipt: a later entry with a closing sequence ##", note)), "WGP2C5-C1a: a later dated heading closed by ' ##' opens an entry").toThrow(/holds 0 tables/);
+    expect(() => receiptAnchor(laterSection(live, "## 2026-11-08 receipt: a later entry with a closing sequence ##", table)), "a later dated heading closed by ' ##', then the table").not.toThrow();
+    expect(() => receiptAnchor(laterSection(live, "##\t2026-11-08 receipt: a later entry after a tab", note)), "WGP2C5-T1a: a later dated heading with a tab after '##' opens an entry").toThrow(/holds 0 tables/);
+    expect(() => receiptAnchor(laterSection(live, "##\t2026-11-08 receipt: a later entry after a tab", table)), "a later dated heading with a tab after '##', then the table").not.toThrow();
+    expect(() => receiptAnchor(laterSection(live, "##  2026-11-08 receipt: a later entry after two spaces", note)), "WGP2C5-S2a: a later dated heading with two spaces after '##' opens an entry").toThrow(/holds 0 tables/);
+    expect(() => receiptAnchor(laterSection(live, "##  2026-11-08 receipt: a later entry after two spaces", table)), "a later dated heading with two spaces after '##', then the table").not.toThrow();
     expect(() => receiptAnchor(laterSection(live, "2026-11-08 receipt\n===", note)), "a later setext depth-1 dated heading leaves the last dated entry in force").not.toThrow();
     expect(() => receiptAnchor(run([1, 3, 4, 5, 6].map(depth => `${"#".repeat(depth)} 2026-11-08 receipt (depth ${depth})`))), "WD1 and kin: a later run of dated headings at depths 1 and 3 to 6").not.toThrow();
     expect(() => receiptAnchor(run(unitsBut(unit => unit === 0x20 || unit === 0xa || unit === 0xd).map(unit => `## 2026-11-08${unit}receipt`))), "WD2, WD3 and kin: a later run of depth-2 headings whose date is followed by each UTF-16 code unit but the space (and the line feed and carriage return, which end the line), then more text").not.toThrow();
@@ -1600,7 +1660,7 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
     expect(() => receiptAnchor(run(near)), "a later run of near-miss dates: each of the ten date positions holding each swept code unit outside its class, a group a digit short or long, the date after other text, and each swept code unit outside \\s (but #) before the date").not.toThrow();
   }, 120_000);
 
-  it("receipt anchor's table count: the last dated entry and everything after it hold exactly one census table - a second one in a block quote, in a one-item list marked by each of the five LIST_MARKERS ('-', '*', '+', '1.', '1)') or in a later undated section fails, while the table's text in a code block is code", () => {
+  it("receipt anchor's table count: a later entry holding a second census table - after the first on its heading's next line, in a block quote, in a one-item list marked by each of the five LIST_MARKERS ('-', '*', '+', '1.', '1)'), in a later undated section or under a later depth-3 heading, dated or not - fails, while the table's text in a code block is code", () => {
     const live = receiptText();
     const table = tableText(ROWS.map(receiptRowOf));
     const quoted = table.split("\n").map(line => `> ${line}`).join("\n");
@@ -1612,14 +1672,15 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
       ["list ordered=true start=1 items=paragraph+space+table"],
       ["list ordered=true start=1 items=paragraph+space+table"],
     ]);
+    expect(() => receiptAnchor(laterTightSection(live, LATER_ENTRY, `${table}\n\n${table}`)), "WGP2C5-W1a: a later dated entry whose table follows its heading line, then a second census table").toThrow(/holds 2 tables/);
     expect(() => receiptAnchor(laterSection(live, LATER_ENTRY, `${table}\n\n${quoted}`)), "WNESTED: a later dated entry holding the table and a block-quoted copy").toThrow(/holds 2 tables/);
     for (const marker of LIST_MARKERS) {
-      expect(() => receiptAnchor(laterSection(live, LATER_ENTRY, `${table}\n\n${listedOf(marker)}`)), `a later dated entry holding the table and a copy in a one-item list marked "${marker}"`).toThrow(/holds 2 tables/);
-      LISTED.add(`table ${marker}`);
+      expect(() => listTwinAnchor("table", laterSection(live, LATER_ENTRY, `${table}\n\n${listedOf(marker)}`)), `a later dated entry holding the table and a copy in a one-item list marked "${marker}"`).toThrow(/holds 2 tables/);
     }
     expect(() => receiptAnchor(laterSection(live, "## Notes", table)), "a later undated section holding a second census table").toThrow(/holds 2 tables/);
     expect(() => receiptAnchor(laterSection(live, "## Notes", quoted)), "a later undated section holding a block-quoted census table").toThrow(/holds 2 tables/);
     expect(() => receiptAnchor(laterSection(live, "### 2026-11-08 receipt: a sub-entry", table)), "a later depth-3 dated heading holding a second census table").toThrow(/holds 2 tables/);
+    expect(() => receiptAnchor(laterSection(live, "### Notes", table)), "a later undated depth-3 heading holding a second census table").toThrow(/holds 2 tables/);
     expect(() => receiptAnchor(laterSection(live, LATER_ENTRY, `${table}\n\n\`\`\`\n${table}\n\`\`\``)), "a later dated entry holding the table and its text in a code block").not.toThrow();
   });
 
@@ -1659,9 +1720,8 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
     expect(() => receiptAnchor(laterSection(live, quotedHeading, note)), "WQ1: a dated heading inside a block quote, then a note").not.toThrow();
     expect(() => receiptAnchor(laterSection(live, quotedHeading, table)), "a dated heading inside a block quote, then the table").toThrow(/holds 2 tables/);
     for (const marker of LIST_MARKERS) {
-      expect(() => receiptAnchor(laterSection(live, listedHeadingOf(marker), note)), `WQ2 "${marker}": a dated heading opening a one-item list, then a note`).not.toThrow();
-      expect(() => receiptAnchor(laterSection(live, listedHeadingOf(marker), table)), `a dated heading opening a one-item list marked "${marker}", then the table`).toThrow(/holds 2 tables/);
-      LISTED.add(`heading ${marker}`);
+      expect(() => listTwinAnchor("heading-note", laterSection(live, listedHeadingOf(marker), note)), `WQ2 "${marker}": a dated heading opening a one-item list, then a note`).not.toThrow();
+      expect(() => listTwinAnchor("heading-table", laterSection(live, listedHeadingOf(marker), table)), `a dated heading opening a one-item list marked "${marker}", then the table`).toThrow(/holds 2 tables/);
     }
   });
 
@@ -1709,11 +1769,11 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
     }
   });
 
-  it("records: every row's case and sweep ran and reached its predicate, the hidden-forms, title and whitespace plant runs asserted every plant on every page, and the receipt anchor's list twins asserted each of the five LIST_MARKERS in both cases", () => {
+  it("records: every row's case and sweep ran and reached its predicate, the hidden-forms, title and whitespace plant runs asserted every plant on every page, and the receipt anchor's list twins asserted each of the five LIST_MARKERS in each of their three twins, read back from the asserted text", () => {
     expect([...REACHED].sort()).toEqual(ROWS.map(row => row.id).sort());
     expect([...SWEPT_ROWS].sort()).toEqual(ROWS.map(row => row.id).sort());
     expect([HIDDEN_PLANTS.length, TITLE_PLANTS.length, 12 * WHITESPACE.length + BARE_WHITESPACE.length]).toEqual([14, 12, 295]);
     expect([...PLANTED].sort()).toEqual(Object.keys(PAGES).flatMap(key => [`${key} forms 14`, `${key} titles 12`, `${key} whitespace 295`]).sort());
-    expect([...LISTED].sort()).toEqual(["-", "*", "+", "1.", "1)"].flatMap(marker => [`heading ${marker}`, `table ${marker}`]).sort());
+    expect([...LISTED].sort()).toEqual(["-", "*", "+", "1.", "1)"].flatMap(marker => [`heading-note ${marker}`, `heading-table ${marker}`, `table ${marker}`]).sort());
   });
 });
