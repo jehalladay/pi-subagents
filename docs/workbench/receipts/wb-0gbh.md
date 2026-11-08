@@ -70,3 +70,21 @@
 - Not claimed: a call deferred through another clock that lands after C-LATE ran; a facility reached through a member name computed at run time; an options object holding members beyond the seven the boundary reads.
 - Explicitly partial, as entry 1 says: closure gate PI-COORDINATION-INSTALLED, external MW-COORDINATION.
 - Display paths added: none.
+
+## 2026-11-08 respin (cut #3): refusal #2's members pinned by recording the planted data functions and reading the loader's bytes, the late-call and artifact words narrowed (machine seat ws-06, run g10-work-s243)
+
+- Refusal #2 (gate run g10-gate-s244, seat gate-prep-37, on cut #2 31759c81) found six one-edit members of `src/workbench/mechanical-coordination.ts` that kept the suite at 268 passed. Four call a function or getter a case planted as data after its case's read (U1), one calls a function input inside the read window (U2), and one hands the loader the host as a hidden member of the artifact's bytes (U3). Cut #3 changes the module's header, not its code: it narrows the words those members contradicted, and the suite adds the pins below.
+- Pins. The functions I-DATA, O-DATA and C-ORDER plant as data (I-DATA's six function rows and own toJSON, O-DATA's returned function and own toJSON, C-ORDER's notData function) and O-DATA's accessor getter now record their receiver and arguments into a trace sealed from the start, so any call of one lands in LATE, which C-LATE reads. Every admitted call admittedOf reads also asserts that the artifact's bytes are a Buffer, not a proxy, whose own keys are exactly its indices, and C-READERS shows that reader flagging its planted controls.
+- Claim boundary, entry 2. Its "Every function a case hands the boundary is then sealed, and C-LATE, the last case, reads that none of them was called after its case's read" claims only the set the module header's THE READ WINDOW names as sealed. Its "Every recording function records its receiver and arguments" claims only the functions the suite header's THE HOST paragraph names. Its "exactly the entry and the artifact" claims only what admittedOf reads: the entry itself, and a frozen artifact of Object.prototype whose own keys are exactly digest and bytes, its bytes a Buffer, not a proxy, whose own keys are exactly its indices.
+- Red: each of refusal #2's seven members alone on a throwaway copy. On the cut #2 suite, six keep it at 0 failed and GP37-L-DIGEST-BOXED-HOST fails L-1, as the gate read. On the cut #3 suite all seven fail it: the four late members and GP37-I-CALL-INPUT-FN at C-LATE (1 failed each), GP37-L-BYTES-HIDDEN-HOST in the 25 cases that read an admitted call through admittedOf and in C-TALLY (26 failed), and GP37-L-DIGEST-BOXED-HOST at L-1 (1 failed).
+- Green: 268 of 268.
+- Falsification on the cut #3 tree: each member applied alone, the suite run, the files restored by sha256. 157 module runs, 152 killed:
+  - refusal #2's 7 members, all killed;
+  - this cut's 13 members of the new pins, all killed; its 4 scope probes survive, each inside the words below or equivalent to the narrowed claim (the host on the bytes' backing ArrayBuffer, a Buffer copy of the same bytes, a loader rejection's stack read at the next call, a planted value's class constructed at the next call);
+  - cut #2's 36 seat members and refusal #1's 23 members that apply, all killed (GP13-L-LOADER-EXTRA-ARG names cut #1's loader line, as cut #2 recorded);
+  - cut #1's 74 members, 73 killed; S-MINLENGTH-UNITS survives and is equivalent, as entry 1 says.
+
+  Suite-side, 8 members edit the new pins. The 5 that hollow a reader or its control are killed by their planted controls (C-LATE, C-READERS). The 3 that remove a pin survive by construction, and with each removal the gate member that pin reads also survives (0 failed).
+- Not claimed: a call, in its case's read window or after it, of a function or getter the read window does not name as sealed (a planted value's class or another prototype member, a built-in method or accessor, an error's stack among them); anything the loader can reach from its two arguments other than through their own keys (a prototype, a built-in accessor, the bytes' backing ArrayBuffer).
+- Explicitly partial, as entries 1 and 2 say: closure gate PI-COORDINATION-INSTALLED, external MW-COORDINATION.
+- Display paths added: none.

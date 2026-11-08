@@ -12,9 +12,10 @@
  * plants and reads the call's counts (grant reads, loader calls, export calls, other exports' calls, provider handle calls and
  * getter runs) only after the call has returned or thrown and every timer it scheduled has run, so a call deferred through
  * one of those timers, a microtask or a next tick is counted (C-SETTLE reads a call a planted loader defers in each of those
- * five ways, the setTimeout by sixty seconds). The grant read, the loader, every namespace function, every provider handle and
- * every getter a case hands the boundary are then sealed: a call after the read is recorded, and C-LATE, the suite's last
- * case, reads that none was made (and reads a planted late call).
+ * five ways, the setTimeout by sixty seconds). The grant read, the loader, every namespace function, every provider handle,
+ * the functions I-DATA, O-DATA and C-ORDER plant as data and the getters G-FIRST, I-DATA, O-DATA and L-EXPORT-ACCESSOR plant
+ * are then sealed: a call after the read is recorded, and C-LATE, the suite's last case, reads that none was made (and reads a
+ * planted late call).
  *
  * THE REVIEWED CONTRACT. MECHANICAL_COORDINATION_REVIEWED_DIGESTS holds the SHA-256 of the three files MechanicalWorkflows
  * publishes for its pure coordination export, at origin/main 469ee2e5: contracts/entrypoints/coordination-reconcile.v1.json
@@ -73,8 +74,8 @@
  *     digest-mismatch: one byte flipped after the pin was taken and the descriptor's digest as the artifact pin (A-DIGEST). The
  *     same bytes under another file name are admitted (L-1b).
  *  7. The host loader is called once, with no receiver and exactly two arguments: MECHANICAL_COORDINATION_ENTRY and a frozen
- *     {digest, bytes} of Object.prototype whose own keys are exactly those two, holding the exact file bytes and the pinned
- *     digest (L-1, and every admitted call admittedOf reads). Of the loader results L-EXPORT plants, an empty object, a
+ *     {digest, bytes} of Object.prototype whose own keys are exactly those two, holding the pinned digest and the file's bytes
+ *     as a Buffer, not a proxy, whose own keys are exactly its indices (L-1, and every admitted call admittedOf reads). Of the loader results L-EXPORT plants, an empty object, a
  *     reconcile that is a string, a number, an object or null, an inherited reconcile, one under default, null, undefined and a
  *     string refuse loaded export-missing; a function holding reconcile, a frozen and a null-prototype object are admitted; a
  *     reconcile accessor refuses export-missing with its getter never run (L-EXPORT-ACCESSOR). In every case no export but
@@ -116,8 +117,10 @@
  * the files lie and whether a path passes through a link; file sizes; a loader result whose member read runs code other than
  * the accessor L-EXPORT-ACCESSOR plants (a proxy); a call without an options object of plain data members, or with members
  * beyond the seven it reads; a call deferred through another clock (an abort signal's timeout, an atomics wait, a finalization
- * callback) that lands after C-LATE ran, and a getter or other function a case does not hand the boundary that runs after its
- * case's read; a facility reached through a member name computed at run time (X-NO-LOAD reads names as written); and any form
+ * callback) that lands after C-LATE ran, and a call, in its case's read window or after it, of a function or getter THE READ
+ * WINDOW does not name as sealed (a planted value's class or another prototype member, a built-in method or accessor, an
+ * error's stack among them); anything the loader can reach from its two arguments other than through their own keys (a
+ * prototype, a built-in accessor, the bytes' backing ArrayBuffer); a facility reached through a member name computed at run time (X-NO-LOAD reads names as written); and any form
  * of a step above that its cited cases do not plant.
  */
 import { createHash } from "node:crypto";

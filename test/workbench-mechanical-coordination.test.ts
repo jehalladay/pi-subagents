@@ -27,15 +27,18 @@
  * installed-consumer leg is NOT RUN by this suite; the slice is not claimed live or closed.
  *
  * THE HOST of every case is a recording object: its grant read beside provider handles named after the Beads, Forge and
- * Furnace actions the planted proposals name (EFFECT_HANDLES), so a boundary that executed a proposal would call one. Every
- * function the suite hands the boundary records its receiver and arguments (recordCall).
+ * Furnace actions the planted proposals name (EFFECT_HANDLES), so a boundary that executed a proposal would call one. The
+ * grant read, every provider handle, the loader, every namespace function and every function dataFunction makes (the functions
+ * I-DATA, O-DATA and C-ORDER plant as data, O-DATA's getter and C-LATE's control) record their receiver and arguments
+ * (recordCall).
  *
  * THE READ WINDOW (settled): each planted call runs with setTimeout, setInterval and setImmediate faked, and its counts are read
  * only after it has returned or thrown and every timer it scheduled has run; the case's trace is then sealed, so a later call
  * of one of its functions lands in LATE, which C-LATE, the last case, reads empty. Every call the suite plants, G-FIRST's and
  * L-THROWS's included, asserts zero effect calls and zero calls of an export other than reconcile in that window, and one
  * grant read as the host's method with no argument; every admitted call admittedOf reads asserts one loader call with no
- * receiver and the entry and a sealed artifact as its two arguments, and one reconcile call with no receiver and one plain
+ * receiver and, as its two arguments, the entry and a frozen artifact of exactly digest and bytes whose bytes are a Buffer,
+ * not a proxy, whose own keys are exactly its indices, and one reconcile call with no receiver and one plain
  * data argument equal to the input that shares no container with it. X-NO-EFFECT also plants every exact effect grant beside
  * the coordination grant. C-SETTLE and C-LATE each read a planted control, and C-READERS shows each of the suite's readers
  * (exactly, violationsOf, readingOf and sharesContainer) flagging its planted controls.
@@ -239,6 +242,12 @@ function recordCall(trace: Trace, name: string, receiver: unknown, args: readonl
   trace.calls.push({ name, receiver, args: [...args] });
 }
 const callsNamed = (trace: Trace, name: string): readonly Call[] => trace.calls.filter(call => call.name === name);
+const HANDED_DATA: Trace = { ...newTrace(), sealed: true };
+const dataFunction = <T>(name: string, value: T) =>
+  function (this: unknown, ...args: unknown[]): T {
+    recordCall(HANDED_DATA, name, this, args);
+    return value;
+  };
 /** The recording host: its grant read and the provider handles (each records an effect call). */
 function hostOf(trace: Trace, grants: unknown): { grants(): unknown } & Record<string, unknown> {
   const effectOf = (label: string) =>
@@ -512,6 +521,13 @@ async function refusalOf(p: Plant): Promise<{ readonly reading: string; readonly
   return { reading: readingOf(result), loads: trace.counts.loads, reconcile: trace.counts.reconcile, others: trace.counts.others, effects: trace.counts.effects };
 }
 const refusedQuietly = (reading: string) => ({ reading, loads: 0, reconcile: 0, others: 0, effects: 0 });
+const indexOnlyBuffer = (artifact: unknown): boolean => {
+  if (typeof artifact !== "object" || artifact === null) return false;
+  const bytes: unknown = Object.getOwnPropertyDescriptor(artifact, "bytes")?.value;
+  if (!types.isUint8Array(bytes) || types.isProxy(bytes) || Object.getPrototypeOf(bytes) !== Buffer.prototype) return false;
+  const keys = Reflect.ownKeys(bytes);
+  return keys.length === bytes.length && keys.every((key, index) => key === String(index));
+};
 /**
  * An admitted call's trace: loaded once, reconcile called once, no other export and no effect called; the loader called with
  * no receiver and exactly the entry and the artifact (of Object.prototype, frozen, exactly digest and bytes); reconcile called
@@ -524,9 +540,9 @@ async function admittedOf(p: Plant): Promise<Planted> {
   expect([planted.trace.counts.loads, planted.trace.counts.reconcile, planted.trace.counts.others, planted.trace.counts.effects]).toEqual([1, 1, 0, 0]);
   const loads = callsNamed(planted.trace, "loader").map(call => {
     const [entry, artifact] = call.args;
-    return [call.receiver, call.args.length, entry === MECHANICAL_COORDINATION_ENTRY, exactly(artifact, ["digest", "bytes"]) && Object.isFrozen(artifact)];
+    return [call.receiver, call.args.length, entry === MECHANICAL_COORDINATION_ENTRY, exactly(artifact, ["digest", "bytes"]) && Object.isFrozen(artifact), indexOnlyBuffer(artifact)];
   });
-  expect(loads, "the loader: no receiver, the entry and a sealed artifact").toEqual([[undefined, 2, true, true]]);
+  expect(loads, "the loader: no receiver, the entry and a sealed artifact").toEqual([[undefined, 2, true, true, true]]);
   const receipts = planted.trace.receipts.map(receipt => [receipt.receiver, receipt.arity, receipt.violations, receipt.sharesCallerContainer, receipt.text === undefined ? undefined : JSON.parse(receipt.text)]);
   expect(receipts, "reconcile: no receiver, one plain data argument equal to the input, sharing no container with it").toEqual([[undefined, 1, [], false, JSON.parse(JSON.stringify(planted.input))]]);
   return planted;
@@ -667,6 +683,14 @@ describe("C: the reviewed contract", () => {
     ]);
     const caller = { basis: { workspaceId: "demo" } };
     expect([sharesContainer({ basis: caller.basis }, caller), sharesContainer(structuredClone(caller), caller)]).toEqual([true, false]);
+    const plantedBytes = [
+      Buffer.from("ab"),
+      Object.defineProperty(Buffer.from("ab"), "host", { value: 1 }),
+      Object.defineProperty(Buffer.from("ab"), Symbol.for("host"), { value: 1 }),
+      Uint8Array.from([1]),
+      new Proxy(Buffer.from("ab"), {}),
+    ];
+    expect(plantedBytes.map(bytes => indexOnlyBuffer({ digest: "d", bytes }))).toEqual([true, false, false, false, false]);
   });
 });
 
@@ -929,13 +953,13 @@ describe("I: EAT-R071 - only serialized data valid against the published input s
   /** The accessor row's getter runs; sealed once its row's counts are read, so a later run lands in LATE. */
   const getterTrace = { reads: 0, sealed: false };
   const DATA: readonly (readonly [string, () => unknown])[] = [
-    ["the input itself a function", () => () => validInput()],
-    ["a function as memory", () => memoryOf(() => 1)],
-    ["a function as an intent's target uri", () => setAt(validInput(), ["proposals", 0, "intents", 0, "target", "uri"], () => "cand:a")],
-    ["a function as a trace detail", () => setAt(validInput(), ["proposals", 0, "trace", 0, "detail"], () => "x")],
-    ["a function as a list's second element", () => memoryOf([0, () => 1])],
-    ["a function as an extra top-level member", () => ({ ...validInput(), extra: () => 1 })],
-    ["an own toJSON function", () => memoryOf({ toJSON: () => ({}) })],
+    ["the input itself a function", () => dataFunction("I-DATA the input itself a function", validInput())],
+    ["a function as memory", () => memoryOf(dataFunction("I-DATA a function as memory", 1))],
+    ["a function as an intent's target uri", () => setAt(validInput(), ["proposals", 0, "intents", 0, "target", "uri"], dataFunction("I-DATA a function as an intent's target uri", "cand:a"))],
+    ["a function as a trace detail", () => setAt(validInput(), ["proposals", 0, "trace", 0, "detail"], dataFunction("I-DATA a function as a trace detail", "x"))],
+    ["a function as a list's second element", () => memoryOf([0, dataFunction("I-DATA a function as a list's second element", 1)])],
+    ["a function as an extra top-level member", () => ({ ...validInput(), extra: dataFunction("I-DATA a function as an extra top-level member", 1) })],
+    ["an own toJSON function", () => memoryOf({ toJSON: dataFunction("I-DATA an own toJSON function", {}) })],
     ["a symbol", () => memoryOf(Symbol("memory"))],
     ["a bigint", () => memoryOf(1n)],
     ["undefined as a member value", () => memoryOf(undefined)],
@@ -1257,10 +1281,10 @@ describe("R and O: EAT-R071 - valid schema data in, the round-trip proposal out"
   const editOutput = (edit: (resolution: JsonRecord) => unknown) => (input: unknown): unknown => edit(standIn(input) as JsonRecord);
   const OUTPUT_DATA: readonly (readonly [string, (input: unknown) => unknown])[] = [
     ["a promise of the resolution (an async reconcile)", asyncProducer],
-    ["a function", () => () => undefined],
+    ["a function", () => dataFunction("O-DATA a function", undefined)],
     ["undefined", () => undefined],
-    ["an own toJSON function", editOutput(resolution => ({ ...resolution, toJSON: () => ({}) }))],
-    ["an accessor member", editOutput(resolution => Object.defineProperty({ ...resolution }, "extra", { enumerable: true, get: () => 1 }))],
+    ["an own toJSON function", editOutput(resolution => ({ ...resolution, toJSON: dataFunction("O-DATA an own toJSON function", {}) }))],
+    ["an accessor member", editOutput(resolution => Object.defineProperty({ ...resolution }, "extra", { enumerable: true, get: dataFunction("O-DATA an accessor member", 1) }))],
     ["a Date member", editOutput(resolution => ({ ...resolution, budgetUsed: new Date(0) }))],
     ["the budget object reused as budgetUsed", editOutput(resolution => ({ ...resolution, budgetUsed: resolution.budget }))],
     [
@@ -1475,7 +1499,7 @@ describe("X: EAT-R072 - a coordination proposal is an observation, never an effe
 // ---- C-ORDER: the first refusal wins ---------------------------------------------------------------------------------------------
 
 describe("C-ORDER: the steps judge in the header's order and the first refusal wins", () => {
-  const notData = (): unknown => ({ ...validInput(), extra: () => 1 });
+  const notData = (): unknown => ({ ...validInput(), extra: dataFunction("C-ORDER notData", 1) });
   const absentSchemas = (layout: Layout): string => join(layout.dir, "absent");
   const ORDER: readonly (readonly [string, string, Plant])[] = [
     ["no grant, a malformed pin", "grants missing-coordination-grant", { grants: [], pin: () => null }],
@@ -1556,11 +1580,12 @@ describe("C-ORDER: the steps judge in the header's order and the first refusal w
     expect(Object.hasOwn((globalThis as unknown as Record<string, object>).setImmediate ?? {}, "clock"), "the real timers are back after each call").toBe(false);
   });
 
-  it("C-LATE (the last case): no function a case handed the boundary was called after its case's read; a planted late call lands in LATE", async () => {
+  it("C-LATE (the last case): no sealed function or getter was called after its case's read; a planted late call lands in LATE", async () => {
     expect(LATE).toEqual([]);
     const { trace, host } = await plant({});
     (host.execute as () => unknown)();
-    expect([LATE, trace.counts.effects]).toEqual([["effect execute"], 1]);
+    dataFunction("C-LATE control", undefined)();
+    expect([LATE, trace.counts.effects]).toEqual([["effect execute", "C-LATE control"], 1]);
     LATE.splice(0);
   });
 });
