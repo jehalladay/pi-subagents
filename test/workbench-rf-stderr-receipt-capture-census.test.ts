@@ -259,8 +259,10 @@
  * recorded argv; C2's, C3's and R1's of the scenario they drive through Pi's rf provider - its failure naming the acceptance as
  * owed; whether a src that gains a committing rf invocation moves C1's reading is NOT CLAIMED by this census, each C1 item claiming
  * its reading in its row's reading alone) or STANDING (it holds today and must keep holding).
- *  capture (ACCEPTANCE[0]). C1 UNTIL-THEN, read from src and at run time: exactly the C1-* items of ENUMERATION. The src
- *    readers' read set is today's script files under src, every one of them (each is .ts today; T0 holds the read set equal
+ *  capture (ACCEPTANCE[0]). C1 UNTIL-THEN, read from src and at run time: exactly the C1-* items of ENUMERATION. What the
+ *    C1 reading and G2's static leg pass the src readers is NOT CLAIMED by this census beyond their witnesses. The read
+ *    set srcTree() returns when T0 calls it is, by path,
+ *    today's script files under src, every one of them (each is .ts today; T0 holds the read set equal
  *    to an independent listing of src), and the workflow worker's inlined source, src's one embedded module today (a template
  *    with one substitution that calls require(, which the host evaluates with new Worker(..., { eval: true }); T0 holds its
  *    path, its text - the text the host evaluates, WORKER_SOURCE as this process imports it, save one stretch, where that
@@ -296,7 +298,7 @@
  *    and for each kill the statement names (deadline/overflow, escalating after the statement's "SIGTERM-SIGKILL(500 ms)") the
  *    preview's custody runs under fake timers against a stand-in that ignores SIGTERM: no SIGTERM before the trigger, SIGTERM at
  *    it, alive 1 ms before the escalation, closed at it, and the typed transport error. G2 STANDING: exactly the G2-* items of
- *    ENUMERATION, read two ways: a static leg over the same src read (the launch binding's uses and its stdio, the
+ *    ENUMERATION, read two ways: a static leg (the launch binding's uses and its stdio, the
  *    diagnostics_channel module sites, the opaque loads) and a run-time leg over both input arms (the legacy one through the
  *    preview leaf), each read while the stand-in hangs after its receipt lines reached the pipe, against the reference child
  *    G2-TRAP describes; after the abort the error is the typed cancel and no process warning names an rf id in its name or message.
