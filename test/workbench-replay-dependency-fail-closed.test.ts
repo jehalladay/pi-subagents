@@ -4,8 +4,13 @@
  * (gate-prep-13, run g10-gate-s231, cut #3 66e8dd25, unmet U1-U7), each pinned red-first. The structural exit row R-B664
  * (M:61935) moved these families out of wb-413a's R-B646 claim set and into this bead; the parent's cured members stay
  * with its own suites (test/workbench-replay-dependency-readers.test.ts, test/workbench-replay-dependencies-wiring.test.ts
- * and test/workbench-claude-replay-dependencies.test.ts), which this cut leaves byte-identical. Cut #2 answers this bead's
- * refusal #1 (gate-prep-43, run g10-gate-s241, cut #1 ef8186d6, unmet U1-U6) under the guard binding R-B717 (M:65110).
+ * and test/workbench-claude-replay-dependencies.test.ts), which this cut leaves byte-identical. Cut #2 answered this
+ * bead's refusal #1 (gate-prep-43, run g10-gate-s241, cut #1 ef8186d6, unmet U1-U6) under the guard binding R-B717
+ * (M:65110). Cut #3 answers refusal #2 (gate-prep-6, run g10-gate-s243, cut #2 62d757dc, unmet U1-U5) in the
+ * enumerate-the-resolvable form, under the second-stage cap R-B721 (M:65552) and the guard bindings R-B722 (M:65553) and
+ * R-B723 (M:65554): each claim below is exactly what its rows plant and assert, each form refusal #2 realized is planted
+ * by a family row (U1 to U4) or read by the word pin (U5), and every other form is NOT CLAIMED, as the last part of this
+ * header lists.
  *
  * Each row plants a form on real files in a scratch directory, or hands a reader the strings, runs the module's reader and
  * asserts the WHOLE reading: the exact unknown reason, or a measured reading equal to a named twin, each beside a measured
@@ -13,10 +18,11 @@
  * answers; the receipt docs/workbench/receipts/wb-6b3z.md records the member counts.
  *
  * PINNED READER SET (this file; every row observed green on the cut):
- *  - FCB-UNSTAT-instructions, FCB-UNSTAT-provider: 101 plants each, each reading exactly {unknown, dependency-unreadable};
- *  - FCB-LINK-BELOW-FILE-instructions, FCB-LINK-BELOW-FILE-provider: 33 links each, each reading measured and equal;
+ *  - FCB-UNSTAT-instructions, FCB-UNSTAT-provider: 136 plants each, each reading exactly {unknown, dependency-unreadable};
+ *  - FCB-LINK-BELOW-FILE-instructions, FCB-LINK-BELOW-FILE-provider: 66 links each, each reading measured and equal;
  *  - FCB-CYCLE-INNER-instructions, FCB-CYCLE-INNER-provider: 61 links each, each reading exactly {unknown, dependency-cycle};
- *  - FCB-READ-AGAIN-instructions, FCB-READ-AGAIN-provider: 124 trees each, each measured, moving and equal to its copy twin;
+ *  - FCB-READ-AGAIN-instructions, FCB-READ-AGAIN-provider: 186 trees each, each measured, moving with each planted rewrite
+ *    of each of its files and equal to its copy twin;
  *  - FCB-RELATIVE-BASE-instructions, FCB-RELATIVE-BASE-provider: 80 readings each, each reading its base reason;
  *  - FCB-RELATIVE-HOME: 24 readings (8 directories, each checked and handed to both readers);
  *  - FCB-UNNAMED-SOURCES: 8 files changed, the resume replayed under equal readings; FCB-UNNAMED-SOURCES-CONTROL: the same 8
@@ -26,28 +32,32 @@
  *    this file.
  *
  * CLAIMED here, each by the rows its family names, and nothing wider:
- *  - FCB-UNSTAT (U1 GP13-10): Each of 101 planted stat refusals per file reader is an unknown reading by
- *    dependency-unreadable, never a stable absent digest: for each file reader under the user source, each of three
- *    plants (the directory the path lies in left listable but not searchable with the path listed in it, two links naming
- *    each other and a link naming a path with a 256-byte component) at the named path and at each depth 1 to 32 below the
- *    location, and each of two plants with the named path absent from the directory it lies in, that directory left
- *    listable but not searchable (the directory empty and the directory holding only an unrelated entry), at the named
- *    path, reads unknown where the same tree without the plant reads measured.
- *  - FCB-LINK-BELOW-FILE (U5 GP13-09): Planted under the user source, each of 33 links per file reader naming a path
- *    below a regular file reads as absent: for each file reader under the user source, with the link at the named path
- *    and at each depth 1 to 32 below the location, the reading is measured and equal to the reading with the same link
- *    naming a missing path.
+ *  - FCB-UNSTAT (U1 GP13-10): Each of 136 planted stat refusals per file reader is an unknown reading by
+ *    dependency-unreadable, never a stable absent digest: for each file reader under the user source, each of four plants
+ *    (the directory the path lies in left at mode 0600 with the path listed in it, the directory the path lies in left at
+ *    mode 0400 with the path listed in it, two links naming each other and a link naming a path with a 256-byte
+ *    component) at the named path and at each depth 1 to 32 below the location, and each of four plants with the named
+ *    path absent from the directory it lies in (the directory empty at mode 0600, the directory holding only an unrelated
+ *    entry at mode 0600, the directory empty at mode 0400 and the directory holding only an unrelated entry at mode
+ *    0400), at the named path, reads unknown where the same tree without the plant reads measured.
+ *  - FCB-LINK-BELOW-FILE (U5 GP13-09): Planted under the user source, each of 66 links per file reader naming a path
+ *    below a regular file reads as absent: for each file reader under the user source, a link naming each of two targets
+ *    (the path one level below the file and the path two levels below the file), with the link at the named path and at
+ *    each depth 1 to 32 below the location, reads measured and equal to the reading with the same link naming a missing
+ *    path.
  *  - FCB-CYCLE-INNER (U2 GP13-01): Up to 31 levels below a user-source location, each of 61 links per file reader
  *    naming the directory it lies in, or the directory above that one, keeps the cycle reason: for each file reader under
  *    the user source, a link naming the directory it lies in, at each depth 1 to 31 below the location, and a link naming
  *    the directory one level above the one it lies in, at each depth 2 to 31, each read unknown by dependency-cycle where
  *    the same tree without the link reads measured.
- *  - FCB-READ-AGAIN (U4 GP13-05): Up to 31 levels below a user-source location, each of 124 trees per file reader, a
+ *  - FCB-READ-AGAIN (U4 GP13-05): Up to 31 levels below a user-source location, each of 186 trees per file reader, a
  *    directory first reached through one or two links that sort before it, is read again, never as a cycle: for each file
  *    reader under the user source, at each depth 1 to 31 below the location, each of two shapes (a directory named by one
  *    link that sorts before it and a directory named by two links that both sort before it), the directory holding each
- *    of two contents (one file (entry.md) and two files (entry.md and second.md)), gives a measured reading that moves
- *    with that directory's bytes and equals the reading with each link replaced by a copy of the directory.
+ *    of three contents (one file (entry.md), two files (entry.md and second.md) and two files whose UTF-16 code-unit order
+ *    and English collation order differ (B.md and a.md)), gives a measured reading that moves when each of its files in
+ *    turn has its text (its name, a space and a version) rewritten from version v1 to version v2, the same length,
+ *    returns when that file is restored and equals the reading with each link replaced by a copy of the directory.
  *  - FCB-RELATIVE-BASE (U3 GP13-02 GP13-03): Each of 80 readings per file reader is unknown, ten relative bases under
  *    each of the eight sets of known sources (none, each one, each two and all three of user, project and local): the
  *    relative config directories config, ./config, ../config, . and the empty string beside an absolute cwd, the relative
@@ -65,37 +75,43 @@
  *    settings.local.json, between the recording and the resume replays the recorded answer under readings equal to the
  *    recorded ones, where the same changes under the user, project and local sources decline it.
  * TABLE SHAPE: the family table, written out with its plant counts, claim lengths and rows (each row's subject and title
- * length; each row asserts the family, subject and count its judge returns), and this file's words (each doc comment
- * and line comment, this header among them, each case and group title and each row title) as this cut delivers them
- * (FCB-FAMILIES-SHAPE);
+ * length; each row asserts the family, subject and count its judge returns), and this file's words (every comment as the
+ * TypeScript parser's comment ranges give it, this header among them, and every group and case title as the test runner
+ * registers it) as this cut delivers them (FCB-FAMILIES-SHAPE);
  * the table's claims are the claims above, this file's one claim block (FCB-CLAIMS-HEADER); each claim names its
- * family's plant count and, word for word, the forms, depths, bases, homes and files its judge's data plants
- * (FCB-PLANT-SETS); the src doc comments that cite the families or this bead read word for word as this cut delivers
- * them and cite exactly the families the table names for each file (FCB-ANCHOR-SRC); and this bead's receipt, as
- * marked 18 lexes it, carries no HTML, image, hard line break or character reference, lists the families in every text
- * carrying the FAMILIES label (FCB-ANCHOR-RECEIPT), carries each claim word for word in its cut #2 entry and reads word
- * for word as this cut delivers it (FCB-RECEIPT-CLAIMS).
+ * family's plant count and, word for word, the forms, modes, depths, targets, contents, versions, bases, homes and files
+ * its judge's data plants, and each row title names its family's plant count (FCB-PLANT-SETS); the src doc comments that
+ * cite the families or this bead read word for word as this cut delivers them and cite exactly the families the table
+ * names for each file (FCB-ANCHOR-SRC); and this bead's receipt, as marked 18 lexes it, carries no HTML, image, hard line
+ * break or character reference, lists the families in every text carrying the FAMILIES label (FCB-ANCHOR-RECEIPT),
+ * carries each claim word for word in its cut #3 entry and reads word for word as this cut delivers it
+ * (FCB-RECEIPT-CLAIMS).
  *
  * NOT CLAIMED by this suite: a read error no row plants (an I/O error among them); a FIFO, a link to a character device,
  * and a directory or a file the process may not read, at any depth (the readers suite claims them one level below a
  * location); the list-only plants under a process running as root (root searches any mode, so there those plants read
- * measured, and the rows assert that instead); a directory below the named path left listable but not searchable that
- * lists no entry; FCB-UNSTAT, FCB-LINK-BELOW-FILE, FCB-CYCLE-INNER and FCB-READ-AGAIN under the project or local
- * source; a link naming a directory two or more levels above the one it lies in; a directory first reached through a
- * link at the named path, or through three or more links, or holding a subdirectory or three or more entries; a
- * relative string for either base other than those FCB-RELATIVE-BASE hands; a relative home other than the four
- * FCB-RELATIVE-HOME hands, CLAUDE_CONFIG_DIR set beside a relative home, and a relative HOME at the registered path;
- * settingSources set to the empty list at the registered path; which identity the registered path hands the provider
- * reader; the src doc words outside the comments FCB-ANCHOR-SRC holds; and that the receipt's texts other than its
- * FAMILIES-labelled texts and its cut #2 claim items, and this file's words other than its claims, state the pinned
- * readings (those texts and words are held to their delivered bytes only).
+ * measured, and the rows assert that instead); a directory left at any mode other than 0600 and 0400, a mode with group
+ * or other permission bits set among them; a directory below the named path, at either mode, that lists no entry;
+ * FCB-UNSTAT, FCB-LINK-BELOW-FILE, FCB-CYCLE-INNER and FCB-READ-AGAIN under the project or local source; a link naming a
+ * path three or more levels below a regular file; a link naming a directory two or more levels above the one it lies in;
+ * a directory first reached through a link at the named path, or through three or more links, or holding a
+ * subdirectory, three or more entries or entries other than the three planted contents; a change to a file's bytes
+ * other than the planted rewrite of its version; a relative string for either base other than those FCB-RELATIVE-BASE
+ * hands; a relative home other than the four FCB-RELATIVE-HOME hands, CLAUDE_CONFIG_DIR set beside a relative home, and
+ * a relative HOME at the registered path; settingSources set to the empty list at the registered path; which identity
+ * the registered path hands the provider reader; the src doc words outside the comments FCB-ANCHOR-SRC holds; this
+ * file's text other than its comments and its registered titles (its code, strings and identifiers), which
+ * FCB-FAMILIES-SHAPE's word pin does not read; and that the receipt's texts other than its FAMILIES-labelled texts and
+ * its cut #3 claim items, and this file's words other than its claims, state the pinned readings (those texts and words
+ * are held to their delivered bytes only).
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { chmodSync, existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, readlinkSync, type Stats, statSync, symlinkSync, unlinkSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, readlinkSync, realpathSync, type Stats, statSync, symlinkSync, unlinkSync, writeFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { marked, type Token, type Tokens } from "marked";
-import { afterEach, describe, expect, it } from "vitest";
+import ts from "typescript";
+import { afterEach, describe, expect, it, type TestContext } from "vitest";
 import subagentsExtension from "../src/index.js";
 import { sessionTaskDir } from "../src/output-file.js";
 import {
@@ -279,22 +295,33 @@ interface StatRefusal {
   readonly witness: (dir: string, path: string) => void;
 }
 const NOTHING_WRITTEN = (): void => {};
-const LIST_ONLY = (dir: string): void => chmodSync(dir, 0o600);
-/** The directory left listable but not searchable, its listing exactly `names`. */
-function listOnlyListing(dir: string, names: readonly string[]): void {
-  expect(statSync(dir).mode & 0o777, `${dir}: listable but not searchable`).toBe(0o600);
+/** The modes FCB-UNSTAT leaves a directory at: rw------- and r--------, each a mode its owner may list but not search. */
+const LIST_ONLY_MODES: readonly number[] = [0o600, 0o400];
+/** A mode as the claims spell it: "mode 0600", "mode 0400". */
+function modeWords(mode: number): string {
+  return `mode ${mode.toString(8).padStart(4, "0")}`;
+}
+/** Leave a directory at `mode`. */
+function listOnlyAt(mode: number): (dir: string) => void {
+  return dir => chmodSync(dir, mode);
+}
+/** The directory left at `mode`, read back, its listing exactly `names`. */
+function listOnlyListing(dir: string, mode: number, names: readonly string[]): void {
+  expect(statSync(dir).mode & 0o777, `${dir}: left at ${modeWords(mode)}`).toBe(mode);
   expect(readdirSync(dir).sort(), `${dir}: its listing`).toEqual([...names].sort());
 }
-/** The three stat refusals FCB-UNSTAT plants at the named path and at each depth below the location (STAT_DEPTHS). */
+/** The four stat refusals FCB-UNSTAT plants at the named path and at each depth below the location (STAT_DEPTHS). */
 const STAT_REFUSALS: readonly StatRefusal[] = [
-  {
-    words: "the directory the path lies in left listable but not searchable with the path listed in it",
-    key: "list-only",
-    listOnly: true,
-    prepare: (_dir, path) => write(path, "entry"),
-    plant: LIST_ONLY,
-    witness: (dir, path) => listOnlyListing(dir, [basename(path)]),
-  },
+  ...LIST_ONLY_MODES.map(
+    (mode): StatRefusal => ({
+      words: `the directory the path lies in left at ${modeWords(mode)} with the path listed in it`,
+      key: `list-only-${mode.toString(8)}`,
+      listOnly: true,
+      prepare: (_dir, path) => write(path, "entry"),
+      plant: listOnlyAt(mode),
+      witness: (dir, path) => listOnlyListing(dir, mode, [basename(path)]),
+    }),
+  ),
   {
     words: "two links naming each other",
     key: "loop",
@@ -325,18 +352,25 @@ const STAT_REFUSALS: readonly StatRefusal[] = [
     },
   },
 ];
-/** The two stat refusals FCB-UNSTAT plants at the named path only, the named path absent from the directory it lies in. */
-const NAMED_ABSENT: readonly StatRefusal[] = [
-  { words: "the directory empty", key: "absent-empty", listOnly: true, prepare: NOTHING_WRITTEN, plant: LIST_ONLY, witness: dir => listOnlyListing(dir, []) },
+/** The four stat refusals FCB-UNSTAT plants at the named path only, the named path absent from the directory it lies in. */
+const NAMED_ABSENT: readonly StatRefusal[] = LIST_ONLY_MODES.flatMap((mode): StatRefusal[] => [
   {
-    words: "the directory holding only an unrelated entry",
-    key: "absent-unrelated",
+    words: `the directory empty at ${modeWords(mode)}`,
+    key: `absent-empty-${mode.toString(8)}`,
+    listOnly: true,
+    prepare: NOTHING_WRITTEN,
+    plant: listOnlyAt(mode),
+    witness: dir => listOnlyListing(dir, mode, []),
+  },
+  {
+    words: `the directory holding only an unrelated entry at ${modeWords(mode)}`,
+    key: `absent-unrelated-${mode.toString(8)}`,
     listOnly: true,
     prepare: dir => write(join(dir, "unrelated.txt"), "not a named path"),
-    plant: LIST_ONLY,
-    witness: dir => listOnlyListing(dir, ["unrelated.txt"]),
+    plant: listOnlyAt(mode),
+    witness: dir => listOnlyListing(dir, mode, ["unrelated.txt"]),
   },
-];
+]);
 /** FCB-UNSTAT: each refusal at each of its depths, after a measured control on the same tree without the refusal. */
 function judgeUnstat(reader: UserReader): Judged {
   const scratch = rowScratch();
@@ -361,24 +395,33 @@ function judgeUnstat(reader: UserReader): Judged {
   return { family: "FCB-UNSTAT", subject: reader.name, judged };
 }
 
-/** FCB-LINK-BELOW-FILE: at each depth, the link naming a path below a regular file reads as the same link naming nothing. */
+/** The paths below plain.txt, a regular file, that FCB-LINK-BELOW-FILE's links name: one level and two levels below it. */
+const BELOW_FILE_TARGETS: readonly (readonly string[])[] = [["below"], ["inner", "below"]];
+/** A target as the claims spell it: "the path one level below the file", "the path two levels below the file". */
+function targetWords(segments: readonly string[]): string {
+  return `the path ${counted(segments.length)} level${segments.length === 1 ? "" : "s"} below the file`;
+}
+/** FCB-LINK-BELOW-FILE: at each depth, a link naming each target below a regular file reads as the same link naming nothing. */
 function judgeLinkBelowFile(reader: UserReader): Judged {
   const scratch = rowScratch();
   let judged = 0;
   for (const depth of STAT_DEPTHS) {
-    const label = `${reader.name}: link at depth ${depth}`;
-    const at = layoutIn(scratch, `link-${depth}`);
-    write(join(at.root, "plain.txt"), "a regular file");
-    const named = join(at.config, reader.location);
-    const link = depth === 0 ? named : join(levelDir(named, depth - 1), "broken");
-    symlinkSync(join(at.root, "nowhere"), link);
-    expect([readlinkSync(link), existsSync(join(at.root, "nowhere"))], `${label}: names a missing path`).toEqual([join(at.root, "nowhere"), false]);
-    const missing = measured(reader.read(at), `${label} naming a missing path`);
-    unlinkSync(link);
-    symlinkSync(join(at.root, "plain.txt", "below"), link);
-    expect([readlinkSync(link), lstatSync(join(at.root, "plain.txt")).isFile()], `${label}: names a path below a regular file`).toEqual([join(at.root, "plain.txt", "below"), true]);
-    expect(measured(reader.read(at), `${label} naming a path below a regular file`), label).toBe(missing);
-    judged += 1;
+    for (const segments of BELOW_FILE_TARGETS) {
+      const label = `${reader.name}: link at depth ${depth} naming ${targetWords(segments)}`;
+      const at = layoutIn(scratch, `link-${segments.length}-${depth}`);
+      write(join(at.root, "plain.txt"), "a regular file");
+      const named = join(at.config, reader.location);
+      const link = depth === 0 ? named : join(levelDir(named, depth - 1), "broken");
+      symlinkSync(join(at.root, "nowhere"), link);
+      expect([readlinkSync(link), existsSync(join(at.root, "nowhere"))], `${label}: names a missing path`).toEqual([join(at.root, "nowhere"), false]);
+      const missing = measured(reader.read(at), `${label}, the link naming a missing path`);
+      unlinkSync(link);
+      const target = join(at.root, "plain.txt", ...segments);
+      symlinkSync(target, link);
+      expect([readlinkSync(link), lstatSync(join(at.root, "plain.txt")).isFile()], `${label}: names a path below a regular file`).toEqual([target, true]);
+      expect(measured(reader.read(at), label), label).toBe(missing);
+      judged += 1;
+    }
   }
   return { family: "FCB-LINK-BELOW-FILE", subject: reader.name, judged };
 }
@@ -426,44 +469,67 @@ const READ_AGAIN_SHAPES: readonly ReadAgainShape[] = [
   { words: "a directory named by one link that sorts before it", target: "review", links: ["a"] },
   { words: "a directory named by two links that both sort before it", target: "zeta", links: ["alias", "beta"] },
 ];
-/** The files the directory the links name holds, in name order: one file, and two files whose order a reader would read. */
-const READ_AGAIN_CONTENTS: readonly (readonly string[])[] = [["entry.md"], ["entry.md", "second.md"]];
-/** The words a claim gives one content: "one file (entry.md)", "two files (entry.md and second.md)". */
-function contentWords(files: readonly string[]): string {
-  return `${counted(files.length)} file${files.length === 1 ? "" : "s"} (${listed(files)})`;
+/**
+ * The files the directory the links name holds, in UTF-16 code-unit name order: one file, two files, and two files whose
+ * code-unit order and English collation order differ, so a reach listed in another order than its copy reads apart.
+ */
+const READ_AGAIN_CONTENTS: readonly (readonly string[])[] = [["entry.md"], ["entry.md", "second.md"], ["B.md", "a.md"]];
+/** English collation, an order a reader could list a reached directory in instead of UTF-16 code-unit order. */
+const ENGLISH = new Intl.Collator("en");
+/** Whether UTF-16 code-unit order and English collation order put `files` in different orders. */
+function sortsApart(files: readonly string[]): boolean {
+  return JSON.stringify([...files].sort()) !== JSON.stringify([...files].sort(ENGLISH.compare));
 }
-/** FCB-READ-AGAIN: at each depth, each shape holding each content is measured, moves with its bytes and equals its copy twin. */
+/** The words a claim gives one content: "one file (entry.md)", "two files whose ... differ (B.md and a.md)". */
+function contentWords(files: readonly string[]): string {
+  const apart = sortsApart(files) ? " whose UTF-16 code-unit order and English collation order differ" : "";
+  return `${counted(files.length)} file${files.length === 1 ? "" : "s"}${apart} (${listed(files)})`;
+}
+/** The two versions a file's text carries, after its name and a space: a rewrite from the first to the second keeps the length. */
+const VERSIONS: readonly [string, string] = ["v1", "v2"];
+function fileText(name: string, version: string): string {
+  return `${name} ${version}`;
+}
+/**
+ * FCB-READ-AGAIN: at each depth, each shape holding each content is measured, moves when each of its files in turn is
+ * rewritten to its second version and back, and equals its copy twin.
+ */
 function judgeReadAgain(reader: UserReader): Judged {
-  const scratch = rowScratch();
+  // The scratch path as the walk's real path: a directory reached by its own name reads with its path equal to its real
+  // path, so only a reach through a link reads with a path apart from its real path.
+  const scratch = realpathSync(rowScratch());
+  const [before, after] = VERSIONS;
   let judged = 0;
   for (const depth of WALK_DEPTHS) {
     for (const shape of READ_AGAIN_SHAPES) {
-      for (const files of READ_AGAIN_CONTENTS) {
+      for (const [content, files] of READ_AGAIN_CONTENTS.entries()) {
         const label = `${reader.name}: ${shape.words}, holding ${contentWords(files)}, at depth ${depth}`;
-        const [first] = files;
-        if (first === undefined) throw new Error(`${label}: a content holds no file`);
-        const at = layoutIn(scratch, `${shape.target}-${files.length}-${depth}`);
+        const at = layoutIn(scratch, `${shape.target}-${content}-${depth}`);
         const dir = levelDir(join(at.config, reader.location), depth - 1);
-        // The named directory, or a copy of it in a link's place: the first file carries the version, the others their names.
-        const fill = (directory: string, version: string): void => {
-          for (const name of files) write(join(directory, name), name === first ? `named directory ${version}` : `${name} v1`);
+        const target = join(dir, shape.target);
+        // The named directory, or a copy of it in a link's place: each file's text is its name and the first version.
+        const fill = (directory: string): void => {
+          for (const name of files) write(join(directory, name), fileText(name, before));
         };
-        fill(join(dir, shape.target), "v1");
-        for (const link of shape.links) symlinkSync(join(dir, shape.target), join(dir, link));
+        fill(target);
+        for (const link of shape.links) symlinkSync(target, join(dir, link));
         expect(
           shape.links.map(link => [readlinkSync(join(dir, link)), link < shape.target]),
           `${label}: each link names the directory and sorts before it`,
-        ).toEqual(shape.links.map(() => [join(dir, shape.target), true]));
-        expect(readdirSync(join(dir, shape.target)).sort(), `${label}: the directory's files`).toEqual([...files]);
+        ).toEqual(shape.links.map(() => [target, true]));
+        expect([realpathSync(target), readdirSync(target).sort()], `${label}: the directory's real path and its files`).toEqual([target, [...files]]);
         const v1 = measured(reader.read(at), label);
-        write(join(dir, shape.target, first), "named directory v2");
-        expect(measured(reader.read(at), `${label}, bytes changed`), label).not.toBe(v1);
-        write(join(dir, shape.target, first), "named directory v1");
-        expect(measured(reader.read(at), `${label}, bytes restored`), label).toBe(v1);
+        for (const name of files) {
+          expect(fileText(name, after).length, `${label}: ${name}'s rewrite keeps its length`).toBe(fileText(name, before).length);
+          write(join(target, name), fileText(name, after));
+          expect(measured(reader.read(at), `${label}, ${name} rewritten`), `${label}, ${name} rewritten`).not.toBe(v1);
+          write(join(target, name), fileText(name, before));
+          expect(measured(reader.read(at), `${label}, ${name} restored`), `${label}, ${name} restored`).toBe(v1);
+        }
         // The copy twin: each link replaced by a directory holding the same files, so the walk read each reach in full.
         for (const link of shape.links) {
           unlinkSync(join(dir, link));
-          fill(join(dir, link), "v1");
+          fill(join(dir, link));
         }
         expect(
           shape.links.map(link => [lstatSync(join(dir, link)).isDirectory(), readdirSync(join(dir, link)).sort()]),
@@ -744,30 +810,34 @@ const FAMILIES: readonly Family[] = [
     id: "FCB-UNSTAT",
     answers: "U1 GP13-10",
     site: MODULE,
-    claim: "Each of 101 planted stat refusals per file reader is an unknown reading by dependency-unreadable, never a stable absent digest: for each file reader under the user source, each of three plants (the directory the path lies in left listable but not searchable with the path listed in it, two links naming each other and a link naming a path with a 256-byte component) at the named path and at each depth 1 to 32 below the location, and each of two plants with the named path absent from the directory it lies in, that directory left listable but not searchable (the directory empty and the directory holding only an unrelated entry), at the named path, reads unknown where the same tree without the plant reads measured.",
-    plants: 101,
+    claim: "Each of 136 planted stat refusals per file reader is an unknown reading by dependency-unreadable, never a stable absent digest: for each file reader under the user source, each of four plants (the directory the path lies in left at mode 0600 with the path listed in it, the directory the path lies in left at mode 0400 with the path listed in it, two links naming each other and a link naming a path with a 256-byte component) at the named path and at each depth 1 to 32 below the location, and each of four plants with the named path absent from the directory it lies in (the directory empty at mode 0600, the directory holding only an unrelated entry at mode 0600, the directory empty at mode 0400 and the directory holding only an unrelated entry at mode 0400), at the named path, reads unknown where the same tree without the plant reads measured.",
+    plants: 136,
     planted: () => STAT_REFUSALS.length * STAT_DEPTHS.length + NAMED_ABSENT.length,
     phrases: () => [
       `Each of ${STAT_REFUSALS.length * STAT_DEPTHS.length + NAMED_ABSENT.length} planted stat refusals per file reader`,
       `each of ${counted(STAT_REFUSALS.length)} plants (${listed(STAT_REFUSALS.map(refusal => refusal.words))}) ${statDepthWords()}`,
-      `each of ${counted(NAMED_ABSENT.length)} plants with the named path absent from the directory it lies in, that directory left listable but not searchable (${listed(NAMED_ABSENT.map(refusal => refusal.words))}), at the named path`,
+      `each of ${counted(NAMED_ABSENT.length)} plants with the named path absent from the directory it lies in (${listed(NAMED_ABSENT.map(refusal => refusal.words))}), at the named path`,
     ],
     rows: [
-      { id: "FCB-UNSTAT-instructions", subject: "instructions", title: "each stat refusal at each of its depths (0 to 32, or the named path alone) is an unknown instruction reading (dependency-unreadable)", judge: () => judgeUnstat(INSTRUCTIONS) },
-      { id: "FCB-UNSTAT-provider", subject: "provider", title: "each stat refusal at each of its depths (0 to 32, or the named path alone) is an unknown provider reading (dependency-unreadable)", judge: () => judgeUnstat(PROVIDER) },
+      { id: "FCB-UNSTAT-instructions", subject: "instructions", title: "each of the 136 planted stat refusals (four forms at each depth 0 to 32, four absent forms at the named path) is an unknown instruction reading (dependency-unreadable)", judge: () => judgeUnstat(INSTRUCTIONS) },
+      { id: "FCB-UNSTAT-provider", subject: "provider", title: "each of the 136 planted stat refusals (four forms at each depth 0 to 32, four absent forms at the named path) is an unknown provider reading (dependency-unreadable)", judge: () => judgeUnstat(PROVIDER) },
     ],
   },
   {
     id: "FCB-LINK-BELOW-FILE",
     answers: "U5 GP13-09",
     site: MODULE,
-    claim: "Planted under the user source, each of 33 links per file reader naming a path below a regular file reads as absent: for each file reader under the user source, with the link at the named path and at each depth 1 to 32 below the location, the reading is measured and equal to the reading with the same link naming a missing path.",
-    plants: 33,
-    planted: () => STAT_DEPTHS.length,
-    phrases: () => [`each of ${STAT_DEPTHS.length} links per file reader`, `with the link ${statDepthWords()}`],
+    claim: "Planted under the user source, each of 66 links per file reader naming a path below a regular file reads as absent: for each file reader under the user source, a link naming each of two targets (the path one level below the file and the path two levels below the file), with the link at the named path and at each depth 1 to 32 below the location, reads measured and equal to the reading with the same link naming a missing path.",
+    plants: 66,
+    planted: () => STAT_DEPTHS.length * BELOW_FILE_TARGETS.length,
+    phrases: () => [
+      `each of ${STAT_DEPTHS.length * BELOW_FILE_TARGETS.length} links per file reader`,
+      `each of ${counted(BELOW_FILE_TARGETS.length)} targets (${listed(BELOW_FILE_TARGETS.map(targetWords))})`,
+      `with the link ${statDepthWords()}`,
+    ],
     rows: [
-      { id: "FCB-LINK-BELOW-FILE-instructions", subject: "instructions", title: "a link naming a path below a regular file, at each depth 0 to 32, reads as the same link naming a missing path (instructions)", judge: () => judgeLinkBelowFile(INSTRUCTIONS) },
-      { id: "FCB-LINK-BELOW-FILE-provider", subject: "provider", title: "a link naming a path below a regular file, at each depth 0 to 32, reads as the same link naming a missing path (provider)", judge: () => judgeLinkBelowFile(PROVIDER) },
+      { id: "FCB-LINK-BELOW-FILE-instructions", subject: "instructions", title: "each of the 66 planted links naming the path one level or two levels below a regular file, at each depth 0 to 32, reads as the same link naming a missing path (instructions)", judge: () => judgeLinkBelowFile(INSTRUCTIONS) },
+      { id: "FCB-LINK-BELOW-FILE-provider", subject: "provider", title: "each of the 66 planted links naming the path one level or two levels below a regular file, at each depth 0 to 32, reads as the same link naming a missing path (provider)", judge: () => judgeLinkBelowFile(PROVIDER) },
     ],
   },
   {
@@ -784,16 +854,16 @@ const FAMILIES: readonly Family[] = [
       `a link naming the directory one level above the one it lies in, at each depth ${depthRange(ABOVE_DEPTHS)}`,
     ],
     rows: [
-      { id: "FCB-CYCLE-INNER-instructions", subject: "instructions", title: "a link naming the directory it lies in (depths 1 to 31) or the one above it (depths 2 to 31) is an unknown instruction reading (dependency-cycle)", judge: () => judgeCycleInner(INSTRUCTIONS) },
-      { id: "FCB-CYCLE-INNER-provider", subject: "provider", title: "a link naming the directory it lies in (depths 1 to 31) or the one above it (depths 2 to 31) is an unknown provider reading (dependency-cycle)", judge: () => judgeCycleInner(PROVIDER) },
+      { id: "FCB-CYCLE-INNER-instructions", subject: "instructions", title: "each of the 61 planted links naming the directory it lies in (depths 1 to 31) or the one above it (depths 2 to 31) is an unknown instruction reading (dependency-cycle)", judge: () => judgeCycleInner(INSTRUCTIONS) },
+      { id: "FCB-CYCLE-INNER-provider", subject: "provider", title: "each of the 61 planted links naming the directory it lies in (depths 1 to 31) or the one above it (depths 2 to 31) is an unknown provider reading (dependency-cycle)", judge: () => judgeCycleInner(PROVIDER) },
     ],
   },
   {
     id: "FCB-READ-AGAIN",
     answers: "U4 GP13-05",
     site: MODULE,
-    claim: "Up to 31 levels below a user-source location, each of 124 trees per file reader, a directory first reached through one or two links that sort before it, is read again, never as a cycle: for each file reader under the user source, at each depth 1 to 31 below the location, each of two shapes (a directory named by one link that sorts before it and a directory named by two links that both sort before it), the directory holding each of two contents (one file (entry.md) and two files (entry.md and second.md)), gives a measured reading that moves with that directory's bytes and equals the reading with each link replaced by a copy of the directory.",
-    plants: 124,
+    claim: "Up to 31 levels below a user-source location, each of 186 trees per file reader, a directory first reached through one or two links that sort before it, is read again, never as a cycle: for each file reader under the user source, at each depth 1 to 31 below the location, each of two shapes (a directory named by one link that sorts before it and a directory named by two links that both sort before it), the directory holding each of three contents (one file (entry.md), two files (entry.md and second.md) and two files whose UTF-16 code-unit order and English collation order differ (B.md and a.md)), gives a measured reading that moves when each of its files in turn has its text (its name, a space and a version) rewritten from version v1 to version v2, the same length, returns when that file is restored and equals the reading with each link replaced by a copy of the directory.",
+    plants: 186,
     planted: () => WALK_DEPTHS.length * READ_AGAIN_SHAPES.length * READ_AGAIN_CONTENTS.length,
     phrases: () => [
       `Up to ${Math.max(...WALK_DEPTHS)} levels below a user-source location`,
@@ -801,10 +871,11 @@ const FAMILIES: readonly Family[] = [
       `at each depth ${depthRange(WALK_DEPTHS)} below the location`,
       `each of ${counted(READ_AGAIN_SHAPES.length)} shapes (${listed(READ_AGAIN_SHAPES.map(shape => shape.words))})`,
       `the directory holding each of ${counted(READ_AGAIN_CONTENTS.length)} contents (${listed(READ_AGAIN_CONTENTS.map(contentWords))})`,
+      `rewritten from version ${VERSIONS[0]} to version ${VERSIONS[1]}`,
     ],
     rows: [
-      { id: "FCB-READ-AGAIN-instructions", subject: "instructions", title: "a directory of one file or two files first reached through one link or two links sorting before it, at each depth 1 to 31, is read again as its copy would be (instructions)", judge: () => judgeReadAgain(INSTRUCTIONS) },
-      { id: "FCB-READ-AGAIN-provider", subject: "provider", title: "a directory of one file or two files first reached through one link or two links sorting before it, at each depth 1 to 31, is read again as its copy would be (provider)", judge: () => judgeReadAgain(PROVIDER) },
+      { id: "FCB-READ-AGAIN-instructions", subject: "instructions", title: "each of the 186 planted trees (one of three contents first reached through one link or two links sorting before it, at each depth 1 to 31) is read again as its copy would be and moves with each planted rewrite (instructions)", judge: () => judgeReadAgain(INSTRUCTIONS) },
+      { id: "FCB-READ-AGAIN-provider", subject: "provider", title: "each of the 186 planted trees (one of three contents first reached through one link or two links sorting before it, at each depth 1 to 31) is read again as its copy would be and moves with each planted rewrite (provider)", judge: () => judgeReadAgain(PROVIDER) },
     ],
   },
   {
@@ -822,8 +893,8 @@ const FAMILIES: readonly Family[] = [
       `and ${BOTH_RELATIVE.cwd} beside ${BOTH_RELATIVE.configDir} each read unknown`,
     ],
     rows: [
-      { id: "FCB-RELATIVE-BASE-instructions", subject: "instructions", title: "every relative base under each of the eight source sets is an unknown instruction reading (instruction-base-not-absolute)", judge: () => judgeRelativeBase(INSTRUCTIONS) },
-      { id: "FCB-RELATIVE-BASE-provider", subject: "provider", title: "every relative base under each of the eight source sets is an unknown provider reading (setting-base-not-absolute)", judge: () => judgeRelativeBase(PROVIDER) },
+      { id: "FCB-RELATIVE-BASE-instructions", subject: "instructions", title: "each of the 80 planted readings (ten relative bases under each of the eight source sets) is an unknown instruction reading (instruction-base-not-absolute)", judge: () => judgeRelativeBase(INSTRUCTIONS) },
+      { id: "FCB-RELATIVE-BASE-provider", subject: "provider", title: "each of the 80 planted readings (ten relative bases under each of the eight source sets) is an unknown provider reading (setting-base-not-absolute)", judge: () => judgeRelativeBase(PROVIDER) },
     ],
   },
   {
@@ -838,7 +909,7 @@ const FAMILIES: readonly Family[] = [
       `${counted(RELATIVE_HOMES.length)} relative homes under each of ${counted(HOME_ENVS.length)} CLAUDE_CONFIG_DIR settings (${listed(HOME_ENVS.map(setting => setting.words))}) with three readings each`,
       `claudeUserConfigDir gives ${homesWords()}`,
     ],
-    rows: [{ id: "FCB-RELATIVE-HOME", subject: "claudeUserConfigDir", title: "a relative home gives a relative <home>/.claude, and both readers refuse it by their base reasons", judge: judgeRelativeHome }],
+    rows: [{ id: "FCB-RELATIVE-HOME", subject: "claudeUserConfigDir", title: "each of the 24 planted readings keeps one of four relative homes relative (CLAUDE_CONFIG_DIR unset and empty): claudeUserConfigDir gives a relative <home>/.claude and both readers refuse it by their base reasons", judge: judgeRelativeHome }],
   },
   {
     id: "FCB-UNNAMED-SOURCES",
@@ -916,23 +987,36 @@ function citationCounts(file: string): string[] {
 }
 const sha256Of = (text: string): string => createHash("sha256").update(text, "utf8").digest("hex");
 /**
- * This file's words, in order: each doc comment (the header among them) with its comment markers dropped and white space
- * collapsed, each line comment's text, each case and group title written as a string, and each row title of the family
- * table.
+ * Every comment of a source, in file order and as written: the TypeScript parser's leading and trailing comment ranges of
+ * every node and token (getChildren, whose last child of the SourceFile is its end-of-file token), a doc comment read
+ * whole and never entered.
  */
-function censusWords(source: string): string[] {
-  return [
-    ...[...source.matchAll(/\/\*\*[\s\S]*?\*\//g)].map(match => flattened(match[0]).trim()),
-    ...source
-      .split("\n")
-      .filter(line => /^\s*\/\//.test(line))
-      .map(line => line.replace(/^\s*\/\/\s?/, "").trim()),
-    ...[...source.matchAll(/\b(?:it|describe)\("((?:[^"\\]|\\.)*)"/g)].map(match => match[1] ?? ""),
-    ...FAMILIES.flatMap(family => family.rows.map(row => row.title)),
-  ];
+function commentsOf(source: string): string[] {
+  const file = ts.createSourceFile("census.ts", source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const found = new Map<number, number>();
+  const add = (ranges: readonly ts.CommentRange[] | undefined): void => {
+    for (const range of ranges ?? []) found.set(range.pos, range.end);
+  };
+  const visit = (node: ts.Node): void => {
+    add(ts.getLeadingCommentRanges(source, node.pos));
+    add(ts.getTrailingCommentRanges(source, node.end));
+    for (const child of node.getChildren(file)) if (!ts.isJSDoc(child)) visit(child);
+  };
+  visit(file);
+  return [...found].sort(([left], [right]) => left - right).map(([pos, end]) => source.slice(pos, end));
+}
+/** The tasks the test runner registered for this file (the vitest task tree the reporter reads). */
+type RegisteredTasks = TestContext["task"]["file"]["tasks"];
+/** Every group and case title the runner registered, in registration order, each with its kind. */
+function registeredTitles(tasks: RegisteredTasks): string[] {
+  return tasks.flatMap(task => (task.type === "suite" ? [`group: ${task.name}`, ...registeredTitles(task.tasks)] : [`case: ${task.name}`]));
+}
+/** This file's words, in order: every comment (commentsOf), then every group and case title the runner registered. */
+function censusWords(source: string, tasks: RegisteredTasks): string[] {
+  return [...commentsOf(source).map(comment => `comment: ${comment}`), ...registeredTitles(tasks)];
 }
 /** The sha-256 of this file's words (censusWords, joined by line feeds) as this cut delivers them. */
-const CENSUS_WORDS_SHA256 = "3a54ea9385781ae2ef95b4b0e6562f5f1ecf5ccb24e072eea1e51b95086dac21";
+const CENSUS_WORDS_SHA256 = "408eb3cdca8e7a4ee5fce9c91136384ac8d9a75a53b7ac3676e97ae41707e180";
 
 /** A src doc comment that cites a family or this bead: its file, the function it documents, the families it cites, its words' sha-256. */
 interface SiteComment {
@@ -948,7 +1032,7 @@ const SITE_COMMENTS: readonly SiteComment[] = [
   { file: MODULE, documents: "instructionDependency", cites: ["FCB-RELATIVE-BASE"], sha256: "f7ba44bbe7b3e40019312c4085855973999b16bbc15c7e5ef756bf29ae6e3d77" },
   { file: MODULE, documents: "providerDependency", cites: ["FCB-RELATIVE-BASE"], sha256: "5a72fa83a592f105d0ecad9dac82b13e327e82c09373f76a3ac175c93877acbe" },
   { file: MODULE, documents: "claudeUserConfigDir", cites: ["FCB-RELATIVE-HOME"], sha256: "914d6eb3999514e2e44b8d51dd08c23fcbc26e32703eadf839cf616e1a5c50b3" },
-  { file: MODULE, documents: "readFiles", cites: ["FCB-CYCLE-INNER", "FCB-LINK-BELOW-FILE", "FCB-READ-AGAIN", "FCB-UNSTAT"], sha256: "aa5959b37de41620cd87235561dc073bce3639695a44679b450ae1dd54ca8a24" },
+  { file: MODULE, documents: "readFiles", cites: ["FCB-CYCLE-INNER", "FCB-LINK-BELOW-FILE", "FCB-READ-AGAIN", "FCB-UNSTAT"], sha256: "c36f8e1e97329fe5af7a66b56b1d78e2d723c901b82526e98e7e47b3abe776dc" },
 ];
 /** Every doc comment of a src file whose words cite a family or this bead, in file order. */
 function citingComments(file: string): SiteComment[] {
@@ -966,10 +1050,10 @@ function citingComments(file: string): SiteComment[] {
 
 const RECEIPT = new URL("../docs/workbench/receipts/wb-6b3z.md", import.meta.url);
 const RECEIPT_TITLE = "wb-6b3z: [413a-exit] fail-closed replay-dependency basis core: unreadable-is-unsafe, link/cycle and location truth pins for the 8 realized GP13 escape families red-first";
-const CUT2_HEADING = "2026-11-08 receipt: cut #2, the respin of gate refusal #1 (machine seat ws-06, run g10-work-s238)";
+const CUT3_HEADING = "2026-11-08 receipt: cut #3, the respin of gate refusal #2 in the enumerate form (machine seat ws-13, run g10-work-s242)";
 const RECEIPT_LABEL = "(FAMILIES, FCB-FAMILIES-SHAPE):";
 /** The sha-256 of this bead's receipt, the whole file, as this cut delivers it. */
-const RECEIPT_SHA256 = "ff591acd3e465844ca355aa8eda12246879cc1f542d5c45c539e692c0b7a75b6";
+const RECEIPT_SHA256 = "cbf8c4d9612074dc0b59805235769a7a30b3e894bf0f6a5af0e1f1a03f997e86";
 /**
  * A character reference: an ampersand, then a number sign and decimal digits, a number sign, an x and hex digits, or a name
  * of ASCII letters, digits and underscores, then a semicolon (the forms marked 18 passes into its HTML as written).
@@ -1042,12 +1126,16 @@ describe("wb-6b3z the family table, its header and plant sets, and its anchors o
     expect(headerClaims(header)).toEqual(FAMILIES.map(family => `${family.id} (${family.answers}): ${family.claim}`));
   });
 
-  it("FCB-PLANT-SETS: each family's claim names, word for word, its plant count and the forms, depths, bases, homes and files its judge's data plants; the source sets are every subset of the three sources, each reader's location and each changed file are ones the module's own tables name", () => {
+  it("FCB-PLANT-SETS: each family's claim names, word for word, its plant count and the forms, modes, depths, targets, contents, versions, bases, homes and files its judge's data plants, and each row title names its family's plant count; the source sets are every subset of the three sources, each reader's location and each changed file are ones the module's own tables name", () => {
     expect(SOURCE_SETS, "the source sets FCB-RELATIVE-BASE plants").toEqual(sourceSubsets());
     expect([CLAUDE_INSTRUCTION_LOCATIONS.user.includes(INSTRUCTIONS.location), CLAUDE_SETTINGS_LOCATIONS.user.includes(PROVIDER.location)], "each reader's location").toEqual([true, true]);
     expect(
       UNNAMED_FILES.filter(file => !readByItsSource(file, "/repo/pkg", "/config")).map(file => file.words),
       "the changed files their sources do not read",
+    ).toEqual([]);
+    expect(
+      FAMILIES.flatMap(family => family.rows.filter(row => !row.title.includes(`${counted(family.plants)} `)).map(row => row.id)),
+      "the row titles that do not name their family's plant count",
     ).toEqual([]);
     for (const family of FAMILIES) {
       expect(family.planted(), `${family.id}: the readings its judge's data gives one row`).toBe(family.plants);
@@ -1090,25 +1178,25 @@ describe("wb-6b3z the family table, its header and plant sets, and its anchors o
     for (const list of lists) expect(list).toEqual(FAMILIES.map(family => `${family.id} ${family.answers}`));
   });
 
-  it("FCB-RECEIPT-CLAIMS: the receipt's cut #2 entry, read from its rendered text, carries each family's claim word for word, with its id and the items it answers, in table order, and no other claim item, and the receipt reads word for word as this cut delivers it", () => {
+  it("FCB-RECEIPT-CLAIMS: the receipt's cut #3 entry, read from its rendered text, carries each family's claim word for word, with its id and the items it answers, in table order, and no other claim item, and the receipt reads word for word as this cut delivers it", () => {
     const markdown = readFileSync(RECEIPT, "utf8");
     expect(sha256Of(markdown), "the receipt's bytes").toBe(RECEIPT_SHA256);
     expect(receiptHazards(markdown), "what the receipt's rendered text could hide").toEqual([]);
-    const section = docsSection(markdown, CUT2_HEADING, 2, [RECEIPT_TITLE]);
-    expect({ why: section.why, hasHtml: section.hasHtml }, "the cut #2 entry's binding").toEqual({ why: "", hasHtml: false });
+    const section = docsSection(markdown, CUT3_HEADING, 2, [RECEIPT_TITLE]);
+    expect({ why: section.why, hasHtml: section.hasHtml }, "the cut #3 entry's binding").toEqual({ why: "", hasHtml: false });
     const texts = section.blocks.flatMap(block => (block.kind === "list" ? block.items.map(item => item.text) : block.kind === "html" ? [] : [block.text]));
     expect(texts.filter(text => /^FCB-[A-Z]+(?:-[A-Z]+)* \(/.test(text))).toEqual(FAMILIES.map(family => `${family.id} (${family.answers}): ${family.claim}`));
   });
 
-  it("FCB-FAMILIES-SHAPE: the family table, written out (frozen shape): each family's id, answered items, site, plants per row and claim length, then each row's id, subject and title length; and this file's words (each doc comment and line comment, this header among them, each case and group title and each row title) read word for word as this cut delivers them", () => {
-    expect(sha256Of(censusWords(ownText().source).join("\n")), "this file's words").toBe(CENSUS_WORDS_SHA256);
+  it("FCB-FAMILIES-SHAPE: the family table, written out (frozen shape): each family's id, answered items, site, plants per row and claim length, then each row's id, subject and title length; and this file's words (every comment as the TypeScript parser's comment ranges give it, this header among them, and every group and case title as the test runner registers it) read word for word as this cut delivers them", ({ task }) => {
+    expect(sha256Of(censusWords(ownText().source, task.file.tasks).join("\n")), "this file's words").toBe(CENSUS_WORDS_SHA256);
     expect(FAMILIES.map(family => `${family.id}|${family.answers}|${family.site}|${family.plants}|${family.claim.length}|${family.rows.map(row => `${row.id}:${row.subject}:${row.title.length}`).join(",")}`)).toEqual([
-      "FCB-UNSTAT|U1 GP13-10|src/workbench/replay-dependencies.ts|101|718|FCB-UNSTAT-instructions:instructions:132,FCB-UNSTAT-provider:provider:129",
-      "FCB-LINK-BELOW-FILE|U5 GP13-09|src/workbench/replay-dependencies.ts|33|328|FCB-LINK-BELOW-FILE-instructions:instructions:125,FCB-LINK-BELOW-FILE-provider:provider:121",
-      "FCB-CYCLE-INNER|U2 GP13-01|src/workbench/replay-dependencies.ts|61|476|FCB-CYCLE-INNER-instructions:instructions:145,FCB-CYCLE-INNER-provider:provider:142",
-      "FCB-READ-AGAIN|U4 GP13-05|src/workbench/replay-dependencies.ts|124|648|FCB-READ-AGAIN-instructions:instructions:172,FCB-READ-AGAIN-provider:provider:168",
-      "FCB-RELATIVE-BASE|U3 GP13-02 GP13-03|src/workbench/replay-dependencies.ts|80|588|FCB-RELATIVE-BASE-instructions:instructions:121,FCB-RELATIVE-BASE-provider:provider:114",
-      "FCB-RELATIVE-HOME|U7 GP13-08|src/workbench/replay-dependencies.ts|24|431|FCB-RELATIVE-HOME:claudeUserConfigDir:97",
+      "FCB-UNSTAT|U1 GP13-10|src/workbench/replay-dependencies.ts|136|851|FCB-UNSTAT-instructions:instructions:167,FCB-UNSTAT-provider:provider:164",
+      "FCB-LINK-BELOW-FILE|U5 GP13-09|src/workbench/replay-dependencies.ts|66|429|FCB-LINK-BELOW-FILE-instructions:instructions:173,FCB-LINK-BELOW-FILE-provider:provider:169",
+      "FCB-CYCLE-INNER|U2 GP13-01|src/workbench/replay-dependencies.ts|61|476|FCB-CYCLE-INNER-instructions:instructions:167,FCB-CYCLE-INNER-provider:provider:164",
+      "FCB-READ-AGAIN|U4 GP13-05|src/workbench/replay-dependencies.ts|186|884|FCB-READ-AGAIN-instructions:instructions:224,FCB-READ-AGAIN-provider:provider:220",
+      "FCB-RELATIVE-BASE|U3 GP13-02 GP13-03|src/workbench/replay-dependencies.ts|80|588|FCB-RELATIVE-BASE-instructions:instructions:154,FCB-RELATIVE-BASE-provider:provider:147",
+      "FCB-RELATIVE-HOME|U7 GP13-08|src/workbench/replay-dependencies.ts|24|431|FCB-RELATIVE-HOME:claudeUserConfigDir:211",
       "FCB-UNNAMED-SOURCES|U6 GP13-04|src/index.ts|8|503|FCB-UNNAMED-SOURCES:settingSources unset:109,FCB-UNNAMED-SOURCES-CONTROL:settingSources user, project, local:98",
     ]);
   });

@@ -291,23 +291,27 @@ interface FileReading {
  * named path (dependency-over-budget).
  *
  * The fail-closed core (wb-6b3z), each form planted for both file readers under the user source: a path the process may
- * not stat in one of three planted forms (the directory it lies in left listable but not searchable with the path
- * listed in it, two links naming each other, or a link naming a path with a 256-byte component) makes the reading
- * unknown (dependency-unreadable) at the named path and at each depth 1 to 32 below the location, and so does a named
- * path absent from the directory it lies in, that directory left listable but not searchable and empty or holding
- * only an unrelated entry (FCB-UNSTAT); a link naming a path below a regular file reads as absent, equal to the same
- * link naming a missing path, at the named path and at each depth 1 to 32 (FCB-LINK-BELOW-FILE); a link naming the
- * directory it lies in, at each depth 1 to 31, or the directory one level above that one, at each depth 2 to 31, makes
- * it unknown (dependency-cycle) (FCB-CYCLE-INNER); and a directory holding one file or two files, first reached, at
- * each depth 1 to 31, through one link or two links that sort before it is read again, as a copy of it would be, its
- * entries in the same order (FCB-READ-AGAIN).
+ * not stat in one of four planted forms (the directory it lies in left at mode 0600 or at mode 0400, each a mode its
+ * owner may list but not search, with the path listed in it; two links naming each other; or a link naming a path with
+ * a 256-byte component) makes the reading unknown (dependency-unreadable) at the named path and at each depth 1 to 32
+ * below the location, and so does a named path absent from the directory it lies in, that directory left at mode 0600
+ * or at mode 0400 and empty or holding only an unrelated entry (FCB-UNSTAT); a link naming the path one level or two
+ * levels below a regular file reads as absent, equal to the same link naming a missing path, at the named path and at
+ * each depth 1 to 32 (FCB-LINK-BELOW-FILE); a link naming the directory it lies in, at each depth 1 to 31, or the
+ * directory one level above that one, at each depth 2 to 31, makes it unknown (dependency-cycle) (FCB-CYCLE-INNER); and
+ * a directory holding one of three planted contents (entry.md; entry.md and second.md; B.md and a.md, two names that
+ * UTF-16 code-unit order and English collation order sort apart), first reached, at each depth 1 to 31, through one
+ * link or two links that sort before it is read again, as a copy of it would be, and its reading moves when one of its
+ * files has its planted text rewritten to a second version of the same length (FCB-READ-AGAIN).
  *
  * NOT CLAIMED: any other read error no row plants; a socket and a block device; the reason for a FIFO, a link to a
  * character device, and a directory or a file the process may not read at another depth than one level below a
- * location; a directory below a named path left listable but not searchable that lists no entry; a link naming a
- * directory two or more levels above the one it lies in; a directory first reached through a link at the named path,
- * or through three or more links, or holding a subdirectory or three or more entries; and these fail-closed forms under
- * the project or local source.
+ * location; a directory left at any mode other than 0600 and 0400 (a mode with group or other permission bits set among
+ * them); a directory below a named path, at either mode, that lists no entry; a link naming a path three or more levels
+ * below a regular file; a link naming a directory two or more levels above the one it lies in; a directory first
+ * reached through a link at the named path, or through three or more links, or holding a subdirectory, three or more
+ * entries or entries other than the three planted contents; a change to a file's bytes other than the planted rewrite;
+ * and these fail-closed forms under the project or local source.
  */
 function readFiles(paths: readonly string[], limits: DependencyReadLimits): FileReading[] {
   const readings: FileReading[] = [];
