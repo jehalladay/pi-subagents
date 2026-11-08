@@ -94,6 +94,22 @@
  * LATER_ENTRY in the twins title (refusal #7 F6). The six pages are unchanged. The cut paragraphs above record what
  * each cut added; what this census claims is THE PINNED SET below, bounded by its HIDDEN and NOT CLAIMED paragraphs.
  *
+ * wb-1gdq (the structural-exit child of wb-12x1; seat ws-12 of g10-work-s250, 2026-11-08, trunk e8a14621): ruling R-B698
+ * exited the frozen R-B636 receipt-anchor claim-word set to this bead, and ruling R-B711 reads the breadth the parent's
+ * cuts #7 and #8 named NOT CLAIMED as its fail-closed core. The landing-1045 ledger hop (e8a14621) compacted wb-12x1's
+ * closed row in .beads/issues.jsonl to its stub and wrote the full row to .beads/archive/issues-closed-2026-11.jsonl, so
+ * on that trunk the three outside anchor cases read ".beads/issues.jsonl holds no wb-12x1 row"; this cut reads the export
+ * through trackerExportText (qa/workbench/tracker-export.mjs), the reader of the export readers wb-294d routed. And
+ * receiptTableOf now hands its one census table to failClosedReads, which throws on the four readings the fail-closed
+ * reads twins plant: the table nested in a container, under a later heading, beside a table without the census columns,
+ * or written otherwise than its cells read. Red-first, this cut adds those twins; the cells and rows twins (every cell
+ * with "x" appended or its letter case swapped, every row twice or dropped, every adjacent pair of rows swapped, and
+ * WGP15-G4a's row M051), which kill refusal #6's GP15-G3, GP15-G4 and GP15-G5; the code blocks twins, which kill
+ * GP15-G1 and refusal #7's GP26-F1, GP26-F2 and GP26-F3; and the quoted copies twins, which kill GP26-Q1 (refusal #7)
+ * and GP1C8-Q1 (the parent's landing gate, F7). Refusal #4's and refusal #5's readers (GP14-Q1, Q2, T1 and T2; GP2C5-W1,
+ * I1, C1, T1 and S2) stay killed by the parent's twins. The six pages and the receipt are unchanged. Like the cut
+ * paragraphs above, this paragraph records what the cut added; what this census claims is THE PINNED SET below.
+ *
  * THE PINNED SET (the claim form; test/workbench-mwi-docs-remediation-census.test.ts, cases in registration order):
  * - "the reading": the six pages are files git would commit - committable lists a named path when it is tracked (in the
  *   index) or untracked and matched by no exclude rule (.gitignore, info/exclude), and it is on disk - each page key is
@@ -143,8 +159,10 @@
  *   exactly that line's ABSENT finding.
  * - "stands' count": a twin row's standing text "alpha beta alpha" read once on its line is clean, and written twice so
  *   the copies share one "alpha" ("alpha beta alpha beta alpha") reads "stands 2 times": overlapping occurrences count.
- * - "outside anchor": the tracked bead export's wb-12x1 row (.beads/issues.jsonl, the row whose id is wb-12x1) - its title
- *   is the statement above, its one ACCEPTANCE segment (the description's only " | "-separated segment that starts
+ * - "outside anchor": the tracked bead export's wb-12x1 row (.beads/issues.jsonl as trackerExportText reads it, the row
+ *   whose id is wb-12x1; wb-1gdq: since the landing-1045 ledger hop that file holds the row's stub, and the reader gives
+ *   the row from .beads/archive/issues-closed-2026-11.jsonl) - its title is the statement above, its one ACCEPTANCE
+ *   segment (the description's only " | "-separated segment that starts
  *   "ACCEPTANCE: ") starts "requirements " and lists EAT-R004 and then exactly the 50 requirement ids of ROWS in order, up
  *   to " - each per its ATOMIC-REQUIREMENTS.md entry", and its one SURFACES segment cites ATOMIC-REQUIREMENTS.md and
  *   TDD-MATRIX.md at the 0b25e14e pin this header names.
@@ -160,10 +178,14 @@
  *   no closing sequence), holds one census table, after a blank line, whose header cells are the eight RECEIPT_COLUMNS
  *   (Requirement, Row, Claim, Where, Kind, Pins, Existing sha-256 and Repair sha-256) in that order and whose rows equal
  *   ROWS in order and both ways (each wording by its full sha256, so the receipt spells none of the text this census
- *   judges). Of any other receipt text, this census claims exactly what the twins of the five receipt anchor cases below
- *   spell (the receipt anchor twins, its dated entries, table count, columns and top-level headings): which later heading
- *   opens an entry, how many census tables a later entry holds, which header is the census header and whether a later
- *   census table's rows equal ROWS are claimed for those twins and for no other text.
+ *   judges); and (wb-1gdq) failClosedReads reads that table as a top-level token of the entry, with no heading between
+ *   the entry's heading and it, beside no other table, and written as its cells read (its text, without its final line
+ *   feed, equals tableText of its own header and cells). Of any other receipt text, this census claims exactly what the
+ *   twins of the nine receipt anchor cases below spell (the receipt anchor twins, its dated entries, table count, columns
+ *   and top-level headings, and wb-1gdq's fail-closed reads, cells and rows, code blocks and quoted copies): which later
+ *   heading opens an entry, how many census tables a later entry holds, which header is the census header, whether a
+ *   later census table's rows equal ROWS and (wb-1gdq) whether failClosedReads refuses a later census table are claimed
+ *   for those twins and for no other text.
  * - "receipt anchor twins": the anchor passes the receipt as committed and with the later dated entry LATER_ENTRY
  *   ("## 2026-11-08 receipt: a later entry (an in-memory twin)") holding the same table after a blank line (W09C: its
  *   text lexes as the heading, a space token and the table) or on its heading's next line (WGP2C5-W1b: the heading and
@@ -218,6 +240,45 @@
  *   and "1)", start 1 - whose item holds the heading alone) open no entry: followed after a blank line by the note
  *   "A later note.", the last dated entry stays in force (the anchor passes); followed after a blank line by the census
  *   table, the last dated entry holds two.
+ * - "receipt anchor's fail-closed reads" (wb-1gdq): the anchor fails, with "is not a top-level token of its last entry", on
+ *   LATER_ENTRY holding, after a blank line, only the census table's copy each of whose lines starts with "> " (WNESTED's
+ *   copy) or only its copy in a one-item list marked by each of the five LIST_MARKERS (the table count case's list copy,
+ *   each marker read back from the asserted text); with "stands under a later heading", on LATER_ENTRY holding, after a
+ *   blank line, the note "- A later note." and then, after another, a later "# Notes", "## Notes", "### Notes" or
+ *   "### 2026-11-08 receipt: a sub-entry" heading followed after a blank line by the census table, and on LATER_ENTRY
+ *   followed on its very next line by each of those four headings and then, after a blank line, by the census table
+ *   (that lexed shape pinned); with "holds 1 tables without the census columns", on LATER_ENTRY holding, after a blank
+ *   line, the census table and then, after another, the census rows under each of 19 near headers (each of the eight
+ *   columns with "x" appended and with its last character dropped, a ninth column Note with each row's cell "none", the
+ *   last column dropped with its cells, and Requirement in lower case), and on LATER_ENTRY holding the census rows under
+ *   the first of those headers (Requirement with "x" appended) before the census table (after a blank line, or on
+ *   LATER_ENTRY's very next line) or, after it, in a copy each of whose lines starts with "> "; and with "is not written
+ *   as its cells read", on LATER_ENTRY holding, after a blank line, the census table with one row's line ending " x |"
+ *   after its eighth cell (each of the 50 rows), its delimiter row's first cell written ":---", M001's line opening
+ *   "|  " (a second space), or M001's line without its leading "| ", each of which marked gives as a table whose header
+ *   is RECEIPT_COLUMNS and whose rows equal ROWS (pinned) - 89 twins, the count pinned.
+ * - "receipt anchor's cells and rows" (wb-1gdq): the anchor fails with "deeply equal" on LATER_ENTRY holding, after a
+ *   blank line, the census table with one of its 400 cells (each of the 50 rows, each of the eight columns) with "x"
+ *   appended (WGP15-G3a's M050 Repair sha-256 cell and WGP15-G3b's M025 Claim cell among them) or with its letter case
+ *   swapped - upper-cased when that changes it, else lower-cased; the case pins that every swap changes its cell
+ *   (WGP15-G5a's "m001" and WGP15-G5b's upper-cased M001 Existing sha-256 among them, both pinned); with one of its 50
+ *   rows written twice in its place or dropped; with one of its 49 pairs of adjacent rows swapped (W10's pair among
+ *   them); or with the row M051 of WGP15-G4a ("EAT-R144", "M051", "C9999", "01:L1", "edit", "stands, absent" and two
+ *   digests) after M050 or before M001 - 951 twins, the count pinned.
+ * - "receipt anchor's code blocks" (wb-1gdq): the anchor passes LATER_ENTRY holding, after a blank line, the census table
+ *   and then, after another, the table's text in each of 23 code blocks, each of which marked gives as the heading, a
+ *   space token, the table, a space token and one code token whose raw text is the block's own text and a line feed
+ *   (both pinned): fences of three backticks, three tildes, four backticks and four tildes, each with its fence lines and
+ *   the text at the line's start or indented one, two or three spaces (16; the table count case's code-block twin among
+ *   them); a fence opened "```md" or "~~~md" (2); "```" closed by "````" and "~~~" closed by "~~~~" (2); "```" followed
+ *   by a space on its opening line or on its closing line (2); and the text indented four spaces, an indented code
+ *   block (1) - the count pinned.
+ * - "receipt anchor's quoted copies" (wb-1gdq): the anchor fails with "holds 2 tables" on LATER_ENTRY holding, after a
+ *   blank line, the census table and, on its very next line, its copy each of whose lines starts with "> " (WGP1C8-Q1a's
+ *   placement: the heading, a space token, the table and a blockquote, no space token between, pinned), and on
+ *   LATER_ENTRY holding, after a blank line, the table and then, after another, its copy each of whose lines starts with
+ *   " > ", "  > " or "   > " (WGP26-Q1a's one space and its two- and three-space twins: the heading, a space token, the
+ *   table, a space token and a blockquote, each pinned).
  * - one case per row, titled "<requirement> <id> <claim> <class> <where>": the predicate over the live page. STANDS: the
  *   row's standing text (an edit row's Repair; a same-edit row's host Repair; a ledger-only row's Existing wording, the
  *   norm the ledger correction leaves in place) stands exactly once on its page, on a line of its Where (from its first
@@ -276,7 +337,14 @@
  * dropped reds them); its
  * header "the eight RECEIPT_COLUMNS in that order" - the receipt anchor's columns (23 twins) and the twins'
  * "Existing sha256" column; its "in order and both ways" - the receipt anchor twins (M001's and M002's rows swapped,
- * M050's row twice or dropped, an "x" appended to M001's cell in each of the eight columns); the outside anchor's
+ * M050's row twice or dropped, an "x" appended to M001's cell in each of the eight columns); (wb-1gdq) failClosedReads'
+ * four refusals - the fail-closed reads twins, each refusal by its own (a refusal deleted, or narrowed to fewer
+ * containers, headings, places or rows than its twins spell, leaves its twins passing), and the "written" twins' pinned
+ * lexed header and rows; the cells and rows of a later census table - the cells and rows twins and their count (a
+ * compare that skips a row, a column or the letter case, drops a row it does not know, or reads the rows as a set reds
+ * them); the code blocks' text - the code blocks twins' pass, lexed shape and raw text (a walk that lexes one of those
+ * blocks' text as Markdown counts the table twice); the quoted copies - their four twins and lexed shapes (a walk that
+ * skips a block quote right after a table, or one indented one to three spaces, counts one table); the outside anchor's
  * "the row whose id is
  * wb-12x1" and "exactly the 50 ... in order" - the outside anchor twins; its "one ACCEPTANCE segment" and "one SURFACES
  * segment" - the outside anchor segments; and for the table itself the frozen shape, the export anchor and the receipt anchor
@@ -310,23 +378,30 @@
  * that no hidden-forms plant spells. A receipt header that differs from RECEIPT_COLUMNS in a way no columns twin spells
  * (another normalization form or a homoglyph of a column's letters, for two) is NOT CLAIMED by this census. A dated
  * heading or a census table copy nested in a container spelled otherwise than the receipt anchor's twins spell it (WQ1,
- * WNESTED and the LIST_MARKERS twins) - another list marker or start number, a list of two or more items, a heading on
+ * WNESTED, the LIST_MARKERS twins and wb-1gdq's fail-closed reads and quoted copies twins) - another list marker or
+ * start number, a list of two or more items, a heading on
  * an item's later line, another indent, a nested list or block quote, a list inside a block quote or a block quote inside
  * a list item, another container (a table cell, an HTML block), or other heading or item text than the twins' own - is
- * NOT CLAIMED by this census. How the receipt anchor reads a receipt text spelled otherwise than the twins of its five
+ * NOT CLAIMED by this census. How the receipt anchor reads a receipt text spelled otherwise than the twins of its nine
  * cases is NOT CLAIMED by this census - for example a dated depth-2 heading indented otherwise, with another run of
  * spaces or tabs between "##" and the date, another closing sequence or whitespace after it, or a setext underline of
- * another length or indent; a census table placed otherwise than after a blank line under its heading or on the
- * heading's next line; a second census table placed otherwise than the table count twins place it (under a heading of
- * another depth or text, after a thematic break, inside an HTML block or a nested container); or a census header that
- * differs from RECEIPT_COLUMNS otherwise than the columns twins differ. Of a later census table, a wrong cell other than
- * an "x" appended to one of M001's cells (a wrong cell on another row, or a cell whose letters change case, for two), a
- * row more or fewer other than M050's row twice or dropped (a row whose Row cell names no census row, for one), and the
- * table's text in any code block other than the code-block twin (a tilde fence, an indented code block, a fence line
- * indented one to three spaces, an opening fence with an info string such as "md", a closing fence of four or more
- * backticks, a space or tab after either fence, a code block placed otherwise than after the table and a blank line in
- * LATER_ENTRY, or one holding other text than the table's, for eight) are NOT CLAIMED by this census: ruling R-B711
- * reads that breadth of the exited receipt-anchor set as the structural-exit child wb-1gdq's. A standing
+ * another length or indent; a census table placed otherwise than after a blank line under its heading, on the
+ * heading's next line or (wb-1gdq) as the fail-closed reads twins place it; a second census table placed otherwise than
+ * the table count and quoted copies twins place it (under a heading of another depth or text, after a thematic break,
+ * inside an HTML block or a nested container); or a census header that differs from RECEIPT_COLUMNS otherwise than the
+ * columns twins differ. wb-1gdq (rulings R-B698 and R-B711): of a later census table, a wrong cell other than one of its
+ * cells with "x" appended or with its letter case swapped (a cell's text replaced, a character dropped, or an "x"
+ * inserted before a cell's last character, for three), a row more or fewer other than a row twice in its place, a row
+ * dropped or the row M051 after M050 or before M001 (two rows more, a row's copy away from its place, or the row M051
+ * between two census rows, for three), rows out of order other than two adjacent rows swapped (a row moved past two
+ * others, for one), and the table's text in a code block other than the code blocks twins' (a fence of five or more
+ * marks, an info string other than "md", a closing fence two or more marks longer, a tab after a fence, fence lines and
+ * text at different indents, a code block placed otherwise than after the table and a blank line in LATER_ENTRY, or one
+ * holding other text than the table's, for seven) are NOT CLAIMED by this census; nor is what failClosedReads reads of
+ * a receipt text spelled otherwise than the fail-closed reads twins - a census table nested otherwise than they nest
+ * it, under a heading other than theirs (a setext heading or a heading of other text, for two), beside a table under a
+ * header or at a place they do not spell, or written otherwise than its cells read in a way no twin spells (a space
+ * after a row's last pipe, alignment colons in another column or a cell's pipe escaped, for three). A standing
  * text moved past the page's end by more than the one line the sweep reads is NOT CLAIMED by this census.
  * RESIDUAL (named family + pinned quiet row; rule 19(d)): R-PARAPHRASE - the predicate is the exact REMEDIATION wording, so
  * an overstrong claim restated in other words, split over two lines, broken by Markdown emphasis or restated in other
@@ -341,7 +416,7 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { Lexer, type Tokens, walkTokens } from "marked";
+import { Lexer, type Token, type Tokens, walkTokens } from "marked";
 import { describe, expect, it } from "vitest";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
@@ -1309,7 +1384,7 @@ const EXPORT_TWINS: readonly { readonly name: string; readonly from: string; rea
 
 const sha256 = (text: string): string => createHash("sha256").update(text, "utf8").digest("hex");
 /** The receipt's census table as cell texts, as this census reads a receipt text. What it claims of that reading is the
- * committed receipt and exactly the twins of the five receipt anchor cases (the header's "receipt anchor" bullet); the
+ * committed receipt and exactly the twins of the nine receipt anchor cases (the header's "receipt anchor" bullet); the
  * reading of any other text is NOT CLAIMED. */
 function receiptTableOf(text: string): string[][] {
   const tokens = new Lexer({ gfm: true }).lex(text);
@@ -1327,7 +1402,33 @@ function receiptTableOf(text: string): string[][] {
     });
   }
   if (tables.length !== 1) throw new Error(`${RECEIPT}'s last entry holds ${tables.length} tables with the census columns`);
+  failClosedReads(tokens, last, tables);
   return (tables[0]?.rows ?? []).map(row => row.map(cell => cell.text));
+}
+/** wb-1gdq (the structural-exit child of wb-12x1, rulings R-B698 and R-B711): the fail-closed reads of the one census
+ * table receiptTableOf found after the last dated heading, the token at index last: it throws when that table is not a
+ * top-level token, when a heading stands between the dated heading and it, when another table stands after the dated
+ * heading, or when its text is not written as its cells read. What this census claims of these reads is the committed
+ * receipt and exactly the twins of the "receipt anchor's fail-closed reads" case. */
+function failClosedReads(tokens: readonly Token[], last: number, tables: readonly Tokens.Table[]): void {
+  const [table] = tables;
+  if (table === undefined) throw new Error(`${RECEIPT}'s last entry holds no census table`);
+  let others = 0;
+  for (const token of tokens.slice(last + 1)) {
+    walkTokens([token], inner => {
+      if (inner.type === "table" && inner !== table) others += 1;
+    });
+  }
+  if (others !== 0) throw new Error(`${RECEIPT}'s last entry holds ${others} tables without the census columns`);
+  const at = tokens.indexOf(table);
+  if (at <= last) throw new Error(`${RECEIPT}'s census table is not a top-level token of its last entry`);
+  const heading = tokens.slice(last + 1, at).find(token => token.type === "heading");
+  if (heading !== undefined) throw new Error(`${RECEIPT}'s census table stands under a later heading: ${JSON.stringify(heading.raw.trim())}`);
+  const written = tableText(
+    table.rows.map(row => row.map(cell => cell.text)),
+    table.header.map(cell => cell.text),
+  );
+  if (table.raw.replace(/\n+$/, "") !== written) throw new Error(`${RECEIPT}'s census table is not written as its cells read`);
 }
 const receiptText = (): string => readFileSync(join(ROOT, RECEIPT), "utf8");
 const receiptRowOf = (row: Row): string[] => [row.requirement, row.id, row.claim, row.where, row.kind, row.pins.join(", "), sha256(row.existing), sha256(row.repair)];
@@ -1803,6 +1904,156 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
       expect(() => listTwinAnchor("heading-note", laterSection(live, listedHeadingOf(marker), note)), `WQ2 "${marker}": a dated heading opening a one-item list, then a note`).not.toThrow();
       expect(() => listTwinAnchor("heading-table", laterSection(live, listedHeadingOf(marker), table)), `a dated heading opening a one-item list marked "${marker}", then the table`).toThrow(/holds 2 tables/);
     }
+  });
+
+  it("receipt anchor's fail-closed reads (wb-1gdq): LATER_ENTRY whose one census table is nested (WNESTED's '> ' copy alone, or the list copy alone after each of the five LIST_MARKERS), stands under a later '# Notes', '## Notes', '### Notes' or '### 2026-11-08 receipt: a sub-entry' heading (after a note, or on LATER_ENTRY's next line), stands beside a table under one of 19 near headers, or is not written as its cells read (a ninth cell on each of the 50 rows, three more spellings) fails", () => {
+    const live = receiptText();
+    const expected = ROWS.map(receiptRowOf);
+    const table = tableText(expected);
+    const note = "- A later note.";
+    const nested = /census table is not a top-level token of its last entry/;
+    const under = /census table stands under a later heading/;
+    const beside = /last entry holds 1 tables without the census columns/;
+    const written = /census table is not written as its cells read/;
+    const quoted = (text: string): string =>
+      text
+        .split("\n")
+        .map(line => `> ${line}`)
+        .join("\n");
+    const listedOf = (marker: string): string => `${marker} the table again:\n\n${table.split("\n").map(line => `${" ".repeat(marker.length + 1)}${line}`).join("\n")}`;
+    const nearHeaders: readonly (readonly string[])[] = [
+      ...RECEIPT_COLUMNS.flatMap((_column, at) => [RECEIPT_COLUMNS.map((name, index) => (index === at ? `${name}x` : name)), RECEIPT_COLUMNS.map((name, index) => (index === at ? name.slice(0, -1) : name))]),
+      [...RECEIPT_COLUMNS, "Note"],
+      RECEIPT_COLUMNS.slice(0, -1),
+      ["requirement", ...RECEIPT_COLUMNS.slice(1)],
+    ];
+    const nearTable = (header: readonly string[]): string => tableText(expected.map(cells => Array.from({ length: header.length }, (_cell, at) => cells[at] ?? "none")), header);
+    const firstNear = nearHeaders[0] ?? [];
+    const lineEdited = (line: number, edit: (text: string) => string): string =>
+      table
+        .split("\n")
+        .map((text, at) => (at === line ? edit(text) : text))
+        .join("\n");
+    const LATER_HEADINGS = ["# Notes", "## Notes", "### Notes", "### 2026-11-08 receipt: a sub-entry"];
+    const twins: [string, string, RegExp][] = [
+      ["WNESTED's '> ' copy alone", laterSection(live, LATER_ENTRY, quoted(table)), nested],
+      ...LIST_MARKERS.map((marker): [string, string, RegExp] => [`the list copy alone, marked "${marker}"`, laterSection(live, LATER_ENTRY, listedOf(marker)), nested]),
+      ...LATER_HEADINGS.map((heading): [string, string, RegExp] => [`a note, then the table under a later "${heading}" heading`, laterSection(live, LATER_ENTRY, `${note}\n\n${heading}\n\n${table}`), under]),
+      ...LATER_HEADINGS.map((heading): [string, string, RegExp] => [`the table under a "${heading}" heading on LATER_ENTRY's next line`, laterTightSection(live, LATER_ENTRY, `${heading}\n\n${table}`), under]),
+      ...nearHeaders.map((header): [string, string, RegExp] => [`the table, then the rows under "${header.join(" | ")}"`, laterSection(live, LATER_ENTRY, `${table}\n\n${nearTable(header)}`), beside]),
+      [`the rows under "${firstNear.join(" | ")}", then the table`, laterSection(live, LATER_ENTRY, `${nearTable(firstNear)}\n\n${table}`), beside],
+      [`the rows under "${firstNear.join(" | ")}" on LATER_ENTRY's next line, then the table`, laterTightSection(live, LATER_ENTRY, `${nearTable(firstNear)}\n\n${table}`), beside],
+      [`the table, then a '> ' copy of the rows under "${firstNear.join(" | ")}"`, laterSection(live, LATER_ENTRY, `${table}\n\n${quoted(nearTable(firstNear))}`), beside],
+      ...expected.map((cells, row): [string, string, RegExp] => [`${cells[1] ?? ""}'s line ending " x |" after its eighth cell`, laterSection(live, LATER_ENTRY, lineEdited(row + 2, text => `${text} x |`)), written]),
+      ["the delimiter row's first cell written ':---'", laterSection(live, LATER_ENTRY, lineEdited(1, text => text.replace("| --- ", "| :--- "))), written],
+      ["M001's line opening '|  '", laterSection(live, LATER_ENTRY, lineEdited(2, text => text.replace("| ", "|  "))), written],
+      ["M001's line without its leading '| '", laterSection(live, LATER_ENTRY, lineEdited(2, text => text.slice(2))), written],
+    ];
+    expect(nearHeaders, "the near headers: eight with 'x' appended, eight with a character dropped, a ninth column, the last column dropped, Requirement in lower case").toHaveLength(19);
+    expect(twins).toHaveLength(6 + 4 + 4 + 19 + 3 + 50 + 3);
+    expect(
+      LATER_HEADINGS.map(heading =>
+        new Lexer({ gfm: true })
+          .lex(laterTightSection(live, LATER_ENTRY, `${heading}\n\n${table}`))
+          .slice(-4)
+          .map(token => token.type),
+      ),
+      "each later heading on LATER_ENTRY's next line: LATER_ENTRY's heading, the later heading, a space token and the table",
+    ).toEqual(LATER_HEADINGS.map(() => ["heading", "heading", "space", "table"]));
+    expect(LIST_MARKERS.map(marker => lastListMarkerOf(laterSection(live, LATER_ENTRY, listedOf(marker)))), "each list copy's text spells its own marker").toEqual(["-", "*", "+", "1.", "1)"]);
+    const lastTableOf = (text: string): Tokens.Table | undefined =>
+      new Lexer({ gfm: true })
+        .lex(text)
+        .filter((token): token is Tokens.Table => token.type === "table")
+        .at(-1);
+    const lexed: string[] = [];
+    for (const [name, text, message] of twins) {
+      if (message !== written) continue;
+      const read = lastTableOf(text);
+      expect([read?.header.map(cell => cell.text), read?.rows.map(cells => cells.map(cell => cell.text))], `${name}: marked gives the census header and ROWS' cells`).toEqual([[...RECEIPT_COLUMNS], expected]);
+      lexed.push(name);
+    }
+    expect(lexed, "every 'written' twin's lexed header and rows read").toHaveLength(53);
+    const asserted: string[] = [];
+    for (const [name, text, message] of twins) {
+      expect(() => receiptAnchor(text), name).toThrow(message);
+      asserted.push(name);
+    }
+    expect(asserted, "every fail-closed twin asserted, in order").toEqual(twins.map(([name]) => name));
+  }, 240_000);
+
+  it("receipt anchor's cells and rows (wb-1gdq): LATER_ENTRY whose census table has one of its 400 cells with 'x' appended or with its letter case swapped, one of its 50 rows twice in its place or dropped, one of its 49 pairs of adjacent rows swapped, or WGP15-G4a's row M051 after M050 or before M001, fails 'deeply equal' (951 twins)", () => {
+    const live = receiptText();
+    const expected = ROWS.map(receiptRowOf);
+    const swapCase = (cell: string): string => (cell.toUpperCase() !== cell ? cell.toUpperCase() : cell.toLowerCase());
+    const withCell = (row: number, column: number, edit: (cell: string) => string): string[][] => expected.map((cells, at) => (at === row ? cells.map((cell, index) => (index === column ? edit(cell) : cell)) : [...cells]));
+    const m051 = ["EAT-R144", "M051", "C9999", "01:L1", "edit", "stands, absent", "77e0c5355fed5dae4bae746d31f5bea34ebba6c83f4c1a6210fc3f2849a59590", "1698c9e055ad1b39a2a596c2ea01940e21aea977bb80cd12fad057b66ad3fce7"];
+    const twins: [string, readonly (readonly string[])[]][] = [
+      ...expected.flatMap((cells, row) => cells.map((_cell, column): [string, string[][]] => [`${cells[1] ?? ""}'s ${RECEIPT_COLUMNS[column] ?? ""} cell with "x" appended`, withCell(row, column, cell => `${cell}x`)])),
+      ...expected.flatMap((cells, row) => cells.map((_cell, column): [string, string[][]] => [`${cells[1] ?? ""}'s ${RECEIPT_COLUMNS[column] ?? ""} cell with its letter case swapped`, withCell(row, column, swapCase)])),
+      ...expected.map((cells, row): [string, string[][]] => [`${cells[1] ?? ""}'s row twice`, [...expected.slice(0, row + 1), cells, ...expected.slice(row + 1)]]),
+      ...expected.map((cells, row): [string, string[][]] => [`${cells[1] ?? ""}'s row dropped`, expected.filter((_cells, at) => at !== row)]),
+      ...expected.slice(1).map((cells, at): [string, string[][]] => [`${expected[at]?.[1] ?? ""}'s and ${cells[1] ?? ""}'s rows swapped`, [...expected.slice(0, at), cells, ...expected.slice(at, at + 1), ...expected.slice(at + 2)]]),
+      ["WGP15-G4a: the row M051 after M050", [...expected, m051]],
+      ["the row M051 before M001", [m051, ...expected]],
+    ];
+    expect(twins).toHaveLength(400 + 400 + 50 + 50 + 49 + 2);
+    expect(expected.flat().filter(cell => swapCase(cell) === cell), "every cell's letter case swap changes it").toEqual([]);
+    expect([withCell(0, 1, swapCase)[0]?.[1], withCell(0, 6, swapCase)[0]?.[6]], "WGP15-G5a's 'm001' and WGP15-G5b's upper-cased M001 Existing sha-256").toEqual(["m001", expected[0]?.[6]?.toUpperCase()]);
+    const asserted: string[] = [];
+    for (const [name, rows] of twins) {
+      expect(() => receiptAnchor(laterSection(live, LATER_ENTRY, tableText(rows))), name).toThrow(/deeply equal/);
+      asserted.push(name);
+    }
+    expect(asserted, "every cells and rows twin asserted, in order").toEqual(twins.map(([name]) => name));
+  }, 240_000);
+
+  it("receipt anchor's code blocks (wb-1gdq): LATER_ENTRY holding the census table and then, after a blank line, its text in each of 23 code blocks - fences of three or four backticks or tildes at indents 0 to 3, '```md' and '~~~md' openings, closings one mark longer, a space after a backtick fence line, and four-space indented code - passes, each lexed as one code token whose raw text is pinned", () => {
+    const live = receiptText();
+    const table = tableText(ROWS.map(receiptRowOf));
+    const indented = (indent: number, lines: readonly string[]): string => lines.map(line => `${" ".repeat(indent)}${line}`).join("\n");
+    const blocks: [string, string][] = [
+      ...["```", "~~~", "````", "~~~~"].flatMap(mark => [0, 1, 2, 3].map((indent): [string, string] => [`fenced by ${mark} at indent ${indent}`, indented(indent, [mark, ...table.split("\n"), mark])])),
+      ["opened by ```md", ["```md", table, "```"].join("\n")],
+      ["opened by ~~~md", ["~~~md", table, "~~~"].join("\n")],
+      ["``` closed by ````", ["```", table, "````"].join("\n")],
+      ["~~~ closed by ~~~~", ["~~~", table, "~~~~"].join("\n")],
+      ["``` with a space after the opening fence", ["``` ", table, "```"].join("\n")],
+      ["``` with a space after the closing fence", ["```", table, "``` "].join("\n")],
+      ["an indented code block (four spaces)", indented(4, table.split("\n"))],
+    ];
+    expect(blocks).toHaveLength(16 + 2 + 2 + 2 + 1);
+    const codeShape: readonly string[] = ["heading", "space", "table", "space", "code"];
+    const passed: string[] = [];
+    for (const [name, block] of blocks) {
+      const text = laterSection(live, LATER_ENTRY, `${table}\n\n${block}`);
+      expect(laterShapeOf(text), `${name}: the heading, a space token, the table, a space token, then one code token`).toEqual(codeShape);
+      expect(new Lexer({ gfm: true }).lex(text).at(-1)?.raw, `${name}: that code token's raw text`).toBe(`${block}\n`);
+      expect(() => receiptAnchor(text), name).not.toThrow();
+      passed.push(name);
+    }
+    expect(passed, "every code-block twin asserted, in order").toEqual(blocks.map(([name]) => name));
+  }, 120_000);
+
+  it("receipt anchor's quoted copies (wb-1gdq): LATER_ENTRY holding the census table and its '> ' copy on the very next line (WGP1C8-Q1a's placement) or, after a blank line, its copy whose lines each start ' > ', '  > ' or '   > ' (WGP26-Q1a's and its two twins) fails 'holds 2 tables' (lexed shapes pinned)", () => {
+    const live = receiptText();
+    const table = tableText(ROWS.map(receiptRowOf));
+    const quotedAt = (indent: number): string =>
+      table
+        .split("\n")
+        .map(line => `${" ".repeat(indent)}> ${line}`)
+        .join("\n");
+    const tight = laterSection(live, LATER_ENTRY, `${table}\n${quotedAt(0)}`);
+    expect(laterShapeOf(tight), "WGP1C8-Q1a's text: the heading, a space token, the table, then a blockquote, with no space token between").toEqual(["heading", "space", "table", "blockquote"]);
+    expect(() => receiptAnchor(tight), "WGP1C8-Q1a: the table and its '> ' copy on the very next line").toThrow(/holds 2 tables/);
+    const indents: number[] = [];
+    for (const indent of [1, 2, 3]) {
+      const text = laterSection(live, LATER_ENTRY, `${table}\n\n${quotedAt(indent)}`);
+      expect(laterShapeOf(text), `the copy indented ${indent}: the heading, a space token, the table, a space token, then a blockquote`).toEqual(["heading", "space", "table", "space", "blockquote"]);
+      expect(() => receiptAnchor(text), `${indent === 1 ? "WGP26-Q1a: " : ""}the table and its copy whose lines each start "${" ".repeat(indent)}> "`).toThrow(/holds 2 tables/);
+      indents.push(indent);
+    }
+    expect(indents, "every indented copy asserted").toEqual([1, 2, 3]);
   });
 
   describe("ROWS: a row's standing text stands once on a line of its Where, (edit and same-edit rows) its Existing wording stands on its page only inside that text, and its page holds no HIDDEN form", () => {
