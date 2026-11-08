@@ -181,7 +181,19 @@
  * (qa/workbench/tracker-export.mjs), the form landing 1038 gave every trunk export reader; that reader's own readings are NOT
  * CLAIMED by this census (test/workbench-tracker-export-compaction.test.ts is its claim of record). Those two blocks are the
  * claims verbatim: ANCHOR holds each
- * entry to its table row word for word, and FROZEN SHAPE pins the rows.
+ * entry to its table row word for word, and FROZEN SHAPE pins the rows. Gate refusal #19 measured the embedded reader's words
+ * still claimed wider than T2 held them: the template with one substitution T2's control plants read and parsed as a module
+ * of its own (embeddedSources' doc and T2's message) while T2 held only its path and its launch and child_process module
+ * sites - so its hollows GP8-INL-HEAD-SHORT and GP8-INL-HEAD-NONSRC (a template's head dropped when it is under 100
+ * characters, or outside src/) and GP8-INL-LIT-SHORT (a span literal's first character dropped under such a head) kept the
+ * census green while its plant realized them, and, riding them, T0 held the line of the worker's embedded module only as
+ * digits (GP8-T0-LINE-SRC, an embedded module under src/ named one line late). Cut #20 changes no reader and no row: T2
+ * holds that template's module's text on either side of its substitution, byte for byte - its head before the substitution
+ * and its span's literal after it, both held to the template the plant writes - and the text the src readers parse for it,
+ * through the landed reader and through parsed(), equal to that module's text; T0 holds the worker's embedded module named
+ * for the line WORKER_SOURCE's template opens on and the text the src readers parse for it equal to its text; the embedded
+ * reader's words are restated to exactly those readings. Cut #19's clause on landing 1038 is corrected here, additively: that
+ * landing introduced trackerExportText, and it did not give that form to every trunk export reader.
  *
  * MEASURED (read-only; cut #1 by seat ws-06, run g10-work-s123 at base bb96515; cut #2 by ws-06, run g10-work-s133 at trunk
  * b3d410f; cut #3 by seat ws-04, run g10-work-s136 at trunk e8e13f8; cut #4 by seat ws-02, run g10-work-s141 at trunk aa95f43;
@@ -193,9 +205,10 @@
  * at trunk fd90f9d, landing 1014; cut #14 by seat ws-05, run g10-work-s237 at trunk 7f54a59, landing 1020; cut #15 by seat ws-01,
  * run g10-work-s237 at trunk ea21fb1, landing 1024; cut #16 by seat ws-08, run g10-work-s237 at trunk 8ed3a73, landing 1028; cut
  * #17 by seat ws-01, run g10-work-s237 at trunk 4c21b67, landing 1029; cut #18 by seat ws-12, run g10-work-s238 at trunk
- * ab08609, landing 1030; cut #19 by seat ws-06, run g10-work-s238 at trunk 5da3f5c, landing 1038; providers/reactivefiber.ts
- * is byte-identical at all nineteen and at 04123dc, sha256/16 d8b764b855600103 over its 203 lines; cuts #6 to #19 move no src
- * or run-time reader (cut #19 routes only the export read, through trackerExportText; .beads/archive is absent at 5da3f5c), so
+ * ab08609, landing 1030; cut #19 by seat ws-06, run g10-work-s238 at trunk 5da3f5c, landing 1038; cut #20 by seat ws-10, run
+ * g10-work-s240 at trunk 932ee8f, landing 1039; providers/reactivefiber.ts is byte-identical at all twenty and at 04123dc,
+ * sha256/16 d8b764b855600103 over its 203 lines; cuts #6 to #20 move no src or run-time reader (cut #19 routes only the export
+ * read, through trackerExportText; .beads/archive is absent at 5da3f5c and at 932ee8f), so
  * every witness reads as at cut #5; every C1 and G2
  * witness below reads
  * the same under cut #4's C1-NAME-RESOLUTION as under cut #3's by-name read, and under cut #5's landed reader as under cut #4's:
@@ -1067,13 +1080,15 @@ function parsed(file: SourceText): ts.SourceFile {
 /**
  * Source text a module carries inside a string or template, read as a module of its own, claimed only as T0 and T2 pin it: in src,
  * the workflow worker's inlined CommonJS source, a template with one substitution that calls require( (the host evaluates it with
- * new Worker(..., { eval: true })), src's one embedded module today, read as the text the host evaluates (WORKER_SOURCE as this
- * process imports it) save one stretch, where that text holds a JSON string, today the substitution's value, its two
- * module-level require( loads module sites (T0); in the modules T2's control plants, exactly as it writes them, byte for byte,
+ * new Worker(..., { eval: true })), src's one embedded module today, named for the line its template opens on, read as the text
+ * the host evaluates (WORKER_SOURCE as this process imports it) save one stretch, where that text holds a JSON string, today the
+ * substitution's value, and parsed as that text, its two module-level require( loads module sites (T0); in the modules T2's
+ * control plants, exactly as it writes them, byte for byte,
  * a module-level const initialized with a no-substitution template, a double-quoted string or a single-quoted string that
  * calls require(, or with a no-substitution template or a double-quoted string that calls getBuiltinModule(, each read as the
  * source text it holds, byte for byte, its spawn a launch site and its child_process load a module site, one initialized with
- * a template with one substitution whose require( and spawn sit after it, read, its spawn a launch site and its child_process
+ * a template with one substitution whose require( and spawn sit after it, read as the source text the template holds on either
+ * side of its substitution, byte for byte, and parsed as that text, its spawn a launch site and its child_process
  * load a module site (T2), and one initialized with a double-quoted string that calls neither, not read. Every other string
  * or template form, position, spelling and module, and the text a template's substitution reads as, are NOT CLAIMED by this
  * census.
@@ -4532,6 +4547,11 @@ describe("wb-jwc.7 rf stderr receipt-capture census (until Pi has a committing r
       "the read set's one embedded module is the one named for the workflow worker's inlined source",
     ).toStrictEqual([expect.stringMatching(/^src\/workflow\/worker-source\.ts#embedded@[0-9]+$/)]);
     const worker = files.find((file) => /^src\/workflow\/worker-source\.ts#embedded@[0-9]+$/.test(file.path));
+    const workerLine =
+      readFileSync(join(REPO, "src/workflow/worker-source.ts"), "utf8")
+        .split("\n")
+        .findIndex((line) => line.startsWith("export const WORKER_SOURCE = `")) + 1;
+    expect(worker?.path, "that module is named for the line WORKER_SOURCE's template opens on").toBe(`src/workflow/worker-source.ts#embedded@${workerLine}`);
     expect(
       jsonString(evaluatedStretch(worker?.text ?? "", WORKER_SOURCE)),
       "the workflow worker's inlined source is read as the text the host evaluates (WORKER_SOURCE as this process imports it), save one stretch, where that text holds a JSON string",
@@ -4540,6 +4560,10 @@ describe("wb-jwc.7 rf stderr receipt-capture census (until Pi has a committing r
       moduleSites(worker === undefined ? [] : [worker], new Set(["node:vm", "node:worker_threads"])),
       "the src readers parse the worker's inlined source as a module of its own: its two module-level require( loads are module sites",
     ).toStrictEqual([`${worker?.path}:<module>:call require:node:vm`, `${worker?.path}:<module>:call require:node:worker_threads`]);
+    expect(
+      worker === undefined ? [] : [readerOf(worker).source.text === worker.text, parsed(worker).text === worker.text],
+      "the text the src readers parse for that module, through the landed reader and through parsed(), is that module's text",
+    ).toStrictEqual([true, true]);
     const probe = await withStandIn("settle", async (rf) => ({
       path: process.env.PATH?.split(delimiter) ?? [],
       dir: rf.dir,
@@ -4595,6 +4619,23 @@ describe("wb-jwc.7 rf stderr receipt-capture census (until Pi has a committing r
       embeddedSources(inlined).map((file) => file.path),
       "a template with one substitution whose require( and spawn sit after it is found as an embedded module, at its line",
     ).toStrictEqual(["inlined.ts#embedded@1"]);
+    const inlinedHead = '"use strict";\nconst PRELUDE = ';
+    const inlinedLiteral = ';\nconst cp = require("node:child_process");\ncp.spawn("rf", ["context", "render"]);\n';
+    expect(
+      inlined.text,
+      "the template inlined.ts plants holds that head, then its one substitution, then that span's literal",
+    ).toBe(["export const INLINED = `", inlinedHead, "$", "{JSON.stringify(PRELUDE)}", inlinedLiteral, "`;"].join(""));
+    expect(
+      embeddedSources(inlined).map((file) => ({
+        head: file.text.slice(0, inlinedHead.length),
+        literal: file.text.slice(Math.max(inlinedHead.length, file.text.length - inlinedLiteral.length)),
+      })),
+      "that template's module is the source text the template holds on either side of its substitution, byte for byte: its head before the substitution and its span's literal after it",
+    ).toStrictEqual([{ head: inlinedHead, literal: inlinedLiteral }]);
+    expect(
+      embeddedSources(inlined).map((file) => [readerOf(file).source.text === file.text, parsed(file).text === file.text]),
+      "the text the src readers parse for that template's module, through the landed reader and through parsed(), is that module's text",
+    ).toStrictEqual([[true, true]]);
     expect(
       launchSites(embeddedSources(inlined)),
       "the src readers parse that template's module as a module of its own: its spawn, after the substitution, is a launch site",
