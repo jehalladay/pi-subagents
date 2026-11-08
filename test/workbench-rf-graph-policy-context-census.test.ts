@@ -385,6 +385,7 @@
  * Display paths added: none (test-only; src/ is read and run in memory, never edited). Scratch: none - every plant is an
  * in-memory entry judged by the same call as the real files, and the readers run on in-memory envelopes; nothing is written to
  * disk.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { execFileSync } from "node:child_process";
 import { existsSync, lstatSync, readFileSync } from "node:fs";
@@ -434,6 +435,7 @@ import {
   wordsOf,
 } from "./helpers/rf-e9dy-census-readers.js";
 import { fullShapeRf, readRfResultRoster } from "./helpers/rf-render-fixture.js";
+import { withoutTriageArchive } from "./helpers/triage-archive.js";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
@@ -1098,10 +1100,12 @@ function findingsFor(verdict: ScopeVerdict, paths: readonly string[], within: bo
 /** Every listed file: tracked plus untracked-not-ignored, present in the worktree as a regular file. */
 const listing = lazy((): string[] =>
   sorted(
-    git(["ls-files", "-z", "--cached", "--others", "--exclude-standard"])
-      .toString("utf8")
-      .split("\0")
-      .filter(path => path !== "" && existsSync(join(REPO, path)) && lstatSync(join(REPO, path)).isFile()),
+    withoutTriageArchive(
+      git(["ls-files", "-z", "--cached", "--others", "--exclude-standard"])
+        .toString("utf8")
+        .split("\0")
+        .filter(path => path !== "" && existsSync(join(REPO, path)) && lstatSync(join(REPO, path)).isFile()),
+    ),
   ),
 );
 function excluded(path: string): boolean {

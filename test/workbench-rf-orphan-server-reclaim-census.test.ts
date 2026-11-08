@@ -145,6 +145,7 @@
  *
  * Display paths added: none. Test-only: nothing is written, the one process spawned is a read-only `git ls-files` (R12's tracked
  * set), and the repository files read are only read.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -155,6 +156,7 @@ import { describe, expect, it } from "vitest";
 import { CapabilityRegistry } from "../src/workbench/capability-registry.js";
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
 import { RECONCILE_EVIDENCE_READS } from "../src/workflow/reconcile.js";
+import { isTriageArchivePath } from "./helpers/triage-archive.js";
 
 type Json = null | boolean | number | string | Json[] | { [key: string]: Json };
 type JsonObject = { [key: string]: Json };
@@ -458,8 +460,9 @@ function filesBelow(directory: string): string[] {
   const files: string[] = [];
   for (const entry of entries) {
     const path = join(directory, entry.name);
-    if (entry.isDirectory()) files.push(...filesBelow(path));
-    else if (entry.isFile()) files.push(path);
+    if (entry.isDirectory()) {
+      if (!isTriageArchivePath(relative(REPO, path))) files.push(...filesBelow(path));
+    } else if (entry.isFile()) files.push(path);
   }
   return files;
 }

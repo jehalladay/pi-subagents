@@ -310,6 +310,7 @@
  *
  * Display paths added: none. Test-only: the replica trees are scratch git repositories under makeScratch; docs, the bead
  * export, docs/03, the status-ledger module and the frozen tree are only read; nothing is spawned but git.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -321,6 +322,7 @@ import { afterAll, afterEach, describe, expect, it } from "vitest";
 import { CLAIM_STATUSES, EXPECTED_HEADER, parseLedger } from "../qa/workbench/status-ledger.mjs";
 import { docsSection, sectionTables } from "./helpers/census.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+import { isTriageArchivePath, withoutTriageArchive } from "./helpers/triage-archive.js";
 
 installScratchLeakGuard(afterAll);
 
@@ -1124,8 +1126,9 @@ function walkTree(base: string): { files: string[]; links: string[] } {
     for (const entry of readdirSync(join(base, directory), { withFileTypes: true })) {
       const path = `${directory}/${entry.name}`;
       if (entry.isSymbolicLink()) links.push(path);
-      else if (entry.isDirectory()) visit(path);
-      else if (entry.isFile()) files.push(path);
+      else if (entry.isDirectory()) {
+        if (!isTriageArchivePath(path)) visit(path);
+      } else if (entry.isFile()) files.push(path);
     }
   };
   for (const root of CONSTANTS.roots) {
@@ -1143,7 +1146,7 @@ function walkTree(base: string): { files: string[]; links: string[] } {
 /** What git would commit below the roots and as root .md pages: tracked or untracked, never ignored. */
 function gitList(base: string): string[] {
   const out = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", ...CONSTANTS.roots, ":(glob)*.md"], { cwd: base, encoding: "utf8", maxBuffer: 1 << 26 });
-  return [...new Set(out.split("\0").filter(path => path !== "" && existsSync(join(base, path))))].sort(byName);
+  return withoutTriageArchive([...new Set(out.split("\0").filter(path => path !== "" && existsSync(join(base, path))))]).sort(byName);
 }
 function ignored(base: string, paths: readonly string[]): Set<string> {
   const result = spawnSync("git", ["check-ignore", "--stdin", "-z"], { cwd: base, input: paths.join("\0"), encoding: "utf8", maxBuffer: 1 << 26 });
@@ -1990,7 +1993,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const walkAgreesWithGit = JSON.stringify(walked.files.filter(path => !skip.has(path))) === JSON.stringify(listed);
     const trackedTop = trackedTopDirectories(REPO);
     const unnamedTop = trackedTop.filter(name => !CONSTANTS.roots.includes(name) && !CONSTANTS.outside.includes(name));
-    const workbenchTracked = execFileSync("git", ["ls-files", "-z", "--cached", "--", "docs/workbench"], { cwd: REPO, encoding: "utf8" }).split("\0").filter(path => path !== "");
+    const workbenchTracked = withoutTriageArchive(execFileSync("git", ["ls-files", "-z", "--cached", "--", "docs/workbench"], { cwd: REPO, encoding: "utf8" }).split("\0").filter(path => path !== ""));
     const roots = CONSTANTS.roots.map(root => existsSync(join(REPO, root)));
     const workbenchRead = workbenchTracked.every(path => listed.includes(path));
     const workbenchFloorMet = workbenchTracked.length >= FLOORS.workbenchFiles;

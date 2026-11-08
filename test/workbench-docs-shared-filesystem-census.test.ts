@@ -9,6 +9,7 @@
  * docs/workbench, including hidden, nested and symlinked paths, is judged in the raw leg; .md, .MD and .markdown
  * files additionally carry the rendered leg. A sentence either leg refuses reds the census. A broken link or an
  * unreadable non-file is named as a scope error rather than silently omitted (gate row 621 G1-G3; R607 scope identity).
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  * - FAMILY RULE (both legs; respin 2 on gate row 600: a SUPERSET of the AC4 grep NFS|EFS|shared filesystem|multi-host,
  *   a case-sensitive substring match, so every sentence that grep matches is a family match): a sentence MATCHES when
  *   it names NFS or EFS at the start of a word in any case (nfs, NFSv4; refs and confs never do) or in capitals
@@ -83,6 +84,7 @@ import { marked, type Token, type Tokens } from "marked";
 import { describe, expect, it } from "vitest";
 import { docsSection, type RenderedBlock, sectionMatches } from "./helpers/census.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+import { isTriageArchivePath } from "./helpers/triage-archive.js";
 
 installScratchLeakGuard();
 
@@ -180,8 +182,9 @@ function docsPages(root = ROOT): string[] {
         // GNU grep -R reports broken links as errors; do not quietly claim the census covered one.
         throw new Error(`cannot read ${path} in the AC4 grep scope`, { cause: error });
       }
-      if (kind.isDirectory()) walk(path, next);
-      else if (kind.isFile()) pages.push(path);
+      if (kind.isDirectory()) {
+        if (!isTriageArchivePath(path)) walk(path, next);
+      } else if (kind.isFile()) pages.push(path);
       else throw new Error(`cannot read ${path} in the AC4 grep scope (not a regular file)`);
     }
   }
