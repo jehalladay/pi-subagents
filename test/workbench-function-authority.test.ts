@@ -109,6 +109,22 @@
  * request shapes are NOT CLAIMED. No residual is named: each of the four members refusal #8 recorded against the two
  * receipt sentences (U1's two and U2's two) fails one of these rows. Cut #9 keeps the frozen sets (R-B669's
  * host-authority words, GUARD A and GUARD B) and refusal #7's cure byte-stable, and does not restate the R-B642 set.
+ * wb-m83p cut #1 (the structural exit of the R-B642 set, ruling R-B665: wb-m83p owns that set, and this cut is rung 1 of
+ * its own ladder) takes the fixed-reason and final-read words. Two rows are strengthened: the seven rows of the refusal
+ * reasons describe now also read that the reason contains none of either request's definition text members (each own
+ * key of its admitted definition beside its kind), and are retitled to the texts they read; the no-park timing row now
+ * also reads that the final grant read happened. Two describes are appended to the end of this file. The fixed-reason
+ * text census pins, for each of the 7 refusal policies, a pair of requests that share none of their 7 texts and carry
+ * one reason containing none of them, with a planted row per policy that keeps its leg live, a frozen-shape row, and
+ * anchors in the module's FunctionAuthorityRefusal union, identity.ts's DefinitionRef, each admitted definition and an
+ * authorization of each scenario. The final-reads describe pins, with an admission park and with none, the host's second
+ * grant and identity reads at the listed request (6 listed changes refuse at dispatch; with no change, one dispatch whose
+ * callback receives the very authority object the boundary returns), the 6 listed entry refusals that never call a
+ * given park, and with no park the 2 listed changes queued by the final grant read, with a frozen-shape row and anchors
+ * in the module source and an authorization. Red-first: the census and the strengthened reason rows fail under refusal
+ * #3's GP18-REASON-DIGEST and GP18-REASON-SCHEMA-KIND, and the final-reads describe and the strengthened no-park row
+ * under GP18-NOPARK-ENTRY-FINAL. Whether a reason names a definition's kind, other texts, pairs, requests, changes and
+ * scheduling forms are NOT CLAIMED. No residual is named.
  *
  * No spelling is adopted, so the production contract is unadopted and refuses every function dispatch (the B-authority row of
  * BEAD-PLAN.md lands "partial - enforcement seams land now; exact action grammar blocked on MW-CONTRACT"). The adopted contracts
@@ -293,6 +309,13 @@ function wholeOf(value: unknown): string {
   const prototype = Object.getPrototypeOf(value);
   const plain = prototype === (Array.isArray(value) ? Array.prototype : Object.prototype);
   return `${Object.isFrozen(value) ? "frozen " : ""}${kind}${plain ? "" : " of another prototype"} { ${entries.join(", ")} }`;
+}
+
+/** Each text member of an admitted definition (wb-m83p): every own key of the definition beside its kind, with its value, in key order. */
+function definitionTexts(definition: Readonly<DefinitionRef>): readonly (readonly [string, string])[] {
+  return Reflect.ownKeys(definition)
+    .filter(key => key !== "kind")
+    .map(key => [String(key), String(Reflect.get(definition, key))] as const);
 }
 
 /** The 10 extension forms of the EAT-R028 and EAT-R029 sweeps: six extend a part at its tail, four at its head; each keeps the grammar. */
@@ -992,6 +1015,7 @@ describe("EAT-R031: revoked grants are re-evaluated at dispatch (wb-201v)", () =
     });
     expect(result.status).toBe("dispatched");
     expect(atDispatch).toEqual([[EXECUTE_GRANT, ACTION]]);
+    expect(reads).toBe(2);
   });
 });
 
@@ -1280,12 +1304,16 @@ describe("refusal reasons: one fixed reason per policy across the enumerated req
     return decision;
   }
 
-  it.each(POLICIES)("%s: one reason for two requests that differ in definition, invocation, identity and held grants, naming none of them", policy => {
+  it.each(POLICIES)("%s: one reason for two requests that differ in definition, invocation, identity and held grants, containing none of either request's definition text members (each own key of its admitted definition beside its kind), action, invocation, principal or session", policy => {
     const a = refusalFor(A, policy);
     const b = refusalFor(B, policy);
     expect([a.policy, b.policy, a.invocationId, b.invocationId]).toEqual([policy, policy, A.invocation, B.invocation]);
     expect(a.reason).toBe(b.reason);
     for (const s of [A, B]) for (const text of [s.id, s.action, s.invocation, s.identity.principal, s.identity.sessionId]) expect(a.reason).not.toContain(text);
+    for (const s of [A, B]) {
+      const definition = admissionFor(s.id, undefined, TASK, policy === "not-a-function-definition" ? "script" : "function", s.invocation).definition;
+      for (const [member, text] of definitionTexts(definition)) expect({ member, contained: a.reason.includes(text) }).toEqual({ member, contained: false });
+    }
   });
 
   const input = (grants: unknown, identity: FunctionIdentity = HOST, admission: ExecuteAdmission = admissionFor()): FunctionAuthorityInput => ({ admission, contract: CONTRACT, entered: HOST, current: { grants, identity } });
@@ -2265,5 +2293,396 @@ describe("decideExecute's policy rule at the listed rows: in each host mode, the
         for (const policy of ARRAY_POLICIES) expect({ hostMode, kind, policy: JSON.stringify(policy), decision: wholeOf(decidedWithPolicy(hostMode, kind, policy)) }).toEqual({ hostMode, kind, policy: JSON.stringify(policy), decision: MALFORMED_POLICY });
       }
     }
+  });
+});
+
+describe("the fixed-reason text census: for each of the 7 refusal policies, both listed requests of its pair carry one reason, and it contains none of the 7 texts either request carries: each definition text member (each own key of the admitted definition beside its kind), the fixture action, the invocation, and the entered principal and session (wb-m83p)", () => {
+  /** A listed request's texts. */
+  interface CensusScenario {
+    readonly label: "C" | "D";
+    readonly id: string;
+    readonly schemaVersion: string;
+    readonly artifactDigest: string;
+    readonly action: string;
+    readonly invocation: string;
+    readonly identity: FunctionIdentity;
+  }
+  const C: CensusScenario = {
+    label: "C",
+    id: "fixture.census-c.v1",
+    schemaVersion: "fixture-schema/c-v3",
+    artifactDigest: `sha256:${"0123456789abcdef".repeat(4)}`,
+    action: "fixture-fn:census-c-run",
+    invocation: "fn_census_c_01",
+    identity: { principal: "local-operator:1002:c-user", sessionId: "sess-c-77" },
+  };
+  const D: CensusScenario = {
+    label: "D",
+    id: "fixture.census-d.v2",
+    schemaVersion: "other-schema/d-v9",
+    artifactDigest: `sha256:${"fedcba9876543210".repeat(4)}`,
+    action: "fixture-fn:census-d-run",
+    invocation: "fn_census_d_02",
+    identity: { principal: "local-operator:1003:d-user", sessionId: "sess-d-88" },
+  };
+  const CENSUS_CONTRACT = adoptFunctionActions([
+    { definitionId: C.id, actionGrant: C.action },
+    { definitionId: D.id, actionGrant: D.action },
+  ]);
+  /** The 7 refusal policies, in the order the module's FunctionAuthorityRefusal union lists them (the anchor row reads that union from the source). */
+  const CENSUS_POLICIES: readonly FunctionAuthorityRefusal[] = [
+    "not-a-function-definition",
+    "unknown-identity-data",
+    "changed-effective-identity",
+    "unknown-permission-data",
+    "missing-execute-grant",
+    "function-action-unadopted",
+    "missing-function-action-grant",
+  ];
+  const ESCAPE = String.fromCodePoint(0x1b);
+  const CENSUS_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+  interface CensusRequest {
+    readonly label: string;
+    readonly scenario: CensusScenario;
+    readonly admission: ExecuteAdmission;
+    readonly refusal: FunctionAuthorityRefused;
+    /** The 7 texts the request carries, by member name. */
+    readonly texts: readonly (readonly [string, string])[];
+  }
+  /** decideExecute's admission of scenario s's request for a definition of the given kind, under workbench:execute, with the plain task fields. */
+  function censusAdmission(s: CensusScenario, kind: DefinitionRef["kind"]): ExecuteAdmission {
+    const admitted = decideExecute({ definitionRef: { kind, id: s.id, schemaVersion: s.schemaVersion, artifactDigest: s.artifactDigest }, input: TASK, hostMode: "embedded" }, { grants: [EXECUTE_GRANT], invocationId: s.invocation });
+    if (admitted.decision !== "admitted") throw new Error(`census admission refused: ${admitted.policy}`);
+    return admitted.admission;
+  }
+  /**
+   * Scenario s's listed request for a policy: its admission (a function definition, but under not-a-function-definition a
+   * script for C and a furnace-formula for D), the decision built to refuse it with that policy, and its 7 texts.
+   */
+  function censusRequest(s: CensusScenario, policy: FunctionAuthorityRefusal): CensusRequest {
+    const other = s === C ? D : C;
+    const admission = censusAdmission(s, policy !== "not-a-function-definition" ? "function" : s === C ? "script" : "furnace-formula");
+    const held =
+      policy === "missing-execute-grant"
+        ? [s.action]
+        : policy === "missing-function-action-grant"
+          ? [EXECUTE_GRANT, other.action]
+          : policy === "unknown-permission-data"
+            ? [EXECUTE_GRANT, s.action, `${s.action}:more`]
+            : [EXECUTE_GRANT, s.action];
+    const read: FunctionIdentity =
+      policy === "unknown-identity-data"
+        ? { principal: `${s.identity.principal}${ESCAPE}[0m`, sessionId: s.identity.sessionId }
+        : policy === "changed-effective-identity"
+          ? { principal: `${s.identity.principal}-moved`, sessionId: s.identity.sessionId }
+          : s.identity;
+    const contract = policy === "function-action-unadopted" ? FUNCTION_ACTION_CONTRACT : CENSUS_CONTRACT;
+    const decision = decideFunctionAuthority({ admission, contract, entered: s.identity, current: { grants: held, identity: read } });
+    if (decision.decision !== "refused") throw new Error(`expected a ${policy} refusal`);
+    const texts: readonly (readonly [string, string])[] = [
+      ...definitionTexts(admission.definition),
+      ["fixture action", s.action],
+      ["invocation", s.invocation],
+      ...Reflect.ownKeys(s.identity).map(key => [`entered ${String(key)}`, String(Reflect.get(s.identity, key))] as const),
+    ];
+    return { label: `${policy}/${s.label}`, scenario: s, admission, refusal: decision, texts };
+  }
+  /** The census table: per policy, its pair's two requests, C then D. Built inside each case, so a fixture fault fails that case. */
+  const censusRows = () => CENSUS_POLICIES.map(policy => ({ policy, requests: [censusRequest(C, policy), censusRequest(D, policy)] as const }));
+  function censusRow(policy: FunctionAuthorityRefusal) {
+    const row = censusRows().find(candidate => candidate.policy === policy);
+    if (row === undefined) throw new Error(`no census row for ${policy}`);
+    return row;
+  }
+  /** The member names of the texts a reason contains. */
+  const contained = (reason: string, texts: CensusRequest["texts"]) => texts.filter(([, text]) => reason.includes(text)).map(([member]) => member);
+
+  it("the census table's frozen shape: 7 policy rows, each holding its pair's two requests, C then D, each judged against the same 7 text members", () => {
+    expect(censusRows().flatMap(row => row.requests.map(request => `${request.label}:${request.texts.map(([member]) => member).join(",")}`))).toEqual([
+      "not-a-function-definition/C:id,schemaVersion,artifactDigest,fixture action,invocation,entered principal,entered sessionId",
+      "not-a-function-definition/D:id,schemaVersion,artifactDigest,fixture action,invocation,entered principal,entered sessionId",
+      "unknown-identity-data/C:id,schemaVersion,artifactDigest,fixture action,invocation,entered principal,entered sessionId",
+      "unknown-identity-data/D:id,schemaVersion,artifactDigest,fixture action,invocation,entered principal,entered sessionId",
+      "changed-effective-identity/C:id,schemaVersion,artifactDigest,fixture action,invocation,entered principal,entered sessionId",
+      "changed-effective-identity/D:id,schemaVersion,artifactDigest,fixture action,invocation,entered principal,entered sessionId",
+      "unknown-permission-data/C:id,schemaVersion,artifactDigest,fixture action,invocation,entered principal,entered sessionId",
+      "unknown-permission-data/D:id,schemaVersion,artifactDigest,fixture action,invocation,entered principal,entered sessionId",
+      "missing-execute-grant/C:id,schemaVersion,artifactDigest,fixture action,invocation,entered principal,entered sessionId",
+      "missing-execute-grant/D:id,schemaVersion,artifactDigest,fixture action,invocation,entered principal,entered sessionId",
+      "function-action-unadopted/C:id,schemaVersion,artifactDigest,fixture action,invocation,entered principal,entered sessionId",
+      "function-action-unadopted/D:id,schemaVersion,artifactDigest,fixture action,invocation,entered principal,entered sessionId",
+      "missing-function-action-grant/C:id,schemaVersion,artifactDigest,fixture action,invocation,entered principal,entered sessionId",
+      "missing-function-action-grant/D:id,schemaVersion,artifactDigest,fixture action,invocation,entered principal,entered sessionId",
+    ]);
+  });
+
+  it("the census's anchors outside its own literals: its policies are the FunctionAuthorityRefusal union the module source declares, in order; each request's first members are, in order, the own keys beside the kind of the definition decideExecute admitted, which are the DefinitionRef members identity.ts declares beside the kind; each request's 7 texts are exactly the texts the module reports for it: that definition's values, the invocation its refusal carries, and the action beside workbench:execute and the value of each own identity key that an authorization of its scenario's function request under the census contract rests on; and no text of one request of a pair holds a text of the other", () => {
+    const module = readFileSync(join(CENSUS_ROOT, "src/workbench/function-authority.ts"), "utf8");
+    const union = /^export type FunctionAuthorityRefusal =((?:\n {2}\| "[a-z-]+")+);$/m.exec(module);
+    expect([...(union?.[1] ?? "").matchAll(/"([a-z-]+)"/g)].map(match => match[1])).toEqual([...CENSUS_POLICIES]);
+    const identity = readFileSync(join(CENSUS_ROOT, "src/workbench/identity.ts"), "utf8");
+    const declared = [...(/^export interface DefinitionRef \{\n([^}]*)\}$/m.exec(identity)?.[1] ?? "").matchAll(/^ {2}readonly (\w+):/gm)].map(match => match[1]).filter(member => member !== "kind");
+    expect(declared).toHaveLength(3);
+    for (const row of censusRows()) {
+      for (const request of row.requests) {
+        const definition = request.admission.definition;
+        const own = Reflect.ownKeys(definition)
+          .filter(key => key !== "kind")
+          .map(key => [String(key), String(Reflect.get(definition, key))]);
+        expect(own.map(([member]) => member)).toEqual(declared);
+        expect(request.texts.slice(0, own.length)).toEqual(own);
+        const control = decideFunctionAuthority({ admission: censusAdmission(request.scenario, "function"), contract: CENSUS_CONTRACT, entered: request.scenario.identity, current: { grants: [EXECUTE_GRANT, request.scenario.action], identity: request.scenario.identity } });
+        if (control.decision !== "authorized") throw new Error(`expected the ${request.scenario.label} control to be authorized`);
+        const identity = control.authority.identity;
+        const reported = [...own.map(([, text]) => text), request.refusal.invocationId, ...control.authority.grants.filter(grant => grant !== EXECUTE_GRANT), ...Reflect.ownKeys(identity).map(key => String(Reflect.get(identity, key)))];
+        const judged = request.texts.map(([, text]) => text);
+        expect({ label: request.label, unjudged: reported.filter(text => !judged.includes(text)), unreported: judged.filter(text => !reported.includes(text)) }).toEqual({ label: request.label, unjudged: [], unreported: [] });
+        expect(judged).toHaveLength(reported.length);
+      }
+      const [c, d] = row.requests;
+      expect({ policy: row.policy, inC: c.texts.flatMap(([, text]) => contained(text, d.texts)), inD: d.texts.flatMap(([, text]) => contained(text, c.texts)) }).toEqual({ policy: row.policy, inC: [], inD: [] });
+    }
+  });
+
+  it.each(CENSUS_POLICIES)("%s: both listed requests of the pair carry one reason, and it contains none of the 7 texts of either request", policy => {
+    const [c, d] = censusRow(policy).requests;
+    expect([c.refusal.policy, d.refusal.policy, c.refusal.invocationId, d.refusal.invocationId]).toEqual([policy, policy, C.invocation, D.invocation]);
+    expect(c.refusal.reason).toBe(d.refusal.reason);
+    expect({ C: contained(c.refusal.reason, c.texts), D: contained(c.refusal.reason, d.texts) }).toEqual({ C: [], D: [] });
+  });
+
+  it.each(CENSUS_POLICIES)("%s, planted: the reason with any one of the 7 texts of either request appended in parentheses is caught as containing that text's member", policy => {
+    for (const request of censusRow(policy).requests) {
+      for (const [member, text] of request.texts) {
+        expect({ request: request.label, member, caught: contained(`${request.refusal.reason} (${text})`, request.texts).includes(member) }).toEqual({ request: request.label, member, caught: true });
+      }
+    }
+  });
+});
+
+describe("the final reads on both dispatch paths: with an admission park and with none, the listed request that passes entry reads the host's grants and identity once more each, each of the 6 listed changes those second reads report refuses at dispatch, and with no change the one dispatch's callback receives the very authority the boundary returns; with a park given, each of the 6 listed entry refusals refuses at entry without calling the park; and with no park, each of the 2 listed changes queued by the final grant read lands after the dispatch (wb-m83p)", () => {
+  const PATHS = ["with an admission park", "with no admission park"] as const;
+  type DispatchPath = (typeof PATHS)[number];
+  const STEADY_GRANTS: readonly string[] = [EXECUTE_GRANT, ACTION];
+  const ESCAPE = String.fromCodePoint(0x1b);
+  const READS_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+  interface SecondReads {
+    readonly family: "a dropped authority grant" | "a changed identity field" | "unknown read data";
+    readonly member: string;
+    readonly policy: FunctionAuthorityRefusal;
+    /** What the host's second grants read reports. */
+    readonly grants: readonly string[] | undefined;
+    /** What the host's second identity read reports. */
+    readonly identity: FunctionIdentity;
+  }
+  /** The 6 listed changes: each grant the authorization rests on dropped, each identity field changed, and each read reporting unknown data. */
+  const SECOND_READS: readonly SecondReads[] = [
+    { family: "a dropped authority grant", member: EXECUTE_GRANT, policy: "missing-execute-grant", grants: [ACTION], identity: HOST },
+    { family: "a dropped authority grant", member: ACTION, policy: "missing-function-action-grant", grants: [EXECUTE_GRANT], identity: HOST },
+    { family: "a changed identity field", member: "principal", policy: "changed-effective-identity", grants: STEADY_GRANTS, identity: { principal: "local-operator:1001:s1", sessionId: HOST.sessionId } },
+    { family: "a changed identity field", member: "sessionId", policy: "changed-effective-identity", grants: STEADY_GRANTS, identity: { principal: HOST.principal, sessionId: "s2" } },
+    { family: "unknown read data", member: "grants", policy: "unknown-permission-data", grants: undefined, identity: HOST },
+    { family: "unknown read data", member: "identity", policy: "unknown-identity-data", grants: STEADY_GRANTS, identity: { principal: `${HOST.principal}${ESCAPE}[0m`, sessionId: HOST.sessionId } },
+  ];
+  const READ_ROWS = PATHS.flatMap(path => SECOND_READS.map(change => ({ path, ...change })));
+  /** A host whose first reads report workbench:execute with the action under local-operator:1000:s1 / s1, and whose later reads report `second`. */
+  function secondReadHost(second: Pick<SecondReads, "grants" | "identity">) {
+    const reads = { grants: 0, identity: 0 };
+    const host: FunctionAuthorityHost = {
+      grants: () => {
+        reads.grants += 1;
+        return reads.grants === 1 ? STEADY_GRANTS : second.grants;
+      },
+      identity: () => {
+        reads.identity += 1;
+        return reads.identity === 1 ? { ...HOST } : { ...second.identity };
+      },
+    };
+    return { host, reads };
+  }
+  /** The listed request (the admission of mechanical.development.develop.v1 under the pinned contract) through the boundary on a path, the park released by hand. */
+  async function throughPath(path: DispatchPath, host: FunctionAuthorityHost, reads: { readonly grants: number; readonly identity: number }) {
+    const wait = parked();
+    const received: FunctionDispatchAuthority[] = [];
+    const provider = vi.fn(async () => "ran");
+    const loader = vi.fn(async () => provider);
+    const pending = dispatchFunctionWithAuthority({
+      admission: admissionFor(),
+      contract: CONTRACT,
+      host,
+      ...(path === "with an admission park" ? { park: wait.park } : {}),
+      dispatch: async authority => {
+        received.push(authority);
+        return (await loader())();
+      },
+    });
+    const atEntry = { ...reads };
+    wait.release();
+    const result = await pending;
+    return { result, atEntry, park: wait.park.mock.calls.length, loader: loader.mock.calls.length, provider: provider.mock.calls.length, received };
+  }
+  interface EntryRefusal {
+    readonly policy: FunctionAuthorityRefusal;
+    readonly category: string;
+    readonly kind: DefinitionRef["kind"];
+    readonly contract: FunctionActionContract;
+    readonly grants: readonly string[] | undefined;
+    readonly identity: FunctionIdentity;
+  }
+  /** The 6 listed entry refusals: one per policy a request can refuse with at entry, each with an admission park given. */
+  const ENTRY_REFUSALS: readonly EntryRefusal[] = [
+    { policy: "not-a-function-definition", category: "validation", kind: "script", contract: CONTRACT, grants: STEADY_GRANTS, identity: HOST },
+    { policy: "unknown-identity-data", category: "authorization", kind: "function", contract: CONTRACT, grants: STEADY_GRANTS, identity: { principal: `${HOST.principal}${ESCAPE}[0m`, sessionId: HOST.sessionId } },
+    { policy: "unknown-permission-data", category: "authorization", kind: "function", contract: CONTRACT, grants: undefined, identity: HOST },
+    { policy: "missing-execute-grant", category: "authorization", kind: "function", contract: CONTRACT, grants: [ACTION], identity: HOST },
+    { policy: "function-action-unadopted", category: "unavailable", kind: "function", contract: FUNCTION_ACTION_CONTRACT, grants: STEADY_GRANTS, identity: HOST },
+    { policy: "missing-function-action-grant", category: "authorization", kind: "function", contract: CONTRACT, grants: [EXECUTE_GRANT, OTHER_FUNCTION_ACTION], identity: HOST },
+  ];
+  type QueuedState = { grants: readonly string[]; identity: FunctionIdentity };
+  /** The 2 listed changes queued by the final grant read: one to each host read. */
+  const QUEUED: readonly (readonly ["grants" | "identity", string, (state: QueuedState) => void])[] = [
+    [
+      "grants",
+      "a revoked action grant",
+      state => {
+        state.grants = [EXECUTE_GRANT];
+      },
+    ],
+    [
+      "identity",
+      "a changed effective principal",
+      state => {
+        state.identity = { principal: "local-operator:1001:s1", sessionId: HOST.sessionId };
+      },
+    ],
+  ];
+
+  it("the tables' frozen shape: the 12 second-read rows (2 paths by 6 changes), the 6 entry refusals and the 2 queued changes", () => {
+    expect(READ_ROWS.map(row => `${row.path}:${row.family}:${row.member}:${row.policy}`)).toEqual([
+      "with an admission park:a dropped authority grant:workbench:execute:missing-execute-grant",
+      "with an admission park:a dropped authority grant:fixture-fn:develop-write:missing-function-action-grant",
+      "with an admission park:a changed identity field:principal:changed-effective-identity",
+      "with an admission park:a changed identity field:sessionId:changed-effective-identity",
+      "with an admission park:unknown read data:grants:unknown-permission-data",
+      "with an admission park:unknown read data:identity:unknown-identity-data",
+      "with no admission park:a dropped authority grant:workbench:execute:missing-execute-grant",
+      "with no admission park:a dropped authority grant:fixture-fn:develop-write:missing-function-action-grant",
+      "with no admission park:a changed identity field:principal:changed-effective-identity",
+      "with no admission park:a changed identity field:sessionId:changed-effective-identity",
+      "with no admission park:unknown read data:grants:unknown-permission-data",
+      "with no admission park:unknown read data:identity:unknown-identity-data",
+    ]);
+    expect(ENTRY_REFUSALS.map(row => `${row.policy}:${row.category}`)).toEqual([
+      "not-a-function-definition:validation",
+      "unknown-identity-data:authorization",
+      "unknown-permission-data:authorization",
+      "missing-execute-grant:authorization",
+      "function-action-unadopted:unavailable",
+      "missing-function-action-grant:authorization",
+    ]);
+    expect(QUEUED.map(([read, change]) => `${read}:${change}`)).toEqual(["grants:a revoked action grant", "identity:a changed effective principal"]);
+  });
+
+  it("the tables' anchors outside their own literals: the dropped grants are, in order, the grants an authorization of the listed request rests on, and the changed identity fields its identity's own keys; the unknown-read-data rows and the queued changes each cover, in order, the reads the module source's FunctionAuthorityHost declares; the paths number 2 to the power of the optional members the source's FunctionDispatchOptions declares; the entry refusals with changed-effective-identity are the source's FunctionAuthorityRefusal union; and each second-read change and each queued change alters, from the steady host state, exactly the read and the grant or identity field it names", () => {
+    const authorized = decideFunctionAuthority({ admission: admissionFor(), contract: CONTRACT, entered: HOST, current: { grants: STEADY_GRANTS, identity: HOST } });
+    if (authorized.decision !== "authorized") throw new Error("expected the listed request to be authorized");
+    const members = (family: SecondReads["family"]) => SECOND_READS.filter(row => row.family === family).map(row => row.member);
+    expect(members("a dropped authority grant")).toEqual([...authorized.authority.grants]);
+    expect(members("a changed identity field")).toEqual(Reflect.ownKeys(authorized.authority.identity));
+    const module = readFileSync(join(READS_ROOT, "src/workbench/function-authority.ts"), "utf8");
+    const hostReads = [...(/^export interface FunctionAuthorityHost \{\n([\s\S]*?)^\}$/m.exec(module)?.[1] ?? "").matchAll(/^ {2}(\w+)\(\):/gm)].map(match => match[1]);
+    expect(hostReads).toHaveLength(2);
+    expect(members("unknown read data")).toEqual(hostReads);
+    expect(QUEUED.map(([read]) => read)).toEqual(hostReads);
+    const optional = [...(/^export interface FunctionDispatchOptions<T> \{\n([\s\S]*?)^\}$/m.exec(module)?.[1] ?? "").matchAll(/^ {2}readonly \w+\?:/gm)];
+    expect(optional).toHaveLength(1);
+    expect(PATHS).toHaveLength(2 ** optional.length);
+    const union = [...(/^export type FunctionAuthorityRefusal =((?:\n {2}\| "[a-z-]+")+);$/m.exec(module)?.[1] ?? "").matchAll(/"([a-z-]+)"/g)].map(match => match[1]);
+    expect(union).toHaveLength(7);
+    expect([...ENTRY_REFUSALS.map(row => row.policy), "changed-effective-identity"].sort()).toEqual([...union].sort());
+    /** The host reads a reported state changes from the steady one (workbench:execute with the action under local-operator:1000:s1 / s1). */
+    const changedReads = (state: { readonly grants: readonly string[] | undefined; readonly identity: FunctionIdentity }) =>
+      hostReads.filter(read => (read === "grants" ? JSON.stringify(state.grants) !== JSON.stringify(STEADY_GRANTS) : JSON.stringify(state.identity) !== JSON.stringify(HOST)));
+    for (const row of SECOND_READS) {
+      const dropped = STEADY_GRANTS.filter(grant => !(row.grants ?? STEADY_GRANTS).includes(grant));
+      const fields = Reflect.ownKeys(HOST)
+        .filter(key => Reflect.get(row.identity, key) !== Reflect.get(HOST, key))
+        .map(String);
+      const named = row.family === "a dropped authority grant" ? dropped : row.family === "a changed identity field" ? fields : changedReads(row);
+      const read = row.family === "a dropped authority grant" ? "grants" : row.family === "a changed identity field" ? "identity" : row.member;
+      expect({ row: `${row.family}:${row.member}`, changed: changedReads(row), named }).toEqual({ row: `${row.family}:${row.member}`, changed: [read], named: [row.member] });
+    }
+    for (const [read, change, apply] of QUEUED) {
+      const state: QueuedState = { grants: STEADY_GRANTS, identity: HOST };
+      apply(state);
+      expect({ change, changed: changedReads(state) }).toEqual({ change, changed: [read] });
+    }
+  });
+
+  it.each(READ_ROWS.map(row => [row.path, row.family, row.member, row.policy, row] as const))("%s: %s (%s) at the host's second reads refuses at dispatch as %s, with zero loader and provider calls, after two grant reads and two identity reads", async (_path, _family, _member, _policy, row) => {
+    const { host, reads } = secondReadHost(row);
+    const run = await throughPath(row.path, host, reads);
+    expect(refusalOf(run.result)).toEqual({ stage: "dispatch", policy: row.policy, category: "authorization" });
+    expect({ reads, park: run.park, loader: run.loader, provider: run.provider }).toEqual({ reads: { grants: 2, identity: 2 }, park: row.path === "with an admission park" ? 1 : 0, loader: 0, provider: 0 });
+    if (row.path === "with an admission park") expect(run.atEntry).toEqual({ grants: 1, identity: 1 });
+  });
+
+  it.each(PATHS)("%s, with no change at the second reads: one dispatch after two grant reads and two identity reads, whose callback receives the very authority object the boundary returns, resting on workbench:execute and the action under local-operator:1000:s1 / s1", async path => {
+    const { host, reads } = secondReadHost({ grants: STEADY_GRANTS, identity: HOST });
+    const run = await throughPath(path, host, reads);
+    if (run.result.status !== "dispatched") throw new Error("expected one dispatch");
+    expect({ reads, park: run.park, loader: run.loader, provider: run.provider, value: run.result.value }).toEqual({ reads: { grants: 2, identity: 2 }, park: path === "with an admission park" ? 1 : 0, loader: 1, provider: 1, value: "ran" });
+    expect(run.received).toHaveLength(1);
+    expect(run.received[0]).toBe(run.result.authority);
+    expect({ grants: run.result.authority.grants, identity: run.result.authority.identity }).toEqual({ grants: [EXECUTE_GRANT, ACTION], identity: HOST });
+  });
+
+  it.each(ENTRY_REFUSALS.map(row => [row.policy, row] as const))("with an admission park given, the listed request refused at entry as %s refuses there without calling the park: zero park and dispatch calls, after one grant read and one identity read", async (_policy, row) => {
+    const reads = { grants: 0, identity: 0 };
+    const host: FunctionAuthorityHost = {
+      grants: () => {
+        reads.grants += 1;
+        return row.grants;
+      },
+      identity: () => {
+        reads.identity += 1;
+        return { ...row.identity };
+      },
+    };
+    const wait = parked();
+    const dispatch = vi.fn(async () => "ran");
+    const pending = dispatchFunctionWithAuthority({ admission: admissionFor(FUNCTION_ID, undefined, TASK, row.kind), contract: row.contract, host, park: wait.park, dispatch });
+    wait.release();
+    expect(refusalOf(await pending)).toEqual({ stage: "entry", policy: row.policy, category: row.category });
+    expect({ reads, park: wait.park.mock.calls.length, dispatch: dispatch.mock.calls.length }).toEqual({ reads: { grants: 1, identity: 1 }, park: 0, dispatch: 0 });
+  });
+
+  it.each(QUEUED)("with no admission park, a change to the host's %s read (%s) queued as a microtask by the final grant read itself lands after the dispatch: the final grant read queues it, and dispatch is invoked on what the host held at that read", async (_read, _change, apply) => {
+    const state: QueuedState = { grants: STEADY_GRANTS, identity: HOST };
+    let grantReads = 0;
+    let queued = false;
+    const host: FunctionAuthorityHost = {
+      grants: () => {
+        grantReads += 1;
+        if (grantReads === 2) {
+          queued = true;
+          queueMicrotask(() => apply(state));
+        }
+        return state.grants;
+      },
+      identity: () => ({ ...state.identity }),
+    };
+    const atDispatch: QueuedState[] = [];
+    const result = await dispatchFunctionWithAuthority({
+      admission: admissionFor(),
+      contract: CONTRACT,
+      host,
+      dispatch: async () => {
+        atDispatch.push({ grants: state.grants, identity: { ...state.identity } });
+        return "ran";
+      },
+    });
+    expect({ status: result.status, grantReads, queued }).toEqual({ status: "dispatched", grantReads: 2, queued: true });
+    expect(atDispatch).toEqual([{ grants: STEADY_GRANTS, identity: HOST }]);
   });
 });

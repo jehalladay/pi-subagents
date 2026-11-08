@@ -8,10 +8,16 @@
  * Once decideExecute (execute.ts) admits a function request, its launch may wait (an admission queue, backpressure, an
  * operator hold) before its loader imports the pinned export and its provider runs.
  * dispatchFunctionWithAuthority is the boundary such a launch passes through: it decides the function's authority when
- * the request enters and again, from FRESH host reads, once the optional wait settles. Pinned final-boundary timing: a
- * host change queued as a microtask right after the wait settles, or queued by the final read itself with or without a
- * wait, lands after the one dispatch the final decision permits is invoked. Other scheduling forms are NOT CLAIMED. No
- * decision taken at entry is carried across the wait.
+ * the request enters and again, from FRESH host reads, once the optional wait settles. Pinned final reads (wb-m83p), at
+ * the suite's listed request, with an admission park and with none: a request that passes entry reads the host's grants
+ * and its identity once more each for the final decision; each of the 6 listed changes those second reads report
+ * (workbench:execute dropped, the action grant dropped, a changed principal, a changed session, a grant read that is
+ * unknown permission data, an identity read that is unknown identity data) refuses at dispatch, with zero loader and
+ * provider calls; and with no change, the callback of the one dispatch receives the very authority object the boundary
+ * returns. Pinned final-boundary timing: a revocation of the action grant queued as a microtask right after the wait
+ * settles, and a revoked action grant or a changed effective principal queued as a microtask by the final grant read
+ * itself, with or without a wait, land after the one dispatch the final decision permits is invoked. Other requests,
+ * changes and scheduling forms are NOT CLAIMED. No decision taken at entry is carried across the wait.
  *
  * Host authority, at the suite's listed forms only. In each host mode, the request for mechanical.development.develop.v1
  * under the pinned contract, carrying any of the suite's 7776 listed caller policies (each record holding each of grants,
@@ -48,7 +54,8 @@
  *             missing-function-action-grant when adoption admits the spelling and as unknown-permission-data when it does
  *             not. Other spellings and holdings are NOT CLAIMED.
  *   EAT-R030  the effective principal and session at dispatch must each equal the one read at entry, field by field.
- *   EAT-R031  the grants are read again at dispatch, so a grant revoked during the wait refuses.
+ *   EAT-R031  the grants are read again at dispatch, with a wait and without one, so at the suite's rows workbench:execute
+ *             or the action grant revoked during the wait, or dropped at that read, refuses.
  *   EAT-R154  pinned at the suite's EAT-R154 rows only. Its listed Beads-note fixture pairs (a plain note or one carrying
  *             the listed seat tokens, in the caller policy, the caller input or the host's identity read) leave
  *             decideExecute's admission as it is for the form's listed request carrying no note, and the boundary's
@@ -80,10 +87,13 @@
  * host reads are NOT CLAIMED. Routing a function launcher through this boundary is a later cut.
  *
  * The host supplies the two reads, the wait and the dispatch. Pinned fixed reasons: for each pinned pair of requests (the
- * seven pairs that differ in definition, invocation, identity and held grants, and the five pairs that differ only in
+ * seven pairs that differ in definition, invocation, identity and held grants; the five pairs that differ only in
  * definition kind, the changed identity field, the shape of unknown permission data, the held-grant count or the schema
- * version), both requests carry one reason, and the first seven name none of their definition, action, invocation or
- * identity texts. Other pairs are NOT CLAIMED.
+ * version; and the text census's seven pairs, one per policy, whose two requests share none of their 7 texts), both
+ * requests carry one reason. The reason of each of the first seven pairs and of each census pair contains none of either
+ * request's definition text members (each own key of its admitted definition beside its kind: id, schemaVersion and
+ * artifactDigest), action, invocation, or entered principal or session (wb-m83p). Whether a reason names a definition's
+ * kind, other texts and other pairs are NOT CLAIMED.
  */
 import { CapabilityError, type CapabilityErrorCategory } from "./capability-registry.js";
 import { EXECUTE_GRANT, type ExecuteAdmission } from "./execute.js";
@@ -299,9 +309,11 @@ export function decideFunctionAuthority(input: FunctionAuthorityInput): Function
 }
 
 /**
- * The final dispatch boundary. Decides at entry (a refusal there never waits), awaits the admission wait, then decides
- * again from fresh host reads and dispatches at most once on that final decision. The entry identity is copied when
- * read, so a host that later mutates the object it returned cannot move the snapshot.
+ * The final dispatch boundary. Decides at entry (a refusal there never waits: pinned, with an admission park given, at the
+ * 6 listed entry refusals, one for each refusal policy but changed-effective-identity), awaits the admission wait when one
+ * is given, then decides again from fresh host reads, with a wait and without one (wb-m83p), and dispatches at most once
+ * on that final decision. The entry identity is copied when read, so a host that later mutates the object it returned
+ * cannot move the snapshot.
  */
 export async function dispatchFunctionWithAuthority<T>(options: FunctionDispatchOptions<T>): Promise<FunctionDispatchResult<T>> {
   const { admission, contract, host, park, dispatch } = options;
