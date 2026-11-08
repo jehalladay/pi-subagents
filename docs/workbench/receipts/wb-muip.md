@@ -17,3 +17,200 @@
 - Red: the suite against stub judges that have the exported API and blind bodies gave 31 failed | 8 passed (39). The 8 that pass are two absence rows a blind judge satisfies and the 6 shape and anchor rows, which do not read the judges.
 - Green: 39 of 39.
 - Mutants: 27 of 27 killed, each applied in place and restored byte-identical (sha256 checked), with 1 to 7 failures each. 24 are on the judges, covering both vendored adversarial mutants, every component pattern, the range bounds, undated reading, entry splitting, JSON dating, store declaration, each exclusion reason, the witness and FAIL rules, the contract check and the store listing. 3 are on the evidence path: the probe reading another operation id field, a recorded failed gate edited to exit 0, and a recorded transcript relabelled as a fixture.
+
+## 2026-11-07 receipt: wb-prv7, the R694 follow-up of landing 1011, reads receipts through marked, records each test's end and anchors the census here (machine seat ws-10, run g10-work-s233)
+
+- Follow-up: wb-prv7 carries the wb-muip gate's F1 (leads) and F2 to F5 (ride); F14, the register archive, is the orchestrator's duty and not this cut's. The suite and its judges are the two files the entry above names. This entry's cut changes how a markdown receipt is split and joined and adds five cases, the record and the anchor below; the EAT-R081 judges, the declared scope and range and the vendored roster are unchanged.
+- F1 (leads): the reader split at every raw line starting `## `, inside fenced code too, and read HTML comment text as entry text. It now reads a receipt through the lexer of marked 18.0.11 (the pinned devDependency): the top-level level-2 headings marked reads, ATX or setext, split it, so a level-2 line inside fenced or indented code, an HTML block or comment, a list item or a block quote opens no entry, and the join reads each entry's text less its HTML comments, while code keeps its text. Each entry's text is still its own lines. Cases: R080-HEADING-FORMS, R080-FENCED-HEADING (the gate's fenced-line witness, with its fence-less control), R080-COMMENT-TEXT (the gate's comment witness, with its comment-free and code controls) and R080-CONTAINER-TEXT (lists, tables and block quotes read item by item, cell by cell and line by line).
+- F5: R080-ONE-PART-PARTIAL pins a partial carrying one component, for each of the four.
+- F2 and F3: the census's tests and residual families are anchored here, outside its two files. Its receipt-anchor check reads the last level-2 entry of this receipt through marked's tokens and holds the first table's ids, rows and kinds to the census's cases and checks in registration order, each census row's claim ids there to that row's pins, and the second table to its residual families, all exactly.
+- F4: every test before the census's record pushes its end with the assertion count vitest holds for it. The record, registered last, reads the vitest task tree (every title in order, every other test in run mode, not inverted and run before it) and holds the ends to the first table's counts, in run order.
+- Live reading, measured on this cut's tree (trunk fd90f9d plus this cut): 209 entries in 58 files (152 receipt entries, 54 TRACEABILITY sections, 3 JSON receipts), 101 dated and 108 undated, 1 out of range (this entry), 0 witnesses and 127 partials (118 with a source pin only, 5 with a run id and a pin, 3 with an operation id and a pin, 1 with all three). The marked reader and the line reader it replaces read the same entries, dates and components on this tree and on trunk fd90f9d alone (208 entries, 0 out of range): searched-scope absence, global UNDETERMINED.
+- Changes: this receipt is append-only (standing rule 15). A later cut that changes a test, a pin, an assertion count or a residual family appends a new dated entry carrying both tables for its state, and the census reads the last entry.
+
+| Test | Row | Kind | Assertions |
+| --- | --- | --- | --- |
+| R080-NEVER-RAN-MUTANT | EAT-R080 | claim | 5 |
+| R080-EMPTY-UNREAD | EAT-R080 | claim | 3 |
+| R080-VOCABULARY | EAT-R080 | claim | 2 |
+| R080-JOINED-WITNESS | EAT-R080 | claim | 5 |
+| R080-NEEDS-PI-RUN | EAT-R080 | claim | 4 |
+| R080-NEEDS-OUTCOME | EAT-R080 | claim | 4 |
+| R080-NEEDS-OPERATION | EAT-R080 | claim | 4 |
+| R080-NEEDS-PIN | EAT-R080 | claim | 4 |
+| R080-ONE-PART-PARTIAL | EAT-R080 | claim | 9 |
+| R080-OUTCOME-TOKENS | EAT-R080 | claim | 4 |
+| R080-RANGE-BOUNDS | EAT-R080 | claim | 6 |
+| R080-UNDATED-READ | EAT-R080 | claim | 3 |
+| R080-MARKDOWN-ENTRIES | EAT-R080 | claim | 5 |
+| R080-HEADING-FORMS | EAT-R080 | claim | 5 |
+| R080-FENCED-HEADING | EAT-R080 | claim | 6 |
+| R080-COMMENT-TEXT | EAT-R080 | claim | 25 |
+| R080-CONTAINER-TEXT | EAT-R080 | claim | 4 |
+| R080-JSON-ENTRY | EAT-R080 | claim | 6 |
+| R080-UNDECLARED-STORE | EAT-R080 | claim | 1 |
+| R080-LIVE-STORES | EAT-R080 | claim | 14 |
+| R080-LIVE-PLANTED | EAT-R080 | claim | 9 |
+| R081-FIXTURE-MUTANT | EAT-R081 | claim | 4 |
+| R081-ADAPTER-CONDITIONAL | EAT-R081 | claim | 2 |
+| R081-PAIRING-WITNESSED | EAT-R081 | claim | 3 |
+| R081-SCOPED-NON-OBSERVATION | EAT-R081 | claim | 3 |
+| R081-NEEDS-PRODUCER | EAT-R081 | claim | 2 |
+| R081-NEEDS-OPERATION | EAT-R081 | claim | 2 |
+| R081-NEEDS-PAIRING-FIELDS | EAT-R081 | claim | 2 |
+| R081-NO-FAILED-GATE | EAT-R081 | claim | 3 |
+| R081-FIXTURE-NEVER-UPGRADES | EAT-R081 | claim | 3 |
+| R081-CONTRACT-CONSISTENCY | EAT-R081 | claim | 1 |
+| R081-RECORDED-PROBE | EAT-R081 | claim | 15 |
+| QUIET-OUTCOME-WORDS | EAT-R080 | quiet | 2 |
+| QUIET-PI-REFERENCE | EAT-R080 | quiet | 2 |
+| QUIET-SPELLING | EAT-R080 | quiet | 7 |
+| QUIET-SPLIT-JOIN | EAT-R080 | quiet | 2 |
+| QUIET-DECLARED-PROVENANCE | EAT-R081 | quiet | 2 |
+| QUIET-VERDICT-SPELLING | EAT-R081 | quiet | 3 |
+| CHECK-FROZEN-SHAPE | - | check | 2 |
+| CHECK-TILING | - | check | 78 |
+| CHECK-ROSTER | - | check | 20 |
+| CHECK-EXPORT-ANCHOR | - | check | 3 |
+| CHECK-J03-ANCHOR | - | check | 3 |
+| CHECK-LIVE-SCOPE | - | check | 6 |
+| CHECK-RECEIPT-ANCHOR | - | check | 7 |
+
+| Residual family | Row | Quiet row |
+| --- | --- | --- |
+| R-OUTCOME-WORDS | EAT-R080 | QUIET-OUTCOME-WORDS |
+| R-PI-REFERENCE | EAT-R080 | QUIET-PI-REFERENCE |
+| R-SPELLING | EAT-R080 | QUIET-SPELLING |
+| R-SPLIT-JOIN | EAT-R080 | QUIET-SPLIT-JOIN |
+| R-DECLARED-PROVENANCE | EAT-R081 | QUIET-DECLARED-PROVENANCE |
+| R-VERDICT-SPELLING | EAT-R081 | QUIET-VERDICT-SPELLING |
+
+## 2026-11-07 receipt: wb-caoo, the R694 follow-up of landing 1018, pins two comments in one html token and a comment in indented code (machine seat ws-07, run g10-work-s235)
+
+- Follow-up: wb-caoo carries the wb-prv7 gate's F1 (leads) and F2 (rides). This entry's cut adds rows to R080-COMMENT-TEXT only; the judges, every other case, the declared scope and range, the roster and the residual families are unchanged.
+- F1 (leads): no row held two HTML comments in one html token, so the comment strip without its global flag (the first comment of each html token removed, the rest read) kept the census green. R080-COMMENT-TEXT now holds two such tokens, a block line holding two comments and a div block holding two comment lines, each lexed as one html token holding both: the four parts inside the second comment are no witness and no partial.
+- F2 (rides): no row held a comment in an indented code block, so stripping comments from indented code only kept the census green. R080-COMMENT-TEXT's code controls now hold indented code, lexed as one indented code block, beside fenced code and a code span: the four parts inside its comment are a witness, since code renders its text.
+- Live reading, measured on this cut's tree (trunk 7f54a59 plus this cut): 218 entries in 60 files (161 receipt entries, 54 TRACEABILITY sections, 3 JSON receipts), 108 dated and 110 undated, 6 out of range (entries 1 and 2 of docs/workbench/receipts/wb-5ik5.md, entry 2 of wb-f3wd.md, entry 3 of wb-wupg.md, and entries 2 and 3 of this receipt), 0 witnesses and 129 partials (120 with a source pin only, 5 with a run id and a pin, 3 with an operation id and a pin, 1 with all three): searched-scope absence, global UNDETERMINED.
+- Changes: this receipt stays append-only (standing rule 15). This entry carries both tables for this cut's state, R080-COMMENT-TEXT's count 31 in place of 25, and the census reads the last entry.
+
+| Test | Row | Kind | Assertions |
+| --- | --- | --- | --- |
+| R080-NEVER-RAN-MUTANT | EAT-R080 | claim | 5 |
+| R080-EMPTY-UNREAD | EAT-R080 | claim | 3 |
+| R080-VOCABULARY | EAT-R080 | claim | 2 |
+| R080-JOINED-WITNESS | EAT-R080 | claim | 5 |
+| R080-NEEDS-PI-RUN | EAT-R080 | claim | 4 |
+| R080-NEEDS-OUTCOME | EAT-R080 | claim | 4 |
+| R080-NEEDS-OPERATION | EAT-R080 | claim | 4 |
+| R080-NEEDS-PIN | EAT-R080 | claim | 4 |
+| R080-ONE-PART-PARTIAL | EAT-R080 | claim | 9 |
+| R080-OUTCOME-TOKENS | EAT-R080 | claim | 4 |
+| R080-RANGE-BOUNDS | EAT-R080 | claim | 6 |
+| R080-UNDATED-READ | EAT-R080 | claim | 3 |
+| R080-MARKDOWN-ENTRIES | EAT-R080 | claim | 5 |
+| R080-HEADING-FORMS | EAT-R080 | claim | 5 |
+| R080-FENCED-HEADING | EAT-R080 | claim | 6 |
+| R080-COMMENT-TEXT | EAT-R080 | claim | 31 |
+| R080-CONTAINER-TEXT | EAT-R080 | claim | 4 |
+| R080-JSON-ENTRY | EAT-R080 | claim | 6 |
+| R080-UNDECLARED-STORE | EAT-R080 | claim | 1 |
+| R080-LIVE-STORES | EAT-R080 | claim | 14 |
+| R080-LIVE-PLANTED | EAT-R080 | claim | 9 |
+| R081-FIXTURE-MUTANT | EAT-R081 | claim | 4 |
+| R081-ADAPTER-CONDITIONAL | EAT-R081 | claim | 2 |
+| R081-PAIRING-WITNESSED | EAT-R081 | claim | 3 |
+| R081-SCOPED-NON-OBSERVATION | EAT-R081 | claim | 3 |
+| R081-NEEDS-PRODUCER | EAT-R081 | claim | 2 |
+| R081-NEEDS-OPERATION | EAT-R081 | claim | 2 |
+| R081-NEEDS-PAIRING-FIELDS | EAT-R081 | claim | 2 |
+| R081-NO-FAILED-GATE | EAT-R081 | claim | 3 |
+| R081-FIXTURE-NEVER-UPGRADES | EAT-R081 | claim | 3 |
+| R081-CONTRACT-CONSISTENCY | EAT-R081 | claim | 1 |
+| R081-RECORDED-PROBE | EAT-R081 | claim | 15 |
+| QUIET-OUTCOME-WORDS | EAT-R080 | quiet | 2 |
+| QUIET-PI-REFERENCE | EAT-R080 | quiet | 2 |
+| QUIET-SPELLING | EAT-R080 | quiet | 7 |
+| QUIET-SPLIT-JOIN | EAT-R080 | quiet | 2 |
+| QUIET-DECLARED-PROVENANCE | EAT-R081 | quiet | 2 |
+| QUIET-VERDICT-SPELLING | EAT-R081 | quiet | 3 |
+| CHECK-FROZEN-SHAPE | - | check | 2 |
+| CHECK-TILING | - | check | 78 |
+| CHECK-ROSTER | - | check | 20 |
+| CHECK-EXPORT-ANCHOR | - | check | 3 |
+| CHECK-J03-ANCHOR | - | check | 3 |
+| CHECK-LIVE-SCOPE | - | check | 6 |
+| CHECK-RECEIPT-ANCHOR | - | check | 7 |
+
+| Residual family | Row | Quiet row |
+| --- | --- | --- |
+| R-OUTCOME-WORDS | EAT-R080 | QUIET-OUTCOME-WORDS |
+| R-PI-REFERENCE | EAT-R080 | QUIET-PI-REFERENCE |
+| R-SPELLING | EAT-R080 | QUIET-SPELLING |
+| R-SPLIT-JOIN | EAT-R080 | QUIET-SPLIT-JOIN |
+| R-DECLARED-PROVENANCE | EAT-R081 | QUIET-DECLARED-PROVENANCE |
+| R-VERDICT-SPELLING | EAT-R081 | QUIET-VERDICT-SPELLING |
+
+## 2026-11-07 receipt: wb-349y, the R694 follow-up of landing 1022, pins the four parts outside the closed comments of one html token and inside the first of two comments (machine seat ws-13, run g10-work-s237)
+
+- Follow-up: wb-349y carries the wb-caoo gate's F1 (leads) and F2 (rides). This entry's cut adds rows to R080-COMMENT-TEXT only; the judges, every other case, the declared scope and range, the roster and the residual families are unchanged.
+- F1 (leads): no row held the four parts outside the closed comments of one html token, so the comment pattern made greedy (each html token read only up to its first comment) kept the census green. R080-COMMENT-TEXT now holds four such tokens, each a witness: the four parts on a line of their own before the comment line of a div block and after a closed comment on a block line (each lexed as one html token holding one comment), and between two closed comments on a block line and on a line of their own between the two comment lines of a div block (each lexed as one html token holding two).
+- F2 (rides): the two-comment rows held the four parts in the second comment only, so an html token dropping only its last comment kept the census green. R080-COMMENT-TEXT now also holds the four parts inside the first of two comments, on a block line holding both and in a div block holding both on lines of their own (each lexed as one html token holding two): no witness and no partial.
+- Live reading, measured on this cut's tree (trunk ea21fb1 plus this cut): 220 entries in 60 files (163 receipt entries, 54 TRACEABILITY sections, 3 JSON receipts), 110 dated and 110 undated, 8 out of range (entries 1, 2 and 3 of docs/workbench/receipts/wb-5ik5.md, entry 2 of wb-f3wd.md, entry 3 of wb-wupg.md, and entries 2, 3 and 4 of this receipt), 0 witnesses and 129 partials (120 with a source pin only, 5 with a run id and a pin, 3 with an operation id and a pin, 1 with all three): searched-scope absence, global UNDETERMINED.
+- Changes: this receipt stays append-only (standing rule 15). This entry carries both tables for this cut's state, R080-COMMENT-TEXT's count 43 in place of 31, and the census reads the last entry.
+
+| Test | Row | Kind | Assertions |
+| --- | --- | --- | --- |
+| R080-NEVER-RAN-MUTANT | EAT-R080 | claim | 5 |
+| R080-EMPTY-UNREAD | EAT-R080 | claim | 3 |
+| R080-VOCABULARY | EAT-R080 | claim | 2 |
+| R080-JOINED-WITNESS | EAT-R080 | claim | 5 |
+| R080-NEEDS-PI-RUN | EAT-R080 | claim | 4 |
+| R080-NEEDS-OUTCOME | EAT-R080 | claim | 4 |
+| R080-NEEDS-OPERATION | EAT-R080 | claim | 4 |
+| R080-NEEDS-PIN | EAT-R080 | claim | 4 |
+| R080-ONE-PART-PARTIAL | EAT-R080 | claim | 9 |
+| R080-OUTCOME-TOKENS | EAT-R080 | claim | 4 |
+| R080-RANGE-BOUNDS | EAT-R080 | claim | 6 |
+| R080-UNDATED-READ | EAT-R080 | claim | 3 |
+| R080-MARKDOWN-ENTRIES | EAT-R080 | claim | 5 |
+| R080-HEADING-FORMS | EAT-R080 | claim | 5 |
+| R080-FENCED-HEADING | EAT-R080 | claim | 6 |
+| R080-COMMENT-TEXT | EAT-R080 | claim | 43 |
+| R080-CONTAINER-TEXT | EAT-R080 | claim | 4 |
+| R080-JSON-ENTRY | EAT-R080 | claim | 6 |
+| R080-UNDECLARED-STORE | EAT-R080 | claim | 1 |
+| R080-LIVE-STORES | EAT-R080 | claim | 14 |
+| R080-LIVE-PLANTED | EAT-R080 | claim | 9 |
+| R081-FIXTURE-MUTANT | EAT-R081 | claim | 4 |
+| R081-ADAPTER-CONDITIONAL | EAT-R081 | claim | 2 |
+| R081-PAIRING-WITNESSED | EAT-R081 | claim | 3 |
+| R081-SCOPED-NON-OBSERVATION | EAT-R081 | claim | 3 |
+| R081-NEEDS-PRODUCER | EAT-R081 | claim | 2 |
+| R081-NEEDS-OPERATION | EAT-R081 | claim | 2 |
+| R081-NEEDS-PAIRING-FIELDS | EAT-R081 | claim | 2 |
+| R081-NO-FAILED-GATE | EAT-R081 | claim | 3 |
+| R081-FIXTURE-NEVER-UPGRADES | EAT-R081 | claim | 3 |
+| R081-CONTRACT-CONSISTENCY | EAT-R081 | claim | 1 |
+| R081-RECORDED-PROBE | EAT-R081 | claim | 15 |
+| QUIET-OUTCOME-WORDS | EAT-R080 | quiet | 2 |
+| QUIET-PI-REFERENCE | EAT-R080 | quiet | 2 |
+| QUIET-SPELLING | EAT-R080 | quiet | 7 |
+| QUIET-SPLIT-JOIN | EAT-R080 | quiet | 2 |
+| QUIET-DECLARED-PROVENANCE | EAT-R081 | quiet | 2 |
+| QUIET-VERDICT-SPELLING | EAT-R081 | quiet | 3 |
+| CHECK-FROZEN-SHAPE | - | check | 2 |
+| CHECK-TILING | - | check | 78 |
+| CHECK-ROSTER | - | check | 20 |
+| CHECK-EXPORT-ANCHOR | - | check | 3 |
+| CHECK-J03-ANCHOR | - | check | 3 |
+| CHECK-LIVE-SCOPE | - | check | 6 |
+| CHECK-RECEIPT-ANCHOR | - | check | 7 |
+
+| Residual family | Row | Quiet row |
+| --- | --- | --- |
+| R-OUTCOME-WORDS | EAT-R080 | QUIET-OUTCOME-WORDS |
+| R-PI-REFERENCE | EAT-R080 | QUIET-PI-REFERENCE |
+| R-SPELLING | EAT-R080 | QUIET-SPELLING |
+| R-SPLIT-JOIN | EAT-R080 | QUIET-SPLIT-JOIN |
+| R-DECLARED-PROVENANCE | EAT-R081 | QUIET-DECLARED-PROVENANCE |
+| R-VERDICT-SPELLING | EAT-R081 | QUIET-VERDICT-SPELLING |

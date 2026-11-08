@@ -1,5 +1,6 @@
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, mkdtempSync, realpathSync, rmSync, writeFileSync } from "node:fs";
+import { readdir, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
@@ -380,11 +381,13 @@ describe("worktree", () => {
   });
 });
 
-// cleanupWorktree's outer catch is the only place in the repo where a caught
-// error can DESTROY user work while reporting success-shaped output: it removes
-// the worktree and returns `{ hasChanges: false }`, which the manager renders as
-// "the agent changed nothing". If the commit or branch step fails, the agent's
-// commits go with the worktree and nobody is told.
+// cleanupWorktree's outer catch is where a failed preservation step lands. It
+// used to remove the worktree and return `{ hasChanges: false }`, which the
+// manager rendered as "the agent changed nothing": a failed commit, status or
+// branch step destroyed the agent's work and nobody was told. The corrected
+// contract (EAT-R001/EAT-R002; wb-5ik5, owner specification ruling M:61188)
+// keeps the worktree and answers with the typed preservation-failed result:
+// its path is the recovery path and its diagnostic carries git's failure text.
 describe("cleanupWorktree — failure path", () => {
   let repoDir: string;
   let pi: ExtensionAPI;
@@ -410,12 +413,13 @@ describe("cleanupWorktree — failure path", () => {
     expect(result.branch).toBeUndefined();
   });
 
-  it("swallows a git failure inside a still-present worktree and reports no changes", async () => {
+  it("answers a git failure inside a still-present worktree with the typed preservation-failed result and keeps the worktree", async () => {
     // The outer catch. The directory exists — so the existsSync guard above
     // does not fire — but git cannot operate in it, which is what a corrupted
-    // or externally-detached worktree looks like. The agent's work is lost
-    // either way; what matters is that cleanup does not reject out of the
-    // manager's settle path and take the whole record down with it.
+    // or externally-detached worktree looks like. Cleanup keeps the worktree,
+    // so the agent's work stays at the recovery path, and it still resolves
+    // rather than rejecting out of the manager's settle path and taking the
+    // whole record down with it.
     const wt = (await createWorktree(pi, repoDir, "corrupt"))!;
     // git can no longer remove this worktree once its link is broken, so the directory is ours to remove.
     trackScratch(wt.path);
@@ -425,14 +429,20 @@ describe("cleanupWorktree — failure path", () => {
 
     const result = await cleanupWorktree(pi, repoDir, wt, "corrupted agent");
 
-    expect(result.hasChanges).toBe(false);
+    expect(result.hasChanges).toBe(true);
+    expect(result.preservationFailed).toBe(true);
+    expect(result.path).toBe(wt.path);
+    expect(existsSync(wt.path)).toBe(true);
+    expect(await readFile(join(wt.path, "work.txt"), "utf-8")).toBe("agent output");
+    expect(result.diagnostic).toContain("not a git repository");
     expect(result.branch).toBeUndefined();
   });
 
-  it("reports no changes when the preservation commit fails", async () => {
+  it("answers a failed preservation commit with the typed preservation-failed result and keeps the worktree", async () => {
     // `git commit` failing resolves with a non-zero code rather than throwing,
     // so the outer catch is only reached if the result is inspected.
     const wt = (await createWorktree(pi, repoDir, "commit-fails"))!;
+    trackScratch(wt.path); // the worktree is kept now, so the directory is the test's to remove
     writeFileSync(join(wt.path, "work.txt"), "agent output");
 
     const result = await cleanupWorktree(
@@ -442,7 +452,12 @@ describe("cleanupWorktree — failure path", () => {
       "commit fails",
     );
 
-    expect(result.hasChanges).toBe(false);
+    expect(result.hasChanges).toBe(true);
+    expect(result.preservationFailed).toBe(true);
+    expect(result.path).toBe(wt.path);
+    expect(existsSync(wt.path)).toBe(true);
+    expect(await readFile(join(wt.path, "work.txt"), "utf-8")).toBe("agent output");
+    expect(result.diagnostic).toContain("boom");
     expect(result.branch).toBeUndefined();
   });
 
@@ -469,6 +484,307 @@ describe("cleanupWorktree — failure path", () => {
       cwd: repoDir, stdio: "pipe",
     }).toString();
     expect(files).toContain("work.txt");
+  });
+});
+
+// wb-5ik5 (program mechanical-workflows-interop-2026-11-04, ATOMIC-REQUIREMENTS.md@0b25e14e), EAT-R001 and EAT-R002:
+// when a preservation step fails, cleanup keeps the agent's edited bytes reachable and does not answer with the clean
+// result. Claimed here, each by its rows, and nothing wider (cut #3, the enumerate form of the R-B650 claim set):
+//  Every PF row asserts the same set: the result is exactly { hasChanges: true, preservationFailed: true, path, diagnostic }
+//  with `path` the worktree's root and the diagnostic the row names, a JSON round trip keeps it, the directory is kept
+//  with the exact bytes of an edited tracked file and a new untracked one (on disk, or in the kept HEAD commit once the
+//  agent's work was committed), and no pi-agent-<id>* ref exists.
+//  - PF-R001-COMMIT: a failed commit (stderr "boom").
+//  - PF-R001-BRANCH: both branch names refused with stderr "boom", the agent's own and then the suffixed retry, both
+//    tried; the bytes are in the kept HEAD commit.
+//  - PF-R002-commit, PF-R002-status, PF-R002-branch, PF-R002-add: that step answered with stderr "boom".
+//  - PF-REVPARSE: `git rev-parse HEAD` failing (stderr "boom") after the agent committed its own work, so the bytes are
+//    in the kept HEAD commit.
+//  - PF-DIAG-1 to PF-DIAG-4: a failed commit with each of the four failures their rows plant, and the diagnostic each
+//    row names.
+//  - PF-M-<step>-<shape> (PF_MATRIX: every step in STEPS with every shape in SHAPES), from a worktree created in the
+//    repo's pkg subdirectory, so its workPath is not its root: the diagnostic is the one the shape gives for the
+//    failing call's argv, the bytes are on disk for the status, add and commit steps and in the kept HEAD commit for
+//    the rev-parse and branch steps, and the planted calls are exactly the step's argv. For the branch step these are
+//    the agent's own name, answered with FIRST_REFUSAL, and then the suffixed retry, whose failure is the diagnostic.
+// NOT CLAIMED by this block: steps, failure shapes and failure texts other than those planted here.
+describe("cleanupWorktree — preservation failure keeps the edited bytes", () => {
+  let repoDir: string;
+  let pi: ExtensionAPI;
+
+  beforeEach(() => { repoDir = initGitRepo(); pi = mockPi(); });
+  afterEach(async () => {
+    try { await pruneWorktrees(pi, repoDir); } catch { /* ignore */ }
+    removeScratch(repoDir);
+    removeAllScratch(); // worktree directories the test registered with trackScratch
+  });
+
+  const TRACKED_BYTES = "# Test repo\nedited by the agent\n";
+  const UNTRACKED_BYTES = "agent output\n";
+
+  /** Edit the tracked README and add an untracked file, the two kinds of edit EAT-R001 names. */
+  function editTrackedAndUntracked(path: string): void {
+    writeFileSync(join(path, "README.md"), TRACKED_BYTES);
+    writeFileSync(join(path, "work.txt"), UNTRACKED_BYTES);
+  }
+
+  /** git's stdout for `args`, run in the repo, trimmed. */
+  function repoGit(args: string[]): string {
+    return execFileSync("git", args, { cwd: repoDir, encoding: "utf-8", stdio: "pipe" }).trim();
+  }
+
+  /**
+   * The ref names and git-directory file paths of the repo that contain `pi-agent-<agentId>` in any letter case, each
+   * once, sorted, one per line ("" when there is none). It reads each refname `git for-each-ref` lists from the repo
+   * (every refs/ namespace, packed or loose: branches, tags, refs/pi and the rest) and the path of every file in the
+   * repo's git directory (a symbolic link included), relative to that directory, with each worktree's admin directory
+   * (a directory under worktrees/ that holds a gitdir file) read from its own root. So a loose ref of any worktree
+   * (its refs/worktree/* and refs/bisect/* included) and a name outside refs/ are read too, and the admin directory's
+   * own name (pi-agent-<id>-<suffix>, from the worktree's path) is not. It first asserts the files ref backend, under
+   * which each loose ref and each name outside refs/ is a file of that directory.
+   */
+  async function preservationRefs(agentId: string): Promise<string> {
+    expect(repoGit(["rev-parse", "--show-ref-format"])).toBe("files");
+    const gitDir = repoGit(["rev-parse", "--path-format=absolute", "--git-common-dir"]);
+    const isAdminDir = (name: string) => existsSync(join(gitDir, "worktrees", name, "gitdir"));
+    const files = (await readdir(gitDir, { recursive: true, withFileTypes: true }))
+      .filter(entry => entry.isFile() || entry.isSymbolicLink())
+      .map(entry => join(entry.parentPath, entry.name).slice(gitDir.length + 1).split(/[\\/]/))
+      .map(segments => (segments[0] === "worktrees" && segments.length > 2 && isAdminDir(segments[1]) ? segments.slice(2) : segments).join("/"));
+    const needle = `pi-agent-${agentId}`.toLowerCase();
+    const names = [...repoGit(["for-each-ref", "--format=%(refname)"]).split("\n"), ...files];
+    return [...new Set(names.filter(name => name.toLowerCase().includes(needle)))].sort().join("\n");
+  }
+
+  /**
+   * Every ref `git for-each-ref` lists from the repo and from the worktree at `worktreePath` (every refs/ namespace,
+   * packed or loose, and each side's own refs/worktree/* and refs/bisect/*), with the object it names: the repo's
+   * listing, a `--` line, then the worktree's listing, one `<objectname> <refname>` line per ref in each.
+   */
+  function refsSnapshot(worktreePath: string): string {
+    const listed = (cwd: string) => execFileSync("git", ["for-each-ref", "--format=%(objectname) %(refname)"], { cwd, encoding: "utf-8", stdio: "pipe" });
+    return `${listed(repoDir)}--\n${listed(worktreePath)}`;
+  }
+
+  it("PF-R001-COMMIT: keeps the worktree and its exact bytes when the preservation commit fails", async () => {
+    // EAT-R001: "inject commit failure ... cleanup leaves exact bytes reachable at the recovery
+    // path or a verified retained ref. Assert the original worktree remains when no preservation
+    // ref exists."
+    const wt = (await createWorktree(pi, repoDir, "keep-commit"))!;
+    trackScratch(wt.path);
+    editTrackedAndUntracked(wt.path);
+    const refsBefore = refsSnapshot(wt.path);
+
+    const result = await cleanupWorktree(failingPi(args => args[0] === "commit", { code: 1, killed: false }), repoDir, wt, "commit fails");
+
+    expect(result).toEqual({ hasChanges: true, preservationFailed: true, path: wt.path, diagnostic: "boom" });
+    expect(JSON.parse(JSON.stringify(result))).toEqual(result);
+    expect(await preservationRefs("keep-commit")).toBe("");
+    expect(refsSnapshot(wt.path)).toBe(refsBefore);
+    expect(existsSync(wt.path)).toBe(true);
+    expect(await readFile(join(wt.path, "README.md"), "utf-8")).toBe(TRACKED_BYTES);
+    expect(await readFile(join(wt.path, "work.txt"), "utf-8")).toBe(UNTRACKED_BYTES);
+  });
+
+  it("PF-R001-BRANCH: keeps the worktree and its committed bytes when every branch name is refused", async () => {
+    // EAT-R001: "inject ... exhaustion of branch-name retries separately". The commit lands in
+    // the detached worktree first, so its HEAD is the only thing that still reaches it.
+    const wt = (await createWorktree(pi, repoDir, "keep-branch"))!;
+    trackScratch(wt.path);
+    editTrackedAndUntracked(wt.path);
+    const refused: string[][] = [];
+    const failing = failingPi(args => args[0] === "branch" && refused.push(args) > 0, { code: 1, killed: false });
+    const refsBefore = refsSnapshot(wt.path);
+
+    const result = await cleanupWorktree(failing, repoDir, wt, "branch fails");
+
+    expect(result).toEqual({ hasChanges: true, preservationFailed: true, path: wt.path, diagnostic: "boom" });
+    expect(JSON.parse(JSON.stringify(result))).toEqual(result);
+    // Both names were tried: the agent's own branch, then the suffixed retry.
+    expect(refused.map(args => args[1])).toEqual(["pi-agent-keep-branch", expect.stringMatching(/^pi-agent-keep-branch-\d+$/)]);
+    expect(await preservationRefs("keep-branch")).toBe("");
+    expect(refsSnapshot(wt.path)).toBe(refsBefore);
+    expect(existsSync(wt.path)).toBe(true);
+    const show = (file: string) => execFileSync("git", ["show", `HEAD:${file}`], { cwd: wt.path, encoding: "utf-8", stdio: "pipe" });
+    expect(show("README.md")).toBe(TRACKED_BYTES);
+    expect(show("work.txt")).toBe(UNTRACKED_BYTES);
+  });
+
+  it.each([
+    ["commit", (args: string[]) => args[0] === "commit"],
+    ["status", (args: string[]) => args[0] === "status"],
+    ["branch", (args: string[]) => args[0] === "branch"],
+    ["add", (args: string[]) => args[0] === "add"],
+  ])("PF-R002-%s: a failed step is not answered with the clean result", async (step, match) => {
+    // EAT-R002: "For commit, status and branch failures, assert a typed preservation-failed
+    // result with recovery path ..., never a clean/no-change outcome". Its named mutant is
+    // "Return hasChanges:false from the failure branch". The add row covers the add step the
+    // variant's words name (wb-5ik5 refusal #1, U3).
+    const wt = (await createWorktree(pi, repoDir, `typed-${step}`))!;
+    trackScratch(wt.path);
+    editTrackedAndUntracked(wt.path);
+    const refsBefore = refsSnapshot(wt.path);
+
+    const result = await cleanupWorktree(failingPi(match, { code: 1, killed: false }), repoDir, wt, `${step} fails`);
+
+    expect(result.hasChanges).not.toBe(false);
+    expect(result.path).toBe(wt.path);
+    expect(result).toEqual({ hasChanges: true, preservationFailed: true, path: wt.path, diagnostic: "boom" });
+    expect(existsSync(wt.path)).toBe(true);
+    expect(await preservationRefs(`typed-${step}`)).toBe("");
+    expect(refsSnapshot(wt.path)).toBe(refsBefore);
+    // The kept tree still holds the agent's bytes: on disk for a failed commit, status or add step, and in the
+    // worktree's own HEAD commit after a failed branch step (the commit landed before the branch was refused).
+    const shown = async (file: string) => step === "branch"
+      ? execFileSync("git", ["show", `HEAD:${file}`], { cwd: wt.path, encoding: "utf-8", stdio: "pipe" })
+      : await readFile(join(wt.path, file), "utf-8");
+    expect(await shown("README.md")).toBe(TRACKED_BYTES);
+    expect(await shown("work.txt")).toBe(UNTRACKED_BYTES);
+    // "serialization preserves that variant": the result is plain data, and a JSON round trip keeps every field.
+    expect(JSON.parse(JSON.stringify(result))).toEqual(result);
+  });
+
+  it("PF-REVPARSE: a failed `rev-parse HEAD` after the agent committed its own work is answered with the failed variant and keeps that commit", async () => {
+    // The `rev-parse HEAD` step the variant's words name: the read of HEAD that runs when `git status` is empty.
+    const wt = (await createWorktree(pi, repoDir, "head-read"))!;
+    trackScratch(wt.path);
+    editTrackedAndUntracked(wt.path);
+    execFileSync("git", ["add", "-A"], { cwd: wt.path, stdio: "pipe" });
+    execFileSync("git", ["commit", "-m", "agent commit"], { cwd: wt.path, stdio: "pipe" });
+    const refsBefore = refsSnapshot(wt.path);
+
+    const result = await cleanupWorktree(failingPi(args => args[0] === "rev-parse", { code: 1, killed: false }), repoDir, wt, "head read fails");
+
+    expect(result).toEqual({ hasChanges: true, preservationFailed: true, path: wt.path, diagnostic: "boom" });
+    expect(JSON.parse(JSON.stringify(result))).toEqual(result);
+    expect(existsSync(wt.path)).toBe(true);
+    expect(await preservationRefs("head-read")).toBe("");
+    expect(refsSnapshot(wt.path)).toBe(refsBefore);
+    const show = (file: string) => execFileSync("git", ["show", `HEAD:${file}`], { cwd: wt.path, encoding: "utf-8", stdio: "pipe" });
+    expect(show("README.md")).toBe(TRACKED_BYTES);
+    expect(show("work.txt")).toBe(UNTRACKED_BYTES);
+  });
+
+  /** A pi whose exec answers the calls `match` picks with `failure` and runs every other call for real. */
+  function failingWith(match: (args: string[]) => boolean, failure: { stderr: string; code: number; killed: boolean }): ExtensionAPI {
+    const real = mockPi();
+    return {
+      exec: async (command: string, args: string[], options?: { cwd?: string; timeout?: number }) =>
+        match(args) ? { stdout: "", ...failure } : real.exec(command, args, options),
+    } as unknown as ExtensionAPI;
+  }
+
+  it.each([
+    ["PF-DIAG-1", "stderr spanning lines, kept whole and trimmed", { stderr: "  fatal: first line\nhint: second line\n", code: 128, killed: false }, "fatal: first line\nhint: second line"],
+    ["PF-DIAG-2", "no stderr and a non-zero exit, the git helper's exit-code message", { stderr: "", code: 1, killed: false }, "git commit --no-verify -m pi-agent: commit fails failed (exit 1)"],
+    ["PF-DIAG-3", "stderr of only whitespace, the git helper's exit-code message", { stderr: " \n\t ", code: 1, killed: false }, "git commit --no-verify -m pi-agent: commit fails failed (exit 1)"],
+    ["PF-DIAG-4", "no stderr from a killed call, the git helper's exit-code message", { stderr: "", code: 0, killed: true }, "git commit --no-verify -m pi-agent: commit fails failed (exit 0)"],
+  ])("%s: the diagnostic of a failed commit with %s", async (_id, _shape, failure, diagnostic) => {
+    const wt = (await createWorktree(pi, repoDir, "diagnostic"))!;
+    trackScratch(wt.path);
+    editTrackedAndUntracked(wt.path);
+    const refsBefore = refsSnapshot(wt.path);
+
+    const result = await cleanupWorktree(failingWith(args => args[0] === "commit", failure), repoDir, wt, "commit fails");
+
+    expect(result).toEqual({ hasChanges: true, preservationFailed: true, path: wt.path, diagnostic });
+    expect(JSON.parse(JSON.stringify(result))).toEqual(result);
+    expect(existsSync(wt.path)).toBe(true);
+    expect(await preservationRefs("diagnostic")).toBe("");
+    expect(refsSnapshot(wt.path)).toBe(refsBefore);
+    expect(await readFile(join(wt.path, "README.md"), "utf-8")).toBe(TRACKED_BYTES);
+    expect(await readFile(join(wt.path, "work.txt"), "utf-8")).toBe(UNTRACKED_BYTES);
+  });
+
+  const ESC = String.fromCodePoint(0x1b);
+  /** Padded, two lines, mixed case, an escape sequence, a tab, a double space and a non-ASCII letter. */
+  const PLANTED_STDERR = `  Fatal: Mixed Case ${ESC}[31mred${ESC}[0m\n\tHint:  second line ${String.fromCodePoint(0xe9)}\n`;
+  /** The answer to the agent's own branch name in the branch rows, so a diagnostic carrying it is told from the retry's. */
+  const FIRST_REFUSAL = "fatal: the agent's own branch name is refused";
+
+  type Plant = { kind: "result"; stderr: string; code: number; killed: boolean } | { kind: "reject"; value: unknown };
+  interface Shape {
+    id: string;
+    plant: Plant;
+    /** The diagnostic this shape gives, from the failing call's argv. */
+    diagnostic: (argv: readonly string[]) => string;
+  }
+  const SHAPES: readonly Shape[] = [
+    { id: "stderr", plant: { kind: "result", stderr: PLANTED_STDERR, code: 1, killed: false }, diagnostic: () => PLANTED_STDERR.trim() },
+    { id: "no-stderr", plant: { kind: "result", stderr: "", code: 128, killed: false }, diagnostic: (argv) => `git ${argv.join(" ")} failed (exit 128)` },
+    { id: "blank-stderr", plant: { kind: "result", stderr: " \n\t ", code: 1, killed: false }, diagnostic: (argv) => `git ${argv.join(" ")} failed (exit 1)` },
+    { id: "killed", plant: { kind: "result", stderr: "", code: 0, killed: true }, diagnostic: (argv) => `git ${argv.join(" ")} failed (exit 0)` },
+    { id: "killed-stderr", plant: { kind: "result", stderr: PLANTED_STDERR, code: 0, killed: true }, diagnostic: () => PLANTED_STDERR.trim() },
+    { id: "rejects", plant: { kind: "reject", value: new Error(PLANTED_STDERR) }, diagnostic: () => PLANTED_STDERR.trim() },
+    { id: "rejects-blank", plant: { kind: "reject", value: new Error(" \n ") }, diagnostic: () => "git failed without a message" },
+    { id: "rejects-value", plant: { kind: "reject", value: PLANTED_STDERR }, diagnostic: () => PLANTED_STDERR.trim() },
+  ];
+
+  interface Step {
+    id: string;
+    /** The argv of the call cleanup makes for this step; the branch step's retry name is matched by pattern. */
+    argv: readonly string[];
+    /** The agent committed its own work first, so `git status` is empty and HEAD has moved. */
+    committedFirst: boolean;
+    /** The agent's bytes are kept in the worktree's HEAD commit rather than on disk. */
+    inHead: boolean;
+  }
+  const DESCRIPTION = "matrix row";
+  const STEPS: readonly Step[] = [
+    { id: "status", argv: ["status", "--porcelain"], committedFirst: false, inHead: false },
+    { id: "add", argv: ["add", "-A"], committedFirst: false, inHead: false },
+    { id: "commit", argv: ["commit", "--no-verify", "-m", `pi-agent: ${DESCRIPTION}`], committedFirst: false, inHead: false },
+    { id: "rev-parse", argv: ["rev-parse", "HEAD"], committedFirst: true, inHead: true },
+    { id: "branch", argv: ["branch"], committedFirst: false, inHead: true },
+  ];
+  const PF_MATRIX = STEPS.flatMap((step) => SHAPES.map((shape) => [`PF-M-${step.id}-${shape.id}`, step, shape] as const));
+
+  /** A pi that plants `shape` on the calls of `step` (recording each one's argv in `calls`) and runs every other call for real. */
+  function plantedPi(step: Step, shape: Shape, calls: string[][]): ExtensionAPI {
+    const real = mockPi();
+    return {
+      exec: async (command: string, args: string[], options?: { cwd?: string; timeout?: number }) => {
+        if (args[0] !== step.argv[0]) return real.exec(command, args, options);
+        calls.push([...args]);
+        if (step.id === "branch" && calls.length === 1) return { stdout: "", stderr: FIRST_REFUSAL, code: 128, killed: false };
+        if (shape.plant.kind === "reject") throw shape.plant.value;
+        return { stdout: "", stderr: shape.plant.stderr, code: shape.plant.code, killed: shape.plant.killed };
+      },
+    } as unknown as ExtensionAPI;
+  }
+
+  it.each(PF_MATRIX)("%s: the failed variant with the shape's diagnostic and the worktree root as path; the bytes kept, no ref", async (id, step, shape) => {
+    const agentId = id.toLowerCase();
+    mkdirSync(join(repoDir, "pkg"));
+    writeFileSync(join(repoDir, "pkg", "README.md"), "# pkg\n");
+    execFileSync("git", ["add", "-A"], { cwd: repoDir, stdio: "pipe" });
+    execFileSync("git", ["commit", "-m", "pkg"], { cwd: repoDir, stdio: "pipe" });
+    const wt = (await createWorktree(pi, join(repoDir, "pkg"), agentId))!;
+    trackScratch(wt.path);
+    expect(wt.workPath).toBe(join(wt.path, "pkg"));
+    editTrackedAndUntracked(wt.workPath);
+    if (step.committedFirst) {
+      execFileSync("git", ["add", "-A"], { cwd: wt.path, stdio: "pipe" });
+      execFileSync("git", ["commit", "-m", "agent commit"], { cwd: wt.path, stdio: "pipe" });
+    }
+    const calls: string[][] = [];
+    const refsBefore = refsSnapshot(wt.path);
+
+    const result = await cleanupWorktree(plantedPi(step, shape, calls), join(repoDir, "pkg"), wt, DESCRIPTION);
+
+    expect(calls).toEqual(step.id === "branch"
+      ? [["branch", `pi-agent-${agentId}`], ["branch", expect.stringMatching(new RegExp(`^pi-agent-${agentId}-\\d+$`))]]
+      : [step.argv]);
+    expect(result).toEqual({ hasChanges: true, preservationFailed: true, path: wt.path, diagnostic: shape.diagnostic(calls[calls.length - 1]) });
+    expect(JSON.parse(JSON.stringify(result))).toEqual(result);
+    expect(existsSync(wt.path)).toBe(true);
+    expect(await preservationRefs(agentId)).toBe("");
+    expect(refsSnapshot(wt.path)).toBe(refsBefore);
+    const kept = async (file: string) => step.inHead
+      ? execFileSync("git", ["show", `HEAD:pkg/${file}`], { cwd: wt.path, encoding: "utf-8", stdio: "pipe" })
+      : await readFile(join(wt.workPath, file), "utf-8");
+    expect(await kept("README.md")).toBe(TRACKED_BYTES);
+    expect(await kept("work.txt")).toBe(UNTRACKED_BYTES);
   });
 });
 

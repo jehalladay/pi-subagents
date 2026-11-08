@@ -135,6 +135,7 @@
  * this cut adds is a superset of the landed one.
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, qa, examples, docs, the repository's
  * top-level directories, the captured registry and the bead export are only read.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { chmodSync, type Dirent, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
@@ -150,6 +151,7 @@ import { type ReactiveFiberProjectionTopology, type ReactiveFiberTopologyContext
 import { sanitizeWorkbenchJson } from "../src/workbench/redaction.js";
 import { fullShapeRf, RF_FIXTURE_OPERATION_ID, RF_FIXTURE_WORKSPACE_ID } from "./helpers/rf-render-fixture.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+import { isTriageArchivePath } from "./helpers/triage-archive.js";
 
 installScratchLeakGuard(afterAll);
 
@@ -451,8 +453,9 @@ function filesBelow(root: string, base: string = REPO): string[] {
     entries.sort((left, right) => (left.name < right.name ? -1 : left.name > right.name ? 1 : 0));
     for (const entry of entries) {
       const path = join(directory, entry.name);
-      if (entry.isDirectory()) visit(path);
-      else if (entry.isFile()) files.push(posix(relative(base, path)));
+      if (entry.isDirectory()) {
+        if (!isTriageArchivePath(posix(relative(base, path)))) visit(path);
+      } else if (entry.isFile()) files.push(posix(relative(base, path)));
     }
   };
   visit(join(base, root));

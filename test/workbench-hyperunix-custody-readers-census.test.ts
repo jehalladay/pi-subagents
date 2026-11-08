@@ -180,6 +180,78 @@
  * reader code changes and no header words change: the helper is unchanged, and the landed words of this census, the
  * FAIL-CLOSED cases and the NOT CLAIMED parenthetical the finding's second cure alternative names among them, stand as
  * landed.
+ * wb-v3a9 (the R694 follow-up bead of wb-o3f8's landing 997) answers that landing's F1 finding (LOW RIDES) with the cure it
+ * carries, the second cure alternative of wb-o3f8's own F1 finding, the one whose lineage note says it ends the loop: the
+ * finding's realized one-edit members of narrowsToPinnedPages, each witnessed on the helper header's L077, outran the landed
+ * FAIL-CLOSED case words, which said that each line a case selects narrows to its pinned pages, and the landed NOT CLAIMED
+ * parenthetical on the widening words of those cases. Those words narrow, in place, to 'the cases apply narrowsToPinnedPages
+ * to the header's lines': each FAIL-CLOSED case's title and ROWS entry say so after 'wb-v3a9: ' and say that
+ * narrowsToPinnedPages reads narrowed every line the case selects, and the parenthetical says that the cases apply
+ * narrowsToPinnedPages to the header's lines, not the line's meaning. Which spellings the predicate reads stays claimed by the
+ * NARROWING_CONTROLS and MEMBER_WITNESSES rows alone, one spelling each, and no row is added for a further spelling. The new
+ * NARROWED WORDS cases read wb-v3a9's own cure sentences from its F1 finding, and the alternative and its lineage note,
+ * verbatim, with the words it replaces and narrows to, from wb-o3f8's F1 finding, both in the tracker export, and hold this
+ * header to them; the new CASE WORDS cases hold each FAIL-CLOSED case - as vitest registers it, as this header's ROWS entry
+ * names it and as this file spells it - to the narrowing: its title and entry hold the words and none of its row's replaced
+ * words, and its body applies narrowsToPinnedPages to a list it reads from the helper header. No reader code changes and the
+ * helper is unchanged; the FAIL-CLOSED case bodies stand as landed, and the CARRIER REFUSAL #1 to #5 ANCHOR cases, which also
+ * apply narrowsToPinnedPages to a line, keep their landed words.
+ * wb-v3a9 cut #2 answers this bead's refusal #1 (gate-prep-26 / g10-gate-s225, U1): the third NARROWED WORDS case read the
+ * NOT CLAIMED sentence on the widening words of the FAIL-CLOSED cases anywhere in this header, so a copy of that sentence
+ * placed elsewhere kept the census green while the sentence's parenthetical, in its place, was widened again. That case now
+ * reads the sentence in its place, that place spelled as the NARROWED WORDS ROWS entry spells it (since cut #3), and it
+ * reads the replaced words in any letter case.
+ * wb-v3a9 cut #3 answers this bead's refusal #2 (gate-prep-5 / g10-gate-s227, U1): cut #2's words for that place named its
+ * bounds, its clause separator and its counted lines more widely than the case reads them, so nine one-edit header edits
+ * in spellings the case does not read made those words false and kept the census green. Cut #3 takes the first branch of
+ * the refusal's cure and narrows those words to the spellings the case reads, in the NARROWED WORDS ROWS entry, which the
+ * case's title and the cut #2 paragraph above now refer to; the wb-v3a9 cut #3 paragraph of the NOT CLAIMED section scopes
+ * out every spelling that entry does not name for that place; a fourth NARROWED WORDS case holds that entry to those
+ * words, verbatim; and the third also reads the replaced words with both texts upper-cased.
+ * wb-v3a9 cut #4 answers this bead's refusal #3 (gate-prep-11 / g10-gate-s229, U1 and U2): rowsEntries, through which the
+ * fourth NARROWED WORDS case and the first CASE WORDS case read this header's ROWS entries, took a ROWS line only when it
+ * began with " *  " or " *   " and skipped every other one, so one-line header edits in other mark spellings, inside the
+ * NARROWED WORDS entry and inside the FAIL-CLOSED CORE and CARRY entries, kept the census green while those entries, as a
+ * reader of this header reads them, held wider words or their rows' replaced words again. Cut #4 takes the first branch of
+ * the refusal's cure: rowsEntries reads ROWS fail-closed, as the ROWS LINES ROWS entry spells it, so such a line reds every
+ * case that reads entries through it; a ROWS LINES case holds that reading on the ROWS_LINES rows; and the first CASE WORDS
+ * case reads the replaced words with white space folded and both texts lower-cased, and both upper-cased.
+ * wb-v3a9 cut #5 answers this bead's refusal #4 (gate-prep-1 / g10-gate-s231, U1) in the enumerate-the-resolvable form
+ * orchestrator ruling R-B651 binds on the CASE WORDS claim set: the first CASE WORDS case read the cases vitest registers
+ * and this header's ROWS entries, and the second case the it() calls, only when they opened "FAIL-CLOSED " with its
+ * space, while the CASE WORDS words spelled no head, so a sixth case or entry opening "FAIL-CLOSED" and then a colon, a
+ * comma or a hyphen kept the census green while those words read false. Cut #5 takes the second branch of the
+ * refusal's cure, the head spelling pinned red-first: the three selections read FAIL_CLOSED_HEAD, "FAIL-CLOSED" with
+ * any character, or none, following it, through failClosedNames, failClosedEntries and failClosedApplications; the CASE
+ * WORDS ROWS entry and the two cases' titles spell that head, so their words name the head the selections read; and
+ * the new CASE HEADS case holds each CASE_HEADS row's in-memory plant to the reading its row states:
+ * refusal #4's nine members and its three controls, the seat's same-class spellings, and the quiet rows of R-CASE-HEAD,
+ * the named residual of the head spellings a reader may read as that head which the selections do not read.
+ * wb-v3a9 cut #6 answers this bead's refusal #5 (gate-prep-6 / g10-gate-s234, U1 and U2) under the structural exit
+ * ruling R-B671: the CASE WORDS words about the it() calls claimed more than the second CASE WORDS case reads, which is
+ * only the first two arguments of a call whose callee is the identifier it, so a call with an options object between
+ * its title and its callback kept the census green while those words read false; that selection, read by the role of
+ * each argument, is now the exit child wb-2sk6's. Cut #6 narrows those words, in the CASE WORDS ROWS entry, the CASE
+ * WORDS suite's title, the second case's title and failClosedApplications' doc, to the call the second case reads, and
+ * a paragraph of the NOT CLAIMED section scopes the other call shapes; and the CASE HEADS case's title, which named two
+ * of the three plant kinds and three of the four readings, now names the template row's plant and its reading, as the
+ * CASE HEADS ROWS entry does (U2).
+ * wb-2sk6, the structural-exit child of wb-v3a9 (orchestrator ruling R-B671 on wb-v3a9's refusal #5, gate-prep-6 /
+ * g10-gate-s234, U1, and its F11 fail-closed core), carries that selection. The second CASE WORDS case read a call's
+ * first two arguments only, so a sixth FAIL-CLOSED call with an options object between its title and its arrow
+ * callback, the form of vitest 4's it(name, options, fn) signature, kept the census green. failClosedApplications now
+ * reads each call whose callee is the identifier it and whose first argument is a string literal opening "FAIL-CLOSED"
+ * by the role of its arguments, the callee, the title and each argument read through their parentheses and type
+ * assertions as the helper's bare reads them: its test function is its second argument when that is an arrow function
+ * or a function expression, as in it(name, fn, timeout), and its third when its second is an object literal, as in
+ * it(name, options, fn); such a call whose test function, so read, is none or is not an arrow function with a block
+ * body makes it throw naming the call's title, so that every case reading the calls through it reds (fail-closed). The
+ * CASE WORDS words name that reading, and a wb-2sk6 paragraph of the NOT CLAIMED section takes the place of the cut #6
+ * one. The new CASE CALLS cases hold each CASE_CALLS row's plant to the reading its row states - refusal #5's members,
+ * controls and live diagnostics as gate-prep-6 planted them, the parenthesized forms GP6-CW2-PARENCB-DEAD and
+ * GP6-CW2-PARENTITLE-DEAD among them, the seat's S6 rows, and the quiet rows of R-CASE-CALL, the named residual of the
+ * calls the selection reads quiet - hold the selection to its floor, the paired witness W6-CW2-ANYPOS, and hold the
+ * rows' GP6 ids and the bead's requirement line to the tracker export.
  *
  * ROWS:
  *  GATE: the gate's own members, replayed verbatim from the two PREP archives (anchor edits on the lifecycle file, or a planted
@@ -250,8 +322,9 @@
  *   start or after ", ", " and ", ", and ", " - " or ", among them ", and before ", ", " and ", ", and ", " - ", the
  *   predicate or, after "among them", the clause's end - with none of the exception words except, but, unlike, save, while,
  *   whereas, other than or claimed between the words and the predicate or the clause's end).
- *  FAIL-CLOSED CORE (wb-tz2.20 cut #4, in the CLASS GUARD, outside this census: the helper header's own words): every claim line
- *   of the four frozen classes, those the guard derives a sub-form from among them, carries the narrowing "on its pinned pages".
+ *  FAIL-CLOSED CORE (wb-tz2.20 cut #4, in the CLASS GUARD, outside this census: the helper header's own words; wb-v3a9: the
+ *   cases apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every claim line of the four
+ *   frozen classes, those the guard derives a sub-form from among them.
  *  CARRIER ANCHOR (wb-tz2.24, outside this census): every wb-tz2.24 requirement line this census answers occurs verbatim in that
  *   bead's description or notes in the export, and the requirement lines are exactly its description's acceptance sentence,
  *   the U1 and U2 slugs of the R-B424 fold note in its notes and (cuts #2 to #5) the UNMET slugs of its own refusal #1,
@@ -291,20 +364,21 @@
  *   member's witnesses, as the verdict states each one's kind, its text (each \n a line break, white space folded) and its
  *   delivered reading, in order, are its row's GP2W SUB-READINGS rows and pins of its line's CLAIM_LINES row; and each row's
  *   line narrows to its pinned pages as a clause of its own.
- *  FAIL-CLOSED CARRY (wb-tz2.24, in the CLASS GUARD, outside this census: the helper header's own words): every claim line whose
- *   words name an argument or element place of a root form or of the watched reference, or (cut #2) a parameter's default
- *   value, or (cut #3) a variable's initializer or a plain text pid, narrows to its pinned pages as a clause of its own; the
- *   FAIL-CLOSED CORE case reads its 17 lines the same way (refusal #4 F2).
- *  FAIL-CLOSED SHAPES (wb-tz2.24 cut #4, in the CLASS GUARD, outside this census: the helper header's own words): every "- "
- *   entry line between the C7 SHAPE FORMS heading and the F3 COMMAND HEADS heading, L064 to L078, narrows to its pinned pages
- *   as a clause of its own.
- *  FAIL-CLOSED ENTRIES (wb-tz2.24 cut #5, in the CLASS GUARD, outside this census: the helper header's own words): every "- "
- *   entry line of the claim block before the RESIDUALS heading - the 71 entries of BINDING_KINDS, ROOT_FORMS, C2 TAMPER FORMS,
- *   C7 DRIVER FORMS, C7 SHAPE FORMS, WRAPPER_FLAG_FORMS and UNESCAPE_FORMS - narrows to its pinned pages as a clause of its own.
- *  FAIL-CLOSED PARAGRAPHS (wb-tz2.24 cut #6, in the CLASS GUARD, outside this census: the helper header's own words): every
- *   paragraph claim line of the claim block before the RESIDUALS heading - each line that is neither blank nor a "- " entry,
- *   the 30 lines L001 to L004, L008 to L016, L025, L026, L028, L042 to L045, L047, L063, L079 to L083, L094, L095 and L103 -
- *   narrows to its pinned pages as a clause of its own.
+ *  FAIL-CLOSED CARRY (wb-tz2.24, in the CLASS GUARD, outside this census: the helper header's own words; wb-v3a9: the cases
+ *   apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every claim line whose words name an
+ *   argument or element place of a root form or of the watched reference, or (cut #2) a parameter's default value, or (cut #3)
+ *   a variable's initializer or a plain text pid; the FAIL-CLOSED CORE case reads its 17 lines the same way (refusal #4 F2).
+ *  FAIL-CLOSED SHAPES (wb-tz2.24 cut #4, in the CLASS GUARD, outside this census: the helper header's own words; wb-v3a9: the
+ *   cases apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every "- " entry line between
+ *   the C7 SHAPE FORMS heading and the F3 COMMAND HEADS heading, L064 to L078.
+ *  FAIL-CLOSED ENTRIES (wb-tz2.24 cut #5, in the CLASS GUARD, outside this census: the helper header's own words; wb-v3a9: the
+ *   cases apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every "- " entry line of the
+ *   claim block before the RESIDUALS heading - the 71 entries of BINDING_KINDS, ROOT_FORMS, C2 TAMPER FORMS, C7 DRIVER FORMS,
+ *   C7 SHAPE FORMS, WRAPPER_FLAG_FORMS and UNESCAPE_FORMS.
+ *  FAIL-CLOSED PARAGRAPHS (wb-tz2.24 cut #6, in the CLASS GUARD, outside this census: the helper header's own words; wb-v3a9:
+ *   the cases apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every paragraph claim line
+ *   of the claim block before the RESIDUALS heading - each line that is neither blank nor a "- " entry, the 30 lines L001 to
+ *   L004, L008 to L016, L025, L026, L028, L042 to L045, L047, L063, L079 to L083, L094, L095 and L103.
  *  POSITIONS (wb-tz2.20 cut #3): each cell, the override in one value form at one place of a call on one roster member, reads the
  *   override driver.
  *  REBIND GRID (wb-tz2.20 cut #3): each declaration kind's bare local, written by each REBIND_WRITES write, reads only the loud
@@ -346,6 +420,86 @@
  *   narrowed line none; and the control classes the finding's cheap cure names are, in order, the rows' items, each row's
  *   item the class its spelling falls in (the phrase's for a quoted replacement of the phrase by text without it, the
  *   follower's for the word that class quotes, else the place class).
+ *  NARROWED WORDS (wb-v3a9, outside this census): every wb-v3a9 requirement line this census answers occurs verbatim in
+ *   that bead's notes in the export, and the requirement lines are exactly its F1 finding's cure sentence and the scope
+ *   sentence beside it; the words its cure narrows, and the words it narrows them to, are those the second cure alternative
+ *   of wb-o3f8's F1 finding quotes; that alternative and its lineage note, the sentences the cure names, occur verbatim in
+ *   wb-o3f8's notes, and the NARROWING_REQUIREMENTS rows are exactly those two sentences of that finding; and the
+ *   parenthetical words the alternative quotes stand nowhere in this header as censusHeader reads it - this file's text
+ *   between its first slash-star-star and its first star-slash, split at each line feed, each line with /^ \* ?/ removed,
+ *   the lines joined with a space, each /\s+/ run read as one space and the ends trimmed - in any letter case (both texts
+ *   compared lower-cased, and both upper-cased), while the words it narrows them to stand in their place, in the
+ *   NOT CLAIMED sentence on the widening words of the FAIL-CLOSED cases (cut #2; cut #3 spells that place as the case reads
+ *   it, refusal #2 U1): of this file's lines (its text up to its first star-slash, split at each line feed), exactly one
+ *   begins with " * NOT CLAIMED (" and exactly one with " * wb-tz2.24: "; the section runs from the line beginning with
+ *   " * NOT CLAIMED (" up to the next line that equals " *", and the paragraph from the line beginning with
+ *   " * wb-tz2.24: ", which stands in that section, up to the section's next line that /^ \* wb-[a-z0-9.]+(?: cut #\d+)?: /
+ *   matches, or to the section's end; that paragraph, its lines read the way censusHeader reads this header's and split at
+ *   each "; " before which as many ")" as "(" stand in it, has a third clause that alone of its clauses holds the
+ *   sentence's opening words, up to its parenthesis, and that is exactly "and " followed by those opening words, the words
+ *   the alternative narrows to and ", not the line's meaning)"; and those opening words occur once in this header as
+ *   censusHeader reads it, in their own letter case; and this entry's words from 'stand nowhere' on are exactly those the
+ *   fourth case holds it to, as rowsEntries reads it (cut #3).
+ *  CASE WORDS (wb-v3a9; cut #5 spells the heads, refusal #4 U1; wb-2sk6 reads the calls by the role of their arguments):
+ *   the cases vitest registers for this file whose titles open "FAIL-CLOSED", this header's ROWS entries whose words, as
+ *   rowsEntries reads them, open "FAIL-CLOSED", the it() calls of this file - calls whose callee is the identifier it -
+ *   whose first argument is a string literal opening "FAIL-CLOSED" (wb-2sk6: the callee and that argument each read
+ *   through its parentheses and type assertions as the helper's bare reads them, whatever the call's other arguments),
+ *   and the FAIL_CLOSED_CASES rows are, by head - the words through the first " (" - and in order, the same
+ *   five, any character, or none, following "FAIL-CLOSED" (cut #5: FAIL_CLOSED_HEAD, read by failClosedNames,
+ *   failClosedEntries and failClosedApplications); each such case's title and ROWS entry hold, after 'wb-v3a9: ', the
+ *   words the alternative narrows to, and 'narrowsToPinnedPages reads narrowed every ', and none of its row's replaced
+ *   words; and each such call's test function, read by the role of its arguments (wb-2sk6: its second argument when that
+ *   is an arrow function or a function expression, its third when its second is an object literal, each read the same
+ *   way), is an arrow function with a block body whose body, as this file spells it, binds lines to helperClaimLines()
+ *   first and hands narrowsToPinnedPages, negated as the whole body of the filter of its unnarrowed list, its row's
+ *   argument over its row's list, a const of the body read from those lines - the argument reading lines itself, or the
+ *   list building no entry of its own (no map or flatMap call and no object literal) - declares none of the names that
+ *   application reads, and expects that list empty; such a call whose test function, so read, is none or is not an arrow
+ *   function with a block body makes failClosedApplications throw naming its title, so that every case reading the calls
+ *   through it reds (wb-2sk6: the CASE CALLS rows).
+ *  ROWS LINES (wb-v3a9 cut #4): rowsEntries reads this header's ROWS fail-closed: ROWS runs from the only line that
+ *   equals " * ROWS:" up to the next line that equals " *", and the line after that one begins with " * NOT CLAIMED (";
+ *   in ROWS, a line that /^ \* {2}[A-Z][A-Z-]*(?:,? (?:[A-Z][A-Z-]*|#\d+|\d+|and))*(?::| \()/ matches opens an entry,
+ *   and a line that begins with " *   " continues the entry open before it; any other line in ROWS (a line beginning
+ *   with " *   " before the first entry opens is one), a second line that equals " * ROWS:" and a close not followed so
+ *   make rowsEntries throw, so that every case reading entries through it reds. Each ROWS_LINES row's lines, inserted in
+ *   memory into this file's text after the line that equals the row's anchor, are refused - rowsEntries throws naming one
+ *   of them - or read into the entry whose head, its words through its first " (" or ":", the row names, as the row
+ *   states; and this entry's lines are exactly those the ROWS LINES case holds them to, their quotes spelled from ROWS_READ.
+ *  CASE HEADS (wb-v3a9 cut #5, refusal #4 U1): each CASE_HEADS row plants one head spelling in memory into this file's
+ *   text - an entry row its ROWS line after the line that equals its anchor, a title row an it() call so titled before the
+ *   line that opens with its anchor and a case so named in a task list, a template row the same with the title written as
+ *   a template literal - and reads as the row states: refused (rowsEntries throws naming the line), selected (the CASE
+ *   WORDS selection holds one more than with no plant: one more entry failClosedEntries reads, or one more call
+ *   failClosedApplications reads and one more name failClosedNames reads), quiet (it holds as many) or, where the calls
+ *   and the names differ, how many more of each (the template row: calls 0, names 1).
+ *  R-CASE-HEAD (wb-v3a9 cut #5, a named RESIDUAL; its quiet rows are the CASE_HEADS rows that read quiet): a case title,
+ *   or a ROWS entry as rowsEntries reads it, that a reader may read as a FAIL-CLOSED case or entry by its head though it
+ *   does not open "FAIL-CLOSED" is read quiet by the CASE WORDS selection - among them, as the quiet rows plant them, a
+ *   title spelling FAIL-CLOSED in lower case or in mixed case, after a space or after another word, or with a space, no
+ *   character or a no-break hyphen between FAIL and CLOSED, and an entry spelling it after another word or with a space
+ *   or no character between FAIL and CLOSED, or headed "CORE (continued): " inside the FAIL-CLOSED CORE entry; each quiet
+ *   row stands beside selected rows of its kind.
+ *  CASE CALLS (wb-2sk6, the structural-exit child of wb-v3a9, R-B671; refusal #5 U1): each CASE_CALLS row's lines,
+ *   inserted in memory into this file's text before the line that equals CALL_ANCHOR (the CASE HEADS suite's opening
+ *   line, where gate-prep-6 planted refusal #5's members), read as the row states: selected (failClosedApplications
+ *   reads one more call), quiet (as many) or refused (it throws CALL_REFUSAL and the title of a call those lines hold);
+ *   and W6-CW2-ANYPOS, gate-prep-6's paired witness as anyPositionTitles reads it (the calls whose callee is the
+ *   identifier it, whose first argument is a string literal opening "FAIL-CLOSED" and one of whose later arguments is
+ *   an arrow function with a block body, each node as written), reads as many more calls in them as the row states.
+ *   The rows are refusal #5's members, controls and live diagnostics, each as gate-prep-6 planted it (GP6), and the
+ *   seat's own shapes (S6); no row whose call W6-CW2-ANYPOS reads reads quiet, and on this file W6-CW2-ANYPOS and
+ *   failClosedApplications read, by head and in order, the FAIL_CLOSED_CASES rows' five (the floor). Outside this
+ *   census: wb-2sk6's requirement line occurs verbatim in its description in the tracker export and is exactly that
+ *   description's DELIVERABLE sentence, and the ids wb-v3a9's refusal #5 verdict names there that open GP6-CW2- or
+ *   GP6-DIAG-, the group name GP6-CW2-OPTS aside, are exactly the ids of the CASE_CALLS rows that open GP6-, each in
+ *   both directions.
+ *  R-CASE-CALL (wb-2sk6, a named RESIDUAL; its quiet rows are the CASE_CALLS rows that read quiet): a call a reader may
+ *   read as one of the second CASE WORDS case's calls though its callee, read through its parentheses and type
+ *   assertions, is no identifier it - a member of it, another name or a comma expression - or though its first argument,
+ *   read the same way, is no string literal - a template literal, a string concatenation or a const's name - as its
+ *   quiet rows plant them, is read quiet by that case; each quiet row stands beside selected rows of its form.
  *  FROZEN SHAPE (standing rule 16): one literal pins every table row as table:id:digest, the digest over the row's own JSON.
  *
  * NOT CLAIMED (scope sentences; no residual semantics): which helper hollowing reds which row is NOT CLAIMED by this census (the
@@ -377,8 +531,8 @@
  * (the line's own words say so), among them each place past the one a G1W witness plants, named so on its line; that a
  * CHILD_SURVIVORS_4 row's words name the first place past its witness is NOT CLAIMED by an anchor outside this census (the
  * CHILD REFUSAL #4 ANCHOR holds each member, its line and its witness; the words are this census's own); and a widening word
- * other than the ones the FAIL-CLOSED cases name is NOT CLAIMED by those cases (they read the phrase's place and those words,
- * not the line's meaning); and that a G1S plant stays is NOT CLAIMED by an anchor outside this census (they are its own
+ * other than the ones the FAIL-CLOSED cases name is NOT CLAIMED by those cases (the cases apply narrowsToPinnedPages to the
+ * header's lines, not the line's meaning); and that a G1S plant stays is NOT CLAIMED by an anchor outside this census (they are its own
  * literals, like the Z plants).
  * wb-tz2.24 cut #2: on L021, a page other than the line's pinned pages is NOT CLAIMED by this census (the line's own words say
  * so), among them the default of a third or later parameter, named so on the line; and that a CARRIER_SURVIVORS_1 row's past
@@ -438,13 +592,54 @@
  * members reds which row is NOT CLAIMED by this census (the seat measures it on scratch copies); and that a one-edit member
  * of narrowsToPinnedPages other than the nine the finding names reds this census is NOT CLAIMED by this census (a finite
  * set of spelling rows cannot pin an open spelling family, as the finding's lineage note states).
+ * wb-v3a9: wherever this census says what a FAIL-CLOSED case reads - its title, its ROWS entry or a paragraph of this
+ * header - the case applies narrowsToPinnedPages to the header's lines, so that a line it selects narrows in meaning, or holds no
+ * widening word in a spelling the predicate does not read, is NOT CLAIMED by that case (which spellings the predicate reads
+ * is claimed by the NARROWING_CONTROLS and MEMBER_WITNESSES rows alone, one spelling each); that a FAIL-CLOSED case body
+ * applies the census's predicate in meaning is NOT CLAIMED by the CASE WORDS cases beyond the syntax and the declared names
+ * they read (they read each body's syntax, not its meaning).
+ * wb-v3a9 cut #2: a spelling of the parenthetical words the alternative quotes other than theirs, letter case and white
+ * space aside, is NOT CLAIMED by the third NARROWED WORDS case (it reads their spelling); the clauses of the wb-tz2.24
+ * paragraph other than its third, and the paragraphs of this header other than that one, are NOT CLAIMED by that case
+ * beyond the replaced words' absence and the count of the sentence's opening words (it reads that clause, the bounds of
+ * that paragraph and of its section, and the counts of their opening lines, not the header's meaning); and the words that
+ * case finds the sentence, its paragraph and its section by - the sentence's opening and closing words and the words its
+ * paragraph's opening line and the heading line open with - are NOT CLAIMED by an anchor outside this census (they are its
+ * own literals; the words between the sentence's opening and closing words are the alternative's, read from the export).
+ * wb-v3a9 cut #3: that a line, a line's mark, white space, a clause separator or a parenthesis in a spelling the
+ * NARROWED WORDS ROWS entry does not name for the place of that sentence bounds, opens, splits or is counted in that
+ * place is NOT CLAIMED by the third NARROWED WORDS case, among them an empty line and a " * " line before the wb-tz2.24
+ * paragraph, a line " * wb-zchj:" ending at its colon, an opener spelled with " cut 2: " or " Cut #2: " or with two spaces
+ * after its mark, a semicolon with no space after it, and a heading or opening line with two spaces after its mark; and a
+ * copy of the sentence's opening words in another letter case, or one read otherwise than censusHeader reads this header,
+ * is NOT CLAIMED by that case's count of them.
+ * wb-v3a9 cut #4: that a ROWS_LINES row stays is NOT CLAIMED by an anchor outside this census (they are its own literals,
+ * like the GP22S plants); and a spelling of a FAIL_CLOSED_CASES row's replaced words other than theirs, letter case aside
+ * and each /\s+/ run read as one space, is NOT CLAIMED by the first CASE WORDS case (it reads their spelling).
+ * wb-v3a9 cut #5: a case title, or a ROWS entry as rowsEntries reads it, that does not open "FAIL-CLOSED" is NOT CLAIMED by
+ * the CASE WORDS cases, though a reader may read it as a FAIL-CLOSED case or entry by its head (R-CASE-HEAD names that
+ * family; its quiet rows are the CASE_HEADS rows that read quiet); a suite whose title opens "FAIL-CLOSED", and a line of
+ * this header outside ROWS that opens with it after its mark, are NOT CLAIMED by those cases (they read the cases vitest
+ * registers and the ROWS entries); a case declared otherwise than by an it() call with a string-literal title (wb-2sk6:
+ * its callee and its title each read through its parentheses and type assertions as the helper's bare reads them) is NOT
+ * CLAIMED by the second CASE WORDS case (the first one counts it among the names vitest registers when its title opens
+ * "FAIL-CLOSED"); and that a CASE_HEADS row stays, or that its id names the
+ * refusal #4 member or control whose spelling it plants, is NOT CLAIMED by an anchor outside this census (they are its own
+ * literals, like the ROWS_LINES rows).
+ * wb-2sk6: a call whose callee, read through its parentheses and type assertions as the helper's bare reads them, is no
+ * identifier it, and an it() call whose first argument, read the same way, is no string literal, are NOT CLAIMED by the
+ * second CASE WORDS case, though a reader may read one as one of that case's calls (R-CASE-CALL names that family; its
+ * quiet rows are the CASE_CALLS rows that read quiet); and that a CASE_CALLS row stays, a row whose id refusal #5's verdict names
+ * aside, that a GP6 row's lines are the edit gate-prep-6 planted under its id, and that anyPositionTitles reads as
+ * gate-prep-6's W6-CW2-ANYPOS read, are NOT CLAIMED by an anchor outside this census (they are its own literals and
+ * readers, like the CASE_HEADS rows; the PREP archive that holds those edits and that witness is outside this repository).
  *
- * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the lifecycle test, the helper's text and the
- * tracker export, and parses planted text in memory.
+ * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the lifecycle test, the helper's text, the
+ * tracker export and (wb-v3a9) its own source, and parses planted text in memory.
  */
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
@@ -452,6 +647,7 @@ import {
   ACCESSOR_DEFINERS,
   BINDING_KINDS,
   type BindingKind,
+  bare,
   bindingOf,
   C2_FORMS,
   CAPABILITY_ID,
@@ -518,12 +714,27 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const HELPER = "test/helpers/hyperunix-custody-readers.ts";
 const LIFECYCLE = "test/workbench-provider-lifecycle.test.ts";
 const EXPORT = ".beads/issues.jsonl";
+/** wb-v3a9: this census's own path from the repository root: it reads its own header and its FAIL-CLOSED case bodies. */
+const CENSUS = relative(ROOT, fileURLToPath(import.meta.url));
 const BEAD = "wb-tz2.16";
 const PARENT = "wb-tz2.11";
 const CHILD = "wb-tz2.20";
 const CARRIER = "wb-tz2.24";
 const FOLLOW_UP = "wb-zchj";
 const FOLLOW_UP_2 = "wb-o3f8";
+const FOLLOW_UP_3 = "wb-v3a9";
+/** wb-2sk6: the structural-exit child of wb-v3a9 (orchestrator ruling R-B671), whose cut reads the CASE WORDS calls by the role of their arguments. */
+const EXIT = "wb-2sk6";
+/** wb-v3a9 cut #2 (refusal #1, U1): the opening words, up to its parenthesis, of the NOT CLAIMED sentence on the widening words of the FAIL-CLOSED cases, the frame refusal #1's cure names. */
+const NARROWED_FRAME = "a widening word other than the ones the FAIL-CLOSED cases name is NOT CLAIMED by those cases (";
+/** wb-v3a9 cut #2: the words, after its " * " mark, that open the line opening the NOT CLAIMED paragraph that holds that sentence. */
+const NARROWED_PARAGRAPH = "wb-tz2.24: ";
+/** wb-v3a9 cut #3 (refusal #2, U1): the words the NARROWED WORDS ROWS entry holds from 'stand nowhere' on, up to its closing sentence, as rowsEntries reads it - the replaced words' absence and the place of the NOT CLAIMED sentence on the widening words of the FAIL-CLOSED cases, as the third NARROWED WORDS case reads them. */
+const PLACE_WORDS = String.raw`stand nowhere in this header as censusHeader reads it - this file's text between its first slash-star-star and its first star-slash, split at each line feed, each line with /^ \* ?/ removed, the lines joined with a space, each /\s+/ run read as one space and the ends trimmed - in any letter case (both texts compared lower-cased, and both upper-cased), while the words it narrows them to stand in their place, in the NOT CLAIMED sentence on the widening words of the FAIL-CLOSED cases (cut #2; cut #3 spells that place as the case reads it, refusal #2 U1): of this file's lines (its text up to its first star-slash, split at each line feed), exactly one begins with " * NOT CLAIMED (" and exactly one with " * wb-tz2.24: "; the section runs from the line beginning with " * NOT CLAIMED (" up to the next line that equals " *", and the paragraph from the line beginning with " * wb-tz2.24: ", which stands in that section, up to the section's next line that /^ \* wb-[a-z0-9.]+(?: cut #\d+)?: / matches, or to the section's end; that paragraph, its lines read the way censusHeader reads this header's and split at each "; " before which as many ")" as "(" stand in it, has a third clause that alone of its clauses holds the sentence's opening words, up to its parenthesis, and that is exactly "and " followed by those opening words, the words the alternative narrows to and ", not the line's meaning)"; and those opening words occur once in this header as censusHeader reads it, in their own letter case`;
+/** wb-v3a9 cut #5 (refusal #4, U1): the words the CASE WORDS cases select a FAIL-CLOSED case's title, an it() call's title and a ROWS entry by: the text opens with them, and any character, or none, may follow (cut #4 selected by "FAIL-CLOSED ", its space included). */
+const FAIL_CLOSED_HEAD = "FAIL-CLOSED";
+/** wb-2sk6 (refusal #5 of wb-v3a9, U1): the words failClosedApplications throws, followed by the call's title as JSON, for an it() call it selects by its title whose test function, read by the role of its arguments, is none or is not an arrow function with a block body. */
+const CALL_REFUSAL = "failClosedApplications reads no arrow function with a block body as the test function, by the role of its arguments, of the it() call titled ";
 const PLANT = "test/workbench-zz-readers-plant.test.ts";
 const SUITE = "wb-tz2.16 binding-aware HyperUnix custody readers census (HX-ORIGINAL-GOALS-CLOSURE-R11)";
 const CENSUS_TIMEOUT = 120_000;
@@ -1145,6 +1356,310 @@ function spelledAsFound(row: MemberWitness): boolean {
   while (tail < row.narrowed.length - head && row.narrowed[row.narrowed.length - 1 - tail] === row.line[row.line.length - 1 - tail]) tail += 1;
   return row.line.includes(spelled) && !row.narrowed.includes(spelled) && row.line.length > row.narrowed.length && head + tail === row.narrowed.length;
 }
+/** wb-v3a9: this census's own header, its leading doc comment, each line's " * " mark dropped, the lines joined and each run of white space read as one space. */
+function censusHeader(): string {
+  const text = read(CENSUS);
+  return text
+    .slice(text.indexOf("/**") + 3, text.indexOf("*/"))
+    .split("\n")
+    .map(line => line.replace(/^ \* ?/, ""))
+    .join(" ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+/**
+ * wb-v3a9 (cut #4, refusal #3 U1 and U2: read fail-closed): this header's ROWS entries, in order, each read as censusHeader
+ * reads its lines, by the ROWS_READ lines and pattern. ROWS runs from the only line that equals ROWS_READ.heading up to the
+ * next line that equals ROWS_READ.close, and the line after that one begins with ROWS_READ.next; in it, a line
+ * ROWS_READ.opener matches opens an entry, and a line beginning with ROWS_READ.continuation continues the entry open before
+ * it; any other line in it, a second heading line and a close not followed so throw. With no text given it reads this file.
+ */
+function rowsEntries(text: string = read(CENSUS)): string[] {
+  const lines = text.slice(0, text.indexOf("*/")).split("\n");
+  const from = lines.indexOf(ROWS_READ.heading);
+  if (from < 0 || lines.indexOf(ROWS_READ.heading, from + 1) >= 0) throw new Error(`rowsEntries reads no single ROWS heading ${JSON.stringify(ROWS_READ.heading)}`);
+  const to = lines.indexOf(ROWS_READ.close, from);
+  const after = to < 0 ? undefined : lines[to + 1];
+  if (after === undefined || !after.startsWith(ROWS_READ.next)) throw new Error(`rowsEntries reads no ROWS close before ${JSON.stringify(after ?? "")}`);
+  const entries: string[] = [];
+  for (const line of lines.slice(from + 1, to)) {
+    const last = entries.length - 1;
+    if (line.startsWith(ROWS_READ.continuation) && last >= 0) entries[last] = `${entries[last]} ${line.slice(ROWS_READ.continuation.length)}`;
+    else if (ROWS_READ.opener.test(line)) entries.push(line.slice(4));
+    else throw new Error(`rowsEntries reads no ROWS line ${JSON.stringify(line)}`);
+  }
+  return entries.map(entry => entry.replace(/\s+/g, " ").trim());
+}
+/** wb-v3a9: the narrowing wb-o3f8's F1 finding offers as its second cure alternative, as filed in the export: the parenthetical words it quotes (replaced) and the words it narrows them to (narrowing). */
+function narrowingCure(): { readonly replaced: string; readonly narrowing: string } {
+  const found = /narrow the FAIL-CLOSED words and the :348 parenthetical \('(.+?)'\) to '(.+?)'\. Lineage noted as data: /.exec(ridesFinding(FOLLOW_UP_2));
+  return { replaced: found?.[1] ?? "", narrowing: found?.[2] ?? "" };
+}
+/**
+ * wb-v3a9 cut #2 (refusal #1, U1; spelled at cut #3, refusal #2 U1, as the NARROWED WORDS ROWS entry spells it): one paragraph
+ * of this header's NOT CLAIMED section, read section-bounded. The section runs from the first line beginning with
+ * " * NOT CLAIMED (" up to the next line that equals " *"; the paragraph runs from the section's first line beginning with " * "
+ * and `opening` up to the section's next line that /^ \* wb-[a-z0-9.]+(?: cut #\d+)?: / matches, or to the section's end, its
+ * lines read the way censusHeader reads this header's. The counts are over this file's lines up to its first star-slash: the
+ * lines beginning with " * NOT CLAIMED (", and the lines beginning with " * " and `opening`.
+ */
+function notClaimedParagraph(opening: string): { readonly headings: number; readonly openings: number; readonly paragraph: string } {
+  const text = read(CENSUS);
+  const lines = text.slice(0, text.indexOf("*/")).split("\n");
+  const heading = " * NOT CLAIMED (";
+  const from = lines.findIndex(line => line.startsWith(heading));
+  const to = from < 0 ? -1 : lines.indexOf(" *", from);
+  const section = to < 0 ? [] : lines.slice(from, to);
+  const start = section.findIndex(line => line.startsWith(` * ${opening}`));
+  let end = start + 1;
+  while (start >= 0 && end < section.length && !/^ \* wb-[a-z0-9.]+(?: cut #\d+)?: /.test(section[end] ?? "")) end += 1;
+  return {
+    headings: lines.filter(line => line.startsWith(heading)).length,
+    openings: lines.filter(line => line.startsWith(` * ${opening}`)).length,
+    paragraph:
+      start < 0
+        ? ""
+        : section
+            .slice(start, end)
+            .map(line => line.replace(/^ \* ?/, ""))
+            .join(" ")
+            .replace(/\s+/g, " ")
+            .trim(),
+  };
+}
+/** wb-v3a9 cut #2: a paragraph's clauses, in order: the paragraph split at each "; " that stands outside parentheses. */
+function clausesOf(paragraph: string): string[] {
+  const clauses: string[] = [];
+  let depth = 0;
+  let from = 0;
+  for (let at = 0; at < paragraph.length; at += 1) {
+    const char = paragraph[at];
+    if (char === "(") depth += 1;
+    else if (char === ")") depth -= 1;
+    else if (depth === 0 && paragraph.startsWith("; ", at)) {
+      clauses.push(paragraph.slice(from, at));
+      from = at + 2;
+    }
+  }
+  return [...clauses, paragraph.slice(from)];
+}
+/** wb-v3a9: the identifiers a node reads, a property name after a dot aside. */
+function namesRead(node: ts.Node): string[] {
+  if (ts.isIdentifier(node)) return [node.text];
+  if (ts.isPropertyAccessExpression(node)) return namesRead(node.expression);
+  const names: string[] = [];
+  ts.forEachChild(node, child => {
+    names.push(...namesRead(child));
+  });
+  return names;
+}
+/** wb-v3a9: an object literal's property by name: its initializer, or the name a shorthand property reads. */
+function propertyOf(object: ts.Expression | undefined, name: string): ts.Expression | undefined {
+  if (object === undefined || !ts.isObjectLiteralExpression(object)) return undefined;
+  for (const property of object.properties) {
+    if (ts.isPropertyAssignment(property) && ts.isIdentifier(property.name) && property.name.text === name) return property.initializer;
+    if (ts.isShorthandPropertyAssignment(property) && property.name.text === name) return property.name;
+  }
+  return undefined;
+}
+/** wb-v3a9: the call, when an expression calls the named method on a receiver (receiver.method(...)). */
+function methodCall(node: ts.Expression | undefined, method: string): ts.CallExpression | undefined {
+  return node !== undefined && ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression) && node.expression.name.text === method ? node : undefined;
+}
+/** wb-v3a9: the receiver a method call reads, when it is a bare name. */
+function receiverOf(call: ts.CallExpression | undefined): string {
+  const callee = call?.expression;
+  return callee !== undefined && ts.isPropertyAccessExpression(callee) && ts.isIdentifier(callee.expression) ? callee.expression.text : "";
+}
+/** wb-v3a9: an expression with every trailing .map(...) call it ends in taken off. */
+function unmapped(node: ts.Expression | undefined): ts.Expression | undefined {
+  const callee = methodCall(node, "map")?.expression;
+  return callee !== undefined && ts.isPropertyAccessExpression(callee) ? unmapped(callee.expression) : node;
+}
+/** wb-v3a9: how one FAIL-CLOSED case's callback, read from its syntax, applies narrowsToPinnedPages (CaseApplication). */
+function caseApplication(title: string, body: readonly ts.Statement[], source: ts.SourceFile): CaseApplication {
+  const consts = new Map<string, ts.Expression>();
+  const declared: string[] = [];
+  const collect = (node: ts.Node): void => {
+    if ((ts.isVariableDeclaration(node) || ts.isParameter(node) || ts.isBindingElement(node) || ts.isFunctionDeclaration(node)) && node.name !== undefined && ts.isIdentifier(node.name)) declared.push(node.name.text);
+    ts.forEachChild(node, collect);
+  };
+  for (const statement of body) {
+    collect(statement);
+    if (!ts.isVariableStatement(statement) || (statement.declarationList.flags & ts.NodeFlags.Const) === 0) continue;
+    for (const declaration of statement.declarationList.declarations) {
+      if (ts.isIdentifier(declaration.name) && declaration.initializer !== undefined) consts.set(declaration.name.text, declaration.initializer);
+    }
+  }
+  const first = body[0];
+  const bound = first !== undefined && ts.isVariableStatement(first) && (first.declarationList.flags & ts.NodeFlags.Const) !== 0 && first.declarationList.declarations.length === 1 ? first.declarationList.declarations[0] : undefined;
+  const binding = bound?.initializer;
+  const bindsLines =
+    bound !== undefined &&
+    ts.isIdentifier(bound.name) &&
+    bound.name.text === "lines" &&
+    binding !== undefined &&
+    ts.isCallExpression(binding) &&
+    ts.isIdentifier(binding.expression) &&
+    binding.expression.text === "helperClaimLines" &&
+    binding.arguments.length === 0 &&
+    declared.filter(name => name === "lines").length === 1;
+  const last = body[body.length - 1];
+  const matcher = last !== undefined && ts.isExpressionStatement(last) ? methodCall(last.expression, "toStrictEqual") : undefined;
+  const asserted = matcher?.expression;
+  const subjectCall = asserted !== undefined && ts.isPropertyAccessExpression(asserted) ? asserted.expression : undefined;
+  const subject = subjectCall !== undefined && ts.isCallExpression(subjectCall) && ts.isIdentifier(subjectCall.expression) && subjectCall.expression.text === "expect" ? subjectCall.arguments[0] : undefined;
+  const filter = methodCall(unmapped(propertyOf(subject, "unnarrowed")), "filter");
+  const receiver = receiverOf(filter);
+  const callback = filter?.arguments[0];
+  const negated = callback !== undefined && ts.isArrowFunction(callback) && ts.isPrefixUnaryExpression(callback.body) && callback.body.operator === ts.SyntaxKind.ExclamationToken ? callback.body.operand : undefined;
+  const applied = negated !== undefined && ts.isCallExpression(negated) && ts.isIdentifier(negated.expression) && negated.expression.text === "narrowsToPinnedPages" && negated.arguments.length === 1 ? negated.arguments[0] : undefined;
+  const readsLines = (name: string, seen: readonly string[]): boolean => {
+    const initializer = consts.get(name);
+    if (initializer === undefined || seen.includes(name)) return false;
+    const names = namesRead(initializer);
+    return names.includes("lines") || names.some(other => other !== "lines" && readsLines(other, [...seen, name]));
+  };
+  const builds = (node: ts.Node): boolean => {
+    if (ts.isObjectLiteralExpression(node)) return true;
+    if (ts.isCallExpression(node) && (methodCall(node, "map") !== undefined || methodCall(node, "flatMap") !== undefined)) return true;
+    return ts.forEachChild(node, builds) ?? false;
+  };
+  const buildsEntries = (name: string, seen: readonly string[]): boolean => {
+    const initializer = consts.get(name);
+    if (initializer === undefined || name === "lines" || seen.includes(name)) return false;
+    return builds(initializer) || namesRead(initializer).some(other => buildsEntries(other, [...seen, name]));
+  };
+  const empty = propertyOf(matcher?.arguments[0], "unnarrowed");
+  return {
+    head: title.slice(0, title.indexOf(" (") + 2),
+    bindsLines,
+    receiver,
+    receiverReadsLines: receiver !== "lines" && readsLines(receiver, []),
+    argument: applied?.getText(source) ?? "",
+    readsHeaderLines: applied !== undefined && (namesRead(applied).includes("lines") || (receiver !== "" && !buildsEntries(receiver, []))),
+    expectsEmpty: empty !== undefined && ts.isArrayLiteralExpression(empty) && empty.elements.length === 0,
+    shadowed: declared.filter(name => name === "narrowsToPinnedPages" || name === "helperClaimLines" || name === "expect"),
+  };
+}
+/** wb-2sk6: this census's text as TypeScript syntax, parsed once for the readers that read the same text in turn (the last text parsed is kept). */
+let parsedCensus: { readonly text: string; readonly source: ts.SourceFile } | undefined;
+function censusSource(text: string): ts.SourceFile {
+  if (parsedCensus === undefined || parsedCensus.text !== text) parsedCensus = { text, source: ts.createSourceFile(CENSUS, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS) };
+  return parsedCensus.source;
+}
+/** wb-v3a9: the FAIL-CLOSED cases as this file spells them, in its order: each call whose callee is the identifier it and whose first argument is a string literal opening FAIL_CLOSED_HEAD (cut #5; "FAIL-CLOSED " at cut #4) - wb-2sk6: the callee and that argument each read through its parentheses and type assertions as the helper's bare reads them (failClosedTitle) - read by the role of its arguments (wb-2sk6; cut #6 read its first two arguments only): its test function (callTestFunction), an arrow function with a block body; such a call whose test function, so read, is none or is not an arrow function with a block body makes it throw CALL_REFUSAL and the call's title (fail-closed). Read from the TypeScript syntax of this census's own source; with no text given it reads this file. */
+function failClosedApplications(text: string = read(CENSUS)): CaseApplication[] {
+  const source = censusSource(text);
+  const found: CaseApplication[] = [];
+  const visit = (node: ts.Node): void => {
+    const title = failClosedTitle(node);
+    if (title !== undefined && ts.isCallExpression(node)) {
+      const callback = callTestFunction(node);
+      if (callback === undefined || !ts.isArrowFunction(callback) || !ts.isBlock(callback.body)) throw new Error(`${CALL_REFUSAL}${JSON.stringify(title)}`);
+      found.push(caseApplication(title, callback.body.statements, source));
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return found;
+}
+/** wb-2sk6: the title of a call whose callee is the identifier it and whose first argument is a string literal opening FAIL_CLOSED_HEAD, the callee and that argument each read through its parentheses and type assertions (as, satisfies, non-null and <T>) as the helper's bare reads them; for any other node, none. */
+function failClosedTitle(node: ts.Node): string | undefined {
+  if (!ts.isCallExpression(node)) return undefined;
+  const callee = bare(node.expression);
+  const first = node.arguments[0];
+  const title = first === undefined ? undefined : bare(first);
+  return ts.isIdentifier(callee) && callee.text === "it" && title !== undefined && ts.isStringLiteral(title) && title.text.startsWith(FAIL_CLOSED_HEAD) ? title.text : undefined;
+}
+/** wb-2sk6 (refusal #5 of wb-v3a9, U1): an it() call's test function by the role of its arguments after its title, as vitest 4's two call signatures place it, each argument read through its parentheses and type assertions as the helper's bare reads them: the second argument when that is an arrow function or a function expression (it(name, fn, timeout)), and the third when the second is an object literal (it(name, options, fn)); none when there is no second argument or it is of any other kind. */
+function callTestFunction(call: ts.CallExpression): ts.Node | undefined {
+  const [, second, third] = call.arguments.map(argument => bare(argument));
+  if (second === undefined) return undefined;
+  if (ts.isArrowFunction(second) || ts.isFunctionExpression(second)) return second;
+  return ts.isObjectLiteralExpression(second) ? third : undefined;
+}
+/** wb-2sk6: W6-CW2-ANYPOS, the paired witness gate-prep-6 wrote for wb-v3a9's refusal #5, as it reads: the titles, in this file's order, of the calls whose callee is the identifier it, whose first argument is a string literal opening FAIL_CLOSED_HEAD and one of whose later arguments is an arrow function with a block body, each node as written (no parentheses or assertions read through) - the floor the CASE CALLS cases hold failClosedApplications to. With no text given it reads this file. */
+function anyPositionTitles(text: string = read(CENSUS)): string[] {
+  const titles: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "it") {
+      const [title, ...rest] = node.arguments;
+      if (title !== undefined && ts.isStringLiteral(title) && title.text.startsWith(FAIL_CLOSED_HEAD) && rest.some(argument => ts.isArrowFunction(argument) && ts.isBlock(argument.body))) titles.push(title.text);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(censusSource(text));
+  return titles;
+}
+/** wb-v3a9 cut #5 (refusal #4, U1): the names, in order, of the cases among these tasks that open FAIL_CLOSED_HEAD, each suite's tasks walked where the suite stands - the cases vitest registers for this file, as the first CASE WORDS case reads them. */
+function failClosedNames(tasks: readonly CaseTask[]): string[] {
+  return tasks.flatMap(child => {
+    if (child.type === "suite") return failClosedNames(child.tasks ?? []);
+    return child.type === "test" && child.name.startsWith(FAIL_CLOSED_HEAD) ? [child.name] : [];
+  });
+}
+/** wb-v3a9 cut #5 (refusal #4, U1): this header's ROWS entries, in order and as rowsEntries reads them, that open FAIL_CLOSED_HEAD. With no text given it reads this file. */
+function failClosedEntries(text: string = read(CENSUS)): string[] {
+  return rowsEntries(text).filter(entry => entry.startsWith(FAIL_CLOSED_HEAD));
+}
+/** wb-v3a9 cut #5 (refusal #4, U1): how the CASE WORDS selection reads one CASE_HEADS row's plant in this file's text (CaseHead), against the entries and calls it reads with no plant (base). */
+function caseHeadReading(row: CaseHead, text: string, base: { readonly entries: number; readonly calls: number }): string {
+  const lines = text.split("\n");
+  if (row.kind === "entry") {
+    const at = lines.indexOf(row.anchor);
+    if (at < 0 || lines.indexOf(row.anchor, at + 1) >= 0) return "no single anchor line";
+    lines.splice(at + 1, 0, row.text);
+    try {
+      const more = failClosedEntries(lines.join("\n")).length - base.entries;
+      if (more === 1) return "selected";
+      return more === 0 ? "quiet" : `${more} more entries`;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      return message.endsWith(JSON.stringify(row.text)) ? "refused" : message;
+    }
+  }
+  const at = lines.findIndex(line => line.startsWith(row.anchor));
+  if (at < 0 || lines.findIndex((line, index) => index > at && line.startsWith(row.anchor)) >= 0) return "no single anchor line";
+  const title = row.kind === "template" ? `\`${row.text}\`` : JSON.stringify(row.text);
+  lines.splice(at, 0, `    it(${title}, () => {`, "      expect(FAIL_CLOSED_CASES.length).toBe(5);", "    });");
+  const calls = failClosedApplications(lines.join("\n")).length - base.calls;
+  const names = failClosedNames([{ type: "suite", name: SUITE, tasks: [{ type: "test", name: row.text }] }]).length;
+  if (calls === 1 && names === 1) return "selected";
+  return calls === 0 && names === 0 ? "quiet" : `calls ${calls}, names ${names}`;
+}
+/** wb-2sk6: how failClosedApplications and W6-CW2-ANYPOS read one CASE_CALLS row's lines (CaseCall) in this file's text, inserted before the line that equals CALL_ANCHOR, against the calls they read with no plant (base): refused only when the words it throws are CALL_REFUSAL and then a title opening FAIL_CLOSED_HEAD, as JSON, that one of those lines holds. */
+function caseCallReading(row: CaseCall, text: string, base: { readonly calls: number; readonly witnessed: number }): { readonly reads: string; readonly witnessed: number } {
+  const lines = text.split("\n");
+  const at = lines.indexOf(CALL_ANCHOR);
+  if (at < 0 || lines.indexOf(CALL_ANCHOR, at + 1) >= 0) return { reads: "no single anchor line", witnessed: 0 };
+  lines.splice(at, 0, ...row.lines);
+  const planted = lines.join("\n");
+  const witnessed = anyPositionTitles(planted).length - base.witnessed;
+  try {
+    const more = failClosedApplications(planted).length - base.calls;
+    if (more === 1) return { reads: "selected", witnessed };
+    return { reads: more === 0 ? "quiet" : `${more} more calls`, witnessed };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    const named = message.startsWith(CALL_REFUSAL) ? message.slice(CALL_REFUSAL.length) : "";
+    const title = named.startsWith(JSON.stringify(FAIL_CLOSED_HEAD).slice(0, -1)) ? named : "";
+    return { reads: title !== "" && row.lines.some(line => line.includes(title)) ? "refused" : message, witnessed };
+  }
+}
+/** wb-2sk6: wb-v3a9's refusal #5 gate verdict in its notes in the export: from its heading to the next verdict. */
+function refusal5Verdict(): string {
+  const notes = exportRecord(FOLLOW_UP_3).notes;
+  const start = notes.indexOf(`GATE VERDICT ${FOLLOW_UP_3}: REFUSED (RESPIN) - substance refusal at PREP F, refusal #5 `);
+  if (start < 0) return "";
+  const end = notes.indexOf(`GATE VERDICT ${FOLLOW_UP_3}`, start + 1);
+  return notes.slice(start, end < 0 ? notes.length : end);
+}
+/** wb-2sk6: the member, control and diagnostic ids a verdict names that open GP6-CW2- or GP6-DIAG-, each once and sorted, the group name GP6-CW2-OPTS aside. */
+function namedCallMembers(block: string): string[] {
+  const ids = [...block.matchAll(/(?<![A-Za-z0-9-])GP6-(?:CW2|DIAG)-[A-Z0-9-]*[A-Z0-9](?![A-Za-z0-9-])/g)].map(match => match[0]).filter(id => id !== "GP6-CW2-OPTS");
+  return [...new Set(ids)].sort();
+}
 /** The ROOT KINDS the ROOTS line enumerates: each "; " item, an operator item read as one kind per operator. */
 function rootKinds(line: string): string[] {
   const marker = "ROOT KINDS is not: ";
@@ -1489,6 +2004,53 @@ interface MemberWitness {
   readonly word: string;
   readonly narrowed: string;
   readonly line: string;
+}
+/** wb-v3a9: a FAIL-CLOSED case, in this census's order: the words its title and its ROWS entry open with (head), the list the filter of its unnarrowed list reads (receiver) and the argument it hands narrowsToPinnedPages (argument), as this file spells them, and the landed words of its title and its ROWS entry that this cut narrows, as base b561689b held them (replaced). */
+interface FailClosedCase {
+  readonly id: string;
+  readonly head: string;
+  readonly receiver: string;
+  readonly argument: string;
+  readonly replaced: readonly string[];
+}
+/** wb-v3a9 cut #4 (refusal #3, U1 and U2): a ROWS line spelling the ROWS LINES case reads: the lines it inserts, in memory, into this file's text after the line that equals its anchor (lines), and how rowsEntries then reads that text (reads): "refused", rowsEntries throwing naming one of those lines, or the head - its words through its first " (" or ":" - of the entry whose words then end with the last of them, its mark removed. */
+interface RowsLine {
+  readonly id: string;
+  readonly anchor: string;
+  readonly lines: readonly string[];
+  readonly reads: string;
+}
+/** wb-v3a9 cut #5 (refusal #4, U1): a head spelling the CASE HEADS case plants in memory into this file's text - an entry row's ROWS line (text) after the line that equals its anchor, or a title row's title (text) as the title of an it() call before the line that opens with its anchor and as the name of a case in a task list, a template row's title written as a template literal - and how the CASE WORDS selection then reads it (reads): "refused", rowsEntries throwing naming the line; "selected", the selection holding one more than with no plant - one more entry failClosedEntries reads, or one more call failClosedApplications reads and one more name failClosedNames reads; "quiet", holding as many; or, when the calls and the names differ, "calls <n>, names <n>", how many more of each. */
+interface CaseHead {
+  readonly id: string;
+  readonly kind: "entry" | "title" | "template";
+  readonly anchor: string;
+  readonly text: string;
+  readonly reads: string;
+}
+/** wb-2sk6 (refusal #5 of wb-v3a9, U1): a call the CASE CALLS case plants in memory into this file's text - its lines, inserted before the line that equals CALL_ANCHOR - with how failClosedApplications then reads that text against the text with no plant (reads): "selected", one more call; "quiet", as many; "refused", throwing CALL_REFUSAL and the title of a call those lines hold; and how many more calls W6-CW2-ANYPOS (anyPositionTitles) then reads (witnessed). */
+interface CaseCall {
+  readonly id: string;
+  readonly lines: readonly string[];
+  readonly reads: string;
+  readonly witnessed: number;
+}
+/** wb-v3a9 cut #5 (refusal #4, U1): a vitest task as the first CASE WORDS case walks it - a case (type "test") by its name, a suite by its tasks. */
+interface CaseTask {
+  readonly type: string;
+  readonly name: string;
+  readonly tasks?: readonly CaseTask[];
+}
+/** wb-v3a9: how a FAIL-CLOSED case, as this file spells it, applies narrowsToPinnedPages: the words its title opens with (head); whether its callback's first statement binds lines to helperClaimLines(), and nothing else in it binds lines (bindsLines); the list the filter of its expect subject's unnarrowed list reads (receiver), and whether that list is a const of the callback whose initializer reads lines, directly or through another such const (receiverReadsLines); the argument it hands narrowsToPinnedPages, negated as the whole body of that filter's callback (argument); whether that argument reads lines itself, or the list and the consts it reads build no entry of their own - no map or flatMap call and no object literal - so the argument reads a header line either way (readsHeaderLines); whether the expected object's unnarrowed is [] (expectsEmpty); and the names it declares that this application reads (shadowed). */
+interface CaseApplication {
+  readonly head: string;
+  readonly bindsLines: boolean;
+  readonly receiver: string;
+  readonly receiverReadsLines: boolean;
+  readonly argument: string;
+  readonly readsHeaderLines: boolean;
+  readonly expectsEmpty: boolean;
+  readonly shadowed: readonly string[];
 }
 /** The lifecycle file's K2 client line: every calibration and residual line is planted right after it. */
 const K2_CLIENT = "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };";
@@ -3628,6 +4190,204 @@ const MEMBER_WITNESSES: readonly MemberWitness[] = [
 const FOLLOW_UP_2_REQUIREMENTS: readonly Requirement[] = [
   { key: "wb-o3f8 F1 members", source: "notes", text: "nine gate-authored members of the predicate at census :991-995 keep the delivered census at 0 failed | 2743 passed on the probe: G-RET-EQ ('  return clause && !widened;' -> '  return clause === !widened;'), G-RET-XOR (-> '  return clause !== widened;'), G-W-EVERY-PERIOD (widening alternative 'every (?:other )?page' -> 'every (?:other )?page\\.'), G-W-BEYOND-PERIOD ('beyond (?:them|its pinned pages)' -> 'beyond (?:them|its pinned pages)\\.'), G-W-NOTONLY-PERIOD ('not only on its pinned pages' -> 'not only on its pinned pages\\.'), G-W-RECEIVER-PERIOD ('on any receiver' -> 'on any receiver\\.'), G-W-EVERY-ON ('every (?:other )?page' -> 'on every (?:other )?page'), G-W-PAGESAND-ON ('on its pinned pages and ' -> 'on its pinned pages and on '), and G-W-AFTERPHRASE (the widened test reads line.slice(line.indexOf(\"on its pinned pages\") + 1))." },
   { key: "wb-o3f8 F1 cure", source: "notes", text: "Optional cheap cure (R694 follow-up): plant red-first controls for the realized spellings, each read by narrowsToPinnedPages with expected false: the phrase replaced by a named word; a named word mid-line, before the phrase and after 'for'; and 'on its pinned pages and' with another follower." },
+];
+/** wb-v3a9: the FAIL-CLOSED cases, in this census's order, each with the list and argument its body hands narrowsToPinnedPages and the landed words of its title and ROWS entry that this cut narrows. */
+const FAIL_CLOSED_CASES: readonly FailClosedCase[] = [
+  { id: "FC-CORE", head: "FAIL-CLOSED CORE (", receiver: "frozen", argument: "lines.find(entry => entry.id === id)?.line ?? \"\"", replaced: ["carries, in its own words, the narrowing 'on its pinned pages' as a clause of its own", "no word on the line widening it again", "carries the narrowing \"on its pinned pages\""] },
+  { id: "FC-CARRY", head: "FAIL-CLOSED CARRY (", receiver: "placed", argument: "lines.find(entry => entry.id === id)?.line ?? \"\"", replaced: ["narrows to its pinned pages as a clause of its own"] },
+  { id: "FC-SHAPES", head: "FAIL-CLOSED SHAPES (", receiver: "shaped", argument: "entry.line", replaced: ["narrows to its pinned pages as a clause of its own"] },
+  { id: "FC-ENTRIES", head: "FAIL-CLOSED ENTRIES (", receiver: "entries", argument: "entry.line", replaced: ["narrows to its pinned pages as a clause of its own"] },
+  { id: "FC-PARAGRAPHS", head: "FAIL-CLOSED PARAGRAPHS (", receiver: "paragraphs", argument: "entry.line", replaced: ["narrows to its pinned pages as a clause of its own", "every claim line before that heading narrows"] },
+];
+/** wb-v3a9's requirement lines, as the export holds them at this cut's base: the second cure alternative of wb-o3f8's own F1 finding and its lineage note, the sentences the bead's cure names (the finding's second alternative, the one its lineage note says ends the loop). */
+const NARROWING_REQUIREMENTS: readonly Requirement[] = [
+  { key: "wb-o3f8 F1 second cure alternative", source: "notes", text: "Or take F1's second cure alternative and narrow the FAIL-CLOSED words and the :348 parenthetical ('they read the phrase's place and those words') to 'the cases apply narrowsToPinnedPages to the header's lines'." },
+  { key: "wb-o3f8 F1 lineage note", source: "notes", text: "Lineage noted as data: a finite set of spelling rows cannot pin an open spelling family, and only the second alternative ends the loop." },
+];
+/** wb-v3a9's own requirement lines: its F1 finding's cure sentence and the scope sentence beside it. */
+const FOLLOW_UP_3_REQUIREMENTS: readonly Requirement[] = [
+  { key: "wb-v3a9 F1 cure", source: "notes", text: "Cure for the carry: the finding's SECOND alternative, the one its lineage note says ends the loop. Narrow the FAIL-CLOSED case words and the census :380 parenthetical ('they read the phrase's place and those words', base :348) to 'the cases apply narrowsToPinnedPages to the header's lines'." },
+  { key: "wb-v3a9 F1 cure scope", source: "notes", text: "A further row-per-spelling cure, the first alternative again, leaves the open spelling family open, as the cut's own NOT CLAIMED sentence states." },
+];
+/** wb-2sk6's requirement line, as the export holds it at this cut's base: its description's DELIVERABLE sentence, the one ahead of its scope sentence on the parent's cured sets. */
+const EXIT_REQUIREMENTS: readonly Requirement[] = [
+  { key: "wb-2sk6 deliverable", source: "description", text: "DELIVERABLE (the record F11 fail-closed core): CW2 reads every it() call by the ROLE of its arguments (arguments[1], or arguments[2] after an options object, per vitest's two overloads - never positionally); W6-CW2-ANYPOS and the four GP6-CW2-OPTS members are the red-first acceptance floor (edits verbatim in the PREP archive tools/gp6.py); the parenthesized forms GP6-CW2-PARENCB-DEAD and -PARENTITLE-DEAD disclosed; claims equal to pins (R-B620(2))." },
+];
+/** wb-v3a9 cut #4 (refusal #3, U1 and U2): the lines and the pattern rowsEntries reads this header's ROWS by, as the ROWS LINES ROWS entry quotes them: the line that opens ROWS (heading), the line that closes it (close), the words the line after the close begins with (next), the pattern a line opening an entry matches (opener) and the words a line continuing an entry begins with (continuation). */
+const ROWS_READ = {
+  heading: " * ROWS:",
+  close: " *",
+  next: " * NOT CLAIMED (",
+  opener: /^ \* {2}[A-Z][A-Z-]*(?:,? (?:[A-Z][A-Z-]*|#\d+|\d+|and))*(?::| \()/,
+  continuation: " *   ",
+} as const;
+/** wb-v3a9 cut #4: the lines of this header's ROWS LINES entry, as the ROWS LINES case holds them, each quote in them spelled from ROWS_READ. */
+const ROWS_LINES_ENTRY: readonly string[] = [
+  ` *  ROWS LINES (wb-v3a9 cut #4): rowsEntries reads this header's ROWS fail-closed: ROWS runs from the only line that`,
+  ` *   equals ${JSON.stringify(ROWS_READ.heading)} up to the next line that equals ${JSON.stringify(ROWS_READ.close)}, and the line after that one begins with ${JSON.stringify(ROWS_READ.next)};`,
+  ` *   in ROWS, a line that /${ROWS_READ.opener.source}/ matches opens an entry,`,
+  ` *   and a line that begins with ${JSON.stringify(ROWS_READ.continuation)} continues the entry open before it; any other line in ROWS (a line beginning`,
+  ` *   with ${JSON.stringify(ROWS_READ.continuation)} before the first entry opens is one), a second line that equals ${JSON.stringify(ROWS_READ.heading)} and a close not followed so`,
+  ` *   make rowsEntries throw, so that every case reading entries through it reds. Each ROWS_LINES row's lines, inserted in`,
+  ` *   memory into this file's text after the line that equals the row's anchor, are refused - rowsEntries throws naming one`,
+  ` *   of them - or read into the entry whose head, its words through its first " (" or ":", the row names, as the row`,
+  ` *   states; and this entry's lines are exactly those the ROWS LINES case holds them to, their quotes spelled from ROWS_READ.`,
+];
+/** wb-v3a9 cut #4: the lines of this header the ROWS_LINES rows insert after: the NARROWED WORDS entry's last line and one of its lines, the last lines of the FAIL-CLOSED CORE and CARRY entries, the line that opens ROWS and the line that opens the NOT CLAIMED section. */
+const ROWS_ANCHORS = {
+  narrowedEnd: " *   fourth case holds it to, as rowsEntries reads it (cut #3).",
+  narrowedSplit: " *   matches, or to the section's end; that paragraph, its lines read the way censusHeader reads this header's and split at",
+  coreEnd: " *   frozen classes, those the guard derives a sub-form from among them.",
+  carryEnd: " *   a variable's initializer or a plain text pid; the FAIL-CLOSED CORE case reads its 17 lines the same way (refusal #4 F2).",
+  heading: " * ROWS:",
+  notClaimed: " * NOT CLAIMED (scope sentences; no residual semantics): which helper hollowing reds which row is NOT CLAIMED by this census (the",
+} as const;
+/** wb-v3a9 cut #4: words the ROWS_LINES rows insert. */
+const WIDE_END = "That section also ends at a line that holds no words after its mark, and a paragraph in it also opens at a line whose words open with a bead id and a colon.";
+const CARRY_WORDS = "Each such line narrows to its pinned pages as a clause of its own.";
+/** wb-v3a9 cut #4 (refusal #3, U1 and U2): ROWS line spellings, each with the reading rowsEntries gives this file's text once the row's lines are inserted. */
+const ROWS_LINES: readonly RowsLine[] = [
+  { id: "GP11-NW4-TAB-END", anchor: ROWS_ANCHORS.narrowedEnd, lines: [` *\t ${WIDE_END}`], reads: "refused" },
+  { id: "GP11-NW4-TAB-MID", anchor: ROWS_ANCHORS.narrowedSplit, lines: [' *\t   every ";" and at'], reads: "refused" },
+  { id: "GP11-NW4-2SP-END", anchor: ROWS_ANCHORS.narrowedEnd, lines: [`  *   ${WIDE_END}`], reads: "refused" },
+  { id: "GP11-NW4-1SP-END", anchor: ROWS_ANCHORS.narrowedEnd, lines: [` * ${WIDE_END}`], reads: "refused" },
+  { id: "GP11-NW4-0SP-END", anchor: ROWS_ANCHORS.narrowedEnd, lines: [` *${WIDE_END}`], reads: "refused" },
+  { id: "GP11-CW1-TAB-CORE", anchor: ROWS_ANCHORS.coreEnd, lines: [' *\t  Each of those lines carries the narrowing "on its pinned pages" as a clause of its own.'], reads: "refused" },
+  { id: "GP11-CW1-TAB-CARRY", anchor: ROWS_ANCHORS.carryEnd, lines: [` *\t  ${CARRY_WORDS}`], reads: "refused" },
+  { id: "GP11-CW1-2SP-CARRY", anchor: ROWS_ANCHORS.carryEnd, lines: [`  *   ${CARRY_WORDS}`], reads: "refused" },
+  { id: "GP11-CW1-1SP-CARRY", anchor: ROWS_ANCHORS.carryEnd, lines: [` * ${CARRY_WORDS}`], reads: "refused" },
+  { id: "S4-EMPTY", anchor: ROWS_ANCHORS.narrowedEnd, lines: [""], reads: "refused" },
+  { id: "S4-MARK-SPACE", anchor: ROWS_ANCHORS.narrowedEnd, lines: [" * "], reads: "refused" },
+  { id: "S4-2SP-EMPTY", anchor: ROWS_ANCHORS.narrowedEnd, lines: [" *  "], reads: "refused" },
+  { id: "S4-2SP-TAB", anchor: ROWS_ANCHORS.narrowedEnd, lines: [` *  \t${WIDE_END}`], reads: "refused" },
+  { id: "S4-2SP-HEADLESS", anchor: ROWS_ANCHORS.narrowedEnd, lines: [` *  ${WIDE_END}`], reads: "refused" },
+  { id: "S4-3SP-FIRST", anchor: ROWS_ANCHORS.heading, lines: [` *   ${WIDE_END}`], reads: "refused" },
+  { id: "S4-CLOSE-EARLY", anchor: ROWS_ANCHORS.narrowedEnd, lines: [" *", ` *   ${WIDE_END}`], reads: "refused" },
+  { id: "S4-HEADING-TWICE", anchor: ROWS_ANCHORS.notClaimed, lines: [" * ROWS:", " *  NARROWED WORDS (a second entry): nothing more."], reads: "refused" },
+  { id: "GP11-NW4-CTRL-3SP-END", anchor: ROWS_ANCHORS.narrowedEnd, lines: [` *   ${WIDE_END}`], reads: "NARROWED WORDS (" },
+  { id: "GP11-CW1-CTRL-3SP-CARRY", anchor: ROWS_ANCHORS.carryEnd, lines: [` *   ${CARRY_WORDS}`], reads: "FAIL-CLOSED CARRY (" },
+  { id: "S4-CTRL-4SP", anchor: ROWS_ANCHORS.narrowedEnd, lines: [` *    ${WIDE_END}`], reads: "NARROWED WORDS (" },
+  { id: "S4-CTRL-3SP-TAB", anchor: ROWS_ANCHORS.narrowedEnd, lines: [` *   \t${WIDE_END}`], reads: "NARROWED WORDS (" },
+  { id: "S4-CTRL-HEAD", anchor: ROWS_ANCHORS.narrowedEnd, lines: [` *  ALSO (a control): ${WIDE_END}`], reads: "ALSO (" },
+];
+/** wb-v3a9 cut #5 (refusal #4, U1): the lines the CASE_HEADS rows plant at - entry rows after the line that equals the anchor (the last lines of the FAIL-CLOSED CORE and CARRY entries, the line before the CORE entry opens and the CORE entry's second line), title rows before the line that opens with it (the FAIL-CLOSED SHAPES case's). */
+const CASE_ANCHORS = {
+  coreEnd: ROWS_ANCHORS.coreEnd,
+  carryEnd: ROWS_ANCHORS.carryEnd,
+  beforeCore: " *   whereas, other than or claimed between the words and the predicate or the clause's end).",
+  coreSplit: " *   cases apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every claim line of the four",
+  shapesCase: '    it("FAIL-CLOSED SHAPES (',
+} as const;
+/** wb-v3a9 cut #5: the words refusal #4's members plant after a FAIL-CLOSED head - FC-CORE's and FC-CARRY's replaced words, in a sentence of their own (CORE_WORDS, CARRY_WORDS) and in a case title (CASE_WORDS_TITLE) - and two code points the seat's spellings use. */
+const CORE_WORDS = 'Each of those lines carries the narrowing "on its pinned pages" as a clause of its own.';
+const CASE_WORDS_TITLE = "each such line narrows to its pinned pages as a clause of its own";
+const NO_BREAK_SPACE = String.fromCodePoint(0xa0);
+const NO_BREAK_HYPHEN = String.fromCodePoint(0x2011);
+/** wb-v3a9 cut #5 (refusal #4, U1): head spellings planted in memory, each with the reading the CASE WORDS selection gives it: refusal #4's nine members and its three controls (selected), the seat's same-class spellings (selected, or refused by rowsEntries, and a template-literal title the second CASE WORDS case does not read: calls 0, names 1), and the quiet rows of the R-CASE-HEAD residual. */
+const CASE_HEADS: readonly CaseHead[] = [
+  { id: "GP1-G2-HEAD-COLON-CARRY", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAIL-CLOSED: ${CARRY_WORDS}`, reads: "selected" },
+  { id: "GP1-G2-HEAD-COMMA-CARRY", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAIL-CLOSED, CARRY (continued): ${CARRY_WORDS}`, reads: "selected" },
+  { id: "GP1-G2-HEAD-HYPHEN-CARRY", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAIL-CLOSED-CARRY (continued): ${CARRY_WORDS}`, reads: "selected" },
+  { id: "GP1-G2-HEAD-COLON-CORE", kind: "entry", anchor: CASE_ANCHORS.coreEnd, text: ` *  FAIL-CLOSED: ${CORE_WORDS}`, reads: "selected" },
+  { id: "GP1-G2-HEAD-COMMA-AGAIN", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAIL-CLOSED, AGAIN (cut #4): ${CARRY_WORDS}`, reads: "selected" },
+  { id: "GP1-G2-HEAD-COLON-FIRST", kind: "entry", anchor: CASE_ANCHORS.beforeCore, text: ` *  FAIL-CLOSED: ${CORE_WORDS}`, reads: "selected" },
+  { id: "GP1-G2-CASE-COLON", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: `FAIL-CLOSED: ${CASE_WORDS_TITLE}`, reads: "selected" },
+  { id: "GP1-G2-CASE-COMMA", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: `FAIL-CLOSED, CARRY (continued): ${CASE_WORDS_TITLE}`, reads: "selected" },
+  { id: "GP1-G2-CASE-COLON-TITLEONLY", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: "FAIL-CLOSED: the cases apply narrowsToPinnedPages to the header's lines", reads: "selected" },
+  { id: "GP1-G2-HEAD-SPACE-CTRL", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAIL-CLOSED CARRY AGAIN (continued): ${CARRY_WORDS}`, reads: "selected" },
+  { id: "GP1-G2-HEAD-PAREN-CTRL", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAIL-CLOSED (continued): ${CARRY_WORDS}`, reads: "selected" },
+  { id: "GP1-G2-CASE-SPACE-CTRL", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: `FAIL-CLOSED CARRY AGAIN (continued): ${CASE_WORDS_TITLE}`, reads: "selected" },
+  { id: "S5-ENTRY-JOINED", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAIL-CLOSEDCARRY (continued): ${CARRY_WORDS}`, reads: "selected" },
+  { id: "S5-ENTRY-HYPHEN-COLON", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAIL-CLOSED-: ${CARRY_WORDS}`, reads: "selected" },
+  { id: "S5-ENTRY-PERIOD", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAIL-CLOSED. ${CARRY_WORDS}`, reads: "refused" },
+  { id: "S5-ENTRY-LOWER", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  Fail-Closed CARRY (continued): ${CARRY_WORDS}`, reads: "refused" },
+  { id: "S5-ENTRY-NO-BREAK-HYPHEN", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAIL${NO_BREAK_HYPHEN}CLOSED CARRY (continued): ${CARRY_WORDS}`, reads: "refused" },
+  { id: "S5-TITLE-PERIOD", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: `FAIL-CLOSED. ${CASE_WORDS_TITLE}`, reads: "selected" },
+  { id: "S5-TITLE-ALONE", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: "FAIL-CLOSED", reads: "selected" },
+  { id: "S5-TITLE-NO-BREAK-SPACE", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: `FAIL-CLOSED${NO_BREAK_SPACE}CARRY (continued): ${CASE_WORDS_TITLE}`, reads: "selected" },
+  { id: "S5-TITLE-TEMPLATE", kind: "template", anchor: CASE_ANCHORS.shapesCase, text: `FAIL-CLOSED: ${CASE_WORDS_TITLE}`, reads: "calls 0, names 1" },
+  { id: "R5-ENTRY-WORD-BEFORE", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  ALSO FAIL-CLOSED CARRY (continued): ${CARRY_WORDS}`, reads: "quiet" },
+  { id: "R5-ENTRY-SPACED", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAIL CLOSED CARRY (continued): ${CARRY_WORDS}`, reads: "quiet" },
+  { id: "R5-ENTRY-UNHYPHENATED", kind: "entry", anchor: CASE_ANCHORS.carryEnd, text: ` *  FAILCLOSED CARRY (continued): ${CARRY_WORDS}`, reads: "quiet" },
+  { id: "R5-ENTRY-CONTINUED", kind: "entry", anchor: CASE_ANCHORS.coreSplit, text: ` *  CORE (continued): ${CORE_WORDS}`, reads: "quiet" },
+  { id: "R5-TITLE-LOWER", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: `fail-closed: ${CASE_WORDS_TITLE}`, reads: "quiet" },
+  { id: "R5-TITLE-MIXED", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: `Fail-Closed CARRY (continued): ${CASE_WORDS_TITLE}`, reads: "quiet" },
+  { id: "R5-TITLE-LEADING-SPACE", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: ` FAIL-CLOSED CARRY (continued): ${CASE_WORDS_TITLE}`, reads: "quiet" },
+  { id: "R5-TITLE-WORD-BEFORE", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: `ALSO FAIL-CLOSED CARRY (continued): ${CASE_WORDS_TITLE}`, reads: "quiet" },
+  { id: "R5-TITLE-SPACED", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: `FAIL CLOSED CARRY (continued): ${CASE_WORDS_TITLE}`, reads: "quiet" },
+  { id: "R5-TITLE-UNHYPHENATED", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: `FAILCLOSED CARRY (continued): ${CASE_WORDS_TITLE}`, reads: "quiet" },
+  { id: "R5-TITLE-NO-BREAK-HYPHEN", kind: "title", anchor: CASE_ANCHORS.shapesCase, text: `FAIL${NO_BREAK_HYPHEN}CLOSED CARRY (continued): ${CASE_WORDS_TITLE}`, reads: "quiet" },
+];
+/** wb-2sk6 (refusal #5 of wb-v3a9, U1): the line the CASE_CALLS rows plant their lines before - the CASE HEADS suite's opening line, where gate-prep-6 planted refusal #5's members - and the body line of each planted call. */
+const CALL_ANCHOR = '  describe("CASE HEADS (wb-v3a9 cut #5, refusal #4 U1): the selection the CASE WORDS cases read by, on head spellings planted in memory", () => {';
+const CALL_BODY = "      expect(FAIL_CLOSED_CASES.length).toBe(5);";
+/** wb-2sk6: the titles refusal #5's members give their calls, as gate-prep-6 wrote them: FC-CARRY's replaced words (CASE_WORDS_TITLE) after refusal #4's colon head, and after its comma head. */
+const CALL_TITLE = `FAIL-CLOSED: ${CASE_WORDS_TITLE}`;
+const CALL_TITLE_CARRY = `FAIL-CLOSED, CARRY (continued): ${CASE_WORDS_TITLE}`;
+/** wb-2sk6: refusal #5's plant frame around a call's opening line, as gate-prep-6 wrote it: a branch vitest never takes, holding the call's opening line, CALL_BODY and its closing line. */
+function deadCall(opening: string, close = "    });"): string[] {
+  return ["  if (FAIL_CLOSED_CASES.length === 0) {", opening, CALL_BODY, close, "  }"];
+}
+/** wb-2sk6: refusal #5's live diagnostic frame, as gate-prep-6 wrote it: a suite of its own, holding the call's opening line, CALL_BODY and its closing line. */
+function liveCall(opening: string, close = "    });"): string[] {
+  return ['  describe("GP6 plant", () => {', opening, CALL_BODY, close, "  });"];
+}
+/** wb-2sk6 (refusal #5 of wb-v3a9, U1; R-B671): calls planted in memory, each with the reading failClosedApplications gives it and how many more calls W6-CW2-ANYPOS reads with it: refusal #5's members, controls and live diagnostics as gate-prep-6 planted them (GP6: the four GP6-CW2-OPTS members, GP6-CW2-OPTS-DUPHEAD-DEAD and the parenthesized forms selected, as are the controls and diagnostics), the seat's own shapes (S6: the test function by the role of each argument, each kind of node bare reads through, and the calls refused), and the quiet rows of the R-CASE-CALL residual. */
+const CASE_CALLS: readonly CaseCall[] = [
+  { id: "GP6-CW2-OPTS-DEAD", lines: deadCall(`    it("${CALL_TITLE}", { timeout: CENSUS_TIMEOUT }, () => {`), reads: "selected", witnessed: 1 },
+  { id: "GP6-CW2-OPTS-EMPTY-DEAD", lines: deadCall(`    it("${CALL_TITLE}", {}, () => {`), reads: "selected", witnessed: 1 },
+  { id: "GP6-CW2-OPTS-CARRY-DEAD", lines: deadCall(`    it("${CALL_TITLE_CARRY}", { retry: 0 }, () => {`), reads: "selected", witnessed: 1 },
+  { id: "GP6-CW2-OPTS-TITLEONLY-DEAD", lines: deadCall(`    it("FAIL-CLOSED: the cases apply narrowsToPinnedPages to the header's lines", { timeout: CENSUS_TIMEOUT }, () => {`), reads: "selected", witnessed: 1 },
+  { id: "GP6-CW2-OPTS-DUPHEAD-DEAD", lines: deadCall(`    it("FAIL-CLOSED SHAPES (wb-v3a9: the cases apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every line", { timeout: CENSUS_TIMEOUT }, () => {`), reads: "selected", witnessed: 1 },
+  { id: "GP6-CW2-PARENCB-DEAD", lines: deadCall(`    it("${CALL_TITLE}", (() => {`, "    }));"), reads: "selected", witnessed: 0 },
+  { id: "GP6-CW2-PARENTITLE-DEAD", lines: deadCall(`    it(("${CALL_TITLE}"), () => {`), reads: "selected", witnessed: 0 },
+  { id: "GP6-CW2-PLAIN-DEAD-CTRL", lines: deadCall(`    it("${CALL_TITLE}", () => {`), reads: "selected", witnessed: 1 },
+  { id: "GP6-CW2-TIMEOUT-DEAD-CTRL", lines: deadCall(`    it("${CALL_TITLE}", () => {`, "    }, CENSUS_TIMEOUT);"), reads: "selected", witnessed: 1 },
+  { id: "GP6-DIAG-OPTS-LIVE", lines: liveCall(`    it("${CALL_TITLE}", { timeout: CENSUS_TIMEOUT }, () => {`), reads: "selected", witnessed: 1 },
+  { id: "GP6-DIAG-PLAIN-LIVE-CTRL", lines: liveCall(`    it("${CALL_TITLE}", () => {`), reads: "selected", witnessed: 1 },
+  { id: "S6-FN-ASYNC", lines: deadCall(`    it("${CALL_TITLE}", async () => {`), reads: "selected", witnessed: 1 },
+  { id: "S6-FN-PARAMETER", lines: deadCall(`    it("${CALL_TITLE}", ({ task }) => {`), reads: "selected", witnessed: 1 },
+  { id: "S6-FN-TWO-ARROWS", lines: ["  if (FAIL_CLOSED_CASES.length === 0) {", `    it("${CALL_TITLE}", () => {`, CALL_BODY, "    }, () => {", CALL_BODY, "    });", "  }"], reads: "selected", witnessed: 1 },
+  { id: "S6-FN-OPTIONS-THIRD", lines: deadCall(`    it("${CALL_TITLE}", () => {`, "    }, { timeout: CENSUS_TIMEOUT });"), reads: "selected", witnessed: 1 },
+  { id: "S6-OPTS-FN-PARAMETER", lines: deadCall(`    it("${CALL_TITLE}", { timeout: CENSUS_TIMEOUT }, async ({ task }) => {`), reads: "selected", witnessed: 1 },
+  { id: "S6-OPTS-SPREAD", lines: deadCall(`    it("${CALL_TITLE}", { ...{ retry: 0 } }, () => {`), reads: "selected", witnessed: 1 },
+  { id: "S6-CALL-OPTIONAL", lines: deadCall(`    it?.("${CALL_TITLE}", {}, () => {`), reads: "selected", witnessed: 1 },
+  { id: "S6-CALLEE-PAREN", lines: deadCall(`    (it)("${CALL_TITLE}", {}, () => {`), reads: "selected", witnessed: 0 },
+  { id: "S6-CALLEE-AS", lines: deadCall(`    (it as typeof it)("${CALL_TITLE}", {}, () => {`), reads: "selected", witnessed: 0 },
+  { id: "S6-CALLEE-NONNULL", lines: deadCall(`    it!("${CALL_TITLE}", {}, () => {`), reads: "selected", witnessed: 0 },
+  { id: "S6-TITLE-PAREN-TWICE", lines: deadCall(`    it((("${CALL_TITLE}")), {}, () => {`), reads: "selected", witnessed: 0 },
+  { id: "S6-TITLE-AS", lines: deadCall(`    it("${CALL_TITLE}" as string, {}, () => {`), reads: "selected", witnessed: 0 },
+  { id: "S6-TITLE-SATISFIES", lines: deadCall(`    it("${CALL_TITLE}" satisfies string, () => {`), reads: "selected", witnessed: 0 },
+  { id: "S6-TITLE-ANGLE", lines: deadCall(`    it(<string>"${CALL_TITLE}", () => {`), reads: "selected", witnessed: 0 },
+  { id: "S6-TITLE-NONNULL", lines: deadCall(`    it("${CALL_TITLE}"!, () => {`), reads: "selected", witnessed: 0 },
+  { id: "S6-OPTS-PAREN", lines: deadCall(`    it("${CALL_TITLE}", ({ timeout: CENSUS_TIMEOUT }), () => {`), reads: "selected", witnessed: 1 },
+  { id: "S6-OPTS-SATISFIES", lines: deadCall(`    it("${CALL_TITLE}", { retry: 0 } satisfies object, () => {`), reads: "selected", witnessed: 1 },
+  { id: "S6-OPTS-AS", lines: deadCall(`    it("${CALL_TITLE}", { retry: 0 } as const, () => {`), reads: "selected", witnessed: 1 },
+  { id: "S6-OPTS-FN-PAREN", lines: deadCall(`    it("${CALL_TITLE}", {}, (() => {`, "    }));"), reads: "selected", witnessed: 0 },
+  { id: "S6-OPTS-FN-NONNULL", lines: deadCall(`    it("${CALL_TITLE}", {}, (() => {`, "    })!);"), reads: "selected", witnessed: 0 },
+  { id: "S6-FN-AS", lines: deadCall(`    it("${CALL_TITLE}", (() => {`, "    }) as () => void);"), reads: "selected", witnessed: 0 },
+  { id: "S6-FN-ANGLE", lines: deadCall(`    it("${CALL_TITLE}", <() => void>(() => {`, "    }));"), reads: "selected", witnessed: 0 },
+  { id: "S6-FN-FUNCTION", lines: deadCall(`    it("${CALL_TITLE}", function () {`), reads: "refused", witnessed: 0 },
+  { id: "S6-FN-EXPRESSION", lines: ["  if (FAIL_CLOSED_CASES.length === 0) {", `    it("${CALL_TITLE}", () => expect(FAIL_CLOSED_CASES.length).toBe(5));`, "  }"], reads: "refused", witnessed: 0 },
+  { id: "S6-OPTS-FN-FUNCTION", lines: deadCall(`    it("${CALL_TITLE}", {}, function () {`), reads: "refused", witnessed: 0 },
+  { id: "S6-OPTS-FN-EXPRESSION", lines: ["  if (FAIL_CLOSED_CASES.length === 0) {", `    it("${CALL_TITLE}", { timeout: CENSUS_TIMEOUT }, () => expect(FAIL_CLOSED_CASES.length).toBe(5));`, "  }"], reads: "refused", witnessed: 0 },
+  { id: "S6-OPTS-NO-FN", lines: ["  if (FAIL_CLOSED_CASES.length === 0) {", `    it("${CALL_TITLE}", { timeout: CENSUS_TIMEOUT });`, "  }"], reads: "refused", witnessed: 0 },
+  { id: "S6-TITLE-ALONE", lines: ["  if (FAIL_CLOSED_CASES.length === 0) {", `    it("${CALL_TITLE}");`, "  }"], reads: "refused", witnessed: 0 },
+  { id: "S6-SECOND-NAME", lines: deadCall(`    it("${CALL_TITLE}", CENSUS_TIMEOUT, () => {`), reads: "refused", witnessed: 1 },
+  { id: "S6-SECOND-NUMBER", lines: deadCall(`    it("${CALL_TITLE}", 5_000, () => {`), reads: "refused", witnessed: 1 },
+  { id: "S6-SECOND-UNDEFINED", lines: deadCall(`    it("${CALL_TITLE}", undefined, () => {`), reads: "refused", witnessed: 1 },
+  { id: "S6-SECOND-ARRAY", lines: deadCall(`    it("${CALL_TITLE}", [], () => {`), reads: "refused", witnessed: 1 },
+  { id: "S6-SECOND-CALL", lines: deadCall(`    it("${CALL_TITLE}", Object.freeze({}), () => {`), reads: "refused", witnessed: 1 },
+  { id: "S6-SECOND-CLASS", lines: deadCall(`    it("${CALL_TITLE}", class {}, () => {`), reads: "refused", witnessed: 1 },
+  { id: "S6-SECOND-SPREAD", lines: ["  if (FAIL_CLOSED_CASES.length === 0) {", `    it("${CALL_TITLE}", ...[() => {}]);`, "  }"], reads: "refused", witnessed: 0 },
+  { id: "S6-SECOND-EXPRESSION-ARROW", lines: deadCall(`    it("${CALL_TITLE}", () => 0, () => {`), reads: "refused", witnessed: 1 },
+  { id: "S6-THIRD-OPTIONS", lines: deadCall(`    it("${CALL_TITLE}", {}, {}, () => {`), reads: "refused", witnessed: 1 },
+  { id: "S6-TITLE-TEMPLATE", lines: deadCall(`    it(\`${CALL_TITLE}\`, {}, () => {`), reads: "quiet", witnessed: 0 },
+  { id: "S6-TITLE-CONCAT", lines: deadCall(`    it("FAIL-CLOSED" + ": ${CASE_WORDS_TITLE}", {}, () => {`), reads: "quiet", witnessed: 0 },
+  { id: "S6-TITLE-NAME", lines: deadCall("    it(FAIL_CLOSED_HEAD, {}, () => {"), reads: "quiet", witnessed: 0 },
+  { id: "S6-CALLEE-MEMBER", lines: deadCall(`    it.concurrent("${CALL_TITLE}", {}, () => {`), reads: "quiet", witnessed: 0 },
+  { id: "S6-CALLEE-OTHER", lines: deadCall(`    test("${CALL_TITLE}", {}, () => {`), reads: "quiet", witnessed: 0 },
+  { id: "S6-CALLEE-COMMA", lines: deadCall(`    (0, it)("${CALL_TITLE}", {}, () => {`), reads: "quiet", witnessed: 0 },
 ];
 /** wb-tz2.20 cut #3 POSITIONS: the override lines' places, each row's cells on every member of its roster (ROSTERS). */
 const POSITIONS: readonly PositionRow[] = [
@@ -6150,6 +6910,124 @@ const FROZEN: readonly string[] = [
   "MEMBER_WITNESSES:W-WORD-BEFORE-PHRASE:e589013afa2d",
   "FOLLOW_UP_2_REQUIREMENTS:wb-o3f8 F1 members:efeb312a4f4b",
   "FOLLOW_UP_2_REQUIREMENTS:wb-o3f8 F1 cure:513986d9f226",
+  "FAIL_CLOSED_CASES:FC-CORE:9c217be24bff",
+  "FAIL_CLOSED_CASES:FC-CARRY:6b7dac06a531",
+  "FAIL_CLOSED_CASES:FC-SHAPES:383bb8ef28b7",
+  "FAIL_CLOSED_CASES:FC-ENTRIES:27daedba09f0",
+  "FAIL_CLOSED_CASES:FC-PARAGRAPHS:6e9fbcd2045e",
+  "NARROWING_REQUIREMENTS:wb-o3f8 F1 second cure alternative:e846929271b1",
+  "NARROWING_REQUIREMENTS:wb-o3f8 F1 lineage note:0de04caad67a",
+  "FOLLOW_UP_3_REQUIREMENTS:wb-v3a9 F1 cure:06017409314f",
+  "FOLLOW_UP_3_REQUIREMENTS:wb-v3a9 F1 cure scope:bd4879e2d117",
+  "ROWS_LINES:GP11-NW4-TAB-END:eec1367623cd",
+  "ROWS_LINES:GP11-NW4-TAB-MID:38ae96aec603",
+  "ROWS_LINES:GP11-NW4-2SP-END:6461bf539f0c",
+  "ROWS_LINES:GP11-NW4-1SP-END:17759d2a8097",
+  "ROWS_LINES:GP11-NW4-0SP-END:bd347ce1e925",
+  "ROWS_LINES:GP11-CW1-TAB-CORE:e67ca227c7dd",
+  "ROWS_LINES:GP11-CW1-TAB-CARRY:8e115e4880ef",
+  "ROWS_LINES:GP11-CW1-2SP-CARRY:9b2840e2cb7d",
+  "ROWS_LINES:GP11-CW1-1SP-CARRY:574f613d48d6",
+  "ROWS_LINES:S4-EMPTY:5c242cbb3ed2",
+  "ROWS_LINES:S4-MARK-SPACE:2a2c2dbe6e1f",
+  "ROWS_LINES:S4-2SP-EMPTY:448344c03136",
+  "ROWS_LINES:S4-2SP-TAB:c2f8109df54b",
+  "ROWS_LINES:S4-2SP-HEADLESS:e192c00627c9",
+  "ROWS_LINES:S4-3SP-FIRST:170aafffa923",
+  "ROWS_LINES:S4-CLOSE-EARLY:7437f35d8393",
+  "ROWS_LINES:S4-HEADING-TWICE:13d4c5cf49bb",
+  "ROWS_LINES:GP11-NW4-CTRL-3SP-END:b721ea840c36",
+  "ROWS_LINES:GP11-CW1-CTRL-3SP-CARRY:af6d1f108236",
+  "ROWS_LINES:S4-CTRL-4SP:8096b70d2859",
+  "ROWS_LINES:S4-CTRL-3SP-TAB:14ad1a9d8002",
+  "ROWS_LINES:S4-CTRL-HEAD:3e3bcd6eb971",
+  "CASE_HEADS:GP1-G2-HEAD-COLON-CARRY:13e9a1400b33",
+  "CASE_HEADS:GP1-G2-HEAD-COMMA-CARRY:6ebdf74ced5e",
+  "CASE_HEADS:GP1-G2-HEAD-HYPHEN-CARRY:148bcec4cfa0",
+  "CASE_HEADS:GP1-G2-HEAD-COLON-CORE:51de98c77883",
+  "CASE_HEADS:GP1-G2-HEAD-COMMA-AGAIN:8c210299c0d8",
+  "CASE_HEADS:GP1-G2-HEAD-COLON-FIRST:77ebb6c3a00d",
+  "CASE_HEADS:GP1-G2-CASE-COLON:5f6406435801",
+  "CASE_HEADS:GP1-G2-CASE-COMMA:5db8b2c33a91",
+  "CASE_HEADS:GP1-G2-CASE-COLON-TITLEONLY:135abf6825a4",
+  "CASE_HEADS:GP1-G2-HEAD-SPACE-CTRL:a240684f9e97",
+  "CASE_HEADS:GP1-G2-HEAD-PAREN-CTRL:0c89a4fbc711",
+  "CASE_HEADS:GP1-G2-CASE-SPACE-CTRL:ae1baa24f401",
+  "CASE_HEADS:S5-ENTRY-JOINED:20ec32ef072d",
+  "CASE_HEADS:S5-ENTRY-HYPHEN-COLON:4b2fe7c74985",
+  "CASE_HEADS:S5-ENTRY-PERIOD:57ce24b2a483",
+  "CASE_HEADS:S5-ENTRY-LOWER:254caada93d3",
+  "CASE_HEADS:S5-ENTRY-NO-BREAK-HYPHEN:7f10de3a1b05",
+  "CASE_HEADS:S5-TITLE-PERIOD:0197ca2e6c4e",
+  "CASE_HEADS:S5-TITLE-ALONE:836e0c3dfab2",
+  "CASE_HEADS:S5-TITLE-NO-BREAK-SPACE:d019dc059ba4",
+  "CASE_HEADS:S5-TITLE-TEMPLATE:8bac8f418f5a",
+  "CASE_HEADS:R5-ENTRY-WORD-BEFORE:54c4ac4a67e0",
+  "CASE_HEADS:R5-ENTRY-SPACED:93174eb71ba8",
+  "CASE_HEADS:R5-ENTRY-UNHYPHENATED:ea777333e6e7",
+  "CASE_HEADS:R5-ENTRY-CONTINUED:cb9669c3aa97",
+  "CASE_HEADS:R5-TITLE-LOWER:74e29da5f6ff",
+  "CASE_HEADS:R5-TITLE-MIXED:47fb89ebb1bb",
+  "CASE_HEADS:R5-TITLE-LEADING-SPACE:a51398e63afd",
+  "CASE_HEADS:R5-TITLE-WORD-BEFORE:03c99f23f62f",
+  "CASE_HEADS:R5-TITLE-SPACED:e8cf8bf1629f",
+  "CASE_HEADS:R5-TITLE-UNHYPHENATED:be2a8f7337e1",
+  "CASE_HEADS:R5-TITLE-NO-BREAK-HYPHEN:238183c3c84c",
+  "EXIT_REQUIREMENTS:wb-2sk6 deliverable:bac6b658c326",
+  "CASE_CALLS:GP6-CW2-OPTS-DEAD:bd1fcce6e37e",
+  "CASE_CALLS:GP6-CW2-OPTS-EMPTY-DEAD:051513521979",
+  "CASE_CALLS:GP6-CW2-OPTS-CARRY-DEAD:228b14ad17b8",
+  "CASE_CALLS:GP6-CW2-OPTS-TITLEONLY-DEAD:cbebca8e81e7",
+  "CASE_CALLS:GP6-CW2-OPTS-DUPHEAD-DEAD:5f85cf965500",
+  "CASE_CALLS:GP6-CW2-PARENCB-DEAD:3d819bb7750a",
+  "CASE_CALLS:GP6-CW2-PARENTITLE-DEAD:716e6a625199",
+  "CASE_CALLS:GP6-CW2-PLAIN-DEAD-CTRL:d15a44c64ba9",
+  "CASE_CALLS:GP6-CW2-TIMEOUT-DEAD-CTRL:07687985d0fe",
+  "CASE_CALLS:GP6-DIAG-OPTS-LIVE:f82f116a7360",
+  "CASE_CALLS:GP6-DIAG-PLAIN-LIVE-CTRL:9a835f9b8f94",
+  "CASE_CALLS:S6-FN-ASYNC:c01f92c22f5c",
+  "CASE_CALLS:S6-FN-PARAMETER:e3d3534eac98",
+  "CASE_CALLS:S6-FN-TWO-ARROWS:20bb1fda01a2",
+  "CASE_CALLS:S6-FN-OPTIONS-THIRD:a5411095d782",
+  "CASE_CALLS:S6-OPTS-FN-PARAMETER:c65ddbcf1212",
+  "CASE_CALLS:S6-OPTS-SPREAD:71229efe934d",
+  "CASE_CALLS:S6-CALL-OPTIONAL:89620115d328",
+  "CASE_CALLS:S6-CALLEE-PAREN:f3d5dc6e75c5",
+  "CASE_CALLS:S6-CALLEE-AS:8e2cdc0480f1",
+  "CASE_CALLS:S6-CALLEE-NONNULL:110315e880ed",
+  "CASE_CALLS:S6-TITLE-PAREN-TWICE:ab2cdf798093",
+  "CASE_CALLS:S6-TITLE-AS:f6e7b45bab9a",
+  "CASE_CALLS:S6-TITLE-SATISFIES:cebc835cc2e3",
+  "CASE_CALLS:S6-TITLE-ANGLE:b8999f838895",
+  "CASE_CALLS:S6-TITLE-NONNULL:9f747c6be37c",
+  "CASE_CALLS:S6-OPTS-PAREN:8626a512c24b",
+  "CASE_CALLS:S6-OPTS-SATISFIES:c8d5876b71d1",
+  "CASE_CALLS:S6-OPTS-AS:de1705e819bc",
+  "CASE_CALLS:S6-OPTS-FN-PAREN:f2c3d2205d19",
+  "CASE_CALLS:S6-OPTS-FN-NONNULL:bf445d86dbb0",
+  "CASE_CALLS:S6-FN-AS:65c832353557",
+  "CASE_CALLS:S6-FN-ANGLE:b559b3cee9b9",
+  "CASE_CALLS:S6-FN-FUNCTION:5e28a18a5415",
+  "CASE_CALLS:S6-FN-EXPRESSION:e6286a6e39a8",
+  "CASE_CALLS:S6-OPTS-FN-FUNCTION:4a40f82cd587",
+  "CASE_CALLS:S6-OPTS-FN-EXPRESSION:fe09ef08b688",
+  "CASE_CALLS:S6-OPTS-NO-FN:bc6eaca3d56f",
+  "CASE_CALLS:S6-TITLE-ALONE:2ac3beaa6aa7",
+  "CASE_CALLS:S6-SECOND-NAME:fac009aaf428",
+  "CASE_CALLS:S6-SECOND-NUMBER:11728dc1db5d",
+  "CASE_CALLS:S6-SECOND-UNDEFINED:f5b4b8e13776",
+  "CASE_CALLS:S6-SECOND-ARRAY:4ef2e8201554",
+  "CASE_CALLS:S6-SECOND-CALL:c059a1fc1e9e",
+  "CASE_CALLS:S6-SECOND-CLASS:e4107629d056",
+  "CASE_CALLS:S6-SECOND-SPREAD:722ec234f43c",
+  "CASE_CALLS:S6-SECOND-EXPRESSION-ARROW:d8b646b97e13",
+  "CASE_CALLS:S6-THIRD-OPTIONS:bde1f5bebed8",
+  "CASE_CALLS:S6-TITLE-TEMPLATE:21c05ab6fa80",
+  "CASE_CALLS:S6-TITLE-CONCAT:7e5b5730b5cf",
+  "CASE_CALLS:S6-TITLE-NAME:336418002d92",
+  "CASE_CALLS:S6-CALLEE-MEMBER:910a13ba9a55",
+  "CASE_CALLS:S6-CALLEE-OTHER:4d544ab115ab",
+  "CASE_CALLS:S6-CALLEE-COMMA:92839fc829b3",
 ];
 
 // ---- rows -------------------------------------------------------------------------------------------------------------
@@ -6938,7 +7816,7 @@ describe(SUITE, () => {
         missing: [],
       });
     });
-    it("FAIL-CLOSED CORE (cut #4, R-B392): every claim line of the four frozen classes - the lines the guard derives a sub-form from (first-argument, POSITIONS and for-of and for-in target lines) and the ROOTS, spy, assignment, compound operator and rebind lines - carries, in its own words, the narrowing 'on its pinned pages' as a clause of its own, no word on the line widening it again (wb-tz2.24, refusal #4 F2)", () => {
+    it("FAIL-CLOSED CORE (cut #4, R-B392; wb-v3a9: the cases apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every claim line of the four frozen classes - the lines the guard derives a sub-form from (first-argument, POSITIONS and for-of and for-in target lines) and the ROOTS, spy, assignment, compound operator and rebind lines (wb-tz2.24, refusal #4 F2)", () => {
       const lines = helperClaimLines();
       const derived = (pattern: RegExp): string[] => lines.filter(entry => pattern.test(entry.line)).map(entry => entry.id);
       const frozen = [
@@ -6952,7 +7830,7 @@ describe(SUITE, () => {
         unnarrowed: [],
       });
     });
-    it("FAIL-CLOSED CARRY (wb-tz2.24, R-B424; cuts #2 and #3): every claim line whose words name an argument or element place of a root form or of the watched reference - a parameter's position, the argument one place later, an array element by its index, a for-of variable's elements or an argument of a call - or a parameter's default value, a variable's initializer or a plain text pid narrows to its pinned pages as a clause of its own", () => {
+    it("FAIL-CLOSED CARRY (wb-tz2.24, R-B424; cuts #2 and #3; wb-v3a9: the cases apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every claim line whose words name an argument or element place of a root form or of the watched reference - a parameter's position, the argument one place later, an array element by its index, a for-of variable's elements or an argument of a call - or a parameter's default value, a variable's initializer or a plain text pid", () => {
       const lines = helperClaimLines();
       const placed = lines.filter(entry => /a parameter's position|a parameter's default value|a variable's initializer|a plain text pid|the argument one place later|an array element by its index|a for-of variable's elements|\(an argument, /.test(entry.line)).map(entry => entry.id);
       expect({ placed, unnarrowed: placed.filter(id => !narrowsToPinnedPages(lines.find(entry => entry.id === id)?.line ?? "")) }).toStrictEqual({
@@ -6960,7 +7838,7 @@ describe(SUITE, () => {
         unnarrowed: [],
       });
     });
-    it("FAIL-CLOSED SHAPES (wb-tz2.24 cut #4, refusal #3): every '- ' entry line between the C7 SHAPE FORMS heading and the F3 COMMAND HEADS heading narrows to its pinned pages as a clause of its own", () => {
+    it("FAIL-CLOSED SHAPES (wb-tz2.24 cut #4, refusal #3; wb-v3a9: the cases apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every '- ' entry line between the C7 SHAPE FORMS heading and the F3 COMMAND HEADS heading", () => {
       const lines = helperClaimLines();
       const from = lines.findIndex(entry => entry.line.startsWith("C7 SHAPE FORMS ("));
       const to = lines.findIndex(entry => entry.line.startsWith("F3 COMMAND HEADS ("));
@@ -6970,7 +7848,7 @@ describe(SUITE, () => {
         unnarrowed: [],
       });
     });
-    it("FAIL-CLOSED ENTRIES (wb-tz2.24 cut #5, refusal #4): every '- ' entry line of the claim block before the RESIDUALS heading - each entry of BINDING_KINDS, ROOT_FORMS, C2 TAMPER FORMS, C7 DRIVER FORMS, C7 SHAPE FORMS, WRAPPER_FLAG_FORMS and UNESCAPE_FORMS - narrows to its pinned pages as a clause of its own (the RESIDUALS families after that heading are no claim)", () => {
+    it("FAIL-CLOSED ENTRIES (wb-tz2.24 cut #5, refusal #4; wb-v3a9: the cases apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every '- ' entry line of the claim block before the RESIDUALS heading - each entry of BINDING_KINDS, ROOT_FORMS, C2 TAMPER FORMS, C7 DRIVER FORMS, C7 SHAPE FORMS, WRAPPER_FLAG_FORMS and UNESCAPE_FORMS (the RESIDUALS families after that heading are no claim)", () => {
       const lines = helperClaimLines();
       const residuals = lines.findIndex(entry => entry.line.startsWith("RESIDUALS ("));
       const entries = (residuals < 0 ? lines : lines.slice(0, residuals)).filter(entry => entry.line.startsWith("- "));
@@ -6979,7 +7857,7 @@ describe(SUITE, () => {
         unnarrowed: [],
       });
     });
-    it("FAIL-CLOSED PARAGRAPHS (wb-tz2.24 cut #6, refusal #5): every paragraph claim line of the claim block before the RESIDUALS heading - each line that is neither blank nor a '- ' entry, the section headings and the lines a sentence runs on over among them - narrows to its pinned pages as a clause of its own, so that with the FAIL-CLOSED ENTRIES case every claim line before that heading narrows", () => {
+    it("FAIL-CLOSED PARAGRAPHS (wb-tz2.24 cut #6, refusal #5; wb-v3a9: the cases apply narrowsToPinnedPages to the header's lines): narrowsToPinnedPages reads narrowed every paragraph claim line of the claim block before the RESIDUALS heading - each line that is neither blank nor a '- ' entry, the section headings and the lines a sentence runs on over among them - so that with the FAIL-CLOSED ENTRIES case it reads narrowed every claim line before that heading", () => {
       const lines = helperClaimLines();
       const residuals = lines.findIndex(entry => entry.line.startsWith("RESIDUALS ("));
       const paragraphs = (residuals < 0 ? lines : lines.slice(0, residuals)).filter(entry => entry.line !== "" && !entry.line.startsWith("- "));
@@ -7154,6 +8032,153 @@ describe(SUITE, () => {
     });
   });
 
+  describe("NARROWED WORDS (wb-v3a9, F1 of wb-o3f8's landing 997; outside this census): wb-v3a9's own cure and the second cure alternative of wb-o3f8's F1 finding it names, in the tracker export, and this header narrowed to them", () => {
+    it("every wb-v3a9 requirement line this census answers occurs verbatim in its own notes, and the requirement lines are exactly its F1 finding's cure sentence and the scope sentence beside it, in both directions; and the words its cure narrows, and the words it narrows them to, are those wb-o3f8's second cure alternative quotes", () => {
+      const notes = exportRecord(FOLLOW_UP_3).notes;
+      const finding = ridesFinding(FOLLOW_UP_3);
+      const cure = finding.indexOf("Cure for the carry: ");
+      const scope = finding.indexOf(" A further row-per-spelling cure, ");
+      const quoted = /parenthetical \('(.+?)', base :348\) to '(.+?)'\. A further row-per-spelling cure, /.exec(finding);
+      const { replaced, narrowing } = narrowingCure();
+      expect({
+        missing: FOLLOW_UP_3_REQUIREMENTS.filter(requirement => !notes.includes(requirement.text)).map(requirement => requirement.key),
+        lines: FOLLOW_UP_3_REQUIREMENTS.map(requirement => requirement.text),
+        words: [quoted?.[1] ?? "no quoted words", quoted?.[2] ?? "no quoted words"],
+      }).toStrictEqual({
+        missing: [],
+        lines: [...(cure < 0 || scope < cure ? [] : [finding.slice(cure, scope)]), ...(scope < 0 ? [] : [finding.slice(scope + 1)])],
+        words: [replaced, narrowing],
+      });
+    });
+    it("the second cure alternative and the lineage note of wb-o3f8's F1 finding, the sentences wb-v3a9's cure names, occur verbatim in wb-o3f8's notes, and the NARROWING_REQUIREMENTS rows are exactly those two sentences of that finding, in both directions", () => {
+      const notes = exportRecord(FOLLOW_UP_2).notes;
+      const finding = ridesFinding(FOLLOW_UP_2);
+      const alternative = finding.indexOf("Or take F1's second cure alternative ");
+      const lineage = finding.indexOf(" Lineage noted as data: ");
+      expect({
+        missing: NARROWING_REQUIREMENTS.filter(requirement => !notes.includes(requirement.text)).map(requirement => requirement.key),
+        lines: NARROWING_REQUIREMENTS.map(requirement => requirement.text),
+      }).toStrictEqual({
+        missing: [],
+        lines: [...(alternative < 0 || lineage < alternative ? [] : [finding.slice(alternative, lineage)]), ...(lineage < 0 ? [] : [finding.slice(lineage + 1)])],
+      });
+    });
+    it("the parenthetical words that alternative quotes stand nowhere in this header as censusHeader reads it, in any letter case, and the words it narrows them to stand in their place, in the NOT CLAIMED sentence on the widening words of the FAIL-CLOSED cases, that place spelled as this header's NARROWED WORDS ROWS entry spells it (cut #2, refusal #1 U1; cut #3, refusal #2 U1)", () => {
+      const { replaced, narrowing } = narrowingCure();
+      const header = censusHeader();
+      const { headings, openings, paragraph } = notClaimedParagraph(NARROWED_PARAGRAPH);
+      expect({
+        words: [replaced, narrowing],
+        replaced: header.toLowerCase().includes(replaced.toLowerCase()) || header.toUpperCase().includes(replaced.toUpperCase()),
+        headings,
+        openings,
+        placed: clausesOf(paragraph).flatMap((clause, at) => (clause.includes(NARROWED_FRAME) ? [{ at, clause }] : [])),
+        frames: header.split(NARROWED_FRAME).length - 1,
+      }).toStrictEqual({
+        words: ["they read the phrase's place and those words", "the cases apply narrowsToPinnedPages to the header's lines"],
+        replaced: false,
+        headings: 1,
+        openings: 1,
+        placed: [{ at: 2, clause: `and ${NARROWED_FRAME}${narrowing}, not the line's meaning)` }],
+        frames: 1,
+      });
+    });
+    it("the only ROWS entry of this header opening 'NARROWED WORDS (' reads, after 'and the parenthetical words the alternative quotes ', PLACE_WORDS and then its closing sentence on them, and nothing else, as rowsEntries reads it: the words cut #3 spells the replaced words' absence and the sentence's place with (cut #3, refusal #2 U1)", () => {
+      const lead = "and the parenthetical words the alternative quotes ";
+      const entries = rowsEntries().filter(entry => entry.startsWith("NARROWED WORDS ("));
+      expect({ entries: entries.length, tails: entries.map(entry => (entry.includes(lead) ? entry.slice(entry.indexOf(lead) + lead.length) : "no such words")) }).toStrictEqual({
+        entries: 1,
+        tails: [`${PLACE_WORDS}; and this entry's words from 'stand nowhere' on are exactly those the fourth case holds it to, as rowsEntries reads it (cut #3).`],
+      });
+    });
+  });
+
+  describe("CASE WORDS (wb-v3a9; cut #5 spells the heads; wb-2sk6 reads the calls by the role of their arguments): each FAIL-CLOSED case's title, ROWS entry and body - the cases, entries and it() calls (callee it, a string-literal title first, its test function - the second argument, or the third after an object literal - an arrow function with a block body) opening \"FAIL-CLOSED\" - narrowed to the cases applying narrowsToPinnedPages to the header's lines", () => {
+    it("the cases vitest registers for this file whose titles open \"FAIL-CLOSED\", this header's ROWS entries whose words, as rowsEntries reads them, open \"FAIL-CLOSED\" and the FAIL_CLOSED_CASES rows are, by head and in order, the same five, any character, or none, following \"FAIL-CLOSED\" (cut #5); and each such case's title and ROWS entry hold, after 'wb-v3a9: ', the words that alternative narrows to, and 'narrowsToPinnedPages reads narrowed every ', and none of its row's replaced words", ({ task }) => {
+      const registered = failClosedNames(task.file.tasks);
+      const entries = failClosedEntries();
+      const { narrowing } = narrowingCure();
+      const headOf = (text: string): string => text.slice(0, text.indexOf(" (") + 2);
+      const folded = (text: string): string => text.replace(/\s+/g, " ");
+      const narrowed = (text: string, row: FailClosedCase): boolean =>
+        narrowing !== "" && text.includes(`wb-v3a9: ${narrowing})`) && text.includes("narrowsToPinnedPages reads narrowed every ") && !row.replaced.some(words => folded(text).toLowerCase().includes(folded(words).toLowerCase()) || folded(text).toUpperCase().includes(folded(words).toUpperCase()));
+      expect({
+        registered: registered.map(headOf),
+        entries: entries.map(headOf),
+        unnarrowed: FAIL_CLOSED_CASES.filter((row, at) => !narrowed(registered[at] ?? "", row) || !narrowed(entries[at] ?? "", row)).map(row => row.id),
+      }).toStrictEqual({ registered: FAIL_CLOSED_CASES.map(row => row.head), entries: FAIL_CLOSED_CASES.map(row => row.head), unnarrowed: [] });
+    });
+    it("the it() calls of this file - calls whose callee is the identifier it - whose first argument is a string literal opening \"FAIL-CLOSED\" (cut #5: any character, or none, following it; wb-2sk6: the callee and that argument each read through its parentheses and type assertions, whatever the call's other arguments) are, by head and in order, the FAIL_CLOSED_CASES rows' five, each read by the role of its arguments (wb-2sk6: its test function its second argument when that is an arrow function or a function expression and its third when its second is an object literal, each read the same way; such a call whose test function, so read, is none or is not an arrow function with a block body makes failClosedApplications throw); each one's test function is an arrow function with a block body whose body, as this file spells it, binds lines to helperClaimLines() first and hands narrowsToPinnedPages, negated as the whole body of the filter of its unnarrowed list, its row's argument over its row's list, a const of the body read from those lines - the argument reading lines itself, or the list building no entry of its own; it declares none of the names that application reads, and it expects that list empty", () => {
+      expect(failClosedApplications()).toStrictEqual(
+        FAIL_CLOSED_CASES.map(row => ({ head: row.head, bindsLines: true, receiver: row.receiver, receiverReadsLines: true, argument: row.argument, readsHeaderLines: true, expectsEmpty: true, shadowed: [] })),
+      );
+    });
+  });
+
+  describe("CASE HEADS (wb-v3a9 cut #5, refusal #4 U1): the selection the CASE WORDS cases read by, on head spellings planted in memory", () => {
+    it("each CASE_HEADS row's plant - an entry row's ROWS line after the line that equals its anchor, a title row's it() call before the line that opens with its anchor and its case in a task list, a template row's the same with the title written as a template literal - reads as the row states: refused (rowsEntries throws naming the line), selected (the selection holds one more than with no plant), quiet (as many) or, where the calls and the names differ, how many more of each (the template row: calls 0, names 1)", () => {
+      const text = read(CENSUS);
+      const base = { entries: failClosedEntries(text).length, calls: failClosedApplications(text).length };
+      expect(CASE_HEADS.map(row => ({ id: row.id, reads: caseHeadReading(row, text, base) }))).toStrictEqual(CASE_HEADS.map(row => ({ id: row.id, reads: row.reads })));
+    }, CENSUS_TIMEOUT);
+  });
+
+  describe("CASE CALLS (wb-2sk6, the structural-exit child of wb-v3a9, R-B671): the second CASE WORDS case's calls read by the role of their arguments, on calls planted in memory, held to the paired witness W6-CW2-ANYPOS as their floor and to the tracker export", () => {
+    it("each CASE_CALLS row's lines, inserted in memory into this file's text before the line that equals CALL_ANCHOR, read as the row states - selected (failClosedApplications reads one more call), quiet (as many) or refused (it throws CALL_REFUSAL and the title of a call those lines hold) - and W6-CW2-ANYPOS reads as many more calls in them as the row states; and no row whose call W6-CW2-ANYPOS reads reads quiet", () => {
+      const text = read(CENSUS);
+      const base = { calls: failClosedApplications(text).length, witnessed: anyPositionTitles(text).length };
+      const readings = CASE_CALLS.map(row => ({ id: row.id, ...caseCallReading(row, text, base) }));
+      expect({ readings, floor: readings.filter(reading => reading.witnessed > 0 && reading.reads === "quiet").map(reading => reading.id) }).toStrictEqual({
+        readings: CASE_CALLS.map(row => ({ id: row.id, reads: row.reads, witnessed: row.witnessed })),
+        floor: [],
+      });
+    }, CENSUS_TIMEOUT);
+    it("W6-CW2-ANYPOS - the it() calls of this file whose callee is the identifier it, whose first argument is a string literal opening \"FAIL-CLOSED\" and one of whose later arguments is an arrow function with a block body, each node as written - and the calls failClosedApplications selects are, by head and in order, the FAIL_CLOSED_CASES rows' five", () => {
+      expect({
+        witnessed: anyPositionTitles().map(title => title.slice(0, title.indexOf(" (") + 2)),
+        selected: failClosedApplications().map(application => application.head),
+      }).toStrictEqual({ witnessed: FAIL_CLOSED_CASES.map(row => row.head), selected: FAIL_CLOSED_CASES.map(row => row.head) });
+    });
+    it("wb-2sk6's requirement line occurs verbatim in its description in the tracker export and is exactly that description's DELIVERABLE sentence, in both directions; and the ids wb-v3a9's refusal #5 verdict names there that open GP6-CW2- or GP6-DIAG-, the group name GP6-CW2-OPTS aside, are exactly the ids of the CASE_CALLS rows that open GP6-, in both directions", () => {
+      const description = exportRecord(EXIT).description;
+      const start = description.indexOf("DELIVERABLE (");
+      const end = start < 0 ? -1 : description.indexOf(" The parent's cured sets ", start);
+      expect({
+        missing: EXIT_REQUIREMENTS.filter(requirement => !description.includes(requirement.text)).map(requirement => requirement.key),
+        lines: EXIT_REQUIREMENTS.map(requirement => requirement.text),
+        members: CASE_CALLS.filter(row => row.id.startsWith("GP6-")).map(row => row.id).sort(),
+      }).toStrictEqual({ missing: [], lines: end < 0 ? [] : [description.slice(start, end)], members: namedCallMembers(refusal5Verdict()) });
+    });
+  });
+
+  describe("ROWS LINES (wb-v3a9 cut #4, refusal #3 U1 and U2): rowsEntries reads this header's ROWS fail-closed", () => {
+    it("each ROWS_LINES row's lines, inserted in memory into this file's text after the line that equals the row's anchor, are refused - rowsEntries throws naming one of them - or read into the entry whose head, its words through its first ' (' or ':', the row names, as the row states; and this header's only ROWS LINES entry is, line by line, ROWS_LINES_ENTRY, its quotes spelled from the ROWS_READ spellings and pattern rowsEntries reads by", () => {
+      const text = read(CENSUS);
+      const readingOf = (row: RowsLine): string => {
+        const lines = text.split("\n");
+        const at = lines.indexOf(row.anchor);
+        if (at < 0 || lines.indexOf(row.anchor, at + 1) >= 0) return "no single anchor line";
+        lines.splice(at + 1, 0, ...row.lines);
+        const last = (row.lines[row.lines.length - 1] ?? "").replace(/^ \* ?/, "").replace(/\s+/g, " ").trim();
+        try {
+          const entry = rowsEntries(lines.join("\n")).find(candidate => candidate.endsWith(last));
+          return entry === undefined ? "read into no entry" : (/^[^(:]*(?: \(|:)/.exec(entry)?.[0] ?? entry);
+        } catch (error) {
+          const message = error instanceof Error ? error.message : String(error);
+          return row.lines.some(line => message.endsWith(JSON.stringify(line))) ? "refused" : message;
+        }
+      };
+      const header = text.slice(0, text.indexOf("*/")).split("\n");
+      const open = header.findIndex(line => line.startsWith(" *  ROWS LINES ("));
+      const after = open < 0 ? -1 : header.findIndex((line, at) => at > open && !line.startsWith(ROWS_READ.continuation));
+      expect({
+        readings: ROWS_LINES.map(row => ({ id: row.id, reads: readingOf(row) })),
+        entry: after < 0 ? [] : header.slice(open, after),
+        entries: rowsEntries().filter(candidate => candidate.startsWith("ROWS LINES (")).length,
+      }).toStrictEqual({ readings: ROWS_LINES.map(row => ({ id: row.id, reads: row.reads })), entry: ROWS_LINES_ENTRY, entries: 1 });
+    });
+  });
+
   describe("FROZEN SHAPE (standing rule 16)", () => {
     it("every table row is pinned as table:id:digest of its own JSON", () => {
       const rows = (table: string, entries: readonly { readonly id?: string; readonly word?: string; readonly key?: string }[]): string[] =>
@@ -7208,6 +8233,13 @@ describe(SUITE, () => {
         ...rows("PREDICATE_MEMBERS", PREDICATE_MEMBERS),
         ...rows("MEMBER_WITNESSES", MEMBER_WITNESSES),
         ...rows("FOLLOW_UP_2_REQUIREMENTS", FOLLOW_UP_2_REQUIREMENTS),
+        ...rows("FAIL_CLOSED_CASES", FAIL_CLOSED_CASES),
+        ...rows("NARROWING_REQUIREMENTS", NARROWING_REQUIREMENTS),
+        ...rows("FOLLOW_UP_3_REQUIREMENTS", FOLLOW_UP_3_REQUIREMENTS),
+        ...rows("ROWS_LINES", ROWS_LINES),
+        ...rows("CASE_HEADS", CASE_HEADS),
+        ...rows("EXIT_REQUIREMENTS", EXIT_REQUIREMENTS),
+        ...rows("CASE_CALLS", CASE_CALLS),
       ]).toStrictEqual(FROZEN);
     });
   });
