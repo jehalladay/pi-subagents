@@ -31,10 +31,11 @@
  * holds, the nearest one or the one below or above the measure (a case that names a row pins a whole number of
  * milliseconds and, where it names the timed host call, one no less than that call's whole milliseconds); for an agent's
  * admission stage and a load stage, an index read from the run's running count of agents or loads when the stage ends rather
- * than from the call itself (only R078-GATE-INDEX, R078-NODE-INDEX and R078-ADMISSION-NODE count a later call before a
- * stage ends, for the sdk, gate, node and node admission stages); where within its acquire call a lease's waitedMs starts
- * and stops, past the two bounds R078-ADMISSION-ROLLBACK and R078-ADMISSION-NODE pin on an admission stage (a queued
- * request's no shorter than the holder's hold from the moment it queued, every lease's no longer than its acquire call).
+ * than from the call itself (only R078-GATE-INDEX, R078-NODE-INDEX, R078-ADMISSION-NODE and R078-ADMISSION-INDEX count a
+ * later call before a stage ends, for the sdk, gate, node and node admission stages); where within its acquire call a lease's
+ * waitedMs starts and stops, past the two bounds R078-ADMISSION-ROLLBACK and R078-ADMISSION-NODE pin on an admission stage
+ * (a queued request's no shorter than the holder's hold from the moment it queued, every lease's no longer than its acquire
+ * call).
  */
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
@@ -123,15 +124,17 @@ function stageProbe(): { records: WorkflowStageRecord[]; telemetry: NonNullable<
 }
 
 /**
- * A HostAdmission that admits exactly as HostAdmission does and keeps, for each lease it grants, the lease's own waitedMs
- * beside the caller's view of the acquire call on the monotonic clock: when it was asked, when its request queued (when it had
- * to) and when it answered. The wait admission.ts measured is read beside the admission stage the run reports
- * (R078-ADMISSION-ROLLBACK, R078-ADMISSION-NODE). The lease's clock starts after the call is asked and before its request
- * queues, and stops before the call answers, so a waitedMs is never shorter than the time from the queueing to the admission
- * and never longer than the call.
+ * A HostAdmission that admits exactly as HostAdmission does and keeps, for each lease it grants, the pools the lease holds and
+ * the lease's own waitedMs beside the caller's view of the acquire call on the monotonic clock: when it was asked, when its
+ * request queued (when it had to) and when it answered. The wait admission.ts measured is read beside the admission stage the
+ * run reports (R078-ADMISSION-ROLLBACK, R078-ADMISSION-NODE, R078-ADMISSION-INDEX), and the pools and the queueing tell one
+ * lease from another. The lease's clock starts after the call is asked and before its request queues, and stops before the
+ * call answers, so a waitedMs is never shorter than the time from the queueing to the admission and never longer than the
+ * call.
  */
 class LeaseLog extends HostAdmission {
   readonly granted: {
+    readonly pools: readonly HostAdmissionPool[];
     readonly askedAt: number;
     readonly queuedAt: number | undefined;
     readonly answeredAt: number;
@@ -148,7 +151,7 @@ class LeaseLog extends HostAdmission {
         request.onQueued?.(wait);
       },
     });
-    this.granted.push({ askedAt, queuedAt: queuedAt[0], answeredAt: performance.now(), waitedMs: lease.waitedMs });
+    this.granted.push({ pools: lease.pools, askedAt, queuedAt: queuedAt[0], answeredAt: performance.now(), waitedMs: lease.waitedMs });
     return lease;
   }
 }
@@ -463,7 +466,7 @@ describe("EAT-R078: each stage a run reports is timed on the monotonic clock and
     expect(load[0]?.durationMs).toBeLessThan(60_000);
   }, 30_000);
 
-  it("R078-ADMISSION-ROLLBACK: an agent queued on a one-query host budget while the holder rolls the wall clock back 60 s reports an admission stage of its monotonic wait, at least 30 ms, with 0 bytes: its own lease's waitedMs, no shorter than the holder's hold from the moment it queued; the two agents' admission stages are the two leases' waitedMs, each no longer than its acquire call", async () => {
+  it("R078-ADMISSION-ROLLBACK: an agent queued on a one-query host budget while the holder rolls the wall clock back 60 s reports an admission stage of its monotonic wait, at least 30 ms, with 0 bytes: its own lease's waitedMs, no shorter than the holder's hold from the moment it queued; the two agents' admission stages are the two leases' waitedMs, each at its own agent's position and no longer than its acquire call", async () => {
     freezeWallClock();
     const { records, telemetry } = stageProbe();
     const received: WorkflowEntry[] = [];
@@ -502,9 +505,18 @@ describe("EAT-R078: each stage a run reports is timed on the monotonic clock and
     expect(heldAfterQueued).toBeGreaterThanOrEqual(30);
     expect(queued?.durationMs).toBeGreaterThanOrEqual(heldAfterQueued);
     for (const lease of hostAdmission.granted) expect(lease.waitedMs).toBeLessThanOrEqual(lease.answeredAt - lease.askedAt);
+    // Each agent's stage at its own position (wb-lzta): the agents sit at their call order's positions, the holder's stage is
+    // the one lease that never queued and the queued agent's (pinned above) the one that did; the holder's wait is the shorter,
+    // so a stage reported at the other agent's position, or at a position no agent holds, reads red.
+    expect([indexOf("holder"), indexOf("queued")]).toEqual([0, 1]);
+    const unqueued = hostAdmission.granted.filter(lease => lease.queuedAt === undefined);
+    expect(unqueued).toHaveLength(1);
+    expect(unqueued[0]?.waitedMs).toBeLessThan(waited[0]?.waitedMs ?? Number.NEGATIVE_INFINITY);
+    const holder = admission.find(record => record.index === indexOf("holder"));
+    expect(holder).toEqual({ stage: "admission", kind: "agent", index: indexOf("holder"), durationMs: unqueued[0]?.waitedMs, bytes: 0 });
   }, 30_000);
 
-  it("R078-ADMISSION-NODE: a forge.gate.status node queued on a one-operation Forge budget while the holder node rolls the wall clock back 60 s, and a later node is dispatched, reports an admission stage of kind node at its own position, of its monotonic wait, at least 30 ms, with 0 bytes: its own lease's waitedMs, no shorter than the holder's hold from the moment it queued; the three nodes' admission stages are the three leases' waitedMs, each no longer than its acquire call", async () => {
+  it("R078-ADMISSION-NODE: a forge.gate.status node queued on a one-operation Forge budget while the holder node rolls the wall clock back 60 s, and a later node is dispatched, reports an admission stage of kind node at its own position, of its monotonic wait, at least 30 ms, with 0 bytes: its own lease's waitedMs, no shorter than the holder's hold from the moment it queued; the three nodes' admission stages are the three leases' waitedMs, each at its own node's position and no longer than its acquire call", async () => {
     freezeWallClock();
     const { records, telemetry } = stageProbe();
     const received: WorkflowEntry[] = [];
@@ -551,6 +563,84 @@ describe("EAT-R078: each stage a run reports is timed on the monotonic clock and
     expect(heldAfterQueued).toBeGreaterThanOrEqual(30);
     expect(queued?.durationMs).toBeGreaterThanOrEqual(heldAfterQueued);
     for (const lease of hostAdmission.granted) expect(lease.waitedMs).toBeLessThanOrEqual(lease.answeredAt - lease.askedAt);
+    // Each node's stage at its own position (wb-lzta): the holder's stage is the one forge-operations lease that never queued,
+    // the later node's the one lease without a forge-operations slot, and the queued node's (pinned above) the one that queued.
+    // The holder's and the later node's leases both had room at once, so their two waits can be equal, and then no record
+    // tells their stages apart; R078-ADMISSION-INDEX holds three waits apart by construction.
+    const holderLeases = hostAdmission.granted.filter(lease => lease.queuedAt === undefined && lease.pools.includes("forge-operations"));
+    const laterLeases = hostAdmission.granted.filter(lease => !lease.pools.includes("forge-operations"));
+    expect(holderLeases).toHaveLength(1);
+    expect(laterLeases).toHaveLength(1);
+    const stageOf = (label: string): WorkflowStageRecord | undefined => admission.find(record => record.index === indexOf(label));
+    expect(stageOf("holder")).toEqual({ stage: "admission", kind: "node", index: indexOf("holder"), durationMs: holderLeases[0]?.waitedMs, bytes: 0 });
+    expect(stageOf("later")).toEqual({ stage: "admission", kind: "node", index: indexOf("later"), durationMs: laterLeases[0]?.waitedMs, bytes: 0 });
+  }, 30_000);
+
+  it("R078-ADMISSION-INDEX: three nodes admitted in turn on a one-process host budget, two forge.gate.status nodes with a hyperunix.find node between them, whose leases' waits are at least 30 ms apart, each report one admission stage of kind node at their own position, carrying their own lease's waitedMs and 0 bytes", async () => {
+    const { records, telemetry } = stageProbe();
+    const received: WorkflowEntry[] = [];
+    const hostAdmission = new LeaseLog({ sdkQueries: 8, childProcesses: 1, forgeOperations: 8, queueDeadlineMs: 30_000 });
+    // How many leases the budget had granted when each node's host call began. The one process slot admits one node at a
+    // time, so the last lease granted then is the calling node's own; the first two nodes admitted each hold the slot 60 ms,
+    // so each lease waits about 60 ms longer than the lease granted before it.
+    const leasesAtCall = new Map<string, number>();
+    const host: WorkflowHost = {
+      async spawnAgent() { return { ok: true, text: "unused" }; },
+      abortAgent() {},
+      async callNode(request) {
+        leasesAtCall.set(request.label, hostAdmission.granted.length);
+        if (leasesAtCall.size < 3) await sleep(60);
+        return { contract: "forge.gate.status/v1", source: { status: "passed" } };
+      },
+      describeNodeEffect: () => "read",
+    };
+    const body = 'return await parallel([() => node("forge.gate.status", {}, { label: "first" }), () => node("hyperunix.find", {}, { label: "second" }), () => node("forge.gate.status", {}, { label: "third" })]);';
+    const result = await run(body, { host, hostAdmission, telemetry }, received);
+    expect(result.status).toBe("completed");
+    const labels = ["first", "second", "third"];
+    const indexOf = (label: string): number | undefined => nodeRows(received).find(row => row.label === label)?.index;
+    expect(labels.map(indexOf)).toEqual([0, 1, 2]);
+    expect(hostAdmission.granted).toHaveLength(3);
+    expect([...leasesAtCall.values()].sort((a, b) => a - b)).toEqual([1, 2, 3]);
+    const waitOf = (label: string): number | undefined => hostAdmission.granted[(leasesAtCall.get(label) ?? 0) - 1]?.waitedMs;
+    const waits = hostAdmission.granted.map(lease => lease.waitedMs).sort((a, b) => a - b);
+    expect((waits[1] ?? Number.NEGATIVE_INFINITY) - (waits[0] ?? Number.POSITIVE_INFINITY)).toBeGreaterThanOrEqual(30);
+    expect((waits[2] ?? Number.NEGATIVE_INFINITY) - (waits[1] ?? Number.POSITIVE_INFINITY)).toBeGreaterThanOrEqual(30);
+    const admission = records.filter(record => record.stage === "admission").sort((a, b) => a.index - b.index);
+    expect(admission).toEqual(labels.map(label => ({ stage: "admission", kind: "node", index: indexOf(label), durationMs: waitOf(label), bytes: 0 })));
+  }, 30_000);
+
+  it("R078-KIND-INDEX: a run that calls a forge.gate.status node, a gated agent and a nested workflow() in turn, twice over, reports its stage records, by stage, kind and position, as exactly the agents' admission, sdk and gate stages of kind agent at positions 0 and 1, the nodes' admission and node stages of kind node at 0 and 1 and the loads' stages of kind workflow at 0 and 1: each kind's positions count that kind's calls only", async () => {
+    const { records, telemetry } = stageProbe();
+    const received: WorkflowEntry[] = [];
+    const hostAdmission = new HostAdmission({ sdkQueries: 8, childProcesses: 8, forgeOperations: 8, queueDeadlineMs: 30_000 });
+    const child = 'export const meta = { name: "child", description: "nested" };\nreturn 1;';
+    const host: WorkflowHost = {
+      async spawnAgent(request) { return { ok: true, text: request.prompt }; },
+      abortAgent() {},
+      async runGate() { return { ok: true, output: "gate ok" }; },
+      async callNode() { return { contract: "forge.gate.status/v1", source: { status: "passed" } }; },
+      describeNodeEffect: () => "read",
+      async loadWorkflow() { return { ok: true, script: child }; },
+    };
+    const body = [
+      'await node("forge.gate.status", {}, { label: "n-0" });',
+      'await agent("a-0", { gate: "npm test" });',
+      'await workflow("child");',
+      'await node("forge.gate.status", {}, { label: "n-1" });',
+      'await agent("a-1", { gate: "npm test" });',
+      'await workflow("child");',
+      'return "done";',
+    ].join("\n");
+    const result = await run(body, { host, hostAdmission, telemetry }, received);
+    expect(result.status).toBe("completed");
+    expect(agentRows(received).filter(row => row.state === "done").map(row => [row.promptPreview, row.index])).toEqual([["a-0", 0], ["a-1", 1]]);
+    expect(nodeRows(received).filter(row => row.state === "done").map(row => [row.label, row.index])).toEqual([["n-0", 0], ["n-1", 1]]);
+    // Every call but the first follows a call of another kind, so a position counted across kinds reads red.
+    expect(records.map(record => `${record.stage}:${record.kind}:${record.index}`).sort()).toEqual([
+      "admission:agent:0", "admission:agent:1", "admission:node:0", "admission:node:1", "gate:agent:0", "gate:agent:1",
+      "load:workflow:0", "load:workflow:1", "node:node:0", "node:node:1", "sdk:agent:0", "sdk:agent:1",
+    ]);
   }, 30_000);
 
   it("R078-NATIVE-IDS: three agents report sdk stages carrying each one's own answer bytes and its own session id, and the agent whose host reports no session carries none", async () => {
