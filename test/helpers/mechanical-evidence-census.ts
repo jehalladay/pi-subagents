@@ -11,7 +11,8 @@
  * operation id, a source pin), and returns found-witness or searched-scope-absence. Its global reading is WITNESSED only beside
  * a witness and UNDETERMINED otherwise: the vocabulary has no universal-absence word, and the declared unread (external) stores
  * are carried into every record. A markdown store's entries are its top-level level-2 sections as marked's lexer reads them,
- * and their HTML comment text is never read (markdownEntries, wb-prv7).
+ * and their HTML comment text is not read in the arrangements the suite's R080-COMMENT-TEXT rows place (markdownEntries,
+ * wb-prv7; wb-ivcm: any other arrangement is NOT CLAIMED by the suite).
  *
  * EAT-R081 ("The Forge transport probe MUST settle the exit-zero failed-gate premise from producer evidence"):
  * judgeTransportPairing admits only native transcripts (declared source native-transcript, a forge identity with version and
@@ -76,7 +77,7 @@ export interface StoreEntry {
   readonly ref: string;
   readonly date: string | null;
   readonly text: string;
-  /** The text the join reads where it is not `text`: a markdown entry's tokens as joinTextOf reads them, HTML comments unread (markdownEntries). Absent, the join reads `text`. */
+  /** The text the join reads where it is not `text`: a markdown entry's tokens as joinTextOf reads them (markdownEntries). Absent, the join reads `text`. */
   readonly readText?: string;
 }
 export interface EntryReading {
@@ -142,8 +143,10 @@ function childrenOf(token: Token): readonly Token[] {
 }
 
 /**
- * The text the join reads of marked tokens: their raw text less every HTML comment marked reads as html. An html token (a block,
- * or inline at any depth) drops its comments; a list reads its items and a table its cells (its header's first), one per line,
+ * The text the join reads of marked tokens: their raw text, less the comments of an html token in the arrangements the suite's
+ * R080-COMMENT-TEXT rows place, a block or inline (wb-ivcm: any other arrangement, among them an html token beside another of
+ * its entry or after another block of it, is NOT CLAIMED by the suite); a list reads its items and a table its cells (its
+ * header's first), one per line,
  * and a block quote its children; any other token with children keeps its own raw text around theirs; a leaf keeps its raw
  * text, so code (fenced, indented or a code span) is read with any comment form it shows, since code renders its text.
  */
@@ -169,7 +172,7 @@ function joinTextOfToken(token: Token): string {
  * before the first such heading is entry 0 (when there is one), the k-th heading opens entry k and runs to the next one or the
  * end. An entry is dated when its heading's text begins with YYYY-MM-DD. An entry's text is its lines, so the entries' texts
  * joined by LF are the input text (a CRLF pair is one line end; a lone carriage return, a line end to marked but not to the LF
- * split, is refused); the join reads its readText, the entry's tokens as joinTextOf reads them (HTML comments unread).
+ * split, is refused); the join reads its readText, the entry's tokens as joinTextOf reads them.
  */
 export function markdownEntries(store: string, ref: string, text: string): StoreEntry[] {
   const lines = text.split("\n");
