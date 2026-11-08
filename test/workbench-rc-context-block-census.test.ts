@@ -1843,7 +1843,7 @@ interface ExportRow {
 let exportCache: ExportRow[] | undefined;
 /** Every row of the tracked bead export: its id, title, notes and parent-child parents. */
 function exportRows(): ExportRow[] {
-  exportCache ??= textAt(EXPORT_FILE).split("\n").filter(line => line.trim().length > 0).map(line => {
+  exportCache ??= rehydrateTrackerExport(textAt(EXPORT_FILE), join(REPO, EXPORT_FILE)).split("\n").filter(line => line.trim().length > 0).map(line => {
     const row: unknown = JSON.parse(line);
     if (!isObject(row) || typeof row.id !== "string" || typeof row.title !== "string") throw new Error("a bead export row needs an id and a title");
     const parents = Array.isArray(row.dependencies)
@@ -3899,3 +3899,5 @@ describe("wb-5ltg.1 RC model-context block census (RC-NATIVE-INTERFACE-COMPONENT
     expect(REACHED, "every pin reached its end, in row order, with its pinned assertion count").toEqual([...ROSTER.reached]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

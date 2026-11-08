@@ -1705,7 +1705,7 @@ function rosterWitness(pin: string): Json {
 
 /** One row of the tracked bead export, by id. */
 function exportRow(id: string): { [key: string]: unknown } {
-  for (const line of readFileSync(EXPORT_PATH, "utf8").split("\n")) {
+  for (const line of trackerExportText(EXPORT_PATH).split("\n")) {
     if (!line.includes(`"id":"${id}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === id) return row;
@@ -3299,3 +3299,5 @@ describe("wb-ts6.1 hx recipe serving census (HXFS-PI-R5, until-then leg)", () =>
     expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(row => row.pins));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

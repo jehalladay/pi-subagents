@@ -15,6 +15,11 @@
  * NOT CLAIMED by this suite: a cost sentence in free prose that names neither October figure; a command holding "; "; units
  * other than the module's VALUE forms; an October figure in another unit (398000 ms or 7000 ms in a row passes); the receipts of program beads that carry no mwi-release block; any October figure
  * spelling other than the pinned ones; whether a figure in a row is fresh beyond its fields being present and well formed.
+ *
+ * RESIDUALS of the October-figure census (named in the module header, each with pinned quiet rows and a live twin below):
+ * R164-RESIDUAL-DATE-ELSEWHERE, a figure stated as a current cost on a rendered line that also names its own report date in
+ * another clause; R164-RESIDUAL-HEADER-VERB, a table whose present-tense cost verb is in a header cell while the figure is in a
+ * body cell.
  */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -34,6 +39,8 @@ const block = (...rows: string[]): string => ["# wb-x: receipt", "", "## 2026-11
 const fullTable = (overrides: Readonly<Record<string, string>> = {}): string =>
   block(...COST_STAGES.map(stage => `${stage}: ${overrides[stage] ?? FIELDS}`));
 const rules = (markdown: string): string[] => costTableFindings(markdown).map(finding => finding.rule);
+/** A markdown document of `lines` under a title, as the census reads one. */
+const doc = (...lines: string[]): string => ["# wb-x: doc", "", ...lines, ""].join("\n");
 
 describe("EAT-R164: a cost row carries date, host, command, sample size, source pin and value, and a row valued at an October figure spelled 398 s or 7 s is refused", () => {
   it("R164-ROW-COMPLETE: a table whose four stage rows each carry the six fields well formed has no finding", () => {
@@ -110,6 +117,31 @@ describe("EAT-R164: the docs census flags 398 s or 7 s with a present-tense cost
   it("R164-CENSUS-RENDERED: a figure inside a list item, a table cell and a fenced block is read on its rendered line", () => {
     const markdown = ["# wb-x: doc", "", "- install is 398 s", "", "| stage | cost |", "|---|---|", "| pack | runs 7 s |", "", "```text", "gate takes 7 s", "```", ""].join("\n");
     expect(historicalFigureFindings(markdown).map(finding => finding.line)).toEqual(["install is 398 s", "pack | runs 7 s", "gate takes 7 s"]);
+  }, 5_000);
+
+  it("R164-CENSUS-FENCED-BLOCK: a fenced block is read as one line, its rows joined by single spaces, so a figure on one row and a present-tense cost verb on another are flagged together", () => {
+    expect(historicalFigureFindings(doc("```text", "pack: 398 s", "install runs", "```"))).toEqual([{ rule: "historical-figure-as-current", figure: "398 s", line: "pack: 398 s install runs" }]);
+  }, 5_000);
+});
+
+describe("EAT-R164 residuals: escape families the October-figure census leaves quiet, each with pinned quiet rows and a live twin", () => {
+  it("R164-RESIDUAL-DATE-ELSEWHERE quiet rows: an October figure stated as a current cost on a line that also names its own report date in another clause is not flagged, in a sentence and across the rows of one fenced block", () => {
+    expect(historicalFigureFindings(doc("The current install cost is 398 s, the same as the 2026-10-20 report."))).toEqual([]);
+    expect(historicalFigureFindings(doc("```text", "install takes 398 s", "per the 2026-10-20 report", "```"))).toEqual([]);
+  }, 5_000);
+
+  it("R164-RESIDUAL-DATE-ELSEWHERE live twin: the same sentence and the same block naming no report date are each flagged", () => {
+    const line = "The current install cost is 398 s, the same as the last report.";
+    expect(historicalFigureFindings(doc(line))).toEqual([{ rule: "historical-figure-as-current", figure: "398 s", line }]);
+    expect(historicalFigureFindings(doc("```text", "install takes 398 s", "per the last report", "```"))).toEqual([{ rule: "historical-figure-as-current", figure: "398 s", line: "install takes 398 s per the last report" }]);
+  }, 5_000);
+
+  it("R164-RESIDUAL-HEADER-VERB quiet row: a table whose present-tense cost verb is in a header cell while the figure is in a body cell is not flagged", () => {
+    expect(historicalFigureFindings(doc("| stage | install now takes |", "|---|---|", "| ci | 398 s |"))).toEqual([]);
+  }, 5_000);
+
+  it("R164-RESIDUAL-HEADER-VERB live twin: the verb in the body cell beside the figure is flagged", () => {
+    expect(historicalFigureFindings(doc("| stage | install |", "|---|---|", "| ci | now takes 398 s |"))).toEqual([{ rule: "historical-figure-as-current", figure: "398 s", line: "ci | now takes 398 s" }]);
   }, 5_000);
 });
 

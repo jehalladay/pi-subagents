@@ -875,7 +875,7 @@ interface ExportRow {
   readonly notes: string;
 }
 /** One row of the tracker export (one JSON object per line), found by its id. */
-function exportRow(id: string, text: string = textOf(EXPORT)): ExportRow {
+function exportRow(id: string, text: string = rehydrateTrackerExport(textOf(EXPORT), join(REPO, EXPORT))): ExportRow {
   for (const line of text.split("\n")) {
     if (!line.includes(id)) continue;
     const parsed: unknown = JSON.parse(line);
@@ -2401,7 +2401,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     return json({ recordWords: recordWords(record), spellingForms, piIdentifiersQuiet: !own.some(mentions), siblingQuiet: sibling });
   },
   Q1: () => {
-    const exportHits = (textOf(EXPORT).match(MENTION) ?? []).length;
+    const exportHits = (rehydrateTrackerExport(textOf(EXPORT), join(REPO, EXPORT)).match(MENTION) ?? []).length;
     expect(exportHits, "the tracker export spells the record (the bead's own row)").toBeGreaterThanOrEqual(1);
     return json({ residual: "R-TRACKER", exportSpellsRecord: exportHits >= 1, exportListed: piListing().paths.includes(EXPORT), trackerExcluded: piListing().excluded.some(path => path.startsWith(TRACKER)) });
   },
@@ -2737,3 +2737,5 @@ describe("wb-dqf.1 Furnace observer-boundary census (FURNACE-CAC-EXECUTION-ASSUR
     expect(accepted, "the claims bound: no pin's live witness shows another pin's claims").toEqual([]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

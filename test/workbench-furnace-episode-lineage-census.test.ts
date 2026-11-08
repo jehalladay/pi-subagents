@@ -763,7 +763,7 @@ function spelling(files: ReadonlyMap<string, string>, words: readonly string[]):
 }
 /** The bead's own export row (title and description only: later store writes change neither). */
 function exportRow(): { title: string; description: string } {
-  const rows = readFileSync(join(REPO, EXPORT), "utf8")
+  const rows = trackerExportText(join(REPO, EXPORT))
     .split("\n")
     .filter((line) => line.trim() !== "")
     .map((line): unknown => JSON.parse(line));
@@ -1449,3 +1449,5 @@ describe("wb-4ap.12 Furnace episode-lineage census (until F2 ships)", () => {
     ]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

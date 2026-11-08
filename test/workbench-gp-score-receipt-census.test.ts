@@ -1153,7 +1153,7 @@ interface Roster {
 const ROSTER = JSON.parse(read(ROSTER_FILE)) as Roster;
 const REACHED: { readonly pin: string; readonly same: boolean }[] = [];
 function trackerRow(): { readonly title: string; readonly notes: string } | undefined {
-  for (const line of read(EXPORT).split("\n")) {
+  for (const line of rehydrateTrackerExport(read(EXPORT), join(ROOT, EXPORT)).split("\n")) {
     if (!line.includes(`"id":"${BEAD}"`)) continue;
     const parsed: unknown = JSON.parse(line);
     if (own(parsed, "id") === BEAD && typeof own(parsed, "title") === "string") {
@@ -1325,3 +1325,5 @@ describe(suite, () => {
     expect(REACHED.filter(entry => !entry.same)).toEqual([]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

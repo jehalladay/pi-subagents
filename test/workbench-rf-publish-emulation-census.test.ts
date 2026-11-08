@@ -1162,7 +1162,7 @@ describe("wb-hs2j.6 rf publish emulation census (RF-REACTIVE-CONTEXT-ASSEMBLY-R7
   });
 
   it("the owner filing's acceptance clauses (a), (b) and (c) in the tracked bead export are rows A, B and C's labels", () => {
-    expect(ROWS.slice(0, 3).map(row => row.label)).toEqual(exportClauses(readFileSync(EXPORT_PATH, "utf8")));
+    expect(ROWS.slice(0, 3).map(row => row.label)).toEqual(exportClauses(trackerExportText(EXPORT_PATH)));
   });
 
   it("every judged pin has exactly one case", () => {
@@ -1195,3 +1195,5 @@ describe("wb-hs2j.6 rf publish emulation census (RF-REACTIVE-CONTEXT-ASSEMBLY-R7
     });
   }
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

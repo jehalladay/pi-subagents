@@ -300,7 +300,7 @@ interface BeadText {
   readonly notes: string;
 }
 function beadText(id: string): BeadText {
-  for (const line of readFileSync(join(ROOT, EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(ROOT, EXPORT)).split("\n")) {
     if (line.trim() === "") continue;
     const row: unknown = JSON.parse(line);
     if (typeof row !== "object" || row === null) continue;
@@ -3463,3 +3463,5 @@ describe(`observation members census (${BEAD}, SDK-REACTIVE-FIBER-R2)`, () => {
     expect(shapeOf()).toEqual(FROZEN_SHAPE);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

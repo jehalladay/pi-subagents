@@ -1002,7 +1002,7 @@ const ANCHOR_ROWS: readonly { readonly id: string; readonly title: string; reado
     id: "ANCHOR-EXPORT",
     title: "outside anchor: this bead's row of the tracked export names exactly EAT-R057 and the gate the judge and record carry",
     run: () => {
-      const rows = repoText(EXPORT)
+      const rows = rehydrateTrackerExport(repoText(EXPORT), join(REPO, EXPORT))
         .split("\n")
         .filter((line) => line.includes(`"id":"${BEAD}"`))
         .map((line) => JSON.parse(line) as { readonly id?: unknown; readonly description?: unknown })
@@ -1114,3 +1114,5 @@ describe("wb-f3wd installed-HX task-scope census: EAT-R057 (MWI B-hx-evidence, g
     reach(LIVENESS_ID);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

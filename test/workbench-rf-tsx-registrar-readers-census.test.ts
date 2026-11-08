@@ -190,12 +190,12 @@
  * Display paths added: none (test-only). No scratch is allocated; the tracker export is only read, and every plant is built in
  * memory; no src, docs or receipt is edited.
  */
-import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";
 import { registrarBindings, tierReadingOf } from "./helpers/rf-tsx-registrar-readers.js";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -517,7 +517,7 @@ interface ExportRow {
   readonly notes: string;
 }
 function exportRow(bead: string): ExportRow {
-  for (const line of readFileSync(join(REPO, EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, EXPORT)).split("\n")) {
     if (!line.includes(`"id":"${bead}"`)) continue;
     const value: unknown = JSON.parse(line);
     if (typeof value !== "object" || value === null || !("id" in value) || value.id !== bead) continue;

@@ -831,7 +831,7 @@ interface ExportRow {
 }
 /** The tracked export's text, read once per run: every default read of exportRow, trackedRow and trackedEdges is this one text, so
  * the outside anchors' added reads cost no further pass over the file (wb-lnz5 cut #2). */
-const trackedExport = lazy((): string => textOf(EXPORT));
+const trackedExport = lazy((): string => rehydrateTrackerExport(textOf(EXPORT), join(REPO, EXPORT)));
 /** One row of the tracker export (one JSON object per line), found by its id; `text` is the export read (the tracked EXPORT unless
  * a case hands in-memory rows, as the outside anchors' edge-type control and FOLLOW_UP's re-typed rows do: wb-lnz5 F2, cut #2). */
 function exportRow(id: string, text: string = trackedExport()): ExportRow {
@@ -2337,3 +2337,5 @@ describe("wb-e9dy rf GraphPolicy-context census (RF-GRAPH-POLICY-CONTEXT-R1, unt
     expect(accepted, "the claims bound: no pin's live witness shows another pin's claims").toEqual([]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

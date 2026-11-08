@@ -1497,7 +1497,7 @@ let beadFacts: ExportFacts | undefined;
 /** The bead's own row in the tracked export (read once per run). */
 function beadRow(): ExportFacts {
   if (beadFacts !== undefined) return beadFacts;
-  const row = exportRow(headText(EXPORT), BEAD);
+  const row = exportRow(rehydrateTrackerExport(headText(EXPORT), join(ROOT, EXPORT)), BEAD);
   if (row === undefined) throw new Error(`${BEAD} has no row in ${EXPORT}`);
   beadFacts = { title: String(row.title ?? ""), notes: String(row.notes ?? "") };
   return beadFacts;
@@ -1916,7 +1916,7 @@ const PINS: Readonly<Record<string, () => void>> = {
     };
     witness("S1b", {
       line: named(lineOf(pinText(anchor.path), anchor.line)), ...anchorWitness(anchor),
-      pjj: { pin: statusAt(pinText(EXPORT), "wb-pjj"), head: statusAt(headText(EXPORT), "wb-pjj") },
+      pjj: { pin: statusAt(pinText(EXPORT), "wb-pjj"), head: statusAt(rehydrateTrackerExport(headText(EXPORT), join(ROOT, EXPORT)), "wb-pjj") },
     }, {
       line: true, pin: "holds", later: "holds", controls: { line: "line", carrier: "carrier-text", twice: "carriers:2" }, ...reading,
       laterPlants: {
@@ -1993,7 +1993,7 @@ const PINS: Readonly<Record<string, () => void>> = {
     witness("S3b", {
       docs: { pin: docs(pinText(OBSERVATION_DOC)), head: docs(headText(OBSERVATION_DOC)) },
       src: { pin: src(pinText(OBSERVATION_SRC)), head: src(headText(OBSERVATION_SRC)) },
-      bundleBead: { pin: statusAt(pinText(EXPORT), "wb-973.8"), head: statusAt(headText(EXPORT), "wb-973.8") },
+      bundleBead: { pin: statusAt(pinText(EXPORT), "wb-973.8"), head: statusAt(rehydrateTrackerExport(headText(EXPORT), join(ROOT, EXPORT)), "wb-973.8") },
     }, {
       docs: { pin: { envelope: [true, true, false], names: false }, head: { envelope: [true, true, false], names: false } },
       src: { pin: [3, 3, 2], head: [3, 3, 2] }, bundleBead: { pin: "open", head: "closed" },
@@ -2203,3 +2203,5 @@ describe(SUITE, () => {
     expect(REACHED.filter(entry => !entry.same).map(entry => entry.pin), "and each compare held").toEqual([]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

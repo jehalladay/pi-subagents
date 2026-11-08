@@ -1874,7 +1874,7 @@ const QUIET: Readonly<Record<string, readonly Row[]>> = {
 // ---- the tracker export (the requirements' outside anchor) ----
 
 function exportRow(): { description: string; notes: string } {
-  for (const line of readFileSync(join(REPO, ".beads", "issues.jsonl"), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, ".beads", "issues.jsonl")).split("\n")) {
     if (!line.includes(`"id":"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (typeof row !== "object" || row === null || !("id" in row) || row.id !== BEAD) continue;
@@ -2059,3 +2059,5 @@ describe("wb-ts6.3 HX mutation Verified readers census (TS6-R2, rule-19 structur
     ]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

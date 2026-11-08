@@ -510,7 +510,7 @@ const quoted = (line: string): string => /"([^"]+)"/.exec(line)?.[1] ?? "";
 /** The first capture of a notes-line pattern in this bead's row of the tracked bead export; `what` names the line. */
 function exportedNotesLine(pattern: RegExp, what: string): string {
   const marker = `"id":"${BEAD}"`;
-  for (const line of readFileSync(BEADS_EXPORT, "utf8").split("\n")) {
+  for (const line of trackerExportText(BEADS_EXPORT).split("\n")) {
     if (!line.includes(marker)) continue;
     const parsed: unknown = JSON.parse(line);
     if (!isObject(parsed) || parsed.id !== BEAD || typeof parsed.notes !== "string") continue;
@@ -1867,3 +1867,5 @@ describe("wb-tnz5.2 federated cursor census (RF-CERTIFIED-FEDERATED-REACTIVE-REF
     });
   }
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

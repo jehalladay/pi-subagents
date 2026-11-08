@@ -404,7 +404,7 @@ interface BeadRow {
 }
 /** A row of the tracked bead export, found by id on a line that parses. */
 function readBeadRow(id: string): BeadRow {
-  for (const line of readFileSync(join(REPO, BEAD_EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, BEAD_EXPORT)).split("\n")) {
     if (!line.includes(`"${id}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === id && typeof row.title === "string") return { title: row.title, notes: typeof row.notes === "string" ? row.notes : "" };
@@ -1431,3 +1431,5 @@ describe("wb-i3p4 RI echo census: A1-D4 witness/count readings and the padded-ec
     expect([...suites, ...titles].filter(name => ENGINE_FAMILY.test(name)), "registered titles spelling the engine family").toEqual([]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

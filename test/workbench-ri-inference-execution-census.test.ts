@@ -461,7 +461,7 @@ interface ExportRow {
 /** The committed bead store export's rows, parsed once. */
 let exported: readonly unknown[] | undefined;
 function exportedRows(): readonly unknown[] {
-  exported ??= readFileSync(ISSUES_PATH, "utf8").split("\n").filter(line => line.trim() !== "").map((line): unknown => JSON.parse(line));
+  exported ??= trackerExportText(ISSUES_PATH).split("\n").filter(line => line.trim() !== "").map((line): unknown => JSON.parse(line));
   return exported;
 }
 /** The one row of the committed bead store export with this id; none, or two, refuses. */
@@ -1672,3 +1672,5 @@ describe("wb-tz4r.7 RI inference execution census (RI-UNIFIED-DECISION-INFERENCE
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

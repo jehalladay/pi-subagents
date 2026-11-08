@@ -2252,7 +2252,7 @@ const rowCache = new Map<string, ExportRow>();
 function exportRowOf(bead: string): ExportRow {
   const cached = rowCache.get(bead);
   if (cached !== undefined) return cached;
-  const rows = readFileSync(join(REPO, EXPORT), "utf8")
+  const rows = trackerExportText(join(REPO, EXPORT))
     .split("\n")
     .filter(line => line.includes(`"${bead}"`))
     .map(line => JSON.parse(line) as Record<string, unknown>)
@@ -2529,3 +2529,5 @@ describe("wb-km7q.12 activity-boundary readers census", () => {
     expect([...REACHED].sort(byName)).toEqual([...pins].sort(byName));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";
