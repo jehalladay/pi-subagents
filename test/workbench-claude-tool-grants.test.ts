@@ -1,7 +1,7 @@
 /**
  * wb-wupg (MWI B-detached-grants, EAT-R012/EAT-R013): the exact Claude tool right the local-detached preflight checks,
  * `claude:tool:<name>` (validateRequest, src/workbench/hosts/local-detached.ts: one exact grant per configured Claude
- * tool), as the six src modules READERS lists read it in a workbench.capabilityGrants list, so the operator can hold the
+ * tool), as the seven src modules READERS lists read it in a workbench.capabilityGrants list, so the operator can hold the
  * tool rights the detached Claude launches of test/workbench-detached-grants.test.ts need.
  *
  * The tool right's form, as each READERS module spells it (TOOL_FORM below): `claude:tool:`, a letter, then up to 63
@@ -31,6 +31,7 @@ import { CapabilityRegistry } from "../src/workbench/capability-registry.js";
 import { createCuratedTools } from "../src/workbench/claude-capability-tools.js";
 import { decideControl } from "../src/workbench/control.js";
 import { decideExecute, EXECUTE_GRANT } from "../src/workbench/execute.js";
+import { adoptFunctionActions, decideFunctionAuthority } from "../src/workbench/function-authority.js";
 import { ObservationProjection } from "../src/workbench/observation.js";
 import { decideReconcile } from "../src/workbench/reconcile-decision.js";
 import { buildWorkflowValidateReply } from "../src/workbench/validate-reply.js";
@@ -106,6 +107,20 @@ function curatedToolsOutcome(grants: readonly string[]): string {
   }
 }
 
+/**
+ * The function authority boundary's decision (wb-201v) for an embedded function request its fixture contract binds to
+ * fixture-fn:develop-write, under a steady host identity: the refusal policy, or authorized.
+ */
+function functionAuthorityOutcome(grants: readonly string[]): string {
+  const definitionRef = { kind: "function", id: "mechanical.development.develop.v1", schemaVersion: "mechanical-workflows/entrypoint/v1", artifactDigest: `sha256:${"ab".repeat(32)}` } as const;
+  const admitted = decideExecute({ definitionRef, input: { task: "t" }, hostMode: "embedded" }, { grants: [EXECUTE_GRANT], invocationId: "inv-wupg-fa" });
+  if (admitted.decision !== "admitted") return `admission:${admitted.policy}`;
+  const contract = adoptFunctionActions([{ definitionId: definitionRef.id, actionGrant: "fixture-fn:develop-write" }]);
+  const identity = { principal: "local-operator:1000:s1", sessionId: "s1" };
+  const decision = decideFunctionAuthority({ admission: admitted.admission, contract, entered: identity, current: { grants, identity } });
+  return decision.decision === "refused" ? decision.policy : "authorized";
+}
+
 /** A src module whose source carries the grammar's exact spellings: a grant list it reads, and what it answers for unknown permission data. */
 interface Reader {
   readonly module: string;
@@ -118,6 +133,7 @@ const READERS: readonly Reader[] = [
   { module: "src/workbench/claude-capability-tools.ts", base: ["forge:inspect"], unknown: "refused", outcome: curatedToolsOutcome },
   { module: "src/workbench/control.ts", base: ["control:furnace.stop"], unknown: "unknown-permission-data", outcome: controlOutcome },
   { module: "src/workbench/execute.ts", base: [EXECUTE_GRANT], unknown: "unknown-permission-data", outcome: executeOutcome },
+  { module: "src/workbench/function-authority.ts", base: [EXECUTE_GRANT, "fixture-fn:develop-write"], unknown: "unknown-permission-data", outcome: functionAuthorityOutcome },
   { module: "src/workbench/reconcile-decision.ts", base: ["workbench:design"], unknown: "unknown-permission-data", outcome: reconcileOutcome },
   { module: "src/workbench/validate-reply.ts", base: ["workbench:observe"], unknown: "UNKNOWN_PERMISSION_DATA", outcome: validateOutcome },
 ];
@@ -144,7 +160,7 @@ describe("the claude:tool:<name> rights TOOL_GRANTS, MALFORMED_TOOL_GRANTS and C
   it("READERS is exactly the .ts files under src/ whose text carries BASE_FORM, and exactly those whose text carries TOOL_FORM", () => {
     expect(READERS.map(reader => reader.module)).toEqual([
       "src/settings.ts", "src/workbench/claude-capability-tools.ts", "src/workbench/control.ts", "src/workbench/execute.ts",
-      "src/workbench/reconcile-decision.ts", "src/workbench/validate-reply.ts",
+      "src/workbench/function-authority.ts", "src/workbench/reconcile-decision.ts", "src/workbench/validate-reply.ts",
     ]);
     expect(sourcesCarrying(BASE_FORM)).toEqual(READERS.map(reader => reader.module));
     expect(sourcesCarrying(TOOL_FORM)).toEqual(READERS.map(reader => reader.module));
