@@ -883,7 +883,7 @@ function srcFiles(): string[] {
 
 /** The bead's own notes in the tracker export; every case reads them through ownerFiling, never whole. */
 function beadNotes(): string {
-  for (const line of textOf(join(REPO, ".beads", "issues.jsonl")).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(join(REPO, ".beads", "issues.jsonl")), join(REPO, ".beads", "issues.jsonl")).split("\n")) {
     if (!line.includes(`"id":"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === BEAD && typeof row.notes === "string") return row.notes;
@@ -1276,3 +1276,5 @@ describe("wb-4nut.1 Fiber debug identity census (TSX-HARNESS2-REACTIVE-EVOLUTION
     expect(REACHED.map(entry => entry.witness), "every reached witness equals a fresh read of the roster").toStrictEqual(pins.map(pin => witnessIn(fresh, pin)));
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

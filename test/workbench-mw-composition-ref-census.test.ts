@@ -602,7 +602,7 @@ interface BeadRow {
 /** The tracked export, read once (about 27 MB): every bead row this census reads comes from the same bytes. */
 let EXPORT_LINES: string[] | undefined;
 function beadRow(bead: string): BeadRow {
-  EXPORT_LINES ??= readRepo(BEAD_EXPORT).split("\n");
+  EXPORT_LINES ??= rehydrateTrackerExport(readRepo(BEAD_EXPORT), join(REPO, BEAD_EXPORT)).split("\n");
   for (const line of EXPORT_LINES) {
     if (!line.includes(`"${bead}"`)) continue;
     const value: unknown = JSON.parse(line);
@@ -2494,3 +2494,5 @@ describe(TOP, () => {
     expect([...REACHED].sort(byName)).toEqual(ROSTER.rows.flatMap(row => row.pins.map(pin => pin.id)).sort(byName));
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

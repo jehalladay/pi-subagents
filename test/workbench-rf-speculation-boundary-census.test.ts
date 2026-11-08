@@ -641,7 +641,7 @@ let titleCache: string | undefined;
 /** The owner filing's title in the tracked bead export; throws when the export holds no such row. */
 function filingTitle(): string {
   if (titleCache !== undefined) return titleCache;
-  for (const line of read(BEAD_EXPORT).split("\n")) {
+  for (const line of rehydrateTrackerExport(read(BEAD_EXPORT), join(REPO, BEAD_EXPORT)).split("\n")) {
     if (!line.includes(`"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (row !== null && typeof row === "object" && "id" in row && row.id === BEAD && "title" in row && typeof row.title === "string") {
@@ -1610,3 +1610,5 @@ describe("wb-km7q.9 rf speculation boundary census (SDK-REACTIVE-FIBER-ADAPTIVE-
     expect(REACHED, "every pin reached its end, in row order, with its frozen assertion count").toEqual([...REACHED_AT]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

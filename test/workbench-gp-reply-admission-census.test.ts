@@ -1492,7 +1492,7 @@ const REACHED: { readonly pin: string; readonly same: boolean }[] = [];
 
 /** The tracker export's row for a bead. */
 function beadRow(bead: string): { readonly title: string; readonly notes: string } | undefined {
-  for (const line of textOf(EXPORT).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(EXPORT), join(ROOT, EXPORT)).split("\n")) {
     if (!line.includes(`"id":"${bead}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (own(row, "id") !== bead) continue;
@@ -2055,3 +2055,5 @@ describe(SUITE, () => {
     ).toEqual([]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

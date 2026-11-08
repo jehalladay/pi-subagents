@@ -452,7 +452,7 @@ function derivedLink(): { schema: string; fields: string[] } {
 
 /** A bead's own row in the tracked bead export: its notes. */
 function notesOf(bead: string): string {
-  for (const line of readFileSync(BEAD_EXPORT, "utf8").split("\n")) {
+  for (const line of trackerExportText(BEAD_EXPORT).split("\n")) {
     if (!line.includes(bead)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === bead && typeof row.notes === "string") return row.notes;
@@ -1381,3 +1381,5 @@ describe("wb-o4h0.6 rf sensitivity echo census (RF-FEDERATED-WORKSPACES-R8)", ()
     });
   }
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

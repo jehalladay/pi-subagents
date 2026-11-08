@@ -1710,7 +1710,7 @@ interface BeadRow {
 }
 let exportCache: string | undefined;
 const exportText = (): string => {
-  if (exportCache === undefined) exportCache = textOf(EXPORT);
+  if (exportCache === undefined) exportCache = rehydrateTrackerExport(textOf(EXPORT), join(ROOT, EXPORT));
   return exportCache;
 };
 /** A bead's row in the tracker export: its title, its notes and its parent-child dependencies. */
@@ -2702,3 +2702,5 @@ describe(SUITE, () => {
     ).toEqual([]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";
