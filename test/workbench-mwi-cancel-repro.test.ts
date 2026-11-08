@@ -60,14 +60,25 @@
  *   covering every nonempty set of the table's axes; over the walk each moved axis, alone and inside a set, takes at
  *   each of its values every other value of its list and a value the list does not hold (an object's copy for an
  *   object); after the last tuple the walk visits once more. On each table the reader's count of visits off the product
- *   is the walk's moved visits plus the one past the last tuple, and it names the first three. Every move reads, on its
- *   table, off the product on exactly the axes it moved, at the positions the walk planted: read back against the
- *   walk's record of each move, only one move per walk, which the walk records at other positions than it planted,
- *   reads otherwise. The same reader flags four planted grids on SEAM_AXES's first three axes: a run signal list
- *   spelled [false, false], two loops in each other's place, each reading visited once, and the product run through
- *   twice. Which values the axes of a set moved at once take together is NOT CLAIMED by the walk. GRID-PRODUCTS reads
- *   no comment: that a builder's comment names the lists of its axes table, or names them in that order, is NOT CLAIMED
- *   by it.
+ *   is the walk's moved visits plus the one past the last tuple, and it names the first three. Read back against the
+ *   walk's record of each move, the walk's read-back counts one move per walk as reading otherwise, the move the walk
+ *   records at other positions than it planted. The same reader flags four planted grids on SEAM_AXES's first three
+ *   axes: a run signal list spelled [false, false], two loops in each other's place, each reading visited once, and the
+ *   product run through twice. Which values the axes of a set moved at once take together is NOT CLAIMED by the walk.
+ *   WALK-READBACK pins the walk's read-back and walkReading on each whole table. A misplant run (plantedWalk with
+ *   misplant set) first reads back one move at each cell of each axis: at the table's first tuple with that axis at
+ *   each position of its list, the axis reading each position of its list and a value it does not hold, each recorded
+ *   at every other position (-1 for a value the list does not hold), L x (L + 1) x L moves for an axis of L values (476
+ *   on SEAM_AXES, 6264 on SKIP_ORACLE_AXES and 492 on RETRY_ORACLE_AXES); its walk then records the move the walk
+ *   records at other positions as planted, and every move otherwise than it reads. The read-back counts every move of
+ *   each run. On each whole table walkReading reads an empty inventory as lacking every change, alone and in sets (107,
+ *   422 and 100 changes), and reads each inventory holding every change of the run's walk but one as lacking that one
+ *   alone, alone and in sets. Which axis and position a misplant run's walk records a move at is NOT CLAIMED. A
+ *   read-back or a missing list that reads the walk or its inventory otherwise than the misplant runs and the planted
+ *   inventories (by the misplant argument, the inventory or anything else in its scope) is NOT CLAIMED, and neither is
+ *   a fault of a setter or of the walk's planting that only such a reading would miss. GRID-PRODUCTS and WALK-READBACK
+ *   read no comment: that a builder's comment names the lists of its axes table, or names them in that order, is NOT
+ *   CLAIMED by them.
  * NOT CLAIMED: a value that no list or offset holds (for example a start, entry, abort or query count above 3, a call
  * log count more than 1 off its grid's sum, a negative or fractional count, or an entry state, attempt, reason, script
  * value, settlement list or run status that no list holds) and a reading outside those products. Production
@@ -635,14 +646,18 @@ function plantedTwiceGrid(visit: (reading: ParkedObservation) => void): void {
  * How a planted walk sets one axis of a reading: set returns the reading with that axis reading value and every other
  * axis of its table reading as before (setup SDK starts moves the call log with it, so the call log offset holds), and
  * outside is the value the walk plants when the axis's current value is not an object and the move needs a value no
- * list of that axis holds.
+ * list of that axis holds. What holds a setter to this is the walk's read-back (plantedWalk); a setter fault that only
+ * a read-back reading the walk otherwise than WALK-READBACK's misplant runs would miss is NOT CLAIMED to be caught.
  */
 interface AxisSetter {
   readonly set: (reading: ParkedObservation, value: unknown) => ParkedObservation;
   readonly outside: unknown;
 }
 
-/** A value no list of the axis holds, standing in for current: a copy of current when it is an object (equal by value, another object), outside otherwise. */
+/**
+ * A value no list of the axis holds, standing in for current: a copy of current when it is an object (equal by value,
+ * another object), outside otherwise. As for AxisSetter, the walk's read-back is what holds it to that.
+ */
 function unlistedValue(current: unknown, outside: unknown): unknown {
   if (Array.isArray(current)) return [...current];
   if (typeof current === "object" && current !== null) return { ...current };
@@ -676,11 +691,13 @@ const AXIS_SETTERS: Readonly<Record<string, AxisSetter>> = {
 };
 
 /**
- * What a planted walk moved: the moves; the moves that read, on the table, otherwise than the walk recorded them (the
- * walk records one move per walk at other positions than it planted, so that move always does); the changes its
- * one-axis moves made and the changes made to each axis of its set moves, one key per (axis, value of the tuple, value
- * planted, -1 for a value no list holds); the axis sets it moved at once, one key per set; and the (axis, value) pairs
- * whose unlisted value it planted as a copy of an object (equal by value, another object).
+ * What a planted walk recorded: the moves it read back; misread, the moves the read-back counted as reading otherwise
+ * than the walk's record of them (on the walk itself, the one move per walk it records at other positions than it
+ * planted); the changes its one-axis moves recorded and the changes recorded for each axis of its set moves, one key per
+ * (axis, value of the tuple, value planted, -1 for a value no list holds); the axis sets it recorded, one key per set;
+ * and the (axis, value) pairs whose unlisted value it planted as a copy of an object (equal by value, another object).
+ * WALK-READBACK pins the read-back on each table's misplant run; a read-back that reads the walk otherwise than that run
+ * is NOT CLAIMED.
  */
 interface WalkInventory {
   moves: number;
@@ -702,11 +719,17 @@ function emptyInventory(): WalkInventory {
  * moved off the product once, and, on each of the tuple's other visits, the reading with a set of axes moved at once.
  * Over the walk the sets cover every nonempty set of the table's axes, and each axis, moved alone and moved inside a
  * set, takes at each value of the tuple every other value of its list and a value its list does not hold
- * (unlistedValue). After the last tuple it visits once more, past the product's last tuple. inventory gets each move
- * read back on the table against the positions the walk records for it: the positions it planted, except one move per
- * walk, recorded at other positions.
+ * (unlistedValue). After the last tuple it visits once more, past the product's last tuple. Each move goes through
+ * readBack, which counts into inventory the moves whose reading it reads otherwise than the positions the walk records
+ * for it: the positions it planted, except one move per walk, recorded at other positions. With misplant set (a
+ * misplant run, WALK-READBACK) it first reads back one move at each cell of each axis: at the table's first tuple with
+ * that axis at each position of its list, the axis reading each position of its list and a value it does not hold, each
+ * recorded at every other position (-1 for a value the list does not hold); its walk then records the one move as
+ * planted and every move otherwise than it reads (at which axis and position is NOT CLAIMED). A read-back that reads
+ * the walk otherwise than a misplant run, and a fault of a setter or of this planting that only such a read-back would
+ * miss, are NOT CLAIMED.
  */
-function plantedWalk(axes: readonly GridAxis[], base: ParkedObservation, inventory: WalkInventory): (visit: (reading: ParkedObservation) => void) => void {
+function plantedWalk(axes: readonly GridAxis[], base: ParkedObservation, inventory: WalkInventory, misplant = false): (visit: (reading: ParkedObservation) => void) => void {
   const setters = axes.map(axis => AXIS_SETTERS[axis.name]);
   const setCount = 2 ** axes.length - 1;
   const setVisits = NOISE.length - axes.length;
@@ -714,6 +737,7 @@ function plantedWalk(axes: readonly GridAxis[], base: ParkedObservation, invento
     const tuple: number[] = axes.map(() => 0);
     const oneAxisTurns = axes.map(axis => axis.list.map(() => 0));
     const setTurns = axes.map(axis => axis.list.map(() => 0));
+    const misTurns = axes.map(() => 0);
     let tuples = 0;
     let firstReading: ParkedObservation | undefined;
     const change = (a: number, turns: number[][], changes: Set<number>): readonly [number, unknown] => {
@@ -728,11 +752,19 @@ function plantedWalk(axes: readonly GridAxis[], base: ParkedObservation, invento
       if (typeof value === "object" && value !== list[from] && JSON.stringify(value) === JSON.stringify(list[from])) inventory.copied.add(a * 64 + from);
       return [to, value];
     };
-    const moved = (reading: ParkedObservation, planted: readonly number[]): void => {
+    const readBack = (reading: ParkedObservation, planted: readonly number[]): void => {
       inventory.moves += 1;
       if (axes.some((axis, a) => axis.list.indexOf(axis.read(reading)) !== planted[a])) inventory.misread += 1;
       visit(reading);
     };
+    // A misplant run's record of a move, set otherwise than the move reads (which axes and positions it changes is NOT CLAIMED).
+    const misrecord = (record: readonly number[]): readonly number[] => {
+      const m = inventory.moves % axes.length;
+      const others = [-1, ...axes[m].list.keys()].filter(position => position !== record[m]);
+      misTurns[m] += 1;
+      return record.map((position, i) => (i === m ? others[misTurns[m] % others.length] : position));
+    };
+    const moved = (reading: ParkedObservation, record: readonly number[]): void => readBack(reading, misplant ? misrecord(record) : record);
     const walk = (depth: number, reading: ParkedObservation): void => {
       if (depth < axes.length) {
         axes[depth].list.forEach((value, position) => {
@@ -745,7 +777,7 @@ function plantedWalk(axes: readonly GridAxis[], base: ParkedObservation, invento
       visit(reading);
       for (let a = 0; a < axes.length; a += 1) {
         const [to, value] = change(a, oneAxisTurns, inventory.changes);
-        moved(setters[a].set(reading, value), tuples === 0 && a === 0 ? [...tuple] : tuple.map((position, i) => (i === a ? to : position)));
+        moved(setters[a].set(reading, value), !misplant && tuples === 0 && a === 0 ? [...tuple] : tuple.map((position, i) => (i === a ? to : position)));
       }
       for (let k = 0; k < setVisits; k += 1) {
         const mask = 1 + ((tuples * setVisits + k) % setCount);
@@ -762,12 +794,33 @@ function plantedWalk(axes: readonly GridAxis[], base: ParkedObservation, invento
       }
       tuples += 1;
     };
+    if (misplant) {
+      // One move at each cell of each axis, at the table's first tuple with that axis at position t: the axis reading position r (-1, a value its list does not hold) and recorded at each position q other than r.
+      const first = axes.reduce((reading, axis, a) => setters[a].set(reading, axis.list[0]), base);
+      axes.forEach((axis, m) => {
+        axis.list.forEach((value, t) => {
+          tuple[m] = t;
+          const held = setters[m].set(first, value);
+          for (let r = -1; r < axis.list.length; r += 1) {
+            const reading = r === t ? held : setters[m].set(held, r === -1 ? unlistedValue(value, setters[m].outside) : axis.list[r]);
+            for (let q = -1; q < axis.list.length; q += 1) {
+              if (q !== r) readBack(reading, tuple.map((position, i) => (i === m ? q : position)));
+            }
+          }
+        });
+        tuple[m] = 0;
+      });
+    }
     walk(0, base);
     if (firstReading !== undefined) visit(firstReading);
   };
 }
 
-/** A walk's inventory read against its table: its counts, and each change it never made, alone or in a set, by axis name and positions. */
+/**
+ * A walk's inventory read against its table: its counts, and the changes its one-axis changes and its set changes each
+ * lack, by axis name and positions. WALK-READBACK pins this missing list on each whole table with planted inventories; a
+ * missing list that reads a walk's inventory otherwise than those is NOT CLAIMED.
+ */
 function walkReading(inventory: WalkInventory, axes: readonly GridAxis[]) {
   const missing = (changes: ReadonlySet<number>): readonly string[] =>
     axes.flatMap((axis, a) =>
@@ -783,6 +836,25 @@ function walkReading(inventory: WalkInventory, axes: readonly GridAxis[]) {
     sets: inventory.sets.size,
     copied: inventory.copied.size,
   };
+}
+
+/** walkReading's two missing lists on planted inventories of a table, one per change of a run's walk: every change of the walk but that one, alone and in sets. */
+function lackingOne(inventory: WalkInventory, axes: readonly GridAxis[]): readonly string[] {
+  return [...inventory.changes].map(left => {
+    const planted = emptyInventory();
+    for (const key of inventory.changes) {
+      if (key === left) continue;
+      planted.changes.add(key);
+      planted.setChanges.add(key);
+    }
+    const { missing, setMissing } = walkReading(planted, axes);
+    return JSON.stringify({ missing, setMissing });
+  });
+}
+
+/** What lackingOne must read for a table: for each change the empty inventory lacks, that change alone, alone and in sets. */
+function aloneEach(missing: readonly string[]): readonly string[] {
+  return missing.map(name => JSON.stringify({ missing: [name], setMissing: [name] }));
 }
 
 /** A grid case's timeout: each grid judges hundreds of thousands of readings, and a loaded gate host is slow. */
@@ -1672,7 +1744,7 @@ describe("the experiment's input lists and every ParkedPlan value (wb-9v02)", ()
         first: ["visit 1: read 1/0/0/0/0/0/0, product 0/0/0/0/0/0/0", "visit 2: read 0/1/0/0/0/0/0, product 0/0/0/0/0/0/0", "visit 3: read 0/0/1/0/0/0/0, product 0/0/0/0/0/0/0"],
       },
     });
-    // The walks read back: every move reads off the product exactly as planted, one move per walk alone reading otherwise than its record (the walk records it at other positions); every change at every value of every axis was made alone and inside a set; every nonempty axis set was moved; and an object's unlisted value was planted as its copy (the final rows and the two object script values).
+    // The walks' inventories: the read-back counts one move per walk as reading otherwise than its record (the move the walk records at other positions than it planted); every change at every value of every axis was recorded alone and inside a set; every nonempty axis set was recorded; and an object's unlisted value was planted as its copy (the final rows and the two object script values). WALK-READBACK pins the read-back and the missing list on each whole table.
     expect({
       seam: walkReading(walks.seam, SEAM_AXES),
       skipOracle: walkReading(walks.skipOracle, SKIP_ORACLE_AXES),
@@ -1685,6 +1757,39 @@ describe("the experiment's input lists and every ParkedPlan value (wb-9v02)", ()
     // Liveness of that reading: an empty inventory, read on PLANTED_AXES, names every change of its three two-value axes as never made.
     const unmade = ["route 0->-1", "route 0->1", "route 1->-1", "route 1->0", "run signal 0->-1", "run signal 0->1", "run signal 1->-1", "run signal 1->0", "parkedAtControl 0->-1", "parkedAtControl 0->1", "parkedAtControl 1->-1", "parkedAtControl 1->0"];
     expect(walkReading(emptyInventory(), PLANTED_AXES)).toEqual({ moves: 0, misread: 0, changes: 0, missing: unmade, setChanges: 0, setMissing: unmade, sets: 0, copied: 0 });
+  });
+
+  it("WALK-READBACK on each whole axes table the walk's read-back counts every move of a misplant run (one move at each cell of each axis, then the walk with every move recorded otherwise than it reads), and walkReading reads an empty inventory as lacking every change, and each inventory holding every change of the run's walk but one as lacking that one alone, alone and in sets", { timeout: GRID_TIMEOUT }, () => {
+    // A misplant run of each whole table: one move at each cell of each axis (L x (L + 1) x L moves for an axis of L values: 476, 6264 and 492), then the walk, 17 moves per tuple, each recorded otherwise than it reads. The read-back counts every move.
+    const runs = { seam: emptyInventory(), skipOracle: emptyInventory(), retryOracle: emptyInventory() };
+    plantedWalk(SEAM_AXES, PARKED_SKIP_SPAWN, runs.seam, true)(() => undefined);
+    plantedWalk(SKIP_ORACLE_AXES, SKIP_ORACLE, runs.skipOracle, true)(() => undefined);
+    plantedWalk(RETRY_ORACLE_AXES, RETRY_ORACLE, runs.retryOracle, true)(() => undefined);
+    expect({
+      seam: [runs.seam.moves, runs.seam.misread],
+      skipOracle: [runs.skipOracle.moves, runs.skipOracle.misread],
+      retryOracle: [runs.retryOracle.moves, runs.retryOracle.misread],
+    }).toEqual({
+      seam: [476 + 110_592 * NOISE.length, 476 + 110_592 * NOISE.length],
+      skipOracle: [6264 + 19_584 * NOISE.length, 6264 + 19_584 * NOISE.length],
+      retryOracle: [492 + 8_192 * NOISE.length, 492 + 8_192 * NOISE.length],
+    });
+    // walkReading on each whole table: an empty inventory lacks every change, alone and in sets (107, 422 and 100), and each inventory holding every change of the run's walk but one lacks that one alone, alone and in sets.
+    const empty = { seam: walkReading(emptyInventory(), SEAM_AXES), skipOracle: walkReading(emptyInventory(), SKIP_ORACLE_AXES), retryOracle: walkReading(emptyInventory(), RETRY_ORACLE_AXES) };
+    expect({
+      seam: [empty.seam.missing.length, empty.seam.setMissing.length],
+      skipOracle: [empty.skipOracle.missing.length, empty.skipOracle.setMissing.length],
+      retryOracle: [empty.retryOracle.missing.length, empty.retryOracle.setMissing.length],
+    }).toEqual({ seam: [107, 107], skipOracle: [422, 422], retryOracle: [100, 100] });
+    expect({
+      seam: [...lackingOne(runs.seam, SEAM_AXES)].sort(),
+      skipOracle: [...lackingOne(runs.skipOracle, SKIP_ORACLE_AXES)].sort(),
+      retryOracle: [...lackingOne(runs.retryOracle, RETRY_ORACLE_AXES)].sort(),
+    }).toEqual({
+      seam: [...aloneEach(empty.seam.missing)].sort(),
+      skipOracle: [...aloneEach(empty.skipOracle.missing)].sort(),
+      retryOracle: [...aloneEach(empty.retryOracle.missing)].sort(),
+    });
   });
 
   it("PLAN-DOMAIN-SHAPE the plan table holds the 24 ParkedPlan values (the product of the four plan unions the helper declares, read with the TypeScript parser), each once, in that product's order", () => {
