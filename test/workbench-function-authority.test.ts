@@ -130,8 +130,8 @@
  * authorization of each scenario. The final-reads describe pins, with an admission park and with none, the host's second
  * grant and identity reads at the listed request (6 listed changes refuse at dispatch; with no change, one dispatch whose
  * callback receives the very authority object the boundary returns), the 6 listed entry refusals that never call a
- * given park, and with no park the 2 listed changes queued by the final grant read, with a frozen-shape row and anchors
- * in the module source and an authorization. Red-first: the census and the strengthened reason rows fail under refusal
+ * given park, and with no park the 2 listed changes queued by the final grant read, each reading taken when the boundary
+ * settles, with a frozen-shape row and anchors in the module source and an authorization. Red-first: the census and the strengthened reason rows fail under refusal
  * #3's GP18-REASON-DIGEST and GP18-REASON-SCHEMA-KIND, and the final-reads describe and the strengthened no-park row
  * under GP18-NOPARK-ENTRY-FINAL. Whether a reason names a definition's kind, other texts, pairs, requests, changes and
  * scheduling forms are NOT CLAIMED. No residual is named.
@@ -139,9 +139,9 @@
  * final-read words) and U2 (the dispatch-count words) in the PIN-AND-FALSIFY form, with the words narrowed to the pinned
  * sets. One describe is appended to the end of this file, the final reads and the dispatch count at the 4 listed
  * requests: the request for mechanical.development.develop.v1 under the pinned contract, in each host mode, carrying no
- * caller policy or the caller policy {}. With an admission park and with none, each of the 6 listed changes the host's
- * second reads report refuses at dispatch with zero callback, loader and provider calls after two reads of each (48
- * rows); with no change, the one dispatch's callback receives the very authority object the boundary returns (8 rows);
+ * caller policy or the caller policy {}. With an admission park and with none, each reading taken when the boundary
+ * settles, each of the 6 listed changes the host's second reads report refuses at dispatch with zero callback, loader
+ * and provider calls after two reads of each (48 rows); with no change, the one dispatch's callback receives the very authority object the boundary returns (8 rows);
  * and at each of the 11 listed callback outcomes (7 resolutions, 3 rejections and 1 synchronous throw), the callback is
  * invoked once, and the boundary returns the value it resolves with unchanged, or rejects with its rejection or its
  * throw unchanged (88 rows). A frozen-shape row and an anchor row hold the tables: the requests from execute.ts's
@@ -153,6 +153,25 @@
  * failed on the cut #1 suite. The module's final-read, dispatch-count, timing and entry-snapshot words now name these
  * rows, the listed request's timing rows and the EAT-R030 snapshot row; other requests, changes, callback outcomes and
  * scheduling forms are NOT CLAIMED. No residual is named.
+ * wb-m83p cut #3 (the respin of wb-m83p refusal #2, in the enumerate-the-resolvable form rule 19(c) orders once the
+ * final-read and dispatch-count claim words reach their second-stage cap) takes refusal #2's U1 (the zero-call words)
+ * and U2 (the invoked-once words) in the PIN-AND-FALSIFY form, with each count word of the set narrowed to the pinned
+ * window. Each row the module's final-read, dispatch-count, final-boundary timing, EAT-R031 and entry-refusal words name,
+ * and the EAT-R030 snapshot row, now takes each of its readings twice: when the boundary settles, and again once the
+ * timer drain ends. The timer drain (startTimerDrain, above): the row installs vitest's fake setTimeout, clearTimeout,
+ * setInterval, clearInterval, setImmediate and clearImmediate before its request enters the boundary and plants one
+ * sentinel timer 2147483647 ms out; once the boundary settles, vi.runAllTimersAsync fires the timers the fake clock
+ * holds, and the timers they queue, until it holds none, and the row requires that it holds none and that the sentinel
+ * ran once. Those rows are the 144 boundary rows of the cut #2 describe, the 22 boundary rows of the cut #1 final-reads
+ * describe, the 4 timing rows of the EAT-R031 describe and the EAT-R030 snapshot row (171 rows). One describe is appended
+ * to the end of this file: the timer drain's frozen shape and its anchors outside the suite's literals (the module header
+ * names the faked functions and the sentinel delay; the fake clock replaces exactly those global functions and the real
+ * timers restore them; a drain ends with its sentinel run once; and each of the module's 4 listed claim sites names the
+ * end of the timer drain). Red-first: before the module's words were narrowed, the anchor row failed; and the cut fails
+ * under each of refusal #2's members GP2M-DEFER-DISPATCH-AFTER-REFUSAL, GP2M-DEFER-SECOND-DISPATCH,
+ * GP2M-CHAIN-SECOND-DISPATCH and GP2M-DEFER-RETRY-ON-REJECT, each of which reads 0 failed on the cut #2 suite. A call,
+ * read or wait that lands after the timer drain ends is NOT CLAIMED, and other requests, changes, callback outcomes and
+ * scheduling forms stay NOT CLAIMED. No residual is named.
  *
  * No spelling is adopted, so the production contract is unadopted and refuses every function dispatch (the B-authority row of
  * BEAD-PLAN.md lands "partial - enforcement seams land now; exact action grammar blocked on MW-CONTRACT"). The adopted contracts
@@ -253,6 +272,33 @@ function parked() {
   return { park, release: () => resolveWait() };
 }
 
+/**
+ * The timer drain (wb-m83p cut #3). A row calls startTimerDrain() before its request enters the boundary: it installs the
+ * fake timer functions DRAIN_FAKES lists (vitest's fake setTimeout, clearTimeout, setInterval, clearInterval,
+ * setImmediate and clearImmediate) and plants one sentinel timer SENTINEL_DELAY ms out. Once the boundary settles, the
+ * row takes its readings, awaits drain() and takes them again. drain() runs vi.runAllTimersAsync, which fires the timers
+ * the fake clock holds, and the timers they queue, one per real macrotask turn (so the microtask and process.nextTick
+ * queues run between them), until the clock holds none; it then requires that the clock holds no timer and that the
+ * sentinel ran once. A reading is never taken after drain() returns, so a call or read that lands later is NOT CLAIMED by
+ * any row: the fake clock holds no timer set through a timer function captured before it is installed or taken from
+ * node:timers, and no I/O callback, worker or message port.
+ */
+const DRAIN_FAKES = ["setTimeout", "clearTimeout", "setInterval", "clearInterval", "setImmediate", "clearImmediate"] as const;
+/** How far out the drain's sentinel timer is planted: 2 ** 31 - 1 ms. */
+const SENTINEL_DELAY = 2 ** 31 - 1;
+function startTimerDrain() {
+  vi.useFakeTimers({ toFake: [...DRAIN_FAKES] });
+  const sentinel = vi.fn();
+  setTimeout(sentinel, SENTINEL_DELAY);
+  return {
+    sentinel,
+    async drain() {
+      await vi.runAllTimersAsync();
+      expect({ timers: vi.getTimerCount(), sentinel: sentinel.mock.calls.length }).toEqual({ timers: 0, sentinel: 1 });
+    },
+  };
+}
+
 function refusalOf<T>(result: FunctionDispatchResult<T>) {
   return result.status === "refused" ? { stage: result.stage, policy: result.refusal.policy, category: result.refusal.category } : { dispatched: true };
 }
@@ -261,6 +307,8 @@ let sandbox: ReturnType<typeof hermeticDir> | undefined;
 afterEach(() => {
   sandbox?.restore();
   sandbox = undefined;
+  // A row that started a timer drain (wb-m83p cut #3) gets the real timer functions back here, drained or not.
+  vi.useRealTimers();
 });
 
 /** A canonical scratch directory for the two judges below (hermeticDir composes test/helpers/scratch.ts; afterEach removes it). */
@@ -857,14 +905,22 @@ describe("EAT-R030: a changed effective principal or session refuses the dispatc
   });
 
   it("the identity read at entry is a snapshot: a host that mutates the object it returned is still caught", async () => {
+    // wb-m83p cut #3: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const shared = { principal: HOST.principal, sessionId: HOST.sessionId };
     const wait = parked();
     const dispatch = vi.fn(async () => "ran");
     const pending = dispatchFunctionWithAuthority({ admission: admissionFor(), contract: CONTRACT, host: { grants: () => [EXECUTE_GRANT, ACTION], identity: () => shared }, park: wait.park, dispatch });
     shared.principal = "local-operator:1001:s1";
     wait.release();
-    expect(refusalOf(await pending)).toEqual({ stage: "dispatch", policy: "changed-effective-identity", category: "authorization" });
-    expect(dispatch).not.toHaveBeenCalled();
+    const result = await pending;
+    const observe = () => {
+      expect(refusalOf(result)).toEqual({ stage: "dispatch", policy: "changed-effective-identity", category: "authorization" });
+      expect(dispatch).not.toHaveBeenCalled();
+    };
+    observe();
+    await timers.drain();
+    observe();
   });
 
   it.each([
@@ -950,6 +1006,8 @@ describe("EAT-R031: revoked grants are re-evaluated at dispatch (wb-201v)", () =
   });
 
   it("a revocation queued as a microtask right after release lands after the dispatch: dispatch is invoked while the host still holds both grants", async () => {
+    // wb-m83p cut #3: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const h = harness();
     const wait = parked();
     const held: (readonly string[] | undefined)[] = [];
@@ -967,8 +1025,14 @@ describe("EAT-R031: revoked grants are re-evaluated at dispatch (wb-201v)", () =
     queueMicrotask(() => {
       h.state.grants = [EXECUTE_GRANT];
     });
-    expect((await pending).status).toBe("dispatched");
-    expect(held).toEqual([[EXECUTE_GRANT, ACTION]]);
+    const result = await pending;
+    const observe = () => {
+      expect(result.status).toBe("dispatched");
+      expect(held).toEqual([[EXECUTE_GRANT, ACTION]]);
+    };
+    observe();
+    await timers.drain();
+    observe();
   });
 
   type HostState = { grants: readonly string[]; identity: FunctionIdentity };
@@ -987,6 +1051,8 @@ describe("EAT-R031: revoked grants are re-evaluated at dispatch (wb-201v)", () =
     ],
   ];
   it.each(CHANGES)("%s, queued as a microtask by the final read itself, never precedes the dispatch: dispatch is invoked on what the host held at that read", async (_change, change) => {
+    // wb-m83p cut #3: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const state: HostState = { grants: [EXECUTE_GRANT, ACTION], identity: HOST };
     let released = false;
     let queued = false;
@@ -1014,12 +1080,20 @@ describe("EAT-R031: revoked grants are re-evaluated at dispatch (wb-201v)", () =
     });
     released = true;
     wait.release();
-    expect((await pending).status).toBe("dispatched");
-    expect(queued).toBe(true);
-    expect(atDispatch).toEqual([{ grants: [EXECUTE_GRANT, ACTION], identity: HOST }]);
+    const result = await pending;
+    const observe = () => {
+      expect(result.status).toBe("dispatched");
+      expect(queued).toBe(true);
+      expect(atDispatch).toEqual([{ grants: [EXECUTE_GRANT, ACTION], identity: HOST }]);
+    };
+    observe();
+    await timers.drain();
+    observe();
   });
 
   it("with no admission park, a revocation queued by the final read never precedes dispatch", async () => {
+    // wb-m83p cut #3: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const state = { grants: [EXECUTE_GRANT, ACTION] as readonly string[] };
     let reads = 0;
     const atDispatch: (readonly string[])[] = [];
@@ -1041,9 +1115,14 @@ describe("EAT-R031: revoked grants are re-evaluated at dispatch (wb-201v)", () =
         return "ran";
       },
     });
-    expect(result.status).toBe("dispatched");
-    expect(atDispatch).toEqual([[EXECUTE_GRANT, ACTION]]);
-    expect(reads).toBe(2);
+    const observe = () => {
+      expect(result.status).toBe("dispatched");
+      expect(atDispatch).toEqual([[EXECUTE_GRANT, ACTION]]);
+      expect(reads).toBe(2);
+    };
+    observe();
+    await timers.drain();
+    observe();
   });
 });
 
@@ -2543,7 +2622,7 @@ describe("the fixed-reason text census: for each of the 7 refusal policies, both
   });
 });
 
-describe("the final reads on both dispatch paths: with an admission park and with none, the listed request that passes entry reads the host's grants and identity once more each, each of the 6 listed changes those second reads report refuses at dispatch, and with no change the one dispatch's callback receives the very authority the boundary returns; with a park given, each of the 6 listed entry refusals refuses at entry without calling the park; and with no park, each of the 2 listed changes queued by the final grant read lands after the dispatch (wb-m83p)", () => {
+describe("the final reads on both dispatch paths, each reading taken when the boundary settles and again once the timer drain ends: with an admission park and with none, the listed request that passes entry reads the host's grants and identity once more each, each of the 6 listed changes those second reads report refuses at dispatch, and with no change the one dispatch's callback receives the very authority the boundary returns; with a park given, each of the 6 listed entry refusals refuses at entry without calling the park; and with no park, each of the 2 listed changes queued by the final grant read lands after the dispatch (wb-m83p cuts #1 and #3)", () => {
   const PATHS = ["with an admission park", "with no admission park"] as const;
   type DispatchPath = (typeof PATHS)[number];
   const STEADY_GRANTS: readonly string[] = [EXECUTE_GRANT, ACTION];
@@ -2583,8 +2662,9 @@ describe("the final reads on both dispatch paths: with an admission park and wit
     };
     return { host, reads };
   }
-  /** The listed request (the admission of mechanical.development.develop.v1 under the pinned contract) through the boundary on a path, the park released by hand. */
+  /** The listed request (the admission of mechanical.development.develop.v1 under the pinned contract) through the boundary on a path, the park released by hand, under a started timer drain. */
   async function throughPath(path: DispatchPath, host: FunctionAuthorityHost, reads: { readonly grants: number; readonly identity: number }) {
+    const timers = startTimerDrain();
     const wait = parked();
     const received: FunctionDispatchAuthority[] = [];
     const provider = vi.fn(async () => "ran");
@@ -2602,7 +2682,9 @@ describe("the final reads on both dispatch paths: with an admission park and wit
     const atEntry = { ...reads };
     wait.release();
     const result = await pending;
-    return { result, atEntry, park: wait.park.mock.calls.length, loader: loader.mock.calls.length, provider: provider.mock.calls.length, received };
+    /** The park, loader and provider calls so far, read when called. */
+    const calls = () => ({ park: wait.park.mock.calls.length, loader: loader.mock.calls.length, provider: provider.mock.calls.length });
+    return { result, atEntry, calls, received, drain: timers.drain };
   }
   interface EntryRefusal {
     readonly policy: FunctionAuthorityRefusal;
@@ -2702,25 +2784,36 @@ describe("the final reads on both dispatch paths: with an admission park and wit
     }
   });
 
-  it.each(READ_ROWS.map(row => [row.path, row.family, row.member, row.policy, row] as const))("%s: %s (%s) at the host's second reads refuses at dispatch as %s, with zero loader and provider calls, after two grant reads and two identity reads", async (_path, _family, _member, _policy, row) => {
+  it.each(READ_ROWS.map(row => [row.path, row.family, row.member, row.policy, row] as const))("%s: %s (%s) at the host's second reads refuses at dispatch as %s, with zero loader and provider calls and two grant reads and two identity reads, each read when the boundary settles and again once the timer drain ends", async (_path, _family, _member, _policy, row) => {
     const { host, reads } = secondReadHost(row);
     const run = await throughPath(row.path, host, reads);
-    expect(refusalOf(run.result)).toEqual({ stage: "dispatch", policy: row.policy, category: "authorization" });
-    expect({ reads, park: run.park, loader: run.loader, provider: run.provider }).toEqual({ reads: { grants: 2, identity: 2 }, park: row.path === "with an admission park" ? 1 : 0, loader: 0, provider: 0 });
-    if (row.path === "with an admission park") expect(run.atEntry).toEqual({ grants: 1, identity: 1 });
+    const observe = () => {
+      expect(refusalOf(run.result)).toEqual({ stage: "dispatch", policy: row.policy, category: "authorization" });
+      expect({ reads, ...run.calls() }).toEqual({ reads: { grants: 2, identity: 2 }, park: row.path === "with an admission park" ? 1 : 0, loader: 0, provider: 0 });
+      if (row.path === "with an admission park") expect(run.atEntry).toEqual({ grants: 1, identity: 1 });
+    };
+    observe();
+    await run.drain();
+    observe();
   });
 
-  it.each(PATHS)("%s, with no change at the second reads: one dispatch after two grant reads and two identity reads, whose callback receives the very authority object the boundary returns, resting on workbench:execute and the action under local-operator:1000:s1 / s1", async path => {
+  it.each(PATHS)("%s, with no change at the second reads: one dispatch, with one loader and one provider call and two grant reads and two identity reads, each read when the boundary settles and again once the timer drain ends, whose callback receives the very authority object the boundary returns, resting on workbench:execute and the action under local-operator:1000:s1 / s1", async path => {
     const { host, reads } = secondReadHost({ grants: STEADY_GRANTS, identity: HOST });
     const run = await throughPath(path, host, reads);
-    if (run.result.status !== "dispatched") throw new Error("expected one dispatch");
-    expect({ reads, park: run.park, loader: run.loader, provider: run.provider, value: run.result.value }).toEqual({ reads: { grants: 2, identity: 2 }, park: path === "with an admission park" ? 1 : 0, loader: 1, provider: 1, value: "ran" });
-    expect(run.received).toHaveLength(1);
-    expect(run.received[0]).toBe(run.result.authority);
-    expect({ grants: run.result.authority.grants, identity: run.result.authority.identity }).toEqual({ grants: [EXECUTE_GRANT, ACTION], identity: HOST });
+    const observe = () => {
+      if (run.result.status !== "dispatched") throw new Error("expected one dispatch");
+      expect({ reads, ...run.calls(), value: run.result.value }).toEqual({ reads: { grants: 2, identity: 2 }, park: path === "with an admission park" ? 1 : 0, loader: 1, provider: 1, value: "ran" });
+      expect(run.received).toHaveLength(1);
+      expect(run.received[0]).toBe(run.result.authority);
+      expect({ grants: run.result.authority.grants, identity: run.result.authority.identity }).toEqual({ grants: [EXECUTE_GRANT, ACTION], identity: HOST });
+    };
+    observe();
+    await run.drain();
+    observe();
   });
 
-  it.each(ENTRY_REFUSALS.map(row => [row.policy, row] as const))("with an admission park given, the listed request refused at entry as %s refuses there without calling the park: zero park and dispatch calls, after one grant read and one identity read", async (_policy, row) => {
+  it.each(ENTRY_REFUSALS.map(row => [row.policy, row] as const))("with an admission park given, the listed request refused at entry as %s refuses there without calling the park: zero park and dispatch calls and one grant read and one identity read, each read when the boundary settles and again once the timer drain ends", async (_policy, row) => {
+    const timers = startTimerDrain();
     const reads = { grants: 0, identity: 0 };
     const host: FunctionAuthorityHost = {
       grants: () => {
@@ -2736,11 +2829,18 @@ describe("the final reads on both dispatch paths: with an admission park and wit
     const dispatch = vi.fn(async () => "ran");
     const pending = dispatchFunctionWithAuthority({ admission: admissionFor(FUNCTION_ID, undefined, TASK, row.kind), contract: row.contract, host, park: wait.park, dispatch });
     wait.release();
-    expect(refusalOf(await pending)).toEqual({ stage: "entry", policy: row.policy, category: row.category });
-    expect({ reads, park: wait.park.mock.calls.length, dispatch: dispatch.mock.calls.length }).toEqual({ reads: { grants: 1, identity: 1 }, park: 0, dispatch: 0 });
+    const result = await pending;
+    const observe = () => {
+      expect(refusalOf(result)).toEqual({ stage: "entry", policy: row.policy, category: row.category });
+      expect({ reads, park: wait.park.mock.calls.length, dispatch: dispatch.mock.calls.length }).toEqual({ reads: { grants: 1, identity: 1 }, park: 0, dispatch: 0 });
+    };
+    observe();
+    await timers.drain();
+    observe();
   });
 
-  it.each(QUEUED)("with no admission park, a change to the host's %s read (%s) queued as a microtask by the final grant read itself lands after the dispatch: the final grant read queues it, and dispatch is invoked on what the host held at that read", async (_read, _change, apply) => {
+  it.each(QUEUED)("with no admission park, a change to the host's %s read (%s) queued as a microtask by the final grant read itself lands after the dispatch: the final grant read queues it, and dispatch is invoked once, on what the host held at that read, after two grant reads, each read when the boundary settles and again once the timer drain ends", async (_read, _change, apply) => {
+    const timers = startTimerDrain();
     const state: QueuedState = { grants: STEADY_GRANTS, identity: HOST };
     let grantReads = 0;
     let queued = false;
@@ -2765,12 +2865,17 @@ describe("the final reads on both dispatch paths: with an admission park and wit
         return "ran";
       },
     });
-    expect({ status: result.status, grantReads, queued }).toEqual({ status: "dispatched", grantReads: 2, queued: true });
-    expect(atDispatch).toEqual([{ grants: STEADY_GRANTS, identity: HOST }]);
+    const observe = () => {
+      expect({ status: result.status, grantReads, queued }).toEqual({ status: "dispatched", grantReads: 2, queued: true });
+      expect(atDispatch).toEqual([{ grants: STEADY_GRANTS, identity: HOST }]);
+    };
+    observe();
+    await timers.drain();
+    observe();
   });
 });
 
-describe("the final reads and the dispatch count at the 4 listed requests: in each host mode, carrying no caller policy or the caller policy {}, with an admission park and with none, a request that passes entry reads the host's grants and identity once more each; each of the 6 listed changes those second reads report refuses at dispatch, with zero loader and provider calls; with no change, the one dispatch's callback receives the very authority object the boundary returns; and at each of the 11 listed callback outcomes, the callback is invoked once and the boundary returns the value it resolves with unchanged, or rejects with its rejection or its synchronous throw unchanged (wb-m83p cut #2)", () => {
+describe("the final reads and the dispatch count at the 4 listed requests, each reading taken when the boundary settles and again once the timer drain ends: in each host mode, carrying no caller policy or the caller policy {}, with an admission park and with none, a request that passes entry reads the host's grants and identity once more each; each of the 6 listed changes those second reads report refuses at dispatch, with zero loader and provider calls; with no change, the one dispatch's callback receives the very authority object the boundary returns; and at each of the 11 listed callback outcomes, the callback is invoked once and the boundary returns the value it resolves with unchanged, or rejects with its rejection or its synchronous throw unchanged (wb-m83p cuts #2 and #3)", () => {
   const LISTED_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
   const STEADY: readonly string[] = [EXECUTE_GRANT, ACTION];
   const ESC = String.fromCodePoint(0x1b);
@@ -2860,8 +2965,9 @@ describe("the final reads and the dispatch count at the 4 listed requests: in ea
     return { host, reads };
   }
   type Settled = { readonly settled: "fulfilled"; readonly result: FunctionDispatchResult<unknown> } | { readonly settled: "rejected"; readonly reason: unknown };
-  /** A listed request through the boundary on a path with the given dispatch callback; a given park is released by hand. */
+  /** A listed request through the boundary on a path with the given dispatch callback, under a started timer drain; a given park is released by hand. */
   async function throughListed(request: ListedRequest, path: ListedPath, host: FunctionAuthorityHost, reads: { readonly grants: number; readonly identity: number }, dispatch: (authority: FunctionDispatchAuthority) => Promise<unknown>) {
+    const timers = startTimerDrain();
     const wait = parked();
     const pending = dispatchFunctionWithAuthority<unknown>({ admission: admissionOf(request), contract: CONTRACT, host, ...(path === "with an admission park" ? { park: wait.park } : {}), dispatch });
     const atEntry = { ...reads };
@@ -2870,7 +2976,7 @@ describe("the final reads and the dispatch count at the 4 listed requests: in ea
       (result): Settled => ({ settled: "fulfilled", result }),
       (reason: unknown): Settled => ({ settled: "rejected", reason }),
     );
-    return { settled, atEntry, park: wait.park.mock.calls.length };
+    return { settled, atEntry, parked: wait.park, drain: timers.drain };
   }
   const SECOND_READ_ROWS = REQUESTS.flatMap(request => PATHS.flatMap(path => CHANGES.map(change => ({ request, path, change }))));
   const STEADY_ROWS = REQUESTS.flatMap(request => PATHS.map(path => ({ request, path })));
@@ -2974,7 +3080,7 @@ describe("the final reads and the dispatch count at the 4 listed requests: in ea
   });
 
   it.each(SECOND_READ_ROWS.map(row => [requestLabel(row.request), row.path, row.change.family, row.change.member, row.change.policy, row] as const))(
-    "%s, %s: %s (%s) at the host's second reads refuses at dispatch as %s, with zero callback, loader and provider calls, after two grant reads and two identity reads",
+    "%s, %s: %s (%s) at the host's second reads refuses at dispatch as %s, with zero callback, loader and provider calls and two grant reads and two identity reads, each read when the boundary settles and again once the timer drain ends",
     async (_request, _path, _family, _member, _policy, row) => {
       const { host, reads } = listedHost(row.change);
       const received: FunctionDispatchAuthority[] = [];
@@ -2984,21 +3090,26 @@ describe("the final reads and the dispatch count at the 4 listed requests: in ea
         received.push(authority);
         return (await loader())();
       });
-      if (run.settled.settled !== "fulfilled") throw new Error("expected the boundary to settle with a refusal");
-      expect(refusalOf(run.settled.result)).toEqual({ stage: "dispatch", policy: row.change.policy, category: "authorization" });
-      expect({ reads, park: run.park, callbacks: received.length, loader: loader.mock.calls.length, provider: provider.mock.calls.length }).toEqual({
-        reads: { grants: 2, identity: 2 },
-        park: row.path === "with an admission park" ? 1 : 0,
-        callbacks: 0,
-        loader: 0,
-        provider: 0,
-      });
-      if (row.path === "with an admission park") expect(run.atEntry).toEqual({ grants: 1, identity: 1 });
+      const observe = () => {
+        if (run.settled.settled !== "fulfilled") throw new Error("expected the boundary to settle with a refusal");
+        expect(refusalOf(run.settled.result)).toEqual({ stage: "dispatch", policy: row.change.policy, category: "authorization" });
+        expect({ reads, park: run.parked.mock.calls.length, callbacks: received.length, loader: loader.mock.calls.length, provider: provider.mock.calls.length }).toEqual({
+          reads: { grants: 2, identity: 2 },
+          park: row.path === "with an admission park" ? 1 : 0,
+          callbacks: 0,
+          loader: 0,
+          provider: 0,
+        });
+        if (row.path === "with an admission park") expect(run.atEntry).toEqual({ grants: 1, identity: 1 });
+      };
+      observe();
+      await run.drain();
+      observe();
     },
   );
 
   it.each(STEADY_ROWS.map(row => [requestLabel(row.request), row.path, row] as const))(
-    "%s, %s, with no change at the second reads: one dispatch after two grant reads and two identity reads, whose callback receives the very authority object the boundary returns, resting on workbench:execute and the action under local-operator:1000:s1 / s1",
+    "%s, %s, with no change at the second reads: one dispatch, with one callback, loader and provider call each and two grant reads and two identity reads, each read when the boundary settles and again once the timer drain ends, whose callback receives the very authority object the boundary returns, resting on workbench:execute and the action under local-operator:1000:s1 / s1",
     async (_request, _path, row) => {
       const { host, reads } = listedHost(UNCHANGED);
       const received: FunctionDispatchAuthority[] = [];
@@ -3008,23 +3119,28 @@ describe("the final reads and the dispatch count at the 4 listed requests: in ea
         received.push(authority);
         return (await loader())();
       });
-      if (run.settled.settled !== "fulfilled" || run.settled.result.status !== "dispatched") throw new Error("expected one dispatch");
-      const result = run.settled.result;
-      expect({ reads, park: run.park, callbacks: received.length, loader: loader.mock.calls.length, provider: provider.mock.calls.length, value: result.value }).toEqual({
-        reads: { grants: 2, identity: 2 },
-        park: row.path === "with an admission park" ? 1 : 0,
-        callbacks: 1,
-        loader: 1,
-        provider: 1,
-        value: "ran",
-      });
-      expect(received[0]).toBe(result.authority);
-      expect({ grants: result.authority.grants, identity: result.authority.identity }).toEqual({ grants: [EXECUTE_GRANT, ACTION], identity: HOST });
+      const observe = () => {
+        if (run.settled.settled !== "fulfilled" || run.settled.result.status !== "dispatched") throw new Error("expected one dispatch");
+        const result = run.settled.result;
+        expect({ reads, park: run.parked.mock.calls.length, callbacks: received.length, loader: loader.mock.calls.length, provider: provider.mock.calls.length, value: result.value }).toEqual({
+          reads: { grants: 2, identity: 2 },
+          park: row.path === "with an admission park" ? 1 : 0,
+          callbacks: 1,
+          loader: 1,
+          provider: 1,
+          value: "ran",
+        });
+        expect(received[0]).toBe(result.authority);
+        expect({ grants: result.authority.grants, identity: result.authority.identity }).toEqual({ grants: [EXECUTE_GRANT, ACTION], identity: HOST });
+      };
+      observe();
+      await run.drain();
+      observe();
     },
   );
 
   it.each(OUTCOME_ROWS.map(row => [requestLabel(row.request), row.path, outcomeLabel(row.outcome), row] as const))(
-    "%s, %s: a dispatch callback that %s is invoked once, on an authority resting on workbench:execute and the action under local-operator:1000:s1 / s1, after two grant reads and two identity reads, and the boundary returns the value it resolves with unchanged, or rejects with its rejection or its throw unchanged",
+    "%s, %s: a dispatch callback that %s is invoked once, with two grant reads and two identity reads, each read when the boundary settles and again once the timer drain ends, on an authority resting on workbench:execute and the action under local-operator:1000:s1 / s1, and the boundary returns the value it resolves with unchanged, or rejects with its rejection or its throw unchanged",
     async (_request, _path, _outcome, row) => {
       const { host, reads } = listedHost(UNCHANGED);
       const received: FunctionDispatchAuthority[] = [];
@@ -3034,20 +3150,87 @@ describe("the final reads and the dispatch count at the 4 listed requests: in ea
         if (row.outcome.settle === "throws") throw row.outcome.value;
         return row.outcome.settle === "rejects" ? Promise.reject(row.outcome.value) : Promise.resolve(row.outcome.value);
       });
-      expect({ reads, park: run.park, callbacks: received.length, settled: run.settled.settled }).toEqual({
-        reads: { grants: 2, identity: 2 },
-        park: row.path === "with an admission park" ? 1 : 0,
-        callbacks: 1,
-        settled: row.outcome.settle === "resolves" ? "fulfilled" : "rejected",
-      });
-      expect({ grants: received[0]?.grants, identity: received[0]?.identity }).toEqual({ grants: [EXECUTE_GRANT, ACTION], identity: HOST });
-      if (run.settled.settled === "rejected") {
-        expect(run.settled.reason).toBe(row.outcome.value);
-        return;
-      }
-      if (run.settled.result.status !== "dispatched") throw new Error("expected one dispatch");
-      expect(run.settled.result.value).toBe(row.outcome.value);
-      expect(received[0]).toBe(run.settled.result.authority);
+      const observe = () => {
+        expect({ reads, park: run.parked.mock.calls.length, callbacks: received.length, settled: run.settled.settled }).toEqual({
+          reads: { grants: 2, identity: 2 },
+          park: row.path === "with an admission park" ? 1 : 0,
+          callbacks: 1,
+          settled: row.outcome.settle === "resolves" ? "fulfilled" : "rejected",
+        });
+        expect({ grants: received[0]?.grants, identity: received[0]?.identity }).toEqual({ grants: [EXECUTE_GRANT, ACTION], identity: HOST });
+        if (run.settled.settled === "rejected") {
+          expect(run.settled.reason).toBe(row.outcome.value);
+          return;
+        }
+        if (run.settled.result.status !== "dispatched") throw new Error("expected one dispatch");
+        expect(run.settled.result.value).toBe(row.outcome.value);
+        expect(received[0]).toBe(run.settled.result.authority);
+      };
+      observe();
+      await run.drain();
+      observe();
     },
   );
+});
+
+describe("the timer drain (wb-m83p cut #3): it fakes the 6 listed timer functions, the ones the module header names, in order, and only those, each restored by the real timers; its sentinel is planted 2147483647 ms out, as the module header says, and a drain ends with it run once and no timer left; and each of the module's 4 listed claim sites names the end of the timer drain", () => {
+  const DRAIN_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+  /** The module's 4 listed claim sites that take their readings at the two points, each with how its text is cut from the module source. */
+  const CLAIM_SITES: readonly (readonly [string, RegExp])[] = [
+    ["the module header's final-reads paragraph", /^\/\*\*\n([\s\S]*?)\n \*\n \* Host authority,/m],
+    ["the module header's EAT-R031 line", /^ \* {3}EAT-R031 {2}([\s\S]*?)\n \* {3}EAT-R154/m],
+    ["the doc of FunctionDispatchOptions.dispatch", /\/\*\*\n((?:(?!\*\/)[\s\S])*?)\*\/\n {2}readonly dispatch: /],
+    ["the doc of dispatchFunctionWithAuthority", /\/\*\*\n((?:(?!\*\/)[\s\S])*?)\*\/\nexport async function dispatchFunctionWithAuthority</],
+  ];
+  /** A cut of the module source as one line of prose: each line's comment marker dropped, whitespace runs collapsed. */
+  const proseOf = (text: string) =>
+    text
+      .split("\n")
+      .map(line => line.replace(/^\s*(?:\/\*\*|\*\/|\*|\/\/)\s?/, ""))
+      .join(" ")
+      .replace(/\s+/g, " ")
+      .trim();
+  /** The phrase each listed claim site names the end of the timer drain by. */
+  const DRAIN_END = "once the timer drain ends";
+  /** Each own global function of this realm, by name (read through its property descriptor, so no getter runs). */
+  const globalFunctions = () =>
+    new Map(
+      Reflect.ownKeys(globalThis)
+        .filter((key): key is string => typeof key === "string")
+        .flatMap(key => {
+          const descriptor = Object.getOwnPropertyDescriptor(globalThis, key);
+          return descriptor !== undefined && typeof descriptor.value === "function" ? [[key, descriptor.value as unknown] as const] : [];
+        }),
+    );
+
+  it("the drain's frozen shape: the 6 faked timer functions in order, the sentinel delay, and the 4 listed claim sites in order", () => {
+    expect([...DRAIN_FAKES]).toEqual(["setTimeout", "clearTimeout", "setInterval", "clearInterval", "setImmediate", "clearImmediate"]);
+    expect(SENTINEL_DELAY).toBe(2147483647);
+    expect(CLAIM_SITES.map(([site]) => site)).toEqual([
+      "the module header's final-reads paragraph",
+      "the module header's EAT-R031 line",
+      "the doc of FunctionDispatchOptions.dispatch",
+      "the doc of dispatchFunctionWithAuthority",
+    ]);
+  });
+
+  it("the drain's anchors outside its own literals: the module header's timer drain sentence names, in order, exactly the timer functions the drain fakes and the delay its sentinel is planted at; while a drain is started, the global functions it replaces are exactly those it fakes, and the real timers restore each; a drain started with nothing else planted ends with its sentinel, not run before, run once and no timer left; and each listed claim site's text names the end of the timer drain, which the module's prose names once per listed site", async () => {
+    const module = readFileSync(join(DRAIN_ROOT, "src/workbench/function-authority.ts"), "utf8");
+    const header = proseOf(/^\/\*\*\n([\s\S]*?)\n \*\//.exec(module)?.[1] ?? "");
+    const drainSentence = /The timer drain: (.*?) A call, read or wait that lands after the timer drain ends is NOT CLAIMED/.exec(header)?.[1] ?? "";
+    expect({ faked: drainSentence.match(/\b(?:set|clear)(?:Timeout|Interval|Immediate)\b/g) ?? [], sentinel: Number(/sentinel timer planted (\d+) ms out/.exec(drainSentence)?.[1]) }).toEqual({ faked: [...DRAIN_FAKES], sentinel: SENTINEL_DELAY });
+    const real = globalFunctions();
+    const timers = startTimerDrain();
+    const replaced = [...real].filter(([name, value]) => Reflect.get(globalThis, name) !== value).map(([name]) => name);
+    expect([...replaced].sort()).toEqual([...DRAIN_FAKES].sort());
+    expect(timers.sentinel).not.toHaveBeenCalled();
+    await timers.drain();
+    vi.useRealTimers();
+    expect([...real].filter(([name, value]) => Reflect.get(globalThis, name) !== value).map(([name]) => name)).toEqual([]);
+    for (const [site, cut] of CLAIM_SITES) {
+      const text = cut.exec(module)?.[1];
+      expect({ site, cut: text !== undefined, names: proseOf(text ?? "").includes(DRAIN_END) }).toEqual({ site, cut: true, names: true });
+    }
+    expect(proseOf(module).split(DRAIN_END).length - 1).toBe(CLAIM_SITES.length);
+  });
 });
