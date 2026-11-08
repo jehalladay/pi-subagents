@@ -163,7 +163,24 @@
  * exactly those forms and today's src, every other form NOT CLAIMED. Where a
  * reader meets what it cannot resolve - a launch program, a module specifier, a load, an argv binding, a builder or an
  * identifier - it reads <opaque ...> or unresolved, a new member of a pinned list, never a pass, save the routes a named residual
- * states (R-OPAQUE-LAUNCHER, R-OPAQUE-LOADER, R-OPAQUE-REGISTRATION). Those two blocks are the claims verbatim: ANCHOR holds each
+ * states (R-OPAQUE-LAUNCHER, R-OPAQUE-LOADER, R-OPAQUE-REGISTRATION). Gate refusal #18 measured the embedded reader's words still
+ * claimed wider than T0 and T2 held them: the workflow worker's inlined source read as a module of its own (CASES,
+ * embeddedSources' doc and T0's messages and title) while T0 held only its path, and T2's planted strings each read as an
+ * embedded module (embeddedSources' doc and T2's message) while T2 held only their paths - so its hollows GP7-EMB-TPL-NOLIT and
+ * GP7-EMB-TPL-HEADONLY (each template span's literal text dropped, a substitution still read as undefined; a template's head
+ * alone read) and GP7-EMB-STR-QUOTED (a quoted string's text read by its source spelling, its quotes kept) kept the census
+ * green while its plants realized them - and orchestrator ruling R-B713 bound the next cut to pin the parse-as-module words
+ * against an inlined source T0 actually parses or to narrow them. Cut #19 changes no src or run-time reader and no row: T0
+ * holds the worker's embedded module's text equal to the text the host evaluates (WORKER_SOURCE as this process imports it)
+ * save one stretch, where that text holds a JSON string, and parses it to its two module-level require( loads as module
+ * sites; T2's control adds
+ * a template with one substitution whose require( and spawn sit after it, read back to its launch site and child_process
+ * module site, and T2 holds the text of each module its worker.ts and strings.ts plants carry, byte for byte, and the launch
+ * and child_process module sites of its strings.ts modules; the embedded reader's words are restated to exactly those
+ * readings. Its one other code change routes the export parsers' one read (exportRow) through trackerExportText
+ * (qa/workbench/tracker-export.mjs), the form landing 1038 gave every trunk export reader; that reader's own readings are NOT
+ * CLAIMED by this census (test/workbench-tracker-export-compaction.test.ts is its claim of record). Those two blocks are the
+ * claims verbatim: ANCHOR holds each
  * entry to its table row word for word, and FROZEN SHAPE pins the rows.
  *
  * MEASURED (read-only; cut #1 by seat ws-06, run g10-work-s123 at base bb96515; cut #2 by ws-06, run g10-work-s133 at trunk
@@ -176,8 +193,10 @@
  * at trunk fd90f9d, landing 1014; cut #14 by seat ws-05, run g10-work-s237 at trunk 7f54a59, landing 1020; cut #15 by seat ws-01,
  * run g10-work-s237 at trunk ea21fb1, landing 1024; cut #16 by seat ws-08, run g10-work-s237 at trunk 8ed3a73, landing 1028; cut
  * #17 by seat ws-01, run g10-work-s237 at trunk 4c21b67, landing 1029; cut #18 by seat ws-12, run g10-work-s238 at trunk
- * ab08609, landing 1030; providers/reactivefiber.ts is byte-identical at all eighteen and at 04123dc, sha256/16
- * d8b764b855600103 over its 203 lines; cuts #6 to #18 move no reader, so every witness reads as at cut #5; every C1 and G2
+ * ab08609, landing 1030; cut #19 by seat ws-06, run g10-work-s238 at trunk 5da3f5c, landing 1038; providers/reactivefiber.ts
+ * is byte-identical at all nineteen and at 04123dc, sha256/16 d8b764b855600103 over its 203 lines; cuts #6 to #19 move no src
+ * or run-time reader (cut #19 routes only the export read, through trackerExportText; .beads/archive is absent at 5da3f5c), so
+ * every witness reads as at cut #5; every C1 and G2
  * witness below reads
  * the same under cut #4's C1-NAME-RESOLUTION as under cut #3's by-name read, and under cut #5's landed reader as under cut #4's:
  * the swap alone, every row and witness kept, moved 10 row readings in 4 of the 44 cases, all of them falsifier rows, which cut #5
@@ -217,8 +236,12 @@
  *  capture (ACCEPTANCE[0]). C1 UNTIL-THEN, read from src and at run time: exactly the C1-* items of ENUMERATION. The src
  *    readers parse (TypeScript AST) today's script files under src, every one of them (each is .ts today; T0 holds the read
  *    set equal to an independent listing of src), and, as a module of its own, the workflow worker's inlined source, src's one
- *    embedded module today (a template that calls require(, which the host evaluates with new Worker(..., { eval: true }); T0
- *    holds it); the two readers' other forms are claimed only as T2's control plants them (sourceFiles' and embeddedSources'
+ *    embedded module today (a template with one substitution that calls require(, which the host evaluates with new
+ *    Worker(..., { eval: true }); T0 holds its path, its text - the text the host evaluates, WORKER_SOURCE as this process
+ *    imports it, save one stretch, where that text holds a JSON string, today the substitution's value - and its two
+ *    module-level require( loads, which the src readers read as module sites; what a module reads where a substitution sits is
+ *    NOT CLAIMED by this census); the two readers' other forms are claimed only as T2's control plants them (sourceFiles' and
+ *    embeddedSources'
  *    docs name each), and every other file or embedded form is NOT CLAIMED by this census; the argv
  *    binding and its builder resolve through TypeScript's checker over the launching file alone, every other identifier through
  *    the landed reader as C1-NAME-RESOLUTION states. C1's witness holds (a) the rf launch sites, (b) the launch inventory, (b2)
@@ -253,7 +276,9 @@
  *    Sinks: the preview reading under all three receipt forms on stderr (their bytes read) is exactly {contract, source,
  *    workspaceRoot} carrying the stdout ids alone, and neither kill's error names an rf id.
  * T0: the readings are live (the stand-in is the only PATH entry, src holds the surfaces, the worker's embedded source is in the
- * read set as src's one embedded module, the read set equals an independent listing of src's script files, the stimulus is
+ * read set as src's one embedded module, read as the text the host evaluates save one stretch, where that text holds a JSON
+ * string, and parsed as a module of its own, its two module-level require( loads module sites, the read set equals an
+ * independent listing of src's script files, the stimulus is
  * every receipt line). ENUMERATION: one case per item, its falsifier caught by its pin's own reader, so a hollowed reader reds the
  * item that names its route. T2 and T3: the instruments read their controls (the read set, embedded sources and G1's AST
  * locators, each claimed only at the inputs its control writes, exactly as it writes them, and at today's src as T0 and G1 hold
@@ -815,6 +840,7 @@ import { nativeReactiveFiberPreview, nativeReactiveFiberRender, type ReactiveFib
 import type { WorkflowJournalEntry } from "../src/workflow/journal.js";
 import { RECONCILE_EVIDENCE_READS } from "../src/workflow/reconcile.js";
 import { runWorkflow, type WorkflowHost, type WorkflowRunResult } from "../src/workflow/runtime.js";
+import { WORKER_SOURCE } from "../src/workflow/worker-source.js";
 import { type BindingTextReader, bindingTextReader, commandWords } from "./helpers/rf-binding-text-reader.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
@@ -1005,6 +1031,26 @@ function listedScripts(dir: string): string[] {
     .map((entry) => relative(REPO, join(entry.parentPath, entry.name)).split("\\").join("/"))
     .sort();
 }
+/**
+ * T0's comparison of a read module's text with the text the host evaluates: what is left of the evaluated text once the longest
+ * prefix the two share, and then the longest suffix they share within what that prefix leaves of each, are set aside.
+ */
+function evaluatedStretch(read: string, evaluated: string): string {
+  let head = 0;
+  while (head < read.length && head < evaluated.length && read[head] === evaluated[head]) head += 1;
+  let tail = 0;
+  while (tail < read.length - head && tail < evaluated.length - head && read[read.length - 1 - tail] === evaluated[evaluated.length - 1 - tail]) tail += 1;
+  return evaluated.slice(head, evaluated.length - tail);
+}
+/** Whether a text is exactly one JSON string, as JSON.stringify writes it. */
+function jsonString(text: string): boolean {
+  try {
+    const value: unknown = JSON.parse(text);
+    return typeof value === "string" && JSON.stringify(value) === text;
+  } catch {
+    return false;
+  }
+}
 function srcTree(): SourceText[] {
   const files = sourceFiles(join(REPO, "src"))
     .map((file) => ({ path: relative(REPO, file).split("\\").join("/"), text: readFileSync(file, "utf8") }))
@@ -1020,11 +1066,15 @@ function parsed(file: SourceText): ts.SourceFile {
 }
 /**
  * Source text a module carries inside a string or template, read as a module of its own, claimed only as T0 and T2 pin it: in src,
- * the workflow worker's inlined CommonJS source, a template with substitutions that calls require( (the host evaluates it with new
- * Worker(..., { eval: true })), src's one embedded module today (T0); in the modules T2's control plants, exactly as it writes
- * them, byte for byte, a module-level const initialized with a no-substitution template, a double-quoted string or a
- * single-quoted string that calls require(, or with a no-substitution template or a double-quoted string that calls
- * getBuiltinModule(, each read, and one initialized with a double-quoted string that calls neither, not read. Every other string
+ * the workflow worker's inlined CommonJS source, a template with one substitution that calls require( (the host evaluates it with
+ * new Worker(..., { eval: true })), src's one embedded module today, read as the text the host evaluates (WORKER_SOURCE as this
+ * process imports it) save one stretch, where that text holds a JSON string, today the substitution's value, its two
+ * module-level require( loads module sites (T0); in the modules T2's control plants, exactly as it writes them, byte for byte,
+ * a module-level const initialized with a no-substitution template, a double-quoted string or a single-quoted string that
+ * calls require(, or with a no-substitution template or a double-quoted string that calls getBuiltinModule(, each read as the
+ * source text it holds, byte for byte, its spawn a launch site and its child_process load a module site, one initialized with
+ * a template with one substitution whose require( and spawn sit after it, read, its spawn a launch site and its child_process
+ * load a module site (T2), and one initialized with a double-quoted string that calls neither, not read. Every other string
  * or template form, position, spelling and module, and the text a template's substitution reads as, are NOT CLAIMED by this
  * census.
  */
@@ -4406,7 +4456,7 @@ function owed(pin: (typeof PINS)[number]): string {
 
 /** The bead's own export row (title and description only: later store writes change neither). */
 function exportRow(): { title: string; description: string } {
-  const rows = readFileSync(join(REPO, EXPORT), "utf8")
+  const rows = trackerExportText(join(REPO, EXPORT))
     .split("\n")
     .filter((line) => line.trim() !== "")
     .map((line): unknown => JSON.parse(line));
@@ -4463,12 +4513,12 @@ function headerBlock(label: string): Array<{ readonly id: string; readonly words
 const reached: PinId[] = [];
 
 describe("wb-jwc.7 rf stderr receipt-capture census (until Pi has a committing rf capability)", () => {
-  it("T0: the readings are live: the stand-in is the only PATH entry and runs on this node, src holds the surfaces and the worker's embedded source (src's one embedded module), the read set equals an independent listing of src's script files, the receipt lines spell the stderr ids", async () => {
+  it("T0: the readings are live: the stand-in is the only PATH entry and runs on this node, src holds the surfaces and the worker's embedded source (src's one embedded module, read as the text the host evaluates save one stretch, where that text holds a JSON string, and parsed as a module of its own), the read set equals an independent listing of src's script files, the receipt lines spell the stderr ids", async () => {
     const files = srcTree();
     expect(files.map((file) => file.path)).toEqual(expect.arrayContaining([PROVIDER, RUNTIME]));
     expect(
       files.filter((file) => /^src\/workflow\/worker-source\.ts#embedded@[0-9]+$/.test(file.path)),
-      "the workflow worker's inlined source is read as an embedded module",
+      "one module of the read set is named for the workflow worker's inlined source",
     ).toHaveLength(1);
     expect(
       files
@@ -4479,8 +4529,17 @@ describe("wb-jwc.7 rf stderr receipt-capture census (until Pi has a committing r
     ).toStrictEqual(listedScripts(join(REPO, "src")));
     expect(
       files.map((file) => file.path).filter((path) => path.includes("#embedded@")),
-      "the workflow worker's inlined source is src's one embedded module",
+      "the read set's one embedded module is the one named for the workflow worker's inlined source",
     ).toStrictEqual([expect.stringMatching(/^src\/workflow\/worker-source\.ts#embedded@[0-9]+$/)]);
+    const worker = files.find((file) => /^src\/workflow\/worker-source\.ts#embedded@[0-9]+$/.test(file.path));
+    expect(
+      jsonString(evaluatedStretch(worker?.text ?? "", WORKER_SOURCE)),
+      "the workflow worker's inlined source is read as the text the host evaluates (WORKER_SOURCE as this process imports it), save one stretch, where that text holds a JSON string",
+    ).toBe(true);
+    expect(
+      moduleSites(worker === undefined ? [] : [worker], new Set(["node:vm", "node:worker_threads"])),
+      "the src readers parse the worker's inlined source as a module of its own: its two module-level require( loads are module sites",
+    ).toStrictEqual([`${worker?.path}:<module>:call require:node:vm`, `${worker?.path}:<module>:call require:node:worker_threads`]);
     const probe = await withStandIn("settle", async (rf) => ({
       path: process.env.PATH?.split(delimiter) ?? [],
       dir: rf.dir,
@@ -4521,7 +4580,29 @@ describe("wb-jwc.7 rf stderr receipt-capture census (until Pi has a committing r
       removeScratch(tree);
     }
     const embedded = plant("worker.ts", ["export const SOURCE = `", 'const cp = require("node:child_process");', 'cp.spawn("rf", ["context", "render"]);', "`;"]);
-    expect(embeddedSources(embedded).map((file) => file.path), "a no-substitution template that calls require( reads as an embedded module").toStrictEqual(["worker.ts#embedded@1"]);
+    expect(embeddedSources(embedded).map((file) => file.path), "a no-substitution template that calls require( is found as an embedded module, at its line").toStrictEqual(["worker.ts#embedded@1"]);
+    expect(embeddedSources(embedded).map((file) => file.text), "that template's module is the source text the template holds, byte for byte").toStrictEqual([
+      '\nconst cp = require("node:child_process");\ncp.spawn("rf", ["context", "render"]);\n',
+    ]);
+    const inlined = plant("inlined.ts", [
+      'export const INLINED = `"use strict";',
+      ["const PRELUDE = ", "$", "{JSON.stringify(PRELUDE)};"].join(""),
+      'const cp = require("node:child_process");',
+      'cp.spawn("rf", ["context", "render"]);',
+      "`;",
+    ]);
+    expect(
+      embeddedSources(inlined).map((file) => file.path),
+      "a template with one substitution whose require( and spawn sit after it is found as an embedded module, at its line",
+    ).toStrictEqual(["inlined.ts#embedded@1"]);
+    expect(
+      launchSites(embeddedSources(inlined)),
+      "the src readers parse that template's module as a module of its own: its spawn, after the substitution, is a launch site",
+    ).toStrictEqual(["inlined.ts#embedded@1:<module>:spawn"]);
+    expect(
+      moduleSites(embeddedSources(inlined), CHILD_PROCESS),
+      "and its child_process load, after the substitution, is a module site",
+    ).toStrictEqual(["inlined.ts#embedded@1:<module>:call require:node:child_process"]);
     const strings = plant("strings.ts", [
       'export const DOUBLE = "const cp = require(\'node:child_process\'); cp.spawn(\'rf\', [\'context\', \'render\']);";',
       "export const SINGLE = 'const cp = require(\"node:child_process\"); cp.spawn(\"rf\", [\"context\", \"render\"]);';",
@@ -4531,10 +4612,31 @@ describe("wb-jwc.7 rf stderr receipt-capture census (until Pi has a committing r
     ]);
     expect(
       embeddedSources(strings).map((file) => file.path),
-      "a double-quoted and a single-quoted string that call require(, and a no-substitution template and a double-quoted string that call getBuiltinModule(, each read as an embedded module; a double-quoted string that calls neither does not",
+      "a double-quoted and a single-quoted string that call require(, and a no-substitution template and a double-quoted string that call getBuiltinModule(, are each found as an embedded module, at its line; a double-quoted string that calls neither is not",
     ).toStrictEqual(["strings.ts#embedded@1", "strings.ts#embedded@2", "strings.ts#embedded@3", "strings.ts#embedded@4"]);
     expect(launchSites(embeddedSources(embedded)), "a launch inside embedded source is a launch").toStrictEqual(["worker.ts#embedded@1:<module>:spawn"]);
     expect(moduleSites(embeddedSources(embedded), CHILD_PROCESS), "an embedded module's child_process load is a module site").toStrictEqual(["worker.ts#embedded@1:<module>:call require:node:child_process"]);
+    expect(embeddedSources(strings).map((file) => file.text), "each of those four modules is the source text its literal holds, byte for byte").toStrictEqual([
+      "const cp = require('node:child_process'); cp.spawn('rf', ['context', 'render']);",
+      'const cp = require("node:child_process"); cp.spawn("rf", ["context", "render"]);',
+      'const cp = process.getBuiltinModule("node:child_process"); cp.spawn("rf", ["context", "render"]);',
+      "const cp = process.getBuiltinModule('node:child_process'); cp.spawn('rf', ['context', 'render']);",
+    ]);
+    expect(launchSites(embeddedSources(strings)), "a launch inside each of those four modules is a launch").toStrictEqual([
+      "strings.ts#embedded@1:<module>:spawn",
+      "strings.ts#embedded@2:<module>:spawn",
+      "strings.ts#embedded@3:<module>:spawn",
+      "strings.ts#embedded@4:<module>:spawn",
+    ]);
+    expect(
+      moduleSites(embeddedSources(strings), CHILD_PROCESS),
+      "each of those four modules' child_process load, by require( or by getBuiltinModule(, is a module site",
+    ).toStrictEqual([
+      "strings.ts#embedded@1:<module>:call require:node:child_process",
+      "strings.ts#embedded@2:<module>:call require:node:child_process",
+      "strings.ts#embedded@3:<module>:call getBuiltinModule:node:child_process",
+      "strings.ts#embedded@4:<module>:call getBuiltinModule:node:child_process",
+    ]);
     const changed = { path: PROVIDER, text: readFileSync(join(REPO, PROVIDER), "utf8").replace("},500);", "},5000);") };
     expect(custodyBlock(changed), "a changed escalation reads as a changed block").not.toStrictEqual([...CUSTODY_AT_PIN]);
     const decoy = {
@@ -4715,3 +4817,4 @@ describe("wb-jwc.7 rf stderr receipt-capture census (until Pi has a committing r
   });
 });
 
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";
