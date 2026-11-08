@@ -13,6 +13,9 @@
  * ceiling and the read memo claim their planted forms - a local and a known remote sha that begin and end with 0 (G9, G10), files
  * holding text beyond ASCII at the ceiling, which counts UTF-8 bytes (C7, K3), and a main export rewritten at the same length at its
  * first and at its last character and in its middle line (R10).
+ * Cut #2 (refusal #1 of wb-xkto): those words claim the forms its gate named as well - a deleted-ref line beside a line that pushes,
+ * and three malformed deleted-ref lines (G9), a push that is not a fast-forward over a known commit (G10), each plant C7 CEILING
+ * PLANTS lists (C7), and two swaps of a main export's lines and a rewrite in the last line of a main export no newline ends (R10).
  *
  * WHY (measured at trunk fd90f9d3, not a case: the tracked export moves). The tracker's export writes every bead, closed ones with
  * their whole bodies, into the tracked .beads/issues.jsonl: 95,821,804 bytes there (1,304 rows; the 1,179 closed rows 93,125,889
@@ -56,9 +59,10 @@
  * the owner shape orders (ruling R-B670 on wb-294d).
  * Measured at fd90f9d3: the beads closed in 2026-10 hold 46,834,285 bytes, those closed 2026-11-01..06 46,291,604, so the running
  * month's shard is the one that grows toward the soft ceiling. The ceiling counts UTF-8 bytes: a compaction after which the main
- * export, a shard it appends to or a shard it does not append to would be at or over it refuses as oversize (C7 plants each at the
- * ceiling over the fixture's ASCII rows, and each alone at it over rows holding text beyond ASCII, whose UTF-8 bytes outnumber their
- * UTF-16 code units); at the CLI compact exits 2 and writes nothing at each plant K3 CEILING PLANTS lists (K3).
+ * export, a shard it appends to or a shard it does not append to would be at or over it refuses as oversize - at each plant C7
+ * CEILING PLANTS lists, its file at the ceiling and one byte over it, over ASCII rows and over rows holding text beyond ASCII, whose
+ * UTF-8 bytes outnumber their UTF-16 code units (C7); at the CLI compact exits 2 and writes nothing at each plant K3 CEILING PLANTS
+ * lists (K3).
  * STUB FIELDS (MEASURED, a rationale and not a case: no case reads or writes a tracker store). Two fields beyond the ruling's list (id,
  * title, status, closed stamp, close reason, dep edges): `_type` is the export's row discriminator, and `updated_at` keeps an import of
  * the main export inert against a store that already holds the full rows (the tracker's importer rewrites an issue only when a row's
@@ -89,9 +93,12 @@
  * inside one millisecond, and adds a shard after the others and before them; a rewrite that keeps names, sizes and modification times
  * reads as the earlier content; another archive directory is read on its own, though its shards keep the names, sizes and modification
  * times of shards read before (R10). A main export rewritten at the same length between two reads is read again - R10 plants a rewrite
- * in its first line, in its last line and in its middle line, one at its first character and one at its last character (R10); a
- * same-length rewrite at a position R10 does not plant is NOT CLAIMED. rehydrateTrackerExport(text, path) is the same for a text a
- * reader already read from path, given a string path or a file URL (R2), another text of the same length among them (R10);
+ * in its first line, in its last line and in its middle line, one at its first character and one at its last character, two swaps of
+ * its lines (its middle and its last line, its first and its last), and a rewrite in the last line of a main export no newline ends
+ * (R10); a same-length rewrite R10 does not plant - another rewrite at a position it plants, a rewrite at another position, another
+ * reordering of the lines, or one in another line of a main export no newline ends - is NOT CLAIMED. rehydrateTrackerExport(text,
+ * path) is the same for a text a reader already read from path, given a string path or a file URL (R2), another text of the same
+ * length among them (R10);
  * rehydrateTrackerText(main, shards) is the same for a main export's text and its shards, read in name order though given out of it
  * (C17), the shard's last line parsed though no newline ends it (R11).
  *
@@ -138,6 +145,30 @@
  *     at a shard name and at the main export | W2-17a directories at both shard names it appends to and at the main export, the full export
  *     listing wb-c2 (closed 2026-11) before wb-c1 (closed 2026-10) | W8-03 a FIFO at the main export | a FIFO at the running month's shard
  *     name | a dangling symlink at the main export | a symlink to a directory at the past month's shard name
+ *
+ * C7 CEILING PLANTS (wb-xkto refusal #1, U4 and U5: C7's plant table, by label, in table order; C7 holds its labels equal to this
+ * list, an anchor outside the compaction suite beside C7's own title). Each plant names one file of one fixture's compaction at the
+ * default ceiling - that run's largest file, every other file under it - and C7 sets the ceiling at that file's UTF-8 bytes and at one
+ * byte under them, where the run refuses as oversize with the one typed line naming the file, and at one byte over them, where it
+ * passes; the run stamp is 2026-11-03T12:00:00Z. The fixture is the routing fixture; the open-rows fixture is one open and one
+ * in-progress row and no closed row; the closed-rows fixture three closed rows, of 2026-09, 2026-10 and 2026-11, and no other row; the
+ * big-shard fixture one open row and one closed row of the run's month with a 4,000-character note, and the gap-month fixture the same
+ * with that row closed in 2026-10, a month before the run's and newer than every shard (C5); the growing fixture an existing run-month
+ * shard holding a closed row the full export no longer carries, beside a full export whose closed row of the run's month the run
+ * appends to it, each row with a 2,000-character note; the sealed and the later-month fixtures the routing fixture beside an existing
+ * shard of 2026-09 or of 2026-12 holding a closed row the full export no longer carries, with a 4,096-character note; the re-run
+ * fixture one open row and one closed row of the run's month with a 1,000-character note, compacted again beside the shard its first
+ * compaction wrote, with nothing to append. Each UTF-8 fixture is the fixture of its name with UTF8_TEXT - a text holding each
+ * character UTF-8 CHARACTERS lists - in its rows' titles or notes.
+ *   C7 ceiling plants: the fixture's main export | the UTF-8 fixture's main export | the open-rows fixture's main export | the UTF-8
+ *     open-rows fixture's main export | the closed-rows fixture's main export | the UTF-8 closed-rows fixture's main export | the
+ *     big-shard fixture's run-month shard, which the run creates | the UTF-8 big-shard fixture's run-month shard, which the run creates
+ *     | the gap-month fixture's past-month shard, which the run creates | the UTF-8 gap-month fixture's past-month shard, which the run
+ *     creates | the growing fixture's run-month shard, which exists before the run and grows | the UTF-8 growing fixture's run-month
+ *     shard, which exists before the run and grows | the sealed fixture's past-month shard, which the run does not append to | the UTF-8
+ *     sealed fixture's past-month shard, which the run does not append to | the re-run fixture's run-month shard, which the run does not
+ *     append to | the UTF-8 re-run fixture's run-month shard, which the run does not append to | the later-month fixture's later-month
+ *     shard, which the run does not append to | the UTF-8 later-month fixture's later-month shard, which the run does not append to
  *
  * K3 CEILING PLANTS (wb-xkto: K3's plant table, by label, in table order; K3 holds its labels equal to this list, an anchor outside the
  * compaction suite beside K3's own title). The big-shard fixture is one open row and one closed row whose 4,000-character note makes
@@ -200,22 +231,28 @@
  *   node qa/workbench/tracker-export.mjs pre-push <remote> [<url>]
  *       the git pre-push hook (G7): reads git's `<local ref> <local sha> <remote ref> <remote sha>` lines on stdin and judges each
  *       line's push of its local sha - G9 plants the base commit's line, two lines at once, a line whose remote sha this repository
- *       lacks, and a line whose local sha begins and ends with 0 and is not all zeros - excluding the line's remote sha when this
- *       repository has it as a commit - G10 plants a commit the case makes and a root commit whose sha begins and ends with 0 and is
- *       not all zeros - but not a remote sha naming a blob or a tree, the oversized export's blob or the tree of the commit holding it
- *       (G10), and excluding every remote-tracking ref of <remote>, --remotes=<remote> (G11); a line whose local sha is all zeros -
- *       forty zeros, or sixty-four - is a deleted ref: it pushes nothing and is skipped (G9). Exit 3 on a usage error (G15), a bad
- *       FW_EXPORT_SOFT_CEILING (G1), a malformed line (G9: one of two, three or five fields, or one whose local or remote sha is one
- *       digit short of 40 or in upper case - each sha form planted at both positions) and a push it cannot judge (G13) - unless a
- *       judged push refuses at the soft ceiling, when the exit is 2 (G13). Install once per clone:
+ *       lacks, a line whose local sha begins and ends with 0 and is not all zeros, and a line that pushes after a deleted-ref line and
+ *       before one - excluding the line's remote sha when this repository has it as a commit - G10 plants a commit the case makes that
+ *       the local sha descends from, a root commit whose sha begins and ends with 0 and is not all zeros, and a commit that is no
+ *       ancestor of the local sha (a push that is not a fast-forward, its local side writing no family blob) - but not a remote sha
+ *       naming a blob or a tree, the oversized export's blob or the tree of the commit holding it (G10), and excluding every
+ *       remote-tracking ref of <remote>, --remotes=<remote> (G11); a line whose local sha is all zeros - forty zeros, or sixty-four -
+ *       is a deleted ref: it pushes nothing and is skipped - G9 plants it alone on stdin, and before and after a line that pushes,
+ *       whose push is judged (G9). Exit 3 on a usage error (G15), a bad FW_EXPORT_SOFT_CEILING (G1), a malformed line (G9: one of two,
+ *       three or five fields, or one whose local or remote sha is one digit short of 40 or in upper case - each sha form planted at
+ *       both positions - and three deleted-ref lines: three fields with forty zeros, forty zeros beside a remote sha one digit short,
+ *       and sixty-four zeros beside an upper-case remote sha) and a push it cannot judge (G13) - unless a judged push refuses at the
+ *       soft ceiling, when the exit is 2 (G13). Install once per clone:
  *         printf '#!/bin/sh\nexec node %s pre-push "$@"\n' "$PWD/qa/workbench/tracker-export.mjs" > "$(git rev-parse --git-path hooks)/pre-push"
  *         chmod +x "$(git rev-parse --git-path hooks)/pre-push"
  *   Any other verb, or none, exits 3 with the verbs' usage line (G15).
  *
- * RESIDUALS: none named at this cut - every member refusals #1 to #4 of wb-137f named is planted (refusal #2's U1-U7 by C9, C17, C18,
- * K3, K7, K14, K15, R2, R3, R10, R11; refusal #3's U1-U6 by C2, C8, C9, C12, C16, G1, G4, K1, K2, K5, K13, R1, R2, R4, R5, R6, R10 and
- * T1; refusal #4's U1-U3 by G9 and G10 for GP45-01, C7 and K3 for GP45-04 and GP45-05, and R10 for GP45-12, and its F4 and F5 riders
- * by K1 for GP45-06 and G10 for GP45-13), and every other mode known is a scope sentence of NOT CLAIMED.
+ * RESIDUALS: none named at this cut - every member refusals #1 to #4 of wb-137f and refusal #1 of wb-xkto named is planted (refusal
+ * #2's U1-U7 by C9, C17, C18, K3, K7, K14, K15, R2, R3, R10, R11; refusal #3's U1-U6 by C2, C8, C9, C12, C16, G1, G4, K1, K2, K5, K13,
+ * R1, R2, R4, R5, R6, R10 and T1; refusal #4's U1-U3 by G9 and G10 for GP45-01, C7 and K3 for GP45-04 and GP45-05, and R10 for
+ * GP45-12, and its F4 and F5 riders by K1 for GP45-06 and G10 for GP45-13; wb-xkto refusal #1's U1-U7 by G9 for GX8-01 and GX8-03, G10
+ * for GX8-06, C7 for GX8-10, GX8-12, GX8-13, GX8-14 and GX8-15, and R10 for GX8-31 and GX8-32), and every other mode known is a scope
+ * sentence of NOT CLAIMED.
  * NOT CLAIMED: the machine wiring named above; line ends other than a bare newline and text that is not UTF-8; a character beyond
  * ASCII that UTF-8 CHARACTERS does not list, outside the tracked export T1 reads; two compactions of one .beads directory at once, a
  * crash while one writes, and a write or a pre-write check that fails with an error (the error is thrown, the exit is 1, and a file
@@ -227,6 +264,10 @@
  * device file at a path compact would write (K14 plants directories, symlinks and FIFOs); a sha of 64 hex digits at the pre-push hook
  * other than the deleted ref's sixty-four zeros - one digit short, in upper case, or a push (G9 plants 40-digit shas beside those
  * zeros); a local or a remote sha of a form G9 and G10 do not plant, and a remote sha naming a tag object, at the pre-push hook; at
+ * the pre-push hook, a deleted-ref line malformed in a form G9 does not plant, more than one deleted-ref line or one between two lines
+ * that push, and a push that is not a fast-forward whose local side writes a family blob; at compactTrackerExport, a ceiling form C7
+ * CEILING PLANTS does not list - another set of files at or over the ceiling, a file more than one byte over it, another fixture -
+ * beyond the fixture's run-month shard and main export C7 sets each at its own ceiling; at
  * the CLI, a ceiling form K3 CEILING PLANTS does not list - another set of files at or over the ceiling (two shards without the main
  * export, the main export with one shard, one file exactly at the ceiling and another over it), a shard that exists before the run at
  * or over it, and a --beads path spelled other than K3's absolute scratch path - what compact writes outside the .beads directory at
@@ -544,8 +585,9 @@ export function trackerExportText(mainPath) {
  * skipped and an empty shard holds no line, in each of those layouts), a malformed export (C8) and a stub-shaped closed row in the
  * input - a main export passed where the full export belongs (C8; that row with one field FIELDS BEYOND STUB_FIELDS lists added is a
  * full row, compacted to its stub, C8); as "oversize" on a main export, a shard the run appends to or a shard it does not append to at
- * or over the ceiling after the run, its size counted in UTF-8 bytes (C7 plants each at the ceiling over the fixture's ASCII rows, and
- * each alone at it over rows holding text beyond ASCII, whose UTF-8 bytes outnumber their UTF-16 code units); as "round-trip" when the
+ * or over the ceiling after the run, its size counted in UTF-8 bytes - at each plant C7 CEILING PLANTS lists, its file at the ceiling
+ * and one byte over it, over ASCII rows and over rows holding text beyond ASCII, whose UTF-8 bytes outnumber their UTF-16 code units
+ * (C7); as "round-trip" when the
  * compacted export does not rehydrate to the full export it was cut from (C10). The CLI then writes nothing (K3, K4, K10). A change to
  * a shard that existed before the run and is of a month before the run's refuses as "sealed": a backstop the routing rule never
  * reaches, since no run appends to such a shard, so no case reaches it.

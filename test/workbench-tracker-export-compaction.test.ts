@@ -22,7 +22,8 @@
  * tables' shape and the module header's PLANTED SHARD LINES block equal to them (wb-137f refusal #2 F4); P2 holds the cut #4 tables
  * (UTF8_CHARACTERS, NAMES_OUTSIDE_THE_FORM, SHARD_NAMES_IN_THE_FORM, STATUSES_NOT_CLOSED, FIELDS_BEYOND_STUB) equal to the module
  * header's CUT #4 PLANT TABLES lists, and K14 its variant labels to the header's K14 variants list (wb-137f refusal #3); K3 holds its
- * ceiling plant labels equal to the header's K3 CEILING PLANTS list (wb-xkto, refusal #4 of wb-137f).
+ * ceiling plant labels equal to the header's K3 CEILING PLANTS list (wb-xkto, refusal #4 of wb-137f), and C7 its ceiling plant labels
+ * equal to the header's C7 CEILING PLANTS list (wb-xkto, its own refusal #1).
  */
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -499,7 +500,7 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
     expect(rehydrateTrackerText(third.main, third.shards)).toBe(textOf(reopened));
   });
 
-  it("C7 CEILING: a main export, a shard the run appends to, or a shard it does not append to that would be at the soft ceiling after the run refuses as oversize with one typed line per file, naming path and bytes - its UTF-8 bytes, over the fixture's ASCII rows and over rows holding text beyond ASCII, whose UTF-8 bytes outnumber their UTF-16 code units (the UTF-8 fixture's main export, the UTF-8 big-shard fixture's shard the run appends to, and a sealed month's shard holding UTF8_TEXT that the run does not append to, each alone at its ceiling); one byte over every file passes", () => {
+  it("C7 CEILING at each of its eighteen plants - the fixture's main export; the UTF-8 fixture's main export; the open-rows fixture's main export; the UTF-8 open-rows fixture's main export; the closed-rows fixture's main export; the UTF-8 closed-rows fixture's main export; the big-shard fixture's run-month shard, which the run creates; the UTF-8 big-shard fixture's run-month shard, which the run creates; the gap-month fixture's past-month shard, which the run creates; the UTF-8 gap-month fixture's past-month shard, which the run creates; the growing fixture's run-month shard, which exists before the run and grows; the UTF-8 growing fixture's run-month shard, which exists before the run and grows; the sealed fixture's past-month shard, which the run does not append to; the UTF-8 sealed fixture's past-month shard, which the run does not append to; the re-run fixture's run-month shard, which the run does not append to; the UTF-8 re-run fixture's run-month shard, which the run does not append to; the later-month fixture's later-month shard, which the run does not append to; the UTF-8 later-month fixture's later-month shard, which the run does not append to - compactTrackerExport refuses as oversize with exactly one typed line naming the plant's file and the UTF-8 bytes the unrefused run gives it, at a ceiling of those bytes and at one byte under them, and passes at one byte over them; the file is the unrefused run's largest, every other file under it, and holds fewer UTF-16 code units than UTF-8 bytes exactly at the nine UTF-8 plants; and, over the fixture, a ceiling at its run-month shard's bytes and one at its main export's each refuse as oversize naming that file, and one byte over every file passes", ({ task }) => {
     const full = textOf(fixtureRows());
     const open = compactTrackerExport({ full, shards: new Map(), now: "2026-11-03T12:00:00Z" });
     if (!open.ok) throw new Error(open.lines.join("\n"));
@@ -562,6 +563,124 @@ describe("wb-294d compaction: stub rows, month shards, round trip (owner shape e
     const sealedPasses = compactTrackerExport({ full, shards: new Map([["issues-closed-2026-09.jsonl", sealedUtf8]]), now: "2026-11-03T12:00:00Z", ceiling: sealedBytes + 1 });
     if (!sealedPasses.ok) throw new Error(sealedPasses.lines.join("\n"));
     expect(sealedPasses.appended.has("issues-closed-2026-09.jsonl"), "one byte over the sealed UTF-8 shard: passes, not appended to").toBe(false);
+    // wb-xkto (refusal #1 of wb-xkto, U4: GX8-10, GX8-12, GX8-15; U5: GX8-13, GX8-14; witnesses W-GX8-10/12/15 and W-GX8-13/14): the
+    // eighteen plants of the module header's C7 CEILING PLANTS. Each names one file of one fixture's unrefused run (the default ceiling),
+    // that run's largest file, every other file under it; its forms read every file the run writes against that file's bytes, each shard
+    // with whether the run appends to it and whether it existed before the run. The main export is planted over a full export holding
+    // open and closed rows, open rows only and closed rows only; a shard the run appends to, one it creates of the run's month and of a
+    // past month, and one that exists before the run; a shard it does not append to, of a past month, of the run's month on a re-run and
+    // of a later month - each over ASCII rows and over rows holding UTF8_TEXT. At a ceiling of the file's bytes, and of one byte under
+    // them, the run refuses as oversize with the one typed line naming the file; at one byte over them it passes.
+    type CeilingInput = { readonly full: string; readonly shards: ReadonlyMap<string, string> };
+    const plantNow = "2026-11-03T12:00:00Z";
+    const beyond = ` ${UTF8_TEXT}`;
+    const closedLine = (id: string, closedAt: string, notes: string): string => `${lineOf(row(id, "closed", { closed_at: closedAt, notes }))}\n`;
+    const closedRowsOf = (suffix: string): Row[] =>
+      [["wb-c1", "2026-09-15T00:00:00Z"], ["wb-c2", "2026-10-15T00:00:00Z"], ["wb-c3", "2026-11-02T00:00:00Z"]].map(([id = "", at = ""]) => row(id, "closed", { closed_at: at, title: `title of ${id}${suffix}` }));
+    const reRun = (notes: string): CeilingInput => {
+      const reRunFull = textOf([row("wb-o1", "open"), row("wb-c1", "closed", { closed_at: "2026-11-02T08:00:00Z", notes })]);
+      const first = compactTrackerExport({ full: reRunFull, shards: new Map<string, string>(), now: plantNow });
+      if (!first.ok) throw new Error(first.lines.join("\n"));
+      expect([...first.appended.keys()], "the re-run fixture's first run appends to the run-month shard").toEqual(["issues-closed-2026-11.jsonl"]);
+      return { full: reRunFull, shards: first.shards };
+    };
+    const ceilingInputs = {
+      fixture: (): CeilingInput => ({ full: textOf(fixtureRows()), shards: new Map<string, string>() }),
+      utf8: (): CeilingInput => ({ full: textOf(utf8Rows()), shards: new Map<string, string>() }),
+      openRows: (): CeilingInput => ({ full: textOf([row("wb-o1", "open"), row("wb-p1", "in_progress")]), shards: new Map<string, string>() }),
+      utf8OpenRows: (): CeilingInput => ({ full: textOf([row("wb-o1", "open", { title: `title of wb-o1${beyond}`, notes: UTF8_TEXT }), row("wb-p1", "in_progress")]), shards: new Map<string, string>() }),
+      closedRows: (): CeilingInput => ({ full: textOf(closedRowsOf("")), shards: new Map<string, string>() }),
+      utf8ClosedRows: (): CeilingInput => ({ full: textOf(closedRowsOf(beyond)), shards: new Map<string, string>() }),
+      bigShard: (): CeilingInput => ({ full: textOf([row("wb-o1", "open"), row("wb-c9", "closed", { closed_at: "2026-11-03T08:00:00Z", notes: "x".repeat(4000) })]), shards: new Map<string, string>() }),
+      utf8BigShard: (): CeilingInput => ({ full: textOf(utf8BigShardRows()), shards: new Map<string, string>() }),
+      gapMonth: (): CeilingInput => ({ full: textOf([row("wb-o1", "open"), row("wb-c9", "closed", { closed_at: "2026-10-15T08:00:00Z", notes: "x".repeat(4000) })]), shards: new Map<string, string>() }),
+      utf8GapMonth: (): CeilingInput => ({ full: textOf([row("wb-o1", "open"), row("wb-c9", "closed", { closed_at: "2026-10-15T08:00:00Z", notes: `${"x".repeat(4000)}${beyond}` })]), shards: new Map<string, string>() }),
+      growing: (): CeilingInput => ({
+        full: textOf([row("wb-o1", "open"), row("wb-c9", "closed", { closed_at: "2026-11-02T08:00:00Z", notes: "x".repeat(2000) })]),
+        shards: new Map([["issues-closed-2026-11.jsonl", closedLine("wb-c8", "2026-11-01T08:00:00Z", "x".repeat(2000))]]),
+      }),
+      utf8Growing: (): CeilingInput => ({
+        full: textOf([row("wb-o1", "open"), row("wb-c9", "closed", { closed_at: "2026-11-02T08:00:00Z", notes: `${"x".repeat(2000)}${beyond}` })]),
+        shards: new Map([["issues-closed-2026-11.jsonl", closedLine("wb-c8", "2026-11-01T08:00:00Z", `${"x".repeat(2000)}${beyond}`)]]),
+      }),
+      sealed: (): CeilingInput => ({ full: textOf(fixtureRows()), shards: new Map([["issues-closed-2026-09.jsonl", closedLine("wb-c9", "2026-09-15T00:00:00Z", "x".repeat(4096))]]) }),
+      utf8Sealed: (): CeilingInput => ({ full: textOf(fixtureRows()), shards: new Map([["issues-closed-2026-09.jsonl", closedLine("wb-c9", "2026-09-15T00:00:00Z", `${"x".repeat(4096)}${beyond}`)]]) }),
+      rerun: (): CeilingInput => reRun("n".repeat(1000)),
+      utf8Rerun: (): CeilingInput => reRun(`${"n".repeat(1000)}${beyond}`),
+      laterMonth: (): CeilingInput => ({ full: textOf(fixtureRows()), shards: new Map([["issues-closed-2026-12.jsonl", closedLine("wb-c9", "2026-12-15T00:00:00Z", "x".repeat(4096))]]) }),
+      utf8LaterMonth: (): CeilingInput => ({ full: textOf(fixtureRows()), shards: new Map([["issues-closed-2026-12.jsonl", closedLine("wb-c9", "2026-12-15T00:00:00Z", `${"x".repeat(4096)}${beyond}`)]]) }),
+    } satisfies Record<string, () => CeilingInput>;
+    /** The inputs whose rows hold UTF8_TEXT: at their plants the file holds fewer UTF-16 code units than UTF-8 bytes. */
+    const utf8Inputs: ReadonlySet<keyof typeof ceilingInputs> = new Set<keyof typeof ceilingInputs>(["utf8", "utf8OpenRows", "utf8ClosedRows", "utf8BigShard", "utf8GapMonth", "utf8Growing", "utf8Sealed", "utf8Rerun", "utf8LaterMonth"]);
+    const c7Plants: readonly { readonly plant: string; readonly input: keyof typeof ceilingInputs; readonly file: string; readonly forms: readonly string[] }[] = [
+      { plant: "the fixture's main export", input: "fixture", file: "issues.jsonl", forms: ["issues.jsonl:at", "archive/issues-closed-2026-10.jsonl:under:appended:created", "archive/issues-closed-2026-11.jsonl:under:appended:created"] },
+      { plant: "the UTF-8 fixture's main export", input: "utf8", file: "issues.jsonl", forms: ["issues.jsonl:at", "archive/issues-closed-2026-10.jsonl:under:appended:created", "archive/issues-closed-2026-11.jsonl:under:appended:created"] },
+      { plant: "the open-rows fixture's main export", input: "openRows", file: "issues.jsonl", forms: ["issues.jsonl:at"] },
+      { plant: "the UTF-8 open-rows fixture's main export", input: "utf8OpenRows", file: "issues.jsonl", forms: ["issues.jsonl:at"] },
+      { plant: "the closed-rows fixture's main export", input: "closedRows", file: "issues.jsonl", forms: ["issues.jsonl:at", "archive/issues-closed-2026-09.jsonl:under:appended:created", "archive/issues-closed-2026-10.jsonl:under:appended:created", "archive/issues-closed-2026-11.jsonl:under:appended:created"] },
+      { plant: "the UTF-8 closed-rows fixture's main export", input: "utf8ClosedRows", file: "issues.jsonl", forms: ["issues.jsonl:at", "archive/issues-closed-2026-09.jsonl:under:appended:created", "archive/issues-closed-2026-10.jsonl:under:appended:created", "archive/issues-closed-2026-11.jsonl:under:appended:created"] },
+      { plant: "the big-shard fixture's run-month shard, which the run creates", input: "bigShard", file: "archive/issues-closed-2026-11.jsonl", forms: ["issues.jsonl:under", "archive/issues-closed-2026-11.jsonl:at:appended:created"] },
+      { plant: "the UTF-8 big-shard fixture's run-month shard, which the run creates", input: "utf8BigShard", file: "archive/issues-closed-2026-11.jsonl", forms: ["issues.jsonl:under", "archive/issues-closed-2026-11.jsonl:at:appended:created"] },
+      { plant: "the gap-month fixture's past-month shard, which the run creates", input: "gapMonth", file: "archive/issues-closed-2026-10.jsonl", forms: ["issues.jsonl:under", "archive/issues-closed-2026-10.jsonl:at:appended:created"] },
+      { plant: "the UTF-8 gap-month fixture's past-month shard, which the run creates", input: "utf8GapMonth", file: "archive/issues-closed-2026-10.jsonl", forms: ["issues.jsonl:under", "archive/issues-closed-2026-10.jsonl:at:appended:created"] },
+      { plant: "the growing fixture's run-month shard, which exists before the run and grows", input: "growing", file: "archive/issues-closed-2026-11.jsonl", forms: ["issues.jsonl:under", "archive/issues-closed-2026-11.jsonl:at:appended:existed"] },
+      { plant: "the UTF-8 growing fixture's run-month shard, which exists before the run and grows", input: "utf8Growing", file: "archive/issues-closed-2026-11.jsonl", forms: ["issues.jsonl:under", "archive/issues-closed-2026-11.jsonl:at:appended:existed"] },
+      { plant: "the sealed fixture's past-month shard, which the run does not append to", input: "sealed", file: "archive/issues-closed-2026-09.jsonl", forms: ["issues.jsonl:under", "archive/issues-closed-2026-09.jsonl:at:kept:existed", "archive/issues-closed-2026-10.jsonl:under:appended:created", "archive/issues-closed-2026-11.jsonl:under:appended:created"] },
+      { plant: "the UTF-8 sealed fixture's past-month shard, which the run does not append to", input: "utf8Sealed", file: "archive/issues-closed-2026-09.jsonl", forms: ["issues.jsonl:under", "archive/issues-closed-2026-09.jsonl:at:kept:existed", "archive/issues-closed-2026-10.jsonl:under:appended:created", "archive/issues-closed-2026-11.jsonl:under:appended:created"] },
+      { plant: "the re-run fixture's run-month shard, which the run does not append to", input: "rerun", file: "archive/issues-closed-2026-11.jsonl", forms: ["issues.jsonl:under", "archive/issues-closed-2026-11.jsonl:at:kept:existed"] },
+      { plant: "the UTF-8 re-run fixture's run-month shard, which the run does not append to", input: "utf8Rerun", file: "archive/issues-closed-2026-11.jsonl", forms: ["issues.jsonl:under", "archive/issues-closed-2026-11.jsonl:at:kept:existed"] },
+      { plant: "the later-month fixture's later-month shard, which the run does not append to", input: "laterMonth", file: "archive/issues-closed-2026-12.jsonl", forms: ["issues.jsonl:under", "archive/issues-closed-2026-11.jsonl:under:appended:created", "archive/issues-closed-2026-12.jsonl:at:kept:existed"] },
+      { plant: "the UTF-8 later-month fixture's later-month shard, which the run does not append to", input: "utf8LaterMonth", file: "archive/issues-closed-2026-12.jsonl", forms: ["issues.jsonl:under", "archive/issues-closed-2026-11.jsonl:under:appended:created", "archive/issues-closed-2026-12.jsonl:at:kept:existed"] },
+    ];
+    expect(c7Plants.map(entry => `${entry.input}|${entry.plant}|${entry.forms.join(",")}`), "C7's eighteen ceiling plants (frozen shape)").toEqual([
+      "fixture|the fixture's main export|issues.jsonl:at,archive/issues-closed-2026-10.jsonl:under:appended:created,archive/issues-closed-2026-11.jsonl:under:appended:created",
+      "utf8|the UTF-8 fixture's main export|issues.jsonl:at,archive/issues-closed-2026-10.jsonl:under:appended:created,archive/issues-closed-2026-11.jsonl:under:appended:created",
+      "openRows|the open-rows fixture's main export|issues.jsonl:at",
+      "utf8OpenRows|the UTF-8 open-rows fixture's main export|issues.jsonl:at",
+      "closedRows|the closed-rows fixture's main export|issues.jsonl:at,archive/issues-closed-2026-09.jsonl:under:appended:created,archive/issues-closed-2026-10.jsonl:under:appended:created,archive/issues-closed-2026-11.jsonl:under:appended:created",
+      "utf8ClosedRows|the UTF-8 closed-rows fixture's main export|issues.jsonl:at,archive/issues-closed-2026-09.jsonl:under:appended:created,archive/issues-closed-2026-10.jsonl:under:appended:created,archive/issues-closed-2026-11.jsonl:under:appended:created",
+      "bigShard|the big-shard fixture's run-month shard, which the run creates|issues.jsonl:under,archive/issues-closed-2026-11.jsonl:at:appended:created",
+      "utf8BigShard|the UTF-8 big-shard fixture's run-month shard, which the run creates|issues.jsonl:under,archive/issues-closed-2026-11.jsonl:at:appended:created",
+      "gapMonth|the gap-month fixture's past-month shard, which the run creates|issues.jsonl:under,archive/issues-closed-2026-10.jsonl:at:appended:created",
+      "utf8GapMonth|the UTF-8 gap-month fixture's past-month shard, which the run creates|issues.jsonl:under,archive/issues-closed-2026-10.jsonl:at:appended:created",
+      "growing|the growing fixture's run-month shard, which exists before the run and grows|issues.jsonl:under,archive/issues-closed-2026-11.jsonl:at:appended:existed",
+      "utf8Growing|the UTF-8 growing fixture's run-month shard, which exists before the run and grows|issues.jsonl:under,archive/issues-closed-2026-11.jsonl:at:appended:existed",
+      "sealed|the sealed fixture's past-month shard, which the run does not append to|issues.jsonl:under,archive/issues-closed-2026-09.jsonl:at:kept:existed,archive/issues-closed-2026-10.jsonl:under:appended:created,archive/issues-closed-2026-11.jsonl:under:appended:created",
+      "utf8Sealed|the UTF-8 sealed fixture's past-month shard, which the run does not append to|issues.jsonl:under,archive/issues-closed-2026-09.jsonl:at:kept:existed,archive/issues-closed-2026-10.jsonl:under:appended:created,archive/issues-closed-2026-11.jsonl:under:appended:created",
+      "rerun|the re-run fixture's run-month shard, which the run does not append to|issues.jsonl:under,archive/issues-closed-2026-11.jsonl:at:kept:existed",
+      "utf8Rerun|the UTF-8 re-run fixture's run-month shard, which the run does not append to|issues.jsonl:under,archive/issues-closed-2026-11.jsonl:at:kept:existed",
+      "laterMonth|the later-month fixture's later-month shard, which the run does not append to|issues.jsonl:under,archive/issues-closed-2026-11.jsonl:under:appended:created,archive/issues-closed-2026-12.jsonl:at:kept:existed",
+      "utf8LaterMonth|the UTF-8 later-month fixture's later-month shard, which the run does not append to|issues.jsonl:under,archive/issues-closed-2026-11.jsonl:under:appended:created,archive/issues-closed-2026-12.jsonl:at:kept:existed",
+    ]);
+    // The plant labels against the module header's C7 CEILING PLANTS list, an anchor outside the suite, and against the title.
+    expect(headerList("C7 ceiling plants"), "the module header's C7 ceiling plants").toEqual(c7Plants.map(entry => entry.plant));
+    expect(task.name.split(" - ")[1]?.split("; "), "the title names exactly C7's ceiling plants, in order").toEqual(c7Plants.map(entry => entry.plant));
+    const countWords = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty"];
+    expect(task.name.startsWith(`C7 CEILING at each of its ${countWords[c7Plants.length]} plants - `), "the title counts C7's ceiling plants").toBe(true);
+    const plantLine = (file: string, bytes: number, ceiling: number): string =>
+      `tracker-export: REFUSED .beads/${file} would be ${bytes} bytes, at or over the soft ceiling of ${ceiling} bytes (FW_EXPORT_SOFT_CEILING); nothing is written`;
+    for (const { plant, input, file, forms } of c7Plants) {
+      const { full: plantFull, shards: plantShards } = ceilingInputs[input]();
+      const unrefused = compactTrackerExport({ full: plantFull, shards: plantShards, now: plantNow });
+      if (!unrefused.ok) throw new Error(`${plant}: ${unrefused.lines.join("\n")}`);
+      const files = new Map<string, string>([["issues.jsonl", unrefused.main], ...[...unrefused.shards].map(([name, text]): [string, string] => [`archive/${name}`, text])]);
+      const text = files.get(file) ?? "";
+      const bytes = Buffer.byteLength(text);
+      const relation = (other: string): string => {
+        const otherBytes = Buffer.byteLength(other);
+        return otherBytes > bytes ? "over" : otherBytes === bytes ? "at" : "under";
+      };
+      const formOf = ([name, other]: [string, string]): string => {
+        if (name === "issues.jsonl") return `${name}:${relation(other)}`;
+        const shard = name.slice("archive/".length);
+        return `${name}:${relation(other)}:${unrefused.appended.has(shard) ? "appended" : "kept"}:${plantShards.has(shard) ? "existed" : "created"}`;
+      };
+      expect([...files].map(formOf), `${plant}: the plant's forms`).toEqual(forms);
+      expect(text.length < bytes, `${plant}: fewer UTF-16 code units than UTF-8 bytes exactly at the UTF-8 plants`).toBe(utf8Inputs.has(input));
+      expect(compactTrackerExport({ full: plantFull, shards: plantShards, now: plantNow, ceiling: bytes }), `${plant}: a ceiling of its bytes`).toEqual({ ok: false, code: "oversize", lines: [plantLine(file, bytes, bytes)] });
+      expect(compactTrackerExport({ full: plantFull, shards: plantShards, now: plantNow, ceiling: bytes - 1 }), `${plant}: a ceiling one byte under its bytes`).toEqual({ ok: false, code: "oversize", lines: [plantLine(file, bytes, bytes - 1)] });
+      expect(compactTrackerExport({ full: plantFull, shards: plantShards, now: plantNow, ceiling: bytes + 1 }).ok, `${plant}: a ceiling one byte over its bytes`).toBe(true);
+    }
   });
 
   it("C8 MALFORMED: each line below refuses as malformed - an unparseable line (each of the eight lines of whitespace alone among them), null, an array, a number or a string, a row whose id is none, empty, a number or null, a row whose status is none, a number or null, a duplicate id, and a closed row already in stub shape; that closed row with one field of FIELDS_BEYOND_STUB added (each alone) is not in stub shape and compacts, its stub without the field and its shard line the row's", () => {
@@ -1150,7 +1269,7 @@ describe("wb-294d rehydrating reader: the one read every export reader routes th
     expect(rehydrateTrackerExport(compacted.main, main)).toBe(compacted.main);
   });
 
-  it("R10 READ MEMO: a process reads the shards again when a shard's size or modification time changes - the last shard by name, or an older one; the modification time moved by 60 s, by 0.5 s inside one second, or by 0.3 ms inside one millisecond - or a shard is added (after the others, or before them), renamed (its size and modification time kept) or removed (the last one, or an older one); a rewrite that keeps names, sizes and modification times reads as the earlier content, the last shard's or an older one's; another archive directory, whose shards keep the names, sizes and modification times of shards read before, is read on its own; and a main export rewritten at the same length between two reads - in its first line, then in its last, in its middle line, at its first character and at its last character - is read again, as is another text of the same length given to rehydrateTrackerExport", () => {
+  it("R10 READ MEMO: a process reads the shards again when a shard's size or modification time changes - the last shard by name, or an older one; the modification time moved by 60 s, by 0.5 s inside one second, or by 0.3 ms inside one millisecond - or a shard is added (after the others, or before them), renamed (its size and modification time kept) or removed (the last one, or an older one); a rewrite that keeps names, sizes and modification times reads as the earlier content, the last shard's or an older one's; another archive directory, whose shards keep the names, sizes and modification times of shards read before, is read on its own; and a main export rewritten at the same length between two reads - in its first line, then in its last, in its middle line, at its first character and at its last character, with its middle and its last line swapped and with its first and its last line swapped, and in its last line where no newline ends it - is read again, as is another text of the same length given to rehydrateTrackerExport", () => {
     const dir = scratch("tracker-export-reader-");
     const archive = join(dir, ".beads", "archive");
     mkdirSync(archive, { recursive: true });
@@ -1324,6 +1443,30 @@ describe("wb-294d rehydrating reader: the one read every export reader routes th
       writeFileSync(fineMain, rewrite);
       expect(trackerExportText(fineMain), `${label}: rewritten at the same length, read again`).toBe(read);
     }
+    // wb-xkto (refusal #1 of wb-xkto, U6: GX8-31, witness W-GX8-31): two lines of the main export swapped - a rewrite at the same length
+    // whose lines are the lines as written - its middle and its last line, then its first and its last, each after a read of the main
+    // export as written, is read again.
+    const middleLastSwapped = `${c8Line}\n${c1Line}\n${c9Line}\n`;
+    const firstLastSwapped = `${c1Line}\n${c9Line}\n${c8Line}\n`;
+    expect([middleLastSwapped.length, firstLastSwapped.length, middleLastSwapped === asWritten, firstLastSwapped === asWritten], "two swaps: the same length, other texts").toEqual([asWritten.length, asWritten.length, false, false]);
+    writeFileSync(fineMain, asWritten);
+    expect(trackerExportText(fineMain), "before the middle and last lines' swap: the main export as written").toBe(fineRead());
+    writeFileSync(fineMain, middleLastSwapped);
+    expect(trackerExportText(fineMain), "its middle and its last line swapped: read again").toBe(`${c8Line}\n${lineOf(c1(fineBodies.last))}\n${lineOf(c9(fineBodies.older))}\n`);
+    writeFileSync(fineMain, asWritten);
+    expect(trackerExportText(fineMain), "before the first and last lines' swap: the main export as written").toBe(fineRead());
+    writeFileSync(fineMain, firstLastSwapped);
+    expect(trackerExportText(fineMain), "its first and its last line swapped: read again").toBe(`${lineOf(c1(fineBodies.last))}\n${lineOf(c9(fineBodies.older))}\n${c8Line}\n`);
+    // wb-xkto (refusal #1 of wb-xkto, U7: GX8-32, witness W-GX8-32): a main export that no newline ends - the form compaction writes for
+    // a full export without a final newline (C12) - rewritten at the same length in its last line (wb-c1's stub becomes wb-c9's) after a
+    // read of it as written, is read again.
+    const unterminated = asWritten.slice(0, -1);
+    const unterminatedLastEdit = `${c8Line}\n${c9Line}\n${c1Line.replace('"id":"wb-c1"', '"id":"wb-c9"')}`;
+    expect([unterminated.endsWith("\n"), unterminatedLastEdit.endsWith("\n"), unterminatedLastEdit.length, unterminatedLastEdit === unterminated], "no final newline, the same length, another text").toEqual([false, false, unterminated.length, false]);
+    writeFileSync(fineMain, unterminated);
+    expect(trackerExportText(fineMain), "no final newline: the main export as written").toBe(fineRead().slice(0, -1));
+    writeFileSync(fineMain, unterminatedLastEdit);
+    expect(trackerExportText(fineMain), "no final newline, its last line rewritten at the same length: read again").toBe(`${c8Line}\n${lineOf(c9(fineBodies.older))}\n${lineOf(c9(fineBodies.older))}`);
   });
 
   it("R11 UNTERMINATED LAST LINE: trackerExportText and rehydrateTrackerText parse a shard's last line though no newline ends it - a whole row there is read as that row, and the prefix form cut short there fails the read with one Error naming the shard and the line - in each layout of SHARD_LAYOUTS", () => {

@@ -6,10 +6,13 @@
  * typed refusal". Owner shape element 4: the guard "covers the MAIN export AND each shard". The family judged is every blob a pushed
  * commit writes to .beads/issues.jsonl or below .beads/archive/ (G2-G4; a merge's own write, G18), whatever other path also holds it
  * (G17); the objects judged are the ones a push of <tip> would send: `git rev-list --objects <tip> --not <excluded...>` (G5, G19). The
- * hook judges each line's push of its local sha - one that begins and ends with 0 and is not all zeros among them - and skips a
- * deleted ref's forty or sixty-four zeros (G9). It excludes each line's remote sha when this repository has it as a commit - a commit
- * the case makes, and a root commit whose sha begins and ends with 0 - but not a remote sha naming the export's blob or its commit's
- * tree (G10), and it excludes every remote-tracking ref of the remote it is called for (G11), so a blob reachable from an excluded
+ * hook judges each line's push of its local sha - one that begins and ends with 0 and is not all zeros among them, and a push line
+ * before a deleted-ref line and after one - and skips a deleted ref's forty or sixty-four zeros, alone on stdin and beside a push line
+ * (G9); a deleted-ref line of three fields, or one beside a remote sha one digit short or in upper case, is malformed (G9). It
+ * excludes each line's remote sha when this repository has it as a commit - a commit the case makes that the local sha descends
+ * from, a root commit whose sha begins and ends with 0, and a commit that is no ancestor of the local sha (a push that is not a
+ * fast-forward, its local side writing no family blob) - but not a remote sha naming the export's blob or its commit's tree (G10),
+ * and it excludes every remote-tracking ref of the remote it is called for (G11), so a blob reachable from an excluded
  * commit is not judged, and one typed line is printed per oversized blob however many of the hook's lines (G12) or family paths (G14)
  * would send it. A large blob outside the family is NOT CLAIMED by this guard (G6 and G16 pin that boundary: other paths, and a tree
  * object below .beads/archive/). A push the hook cannot judge exits 3 unless a judged push refuses at the ceiling, which exits 2
@@ -315,7 +318,7 @@ describe("wb-294d export-size guard as the git pre-push hook (the push itself ne
     expect(remoteHead(repo)).toBe(tip);
   });
 
-  it("G9 the hook judges each planted stdin line's push of its local sha - the base commit's line, two lines at once, a line whose remote sha this repository lacks, and a line whose local sha begins and ends with 0 and is not all zeros (a root commit writing the oversized shard) - and skips a deleted-ref line, whose local sha is forty zeros or sixty-four zeros; it refuses a malformed line rc 3 - three fields, and with one typed line each: two or five fields, a local or a remote sha one digit short, an upper-case local or remote sha", () => {
+  it("G9 the hook judges each planted stdin line's push of its local sha - the base commit's line, two lines at once, a line whose remote sha this repository lacks, a line whose local sha begins and ends with 0 and is not all zeros (a root commit writing the oversized shard), and a line that pushes the oversized shard after a deleted-ref line and before one - and skips a deleted-ref line, whose local sha is forty zeros or sixty-four zeros; it refuses a malformed line rc 3 - three fields, and with one typed line each: two or five fields, a local or a remote sha one digit short, an upper-case local or remote sha, and three deleted-ref lines (three fields with forty zeros, forty zeros beside a remote sha one digit short, sixty-four zeros beside an upper-case remote sha)", () => {
     const repo = makeRepo();
     const base = repo.commit({ [MAIN]: 10 }, "base");
     const tip = repo.commit({ [SHARD]: 900 }, "large shard");
@@ -356,12 +359,31 @@ describe("wb-294d export-size guard as the git pre-push hook (the push itself ne
     expect(stderrLines(zeroLedPush)).toEqual([refusal(SHARD, repo.blobOf(zeroLed, SHARD), 900, 600)]);
     const deleted64 = hook(`(delete) ${"0".repeat(64)} refs/heads/gone ${base}\n`);
     expect([deleted64.status, deleted64.stderr]).toEqual([0, ""]);
+    // wb-xkto (refusal #1 of wb-xkto, U1: GX8-01, witness W-GX8-01): a deleted-ref line is skipped and the line beside it that pushes
+    // the oversized shard is judged - the deleted-ref line before it (git push origin :gone main), and after it.
+    const oversizedShard = refusal(SHARD, repo.blobOf(tip, SHARD), 900, 600);
+    const deletedThenPush = hook(`(delete) ${zeros} refs/heads/gone ${base}\nrefs/heads/main ${tip} refs/heads/main ${zeros}\n`);
+    expect([deletedThenPush.status, stderrLines(deletedThenPush)], "a deleted-ref line, then a line that pushes the oversized shard").toEqual([2, [oversizedShard]]);
+    const pushThenDeleted = hook(`refs/heads/main ${tip} refs/heads/main ${zeros}\n(delete) ${zeros} refs/heads/gone ${base}\n`);
+    expect([pushThenDeleted.status, stderrLines(pushThenDeleted)], "a line that pushes the oversized shard, then a deleted-ref line").toEqual([2, [oversizedShard]]);
+    // wb-xkto (refusal #1 of wb-xkto, U2: GX8-03, witness W-GX8-03): a deleted-ref line is malformed like any other line - three
+    // fields with forty zeros, forty zeros beside a remote sha one digit short, and sixty-four zeros beside an upper-case remote sha.
+    const malformedLine = (bad: string): string => `tracker-export: malformed pre-push line refused (${bad.length} chars); nothing is pushed`;
+    const deletedThreeFields = `(delete) ${zeros} refs/heads/gone`;
+    const deletedThree = hook(`${deletedThreeFields}\n`);
+    expect([deletedThree.status, stderrLines(deletedThree)], deletedThreeFields).toEqual([3, [malformedLine(deletedThreeFields)]]);
+    const deletedShortRemote = `(delete) ${zeros} refs/heads/gone ${base.slice(1)}`;
+    const deletedShort = hook(`${deletedShortRemote}\n`);
+    expect([deletedShort.status, stderrLines(deletedShort)], deletedShortRemote).toEqual([3, [malformedLine(deletedShortRemote)]]);
+    const deleted64UpperRemote = `(delete) ${"0".repeat(64)} refs/heads/gone ${base.toUpperCase()}`;
+    const deletedUpper = hook(`${deleted64UpperRemote}\n`);
+    expect([deletedUpper.status, stderrLines(deletedUpper)], deleted64UpperRemote).toEqual([3, [malformedLine(deleted64UpperRemote)]]);
   });
 
   const hookIn = (repo: Repo, remote: string, stdin: string): SpawnSyncReturns<string> =>
     spawnSync(process.execPath, [TOOL, "pre-push", remote, repo.remote], { cwd: repo.dir, env: childEnv(repo.home, { [CEILING_ENV]: "600" }), input: stdin, encoding: "utf8" });
 
-  it("G10 the hook excludes a line's remote sha when this repository has it as a commit - a commit the case makes, and a root commit whose sha begins and ends with 0 and is not all zeros: an oversized export only that commit holds is not judged again, and the same push from a new ref is; a remote sha naming the oversized export's blob or the tree of the commit that holds it - objects this repository has that are not commits - is not excluded and the push is judged", () => {
+  it("G10 the hook excludes a line's remote sha when this repository has it as a commit - a commit the case makes that the local sha descends from, a root commit whose sha begins and ends with 0 and is not all zeros, and a commit that is no ancestor of the local sha (a push that is not a fast-forward, its local side writing no family blob): an oversized export only that commit's history holds is not judged again, and the same push from a new ref is; a remote sha naming the oversized export's blob or the tree of the commit that holds it - objects this repository has that are not commits - is not excluded and the push is judged", () => {
     const repo = makeRepo();
     const old = repo.commit({ [MAIN]: 900 }, "an oversized export the remote already holds");
     const tip = repo.commit({ "src/b.ts": 5 }, "a later commit that does not touch the export");
@@ -396,6 +418,25 @@ describe("wb-294d export-size guard as the git pre-push hook (the push itself ne
     const notCommitTree = hookIn(zeroRepo, "origin", `refs/heads/main ${zeroTip} refs/heads/main ${tree}\n`);
     expect(notCommitTree.status).toBe(2);
     expect(stderrLines(notCommitTree)).toEqual([refusal(MAIN, blob, 900, 600)]);
+    // wb-xkto (refusal #1 of wb-xkto, U3: GX8-06, witness W-GX8-06): a push that is not a fast-forward - the remote's commit X, which
+    // this repository has, is no ancestor of the local sha Y; both descend from the base commit that writes the oversized export, and
+    // Y's side writes no family blob - excludes X like any known commit, so the base's export is not judged; the same push from a new
+    // ref is judged.
+    const sides = makeRepo();
+    const sidesBase = sides.commit({ [MAIN]: 900 }, "the base: an oversized export the remote already holds");
+    const remoteTip = sides.commit({ "src/x.ts": 5 }, "X: the remote's tip");
+    sides.git("checkout", "-q", "-b", "y", sidesBase);
+    const localTip = sides.commit({ "src/y.ts": 5 }, "Y: a sibling of X that does not touch the export");
+    const isAncestor = (ancestor: string, of: string): number | null =>
+      spawnSync("git", ["merge-base", "--is-ancestor", ancestor, of], { cwd: sides.dir, env: childEnv(sides.home), encoding: "utf8" }).status;
+    expect(
+      [isAncestor(remoteTip, localTip), isAncestor(sidesBase, localTip), isAncestor(sidesBase, remoteTip), sides.blobOf(localTip, MAIN) === sides.blobOf(sidesBase, MAIN)],
+      "X is no ancestor of Y; the base is an ancestor of both; Y keeps the base's export",
+    ).toEqual([1, 0, 0, true]);
+    const notFastForward = hookIn(sides, "origin", `refs/heads/main ${localTip} refs/heads/main ${remoteTip}\n`);
+    expect([notFastForward.status, notFastForward.stderr], "a push of Y over the remote's X, a commit this repository has").toEqual([0, ""]);
+    const sidesFresh = hookIn(sides, "origin", `refs/heads/main ${localTip} refs/heads/main ${"0".repeat(40)}\n`);
+    expect([sidesFresh.status, stderrLines(sidesFresh)], "the same push from a new ref").toEqual([2, [refusal(MAIN, sides.blobOf(sidesBase, MAIN), 900, 600)]]);
   });
 
   it("G11 the hook excludes every remote-tracking ref of the remote it is called for: a new branch over a commit origin already tracks passes, the same line for another remote does not", () => {
