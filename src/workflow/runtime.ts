@@ -14,6 +14,7 @@
  */
 
 import { cpus } from "node:os";
+import { performance } from "node:perf_hooks";
 import { Worker } from "node:worker_threads";
 import { type CapabilityDescriptor, type CapabilityDiagnostic, CapabilityError, type JsonValue, validatedCapabilityJson } from "../workbench/capability-registry.js";
 import { nativeEvidence, nativeRefOf } from "../workbench/native-evidence.js";
@@ -35,6 +36,14 @@ import {
   type OverrideRow,
   producerOf,
 } from "./reconcile.js";
+import {
+  ByteBoundedLog,
+  jsonBytes,
+  textBytes,
+  type WorkflowStageRecord,
+  type WorkflowTelemetryOptions,
+  type WorkflowTelemetryReport,
+} from "./telemetry.js";
 import { WORKER_SOURCE } from "./worker-source.js";
 
 /** Matches the `script` field's `maxLength` in the tool schema. */
@@ -370,6 +379,11 @@ export interface RunWorkflowOptions {
   /** Told when one of this run's dispatches queues on {@link hostAdmission}: the pool, its load, the line ahead. */
   onAdmissionWait?(wait: WorkflowAdmissionWait): void;
   /**
+   * A byte bound on the progress this run retains, and a reporter for each stage it measures (wb-r5q2, EAT-R077 and EAT-R078;
+   * telemetry.ts). Absent, the run retains every progress entry and reports no stage, as before.
+   */
+  telemetry?: WorkflowTelemetryOptions;
+  /**
    * Hands the caller the run's control surface, once per run.
    *
    * A callback rather than a return value because `runWorkflow` resolves when
@@ -422,7 +436,7 @@ export interface WorkflowRunResult {
   error?: string;
   /** Typed node transport/validation diagnostic, never a native domain verdict. */
   capabilityError?: CapabilityDiagnostic;
-  /** The append-only log, in emission order. */
+  /** The append-only log, in emission order; under {@link RunWorkflowOptions.telemetry}, its newest entries within telemetry.progressBytes. */
   progress: WorkflowEntry[];
   /** Agents scheduled, including those that failed. */
   agentCount: number;
@@ -432,6 +446,8 @@ export interface WorkflowRunResult {
   replayedNodeCount: number;
   /** Positions settled by an operator acknowledgement or re-run under an operator override; never folded into agentCount, replayedCount or replayedNodeCount. */
   reconciledNodeCount: number;
+  /** Present when the run was given {@link RunWorkflowOptions.telemetry}: the retained progress log's counts. */
+  telemetry?: WorkflowTelemetryReport;
 }
 
 /* ------------------------------------------------------------------------- *
@@ -770,6 +786,17 @@ function positiveRunLimit(name: "concurrency" | "agentCap" | "itemCap" | "nested
   return value;
 }
 
+/** Checks telemetry.progressBytes at the call, as positiveRunLimit checks a run limit (wb-r5q2, EAT-R077). */
+function progressByteBound(value: unknown): number {
+  if (typeof value !== "number" || !Number.isSafeInteger(value) || value < 1) {
+    throw new WorkflowRuntimeError("Workflow telemetry.progressBytes must be a positive integer.");
+  }
+  return value;
+}
+
+/** UTF-8 bytes of a host-supplied text; 0 for a value that is not a string, so a malformed answer never throws here. */
+const hostTextBytes = (text: unknown): number => (typeof text === "string" ? textBytes(text) : 0);
+
 export async function runWorkflow(options: RunWorkflowOptions): Promise<WorkflowRunResult> {
   const { script, host } = options;
 
@@ -789,6 +816,13 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
   const hostAdmission = options.hostAdmission;
   /** Aborted when the run settles: every wait of this run still in the host's line leaves it, undispatched (EAT-R076). */
   const admissionAbort = new AbortController();
+  const telemetry = options.telemetry;
+  /**
+   * Under telemetry, the progress log this run retains: at most telemetry.progressBytes bytes of entries, each charged the
+   * UTF-8 bytes of its JSON text, the oldest evicted first and every drop counted (wb-r5q2, EAT-R077). The bound is checked
+   * here, before anything is dispatched.
+   */
+  const retained = telemetry !== undefined ? new ByteBoundedLog<WorkflowEntry>(progressByteBound(telemetry.progressBytes), jsonBytes) : undefined;
 
   const progress: WorkflowEntry[] = [];
   const inflight = new Set<string>();
@@ -813,6 +847,25 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
   let settled = false;
   /** One diagnostic per run: a hostile worker must not spam the log with drops (wb-zin). */
   let droppedProgressFrame = false;
+  /** Nested workflow() loads that reached host.loadWorkflow, in call order: a load stage's index (wb-r5q2). */
+  let loadCount = 0;
+  /** Hands one stage record to telemetry.onStage (wb-r5q2, EAT-R078); a reporter that throws is ignored (R078-THROWING-REPORT). */
+  const reportStage = (record: WorkflowStageRecord): void => {
+    if (telemetry?.onStage === undefined) return;
+    try {
+      telemetry.onStage(record);
+    } catch {
+      // The reporter's failure is the reporter's: the run goes on.
+    }
+  };
+  /** `runGate`, each call it answers reported as a gate stage of the agent at `index` (wb-r5q2, EAT-R078). */
+  const timedGate = (runGate: NonNullable<WorkflowHost["runGate"]>, index: number): NonNullable<WorkflowHost["runGate"]> =>
+    async (command, gateOptions) => {
+      const calledAt = performance.now();
+      const outcome = await runGate(command, gateOptions);
+      reportStage({ stage: "gate", kind: "agent", index, durationMs: performance.now() - calledAt, bytes: hostTextBytes(outcome.output) });
+      return outcome;
+    };
 
   /* --- resume state ---------------------------------------------------- */
 
@@ -976,7 +1029,8 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
   return await new Promise<WorkflowRunResult>(resolve => {
     const emit = (entries: WorkflowEntry[]) => {
       if (entries.length === 0) return;
-      progress.push(...entries);
+      if (retained !== undefined) for (const entry of entries) retained.offer(entry);
+      else progress.push(...entries);
       options.onProgress?.(entries);
     };
 
@@ -990,7 +1044,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       worker.postMessage({ type: "response", callId, ok, value, error, fatal, capabilityError, spent: spentOutputTokens });
     };
 
-    const finish = (result: Omit<WorkflowRunResult, "meta" | "progress" | "agentCount" | "replayedCount" | "replayedNodeCount" | "reconciledNodeCount">) => {
+    const finish = (result: Omit<WorkflowRunResult, "meta" | "progress" | "agentCount" | "replayedCount" | "replayedNodeCount" | "reconciledNodeCount" | "telemetry">) => {
       if (settled) return;
       settled = true;
       options.signal?.removeEventListener("abort", onAbort);
@@ -1010,7 +1064,11 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       nodeSemaphore.drain();
       // Resolve only once the thread is actually down, so a caller that awaits
       // runWorkflow() is guaranteed not to be leaking one.
-      const settle = () => resolve({ ...result, meta, progress, agentCount, replayedCount, replayedNodeCount, reconciledNodeCount });
+      const settle = () => resolve({
+        ...result, meta, progress: retained !== undefined ? retained.entries() : progress,
+        agentCount, replayedCount, replayedNodeCount, reconciledNodeCount,
+        ...(retained !== undefined ? { telemetry: { progress: retained.counts() } } : {}),
+      });
       void worker.terminate().then(settle, settle);
     };
 
@@ -1268,6 +1326,8 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
               live.wake = undefined;
               admissionAbort.signal.removeEventListener("abort", cancelWait);
             }
+            // The wait ended with a lease: its own monotonic wait is the admission stage (wb-r5q2, EAT-R078).
+            reportStage({ stage: "admission", kind: "agent", index, durationMs: lease.waitedMs, bytes: 0 });
             // Paused, skipped or ended (by abort or by failure) while queued on
             // the host: the slots arrived, and go straight back, exactly as the
             // run's own permit.
@@ -1290,6 +1350,9 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
             attempt > 1 ? { attempt, lastAttemptReason: "user-retry" as const } : {};
 
           const startedAt = Date.now();
+          // The row's durationMs is measured on the monotonic clock: a wall clock moved back mid-call leaves it nonnegative
+          // (wb-r5q2, EAT-R078; R078-SDK-ROLLBACK).
+          const startedMono = performance.now();
           emit([{ ...base, queuedAt, startedAt, ...attemptMark }]);
 
           // Mutates `base` rather than emitting a standalone patch: every later
@@ -1325,6 +1388,16 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
           inflight.add(agentId);
 
           let result: WorkflowSpawnResult;
+          /** The sdk stage: from the host call to its answer, on the monotonic clock (wb-r5q2, EAT-R078). */
+          const sdkCalledAt = performance.now();
+          let sdkReported = false;
+          const reportSdk = (answer: WorkflowSpawnResult): void => {
+            if (sdkReported || telemetry?.onStage === undefined) return;
+            sdkReported = true;
+            reportStage({ stage: "sdk", kind: "agent", index, durationMs: performance.now() - sdkCalledAt,
+              bytes: hostTextBytes(answer.ok ? answer.text ?? "" : answer.error ?? ""),
+              ...(typeof answer.sessionId === "string" ? { nativeId: answer.sessionId } : {}) });
+          };
           try {
             result =
               resumed !== undefined && resumeAgent !== undefined
@@ -1346,6 +1419,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
                     ...(payload.gate !== undefined ? { gate: payload.gate } : {}),
                     onResolved,
                   });
+            reportSdk(result);
             if (result.ok) {
               // Recorded before the gate runs: the child itself finished, so it is
               // resumable even when its gate rejects the work — "here is what the
@@ -1368,11 +1442,13 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
                 result = applySchema(result, compiledSchema);
               }
               if (result.ok && payload.gate !== undefined && runGate !== undefined) {
-                result = await applyGate(result, payload.gate, agentId, runGate);
+                result = await applyGate(result, payload.gate, agentId, telemetry?.onStage !== undefined ? timedGate(runGate, index) : runGate);
               }
             }
           } catch (error) {
             result = { ok: false, error: error instanceof Error ? error.message : String(error) };
+            // Reported here only when the host call itself threw; a later throw (its gate) finds it reported (R078-GATE-THROWS).
+            reportSdk(result);
           } finally {
             inflight.delete(agentId);
             live.started = false;
@@ -1404,7 +1480,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
             startedAt,
             ...attemptMark,
             lastProgressAt: finishedAt,
-            durationMs: finishedAt - startedAt,
+            durationMs: Math.round(performance.now() - startedMono),
             ...(result.tokens !== undefined ? { tokens: result.tokens } : {}),
             ...(result.toolCalls !== undefined ? { toolCalls: result.toolCalls } : {}),
             ...(result.sessionId !== undefined ? { sessionId: result.sessionId } : {}),
@@ -1718,6 +1794,8 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
           respond(callId, false, undefined, refusal, true, { name: "CapabilityError", category: "unavailable", message: refusal });
           return;
         }
+        // The wait ended with a lease: its own monotonic wait is the admission stage (wb-r5q2, EAT-R078).
+        reportStage({ stage: "admission", kind: "node", index, durationMs: lease.waitedMs, bytes: 0 });
         if (aborted || settled) {
           lease.release();
           nodeSemaphore.release();
@@ -1726,7 +1804,20 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         }
       }
       const startedAt = Date.now();
+      // As for an agent, the row's durationMs is a monotonic measure (wb-r5q2, EAT-R078; R078-NODE-ROLLBACK and
+      // R078-NODE-NOT-DISPATCHED).
+      const startedMono = performance.now();
       emit([{ ...base, startedAt }]);
+      /** The node stage: from the host call to its answer, on the monotonic clock (wb-r5q2, EAT-R078). */
+      let calledAt: number | undefined;
+      let answeredAt: number | undefined;
+      let nodeReported = false;
+      const reportNode = (bytes: () => number, nativeId: string | undefined): void => {
+        if (calledAt === undefined || nodeReported || telemetry?.onStage === undefined) return;
+        nodeReported = true;
+        reportStage({ stage: "node", kind: "node", index, durationMs: (answeredAt ?? performance.now()) - calledAt, bytes: bytes(),
+          ...(nativeId !== undefined ? { nativeId } : {}) });
+      };
       try {
         const input = validatedCapabilityJson(payload.input, `node(${payload.capabilityId}) input`);
         // The tripwire exists from dispatch, not from settlement (wb-5x0.1): a
@@ -1741,7 +1832,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
           !appendRow({ kind: "node", index, key: key ?? "", ok: false, capabilityId: payload.capabilityId, ...effectMark, ...basisMark, dispatched: true })) {
           const reason = `node(${payload.capabilityId}) at position ${index} was not dispatched: its dispatched journal row could not be written, and a non-read call runs only once its dispatch is on record, so a later resume can refuse it rather than repeat it.`;
           const finishedAt = Date.now();
-          emit([{ ...base, startedAt, lastProgressAt: finishedAt, durationMs: finishedAt - startedAt, state: "error", error: reason }]);
+          emit([{ ...base, startedAt, lastProgressAt: finishedAt, durationMs: Math.round(performance.now() - startedMono), state: "error", error: reason }]);
           // Nothing ran, so nothing new goes on record. An override's original
           // effect row is carried forward, so a resume of this run still stops
           // at the position instead of finding it empty.
@@ -1750,20 +1841,27 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
           respond(callId, false, undefined, reason, true, { name: "CapabilityError", category: "unavailable", message: reason });
           return;
         }
-        const output = await callNode({
-          callId, index, capabilityId: payload.capabilityId,
-          input, label: payload.label,
-          ...(payload.phaseIndex !== undefined ? { phaseIndex: payload.phaseIndex } : {}),
-          ...(payload.phaseTitle !== undefined ? { phaseTitle: payload.phaseTitle } : {}),
-          signal: nodeAbort.signal,
-        });
+        calledAt = performance.now();
+        let output: unknown;
+        try {
+          output = await callNode({
+            callId, index, capabilityId: payload.capabilityId,
+            input, label: payload.label,
+            ...(payload.phaseIndex !== undefined ? { phaseIndex: payload.phaseIndex } : {}),
+            ...(payload.phaseTitle !== undefined ? { phaseTitle: payload.phaseTitle } : {}),
+            signal: nodeAbort.signal,
+          });
+        } finally {
+          answeredAt = performance.now();
+        }
         const value = validatedCapabilityJson(output, `node(${payload.capabilityId}) output`);
         // A native producer's domain failure/partial outcome is returned as-is.
         // The Workbench does not invent an evidence reference or PASS verdict.
         const finishedAt = Date.now();
         const evidence = nativeEvidence(payload.capabilityId, value);
+        reportNode(() => jsonBytes(value), evidence.nativeId);
         emit([{ ...base, startedAt, lastProgressAt: finishedAt,
-          durationMs: finishedAt - startedAt, state: "done",
+          durationMs: Math.round(performance.now() - startedMono), state: "done",
           ...evidence,
           freshness: "unknown", // A returned snapshot alone establishes no current observation freshness.
           ...(override !== undefined ? { reconcile: { state: "overridden" as const, overrideId: override.reconcile.overrideId,
@@ -1792,8 +1890,11 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       } catch (error) {
         const finishedAt = Date.now();
         const detail = error instanceof Error ? error.message : String(error);
+        // Reported only once the host call was made (calledAt set). A refusal thrown before the call, by the host-side input
+        // check a script's node() cannot reach past the worker's own, is pinned by no case and NOT CLAIMED.
+        reportNode(() => textBytes(detail), undefined);
         emit([{ ...base, startedAt, lastProgressAt: finishedAt,
-          durationMs: finishedAt - startedAt, state: "error", error: detail,
+          durationMs: Math.round(performance.now() - startedMono), state: "error", error: detail,
           ...(override !== undefined ? { reconcile: { state: "overridden" as const, overrideId: override.reconcile.overrideId,
             principal: override.reconcile.operator.principal, recordedAt: override.reconcile.recordedAt,
             duplicateRisk: override.reconcile.duplicateRisk, outcome: "re-run-failed" as const } } : {}) }]);
@@ -1832,13 +1933,20 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         respond(callId, false, undefined, "This workflow host cannot run nested workflows.", true);
         return;
       }
+      /** The load stage: from the host call to its answer, on the monotonic clock (wb-r5q2, EAT-R078). */
+      const loadIndex = loadCount++;
+      const calledAt = performance.now();
       let source: WorkflowScriptSource;
       try {
         source = await loadWorkflow(ref);
       } catch (error) {
-        respond(callId, false, undefined, error instanceof Error ? error.message : String(error));
+        const message = error instanceof Error ? error.message : String(error);
+        reportStage({ stage: "load", kind: "workflow", index: loadIndex, durationMs: performance.now() - calledAt, bytes: hostTextBytes(message) });
+        respond(callId, false, undefined, message);
         return;
       }
+      reportStage({ stage: "load", kind: "workflow", index: loadIndex, durationMs: performance.now() - calledAt,
+        bytes: hostTextBytes(source?.ok ? source.script : source?.message) });
       if (!source.ok) {
         respond(callId, false, undefined, source.message);
         return;
