@@ -24,7 +24,8 @@
  *   R022-STAGED, R022-UNTRACKED: one edit each (git status " M", "M " and "??"), refusal dirty-base with that edit in its own
  *   column. R022-COUNTS: a base whose git status lists " M", "MM", " D", "A " and three "??" records (two files of one new
  *   directory listed one by one) refuses dirty-base with tracked 3, staged 2, untracked 3. R022-STATUS-COLUMNS: a "?M" record
- *   (read through a reader that rewrites status) counts as staged and as tracked, never as untracked. R022-TYPE-AND-INTENT: a type
+ *   (read through a reader that rewrites status) counts as staged and as tracked, never as untracked; R022-STATUS-WORKTREE-QUESTION:
+ *   an "M?" record (read the same way) counts as staged and as tracked, never as untracked. R022-TYPE-AND-INTENT: a type
  *   change (" T"), the same change staged ("T ") and an intent-to-add file (" A", which ls-files tags H) refuse dirty-base with
  *   tracked 1, staged 1 and tracked 1. R022-RENAME: a staged rename counts as a staged deletion and a staged addition (tracked 0,
  *   staged 2). R022-ASSUME-UNCHANGED, R022-SKIP-WORKTREE, R022-UNMERGED: an index entry that git ls-files -v tags other than "H "
@@ -122,12 +123,22 @@
  *   writes-not-requested. R027-REQUESTED: the policy { allowWrites: true } and its null-prototype copy dispatch. R027-WITHDRAWN:
  *   an attestation withdrawn while admission waits
  *   refuses. R027-REATTESTED: an attestation replaced while admission waits is read again (the grant names the new operator).
+ *   R027-REREAD-OTHER-WORKSPACE, R027-REREAD-STALE, R027-REREAD-UNMINTED (rule 11): while the admission waits (inv-a's lease
+ *   held, so rules 1-7 passed), the host replaces its attestation; rule 10 measures the same identity, and rule 11 refuses with
+ *   rule 6's code, with no dispatch and the lease released: the authority's attestation of another workspace refuses
+ *   attestation-other-workspace, its attestation of another identity of ws (ws measured with an ignored copy of its gate
+ *   manifest) refuses attestation-stale, and an equal-shaped copy of the minted attestation and another authority's
+ *   attestation of the same identity each refuse attestation-absent.
  *   R027-UNMEASURED: attest throws a validation CapabilityError with its exact message for an identity the host did not measure
  *   and for the operator ids "", " ", two holding U+000A and one of 4097 UTF-8 bytes. R027-ATTESTED: the grant carries the operator and is frozen, and the
  *   outcome carries no grant. R027-ATTESTATION-FROZEN: a minted attestation is frozen, so it cannot be rewritten to name another
  *   workspace.
  * - General: GEN-PRE-ABORTED (admission-cancelled, no lease), GEN-WAIT-REFUSED (admission-refused, lease released),
  *   GEN-WAIT-CANCELLED (a wait that rejects because the signal aborted refuses admission-cancelled, lease released),
+ *   GEN-WAIT-ARGUMENT (the admission wait is called once with one argument, host.signal: the very AbortSignal while
+ *   host.signal is set and not aborted, and undefined when it is unset; each of the two admissions dispatches),
+ *   GEN-WAIT-REFUSED-SIGNAL (a wait that rejects while host.signal is set and not aborted refuses admission-refused, lease
+ *   released),
  *   GEN-DISPATCH-THROWS (the error propagates, lease released), GEN-MALFORMED (on an otherwise valid admission, an invocation
  *   reference that is "" or " ", holds any one of the code points U+0000-U+001F and U+007F, or exceeds 4096 UTF-8 bytes as one-,
  *   two-, three- or four-byte text refuses malformed-request), GEN-MALFORMED-BLANK (the case first derives, by scanning every
@@ -147,8 +158,14 @@
  *   relative root "authorized/ws", unclean manifest of ws ("", " ", two holding U+000A, one of 4097 UTF-8 bytes) or string
  *   reader refuse malformed-request; none of those paths resolves by realpath and none of those manifests measures),
  *   GEN-NULL-PROTOTYPE-REQUEST (a
- *   null-prototype request object dispatches), GEN-READER-FAILS (a reader that throws or answers with no Buffer at its first
- *   call is a refusal, never a rejection), GEN-REASON-FIXED (the reason names neither the caller's workspace nor its invocation).
+ *   null-prototype request object dispatches), GEN-READER-FAILS (a reader that throws, or answers with a string, at every call
+ *   is a refusal, never a rejection: the admission refuses workspace-not-worktree-root and the measurement source-unmeasurable),
+ *   GEN-READER-NOT-BUFFER (a reader that answers git's bytes at every call as a Uint8Array, an ArrayBuffer, a DataView, an array
+ *   of byte values or an object whose toString answers git's text, none of them a Buffer, makes confineWorkspace and the
+ *   admission refuse workspace-not-worktree-root, with no dispatch and no lease, and the measurement refuse
+ *   source-unmeasurable; one that answers one call of the measurement alone as a Uint8Array or as such an object refuses
+ *   source-unmeasurable for each such call), GEN-REASON-FIXED (the reason names neither the caller's workspace nor its
+ *   invocation).
  *   Rule order (the eleven rules of the module comment): each of these cases fails the two rules it names and no rule before them,
  *   and expects the code of the first: GEN-ORDER-SHAPE-CANCEL (1, 2: rule 1's invocationId clause, an invocationId of "", with an
  *   aborted signal), GEN-ORDER-CANCEL-REQUEST (2, 3), GEN-ORDER-REQUEST-CONFINE
@@ -200,6 +217,13 @@
  *   bidi controls U+061C, U+200E, U+200F, U+202A-U+202E and U+2066-U+2069 among them) is NOT CLAIMED by this suite.
  * - Whether a relative path the cases do not plant is inside a root (a workspace or manifest named "...ws" among them) is NOT
  *   CLAIMED by this suite.
+ * - What a request that fails a rule in a form no entry above plants through admitSourceWrite gets (which refusal, and
+ *   whether dispatch is called) is NOT CLAIMED by this suite: each entry pins the forms it plants.
+ * - What an attestation found at rule 11's re-read gets, in a form R027-WITHDRAWN, R027-REATTESTED and the R027-REREAD
+ *   entries do not plant, is NOT CLAIMED by this suite.
+ * - What the admission wait is called with in a form GEN-WAIT-ARGUMENT does not plant (a host.signal aborted before the wait
+ *   among them), and the this value it is called with, are NOT CLAIMED by this suite.
+ * - Whether a reader answer that is not a Buffer, in a form the cases do not plant, is no answer is NOT CLAIMED by this suite.
  */
 import { type ChildProcess, execFileSync, spawn } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -601,9 +625,14 @@ describe("EAT-R022: a base whose git status lists a record is refused before any
     expect(grants).toHaveLength(0);
   });
 
-  it("R022-STATUS-COLUMNS: a status record whose index column is ? and whose worktree column is not counts as staged and tracked", () => {
+  it('R022-STATUS-COLUMNS: a "?M" status record counts as staged and as tracked, never as untracked', () => {
     const crafted: SourceGitReader = (directory, args) => (args.includes("status") ? Buffer.from("?M crafted.txt\0") : gitReader(directory, args));
     expectRefused(measureSourceIdentity(ws, "forge.toml", crafted), "dirty-base", { tracked: 1, staged: 1, untracked: 0 });
+  });
+
+  it('R022-STATUS-WORKTREE-QUESTION: an "M?" status record counts as staged and as tracked, never as untracked', () => {
+    const mirrored: SourceGitReader = (directory, args) => (args.includes("status") ? Buffer.from("M? mirrored.txt\0") : gitReader(directory, args));
+    expectRefused(measureSourceIdentity(ws, "forge.toml", mirrored), "dirty-base", { tracked: 1, staged: 1, untracked: 0 });
   });
 
   it('R022-TYPE-AND-INTENT: a type change (" T"), the same change staged ("T ") and an intent-to-add file (" A") count by their columns', async () => {
@@ -1476,6 +1505,67 @@ describe("EAT-R027: writes need an operator attestation the host minted for this
     expect(grants.map(grant => grant.operatorId)).toEqual(["operator-2"]);
   });
 
+  it("R027-REREAD-OTHER-WORKSPACE: an attestation the host replaces while admission waits with its authority's attestation of another workspace refuses attestation-other-workspace at rule 11", async () => {
+    const other = identityOf(fixtureRepo(join(root, "other")));
+    const park = parkedWait();
+    const host = { ...hostFor(authority.attest(OPERATOR, identityOf(ws))), admissionWait: park.wait };
+    const { grants, dispatch } = recorder();
+    const pending = admitSourceWrite(requestFor(ws), host, dispatch);
+    await park.entered.promise;
+    expect(leases.holder(ws)).toBe("inv-a");
+    const replacement = authority.attest(OPERATOR, other);
+    expect([replacement.workspace, replacement.sourceIdentity]).toEqual([other.canonicalRoot, other.digest]);
+    host.attestation = replacement;
+    park.gate.resolve();
+    expectRefused(await pending, "attestation-other-workspace");
+    expect(grants).toHaveLength(0);
+    expect(leases.holder(ws)).toBeUndefined();
+  });
+
+  it("R027-REREAD-STALE: an attestation the host replaces while admission waits with its authority's attestation of another identity of ws refuses attestation-stale at rule 11", async () => {
+    mkdirSync(join(ws, "ignored"));
+    writeFileSync(join(ws, "ignored", "gate.toml"), readFileSync(join(ws, "forge.toml")));
+    const admitted = identityOf(ws);
+    const another = identityOf(ws, "ignored/gate.toml");
+    expect([another.canonicalRoot, another.commit, another.tree]).toEqual([ws, admitted.commit, admitted.tree]);
+    expect(another.digest).not.toBe(admitted.digest);
+    const park = parkedWait();
+    const host = { ...hostFor(authority.attest(OPERATOR, admitted)), admissionWait: park.wait };
+    const { grants, dispatch } = recorder();
+    const pending = admitSourceWrite(requestFor(ws), host, dispatch);
+    await park.entered.promise;
+    expect(leases.holder(ws)).toBe("inv-a");
+    host.attestation = authority.attest(OPERATOR, another);
+    park.gate.resolve();
+    expectRefused(await pending, "attestation-stale");
+    expect(grants).toHaveLength(0);
+    expect(leases.holder(ws)).toBeUndefined();
+  });
+
+  it("R027-REREAD-UNMINTED: an equal-shaped copy of the minted attestation, and another authority's attestation of the same identity, each replacing the attestation while admission waits, refuse attestation-absent at rule 11", async () => {
+    const identity = identityOf(ws);
+    const minted = authority.attest(OPERATOR, identity);
+    const replacements: readonly (readonly [string, WriteBoundaryAttestation])[] = [
+      ["an equal-shaped copy", { ...minted }],
+      ["another authority's attestation", new WriteBoundaryAuthority().attest(OPERATOR, identity)],
+    ];
+    for (const [label, replacement] of replacements) {
+      expect(replacement, label).toEqual(minted);
+      expect(authority.minted(replacement), label).toBe(false);
+      const park = parkedWait();
+      const host = { ...hostFor(minted), admissionWait: park.wait };
+      const { grants, dispatch } = recorder();
+      const pending = admitSourceWrite(requestFor(ws), host, dispatch);
+      await park.entered.promise;
+      expect(leases.holder(ws), label).toBe("inv-a");
+      host.attestation = replacement;
+      park.gate.resolve();
+      expectRefused(await pending, "attestation-absent", undefined, label);
+      expect(grants, label).toHaveLength(0);
+      expect(leases.holder(ws), label).toBeUndefined();
+    }
+  });
+
   it("R027-UNMEASURED: attest throws a validation CapabilityError for an identity the host did not measure and for an operator id that is not clean text", () => {
     const measured = identityOf(ws);
     const lookalike: SourceIdentity = { ...measured, gateManifest: { ...measured.gateManifest } };
@@ -1547,6 +1637,38 @@ describe("admission lifecycle: cancellation, a refusing wait, a throwing dispatc
     expect(leases.holder(ws)).toBe("inv-a");
     abort.abort();
     expectRefused(await pending, "admission-cancelled");
+    expect(grants).toHaveLength(0);
+    expect(leases.holder(ws)).toBeUndefined();
+  });
+
+  it("GEN-WAIT-ARGUMENT: the admission wait is called once with one argument, host.signal: the very AbortSignal while host.signal is set and not aborted, and undefined when it is unset", async () => {
+    const abort = new AbortController();
+    for (const signal of [abort.signal, undefined]) {
+      const label = signal === undefined ? "host.signal unset" : "host.signal set";
+      const calls: unknown[][] = [];
+      const wait = async (...args: unknown[]): Promise<void> => {
+        calls.push(args);
+      };
+      const { grants, dispatch } = recorder();
+      const host = hostFor(authority.attest(OPERATOR, identityOf(ws)), { admissionWait: wait, ...(signal !== undefined ? { signal } : {}) });
+      expect("signal" in host, label).toBe(signal !== undefined);
+      await expect(admitSourceWrite(requestFor(ws), host, dispatch), label).resolves.toMatchObject({ decision: "dispatched" });
+      expect(grants, label).toHaveLength(1);
+      expect(calls.map(args => args.length), label).toEqual([1]);
+      expect(calls[0]?.[0], label).toBe(signal);
+    }
+  });
+
+  it("GEN-WAIT-REFUSED-SIGNAL: a wait that rejects while host.signal is set and not aborted refuses admission-refused and releases the lease", async () => {
+    const abort = new AbortController();
+    const park = parkedWait();
+    const { grants, dispatch } = recorder();
+    const pending = admitSourceWrite(requestFor(ws), hostFor(authority.attest(OPERATOR, identityOf(ws)), { signal: abort.signal, admissionWait: park.wait }), dispatch);
+    await park.entered.promise;
+    expect(leases.holder(ws)).toBe("inv-a");
+    park.gate.reject(new Error("host budget closed"));
+    expectRefused(await pending, "admission-refused");
+    expect(abort.signal.aborted).toBe(false);
     expect(grants).toHaveLength(0);
     expect(leases.holder(ws)).toBeUndefined();
   });
@@ -1690,7 +1812,7 @@ describe("admission lifecycle: cancellation, a refusing wait, a throwing dispatc
     expect(grants).toHaveLength(1);
   });
 
-  it("GEN-READER-FAILS: a reader that throws or answers with no Buffer is a refusal, never a rejection", async () => {
+  it("GEN-READER-FAILS: a reader that throws or answers with a string is a refusal, never a rejection", async () => {
     const attestation = authority.attest(OPERATOR, identityOf(ws));
     const throwing: SourceGitReader = () => {
       throw new Error("git is not installed");
@@ -1703,6 +1825,49 @@ describe("admission lifecycle: cancellation, a refusing wait, a throwing dispatc
     for (const reader of [throwing, textual]) {
       expectRefused(await admitSourceWrite(requestFor(ws), hostFor(attestation, { git: reader }), dispatch), "workspace-not-worktree-root");
       expectRefused(measureSourceIdentity(ws, "forge.toml", reader), "source-unmeasurable");
+    }
+    expect(grants).toHaveLength(0);
+    expect(leases.holder(ws)).toBeUndefined();
+  });
+
+  it("GEN-READER-NOT-BUFFER: git's bytes answered as a Uint8Array, an ArrayBuffer, a DataView, an array of byte values or an object whose toString answers git's text are no answer at every call, and as a Uint8Array or such an object at one call alone", async () => {
+    const asUint8Array = (output: Buffer): unknown => new Uint8Array(output);
+    const asTextObject = (output: Buffer): unknown => ({ toString: () => output.toString("utf8") });
+    const forms: readonly (readonly [string, (output: Buffer) => unknown, (value: unknown) => Buffer])[] = [
+      ["a Uint8Array", asUint8Array, value => Buffer.from(value as Uint8Array)],
+      ["an ArrayBuffer", output => new Uint8Array(output).buffer, value => Buffer.from(value as ArrayBuffer)],
+      ["a DataView", output => new DataView(new Uint8Array(output).buffer), value => Buffer.from((value as DataView).buffer)],
+      ["an array of byte values", output => [...output], value => Buffer.from(value as number[])],
+      ["an object whose toString answers git's text", asTextObject, value => Buffer.from(String(value))],
+    ];
+    const top = gitReader(ws, [...OPTIONS, "rev-parse", "--show-toplevel"]);
+    if (top === undefined) throw new Error("git does not answer rev-parse --show-toplevel in ws");
+    const attestation = authority.attest(OPERATOR, identityOf(ws));
+    const { grants, dispatch } = recorder();
+    for (const [form, answer, bytes] of forms) {
+      const value = answer(top);
+      expect(Buffer.isBuffer(value), form).toBe(false);
+      expect(bytes(value).equals(top), form).toBe(true);
+      const every: SourceGitReader = (directory, args) => {
+        const output = gitReader(directory, args);
+        return output === undefined ? undefined : (answer(output) as Buffer);
+      };
+      expectRefused(confineWorkspace(root, ws, every), "workspace-not-worktree-root", undefined, form);
+      expectRefused(await admitSourceWrite(requestFor(ws), hostFor(attestation, { git: every }), dispatch), "workspace-not-worktree-root", undefined, form);
+      expectRefused(measureSourceIdentity(ws, "forge.toml", every), "source-unmeasurable", undefined, form);
+    }
+    const oneCallForms: readonly (readonly [string, (output: Buffer) => unknown])[] = [
+      ["a Uint8Array", asUint8Array],
+      ["an object whose toString answers git's text", asTextObject],
+    ];
+    for (const [form, answer] of oneCallForms) {
+      for (const [call, matches] of MEASUREMENT_CALLS) {
+        const one: SourceGitReader = (directory, args) => {
+          const output = gitReader(directory, args);
+          return output === undefined || !matches(args) ? output : (answer(output) as Buffer);
+        };
+        expectRefused(measureSourceIdentity(ws, "forge.toml", one), "source-unmeasurable", undefined, `${call}: ${form}`);
+      }
     }
     expect(grants).toHaveLength(0);
     expect(leases.holder(ws)).toBeUndefined();

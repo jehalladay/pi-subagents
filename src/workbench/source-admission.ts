@@ -5,10 +5,12 @@
  * pins each form these comments state, the residual family whose quiet rows it pins, and the forms it does not claim.
  *
  * admitSourceWrite(request, host, dispatch) calls dispatch at most once, with the one grant it mints, after the rules below
- * pass; a request that fails one of them gets that rule's refusal, and dispatch is not called. When a request fails two rules,
- * the refusal is the earlier rule's for the clause pairs the suite header's rule-order cases fail (one case for each adjacent
- * pair of rules); which refusal answers for any other pair of failing clauses (rule 1's plain-object and dispatch clauses
- * against rule 2's cancellation among them) is NOT CLAIMED. The rules, numbered as the rule-order cases name them:
+ * pass; a request that fails one of them in a form a suite header entry plants through admitSourceWrite gets that rule's
+ * refusal, and dispatch is not called, and what a request that fails a rule in any other form gets is NOT CLAIMED. When a
+ * request fails two rules, the refusal is the earlier rule's for the clause pairs the suite header's rule-order cases fail
+ * (one case for each adjacent pair of rules); which refusal answers for any other pair of failing clauses (rule 1's
+ * plain-object and dispatch clauses against rule 2's cancellation among them) is NOT CLAIMED. The rules, numbered as the
+ * rule-order cases name them:
  * 1. request shape (malformed-request): request is a plain object whose invocationId is clean text, and dispatch is a function;
  * 2. cancellation (admission-cancelled): host.signal is not aborted;
  * 3. the write request (writes-not-requested): request.policy asks for writes (see writesRequested for the policies the suite
@@ -23,12 +25,19 @@
  *    while inv-a's lease holds that root, the suite's admissions of inv-b and inv-c there do not get one (see WriterLeases),
  *    and what an admission of any other invocation id meets while a lease holds the root (the holder's own id, or one that
  *    differs from it only in letter case, among them) is NOT CLAIMED;
- * 8. the admission wait: host.admissionWait, when set, is called with host.signal and resolves; a rejection refuses
- *    admission-cancelled when host.signal is aborted by then and admission-refused otherwise;
+ * 8. the admission wait: host.admissionWait, when set, is called and resolves - in the forms the suite plants it is called
+ *    once with one argument, host.signal (the very AbortSignal while host.signal is set and not aborted, undefined when it is
+ *    unset), and what it is called with in any other form is NOT CLAIMED; a rejection refuses admission-cancelled when
+ *    host.signal is aborted by then and admission-refused otherwise (host.signal unset, or set and not aborted);
  * 9. cancellation (admission-cancelled): host.signal is not aborted;
  * 10. the fresh measurement (EAT-R025, source-changed): measureSourceIdentity of that root answers measured, with the digest of
  *    the identity rule 5 measured;
- * 11. the attestation read again: rule 6's checks and codes, against the fresh identity.
+ * 11. the attestation read again: host.attestation as it is after the wait, in the forms the suite plants by replacing it
+ *    while the admission waits - none, an equal-shaped copy and another authority's attestation refuse attestation-absent,
+ *    the authority's attestation of another workspace refuses attestation-other-workspace and its attestation of another
+ *    identity of that root attestation-stale (rule 6's codes, judged against the fresh identity, whose canonical root and
+ *    digest are rule 5's), and its attestation of that identity by another operator dispatches with that operator; what any
+ *    other attestation found at the re-read gets is NOT CLAIMED.
  * The lease rule 7 takes is released when a later rule refuses and when dispatch settles; an error dispatch throws propagates
  * unchanged. A refusal carries the fixed reason of its code (REASONS) and, on dirty-base only, the counts.
  *
@@ -48,7 +57,11 @@ export const SOURCE_IDENTITY_DOMAIN = "source-identity";
 
 /**
  * The host's Git reader: it runs git in `directory` with `args` and returns git's stdout, or undefined when git cannot answer.
- * The host owns the process and its environment. The module reads a throw, or an answer that is not a Buffer, as no answer.
+ * The host owns the process and its environment. The module reads a throw, or an answer for which Buffer.isBuffer is false, as
+ * no answer, in the forms the suite plants: a throw or a string at every call; git's bytes at every call as a Uint8Array, an
+ * ArrayBuffer, a DataView, an array of byte values or an object whose toString answers git's text; and undefined, a throw, a
+ * string, a Uint8Array or such an object at one call of a measurement alone. Whether any other answer that is not a Buffer is
+ * no answer is NOT CLAIMED.
  */
 export type SourceGitReader = (directory: string, args: readonly string[]) => Buffer | undefined;
 
@@ -230,7 +243,7 @@ function realpathOf(path: string): string | undefined {
   }
 }
 
-/** The reader's answer for one call: undefined when it throws or answers with anything but a Buffer. */
+/** The reader's answer for one call: the Buffer it answers, or undefined when it throws or answers a value for which Buffer.isBuffer is false (the suite's forms: see SourceGitReader). */
 function read(git: SourceGitReader, directory: string, args: readonly string[]): Buffer | undefined {
   try {
     const output = git(directory, [...GIT_MEASURE_OPTIONS, ...args]);
@@ -305,9 +318,10 @@ function gateManifestOf(root: string, manifest: string): { readonly path: string
  * is not a string), none of which resolves by realpath, refuses malformed-request, as does a git that is a string; a missing
  * workspace or authorized root refuses workspace-unresolvable; a workspace outside the root refuses workspace-outside-root, also
  * when it is a subdirectory of its own worktree; and a subdirectory of a worktree, or a reader that throws or answers with no
- * Buffer, refuses workspace-not-worktree-root. Which refusal answers any other call is NOT CLAIMED, among them a path that is
- * not absolute clean text yet resolves by realpath, a git that is not a function beside a path that does not resolve or a
- * workspace outside the root, and a workspace that is not absolute clean text beside an authorized root that does not resolve.
+ * Buffer at every call in a form the suite plants (see SourceGitReader), refuses workspace-not-worktree-root. Which refusal
+ * answers any other call is NOT CLAIMED, among them a path that is not absolute clean text yet resolves by realpath, a git
+ * that is not a function beside a path that does not resolve or a workspace outside the root, and a workspace that is not
+ * absolute clean text beside an authorized root that does not resolve.
  */
 export function confineWorkspace(authorizedRoot: string, workspace: string, git: SourceGitReader): WorkspaceConfinement {
   if (!absolutePath(authorizedRoot) || !absolutePath(workspace) || typeof git !== "function") return refusal("malformed-request");
@@ -388,12 +402,13 @@ export class WriteBoundaryAuthority {
  * no lease holds that root, for the roots the suite's cases acquire; while inv-a's lease holds a root, it answers undefined to
  * the suite's inv-b and inv-c, and what it answers any other invocation id while a lease holds the root (the holder's own id,
  * or one that differs from it only in letter case, among them) is NOT CLAIMED. The leases of the root pairs the suite plants
- * are independent: ws and its sibling ws2, ws and each root the suite plants inside it, sub and ignored/inner (at admission,
- * ws's committed submodule and a repository under its ignored directory), and ws and WS, whose paths differ only in letter case
- * (at admission, two directories on this file system). For each such pair, in either order: while inv-a's lease holds one root,
- * no lease holds the other and inv-b acquires it, holder answers inv-a and inv-b, and releasing inv-b's lease leaves inv-a's
- * held; and while inv-a writes on one root, inv-b's admission on the other dispatches, and when inv-b's write ends inv-a's
- * lease still holds the first. Of the three roots r1, r2 and r3, leased at once by inv-a, releasing r2's lease frees r2 only.
+ * are independent: ws and its sibling ws2; ws and each of the two roots the suite plants inside it, sub and ignored/inner (at
+ * admission, ws's committed submodule and a repository under its ignored directory); and ws and WS, whose paths differ only in
+ * letter case (at admission, two directories on this file system). For each such pair, in either order: while inv-a's lease
+ * holds one root, no lease holds the other and inv-b acquires it, holder answers inv-a and inv-b, and releasing inv-b's lease
+ * leaves inv-a's held; and while inv-a writes on one root, inv-b's admission on the other dispatches, and when inv-b's write
+ * ends inv-a's lease still holds the first. Of the three roots r1, r2 and r3, leased at once by inv-a, releasing r2's lease
+ * frees r2 only.
  * Whether the leases of any other pair of roots are independent is NOT CLAIMED. release frees a root only for the very object
  * acquire returned while it still holds that root, so a released lease, or a copy naming the same root and invocation, frees
  * nothing. admitSourceWrite keys the lease by the canonical root it measured, never by the caller's spelling of the workspace.
