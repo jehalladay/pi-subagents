@@ -25,7 +25,8 @@
  *   column. R022-COUNTS: a base whose git status lists " M", "MM", " D", "A " and three "??" records (two files of one new
  *   directory listed one by one) refuses dirty-base with tracked 3, staged 2, untracked 3. R022-STATUS-COLUMNS: a "?M" record
  *   (read through a reader that rewrites status) counts as staged and as tracked, never as untracked; R022-STATUS-WORKTREE-QUESTION:
- *   an "M?" record (read the same way) counts as staged and as tracked, never as untracked. R022-TYPE-AND-INTENT: a type
+ *   an "M?" record (read the same way) counts as staged and as tracked, never as untracked; R022-STATUS-INDEX-QUESTION: a "? "
+ *   record (read the same way) counts as staged, never as untracked or tracked. R022-TYPE-AND-INTENT: a type
  *   change (" T"), the same change staged ("T ") and an intent-to-add file (" A", which ls-files tags H) refuse dirty-base with
  *   tracked 1, staged 1 and tracked 1. R022-RENAME: a staged rename counts as a staged deletion and a staged addition (tracked 0,
  *   staged 2). R022-ASSUME-UNCHANGED, R022-SKIP-WORKTREE, R022-UNMERGED: an index entry that git ls-files -v tags other than "H "
@@ -50,7 +51,12 @@
  *   answers of a measurement) measures the identity the suite's reader measures, and its admission dispatches with that
  *   identity; a reader whose LF-ending answers end with a second LF refuses source-unmeasurable. R022-OBJECT-ID-LEADING-ZERO: a
  *   HEAD^{commit} or HEAD^{tree} answer that is the real id with its first digit replaced by 0, or forty 0 digits, measures as
- *   that id.
+ *   that id. R022-READER-NO-LF-EDGE: for each of the 20 code points String.prototype.trim() removes outside U+0000-U+001F
+ *   (TRIMMED below), on the worktree inside the root whose directory name is "w" followed by that code point, a reader whose
+ *   LF-ending answers carry no final LF (the five rev-parse answers of a measurement) measures the identity the suite's reader
+ *   measures there, and its admission there, attested for that identity, dispatches against that root.
+ *   R022-READER-COMMIT-CR: a HEAD^{commit} answer that is ws's commit id followed by a CR, with no LF after it and with one,
+ *   refuses source-unmeasurable.
  *   RESIDUAL UNLISTED-EDITS (named family, pinned quiet rows): an edit the measurement's git status call does not list is measured
  *   clean. R022-STAT-TRUST: under core.checkStat=minimal a same-size edit whose mtime is restored is listed by no git status, and
  *   the measurement answers the identity it answered before the edit. R022-CLEAN-FILTER: under a configured clean filter that
@@ -183,8 +189,11 @@
  *   with a null prototype: carrying an own allowWrites true as the policy each refuses writes-not-requested, and carrying the
  *   request's members as the request each refuses malformed-request; no dispatch, no lease), GEN-CLEAN-TEXT-SCAN (for every
  *   code point from U+0000 to U+10FFFF outside U+0000-U+001F and U+007F, the lone surrogates included, the text "a", that
- *   code point, "b" is a lease invocation acquire takes and release frees, an operator id attest mints, and the invocation
- *   reference of a request that asks for no writes, which refuses writes-not-requested at rule 3; for each code point in
+ *   code point, "b" is a lease invocation acquire takes and release frees (acquire answers a lease naming ws and that text,
+ *   holder then answers that text, and release answers true and leaves holder answering undefined), an operator id attest
+ *   mints (the attestation it answers is frozen and names that text, ws and the identity's digest as its operatorId,
+ *   workspace and sourceIdentity, and the authority's minted answers true for it), and the invocation reference of a request
+ *   that asks for no writes, which refuses writes-not-requested at rule 3; for each code point in
  *   U+0000-U+001F and U+007F the same text throws the validation CapabilityError as a lease invocation and as an operator id
  *   and refuses malformed-request as an invocation reference), GEN-CONFINE-ORDER (confineWorkspace, and the admission with the
  *   same host, refuse malformed-request for each of these pairs: a reader that is the string "git", undefined or a plain
@@ -255,6 +264,9 @@
  * - What the admission wait is called with in a form GEN-WAIT-ARGUMENT does not plant (a host.signal aborted before the wait
  *   among them), and the this value it is called with, are NOT CLAIMED by this suite.
  * - Whether a reader answer that is not a Buffer, in a form the cases do not plant, is no answer is NOT CLAIMED by this suite.
+ * - How the module reads a reader answer in a text form no entry plants (an answer without its final LF on a worktree other
+ *   than ws and the R022-READER-NO-LF-EDGE worktrees, or an id followed by text other than R022-READER-COMMIT-CR's CR and
+ *   CR LF, among them) is NOT CLAIMED by this suite.
  */
 import { type ChildProcess, execFileSync, spawn } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -666,6 +678,11 @@ describe("EAT-R022: a base whose git status lists a record is refused before any
     expectRefused(measureSourceIdentity(ws, "forge.toml", mirrored), "dirty-base", { tracked: 1, staged: 1, untracked: 0 });
   });
 
+  it('R022-STATUS-INDEX-QUESTION: a "? " status record counts as staged, never as untracked or tracked', () => {
+    const indexQuestion: SourceGitReader = (directory, args) => (args.includes("status") ? Buffer.from("? index-question.txt\0") : gitReader(directory, args));
+    expectRefused(measureSourceIdentity(ws, "forge.toml", indexQuestion), "dirty-base", { tracked: 0, staged: 1, untracked: 0 });
+  });
+
   it('R022-TYPE-AND-INTENT: a type change (" T"), the same change staged ("T ") and an intent-to-add file (" A") count by their columns', async () => {
     const attestation = authority.attest(OPERATOR, identityOf(ws));
     rmSync(join(ws, "README.md"));
@@ -942,6 +959,41 @@ describe("EAT-R022: a base whose git status lists a record is refused before any
         const ids = measured.decision === "measured" ? [measured.identity.commit, measured.identity.tree] : measured;
         expect(ids, `${member} ${id}`).toEqual(member === "commit" ? [id, head.tree] : [head.commit, id]);
       }
+    }
+  });
+
+  it("R022-READER-NO-LF-EDGE: on each worktree whose directory name is w followed by one of the 20 code points trim() removes outside U+0000-U+001F, a reader whose answers carry no final LF measures the identity the suite's reader measures, and its admission there dispatches against that root", async () => {
+    let stripped = 0;
+    const withoutFinalLf: SourceGitReader = (directory, args) => {
+      const output = gitReader(directory, args);
+      if (output === undefined || output.at(-1) !== 0x0a) return output;
+      stripped += 1;
+      return output.subarray(0, -1);
+    };
+    const endings = TRIMMED.filter(codePoint => codePoint > 0x1f);
+    expect(endings).toHaveLength(20);
+    const { grants, dispatch } = recorder();
+    const edged: string[] = [];
+    for (const codePoint of endings) {
+      const label = `U+${codePoint.toString(16)}`;
+      const worktree = fixtureRepo(join(root, `w${String.fromCodePoint(codePoint)}`));
+      expect(worktree.endsWith(`w${String.fromCodePoint(codePoint)}`), label).toBe(true);
+      const expected = identityOf(worktree);
+      stripped = 0;
+      expect(measureSourceIdentity(worktree, "forge.toml", withoutFinalLf), label).toStrictEqual({ decision: "measured", identity: expected });
+      expect(stripped, label).toBe(5);
+      await expect(admitSourceWrite(requestFor(worktree), hostFor(authority.attest(OPERATOR, expected), { git: withoutFinalLf }), dispatch), label).resolves.toMatchObject({ decision: "dispatched" });
+      edged.push(worktree);
+    }
+    expect(grants.map(grant => grant.identity.canonicalRoot)).toEqual(edged);
+  });
+
+  it("R022-READER-COMMIT-CR: a HEAD commit answer that is ws's commit id followed by a CR, with no LF after it and with one, refuses source-unmeasurable", () => {
+    const commit = git(ws, "rev-parse", "HEAD^{commit}");
+    expect(measureSourceIdentity(ws, "forge.toml", gitReader)).toMatchObject({ decision: "measured", identity: { commit } });
+    for (const answer of [`${commit}\r`, `${commit}\r\n`]) {
+      const carriageReturn: SourceGitReader = (directory, args) => (args.includes("HEAD^{commit}") ? Buffer.from(answer) : gitReader(directory, args));
+      expectRefused(measureSourceIdentity(ws, "forge.toml", carriageReturn), "source-unmeasurable", undefined, JSON.stringify(answer));
     }
   });
 
@@ -2209,18 +2261,23 @@ describe("admission lifecycle: cancellation, a refusing wait, a throwing dispatc
       let leaseReading: string;
       try {
         const lease = leases.acquire(ws, text);
-        leaseReading = lease !== undefined && lease.invocationId === text && leases.release(lease) ? "leased" : "no lease";
+        if (lease === undefined) leaseReading = "no lease";
+        else if (lease.canonicalRoot !== ws || lease.invocationId !== text || leases.holder(ws) !== text) leaseReading = "other lease";
+        else leaseReading = leases.release(lease) && leases.holder(ws) === undefined ? "leased" : "not freed";
       } catch (error) {
         leaseReading = error instanceof CapabilityError && error.category === "validation" && error.message === LEASE_VALIDATION ? "validation" : "other error";
       }
       let operatorReading: string;
       try {
-        operatorReading = authority.attest(text, identity).operatorId === text ? "attested" : "other operator";
+        const attestation = authority.attest(text, identity);
+        const named = attestation.operatorId === text && attestation.workspace === ws && attestation.sourceIdentity === identity.digest && Object.isFrozen(attestation);
+        operatorReading = !named ? "other attestation" : authority.minted(attestation) ? "attested" : "not minted";
       } catch (error) {
         operatorReading = error instanceof CapabilityError && error.category === "validation" && error.message === ATTEST_OPERATOR ? "validation" : "other error";
       }
       const admission = await admitSourceWrite(requestFor(ws, text, {}), host, dispatch);
-      const admissionReading = admission.decision === "refused" ? admission.code : admission.decision;
+      const admissionReading =
+        admission.decision !== "refused" ? admission.decision : Object.keys(admission).length === 3 && admission.reason === REASON[admission.code] ? admission.code : `${admission.code} (not the whole refusal)`;
       const expected = clean ? ["leased", "attested", "writes-not-requested"] : ["validation", "validation", "malformed-request"];
       if (leaseReading !== expected[0] || operatorReading !== expected[1] || admissionReading !== expected[2]) mismatches.push(`U+${point.toString(16)}: ${leaseReading}, ${operatorReading}, ${admissionReading}`);
     }

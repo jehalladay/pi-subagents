@@ -256,9 +256,13 @@ function read(git: SourceGitReader, directory: string, args: readonly string[]):
 }
 
 /**
- * The answer as UTF-8 text with one final newline removed, and an answer with none is read as it is: a reader whose answers
- * carry no final LF measures, and one whose LF-ending answers end with a second LF refuses source-unmeasurable
- * (R022-READER-FINAL-LF).
+ * The answer as UTF-8 text, with one final LF removed when it ends with one, in the forms the suite pins: the suite reader's
+ * rev-parse answers, each ending with one LF; those answers without their final LF on ws (R022-READER-FINAL-LF) and on each
+ * worktree whose directory name is w followed by one of the 20 code points String.prototype.trim() removes outside
+ * U+0000-U+001F (R022-READER-NO-LF-EDGE), which measure the identity the suite's reader measures and whose admissions
+ * dispatch; those answers on ws with a second LF, which refuse source-unmeasurable (R022-READER-FINAL-LF); and ws's commit id
+ * followed by a CR, with no LF after it and with one, as the HEAD^{commit} answer, which refuses source-unmeasurable
+ * (R022-READER-COMMIT-CR). What it reads any other answer as is NOT CLAIMED.
  */
 function readLine(git: SourceGitReader, directory: string, args: readonly string[]): string | undefined {
   const output = read(git, directory, args)?.toString("utf8");
