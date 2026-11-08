@@ -135,6 +135,24 @@
  * #3's GP18-REASON-DIGEST and GP18-REASON-SCHEMA-KIND, and the final-reads describe and the strengthened no-park row
  * under GP18-NOPARK-ENTRY-FINAL. Whether a reason names a definition's kind, other texts, pairs, requests, changes and
  * scheduling forms are NOT CLAIMED. No residual is named.
+ * wb-m83p cut #2 (the respin of wb-m83p refusal #1, rung 1 of this bead's own ladder) takes refusal #1's U1 (the
+ * final-read words) and U2 (the dispatch-count words) in the PIN-AND-FALSIFY form, with the words narrowed to the pinned
+ * sets. One describe is appended to the end of this file, the final reads and the dispatch count at the 4 listed
+ * requests: the request for mechanical.development.develop.v1 under the pinned contract, in each host mode, carrying no
+ * caller policy or the caller policy {}. With an admission park and with none, each of the 6 listed changes the host's
+ * second reads report refuses at dispatch with zero callback, loader and provider calls after two reads of each (48
+ * rows); with no change, the one dispatch's callback receives the very authority object the boundary returns (8 rows);
+ * and at each of the 11 listed callback outcomes (7 resolutions, 3 rejections and 1 synchronous throw), the callback is
+ * invoked once, and the boundary returns the value it resolves with unchanged, or rejects with its rejection or its
+ * throw unchanged (88 rows). A frozen-shape row and an anchor row hold the tables: the requests from execute.ts's
+ * EXECUTE_HOST_MODES and ExecuteAdmission's optional members, the counts the module source names at each of its claim
+ * sites and the outcome values its header names, the paths from FunctionDispatchOptions's optional members, and the
+ * changes from an authorization and FunctionAuthorityHost. Red-first: before the module's words were narrowed, the anchor row failed;
+ * and the describe fails under each of refusal #1's members GP28-NOPARK-DETACHED-ENTRY-FINAL,
+ * GP28-NOPARK-POLICY-ENTRY-FINAL, GP28-DISPATCH-RETRY-ON-THROW and GP28-DISPATCH-TWICE-UNDEFINED, each of which reads 0
+ * failed on the cut #1 suite. The module's final-read, dispatch-count, timing and entry-snapshot words now name these
+ * rows, the listed request's timing rows and the EAT-R030 snapshot row; other requests, changes, callback outcomes and
+ * scheduling forms are NOT CLAIMED. No residual is named.
  *
  * No spelling is adopted, so the production contract is unadopted and refuses every function dispatch (the B-authority row of
  * BEAD-PLAN.md lands "partial - enforcement seams land now; exact action grammar blocked on MW-CONTRACT"). The adopted contracts
@@ -150,7 +168,7 @@ import type { ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { loadSettings } from "../src/settings.js";
 import { CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
-import { decideExecute, EXECUTE_GRANT, type ExecuteAdmission } from "../src/workbench/execute.js";
+import { decideExecute, EXECUTE_GRANT, EXECUTE_HOST_MODES, type ExecuteAdmission } from "../src/workbench/execute.js";
 import { createWorkflowExecuteTool, DETACH_GRANT, type WorkflowExecuteDeps } from "../src/workbench/execute-tool.js";
 import {
   adoptFunctionActions,
@@ -2750,4 +2768,286 @@ describe("the final reads on both dispatch paths: with an admission park and wit
     expect({ status: result.status, grantReads, queued }).toEqual({ status: "dispatched", grantReads: 2, queued: true });
     expect(atDispatch).toEqual([{ grants: STEADY_GRANTS, identity: HOST }]);
   });
+});
+
+describe("the final reads and the dispatch count at the 4 listed requests: in each host mode, carrying no caller policy or the caller policy {}, with an admission park and with none, a request that passes entry reads the host's grants and identity once more each; each of the 6 listed changes those second reads report refuses at dispatch, with zero loader and provider calls; with no change, the one dispatch's callback receives the very authority object the boundary returns; and at each of the 11 listed callback outcomes, the callback is invoked once and the boundary returns the value it resolves with unchanged, or rejects with its rejection or its synchronous throw unchanged (wb-m83p cut #2)", () => {
+  const LISTED_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+  const STEADY: readonly string[] = [EXECUTE_GRANT, ACTION];
+  const ESC = String.fromCodePoint(0x1b);
+  const PATHS = ["with an admission park", "with no admission park"] as const;
+  type ListedPath = (typeof PATHS)[number];
+  /** One of the 4 listed requests: the request for mechanical.development.develop.v1 under the pinned contract, in one host mode, carrying no caller policy or the caller policy {}. */
+  interface ListedRequest {
+    readonly hostMode: ExecuteAdmission["hostMode"];
+    readonly policy: JsonValue | undefined;
+  }
+  const REQUESTS: readonly ListedRequest[] = [
+    { hostMode: "embedded", policy: undefined },
+    { hostMode: "embedded", policy: {} },
+    { hostMode: "detached", policy: undefined },
+    { hostMode: "detached", policy: {} },
+  ];
+  /** A listed request's label, from its own fields. */
+  const requestLabel = (request: ListedRequest) => `the ${request.hostMode} request carrying ${request.policy === undefined ? "no caller policy" : `the caller policy ${JSON.stringify(request.policy)}`}`;
+  /** The listed request's real workflow_execute admission (decideExecute, under workbench:execute). */
+  function admissionOf(request: ListedRequest): ExecuteAdmission {
+    const decision = decideExecute(
+      { definitionRef: { kind: "function", id: FUNCTION_ID, schemaVersion: FUNCTION_SCHEMA, artifactDigest: DIGEST }, input: TASK, hostMode: request.hostMode, ...(request.policy !== undefined ? { policy: request.policy } : {}) },
+      { grants: [EXECUTE_GRANT], invocationId: INVOCATION },
+    );
+    if (decision.decision !== "admitted") throw new Error(`fixture admission refused: ${decision.policy}`);
+    return decision.admission;
+  }
+  interface SecondReadChange {
+    readonly family: "a dropped authority grant" | "a changed identity field" | "unknown read data";
+    readonly member: string;
+    readonly policy: FunctionAuthorityRefusal;
+    /** What the host's second grants read reports. */
+    readonly grants: readonly string[] | undefined;
+    /** What the host's second identity read reports. */
+    readonly identity: FunctionIdentity;
+  }
+  /** The 6 listed changes: each grant an authorization rests on dropped, each identity field changed, and each read reporting unknown data. */
+  const CHANGES: readonly SecondReadChange[] = [
+    { family: "a dropped authority grant", member: EXECUTE_GRANT, policy: "missing-execute-grant", grants: [ACTION], identity: HOST },
+    { family: "a dropped authority grant", member: ACTION, policy: "missing-function-action-grant", grants: [EXECUTE_GRANT], identity: HOST },
+    { family: "a changed identity field", member: "principal", policy: "changed-effective-identity", grants: STEADY, identity: { principal: "local-operator:1001:s1", sessionId: HOST.sessionId } },
+    { family: "a changed identity field", member: "sessionId", policy: "changed-effective-identity", grants: STEADY, identity: { principal: HOST.principal, sessionId: "s2" } },
+    { family: "unknown read data", member: "grants", policy: "unknown-permission-data", grants: undefined, identity: HOST },
+    { family: "unknown read data", member: "identity", policy: "unknown-identity-data", grants: STEADY, identity: { principal: `${HOST.principal}${ESC}[0m`, sessionId: HOST.sessionId } },
+  ];
+  /** No change at the second reads: they report the steady state again. */
+  const UNCHANGED: Pick<SecondReadChange, "grants" | "identity"> = { grants: STEADY, identity: HOST };
+  /** One of the 11 listed callback outcomes: what the dispatch callback does on its first call. */
+  interface CallbackOutcome {
+    readonly settle: "resolves" | "rejects" | "throws";
+    readonly value: unknown;
+  }
+  const CALLBACK_OUTCOMES: readonly CallbackOutcome[] = [
+    { settle: "resolves", value: "ran" },
+    { settle: "resolves", value: Object.freeze({ outcome: "ran" }) },
+    { settle: "resolves", value: undefined },
+    { settle: "resolves", value: null },
+    { settle: "resolves", value: false },
+    { settle: "resolves", value: 0 },
+    { settle: "resolves", value: "" },
+    { settle: "rejects", value: new Error("provider failed") },
+    { settle: "rejects", value: "provider failed" },
+    { settle: "rejects", value: undefined },
+    { settle: "throws", value: new Error("loader failed") },
+  ];
+  /** What an outcome's value is, read from the value itself. */
+  const valueLabel = (value: unknown) =>
+    value instanceof Error ? "an Error" : value === "" ? "the empty string" : typeof value === "string" ? "a string" : typeof value === "object" && value !== null ? "an object" : String(value);
+  /** An outcome's label, from its own fields. */
+  const outcomeLabel = (outcome: CallbackOutcome) =>
+    outcome.settle === "resolves" ? `resolves ${valueLabel(outcome.value)}` : outcome.settle === "rejects" ? `rejects with ${valueLabel(outcome.value)}` : `throws ${valueLabel(outcome.value)} synchronously`;
+  /** What a callback resolves with on any call after its first: never a listed outcome, so a second invocation changes how the boundary settles. */
+  const SECOND_CALL = "a second call";
+  /** A host whose first reads report workbench:execute with the action under local-operator:1000:s1 / s1, and whose later reads report `second`. */
+  function listedHost(second: Pick<SecondReadChange, "grants" | "identity">) {
+    const reads = { grants: 0, identity: 0 };
+    const host: FunctionAuthorityHost = {
+      grants: () => {
+        reads.grants += 1;
+        return reads.grants === 1 ? STEADY : second.grants;
+      },
+      identity: () => {
+        reads.identity += 1;
+        return reads.identity === 1 ? { ...HOST } : { ...second.identity };
+      },
+    };
+    return { host, reads };
+  }
+  type Settled = { readonly settled: "fulfilled"; readonly result: FunctionDispatchResult<unknown> } | { readonly settled: "rejected"; readonly reason: unknown };
+  /** A listed request through the boundary on a path with the given dispatch callback; a given park is released by hand. */
+  async function throughListed(request: ListedRequest, path: ListedPath, host: FunctionAuthorityHost, reads: { readonly grants: number; readonly identity: number }, dispatch: (authority: FunctionDispatchAuthority) => Promise<unknown>) {
+    const wait = parked();
+    const pending = dispatchFunctionWithAuthority<unknown>({ admission: admissionOf(request), contract: CONTRACT, host, ...(path === "with an admission park" ? { park: wait.park } : {}), dispatch });
+    const atEntry = { ...reads };
+    wait.release();
+    const settled = await pending.then(
+      (result): Settled => ({ settled: "fulfilled", result }),
+      (reason: unknown): Settled => ({ settled: "rejected", reason }),
+    );
+    return { settled, atEntry, park: wait.park.mock.calls.length };
+  }
+  const SECOND_READ_ROWS = REQUESTS.flatMap(request => PATHS.flatMap(path => CHANGES.map(change => ({ request, path, change }))));
+  const STEADY_ROWS = REQUESTS.flatMap(request => PATHS.map(path => ({ request, path })));
+  const OUTCOME_ROWS = REQUESTS.flatMap(request => PATHS.flatMap(path => CALLBACK_OUTCOMES.map(outcome => ({ request, path, outcome }))));
+
+  it("the tables' frozen shape: the 4 listed requests, the 2 paths, the 6 listed changes and the 11 listed callback outcomes, and the 48 second-read rows, the 8 steady rows and the 88 outcome rows they make, in order", () => {
+    expect(REQUESTS.map(requestLabel)).toEqual([
+      "the embedded request carrying no caller policy",
+      "the embedded request carrying the caller policy {}",
+      "the detached request carrying no caller policy",
+      "the detached request carrying the caller policy {}",
+    ]);
+    expect([...PATHS]).toEqual(["with an admission park", "with no admission park"]);
+    expect(CHANGES.map(change => `${change.family}:${change.member}:${change.policy}`)).toEqual([
+      "a dropped authority grant:workbench:execute:missing-execute-grant",
+      "a dropped authority grant:fixture-fn:develop-write:missing-function-action-grant",
+      "a changed identity field:principal:changed-effective-identity",
+      "a changed identity field:sessionId:changed-effective-identity",
+      "unknown read data:grants:unknown-permission-data",
+      "unknown read data:identity:unknown-identity-data",
+    ]);
+    expect(CALLBACK_OUTCOMES.map(outcomeLabel)).toEqual([
+      "resolves a string",
+      "resolves an object",
+      "resolves undefined",
+      "resolves null",
+      "resolves false",
+      "resolves 0",
+      "resolves the empty string",
+      "rejects with an Error",
+      "rejects with a string",
+      "rejects with undefined",
+      "throws an Error synchronously",
+    ]);
+    const key = (...parts: readonly string[]) => parts.join(" | ");
+    expect(SECOND_READ_ROWS.map(row => key(requestLabel(row.request), row.path, row.change.member))).toEqual(REQUESTS.flatMap(request => PATHS.flatMap(path => CHANGES.map(change => key(requestLabel(request), path, change.member)))));
+    expect(STEADY_ROWS.map(row => key(requestLabel(row.request), row.path))).toEqual(REQUESTS.flatMap(request => PATHS.map(path => key(requestLabel(request), path))));
+    expect(OUTCOME_ROWS.map(row => key(requestLabel(row.request), row.path, outcomeLabel(row.outcome)))).toEqual(REQUESTS.flatMap(request => PATHS.flatMap(path => CALLBACK_OUTCOMES.map(outcome => key(requestLabel(request), path, outcomeLabel(outcome))))));
+    expect([SECOND_READ_ROWS.length, STEADY_ROWS.length, OUTCOME_ROWS.length]).toEqual([48, 8, 88]);
+  });
+
+  it("the tables' anchors outside their own literals: the requests' host modes are execute.ts's EXECUTE_HOST_MODES, each mode with as many requests as 2 to the power of the optional members execute.ts's ExecuteAdmission declares, and each request's admission holds its host mode and holds the policy exactly when the request carries one; each of the module source's claim sites that counts listed requests or listed callback outcomes names these tables' counts, and its outcome list names, by kind, the values the outcomes settle with; the paths number 2 to the power of the optional members the module's FunctionDispatchOptions declares; the dropped grants are, in order, the grants an authorization of each request rests on, the changed identity fields its identity's own keys, and the unknown-read-data rows the reads the module's FunctionAuthorityHost declares; and each change alters, from the steady host state, exactly the read and the grant or identity field it names", () => {
+    const execute = readFileSync(join(LISTED_ROOT, "src/workbench/execute.ts"), "utf8");
+    const admissionOptional = [...(/^export interface ExecuteAdmission \{\n([\s\S]*?)^\}$/m.exec(execute)?.[1] ?? "").matchAll(/^ {2}readonly (\w+)\?:/gm)].map(match => match[1]);
+    expect(admissionOptional).toEqual(["policy"]);
+    expect(REQUESTS.map(request => request.hostMode)).toEqual(EXECUTE_HOST_MODES.flatMap(mode => Array.from({ length: 2 ** admissionOptional.length }, () => mode)));
+    for (const request of REQUESTS) {
+      const admission = admissionOf(request);
+      expect({ request: requestLabel(request), hostMode: admission.hostMode, policy: Object.hasOwn(admission, "policy") ? admission.policy : "absent" }).toEqual({ request: requestLabel(request), hostMode: request.hostMode, policy: request.policy ?? "absent" });
+    }
+    for (const mode of EXECUTE_HOST_MODES) expect(REQUESTS.filter(request => request.hostMode === mode).map(request => request.policy === undefined)).toEqual([true, false]);
+    const module = readFileSync(join(LISTED_ROOT, "src/workbench/function-authority.ts"), "utf8");
+    /** The module's text as one line of prose: each line's comment marker dropped, whitespace runs collapsed. */
+    const prose = module
+      .split("\n")
+      .map(line => line.replace(/^\s*(?:\/\*\*|\*\/|\*|\/\/)\s?/, ""))
+      .join(" ")
+      .replace(/\s+/g, " ");
+    const counts = (pattern: RegExp) => [...prose.matchAll(pattern)].map(match => Number(match[1]));
+    expect(counts(/\b(\d+) listed requests\b/g)).toEqual([REQUESTS.length, REQUESTS.length, REQUESTS.length]);
+    expect(counts(/\b(\d+) listed callback outcomes\b/g)).toEqual([CALLBACK_OUTCOMES.length, CALLBACK_OUTCOMES.length]);
+    const byKind = /\b(\d+) listed callback outcomes \((\d+) resolutions: ([^;]+); (\d+) rejections: ([^;]+); and (\d+) synchronous throws? of ([^)]+)\)/.exec(prose);
+    const named = (list: string | undefined) => (list ?? "").split(/, | and /).map(item => item.trim());
+    const ofKind = (settle: CallbackOutcome["settle"]) => CALLBACK_OUTCOMES.filter(outcome => outcome.settle === settle).map(outcome => valueLabel(outcome.value));
+    expect({
+      total: Number(byKind?.[1]),
+      resolutions: [Number(byKind?.[2]), named(byKind?.[3])],
+      rejections: [Number(byKind?.[4]), named(byKind?.[5])],
+      throws: [Number(byKind?.[6]), named(byKind?.[7])],
+    }).toEqual({
+      total: CALLBACK_OUTCOMES.length,
+      resolutions: [ofKind("resolves").length, ofKind("resolves")],
+      rejections: [ofKind("rejects").length, ofKind("rejects")],
+      throws: [ofKind("throws").length, ofKind("throws")],
+    });
+    const optional = [...(/^export interface FunctionDispatchOptions<T> \{\n([\s\S]*?)^\}$/m.exec(module)?.[1] ?? "").matchAll(/^ {2}readonly \w+\?:/gm)];
+    expect(optional).toHaveLength(1);
+    expect(PATHS).toHaveLength(2 ** optional.length);
+    const hostReads = [...(/^export interface FunctionAuthorityHost \{\n([\s\S]*?)^\}$/m.exec(module)?.[1] ?? "").matchAll(/^ {2}(\w+)\(\):/gm)].map(match => match[1]);
+    expect(hostReads).toHaveLength(2);
+    const members = (family: SecondReadChange["family"]) => CHANGES.filter(change => change.family === family).map(change => change.member);
+    expect(members("unknown read data")).toEqual(hostReads);
+    for (const request of REQUESTS) {
+      const authorized = decideFunctionAuthority({ admission: admissionOf(request), contract: CONTRACT, entered: HOST, current: { grants: STEADY, identity: HOST } });
+      if (authorized.decision !== "authorized") throw new Error(`expected ${requestLabel(request)} to be authorized`);
+      expect({ request: requestLabel(request), dropped: members("a dropped authority grant"), fields: members("a changed identity field") }).toEqual({ request: requestLabel(request), dropped: [...authorized.authority.grants], fields: Reflect.ownKeys(authorized.authority.identity) });
+    }
+    /** The host reads a reported state changes from the steady one (workbench:execute with the action under local-operator:1000:s1 / s1). */
+    const changedReads = (state: Pick<SecondReadChange, "grants" | "identity">) =>
+      hostReads.filter(read => (read === "grants" ? JSON.stringify(state.grants) !== JSON.stringify(STEADY) : JSON.stringify(state.identity) !== JSON.stringify(HOST)));
+    expect(changedReads(UNCHANGED)).toEqual([]);
+    for (const change of CHANGES) {
+      const dropped = STEADY.filter(grant => !(change.grants ?? STEADY).includes(grant));
+      const fields = Reflect.ownKeys(HOST)
+        .filter(key => Reflect.get(change.identity, key) !== Reflect.get(HOST, key))
+        .map(String);
+      const named = change.family === "a dropped authority grant" ? dropped : change.family === "a changed identity field" ? fields : changedReads(change);
+      const read = change.family === "a dropped authority grant" ? "grants" : change.family === "a changed identity field" ? "identity" : change.member;
+      expect({ change: `${change.family}:${change.member}`, changed: changedReads(change), named }).toEqual({ change: `${change.family}:${change.member}`, changed: [read], named: [change.member] });
+    }
+  });
+
+  it.each(SECOND_READ_ROWS.map(row => [requestLabel(row.request), row.path, row.change.family, row.change.member, row.change.policy, row] as const))(
+    "%s, %s: %s (%s) at the host's second reads refuses at dispatch as %s, with zero callback, loader and provider calls, after two grant reads and two identity reads",
+    async (_request, _path, _family, _member, _policy, row) => {
+      const { host, reads } = listedHost(row.change);
+      const received: FunctionDispatchAuthority[] = [];
+      const provider = vi.fn(async () => "ran");
+      const loader = vi.fn(async () => provider);
+      const run = await throughListed(row.request, row.path, host, reads, async authority => {
+        received.push(authority);
+        return (await loader())();
+      });
+      if (run.settled.settled !== "fulfilled") throw new Error("expected the boundary to settle with a refusal");
+      expect(refusalOf(run.settled.result)).toEqual({ stage: "dispatch", policy: row.change.policy, category: "authorization" });
+      expect({ reads, park: run.park, callbacks: received.length, loader: loader.mock.calls.length, provider: provider.mock.calls.length }).toEqual({
+        reads: { grants: 2, identity: 2 },
+        park: row.path === "with an admission park" ? 1 : 0,
+        callbacks: 0,
+        loader: 0,
+        provider: 0,
+      });
+      if (row.path === "with an admission park") expect(run.atEntry).toEqual({ grants: 1, identity: 1 });
+    },
+  );
+
+  it.each(STEADY_ROWS.map(row => [requestLabel(row.request), row.path, row] as const))(
+    "%s, %s, with no change at the second reads: one dispatch after two grant reads and two identity reads, whose callback receives the very authority object the boundary returns, resting on workbench:execute and the action under local-operator:1000:s1 / s1",
+    async (_request, _path, row) => {
+      const { host, reads } = listedHost(UNCHANGED);
+      const received: FunctionDispatchAuthority[] = [];
+      const provider = vi.fn(async () => "ran");
+      const loader = vi.fn(async () => provider);
+      const run = await throughListed(row.request, row.path, host, reads, async authority => {
+        received.push(authority);
+        return (await loader())();
+      });
+      if (run.settled.settled !== "fulfilled" || run.settled.result.status !== "dispatched") throw new Error("expected one dispatch");
+      const result = run.settled.result;
+      expect({ reads, park: run.park, callbacks: received.length, loader: loader.mock.calls.length, provider: provider.mock.calls.length, value: result.value }).toEqual({
+        reads: { grants: 2, identity: 2 },
+        park: row.path === "with an admission park" ? 1 : 0,
+        callbacks: 1,
+        loader: 1,
+        provider: 1,
+        value: "ran",
+      });
+      expect(received[0]).toBe(result.authority);
+      expect({ grants: result.authority.grants, identity: result.authority.identity }).toEqual({ grants: [EXECUTE_GRANT, ACTION], identity: HOST });
+    },
+  );
+
+  it.each(OUTCOME_ROWS.map(row => [requestLabel(row.request), row.path, outcomeLabel(row.outcome), row] as const))(
+    "%s, %s: a dispatch callback that %s is invoked once, on an authority resting on workbench:execute and the action under local-operator:1000:s1 / s1, after two grant reads and two identity reads, and the boundary returns the value it resolves with unchanged, or rejects with its rejection or its throw unchanged",
+    async (_request, _path, _outcome, row) => {
+      const { host, reads } = listedHost(UNCHANGED);
+      const received: FunctionDispatchAuthority[] = [];
+      const run = await throughListed(row.request, row.path, host, reads, authority => {
+        received.push(authority);
+        if (received.length > 1) return Promise.resolve(SECOND_CALL);
+        if (row.outcome.settle === "throws") throw row.outcome.value;
+        return row.outcome.settle === "rejects" ? Promise.reject(row.outcome.value) : Promise.resolve(row.outcome.value);
+      });
+      expect({ reads, park: run.park, callbacks: received.length, settled: run.settled.settled }).toEqual({
+        reads: { grants: 2, identity: 2 },
+        park: row.path === "with an admission park" ? 1 : 0,
+        callbacks: 1,
+        settled: row.outcome.settle === "resolves" ? "fulfilled" : "rejected",
+      });
+      expect({ grants: received[0]?.grants, identity: received[0]?.identity }).toEqual({ grants: [EXECUTE_GRANT, ACTION], identity: HOST });
+      if (run.settled.settled === "rejected") {
+        expect(run.settled.reason).toBe(row.outcome.value);
+        return;
+      }
+      if (run.settled.result.status !== "dispatched") throw new Error("expected one dispatch");
+      expect(run.settled.result.value).toBe(row.outcome.value);
+      expect(received[0]).toBe(run.settled.result.authority);
+    },
+  );
 });
