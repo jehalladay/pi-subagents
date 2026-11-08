@@ -143,11 +143,13 @@
  *   exactly that line's ABSENT finding.
  * - "stands' count": a twin row's standing text "alpha beta alpha" read once on its line is clean, and written twice so
  *   the copies share one "alpha" ("alpha beta alpha beta alpha") reads "stands 2 times": overlapping occurrences count.
- * - "outside anchor": the tracked bead export's wb-12x1 row (.beads/issues.jsonl, the row whose id is wb-12x1) - its title
- *   is the statement above, its one ACCEPTANCE segment (the description's only " | "-separated segment that starts
- *   "ACCEPTANCE: ") starts "requirements " and lists EAT-R004 and then exactly the 50 requirement ids of ROWS in order, up
- *   to " - each per its ATOMIC-REQUIREMENTS.md entry", and its one SURFACES segment cites ATOMIC-REQUIREMENTS.md and
- *   TDD-MATRIX.md at the 0b25e14e pin this header names.
+ * - "outside anchor": the tracked bead export's wb-12x1 row as trackerExportText (qa/workbench/tracker-export.mjs) reads
+ *   the export - .beads/issues.jsonl, each closed bead's stub row replaced by its full row from the archive shard beside it
+ *   (wb-12x1's from .beads/archive/issues-closed-2026-11.jsonl since its close at landing 1045) - the row whose id is
+ *   wb-12x1 - its title is the statement above, its one ACCEPTANCE segment (the description's only " | "-separated
+ *   segment that starts "ACCEPTANCE: ") starts "requirements " and lists EAT-R004 and then exactly the 50 requirement
+ *   ids of ROWS in order, up to " - each per its ATOMIC-REQUIREMENTS.md entry", and its one SURFACES segment cites
+ *   ATOMIC-REQUIREMENTS.md and TDD-MATRIX.md at the 0b25e14e pin this header names.
  * - "outside anchor twins": the anchor passes the row as exported and fails on each EXPORT_TWINS edit of it (an id joined
  *   after EAT-R143 by "and" or by a comma, an id dropped, two ids swapped, words before the list, another delimiter after
  *   it, another file type in that delimiter, another surface pin), on another title, and on an export whose only line
