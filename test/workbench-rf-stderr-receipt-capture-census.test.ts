@@ -134,7 +134,19 @@
  * listener; a listener log out of sorted order, with a once listener attached on the next tick; the latin1 encoding; two published
  * children; an rf id in a warning's name - closes each of the seven items' words with the forms its rows plant, every other form
  * NOT CLAIMED, and bounds OWED, the CASES UNTIL-THEN sentences and Pin.kind's doc to today's witness, with whether a src that gains
- * a committing rf invocation moves C1 NOT CLAIMED by this census. Where a
+ * a committing rf invocation moves C1 NOT CLAIMED by this census. Gate refusal #16 measured two run-time readers still claimed
+ * wider than their rows: C1-RUNTIME-ARGV's words claimed both arms' argv as the stand-in recorded them, at 'absent from one arm',
+ * while its rows call committingArms on argv arrays they write and plant no module, so the premise of cut #16's NOT CLAIMED
+ * sentences (each C1 item claiming its reading in its row's reading alone) failed for it; and G2-SINKS's words bounded a warning's
+ * form and timing but never the recording's warning set while each of its rows records one warning - so its hollows GP5-RTA-INJECT
+ * and GP5-RTA-EMPTY (each recorded argv read with --no-commit appended, and committingArms over no recorded argv) and
+ * GP5-SINKS-LAST and GP5-SINKS-FIRST (only the last, and only the first, warning a recording holds read) kept the census green
+ * while its plants realized them. Cut #17 changes no reader and no row: it writes C1-RUNTIME-ARGV's reading as its row's reading
+ * alone (committingArms over exactly the argv arrays its row writes), both arms' recorded argv held as today's witness alone and
+ * each of its forms in an argv the stand-in records NOT CLAIMED, and G2-SINKS's as its row's reading alone (the one warning its row
+ * emits, alone in the recording its row makes), each of its forms in a recording that holds another warning or is made around
+ * either arm's launch NOT CLAIMED; it states OWED's premise exactly for every C1 item (C1-DECLARATION-REFERENCES's row modules in
+ * its row's order, C1-RUNTIME-ARGV planting no module) and bounds R-PROTOTYPE-PATCH's C1 (f) reading to today's witness. Where a
  * reader meets what it cannot resolve - a launch program, a module specifier, a load, an argv binding, a builder or an
  * identifier - it reads <opaque ...> or unresolved, a new member of a pinned list, never a pass, save the routes a named residual
  * states (R-OPAQUE-LAUNCHER, R-OPAQUE-LOADER, R-OPAQUE-REGISTRATION). Those two blocks are the claims verbatim: ANCHOR holds each
@@ -148,9 +160,10 @@
  * by seat ws-06, run g10-work-s228 at trunk c4e8f82, landing 1004; cut #11 by seat ws-03, run g10-work-s230 at trunk 600a253,
  * landing 1011; cut #12 by seat ws-07, run g10-work-s233 at trunk fd90f9d, landing 1014; cut #13 by seat ws-10, run g10-work-s233
  * at trunk fd90f9d, landing 1014; cut #14 by seat ws-05, run g10-work-s237 at trunk 7f54a59, landing 1020; cut #15 by seat ws-01,
- * run g10-work-s237 at trunk ea21fb1, landing 1024; cut #16 by seat ws-08, run g10-work-s237 at trunk 8ed3a73, landing 1028;
- * providers/reactivefiber.ts is byte-identical at all sixteen and at 04123dc, sha256/16 d8b764b855600103 over its 203 lines; cuts
- * #6 to #16 move no reader, so every witness reads as at cut #5; every C1 and G2 witness below reads
+ * run g10-work-s237 at trunk ea21fb1, landing 1024; cut #16 by seat ws-08, run g10-work-s237 at trunk 8ed3a73, landing 1028; cut
+ * #17 by seat ws-01, run g10-work-s237 at trunk 4c21b67, landing 1029; providers/reactivefiber.ts is byte-identical at all
+ * seventeen and at 04123dc, sha256/16 d8b764b855600103 over its 203 lines; cuts #6 to #17 move no reader, so every witness reads as
+ * at cut #5; every C1 and G2 witness below reads
  * the same under cut #4's C1-NAME-RESOLUTION as under cut #3's by-name read, and under cut #5's landed reader as under cut #4's:
  * the swap alone, every row and witness kept, moved 10 row readings in 4 of the 44 cases, all of them falsifier rows, which cut #5
  * restates).
@@ -560,8 +573,12 @@
  *    registration, child_process or diagnostics_channel text among them), and one with a module at another path or written
  *    otherwise than its row writes it - is NOT CLAIMED by this census.
  *  C1-RUNTIME-ARGV: C1 (f) reads, at run time, both input arms' argv as the stand-in recorded them, and which arm's recorded argv
- *    lists no --no-commit. It claims that reading exactly at the forms its rows plant: --no-commit as an arm's last, an inner and
- *    its first element, and absent from one arm and from both; every other argv shape is NOT CLAIMED by this census.
+ *    lists no --no-commit. It claims that reading exactly at the forms its rows plant, each in its row's reading alone
+ *    (committingArms over exactly the argv arrays its row writes, as it writes them; its rows plant no module and the stand-in
+ *    records none of them): --no-commit as an arm's last, an inner and its first element, and absent from one arm and from both;
+ *    every other argv shape is NOT CLAIMED by this census. Both input arms' argv as the stand-in recorded them are held as today's
+ *    witness alone: each of those forms, and every other argv shape, in an argv the stand-in records (an arm launched without
+ *    --no-commit among them) is NOT CLAIMED by this census.
  *  G2-BINDING-USES: G2 (static) reads, per rf launch C1 finds under spawn in the module its rows plant, exactly as they write it,
  *    byte for byte (two launches, each a call by spawn's own name, its callee bare, with the string rf as its first argument, the
  *    one the initializer of a const in a module-level function declaration with export alone and the other of a let in another), in
@@ -667,11 +684,14 @@
  *    this census.
  *  G2-SINKS: G2 (run time) reads, after the abort, the typed cancel and the rf ids any process warning names during the launch;
  *    and the preview reading's keys and rf ids under all three receipt forms on stderr, and the rf ids each kill's typed error
- *    spells. It claims that reading exactly at the forms its rows plant: an rf id as a process warning's message (emitted under
- *    the name Receipt) and as its name (emitted with the message Receipt), each by process.emitWarning while the reader records,
- *    and an rf id in parentheses in a typed error's text, as its row writes it; an rf id only in a warning's code, detail or
- *    stack, a warning emitted before or after the reader records, every other warning form, and every outcome, preview reading and
- *    kill error other than those G2's witness reads today are NOT CLAIMED by this census.
+ *    spells. It claims that reading exactly at the forms its rows plant, each in its row's reading alone (the one warning its row
+ *    emits, alone in the recording its row makes, and the one text its row writes): an rf id as a process warning's message
+ *    (emitted under the name Receipt) and as its name (emitted with the message Receipt), each by process.emitWarning while the
+ *    reader records, and an rf id in parentheses in a typed error's text, as its row writes it; an rf id only in a warning's code,
+ *    detail or stack, a warning emitted before or after the reader records, every other warning form, and every outcome, preview
+ *    reading and kill error other than those G2's witness reads today are NOT CLAIMED by this census. Each of those forms in every
+ *    other reading - a recording that holds another warning beside its row's one warning, before or after it, and a recording made
+ *    around either arm's launch among them - is NOT CLAIMED by this census.
  * RESIDUALS (named, each with a pinned quiet row; ANCHOR holds every entry below to its table row word for word; a newly
  * found escape that contradicts no enumerated item is a residual-list addition):
  *  R-OPAQUE-LAUNCHER (C1): a launch function reaching a call other than as C1-LAUNCH-ROUTES reads it - for instance through a
@@ -710,8 +730,9 @@
  *    - for instance ChildProcess.prototype.spawn reached through an existing child with Object.getPrototypeOf - rewriting an rf
  *    launch's argv or program after its builder returns, under a condition this census does not set (an environment variable), is
  *    read by no C1 item: the static items read the launch, its builder and its module sites unchanged, and C1 (f) reads only the
- *    argv the stand-in records under this census's own environment (quiet row: such a patch added to a module beside an unchanged
- *    launch adds no launch site, inventory member, module site, opaque load, argv reading or registration).
+ *    argv the stand-in records under this census's own environment, held as today's witness alone (quiet row: such a patch added to
+ *    a module beside an unchanged launch adds no launch site, inventory member, module site, opaque load, argv reading or
+ *    registration).
  *  R-EVALUATED-SOURCE (C1): source text assembled at run time and evaluated (new Function, eval, vm, a Worker with eval), or an
  *    embedded string that neither calls require( nor getBuiltinModule(, is no module to the src readers (quiet row: a launch
  *    joined from parts and handed to new Function reads no embedded module, rf launch, inventory member, module site or opaque
@@ -748,12 +769,15 @@
  * capture either reads the -v `[rfo_...]` prefix or reconciles the rfr_ id through rf context show. Such a cut reds an UNTIL-THEN
  * pin only when it moves that pin's reading off today's witness: C1 when the reading of src or of both arms' recorded argv moves,
  * C2 or C3 when the scenario they drive through Pi's rf provider journals a captured reference, and R1 when that scenario's resume
- * names an id or the reconcile reads gain an operation-id read. Each C1 item claims its reading in its row's reading alone (exactly
- * the one module its row plants and no other, at its row's path and exactly as its row writes it, byte for byte), so whether such a
- * cut's launch in src - beside the provider's launch in its module, in another module of src or anywhere else - moves a surface a
- * C1 item names (a new rf launch, inventory member, child_process module site or opaque load, a changed argv, builder, builder
- * declaration, options, launching declaration text, reference or registration), and so reds C1, is NOT CLAIMED by this census; a
- * committing path built only through a named residual route moves none of them.
+ * names an id or the reconcile reads gain an operation-id read. Each C1 item claims its reading in its row's reading alone (for
+ * each src item but C1-DECLARATION-REFERENCES, exactly the one module its row plants and no other, at its row's path and exactly as
+ * its row writes it, byte for byte; for C1-DECLARATION-REFERENCES, exactly the modules its row plants and no other, in its row's
+ * order, each at its row's path and exactly as its row writes it, byte for byte, its launching module first; and for
+ * C1-RUNTIME-ARGV, which plants no module, exactly the argv arrays its row writes, as it writes them, with both arms' recorded argv
+ * held as today's witness alone), so whether such a cut's launch in src - beside the provider's launch in its module, in another
+ * module of src or anywhere else - moves a surface a C1 item names (a new rf launch, inventory member, child_process module site or
+ * opaque load, a changed argv, builder, builder declaration, options, launching declaration text, reference or registration), and
+ * so reds C1, is NOT CLAIMED by this census; a committing path built only through a named residual route moves none of them.
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch as the only PATH entry, and the reference
  * and planted children run this process's node directly; src and the tracker export are only read.
  */
@@ -3691,7 +3715,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "C1-RUNTIME-ARGV",
     pin: "C1",
-    words: "C1 (f) reads, at run time, both input arms' argv as the stand-in recorded them, and which arm's recorded argv lists no --no-commit. It claims that reading exactly at the forms its rows plant: --no-commit as an arm's last, an inner and its first element, and absent from one arm and from both; every other argv shape is NOT CLAIMED by this census.",
+    words: "C1 (f) reads, at run time, both input arms' argv as the stand-in recorded them, and which arm's recorded argv lists no --no-commit. It claims that reading exactly at the forms its rows plant, each in its row's reading alone (committingArms over exactly the argv arrays its row writes, as it writes them; its rows plant no module and the stand-in records none of them): --no-commit as an arm's last, an inner and its first element, and absent from one arm and from both; every other argv shape is NOT CLAIMED by this census. Both input arms' argv as the stand-in recorded them are held as today's witness alone: each of those forms, and every other argv shape, in an argv the stand-in records (an arm launched without --no-commit among them) is NOT CLAIMED by this census.",
     falsifier: async () => ({
       lastElement: committingArms({ legacy: ["context", "render", "--no-commit"], view: ["context", "render", "--view", "v"] }),
       innerElements: committingArms({ legacy: ["context", "--no-commit", "render"], view: ["--no-commit", "context", "render", "--view", "v"] }),
@@ -3981,7 +4005,7 @@ const ENUMERATION: readonly Item[] = [
   {
     id: "G2-SINKS",
     pin: "G2",
-    words: "G2 (run time) reads, after the abort, the typed cancel and the rf ids any process warning names during the launch; and the preview reading's keys and rf ids under all three receipt forms on stderr, and the rf ids each kill's typed error spells. It claims that reading exactly at the forms its rows plant: an rf id as a process warning's message (emitted under the name Receipt) and as its name (emitted with the message Receipt), each by process.emitWarning while the reader records, and an rf id in parentheses in a typed error's text, as its row writes it; an rf id only in a warning's code, detail or stack, a warning emitted before or after the reader records, every other warning form, and every outcome, preview reading and kill error other than those G2's witness reads today are NOT CLAIMED by this census.",
+    words: "G2 (run time) reads, after the abort, the typed cancel and the rf ids any process warning names during the launch; and the preview reading's keys and rf ids under all three receipt forms on stderr, and the rf ids each kill's typed error spells. It claims that reading exactly at the forms its rows plant, each in its row's reading alone (the one warning its row emits, alone in the recording its row makes, and the one text its row writes): an rf id as a process warning's message (emitted under the name Receipt) and as its name (emitted with the message Receipt), each by process.emitWarning while the reader records, and an rf id in parentheses in a typed error's text, as its row writes it; an rf id only in a warning's code, detail or stack, a warning emitted before or after the reader records, every other warning form, and every outcome, preview reading and kill error other than those G2's witness reads today are NOT CLAIMED by this census. Each of those forms in every other reading - a recording that holds another warning beside its row's one warning, before or after it, and a recording made around either arm's launch among them - is NOT CLAIMED by this census.",
     falsifier: async () => ({
       warning: await warningIdsDuring(async () => {
         process.emitWarning(STDERR_OPERATION, "Receipt");
@@ -4157,7 +4181,7 @@ const RESIDUALS: readonly Residual[] = [
   {
     id: "R-PROTOTYPE-PATCH",
     pins: ["C1"],
-    words: "a launcher or ChildProcess method patched on a shared prototype that the src readers never see written - for instance ChildProcess.prototype.spawn reached through an existing child with Object.getPrototypeOf - rewriting an rf launch's argv or program after its builder returns, under a condition this census does not set (an environment variable), is read by no C1 item: the static items read the launch, its builder and its module sites unchanged, and C1 (f) reads only the argv the stand-in records under this census's own environment (quiet row: such a patch added to a module beside an unchanged launch adds no launch site, inventory member, module site, opaque load, argv reading or registration).",
+    words: "a launcher or ChildProcess method patched on a shared prototype that the src readers never see written - for instance ChildProcess.prototype.spawn reached through an existing child with Object.getPrototypeOf - rewriting an rf launch's argv or program after its builder returns, under a condition this census does not set (an environment variable), is read by no C1 item: the static items read the launch, its builder and its module sites unchanged, and C1 (f) reads only the argv the stand-in records under this census's own environment, held as today's witness alone (quiet row: such a patch added to a module beside an unchanged launch adds no launch site, inventory member, module site, opaque load, argv reading or registration).",
     quiet: async () => {
       const existing = ['import { spawn } from "node:child_process";', 'export function launchDetached(): object { return spawn(process.execPath, ["-e", ""], { stdio: "ignore" }); }'];
       const escapes = [
