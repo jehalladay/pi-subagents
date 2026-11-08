@@ -1277,7 +1277,7 @@ function exportRowOf(jsonl: string): ExportRow {
   }
   throw new Error(`${EXPORT} holds no ${BEAD} row`);
 }
-const exportText = (): string => readFileSync(join(ROOT, EXPORT), "utf8");
+const exportText = (): string => trackerExportText(join(ROOT, EXPORT));
 /** The one " | "-separated segment of the export description with this leading label: a description with none, or with
  * two or more, fails. */
 function segment(description: string, label: string): string {
@@ -1857,3 +1857,5 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
     expect([...LISTED].sort()).toEqual(["-", "*", "+", "1.", "1)"].flatMap(marker => [`heading-note ${marker}`, `heading-table ${marker}`, `table ${marker}`]).sort());
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";
