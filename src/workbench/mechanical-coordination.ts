@@ -8,34 +8,51 @@
  * and reason the step names. A form no cited case plants is NOT CLAIMED, whatever a step's wording seems to cover; the code's
  * rule is described beside each step so a reader can find it, and the description is not a claim beyond the planted forms.
  *
+ * THE READ WINDOW (every count claimed below). The suite fakes setTimeout, setInterval and setImmediate around each call it
+ * plants and reads the call's counts (grant reads, loader calls, export calls, other exports' calls, provider handle calls and
+ * getter runs) only after the call has returned or thrown and every timer it scheduled has run, so a call deferred through
+ * one of those timers, a microtask or a next tick is counted (C-SETTLE reads a call a planted loader defers in each of those
+ * five ways, the setTimeout by sixty seconds). The grant read, the loader, every namespace function, every provider handle and
+ * every getter a case hands the boundary are then sealed: a call after the read is recorded, and C-LATE, the suite's last
+ * case, reads that none was made (and reads a planted late call).
+ *
  * THE REVIEWED CONTRACT. MECHANICAL_COORDINATION_REVIEWED_DIGESTS holds the SHA-256 of the three files MechanicalWorkflows
  * publishes for its pure coordination export, at origin/main 469ee2e5: contracts/entrypoints/coordination-reconcile.v1.json
  * (the descriptor) and the input and output schema files it names. C-1 holds the suite's vendored copies of the three files to
  * their git blob ids and these digests, and MECHANICAL_COORDINATION_ENTRY to the descriptor's id, export and schema names. The
  * boundary trusts no other bytes: the producer's descriptor and schemas are read from the host's files on every call, and a
- * file whose bytes are not the reviewed ones refuses. This module spells none of the producer's schema vocabulary; it judges
- * a value by the schema it read, through the keywords C-KEYWORDS lists.
+ * file whose bytes are not the reviewed ones refuses. Of the member names and enum values the two schema files define, the
+ * module's code (its identifiers and string literals; comments aside) spells exactly the fifteen C-SPELLING lists: the members
+ * the basis and budget echo reads (basis, workspaceId, revision, budget, compute, workers, queue and latencyMs), the
+ * resolution members its result type names (admitted, rejected, conflicts and budgetUsed), authority and code, which it spells
+ * as the observation's and the diagnostic's own members, and target, a local name of its schema judge. It spells no enum value
+ * of either file, and judges every other part of a value by the schema it read, through the keywords C-KEYWORDS lists. Its
+ * comments name schema words as prose, the enum value authorized-effect among them (steps 4 and 9).
  *
  * invokeMechanicalCoordination judges the steps below in order, and at the multi-fault calls C-ORDER plants the earliest failing
- * step's refusal is returned. A refusal is returned as {code: "mechanical-coordination-refused", field, reason}, frozen, with
- * exactly those members and field and reason from MECHANICAL_COORDINATION_FIELDS and MECHANICAL_COORDINATION_REASONS, so it
- * carries no path, member value or file text (read closed in every refusal case; C-VOCABULARY, C-TALLY). An error the loader or
- * the export throws propagates (L-THROWS).
- *  1. The separate read-only grant (EAT-R071). The host's grant read is called once (G-1, G-FIRST). Admitted: a read holding
- *     MECHANICAL_COORDINATION_GRANT, workbench:coordinate, alone or beside workbench:execute in either order, with the same
- *     observation (G-1, G-3). Refused missing-coordination-grant: workbench:execute, the blanket write grant function dispatch
- *     rests on, held alone (G-2, the mutant "reuse blanket write grant"); the empty list; and each of the 24 stand-ins
- *     G-STANDINS plants in the coordination grant's place, alone and beside workbench:execute. Refused unknown-permission-data:
- *     the 12 reads G-UNKNOWN plants. (The rule: an array of strings holding the grant by strict equality.) At G-FIRST's call (no
- *     coordination grant, a missing descriptor, schema directory and artifact, a malformed pin and an input of getters) the grant
- *     refusal returns with no pin or input getter run and no loader call.
+ * step's refusal is returned. It returns {ok, diagnostic} or {ok, observation}: an object of Object.prototype whose own keys
+ * are exactly those two, each an enumerable data member. A diagnostic is {code: "mechanical-coordination-refused", field,
+ * reason}, frozen, of Object.prototype, not a proxy, whose own keys (Reflect.ownKeys: string or symbol, enumerable or not) are
+ * exactly those three, each an enumerable data member holding a string, field and reason from MECHANICAL_COORDINATION_FIELDS
+ * and MECHANICAL_COORDINATION_REASONS, so it carries no path, member value or file text (readingOf in every refusal case;
+ * C-VOCABULARY, C-TALLY). An error the loader or the export throws propagates (L-THROWS).
+ *  1. The separate read-only grant (EAT-R071). The host's grant read is called once, as the host's method with no argument
+ *     (G-1, G-FIRST; every planted call reads its arguments). Admitted: a read holding MECHANICAL_COORDINATION_GRANT,
+ *     workbench:coordinate, alone or beside workbench:execute in either order, with the same observation (G-1, G-3). Refused
+ *     missing-coordination-grant: workbench:execute, the blanket write grant function dispatch rests on, held alone (G-2, the
+ *     mutant "reuse blanket write grant"); the empty list; and each of the 24 stand-ins G-STANDINS plants in the coordination
+ *     grant's place, alone and beside workbench:execute. Refused unknown-permission-data: the 12 reads G-UNKNOWN plants. (The
+ *     rule: an array of strings holding the grant by strict equality.) At G-FIRST's call (no coordination grant, a missing
+ *     descriptor, schema directory and artifact, a malformed pin and an input of getters) the grant refusal returns with no
+ *     input getter run, no loader call and no provider handle or other export called.
  *  2. The pin. Refused pin-malformed: the 13 artifact pins P-1 plants. (The rule: a string in MECHANICAL_DIGEST_PATTERN, the
  *     descriptor boundary's grammar.)
  *  3. The descriptor FILE. Refused descriptor unreadable: a missing path; not-a-file: a directory and a FIFO, read without
  *     blocking (D-READ). Refused digest-mismatch, with zero loader calls: the 19 byte-different descriptors D-DIGEST plants (the
  *     producer's JSON re-rendered, compacted, after a byte order mark, one member edited, extended or left out, among them
- *     another export, the development descriptor) and, in D-EXPORT, the producer descriptor naming each of the 16 other value
- *     exports of the coordination package and 12 near spellings of reconcile as its export (the mutant "allow arbitrary
+ *     another export, the development descriptor) and, in D-EXPORT, the producer descriptor naming as its export each of 16
+ *     value exports of the coordination package other than reconcile (OTHER_EXPORTS, a subset of the package's value exports;
+ *     how many the package holds is NOT CLAIMED) and each of 12 near spellings of reconcile (the mutant "allow arbitrary
  *     coordination exports").
  *  4. The two schema FILES, the descriptor's input and output schema names inside the host's schema directory, in that order.
  *     Refused unreadable under inputSchema or outputSchema: a missing directory and a missing file; not-a-file: a directory and a
@@ -55,38 +72,53 @@
  *  6. The artifact FILE. Refused artifact unreadable: a missing path; not-a-file: a directory and a FIFO (A-READ);
  *     digest-mismatch: one byte flipped after the pin was taken and the descriptor's digest as the artifact pin (A-DIGEST). The
  *     same bytes under another file name are admitted (L-1b).
- *  7. The host loader runs once with MECHANICAL_COORDINATION_ENTRY and a frozen {digest, bytes} holding the exact file bytes
- *     and the pinned digest (L-1). Of the loader results L-EXPORT plants, an empty object, a reconcile that is a string, a
- *     number, an object or null, an inherited reconcile, one under default, null, undefined and a string refuse loaded
- *     export-missing; a function holding reconcile, a frozen and a null-prototype object are admitted; a reconcile accessor
- *     refuses export-missing with its getter never run (L-EXPORT-ACCESSOR). In every case no export but reconcile is called.
- *  8. The export is called once, with an object equal to the input that is not the caller's, so a producer mutating its
- *     argument leaves the caller's input unchanged (R-ROUNDTRIP-COPIES).
+ *  7. The host loader is called once, with no receiver and exactly two arguments: MECHANICAL_COORDINATION_ENTRY and a frozen
+ *     {digest, bytes} of Object.prototype whose own keys are exactly those two, holding the exact file bytes and the pinned
+ *     digest (L-1, and every admitted call admittedOf reads). Of the loader results L-EXPORT plants, an empty object, a
+ *     reconcile that is a string, a number, an object or null, an inherited reconcile, one under default, null, undefined and a
+ *     string refuse loaded export-missing; a function holding reconcile, a frozen and a null-prototype object are admitted; a
+ *     reconcile accessor refuses export-missing with its getter never run (L-EXPORT-ACCESSOR). In every case no export but
+ *     reconcile is called.
+ *  8. The export is called once, with no receiver and exactly one argument: plain data equal to the input (every container
+ *     reachable from it through any own key a list of Array.prototype or a record of Object.prototype holding only enumerable
+ *     data members with string keys, none a function) that is not the caller's and shares no container with it, so a producer
+ *     mutating its argument leaves the caller's input unchanged (R-ROUNDTRIP-COPIES, and every admitted call admittedOf reads).
  *  9. The result. Refused resolution not-serialized-data: the 10 forms O-DATA plants (a promise from an async reconcile, a
  *     function, undefined, an own toJSON, an accessor, a Date member, the budget object reused as budgetUsed, a cycle, NaN, a
  *     class instance) and an extra member making the resolution 65 containers deep, where 64 deep reads schema-invalid
  *     (I-DEPTH). Refused schema-invalid: the 20 forms O-SCHEMA plants, an admitted intent declaring authorized-effect among
  *     them (X-AUTHORIZED). Refused basis-mismatch and budget-mismatch: another workspaceId or revision, and another value in
  *     each of the four budget dimensions; another budgetUsed is admitted (O-ECHO).
- * 10. Admitted: the observation {entry, authority, descriptorDigest, artifactDigest, resolution}: the entry's id,
- *     MECHANICAL_COORDINATION_AUTHORITY (observation-only), the reviewed descriptor digest, the pinned artifact digest and a
- *     resolution equal to what the export returned and not that object, frozen through every level and holding no function,
- *     equal to itself after a JSON round trip (R-ROUNDTRIP, R-ROUNDTRIP-COPIES).
+ * 10. Admitted: the observation, of Object.prototype, whose own keys are exactly entry, authority, descriptorDigest,
+ *     artifactDigest and resolution: the entry's id, MECHANICAL_COORDINATION_AUTHORITY (observation-only), the reviewed
+ *     descriptor digest, the pinned artifact digest and a resolution equal to what the export returned and not that object.
+ *     Every object reachable from it through any own key (string or symbol, enumerable or not) is frozen, not a proxy, a record
+ *     of Object.prototype or a list of Array.prototype, and holds only enumerable data members with string keys (a list's
+ *     length aside), none a function; it equals itself after a JSON round trip (R-ROUNDTRIP, R-ROUNDTRIP-COPIES, and readingOf
+ *     in every admitted case).
  *
  * OBSERVATION, NEVER AUTHORITY (EAT-R072). A resolution is a proposal. At X-NO-EFFECT's call, whose resolution admits a Beads
  * close, a Forge publish and a Furnace start, the three intents come back as data in an observation-only observation, and with
- * a provider handle for each action and every exact effect grant planted on the host no handle is called (the mutant
- * "auto-execute policy output as a command"); in every case the suite's provider handles see no call. The module's only function
- * export is invokeMechanicalCoordination (X-SURFACE), and it imports only the bindings X-IMPORTS lists (no process, network,
- * control or file-write module). An effect needs a separate resolver and exact authority this module does not provide.
+ * a provider handle for each action and every exact effect grant planted on the host no handle is called within the read
+ * window (the mutant "auto-execute policy output as a command"). In every call the suite plants, G-FIRST's and L-THROWS's
+ * included, the suite's provider handles see no call within it. The module's exports are exactly the eight X-SURFACE lists, and
+ * no export but invokeMechanicalCoordination is or holds a function through any own key, accessor or prototype; that function's
+ * own keys are its length and name. It imports only the bindings X-IMPORTS lists (import and export-from declarations,
+ * import-equals, import() and require, read through the TypeScript parser), and its code names none of the names X-NO-LOAD
+ * lists (process, globalThis, eval, Function, constructor, fetch, the timers and the rest), so it reaches no process, module,
+ * network, worker or timer facility through them. An effect needs a separate resolver and exact authority this module does
+ * not provide.
  *
  * NOT CLAIMED (explicitly partial; closure gate PI-COORDINATION-INSTALLED, external MW-COORDINATION): that a packed or installed
  * coordination package was read (every case hands a scratch file standing in for the artifact and a loader that imports
  * nothing); where a production pin, schema directory or descriptor comes from; the producer's resolution semantics (which
  * intents are admitted); a grant read, pin or host whose read throws or runs code; a grant revoked after the grant read; where
  * the files lie and whether a path passes through a link; file sizes; a loader result whose member read runs code other than
- * the accessor L-EXPORT-ACCESSOR plants (a proxy); a call without an options object of plain data members; and any form of a
- * step above that its cited cases do not plant.
+ * the accessor L-EXPORT-ACCESSOR plants (a proxy); a call without an options object of plain data members, or with members
+ * beyond the seven it reads; a call deferred through another clock (an abort signal's timeout, an atomics wait, a finalization
+ * callback) that lands after C-LATE ran, and a getter or other function a case does not hand the boundary that runs after its
+ * case's read; a facility reached through a member name computed at run time (X-NO-LOAD reads names as written); and any form
+ * of a step above that its cited cases do not plant.
  */
 import { createHash } from "node:crypto";
 import { constants } from "node:fs";
@@ -358,7 +390,8 @@ export async function invokeMechanicalCoordination(options: MechanicalCoordinati
   if (!artifact.ok) return artifact;
   const measured = digestOf(artifact.bytes);
   if (measured !== artifactDigest) return refused("artifact", "digest-mismatch");
-  const loaded = await options.loader(entry, Object.freeze({ digest: measured, bytes: artifact.bytes }));
+  const { loader } = options;
+  const loaded = await loader(entry, Object.freeze({ digest: measured, bytes: artifact.bytes }));
   const exported = (typeof loaded === "object" && loaded !== null) || typeof loaded === "function" ? dataMember(loaded, entry.export) : undefined;
   if (typeof exported !== "function") return refused("loaded", "export-missing");
   const produced: unknown = exported(JSON.parse(JSON.stringify(input)));

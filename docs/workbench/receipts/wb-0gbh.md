@@ -41,3 +41,32 @@
   - a host, pin or loader result whose member read runs code, other than the accessor rows the suite plants;
   - any form a step's cases do not plant.
 - Display paths added: none. The boundary returns closed-vocabulary diagnostics and data, and composes no label or reply text.
+
+## 2026-11-08 respin (cut #2): refusal #1's members pinned through a settled read window, sealed results and exact argument lists, two sentences restated (machine seat ws-11, run g10-work-s242)
+
+- Refusal #1 (gate run g10-gate-s243, seat gate-prep-13, on cut #1 3658beb9) found 18 one-edit members of `src/workbench/mechanical-coordination.ts` that kept the suite at 263 passed (items U1 to U5) and two false sentences (U6 and U7). Cut #2 pins each member red-first. The module changes one line of code: the loader is now called with no receiver, where cut #1 called it as a method of the options object. Its header is rewritten to claim exactly what the cases now pin.
+- U1, deferred calls. Each planted call now runs with setTimeout, setInterval and setImmediate faked. Its counts are read only after it has returned or thrown and every timer it scheduled has run; the read also yields to the real event loop, so microtasks and next ticks have run too. Every function a case hands the boundary is then sealed, and C-LATE, the last case, reads that none of them was called after its case's read. C-SETTLE reads a call that a planted loader defers in each of those five ways.
+- U2, hidden members. Results, diagnostics and observations are read through `Reflect.ownKeys`, with their descriptors and prototypes. A non-enumerable, symbol-keyed or inherited member, an accessor, an unfrozen container or a proxy anywhere in an observation reads as unsealed, and in a diagnostic as unclosed.
+- U3, the export surface and the import list. X-SURFACE pins the module's eight export names and walks every export through any own key, accessor and prototype for a function. X-IMPORTS also reads export-from and import-equals declarations and import type nodes. X-NO-LOAD reads that the module's code names none of a list of global names (process, globalThis, eval, Function, constructor, fetch, the timers and others).
+- U4, handed extras. Every recording function records its receiver and arguments. Every admitted call asserts that the loader was called with no receiver and exactly the entry and the artifact, and that reconcile was called with no receiver and exactly one argument: plain data, equal to the input, sharing no container with it. Every planted call asserts that the grant read was called as the host's method, with no argument.
+- U5. G-FIRST now asserts zero provider handle and export calls in the read window. L-THROWS's calls assert the same before their error is rethrown.
+- U6, restated. Entry 1's "The module spells none of the producer's schema vocabulary; the published files supply it at run time" is false. Of the member names and enum values the two schema files define, the module's code spells exactly fifteen member names and no enum value (C-SPELLING):
+  - basis, workspaceId, revision, budget, compute, workers, queue and latencyMs, which its basis and budget echo reads;
+  - admitted, rejected, conflicts and budgetUsed, which its result type names;
+  - authority and code, as the observation's and the diagnostic's own members;
+  - target, a local name in its schema judge.
+
+  Its comments also name the enum value authorized-effect.
+- U7, restated. Entry 1's module header and cut #1's D-EXPORT title said "the 16 other value exports of the coordination package"; the 16 are a subset. This seat counted the package index at the pin (blob 458913c5, read with a read-only `git cat-file`) with the TypeScript parser: 284 value exports, 283 other than reconcile. The suite reads no such count.
+- Claim boundary, entry 1. Its "reads the host's grants once", "calls the host loader once", "It calls the export once, with a copy of the input", "The result is returned as a frozen `observation-only` observation" and "no provider handle is called" now claim only what the module header's steps claim, read in the read window above. Its "it imports only the bindings X-IMPORTS lists" claims only the forms X-IMPORTS and X-NO-LOAD read. Its "answers with recording functions" holds for every case's loader except L-THROWS's, which reject or throw.
+- Tests: 268, cut #1's 263 plus C-SPELLING, C-READERS (each of the suite's readers flags its planted controls), X-NO-LOAD, C-SETTLE and C-LATE.
+- Red: the cut #2 suite against cut #1's module reads 26 failed | 242 passed (268). Every admitted case fails at the loader's receiver, cut #1's options object, which holds the host; C-TALLY fails as well. Each of refusal #1's 24 members alone on the entry commit's own suite reproduces the gate's reading: the 18 survivors and the -B variant at 0|263, and the five controls killed as the gate read them.
+- Falsification on the cut #2 tree: each member applied alone by exact anchor, the suite run, the module restored by sha256. 133 runs, 132 killed:
+  - refusal #1's 24 members, all killed (GP13-L-LOADER-EXTRA-ARG re-expressed on the new loader line);
+  - 35 seat members of the new pins, all killed;
+  - cut #1's 74 members, 73 killed; the survivor S-MINLENGTH-UNITS is equivalent, as entry 1 says.
+
+  The refusal's gate witness suite reads 10 of 10 on the cut #2 tree.
+- Not claimed: a call deferred through another clock that lands after C-LATE ran; a facility reached through a member name computed at run time; an options object holding members beyond the seven the boundary reads.
+- Explicitly partial, as entry 1 says: closure gate PI-COORDINATION-INSTALLED, external MW-COORDINATION.
+- Display paths added: none.

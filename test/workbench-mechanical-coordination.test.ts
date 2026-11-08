@@ -16,9 +16,9 @@
  * contracts/schemas/coordination-resolver-input.v1.schema.json and coordination-resolution.v1.schema.json. C-1 holds each to its
  * SHA-256 and git blob id, and the module's reviewed digests to the same SHA-256. Every case writes the three files (or a
  * planted edit of one) to a scratch directory and hands the boundary their paths. D-DIGEST also plants
- * test/fixtures/mw-development-entrypoint-v1.json, the B-descriptor suite's vendored development descriptor. D-EXPORT's names
- * are value exports of the coordination package's packages/coordination/src/index.ts at the same pin (blob 458913c5, read by
- * the cutting seat with the TypeScript parser).
+ * test/fixtures/mw-development-entrypoint-v1.json, the B-descriptor suite's vendored development descriptor. D-EXPORT's 16
+ * names are value exports of the coordination package's packages/coordination/src/index.ts at the same pin (blob 458913c5,
+ * read by the cutting seats with the TypeScript parser), a subset of them: no case reads how many the index holds.
  *
  * EXPLICITLY PARTIAL (closure gate PI-COORDINATION-INSTALLED; external MW-COORDINATION): no packed or installed coordination
  * package is read. Each case writes a scratch file standing in for the artifact, pins its SHA-256, and hands a loader that
@@ -28,8 +28,17 @@
  *
  * THE HOST of every case is a recording object: its grant read beside provider handles named after the Beads, Forge and
  * Furnace actions the planted proposals name (EFFECT_HANDLES), so a boundary that executed a proposal would call one. Every
- * call the suite plants asserts zero effect calls and zero calls of an export other than reconcile; X-NO-EFFECT also plants
- * every exact effect grant beside the coordination grant.
+ * function the suite hands the boundary records its receiver and arguments (recordCall).
+ *
+ * THE READ WINDOW (settled): each planted call runs with setTimeout, setInterval and setImmediate faked, and its counts are read
+ * only after it has returned or thrown and every timer it scheduled has run; the case's trace is then sealed, so a later call
+ * of one of its functions lands in LATE, which C-LATE, the last case, reads empty. Every call the suite plants, G-FIRST's and
+ * L-THROWS's included, asserts zero effect calls and zero calls of an export other than reconcile in that window, and one
+ * grant read as the host's method with no argument; every admitted call admittedOf reads asserts one loader call with no
+ * receiver and the entry and a sealed artifact as its two arguments, and one reconcile call with no receiver and one plain
+ * data argument equal to the input that shares no container with it. X-NO-EFFECT also plants every exact effect grant beside
+ * the coordination grant. C-SETTLE and C-LATE each read a planted control, and C-READERS shows each of the suite's readers
+ * (exactly, violationsOf, readingOf and sharesContainer) flagging its planted controls.
  *
  * Display paths added: none (the boundary returns closed-vocabulary diagnostics and data, and composes no label or reply text).
  */
@@ -37,8 +46,9 @@ import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { mkdirSync, readFileSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
+import { types } from "node:util";
 import ts from "typescript";
-import { afterAll, afterEach, describe, expect, it } from "vitest";
+import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
 import { EXECUTE_GRANT } from "../src/workbench/execute.js";
 import * as coordination from "../src/workbench/mechanical-coordination.js";
 import {
@@ -99,7 +109,7 @@ const withExport = (name: Json) => withImplementation(implementation => ({ ...im
 const INPUT_SCHEMA = JSON.parse(INPUT_SCHEMA_BYTES.toString("utf8")) as JsonRecord;
 const OUTPUT_SCHEMA = JSON.parse(OUTPUT_SCHEMA_BYTES.toString("utf8")) as JsonRecord;
 
-/** Value exports of the coordination package's index at the pin other than reconcile (D-EXPORT plants each as the descriptor's export). */
+/** Sixteen value exports of the coordination package's index at the pin other than reconcile, a subset of them (D-EXPORT plants each as the descriptor's export). */
 const OTHER_EXPORTS: readonly string[] = [
   "canonicalJson", "digest", "sequential", "parallel", "guarded", "alternative", "inhibit", "repeated", "replayTape", "validateEffectPermissions",
   "commitDurable", "runLandingQueue", "decidePromotion", "buildDecisionReceipts", "exportEpisodeForTraining", "publishReconciled",
@@ -188,40 +198,99 @@ interface Counts {
   effects: number;
   getters: number;
 }
+/** One call of a function the suite handed the boundary: its name, its receiver and its arguments. */
+interface Call {
+  readonly name: string;
+  readonly receiver: unknown;
+  readonly args: readonly unknown[];
+}
+/** What the recording reconcile read of its argument at its call, before the producer behind it ran. */
+interface Received {
+  readonly receiver: unknown;
+  readonly arity: number;
+  readonly violations: readonly string[];
+  readonly sharesCallerContainer: boolean;
+  readonly text: string | undefined;
+}
 interface Trace {
   readonly counts: Counts;
+  readonly calls: Call[];
   readonly loads: { readonly entry: MechanicalCoordinationEntry; readonly artifact: MechanicalCoordinationArtifact }[];
   readonly received: unknown[];
+  readonly receipts: Received[];
   readonly produced: unknown[];
+  /** Set once the case's counts are read (settled); a call after that lands in LATE. */
+  sealed: boolean;
 }
-const newTrace = (): Trace => ({ counts: { grants: 0, loads: 0, reconcile: 0, others: 0, effects: 0, getters: 0 }, loads: [], received: [], produced: [] });
+const newTrace = (): Trace => ({
+  counts: { grants: 0, loads: 0, reconcile: 0, others: 0, effects: 0, getters: 0 },
+  calls: [],
+  loads: [],
+  received: [],
+  receipts: [],
+  produced: [],
+  sealed: false,
+});
+/** Every call of a sealed trace's function, by name: C-LATE, the last case, reads it empty. */
+const LATE: string[] = [];
+/** Records one call of a function the suite handed the boundary; a call after its case's read also lands in LATE. */
+function recordCall(trace: Trace, name: string, receiver: unknown, args: readonly unknown[]): void {
+  if (trace.sealed) LATE.push(name);
+  trace.calls.push({ name, receiver, args: [...args] });
+}
+const callsNamed = (trace: Trace, name: string): readonly Call[] => trace.calls.filter(call => call.name === name);
 /** The recording host: its grant read and the provider handles (each records an effect call). */
 function hostOf(trace: Trace, grants: unknown): { grants(): unknown } & Record<string, unknown> {
-  const effect = (): undefined => {
-    trace.counts.effects += 1;
-    return undefined;
-  };
+  const effectOf = (label: string) =>
+    function (this: unknown, ...args: unknown[]): undefined {
+      recordCall(trace, `effect ${label}`, this, args);
+      trace.counts.effects += 1;
+      return undefined;
+    };
   const host: Record<string, unknown> = {
-    grants: () => {
+    grants(this: unknown, ...args: unknown[]): unknown {
+      recordCall(trace, "grants", this, args);
       trace.counts.grants += 1;
       return grants;
     },
   };
-  for (const [provider, actions] of Object.entries(EFFECT_HANDLES)) host[provider] = Object.fromEntries(actions.map(action => [action, effect]));
-  for (const name of EFFECT_FUNCTIONS) host[name] = effect;
+  for (const [provider, actions] of Object.entries(EFFECT_HANDLES)) host[provider] = Object.fromEntries(actions.map(action => [action, effectOf(`${provider}.${action}`)]));
+  for (const name of EFFECT_FUNCTIONS) host[name] = effectOf(name);
   return host as { grants(): unknown } & Record<string, unknown>;
 }
+/** A recording function counted as a call of an export other than reconcile. */
+const otherExportOf = (trace: Trace, name: string) =>
+  function (this: unknown, ...args: unknown[]): undefined {
+    recordCall(trace, `export ${name}`, this, args);
+    trace.counts.others += 1;
+    return undefined;
+  };
+/** Whether a value reaches a container (object or list) the caller's input reaches. */
+function sharesContainer(value: unknown, callerInput: unknown): boolean {
+  const callers = new Set<object>();
+  const collect = (node: unknown): void => {
+    if (typeof node !== "object" || node === null || callers.has(node)) return;
+    callers.add(node);
+    for (const key of Reflect.ownKeys(node)) collect(Object.getOwnPropertyDescriptor(node, key)?.value);
+  };
+  collect(callerInput);
+  const seen = new Set<object>();
+  const reaches = (node: unknown): boolean => {
+    if (typeof node !== "object" || node === null || seen.has(node)) return false;
+    seen.add(node);
+    return callers.has(node) || Reflect.ownKeys(node).some(key => reaches(Object.getOwnPropertyDescriptor(node, key)?.value));
+  };
+  return reaches(value);
+}
 /** The recording namespace: reconcile running the producer function given, and every other export a recording function. */
-function namespaceOf(trace: Trace, produce: (input: unknown) => unknown): Record<string, unknown> {
+function namespaceOf(trace: Trace, produce: (input: unknown) => unknown, callerInput: unknown): Record<string, unknown> {
   const namespace: Record<string, unknown> = {};
-  for (const name of OTHER_EXPORTS) {
-    namespace[name] = () => {
-      trace.counts.others += 1;
-      return undefined;
-    };
-  }
-  namespace[MECHANICAL_COORDINATION_ENTRY.export] = (input: unknown) => {
+  for (const name of OTHER_EXPORTS) namespace[name] = otherExportOf(trace, name);
+  namespace[MECHANICAL_COORDINATION_ENTRY.export] = function (this: unknown, ...args: unknown[]): unknown {
+    recordCall(trace, "reconcile", this, args);
     trace.counts.reconcile += 1;
+    const [input] = args;
+    trace.receipts.push({ receiver: this, arity: args.length, violations: violationsOf(input, false), sharesCallerContainer: sharesContainer(input, callerInput), text: JSON.stringify(input) });
     trace.received.push(input);
     const output = produce(input);
     trace.produced.push(output);
@@ -271,20 +340,45 @@ interface Plant {
   readonly input?: unknown;
   /** The producer behind the namespace's reconcile; the stand-in unless given. */
   readonly produce?: (input: unknown) => unknown;
-  /** The loader's result, given the recording namespace; the namespace unless given. */
-  readonly namespace?: (recording: Record<string, unknown>) => unknown;
+  /** The loader's result, given the recording namespace and a recording function counted as another export's; the namespace unless given. */
+  readonly namespace?: (recording: Record<string, unknown>, other: () => unknown) => unknown;
   /** A loader replacing the recording one. */
   readonly loader?: MechanicalCoordinationLoader;
 }
 interface Planted {
   readonly result: MechanicalCoordinationResult;
   readonly trace: Trace;
+  readonly host: Record<string, unknown>;
   readonly input: unknown;
   readonly artifactBytes: Buffer;
   readonly pin: string;
 }
-/** Writes the planted files to a fresh scratch directory and calls the boundary once with the recording host and loader. */
-async function plant(p: Plant = {}): Promise<Planted> {
+/** The timers the suite fakes around each planted call (THE READ WINDOW). */
+const FAKED_TIMERS = ["setTimeout", "clearTimeout", "setInterval", "clearInterval", "setImmediate", "clearImmediate"] as const;
+type Settled = { readonly ok: true; readonly result: MechanicalCoordinationResult } | { readonly ok: false; readonly error: unknown };
+/**
+ * THE READ WINDOW: runs one boundary call with FAKED_TIMERS faked, waits for it to return or throw, runs every timer it
+ * scheduled (vitest's runAllTimersAsync, which also yields to the real event loop, so microtasks and next ticks run), restores
+ * the real timers and seals the trace, so the counts read next include every call those deferred and a later call lands in LATE.
+ */
+async function settled(trace: Trace, call: () => Promise<MechanicalCoordinationResult>): Promise<Settled> {
+  vi.useFakeTimers({ toFake: [...FAKED_TIMERS] });
+  let outcome: Settled;
+  try {
+    outcome = { ok: true, result: await call() };
+  } catch (error) {
+    outcome = { ok: false, error };
+  }
+  try {
+    await vi.runAllTimersAsync();
+  } finally {
+    vi.useRealTimers();
+    trace.sealed = true;
+  }
+  return outcome;
+}
+/** Writes the planted files to a fresh scratch directory and calls the boundary once with the recording host and loader, settled. */
+async function plantSettled(p: Plant = {}): Promise<{ readonly outcome: Settled; readonly trace: Trace; readonly host: Record<string, unknown>; readonly input: unknown; readonly artifactBytes: Buffer; readonly pin: string }> {
   const dir = scratch();
   const schemas = join(dir, "contracts", "schemas");
   const layout: Layout = {
@@ -304,39 +398,111 @@ async function plant(p: Plant = {}): Promise<Planted> {
   const exact = digestOf(artifactBytes);
   p.arrange?.(layout);
   const input = Object.hasOwn(p, "input") ? p.input : validInput();
-  const recording = namespaceOf(trace, p.produce ?? standIn);
+  const recording = namespaceOf(trace, p.produce ?? standIn, input);
+  const custom = p.loader;
   const loader: MechanicalCoordinationLoader =
-    p.loader ??
-    (async (entry, artifact) => {
-      trace.counts.loads += 1;
-      trace.loads.push({ entry, artifact });
-      return p.namespace === undefined ? recording : p.namespace(recording);
-    });
-  const result = await invokeMechanicalCoordination({
-    host: hostOf(trace, Object.hasOwn(p, "grants") ? p.grants : [MECHANICAL_COORDINATION_GRANT]),
-    descriptorPath: p.descriptorPath === undefined ? layout.descriptor : p.descriptorPath(layout),
-    schemaDirectory: p.schemaDirectory === undefined ? layout.schemas : p.schemaDirectory(layout),
-    artifactPath: p.artifactPath === undefined ? layout.artifact : p.artifactPath(layout),
-    artifactDigest: (p.pin === undefined ? exact : p.pin(exact)) as string,
-    input,
-    loader,
-  });
+    custom === undefined
+      ? async function (this: unknown, ...args: unknown[]): Promise<unknown> {
+          recordCall(trace, "loader", this, args);
+          trace.counts.loads += 1;
+          trace.loads.push({ entry: args[0] as MechanicalCoordinationEntry, artifact: args[1] as MechanicalCoordinationArtifact });
+          return p.namespace === undefined ? recording : p.namespace(recording, otherExportOf(trace, "(the loaded value)"));
+        }
+      : function (this: unknown, ...args: unknown[]): Promise<unknown> {
+          recordCall(trace, "loader", this, args);
+          trace.counts.loads += 1;
+          return custom(args[0] as MechanicalCoordinationEntry, args[1] as MechanicalCoordinationArtifact);
+        };
+  const host = hostOf(trace, Object.hasOwn(p, "grants") ? p.grants : [MECHANICAL_COORDINATION_GRANT]);
+  const outcome = await settled(trace, () =>
+    invokeMechanicalCoordination({
+      host,
+      descriptorPath: p.descriptorPath === undefined ? layout.descriptor : p.descriptorPath(layout),
+      schemaDirectory: p.schemaDirectory === undefined ? layout.schemas : p.schemaDirectory(layout),
+      artifactPath: p.artifactPath === undefined ? layout.artifact : p.artifactPath(layout),
+      artifactDigest: (p.pin === undefined ? exact : p.pin(exact)) as string,
+      input,
+      loader,
+    }),
+  );
+  return { outcome, trace, host, input, artifactBytes, pin: exact };
+}
+/**
+ * plantSettled, then the reads every planted call makes in the read window: no provider handle and no export but reconcile is
+ * called, and the grant read is called once, as the host's method, with no argument; a thrown error is then rethrown.
+ */
+async function plant(p: Plant = {}): Promise<Planted> {
+  const { outcome, trace, host, input, artifactBytes, pin } = await plantSettled(p);
   expect([trace.counts.effects, trace.counts.others], "no provider handle and no export but reconcile is called").toEqual([0, 0]);
-  return { result, trace, input, artifactBytes, pin: exact };
+  expect(callsNamed(trace, "grants").map(call => [call.receiver === host, call.args.length]), "one grant read, as the host's method, with no argument").toEqual([[true, 0]]);
+  if (!outcome.ok) throw outcome.error;
+  return { result: outcome.result, trace, host, input, artifactBytes, pin };
 }
 
 /** Every (field, reason) pair a case of this suite observed, for C-TALLY. */
 const OBSERVED_PAIRS = new Set<string>();
 /** Every table row that ran, for the closing each-liveness tally. */
 const RAN = new Set<string>();
+/** A key as text: a string itself, a symbol through its description. */
+const keyText = (key: string | symbol): string => (typeof key === "string" ? key : key.toString());
 /**
- * A result's reading: "admitted", or "<field> <reason>" when its diagnostic is closed (exactly code, field and reason in that
- * order, the code mechanical-coordination-refused, frozen), else "unclosed <field> <reason>".
+ * Why a value is not plain data: each object reachable from it through any own key (string or symbol, enumerable or not) must
+ * not be a proxy, must be a record of Object.prototype or a list of Array.prototype, and must hold only enumerable data members
+ * with string keys (a list's length aside), none a function; sealed also requires each such object frozen.
+ */
+function violationsOf(value: unknown, sealed: boolean, path = "$", seen = new Set<object>()): string[] {
+  if (typeof value === "function") return [`${path}: function`];
+  if (typeof value !== "object" || value === null || seen.has(value)) return [];
+  seen.add(value);
+  if (types.isProxy(value)) return [`${path}: proxy`];
+  const found: string[] = [];
+  const list = Array.isArray(value);
+  if (Object.getPrototypeOf(value) !== (list ? Array.prototype : Object.prototype)) found.push(`${path}: prototype`);
+  if (sealed && !Object.isFrozen(value)) found.push(`${path}: unfrozen`);
+  for (const key of Reflect.ownKeys(value)) {
+    const at = `${path}.${keyText(key)}`;
+    if (typeof key === "symbol") found.push(`${at}: symbol key`);
+    const descriptor = Object.getOwnPropertyDescriptor(value, key);
+    if (descriptor === undefined) continue;
+    if (!Object.hasOwn(descriptor, "value")) {
+      found.push(`${at}: accessor`);
+      continue;
+    }
+    if (descriptor.enumerable !== true && !(list && key === "length")) found.push(`${at}: hidden`);
+    found.push(...violationsOf(descriptor.value, sealed, at, seen));
+  }
+  return found;
+}
+/** Whether an object is of Object.prototype, not a proxy, and its own keys are exactly the names given, each an enumerable data member. */
+function exactly(value: unknown, names: readonly string[]): boolean {
+  if (typeof value !== "object" || value === null || types.isProxy(value) || Object.getPrototypeOf(value) !== Object.prototype) return false;
+  const keys = Reflect.ownKeys(value);
+  if (keys.map(keyText).join(",") !== names.join(",") || keys.some(key => typeof key !== "string")) return false;
+  return keys.every(key => {
+    const descriptor = Object.getOwnPropertyDescriptor(value, key);
+    return descriptor !== undefined && descriptor.enumerable === true && Object.hasOwn(descriptor, "value");
+  });
+}
+const OBSERVATION_KEYS = ["entry", "authority", "descriptorDigest", "artifactDigest", "resolution"] as const;
+/**
+ * A result's reading. An admitted result reads "admitted" when it is {ok, observation} exactly and its observation has exactly
+ * the five own keys and is sealed plain data (violationsOf), else "unsealed admitted". A refusal reads "<field> <reason>" when
+ * it is {ok, diagnostic} exactly and its diagnostic is closed (frozen, exactly code, field and reason, each a string, the code
+ * mechanical-coordination-refused), else "unclosed <field> <reason>".
  */
 function readingOf(result: MechanicalCoordinationResult): string {
-  if (result.ok) return "admitted";
+  if (result.ok) {
+    const sealedObservation = exactly(result, ["ok", "observation"]) && exactly(result.observation, OBSERVATION_KEYS) && violationsOf(result.observation, true).length === 0;
+    return sealedObservation ? "admitted" : "unsealed admitted";
+  }
   const { diagnostic } = result;
-  const closed = Object.keys(diagnostic).join(",") === "code,field,reason" && diagnostic.code === "mechanical-coordination-refused" && Object.isFrozen(diagnostic);
+  const members = Reflect.ownKeys(diagnostic).map(key => Object.getOwnPropertyDescriptor(diagnostic, key)?.value);
+  const closed =
+    exactly(result, ["ok", "diagnostic"]) &&
+    exactly(diagnostic, ["code", "field", "reason"]) &&
+    Object.isFrozen(diagnostic) &&
+    members.every(member => typeof member === "string") &&
+    diagnostic.code === "mechanical-coordination-refused";
   OBSERVED_PAIRS.add(`${diagnostic.field} ${diagnostic.reason}`);
   return `${closed ? "" : "unclosed "}${diagnostic.field} ${diagnostic.reason}`;
 }
@@ -346,11 +512,23 @@ async function refusalOf(p: Plant): Promise<{ readonly reading: string; readonly
   return { reading: readingOf(result), loads: trace.counts.loads, reconcile: trace.counts.reconcile, others: trace.counts.others, effects: trace.counts.effects };
 }
 const refusedQuietly = (reading: string) => ({ reading, loads: 0, reconcile: 0, others: 0, effects: 0 });
-/** An admitted call's trace: loaded once, reconcile called once, no other export and no effect called. */
+/**
+ * An admitted call's trace: loaded once, reconcile called once, no other export and no effect called; the loader called with
+ * no receiver and exactly the entry and the artifact (of Object.prototype, frozen, exactly digest and bytes); reconcile called
+ * with no receiver and exactly one argument, plain data equal to the input's JSON copy that shares no container with it, as
+ * the recording reconcile read it at its call.
+ */
 async function admittedOf(p: Plant): Promise<Planted> {
   const planted = await plant(p);
   expect(readingOf(planted.result)).toBe("admitted");
   expect([planted.trace.counts.loads, planted.trace.counts.reconcile, planted.trace.counts.others, planted.trace.counts.effects]).toEqual([1, 1, 0, 0]);
+  const loads = callsNamed(planted.trace, "loader").map(call => {
+    const [entry, artifact] = call.args;
+    return [call.receiver, call.args.length, entry === MECHANICAL_COORDINATION_ENTRY, exactly(artifact, ["digest", "bytes"]) && Object.isFrozen(artifact)];
+  });
+  expect(loads, "the loader: no receiver, the entry and a sealed artifact").toEqual([[undefined, 2, true, true]]);
+  const receipts = planted.trace.receipts.map(receipt => [receipt.receiver, receipt.arity, receipt.violations, receipt.sharesCallerContainer, receipt.text === undefined ? undefined : JSON.parse(receipt.text)]);
+  expect(receipts, "reconcile: no receiver, one plain data argument equal to the input, sharing no container with it").toEqual([[undefined, 1, [], false, JSON.parse(JSON.stringify(planted.input))]]);
   return planted;
 }
 /** A JSON record with one value at a path replaced or deleted (for the edits below). */
@@ -369,11 +547,18 @@ const deleteAt = (value: JsonRecord, path: readonly (string | number)[]): JsonRe
   editAt(value, path, (holder, key) => {
     delete holder[key];
   });
-/** Whether every object and array reachable from a value is frozen and no function is reachable. */
-function inert(value: unknown): boolean {
-  if (typeof value === "function") return false;
-  if (typeof value !== "object" || value === null) return true;
-  return Object.isFrozen(value) && Object.values(value).every(inert);
+/** The module's text, read by C-SPELLING, X-IMPORTS and X-NO-LOAD. */
+const MODULE_TEXT = readFileSync(new URL("../src/workbench/mechanical-coordination.ts", import.meta.url), "utf8");
+/** A module's code tokens: every identifier (property names included), private identifier and string literal text, read through the TypeScript parser; comments are not tokens. */
+function codeTokensOf(text: string): Set<string> {
+  const source = ts.createSourceFile("module.ts", text, ts.ScriptTarget.ES2022, true, ts.ScriptKind.TS);
+  const tokens = new Set<string>();
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node) || ts.isStringLiteralLike(node)) tokens.add(node.text);
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return tokens;
 }
 
 // ---- C: the reviewed contract ---------------------------------------------------------------------------------------------------
@@ -415,6 +600,73 @@ describe("C: the reviewed contract", () => {
       "unknown-permission-data", "missing-coordination-grant", "pin-malformed", "unreadable", "not-a-file", "digest-mismatch", "not-serialized-data",
       "schema-invalid", "export-missing", "basis-mismatch", "budget-mismatch",
     ]);
+  });
+
+  /** The fifteen member names of the producer schema files the module's code spells (C-SPELLING), sorted. */
+  const SPELLED = ["admitted", "authority", "basis", "budget", "budgetUsed", "code", "compute", "conflicts", "latencyMs", "queue", "rejected", "revision", "target", "workers", "workspaceId"];
+  /** The member names (every key of a properties keyword, $defs included) and string enum values of the two producer schema files. */
+  function schemaVocabulary(): { readonly members: Set<string>; readonly values: Set<string> } {
+    const members = new Set<string>();
+    const values = new Set<string>();
+    const visit = (node: unknown): void => {
+      if (Array.isArray(node)) {
+        for (const item of node) visit(item);
+        return;
+      }
+      if (typeof node !== "object" || node === null) return;
+      for (const [key, child] of Object.entries(node)) {
+        if (key === "properties" && typeof child === "object" && child !== null) for (const name of Object.keys(child)) members.add(name);
+        if (key === "enum" && Array.isArray(child)) for (const value of child) if (typeof value === "string") values.add(value);
+        visit(child);
+      }
+    };
+    visit(INPUT_SCHEMA);
+    visit(OUTPUT_SCHEMA);
+    return { members, values };
+  }
+  it("C-SPELLING: of the member names and enum values the two producer schema files define, the module's code (identifiers, property names and string literals, read through the TypeScript parser; comments aside) spells exactly the fifteen names SPELLED lists and no enum value", () => {
+    const { members, values } = schemaVocabulary();
+    expect([members.size, values.size]).toEqual([34, 9]);
+    const tokens = codeTokensOf(MODULE_TEXT);
+    expect([[...members].filter(name => tokens.has(name)).sort(), [...values].filter(value => tokens.has(value))]).toEqual([SPELLED, []]);
+    // The reader's controls: a planted line reads the member and the value it spells in code, and nothing in its comment.
+    const planted = codeTokensOf('// workers queue\nconst stale = intent.expectedRevision !== "propose-only";\n');
+    expect([[...members].filter(name => planted.has(name)).sort(), [...values].filter(value => planted.has(value))]).toEqual([["expectedRevision", "intent"], ["propose-only"]]);
+  });
+
+  it("C-READERS: the suite's readers flag their planted controls (exactly, violationsOf, readingOf and sharesContainer)", () => {
+    const hidden = Object.defineProperty({ a: 1 }, "h", { value: 1 });
+    const symbolKeyed = { a: 1, [Symbol.for("s")]: 1 };
+    const accessor = Object.defineProperty({}, "a", { enumerable: true, get: () => 1 });
+    const inherited = Object.assign(Object.create({ apply: () => undefined }) as object, { a: 1 });
+    const proxied = new Proxy({ a: 1 }, {});
+    expect([exactly({ a: 1 }, ["a"]), ...[hidden, symbolKeyed, accessor, inherited, proxied].map(value => exactly(value, ["a"]))]).toEqual([true, false, false, false, false, false]);
+    expect([hidden, symbolKeyed, accessor, inherited, proxied, { f: () => undefined }].map(value => violationsOf(value, false))).toEqual([
+      ["$.h: hidden"],
+      ["$.Symbol(s): symbol key"],
+      ["$.a: accessor"],
+      ["$: prototype"],
+      ["$: proxy"],
+      ["$.f: function"],
+    ]);
+    expect([violationsOf(Object.freeze({ list: Object.freeze([1]) }), true), violationsOf({ list: [1] }, true)]).toEqual([[], ["$: unfrozen", "$.list: unfrozen"]]);
+    const refusal = (diagnostic: object): MechanicalCoordinationResult => ({ ok: false, diagnostic }) as MechanicalCoordinationResult;
+    const members = { code: "mechanical-coordination-refused", field: "pin", reason: "pin-malformed" };
+    expect([readingOf(refusal(Object.freeze({ ...members }))), readingOf(refusal(Object.freeze(Object.defineProperty({ ...members }, "where", { value: "/a/path" }))))]).toEqual([
+      "pin pin-malformed",
+      "unclosed pin pin-malformed",
+    ]);
+    const admission = (edit: (observation: object) => void): MechanicalCoordinationResult => {
+      const observation = { entry: "e", authority: "observation-only", descriptorDigest: "d", artifactDigest: "a", resolution: Object.freeze({ admitted: Object.freeze([]) }) };
+      edit(observation);
+      return { ok: true, observation: Object.freeze(observation) } as unknown as MechanicalCoordinationResult;
+    };
+    expect([readingOf(admission(() => undefined)), readingOf(admission(observation => Object.defineProperty(observation, "apply", { value: () => undefined })))]).toEqual([
+      "admitted",
+      "unsealed admitted",
+    ]);
+    const caller = { basis: { workspaceId: "demo" } };
+    expect([sharesContainer({ basis: caller.basis }, caller), sharesContainer(structuredClone(caller), caller)]).toEqual([true, false]);
   });
 });
 
@@ -501,28 +753,35 @@ describe("G: EAT-R071 - a separate read-only grant, never the blanket write gran
     RAN.add(`G-UNKNOWN:${label}`);
   });
 
-  it("G-FIRST: a missing grant refuses before the pin, the descriptor, the schemas, the input or the artifact is read (no input getter runs, no loader call)", async () => {
+  it("G-FIRST: a missing grant refuses before the pin, the descriptor, the schemas, the input or the artifact is read: no input getter runs, no loader is called, and no provider handle or export is called within the read window", async () => {
     const trace = newTrace();
     const input = {
       get basis() {
+        recordCall(trace, "getter basis", undefined, []);
         trace.counts.getters += 1;
         return { workspaceId: "demo", revision: "head-1" };
       },
     };
     const missing = scratch();
-    const result = await invokeMechanicalCoordination({
-      host: hostOf(trace, [EXECUTE_GRANT]),
-      descriptorPath: join(missing, "absent.json"),
-      schemaDirectory: join(missing, "absent"),
-      artifactPath: join(missing, "absent.tgz"),
-      artifactDigest: "not-a-digest",
-      input,
-      loader: async () => {
-        trace.counts.loads += 1;
-        return {};
-      },
-    });
-    expect([readingOf(result), trace.counts.getters, trace.counts.loads, trace.counts.grants]).toEqual(["grants missing-coordination-grant", 0, 0, 1]);
+    const host = hostOf(trace, [EXECUTE_GRANT]);
+    const outcome = await settled(trace, () =>
+      invokeMechanicalCoordination({
+        host,
+        descriptorPath: join(missing, "absent.json"),
+        schemaDirectory: join(missing, "absent"),
+        artifactPath: join(missing, "absent.tgz"),
+        artifactDigest: "not-a-digest",
+        input,
+        loader: async function (this: unknown, ...args: unknown[]): Promise<unknown> {
+          recordCall(trace, "loader", this, args);
+          trace.counts.loads += 1;
+          return { reconcile: otherExportOf(trace, "reconcile") };
+        },
+      }),
+    );
+    if (!outcome.ok) throw outcome.error;
+    expect([readingOf(outcome.result), trace.counts.getters, trace.counts.loads, trace.counts.grants, trace.counts.effects, trace.counts.others]).toEqual(["grants missing-coordination-grant", 0, 0, 1, 0, 0]);
+    expect(trace.calls.map(call => [call.name, call.receiver === host, call.args.length])).toEqual([["grants", true, 0]]);
   });
 });
 
@@ -587,7 +846,7 @@ describe("D and S: EAT-R071 - only the reviewed descriptor and schema bytes, so 
   });
 
   const NEAR_EXPORTS: readonly Json[] = ["Reconcile", "RECONCILE", "reconcile ", " reconcile", "reconcil", "reconcileAll", "reconcile2", "default", "*", "", "__proto__", "constructor"];
-  it("D-EXPORT: the producer descriptor naming each of the 16 other value exports of the coordination package, or each of 12 near spellings of reconcile, as its export refuses descriptor digest-mismatch with zero loader calls and no export called (the mutant 'allow arbitrary coordination exports')", async () => {
+  it("D-EXPORT: the producer descriptor naming as its export each of 16 value exports of the coordination package other than reconcile (a subset of them), or each of 12 near spellings of reconcile, refuses descriptor digest-mismatch with zero loader calls and no export called (the mutant 'allow arbitrary coordination exports')", async () => {
     expect([OTHER_EXPORTS.length, new Set(OTHER_EXPORTS).size, OTHER_EXPORTS.includes(MECHANICAL_COORDINATION_ENTRY.export), NEAR_EXPORTS.length]).toEqual([16, 16, false, 12]);
     const readings: string[] = [];
     let calls = 0;
@@ -667,7 +926,8 @@ describe("I: EAT-R071 - only serialized data valid against the published input s
     memory.self = memory;
     return memoryOf(memory);
   };
-  const getterTrace = { reads: 0 };
+  /** The accessor row's getter runs; sealed once its row's counts are read, so a later run lands in LATE. */
+  const getterTrace = { reads: 0, sealed: false };
   const DATA: readonly (readonly [string, () => unknown])[] = [
     ["the input itself a function", () => () => validInput()],
     ["a function as memory", () => memoryOf(() => 1)],
@@ -689,6 +949,7 @@ describe("I: EAT-R071 - only serialized data valid against the published input s
           Object.defineProperty({}, "value", {
             enumerable: true,
             get: () => {
+              if (getterTrace.sealed) LATE.push("getter I-DATA");
               getterTrace.reads += 1;
               return getterTrace.reads;
             },
@@ -719,8 +980,10 @@ describe("I: EAT-R071 - only serialized data valid against the published input s
   ];
   it.each(DATA)("I-DATA %s: refused input not-serialized-data with zero loader calls and no getter run (the six function rows and the own toJSON are the 'callable inputs')", async (label, input) => {
     getterTrace.reads = 0;
+    getterTrace.sealed = false;
     expect(await refusalOf({ input: input() })).toEqual(refusedQuietly("input not-serialized-data"));
     expect(getterTrace.reads).toBe(0);
+    getterTrace.sealed = true;
     RAN.add(`I-DATA:${label}`);
   });
 
@@ -845,12 +1108,18 @@ describe("A and L: EAT-R071 - the exact pinned artifact bytes, loaded once, its 
     expect(await refusalOf({ pin: () => MECHANICAL_COORDINATION_REVIEWED_DIGESTS.descriptor })).toEqual(refusedQuietly("artifact digest-mismatch"));
   });
 
-  it("L-1: the loader runs once with the reviewed entry and the exact bytes it measured with their digest, frozen; only reconcile is called, once", async () => {
+  it("L-1: the loader runs once with the reviewed entry and the exact bytes it measured with their digest, frozen, with exactly those two own keys; only reconcile is called, once", async () => {
     const { trace, artifactBytes, pin } = await admittedOf({});
     expect(trace.loads).toHaveLength(1);
     const [load] = trace.loads;
     expect(load?.entry).toBe(MECHANICAL_COORDINATION_ENTRY);
-    expect([load?.artifact.digest, Buffer.from(load?.artifact.bytes ?? []).equals(artifactBytes), Object.isFrozen(load?.artifact), Object.keys(load?.artifact ?? {})]).toEqual([pin, true, true, ["digest", "bytes"]]);
+    expect([load?.artifact.digest, Buffer.from(load?.artifact.bytes ?? []).equals(artifactBytes), Object.isFrozen(load?.artifact), Reflect.ownKeys(load?.artifact ?? {}), Object.getPrototypeOf(load?.artifact)]).toEqual([
+      pin,
+      true,
+      true,
+      ["digest", "bytes"],
+      Object.prototype,
+    ]);
   });
 
   it("L-1b: the same bytes under another file name are admitted (the pin is over bytes, not the name)", async () => {
@@ -864,7 +1133,7 @@ describe("A and L: EAT-R071 - the exact pinned artifact bytes, loaded once, its 
   });
 
   const reconcileOf = (recording: Record<string, unknown>): unknown => recording[MECHANICAL_COORDINATION_ENTRY.export];
-  const EXPORTS: readonly (readonly [string, string, (recording: Record<string, unknown>) => unknown])[] = [
+  const EXPORTS: readonly (readonly [string, string, (recording: Record<string, unknown>, other: () => unknown) => unknown])[] = [
     ["an empty object", "loaded export-missing", () => ({})],
     ["reconcile a string", "loaded export-missing", () => ({ reconcile: "reconcile" })],
     ["reconcile a number", "loaded export-missing", () => ({ reconcile: 1 })],
@@ -875,7 +1144,7 @@ describe("A and L: EAT-R071 - the exact pinned artifact bytes, loaded once, its 
     ["null", "loaded export-missing", () => null],
     ["undefined", "loaded export-missing", () => undefined],
     ["a string", "loaded export-missing", () => "reconcile"],
-    ["a function holding reconcile", "admitted", recording => Object.assign(() => undefined, { reconcile: reconcileOf(recording) })],
+    ["a function holding reconcile", "admitted", (recording, other) => Object.assign(other, { reconcile: reconcileOf(recording) })],
     ["a frozen object", "admitted", recording => Object.freeze({ ...recording })],
     ["a null-prototype object", "admitted", recording => Object.assign(Object.create(null) as object, recording)],
   ];
@@ -888,16 +1157,19 @@ describe("A and L: EAT-R071 - the exact pinned artifact bytes, loaded once, its 
 
   it("L-EXPORT-ACCESSOR: a reconcile accessor is not read: its getter never runs and the call refuses loaded export-missing", async () => {
     let reads = 0;
+    let sealed = false;
     const { result, trace } = await plant({
       namespace: recording =>
         Object.defineProperty({}, "reconcile", {
           enumerable: true,
           get: () => {
+            if (sealed) LATE.push("getter L-EXPORT-ACCESSOR");
             reads += 1;
             return recording.reconcile;
           },
         }),
     });
+    sealed = true;
     expect([readingOf(result), reads, trace.counts.reconcile]).toEqual(["loaded export-missing", 0, 0]);
   });
 
@@ -938,12 +1210,12 @@ describe("A and L: EAT-R071 - the exact pinned artifact bytes, loaded once, its 
 // ---- R and O: the round-trip proposal ---------------------------------------------------------------------------------------------
 
 describe("R and O: EAT-R071 - valid schema data in, the round-trip proposal out", () => {
-  it("R-ROUNDTRIP: the observation holds the entry id, observation-only, the reviewed descriptor digest, the artifact pin and the producer's resolution; it is frozen through every level and round-trips through JSON text", async () => {
+  it("R-ROUNDTRIP: the observation holds the entry id, observation-only, the reviewed descriptor digest, the artifact pin and the producer's resolution; its own keys are exactly those five, it is sealed plain data through every own key (violationsOf), and it round-trips through JSON text", async () => {
     const { result, pin, input, trace } = await admittedOf({});
     if (!result.ok) throw new Error("unreachable: admitted above");
     const { observation } = result;
     expect(observation.resolution).toEqual(trace.produced[0]);
-    expect(Object.keys(observation)).toEqual(["entry", "authority", "descriptorDigest", "artifactDigest", "resolution"]);
+    expect(Reflect.ownKeys(observation)).toEqual(["entry", "authority", "descriptorDigest", "artifactDigest", "resolution"]);
     expect([observation.entry, observation.authority, observation.descriptorDigest, observation.artifactDigest]).toEqual([
       MECHANICAL_COORDINATION_ENTRY.id,
       "observation-only",
@@ -953,7 +1225,7 @@ describe("R and O: EAT-R071 - valid schema data in, the round-trip proposal out"
     expect(MECHANICAL_COORDINATION_AUTHORITY).toBe("observation-only");
     expect(observation.resolution).toEqual(expectedResolutionOf(input));
     expect(JSON.parse(JSON.stringify(observation))).toEqual(observation);
-    expect(inert(observation)).toBe(true);
+    expect(violationsOf(observation, true)).toEqual([]);
   });
 
   it("R-ROUNDTRIP-COPIES: reconcile receives a JSON copy of the input, so a producer that mutates its argument or its returned value changes neither the caller's input nor the observation", async () => {
@@ -1062,13 +1334,13 @@ describe("X: EAT-R072 - a coordination proposal is an observation, never an effe
     );
   const EXACT_EFFECT_GRANTS = [MECHANICAL_COORDINATION_GRANT, EXECUTE_GRANT, "workbench:detach", "beads:close", "forge:publish", "furnace:start"];
 
-  it("X-NO-EFFECT: a resolution admitting a Beads close, a Forge publish and a Furnace start comes back as observation-only data, and with every provider handle and every exact effect grant planted no provider is called (the mutant 'auto-execute policy output as a command')", async () => {
+  it("X-NO-EFFECT: a resolution admitting a Beads close, a Forge publish and a Furnace start comes back as observation-only data, and with every provider handle and every exact effect grant planted no provider is called within the read window (the mutant 'auto-execute policy output as a command')", async () => {
     const { result, trace, input } = await admittedOf({ input: actionInput(), grants: EXACT_EFFECT_GRANTS });
     if (!result.ok) throw new Error("unreachable: admitted above");
     const admitted = result.observation.resolution.admitted as readonly { readonly target: { readonly kind: string }; readonly effect: string }[];
     expect(admitted.map(intent => `${intent.target.kind} ${intent.effect}`)).toEqual(["beads close", "forge publish", "furnace start"]);
     expect(Object.keys(EFFECT_HANDLES)).toEqual(admitted.map(intent => intent.target.kind));
-    expect([result.observation.authority, trace.counts.effects, trace.counts.others, inert(result.observation)]).toEqual(["observation-only", 0, 0, true]);
+    expect([result.observation.authority, trace.counts.effects, trace.counts.others, violationsOf(result.observation, true)]).toEqual(["observation-only", 0, 0, []]);
     expect(result.observation.resolution).toEqual(expectedResolutionOf(input));
   });
 
@@ -1088,14 +1360,46 @@ describe("X: EAT-R072 - a coordination proposal is an observation, never an effe
     expect([readingOf(refusedCall.result), refusedCall.trace.counts.effects]).toEqual(["resolution schema-invalid", 0]);
   });
 
-  it("X-SURFACE: the module's only function export is invokeMechanicalCoordination: nothing takes an observation to apply it", () => {
-    expect(Object.entries(coordination).flatMap(([name, value]) => (typeof value === "function" ? [name] : []))).toEqual(["invokeMechanicalCoordination"]);
+  /** The module's run-time exports, sorted. */
+  const EXPORT_NAMES = [
+    "MECHANICAL_COORDINATION_AUTHORITY", "MECHANICAL_COORDINATION_ENTRY", "MECHANICAL_COORDINATION_FIELDS", "MECHANICAL_COORDINATION_GRANT", "MECHANICAL_COORDINATION_MAX_DEPTH",
+    "MECHANICAL_COORDINATION_REASONS", "MECHANICAL_COORDINATION_REVIEWED_DIGESTS", "invokeMechanicalCoordination",
+  ];
+  /** The functions (and accessors and prototypes other than the plain ones) a value reaches through any own key. */
+  function functionsIn(value: unknown, path: string, seen = new Set<object>()): string[] {
+    if (typeof value === "function") return [`${path}: function`];
+    if (typeof value !== "object" || value === null || seen.has(value)) return [];
+    seen.add(value);
+    const found: string[] = [];
+    const prototype: unknown = Object.getPrototypeOf(value);
+    if (prototype !== Object.prototype && prototype !== Array.prototype && prototype !== null) found.push(`${path}: prototype`);
+    for (const key of Reflect.ownKeys(value)) {
+      const descriptor = Object.getOwnPropertyDescriptor(value, key);
+      if (descriptor === undefined) continue;
+      if (!Object.hasOwn(descriptor, "value")) found.push(`${path}.${keyText(key)}: accessor`);
+      else found.push(...functionsIn(descriptor.value, `${path}.${keyText(key)}`, seen));
+    }
+    return found;
+  }
+  it("X-SURFACE: the module's exports are exactly the eight names below; no export but invokeMechanicalCoordination is or holds a function through any own key, accessor or prototype, and that function's own keys are its length and name", () => {
+    const keys = Reflect.ownKeys(coordination);
+    expect([keys.filter(key => typeof key === "string").sort(), keys.filter(key => typeof key === "symbol")]).toEqual([EXPORT_NAMES, [Symbol.toStringTag]]);
+    const found = Object.entries(coordination).flatMap(([name, value]) => (name === "invokeMechanicalCoordination" ? [] : functionsIn(value, name)));
+    expect(found).toEqual([]);
+    expect([Reflect.ownKeys(invokeMechanicalCoordination), Object.getPrototypeOf(invokeMechanicalCoordination) === Object.getPrototypeOf(async () => undefined)]).toEqual([["length", "name"], true]);
+    // The reader's controls: a planted object holding a nested method, a hidden function and an accessor reads each.
+    const planted = Object.defineProperty({ nested: { apply: () => undefined } }, "hidden", { value: () => undefined });
+    Object.defineProperty(planted, "read", { get: () => 1, enumerable: true });
+    expect(functionsIn(planted, "planted")).toEqual(["planted.nested.apply: function", "planted.hidden: function", "planted.read: accessor"]);
   });
 
-  it("X-IMPORTS: the module imports exactly createHash, the fs constants, open (and the FileHandle type), join and the descriptor boundary's digest grammar, with no dynamic import or require", () => {
-    const text = readFileSync(new URL("../src/workbench/mechanical-coordination.ts", import.meta.url), "utf8");
-    const source = ts.createSourceFile("mechanical-coordination.ts", text, ts.ScriptTarget.ES2022, true, ts.ScriptKind.TS);
+  /** Reads a module's import and export-from declarations, import-equals declarations, import type nodes and import()/require() calls. */
+  function importsOf(text: string): { readonly imports: string[]; readonly exportsFrom: string[]; readonly importEquals: number; readonly typeImports: number; readonly computed: number } {
+    const source = ts.createSourceFile("module.ts", text, ts.ScriptTarget.ES2022, true, ts.ScriptKind.TS);
     const imports: string[] = [];
+    const exportsFrom: string[] = [];
+    let importEquals = 0;
+    let typeImports = 0;
     let computed = 0;
     const visit = (node: ts.Node): void => {
       if (ts.isImportDeclaration(node) && ts.isStringLiteral(node.moduleSpecifier)) {
@@ -1103,14 +1407,68 @@ describe("X: EAT-R072 - a coordination proposal is an observation, never an effe
         const names = bindings !== undefined && ts.isNamedImports(bindings) ? bindings.elements.map(element => `${element.isTypeOnly ? "type " : ""}${element.name.text}`) : ["(other form)"];
         imports.push(`${node.moduleSpecifier.text}: ${names.join(", ")}`);
       }
+      if (ts.isExportDeclaration(node) && node.moduleSpecifier !== undefined) exportsFrom.push(node.moduleSpecifier.getText(source));
+      if (ts.isImportEqualsDeclaration(node)) importEquals += 1;
+      if (ts.isImportTypeNode(node)) typeImports += 1;
       if (ts.isCallExpression(node) && (node.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(node.expression) && node.expression.text === "require"))) computed += 1;
       ts.forEachChild(node, visit);
     };
     visit(source);
-    expect([imports, computed]).toEqual([
-      ["node:crypto: createHash", "node:fs: constants", "node:fs/promises: type FileHandle, open", "node:path: join", "./mechanical-descriptor.js: MECHANICAL_DIGEST_PATTERN"],
-      0,
-    ]);
+    return { imports, exportsFrom, importEquals, typeImports, computed };
+  }
+  it("X-IMPORTS: the module imports exactly createHash, the fs constants, open (and the FileHandle type), join and the descriptor boundary's digest grammar, with no export-from or import-equals declaration, no import type and no import() or require call", () => {
+    expect(importsOf(MODULE_TEXT)).toEqual({
+      imports: ["node:crypto: createHash", "node:fs: constants", "node:fs/promises: type FileHandle, open", "node:path: join", "./mechanical-descriptor.js: MECHANICAL_DIGEST_PATTERN"],
+      exportsFrom: [],
+      importEquals: 0,
+      typeImports: 0,
+      computed: 0,
+    });
+    // The reader's controls: each form planted once reads once.
+    const planted = importsOf('export * as cp from "node:child_process";\nimport cp2 = require("node:child_process");\ntype T = import("node:child_process").ChildProcess;\nvoid import("node:net");\nconst fs = require("node:fs");\n');
+    expect([planted.exportsFrom, planted.importEquals, planted.typeImports, planted.computed]).toEqual([['"node:child_process"'], 1, 1, 2]);
+  });
+
+  /** Global names through which code reaches a process, module, network, worker, code-evaluation or timer facility. */
+  const REACH_NAMES = [
+    "process", "globalThis", "global", "require", "module", "eval", "Function", "constructor", "getBuiltinModule", "fetch", "WebSocket", "EventSource",
+    "XMLHttpRequest", "Worker", "SharedWorker", "MessageChannel", "BroadcastChannel", "setTimeout", "setInterval", "setImmediate", "queueMicrotask", "nextTick",
+    "AbortSignal", "AbortController", "Atomics", "FinalizationRegistry", "WeakRef", "Deno", "Bun",
+  ];
+  /** The REACH_NAMES a module's code names (identifiers, property names and string literals, read through the TypeScript parser; comments aside) and its import.meta reads. */
+  function reachOf(text: string): { readonly names: string[]; readonly metas: number } {
+    const source = ts.createSourceFile("module.ts", text, ts.ScriptTarget.ES2022, true, ts.ScriptKind.TS);
+    const names = new Set<string>();
+    let metas = 0;
+    const visit = (node: ts.Node): void => {
+      if ((ts.isIdentifier(node) || ts.isPrivateIdentifier(node) || ts.isStringLiteralLike(node)) && REACH_NAMES.includes(node.text.replace(/^#/, ""))) names.add(node.text.replace(/^#/, ""));
+      if (ts.isMetaProperty(node) && node.keywordToken === ts.SyntaxKind.ImportKeyword) metas += 1;
+      ts.forEachChild(node, visit);
+    };
+    visit(source);
+    return { names: [...names].sort(), metas };
+  }
+  it("X-NO-LOAD: the module's code names none of REACH_NAMES (process, globalThis, eval, Function, constructor, fetch, the timers and the rest, as an identifier, a property name or a string literal; comments aside) and reads no import.meta", () => {
+    expect(reachOf(MODULE_TEXT)).toEqual({ names: [], metas: 0 });
+    // The reader's controls: planted lines read each name they spell (every name the module header lists among them), a comment reads nothing.
+    const planted = [
+      'void process.getBuiltinModule("node:child_process");',
+      'const g = globalThis["fetch"];',
+      "const f = ({}).constructor.constructor;",
+      "const e = eval;",
+      "const F = Function;",
+      "setTimeout(() => undefined, 0);",
+      "setInterval(() => undefined, 1);",
+      "setImmediate(() => undefined);",
+      "queueMicrotask(() => undefined);",
+      "process.nextTick(() => undefined);",
+      "const m = import.meta;",
+      "// a comment naming fetch and eval",
+    ];
+    expect(reachOf(`${planted.join("\n")}\n`)).toEqual({
+      names: ["Function", "constructor", "eval", "fetch", "getBuiltinModule", "globalThis", "nextTick", "process", "queueMicrotask", "setImmediate", "setInterval", "setTimeout"],
+      metas: 1,
+    });
   });
 });
 
@@ -1162,5 +1520,47 @@ describe("C-ORDER: the steps judge in the header's order and the first refusal w
       const [field, reason] = pair.split(" ");
       expect([fields.includes(field ?? ""), reasons.includes(reason ?? "")]).toEqual([true, true]);
     }
+  });
+
+  it("C-SETTLE: the read window counts a call a planted loader defers through each faked timer (setTimeout by sixty seconds, setInterval, setImmediate), a microtask and a next tick; no provider handle is called", async () => {
+    const DEFERRALS: readonly (readonly [string, (call: () => void) => void])[] = [
+      ["setTimeout by sixty seconds", call => void setTimeout(call, 60_000)],
+      [
+        "setInterval",
+        call => {
+          const id = setInterval(() => {
+            clearInterval(id);
+            call();
+          }, 1_000);
+        },
+      ],
+      ["setImmediate", call => void setImmediate(call)],
+      ["a microtask", call => queueMicrotask(call)],
+      ["a next tick", call => process.nextTick(call)],
+    ];
+    const counted: string[] = [];
+    /** Inside each call, which of the three timers the header names are the fake ones (an installed fake carries its clock). */
+    const faked: string[][] = [];
+    for (const [label, defer] of DEFERRALS) {
+      const { trace } = await plantSettled({
+        namespace: recording => {
+          faked.push(["setTimeout", "setInterval", "setImmediate"].filter(name => Object.hasOwn((globalThis as unknown as Record<string, object>)[name] ?? {}, "clock")));
+          defer(() => void (recording.digest as () => unknown)());
+          return recording;
+        },
+      });
+      counted.push(`${label}: ${trace.counts.others} other, ${trace.counts.effects} effect`);
+    }
+    expect(counted).toEqual(DEFERRALS.map(([label]) => `${label}: 1 other, 0 effect`));
+    expect(faked).toEqual(DEFERRALS.map(() => ["setTimeout", "setInterval", "setImmediate"]));
+    expect(Object.hasOwn((globalThis as unknown as Record<string, object>).setImmediate ?? {}, "clock"), "the real timers are back after each call").toBe(false);
+  });
+
+  it("C-LATE (the last case): no function a case handed the boundary was called after its case's read; a planted late call lands in LATE", async () => {
+    expect(LATE).toEqual([]);
+    const { trace, host } = await plant({});
+    (host.execute as () => unknown)();
+    expect([LATE, trace.counts.effects]).toEqual([["effect execute"], 1]);
+    LATE.splice(0);
   });
 });
