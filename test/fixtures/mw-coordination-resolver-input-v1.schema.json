@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mechanical-workflows/coordination-resolver-input.v1.schema.json",
+  "title": "ResolverInput v1",
+  "description": "Serialized input of the pure reconcile function (packages/coordination resolver.ts). Intents may declare authorized-effect; the resolver rejects them with INTENT_AUTHORITY_EXCEEDED.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "basis",
+    "budget",
+    "protectedScopes",
+    "proposals"
+  ],
+  "properties": {
+    "basis": {
+      "$ref": "#/$defs/basis"
+    },
+    "budget": {
+      "$ref": "#/$defs/budget"
+    },
+    "protectedScopes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "proposals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "intents",
+          "memory",
+          "trace"
+        ],
+        "properties": {
+          "intents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/intent"
+            }
+          },
+          "memory": {},
+          "trace": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "policyId",
+                "detail"
+              ],
+              "properties": {
+                "kind": {
+                  "type": "string"
+                },
+                "policyId": {
+                  "type": "string"
+                },
+                "detail": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "basis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workspaceId",
+        "revision"
+      ],
+      "properties": {
+        "workspaceId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "compute",
+        "workers",
+        "queue",
+        "latencyMs"
+      ],
+      "properties": {
+        "compute": {
+          "type": "number",
+          "minimum": 0
+        },
+        "workers": {
+          "type": "number",
+          "minimum": 0
+        },
+        "queue": {
+          "type": "number",
+          "minimum": 0
+        },
+        "latencyMs": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "intent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "intentId",
+        "policyId",
+        "target",
+        "expectedRevision",
+        "effect",
+        "claim",
+        "evidenceRefs",
+        "writeScopes",
+        "readScopes"
+      ],
+      "properties": {
+        "intentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "policyId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "uri"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "uri": {
+              "type": "string"
+            }
+          }
+        },
+        "expectedRevision": {
+          "type": "string"
+        },
+        "effect": {
+          "type": "string"
+        },
+        "claim": {
+          "$ref": "#/$defs/budget"
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "writeScopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "readScopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "authority": {
+          "enum": [
+            "propose-only",
+            "authorized-effect"
+          ]
+        }
+      }
+    }
+  }
+}
