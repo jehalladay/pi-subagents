@@ -177,8 +177,8 @@ export interface WorkflowSpawnResult {
    * runs commands by default.
    *
    * Usually unset for a worktree child even so: the copy is removed during the
-   * child's own settle, so it no longer exists by the time this is read. That
-   * is what {@link gate} is for.
+   * child's own settle (a failed Git preservation keeps it instead), so it is
+   * normally gone by the time this is read. That is what {@link gate} is for.
    */
   cwd?: string;
   /**
