@@ -1019,7 +1019,7 @@ function mentionsOf(text: string): Mention[] {
 
 /** The owner filing: the notes of this bead's row in the tracked bead export. */
 function filingNotes(): string {
-  for (const line of textOf(BEAD_EXPORT).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(BEAD_EXPORT), BEAD_EXPORT).split("\n")) {
     if (line.trim() === "") continue;
     let parsed: unknown;
     try {
@@ -1512,3 +1512,5 @@ describe("wb-pfxo.3 assembly-handoff census (RF-COMPOSITIONAL-ASSEMBLY-R4, absen
     });
   }
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

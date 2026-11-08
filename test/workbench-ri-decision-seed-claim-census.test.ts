@@ -678,7 +678,7 @@ function parseExport(text: string): BeadExport {
 }
 let exportCache: BeadExport | undefined;
 const beadExport = (): BeadExport => {
-  exportCache ??= parseExport(textOf(join(REPO, BEAD_EXPORT)));
+  exportCache ??= parseExport(rehydrateTrackerExport(textOf(join(REPO, BEAD_EXPORT)), join(REPO, BEAD_EXPORT)));
   return exportCache;
 };
 /** Row A's reading of an export: the rows naming a family and one finding per string value naming one without both. */
@@ -696,7 +696,7 @@ function exportFindings(data: BeadExport): { judged: Set<string>; findings: stri
   return { judged, findings };
 }
 function beadRow(id: string): { title: string; notes: string } {
-  const raw = textOf(join(REPO, BEAD_EXPORT))
+  const raw = rehydrateTrackerExport(textOf(join(REPO, BEAD_EXPORT)), join(REPO, BEAD_EXPORT))
     .split("\n")
     .filter(line => line.trim() !== "")
     .map((line): unknown => JSON.parse(line))
@@ -1438,3 +1438,5 @@ describe("wb-tz4r.8 ReactiveInference seed-only claim census (program-triage-202
     expect([...suites, ...titles].flatMap(name => needleSites("title", name)), "registered titles spelling a needle").toEqual([]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

@@ -431,7 +431,7 @@ function producerLine(short: string, line: number): string {
 
 /** The filing's own notes in the tracker export: the text rows A to E, FO L25's words and the gating ids are held to. */
 function beadNotes(): string {
-  for (const line of readFileSync(EXPORT_PATH, "utf8").split("\n")) {
+  for (const line of trackerExportText(EXPORT_PATH).split("\n")) {
     if (!line.includes(`"id":"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === BEAD && typeof row.notes === "string") return row.notes;
@@ -1259,3 +1259,5 @@ describe("wb-4nut.10 H2 state-promotion census (TSX-HARNESS2-REACTIVE-EVOLUTION-
     REACHED.push(`${REGISTRATION_ID}:${expect.getState().assertionCalls}`);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

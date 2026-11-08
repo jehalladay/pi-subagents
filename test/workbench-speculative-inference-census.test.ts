@@ -1973,7 +1973,7 @@ const IMPL: Record<string, () => JsonValue | Promise<JsonValue>> = {
 /** The filing this census anchors on outside its own literals, wb-km7q.7's row in the tracked export: the judged-set case's
  * former inline export read, moved here unchanged. */
 function filingRow(): unknown {
-  return readFileSync(join(REPO, ".beads", "issues.jsonl"), "utf8").split("\n")
+  return trackerExportText(join(REPO, ".beads", "issues.jsonl")).split("\n")
     .filter(line => line.includes('"id":"wb-km7q.7"'))
     .map((line): unknown => JSON.parse(line))
     .find(entry => isObject(entry) && entry.id === "wb-km7q.7");
@@ -2263,3 +2263,5 @@ describe("wb-km7q.7 A1-D1 model-binding, plane-closure and opt-in-checklist cens
     expect([...REACHED].sort(), "every judged pin reached its witness assertion").toEqual(ROWS.flatMap(row => row.pins).sort());
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

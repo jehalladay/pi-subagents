@@ -1231,7 +1231,7 @@ const textOf = (path: string): string => readFileSync(join(ROOT, path), "utf8");
 const jsonOf = (value: unknown): Json => JSON.parse(JSON.stringify(value ?? null)) as Json;
 /** wb-4ap.16's note list of the stable rejection codes, and the README pin it reads them at. */
 function noteCodes(): { readonly codes: readonly string[]; readonly pin: string } {
-  const notes = beadRow(textOf(EXPORT), CODES_BEAD)?.notes ?? "";
+  const notes = beadRow(rehydrateTrackerExport(textOf(EXPORT), join(ROOT, EXPORT)), CODES_BEAD)?.notes ?? "";
   const listed = /the stable rejection codes (INTENT_[A-Z_]+(?: \/ INTENT_[A-Z_]+)*) \(packages\/coordination\/README\.md@([0-9a-f]+)\)/.exec(notes);
   return { codes: listed?.[1]?.split(" / ") ?? [], pin: listed?.[2] ?? "" };
 }
@@ -1269,7 +1269,7 @@ type Edit = (model: AnchorModel) => AnchorModel;
 let exportCache: string | undefined;
 /** The tracker export's text, read once per run. */
 function exportText(): string {
-  if (exportCache === undefined) exportCache = textOf(EXPORT);
+  if (exportCache === undefined) exportCache = rehydrateTrackerExport(textOf(EXPORT), join(ROOT, EXPORT));
   return exportCache;
 }
 const exportRows = new Map<string, ReturnType<typeof beadRow>>();
@@ -1908,7 +1908,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     return { codes, off: values, bases, mutants };
   },
   C3: () => {
-    const notes = beadRow(textOf(EXPORT), CODES_BEAD)?.notes ?? "";
+    const notes = beadRow(rehydrateTrackerExport(textOf(EXPORT), join(ROOT, EXPORT)), CODES_BEAD)?.notes ?? "";
     const listed = /the stable rejection codes (INTENT_[A-Z_]+(?: \/ INTENT_[A-Z_]+)*) \(packages\/coordination\/README\.md@([0-9a-f]+)\)/.exec(notes);
     expect(listed?.[1]?.split(" / "), `the codes are ${CODES_BEAD}'s note list`).toEqual([...CODES]);
     expect(listed?.[2], "read at the note's pin").toBe(CODES_NOTE_PIN);
@@ -2316,7 +2316,7 @@ describe(SUITE, () => {
   });
 
   it("the outside anchors: every outside reading holds on the census's anchor model and every BOUND edit of that model reds the reading it names; the bead's own row binds the labels of rows A-D (its acceptance clauses) and S (its title's statement), those rows' pin quotes' text, each item's text and the join of its fields' phrases, each field name to a contiguous run of its phrase's words, the actions and their three distinct fields, ADMITTED, the codes, the statuses, the record noun and the vocabulary's composition; wb-4ap.16's note carries the six codes; the notes cite the producer pin and lines; git's src listing names no vocabulary word unregistered; how an item is cut into fields, which run of its phrase a field name takes, the pin partition, row Q, the decision's fields and the roster's producer copy are not anchored", { timeout: 60_000 }, () => {
-    const row = beadRow(textOf(EXPORT), BEAD);
+    const row = beadRow(rehydrateTrackerExport(textOf(EXPORT), join(ROOT, EXPORT)), BEAD);
     expect(row, `${BEAD}'s row was read from the tracker export`).toBeDefined();
     const title = row?.title ?? "";
     const notes = row?.notes ?? "";
@@ -2420,3 +2420,5 @@ describe(SUITE, () => {
     expect(ENDED, "each other judged case - rule 16, the mutant battery, the outside anchors - reached its last statement having made the assertion count the roster pins, in run order").toEqual([...ROSTER.ended]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

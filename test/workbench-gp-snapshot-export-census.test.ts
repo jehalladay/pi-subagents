@@ -1757,7 +1757,7 @@ describe(SUITE, () => {
   });
 
   it("the outside anchors: the bead's own row binds the rows and the pin quotes; the vendored producer fixture, the registry and the live control import bind the judge's spellings", () => {
-    const row = beadRow(textOf(EXPORT), BEAD);
+    const row = beadRow(rehydrateTrackerExport(textOf(EXPORT), join(ROOT, EXPORT)), BEAD);
     expect(row, `${BEAD}'s row was read from the tracker export`).toBeDefined();
     const title = row?.title ?? "";
     const notes = row?.notes ?? "";
@@ -1873,7 +1873,7 @@ describe(SUITE, () => {
     ENDS.push("fail closed: forms");
     // wb-0x41 (landing 677's carried F4): every form answers exactly one name the row that filed it gives in the tracker export,
     // and every such name is answered, so a form removed from every literal of these files and the roster still reds here.
-    const exported = textOf(EXPORT);
+    const exported = rehydrateTrackerExport(textOf(EXPORT), join(ROOT, EXPORT));
     const items = refusalItemsOf(rowDescription(exported, REFUSAL_ITEMS_BEAD) ?? "");
     expect(items.map(item => `${item.item}:${item.claim}:${item.names.join("+")}`), `${REFUSAL_ITEMS_BEAD}'s description (its "- U<n> " lines) enumerates refusal #5's five items, each naming its claim and its hollowings or residual families`).toEqual(["U1:G1:RH-CAMEL+RH-SENTENCE+RH-RUN-LONG+RH-RUN3-SAME+RH-UNEVEN", "U2:D3:RH-D3-CAMEL+RH-D3-SENTENCE", "U3:G3:RH-FIRST-HEADING+RH-FIRST-HR", "U4:G3:RH-OTHER-LEAD", "U5:S2:Q1+Q2"]);
     const carriedNotes = beadRow(exported, CARRIED_BEAD)?.notes ?? "";
@@ -1958,7 +1958,7 @@ describe(SUITE, () => {
     expect(texts.size >= SRC_FLOOR && texts.has(CONTROL), "the src listing read the tree").toBe(true);
     // The outside anchor: wb-0lf.8's row in the tracker export, whose U1-U4 lines name refusal #5's reader hollowings and whose
     // U5 line names the residual families its liveness reading covers.
-    const exported = textOf(EXPORT);
+    const exported = rehydrateTrackerExport(textOf(EXPORT), join(ROOT, EXPORT));
     const description = descriptionOf(exported, SURFACE_BEAD);
     expect(description, `${SURFACE_BEAD}'s description was read from the tracker export`).toBeDefined();
     const items = surfaceItems(description ?? "");
@@ -2418,7 +2418,7 @@ describe(SUITE, () => {
     const titles = walked.map(entry => entry.name);
     expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual(ROSTER.tests);
     // Refusal #1's F1: wb-0lf.8's own row in the tracker export, listing its items, binds the full-surface row's registration.
-    const surfaceListed = Object.keys(surfaceItems(descriptionOf(textOf(EXPORT), SURFACE_BEAD) ?? "")).length > 0;
+    const surfaceListed = Object.keys(surfaceItems(descriptionOf(rehydrateTrackerExport(textOf(EXPORT), join(ROOT, EXPORT)), SURFACE_BEAD) ?? "")).length > 0;
     expect([surfaceListed, titles.filter(name => name.startsWith(`full surface (${SURFACE_BEAD}): `)).length], `${SURFACE_BEAD}'s row lists its items, so exactly one registered test is its full-surface row`).toEqual([true, 1]);
     expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice").toEqual([]);
     const here = walked.findIndex(entry => entry.self);
@@ -2430,3 +2430,5 @@ describe(SUITE, () => {
     expect(ENDS, "every case that is no pin ran to its end: the rule 16 and outside-anchors cases, the fail-closed case through each of its five blocks, and the full-surface case").toEqual([...ENDS_EXPECTED]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

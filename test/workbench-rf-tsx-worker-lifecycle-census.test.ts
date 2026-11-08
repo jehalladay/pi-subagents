@@ -543,7 +543,7 @@ interface OwnerFiling {
 /** The owner filing, read from the wb-csbt.3 row of the tracked bead export: its title, its acceptance clauses "(a) ...", "(b) ...",
  * "(c) ..." and the quote with its citation. */
 function ownerFiling(): OwnerFiling {
-  const rows: unknown[] = readFileSync(join(REPO, EXPORT_FILE), "utf8").split("\n").filter(line => line.includes(`"id":"${BEAD}"`)).map(line => JSON.parse(line) as unknown);
+  const rows: unknown[] = trackerExportText(join(REPO, EXPORT_FILE)).split("\n").filter(line => line.includes(`"id":"${BEAD}"`)).map(line => JSON.parse(line) as unknown);
   const row = rows.find(entry => isObject(entry) && entry.id === BEAD);
   if (!isObject(row) || typeof row.notes !== "string" || typeof row.title !== "string") throw new Error(`the bead export holds no ${BEAD} row with notes`);
   const notes = row.notes;
@@ -1515,3 +1515,5 @@ afterAll(() => {
     throw new Error(`wb-jdpn backstop: a case passed without reaching its end: ${ends.length} of ${ROSTER.tests.length} ends recorded, the closing case's after ${closing ?? "no"} of its ${CLOSING_ASSERTIONS} assertions`);
   }
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

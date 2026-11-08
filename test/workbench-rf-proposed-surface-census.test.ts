@@ -695,7 +695,7 @@ function parseExport(text: string): BeadExport {
 let exportCache: BeadExport | undefined;
 /** The tracked bead export, read once. */
 function beadExport(): BeadExport {
-  exportCache ??= parseExport(textOf(BEAD_EXPORT));
+  exportCache ??= parseExport(rehydrateTrackerExport(textOf(BEAD_EXPORT), BEAD_EXPORT));
   return exportCache;
 }
 /** Row C2's reading of an export: unpinned citations, foreign row@pin pairs and the rows holding an admitted citation. */
@@ -1401,7 +1401,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   C2: async () => {
     const data = beadExport();
     const { unpinned, foreignPinPairs, citing, rowsRead } = readExport(data);
-    const lines = textOf(BEAD_EXPORT).split("\n").filter(line => line.trim() !== "").length;
+    const lines = rehydrateTrackerExport(textOf(BEAD_EXPORT), BEAD_EXPORT).split("\n").filter(line => line.trim() !== "").length;
     const reading = {
       rowsFloorMet: data.rows.length >= EXPORT_FLOOR,
       everyLineRead: lines > 0 && data.rows.length + data.unreadable.length === lines,
@@ -1474,3 +1474,5 @@ describe("wb-a9l2.7 proposed-surface census (RF-HARNESS2-FEDERATED-PEER-R7, abse
     });
   }
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

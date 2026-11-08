@@ -627,7 +627,7 @@ function forms(at: Pin): string[] {
 
 /** A bead's row in the tracker export. */
 function exportRow(id: string): { readonly description: string; readonly notes: string } {
-  for (const line of readFileSync(join(REPO, EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, EXPORT)).split("\n")) {
     if (line.trim() === "") continue;
     const row = JSON.parse(line) as { id?: unknown; description?: unknown; notes?: unknown };
     if (row.id === id && typeof row.description === "string") return { description: row.description, notes: typeof row.notes === "string" ? row.notes : "" };
@@ -806,3 +806,5 @@ describe("wb-jwc.13 binding text reader sub-form census (test/helpers/rf-binding
     });
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";
