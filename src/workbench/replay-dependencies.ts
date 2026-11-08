@@ -290,28 +290,31 @@ interface FileReading {
  * reading past its budget (dependency-over-budget, DependencyReadLimits) and for a directory MAX_DEPTH levels below a
  * named path (dependency-over-budget).
  *
- * The fail-closed core (wb-6b3z), each form planted for both file readers under the user source: a path the process may
- * not stat in one of four planted forms (the directory it lies in left at mode 0600 or at mode 0400, each a mode its
- * owner may list but not search, with the path listed in it; two links naming each other; or a link naming a path with
- * a 256-byte component) makes the reading unknown (dependency-unreadable) at the named path and at each depth 1 to 32
- * below the location, and so does a named path absent from the directory it lies in, that directory left at mode 0600
- * or at mode 0400 and empty or holding only an unrelated entry (FCB-UNSTAT); a link naming the path one level or two
- * levels below a regular file reads as absent, equal to the same link naming a missing path, at the named path and at
- * each depth 1 to 32 (FCB-LINK-BELOW-FILE); a link naming the directory it lies in, at each depth 1 to 31, or the
- * directory one level above that one, at each depth 2 to 31, makes it unknown (dependency-cycle) (FCB-CYCLE-INNER); and
- * a directory holding one of three planted contents (entry.md; entry.md and second.md; B.md and a.md, two names that
- * UTF-16 code-unit order and English collation order sort apart), first reached, at each depth 1 to 31, through one
- * link or two links that sort before it is read again, as a copy of it would be, and its reading moves when one of its
- * files has its planted text rewritten to a second version of the same length (FCB-READ-AGAIN).
+ * The fail-closed core (wb-6b3z) is claimed only at the instances the fail-closed suite plants, for each file reader
+ * under the user source: each of the 136 planted stat refusals (four forms at each depth 0 to 32, four absent forms at
+ * the named path) is an unknown reading (dependency-unreadable) (FCB-UNSTAT); each of the 66 planted links naming the
+ * path one level or two levels below a regular file, at each depth 0 to 32, reads as the same link naming a missing
+ * path (FCB-LINK-BELOW-FILE); each of the 61 planted links naming the directory it lies in (depths 1 to 31) or the one
+ * above it (depths 2 to 31) is an unknown reading (dependency-cycle) (FCB-CYCLE-INNER); and each of the 186 planted
+ * trees (one of three contents first reached through one link or two links sorting before it, at each depth 1 to 31)
+ * is read again as its copy would be and moves with each planted rewrite (FCB-READ-AGAIN).
  *
- * NOT CLAIMED: any other read error no row plants; a socket and a block device; the reason for a FIFO, a link to a
- * character device, and a directory or a file the process may not read at another depth than one level below a
- * location; a directory left at any mode other than 0600 and 0400 (a mode with group or other permission bits set among
- * them); a directory below a named path, at either mode, that lists no entry; a link naming a path three or more levels
- * below a regular file; a link naming a directory two or more levels above the one it lies in; a directory first
- * reached through a link at the named path, or through three or more links, or holding a subdirectory, three or more
- * entries or entries other than the three planted contents; a change to a file's bytes other than the planted rewrite;
- * and these fail-closed forms under the project or local source.
+ * NOT CLAIMED: any instance of the fail-closed core that the fail-closed suite does not plant. Among those, the forms
+ * wb-6b3z's refusal #3 realized beyond the plants: the ones the structural exit R-B729 routes to wb-g9g5 (the relative
+ * link below a regular file with them, as R-B730 has its treatment ride wb-g9g5's claims-equal-pins cut), namely a
+ * directory left at mode 0600 or 0400 listing another entry beside the path, or, below the location, listing a path
+ * named other than entry.md; at the named path, such a directory listing the instruction reader's CLAUDE.md; and two
+ * links naming each other, a link naming a path with a 256-byte component, a link naming a path below a regular file
+ * and a link through which a directory is first reached, each naming its target by a relative path; and, under the
+ * R-B731 guard on the cycle words, a link naming the directory it lies in, or the one above it, by a relative path.
+ * Also NOT CLAIMED: the list-only plants under a process running as root; any other read error no row plants; a socket
+ * and a block device; the reason for a FIFO, a link to a character device, and a directory or a file the process may
+ * not read at another depth than one level below a location; a directory left at any mode other than 0600 and 0400 (a
+ * mode with group or other permission bits set among them); a directory below a named path, at either mode, that lists
+ * no entry; a link naming a path three or more levels below a regular file; a link naming a directory two or more
+ * levels above the one it lies in; a directory first reached through a link at the named path, or through three or more
+ * links, or holding a subdirectory, three or more entries or entries other than the three planted contents; a change to
+ * a file's bytes other than the planted rewrite; and these fail-closed forms under the project or local source.
  */
 function readFiles(paths: readonly string[], limits: DependencyReadLimits): FileReading[] {
   const readings: FileReading[] = [];

@@ -1032,7 +1032,7 @@ const SITE_COMMENTS: readonly SiteComment[] = [
   { file: MODULE, documents: "instructionDependency", cites: ["FCB-RELATIVE-BASE"], sha256: "f7ba44bbe7b3e40019312c4085855973999b16bbc15c7e5ef756bf29ae6e3d77" },
   { file: MODULE, documents: "providerDependency", cites: ["FCB-RELATIVE-BASE"], sha256: "5a72fa83a592f105d0ecad9dac82b13e327e82c09373f76a3ac175c93877acbe" },
   { file: MODULE, documents: "claudeUserConfigDir", cites: ["FCB-RELATIVE-HOME"], sha256: "914d6eb3999514e2e44b8d51dd08c23fcbc26e32703eadf839cf616e1a5c50b3" },
-  { file: MODULE, documents: "readFiles", cites: ["FCB-CYCLE-INNER", "FCB-LINK-BELOW-FILE", "FCB-READ-AGAIN", "FCB-UNSTAT"], sha256: "c36f8e1e97329fe5af7a66b56b1d78e2d723c901b82526e98e7e47b3abe776dc" },
+  { file: MODULE, documents: "readFiles", cites: ["FCB-CYCLE-INNER", "FCB-LINK-BELOW-FILE", "FCB-READ-AGAIN", "FCB-UNSTAT"], sha256: "374649456dafff220006fb604345492dd316ca321cad64d74996cf4a89c258ab" },
 ];
 /** Every doc comment of a src file whose words cite a family or this bead, in file order. */
 function citingComments(file: string): SiteComment[] {
@@ -1053,7 +1053,7 @@ const RECEIPT_TITLE = "wb-6b3z: [413a-exit] fail-closed replay-dependency basis 
 const CUT3_HEADING = "2026-11-08 receipt: cut #3, the respin of gate refusal #2 in the enumerate form (machine seat ws-13, run g10-work-s242)";
 const RECEIPT_LABEL = "(FAMILIES, FCB-FAMILIES-SHAPE):";
 /** The sha-256 of this bead's receipt, the whole file, as this cut delivers it. */
-const RECEIPT_SHA256 = "cbf8c4d9612074dc0b59805235769a7a30b3e894bf0f6a5af0e1f1a03f997e86";
+const RECEIPT_SHA256 = "803cc70f5f8a9e104ac0cff7b302945776179e1d638410032cab7f8722ae9dca";
 /**
  * A character reference: an ampersand, then a number sign and decimal digits, a number sign, an x and hex digits, or a name
  * of ASCII letters, digits and underscores, then a semicolon (the forms marked 18 passes into its HTML as written).
