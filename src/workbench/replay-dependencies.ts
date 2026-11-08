@@ -291,20 +291,23 @@ interface FileReading {
  * named path (dependency-over-budget).
  *
  * The fail-closed core (wb-6b3z), each form planted for both file readers under the user source: a path the process may
- * not stat in one of three planted forms (the directory it lies in left listable but not searchable, two links naming
- * each other, or a link naming a path with a 256-byte component) makes the reading unknown (dependency-unreadable) at
- * the named path and at each depth 1 to 32 below the location (FCB-UNSTAT); a link naming a path below a regular file
- * reads as absent, equal to the same link naming a missing path, at the named path and at each depth 1 to 32
- * (FCB-LINK-BELOW-FILE); a link naming the directory it lies in, at each depth 1 to 31, or the directory one level
- * above that one, at each depth 2 to 31, makes it unknown (dependency-cycle) (FCB-CYCLE-INNER); and a directory first
- * reached, at each depth 1 to 31, through one link or two links that sort before it is read again, as a copy of it
- * would be (FCB-READ-AGAIN).
+ * not stat in one of three planted forms (the directory it lies in left listable but not searchable with the path
+ * listed in it, two links naming each other, or a link naming a path with a 256-byte component) makes the reading
+ * unknown (dependency-unreadable) at the named path and at each depth 1 to 32 below the location, and so does a named
+ * path absent from the directory it lies in, that directory left listable but not searchable and empty or holding
+ * only an unrelated entry (FCB-UNSTAT); a link naming a path below a regular file reads as absent, equal to the same
+ * link naming a missing path, at the named path and at each depth 1 to 32 (FCB-LINK-BELOW-FILE); a link naming the
+ * directory it lies in, at each depth 1 to 31, or the directory one level above that one, at each depth 2 to 31, makes
+ * it unknown (dependency-cycle) (FCB-CYCLE-INNER); and a directory holding one file or two files, first reached, at
+ * each depth 1 to 31, through one link or two links that sort before it is read again, as a copy of it would be, its
+ * entries in the same order (FCB-READ-AGAIN).
  *
  * NOT CLAIMED: any other read error no row plants; a socket and a block device; the reason for a FIFO, a link to a
  * character device, and a directory or a file the process may not read at another depth than one level below a
- * location; a link naming a directory two or more levels above the one it lies in; a directory first reached through a
- * link at the named path, or through three or more links; and these fail-closed forms under the project or local
- * source.
+ * location; a directory below a named path left listable but not searchable that lists no entry; a link naming a
+ * directory two or more levels above the one it lies in; a directory first reached through a link at the named path,
+ * or through three or more links, or holding a subdirectory or three or more entries; and these fail-closed forms under
+ * the project or local source.
  */
 function readFiles(paths: readonly string[], limits: DependencyReadLimits): FileReading[] {
   const readings: FileReading[] = [];
