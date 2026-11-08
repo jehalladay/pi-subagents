@@ -13,7 +13,7 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, realpathSync, unlinkSync, writeFileSync } from "node:fs";
-import { userInfo } from "node:os";
+import { homedir, userInfo } from "node:os";
 import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineTool, type ExtensionAPI, type ExtensionCommandContext, type ExtensionContext, getAgentDir, getSettingsListTheme } from "@earendil-works/pi-coding-agent";
@@ -85,6 +85,7 @@ import { type NativeRef, ObservationProjection, type ObservationScope, type Pres
 import { OBSERVE_CURSOR_MAX_BYTES, OBSERVE_DEFAULT_MAX_BYTES, OBSERVE_MAX_LIMIT, OBSERVE_MAX_MAX_BYTES, OBSERVE_MIN_MAX_BYTES, observeInvocation } from "./workbench/observe-query.js";
 import { createWorkflowReconcileTool } from "./workbench/reconcile-tool.js";
 import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText, WORKBENCH_TEXT_LIMIT } from "./workbench/redaction.js";
+import { type ClaudeReplayDependencies, claudeUserConfigDir, instructionDependency, providerDependency, sourceDependency } from "./workbench/replay-dependencies.js";
 import { type ByteCapMarker, buildWorkflowCatalogReply, buildWorkflowInspectReply, INSPECT_VIEWS, TOOL_REPLY_CONTRACT_VERSION, TOOL_REPLY_DEFAULT_MAX_BYTES, TOOL_REPLY_MAX_LIMIT } from "./workbench/tool-replies.js";
 import {
   type BuildWorkflowValidateReplyInput,
@@ -2588,6 +2589,26 @@ Terse command-style prompts produce shallow, generic work.
     };
   }
 
+  /**
+   * wb-413a: the readings the run's Claude host replays under (replay-dependencies.ts, whose module doc lists the Git
+   * candidate forms claimed): the source reading of the cwd's HEAD with the identity capture's Git candidate, and the
+   * instruction and provider readings of the setting sources the run names (as the wiring suite names them: user,
+   * project, local, and user with local) under claudeUserConfigDir (CLAUDE_CONFIG_DIR, else ~/.claude). NOT CLAIMED:
+   * which identity the provider reading is handed here (one process cannot vary its SDK), and which sources the readings
+   * read when the run names none (R-B664, routed to wb-6b3z).
+   */
+  function claudeReplayDependencies(ctx: ExtensionContext, task: WorkflowTask, settings: WorkbenchSettings,
+    input: IdentityCaptureInput): ClaudeReplayDependencies {
+    const cwd = realpathSync(ctx.cwd);
+    const sources = settings.settingSources ?? [];
+    const configDir = claudeUserConfigDir(process.env, homedir(), cwd);
+    return {
+      source: sourceDependency(observedPackageHead(cwd), { sourceBasis: input.workspace.sourceBasis, state: task.workspaceSourceState ?? "unknown" }),
+      instructions: instructionDependency(cwd, sources, configDir),
+      provider: providerDependency(task.identityReceipt, cwd, sources, configDir),
+    };
+  }
+
   /** A native reference scope the pure reply builder admits (clean text within its 256-byte identity bound), else none. */
   function referenceScope(path: string): { scope: string } | Record<string, never> {
     return Buffer.byteLength(path) <= 256 && stripUnsafeText(path) === path ? { scope: path } : {};
@@ -3139,6 +3160,7 @@ Terse command-style prompts produce shallow, generic work.
         updateWorkflowProgressBatch(task, [updated]);
       }, createClaudeControlObserver({ invocationId: task.id, scope, projection, now: () => new Date().toISOString(), retention: claudeControlRetention }));
       let beforeDispatch: (() => void) | undefined;
+      let replayDependencies: ClaudeReplayDependencies | undefined;
       if (settings) {
         const registry = registryFor(ctx.cwd);
         const descriptors = registry.discover({ grants: [
@@ -3148,6 +3170,7 @@ Terse command-style prompts produce shallow, generic work.
         const input = invocationInput(ctx, task, settings, descriptors);
         task.identityReceipt = captureInvocationIdentity(input);
         task.inputDigest = identityDigest("workflow-input", task.args === undefined ? { supplied: false } : { supplied: true, value: task.args });
+        replayDependencies = claudeReplayDependencies(ctx, task, settings, input);
         beforeDispatch = () => {
           // Re-read operator settings and measured candidate; pinned settings
           // alone would hide a mid-run grant revocation from verification.
@@ -3177,6 +3200,7 @@ Terse command-style prompts produce shallow, generic work.
               invocationId: task.id,
               principal: { id: scope.principal, role: "local-operator" },
               beforeDispatch,
+              replayDependencies,
               onMessage: (message, call) => {
                 if (message.type === "system" && message.subtype === "init") {
                   const live = liveClaudeQueries.get(liveClaudeKey(task.id, call));
