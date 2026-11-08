@@ -17,8 +17,9 @@
  * exactly the forms the wb-ocie negative controls hold, and no more. Excused, the row alive: the exact cooked text in both
  * quote forms, as a template without substitutions and escaped. An offender at its line: a second string holding the part
  * beside the exact string. An offender that leaves the row stale: the part under another producer, the ten inexact texts of
- * cut #2 (a superstring on either side, case, padded and compatibility variants, three template parts) and the seven
- * NAMESPACED_TEXT_FORMS (default-ignorable code points inside or before the id, a line break after it). Stale: the bare part
+ * cut #2 (a superstring on either side, case, padded and compatibility variants, three template parts) and the eight
+ * NAMESPACED_TEXT_FORMS (default-ignorable code points inside or before the id, a line break or a tab after it; frozen by name
+ * and by value, the tab from the wb-mqpz follow-up). Stale: the bare part
  * as a whole string. An offender in the other file: the exact id under each of the two other file names of cut #1 and cut #2
  * and of the thirteen NAMESPACED_FILE_FORMS, the thirteen also leaving the row stale. A text form or file form the controls
  * do not hold is NOT CLAIMED.
@@ -213,7 +214,11 @@ const IGNORABLE = {
 } as const;
 /**
  * The inexact cooked texts (wb-ocie cut #3; refusal #2's LN01 plants, a soft hyphen and a zero width space, first) a whole
- * string of the row's file plants: each an offender that leaves the row stale.
+ * string of the row's file plants: each an offender that leaves the row stale. The last (wb-mqpz, the R694 follow-up of the
+ * wb-ocie landing 1037 gate, its finding F1) plants that gate's PL05 form, a tab after the id (its member LX05 stripped tabs
+ * from the cooked text before the within compare). The case below freezes the table by name and by value, so a plant swapped
+ * under its name or a row deleted alone reds it; a row deleted together with its name and its value is NOT CLAIMED to be caught
+ * (those two literals are the table's only anchors).
  */
 const NAMESPACED_TEXT_FORMS: readonly { readonly form: string; readonly text: (within: string) => string }[] = [
   { form: "a soft hyphen in the producer part", text: within => within.replace("-", `${IGNORABLE.softHyphen}-`) },
@@ -223,6 +228,7 @@ const NAMESPACED_TEXT_FORMS: readonly { readonly form: string; readonly text: (w
   { form: "a combining grapheme joiner in the producer part", text: within => within.replace("-", `${IGNORABLE.combiningGraphemeJoiner}-`) },
   { form: "a zero width no-break space before the id", text: within => `${IGNORABLE.zeroWidthNoBreakSpace}${within}` },
   { form: "a line break after the id", text: within => `${within}\n` },
+  { form: "a tab after the id", text: within => `${within}\t` },
 ];
 /**
  * The other file names (wb-ocie cut #3; refusal #2's LN02 plant, the src-root file, first) under which a whole string holding
@@ -594,7 +600,7 @@ describe("contract literals have one carrier each", () => {
     expect(embeddedOffenders(new Map([["other/workbench/mechanical-descriptor.ts", declare(JSON.stringify(within))]]), EMBEDDED_TABLES)).toEqual(["entrypoint/v1: src/other/workbench/mechanical-descriptor.ts:1"]);
   });
 
-  it("UD2 negative control (wb-ocie cut #3, the enumerate form under the R-B655 cap): each of the seven NAMESPACED_TEXT_FORMS in a whole string of the row's file is an offender at line 1 that leaves the row stale, and the exact id under each of the thirteen NAMESPACED_FILE_FORMS is an offender there that leaves the row stale; both tables are frozen by name", () => {
+  it("UD2 negative control (wb-ocie cut #3, the enumerate form under the R-B655 cap): each of the eight NAMESPACED_TEXT_FORMS in a whole string of the row's file is an offender at line 1 that leaves the row stale, and the exact id under each of the thirteen NAMESPACED_FILE_FORMS is an offender there that leaves the row stale; both tables are frozen by name, and the text forms also by value", () => {
     const file = "workbench/mechanical-descriptor.ts";
     const within = "mechanical-workflows/entrypoint/v1";
     const declare = (initializer: string): string => `export const SCHEMA = ${initializer};\n`;
@@ -614,7 +620,17 @@ describe("contract literals have one carrier each", () => {
         NAMESPACED_FILE_FORMS.map(({ form, file: other }) => [form, { other: true, offenders: [`entrypoint/v1: src/${other(file)}:1`], stale: [`entrypoint/v1 in ${file}`] }]),
       ),
     );
-    expect(NAMESPACED_TEXT_FORMS.map(({ form }) => form)).toEqual(["a soft hyphen in the producer part", "a zero width space in the producer part", "a zero width joiner in the producer part", "a word joiner before the name part", "a combining grapheme joiner in the producer part", "a zero width no-break space before the id", "a line break after the id"]);
+    expect(NAMESPACED_TEXT_FORMS.map(({ form }) => form)).toEqual(["a soft hyphen in the producer part", "a zero width space in the producer part", "a zero width joiner in the producer part", "a word joiner before the name part", "a combining grapheme joiner in the producer part", "a zero width no-break space before the id", "a line break after the id", "a tab after the id"]);
+    expect(NAMESPACED_TEXT_FORMS.map(({ text }) => text(within)), "the text forms, frozen by value under the row's id").toEqual([
+      `mechanical${IGNORABLE.softHyphen}-workflows/entrypoint/v1`,
+      `mechanical${IGNORABLE.zeroWidthSpace}-workflows/entrypoint/v1`,
+      `mechanical${IGNORABLE.zeroWidthJoiner}-workflows/entrypoint/v1`,
+      `mechanical-workflows/${IGNORABLE.wordJoiner}entrypoint/v1`,
+      `mechanical${IGNORABLE.combiningGraphemeJoiner}-workflows/entrypoint/v1`,
+      `${IGNORABLE.zeroWidthNoBreakSpace}mechanical-workflows/entrypoint/v1`,
+      "mechanical-workflows/entrypoint/v1\n",
+      "mechanical-workflows/entrypoint/v1\t",
+    ]);
     expect(NAMESPACED_FILE_FORMS.map(({ form }) => form)).toEqual(["its last segment alone (a src-root file)", "the end of its last segment", "the src/ prefix before it", "a longer name", "its directory capitalized", "a doubled separator", "a leading ./", "a dot segment", "a dot-dot segment that returns", "padded before", "backslash separators", "a soft hyphen inside", "the empty name"]);
   });
 

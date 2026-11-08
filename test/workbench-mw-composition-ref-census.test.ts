@@ -303,8 +303,10 @@
  *     readings listed at holdsScopeIn): under the bound path, the bound text once reads clear, in a line or a block comment too
  *     (the binding is textual), and the bound text absent or twice, beside a scope occurrence or joined across the cut into one,
  *     its four respellings and the six other texts of MW_SCOPE_TEXT_FORMS read as holding the scope; the bound text once under
- *     each of the four cut #2 paths and the seventeen MW_SCOPE_PATH_FORMS reads as holding the scope. A path form or text form T1
- *     does not hold is NOT CLAIMED, and so is whether the bound text sits in a string literal. Today it binds
+ *     each of the four cut #2 paths and the twenty-two MW_SCOPE_PATH_FORMS (frozen by name and by value; the last five, from the
+ *     wb-mqpz follow-up, are the bound path with a hyphen or a separator percent-encoded and its .js, .mjs and .cjs twins) reads
+ *     as holding the scope. A path form or text form T1 does not hold is NOT CLAIMED, and so is whether the bound text sits in a
+ *     string literal. Today it binds
  *     src/workbench/mechanical-descriptor.ts (the mechanical-workflows-interop B-descriptor boundary, EAT-R010) to the reviewed
  *     package's name in double quotes, the one text in which its fixed allowlist spells the package; T1's import reading holds
  *     that no src module loads an @mechanical/ name.
@@ -1591,7 +1593,12 @@ const SCOPE_FULLWIDTH_SOLIDUS = String.fromCodePoint(0xff0f);
 const SCOPE_FULLWIDTH_AT = String.fromCodePoint(0xff20);
 /**
  * The path forms (wb-ocie cut #3; refusal #2's CN01/CN02 plants PN01 and PN02 first) T1 plants beside the bound path in memory:
- * under each, the bound text once reads as holding the scope.
+ * under each, the bound text once reads as holding the scope. The last five (wb-mqpz, the R694 follow-up of the wb-ocie landing
+ * 1037 gate, its finding F1) plant that gate's PX04 and PQ02 forms: the bound path with a hyphen or a separator percent-encoded
+ * (its member CX04 decoded the path before the match) and the bound path's .js, .mjs and .cjs twins (its member CQ02 read a
+ * twin as the bound path). T1 freezes the table by name and by value, so a plant swapped under its name or a row deleted alone
+ * reds T1; a row deleted together with its name and its value is NOT CLAIMED to be caught (those two literals are the table's
+ * only anchors).
  */
 const MW_SCOPE_PATH_FORMS: readonly { readonly form: string; readonly path: (bound: string) => string }[] = [
   { form: "a longer path ending with the bound path", path: bound => `src/x/${bound}` },
@@ -1611,6 +1618,11 @@ const MW_SCOPE_PATH_FORMS: readonly { readonly form: string; readonly path: (bou
   { form: "a zero width space inside", path: bound => bound.replace("/", `/${SCOPE_ZERO_WIDTH_SPACE}`) },
   { form: "a fullwidth solidus", path: bound => bound.replace("/", SCOPE_FULLWIDTH_SOLIDUS) },
   { form: "the empty path", path: () => "" },
+  { form: "a percent-encoded hyphen", path: bound => bound.replace("-", "%2D") },
+  { form: "a percent-encoded separator", path: bound => bound.replace("/", "%2F") },
+  { form: "its .js twin", path: bound => bound.replace(/\.ts$/, ".js") },
+  { form: "its .mjs twin", path: bound => bound.replace(/\.ts$/, ".mjs") },
+  { form: "its .cjs twin", path: bound => bound.replace(/\.ts$/, ".cjs") },
 ];
 /**
  * The bound-text forms (wb-ocie cut #3) T1 plants under the bound path in memory: the bound text once in a comment reads clear
@@ -1634,7 +1646,7 @@ const MW_SCOPE_TEXT_FORMS: readonly { readonly form: string; readonly text: (bou
  * occurrence after or before it, joined across the cut into a scope occurrence, respelled (a template, single quotes, unquoted,
  * upper-case) or in one of the six other texts of MW_SCOPE_TEXT_FORMS reads as holding the scope, and so does the bound text once
  * under another path: the same last segment in another directory, a name that ends with that segment, a longer path, the path
- * upper-case, and the seventeen MW_SCOPE_PATH_FORMS.
+ * upper-case, and the twenty-two MW_SCOPE_PATH_FORMS.
  */
 const holdsScopeIn = (module: Module): boolean => {
   const bound = MW_SCOPE_MODULES.find(entry => entry.module === module.path);
@@ -2242,7 +2254,8 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     }
     // In memory (wb-ocie cut #3, the enumerate form under the R-B655 cap on GUARD 1): the bound text once under each of the
     // MW_SCOPE_PATH_FORMS (CN01's PN01 and CN02's PN02 first) reads as holding the scope, and so does each MW_SCOPE_TEXT_FORMS text
-    // under the bound path but the bound text once in a comment, which reads clear; both tables are frozen by name.
+    // under the bound path but the bound text once in a comment, which reads clear; both tables are frozen by name, and the path
+    // forms also by value (wb-mqpz: each form's plant under the bound path, so a plant swapped under an unchanged name reds).
     for (const { module, literal } of MW_SCOPE_MODULES) {
       const read = (text: string, path: string = module): boolean => holdsScopeIn({ path, text });
       expect(
@@ -2254,7 +2267,31 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
         `FC-SCOPE binding of ${module}: the cut #3 bound-text forms`,
       ).toEqual(Object.fromEntries(MW_SCOPE_TEXT_FORMS.map(({ form, holds }) => [form, holds])));
     }
-    expect(MW_SCOPE_PATH_FORMS.map(({ form }) => form), "the cut #3 path forms, frozen by name").toEqual(["a longer path ending with the bound path", "its part below src/ under another directory", "its part below src/ alone", "its last segment alone", "the end of its last segment", "a leading ./", "a leading /", "a dot segment", "a dot-dot segment that returns", "a doubled separator", "backslash separators", "padded before", "padded after", "a soft hyphen inside", "a zero width space inside", "a fullwidth solidus", "the empty path"]);
+    expect(MW_SCOPE_PATH_FORMS.map(({ form }) => form), "the cut #3 path forms, frozen by name").toEqual(["a longer path ending with the bound path", "its part below src/ under another directory", "its part below src/ alone", "its last segment alone", "the end of its last segment", "a leading ./", "a leading /", "a dot segment", "a dot-dot segment that returns", "a doubled separator", "backslash separators", "padded before", "padded after", "a soft hyphen inside", "a zero width space inside", "a fullwidth solidus", "the empty path", "a percent-encoded hyphen", "a percent-encoded separator", "its .js twin", "its .mjs twin", "its .cjs twin"]);
+    expect(MW_SCOPE_PATH_FORMS.map(({ path }) => path("src/workbench/mechanical-descriptor.ts")), "the path forms, frozen by value under the bound path").toEqual([
+      "src/x/src/workbench/mechanical-descriptor.ts",
+      "src/x/workbench/mechanical-descriptor.ts",
+      "workbench/mechanical-descriptor.ts",
+      "mechanical-descriptor.ts",
+      "descriptor.ts",
+      "./src/workbench/mechanical-descriptor.ts",
+      "/src/workbench/mechanical-descriptor.ts",
+      "src/./workbench/mechanical-descriptor.ts",
+      "src/x/../workbench/mechanical-descriptor.ts",
+      "src//workbench/mechanical-descriptor.ts",
+      "src\\workbench\\mechanical-descriptor.ts",
+      " src/workbench/mechanical-descriptor.ts",
+      "src/workbench/mechanical-descriptor.ts ",
+      `src/${SCOPE_SOFT_HYPHEN}workbench/mechanical-descriptor.ts`,
+      `src/${SCOPE_ZERO_WIDTH_SPACE}workbench/mechanical-descriptor.ts`,
+      `src${SCOPE_FULLWIDTH_SOLIDUS}workbench/mechanical-descriptor.ts`,
+      "",
+      "src/workbench/mechanical%2Ddescriptor.ts",
+      "src%2Fworkbench/mechanical-descriptor.ts",
+      "src/workbench/mechanical-descriptor.js",
+      "src/workbench/mechanical-descriptor.mjs",
+      "src/workbench/mechanical-descriptor.cjs",
+    ]);
     expect(MW_SCOPE_TEXT_FORMS.map(({ form }) => form), "the cut #3 bound-text forms, frozen by name").toEqual(["the bound text once in a line comment", "the bound text once in a block comment", "padded inside its quotes", "an escaped at sign", "a fullwidth at sign", "a soft hyphen inside", "a zero width space inside", "a line break inside"]);
     expect(
       Object.entries(closedManifests.manifests).flatMap(([path, hits]) => (hits.length > 0 ? [path] : [])),
