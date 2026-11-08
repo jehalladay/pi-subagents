@@ -107,7 +107,7 @@
       },
       {
         "path": "test/workbench-ri-observation-authority-census.test.ts",
-        "line": 614,
+        "line": 616,
         "placeholder": "<DI>",
         "quote": "(b) adoption: every observation source and effect reaching the <DI> is enumerated in a Pi-owned authorization record before the call, an unlisted source is refused with a typed reason",
         "filed": "notes"
@@ -254,7 +254,7 @@
               "test/fixtures/ri-observation-authority-roster.json:222 <DI>",
               "test/workbench-ri-observation-authority-census.test.ts:3 <DI>",
               "test/workbench-ri-observation-authority-census.test.ts:9 <DI>",
-              "test/workbench-ri-observation-authority-census.test.ts:614 <DI>"
+              "test/workbench-ri-observation-authority-census.test.ts:616 <DI>"
             ],
             "outside": [],
             "self": [
@@ -608,14 +608,14 @@
               "test/fixtures/ri-observation-authority-roster.json:222 <DI>",
               "test/workbench-ri-observation-authority-census.test.ts:3 <DI>",
               "test/workbench-ri-observation-authority-census.test.ts:9 <DI>",
-              "test/workbench-ri-observation-authority-census.test.ts:614 <DI>"
+              "test/workbench-ri-observation-authority-census.test.ts:616 <DI>"
             ],
             "absent": [],
             "verbatim": [
               "test/fixtures/ri-observation-authority-roster.json:222 <DI>: carried, notes",
               "test/workbench-ri-observation-authority-census.test.ts:3 <DI>: carried, title",
               "test/workbench-ri-observation-authority-census.test.ts:9 <DI>: carried, notes",
-              "test/workbench-ri-observation-authority-census.test.ts:614 <DI>: carried, notes"
+              "test/workbench-ri-observation-authority-census.test.ts:616 <DI>: carried, notes"
             ]
           }
         },
