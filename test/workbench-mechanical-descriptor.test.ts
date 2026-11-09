@@ -60,24 +60,48 @@
  * Follow-up cut (wb-dhfk; the R694 follow-up of the wb-mqpz landing 1047 gate, its finding F1, whose member
  * GQ-D17-PIN-AFTER-DEFERRED-READ reads the descriptor path ahead of the pin judgment and defers that read's failure) pins
  * the read order behind the words "before any file is read" (the module header's step 1 and the titles of R008-5, R008-6,
- * R008-9, R008-10, R008-12 and R008-13) with an observable descriptor read. Each of those six cases ends with its READ-ORDER
- * LEG (readOrderLeg): every pin the case plants as refused pin-malformed is handed to the boundary again, one at a time, with
- * a FIFO that no writer opens in the descriptor's place. An open of that path for reading waits for a writer, so a boundary
- * that opens it before it judges the pin either does not settle (the row reads "blocked": the GQ-D17 form, the read awaited)
- * or leaves a reader behind (the row ends " reader": an open started and not awaited). Each leg first runs its positive
- * control: with the producer pin, the resolution opens that FIFO for reading (the open waits until the control's own writer
- * appears), so the leg can see this boundary's descriptor read; that open is the only FIFO reading the legs claim. R008-14
- * holds the legs to the titles that carry the words and to each case's row count. NOT CLAIMED by the legs: an open of the
- * artifact path, or a stat or realpath of either path, ahead of the pin judgment (they watch the descriptor path only); a
- * synchronous read of the descriptor path (it would wait for a writer on the suite's own thread, so no case could report it);
- * and what the boundary reads from a FIFO, or returns, once it opens one (the module header's NOT CLAIMED list names a FIFO
- * descriptor path).
+ * R008-9, R008-10, R008-12 and R008-13) with an observable descriptor read. Its respin cut #2 (wb-dhfk refusal #1, unmet
+ * U1: the member GP6-S03-NONBLOCK-READ-FIRST read the descriptor through an open that does not wait for a writer, and no
+ * row of cut #1 saw it) adds the READ leg below, bounds every wait (finding F2) and anchors the legs (findings F3 and F4).
+ * Each of those six cases ends with its READ-ORDER LEG (readOrderLeg), which first checks that it was handed exactly the
+ * pins the case's own landed assertions saw refused pin-malformed, in their order (refusalOf records them by case). Each of
+ * those pins is then handed to the boundary again, one row at a time, with a FIFO in the descriptor's place, in two legs:
+ *  - the OPEN leg: a FIFO that holds no bytes and that no writer holds. An open of it that waits for a writer (a blocking
+ *    open) does not complete until one appears, so a boundary that makes such an open before it judges the pin either does
+ *    not settle within 3 s (the row reads "<at> blocked": the open awaited) or leaves a reader waiting (the row ends
+ *    " reader", seen by a writer probe that does not wait, readerAt: an open started and not awaited);
+ *  - the READ leg: a FIFO that holds the producer file's 564 bytes before each row and that the suite holds open for
+ *    reading, with no writer. A read of it through any open, one that waits for a writer or one that does not (O_NONBLOCK,
+ *    the GP6-S03 form), takes bytes out of the pipe, and after each row the suite reads back what is left: the row ends
+ *    " read <n>" for the n bytes taken (a row whose open waited reads "<at> blocked", as in the open leg).
+ * Each leg first runs its positive controls with the producer pin: the resolution opens the empty FIFO (a reader appears:
+ * "opened") and takes all 564 bytes out of the full one ("read 564"), so each leg sees this boundary's own descriptor read;
+ * and the read leg's probe, the suite's own read through an open that does not wait for a writer, takes all 564 bytes
+ * too ("read 564"), so the read leg sees that open mode. No wait is unbounded: a control, or a row still pending after its
+ * 3 s, is released by a writer that opens and closes at once, every 5 ms, until it settles (at most 5 s; then it reads
+ * "unsettled" or "<at> stuck"), so an open the boundary makes after another one is released too; a leg ends at its first
+ * blocked row; and each leg closes with a 100 ms sweep of the same releases: the open leg's reports any reader still
+ * waiting ("reader", else "no reader"), and the read leg's refills the FIFO first and then reads back the bytes taken
+ * during it ("read <n>", else "no read"). R008-14 reads the module header's step 1 from src: the words are in it, the
+ * cases it cites are exactly the cases whose titles carry the words and exactly the cases that ran a leg, in run order,
+ * and it holds each leg's row count.
+ * NOT CLAIMED by the legs: an open of the artifact path, or a stat or realpath of either path, ahead of the pin judgment
+ * (they watch the descriptor path only); a synchronous read that waits for a writer (it would stall the suite's own
+ * thread, so no case could report it); an open of the descriptor path that does not wait for a writer and reads nothing
+ * from it (the read leg sees only bytes taken, and the open leg sees such an open only while it is still held at a row's
+ * check); a read ahead of the pin judgment that the boundary makes only when the descriptor path is not a FIFO (both legs
+ * plant a FIFO there); an open or a read that has not happened by the end of its leg's closing sweep; an open of the
+ * descriptor path for writing (through one a boundary could put back what it read); the open control's reading of a
+ * boundary whose own descriptor read does not wait for a writer (the GP6-S09 form: such an open is seen only while it is
+ * still held, so that control then reads by timing, while the read leg's control still takes its bytes); and what the
+ * boundary reads from a FIFO, or returns, once it opens one (the controls claim only the open and the bytes taken; the
+ * module header's NOT CLAIMED list names a FIFO descriptor path).
  *
  * Display paths added: none (the boundary returns closed-vocabulary diagnostics and composes no label or reply text).
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { closeSync, constants, mkdirSync, openSync, readFileSync, realpathSync, symlinkSync, unlinkSync, writeFileSync } from "node:fs";
+import { closeSync, constants, mkdirSync, openSync, readFileSync, readSync, realpathSync, symlinkSync, unlinkSync, writeFileSync, writeSync } from "node:fs";
 import { dirname, join, sep } from "node:path";
 import { afterAll, afterEach, describe, expect, it } from "vitest";
 import {
@@ -212,12 +236,33 @@ const fixedLoader = (namespace: unknown): { readonly loader: MechanicalExportLoa
 const recordingLoader = (): { readonly loader: MechanicalExportLoader; readonly calls: LoaderCall[] } =>
   fixedLoader({ develop: () => "planted develop", developLive: () => "not the reviewed export" });
 
-/** The refusal a host's one-shot admission returns, with the loader calls it caused (must be zero). */
+/**
+ * The pins refusalOf saw refused pin-malformed, by the running case's name, each with its call number (wb-dhfk respin cut
+ * #2, finding F3): a read-order leg is held to exactly the pins its case's landed assertions saw refused, so a row dropped
+ * from a leg, or a leg emptied, reds the case that runs it whatever R008-14's count literal says.
+ */
+const PIN_MALFORMED_SEEN: Record<string, { readonly call: number; readonly pin: unknown }[]> = {};
+let refusalCalls = 0;
+/** The running case's full name (the key PIN_MALFORMED_SEEN records under). */
+const runningCase = (): string => expect.getState().currentTestName ?? "";
+/** The pins refusalOf saw refused pin-malformed in the running case, in call order. */
+const pinsRefusedHere = (): unknown[] =>
+  [...(PIN_MALFORMED_SEEN[runningCase()] ?? [])].sort((left, right) => left.call - right.call).map(({ pin }) => pin);
+/**
+ * The refusal a host's one-shot admission returns, with the loader calls it caused (must be zero); the pin of a
+ * pin-malformed refusal is recorded for the running case (PIN_MALFORMED_SEEN).
+ */
 async function refusalOf(options: MechanicalEntrypointOptions): Promise<{ diagnostic: MechanicalEntrypointDiagnostic; loads: number }> {
+  const call = refusalCalls;
+  refusalCalls += 1;
+  const name = runningCase();
   const { loader, calls } = recordingLoader();
   const outcome = await admitMechanicalEntrypoint(options, loader);
   expect(outcome.ok, "the admission is refused").toBe(false);
   if (outcome.ok) throw new Error("unreachable: the admission was expected to be refused");
+  if (outcome.diagnostic.field === "pin" && outcome.diagnostic.reason === "pin-malformed") {
+    PIN_MALFORMED_SEEN[name] = [...(PIN_MALFORMED_SEEN[name] ?? []), { call, pin: options.pin }];
+  }
   return { diagnostic: outcome.diagnostic, loads: calls.length };
 }
 const refused = (field: string, reason: string): MechanicalEntrypointDiagnostic =>
@@ -272,6 +317,26 @@ const ran = (table: string, row: string): void => {
 const READ_ORDER_WORDS = "before any file is read";
 /** The rows each read-order leg was handed, by the head of its case's title, in run order (R008-14 holds them). */
 const READ_ORDER_LEGS: Record<string, number> = {};
+/** The module's own source: R008-14 reads the module header's step 1 from it (wb-dhfk respin cut #2, finding F4). */
+const MODULE_SOURCE = readFileSync(new URL("../src/workbench/mechanical-descriptor.ts", import.meta.url), "utf8");
+/** One numbered step of the module header (its " *  <n>. " line up to the next step's), comment markers dropped, lines joined. */
+function moduleHeaderStep(step: number): string {
+  const lines = MODULE_SOURCE.split("\n");
+  const start = lines.findIndex(line => line.startsWith(` *  ${step}. `));
+  const end = lines.findIndex((line, index) => index > start && line.startsWith(` *  ${step + 1}. `));
+  expect(start >= 0 && end > start, `the module header numbers step ${step} and then step ${step + 1}`).toBe(true);
+  return lines
+    .slice(start, end)
+    .map(line => line.replace(/^ \*\s*/, ""))
+    .join(" ")
+    .replace(/\s+/g, " ");
+}
+/** Orders requirement ids by group, then number (R008-5 before R008-10). */
+const byRequirement = (left: string, right: string): number => {
+  const [leftGroup = 0, leftNumber = 0] = left.slice(1).split("-").map(Number);
+  const [rightGroup = 0, rightNumber = 0] = right.slice(1).split("-").map(Number);
+  return leftGroup - rightGroup || leftNumber - rightNumber;
+};
 
 /** The members whose absence step 5 refuses member-missing under their own name: the producer's own, but schema (step 4) and note. */
 const REQUIRED_MEMBERS: readonly string[] = MECHANICAL_DESCRIPTOR_MEMBERS.filter(name => name !== "schema" && name !== "note");
@@ -888,7 +953,10 @@ describe("wb-ocie EAT-R008: Pi refuses artifact bytes that differ from their SHA
     expect(await readOrderLeg(task.name, options, rows)).toStrictEqual(legRefused(rows));
   });
 
-  it("R008-14 the read-order legs (wb-dhfk): the cases of this file whose titles carry the order words of the module header's step 1 are exactly the cases that ran a leg, in run order, and each leg was handed its case's rows (R008-5 6, R008-6 22, R008-9 5, R008-10 20, R008-12 112, R008-13 142), so a leg cut at its call site or moved to another case reds here", ({ task }) => {
+  it("R008-14 the read-order legs (wb-dhfk): the module header's step 1, read from src, carries the order words, and the cases it cites are exactly the cases of this file whose titles carry those words and exactly the cases that ran a leg, in run order; each leg was handed its case's rows (R008-5 6, R008-6 22, R008-9 5, R008-10 20, R008-12 112, R008-13 142), so a leg cut at its call site or moved to another case, or the words dropped from step 1 or from the title of a case it cites, reds here", ({ task }) => {
+    const step = moduleHeaderStep(1);
+    expect(step, "the module header's step 1 carries the order words").toContain(READ_ORDER_WORDS);
+    const cited = [...new Set(step.match(/\bR\d{3}-\d+\b/g) ?? [])].sort(byRequirement);
     const titled: string[] = [];
     const walk = (tasks: typeof task.file.tasks): void => {
       for (const child of tasks) {
@@ -898,6 +966,7 @@ describe("wb-ocie EAT-R008: Pi refuses artifact bytes that differ from their SHA
     };
     walk(task.file.tasks);
     expect(Object.keys(READ_ORDER_LEGS), "the cases that ran a read-order leg, in run order").toEqual(titled);
+    expect([...titled].sort(byRequirement), "the cases whose titles carry the order words are the cases step 1 cites").toEqual(cited);
     expect(READ_ORDER_LEGS).toStrictEqual({ "R008-5": 6, "R008-6": 22, "R008-9": 5, "R008-10": 20, "R008-12": 112, "R008-13": 142 });
   });
 });
@@ -1207,15 +1276,33 @@ async function settledWithoutWriter<T>(fifo: string, pending: Promise<T>): Promi
 
 /** One row of a read-order leg: its label and the pin the boundary is handed. */
 type LegRow = readonly [at: string, pin: unknown];
-/** A read-order leg's reading. */
-interface LegReading {
+/** The open leg's reading (the suite header's wb-dhfk paragraph): its control, its rows in order, and its closing sweep. */
+interface OpenLegReading {
   readonly control: string;
-  readonly readings: readonly string[];
+  readonly rows: readonly string[];
+  readonly sweep: string;
 }
+/** The read leg's reading: the open leg's fields, and the probe of its open mode that does not wait for a writer. */
+interface ReadLegReading extends OpenLegReading {
+  readonly probe: string;
+}
+/** A read-order leg's reading: its open leg, then its read leg. */
+interface LegReading {
+  readonly open: OpenLegReading;
+  readonly read: ReadLegReading;
+}
+/** The bytes the read leg's FIFO holds before each row and before its sweep: the producer file's 564 (R007-1). */
+const READ_LEG_BYTES: Buffer = DESCRIPTOR_BYTES;
 /** The head of a case title: its requirement id (R008-5, R008-14). */
 const titleHeadOf = (title: string): string => title.slice(0, title.indexOf(" "));
-/** What a read-order leg reads when the boundary judges every row's pin before it opens the descriptor path. */
-const legRefused = (rows: readonly LegRow[]): LegReading => ({ control: "opened", readings: rows.map(([at]) => `${at} pin pin-malformed loads=0`) });
+/** What a read-order leg reads when the boundary judges every row's pin before it opens or reads the descriptor path. */
+const legRefused = (rows: readonly LegRow[]): LegReading => {
+  const refusedRows = rows.map(([at]) => `${at} pin pin-malformed loads=0`);
+  return {
+    open: { control: "opened", rows: refusedRows, sweep: "no reader" },
+    read: { probe: `read ${READ_LEG_BYTES.length}`, control: `read ${READ_LEG_BYTES.length}`, rows: refusedRows, sweep: "no read" },
+  };
+};
 /**
  * Whether a reader holds the FIFO at `fifo` open or waits in an open of it: a writer open that does not wait (O_NONBLOCK)
  * succeeds only then and fails ENXIO while no reader exists; closing that writer at once lets such a reader read end of file.
@@ -1229,49 +1316,176 @@ function readerAt(fifo: string): boolean {
     throw error;
   }
 }
-/**
- * A read-order leg's positive control: the producer pin's request, with the FIFO at `fifo` in the descriptor's place, opens it
- * for reading, so a reader appears ("opened") within 3 s; the writer open that sees it lets the read end, and the resolution is
- * awaited to its end before the leg's rows. What it then reads from the FIFO, or returns, is NOT CLAIMED.
- */
-async function controlOpens(fifo: string, request: MechanicalEntrypointOptions): Promise<string> {
-  const pending = resolveMechanicalEntrypoint(request).then(
-    () => undefined,
-    () => undefined,
+const pause = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
+/** A pending promise whose settlement reads synchronously: settled once it resolves, or rejects (then done reads "threw"). */
+interface Tracked<T> {
+  readonly done: Promise<T | "threw">;
+  readonly settled: () => boolean;
+}
+function tracked<T>(pending: Promise<T>): Tracked<T> {
+  let settled = false;
+  const done = pending.then(
+    (value): T | "threw" => {
+      settled = true;
+      return value;
+    },
+    (): "threw" => {
+      settled = true;
+      return "threw";
+    },
   );
-  const deadline = Date.now() + 3_000;
-  while (!readerAt(fifo)) {
-    if (Date.now() > deadline) return "no reader within 3 s";
-    await new Promise(resolve => setTimeout(resolve, 5));
-  }
-  await pending;
-  return "opened";
+  return { done, settled: () => settled };
 }
 /**
- * A case's read-order leg (wb-dhfk; the suite header's follow-up paragraph), recorded under its case's title head for R008-14:
- * the control, then each row's pin handed to the boundary with the FIFO in the descriptor's place, one row at a time, read as
- * "<at> <field> <reason> loads=<n>" while no writer exists (settledWithoutWriter), with " reader" appended when a reader then
- * holds or waits in an open of the FIFO. A row that does not settle reads "<at> blocked" and ends the leg, so a blocked
- * boundary costs one wait.
+ * Releases the FIFO at `fifo` every 5 ms (readerAt: a writer that does not wait, closed at once, completes every open then
+ * waiting for a writer, and with no writer left the reads it lets through reach end of file) until `settled()` holds or
+ * `ms` have passed (finding F2: so an open the boundary makes after another one is released too); reports whether it
+ * settled and whether a reader was there at any release.
  */
-async function readOrderLeg(title: string, options: MechanicalEntrypointOptions, rows: readonly LegRow[]): Promise<LegReading> {
-  READ_ORDER_LEGS[titleHeadOf(title)] = rows.length;
-  const fifo = join(options.approvedRoot, "contracts", "entrypoints", "development.v1.fifo");
-  execFileSync("mkfifo", [fifo]);
-  /** The planted request with the FIFO in the descriptor's place, for the control and every row alike. */
-  const handed = (pin: unknown): MechanicalEntrypointOptions => ({ ...options, descriptorPath: fifo, pin: pin as MechanicalReleasePin });
-  const control = await controlOpens(fifo, handed(options.pin));
+async function releasedUntil(fifo: string, settled: () => boolean, ms: number): Promise<{ readonly settled: boolean; readonly reader: boolean }> {
+  const deadline = Date.now() + ms;
+  let reader = false;
+  while (!settled() && Date.now() <= deadline) {
+    if (readerAt(fifo)) reader = true;
+    await pause(5);
+  }
+  return { settled: settled(), reader };
+}
+/** A row's settlement: its reading, or "blocked" (released after 3 s with no writer), or "stuck" (still pending after that). */
+type RowSettlement = { readonly kind: "settled"; readonly reading: string } | { readonly kind: "blocked" | "stuck" };
+/** Waits up to 3 s, with no writer opened, for the row's reading; a row still pending then is released (releasedUntil, 5 s). */
+async function rowSettlement(fifo: string, pending: Promise<string>): Promise<RowSettlement> {
+  const row = tracked(pending);
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const waited = new Promise<"waited">(resolve => {
+    timer = setTimeout(() => resolve("waited"), 3_000);
+  });
+  const first = await Promise.race([row.done, waited]);
+  clearTimeout(timer);
+  if (first !== "waited") return { kind: "settled", reading: first };
+  return { kind: (await releasedUntil(fifo, row.settled, 5_000)).settled ? "blocked" : "stuck" };
+}
+/** One row's admission reading: "<field> <reason> loads=<n>", or "admitted loads=<n>" (a leg reports, it never throws). */
+async function rowReadingOf(options: MechanicalEntrypointOptions): Promise<string> {
+  const { loader, calls } = recordingLoader();
+  const outcome = await admitMechanicalEntrypoint(options, loader);
+  return `${readingOfOutcome(outcome)} loads=${calls.length}`;
+}
+/** Everything the FIFO reader `fd` (opened O_NONBLOCK) can read now: up to end of file, or until a read would wait. */
+function drained(fd: number): Buffer {
+  const chunks: Buffer[] = [];
+  const chunk = Buffer.alloc(READ_LEG_BYTES.length + 1);
+  let length = 1;
+  while (length > 0) {
+    try {
+      length = readSync(fd, chunk, 0, chunk.length, null);
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== "EAGAIN") throw error;
+      length = 0;
+    }
+    if (length > 0) chunks.push(Buffer.from(chunk.subarray(0, length)));
+  }
+  return Buffer.concat(chunks);
+}
+/** The planted request with the FIFO at `fifo` in the descriptor's place and `pin` as its pin. */
+type Handed = (pin: unknown) => MechanicalEntrypointOptions;
+/**
+ * The OPEN leg (the suite header's wb-dhfk paragraph) over the empty FIFO at `fifo`: its control with the producer pin
+ * (released until it settles: "opened" when a reader was there), then each row (rowSettlement; a settled row gains
+ * " reader" when a reader holds or waits in an open of the FIFO a turn after it settles), then its 100 ms closing sweep.
+ */
+async function openLeg(fifo: string, handed: Handed, producerPin: MechanicalReleasePin, rows: readonly LegRow[]): Promise<OpenLegReading> {
+  const control = tracked(resolveMechanicalEntrypoint(handed(producerPin)));
+  const released = await releasedUntil(fifo, control.settled, 5_000);
   const readings: string[] = [];
-  for (const [at, pin] of rows) {
-    const outcome = await settledWithoutWriter(fifo, refusalOf(handed(pin)));
-    if (outcome === "blocked") {
-      readings.push(`${at} blocked`);
+  for (const [at, pin] of released.settled ? rows : []) {
+    const settlement = await rowSettlement(fifo, rowReadingOf(handed(pin)));
+    if (settlement.kind !== "settled") {
+      readings.push(`${at} ${settlement.kind}`);
       break;
     }
     await new Promise(resolve => setImmediate(resolve));
-    readings.push(`${at} ${diagnosticReading(outcome.diagnostic)} loads=${outcome.loads}${readerAt(fifo) ? " reader" : ""}`);
+    readings.push(`${at} ${settlement.reading}${readerAt(fifo) ? " reader" : ""}`);
   }
-  return { control, readings };
+  const swept = await releasedUntil(fifo, () => false, 100);
+  return { control: released.settled ? (released.reader ? "opened" : "no reader") : "unsettled", rows: readings, sweep: swept.reader ? "reader" : "no reader" };
+}
+/**
+ * The READ leg over the FIFO at `fifo`, which the suite holds open for reading (O_NONBLOCK) and fills with READ_LEG_BYTES
+ * before its probe, its control, each row and its sweep: the probe (the suite's own read through an open that does not
+ * wait for a writer), the control with the producer pin (released until it settles), each row (rowSettlement; a settled row
+ * gains " read <n>" for the n bytes it took, read back a turn after it settles), then its 100 ms closing sweep of releases
+ * and the bytes taken during it.
+ */
+async function readLeg(fifo: string, handed: Handed, producerPin: MechanicalReleasePin, rows: readonly LegRow[]): Promise<ReadLegReading> {
+  const held = openSync(fifo, constants.O_RDONLY | constants.O_NONBLOCK);
+  try {
+    const fill = (): void => {
+      const writer = openSync(fifo, constants.O_WRONLY | constants.O_NONBLOCK);
+      try {
+        writeSync(writer, READ_LEG_BYTES);
+      } finally {
+        closeSync(writer);
+      }
+    };
+    /** The bytes taken out of the FIFO since it was filled: READ_LEG_BYTES less what the suite's own reader reads back. */
+    const taken = (): number => READ_LEG_BYTES.length - drained(held).length;
+    fill();
+    const probe = openSync(fifo, constants.O_RDONLY | constants.O_NONBLOCK);
+    try {
+      drained(probe);
+    } finally {
+      closeSync(probe);
+    }
+    const probeReading = `read ${taken()}`;
+    fill();
+    const control = tracked(resolveMechanicalEntrypoint(handed(producerPin)));
+    const released = await releasedUntil(fifo, control.settled, 5_000);
+    const controlReading = released.settled ? `read ${taken()}` : "unsettled";
+    const readings: string[] = [];
+    for (const [at, pin] of released.settled ? rows : []) {
+      fill();
+      const settlement = await rowSettlement(fifo, rowReadingOf(handed(pin)));
+      if (settlement.kind !== "settled") {
+        drained(held);
+        readings.push(`${at} ${settlement.kind}`);
+        break;
+      }
+      await new Promise(resolve => setImmediate(resolve));
+      const bytes = taken();
+      readings.push(`${at} ${settlement.reading}${bytes === 0 ? "" : ` read ${bytes}`}`);
+    }
+    drained(held);
+    fill();
+    await releasedUntil(fifo, () => false, 100);
+    const swept = taken();
+    return { probe: probeReading, control: controlReading, rows: readings, sweep: swept === 0 ? "no read" : `read ${swept}` };
+  } finally {
+    closeSync(held);
+  }
+}
+/**
+ * A case's read-order leg (wb-dhfk; the suite header's follow-up paragraph), recorded under its case's title head for
+ * R008-14. It first checks that `rows` hands the boundary exactly the pins this case's landed assertions saw refused
+ * pin-malformed, in their order (finding F3), then runs the open leg and the read leg, each over its own FIFO in the
+ * descriptor's place.
+ */
+async function readOrderLeg(title: string, options: MechanicalEntrypointOptions, rows: readonly LegRow[]): Promise<LegReading> {
+  READ_ORDER_LEGS[titleHeadOf(title)] = rows.length;
+  expect(
+    rows.map(([, pin]) => pin),
+    "the leg is handed exactly the pins this case's landed assertions saw refused pin-malformed, in their order",
+  ).toStrictEqual(pinsRefusedHere());
+  const entrypoints = join(options.approvedRoot, "contracts", "entrypoints");
+  const openFifo = join(entrypoints, "development.v1.open.fifo");
+  const readFifo = join(entrypoints, "development.v1.read.fifo");
+  execFileSync("mkfifo", [openFifo, readFifo]);
+  const handedAt =
+    (fifo: string): Handed =>
+    (pin: unknown): MechanicalEntrypointOptions => ({ ...options, descriptorPath: fifo, pin: pin as MechanicalReleasePin });
+  const open = await openLeg(openFifo, handedAt(openFifo), options.pin, rows);
+  const read = await readLeg(readFifo, handedAt(readFifo), options.pin, rows);
+  return { open, read };
 }
 
 describe("wb-ocie EAT-R011: Pi refuses symlink escapes during artifact resolution", () => {
