@@ -167,6 +167,7 @@
  * faked here; the cut that adds them flips this census (the FLIP of the freeze-and-flip).
  *
  * Display paths added: none. Test-only: no scratch is allocated; src, docs and the two tier files are only read.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -178,6 +179,7 @@ import { describe, expect, it } from "vitest";
 import { REACTIVE_FIBER_CONTRACT_SOURCE } from "../src/workbench/providers/reactivefiber.js";
 import { recordedRfRelease } from "./helpers/rf-release-drift.js";
 import * as rfFixture from "./helpers/rf-render-fixture.js";
+import { isTriageArchivePath, withoutTriageArchive } from "./helpers/triage-archive.js";
 
 type Json = rfFixture.Json;
 type JsonObject = { [key: string]: Json };
@@ -795,8 +797,9 @@ function filesBelow(directory: string): string[] {
   const files: string[] = [];
   for (const entry of entries) {
     const path = join(directory, entry.name);
-    if (entry.isDirectory()) files.push(...filesBelow(path));
-    else if (entry.isFile()) files.push(path);
+    if (entry.isDirectory()) {
+      if (!isTriageArchivePath(relative(REPO, path))) files.push(...filesBelow(path));
+    } else if (entry.isFile()) files.push(path);
   }
   return files.sort();
 }
@@ -818,7 +821,7 @@ function gitListed(root: string, extension: string): string[] {
       return false;
     }
   };
-  return [...new Set(listing.split("\0"))].filter(path => path !== "" && path.endsWith(extension) && isFile(path)).sort();
+  return withoutTriageArchive([...new Set(listing.split("\0"))].filter(path => path !== "" && path.endsWith(extension) && isFile(path))).sort();
 }
 /** A walk's reading, sorted, holds exactly git's listing. */
 function sameList(read: readonly string[], listed: readonly string[]): boolean {

@@ -1094,7 +1094,7 @@ let exportRow: ExportRow | undefined;
 /** The bead's own row in the tracked export (read once per run). */
 function beadRow(): ExportRow {
   if (exportRow !== undefined) return consult("repo", exportRow);
-  for (const line of headText(EXPORT).split("\n")) {
+  for (const line of rehydrateTrackerExport(headText(EXPORT), join(ROOT, EXPORT)).split("\n")) {
     if (!line.includes(`"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (member(row, "id") !== BEAD) continue;
@@ -1879,3 +1879,5 @@ describe(SUITE, () => {
     expect(reachedFindings(REACHED), "REACHED's reader agrees").toEqual([]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

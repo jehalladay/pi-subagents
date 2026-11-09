@@ -686,7 +686,7 @@ function scanFile(path: string): { keyPairs: string[]; labels: string[]; lossy: 
 }
 /** The bead's row of the tracked bead export: its title and its notes. */
 function exportRow(): { title: string; notes: string } {
-  const rows: unknown[] = textOf(EXPORT_PATH)
+  const rows: unknown[] = rehydrateTrackerExport(textOf(EXPORT_PATH), EXPORT_PATH)
     .split("\n")
     .filter(entry => entry.includes(`"id":"${BEAD}"`))
     .map(entry => JSON.parse(entry) as unknown);
@@ -1993,3 +1993,5 @@ describe("wb-csbt.2 rf render-report component-reuse echo census (TSX-RESOURCE-E
     ).toEqual([]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

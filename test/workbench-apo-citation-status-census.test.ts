@@ -341,6 +341,7 @@
  * SCOPE: the judges read words, not meaning. Display paths added: none (test-only; src/ and the docs are read, never edited).
  * Scratch: M1 and overTree (the stand-in trees of C1, C2 and THE LANDED JUDGE) compose makeScratch/removeScratch with the leak
  * guard installed; the tree, .beads and git objects are otherwise only read.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { execFileSync } from "node:child_process";
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -352,6 +353,7 @@ import { describe, expect, it } from "vitest";
 import { BLANK, bindingOf, causesOf, cites, cp, EFFECT_PROPERTY, ELEMENT, FENCE, type FileText, FOOTNOTE, HEADING, type Judgement, judgeFiles, LIST_ITEM, LOCKS, MARKDOWN, NEGATION_AFTER, NEGATION_BEFORE, NUL, OWES, propertyNameOf, READ, READS, SCOPE_PATTERN, SCOPE_WORD, SCRIPT, STATUS_LITERAL, STATUS_LITERAL_PATTERN, STATUS_PATTERN, STATUS_WORD, TABLE_ROW, UNSHOWN, unitsOf } from "./helpers/apo-citation-status-judge.js";
 import { ABBREVIATION, roleReading, SLUG } from "./helpers/apo-ui-publish-census.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+import { withoutTriageArchive } from "./helpers/triage-archive.js";
 
 installScratchLeakGuard();
 
@@ -567,14 +569,15 @@ function gitFiles(root: string, args: readonly string[]): string[] {
 }
 /** THE PRODUCT SCOPE: every file git would commit (tracked, or untracked and not ignored) outside UNREAD_ROOTS. */
 function productList(root: string): string[] {
-  return [...new Set(gitFiles(root, ["ls-files", "-z", "--cached", "--others", "--exclude-standard"]))].filter(path => !UNREAD_ROOTS.some(prefix => path.startsWith(prefix))).sort();
+  return withoutTriageArchive([...new Set(gitFiles(root, ["ls-files", "-z", "--cached", "--others", "--exclude-standard"]))].filter(path => !UNREAD_ROOTS.some(prefix => path.startsWith(prefix)))).sort();
 }
 /** A directory read from the filesystem: the walk's outside anchor. */
 function walkOf(root: string, directory: string): string[] {
-  return readdirSync(join(root, directory), { recursive: true, withFileTypes: true })
-    .filter(entry => entry.isFile())
-    .map(entry => relative(root, join(entry.parentPath, entry.name)))
-    .sort();
+  return withoutTriageArchive(
+    readdirSync(join(root, directory), { recursive: true, withFileTypes: true })
+      .filter(entry => entry.isFile())
+      .map(entry => relative(root, join(entry.parentPath, entry.name))),
+  ).sort();
 }
 /** readScope: every listed file read from disk and judged, then the plants judged by the same call. */
 function readScope(root: string, paths: readonly string[], plants: readonly FileText[] = []): Judgement {
@@ -707,7 +710,7 @@ function rejudged(witness: JsonValue): string[] {
 /** The bead's own row in the tracker export. */
 function beadRow(bead: string): { title: string; notes: string } {
   READS.calls += 1;
-  for (const line of textOf(EXPORT).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(EXPORT), join(REPO, EXPORT)).split("\n")) {
     if (!line.includes(`"id":"${bead}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === bead && typeof row.title === "string" && typeof row.notes === "string") return { title: row.title, notes: row.notes };
@@ -1968,3 +1971,5 @@ describe("wb-021.6 APO citation-status census (MW-ADAPTIVE-POLICY-ORGANIZATIONS-
     ).toEqual([]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

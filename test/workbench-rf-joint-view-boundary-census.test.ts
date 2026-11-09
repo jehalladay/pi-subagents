@@ -464,7 +464,7 @@ function admission(registry: CapabilityRegistry): { arms: JsonValue[]; permissio
 let beadRowRead: Record<string, unknown> | undefined;
 function beadRow(): Record<string, unknown> {
   if (beadRowRead !== undefined) return beadRowRead;
-  for (const line of readFileSync(join(REPO, ".beads/issues.jsonl"), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, ".beads/issues.jsonl")).split("\n")) {
     if (!line.includes(BEAD)) continue;
     const value: unknown = JSON.parse(line);
     if (isRecord(value) && value.id === BEAD) {
@@ -1014,3 +1014,5 @@ describe("wb-ae7u rf joint-view boundary census (RF-CAC-CONTEXT-REFINEMENT-R5, g
     expect([...REACHED].sort()).toEqual([...ROSTER.rows.flatMap(row => row.pins.map(pin => pin.id)), CLAIMS_BOUND].sort());
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

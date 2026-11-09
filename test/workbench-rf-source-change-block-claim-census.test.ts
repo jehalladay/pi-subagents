@@ -105,6 +105,7 @@
  * fixture re-measure re-reads them. No reader is added or faked here.
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src and docs are only read.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { chmodSync, type Dirent, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
@@ -122,6 +123,7 @@ import {
 import { type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
 import { RECONCILE_EVIDENCE_READS } from "../src/workflow/reconcile.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+import { isTriageArchivePath } from "./helpers/triage-archive.js";
 
 installScratchLeakGuard(afterAll);
 
@@ -362,7 +364,7 @@ function rosterWitness(pin: string): JsonValue {
 let acceptanceRead: string | undefined;
 /** The Acceptance line of wb-pfxo.2's notes in the tracked bead export, its closing period dropped; read once. */
 function exportedAcceptance(): string {
-  acceptanceRead ??= acceptanceOf(readFileSync(BEADS_EXPORT, "utf8"));
+  acceptanceRead ??= acceptanceOf(trackerExportText(BEADS_EXPORT));
   return acceptanceRead;
 }
 function acceptanceOf(exported: string): string {
@@ -380,7 +382,7 @@ let findingRead: string[] | undefined;
 /** The raw HTML forms the finding's leads line quotes - each quoted span whose markup splits "sou" from "rce" - in line order; read
  * once from the tracked bead export. */
 function findingForms(): string[] {
-  findingRead ??= findingFormsOf(readFileSync(BEADS_EXPORT, "utf8"));
+  findingRead ??= findingFormsOf(trackerExportText(BEADS_EXPORT));
   return findingRead;
 }
 function findingFormsOf(exported: string): string[] {
@@ -592,8 +594,9 @@ function filesBelow(directory: string): string[] {
   const files: string[] = [];
   for (const entry of entries.sort((a, b) => a.name.localeCompare(b.name))) {
     const path = join(directory, entry.name);
-    if (entry.isDirectory()) files.push(...filesBelow(path));
-    else if (entry.isFile()) files.push(path);
+    if (entry.isDirectory()) {
+      if (!isTriageArchivePath(relative(REPO, path))) files.push(...filesBelow(path));
+    } else if (entry.isFile()) files.push(path);
   }
   return files;
 }
@@ -1248,3 +1251,5 @@ describe("wb-pfxo.2 rf source-change block-claim census (RF-COMPOSITIONAL-ASSEMB
     expect(missing, "a cell the bead export and src require that no pin of its row judged").toStrictEqual(Object.fromEntries(ROWS.slice(1).map(row => [row.id, []])));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

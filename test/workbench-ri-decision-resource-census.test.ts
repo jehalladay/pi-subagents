@@ -123,6 +123,7 @@
  * record) is a shipped shape the re-cut measures, not one constructed here. No reader is added or faked here.
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src is only read.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -140,6 +141,7 @@ import {
 import { type ReactiveFiberSeam, type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
 import { RECONCILE_EVIDENCE_READS } from "../src/workflow/reconcile.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+import { withoutTriageArchive } from "./helpers/triage-archive.js";
 
 installScratchLeakGuard(afterAll);
 
@@ -513,7 +515,7 @@ function filesBelow(directory: string): string[] {
 /** What git would commit below a root: tracked or untracked, never ignored (the walk's outside anchor). */
 function gitListed(root: string): string[] {
   const out = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", root], { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 26 });
-  return [...new Set(out.split("\0").filter(path => path !== "" && existsSync(join(REPO, path))))].sort();
+  return withoutTriageArchive([...new Set(out.split("\0").filter(path => path !== "" && existsSync(join(REPO, path))))]).sort();
 }
 /** The walked paths git ignores (a tracked path is never reported). */
 function gitIgnored(paths: readonly string[]): Set<string> {
@@ -541,7 +543,7 @@ const scans = new Map<string, RootScan>();
 function scanOf(root: string): RootScan {
   const cached = scans.get(root);
   if (cached !== undefined) return cached;
-  const files = filesBelow(join(REPO, root)).map(file => relative(REPO, file));
+  const files = withoutTriageArchive(filesBelow(join(REPO, root)).map(file => relative(REPO, file)));
   const ignored = gitIgnored(files);
   const kept = new Set(files.filter(file => !ignored.has(file)));
   const listed = gitListed(root);
@@ -797,7 +799,7 @@ function siteCount(text: string): number {
 
 /** The tracked bead export's row for `id` (every line must parse; a malformed export is refused, never skipped). */
 function exportRow(id: string): { [key: string]: unknown } {
-  const rows = readFileSync(join(REPO, BEAD_EXPORT), "utf8")
+  const rows = trackerExportText(join(REPO, BEAD_EXPORT))
     .split("\n")
     .filter(line => line.trim() !== "")
     .map((line, index): unknown => {
@@ -1240,3 +1242,5 @@ describe("wb-tz4r.1 RI decision resource census (RI-UNIFIED-DECISION-INFERENCE-R
     expect(REACHED, "every pin reached its end, in row order, with its pinned assertion count").toEqual([...ROSTER.reached]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

@@ -1488,7 +1488,7 @@ const planted = (): ReturnType<typeof sourceProgram> => {
 /** This bead's row in the tracked export: the owner filing's title and notes, an anchor outside this file and its roster. */
 function exportRow(): ExportRow {
   const rows: ExportRow[] = [];
-  for (const line of read(BEAD_EXPORT).split("\n")) {
+  for (const line of rehydrateTrackerExport(read(BEAD_EXPORT), join(ROOT, BEAD_EXPORT)).split("\n")) {
     if (!line.includes(`"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (row === null || typeof row !== "object" || !("id" in row) || row.id !== BEAD) continue;
@@ -3055,3 +3055,5 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(status), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

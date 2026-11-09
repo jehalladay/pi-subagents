@@ -13,7 +13,7 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, realpathSync, unlinkSync, writeFileSync } from "node:fs";
-import { userInfo } from "node:os";
+import { homedir, userInfo } from "node:os";
 import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineTool, type ExtensionAPI, type ExtensionCommandContext, type ExtensionContext, getAgentDir, getSettingsListTheme } from "@earendil-works/pi-coding-agent";
@@ -85,6 +85,7 @@ import { type NativeRef, ObservationProjection, type ObservationScope, type Pres
 import { OBSERVE_CURSOR_MAX_BYTES, OBSERVE_DEFAULT_MAX_BYTES, OBSERVE_MAX_LIMIT, OBSERVE_MAX_MAX_BYTES, OBSERVE_MIN_MAX_BYTES, observeInvocation } from "./workbench/observe-query.js";
 import { createWorkflowReconcileTool } from "./workbench/reconcile-tool.js";
 import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText, WORKBENCH_TEXT_LIMIT } from "./workbench/redaction.js";
+import { type ClaudeReplayDependencies, claudeUserConfigDir, instructionDependency, providerDependency, sourceDependency } from "./workbench/replay-dependencies.js";
 import { type ByteCapMarker, buildWorkflowCatalogReply, buildWorkflowInspectReply, INSPECT_VIEWS, TOOL_REPLY_CONTRACT_VERSION, TOOL_REPLY_DEFAULT_MAX_BYTES, TOOL_REPLY_MAX_LIMIT } from "./workbench/tool-replies.js";
 import {
   type BuildWorkflowValidateReplyInput,
@@ -1609,11 +1610,11 @@ export default function (pi: ExtensionAPI, injected: SubagentsExtensionInjection
   // With no per-result note by design, the model would have every reason to go
   // on reporting a `pi-agent-*` branch that was never created.
   const isolationGuideline = isWorktreeIsolationEnabled()
-    ? `\n- Use isolation: "worktree" to give the agent its own git worktree (safe parallel file modifications); leave it unset, or pass "off", for none. The worktree is removed when the agent finishes; if it made changes, they are committed to a branch and the branch is named in the result.`
+    ? `\n- Use isolation: "worktree" to give the agent its own git worktree (safe parallel file modifications); leave it unset, or pass "off", for none. When the agent finishes, any changes it made are committed to a branch named in the result and the worktree is removed; if Git preservation fails, no branch is created and the worktree is kept instead, with the agent's work in it.`
     : "";
 
   const isolationCompactGuideline = isWorktreeIsolationEnabled()
-    ? `\n- isolation: "worktree" gives the agent its own git worktree (removed on completion); changes land on a branch named in the result.`
+    ? `\n- isolation: "worktree" gives the agent its own git worktree; on completion, changes land on a branch named in the result and the worktree is removed, but if Git preservation fails, the worktree is kept and no branch is created.`
     : "";
 
   // Compact Agent tool description (#91, `toolDescriptionMode: "compact"`) —
@@ -2588,6 +2589,28 @@ Terse command-style prompts produce shallow, generic work.
     };
   }
 
+  /**
+   * wb-413a: the readings the run's Claude host replays under (replay-dependencies.ts, whose module doc lists the Git
+   * candidate forms claimed): the source reading of the cwd's HEAD with the identity capture's Git candidate, and the
+   * instruction and provider readings of the setting sources the run names (as the wiring suite names them: user,
+   * project, local, and user with local) under claudeUserConfigDir (CLAUDE_CONFIG_DIR, else ~/.claude). A run whose
+   * settingSources is unset hands both readers no source: the eight user, project and local instruction and setting
+   * files the fail-closed suite changes leave the readings equal and the recorded answer replays (wb-6b3z
+   * FCB-UNNAMED-SOURCES). NOT CLAIMED: which identity the provider reading is handed here (one process cannot vary its
+   * SDK), and a settingSources set to the empty list.
+   */
+  function claudeReplayDependencies(ctx: ExtensionContext, task: WorkflowTask, settings: WorkbenchSettings,
+    input: IdentityCaptureInput): ClaudeReplayDependencies {
+    const cwd = realpathSync(ctx.cwd);
+    const sources = settings.settingSources ?? [];
+    const configDir = claudeUserConfigDir(process.env, homedir(), cwd);
+    return {
+      source: sourceDependency(observedPackageHead(cwd), { sourceBasis: input.workspace.sourceBasis, state: task.workspaceSourceState ?? "unknown" }),
+      instructions: instructionDependency(cwd, sources, configDir),
+      provider: providerDependency(task.identityReceipt, cwd, sources, configDir),
+    };
+  }
+
   /** A native reference scope the pure reply builder admits (clean text within its 256-byte identity bound), else none. */
   function referenceScope(path: string): { scope: string } | Record<string, never> {
     return Buffer.byteLength(path) <= 256 && stripUnsafeText(path) === path ? { scope: path } : {};
@@ -3139,6 +3162,7 @@ Terse command-style prompts produce shallow, generic work.
         updateWorkflowProgressBatch(task, [updated]);
       }, createClaudeControlObserver({ invocationId: task.id, scope, projection, now: () => new Date().toISOString(), retention: claudeControlRetention }));
       let beforeDispatch: (() => void) | undefined;
+      let replayDependencies: ClaudeReplayDependencies | undefined;
       if (settings) {
         const registry = registryFor(ctx.cwd);
         const descriptors = registry.discover({ grants: [
@@ -3148,6 +3172,7 @@ Terse command-style prompts produce shallow, generic work.
         const input = invocationInput(ctx, task, settings, descriptors);
         task.identityReceipt = captureInvocationIdentity(input);
         task.inputDigest = identityDigest("workflow-input", task.args === undefined ? { supplied: false } : { supplied: true, value: task.args });
+        replayDependencies = claudeReplayDependencies(ctx, task, settings, input);
         beforeDispatch = () => {
           // Re-read operator settings and measured candidate; pinned settings
           // alone would hide a mid-run grant revocation from verification.
@@ -3177,6 +3202,7 @@ Terse command-style prompts produce shallow, generic work.
               invocationId: task.id,
               principal: { id: scope.principal, role: "local-operator" },
               beforeDispatch,
+              replayDependencies,
               onMessage: (message, call) => {
                 if (message.type === "system" && message.subtype === "init") {
                   const live = liveClaudeQueries.get(liveClaudeKey(task.id, call));

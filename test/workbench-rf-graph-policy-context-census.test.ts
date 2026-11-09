@@ -385,6 +385,7 @@
  * Display paths added: none (test-only; src/ is read and run in memory, never edited). Scratch: none - every plant is an
  * in-memory entry judged by the same call as the real files, and the readers run on in-memory envelopes; nothing is written to
  * disk.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { execFileSync } from "node:child_process";
 import { existsSync, lstatSync, readFileSync } from "node:fs";
@@ -434,6 +435,7 @@ import {
   wordsOf,
 } from "./helpers/rf-e9dy-census-readers.js";
 import { fullShapeRf, readRfResultRoster } from "./helpers/rf-render-fixture.js";
+import { withoutTriageArchive } from "./helpers/triage-archive.js";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
@@ -829,7 +831,7 @@ interface ExportRow {
 }
 /** The tracked export's text, read once per run: every default read of exportRow, trackedRow and trackedEdges is this one text, so
  * the outside anchors' added reads cost no further pass over the file (wb-lnz5 cut #2). */
-const trackedExport = lazy((): string => textOf(EXPORT));
+const trackedExport = lazy((): string => rehydrateTrackerExport(textOf(EXPORT), join(REPO, EXPORT)));
 /** One row of the tracker export (one JSON object per line), found by its id; `text` is the export read (the tracked EXPORT unless
  * a case hands in-memory rows, as the outside anchors' edge-type control and FOLLOW_UP's re-typed rows do: wb-lnz5 F2, cut #2). */
 function exportRow(id: string, text: string = trackedExport()): ExportRow {
@@ -1098,10 +1100,12 @@ function findingsFor(verdict: ScopeVerdict, paths: readonly string[], within: bo
 /** Every listed file: tracked plus untracked-not-ignored, present in the worktree as a regular file. */
 const listing = lazy((): string[] =>
   sorted(
-    git(["ls-files", "-z", "--cached", "--others", "--exclude-standard"])
-      .toString("utf8")
-      .split("\0")
-      .filter(path => path !== "" && existsSync(join(REPO, path)) && lstatSync(join(REPO, path)).isFile()),
+    withoutTriageArchive(
+      git(["ls-files", "-z", "--cached", "--others", "--exclude-standard"])
+        .toString("utf8")
+        .split("\0")
+        .filter(path => path !== "" && existsSync(join(REPO, path)) && lstatSync(join(REPO, path)).isFile()),
+    ),
   ),
 );
 function excluded(path: string): boolean {
@@ -2333,3 +2337,5 @@ describe("wb-e9dy rf GraphPolicy-context census (RF-GRAPH-POLICY-CONTEXT-R1, unt
     expect(accepted, "the claims bound: no pin's live witness shows another pin's claims").toEqual([]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

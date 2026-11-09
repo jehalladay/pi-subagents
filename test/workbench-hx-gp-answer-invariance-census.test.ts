@@ -123,6 +123,7 @@
  *
  * Display paths added: none. Test-only: spawns nothing and writes nothing; every planted tree and document is in memory; src, docs,
  * qa, test, the vendored SDK declarations, the landed receipt and roster, and the bead export are only read.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { createHash } from "node:crypto";
 import { type Dirent, readdirSync, readFileSync } from "node:fs";
@@ -136,6 +137,7 @@ import { HYPERUNIX_EXECUTION_KINDS, type HyperUnixTopologyContext, hxLiveInvaria
 import { nativeEvidence, nativeRefOf } from "../src/workbench/native-evidence.js";
 import { type HyperUnixReader, registerHyperUnixFind } from "../src/workbench/providers/hyperunix.js";
 import { docsSection, sectionTables } from "./helpers/census.js";
+import { isTriageArchivePath } from "./helpers/triage-archive.js";
 
 type Json = { [key: string]: JsonValue };
 
@@ -471,8 +473,9 @@ function walk(start: string): Walk {
     for (const entry of entries) {
       const path = join(directory, entry.name);
       if (entry.isSymbolicLink()) symlinks.push(posix(relative(REPO, path)));
-      else if (entry.isDirectory()) visit(path);
-      else if (entry.isFile()) files.push(posix(relative(REPO, path)));
+      else if (entry.isDirectory()) {
+        if (!isTriageArchivePath(posix(relative(REPO, path)))) visit(path);
+      } else if (entry.isFile()) files.push(posix(relative(REPO, path)));
     }
   };
   visit(join(REPO, start));
@@ -818,7 +821,7 @@ interface ExportRow {
 }
 /** The tracked bead export's row for `id`. */
 function exportRow(id: string): ExportRow {
-  for (const line of textOf(BEAD_EXPORT).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(BEAD_EXPORT), join(REPO, BEAD_EXPORT)).split("\n")) {
     if (!line.includes(`"id":"${id}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === id && typeof row.notes === "string") return { id, notes: row.notes };
@@ -1702,3 +1705,5 @@ describe("wb-kjg9.1 HX GraphPolicy answer-invariance census (HX-GRAPH-POLICY-OPT
     expect([...REACHED].sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

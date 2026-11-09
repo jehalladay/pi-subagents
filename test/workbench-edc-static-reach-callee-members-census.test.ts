@@ -383,7 +383,7 @@ function syntaxErrors(text: string): string[] {
 /** Beads' descriptions and notes in the tracker export, read once (a line is parsed only when it holds the bead's id field). */
 function exportRows(ids: readonly string[]): Map<string, { description: string; notes: string }> {
   const found = new Map<string, { description: string; notes: string }>();
-  for (const line of readFileSync(join(REPO, EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, EXPORT)).split("\n")) {
     const id = ids.find(entry => line.includes(`"id":${JSON.stringify(entry)}`));
     if (id === undefined) continue;
     const row: unknown = JSON.parse(line);
@@ -577,3 +577,5 @@ describe("wb-pyel.11 EDC static-reach callee members census (test/helpers/edc-st
     expect(REACHED, "every pin case completed its compares, in row order").toEqual(PINS.map(pin => pin.id));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

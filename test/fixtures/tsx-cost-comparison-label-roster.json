@@ -1156,7 +1156,8 @@
       "installed": {
        ".pi/skills": null,
        ".agents/skills": [
-        "beads"
+        "beads",
+        "pi-mechanical-interop"
        ],
        ".claude/skills": null
       },
@@ -1165,7 +1166,8 @@
        "src/agent-runner.ts"
       ],
       "skillRootSpellers": [
-       "src/skill-loader.ts"
+       "src/skill-loader.ts",
+       "src/workbench/replay-dependencies.ts"
       ],
       "preloadCallers": [
        "src/agent-runner.ts"

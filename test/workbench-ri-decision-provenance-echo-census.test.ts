@@ -942,7 +942,7 @@ function writesTo(target: object, member: string): Record<string, string> {
 
 /** The wb-tz4r.3 row of the tracked bead export: its title and notes. */
 function exportRow(): { title: string; notes: string } {
-  for (const line of readFileSync(EXPORT_PATH, "utf8").split("\n")) {
+  for (const line of trackerExportText(EXPORT_PATH).split("\n")) {
     if (!line.includes(`"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === BEAD && typeof row.title === "string" && typeof row.notes === "string") return { title: row.title, notes: row.notes };
@@ -3464,3 +3464,5 @@ describe("wb-tz4r.3 RI native result provenance echo census (RI-UNIFIED-DECISION
     expect(REACHED, "every pin reached its end, in row order, with its pinned assertion count").toEqual([...ROSTER.reached]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

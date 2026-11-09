@@ -697,6 +697,8 @@
           "witness": {
             "findings": [],
             "liveQuiet": [
+              ".agents/skills/pi-mechanical-interop/SKILL.md subjectless:demand demands",
+              ".agents/skills/pi-mechanical-interop/SKILL.md subjectless:precision precise",
               "src/default-agents.ts lexeme subjectless:precision precise",
               "src/workbench/claude-capability-tools.ts lexeme subjectless:demand demand"
             ],

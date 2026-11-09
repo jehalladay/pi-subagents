@@ -135,6 +135,7 @@
  * this cut adds is a superset of the landed one.
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, qa, examples, docs, the repository's
  * top-level directories, the captured registry and the bead export are only read.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { chmodSync, type Dirent, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
@@ -150,6 +151,7 @@ import { type ReactiveFiberProjectionTopology, type ReactiveFiberTopologyContext
 import { sanitizeWorkbenchJson } from "../src/workbench/redaction.js";
 import { fullShapeRf, RF_FIXTURE_OPERATION_ID, RF_FIXTURE_WORKSPACE_ID } from "./helpers/rf-render-fixture.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+import { isTriageArchivePath } from "./helpers/triage-archive.js";
 
 installScratchLeakGuard(afterAll);
 
@@ -400,7 +402,7 @@ interface BeadRow {
 }
 /** The owner filing's row in the tracked bead export, found by id on a line that parses. */
 function readBeadRow(): BeadRow {
-  for (const line of readFileSync(join(REPO, BEAD_EXPORT), "utf8").split("\n")) {
+  for (const line of trackerExportText(join(REPO, BEAD_EXPORT)).split("\n")) {
     if (!line.includes(BEAD)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === BEAD && typeof row.title === "string" && typeof row.notes === "string") return { title: row.title, notes: row.notes };
@@ -451,8 +453,9 @@ function filesBelow(root: string, base: string = REPO): string[] {
     entries.sort((left, right) => (left.name < right.name ? -1 : left.name > right.name ? 1 : 0));
     for (const entry of entries) {
       const path = join(directory, entry.name);
-      if (entry.isDirectory()) visit(path);
-      else if (entry.isFile()) files.push(posix(relative(base, path)));
+      if (entry.isDirectory()) {
+        if (!isTriageArchivePath(posix(relative(base, path)))) visit(path);
+      } else if (entry.isFile()) files.push(posix(relative(base, path)));
     }
   };
   visit(join(base, root));
@@ -1452,3 +1455,5 @@ describe("wb-hs2j.8 rf read-side status upgrade census (RF-REACTIVE-CONTEXT-ASSE
     expect(REACHED, "every pin's case reached its end, in row order").toEqual(ROWS.flatMap(row => row.pins));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

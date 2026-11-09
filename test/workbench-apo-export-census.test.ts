@@ -173,6 +173,7 @@
  *
  * Display paths added: none (test-only; src/ is read, never edited). Scratch: none - every plant is an in-memory entry judged
  * by the same call as the real files; nothing is written to disk.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { execFileSync } from "node:child_process";
 import { existsSync, lstatSync, readdirSync, readFileSync } from "node:fs";
@@ -182,6 +183,7 @@ import { isDeepStrictEqual } from "node:util";
 import { marked, type Token, type Tokens } from "marked";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
+import { withoutTriageArchive } from "./helpers/triage-archive.js";
 
 type JsonValue = null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue };
 type JsonObject = { [key: string]: JsonValue };
@@ -430,7 +432,7 @@ interface ExportRow {
   readonly notes: string;
 }
 /** One row of the tracker export (one JSON object per line), found by its id; the untitled probe cuts its title to the requirement-id prefix. */
-function exportRow(id: string, text: string = textOf(EXPORT)): ExportRow {
+function exportRow(id: string, text: string = rehydrateTrackerExport(textOf(EXPORT), join(REPO, EXPORT))): ExportRow {
   for (const line of text.split("\n")) {
     if (!line.includes(id)) continue;
     const parsed: unknown = JSON.parse(line);
@@ -766,7 +768,7 @@ function walked(dir: string, skip: (path: string) => boolean): string[] {
     }
   };
   visit(dir.replace(/\/$/, ""));
-  return sorted(out);
+  return sorted(withoutTriageArchive(out));
 }
 /** The walked paths git ignores (tracked files are never reported). */
 function ignoredOf(paths: readonly string[]): Set<string> {
@@ -784,7 +786,7 @@ interface Listing {
   readonly excluded: readonly string[];
   readonly walkEqualsGit: boolean;
 }
-const listedAll = lazy((): string[] => sorted(git(["ls-files", "-z", "--cached", "--others", "--exclude-standard"]).toString("utf8").split("\0").filter(Boolean)));
+const listedAll = lazy((): string[] => sorted(withoutTriageArchive(git(["ls-files", "-z", "--cached", "--others", "--exclude-standard"]).toString("utf8").split("\0").filter(Boolean))));
 const outside = (path: string): boolean => OUTSIDE.some(prefix => path.startsWith(prefix));
 /** Row T's scope: every listed file under src/, held equal to a filesystem walk of src/ minus what git ignores. */
 const srcListing = lazy((): Listing => {
@@ -1104,7 +1106,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     return json({ overRead, readerForms, pageForms, quietForms });
   },
   Q1: () => {
-    const exportMentions = mentionsIn(textOf(EXPORT)).length;
+    const exportMentions = mentionsIn(rehydrateTrackerExport(textOf(EXPORT), join(REPO, EXPORT))).length;
     expect(exportMentions, "the tracker export spells the program (the bead's own row)").toBeGreaterThanOrEqual(1);
     return json({ residual: "R-TRACKER", exportSpellsProgram: exportMentions >= 1, exportListed: git(["ls-files", EXPORT]).toString("utf8").trim() === EXPORT, trackerExcluded: docsListing().excluded.includes(EXPORT) });
   },
@@ -1451,3 +1453,5 @@ describe("wb-021.3 APO export census (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R3, until
     expect(shown, "the claims bound: no pin's live witness shows another pin's claims").toEqual([]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

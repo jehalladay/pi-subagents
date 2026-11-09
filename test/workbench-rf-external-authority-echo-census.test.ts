@@ -408,7 +408,7 @@ interface BeadRow {
 }
 /** The owner filing's row in the tracked bead export, found by id on a line that parses. */
 function readBeadRow(): BeadRow {
-  for (const line of readFileSync(BEAD_EXPORT, "utf8").split("\n")) {
+  for (const line of trackerExportText(BEAD_EXPORT).split("\n")) {
     if (!line.includes(`"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === BEAD && typeof row.title === "string" && typeof row.notes === "string") return { title: row.title, notes: row.notes };
@@ -438,7 +438,7 @@ function sourceOf(notes: string): { citation: string; quote: string; cf: string[
 /** Every distinct status word the export's issue rows carry, in first-seen order: bd's own words for the work it tracks. */
 function exportStatuses(): string[] {
   const seen = new Set<string>();
-  for (const line of readFileSync(BEAD_EXPORT, "utf8").split("\n")) {
+  for (const line of trackerExportText(BEAD_EXPORT).split("\n")) {
     if (line.trim() === "") continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row._type === "issue" && typeof row.status === "string") seen.add(row.status);
@@ -1469,3 +1469,5 @@ afterAll(() => {
     throw new Error(`a case passed without reaching its end: ${ends.length} of ${titles.length} ends recorded, the records case's after ${records ?? "no"} of its ${RECORDS_ASSERTIONS} assertions`);
   }
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

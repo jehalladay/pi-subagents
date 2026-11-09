@@ -556,7 +556,7 @@ let beadRowCache: BeadRow | undefined;
 /** The bead's row in the tracked export, parsed once: the outside anchor of the rows, atoms and vocabularies. */
 function beadRow(): BeadRow {
   if (beadRowCache !== undefined) return beadRowCache;
-  for (const line of readFileSync(BEAD_EXPORT, "utf8").split("\n")) {
+  for (const line of trackerExportText(BEAD_EXPORT).split("\n")) {
     if (!line.includes(`"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === BEAD && typeof row.title === "string" && typeof row.notes === "string") {
@@ -1563,3 +1563,5 @@ describe("wb-tz4r.4 RI confidence evidence census (RI-UNIFIED-DECISION-INFERENCE
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

@@ -1432,7 +1432,7 @@ function stringConstant(file: string, name: string): string[] {
 
 /** The bead's own export row (the committed store export at the tree under test). */
 function beadNotes(): string {
-  const line = readFileSync(EXPORT_PATH, "utf8").split("\n").find(row => row.includes(`"id":"${BEAD}"`));
+  const line = trackerExportText(EXPORT_PATH).split("\n").find(row => row.includes(`"id":"${BEAD}"`));
   if (line === undefined) throw new Error(`${BEAD} is not in the store export`);
   const row: unknown = JSON.parse(line);
   if (!isObject(row) || typeof row.notes !== "string") throw new Error(`${BEAD}'s export row carries no notes`);
@@ -1843,3 +1843,4 @@ describe("wb-o4h0.1 rf observation cache-key census (RF-FEDERATED-WORKSPACES-R1)
   }
 });
 
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

@@ -980,6 +980,7 @@
  *
  * Display paths added: none. Test-only: the stand-in rf, its argv log and the scratch trees live in makeScratch scratch with its
  * leak guard installed; src, the manifests, the docs, the fixtures and the bead export are only read.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -1003,6 +1004,7 @@ import {
 import { docsSection, sectionTables } from "./helpers/census.js";
 import { fullShapeRf, type Json } from "./helpers/rf-render-fixture.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+import { isTriageArchivePath, withoutTriageArchive } from "./helpers/triage-archive.js";
 
 installScratchLeakGuard(afterAll);
 
@@ -3635,10 +3637,11 @@ function pathReading(paths: readonly string[]): { wasmFiles: string[]; named: st
 }
 /** git's tracked files, whole repository or below the given paths, in name order. */
 function gitFiles(...paths: string[]): string[] {
-  return execFileSync("git", ["ls-files", "-z", "--", ...paths], { cwd: REPO, encoding: "utf8" })
-    .split("\0")
-    .filter(path => path.length > 0)
-    .sort();
+  return withoutTriageArchive(
+    execFileSync("git", ["ls-files", "-z", "--", ...paths], { cwd: REPO, encoding: "utf8" })
+      .split("\0")
+      .filter(path => path.length > 0),
+  ).sort();
 }
 
 // ---- the src reader (A3, A4, C1) ----
@@ -3962,8 +3965,9 @@ function walkFiles(root: string, directory: string, keep: (path: string) => bool
       const path = join(dir, entry.name);
       const at = relative(root, path).split("\\").join("/");
       if (entry.isSymbolicLink()) symlinks.push(at);
-      else if (entry.isDirectory()) visit(path);
-      else if (entry.isFile() && keep(entry.name)) files.push(at);
+      else if (entry.isDirectory()) {
+        if (!isTriageArchivePath(at)) visit(path);
+      } else if (entry.isFile() && keep(entry.name)) files.push(at);
     }
   };
   if (existsSync(join(root, directory))) visit(join(root, directory));
@@ -4246,7 +4250,7 @@ let exportCache: Map<string, ExportRow> | undefined;
 function exportRows(): Map<string, ExportRow> {
   if (exportCache !== undefined) return exportCache;
   exportCache = rowsById(
-    readFileSync(EXPORT_PATH, "utf8")
+    trackerExportText(EXPORT_PATH)
       .split("\n")
       .filter(line => line.trim().length > 0)
       .map(line => JSON.parse(line) as unknown),
@@ -4260,7 +4264,7 @@ function rowsById(rows: readonly unknown[]): Map<string, ExportRow> {
 }
 /** The tracked export's lines (each a bead's row as bd writes it). */
 function exportLines(): string[] {
-  return readFileSync(EXPORT_PATH, "utf8")
+  return trackerExportText(EXPORT_PATH)
     .split("\n")
     .filter(line => line.trim().length > 0);
 }
@@ -5340,3 +5344,5 @@ describe("wb-2wiv.1 portable Fiber core gate census (SDK-UNIVERSAL-REACTIVE-REND
     expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(row => row.pins));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

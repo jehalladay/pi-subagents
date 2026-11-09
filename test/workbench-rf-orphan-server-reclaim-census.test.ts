@@ -145,6 +145,7 @@
  *
  * Display paths added: none. Test-only: nothing is written, the one process spawned is a read-only `git ls-files` (R12's tracked
  * set), and the repository files read are only read.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -155,6 +156,7 @@ import { describe, expect, it } from "vitest";
 import { CapabilityRegistry } from "../src/workbench/capability-registry.js";
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
 import { RECONCILE_EVIDENCE_READS } from "../src/workflow/reconcile.js";
+import { isTriageArchivePath } from "./helpers/triage-archive.js";
 
 type Json = null | boolean | number | string | Json[] | { [key: string]: Json };
 type JsonObject = { [key: string]: Json };
@@ -458,8 +460,9 @@ function filesBelow(directory: string): string[] {
   const files: string[] = [];
   for (const entry of entries) {
     const path = join(directory, entry.name);
-    if (entry.isDirectory()) files.push(...filesBelow(path));
-    else if (entry.isFile()) files.push(path);
+    if (entry.isDirectory()) {
+      if (!isTriageArchivePath(relative(REPO, path))) files.push(...filesBelow(path));
+    } else if (entry.isFile()) files.push(path);
   }
   return files;
 }
@@ -920,7 +923,7 @@ function shapeProblems(run: Run): string[] {
 /** The notes of a bead's row in the tracked bead export: wb-pfxo.8's carry the owner filing, its delivery record and its review;
  * wb-gue9's carry the follow-up's findings and owner ruling R709. */
 function filingNotes(bead: string): string {
-  for (const line of textOf(BEAD_EXPORT).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(BEAD_EXPORT), BEAD_EXPORT).split("\n")) {
     if (line.trim() === "") continue;
     let parsed: unknown;
     try {
@@ -1401,3 +1404,5 @@ describe("wb-pfxo.8 orphan-server reclaim census (RF-COMPOSITIONAL-ASSEMBLY-R9, 
     });
   }
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";
