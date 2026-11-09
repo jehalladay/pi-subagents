@@ -30,12 +30,12 @@
  * its host call, such as an admission refusal or an agent skipped before dispatch); which whole number a row's durationMs
  * holds, the nearest one or the one below or above the measure (a case that names a row pins a whole number of
  * milliseconds and, where it names the timed host call, one no less than that call's whole milliseconds); for an agent's
- * admission stage and a load stage, an index read from the run's running count of agents or loads when the stage ends rather
- * than from the call itself (only R078-GATE-INDEX, R078-NODE-INDEX, R078-ADMISSION-NODE and R078-ADMISSION-INDEX count a
- * later call before a stage ends, for the sdk, gate, node and node admission stages); where within its acquire call a lease's
- * waitedMs starts and stops, past the two bounds R078-ADMISSION-ROLLBACK and R078-ADMISSION-NODE pin on an admission stage
- * (a queued request's no shorter than the holder's hold from the moment it queued, every lease's no longer than its acquire
- * call).
+ * admission stage, an index read from the run's running count of agents when the stage ends rather than from the call itself
+ * (only R078-GATE-INDEX, R078-NODE-INDEX, R078-ADMISSION-NODE, R078-ADMISSION-INDEX, R078-ADMISSION-REFUSED and
+ * R078-END-ORDER count a later call before a stage ends, for the sdk, gate, node, node admission and load stages); where
+ * within its acquire call a lease's waitedMs starts and stops, past the two bounds R078-ADMISSION-ROLLBACK and
+ * R078-ADMISSION-NODE pin on an admission stage (a queued request's no shorter than the holder's hold from the moment it
+ * queued, every lease's no longer than its acquire call).
  */
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
@@ -636,11 +636,211 @@ describe("EAT-R078: each stage a run reports is timed on the monotonic clock and
     expect(result.status).toBe("completed");
     expect(agentRows(received).filter(row => row.state === "done").map(row => [row.promptPreview, row.index])).toEqual([["a-0", 0], ["a-1", 1]]);
     expect(nodeRows(received).filter(row => row.state === "done").map(row => [row.label, row.index])).toEqual([["n-0", 0], ["n-1", 1]]);
-    // Every call but the first follows a call of another kind, so a position counted across kinds reads red.
+    // Every call but the first follows a call of another kind, so a position that adds another kind's calls to its own reads
+    // red here. The kinds' counts stay equal at every call, so a position that takes the larger of its own count and another
+    // kind's reads green here; R078-KIND-UNEQUAL holds the counts apart and reads it red (wb-rzbv).
     expect(records.map(record => `${record.stage}:${record.kind}:${record.index}`).sort()).toEqual([
       "admission:agent:0", "admission:agent:1", "admission:node:0", "admission:node:1", "gate:agent:0", "gate:agent:1",
       "load:workflow:0", "load:workflow:1", "node:node:0", "node:node:1", "sdk:agent:0", "sdk:agent:1",
     ]);
+  }, 30_000);
+
+  it("R078-KIND-UNEQUAL: two runs whose kinds' call counts differ report each kind's stages at that kind's own positions: three forge.gate.status nodes, then two gated agents, then a nested workflow() report the nodes' admission and node stages at 0, 1 and 2, the agents' admission, sdk and gate stages at 0 and 1 and the load's stage at 0; three nested workflow() loads, then two gated agents, then a node report the loads' stages at 0, 1 and 2, the agents' stages at 0 and 1 and the node's admission and node stages at 0", async () => {
+    const child = 'export const meta = { name: "child", description: "nested" };\nreturn 1;';
+    const host: WorkflowHost = {
+      async spawnAgent(request) { return { ok: true, text: request.prompt }; },
+      abortAgent() {},
+      async runGate() { return { ok: true, output: "gate ok" }; },
+      async callNode() { return { contract: "forge.gate.status/v1", source: { status: "passed" } }; },
+      describeNodeEffect: () => "read",
+      async loadWorkflow() { return { ok: true, script: child }; },
+    };
+    /** One run of `calls` in turn under a roomy host budget: its status, the done rows' positions and the records' keys. */
+    const runCalls = async (calls: readonly string[]) => {
+      const { records, telemetry } = stageProbe();
+      const received: WorkflowEntry[] = [];
+      const hostAdmission = new HostAdmission({ sdkQueries: 8, childProcesses: 8, forgeOperations: 8, queueDeadlineMs: 30_000 });
+      const result = await run([...calls, 'return "done";'].join("\n"), { host, hostAdmission, telemetry }, received);
+      return {
+        status: result.status,
+        agents: agentRows(received).filter(row => row.state === "done").map(row => [row.promptPreview, row.index]),
+        nodes: nodeRows(received).filter(row => row.state === "done").map(row => [row.label, row.index]),
+        keys: records.map(record => `${record.stage}:${record.kind}:${record.index}`).sort(),
+      };
+    };
+    const nodeCall = (label: string): string => `await node("forge.gate.status", {}, { label: "${label}" });`;
+    const agentCall = (prompt: string): string => `await agent("${prompt}", { gate: "npm test" });`;
+    const loadCall = 'await workflow("child");';
+    // Each kind's calls come as one block and the blocks in turn, so when a later block's kind calls, an earlier block's kind
+    // has already counted 2 or 3 calls while the calling kind's own count is 0 or 1: a position that takes the larger of its
+    // own count and another kind's, or another kind's count in its place, reads red. The two runs put the blocks in opposite
+    // orders, so every kind's stages come after each other kind's calls in one of them.
+    const nodesFirst = await runCalls([nodeCall("n-0"), nodeCall("n-1"), nodeCall("n-2"), agentCall("a-0"), agentCall("a-1"), loadCall]);
+    expect(nodesFirst.status).toBe("completed");
+    expect(nodesFirst.nodes).toEqual([["n-0", 0], ["n-1", 1], ["n-2", 2]]);
+    expect(nodesFirst.agents).toEqual([["a-0", 0], ["a-1", 1]]);
+    expect(nodesFirst.keys).toEqual([
+      "admission:agent:0", "admission:agent:1", "admission:node:0", "admission:node:1", "admission:node:2", "gate:agent:0",
+      "gate:agent:1", "load:workflow:0", "node:node:0", "node:node:1", "node:node:2", "sdk:agent:0", "sdk:agent:1",
+    ]);
+    const loadsFirst = await runCalls([loadCall, loadCall, loadCall, agentCall("a-0"), agentCall("a-1"), nodeCall("n-0")]);
+    expect(loadsFirst.status).toBe("completed");
+    expect(loadsFirst.agents).toEqual([["a-0", 0], ["a-1", 1]]);
+    expect(loadsFirst.nodes).toEqual([["n-0", 0]]);
+    expect(loadsFirst.keys).toEqual([
+      "admission:agent:0", "admission:agent:1", "admission:node:0", "gate:agent:0", "gate:agent:1", "load:workflow:0",
+      "load:workflow:1", "load:workflow:2", "node:node:0", "sdk:agent:0", "sdk:agent:1",
+    ]);
+  }, 30_000);
+
+  it("R078-ADMISSION-REFUSED: on a one-query host budget, an agent refused at its 40 ms queue deadline while the holder agent holds the query keeps its call's position 1 and reports no admission or sdk stage, so the agent called after it reports its admission and sdk stages at position 2: each admission stage its own lease's waitedMs with 0 bytes and each sdk stage its own answer's bytes, at its own agent's position", async () => {
+    const { records, telemetry } = stageProbe();
+    const received: WorkflowEntry[] = [];
+    const hostAdmission = new LeaseLog({ sdkQueries: 1, childProcesses: 8, forgeOperations: 8, queueDeadlineMs: 40 });
+    // The holder keeps the one query until the queued agent's refusal row is out (5 s at most), so the refusal never races the
+    // holder's release; the third agent is called once the holder has answered and its lease is back, and is admitted at once.
+    let refusalOut: () => void = () => {};
+    const refused = new Promise<void>(resolve => { refusalOut = resolve; });
+    const host: WorkflowHost = {
+      async spawnAgent(request) {
+        if (request.prompt === "holder") {
+          let fallback: ReturnType<typeof setTimeout> | undefined;
+          await Promise.race([refused, new Promise<void>(resolve => { fallback = setTimeout(resolve, 5_000); })]);
+          clearTimeout(fallback);
+        }
+        return { ok: true, text: request.prompt };
+      },
+      abortAgent() {},
+    };
+    const body = [
+      'const held = agent("holder");',
+      'let second = "admitted"; try { await agent("refused"); } catch { second = "refused"; }',
+      "await held;",
+      'return [second, await agent("third")];',
+    ].join("\n");
+    const result = await runWorkflow({
+      script: HEAD + body,
+      host,
+      hostAdmission,
+      concurrency: 2,
+      telemetry,
+      onProgress: entries => {
+        received.push(...entries);
+        if (agentRows(entries).some(row => row.state === "error")) refusalOut();
+      },
+    });
+    expect(result.status).toBe("completed");
+    expect(result.value).toEqual(["refused", "third"]);
+    const settledRows = agentRows(received).filter(row => row.state === "done" || row.state === "error").sort((a, b) => a.index - b.index);
+    expect(settledRows.map(row => [row.promptPreview, row.state, row.index])).toEqual([["holder", "done", 0], ["refused", "error", 1], ["third", "done", 2]]);
+    expect(settledRows[1]?.error).toMatch(/queue deadline passed/);
+    // The refused wait ended without a lease: two leases in all, granted in turn to the holder and to the third agent, and
+    // neither queued.
+    expect(hostAdmission.granted).toHaveLength(2);
+    expect(hostAdmission.granted.filter(lease => lease.queuedAt !== undefined)).toHaveLength(0);
+    const admission = records.filter(record => record.stage === "admission").sort((a, b) => a.index - b.index);
+    expect(admission).toEqual([
+      { stage: "admission", kind: "agent", index: 0, durationMs: hostAdmission.granted[0]?.waitedMs, bytes: 0 },
+      { stage: "admission", kind: "agent", index: 2, durationMs: hostAdmission.granted[1]?.waitedMs, bytes: 0 },
+    ]);
+    const sdk = records.filter(record => record.stage === "sdk").sort((a, b) => a.index - b.index);
+    expect(sdk).toEqual([
+      { stage: "sdk", kind: "agent", index: 0, durationMs: sdk[0]?.durationMs, bytes: Buffer.byteLength("holder", "utf8") },
+      { stage: "sdk", kind: "agent", index: 2, durationMs: sdk[1]?.durationMs, bytes: Buffer.byteLength("third", "utf8") },
+    ]);
+  }, 30_000);
+
+  it("R078-END-ORDER: two gated agents, two forge.gate.status nodes and two nested workflow() loads, each pair called at once and its first call held until the second call's stage of that kind has ended, report each sdk, gate, node and load stage at its own call's position, carrying its own call's bytes and, where the stage has one, its own call's native id, while each pair's stages end second call first", async () => {
+    const received: WorkflowEntry[] = [];
+    const records: WorkflowStageRecord[] = [];
+    const ended = new Map<WorkflowStageRecord["stage"], () => void>();
+    const telemetry: NonNullable<RunWorkflowOptions["telemetry"]> = {
+      progressBytes: 1 << 20,
+      onStage: record => {
+        records.push(record);
+        ended.get(record.stage)?.();
+      },
+    };
+    /** Holds a pair's first call until a stage of `stage` has ended (the second call's, as the first's cannot), 5 s at most. */
+    const afterOtherEnded = async (stage: WorkflowStageRecord["stage"]): Promise<void> => {
+      if (records.some(record => record.stage === stage)) return;
+      let fallback: ReturnType<typeof setTimeout> | undefined;
+      await Promise.race([
+        new Promise<void>(resolve => { ended.set(stage, resolve); }),
+        new Promise<void>(resolve => { fallback = setTimeout(resolve, 5_000); }),
+      ]);
+      clearTimeout(fallback);
+    };
+    const utf8 = (text: string): number => Buffer.byteLength(text, "utf8");
+    const texts: Readonly<Record<string, string>> = { first: "first answer \u00e9", second: "2" };
+    const gateOutputs: Readonly<Record<string, string>> = { first: "gate ok \u2713\u2713", second: "gate ok" };
+    const operations: Readonly<Record<string, string>> = { first: `op-${"d4".repeat(16)}`, second: `op-${"e5".repeat(16)}` };
+    const scripts: Readonly<Record<string, string>> = {
+      first: 'export const meta = { name: "first", description: "nested \u00e9" };\nreturn "first";',
+      second: 'export const meta = { name: "second", description: "nested" };\nreturn "second";',
+    };
+    const promptOf = new Map<string, string>();
+    const host: WorkflowHost = {
+      async spawnAgent(request) {
+        promptOf.set(request.agentId, request.prompt);
+        if (request.prompt === "first") await afterOtherEnded("sdk");
+        return { ok: true, text: texts[request.prompt] ?? "", sessionId: `sdk-session-${request.prompt}` };
+      },
+      abortAgent() {},
+      async runGate(_command, gateOptions) {
+        const prompt = promptOf.get(gateOptions.agentId) ?? "";
+        if (prompt === "first") await afterOtherEnded("gate");
+        return { ok: true, output: gateOutputs[prompt] ?? "" };
+      },
+      async callNode(request) {
+        if (request.label === "first") await afterOtherEnded("node");
+        return { contract: "forge.gate.status/v1", source: { operation_id: operations[request.label], status: "passed" } };
+      },
+      describeNodeEffect: () => "read",
+      async loadWorkflow(ref) {
+        if (ref.name === "first") await afterOtherEnded("load");
+        return { ok: true, script: scripts[ref.name ?? ""] ?? "" };
+      },
+    };
+    const body = [
+      'await parallel([() => agent("first", { gate: "npm test" }), () => agent("second", { gate: "npm test" })]);',
+      'await parallel([() => node("forge.gate.status", {}, { label: "first" }), () => node("forge.gate.status", {}, { label: "second" })]);',
+      'return await parallel([() => workflow("first"), () => workflow("second")]);',
+    ].join("\n");
+    const result = await run(body, { host, concurrency: 2, telemetry }, received);
+    expect(result.status).toBe("completed");
+    expect(result.value).toEqual(["first", "second"]);
+    // Positions in call order: each pair's first call at 0 and its second at 1.
+    const byIndex = <T extends { readonly index: number }>(rows: readonly T[]): T[] => [...rows].sort((a, b) => a.index - b.index);
+    expect(byIndex(agentRows(received).filter(row => row.state === "done")).map(row => [row.promptPreview, row.index])).toEqual([["first", 0], ["second", 1]]);
+    expect(byIndex(nodeRows(received).filter(row => row.state === "done")).map(row => [row.label, row.index])).toEqual([["first", 0], ["second", 1]]);
+    // The stages ended second call first: in the order they were reported, each pair's records carry the second call's
+    // bytes or native id first.
+    const reported = (stage: WorkflowStageRecord["stage"]): WorkflowStageRecord[] => records.filter(record => record.stage === stage);
+    expect(reported("sdk").map(record => record.nativeId)).toEqual(["sdk-session-second", "sdk-session-first"]);
+    expect(reported("gate").map(record => record.bytes)).toEqual([utf8("gate ok"), utf8("gate ok \u2713\u2713")]);
+    expect(reported("node").map(record => record.nativeId)).toEqual([operations.second, operations.first]);
+    expect(reported("load").map(record => record.bytes)).toEqual([utf8(scripts.second ?? ""), utf8(scripts.first ?? "")]);
+    // Each stage sits at its own call's position with its own call's bytes and native id; there is no admission stage, as
+    // the run has no host budget, so these eight records are all the run reported.
+    expect(records).toHaveLength(8);
+    const sdk = byIndex(reported("sdk"));
+    expect(sdk).toEqual(["first", "second"].map((prompt, at) => (
+      { stage: "sdk", kind: "agent", index: at, durationMs: sdk[at]?.durationMs, bytes: utf8(texts[prompt] ?? ""), nativeId: `sdk-session-${prompt}` }
+    )));
+    const gate = byIndex(reported("gate"));
+    expect(gate).toEqual(["first", "second"].map((prompt, at) => (
+      { stage: "gate", kind: "agent", index: at, durationMs: gate[at]?.durationMs, bytes: utf8(gateOutputs[prompt] ?? "") }
+    )));
+    const node = byIndex(reported("node"));
+    expect(node).toEqual(["first", "second"].map((label, at) => {
+      const answer = { contract: "forge.gate.status/v1", source: { operation_id: operations[label], status: "passed" } };
+      return { stage: "node", kind: "node", index: at, durationMs: node[at]?.durationMs, bytes: bytesOf(answer), nativeId: operations[label] };
+    }));
+    const load = byIndex(reported("load"));
+    expect(load).toEqual(["first", "second"].map((name, at) => (
+      { stage: "load", kind: "workflow", index: at, durationMs: load[at]?.durationMs, bytes: utf8(scripts[name] ?? "") }
+    )));
   }, 30_000);
 
   it("R078-NATIVE-IDS: three agents report sdk stages carrying each one's own answer bytes and its own session id, and the agent whose host reports no session carries none", async () => {
