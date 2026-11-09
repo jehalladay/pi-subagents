@@ -1,4 +1,9 @@
 /**
+ * wb-g464 (the R694 follow-up bead of wb-1ht7's landing 1079, filed from the PASS-WITH-FINDING verdict of gate cmd_f12f9c46b4ef;
+ * its F1 LOW), STANDING LEG ONLY: wb-1ht7's cut #2, below, with a witness tree of its own for each test .ts anchor of C7 beside
+ * the qa anchor's, so a hollowing of C7's reading that drops a test .ts anchor reds the C7 row on that anchor's witness tree (THE
+ * C7 VERDICT and CURES OF wb-g464 below). No row is added or removed; the code that changes is the C7_WITNESSES table, the C7
+ * row's and the frozen shape row's, and the run pin's C7 title (test/workbench-hyperunix-custody-claims.census.ts).
  * wb-1ht7 (HX-ORIGINAL-GOALS-CLOSURE-R11; the structural-exit child of wb-tz2.11 under orchestrator ruling R-B746, M:69547),
  * STANDING LEG ONLY, cut #2: wb-tz2.11's cut #6, below, with its C7 and C8 verdicts each one function of a tree, read by one
  * expression on the repository's tree and on realized witnesses' (THE C7 VERDICT, THE C8 VERDICT, CURES OF REFUSAL #1 OF wb-1ht7
@@ -134,26 +139,32 @@
  * file's F1-F4 hits beside the hits KNOWN_REAPERS sets aside, one line per hit (path, line, shape and form) - the anchors and the
  * hits above. C7 reads it through c7Readings (wb-1ht7 cut #2), one expression over C7_TREES: the repository's tree (no anchor
  * missed, no hit) and each realized witness's tree (C7_WITNESSES), each judged by judgingOf and read by c7Verdict in that one call;
- * the C7 row reads no verdict elsewhere. Each witness is a real file at a walked path in a makeScratch tree of its own that holds
- * every other C7_ANCHORS path as a quiet SDK import (ANCHOR_TEXT, judged with no hit): an F3 /proc path and an F4 ESRCH literal in
- * test .ts files (GW-F3, GW-F4), a kill in a qa .mjs file (GW-QA-KILL), a kill in a fixtures .mts file (GW-FIX-KILL), a kill
- * driven by an override (GW-OVERRIDE-KILL) and by an invoke (GW-INVOKE-KILL), and the qa anchor left out (GW-QA-ANCHOR-GONE),
- * each tree read exactly as its row freezes it, with the witness file's drivers. The C7 walk row reads c7Verdict on its
+ * the C7 row reads no verdict elsewhere. Each witness is a makeScratch tree of its own that holds every C7_ANCHORS path but its
+ * own as a quiet SDK import (ANCHOR_TEXT, judged with no hit) and, when it plants one, a real file at a walked path: an F3 /proc
+ * path and an F4 ESRCH literal in test .ts files (GW-F3, GW-F4), a kill in a qa .mjs file (GW-QA-KILL), a kill in a fixtures .mts
+ * file (GW-FIX-KILL), a kill driven by an override (GW-OVERRIDE-KILL) and by an invoke (GW-INVOKE-KILL), and each C7_ANCHORS path
+ * left out, planting no file: the qa anchor (GW-QA-ANCHOR-GONE) and each test .ts anchor (GW-LIFECYCLE-ANCHOR-GONE,
+ * GW-OBS-ANCHOR-GONE and GW-GRAD-ANCHOR-GONE; wb-g464), each tree read exactly as its row freezes it, with the witness file's
+ * drivers. The C7 walk row reads c7Verdict on its
  * WALK_PLANTS tree: every C7_ANCHORS path missed (none is planted) and each judged plant's F1 and F2 hit on its kill's line
  * (WALK_PLANT_HITS), so the verdict reads every walk word above. The witness rows refusal #6's verdict names equal, member,
  * witness and path, the pairs it lists in the tracker export, each witness text holding every fragment it quotes; GW-INVOKE-KILL,
- * which it does not name, witnesses the one DRIVER_REASONS reason no named witness drives; and the witnesses together drive HX by
- * every DRIVER_REASONS reason and hit every SHAPES shape (both the landed readers' rosters). WHAT THE WITNESSES PIN: a hollowing of
- * C7's reading, written in c7Readings or in c7Verdict, that changes what a witness tree reads (an anchor it misses, a hit it holds
- * or its witness file's drivers) reds the C7 row on that tree, as each of SCOPE's C7 members does (GP16-H1, F1/F2 hits only: GW-F3
- * and GW-F4; H2, qa/ dropped: GW-QA-KILL; H3, fixtures dropped: GW-FIX-KILL; H4, import-driven only: GW-OVERRIDE-KILL and
- * GW-INVOKE-KILL; A1, the qa anchor unchecked: GW-QA-ANCHOR-GONE), and one written in c7Verdict that changes what the WALK_PLANTS
- * tree reads reds the C7 walk row. A hollowing that leaves every witness tree's reading as its row freezes it (and, written in
- * c7Verdict, the WALK_PLANTS tree's as the walk row freezes it) is NOT CLAIMED by this census: one that reads the repository's tree
- * apart from the witness trees (a test of the tree, of its C7_TREES entry, of its place among the readings or of its judging, an
- * edit where the repository's tree or its reading alone is named, and its reading replaced with the value the row freezes, among
- * them), and one that drops only hits no witness tree holds (a hit in a test/helpers file, in a file driven more than one way or on
- * line 1, among them).
+ * which it does not name, witnesses the one DRIVER_REASONS reason no named witness drives, and wb-g464's three test .ts anchor
+ * witnesses, which it does not name either, each leave out an anchor no named witness leaves out; and the witnesses together drive
+ * HX by every DRIVER_REASONS reason and hit every SHAPES shape (both the landed readers' rosters), and leave out every C7_ANCHORS
+ * path, each in a tree of its own. WHAT THE WITNESSES PIN: a hollowing of C7's reading, written in c7Readings, at the C7 row's
+ * readings field or in c7Verdict, that changes what a witness tree reads (an anchor it misses, a hit it holds or its witness file's
+ * drivers) reds the C7 row on that tree, as each of SCOPE's C7 members does (GP16-H1, F1/F2 hits only: GW-F3 and GW-F4; H2, qa/
+ * dropped: GW-QA-KILL; H3, fixtures dropped: GW-FIX-KILL; H4, import-driven only: GW-OVERRIDE-KILL and GW-INVOKE-KILL; A1, the qa
+ * anchor unchecked: GW-QA-ANCHOR-GONE) and as wb-g464's member does (N1-ANCHOR-TEST, the landing-1079 gate's member that keeps
+ * the anchors to qa/ paths, and any one test .ts anchor unchecked: GW-LIFECYCLE-ANCHOR-GONE, GW-OBS-ANCHOR-GONE and
+ * GW-GRAD-ANCHOR-GONE), and one written in c7Verdict that changes what the WALK_PLANTS tree reads reds the C7 walk row. A hollowing
+ * that leaves every witness tree's reading as its row freezes it (and, written in c7Verdict, the WALK_PLANTS tree's as the walk row
+ * freezes it) is NOT CLAIMED by this census: one that reads the repository's tree apart from the witness trees (a test of the tree,
+ * of its C7_TREES entry, of its place among the readings or of its judging, an edit where the repository's tree or its reading
+ * alone is named, and its reading replaced with the value the row freezes, among them), one that drops only hits no witness tree
+ * holds (a hit in a test/helpers file, in a file driven more than one way or on line 1, among them), and one that drops only
+ * anchors no witness tree misses (an anchor a tree misses beside another, as each witness tree misses one at most, among them).
  * C8 DOCS: every .md file under docs/workbench is read as marked 18.0.11 (the repo's renderer) renders it to HTML, and this view
  * reads that HTML as a browser's default stylesheet shows it: comments render nothing (including <!--> and <!---> and a comment
  * ended by --!> or by the end of the page), as do bogus comments, doctypes and every tag; the text of every element renders;
@@ -195,6 +206,16 @@
  * witness or walk page holds, details among them).
  * C9 RUN PIN: the run pin's literals name the suite, every CASES title, this file's suite and every case of this file.
  *
+ * CURES OF wb-g464 (the R694 follow-up bead of wb-1ht7's landing 1079, PASS-WITH-FINDING at gate cmd_f12f9c46b4ef; named in the
+ * delivery note): F1 (LOW) - the C7 title's three test .ts anchors were pinned at C7's call site only through the repository's own
+ * reading. The one anchor witness, GW-QA-ANCHOR-GONE, leaves out the qa anchor, so the gate's N1-ANCHOR-TEST (C7's reading with
+ * its anchors kept to qa/ paths, written inside c7Readings or at the C7 row's readings field) read green alone and with a test .ts
+ * anchor deleted from a repository copy (the gate's G1-OBS-ANCHOR-GONE and G1-GRAD-ANCHOR-GONE). Each test .ts anchor now has a
+ * witness tree of its own that leaves it out, beside the qa anchor's (GW-LIFECYCLE-ANCHOR-GONE, GW-OBS-ANCHOR-GONE and
+ * GW-GRAD-ANCHOR-GONE), so N1-ANCHOR-TEST and each filter that drops one anchor, written at either of those sites or in
+ * c7Verdict, red the C7 row on that anchor's witness tree; and the C7 row's unmissed check holds the witness set to C7_ANCHORS,
+ * the roster c7Verdict reads: an anchor no witness tree leaves out reds the row. What no witness tree misses is NOT CLAIMED (THE
+ * C7 VERDICT), and neither is a hollow that also empties the unmissed check itself.
  * CURES OF REFUSAL #1 OF wb-1ht7 (cut #2; refusal #1 = gate-prep-13 / g10-gate-s258, gate-refused M:69849; each named in the
  * delivery note): U1 C7-REPOSITORY-VERDICT-CALL-SITE-WITHOUT-FALSIFIER and U2 C8-REPOSITORY-VERDICT-CALL-SITE-WITHOUT-FALSIFIER -
  * cut #1's C7 and C8 docs rows read the repository's verdict through a call of their own (verdict: c7Verdict(judged) and verdict:
@@ -204,7 +225,8 @@
  * on the witness tree it narrows. R-B750 (M:69871) ruled this refusal rung 1 of wb-1ht7's own ladder and bound the class guard over
  * these call-site words: each now carries realized call-site falsifiers (each of the seven filters, written at the row's readings
  * field or inside c7Readings or c8Readings, reds the row alone and under each paired witness), and the call-site edits no witness
- * tree can see (one that reads the repository's tree apart) are NOT CLAIMED (THE C7 VERDICT, THE C8 VERDICT). F1 (rides): THE C7
+ * tree can see (one that reads the repository's tree apart among them; THE C7 VERDICT and THE C8 VERDICT name each NOT CLAIMED
+ * kind) are NOT CLAIMED (THE C7 VERDICT, THE C8 VERDICT). F1 (rides): THE C7
  * VERDICT and THE C8 VERDICT claim exactly what the witness trees pin (WHAT THE WITNESSES PIN) and put the rest NOT CLAIMED, the
  * test/helpers, more-than-one-driver and line-1 hollowings refusal #1 realized among it.
  * CURES OF REFUSAL #6 (wb-1ht7, the structural-exit child of wb-tz2.11 under orchestrator ruling R-B746, M:69547; refusal #6 =
@@ -270,8 +292,10 @@
  * the SDK transport's own termination JSDoc (STEM_WORDS, an instrument independent of VOCABULARY); C8 calibrates on the frozen
  * TRACEABILITY.md provider-custody row; C7 and C8 hold the witness rows refusal #6's verdict names to the member, witness and path
  * pairs, and the quoted fragments, that verdict lists in wb-tz2.11's notes in the tracker export (.beads/issues.jsonl, read through
- * qa/workbench/tracker-export.mjs), and C7 its witnesses to the landed DRIVER_REASONS and SHAPES rosters. R-UNANCHORED pins exactly
- * the terms none of these anchors holds.
+ * qa/workbench/tracker-export.mjs), and C7 its witnesses to the landed DRIVER_REASONS and SHAPES rosters and (wb-g464) its anchor
+ * witnesses to C7_ANCHORS, the roster c7Verdict reads - a table of this census, so an anchor dropped from C7_ANCHORS and from every
+ * literal together is R-UNANCHORED's family (a calibration member whose own literals are its only anchor). R-UNANCHORED pins
+ * exactly the terms none of these anchors holds.
  * FROZEN SHAPE (standing rule 16): one row pins every table: VOCABULARY, CASES, CUSTODY, the matcher and subject sets, the mock,
  * guarded-target and tamper sets, the falsifier shapes and their member words, the process table, the wrappers with their option
  * tables, the shell keywords and shells, the reader patterns, the driver needles, loaders, env calls and methods, tokens and
@@ -2321,7 +2345,8 @@ const judgedPaths = (plants: readonly WalkPlant[]): string[] =>
  * THE VERDICTS' WITNESSES (wb-1ht7, the structural-exit child of wb-tz2.11 under orchestrator ruling R-B746, M:69547). Refusal #6
  * of cut #6 (gate-prep-1 / g10-gate-s255, gate-refused M:69492) realized seven one-edit hollowings of C7's and C8's own verdict
  * expressions, each green while its paired witness alone redded the census. Each witness here is that file at that path (for
- * GW-QA-ANCHOR-GONE, the qa anchor left out), planted as a real file in a makeScratch tree of its own and read, with the
+ * GW-QA-ANCHOR-GONE, the qa anchor left out; for wb-g464's GW-LIFECYCLE-ANCHOR-GONE, GW-OBS-ANCHOR-GONE and GW-GRAD-ANCHOR-GONE,
+ * a test .ts anchor left out), planted as a real file in a makeScratch tree of its own and read, with the
  * repository's tree, through one reading (c7Readings or c8Readings, below), so a member's hollowing of that reading or of the
  * verdict reds the row on the witness tree it narrows.
  */
@@ -2331,7 +2356,7 @@ const ANCHOR_TEXT = HX_HEAD;
 const WITNESS_KILL = "export const stopChild = (child: { pid: number }): void => {\n  process.kill(child.pid);\n};\n";
 interface C7Witness {
   readonly id: string;
-  /** The member of wb-1ht7's SCOPE, by refusal #6's id, whose hollowing of C7's reading (c7Verdict or c7Readings) this witness reds. */
+  /** The member whose hollowing of C7's reading (c7Verdict or c7Readings) this witness reds: one of wb-1ht7's SCOPE, by refusal #6's id, or wb-g464's, by the landing-1079 gate's (N1-ANCHOR-TEST). */
   readonly member: string;
   /** The walked path it plants, or the C7_ANCHORS path it leaves out of its tree. */
   readonly path: string;
@@ -2399,6 +2424,25 @@ const C7_WITNESSES: readonly C7Witness[] = [
     hits: ["test/zz-gp16-invoke.test.ts:4 F1 (member)", "test/zz-gp16-invoke.test.ts:4 F2 (member)"],
   },
   { id: "GW-QA-ANCHOR-GONE", member: "GP16-A1-C7-QA-ANCHOR-UNCHECKED", path: QA_ANCHOR, text: undefined, drivers: [], anchored: [QA_ANCHOR], hits: [] },
+  { id: "GW-LIFECYCLE-ANCHOR-GONE", member: "N1-ANCHOR-TEST", path: LIFECYCLE, text: undefined, drivers: [], anchored: [LIFECYCLE], hits: [] },
+  {
+    id: "GW-OBS-ANCHOR-GONE",
+    member: "N1-ANCHOR-TEST",
+    path: "test/workbench-hyperunix-observer.test.ts",
+    text: undefined,
+    drivers: [],
+    anchored: ["test/workbench-hyperunix-observer.test.ts"],
+    hits: [],
+  },
+  {
+    id: "GW-GRAD-ANCHOR-GONE",
+    member: "N1-ANCHOR-TEST",
+    path: "test/workbench-hyperunix-graduation-vocabulary-census.test.ts",
+    text: undefined,
+    drivers: [],
+    anchored: ["test/workbench-hyperunix-graduation-vocabulary-census.test.ts"],
+    hits: [],
+  },
 ];
 /** A C7 witness tree's files: every C7_ANCHORS path it keeps as ANCHOR_TEXT, and its own file when it plants one. */
 const c7WitnessFiles = (witness: C7Witness): Array<readonly [string, string]> => [
@@ -3241,6 +3285,9 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
           "GW-OVERRIDE-KILL<GP16-H4-C7-VERDICT-IMPORT-DRIVEN-ONLY=test/zz-gp16-override.test.ts:override//2#71e1e850544f",
           "GW-INVOKE-KILL<GP16-H4-C7-VERDICT-IMPORT-DRIVEN-ONLY=test/zz-gp16-invoke.test.ts:invoke//2#ba7e7a8dd627",
           "GW-QA-ANCHOR-GONE<GP16-A1-C7-QA-ANCHOR-UNCHECKED=qa/workbench/hx-task-scope-probe.mjs:/qa/workbench/hx-task-scope-probe.mjs/0#e3b0c44298fc",
+          "GW-LIFECYCLE-ANCHOR-GONE<N1-ANCHOR-TEST=test/workbench-provider-lifecycle.test.ts:/test/workbench-provider-lifecycle.test.ts/0#e3b0c44298fc",
+          "GW-OBS-ANCHOR-GONE<N1-ANCHOR-TEST=test/workbench-hyperunix-observer.test.ts:/test/workbench-hyperunix-observer.test.ts/0#e3b0c44298fc",
+          "GW-GRAD-ANCHOR-GONE<N1-ANCHOR-TEST=test/workbench-hyperunix-graduation-vocabulary-census.test.ts:/test/workbench-hyperunix-graduation-vocabulary-census.test.ts/0#e3b0c44298fc",
         ],
         c8: [
           "GW-PAGE-RECEIPTS<GP16-D1-C8-VERDICT-DROPS-RECEIPTS=docs/workbench/receipts/zz-gp16.md:0/1#11873df90e33",
@@ -3631,7 +3678,7 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
     ]);
   });
 
-  it("C7 no hand-rolled kill falsifier: on the repository the C7 walk reads exactly the files node:fs's recursive listing lists under test/ and qa/ (each regular file with a SOURCE_FILE name - .ts .mts .cts .js .mjs .cjs - outside a node_modules directory, and no entry there but regular files and directories); C7 judges exactly the listed files other than this census whose text, raw or unescaped, holds the needle hyperunix (any case) and that the landed readers' hxDrivers classes as driving HX by any of its C7 DRIVER FORMS (an import, invoke or override form), three test .ts anchors and the qa .mjs anchor among them; and no judged file carries an F1-F4 shape the landed readers' falsifierShapes reads by any of its C7 SHAPE FORMS, a command read through commandHeads, beside the hits KNOWN_REAPERS sets aside (R-REAPER); the anchors and the hits are C7's verdict (c7Verdict: the C7_ANCHORS its judged files miss and each judged file's F1-F4 hits beside KNOWN_REAPERS, one line per hit), read by one expression (c7Readings) on the repository's tree and on each C7_WITNESSES tree - a real file at a walked path beside the C7_ANCHORS it keeps -, each tree read exactly as its row freezes it: the repository's with no anchor missed and no hit, and the witnesses' an F3 /proc path and an F4 ESRCH literal in test .ts files, a kill in a qa .mjs file and in a fixtures .mts file, a kill driven by an override and by an invoke, and the qa anchor left out; the rows refusal #6's verdict names equal the member, witness and path pairs it lists in the tracker export, and the witnesses drive HX by every DRIVER_REASONS reason and hit every SHAPES shape", { timeout: CENSUS_TIMEOUT }, () => {
+  it("C7 no hand-rolled kill falsifier: on the repository the C7 walk reads exactly the files node:fs's recursive listing lists under test/ and qa/ (each regular file with a SOURCE_FILE name - .ts .mts .cts .js .mjs .cjs - outside a node_modules directory, and no entry there but regular files and directories); C7 judges exactly the listed files other than this census whose text, raw or unescaped, holds the needle hyperunix (any case) and that the landed readers' hxDrivers classes as driving HX by any of its C7 DRIVER FORMS (an import, invoke or override form), three test .ts anchors and the qa .mjs anchor among them; and no judged file carries an F1-F4 shape the landed readers' falsifierShapes reads by any of its C7 SHAPE FORMS, a command read through commandHeads, beside the hits KNOWN_REAPERS sets aside (R-REAPER); the anchors and the hits are C7's verdict (c7Verdict: the C7_ANCHORS its judged files miss and each judged file's F1-F4 hits beside KNOWN_REAPERS, one line per hit), read by one expression (c7Readings) on the repository's tree and on each C7_WITNESSES tree - the C7_ANCHORS it keeps, beside a real file at a walked path when it plants one -, each tree read exactly as its row freezes it: the repository's with no anchor missed and no hit, and the witnesses' an F3 /proc path and an F4 ESRCH literal in test .ts files, a kill in a qa .mjs file and in a fixtures .mts file, a kill driven by an override and by an invoke, and each C7_ANCHORS path left out (the qa anchor and each test .ts anchor, each in a tree of its own); the rows refusal #6's verdict names equal the member, witness and path pairs it lists in the tracker export, and the witnesses drive HX by every DRIVER_REASONS reason, hit every SHAPES shape and leave out every C7_ANCHORS path", { timeout: CENSUS_TIMEOUT }, () => {
     const { sources, judged } = judgedDrivers();
     const paths = judged.map(entry => entry.path);
     const listed = listedSources(ROOT);
@@ -3651,6 +3698,7 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
       unnamed: C7_WITNESSES.filter(witness => !namedWitnesses().some(pair => pair.id === witness.id)).map(witness => witness.id),
       undriven: DRIVER_REASONS.filter(reason => !C7_WITNESSES.some(witness => witness.drivers.includes(reason) && witness.hits.length > 0)),
       unhit: SHAPES.filter(shape => !C7_WITNESSES.some(witness => witness.hits.some(hit => hit.includes(` ${shape} (`)))),
+      unmissed: C7_ANCHORS.filter(path => !C7_WITNESSES.some(witness => witness.text === undefined && witness.path === path)),
     }).toStrictEqual({
       walk: { unwalked: [], unlisted: [], unmodelled: [] },
       judging: { unjudged: [], misjudged: [] },
@@ -3658,9 +3706,10 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
       selfExcluded: true,
       readings: [{ id: REPOSITORY_TREE, drivers: [], anchored: [], hits: [] }, ...C7_WITNESSES.map(witness => ({ id: witness.id, drivers: [...witness.drivers], anchored: [...witness.anchored], hits: [...witness.hits] }))],
       unmatchedNamed: [],
-      unnamed: ["GW-INVOKE-KILL"],
+      unnamed: ["GW-INVOKE-KILL", "GW-LIFECYCLE-ANCHOR-GONE", "GW-OBS-ANCHOR-GONE", "GW-GRAD-ANCHOR-GONE"],
       undriven: [],
       unhit: [],
+      unmissed: [],
     });
   });
 
