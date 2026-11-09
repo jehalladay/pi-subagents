@@ -24,7 +24,9 @@
  * package is read. Each case writes a scratch file standing in for the artifact, pins its SHA-256, and hands a loader that
  * records its calls, imports nothing and answers with a namespace of recording functions: reconcile (a stand-in that admits
  * every propose-only intent once, see standIn) beside one recording function for each name of OTHER_EXPORTS. The
- * installed-consumer leg is NOT RUN by this suite; the slice is not claimed live or closed.
+ * installed-consumer leg is NOT RUN by this suite; the slice is not claimed live or closed. At every call but L-1's, the
+ * value of the artifact's digest member and the content of its bytes as the loader receives them, and anything the loader can
+ * reach through the digest member, are NOT CLAIMED.
  *
  * THE HOST of every case is a recording object: its grant read beside provider handles named after the Beads, Forge and
  * Furnace actions the planted proposals name (EFFECT_HANDLES), so a boundary that executed a proposal would call one. The
@@ -34,9 +36,10 @@
  *
  * THE READ WINDOW (settled): each planted call runs with setTimeout, setInterval and setImmediate faked, and its counts are read
  * only after it has returned or thrown and every timer it scheduled has run; the case's trace is then sealed, so a later call
- * of one of its functions lands in LATE, which C-LATE, the last case, reads empty. Every call the suite plants, G-FIRST's and
- * L-THROWS's included, asserts zero effect calls and zero calls of an export other than reconcile in that window, and one
- * grant read as the host's method with no argument; every admitted call admittedOf reads asserts one loader call with no
+ * of one of its functions lands in LATE, which C-LATE, the last case, reads empty. Every call the suite plants but C-SETTLE's
+ * five, G-FIRST's and L-THROWS's included, asserts zero effect calls and zero calls of an export other than reconcile in that
+ * window, and one grant read as the host's method with no argument (the grant read at C-SETTLE's five calls is NOT CLAIMED);
+ * every admitted call admittedOf reads asserts one loader call with no
  * receiver and, as its two arguments, the entry and a frozen artifact of exactly digest and bytes whose bytes are a Buffer,
  * not a proxy, whose own keys are exactly its indices, and one reconcile call with no receiver and one plain
  * data argument equal to the input that shares no container with it. X-NO-EFFECT also plants every exact effect grant beside
@@ -708,7 +711,7 @@ describe("G: EAT-R071 - a separate read-only grant, never the blanket write gran
     expect(await refusalOf({ grants: [EXECUTE_GRANT] })).toEqual(refusedQuietly("grants missing-coordination-grant"));
   });
 
-  it("G-3: workbench:execute held beside workbench:coordinate, in either order, changes nothing: the same observation as with the coordination grant alone", async () => {
+  it("G-3: workbench:execute held beside workbench:coordinate, in either order, gives the same observation as with the coordination grant alone", async () => {
     const alone = await admittedOf({ grants: [MECHANICAL_COORDINATION_GRANT] });
     for (const grants of [[EXECUTE_GRANT, MECHANICAL_COORDINATION_GRANT], [MECHANICAL_COORDINATION_GRANT, EXECUTE_GRANT]]) {
       const both = await admittedOf({ grants });

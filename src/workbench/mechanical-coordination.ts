@@ -38,7 +38,7 @@
  * and MECHANICAL_COORDINATION_REASONS, so it carries no path, member value or file text (readingOf in every refusal case;
  * C-VOCABULARY, C-TALLY). An error the loader or the export throws propagates (L-THROWS).
  *  1. The separate read-only grant (EAT-R071). The host's grant read is called once, as the host's method with no argument
- *     (G-1, G-FIRST; every planted call reads its arguments). Admitted: a read holding MECHANICAL_COORDINATION_GRANT,
+ *     (G-1, G-FIRST; every planted call but C-SETTLE's five reads its arguments). Admitted: a read holding MECHANICAL_COORDINATION_GRANT,
  *     workbench:coordinate, alone or beside workbench:execute in either order, with the same observation (G-1, G-3). Refused
  *     missing-coordination-grant: workbench:execute, the blanket write grant function dispatch rests on, held alone (G-2, the
  *     mutant "reuse blanket write grant"); the empty list; and each of the 24 stand-ins G-STANDINS plants in the coordination
@@ -74,12 +74,13 @@
  *     digest-mismatch: one byte flipped after the pin was taken and the descriptor's digest as the artifact pin (A-DIGEST). The
  *     same bytes under another file name are admitted (L-1b).
  *  7. The host loader is called once, with no receiver and exactly two arguments: MECHANICAL_COORDINATION_ENTRY and a frozen
- *     {digest, bytes} of Object.prototype whose own keys are exactly those two, holding the pinned digest and the file's bytes
- *     as a Buffer, not a proxy, whose own keys are exactly its indices (L-1, and every admitted call admittedOf reads). Of the loader results L-EXPORT plants, an empty object, a
+ *     {digest, bytes} of Object.prototype whose own keys are exactly those two, its bytes a Buffer, not a proxy, whose own keys
+ *     are exactly its indices (L-1, and every admitted call admittedOf reads); at L-1's call the digest is the pinned digest and
+ *     the bytes are the file's bytes (L-1). Of the loader results L-EXPORT plants, an empty object, a
  *     reconcile that is a string, a number, an object or null, an inherited reconcile, one under default, null, undefined and a
  *     string refuse loaded export-missing; a function holding reconcile, a frozen and a null-prototype object are admitted; a
- *     reconcile accessor refuses export-missing with its getter never run (L-EXPORT-ACCESSOR). In every case no export but
- *     reconcile is called.
+ *     reconcile accessor refuses export-missing with its getter never run (L-EXPORT-ACCESSOR). In each of those calls (L-EXPORT,
+ *     L-EXPORT-ACCESSOR) no export but reconcile is called.
  *  8. The export is called once, with no receiver and exactly one argument: plain data equal to the input (every container
  *     reachable from it through any own key a list of Array.prototype or a record of Object.prototype holding only enumerable
  *     data members with string keys, none a function) that is not the caller's and shares no container with it, so a producer
@@ -120,7 +121,9 @@
  * callback) that lands after C-LATE ran, and a call, in its case's read window or after it, of a function or getter THE READ
  * WINDOW does not name as sealed (a planted value's class or another prototype member, a built-in method or accessor, an
  * error's stack among them); anything the loader can reach from its two arguments other than through their own keys (a
- * prototype, a built-in accessor, the bytes' backing ArrayBuffer); a facility reached through a member name computed at run time (X-NO-LOAD reads names as written); and any form
+ * prototype, a built-in accessor, the bytes' backing ArrayBuffer); at every call but L-1's, the artifact argument's digest value
+ * and bytes content, and anything the loader can reach through its digest member; the grant read at C-SETTLE's five calls; a
+ * facility reached through a member name computed at run time (X-NO-LOAD reads names as written); and any form
  * of a step above that its cited cases do not plant.
  */
 import { createHash } from "node:crypto";
