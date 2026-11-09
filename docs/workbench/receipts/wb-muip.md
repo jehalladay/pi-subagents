@@ -282,3 +282,69 @@
 | R-SPLIT-JOIN | EAT-R080 | QUIET-SPLIT-JOIN |
 | R-DECLARED-PROVENANCE | EAT-R081 | QUIET-DECLARED-PROVENANCE |
 | R-VERDICT-SPELLING | EAT-R081 | QUIET-VERDICT-SPELLING |
+
+## 2026-11-08 receipt: wb-r7th, the R694 follow-up of landing 1036, pins the comment text of each html token body in six contexts and four entries of one receipt (machine seat ws-08, run g10-work-s240)
+
+- Follow-up: wb-r7th carries the wb-mj6j gate's F1 (leads, LOW PLAUSIBLE, reading A): every pinned block html token holding a comment was a top-level block of a receipt's first level-2 entry, so the html token's context (not its position inside the token) was a dimension no row varied. This entry's cut changes R080-COMMENT-TEXT and the census header only; the judges (test/helpers/mechanical-evidence-census.ts is unchanged), every other case, the declared scope and range, the roster and the residual families are unchanged.
+- F1 (leads): the gate's L2-ENTRY-ONE-BLOCK (a block html token keeps its comments outside a receipt's first level-2 entry) and L2-TOP-LEVEL-ONLY (a block html token nested in a block quote or a list item keeps its comments) kept the census at 46 of 46. The context table now places the comment bodies in a receipt's preamble and in its second and third level-2 entries, and inside block quotes and list items: under each of the two members R080-COMMENT-TEXT reds (2 failed, 44 passed with the record).
+- The context table: twenty-nine bodies (the position table's twenty, the comment block, the two empty-comment controls, and the paragraph, list item, block quote, table cell, emphasis and link text placements), each wrapped in six contexts (the top level, a block quote, a list item, a loose list item's second block, a block quote inside a list item, a list item inside a block quote) and placed four times in one receipt, in its preamble and in its first, second and third level-2 entries: 174 rows, each asserting first that marked lexes one html token per entry under exactly its context's block quotes and list items (and a placement's own), block or inline as its body is, holding its body's comment openers. In each of the four entries the four parts inside a comment are no witness and no partial, the four parts outside the comments or after an empty comment are a witness, a placement's other three parts are the entry's partial, and the comment block's level-2 line opens no entry (the receipt holds exactly its four entries).
+- NOT CLAIMED (a scope sentence, no follow-up): a body in a context other than the context table's six (another arrangement of block quotes and list items, or a list item marked otherwise than by a dash) or in a receipt's fourth or later level-2 entry; the comment block never closed, the heading placement and the no-comment, code and inline-opener controls in a context other than their own rows'.
+- Live reading, measured on this cut's tree (trunk 932ee8f plus this cut): 260 entries in 66 files (203 receipt entries, 54 TRACEABILITY sections, 3 JSON receipts), 144 dated and 116 undated, 32 out of range (entries 4 to 10 of docs/workbench/receipts/wb-201v.md, entries 4 to 8 of wb-413a.md, entries 1, 2 and 3 of wb-5ik5.md, entry 2 of wb-f3wd.md, entries 3, 4 and 5 of wb-j5y5.md, entry 1 of wb-ny54.md, entry 3 of wb-ocie.md, entry 1 of wb-r5q2.md, entries 3 to 7 of wb-wupg.md, and entries 2 to 6 of this receipt), 0 witnesses and 139 partials (130 with a source pin only, 5 with a run id and a pin, 3 with an operation id and a pin, 1 with all three): searched-scope absence, global UNDETERMINED.
+- Changes: this receipt stays append-only (standing rule 15). This entry carries both tables for this cut's state, R080-COMMENT-TEXT's count 415 in place of 67, and the census reads the last entry.
+
+| Test | Row | Kind | Assertions |
+| --- | --- | --- | --- |
+| R080-NEVER-RAN-MUTANT | EAT-R080 | claim | 5 |
+| R080-EMPTY-UNREAD | EAT-R080 | claim | 3 |
+| R080-VOCABULARY | EAT-R080 | claim | 2 |
+| R080-JOINED-WITNESS | EAT-R080 | claim | 5 |
+| R080-NEEDS-PI-RUN | EAT-R080 | claim | 4 |
+| R080-NEEDS-OUTCOME | EAT-R080 | claim | 4 |
+| R080-NEEDS-OPERATION | EAT-R080 | claim | 4 |
+| R080-NEEDS-PIN | EAT-R080 | claim | 4 |
+| R080-ONE-PART-PARTIAL | EAT-R080 | claim | 9 |
+| R080-OUTCOME-TOKENS | EAT-R080 | claim | 4 |
+| R080-RANGE-BOUNDS | EAT-R080 | claim | 6 |
+| R080-UNDATED-READ | EAT-R080 | claim | 3 |
+| R080-MARKDOWN-ENTRIES | EAT-R080 | claim | 5 |
+| R080-HEADING-FORMS | EAT-R080 | claim | 5 |
+| R080-FENCED-HEADING | EAT-R080 | claim | 6 |
+| R080-COMMENT-TEXT | EAT-R080 | claim | 415 |
+| R080-CONTAINER-TEXT | EAT-R080 | claim | 4 |
+| R080-JSON-ENTRY | EAT-R080 | claim | 6 |
+| R080-UNDECLARED-STORE | EAT-R080 | claim | 1 |
+| R080-LIVE-STORES | EAT-R080 | claim | 14 |
+| R080-LIVE-PLANTED | EAT-R080 | claim | 9 |
+| R081-FIXTURE-MUTANT | EAT-R081 | claim | 4 |
+| R081-ADAPTER-CONDITIONAL | EAT-R081 | claim | 2 |
+| R081-PAIRING-WITNESSED | EAT-R081 | claim | 3 |
+| R081-SCOPED-NON-OBSERVATION | EAT-R081 | claim | 3 |
+| R081-NEEDS-PRODUCER | EAT-R081 | claim | 2 |
+| R081-NEEDS-OPERATION | EAT-R081 | claim | 2 |
+| R081-NEEDS-PAIRING-FIELDS | EAT-R081 | claim | 2 |
+| R081-NO-FAILED-GATE | EAT-R081 | claim | 3 |
+| R081-FIXTURE-NEVER-UPGRADES | EAT-R081 | claim | 3 |
+| R081-CONTRACT-CONSISTENCY | EAT-R081 | claim | 1 |
+| R081-RECORDED-PROBE | EAT-R081 | claim | 15 |
+| QUIET-OUTCOME-WORDS | EAT-R080 | quiet | 2 |
+| QUIET-PI-REFERENCE | EAT-R080 | quiet | 2 |
+| QUIET-SPELLING | EAT-R080 | quiet | 7 |
+| QUIET-SPLIT-JOIN | EAT-R080 | quiet | 2 |
+| QUIET-DECLARED-PROVENANCE | EAT-R081 | quiet | 2 |
+| QUIET-VERDICT-SPELLING | EAT-R081 | quiet | 3 |
+| CHECK-FROZEN-SHAPE | - | check | 2 |
+| CHECK-TILING | - | check | 78 |
+| CHECK-ROSTER | - | check | 20 |
+| CHECK-EXPORT-ANCHOR | - | check | 3 |
+| CHECK-J03-ANCHOR | - | check | 3 |
+| CHECK-LIVE-SCOPE | - | check | 6 |
+| CHECK-RECEIPT-ANCHOR | - | check | 7 |
+
+| Residual family | Row | Quiet row |
+| --- | --- | --- |
+| R-OUTCOME-WORDS | EAT-R080 | QUIET-OUTCOME-WORDS |
+| R-PI-REFERENCE | EAT-R080 | QUIET-PI-REFERENCE |
+| R-SPELLING | EAT-R080 | QUIET-SPELLING |
+| R-SPLIT-JOIN | EAT-R080 | QUIET-SPLIT-JOIN |
+| R-DECLARED-PROVENANCE | EAT-R081 | QUIET-DECLARED-PROVENANCE |
+| R-VERDICT-SPELLING | EAT-R081 | QUIET-VERDICT-SPELLING |

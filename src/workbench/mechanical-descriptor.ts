@@ -9,7 +9,9 @@
  * claimed admitted, and a planted form it reads as refused is claimed refused with the field and reason the step names. A form
  * no cited case plants is NOT CLAIMED, whatever a step's wording seems to cover. A known form within these steps that the
  * boundary reads otherwise than its wording suggests is a named RESIDUAL with a pinned quiet row (RESIDUALS below); a form
- * found later is a residual-list addition, not a claim.
+ * found later is a residual-list addition, not a claim. The follow-up cut wb-mqpz (the R694 follow-up of the wb-ocie landing 1037
+ * gate, its finding F1) cites five more cases, R007-21, R007-22, R008-13, R009-11 and R010-14, which plant the forms that gate
+ * realized outside cut #3's tables (its witnesses WG01-WG05).
  *
  * The descriptor of record is MechanicalWorkflows' contracts/entrypoints/development.v1.json at f7c0a943, metadata naming one
  * deployable function, vendored byte-identical as the suite's fixture (R007-1). The boundary reads a descriptor as metadata only:
@@ -25,8 +27,10 @@
  *     without one or both) and, in either member, the digests R008-5, R008-6 and R008-10 plant (the bare hex, 63 and 65 digits,
  *     upper-case hex, a letter that is no hex digit, sha512:, no colon, an upper-case or hyphenated algorithm, a space or a line
  *     break before or after, a carriage return or a line separator after, empty, a number, null, an object whose text is a
- *     digest). The digest grammar is MECHANICAL_DIGEST_PATTERN: R008-12 scans one digit's place of the artifact digest over every
- *     BMP code point through the pattern and over every ASCII code point through the boundary.
+ *     digest), and those R008-13 plants (a valid digest with any one of its code points in its fullwidth compatibility form,
+ *     which NFKC maps back to that digest: nothing is normalized first). The digest grammar is MECHANICAL_DIGEST_PATTERN: R008-12
+ *     scans one digit's place of the artifact digest over every BMP code point through the pattern and over every ASCII code
+ *     point through the boundary.
  *  2. The descriptor FILE: its bytes are read from the path (unreadable when missing or a directory: R007-4), and their SHA-256
  *     is compared with the pin before they are decoded or parsed (digest-mismatch: R007-3, R007-9, R007-16).
  *  3. The bytes decode as UTF-8, the decoder dropping one leading UTF-8 byte order mark (R007-16), and parse as JSON (malformed:
@@ -38,20 +42,21 @@
  *     compatibility and line-break variants, empty).
  *  5. The member set, compared name for name with the producer file's eight: each extra name R007-7, R007-13 and R007-18 plant
  *     (among them case, padding, longer, shorter, empty, ignorable and compatibility variants of a member's name, and inherited
- *     object names) is member-unexpected; then each absent member but note is member-missing under its own name; note may be
- *     absent (R007-11).
+ *     object names) is member-unexpected; then each absent member but note is member-missing under its own name, and of several
+ *     absent members the first in the producer file's order (R007-22); note may be absent (R007-11).
  *  6. Member by member, in the producer file's order (R007-13): id is a string (wrong-type: R007-12, R007-17) naming an entry
  *     of the fixed allowlist MECHANICAL_REVIEWED_ENTRYPOINTS by strict equality (not-allowlisted: the ids R010-4 and R007-17
  *     plant); implementation is an object (wrong-type: R007-12) whose member names are package and export, compared name for
- *     name (member-unexpected, then member-missing: R007-7, R007-11, R007-13, R007-18), each value compared by strict equality
- *     with the reviewed entry's (not-allowlisted: the values R010-2, R010-3 and R010-11 plant, lists of the reviewed value
- *     among them); inputSchema and outputSchema are each a string (wrong-type: R007-12) matching MECHANICAL_SCHEMA_REF_PATTERN
- *     over the whole text with nothing normalized first (schema-ref-noncanonical: the forms R009-2, R009-6 and R009-7 plant,
- *     and the ASCII code points R009-10 scans in inputSchema) and equal to the reviewed name (schema-ref-unknown: the canonical
- *     names R009-3, R009-8 and R009-10 plant); bindings are the reviewed four in order, each compared by strict equality
- *     (bindings-mismatch: the forms R007-8, R007-12 and R007-17 plant); status is descriptor-only by strict equality
- *     (status-unsupported: the forms R007-8, R007-12 and R007-17 plant); note, when present, is a string (wrong-type: R007-8,
- *     R007-12, R007-17) whose text is not judged further (R007-11).
+ *     name (member-unexpected, then member-missing: R007-7, R007-11, R007-13, R007-18; an own __proto__ member: R007-21), each
+ *     value compared by strict equality with the reviewed entry's (not-allowlisted: the values R010-2, R010-3 and R010-11
+ *     plant, lists of the reviewed value among them); inputSchema and outputSchema are each a string (wrong-type: R007-12)
+ *     matching MECHANICAL_SCHEMA_REF_PATTERN over the whole text with nothing normalized first (schema-ref-noncanonical: the
+ *     forms R009-2, R009-6 and R009-7 plant, the ASCII code points R009-10 scans in inputSchema, and each reviewed name with
+ *     any one of its code points in its fullwidth compatibility form, which NFKC maps back to that name, R009-11) and equal to
+ *     the reviewed name (schema-ref-unknown: the canonical names R009-3, R009-8 and R009-10 plant); bindings are the reviewed
+ *     four in order, each compared by strict equality (bindings-mismatch: the forms R007-8, R007-12 and R007-17 plant); status
+ *     is descriptor-only by strict equality (status-unsupported: the forms R007-8, R007-12 and R007-17 plant); note, when
+ *     present, is a string (wrong-type: R007-8, R007-12, R007-17) whose text is not judged further (R007-11).
  *  7. The approved root, then the artifact, each by realpath (unreadable, under root or artifact: R011-7, R011-13).
  *  8. Containment, realpath against realpath: the artifact lies strictly inside the root, read as a relative path that is not
  *     empty, not .. and does not start with ../ (outside-root: the root itself and its parent R011-10, a sibling sharing the
@@ -70,25 +75,27 @@
  * R011-6, R011-11, R011-14). The loader then runs once, with the reviewed entry and the bytes the load measured with their
  * digest (R008-1, R010-1); a loader that throws or rejects propagates its own error and is not run again (R008-8). The export is
  * read from the loader's result, an object or a function (a list, a frozen and a null-prototype object among them: R010-12), by
- * the reviewed name, as that value's own member, and only when the member is a function (export-missing: R010-6, R010-9); the
- * boundary never calls it (R008-3, R008-7).
+ * the reviewed name, as that value's own member (an own accessor member read through its getter, run once: R010-14), and only
+ * when the member is a function (export-missing: R010-6, R010-9, R010-14); the boundary never calls it (R008-3, R008-7,
+ * R010-14).
  *
  * RESIDUALS (named; each with a pinned quiet row that reds when the boundary stops reading it as stated):
  *   R-DUPLICATE-MEMBER (step 5): a member written twice in the descriptor bytes reads as one member, the last written (JSON.parse
  *   keeps the last), so no duplicate is refused; quiet row R007-20: status written invocable then descriptor-only is admitted
  *   under its own pin, and written in the other order refused status-unsupported.
  *
- * NOT CLAIMED (explicitly partial; closure gate MW-INSTALLED-CONSUMER, external MW-CONTRACT and MW-PACKAGE): where the pin comes
- * from (MechanicalWorkflows publishes no release manifest at f7c0a943, so the host supplies the pin); that an installed package or
- * a published tarball was read; the invocation contract and its version (B-contract-choice, EAT-R005 and EAT-R006); dispatch,
- * grants, source admission and outcome validation; a call without an options object of plain data members, or with a loader
- * that is not a function; where the descriptor file lies (no root bounds the descriptor path); a descriptor path that is neither
- * a readable file nor a directory (a FIFO, a device); a code point outside ASCII read through the boundary in a digest or a
- * schema reference other than the ones the cited cases plant (R008-12 and R009-10 scan the exported patterns, not the boundary,
- * over the BMP); the window between a realpath and the open of the same path (the open asks O_NOFOLLOW where the platform has it
- * and checks the opened handle as a regular file again, but no case plants a swap inside that window); hard links; a loader
- * result whose member read runs code (an accessor or a proxy); and the window between the load-phase measurement and a host
- * that re-opens the path instead of using the measured bytes.
+ * NOT CLAIMED (explicitly partial; closure gate MW-INSTALLED-CONSUMER, external MW-CONTRACT and MW-PACKAGE): where the pin
+ * comes from (MechanicalWorkflows publishes no release manifest at f7c0a943, so the host supplies the pin); that an installed
+ * package or a published tarball was read; the invocation contract and its version (B-contract-choice, EAT-R005 and EAT-R006);
+ * dispatch, grants, source admission and outcome validation; a call without an options object of plain data members, or with a
+ * loader that is not a function; where the descriptor file lies (no root bounds the descriptor path); a descriptor path that is
+ * neither a readable file nor a directory (a FIFO, a device); a code point outside ASCII read through the boundary in a digest
+ * or a schema reference other than the ones the cited cases plant (R008-12 and R009-10 scan the exported patterns, not the
+ * boundary, over the BMP; R008-13 and R009-11 put fullwidth compatibility forms only through the boundary); the window between
+ * a realpath and the open of the same path (the open asks O_NOFOLLOW where the platform has it and checks the opened handle as
+ * a regular file again, but no case plants a swap inside that window); hard links; a loader result whose member read runs code
+ * other than through the two own accessors R010-14 plants (a proxy, a getter that throws, an inherited accessor); and the
+ * window between the load-phase measurement and a host that re-opens the path instead of using the measured bytes.
  */
 import { createHash } from "node:crypto";
 import { constants } from "node:fs";
