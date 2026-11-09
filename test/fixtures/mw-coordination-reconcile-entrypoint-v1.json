@@ -1,0 +1,13 @@
+{
+  "schema": "mechanical-workflows/entrypoint/v1",
+  "id": "mechanical.coordination.reconcile.v1",
+  "implementation": {
+    "package": "@mechanical/workflows-coordination",
+    "export": "reconcile"
+  },
+  "inputSchema": "coordination-resolver-input.v1.schema.json",
+  "outputSchema": "coordination-resolution.v1.schema.json",
+  "bindings": [],
+  "status": "descriptor-only",
+  "note": "Read-only pure function: a Resolution is admissibility, never an authorized effect. No remote host loader or generic invocation transport is implemented, and the function is not Pi-callable."
+}
