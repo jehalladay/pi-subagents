@@ -75,6 +75,9 @@
  * files: NO_MATCH quiet rows; F3 again). G4 (a qualifier after a period with no following white space) and G5
  * (safer/safest/safety, outside safe/safely) remain named residuals, outside this sentence splitter/claim-word rule.
  * Only the path-scope tests write tracked scratch fixtures; the live census reads docs/workbench.
+ * wb-12x1 (owner specification ruling M:60615 (2)): SCG-R5's walk holds PROGRAM_PAGES, the five pages of the one program
+ * tree landed below docs/workbench/programs, beside the top-level pages and the receipts; the list is frozen, so a page
+ * added, removed or renamed there reds SCG-R5 until the cut that lands it acknowledges it in PROGRAM_PAGES.
  */
 import { createHash } from "node:crypto";
 import { mkdirSync, readdirSync, readFileSync, realpathSync, statSync, symlinkSync, writeFileSync } from "node:fs";
@@ -91,6 +94,14 @@ installScratchLeakGuard();
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DOCS = "docs/workbench";
 const ROOT_SENTENCE_FILE = `${DOCS}/13-contracts-and-config.md`;
+/** wb-12x1 (owner ruling M:60615 (2)): the program pages landed below docs/workbench/programs, frozen as landed (SCG-R5). */
+const PROGRAM_PAGES = [
+  `${DOCS}/programs/mechanical-workflows-interop-2026-11-04/01-audit-and-evidence.md`,
+  `${DOCS}/programs/mechanical-workflows-interop-2026-11-04/02-host-architecture-and-protocol.md`,
+  `${DOCS}/programs/mechanical-workflows-interop-2026-11-04/03-implementation-and-qa.md`,
+  `${DOCS}/programs/mechanical-workflows-interop-2026-11-04/04-agent-handoff.md`,
+  `${DOCS}/programs/mechanical-workflows-interop-2026-11-04/README.md`,
+] as const;
 const ADR = "ADR-SCG-010";
 
 const FAMILIES: ReadonlyArray<readonly [string, RegExp]> = [
@@ -279,7 +290,7 @@ describe("SCG-R5 AC4 (wb-973.5): docs/workbench never presents a shared-filesyst
     const pages = docsPages();
     const top = readdirSync(join(ROOT, DOCS)).filter(name => statSync(join(ROOT, DOCS, name)).isFile()).map(name => `${DOCS}/${name}`);
     const receipts = readdirSync(join(ROOT, DOCS, "receipts")).filter(name => statSync(join(ROOT, DOCS, "receipts", name)).isFile()).map(name => `${DOCS}/receipts/${name}`);
-    expect(pages).toEqual([...top, ...receipts].sort());
+    expect(pages).toEqual([...top, ...receipts, ...PROGRAM_PAGES].sort());
     expect(pages).toContain(ROOT_SENTENCE_FILE);
     expect(pages).toContain(`${DOCS}/07-native-integrations.md`);
     expect(receipts.length).toBeGreaterThan(0);

@@ -16,19 +16,16 @@
  *  - provider (providerDependency): the runtime artifact digest and the provider contract digest of the identity it is
  *    handed, and what readFiles reads at the setting file (CLAUDE_SETTINGS_LOCATIONS) of each source it is handed.
  *
- * A reading is MEASURED, a digest of what was read, or UNKNOWN, a fixed reason and no digest. replayDependenciesMeasured
- * is true only for three measured readings with well-formed digests, and the Claude host permits settled replay only
- * then, so a reading a reader returns unknown declines replay instead of matching. Which conditions a reader returns
- * unknown is claimed only at the forms its export doc and readFiles name, as the readers suite plants them.
+ * A reading is MEASURED, a digest of what was read, or UNKNOWN, a fixed reason and no digest.
+ * replayDependenciesMeasured is true only for three measured readings with well-formed digests, and the Claude host
+ * permits settled replay only then, so a reading a reader returns unknown declines replay instead of matching. Which
+ * conditions a reader returns unknown is claimed only at the forms its export doc and readFiles name, as the readers
+ * suite and the fail-closed suite (test/workbench-replay-dependency-fail-closed.test.ts, wb-6b3z, the structural exit
+ * R-B664 of wb-413a's R-B646 claim set) plant them; each fail-closed claim names the family of that suite that pins it.
  *
- * NOT CLAIMED (R-B664, the structural exit of the R-B646 claim set; the fail-closed basis core is owned by wb-6b3z):
- * that every condition the process cannot measure reads unknown, among them a named path the process may not stat, a
- * link below a location naming a path below a regular file and any read error no row plants; which reason a link back
- * to a directory inside a location gives; whether a directory first reached through a link, or through two links, is
- * read again; a relative cwd or config directory handed with any sources but the user source alone, a relative cwd
- * handed beside a relative config directory, and a relative cwd or config directory other than the two strings the
- * readers suite plants (R-UNK-relative: the cwd repo/pkg, the config directory config); which sources src/index.ts
- * hands the readers when the run names none; and the default config directory for a relative home.
+ * NOT CLAIMED: that every condition the process cannot measure reads unknown (a read error no row plants, an I/O error
+ * among them); any relative string for either base other than those instructionDependency's and providerDependency's
+ * docs name; and the default config directory for a relative home other than those claudeUserConfigDir's doc names.
  */
 import { createHash } from "node:crypto";
 import { readdirSync, readFileSync, realpathSync, type Stats, statSync } from "node:fs";
@@ -166,13 +163,13 @@ export function instructionPaths(cwd: string, sources: readonly ClaudeSettingSou
  * The instruction reading: what readFiles reads at the paths instructionPaths names for the sources it is handed,
  * whatever order or repetition they come in. Unknown, by a fixed reason, when a source is managed, User, "user " or the
  * empty name (none of them user, project or local), handed alone or beside one known source, before or after it
- * (setting-source-unrecognized); with the user source handed alone, when the cwd is the relative repo/pkg and the
- * config directory absolute, or the cwd absolute and the config directory the relative config, as R-UNK-relative
- * plants them (instruction-base-not-absolute); and in the forms readFiles names. Which reason a reading meeting two of
- * these conditions gives is NOT CLAIMED; so are any other unrecognized name, an unrecognized name beside two or more
- * sources or beside another unrecognized name, and (R-B664, routed to wb-6b3z) a relative cwd or config directory
- * handed with any sources but the user source alone, a relative cwd beside a relative config directory, and any other
- * relative string for either.
+ * (setting-source-unrecognized); when a base is relative (instruction-base-not-absolute), under each of the eight sets
+ * of known sources (none, each one, each two, all three), for the config directories config, ./config, ../config, .
+ * and the empty string beside an absolute cwd, the cwds repo/pkg, ./pkg, . and the empty string beside an absolute
+ * config directory, and repo/pkg beside config (FCB-RELATIVE-BASE; R-UNK-relative plants two of these under the user
+ * source alone); and in the forms readFiles names. Which reason a reading meeting two of these conditions gives is NOT
+ * CLAIMED; so are any other unrecognized name, an unrecognized name beside two or more sources or beside another
+ * unrecognized name, and any other relative string for either base.
  */
 export function instructionDependency(
   cwd: string,
@@ -192,13 +189,12 @@ export function instructionDependency(
  * what readFiles reads at the setting file of each source it is handed, under the source's base. Unknown, by a fixed
  * reason, when no identity is handed or either digest is not sha256: and 64 lowercase hex digits
  * (provider-identity-unmeasured); when a source is managed, User, "user " or the empty name (none of them user, project
- * or local), handed alone or beside one known source, before or after it (setting-source-unrecognized); with the user
- * source handed alone, when the cwd is the relative repo/pkg and the config directory absolute, or the cwd absolute
- * and the config directory the relative config, as R-UNK-relative plants them (setting-base-not-absolute); and in the
- * forms readFiles names. Which reason a reading meeting two of these conditions gives is NOT CLAIMED; so are any other
- * unrecognized name, an unrecognized name beside two or more sources or beside another unrecognized name, and
- * (R-B664, routed to wb-6b3z) a relative cwd or config directory handed with any sources but the user source alone, a
- * relative cwd beside a relative config directory, and any other relative string for either.
+ * or local), handed alone or beside one known source, before or after it (setting-source-unrecognized); with a
+ * well-formed identity, when a base is relative (setting-base-not-absolute), under each of the eight sets of known
+ * sources and for the relative strings instructionDependency's doc names (FCB-RELATIVE-BASE; R-UNK-relative plants two
+ * of these under the user source alone); and in the forms readFiles names. Which reason a reading meeting two of these
+ * conditions gives is NOT CLAIMED; so are any other unrecognized name, an unrecognized name beside two or more sources
+ * or beside another unrecognized name, and any other relative string for either base.
  */
 export function providerDependency(
   identity: { readonly runtimeArtifactDigest: string; readonly providerContractDigest: string } | undefined,
@@ -225,10 +221,13 @@ export function providerDependency(
 }
 
 /**
- * The user config directory both readers read under the "user" source, for an absolute cwd and an absolute home:
+ * The user config directory both readers read under the "user" source, for an absolute cwd: for an absolute home,
  * CLAUDE_CONFIG_DIR when it is set to anything but the empty string, an absolute value in normal form as it is and a
- * relative one (a whitespace-only value among them) resolved against the cwd; else <home>/.claude. An absolute value not
- * in normal form, a relative cwd and a relative home are NOT CLAIMED (the relative home: R-B664, routed to wb-6b3z).
+ * relative one (a whitespace-only value among them) resolved against the cwd, else <home>/.claude; with CLAUDE_CONFIG_DIR
+ * unset or empty and one of the relative homes FCB-RELATIVE-HOME hands, the relative directory node:path's join gives
+ * (operator/.claude for operator and ./operator, ../operator/.claude for ../operator and .claude for the empty home),
+ * which both readers refuse by their base reasons. An absolute value not in normal form, a relative cwd,
+ * CLAUDE_CONFIG_DIR set beside a relative home and any other relative home are NOT CLAIMED.
  */
 export function claudeUserConfigDir(env: Readonly<Record<string, string | undefined>>, home: string, cwd: string): string {
   const configured = env.CLAUDE_CONFIG_DIR;
@@ -291,11 +290,31 @@ interface FileReading {
  * reading past its budget (dependency-over-budget, DependencyReadLimits) and for a directory MAX_DEPTH levels below a
  * named path (dependency-over-budget).
  *
- * NOT CLAIMED (R-B664, routed to wb-6b3z, the fail-closed basis core): a named path the process may not stat, and any
- * other read error no row plants; a link below a location naming a path below a regular file; which reason a link back
- * to a directory inside the location gives; and whether a directory first reached through a link, or reached through
- * two links, is read again. Also NOT CLAIMED: a socket, a block device, and the reason for any of these forms at
- * another depth.
+ * The fail-closed core (wb-6b3z) is claimed only at the instances the fail-closed suite plants, for each file reader
+ * under the user source: each of the 136 planted stat refusals (four forms at each depth 0 to 32, four absent forms at
+ * the named path) is an unknown reading (dependency-unreadable) (FCB-UNSTAT); each of the 66 planted links naming the
+ * path one level or two levels below a regular file, at each depth 0 to 32, reads as the same link naming a missing
+ * path (FCB-LINK-BELOW-FILE); each of the 61 planted links naming the directory it lies in (depths 1 to 31) or the one
+ * above it (depths 2 to 31) is an unknown reading (dependency-cycle) (FCB-CYCLE-INNER); and each of the 186 planted
+ * trees (one of three contents first reached through one link or two links sorting before it, at each depth 1 to 31)
+ * is read again as its copy would be and moves with each planted rewrite (FCB-READ-AGAIN).
+ *
+ * NOT CLAIMED: any instance of the fail-closed core that the fail-closed suite does not plant. Among those, the forms
+ * wb-6b3z's refusal #3 realized beyond the plants: the ones the structural exit R-B729 routes to wb-g9g5 (the relative
+ * link below a regular file with them, as R-B730 has its treatment ride wb-g9g5's claims-equal-pins cut), namely a
+ * directory left at mode 0600 or 0400 listing another entry beside the path, or, below the location, listing a path
+ * named other than entry.md; at the named path, such a directory listing the instruction reader's CLAUDE.md; and two
+ * links naming each other, a link naming a path with a 256-byte component, a link naming a path below a regular file
+ * and a link through which a directory is first reached, each naming its target by a relative path; and, under the
+ * R-B731 guard on the cycle words, a link naming the directory it lies in, or the one above it, by a relative path.
+ * Also NOT CLAIMED: the list-only plants under a process running as root; any other read error no row plants; a socket
+ * and a block device; the reason for a FIFO, a link to a character device, and a directory or a file the process may
+ * not read at another depth than one level below a location; a directory left at any mode other than 0600 and 0400 (a
+ * mode with group or other permission bits set among them); a directory below a named path, at either mode, that lists
+ * no entry; a link naming a path three or more levels below a regular file; a link naming a directory two or more
+ * levels above the one it lies in; a directory first reached through a link at the named path, or through three or more
+ * links, or holding a subdirectory, three or more entries or entries other than the three planted contents; a change to
+ * a file's bytes other than the planted rewrite; and these fail-closed forms under the project or local source.
  */
 function readFiles(paths: readonly string[], limits: DependencyReadLimits): FileReading[] {
   const readings: FileReading[] = [];

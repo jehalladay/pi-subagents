@@ -4,10 +4,10 @@
 
 | Slice | Owner | Deliverable | Must be true before closure |
 | --- | --- | --- | --- |
-| PI-0 | Pi + Mechanical | Pin baseline, reconcile descriptor canonicalization and host ABI; signed-off audit inventory | Read committed manifest via actual host; wrong digest/path/schema refuse before import |
+| PI-0 | Pi + Mechanical | Pin baseline; confirm the descriptor/host schema-ref reconciliation that landed upstream (MW `1f29daa7`) and adopt its grammar; signed-off audit inventory | Read committed manifest via actual host; wrong digest/path/schema refuse before import |
 | PI-1 | Pi | `function` branch in `workflow_execute` behind feature/grant; registration of pinned local Mechanical host | Source bytes/manifest, identity and grants checked; script branch unchanged |
-| PI-2 | Mechanical | Versioned, independently importable `develop` host binding from its rig and a local packaged consumer | Correct four callbacks, real package install, source/evidence shape; no Pi import in core |
-| PI-3 | Both | First actual Pi → Mechanical `develop` in clean isolated Git workspace using explicit `git-census` profile | Native Claude session creates changed commit, Forge result agrees on commit/tree, Pi observes four-domain outcome |
+| PI-2 | Mechanical | Versioned, independently importable `develop` host binding from its rig (today `@mechanical/development-rig` exposes only a `bin`, no `main`/`exports`; tests deep-import `dist/`) and a local packaged consumer | Correct four callbacks, real package install, source/evidence shape; no Pi import in core |
+| PI-3 | Both | First Pi → Mechanical `develop` witnessed in-repo (neither repository holds a receipt of any prior run; runs outside the repos were not checked) in clean isolated Git workspace using the existing tracked-file census path of `developLive` (`discovery: "git-tracked-files"`), which this program labels `git-census` (no such selector ships at MW `f7c0a943`) | Native Claude session creates changed commit, Forge result agrees on commit/tree, Pi observes four-domain outcome |
 | PI-4 | Pi | Complete observation and operator controls; independent per-agent skip/retry cancellation, replay fingerprints | Zero unauthorized late SDK starts, no blind effect replay, exact native refs, stale/unknown visible |
 | PI-5 | Both | Certified HX task-scope + task-grounded RF composition | Source revision, coverage witness, task/query digest and render identity producer-backed; negative controls block writes |
 | PI-6 | Both | Detached and optional Furnace-hosted function execution | Real grant/reattach control, Run/Work/Attempt mapping, failure and crash uncertainty, producer-owned retry |
@@ -15,12 +15,12 @@
 
 ### First unblockers, before claiming PI-3
 
-1. Fix Mechanical checked-in descriptor versus `entrypoint-host.ts` comparison; test exactly checked-in descriptor and a packed tarball.
+1. Confirm the MW repair of the checked-in descriptor versus `entrypoint-host.ts` (`1f29daa7`: bare filenames; tests now read the committed file and a packed tarball, not run here) and keep the file-driven tests.
 2. Fix Pi `workflow_execute` refusal for authorized `function` definitions and provide the actually installed host loader; do not route long-running development through `node()`.
 3. Fix Pi registered detached Claude empty-grants path independently; do not disable validator.
-4. Fix loss of modified worktrees in `cleanupWorktree` before reusing Pi worktree isolation; begin PI-3 on a distinct, materialized Mechanical workspace if simpler.
-5. Register an abort token before the async Claude `beforeDispatch` seam, and test skip/retry and workflow cancel while startup is parked.
-6. Establish candidate/source identity and explicit write permission before any edit. Pi/Mechanical integration may use current git-census mode **only** when labeled as such.
+4. Fix `cleanupWorktree`'s failure path, which force-removes a modified worktree and reports `hasChanges:false` when the preservation commit or branch step fails (the normal path commits and branches before removal) before reusing Pi worktree isolation; begin PI-3 on a distinct, materialized Mechanical workspace if simpler.
+5. Register an abort token before the async Claude `beforeDispatch` seam, and test per-agent skip/retry (the suspected gap: no controller exists during the await) and workflow cancel (already re-checked after the await and covered by fault test F10; keep as a control) while startup is parked.
+6. Establish candidate/source identity and explicit write permission before any edit. Pi/Mechanical integration may use current tracked-file census mode of `developLive` (called `git-census` here; the separate `live-composition` root wires HX task scope) **only** when labeled as such.
 
 ## QA matrix
 
@@ -30,7 +30,7 @@
 | Real Pi `workflow_execute` launches function | no grant, wrong definition kind, forged principal, stale source, path escape | Pi reply, single invocation ID, no unauthorized child |
 | Native `develop` four callbacks | discovery partial/unknown, wrong workspace/base, provider throws | no implement on incomplete scope, appropriate distinct outcome |
 | Agent writes candidate | dirty base, failed commit, branch creation failure, mid-run cancel | recoverable worktree/commit, no false-clean |
-| Forge verify | transport 0 with failed gate, partial selection, mismatched commit/tree, missing operation ID | only matching native producer gate warrants verified_candidate |
+| Forge verify | transport exit 0 with a failed gate (simulated mutant; whether native Forge ever produces this pairing is not established here), partial selection, mismatched commit/tree, missing operation ID | only matching native producer gate warrants verified_candidate |
 | RF/HX native | RF preview substituted for committed render, incomplete HX + false known-empty, changed query basis | reject false completeness/side effects |
 | Replay/retry | effect result lost between dispatch and settlement; changed skill/source/model/provider basis | one dispatch or typed uncertain-effect; never silent second write |
 | Per-agent control | skip during beforeDispatch, SDK terminal after abort, unawaited launch, cancel during gate | no late unauthorized query or fabricated cancellation |
@@ -52,7 +52,7 @@
 
 ## Completion / release criteria
 
-- Working Pi *script* workflows do not regress when Workbench/Mechanical feature disabled.
+- Existing Pi *script* workflows (source implemented, tests recorded; not run for this audit) do not regress when Workbench/Mechanical feature disabled.
 - A function artifact can be installed and executed without a repository checkout dependency; no extension source copy of Mechanical function body.
 - No unapproved mutation can run through a catalog, preview, observer, or function launch.
 - An uncertain producer effect remains uncertain across Pi process restart/resume; no implicit duplicate.

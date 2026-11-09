@@ -29,7 +29,7 @@ An allowlisted descriptor is **metadata**, not executable authority. Its source 
 ```ts
 interface FunctionDefinition {
   kind: "function";
-  id: "mechanical.development.develop.v1";  // from installed verified descriptor
+  id: "mechanical.development.develop.v1";  // from the committed descriptor (`contracts/entrypoints/development.v1.json`, self-described `descriptor-only`; install flow verified in tests, not a standing installed artifact)
   schemaVersion: "mechanical-workflows/entrypoint/v1";
   artifactDigest: `sha256:${string}`;
 }
@@ -37,7 +37,7 @@ interface FunctionLaunch {
   definitionRef: FunctionDefinition;
   input: { task: string; workspaceId: string; baseRevision: string };
   hostMode: "embedded" | "detached"; // selected explicitly by host policy
-  profile: "git-census" | "native-task-scope";
+  profile: "git-census" | "native-task-scope"; // MW counterpart doc (02-binding-and-packaging-contract.md:25) names this field `mode`; choose one name before implementation
   policy?: { allowWrites?: boolean; runFurnace?: boolean };
 }
 ```
@@ -45,7 +45,7 @@ Do **not** implement this with unbounded arbitrary package/export loading or use
 
 ### Existing contract repair
 
-Mechanical checks the descriptor schema names in `invokePinnedDevelopment` and ships relative schema paths. Adopt one canonical schema-ref grammar in the Mechanical repo: repository-relative (resolved under `contracts/`) OR basename with a canonical manifest transform; never silently accept arbitrary paths. Pi consumes the canonical exported descriptor without hardcoded tests that substitute a hand-authored object. Add a corpus-file-driven contract test and reject path traversal/unknown schema.
+Mechanical checks the descriptor schema names in `invokePinnedDevelopment`; at `0c78e253` it shipped relative (`../schemas/`) paths, repaired to bare filenames by `1f29daa7` (2026-11-05), so the canonical grammar below is partly adopted upstream. Adopt one canonical schema-ref grammar in the Mechanical repo: repository-relative (resolved under `contracts/`) OR basename with a canonical manifest transform; never silently accept arbitrary paths. Pi must consume the canonical exported descriptor and must not add tests that substitute a hand-authored object (the hand-authored descriptor tests were MechanicalWorkflows', made file-driven by `1f29daa7`; Pi has none). Add a corpus-file-driven contract test and reject path traversal/unknown schema.
 
 ## Authorization
 
