@@ -1,6 +1,6 @@
 # MechanicalWorkflows function hosting: current and target
 
-**Audience:** operators and contributors to Pi Workflow Workbench. **Status 2026-11-06: first-class Pi→Mechanical function invocation not shipped.** Read the [reconciled program](programs/mechanical-interoperability-audit-2026-11-06/README.md).
+**Audience:** operators and contributors to Pi Workflow Workbench. **Status at 2026-11-09 audit pins: first-class Pi→Mechanical function invocation not shipped.** Start with the [current package-local full implementation and verification plan](../programs/mechanical-native-interoperability-2026-11-09/README.md); the [November 6 audit](programs/mechanical-interoperability-audit-2026-11-06/README.md) remains dated history. Pi worktree preservation, two detached Claude grant producers and pre-dispatch run-abort checks have gained implementation/test improvements since that history; native registered function dispatch, domain observation and durable cross-host recovery remain open.
 
 ## Available now
 
