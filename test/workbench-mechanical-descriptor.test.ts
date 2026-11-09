@@ -85,12 +85,28 @@
  * during it ("read <n>", else "no read"). R008-14 reads the module header's step 1 from src: the words are in it, the
  * cases it cites are exactly the cases whose titles carry the words and exactly the cases that ran a leg, in run order,
  * and it holds each leg's row count.
+ * Follow-up cut (wb-qgyq; the R694 follow-up of the wb-dhfk landing 1067 gate, its findings F1 and F2): R008-5 names the
+ * five artifact digests it plants (the bare hex, 63 digits, upper-case hex, sha512: and a space after) and holds its leg's
+ * rows to those names and then its bare-hex descriptor digest, in order, inside the case (F2: its rows gain an anchor
+ * outside R008-14's count literal, as R008-6's [9, 4] and R008-9's length pins anchor theirs). The names label the digests
+ * written beside them: that each digest is the form its name says is NOT CLAIMED by that pin, and neither is a form
+ * removed from the table together with every literal that names or counts it (R008-5's names, R008-14's count literal
+ * and title), since R008-5's forms have no anchor outside this suite (the module header's step 1 names them only in the
+ * union R008-5, R008-6 and R008-10 plant). The list below names the reads the gate's members GP8-H1, GP8-H2, GP8-H3 and
+ * GP8-H12 make, which no row of either leg can see (F1): a read the boundary makes only for requests unlike a leg's rows,
+ * or of a path other than the one a row hands.
  * NOT CLAIMED by the legs: an open of the artifact path, or a stat or realpath of either path, ahead of the pin judgment
  * (they watch the descriptor path only); a synchronous read that waits for a writer (it would stall the suite's own
  * thread, so no case could report it); an open of the descriptor path that does not wait for a writer and reads nothing
  * from it (the read leg sees only bytes taken, and the open leg sees such an open only while it is still held at a row's
  * check); a read ahead of the pin judgment that the boundary makes only when the descriptor path is not a FIFO (both legs
- * plant a FIFO there); an open or a read that has not happened by the end of its leg's closing sweep; an open of the
+ * plant a FIFO there), only on the first request that names a path (each leg's control is the first request that names its
+ * FIFO, so the control takes that read and no row sees one: GP8-H1, GP8-H2), or only for a path name the legs' FIFOs do not
+ * carry (they are named development.v1.open.fifo and development.v1.read.fifo, so a read made only for a .json name reaches
+ * no row: GP8-H3); a read of a file other than the handed descriptor path (such as the producer file beside each FIFO:
+ * GP8-H12); a read at a request the landed assertions make (the legs watch their own rows only: those requests hand an
+ * absent path or, at R008-5's bare-hex request, the producer file itself, a regular file whose read no case observes); an
+ * open or a read that has not happened by the end of its leg's closing sweep; an open of the
  * descriptor path for writing (through one a boundary could put back what it read); the open control's reading of a
  * boundary whose own descriptor read does not wait for a writer (the GP6-S09 form: such an open is seen only while it is
  * still held, so that control then reads by timing, while the read leg's control still takes its bytes); and what the
@@ -786,15 +802,25 @@ describe("wb-ocie EAT-R008: Pi refuses artifact bytes that differ from their SHA
   it("R008-5 a malformed release pin is refused before any file is read", { timeout: 30_000 }, async ({ task }) => {
     const { options } = plant();
     const hex = sha256Of(readFileSync(options.artifactPath));
-    const artifactDigests = [hex, `sha256:${hex.slice(1)}`, `sha256:${hex.toUpperCase()}`, `sha512:${hex}`, `sha256:${hex} `];
-    for (const artifactDigest of artifactDigests) {
+    const artifactDigests: readonly (readonly [form: string, artifactDigest: string])[] = [
+      ["the bare hex", hex],
+      ["63 digits", `sha256:${hex.slice(1)}`],
+      ["upper-case hex", `sha256:${hex.toUpperCase()}`],
+      ["sha512:", `sha512:${hex}`],
+      ["a space after", `sha256:${hex} `],
+    ];
+    for (const [, artifactDigest] of artifactDigests) {
       await expectRefused({ ...options, descriptorPath: join(options.approvedRoot, "absent.json"), pin: { ...options.pin, artifactDigest } }, "pin", "pin-malformed");
     }
     await expectRefused({ ...options, pin: { ...options.pin, descriptorDigest: PRODUCER.sha256 } }, "pin", "pin-malformed");
     const rows: LegRow[] = [
-      ...artifactDigests.map((artifactDigest, index): LegRow => [`artifactDigest ${index}`, { ...options.pin, artifactDigest }]),
+      ...artifactDigests.map(([form, artifactDigest]): LegRow => [`artifactDigest ${form}`, { ...options.pin, artifactDigest }]),
       ["descriptorDigest the bare hex", { ...options.pin, descriptorDigest: PRODUCER.sha256 }],
     ];
+    expect(
+      rows.map(([at]) => at),
+      "R008-5's leg is handed the forms R008-5 plants, by name and in order (wb-qgyq F2: an anchor outside R008-14's count literal)",
+    ).toEqual(["artifactDigest the bare hex", "artifactDigest 63 digits", "artifactDigest upper-case hex", "artifactDigest sha512:", "artifactDigest a space after", "descriptorDigest the bare hex"]);
     expect(await readOrderLeg(task.name, options, rows)).toStrictEqual(legRefused(rows));
   });
 
