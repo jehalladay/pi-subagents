@@ -137,6 +137,19 @@
  * rows twins' edits, the code blocks twins' fence lines and the quoted copies' indents. The six pages and the receipt
  * are unchanged; like the paragraphs above, this records what the cut added.
  *
+ * wb-m2j4 (the R694 follow-up of wb-culd's landing 1069, its F1 leading and its F2 riding; seat ws-07 of g10-work-s260,
+ * 2026-11-09, trunk a4999242): the code blocks case read each block's opening and closing lines back but not the lines
+ * between them, so a block generator that dropped the delimiter row from those lines at indents 1 to 3 left the census
+ * green and masked a reader the census kills alone (wb-culd's gate: GP1X-CB-INDENTED-FENCES-HOLD-NO-DELIMITER-ROW 0|126;
+ * with the reader GP26-F1, 0|126; GP26-F1 alone, 1|125); and the fail-closed reads case named a heading by its trimmed
+ * source line, so a later heading with a space after or before its text read as the twins' own
+ * (GP1X-FC-LATER-HEADINGS-TRAILING-SPACE and GP1X-FC-LATER-HEADINGS-INDENTED-ONE, each 0|126). Red-first, this cut reads
+ * each code block's text back from the very text its anchor call reads - the lines between its fence lines (an indented
+ * code block: all its lines), each with the block's indent cut from its start - and pins it against the census table's
+ * text, tableText of ROWS' receipt rows, never against the block generator (F1's rider cure); and it names a heading by
+ * its source line as written, untrimmed (F2's cure). The six pages and the receipt are unchanged; like the paragraphs
+ * above, this records what the cut added.
+ *
  * THE PINNED SET (the claim form; test/workbench-mwi-docs-remediation-census.test.ts, cases in registration order):
  * - "the reading": the six pages are files git would commit - committable lists a named path when it is tracked (in the
  *   index) or untracked and matched by no exclude rule (.gitignore, info/exclude), and it is on disk - each page key is
@@ -290,11 +303,12 @@
  *   "|  " (a second space), or M001's line without its leading "| ", each of which marked gives as a table whose header
  *   is RECEIPT_COLUMNS and whose rows equal ROWS (pinned) - 89 twins, the count pinned. (wb-culd) Each twin is read back
  *   from the very text its anchor call reads: marked's lexer gives its top-level tokens after LATER_ENTRY's heading, each
- *   named - a heading by its source line; a list by its first line (its marker and its item's first words) and the
- *   indent of its later lines; a block quote by the tokens it holds and the prefix its lines spell before their text; a
- *   table by how its header differs from RECEIPT_COLUMNS, whether its rows are ROWS' cells (and its cells past the
- *   eighth) and, when it is not written as its cells read, the row its first such line holds (or its delimiter row) and
- *   that line's edit - and the 89 readings are pinned against literals and ROWS; and each twin's last top-level list
+ *   named - a heading by its source line as written (wb-m2j4: untrimmed, so a space before or after its text is read);
+ *   a list by its first line (its marker and its item's first words) and the indent of its later lines; a block quote
+ *   by the tokens it holds and the prefix its lines spell before their text; a table by how its header differs from
+ *   RECEIPT_COLUMNS, whether its rows are ROWS' cells (and its cells past the eighth) and, when it is not written as its
+ *   cells read, the row its first such line holds (or its delimiter row) and that line's edit - and the 89 readings
+ *   are pinned against literals and ROWS; and each twin's last top-level list
  *   marker is read back from that text as LISTED reads it (lastListMarkerOf: the list copies spell their own five, every
  *   other twin the receipt's last list, "-") and pinned against a literal.
  * - "receipt anchor's cells and rows" (wb-1gdq): the anchor fails with "deeply equal" on LATER_ENTRY holding, after a
@@ -317,7 +331,11 @@
  *   by a space on its opening line or on its closing line (2); and the text indented four spaces, an indented code
  *   block (1) - the count pinned. (wb-culd) Each block's opening and closing lines as its code token's raw text spells
  *   them, their indent included (an indented code block: the indent of its lines), are read back from the very text its
- *   anchor call reads and pinned against literals.
+ *   anchor call reads and pinned against literals. (wb-m2j4) Each block's text - the lines its code token's raw text
+ *   spells between those two lines (an indented code block: all its lines), each with the block's indent cut from its
+ *   start (as many characters as the spaces before its opening line; an indented code block: four), so a line indented
+ *   otherwise than its block reads otherwise - is read back from the very text its anchor call reads and pinned against
+ *   the census table's text, tableText of ROWS' receipt rows (the 23 readings, the count pinned).
  * - "receipt anchor's quoted copies" (wb-1gdq): the anchor fails with "holds 2 tables" on LATER_ENTRY holding, after a
  *   blank line, the census table and, on its very next line, its copy each of whose lines starts with "> " (WGP1C8-Q1a's
  *   placement: the heading, a space token, the table and a blockquote, no space token between, pinned), and on
@@ -390,12 +408,18 @@
  * containers, headings, places or rows than its twins spell, leaves its twins passing), and the "written" twins' pinned
  * lexed header and rows; the cells and rows of a later census table - the cells and rows twins and their count (a
  * compare that skips a row, a column or the letter case, drops a row it does not know, or reads the rows as a set reds
- * them); the code blocks' text - the code blocks twins' pass, lexed shape and raw text (a walk that lexes one of those
- * blocks' text as Markdown counts the table twice); the quoted copies - their four twins and lexed shapes (a walk that
+ * them); the code blocks' text - the code blocks twins' pass, lexed shape and raw text, and (wb-m2j4) each block's text
+ * read back from its asserted text against the census table's text (a walk that lexes one of those blocks' text as
+ * Markdown counts the table twice; a block generator that drops, edits or reorders a line between a block's fence
+ * lines, or indents those lines otherwise than its fence, reds the text read-back - wb-culd's gate's
+ * GP1X-CB-INDENTED-FENCES-HOLD-NO-DELIMITER-ROW, alone and with GP26-F1's reader); the quoted copies - their four twins
+ * and lexed shapes (a walk that
  * skips a block quote right after a table, or one indented one to three spaces, counts one table); (wb-culd) what each
  * fail-closed reads, cells and rows, code blocks and quoted copies twin spells - its case's read-back pin over the asserted
  * texts (a twin generator that spells one marker, placement, heading, header, edited row or cell, fence indent or quote
- * indent for every twin of its family reds it: the ten GP7X members of wb-1gdq's gate); the outside anchor's
+ * indent for every twin of its family reds it: the ten GP7X members of wb-1gdq's gate; and, wb-m2j4, later headings
+ * spelled with a space after or before their text: wb-culd's gate's GP1X-FC-LATER-HEADINGS-TRAILING-SPACE and
+ * GP1X-FC-LATER-HEADINGS-INDENTED-ONE); the outside anchor's
  * "the row whose id is
  * wb-12x1" and "exactly the 50 ... in order" - the outside anchor twins; its "one ACCEPTANCE segment" and "one SURFACES
  * segment" - the outside anchor segments; and for the table itself the frozen shape, the export anchor and the receipt anchor
@@ -454,13 +478,13 @@
  * it, under a heading other than theirs (a setext heading or a heading of other text, for two), beside a table under a
  * header or at a place they do not spell, or written otherwise than its cells read in a way no twin spells (a space
  * after a row's last pipe, alignment colons in another column or a cell's pipe escaped, for three). What the wb-culd
- * read-backs (headerReadOf, rowsReadOf, lineEditOf, twinTokenReadOf, laterReadOf, cellsEditOf, fenceLinesOf and
- * quoteIndentOf) give of a text other than their own case's twins is NOT CLAIMED by this census: they are the
- * instruments of those pins, not receipt readers. Of a twin's text, a spelling those read-backs do not name - a list
- * item's text after its first line, which row holds a cell past the eighth (rowsReadOf names their distinct texts), a
- * code block's lines between its opening and closing lines, a quoted copy's lines after its first (the quoted copies
- * case) - is NOT CLAIMED by the read-back pins, and a hollow that edits a twin generator together with its read-back
- * pin is the coordinated hollow named above. A standing
+ * and wb-m2j4 read-backs (headerReadOf, rowsReadOf, lineEditOf, twinTokenReadOf, laterReadOf, cellsEditOf,
+ * fenceLinesOf, codeTextOf and quoteIndentOf) give of a text other than their own case's twins is NOT CLAIMED by this
+ * census: they are the instruments of those pins, not receipt readers. Of a twin's text, a spelling those read-backs do
+ * not name - a list item's text after its first line, which row holds a cell past the eighth (rowsReadOf names their
+ * distinct texts), a quoted copy's lines after its first (the quoted copies case) - is NOT CLAIMED by the read-back
+ * pins, and a hollow that edits a twin generator together with its read-back pin is the coordinated hollow named
+ * above. A standing
  * text moved past the page's end by more than the one line the sweep reads is NOT CLAIMED by this census.
  * A second census table placed right after the first, with no blank line between, as a list-item copy on the table's
  * next line (wb-js9a F7) is NOT CLAIMED by this census; the copy whose lines each start "> " there (the GP1C8-Q1
@@ -1597,14 +1621,15 @@ const lineEditOf = (line: string, was: string): string => {
   return `${JSON.stringify(was.slice(start, was.length - end))} -> ${JSON.stringify(line.slice(start, line.length - end))} at ${start === was.length ? "the end" : String(start)}`;
 };
 /** wb-culd: one top-level token of a twin's text as the fail-closed reads read-back names it - a heading by its source
- * line, a list by its source's first line (its marker and its item's first words) and the indents of its later lines, a
- * block quote by the tokens it holds and the prefixes its lines spell before their text, a table by its header
- * (headerReadOf) and its rows (rowsReadOf) and, when its source is not written as its cells read (tableText of its own
- * header and cells), by the row its first such line holds ("the delimiter row" for its second line) and that line's
- * edit (lineEditOf), and any other token by its kind. */
+ * line as written (wb-m2j4, the F2 of wb-culd's landing: untrimmed, only the line feeds after it dropped, so a space
+ * before or after its text is read), a list by its source's first line (its marker and its item's first words) and the
+ * indents of its later lines, a block quote by the tokens it holds and the prefixes its lines spell before their text, a
+ * table by its header (headerReadOf) and its rows (rowsReadOf) and, when its source is not written as its cells read
+ * (tableText of its own header and cells), by the row its first such line holds ("the delimiter row" for its second
+ * line) and that line's edit (lineEditOf), and any other token by its kind. */
 function twinTokenReadOf(token: Token): string {
   const sourceLines = token.raw.replace(/\n+$/, "").split("\n");
-  if (token.type === "heading") return `heading ${JSON.stringify(token.raw.trim())}`;
+  if (token.type === "heading") return `heading ${JSON.stringify(token.raw.replace(/\n+$/, ""))}`;
   if (token.type === "list") {
     const indents = [...new Set(sourceLines.slice(1).flatMap(line => (line === "" ? [] : [line.length - line.trimStart().length])))];
     return `list ${JSON.stringify(sourceLines[0] ?? "")}${indents.length === 0 ? "" : ` indented ${indents.join(",")}`}`;
@@ -1678,6 +1703,21 @@ const fenceLinesOf = (token: Token | undefined): string => {
   const lines = token.raw.replace(/\n$/, "").split("\n");
   if ((token as Tokens.Code).codeBlockStyle === "indented") return `indented ${[...new Set(lines.map(line => line.length - line.trimStart().length))].join(",")}`;
   return `${JSON.stringify(lines[0] ?? "")} to ${JSON.stringify(lines[lines.length - 1] ?? "")}`;
+};
+/** wb-m2j4 (the R694 follow-up of wb-culd's landing 1069, its F1): a code token's text as its source spells it, read
+ * back from the very text the anchor is asserted on - the lines between its opening and its closing line (an indented
+ * code block: all its lines), each with the block's indent cut from its start (as many characters as the spaces before
+ * its opening line; an indented code block: four), so a line indented otherwise than its block reads otherwise. */
+const codeTextOf = (token: Token | undefined): string => {
+  if (token?.type !== "code") return "no code token";
+  const lines = token.raw.replace(/\n$/, "").split("\n");
+  if ((token as Tokens.Code).codeBlockStyle === "indented") return lines.map(line => line.slice(4)).join("\n");
+  const opening = lines[0] ?? "";
+  const indent = opening.length - opening.trimStart().length;
+  return lines
+    .slice(1, -1)
+    .map(line => line.slice(indent))
+    .join("\n");
 };
 /** wb-culd: the indent of a text's last top-level block quote, read back by marked's GFM lexer from that very text - the
  * spaces its source spells before its first ">" (-1 when the text lexes no block quote). */
@@ -2291,11 +2331,13 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
     const codeShape: readonly string[] = ["heading", "space", "table", "space", "code"];
     const passed: string[] = [];
     const fences: string[] = [];
+    const codeTexts: string[] = [];
     for (const [name, block] of blocks) {
       const text = laterSection(live, LATER_ENTRY, `${table}\n\n${block}`);
       expect(laterShapeOf(text), `${name}: the heading, a space token, the table, a space token, then one code token`).toEqual(codeShape);
       expect(new Lexer({ gfm: true }).lex(text).at(-1)?.raw, `${name}: that code token's raw text`).toBe(`${block}\n`);
       fences.push(fenceLinesOf(new Lexer({ gfm: true }).lex(text).at(-1)));
+      codeTexts.push(codeTextOf(new Lexer({ gfm: true }).lex(text).at(-1)));
       expect(() => receiptAnchor(text), name).not.toThrow();
       passed.push(name);
     }
@@ -2313,6 +2355,10 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
       fence("```", "``` "),
       "indented 4",
     ]);
+    // wb-m2j4: each block's text - the lines between its fence lines (an indented code block: all its lines), its indent
+    // cut - read back from the very text its anchor call reads, against the census table's text (never against the block
+    // generator).
+    expect(codeTexts, "each code block's text, its indent cut, as marked's lexer reads it back from the asserted text: the census table's text").toEqual(Array.from({ length: 23 }, () => tableText(ROWS.map(receiptRowOf))));
   }, 120_000);
 
   it("receipt anchor's quoted copies (wb-1gdq): LATER_ENTRY holding the census table and its '> ' copy on the very next line (WGP1C8-Q1a's placement) or, after a blank line, its copy whose lines each start ' > ', '  > ' or '   > ' (WGP26-Q1a's and its two twins) fails 'holds 2 tables' (lexed shapes pinned)", () => {
