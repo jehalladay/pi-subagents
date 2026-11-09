@@ -1,8 +1,9 @@
 /**
  * wb-1ht7 (HX-ORIGINAL-GOALS-CLOSURE-R11; the structural-exit child of wb-tz2.11 under orchestrator ruling R-B746, M:69547),
- * STANDING LEG ONLY: wb-tz2.11's cut #6, below, with its C7 and C8 verdicts each one function of a tree, read on the repository and
- * on realized witnesses (THE C7 VERDICT, THE C8 VERDICT and CURES OF REFUSAL #6 below). No row is added or removed, and no row's
- * code but C7's, the C7 walk row's, C8's, the C8 walk row's and the frozen shape's changes.
+ * STANDING LEG ONLY, cut #2: wb-tz2.11's cut #6, below, with its C7 and C8 verdicts each one function of a tree, read by one
+ * expression on the repository's tree and on realized witnesses' (THE C7 VERDICT, THE C8 VERDICT, CURES OF REFUSAL #1 OF wb-1ht7
+ * and CURES OF REFUSAL #6 below). No row is added or removed, and no row's code but C7's, the C7 walk row's, C8's, the C8 walk
+ * row's and the frozen shape's changes.
  * wb-tz2.11, cut #6: cut #5 - the restatement of the FINAL cut over the landed
  * readers that orchestrator ruling R-B98 (M:35530) binds - with its two walks pinned, as branch ruling R-B683 (M:64451) binds for
  * refusal #5 of cut #5 (gate-prep-15 / g10-gate-s236, gate-refused M:63274): the walk is pinned by a realized falsifier per claim
@@ -131,18 +132,28 @@
  * (R-UNWALKED).
  * THE C7 VERDICT (c7Verdict; wb-1ht7, R-B746) is one function of a tree's judged files: the C7_ANCHORS they miss, and each judged
  * file's F1-F4 hits beside the hits KNOWN_REAPERS sets aside, one line per hit (path, line, shape and form) - the anchors and the
- * hits above. C7 reads it on the repository (no anchor missed, no hit) and on realized witnesses (C7_WITNESSES), each a real file
- * at a walked path in a makeScratch tree of its own that holds every other C7_ANCHORS path as a quiet SDK import (ANCHOR_TEXT,
- * judged with no hit): an F3 /proc path and an F4 ESRCH literal in test .ts files (GW-F3, GW-F4), a kill in a qa .mjs file
- * (GW-QA-KILL), a kill in a fixtures .mts file (GW-FIX-KILL), a kill driven by an override (GW-OVERRIDE-KILL) and by an invoke
- * (GW-INVOKE-KILL), and the qa anchor left out (GW-QA-ANCHOR-GONE), each read exactly as its row freezes it, with the witness
- * file's drivers. The C7 walk row reads it on its WALK_PLANTS tree: every C7_ANCHORS path missed (none is planted) and each judged
- * plant's F1 and F2 hit on its kill's line (WALK_PLANT_HITS), so the verdict reads every walk word above. The witness rows refusal
- * #6's verdict names equal, member, witness and path, the pairs it lists in the tracker export, each witness text holding every
- * fragment it quotes; GW-INVOKE-KILL, which it does not name, witnesses the one DRIVER_REASONS reason no named witness drives; and
- * the witnesses together drive HX by every DRIVER_REASONS reason and hit every SHAPES shape (both the landed readers' rosters). A
- * hollowing of the verdict that keeps or drops a hit by its form rather than its shape, path or driver is NOT CLAIMED by this
- * census.
+ * hits above. C7 reads it through c7Readings (wb-1ht7 cut #2), one expression over C7_TREES: the repository's tree (no anchor
+ * missed, no hit) and each realized witness's tree (C7_WITNESSES), each judged by judgingOf and read by c7Verdict in that one call;
+ * the C7 row reads no verdict elsewhere. Each witness is a real file at a walked path in a makeScratch tree of its own that holds
+ * every other C7_ANCHORS path as a quiet SDK import (ANCHOR_TEXT, judged with no hit): an F3 /proc path and an F4 ESRCH literal in
+ * test .ts files (GW-F3, GW-F4), a kill in a qa .mjs file (GW-QA-KILL), a kill in a fixtures .mts file (GW-FIX-KILL), a kill
+ * driven by an override (GW-OVERRIDE-KILL) and by an invoke (GW-INVOKE-KILL), and the qa anchor left out (GW-QA-ANCHOR-GONE),
+ * each tree read exactly as its row freezes it, with the witness file's drivers. The C7 walk row reads c7Verdict on its
+ * WALK_PLANTS tree: every C7_ANCHORS path missed (none is planted) and each judged plant's F1 and F2 hit on its kill's line
+ * (WALK_PLANT_HITS), so the verdict reads every walk word above. The witness rows refusal #6's verdict names equal, member,
+ * witness and path, the pairs it lists in the tracker export, each witness text holding every fragment it quotes; GW-INVOKE-KILL,
+ * which it does not name, witnesses the one DRIVER_REASONS reason no named witness drives; and the witnesses together drive HX by
+ * every DRIVER_REASONS reason and hit every SHAPES shape (both the landed readers' rosters). WHAT THE WITNESSES PIN: a hollowing of
+ * C7's reading, written in c7Readings or in c7Verdict, that changes what a witness tree reads (an anchor it misses, a hit it holds
+ * or its witness file's drivers) reds the C7 row on that tree, as each of SCOPE's C7 members does (GP16-H1, F1/F2 hits only: GW-F3
+ * and GW-F4; H2, qa/ dropped: GW-QA-KILL; H3, fixtures dropped: GW-FIX-KILL; H4, import-driven only: GW-OVERRIDE-KILL and
+ * GW-INVOKE-KILL; A1, the qa anchor unchecked: GW-QA-ANCHOR-GONE), and one written in c7Verdict that changes what the WALK_PLANTS
+ * tree reads reds the C7 walk row. A hollowing that leaves every witness tree's reading as its row freezes it (and, written in
+ * c7Verdict, the WALK_PLANTS tree's as the walk row freezes it) is NOT CLAIMED by this census: one that reads the repository's tree
+ * apart from the witness trees (a test of the tree, of its C7_TREES entry, of its place among the readings or of its judging, an
+ * edit where the repository's tree or its reading alone is named, and its reading replaced with the value the row freezes, among
+ * them), and one that drops only hits no witness tree holds (a hit in a test/helpers file, in a file driven more than one way or on
+ * line 1, among them).
  * C8 DOCS: every .md file under docs/workbench is read as marked 18.0.11 (the repo's renderer) renders it to HTML, and this view
  * reads that HTML as a browser's default stylesheet shows it: comments render nothing (including <!--> and <!---> and a comment
  * ended by --!> or by the end of the page), as do bogus comments, doctypes and every tag; the text of every element renders;
@@ -164,24 +175,46 @@
  * unwalked edges) stays green, a calibration member whose own literals are its only anchor (R-UNANCHORED's family).
  * THE C8 VERDICT (c8Verdict; wb-1ht7, R-B746) is one function of a tree's docs reading: each construct the view refuses, page by
  * page, and each clause pairing the HX side with a vocabulary term beside the clauses KNOWN_CLAUSES sets aside, one line per clause
- * (page, clause index, terms and text) - the refusals and the clauses above. C8 reads it on the repository (no refusal, no clause)
- * and on realized witnesses (C8_WITNESSES), each a real page under docs/workbench in a makeScratch tree of its own: an HX kill
- * clause on a receipts page (GW-PAGE-RECEIPTS) and a hidden element on a receipts page (GW-PAGE-HIDDEN-RECEIPTS), each read exactly
- * as its row freezes it, the rows equal, member, witness and path, to the pairs refusal #6's verdict lists in the tracker export,
- * as C7's. The C8 walk row reads it on its PAGE_WALK_PLANTS tree (the planted clause of every walked page, no refusal) and on a
- * second tree of the same pages each holding a hidden element (PAGE_HIDING_TEXT: every walked page refused, no clause), so the
- * verdict reads every walk word above for both. A hollowing of the verdict that keeps or drops a clause by its vocabulary term,
- * or a refusal by its construct, is NOT CLAIMED by this census.
+ * (page, clause index, terms and text) - the refusals and the clauses above. C8 reads it through c8Readings (wb-1ht7 cut #2), one
+ * expression over C8_TREES: the repository's tree (no refusal, no clause) and each realized witness's tree (C8_WITNESSES), each
+ * read by docsOf and c8Verdict in that one call; the C8 docs row reads no verdict elsewhere. Each witness is a real page under
+ * docs/workbench in a makeScratch tree of its own: an HX kill clause on a receipts page (GW-PAGE-RECEIPTS) and a hidden element on
+ * a receipts page (GW-PAGE-HIDDEN-RECEIPTS), each tree read exactly as its row freezes it, the rows equal, member, witness and
+ * path, to the pairs refusal #6's verdict lists in the tracker export, as C7's. The C8 walk row reads c8Verdict on its
+ * PAGE_WALK_PLANTS tree (the planted clause of every walked page, no refusal) and on a second tree of the same pages each holding
+ * a hidden element (PAGE_HIDING_TEXT: every walked page refused, no clause), so the verdict reads every walk word above for both.
+ * WHAT THE WITNESSES PIN: a hollowing of C8's reading, written in c8Readings or in c8Verdict, that changes what a witness tree reads
+ * (a refusal or a clause it holds) reds the C8 docs row on that tree, as each of SCOPE's C8 members does (GP16-D1, receipts pages
+ * dropped from the clauses: GW-PAGE-RECEIPTS; D2, from the refusals: GW-PAGE-HIDDEN-RECEIPTS), and one written in c8Verdict that
+ * changes what either PAGE_WALK_PLANTS tree reads reds the C8 walk row. A hollowing that leaves every witness tree's reading as its
+ * row freezes it (and, written in c8Verdict, both walk trees' as the walk row freezes them) is NOT CLAIMED by this census: one that
+ * reads the repository's tree apart from the witness trees (a test of the tree, of its C8_TREES entry, of its place among the
+ * readings or of its docs reading, an edit where the repository's tree or its reading alone is named, and its reading replaced with
+ * the value the row freezes, among them), and one that drops only clauses or refusals no witness tree holds (written in
+ * c8Readings, a clause or a refusal of a page outside docs/workbench/receipts; written in either, a refusal of an element no
+ * witness or walk page holds, details among them).
  * C9 RUN PIN: the run pin's literals name the suite, every CASES title, this file's suite and every case of this file.
  *
+ * CURES OF REFUSAL #1 OF wb-1ht7 (cut #2; refusal #1 = gate-prep-13 / g10-gate-s258, gate-refused M:69849; each named in the
+ * delivery note): U1 C7-REPOSITORY-VERDICT-CALL-SITE-WITHOUT-FALSIFIER and U2 C8-REPOSITORY-VERDICT-CALL-SITE-WITHOUT-FALSIFIER -
+ * cut #1's C7 and C8 docs rows read the repository's verdict through a call of their own (verdict: c7Verdict(judged) and verdict:
+ * c8Verdict(reading)), apart from the witness trees' call, so SCOPE's seven filters written at that call (refusal #1's S-H1,
+ * S-H2b, S-H3, S-H4 and S-A1; S-D1 and S-D2) read green. The repository's tree is now the first of C7_TREES and C8_TREES, read with
+ * every witness tree through c7Readings and c8Readings, each row's only verdict reading, so each filter written there reds the row
+ * on the witness tree it narrows. R-B750 (M:69871) ruled this refusal rung 1 of wb-1ht7's own ladder and bound the class guard over
+ * these call-site words: each now carries realized call-site falsifiers (each of the seven filters, written at the row's readings
+ * field or inside c7Readings or c8Readings, reds the row alone and under each paired witness), and the call-site edits no witness
+ * tree can see (one that reads the repository's tree apart) are NOT CLAIMED (THE C7 VERDICT, THE C8 VERDICT). F1 (rides): THE C7
+ * VERDICT and THE C8 VERDICT claim exactly what the witness trees pin (WHAT THE WITNESSES PIN) and put the rest NOT CLAIMED, the
+ * test/helpers, more-than-one-driver and line-1 hollowings refusal #1 realized among it.
  * CURES OF REFUSAL #6 (wb-1ht7, the structural-exit child of wb-tz2.11 under orchestrator ruling R-B746, M:69547; refusal #6 =
  * gate-prep-1 / g10-gate-s255, gate-refused M:69492; each named in the delivery note): U1 C7-VERDICT-WORDS-WITHOUT-FALSIFIER and
  * U2 C8-VERDICT-WORDS-WITHOUT-FALSIFIER - the anchors and hits of C7 and the refusals and clauses of C8 were read on the
  * repository only, so the seven hollowings of wb-1ht7's SCOPE (GP16-H1 F1/F2 hits only, H2 qa/ dropped, H3 fixtures dropped, H4
  * import-driven only, A1 the qa anchor unchecked; D1 receipts pages dropped from the clauses, D2 from the refusals) read green.
- * Each verdict is now one function, the one expression each member edits, read on the repository and on realized witnesses (THE
- * C7 VERDICT and THE C8 VERDICT above): each member reds the row that reads its witness, and each refusal #6 witness is a row of
- * C7_WITNESSES or C8_WITNESSES.
+ * Each verdict is now one function (c7Verdict, c8Verdict), and since wb-1ht7 cut #2 one reading (c7Readings, c8Readings) reads it
+ * on the repository's tree and on each realized witness's (THE C7 VERDICT and THE C8 VERDICT above): each member, written in
+ * either, reds the row on the witness tree it narrows, and each refusal #6 witness is a row of C7_WITNESSES or C8_WITNESSES.
  * CURES OF REFUSAL #5 (cut #6, under branch ruling R-B683; each named in the delivery note): U1 C7-WALK-WORDS-WITHOUT-FALSIFIER -
  * the C7 walk words (the read set above, the C7 title's walked files and the C7 calibration's "each at a path the C7 walk reads")
  * are pinned three ways: on the repository the walk equals its anchor, the judged set equals the anchor's driving files and a qa
@@ -1291,7 +1324,13 @@ interface JudgedFile {
   readonly drivers: readonly string[];
   readonly hits: readonly ShapeHit[];
 }
-let JUDGED: { readonly sources: readonly string[]; readonly judged: readonly JudgedFile[] } | undefined;
+/** C7's judging of a tree: its walked sources, and the judged files among them. */
+interface Judging {
+  readonly sources: readonly string[];
+  readonly judged: readonly JudgedFile[];
+}
+/** Each tree's judging, judged once (wb-1ht7 cut #2): the repository's is the one every row reads, c7Readings among them. */
+const JUDGINGS = new WeakMap<Tree, Judging>();
 /** The ids of the readers census's rows for one refusal #4 prefix (GP4-C2 or GP4-C7), in its order. */
 function gateRows(prefix: string): string[] {
   return [...read(READERS_CENSUS).matchAll(new RegExp(`\\{ id: "(${prefix}-[0-9a-z]+)", label:`, "g"))].map(match => match[1] ?? "");
@@ -1307,7 +1346,7 @@ function unknownHits(entry: JudgedFile): ShapeHit[] {
   });
 }
 /** C7's judging of a tree: each walked source other than the EXCLUDED census whose text passes the landed prefilter and that hxDrivers classes as driving HX, with its F1-F4 hits. */
-function judgeTree(tree: Tree): { readonly sources: readonly string[]; readonly judged: readonly JudgedFile[] } {
+function judgeTree(tree: Tree): Judging {
   const sources = walkedSources(tree.root);
   const excluded = new Set<string>(EXCLUDED);
   const judged = sources
@@ -1319,10 +1358,17 @@ function judgeTree(tree: Tree): { readonly sources: readonly string[]; readonly 
     });
   return { sources, judged };
 }
-function judgedDrivers(): { readonly sources: readonly string[]; readonly judged: readonly JudgedFile[] } {
-  if (JUDGED !== undefined) return JUDGED;
-  JUDGED = judgeTree(REPOSITORY);
-  return JUDGED;
+/** A tree's judging through JUDGINGS: judgeTree runs once per tree. */
+function judgingOf(tree: Tree): Judging {
+  const known = JUDGINGS.get(tree);
+  if (known !== undefined) return known;
+  const judging = judgeTree(tree);
+  JUDGINGS.set(tree, judging);
+  return judging;
+}
+/** The repository's judging. */
+function judgedDrivers(): Judging {
+  return judgingOf(REPOSITORY);
 }
 /** A judged file as one line: its path, its drivers and its F1-F4 shape:form list. */
 const judgedLine = (entry: JudgedFile): string => `${entry.path}=${entry.drivers.join("+")}/${shapeForms(entry.hits).join("+")}`;
@@ -1333,7 +1379,7 @@ interface C7Verdict {
   /** Each judged file's F1-F4 hits beside the hits KNOWN_REAPERS sets aside, one line per hit: path, line, shape and form. */
   readonly hits: readonly string[];
 }
-/** The verdict of a tree's judged files: C7 reads it on the repository and on each C7_WITNESSES tree, the C7 walk row on its WALK_PLANTS tree. */
+/** The verdict of a tree's judged files: C7 reads it through c7Readings on the repository's tree and each C7_WITNESSES tree, the C7 walk row on its WALK_PLANTS tree. */
 function c7Verdict(judged: readonly JudgedFile[]): C7Verdict {
   const paths = judged.map(entry => entry.path);
   return {
@@ -1611,7 +1657,8 @@ interface DocsReading {
   readonly clauses: readonly Clause[];
   readonly refusals: readonly string[];
 }
-let DOCS_READING: DocsReading | undefined;
+/** Each tree's docs reading, read once (wb-1ht7 cut #2): the repository's is the one every row reads, c8Readings among them. */
+const DOCS_READINGS = new WeakMap<Tree, DocsReading>();
 /** C8's reading of a tree: every page the C8 walk reads under docs/workbench, clause by clause, with the constructs the view refuses. */
 function docsReadingOf(tree: Tree): DocsReading {
   const files = docsUnder(tree.root, DOCS);
@@ -1622,10 +1669,17 @@ function docsReadingOf(tree: Tree): DocsReading {
     refusals: views.flatMap(({ file, view }) => view.refusals.map(refusal => `${file}: ${refusal}`)),
   };
 }
+/** A tree's docs reading through DOCS_READINGS: docsReadingOf runs once per tree. */
+function docsOf(tree: Tree): DocsReading {
+  const known = DOCS_READINGS.get(tree);
+  if (known !== undefined) return known;
+  const reading = docsReadingOf(tree);
+  DOCS_READINGS.set(tree, reading);
+  return reading;
+}
+/** The repository's docs reading. */
 function docsReading(): DocsReading {
-  if (DOCS_READING !== undefined) return DOCS_READING;
-  DOCS_READING = docsReadingOf(REPOSITORY);
-  return DOCS_READING;
+  return docsOf(REPOSITORY);
 }
 /**
  * The docs clauses C8 sets aside (R-KNOWN-CLAUSE): the host-admission clause of a trunk receipt landed after cut #5, which names
@@ -1657,7 +1711,7 @@ interface C8Verdict {
   /** Each clause pairing the HX side with a vocabulary term beside KNOWN_CLAUSES, one line per clause: page, clause index, terms and text. */
   readonly hits: readonly string[];
 }
-/** The verdict of a tree's docs reading: C8 reads it on the repository and on each C8_WITNESSES tree, the C8 walk row on its PAGE_WALK_PLANTS trees. */
+/** The verdict of a tree's docs reading: C8 reads it through c8Readings on the repository's tree and each C8_WITNESSES tree, the C8 walk row on its PAGE_WALK_PLANTS trees. */
 function c8Verdict(reading: DocsReading): C8Verdict {
   return {
     refusals: reading.refusals,
@@ -2267,8 +2321,9 @@ const judgedPaths = (plants: readonly WalkPlant[]): string[] =>
  * THE VERDICTS' WITNESSES (wb-1ht7, the structural-exit child of wb-tz2.11 under orchestrator ruling R-B746, M:69547). Refusal #6
  * of cut #6 (gate-prep-1 / g10-gate-s255, gate-refused M:69492) realized seven one-edit hollowings of C7's and C8's own verdict
  * expressions, each green while its paired witness alone redded the census. Each witness here is that file at that path (for
- * GW-QA-ANCHOR-GONE, the qa anchor left out), planted as a real file in a makeScratch tree of its own and read through the same
- * c7Verdict or c8Verdict the repository row reads, so a member's hollowing of the verdict reds the row that reads its witness.
+ * GW-QA-ANCHOR-GONE, the qa anchor left out), planted as a real file in a makeScratch tree of its own and read, with the
+ * repository's tree, through one reading (c7Readings or c8Readings, below), so a member's hollowing of that reading or of the
+ * verdict reds the row on the witness tree it narrows.
  */
 /** The quiet text each C7 witness tree holds at every C7_ANCHORS path it keeps: an SDK import, judged with no hit. */
 const ANCHOR_TEXT = HX_HEAD;
@@ -2276,7 +2331,7 @@ const ANCHOR_TEXT = HX_HEAD;
 const WITNESS_KILL = "export const stopChild = (child: { pid: number }): void => {\n  process.kill(child.pid);\n};\n";
 interface C7Witness {
   readonly id: string;
-  /** The member of wb-1ht7's SCOPE, by refusal #6's id, whose hollowing of c7Verdict this witness reds. */
+  /** The member of wb-1ht7's SCOPE, by refusal #6's id, whose hollowing of C7's reading (c7Verdict or c7Readings) this witness reds. */
   readonly member: string;
   /** The walked path it plants, or the C7_ANCHORS path it leaves out of its tree. */
   readonly path: string;
@@ -2284,7 +2339,7 @@ interface C7Witness {
   readonly text: string | undefined;
   /** The planted file's hxDrivers reasons ([] for the anchor left out). */
   readonly drivers: readonly string[];
-  /** The verdict c7Verdict reads on its tree, exactly. */
+  /** The verdict c7Readings reads on its tree, exactly. */
   readonly anchored: readonly string[];
   readonly hits: readonly string[];
 }
@@ -2352,11 +2407,11 @@ const c7WitnessFiles = (witness: C7Witness): Array<readonly [string, string]> =>
 ];
 interface C8Witness {
   readonly id: string;
-  /** The member of wb-1ht7's SCOPE, by refusal #6's id, whose hollowing of c8Verdict this witness reds. */
+  /** The member of wb-1ht7's SCOPE, by refusal #6's id, whose hollowing of C8's reading (c8Verdict or c8Readings) this witness reds. */
   readonly member: string;
   readonly path: string;
   readonly text: string;
-  /** The verdict c8Verdict reads on its tree, exactly. */
+  /** The verdict c8Readings reads on its tree, exactly. */
   readonly refusals: readonly string[];
   readonly hits: readonly string[];
 }
@@ -2378,6 +2433,61 @@ const C8_WITNESSES: readonly C8Witness[] = [
     hits: [],
   },
 ];
+/**
+ * THE READINGS (wb-1ht7 cut #2, refusal #1's U1 and U2): each verdict is read on the repository's tree and on every witness tree by
+ * one expression, so the repository rows' verdict is read where the witnesses' is and a hollowing written there is read on both.
+ */
+/** A tree a verdict is read on: the repository's (it plants nothing), or a witness row's makeScratch tree of its files. */
+interface VerdictTree {
+  readonly id: string;
+  /** The witness file's walked path, whose drivers C7 reads (none for the repository's tree). */
+  readonly path: string | undefined;
+  /** The files planted for the reading and removed after it (none for the repository's tree). */
+  readonly files: ReadonlyArray<readonly [string, string]> | undefined;
+}
+/** The id of the repository's tree, the first of C7_TREES and C8_TREES. */
+const REPOSITORY_TREE = "repository";
+/** Runs one reading on a VerdictTree: the repository itself when it plants nothing, else its files planted in a fresh makeScratch tree. */
+function readTree<T>(entry: VerdictTree, reading: (tree: Tree) => T): T {
+  const { files } = entry;
+  if (files === undefined) return reading(REPOSITORY);
+  return inScratch(scratch => {
+    plantTree(scratch, files);
+    return reading(scratchTree(scratch));
+  });
+}
+/** The trees C7 reads its verdict on, in order: the repository's, then each C7_WITNESSES row's (its files: c7WitnessFiles). */
+const C7_TREES: readonly VerdictTree[] = [
+  { id: REPOSITORY_TREE, path: undefined, files: undefined },
+  ...C7_WITNESSES.map(witness => ({ id: witness.id, path: witness.path, files: c7WitnessFiles(witness) })),
+];
+/** One tree's C7 reading: its id, its witness file's drivers ([] when it plants none) and its verdict. */
+interface C7Reading extends C7Verdict {
+  readonly id: string;
+  readonly drivers: readonly string[];
+}
+/** C7's READINGS: every C7_TREES tree judged (judgingOf) and read (c7Verdict) by this one expression; the C7 row reads no verdict elsewhere. */
+function c7Readings(): C7Reading[] {
+  return C7_TREES.map(entry =>
+    readTree(entry, tree => {
+      const { judged } = judgingOf(tree);
+      return { id: entry.id, drivers: judged.find(file => file.path === entry.path)?.drivers ?? [], ...c7Verdict(judged) };
+    }),
+  );
+}
+/** The trees C8 reads its verdict on, in order: the repository's, then each C8_WITNESSES row's (its one page). */
+const C8_TREES: readonly VerdictTree[] = [
+  { id: REPOSITORY_TREE, path: undefined, files: undefined },
+  ...C8_WITNESSES.map(witness => ({ id: witness.id, path: witness.path, files: [[witness.path, witness.text] as const] })),
+];
+/** One tree's C8 reading: its id and its verdict. */
+interface C8Reading extends C8Verdict {
+  readonly id: string;
+}
+/** C8's READINGS: every C8_TREES tree read (docsOf) and judged (c8Verdict) by this one expression; the C8 docs row reads no verdict elsewhere. */
+function c8Readings(): C8Reading[] {
+  return C8_TREES.map(entry => readTree(entry, tree => ({ id: entry.id, ...c8Verdict(docsOf(tree)) })));
+}
 /** How C7 hits WALK_PLANT_TEXT, by line, shape and form: its kill on line 3, an F1 and an F2 member. */
 const WALK_PLANT_HITS = ["3 F1 (member)", "3 F2 (member)"] as const;
 /** The text of every page of the C8 walk row's hiding tree: an element the hidden attribute hides, and no clause. */
@@ -3521,20 +3631,12 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
     ]);
   });
 
-  it("C7 no hand-rolled kill falsifier: on the repository the C7 walk reads exactly the files node:fs's recursive listing lists under test/ and qa/ (each regular file with a SOURCE_FILE name - .ts .mts .cts .js .mjs .cjs - outside a node_modules directory, and no entry there but regular files and directories); C7 judges exactly the listed files other than this census whose text, raw or unescaped, holds the needle hyperunix (any case) and that the landed readers' hxDrivers classes as driving HX by any of its C7 DRIVER FORMS (an import, invoke or override form), three test .ts anchors and the qa .mjs anchor among them; and no judged file carries an F1-F4 shape the landed readers' falsifierShapes reads by any of its C7 SHAPE FORMS, a command read through commandHeads, beside the hits KNOWN_REAPERS sets aside (R-REAPER); the anchors and the hits are C7's verdict (c7Verdict: the C7_ANCHORS its judged files miss and each judged file's F1-F4 hits beside KNOWN_REAPERS, one line per hit), which reads each C7_WITNESSES tree - a real file at a walked path beside the C7_ANCHORS it keeps - exactly as its row freezes it: an F3 /proc path and an F4 ESRCH literal in test .ts files, a kill in a qa .mjs file and in a fixtures .mts file, a kill driven by an override and by an invoke, and the qa anchor left out; the rows refusal #6's verdict names equal the member, witness and path pairs it lists in the tracker export, and the witnesses drive HX by every DRIVER_REASONS reason and hit every SHAPES shape", { timeout: CENSUS_TIMEOUT }, () => {
+  it("C7 no hand-rolled kill falsifier: on the repository the C7 walk reads exactly the files node:fs's recursive listing lists under test/ and qa/ (each regular file with a SOURCE_FILE name - .ts .mts .cts .js .mjs .cjs - outside a node_modules directory, and no entry there but regular files and directories); C7 judges exactly the listed files other than this census whose text, raw or unescaped, holds the needle hyperunix (any case) and that the landed readers' hxDrivers classes as driving HX by any of its C7 DRIVER FORMS (an import, invoke or override form), three test .ts anchors and the qa .mjs anchor among them; and no judged file carries an F1-F4 shape the landed readers' falsifierShapes reads by any of its C7 SHAPE FORMS, a command read through commandHeads, beside the hits KNOWN_REAPERS sets aside (R-REAPER); the anchors and the hits are C7's verdict (c7Verdict: the C7_ANCHORS its judged files miss and each judged file's F1-F4 hits beside KNOWN_REAPERS, one line per hit), read by one expression (c7Readings) on the repository's tree and on each C7_WITNESSES tree - a real file at a walked path beside the C7_ANCHORS it keeps -, each tree read exactly as its row freezes it: the repository's with no anchor missed and no hit, and the witnesses' an F3 /proc path and an F4 ESRCH literal in test .ts files, a kill in a qa .mjs file and in a fixtures .mts file, a kill driven by an override and by an invoke, and the qa anchor left out; the rows refusal #6's verdict names equal the member, witness and path pairs it lists in the tracker export, and the witnesses drive HX by every DRIVER_REASONS reason and hit every SHAPES shape", { timeout: CENSUS_TIMEOUT }, () => {
     const { sources, judged } = judgedDrivers();
     const paths = judged.map(entry => entry.path);
     const listed = listedSources(ROOT);
     /** The listed files C7 must judge, recomputed apart from the walk and judgeTree. */
     const driven = listed.files.filter(path => path !== SELF && passesPrefilter(read(path)) && hxDrivers(parse(path)).length > 0);
-    /** Each witness planted at its walked path beside the C7_ANCHORS it keeps, judged and read through the same verdict. */
-    const witnesses = C7_WITNESSES.map(witness =>
-      inScratch(scratch => {
-        plantTree(scratch, c7WitnessFiles(witness));
-        const reading = judgeTree(scratchTree(scratch));
-        return { id: witness.id, drivers: reading.judged.find(entry => entry.path === witness.path)?.drivers ?? [], ...c7Verdict(reading.judged) };
-      }),
-    );
     expect({
       walk: {
         unwalked: listed.files.filter(path => !sources.includes(path)),
@@ -3544,8 +3646,7 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
       judging: { unjudged: driven.filter(path => !paths.includes(path)), misjudged: paths.filter(path => !driven.includes(path)) },
       floor: judged.length >= JUDGED_FLOOR,
       selfExcluded: !paths.includes(SELF) && sources.includes(SELF),
-      verdict: c7Verdict(judged),
-      witnesses,
+      readings: c7Readings(),
       unmatchedNamed: unmatchedNamed("C7", C7_WITNESSES),
       unnamed: C7_WITNESSES.filter(witness => !namedWitnesses().some(pair => pair.id === witness.id)).map(witness => witness.id),
       undriven: DRIVER_REASONS.filter(reason => !C7_WITNESSES.some(witness => witness.drivers.includes(reason) && witness.hits.length > 0)),
@@ -3555,8 +3656,7 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
       judging: { unjudged: [], misjudged: [] },
       floor: true,
       selfExcluded: true,
-      verdict: { anchored: [], hits: [] },
-      witnesses: C7_WITNESSES.map(witness => ({ id: witness.id, drivers: [...witness.drivers], anchored: [...witness.anchored], hits: [...witness.hits] })),
+      readings: [{ id: REPOSITORY_TREE, drivers: [], anchored: [], hits: [] }, ...C7_WITNESSES.map(witness => ({ id: witness.id, drivers: [...witness.drivers], anchored: [...witness.anchored], hits: [...witness.hits] }))],
       unmatchedNamed: [],
       unnamed: ["GW-INVOKE-KILL"],
       undriven: [],
@@ -3650,16 +3750,9 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
     });
   });
 
-  it("C8 docs: on the repository the C8 walk reads exactly the .md files node:fs's recursive listing lists under docs/workbench (and no entry there but regular files and directories); every page it reads, read in the header's view of what marked renders and a browser shows (comments, tags and Default_Ignorable code points render nothing, character references decode, units split into clauses), is a modelled page with no clause pairing the HX side with a vocabulary term unless it names the upstream HXGC-OPS-002 artifact, beside the clauses KNOWN_CLAUSES sets aside (R-KNOWN-CLAUSE); the refusals and the clauses are C8's verdict (c8Verdict: each construct the view refuses, page by page, and each such clause beside KNOWN_CLAUSES, one line per clause), which reads each C8_WITNESSES tree - a real page under docs/workbench - exactly as its row freezes it: an HX kill clause on a receipts page and a hidden element on a receipts page, the rows equal to the member, witness and path pairs refusal #6's verdict lists in the tracker export", { timeout: CENSUS_TIMEOUT }, () => {
+  it("C8 docs: on the repository the C8 walk reads exactly the .md files node:fs's recursive listing lists under docs/workbench (and no entry there but regular files and directories); every page it reads, read in the header's view of what marked renders and a browser shows (comments, tags and Default_Ignorable code points render nothing, character references decode, units split into clauses), is a modelled page with no clause pairing the HX side with a vocabulary term unless it names the upstream HXGC-OPS-002 artifact, beside the clauses KNOWN_CLAUSES sets aside (R-KNOWN-CLAUSE); the refusals and the clauses are C8's verdict (c8Verdict: each construct the view refuses, page by page, and each such clause beside KNOWN_CLAUSES, one line per clause), read by one expression (c8Readings) on the repository's tree and on each C8_WITNESSES tree - a real page under docs/workbench -, each tree read exactly as its row freezes it: the repository's with no refusal and no clause, and the witnesses' an HX kill clause on a receipts page and a hidden element on a receipts page, the rows equal to the member, witness and path pairs refusal #6's verdict lists in the tracker export", { timeout: CENSUS_TIMEOUT }, () => {
     const reading = docsReading();
     const listed = listedPages(ROOT);
-    /** Each witness page planted in a makeScratch tree of its own and read through the same verdict. */
-    const witnesses = C8_WITNESSES.map(witness =>
-      inScratch(scratch => {
-        plantTree(scratch, [[witness.path, witness.text]]);
-        return { id: witness.id, ...c8Verdict(docsReadingOf(scratchTree(scratch))) };
-      }),
-    );
     expect({
       files: reading.files.length >= 50,
       walk: {
@@ -3667,15 +3760,13 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
         unlisted: reading.files.filter(file => !listed.files.includes(file)),
         unmodelled: listed.unmodelled,
       },
-      verdict: c8Verdict(reading),
-      witnesses,
+      readings: c8Readings(),
       unmatchedNamed: unmatchedNamed("C8", C8_WITNESSES),
       unnamed: C8_WITNESSES.filter(witness => !namedWitnesses().some(pair => pair.id === witness.id)).map(witness => witness.id),
     }).toStrictEqual({
       files: true,
       walk: { unwalked: [], unlisted: [], unmodelled: [] },
-      verdict: { refusals: [], hits: [] },
-      witnesses: C8_WITNESSES.map(witness => ({ id: witness.id, refusals: [...witness.refusals], hits: [...witness.hits] })),
+      readings: [{ id: REPOSITORY_TREE, refusals: [], hits: [] }, ...C8_WITNESSES.map(witness => ({ id: witness.id, refusals: [...witness.refusals], hits: [...witness.hits] }))],
       unmatchedNamed: [],
       unnamed: [],
     });
