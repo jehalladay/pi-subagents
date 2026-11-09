@@ -28,8 +28,21 @@
  *   also pins that the live retry reading with its original start count set to 0 is refused as uncounted-sdk-start).
  *   PLAN-DOMAIN does the same for each of the 24 ParkedPlan values (3 controls x 2 startups x 2 routes x 2 barriers), run
  *   with every field given and, for the 18 plans holding a default (route "per-agent", barrier "parked"), again with
- *   those fields omitted; PLAN-DOMAIN-SHAPE pins that its table holds exactly those 24 plans, each once, in the order
- *   of the product of the four plan unions as the helper declares them (read with the TypeScript parser).
+ *   those fields omitted (42 runs, counted); PLAN-DOMAIN-SHAPE pins that its table holds exactly those 24 plans, each
+ *   once, in the order of the product of the four plan unions as the helper declares them (read with the TypeScript
+ *   parser).
+ *   PLAN-DOMAIN then makes each of those runs again with callThrough, the call-through recorder, as the experiment's
+ *   runner (wb-7ak9). callThrough hands the experiment's options on to runWorkflow with one change, the surface their
+ *   onControl receives is recordedSurface over the runtime's own, and counts the abort events their signal dispatches.
+ *   That run must read the same whole reading, and its record must be the one namedConduct gives its plan: a skip or
+ *   retry plan on the per-agent route makes one call, that WorkflowControl method on the target's row (0 at spawn, 1 at
+ *   resume), returning the reading's controlAccepted, and the run's own signal dispatches no abort event; on the
+ *   run-abort route it makes no WorkflowControl call and the signal dispatches one; a "none" plan, whatever its route
+ *   and barrier, makes no WorkflowControl call and the signal dispatches none. CALL-THROUGH pins recordedSurface over a
+ *   planted WorkflowControl: each call of each of its five methods is recorded, in call order, as `method(argument) =
+ *   value` with the value the planted method returned (`pause()`, `resume()` and `isPaused() = value` for those that
+ *   take no argument); the planted method is called once and its value returned. The record is read when the
+ *   experiment's promise settles: a call or an abort made after that is NOT CLAIMED.
  *   INSTRUMENT-NO-TIMER pins, by the same parser, what the helper's source text holds: no timer global's name
  *   (setTimeout, setInterval, setImmediate) as an identifier, no literal text (string, template or regular expression)
  *   containing one of those names or the text timers, no import() call and no static import of a timers module; and
@@ -41,11 +54,19 @@
  *   R015-ORACLE, R015-ORACLE-ROWS, R016-ORACLE and R016-ORACLE-ROWS.
  * - Judge grids: R015-SEAM-GRID, R015-ORACLE-GRID and R016-ORACLE-GRID. Each grid is the product of the axis lists that
  *   its builder's comment names (seamGrid, skipOracleGrid, retryOracleGrid), and each of the 17 NOISE profiles is also
- *   applied to every reading of that product (a profile replaces, together, the fields that builder names as its
- *   noise). Every reading built either way must get the verdict ruledVerdict gives, and the number of readings is
- *   pinned. ruledVerdict restates the rules of the helper's header, one rule per line, in the order the verdict lists
- *   them. GRID-AXES pins each of the 16 lists of the axis-list block by value (COUNTS, CONTROLS, STARTUPS, ROUTES,
- *   BARRIERS, SETUP_AGENTS, ENTRY_STATES, FINAL_ROWS, SCRIPT_VALUES, SETTLEMENT_LISTS, RUN_STATUSES, CONTROL_VALUES,
+ *   applied to every reading of that product. GRID-NOISE pins that application on each grid (wb-7ak9): each reading's
+ *   17 visits after its first are, in NOISE's order, that first visit under each profile, the places of the NOISE
+ *   fields NOISE_FIELDS lists for the grid holding the profile's values and every other place the first visit's
+ *   (Object.is, an object by identity), with the same keys in the reading and in its plan, authorizations and
+ *   sdkStarts objects. A place is a key of the reading, or of one of those three objects: READING_PLACES is read
+ *   against Object.keys of DISTINCT_READING, whose places all hold distinct values. The same reader flags eight
+ *   planted grids (one profile throughout, the profiles reversed, a listed field kept, a field outside the list
+ *   replaced, and a key added to the reading, its plan, its authorizations or its sdkStarts). NOISE_FIELDS is this
+ *   suite's own list: which fields a noise function's comment names is NOT CLAIMED. Every reading
+ *   built either way must get the verdict ruledVerdict gives, and the number of readings is pinned. ruledVerdict
+ *   restates the rules of the helper's header, one rule per line, in the order the verdict lists them. GRID-AXES pins
+ *   each of the 16 lists of the axis-list block by value (COUNTS, CONTROLS, STARTUPS, ROUTES, BARRIERS, SETUP_AGENTS,
+ *   ENTRY_STATES, FINAL_ROWS, SCRIPT_VALUES, SETTLEMENT_LISTS, RUN_STATUSES, CONTROL_VALUES,
  *   CALL_LOG_OFFSETS, ONE_START_SPLITS, RUN_SIGNALS and PARKED_AT_CONTROL), NOISE by each profile's position in every
  *   list it draws from, that each NOISE field takes every value of its list, and that the four plan facet lists,
  *   ENTRY_STATES and RUN_STATUSES equal the unions their source files declare. GRID-PRODUCTS pins that each grid's
@@ -106,6 +127,7 @@ import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import type { WorkflowEntryState } from "../src/workflow/progress.js";
+import { runWorkflow, type WorkflowControl } from "../src/workflow/runtime.js";
 import {
   type Breach,
   type FinalRow,
@@ -117,6 +139,7 @@ import {
   type ParkedObservation,
   type ParkedPlan,
   type ParkedRoute,
+  type ParkedRunner,
   type ParkedStartup,
   type ParkedVerdict,
   runParkedDispatchExperiment,
@@ -1452,6 +1475,233 @@ describe("EAT-R016 a per-agent retry issued while the host's beforeDispatch is p
   });
 });
 
+/**
+ * The call-through recorder's record of one run (wb-7ak9): each call the experiment made on the WorkflowControl surface
+ * its onControl received, in call order, as `method(argument) = value` (`pause()`, `resume()` and `isPaused() = value`
+ * for the methods that take none), and how many abort events the run's own signal dispatched.
+ */
+interface ControlRecord {
+  readonly calls: string[];
+  aborts: number;
+}
+
+/** A WorkflowControl whose five methods each call the surface's own method, record the call in calls and return its value. */
+function recordedSurface(surface: WorkflowControl, calls: string[]): WorkflowControl {
+  return {
+    pause: () => {
+      surface.pause();
+      calls.push("pause()");
+    },
+    resume: () => {
+      surface.resume();
+      calls.push("resume()");
+    },
+    isPaused: () => {
+      const value = surface.isPaused();
+      calls.push(`isPaused() = ${value}`);
+      return value;
+    },
+    skip: index => {
+      const value = surface.skip(index);
+      calls.push(`skip(${index}) = ${value}`);
+      return value;
+    },
+    retry: index => {
+      const value = surface.retry(index);
+      calls.push(`retry(${index}) = ${value}`);
+      return value;
+    },
+  };
+}
+
+/**
+ * The call-through recorder, the runner PLAN-DOMAIN's second run of each plan passes to the experiment: it hands the
+ * experiment's own options on to runWorkflow with one change, the surface their onControl receives is recordedSurface
+ * over the runtime's own, and it counts the abort events their signal dispatches.
+ */
+function callThrough(record: ControlRecord): ParkedRunner {
+  return options => {
+    options.signal?.addEventListener("abort", () => {
+      record.aborts += 1;
+    });
+    return runWorkflow({ ...options, onControl: surface => options.onControl?.(recordedSurface(surface, record.calls)) });
+  };
+}
+
+/**
+ * The record a plan's words name (the helper's ParkedControl and ParkedRoute docs): a skip or retry plan on the
+ * per-agent route makes one call, that WorkflowControl method on the target's row, returning the reading's
+ * controlAccepted, and the run's own signal dispatches no abort event; on the run-abort route it makes no call and the
+ * signal dispatches one; a "none" plan makes no call and the signal dispatches none. The target's row is the one after
+ * the setup agents' rows (rows count agent() calls from 0): 0 at spawn, 1 at resume.
+ */
+function namedConduct(reading: ParkedObservation): { readonly calls: readonly string[]; readonly aborts: number } {
+  const { control, startup, route } = reading.plan;
+  if (control === "none") return { calls: [], aborts: 0 };
+  if (route === "run-abort") return { calls: [], aborts: 1 };
+  return { calls: [`${control}(${SETUP_AGENTS[startup]}) = ${reading.controlAccepted}`], aborts: 0 };
+}
+
+/** Every place a reading holds a value, and how to read it there: the plan's four facets, the top-level fields, and the four counts of authorizations and of sdkStarts. */
+const READING_PLACES: readonly (readonly [string, (reading: ParkedObservation) => unknown])[] = [
+  ["plan.control", reading => reading.plan.control],
+  ["plan.startup", reading => reading.plan.startup],
+  ["plan.route", reading => reading.plan.route],
+  ["plan.barrier", reading => reading.plan.barrier],
+  ["parkedAtControl", reading => reading.parkedAtControl],
+  ["queriesBeforeControl", reading => reading.queriesBeforeControl],
+  ["controlAccepted", reading => reading.controlAccepted],
+  ["hostAbortsWhileParked", reading => reading.hostAbortsWhileParked],
+  ["runAborted", reading => reading.runAborted],
+  ["authorizations.setup", reading => reading.authorizations.setup],
+  ["authorizations.original", reading => reading.authorizations.original],
+  ["authorizations.replacement", reading => reading.authorizations.replacement],
+  ["authorizations.extra", reading => reading.authorizations.extra],
+  ["sdkStarts.setup", reading => reading.sdkStarts.setup],
+  ["sdkStarts.original", reading => reading.sdkStarts.original],
+  ["sdkStarts.replacement", reading => reading.sdkStarts.replacement],
+  ["sdkStarts.extra", reading => reading.sdkStarts.extra],
+  ["sdkCallsRecorded", reading => reading.sdkCallsRecorded],
+  ["hostSettlements", reading => reading.hostSettlements],
+  ["finalRow", reading => reading.finalRow],
+  ["runStatus", reading => reading.runStatus],
+  ["scriptValue", reading => reading.scriptValue],
+];
+
+/** The reading's objects GRID-NOISE reads key by key; every other field of a reading is one place, read whole (an object by identity). */
+const READ_BY_KEY: readonly string[] = ["plan", "authorizations", "sdkStarts"];
+
+/** A reading's places by Object.keys, in key order: each field's value, and for READ_BY_KEY's objects each of their keys' values (`object.key`). */
+function placesByKeys(reading: ParkedObservation): readonly (readonly [string, unknown])[] {
+  return Object.entries(reading).flatMap(([key, value]) =>
+    READ_BY_KEY.includes(key) && typeof value === "object" && value !== null
+      ? Object.entries(value).map(([inner, innerValue]) => [`${key}.${inner}`, innerValue] as const)
+      : [[key, value] as const],
+  );
+}
+
+/** A reading whose places all hold distinct values (by Object.is), never judged: GRID-NOISE reads READING_PLACES against it. */
+const DISTINCT_READING: ParkedObservation = {
+  plan: { control: "skip", startup: "resume", route: "run-abort", barrier: "absent" },
+  parkedAtControl: true,
+  queriesBeforeControl: 11,
+  controlAccepted: undefined,
+  hostAbortsWhileParked: 12,
+  runAborted: false,
+  authorizations: { setup: 21, original: 22, replacement: 23, extra: 24 },
+  sdkStarts: { setup: 31, original: 32, replacement: 33, extra: 34 },
+  sdkCallsRecorded: 41,
+  hostSettlements: [],
+  finalRow: { state: "progress", skipped: true, attempt: 3, reason: "a reason" },
+  runStatus: "failed",
+  scriptValue: "a script value",
+};
+
+/** Where a reading holds each field of a NOISE profile: the places that field replaces, each with the profile's value for it. */
+const NOISE_PLACES: Readonly<Record<keyof Noise, readonly (readonly [string, (noise: Noise) => unknown])[]>> = {
+  hostSettlements: [["hostSettlements", noise => noise.hostSettlements]],
+  runStatus: [["runStatus", noise => noise.runStatus]],
+  barrier: [["plan.barrier", noise => noise.barrier]],
+  finalRow: [["finalRow", noise => noise.finalRow]],
+  scriptValue: [["scriptValue", noise => noise.scriptValue]],
+  entries: [
+    ["authorizations.original", noise => noise.entries.original],
+    ["authorizations.replacement", noise => noise.entries.replacement],
+    ["authorizations.extra", noise => noise.entries.extra],
+  ],
+  oneStart: [
+    ["sdkStarts.original", noise => noise.oneStart.original],
+    ["sdkStarts.replacement", noise => noise.oneStart.replacement],
+    ["sdkStarts.extra", noise => noise.oneStart.extra],
+  ],
+};
+
+/** GRID-NOISE's lists, this suite's own (no comment is read): the NOISE fields each grid's visits under a profile replace, and no other. */
+const NOISE_FIELDS: Readonly<Record<"seam" | "skipOracle" | "retryOracle", readonly (keyof Noise)[]>> = {
+  seam: ["hostSettlements", "runStatus", "barrier", "finalRow", "scriptValue", "entries", "oneStart"],
+  skipOracle: ["hostSettlements", "runStatus", "barrier", "entries"],
+  retryOracle: ["hostSettlements", "runStatus", "barrier", "finalRow", "scriptValue"],
+};
+
+/** The keys of a reading and of its plan, authorizations and sdkStarts objects, in order. */
+function readingKeys(reading: ParkedObservation): string {
+  return [reading, reading.plan, reading.authorizations, reading.sdkStarts].map(part => Object.keys(part).join()).join("|");
+}
+
+/** A reading under a NOISE profile with a key added to one of its parts: the reading itself, or its plan, authorizations or sdkStarts object. */
+function strayKey(reading: ParkedObservation, part: "reading" | "plan" | "authorizations" | "sdkStarts"): ParkedObservation {
+  if (part === "reading") {
+    const planted = { ...reading, stray: 0 };
+    return planted;
+  }
+  if (part === "plan") {
+    const plan = { ...reading.plan, stray: 0 };
+    return { ...reading, plan };
+  }
+  if (part === "authorizations") {
+    const authorizations = { ...reading.authorizations, stray: 0 };
+    return { ...reading, authorizations };
+  }
+  const sdkStarts = { ...reading.sdkStarts, stray: 0 };
+  return { ...reading, sdkStarts };
+}
+
+/** How a grid's visits read against the NOISE profiles: the visits, how many are not their reading under the profile due, and the first three of those. */
+interface NoiseTally {
+  readonly visits: number;
+  readonly wrong: number;
+  readonly first: readonly string[];
+}
+
+/**
+ * Reads a grid's visits in runs of 1 + NOISE.length: the first visit of a run is its reading, and visit k after it (k
+ * from 1) must be that reading under NOISE[k - 1]: at each place of the fields listed, that profile's value, at every
+ * other place the first visit's, each compared with Object.is (an object by identity), and the same keys as the first
+ * visit. It names the places a wrong visit differs at.
+ */
+function noiseTally(grid: (visit: (reading: ParkedObservation) => void) => void, fields: readonly (keyof Noise)[]): NoiseTally {
+  const due = 1 + NOISE.length;
+  const replaced = new Map(fields.flatMap(field => NOISE_PLACES[field]));
+  let visits = 0;
+  let wrong = 0;
+  const first: string[] = [];
+  let bare: readonly unknown[] = [];
+  let bareKeys = "";
+  grid(reading => {
+    const k = visits % due;
+    const visit = visits;
+    visits += 1;
+    const values = READING_PLACES.map(([, read]) => read(reading));
+    if (k === 0) {
+      bare = values;
+      bareKeys = readingKeys(reading);
+      return;
+    }
+    const noise = NOISE[k - 1];
+    const off = READING_PLACES.filter(([place], i) => {
+      const profileValue = replaced.get(place);
+      return !Object.is(values[i], profileValue === undefined ? bare[i] : profileValue(noise));
+    }).map(([place]) => place);
+    if (readingKeys(reading) !== bareKeys) off.push("keys");
+    if (off.length === 0) return;
+    wrong += 1;
+    if (first.length < 3) first.push(`visit ${visit}: ${off.join(", ")}`);
+  });
+  return { visits, wrong, first };
+}
+
+/** A planted grid, never run as a grid case: PARKED_SKIP_SPAWN and PARKED_RETRY_SPAWN each visited bare, then under each NOISE profile as plant applies it (k its position in NOISE). */
+function plantedNoiseGrid(plant: (reading: ParkedObservation, noise: Noise, k: number) => ParkedObservation): (visit: (reading: ParkedObservation) => void) => void {
+  return visit => {
+    for (const reading of [PARKED_SKIP_SPAWN, PARKED_RETRY_SPAWN]) {
+      visit(reading);
+      NOISE.forEach((noise, k) => {
+        visit(plant(reading, noise, k));
+      });
+    }
+  };
+}
+
 /** One ParkedPlan value's reading and verdict, as measured at this tree. */
 interface PlanRow {
   readonly reading: ParkedObservation;
@@ -2036,7 +2286,8 @@ describe("the experiment's input lists and every ParkedPlan value (wb-9v02)", ()
     });
   });
 
-  it("PLAN-DOMAIN each of the 24 ParkedPlan values, run with every field given and again with its default fields omitted: its whole reading as measured at this tree, then its verdict", { timeout: GRID_TIMEOUT }, async () => {
+  it("PLAN-DOMAIN each of the 24 ParkedPlan values, run with every field given and again with its default fields omitted: its whole reading as measured at this tree, then its verdict; each run made again through the call-through recorder reads the same whole reading and makes the WorkflowControl calls and run-signal aborts its plan names; 42 runs of each kind", { timeout: GRID_TIMEOUT }, async () => {
+    const runs = { plain: 0, recorded: 0 };
     for (const row of PLAN_ROWS) {
       const { control, startup, route, barrier } = row.reading.plan;
       const given: ParkedPlan = row.reading.plan;
@@ -2049,9 +2300,88 @@ describe("the experiment's input lists and every ParkedPlan value (wb-9v02)", ()
       ] as const) {
         if (input === undefined) continue;
         const observation = await runParkedDispatchExperiment(input);
+        runs.plain += 1;
         expect.soft(observation, label).toEqual(row.reading);
         expect.soft(judgeParkedObservation(observation), label).toEqual(row.verdict);
+        // The same run through the call-through recorder: the reading it gives, then what the recorder saw.
+        const record: ControlRecord = { calls: [], aborts: 0 };
+        const recorded = await runParkedDispatchExperiment(input, callThrough(record));
+        runs.recorded += 1;
+        expect.soft(recorded, `${label} (call-through)`).toEqual(row.reading);
+        expect.soft({ calls: record.calls, aborts: record.aborts }, `${label} (call-through)`).toEqual(namedConduct(row.reading));
       }
     }
+    // 24 plans with every field given and the 18 that hold a default again with it omitted, each run both ways.
+    expect(runs).toEqual({ plain: 42, recorded: 42 });
+  });
+
+  it("CALL-THROUGH recordedSurface over a planted WorkflowControl records each call of each of its five methods, in call order and with the value the planted method returned, calls that method once and returns its value", () => {
+    const planted: string[] = [];
+    const surface: WorkflowControl = {
+      pause: () => {
+        planted.push("pause");
+      },
+      resume: () => {
+        planted.push("resume");
+      },
+      isPaused: () => {
+        planted.push("isPaused");
+        return true;
+      },
+      skip: index => {
+        planted.push(`skip ${index}`);
+        return index === 7;
+      },
+      retry: index => {
+        planted.push(`retry ${index}`);
+        return index !== 8;
+      },
+    };
+    const calls: string[] = [];
+    const recorded = recordedSurface(surface, calls);
+    const values = [recorded.pause(), recorded.resume(), recorded.isPaused(), recorded.skip(7), recorded.skip(-1), recorded.retry(8), recorded.retry(2)];
+    expect({ values, calls, planted }).toEqual({
+      values: [undefined, undefined, true, true, false, false, true],
+      calls: ["pause()", "resume()", "isPaused() = true", "skip(7) = true", "skip(-1) = false", "retry(8) = false", "retry(2) = true"],
+      planted: ["pause", "resume", "isPaused", "skip 7", "skip -1", "retry 8", "retry 2"],
+    });
+  });
+
+  it("GRID-NOISE on each of the three grids every reading's 17 visits after its first are, in NOISE's order, that first visit under each profile: the places of the NOISE_FIELDS that grid lists hold the profile's values, every other place the first visit's (Object.is), with the same keys; READING_PLACES reads each place Object.keys finds; the same reader flags eight planted grids", { timeout: GRID_TIMEOUT }, () => {
+    // The places the reader reads are the keys a reading holds (its own, and its plan's, authorizations' and sdkStarts'), each read where it is.
+    expect(READING_PLACES.map(([place, read]) => [place, read(DISTINCT_READING)])).toEqual(placesByKeys(DISTINCT_READING));
+    expect(new Set(placesByKeys(DISTINCT_READING).map(([, value]) => value)).size).toBe(READING_PLACES.length);
+    expect([noiseTally(seamGrid, NOISE_FIELDS.seam), noiseTally(skipOracleGrid, NOISE_FIELDS.skipOracle), noiseTally(retryOracleGrid, NOISE_FIELDS.retryOracle)]).toEqual([
+      { visits: 110_592 * (1 + NOISE.length), wrong: 0, first: [] },
+      { visits: 19_584 * (1 + NOISE.length), wrong: 0, first: [] },
+      { visits: 8_192 * (1 + NOISE.length), wrong: 0, first: [] },
+    ]);
+    // Liveness: the reader, over planted grids that apply the profiles otherwise, counts every visit they apply wrongly.
+    const all = NOISE_FIELDS.seam;
+    const read = (plant: (reading: ParkedObservation, noise: Noise, k: number) => ParkedObservation) => {
+      const { visits, wrong } = noiseTally(plantedNoiseGrid(plant), all);
+      return `${visits}:${wrong}`;
+    };
+    expect({
+      applied: read((reading, noise) => seamNoise(reading, noise)),
+      oneProfile: read(reading => seamNoise(reading, NOISE[0])),
+      reversed: read((reading, _noise, k) => seamNoise(reading, NOISE[NOISE.length - 1 - k])),
+      fieldKept: read((reading, noise) => ({ ...seamNoise(reading, noise), finalRow: reading.finalRow })),
+      fieldMore: read((reading, noise) => ({ ...seamNoise(reading, noise), controlAccepted: !reading.controlAccepted })),
+      keyMore: read((reading, noise) => strayKey(seamNoise(reading, noise), "reading")),
+      planKeyMore: read((reading, noise) => strayKey(seamNoise(reading, noise), "plan")),
+      authorizationsKeyMore: read((reading, noise) => strayKey(seamNoise(reading, noise), "authorizations")),
+      sdkStartsKeyMore: read((reading, noise) => strayKey(seamNoise(reading, noise), "sdkStarts")),
+    }).toEqual({
+      applied: "36:0",
+      oneProfile: "36:32",
+      reversed: "36:32",
+      fieldKept: "36:34",
+      fieldMore: "36:34",
+      keyMore: "36:34",
+      planKeyMore: "36:34",
+      authorizationsKeyMore: "36:34",
+      sdkStartsKeyMore: "36:34",
+    });
   });
 });
