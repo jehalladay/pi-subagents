@@ -172,6 +172,26 @@
  * GP2M-CHAIN-SECOND-DISPATCH and GP2M-DEFER-RETRY-ON-REJECT, each of which reads 0 failed on the cut #2 suite. A call,
  * read or wait that lands after the timer drain ends is NOT CLAIMED, and other requests, changes, callback outcomes and
  * scheduling forms stay NOT CLAIMED. No residual is named.
+ * wb-rrni (the R694 follow-up of landing 1049: F6 of the PASS-WITH-FINDING verdict on wb-m83p cut #3 found that
+ * wb-201v's zero-call and before-any-dispatch words at entry refusals were read only when the boundary settles, since
+ * the gate's M13, which with no admission park dispatches a made-up authority one zero-delay timer after an entry
+ * refusal, read 0 failed on this suite) has 51 wb-201v rows take each of their readings twice, when the boundary
+ * settles and again once the timer drain ends. Without an admission park they are the 38 rows the gate's liveness
+ * witness M13W fails: EAT-R028's binding row, EAT-R029's 16 rows that run the boundary, the action grammar's
+ * unrepresentable-spelling row, EAT-R030's 8 listed unknown identities and its accessor-principal row, the
+ * function-definition boundary's 2 rows, the 7 clean-text rows that deny a listed session before any dispatch and host
+ * authority's 2 rows whose caller policy names the action. With an admission park given they are EAT-R028's first row
+ * and its 8 stand-ins, and in the host authority describe the detached row, the 13824 descriptor forms (one drain for
+ * each host mode's 6912) and the 7776-policy and 7776-input rows (one drain for each of the 12 listed boundary
+ * scenarios in each host mode). The host authority describe's ending helper now returns settled, the ending read when
+ * the boundary settles, beside again(), which reads it once more from the calls as they stand, and endings tallies
+ * both. Each row's title and each reading it took are kept. The module header gains one paragraph naming these rows,
+ * and the timer drain describe's table lists it as its fifth claim site; that describe's title, its frozen-shape row's
+ * title and the table's doc now count 5 sites. Red-first: on the module's trunk words the timer drain describe's anchor
+ * row failed (1 failed | 420 passed); under M13 this suite fails exactly the 38 rows M13W fails (0 on the trunk suite);
+ * and under the same dispatch made at every entry refusal, with an admission park or without one, it fails 57 rows: the
+ * 51 above and the 6 that already fail under it on the trunk suite. A call, read or wait that lands after the timer
+ * drain ends, and every other row, are NOT CLAIMED. No residual is named.
  *
  * No spelling is adopted, so the production contract is unadopted and refuses every function dispatch (the B-authority row of
  * BEAD-PLAN.md lands "partial - enforcement seams land now; exact action grammar blocked on MW-CONTRACT"). The adopted contracts
@@ -453,25 +473,42 @@ function tally(decide: (spelling: string) => ReturnType<typeof decideFunctionAut
 
 describe("EAT-R028: workbench:execute at the enumerated rows and sweeps (wb-201v)", () => {
   it("refuses the otherwise authorized function request without workbench:execute before any wait, with zero loader and provider calls", async () => {
+    // wb-rrni: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const h = harness({ grants: [ACTION] });
     const wait = parked();
     const result = await h.run(admissionFor(), CONTRACT, wait.park);
-    expect(refusalOf(result)).toEqual({ stage: "entry", policy: "missing-execute-grant", category: "authorization" });
-    expect(wait.park).not.toHaveBeenCalled();
-    expect(h.loader).not.toHaveBeenCalled();
-    expect(h.provider).not.toHaveBeenCalled();
+    const observe = () => {
+      expect(refusalOf(result)).toEqual({ stage: "entry", policy: "missing-execute-grant", category: "authorization" });
+      expect(wait.park).not.toHaveBeenCalled();
+      expect(h.loader).not.toHaveBeenCalled();
+      expect(h.provider).not.toHaveBeenCalled();
+    };
+    observe();
+    await timers.drain();
+    observe();
   });
 
   it("held with the action grant and not workbench:execute, the embedded request for mechanical.development.develop.v1, which the pinned contract binds to the action, refuses at entry as missing-execute-grant, with zero loader and provider calls, without a policy, with the pinned JSON policy (naming workbench:execute under grants, permissions and authority, with reviewed true) and with the pinned input (naming it under grants)", async () => {
+    // wb-rrni: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const h = harness({ grants: [ACTION] });
     const claims: JsonValue = { grants: [EXECUTE_GRANT, ACTION], permissions: [EXECUTE_GRANT], authority: EXECUTE_GRANT, reviewed: true };
+    const results: FunctionDispatchResult<unknown>[] = [];
     for (const admission of [admissionFor(), admissionFor(FUNCTION_ID, claims), admissionFor(FUNCTION_ID, undefined, { task: "t", grants: [EXECUTE_GRANT] })]) {
-      expect(refusalOf(await h.run(admission))).toEqual({ stage: "entry", policy: "missing-execute-grant", category: "authorization" });
+      results.push(await h.run(admission));
     }
     const pure = decideFunctionAuthority({ admission: admissionFor(), contract: CONTRACT, entered: HOST, current: { grants: [ACTION], identity: HOST } });
-    expect(pure).toMatchObject({ decision: "refused", policy: "missing-execute-grant", invocationId: INVOCATION });
-    expect(h.loader).not.toHaveBeenCalled();
-    expect(h.provider).not.toHaveBeenCalled();
+    const observe = () => {
+      for (const result of results) expect(refusalOf(result)).toEqual({ stage: "entry", policy: "missing-execute-grant", category: "authorization" });
+      expect(pure).toMatchObject({ decision: "refused", policy: "missing-execute-grant", invocationId: INVOCATION });
+      expect(h.loader).not.toHaveBeenCalled();
+      expect(h.provider).not.toHaveBeenCalled();
+    };
+    expect(results).toHaveLength(3);
+    observe();
+    await timers.drain();
+    observe();
   });
 
   it("workbench:execute revoked while the admission is parked refuses at the final boundary: no loader or provider call after release", async () => {
@@ -496,12 +533,20 @@ describe("EAT-R028: workbench:execute at the enumerated rows and sweeps (wb-201v
     ["the permission execute under the namespace fixture-fn", "fixture-fn:execute"],
     ["the parent-qualified namespace org.workbench", "org.workbench:execute"],
   ])("the otherwise authorized request holding %s (%s) in place of workbench:execute refuses before any wait as missing-execute-grant, with zero loader and provider calls", async (_what, grant) => {
+    // wb-rrni: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const h = harness({ grants: [grant, ACTION] });
     const wait = parked();
-    expect(refusalOf(await h.run(admissionFor(), CONTRACT, wait.park))).toEqual({ stage: "entry", policy: "missing-execute-grant", category: "authorization" });
-    expect(wait.park).not.toHaveBeenCalled();
-    expect(h.loader).not.toHaveBeenCalled();
-    expect(h.provider).not.toHaveBeenCalled();
+    const result = await h.run(admissionFor(), CONTRACT, wait.park);
+    const observe = () => {
+      expect(refusalOf(result)).toEqual({ stage: "entry", policy: "missing-execute-grant", category: "authorization" });
+      expect(wait.park).not.toHaveBeenCalled();
+      expect(h.loader).not.toHaveBeenCalled();
+      expect(h.provider).not.toHaveBeenCalled();
+    };
+    observe();
+    await timers.drain();
+    observe();
   });
 
   it("the otherwise authorized request holding in place of workbench:execute each spelling the 10 listed forms make of it (six at the tail and four at the head of its namespace and of its permission, at every length that keeps it within 256 characters) refuses as missing-execute-grant, and each one-character insertion, deletion or substitution of it over the grammar's 38 characters refuses as missing-execute-grant or as unknown permission data", () => {
@@ -519,10 +564,18 @@ describe("EAT-R028: workbench:execute at the enumerated rows and sweeps (wb-201v
 
 describe("EAT-R029: the exact host-issued function action grant at the enumerated rows and sweeps (wb-201v)", () => {
   it("refuses a reviewed definition held with workbench:execute and no action grant", async () => {
+    // wb-rrni: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const h = harness({ grants: [EXECUTE_GRANT] });
-    expect(refusalOf(await h.run(admissionFor()))).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
-    expect(h.loader).not.toHaveBeenCalled();
-    expect(h.provider).not.toHaveBeenCalled();
+    const result = await h.run(admissionFor());
+    const observe = () => {
+      expect(refusalOf(result)).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
+      expect(h.loader).not.toHaveBeenCalled();
+      expect(h.provider).not.toHaveBeenCalled();
+    };
+    observe();
+    await timers.drain();
+    observe();
   });
 
   it.each([
@@ -534,61 +587,118 @@ describe("EAT-R029: the exact host-issued function action grant at the enumerate
     ["the shorter spelling develop, which the exact action begins with", "fixture-fn:develop"],
     ["the namespace sibling write", "fixture-fn:write"],
   ])("refuses %s in the adopted action's namespace (%s)", async (_what, grant) => {
+    // wb-rrni: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const h = harness({ grants: [EXECUTE_GRANT, grant] });
-    expect(refusalOf(await h.run(admissionFor()))).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
-    expect(h.loader).not.toHaveBeenCalled();
-    expect(h.provider).not.toHaveBeenCalled();
+    const result = await h.run(admissionFor());
+    const observe = () => {
+      expect(refusalOf(result)).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
+      expect(h.loader).not.toHaveBeenCalled();
+      expect(h.provider).not.toHaveBeenCalled();
+    };
+    observe();
+    await timers.drain();
+    observe();
   });
 
   it("refuses the adopted permission under the namespace other-fn (other-fn:develop-write)", async () => {
+    // wb-rrni: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const h = harness({ grants: [EXECUTE_GRANT, "other-fn:develop-write"] });
-    expect(refusalOf(await h.run(admissionFor()))).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
-    expect(h.loader).not.toHaveBeenCalled();
-    expect(h.provider).not.toHaveBeenCalled();
+    const result = await h.run(admissionFor());
+    const observe = () => {
+      expect(refusalOf(result)).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
+      expect(h.loader).not.toHaveBeenCalled();
+      expect(h.provider).not.toHaveBeenCalled();
+    };
+    observe();
+    await timers.drain();
+    observe();
   });
 
   it("the adopted exact action held among four grants passes: one loader and one provider call, resting on exactly the two grants, while workbench:execute and that action refuse the other bound definition", async () => {
+    // wb-rrni: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const h = harness({ grants: ["forge:inspect", OTHER_FUNCTION_ACTION, ACTION, EXECUTE_GRANT] });
     const result = await h.run(admissionFor());
-    expect(result).toEqual({
-      status: "dispatched",
-      authority: { invocationId: INVOCATION, definition: { kind: "function", id: FUNCTION_ID, schemaVersion: FUNCTION_SCHEMA, artifactDigest: DIGEST }, grants: [EXECUTE_GRANT, ACTION], identity: HOST },
-      value: { outcome: "ran", invocationId: INVOCATION },
-    });
-    expect(h.loader).toHaveBeenCalledTimes(1);
-    expect(h.provider).toHaveBeenCalledTimes(1);
-    // The dispatch rests on exactly the two grants: the provider receives the authority the dispatch callback received.
-    expect(h.provider.mock.calls.map(([authority]) => authority.grants)).toEqual([[EXECUTE_GRANT, ACTION]]);
+    const observeDispatch = () => {
+      expect(result).toEqual({
+        status: "dispatched",
+        authority: { invocationId: INVOCATION, definition: { kind: "function", id: FUNCTION_ID, schemaVersion: FUNCTION_SCHEMA, artifactDigest: DIGEST }, grants: [EXECUTE_GRANT, ACTION], identity: HOST },
+        value: { outcome: "ran", invocationId: INVOCATION },
+      });
+      expect(h.loader).toHaveBeenCalledTimes(1);
+      expect(h.provider).toHaveBeenCalledTimes(1);
+      // The dispatch rests on exactly the two grants: the provider receives the authority the dispatch callback received.
+      expect(h.provider.mock.calls.map(([authority]) => authority.grants)).toEqual([[EXECUTE_GRANT, ACTION]]);
+    };
+    observeDispatch();
     // The grant is exact per function: the same holdings do not reach the other bound definition.
     const other = harness({ grants: [EXECUTE_GRANT, ACTION] });
-    expect(refusalOf(await other.run(admissionFor(OTHER_FUNCTION_ID)))).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
-    expect(other.loader).not.toHaveBeenCalled();
+    const otherResult = await other.run(admissionFor(OTHER_FUNCTION_ID));
+    const observeOther = () => {
+      expect(refusalOf(otherResult)).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
+      expect(other.loader).not.toHaveBeenCalled();
+    };
+    observeOther();
+    await timers.drain();
+    observeDispatch();
+    observeOther();
   });
 
   it("held with workbench:execute and not the action grant, the embedded request for mechanical.development.develop.v1 with the pinned JSON policy {grants: [the action], actionGrant: the action} or with the pinned input {task, actionGrant: the action} refuses at entry as missing-function-action-grant, with zero loader calls", async () => {
+    // wb-rrni: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const h = harness({ grants: [EXECUTE_GRANT] });
+    const results: FunctionDispatchResult<unknown>[] = [];
     for (const admission of [admissionFor(FUNCTION_ID, { grants: [ACTION], actionGrant: ACTION }), admissionFor(FUNCTION_ID, undefined, { task: "t", actionGrant: ACTION })]) {
-      expect(refusalOf(await h.run(admission))).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
+      results.push(await h.run(admission));
     }
-    expect(h.loader).not.toHaveBeenCalled();
+    const observe = () => {
+      for (const result of results) expect(refusalOf(result)).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
+      expect(h.loader).not.toHaveBeenCalled();
+    };
+    expect(results).toHaveLength(2);
+    observe();
+    await timers.drain();
+    observe();
   });
 
   it("the production contract is unadopted (MW-CONTRACT): held with workbench:execute and both fixture action grants, both fixture definitions refuse as function-action-unadopted", async () => {
     expect(FUNCTION_ACTION_CONTRACT).toEqual({ state: "unadopted", blockedOn: "MW-CONTRACT" });
+    // wb-rrni: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const h = harness({ grants: [EXECUTE_GRANT, ACTION, OTHER_FUNCTION_ACTION] });
+    const results: FunctionDispatchResult<unknown>[] = [];
     for (const id of [FUNCTION_ID, OTHER_FUNCTION_ID]) {
-      expect(refusalOf(await h.run(admissionFor(id), FUNCTION_ACTION_CONTRACT))).toEqual({ stage: "entry", policy: "function-action-unadopted", category: "unavailable" });
+      results.push(await h.run(admissionFor(id), FUNCTION_ACTION_CONTRACT));
     }
-    expect(h.loader).not.toHaveBeenCalled();
-    expect(h.provider).not.toHaveBeenCalled();
+    const observe = () => {
+      for (const result of results) expect(refusalOf(result)).toEqual({ stage: "entry", policy: "function-action-unadopted", category: "unavailable" });
+      expect(h.loader).not.toHaveBeenCalled();
+      expect(h.provider).not.toHaveBeenCalled();
+    };
+    expect(results).toHaveLength(2);
+    observe();
+    await timers.drain();
+    observe();
   });
 
   it("the unbound definition fixture.unbound.v1, and the pinned forged contract (a frozen adopted-shaped object that never went through adoption), refuse as unadopted", async () => {
+    // wb-rrni: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const h = harness({ grants: [EXECUTE_GRANT, ACTION] });
-    expect(refusalOf(await h.run(admissionFor("fixture.unbound.v1")))).toEqual({ stage: "entry", policy: "function-action-unadopted", category: "unavailable" });
+    const unbound = await h.run(admissionFor("fixture.unbound.v1"));
     const forged: FunctionActionContract = Object.freeze({ state: "adopted", bindings: Object.freeze([Object.freeze({ definitionId: FUNCTION_ID, actionGrant: ACTION })]) });
-    expect(refusalOf(await h.run(admissionFor(), forged))).toEqual({ stage: "entry", policy: "function-action-unadopted", category: "unavailable" });
-    expect(h.loader).not.toHaveBeenCalled();
+    const forgedResult = await h.run(admissionFor(), forged);
+    const observe = () => {
+      expect(refusalOf(unbound)).toEqual({ stage: "entry", policy: "function-action-unadopted", category: "unavailable" });
+      expect(refusalOf(forgedResult)).toEqual({ stage: "entry", policy: "function-action-unadopted", category: "unavailable" });
+      expect(h.loader).not.toHaveBeenCalled();
+    };
+    observe();
+    await timers.drain();
+    observe();
   });
 
   it("no one-character insertion, deletion or substitution of the exact action over the grammar's 38 characters stands in for it: each refuses as a missing action grant or as unknown permission data", () => {
@@ -641,10 +751,18 @@ describe("EAT-R029: the exact host-issued function action grant at the enumerate
     ["the exact action extended by -admin", `${ACTION}-admin`],
     ["the exact action extended by the digits 22", `${ACTION}22`],
   ])("refuses the stand-in %s (%s)", async (_what, grant) => {
+    // wb-rrni: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const h = harness({ grants: [EXECUTE_GRANT, grant] });
-    expect(refusalOf(await h.run(admissionFor()))).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
-    expect(h.loader).not.toHaveBeenCalled();
-    expect(h.provider).not.toHaveBeenCalled();
+    const result = await h.run(admissionFor());
+    const observe = () => {
+      expect(refusalOf(result)).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
+      expect(h.loader).not.toHaveBeenCalled();
+      expect(h.provider).not.toHaveBeenCalled();
+    };
+    observe();
+    await timers.drain();
+    observe();
   });
 
   it("the exact action extended by each of the 10 listed forms (six at the tail and four at the head of its namespace and of its permission), at every length that keeps it within 256 characters, refuses as missing-function-action-grant", () => {
@@ -681,9 +799,17 @@ describe("the action grammar: adoption judged against Pi grant settings and the 
   });
 
   it("a host that reports the unrepresentable spelling anyway is unknown permission data, denied before any dispatch", async () => {
+    // wb-rrni: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const h = harness({ grants: [EXECUTE_GRANT, ACTION, PROPOSED_EXAMPLE] });
-    expect(refusalOf(await h.run(admissionFor()))).toEqual({ stage: "entry", policy: "unknown-permission-data", category: "authorization" });
-    expect(h.loader).not.toHaveBeenCalled();
+    const result = await h.run(admissionFor());
+    const observe = () => {
+      expect(refusalOf(result)).toEqual({ stage: "entry", policy: "unknown-permission-data", category: "authorization" });
+      expect(h.loader).not.toHaveBeenCalled();
+    };
+    observe();
+    await timers.drain();
+    observe();
   });
 
   it("the representable spelling fixture-fn:develop-write round-trips through loadSettings, and a host reading settings on every call dispatches under it", async () => {
@@ -933,22 +1059,36 @@ describe("EAT-R030: a changed effective principal or session refuses the dispatc
     ["a principal ending in U+202E (a bidi override)", { principal: `${HOST.principal}${String.fromCodePoint(0x202e)}`, sessionId: "s1" }],
     ["a principal ending in U+200B (a default-ignorable point)", { principal: `${HOST.principal}${String.fromCodePoint(0x200b)}`, sessionId: "s1" }],
   ])("denies %s as unknown identity data before any dispatch", async (_what, identity) => {
+    // wb-rrni: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const dispatch = vi.fn(async () => "ran");
     const host = { grants: () => [EXECUTE_GRANT, ACTION], identity: () => identity } as unknown as FunctionAuthorityHost;
     const result = await dispatchFunctionWithAuthority({ admission: admissionFor(), contract: CONTRACT, host, dispatch });
-    expect(refusalOf(result)).toEqual({ stage: "entry", policy: "unknown-identity-data", category: "authorization" });
-    expect(dispatch).not.toHaveBeenCalled();
+    const observe = () => {
+      expect(refusalOf(result)).toEqual({ stage: "entry", policy: "unknown-identity-data", category: "authorization" });
+      expect(dispatch).not.toHaveBeenCalled();
+    };
+    observe();
+    await timers.drain();
+    observe();
   });
 
   it("reads the identity through its own property descriptors: an accessor principal is unknown identity data and its getter never runs", async () => {
+    // wb-rrni: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const getter = vi.fn(() => HOST.principal);
     const identity = Object.defineProperty({ sessionId: HOST.sessionId }, "principal", { get: getter, enumerable: true });
     const dispatch = vi.fn(async () => "ran");
     const host = { grants: () => [EXECUTE_GRANT, ACTION], identity: () => identity } as unknown as FunctionAuthorityHost;
     const result = await dispatchFunctionWithAuthority({ admission: admissionFor(), contract: CONTRACT, host, dispatch });
-    expect(refusalOf(result)).toEqual({ stage: "entry", policy: "unknown-identity-data", category: "authorization" });
-    expect(getter).not.toHaveBeenCalled();
-    expect(dispatch).not.toHaveBeenCalled();
+    const observe = () => {
+      expect(refusalOf(result)).toEqual({ stage: "entry", policy: "unknown-identity-data", category: "authorization" });
+      expect(getter).not.toHaveBeenCalled();
+      expect(dispatch).not.toHaveBeenCalled();
+    };
+    observe();
+    await timers.drain();
+    observe();
   });
 
   it("the identity an authorized dispatch rests on is a frozen copy of the host's read, not the object the host returned", async () => {
@@ -1128,9 +1268,17 @@ describe("EAT-R031: revoked grants are re-evaluated at dispatch (wb-201v)", () =
 
 describe("the boundary admits function definitions only (wb-201v)", () => {
   it.each(["script", "furnace-formula"] as const)("refuses a %s admission as not a function definition", async kind => {
+    // wb-rrni: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const h = harness();
-    expect(refusalOf(await h.run(admissionFor(FUNCTION_ID, undefined, TASK, kind)))).toEqual({ stage: "entry", policy: "not-a-function-definition", category: "validation" });
-    expect(h.loader).not.toHaveBeenCalled();
+    const result = await h.run(admissionFor(FUNCTION_ID, undefined, TASK, kind));
+    const observe = () => {
+      expect(refusalOf(result)).toEqual({ stage: "entry", policy: "not-a-function-definition", category: "validation" });
+      expect(h.loader).not.toHaveBeenCalled();
+    };
+    observe();
+    await timers.drain();
+    observe();
   });
 });
 
@@ -1303,11 +1451,18 @@ describe("clean text: the enumerated readings of a definition id, a principal an
     ["of one U+3000 ideographic space", String.fromCodePoint(0x3000)],
     ["of 257 bytes in 256 characters", `${"a".repeat(255)}é`],
   ])("denies a session %s as unknown identity data before any dispatch", async (_what, sessionId) => {
+    // wb-rrni: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const dispatch = vi.fn(async () => "ran");
     const host: FunctionAuthorityHost = { grants: () => [EXECUTE_GRANT, ACTION], identity: () => ({ principal: HOST.principal, sessionId }) };
     const result = await dispatchFunctionWithAuthority({ admission: admissionFor(), contract: CONTRACT, host, dispatch });
-    expect(refusalOf(result)).toEqual({ stage: "entry", policy: "unknown-identity-data", category: "authorization" });
-    expect(dispatch).not.toHaveBeenCalled();
+    const observe = () => {
+      expect(refusalOf(result)).toEqual({ stage: "entry", policy: "unknown-identity-data", category: "authorization" });
+      expect(dispatch).not.toHaveBeenCalled();
+    };
+    observe();
+    await timers.drain();
+    observe();
   });
 });
 
@@ -1617,8 +1772,12 @@ describe("host authority: in each host mode, the listed caller policies leave th
     [OTHER, { grants: BOTH, identity: HOST }, refusedAs("changed-effective-identity")],
   ];
 
-  /** How one request ends at the boundary when the park applies the scenario's change; the park, loader and provider calls are counted. */
-  async function ending(admission: ExecuteAdmission, entry: HostReads, change: HostReads | undefined, contract: FunctionActionContract = CONTRACT): Promise<string> {
+  /**
+   * How one request ends at the boundary when the park applies the scenario's change; the park, loader and provider calls
+   * are counted. settled is the ending read when the boundary settles; again() reads it once more from the calls as they
+   * stand when it is called, which a row does once the timer drain ends (wb-rrni).
+   */
+  async function ending(admission: ExecuteAdmission, entry: HostReads, change: HostReads | undefined, contract: FunctionActionContract = CONTRACT): Promise<{ readonly settled: string; readonly again: () => string }> {
     let reads = entry;
     const calls = { park: 0, loader: 0, provider: 0 };
     const received: FunctionDispatchAuthority[] = [];
@@ -1637,12 +1796,15 @@ describe("host authority: in each host mode, the listed caller policies leave th
       return provider();
     };
     const result = await dispatchFunctionWithAuthority({ admission, contract, host, park, dispatch });
-    const counted = `park ${calls.park}, loader ${calls.loader}, provider ${calls.provider}`;
-    if (result.status === "refused") return `refused at ${result.stage} as ${result.refusal.policy} (${result.refusal.category}) for ${result.refusal.invocationId}; ${counted}`;
-    const { invocationId, definition, grants, identity } = result.authority;
-    const further = Object.keys(identity).length === 2 ? "" : " with further identity fields";
-    const whole = `read whole, the returned authority ${wholeOf(result.authority)} and the authority the dispatch callback received ${received.map(wholeOf).join(" and then ")}`;
-    return `dispatched ${invocationId} for ${definition.kind} ${definition.id} ${definition.schemaVersion} ${definition.artifactDigest} on ${grants.join(" and ")} under ${identity.principal} / ${identity.sessionId}${further}, value ${String(result.value)}; ${whole}; ${counted}`;
+    const read = () => {
+      const counted = `park ${calls.park}, loader ${calls.loader}, provider ${calls.provider}`;
+      if (result.status === "refused") return `refused at ${result.stage} as ${result.refusal.policy} (${result.refusal.category}) for ${result.refusal.invocationId}; ${counted}`;
+      const { invocationId, definition, grants, identity } = result.authority;
+      const further = Object.keys(identity).length === 2 ? "" : " with further identity fields";
+      const whole = `read whole, the returned authority ${wholeOf(result.authority)} and the authority the dispatch callback received ${received.map(wholeOf).join(" and then ")}`;
+      return `dispatched ${invocationId} for ${definition.kind} ${definition.id} ${definition.schemaVersion} ${definition.artifactDigest} on ${grants.join(" and ")} under ${identity.principal} / ${identity.sessionId}${further}, value ${String(result.value)}; ${whole}; ${counted}`;
+    };
+    return { settled: read(), again: read };
   }
   /** A decision as the readings list it. */
   function decisionEnding(decision: ReturnType<typeof decideFunctionAuthority>): string {
@@ -1651,28 +1813,55 @@ describe("host authority: in each host mode, the listed caller policies leave th
     const further = Object.keys(identity).length === 2 ? "" : " with further identity fields";
     return `authorized ${invocationId} for ${definition.kind} ${definition.id} ${definition.schemaVersion} ${definition.artifactDigest} on ${grants.join(" and ")} under ${identity.principal} / ${identity.sessionId}${further}; read whole ${wholeOf(decision.authority)}`;
   }
-  /** The endings of a list of requests at one scenario, tallied. */
-  async function endings(admissions: readonly ExecuteAdmission[], entry: HostReads, change: HostReads | undefined): Promise<Record<string, number>> {
+  /** How many of the listed readings render each ending, each reading taken when this is called (wb-rrni). */
+  function tallyOf(readings: readonly (() => string)[]): Record<string, number> {
     const tallied: Record<string, number> = {};
-    for (const admission of admissions) {
-      const ended = await ending(admission, entry, change);
+    for (const read of readings) {
+      const ended = read();
       tallied[ended] = (tallied[ended] ?? 0) + 1;
     }
     return tallied;
   }
+  /** The endings of a list of requests at one scenario, tallied as each boundary settles (settled), and again() from each ending's again() (wb-rrni). */
+  async function endings(admissions: readonly ExecuteAdmission[], entry: HostReads, change: HostReads | undefined): Promise<{ readonly settled: Record<string, number>; readonly again: () => Record<string, number> }> {
+    const tallied: Record<string, number> = {};
+    const agains: (() => string)[] = [];
+    for (const admission of admissions) {
+      const ended = await ending(admission, entry, change);
+      tallied[ended.settled] = (tallied[ended.settled] ?? 0) + 1;
+      agains.push(ended.again);
+    }
+    return { settled: tallied, again: () => tallyOf(agains) };
+  }
 
   it("held with workbench:execute and not the action grant, the embedded request for mechanical.development.develop.v1 with the policy {grants: [the action], actionGrant: the action, reviewed: true} refuses at entry as missing-function-action-grant, with zero loader and provider calls", async () => {
+    // wb-rrni: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const h = harness({ grants: [EXECUTE_GRANT] });
-    expect(refusalOf(await h.run(admit("embedded", { grants: [ACTION], actionGrant: ACTION, reviewed: true })))).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
-    expect(h.loader).not.toHaveBeenCalled();
-    expect(h.provider).not.toHaveBeenCalled();
+    const result = await h.run(admit("embedded", { grants: [ACTION], actionGrant: ACTION, reviewed: true }));
+    const observe = () => {
+      expect(refusalOf(result)).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
+      expect(h.loader).not.toHaveBeenCalled();
+      expect(h.provider).not.toHaveBeenCalled();
+    };
+    observe();
+    await timers.drain();
+    observe();
   });
 
   it("held with workbench:execute and not the action grant, the embedded request for mechanical.development.develop.v1 with the policy {grants: [workbench:execute, the action], actionGrant: the action} refuses at entry as missing-function-action-grant, with zero loader and provider calls", async () => {
+    // wb-rrni: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const h = harness({ grants: [EXECUTE_GRANT] });
-    expect(refusalOf(await h.run(admit("embedded", { grants: [EXECUTE_GRANT, ACTION], actionGrant: ACTION })))).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
-    expect(h.loader).not.toHaveBeenCalled();
-    expect(h.provider).not.toHaveBeenCalled();
+    const result = await h.run(admit("embedded", { grants: [EXECUTE_GRANT, ACTION], actionGrant: ACTION }));
+    const observe = () => {
+      expect(refusalOf(result)).toEqual({ stage: "entry", policy: "missing-function-action-grant", category: "authorization" });
+      expect(h.loader).not.toHaveBeenCalled();
+      expect(h.provider).not.toHaveBeenCalled();
+    };
+    observe();
+    await timers.drain();
+    observe();
   });
 
   it.each([
@@ -1701,12 +1890,20 @@ describe("host authority: in each host mode, the listed caller policies leave th
   });
 
   it("held with the action grant and not workbench:execute, the detached request for mechanical.development.develop.v1, which the pinned contract binds to the action, refuses at entry as missing-execute-grant, with zero park, loader and provider calls", async () => {
+    // wb-rrni: each reading is taken when the boundary settles and again once the timer drain ends.
+    const timers = startTimerDrain();
     const h = harness({ grants: [ACTION] });
     const wait = parked();
-    expect(refusalOf(await h.run(admit("detached"), CONTRACT, wait.park))).toEqual({ stage: "entry", policy: "missing-execute-grant", category: "authorization" });
-    expect(wait.park).not.toHaveBeenCalled();
-    expect(h.loader).not.toHaveBeenCalled();
-    expect(h.provider).not.toHaveBeenCalled();
+    const result = await h.run(admit("detached"), CONTRACT, wait.park);
+    const observe = () => {
+      expect(refusalOf(result)).toEqual({ stage: "entry", policy: "missing-execute-grant", category: "authorization" });
+      expect(wait.park).not.toHaveBeenCalled();
+      expect(h.loader).not.toHaveBeenCalled();
+      expect(h.provider).not.toHaveBeenCalled();
+    };
+    observe();
+    await timers.drain();
+    observe();
   });
 
   it("in each host mode, the request for mechanical.development.develop.v1 carrying each of the 7776 listed caller policies (each record holding each of grants, permissions, authority, reviewed, actionGrant, principal, sessionId and identity absent or with one of its listed values) ends each of the 12 listed boundary scenarios as the scenario lists, as the request without a policy does: the same refusal stage, policy, category and invocation, or one dispatch whose callback receives, and whose boundary returns, the listed authority read whole (each own key and value, nested, each object's frozenness and any other prototype) on the same invocation and definition, resting on workbench:execute and the action under the same principal and session, with the same value and the same park, loader and provider calls", async () => {
@@ -1715,7 +1912,12 @@ describe("host authority: in each host mode, the listed caller policies leave th
     for (const hostMode of MODES) {
       const admissions = [admit(hostMode), ...RECORDS.map(policy => admit(hostMode, policy))];
       for (const [scenario, entry, change, expected] of SCENARIOS) {
-        expect({ hostMode, scenario, endings: await endings(admissions, entry, change) }).toEqual({ hostMode, scenario, endings: { [expected]: 7777 } });
+        // wb-rrni: each reading is taken when the boundary settles and again once the timer drain ends.
+        const timers = startTimerDrain();
+        const ended = await endings(admissions, entry, change);
+        expect({ hostMode, scenario, endings: ended.settled }).toEqual({ hostMode, scenario, endings: { [expected]: 7777 } });
+        await timers.drain();
+        expect({ hostMode, scenario, endings: ended.again() }).toEqual({ hostMode, scenario, endings: { [expected]: 7777 } });
       }
     }
   }, 120_000);
@@ -1740,7 +1942,12 @@ describe("host authority: in each host mode, the listed caller policies leave th
     for (const hostMode of MODES) {
       const admissions = [admit(hostMode), ...RECORDS.map(fields => admit(hostMode, undefined, { ...PLAIN_TASK, ...fields }))];
       for (const [scenario, entry, change, expected] of SCENARIOS) {
-        expect({ hostMode, scenario, endings: await endings(admissions, entry, change) }).toEqual({ hostMode, scenario, endings: { [expected]: 7777 } });
+        // wb-rrni: each reading is taken when the boundary settles and again once the timer drain ends.
+        const timers = startTimerDrain();
+        const ended = await endings(admissions, entry, change);
+        expect({ hostMode, scenario, endings: ended.settled }).toEqual({ hostMode, scenario, endings: { [expected]: 7777 } });
+        await timers.drain();
+        expect({ hostMode, scenario, endings: ended.again() }).toEqual({ hostMode, scenario, endings: { [expected]: 7777 } });
       }
     }
   }, 120_000);
@@ -1753,7 +1960,11 @@ describe("host authority: in each host mode, the listed caller policies leave th
     const pool = [ACTION, OTHER_FUNCTION_ACTION, DETACH_GRANT, "workbench:design", "forge:inspect"];
     const subsets = Array.from({ length: 2 ** pool.length }, (_, mask) => pool.filter((_grant, bit) => (mask & (1 << bit)) !== 0));
     const tallied: Record<string, number> = {};
+    const drained: Record<string, number> = {};
     for (const hostMode of MODES) {
+      // wb-rrni: each reading is taken when the boundary settles and again once the timer drain ends (one drain per host mode).
+      const timers = startTimerDrain();
+      const agains: (() => string)[] = [];
       for (const id of [FUNCTION_ID, OTHER_FUNCTION_ID, "fixture.unbound.v1"]) {
         for (const schemaVersion of [FUNCTION_SCHEMA, "mechanical-workflows/entrypoint/v2"]) {
           for (const artifactDigest of [DIGEST, `sha256:${"cd".repeat(32)}`]) {
@@ -1763,7 +1974,8 @@ describe("host authority: in each host mode, the listed caller policies leave th
                 for (const contract of [CONTRACT, FUNCTION_ACTION_CONTRACT, forged]) {
                   for (const grants of subsets) {
                     const ended = await ending(admission, { grants, identity: HOST }, undefined, contract);
-                    tallied[ended] = (tallied[ended] ?? 0) + 1;
+                    tallied[ended.settled] = (tallied[ended.settled] ?? 0) + 1;
+                    agains.push(ended.again);
                   }
                 }
               }
@@ -1771,8 +1983,11 @@ describe("host authority: in each host mode, the listed caller policies leave th
           }
         }
       }
+      await timers.drain();
+      for (const [ended, count] of Object.entries(tallyOf(agains))) drained[ended] = (drained[ended] ?? 0) + count;
     }
     expect(tallied).toEqual({ [refusedAt("entry", "missing-execute-grant")]: 13824 });
+    expect(drained).toEqual({ [refusedAt("entry", "missing-execute-grant")]: 13824 });
   }, 120_000);
 });
 
@@ -3173,14 +3388,15 @@ describe("the final reads and the dispatch count at the 4 listed requests, each 
   );
 });
 
-describe("the timer drain (wb-m83p cut #3): it fakes the 6 listed timer functions, the ones the module header names, in order, and only those, each restored by the real timers; its sentinel is planted 2147483647 ms out, as the module header says, and a drain ends with it run once and no timer left; and each of the module's 4 listed claim sites names the end of the timer drain", () => {
+describe("the timer drain (wb-m83p cut #3): it fakes the 6 listed timer functions, the ones the module header names, in order, and only those, each restored by the real timers; its sentinel is planted 2147483647 ms out, as the module header says, and a drain ends with it run once and no timer left; and each of the module's 5 listed claim sites names the end of the timer drain", () => {
   const DRAIN_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-  /** The module's 4 listed claim sites that take their readings at the two points, each with how its text is cut from the module source. */
+  /** The module's 5 listed claim sites that take their readings at the two points, each with how its text is cut from the module source (the fifth, wb-rrni's). */
   const CLAIM_SITES: readonly (readonly [string, RegExp])[] = [
     ["the module header's final-reads paragraph", /^\/\*\*\n([\s\S]*?)\n \*\n \* Host authority,/m],
     ["the module header's EAT-R031 line", /^ \* {3}EAT-R031 {2}([\s\S]*?)\n \* {3}EAT-R154/m],
     ["the doc of FunctionDispatchOptions.dispatch", /\/\*\*\n((?:(?!\*\/)[\s\S])*?)\*\/\n {2}readonly dispatch: /],
     ["the doc of dispatchFunctionWithAuthority", /\/\*\*\n((?:(?!\*\/)[\s\S])*?)\*\/\nexport async function dispatchFunctionWithAuthority</],
+    ["the module header's wb-rrni paragraph", /^ \* Read twice at the rows wb-rrni lists ([\s\S]*?)\n \*\n \* PARTIAL by plan/m],
   ];
   /** A cut of the module source as one line of prose: each line's comment marker dropped, whitespace runs collapsed. */
   const proseOf = (text: string) =>
@@ -3203,7 +3419,7 @@ describe("the timer drain (wb-m83p cut #3): it fakes the 6 listed timer function
         }),
     );
 
-  it("the drain's frozen shape: the 6 faked timer functions in order, the sentinel delay, and the 4 listed claim sites in order", () => {
+  it("the drain's frozen shape: the 6 faked timer functions in order, the sentinel delay, and the 5 listed claim sites in order", () => {
     expect([...DRAIN_FAKES]).toEqual(["setTimeout", "clearTimeout", "setInterval", "clearInterval", "setImmediate", "clearImmediate"]);
     expect(SENTINEL_DELAY).toBe(2147483647);
     expect(CLAIM_SITES.map(([site]) => site)).toEqual([
@@ -3211,6 +3427,7 @@ describe("the timer drain (wb-m83p cut #3): it fakes the 6 listed timer function
       "the module header's EAT-R031 line",
       "the doc of FunctionDispatchOptions.dispatch",
       "the doc of dispatchFunctionWithAuthority",
+      "the module header's wb-rrni paragraph",
     ]);
   });
 
