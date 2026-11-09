@@ -150,6 +150,20 @@
  * its source line as written, untrimmed (F2's cure). The six pages and the receipt are unchanged; like the paragraphs
  * above, this records what the cut added.
  *
+ * wb-guqa (the R694 follow-up of wb-m2j4's landing 1073, its F1; seat ws-12 of g10-work-s265, 2026-11-09, trunk
+ * 62eb8687): the code blocks case cut each block's indent from its lines by count - as many characters as the spaces
+ * before its opening line (an indented code block: four) - without reading the characters it cut, so a block generator
+ * that indented the lines between a fenced block's fence lines at indents 1 to 3 with tabs or with dots in place of
+ * spaces left the census green, and with dots it masked a reader the census kills alone (wb-m2j4's gate:
+ * GP31X-CB-INNER-INDENT-AS-TABS and GP31X-CB-INNER-INDENT-AS-DOTS, each 0|126; the dots member with the reader GP26-F1,
+ * 0|126; GP26-F1 alone, 1|125). Red-first, this cut reads each of those lines whole, its indent included, and pins it
+ * against the census table's line after the indent its twin spells (the fence lines' literal indents; an indented code
+ * block: four spaces), never against the block generator, so every character of every line of each block's code token
+ * is read back from the asserted text (F1's rider cure, in the class-closing form its PREP F2 names; the form F1 words,
+ * a line's indent cut only when the line starts with it, reads a line at indent 0 under a fence at indents 1 to 3 as
+ * the table's own line). The six pages and the receipt are unchanged; like the paragraphs above, this records what the
+ * cut added.
+ *
  * THE PINNED SET (the claim form; test/workbench-mwi-docs-remediation-census.test.ts, cases in registration order):
  * - "the reading": the six pages are files git would commit - committable lists a named path when it is tracked (in the
  *   index) or untracked and matched by no exclude rule (.gitignore, info/exclude), and it is on disk - each page key is
@@ -331,11 +345,13 @@
  *   by a space on its opening line or on its closing line (2); and the text indented four spaces, an indented code
  *   block (1) - the count pinned. (wb-culd) Each block's opening and closing lines as its code token's raw text spells
  *   them, their indent included (an indented code block: the indent of its lines), are read back from the very text its
- *   anchor call reads and pinned against literals. (wb-m2j4) Each block's text - the lines its code token's raw text
- *   spells between those two lines (an indented code block: all its lines), each with the block's indent cut from its
- *   start (as many characters as the spaces before its opening line; an indented code block: four), so a line indented
- *   otherwise than its block reads otherwise - is read back from the very text its anchor call reads and pinned against
- *   the census table's text, tableText of ROWS' receipt rows (the 23 readings, the count pinned).
+ *   anchor call reads and pinned against literals. (wb-m2j4, wb-guqa) Each block's text - the lines its code token's raw
+ *   text spells between those two lines (an indented code block: all its lines), each whole, its indent included - is
+ *   read back from the very text its anchor call reads and pinned against the census table's text, tableText of ROWS'
+ *   receipt rows, each of its lines after the indent its twin spells (the fence lines' literal indents: none, one, two or
+ *   three spaces; an indented code block: four spaces), so every character of those lines is read and a line indented
+ *   otherwise than its twin - by a space more or fewer, or with another character in place of a space - reads otherwise
+ *   (the 23 readings, the count pinned).
  * - "receipt anchor's quoted copies" (wb-1gdq): the anchor fails with "holds 2 tables" on LATER_ENTRY holding, after a
  *   blank line, the census table and, on its very next line, its copy each of whose lines starts with "> " (WGP1C8-Q1a's
  *   placement: the heading, a space token, the table and a blockquote, no space token between, pinned), and on
@@ -408,12 +424,14 @@
  * containers, headings, places or rows than its twins spell, leaves its twins passing), and the "written" twins' pinned
  * lexed header and rows; the cells and rows of a later census table - the cells and rows twins and their count (a
  * compare that skips a row, a column or the letter case, drops a row it does not know, or reads the rows as a set reds
- * them); the code blocks' text - the code blocks twins' pass, lexed shape and raw text, and (wb-m2j4) each block's text
- * read back from its asserted text against the census table's text (a walk that lexes one of those blocks' text as
- * Markdown counts the table twice; a block generator that drops, edits or reorders a line between a block's fence
- * lines, or indents those lines otherwise than its fence, reds the text read-back - wb-culd's gate's
- * GP1X-CB-INDENTED-FENCES-HOLD-NO-DELIMITER-ROW, alone and with GP26-F1's reader); the quoted copies - their four twins
- * and lexed shapes (a walk that
+ * them); the code blocks' text - the code blocks twins' pass, lexed shape and raw text, and (wb-m2j4, wb-guqa) each
+ * block's text read back from its asserted text against the census table's lines at its twin's indent (a walk that
+ * lexes one of those blocks' text as Markdown counts the table twice; a block generator that drops, edits or reorders
+ * a line between a block's fence lines, or indents those lines otherwise than its twin - by a space more or fewer, or
+ * with another character in place of a space - reds the text read-back - wb-culd's gate's
+ * GP1X-CB-INDENTED-FENCES-HOLD-NO-DELIMITER-ROW, alone and with GP26-F1's reader, and wb-m2j4's gate's
+ * GP31X-CB-INNER-INDENT-AS-TABS and GP31X-CB-INNER-INDENT-AS-DOTS, the dots member also with GP26-F1's reader); the
+ * quoted copies - their four twins and lexed shapes (a walk that
  * skips a block quote right after a table, or one indented one to three spaces, counts one table); (wb-culd) what each
  * fail-closed reads, cells and rows, code blocks and quoted copies twin spells - its case's read-back pin over the asserted
  * texts (a twin generator that spells one marker, placement, heading, header, edited row or cell, fence indent or quote
@@ -1704,20 +1722,15 @@ const fenceLinesOf = (token: Token | undefined): string => {
   if ((token as Tokens.Code).codeBlockStyle === "indented") return `indented ${[...new Set(lines.map(line => line.length - line.trimStart().length))].join(",")}`;
   return `${JSON.stringify(lines[0] ?? "")} to ${JSON.stringify(lines[lines.length - 1] ?? "")}`;
 };
-/** wb-m2j4 (the R694 follow-up of wb-culd's landing 1069, its F1): a code token's text as its source spells it, read
- * back from the very text the anchor is asserted on - the lines between its opening and its closing line (an indented
- * code block: all its lines), each with the block's indent cut from its start (as many characters as the spaces before
- * its opening line; an indented code block: four), so a line indented otherwise than its block reads otherwise. */
+/** wb-m2j4 (the R694 follow-up of wb-culd's landing 1069, its F1) and wb-guqa (the R694 follow-up of wb-m2j4's landing
+ * 1073, its F1): a code token's text as its source spells it, read back from the very text the anchor is asserted on -
+ * the lines between its opening and its closing line (an indented code block: all its lines), each whole, its indent
+ * included, so every character of each of those lines is read (wb-m2j4 cut the block's indent from each line by count,
+ * without reading the characters it cut). */
 const codeTextOf = (token: Token | undefined): string => {
   if (token?.type !== "code") return "no code token";
   const lines = token.raw.replace(/\n$/, "").split("\n");
-  if ((token as Tokens.Code).codeBlockStyle === "indented") return lines.map(line => line.slice(4)).join("\n");
-  const opening = lines[0] ?? "";
-  const indent = opening.length - opening.trimStart().length;
-  return lines
-    .slice(1, -1)
-    .map(line => line.slice(indent))
-    .join("\n");
+  return ((token as Tokens.Code).codeBlockStyle === "indented" ? lines : lines.slice(1, -1)).join("\n");
 };
 /** wb-culd: the indent of a text's last top-level block quote, read back by marked's GFM lexer from that very text - the
  * spaces its source spells before its first ">" (-1 when the text lexes no block quote). */
@@ -2355,10 +2368,20 @@ describe("wb-12x1 MWI docs remediation census (EAT-R094..EAT-R143): the 50 REMED
       fence("```", "``` "),
       "indented 4",
     ]);
-    // wb-m2j4: each block's text - the lines between its fence lines (an indented code block: all its lines), its indent
-    // cut - read back from the very text its anchor call reads, against the census table's text (never against the block
-    // generator).
-    expect(codeTexts, "each code block's text, its indent cut, as marked's lexer reads it back from the asserted text: the census table's text").toEqual(Array.from({ length: 23 }, () => tableText(ROWS.map(receiptRowOf))));
+    // wb-m2j4, wb-guqa: each block's text - the lines between its fence lines (an indented code block: all its lines), each
+    // whole, its indent included - read back from the very text its anchor call reads, against the census table's lines,
+    // each after the indent its twin spells: the fence lines' literal indents above, an indented code block's four spaces
+    // (never against the block generator).
+    const tableAt = (indent: string): string =>
+      tableText(ROWS.map(receiptRowOf))
+        .split("\n")
+        .map(line => `${indent}${line}`)
+        .join("\n");
+    expect(codeTexts, "each code block's text, every line whole, as marked's lexer reads it back from the asserted text: the census table's lines at the twin's indent").toEqual([
+      ...["```", "~~~", "````", "~~~~"].flatMap(() => ["", " ", "  ", "   "].map(tableAt)),
+      ...Array.from({ length: 6 }, () => tableAt("")),
+      tableAt("    "),
+    ]);
   }, 120_000);
 
   it("receipt anchor's quoted copies (wb-1gdq): LATER_ENTRY holding the census table and its '> ' copy on the very next line (WGP1C8-Q1a's placement) or, after a blank line, its copy whose lines each start ' > ', '  > ' or '   > ' (WGP26-Q1a's and its two twins) fails 'holds 2 tables' (lexed shapes pinned)", () => {
