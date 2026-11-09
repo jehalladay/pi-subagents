@@ -144,7 +144,7 @@
  * census, among them an entry holding a second html token (a second comment block, or a second inline comment in one
  * paragraph), an html token after another top-level block of its entry than the level-2 heading opening it (a comment block
  * after a paragraph), an entry opened by a setext level-2 heading, by a level-2 heading whose text opens with no date or by one
- * dated otherwise than those rows' headings, and a preamble holding a heading or another block before its html token.
+ * dated otherwise than those rows' headings, and a preamble holding a heading or another top-level block before its html token.
  *
  * RESIDUALS (rule 19(d): a named family plus a pinned quiet row, a case that reds when the quiet reading changes):
  * - R-OUTCOME-WORDS (QUIET-OUTCOME-WORDS): the fourth outcome docs/workbench/01 J03 names, indeterminate, is an ordinary word and
