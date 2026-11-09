@@ -28,14 +28,17 @@
  *   B3  the CLI over B1's December run at FW_EXPORT_SOFT_CEILING=CEILING: compact exits 0 with an empty stderr and a receipt appending
  *       four lines to issues-closed-2026-12.jsonl alone; each shard file that existed before the run keeps its inode, modification time
  *       and bytes; the December shard holds the four lines; no temporary file stays in B3's scratch directory (the one holding .beads
- *       and the full export), in .beads or in the archive directory, each of the three listed whole after the run; rehydrate prints the
- *       full export.
+ *       and the full export), in .beads or in the archive directory, each of the three listed whole after the run; after the compact run
+ *       the full export file holds the text the case wrote; rehydrate prints that text, the same text the full export file holds at the
+ *       end of the case.
  * NOT CLAIMED (scope sentences): the "sealed" refusal of a shard sealed before the run - no case reaches it, since the routing never
  * appends to such a shard (the module header says so); a past month with more than one continuation; a run more than one month after
  * the continued month; a late row of a month before the continued one (C4 of the compaction suite plants one beside a month without a
  * continuation); a ceiling other than CEILING, the default among them; any other layout of the archive before the run; a temporary
  * file anywhere outside B3's scratch directory, the system temporary directory that holds it and the working directory the CLI runs
- * in among them - no listing of B3's reaches it.
+ * in among them - no listing of B3's reaches it; rehydrate's exit status and its stderr - B3 reads its stdout alone; the full export
+ * file's inode, modification time and mode - B3 reads its text alone; a pre-run shard file's status-change time and mode - kept()
+ * reads its inode, modification time and bytes alone.
  * RESIDUALS: none named.
  */
 import { spawnSync } from "node:child_process";
@@ -174,7 +177,7 @@ describe("wb-3fop the month boundary after an overflow-continued month (owner ru
     expect(rehydrateTrackerText(run.main, run.shards), "the round trip").toBe(full);
   });
 
-  it("B3 CLI AT THE BOUNDARY: compact over a .beads directory holding the November run's main export and shards, at FW_EXPORT_SOFT_CEILING of the fixture's ceiling and a 2026-12 run stamp, exits 0 with an empty stderr and a receipt appending four lines to issues-closed-2026-12.jsonl alone; each shard file that existed before the run keeps its inode, modification time and bytes; the December shard holds the four lines; no temporary file stays in the scratch directory holding .beads and the full export, in .beads or in the archive directory, each of the three listed whole after the run; rehydrate prints the full export", () => {
+  it("B3 CLI AT THE BOUNDARY: compact over a .beads directory holding the November run's main export and shards, at FW_EXPORT_SOFT_CEILING of the fixture's ceiling and a 2026-12 run stamp, exits 0 with an empty stderr and a receipt appending four lines to issues-closed-2026-12.jsonl alone; each shard file that existed before the run keeps its inode, modification time and bytes; the December shard holds the four lines; no temporary file stays in the scratch directory holding .beads and the full export, in .beads or in the archive directory, each of the three listed whole after the run; after the compact run the full export file holds the text the case wrote; rehydrate prints that text, the same text the full export file holds at the end of the case", () => {
     const before = novemberRun();
     const dir = makeScratch("tracker-export-month-boundary-");
     scratches.push(dir);
@@ -208,6 +211,9 @@ describe("wb-3fop the month boundary after an overflow-continued month (owner ru
       "issues-closed-2026-11.jsonl",
       "issues-closed-2026-12.jsonl",
     ]);
-    expect(cli(["rehydrate", "--beads", beads]).stdout, "rehydrate prints the full export").toBe(readFileSync(fullPath, "utf8"));
+    expect(readFileSync(fullPath, "utf8"), "after the compact run the full export file holds the text the case wrote").toBe(textOf(december()));
+    const rehydrated = cli(["rehydrate", "--beads", beads]).stdout;
+    expect(rehydrated, "rehydrate prints the text the case wrote").toBe(textOf(december()));
+    expect(rehydrated, "rehydrate prints the text the full export file holds at the end of the case").toBe(readFileSync(fullPath, "utf8"));
   });
 });
