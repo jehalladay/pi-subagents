@@ -1,13 +1,15 @@
 /**
- * wb-tz2.11 (HX-ORIGINAL-GOALS-CLOSURE-R11), STANDING LEG ONLY, cut #5: the restatement of the FINAL cut over the landed readers
- * that orchestrator ruling R-B98 (M:35530) binds. Refusal #4 of cut #4 (gate-prep-4 / g10-gate-s144, gate-refused M:35515) folded
+ * wb-tz2.11 (HX-ORIGINAL-GOALS-CLOSURE-R11), STANDING LEG ONLY, cut #6: cut #5 - the restatement of the FINAL cut over the landed
+ * readers that orchestrator ruling R-B98 (M:35530) binds - with its two walks pinned, as branch ruling R-B683 (M:64451) binds for
+ * refusal #5 of cut #5 (gate-prep-15 / g10-gate-s236, gate-refused M:63274): the walk is pinned by a realized falsifier per claim
+ * word, or the words narrow. Refusal #4 of cut #4 (gate-prep-4 / g10-gate-s144, gate-refused M:35515) folded
  * its U1 and U2 members into child wb-tz2.16, whose binding-aware readers - test/helpers/hyperunix-custody-readers.ts, with their
  * falsifier census test/workbench-hyperunix-custody-readers-census.test.ts - landed at landing 969 through the carrier wb-tz2.24
  * (merge 4b1f528204826262ffdc648255e9f2c4b0c65b17, fold-done M:58106). Before it: R-B83 (M:34371) bound cut #4 as the FINAL cut to
  * the fail-closed core after refusal #3 (gate-prep-13 / g10-gate-s139, M:34363); refusal #2 was gate-prep-22 / g10-gate-s127,
  * M:31621; refusal #1 gate-prep-19 / g10-gate-s126, M:30519. The HyperUnix custody-claims census: Pi's dispose/close custody tests
- * for the HX SDK prove the CALLS, never the termination, and no Pi test or qa script that drives HX (this census aside) carries a
- * kill falsifier shape the landed readers read, beside the two frozen reapers R-REAPER names.
+ * for the HX SDK prove the CALLS, never the termination, and no source the C7 walk reads (below) that drives HX, this census aside,
+ * carries a kill falsifier shape the landed readers read, beside the two frozen reapers R-REAPER names.
  *
  * Acceptance row pinned (bead wb-tz2.11): "Standing: the custody tests stay green and claim only call-custody, never real-child
  * termination." Statement halves pinned: Pi cites the receipt "beside its own dispose/close custody tests — which prove the
@@ -19,10 +21,11 @@
  * collecting exactly those three cases), which row C9 holds to this file.
  * ON-LANDING LEG NOT IN SCOPE: a docs/workbench row citing the HX SDK cancellation/child-process-cleanup conformance receipt
  * (artifact id + hx sha), and the census that the citation names it, wait for that receipt (HXGC-OPS-002 reads status DESIGN in
- * HyperUnix-CLI's requirements.jsonl:12, with no sdk/conformance receipt; re-read at cut #5 on HyperUnix-CLI origin/main 7a6489e80a:
- * still DESIGN, and no sdk/conformance file names cancellation or child-process cleanup). The bead stays open for that leg.
+ * HyperUnix-CLI's requirements.jsonl:12, with no sdk/conformance receipt; re-read at cut #6, read only, on the HyperUnix-CLI clone's
+ * origin/main 1f31d885fc as last fetched there: still DESIGN with implementation_evidence null, and no sdk/conformance file names
+ * cancellation, child-process cleanup or termination). The bead stays open for that leg.
  *
- * FORM OF RECORD (enumerate-the-resolvable, taken at cut #3 as refusal #2's LOOP-CAP DISCLOSURE permits, kept at cuts #4 and #5):
+ * FORM OF RECORD (enumerate-the-resolvable, taken at cut #3 as refusal #2's LOOP-CAP DISCLOSURE permits, kept at cuts #4 to #6):
  * each row claims exactly the read set this header enumerates for it, and a calibration plant pins each read form; every known
  * unread family is a named residual (R-*) with a pinned quiet row; a spelling outside a row's read set is a member of a residual
  * family, never a claim of that row. "Every" and "no" below range over the enumerated forms. LANDED READERS (cut #5, R-B98):
@@ -97,20 +100,31 @@
  * the abort listener reaches that group kill through the function's own closures: a call to a local function (directly, through
  * an alias binding, or through call / apply / bind) - abort -> stop -> kill -> process.kill(-child.pid). Every string signal
  * argument of a kill call (kill(...) or .kill(...)) in it or Pi's RF provider is a W2 term and every kill call's name a W3 term.
- * C7 NO HAND-ROLLED KILL FALSIFIER: the judged files are the test/ and qa/ sources (SOURCE_FILE: .ts .mts .cts .js .mjs .cjs;
- * node_modules skipped; this file excluded, it spells the detector) whose text the landed readers' passesPrefilter passes (raw or
- * unescaped, it holds DRIVER_NEEDLE, hyperunix in any case; every DRIVER_TOKENS member holds it) and that their hxDrivers classes
- * by one of its C7 DRIVER FORMS (value import, side-effect import, export-from, import-equals, dynamic import, loader call,
- * created require, invoke, override member, override destructuring, override destructuring assignment, override object key,
- * override in, override env call and override env method, each as that file's claim block states it). A judged file carries no
- * F1-F4 shape their falsifierShapes reads by one of its C7 SHAPE FORMS (member, element key, type member, destructuring,
+ * C7 NO HAND-ROLLED KILL FALSIFIER. THE C7 WALK (sourcesUnder through walkedSources) reads, from a tree's root, every file with a
+ * SOURCE_FILE name (.ts .mts .cts .js .mjs .cjs, lower case) under test/ and qa/ (WALK_ROOTS) at every depth, entering every
+ * subdirectory (a fixtures and a dot directory among them) except one named node_modules, which it skips at every depth. On the
+ * repository it reads exactly the files node:fs's own recursive listing lists (listedSources, the walks' anchor, sharing no code
+ * with the walk: every regular file with a SOURCE_FILE name under test/ or qa/ outside a node_modules directory), and that listing
+ * finds no entry there but regular files and directories (a symbolic link or another special entry is not modelled and reds C7).
+ * The walk and C7's judging also run over real files planted in makeScratch trees: WALK_PLANTS (one plant per walk word above, each
+ * walked plant read and judged, each unwalked one - a file in a node_modules directory, a name outside SOURCE_FILE, a file outside
+ * test/ and qa/ - neither) and each of refusal #4's GP4-C7 files written at its declared path in a tree of its own, so each walk
+ * word has a realized falsifier. The judged files are the walked sources other than this file (excluded, it spells the detector)
+ * whose text the landed readers' passesPrefilter passes (raw or unescaped, it holds DRIVER_NEEDLE, hyperunix in any case; every
+ * DRIVER_TOKENS member holds it) and that their hxDrivers classes by one of its C7 DRIVER FORMS (value import, side-effect
+ * import, export-from, import-equals, dynamic import, loader call, created require, invoke, override member, override
+ * destructuring, override destructuring assignment, override object key, override in, override env call and override env method,
+ * each as that file's claim block states it); on the repository they are exactly the listed files other than this census that
+ * pass that prefilter and that hxDrivers classes, recomputed apart from the walk. A judged file carries no F1-F4 shape their
+ * falsifierShapes reads by one of its C7 SHAPE FORMS (member, element key, type member, destructuring,
  * destructuring assignment, import, bare call, identifier, regular expression, key, literal, /proc path, kill name literal, pid
  * name literal and process-table command, each as that file's claim block states it; F3's command heads are commandHeads', its
  * modelled reading through WRAPPER_FLAG_FORMS beside cut #4's fail-closed reading of every fragment past a wrapper or a shell),
  * beside the hits KNOWN_REAPERS sets aside (R-REAPER): test/workbench-edc-render-abort-census.test.ts (F1:member, F3:/proc path)
  * and test/workbench-fiber-host-publication-census.test.ts (F1:member), trunk censuses absent at cut #4's gate base 37adc54 that
  * kill processes of their own; what those kills reach is NOT CLAIMED by this census. A defined key (an object-literal property, a
- * method, a class or type member) is no read of kill or pid (R-DEFINITION).
+ * method, a class or type member) is no read of kill or pid (R-DEFINITION). A file the walk does not read is not judged
+ * (R-UNWALKED).
  * C8 DOCS: every .md file under docs/workbench is read as marked 18.0.11 (the repo's renderer) renders it to HTML, and this view
  * reads that HTML as a browser's default stylesheet shows it: comments render nothing (including <!--> and <!---> and a comment
  * ended by --!> or by the end of the page), as do bogus comments, doctypes and every tag; the text of every element renders;
@@ -119,9 +133,29 @@
  * ends a unit, and a unit splits into clauses at ";", "|", an em dash and sentence ends. A page holding an element whose content a
  * browser hides or does not show as text (HIDING_ELEMENTS) or an attribute that hides (hidden, popover, style) is not modelled
  * and is refused. No clause names the HX side together with a vocabulary term unless it names the upstream artifact HXGC-OPS-002,
- * the on-landing citation's form.
+ * the on-landing citation's form, beside the clauses KNOWN_CLAUSES sets aside by page, terms and text digest (R-KNOWN-CLAUSE):
+ * docs/workbench/receipts/wb-ny54.md's host-admission clause, which names the child-processes pool beside the hyperunix.find
+ * capability id - a receipt page landed after cut #5 that reds cut #5's C8 on trunk b877893; what that clause says is NOT CLAIMED
+ * by this census. THE C8 WALK (docsUnder) reads every file with a .md name (lower case) under docs/workbench at every depth,
+ * entering every subdirectory; on the repository it reads exactly the .md files node:fs's recursive listing (listedPages) lists
+ * there, that listing finds no entry there but regular files and directories, and the walk runs over real pages planted in a
+ * makeScratch tree (PAGE_WALK_PLANTS) as C7's does. A page named other than .md is not read (R-UNWALKED); a page outside
+ * docs/workbench is R-SCOPE's. A WALK_PLANTS or PAGE_WALK_PLANTS row is pinned by its frozen literal; removed from every literal
+ * together, a row whose walk word no repository file also realizes (the .mts, .cts, .js and .cjs names, a source more than one
+ * directory below test/ or qa/, a page more than two directories below docs/workbench, a dot or node_modules directory, and the
+ * unwalked edges) stays green, a calibration member whose own literals are its only anchor (R-UNANCHORED's family).
  * C9 RUN PIN: the run pin's literals name the suite, every CASES title, this file's suite and every case of this file.
  *
+ * CURES OF REFUSAL #5 (cut #6, under branch ruling R-B683; each named in the delivery note): U1 C7-WALK-WORDS-WITHOUT-FALSIFIER -
+ * the C7 walk words (the read set above, the C7 title's walked files and the C7 calibration's "each at a path the C7 walk reads")
+ * are pinned three ways: on the repository the walk equals its anchor, the judged set equals the anchor's driving files and a qa
+ * .mjs file (qa/workbench/hx-task-scope-probe.mjs) is judged beside the three test .ts anchors; the C7 walk row runs the walk over
+ * WALK_PLANTS; and the C7 calibration writes each of refusal #4's 22 GP4-C7 files at its declared path (GP4-C7-15 at
+ * qa/workbench/zz-gp4-plant.mjs and GP4-C7-16 at test/fixtures/zz-gp4/plant.cts among them) and reads it through the walk, so a
+ * walk that drops qa/ (GP15-W1), skips fixtures directories (W2), reads .ts names only (W3) or stops below depth 2 (W4) reds C7's
+ * rows; isWalkedPath, the predicate that restated the walk's domain, is gone. The C8 walk is pinned the same way. F1 (rides): the
+ * two calibration titles name the antecedent of their form-coverage words (at least one plant of this row). TRUNK: C8's
+ * KNOWN_CLAUSES (R-KNOWN-CLAUSE) for the wb-ny54 receipt clause.
  * CURES OF REFUSAL #4 (cut #5, over the landed readers; each named in the delivery note): every GP4 member refusal #4's verdict
  * (gate-prep-4 / g10-gate-s144) names is a row of REFUSAL_4_LIFECYCLE (33 GP4-C2 lifecycle members, edits verbatim, read for
  * exactly their recorded tampers and mocks) or REFUSAL_4_PLANTS (22 GP4-C7 files, contents and paths verbatim, read for exactly
@@ -172,19 +206,23 @@
  * reasons, the docs view's element, attribute, reference and filler sets, the near misses, the exclusions, KNOWN_REAPERS, the
  * landed readers' rosters it reads with (C2_FORMS, DRIVER_FORMS, SHAPE_FORMS, ROOT_FORMS, BINDING_KINDS, PROTOTYPE_LINKS,
  * ACCESSOR_DEFINERS, CUSTODY_EXPORT, WRAPPER_FLAG_FORMS, SHELL_ARGUMENT_OPTIONS, UNESCAPE_FORMS and RESIDUAL_FAMILIES), the
- * residual ids and every plant table (id, expectation, digest), REFUSAL_4_LIFECYCLE and REFUSAL_4_PLANTS among them.
+ * residual ids and every plant table (id, expectation, digest), REFUSAL_4_LIFECYCLE and REFUSAL_4_PLANTS among them, and the walks'
+ * tables: WALK_ROOTS, the page name, the skipped directory, WALK_PLANTS, PAGE_WALK_PLANTS, the planted texts, the links and
+ * KNOWN_CLAUSES.
  * RESIDUALS (each a named family with its pinned row, R-* below; the row plants a member and shows the reader quiet on it beside a
  * control the same reader catches): R-WORDING, R-UNANCHORED, R-SHAPELESS, R-COMPOSED, R-ERRNO, R-UNDRIVEN, R-ARGUMENTS, R-RUNTIME,
  * R-DEAD-PATH, R-CLAUSE, R-CITATION, R-REFERENCE, R-LOOKALIKE, R-ATTRIBUTE, R-SCOPE, R-DETACHED-COMMENT, R-WRAPPER, R-INDIRECT,
- * R-DATA-OVERRIDE, R-DEFINITION, R-ELSEWHERE, R-HELPER-REGISTRATION, R-GROUP-FORM, R-BIDI, R-REAPER (RESIDUALS names each family;
- * the records row requires every one to have run to its end).
+ * R-DATA-OVERRIDE, R-DEFINITION, R-ELSEWHERE, R-HELPER-REGISTRATION, R-GROUP-FORM, R-BIDI, R-REAPER, R-UNWALKED, R-KNOWN-CLAUSE
+ * (RESIDUALS names each family; the records row requires every one to have run to its end).
  *
- * Display paths added: none. Test-only: spawns nothing, writes nothing, reads sources and docs and parses planted text in memory.
+ * Display paths added: none. Test-only: spawns nothing; reads sources and docs, parses planted text in memory, and writes planted
+ * files only into makeScratch trees (test/helpers/scratch.ts, its leak guard installed at module scope), each removed by the row
+ * that made it.
  */
 import { createHash } from "node:crypto";
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { mkdirSync, readdirSync, readFileSync, statSync, symlinkSync, writeFileSync } from "node:fs";
 import { constants } from "node:os";
-import { dirname, join, posix } from "node:path";
+import { dirname, join, posix, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { marked } from "marked";
 import ts from "typescript";
@@ -235,6 +273,9 @@ import {
   WRAPPER_FLAG_FORMS,
   WRAPPER_RULES,
 } from "./helpers/hyperunix-custody-readers.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SELF = "test/workbench-hyperunix-custody-claims.test.ts";
@@ -242,6 +283,10 @@ const RUN_PIN = "test/workbench-hyperunix-custody-claims.census.ts";
 /** The landed readers' falsifier census: its GP4 rows are the anchor outside this file for refusal #4's member tables. */
 const READERS_CENSUS = "test/workbench-hyperunix-custody-readers-census.test.ts";
 const LIFECYCLE = "test/workbench-provider-lifecycle.test.ts";
+/** A qa .mjs file C7 judges on trunk today: the C7 row's qa anchor, so a walk that drops qa/ or reads .ts names only reds on the repository too. */
+const QA_ANCHOR = "qa/workbench/hx-task-scope-probe.mjs";
+/** The files the C7 row requires among its judged files: three test .ts files and the qa .mjs anchor. */
+const C7_ANCHORS = [LIFECYCLE, "test/workbench-hyperunix-observer.test.ts", "test/workbench-hyperunix-graduation-vocabulary-census.test.ts", QA_ANCHOR] as const;
 const HX_SUITE = "HyperUnix SDK custody";
 const RF_SUITE = "RF CLI process custody";
 const PROVIDER = "src/workbench/providers/hyperunix.ts";
@@ -1094,35 +1139,111 @@ const KNOWN_REAPERS: readonly Reaper[] = [
   { path: "test/workbench-edc-render-abort-census.test.ts", hits: ["F1:member", "F3:/proc path"] },
   { path: "test/workbench-fiber-host-publication-census.test.ts", hits: ["F1:member"] },
 ];
+/** The directories the C7 walk reads, each from a tree's root. */
+const WALK_ROOTS = ["test", "qa"] as const;
 /** The file names the C7 walk judges: .ts, .mts, .cts, .js, .mjs and .cjs. */
 const SOURCE_FILE = /\.[cm]?[jt]s$/;
-/** Whether a repository path is one the C7 walk reads: under test/ or qa/, a SOURCE_FILE name, no node_modules segment. */
-const isWalkedPath = (path: string): boolean => /^(?:test|qa)\//.test(path) && SOURCE_FILE.test(path) && !path.split("/").includes("node_modules");
-/** Every .ts / .mts / .cts / .js / .mjs / .cjs source under a repository directory, node_modules skipped, sorted. */
-function sourcesUnder(directory: string): string[] {
+/** The page names the C8 walk reads. */
+const PAGE_FILE = ".md";
+/** The directory the C7 walk never enters, at any depth. */
+const SKIPPED_DIRECTORY = "node_modules";
+/**
+ * One file tree a walk reads from its root: the repository (each source read and parsed once), or a makeScratch tree of real
+ * planted files (read from disk at each call, never through the repository's cache).
+ */
+interface Tree {
+  readonly root: string;
+  readonly text: (path: string) => string;
+  readonly source: (path: string) => ts.SourceFile;
+}
+const REPOSITORY: Tree = { root: ROOT, text: read, source: parse };
+function scratchTree(root: string): Tree {
+  const text = (path: string): string => readFileSync(join(root, path), "utf8");
+  return { root, text, source: path => parseText(path, text(path)) };
+}
+/** THE C7 WALK under one directory of a tree: every SOURCE_FILE name at every depth, every subdirectory entered but node_modules, sorted by name in each directory. */
+function sourcesUnder(root: string, directory: string): string[] {
   const out: string[] = [];
   const walk = (relativeDirectory: string): void => {
-    for (const name of readdirSync(join(ROOT, relativeDirectory)).sort()) {
-      if (name === "node_modules") continue;
+    for (const name of readdirSync(join(root, relativeDirectory)).sort()) {
+      if (name === SKIPPED_DIRECTORY) continue;
       const path = `${relativeDirectory}/${name}`;
-      if (statSync(join(ROOT, path)).isDirectory()) walk(path);
+      if (statSync(join(root, path)).isDirectory()) walk(path);
       else if (SOURCE_FILE.test(name)) out.push(path);
     }
   };
   walk(directory);
   return out;
 }
-function docsUnder(directory: string): string[] {
+/** THE C7 WALK of a tree: the sources under each WALK_ROOTS directory. */
+function walkedSources(root: string): string[] {
+  return WALK_ROOTS.flatMap(directory => sourcesUnder(root, directory));
+}
+/** THE C8 WALK under one directory of a tree: every PAGE_FILE name at every depth, every subdirectory entered, sorted by name in each directory. */
+function docsUnder(root: string, directory: string): string[] {
   const out: string[] = [];
   const walk = (relativeDirectory: string): void => {
-    for (const name of readdirSync(join(ROOT, relativeDirectory)).sort()) {
+    for (const name of readdirSync(join(root, relativeDirectory)).sort()) {
       const path = `${relativeDirectory}/${name}`;
-      if (statSync(join(ROOT, path)).isDirectory()) walk(path);
-      else if (name.endsWith(".md")) out.push(path);
+      if (statSync(join(root, path)).isDirectory()) walk(path);
+      else if (name.endsWith(PAGE_FILE)) out.push(path);
     }
   };
   walk(directory);
   return out;
+}
+/** What one of the walks' anchors lists: the files it keeps, and the entries no walk models. */
+interface Listing {
+  readonly files: readonly string[];
+  readonly unmodelled: readonly string[];
+}
+/**
+ * THE WALKS' ANCHOR: node:fs's own recursive listing (readdirSync with recursive and withFileTypes, no code shared with either
+ * walk) of one directory of a tree - every regular file whose name keep passes, outside any node_modules directory when the
+ * listing skips them, and every entry that is neither a regular file nor a directory (a symbolic link among them), which neither
+ * walk models. Both lists sorted.
+ */
+function listing(root: string, directory: string, keep: (name: string) => boolean, skipsModules: boolean): Listing {
+  const files: string[] = [];
+  const unmodelled: string[] = [];
+  for (const entry of readdirSync(join(root, directory), { recursive: true, withFileTypes: true })) {
+    const path = relative(root, join(entry.parentPath, entry.name)).split(sep).join("/");
+    if (skipsModules && path.split("/").includes("node_modules")) continue;
+    if (entry.isFile()) {
+      if (keep(entry.name)) files.push(path);
+    } else if (!entry.isDirectory()) unmodelled.push(path);
+  }
+  return { files: files.sort(), unmodelled: unmodelled.sort() };
+}
+/** The C7 walk's anchor: the listings of test/ and qa/, SOURCE_FILE names kept, node_modules directories skipped. */
+function listedSources(root: string): Listing {
+  const parts = ["test", "qa"].map(directory => listing(root, directory, name => SOURCE_FILE.test(name), true));
+  return { files: parts.flatMap(part => part.files).sort(), unmodelled: parts.flatMap(part => part.unmodelled).sort() };
+}
+/** The C8 walk's anchor: the listing of docs/workbench, .md names kept, nothing skipped. */
+function listedPages(root: string): Listing {
+  return listing(root, DOCS, name => name.endsWith(".md"), false);
+}
+/** A fresh makeScratch directory for one reading, removed after it whatever the reading does. */
+function inScratch<T>(reading: (scratch: string) => T): T {
+  const scratch = makeScratch("wb-tz2-11-walk-");
+  try {
+    return reading(scratch);
+  } finally {
+    removeScratch(scratch);
+  }
+}
+/** Real files (and symbolic links: path, target) planted under a tree's root, test/, qa/ and docs/workbench made first so every walk finds its directories. */
+function plantTree(root: string, files: ReadonlyArray<readonly [string, string]>, links: ReadonlyArray<readonly [string, string]> = []): void {
+  for (const directory of ["test", "qa", DOCS]) mkdirSync(join(root, directory), { recursive: true });
+  for (const [path, text] of files) {
+    mkdirSync(dirname(join(root, path)), { recursive: true });
+    writeFileSync(join(root, path), text);
+  }
+  for (const [path, target] of links) {
+    mkdirSync(dirname(join(root, path)), { recursive: true });
+    symlinkSync(target, join(root, path));
+  }
 }
 interface JudgedFile {
   readonly path: string;
@@ -1144,20 +1265,26 @@ function unknownHits(entry: JudgedFile): ShapeHit[] {
     return false;
   });
 }
-function judgedDrivers(): { readonly sources: readonly string[]; readonly judged: readonly JudgedFile[] } {
-  if (JUDGED !== undefined) return JUDGED;
-  const sources = [...sourcesUnder("test"), ...sourcesUnder("qa")];
+/** C7's judging of a tree: each walked source other than the EXCLUDED census whose text passes the landed prefilter and that hxDrivers classes as driving HX, with its F1-F4 hits. */
+function judgeTree(tree: Tree): { readonly sources: readonly string[]; readonly judged: readonly JudgedFile[] } {
+  const sources = walkedSources(tree.root);
   const excluded = new Set<string>(EXCLUDED);
   const judged = sources
-    .filter(path => !excluded.has(path) && passesPrefilter(read(path)))
+    .filter(path => !excluded.has(path) && passesPrefilter(tree.text(path)))
     .flatMap(path => {
-      const source = parse(path);
+      const source = tree.source(path);
       const drivers = hxDrivers(source);
       return drivers.length > 0 ? [{ path, drivers, hits: falsifierShapes(source) }] : [];
     });
-  JUDGED = { sources, judged };
+  return { sources, judged };
+}
+function judgedDrivers(): { readonly sources: readonly string[]; readonly judged: readonly JudgedFile[] } {
+  if (JUDGED !== undefined) return JUDGED;
+  JUDGED = judgeTree(REPOSITORY);
   return JUDGED;
 }
+/** A judged file as one line: its path, its drivers and its F1-F4 shape:form list. */
+const judgedLine = (entry: JudgedFile): string => `${entry.path}=${entry.drivers.join("+")}/${shapeForms(entry.hits).join("+")}`;
 
 // ---- the docs view ----------------------------------------------------------------------------------------------------
 
@@ -1423,17 +1550,49 @@ interface Clause {
   readonly index: number;
   readonly text: string;
 }
-let DOCS_READING: { readonly files: readonly string[]; readonly clauses: readonly Clause[]; readonly refusals: readonly string[] } | undefined;
-function docsReading(): { readonly files: readonly string[]; readonly clauses: readonly Clause[]; readonly refusals: readonly string[] } {
-  if (DOCS_READING !== undefined) return DOCS_READING;
-  const files = docsUnder(DOCS);
-  const views = files.map(file => ({ file, view: pageView(read(file)) }));
-  DOCS_READING = {
+interface DocsReading {
+  readonly files: readonly string[];
+  readonly clauses: readonly Clause[];
+  readonly refusals: readonly string[];
+}
+let DOCS_READING: DocsReading | undefined;
+/** C8's reading of a tree: every page the C8 walk reads under docs/workbench, clause by clause, with the constructs the view refuses. */
+function docsReadingOf(tree: Tree): DocsReading {
+  const files = docsUnder(tree.root, DOCS);
+  const views = files.map(file => ({ file, view: pageView(tree.text(file)) }));
+  return {
     files,
     clauses: views.flatMap(({ file, view }) => view.clauses.map((text, index) => ({ file, index, text }))),
     refusals: views.flatMap(({ file, view }) => view.refusals.map(refusal => `${file}: ${refusal}`)),
   };
+}
+function docsReading(): DocsReading {
+  if (DOCS_READING !== undefined) return DOCS_READING;
+  DOCS_READING = docsReadingOf(REPOSITORY);
   return DOCS_READING;
+}
+/**
+ * The docs clauses C8 sets aside (R-KNOWN-CLAUSE): the host-admission clause of a trunk receipt landed after cut #5, which names
+ * the child-processes pool beside the hyperunix.find capability id - a pool's name, not a termination claim. Each is pinned by its
+ * page, the vocabulary terms it carries and the digest of its text (never its index), so a clause beside it, a changed clause or a
+ * page that no longer holds it reds C8 or R-KNOWN-CLAUSE.
+ */
+interface KnownClause {
+  readonly page: string;
+  readonly terms: readonly string[];
+  readonly digest: string;
+}
+const KNOWN_CLAUSES: readonly KnownClause[] = [{ page: "docs/workbench/receipts/wb-ny54.md", terms: ["child processes"], digest: "720365d7f0b7" }];
+const clauseKey = (page: string, terms: readonly string[], text: string): string => `${page}|${terms.join("+")}|${text}`;
+/** The docs hits beside KNOWN_CLAUSES: each frozen page, terms and digest set aside once, every other hit kept. */
+function unknownClauses(hits: readonly Clause[]): Clause[] {
+  const known = KNOWN_CLAUSES.map(clause => clauseKey(clause.page, clause.terms, clause.digest));
+  return hits.filter(hit => {
+    const at = known.indexOf(clauseKey(hit.file, termsIn(hit.text), digest(hit.text)));
+    if (at < 0) return true;
+    known.splice(at, 1);
+    return false;
+  });
 }
 
 // ---- provider and SDK structure ---------------------------------------------------------------------------------------
@@ -1660,6 +1819,18 @@ const RESIDUALS: readonly Residual[] = [
     rows: "C7",
     family:
       "a judged file's F1-F4 hits frozen in KNOWN_REAPERS by path, shape and form (the kill code of two trunk censuses that kill processes of their own) are set aside by C7, so what those kills reach is not read; a hit beside them, a changed hit or a file no longer judged reads loud",
+  },
+  {
+    id: "R-UNWALKED",
+    rows: "C7 C8",
+    family:
+      "a file a walk does not read is neither judged nor read, however it drives HX and kills or claims a termination - for C7 a name outside SOURCE_FILE (a .tsx, .jsx, .json, .sh or upper-case .TS name among them), a file in a node_modules directory or a file outside test/ and qa/; for C8 a page named other than .md (a .markdown, .mdx, upper-case .MD or .txt name among them)",
+  },
+  {
+    id: "R-KNOWN-CLAUSE",
+    rows: "C8",
+    family:
+      "a docs clause frozen in KNOWN_CLAUSES by page, terms and text digest (a trunk receipt's host-admission clause naming the child-processes pool beside the hyperunix.find capability id) is set aside by C8, once, so what it says is not read; a clause beside it, a second copy of it, a changed clause or a page that no longer holds it reads loud",
   },
 ];
 const residualTitle = (residual: Residual): string => `${residual.id} (${residual.rows}): ${residual.family}`;
@@ -1946,6 +2117,82 @@ const pageHits = (markdown: string): { readonly hits: readonly string[]; readonl
   return { hits: view.clauses.filter(isDocsHit), refusals: view.refusals };
 };
 
+/** One real file a walk row plants in a makeScratch tree: whether its walk reads it, and whether its row then judges it (C7) or reads its clause (C8). */
+interface WalkPlant {
+  readonly id: string;
+  readonly path: string;
+  readonly walked: boolean;
+  readonly judged: boolean;
+}
+/** The text of every C7 walk plant: refusal #4's GP4-C7-15 file, a JavaScript and TypeScript source that drives HX and kills. */
+const WALK_PLANT_TEXT = `${HX_HEAD}export const alive = child => { process.kill(child.pid, 0); return true; };\n`;
+/** How C7 judges that text: driven by the SDK import, an F1 and an F2 member. */
+const WALK_PLANT_READING = "import/F1:member+F2:member";
+/**
+ * The C7 walk's words, one planted file each: a SOURCE_FILE name of each of the six extensions, a file directly in test/ and in
+ * qa/ and six directories below each, a file in a fixtures and in a dot directory, and this census's own path (walked, never
+ * judged); and the walk's edges, none walked: a file in a node_modules directory directly under test/ and deeper under qa/, a
+ * .tsx, .jsx, .json, .sh and upper-case .TS name, and a file under src/, at the tree's root and under another directory.
+ */
+const WALK_PLANTS: readonly WalkPlant[] = [
+  { id: "WK-TEST-TS", path: "test/zz-walk-plant.ts", walked: true, judged: true },
+  { id: "WK-TEST-MTS", path: "test/zz-walk/plant.mts", walked: true, judged: true },
+  { id: "WK-TEST-CTS", path: "test/zz-walk/plant.cts", walked: true, judged: true },
+  { id: "WK-QA-JS", path: "qa/zz-walk/plant.js", walked: true, judged: true },
+  { id: "WK-QA-MJS", path: "qa/zz-walk-plant.mjs", walked: true, judged: true },
+  { id: "WK-QA-CJS", path: "qa/zz-walk/plant.cjs", walked: true, judged: true },
+  { id: "WK-FIXTURES", path: "test/fixtures/zz-walk/plant.ts", walked: true, judged: true },
+  { id: "WK-DOT-DIRECTORY", path: "test/.zz-walk/plant.ts", walked: true, judged: true },
+  { id: "WK-DEEP-TEST", path: "test/zz-walk/a/b/c/d/e/plant.ts", walked: true, judged: true },
+  { id: "WK-DEEP-QA", path: "qa/workbench/zz-walk/a/b/c/d/plant.mjs", walked: true, judged: true },
+  { id: "WK-SELF", path: SELF, walked: true, judged: false },
+  { id: "WK-NODE-MODULES", path: "test/node_modules/plant.ts", walked: false, judged: false },
+  { id: "WK-NODE-MODULES-DEEP", path: "qa/zz-walk/a/node_modules/b/plant.mjs", walked: false, judged: false },
+  { id: "WK-TSX", path: "test/zz-walk/plant.test.tsx", walked: false, judged: false },
+  { id: "WK-JSX", path: "qa/zz-walk/plant.jsx", walked: false, judged: false },
+  { id: "WK-JSON", path: "test/zz-walk/plant.json", walked: false, judged: false },
+  { id: "WK-SHELL", path: "qa/zz-walk/plant.sh", walked: false, judged: false },
+  { id: "WK-UPPER-CASE", path: "test/zz-walk/plant.TS", walked: false, judged: false },
+  { id: "WK-SRC", path: "src/zz-walk-plant.ts", walked: false, judged: false },
+  { id: "WK-TREE-ROOT", path: "zz-walk-plant.mjs", walked: false, judged: false },
+  { id: "WK-OTHER-DIRECTORY", path: "scripts/zz-walk/plant.mjs", walked: false, judged: false },
+];
+/** The text of every C8 walk plant: one HX termination clause. */
+const PAGE_PLANT_TEXT = "HX children are terminated on abort.\n";
+/**
+ * The C8 walk's words, one planted page each: a .md page directly in docs/workbench, in its receipts directory, six directories
+ * below it, in a dot directory and in a node_modules directory (the C8 walk skips none); and its edges, none walked: a .markdown,
+ * .mdx, upper-case .MD and .txt name, and a page in docs/ outside docs/workbench and at the tree's root (R-SCOPE's family).
+ */
+const PAGE_WALK_PLANTS: readonly WalkPlant[] = [
+  { id: "WK-PAGE", path: "docs/workbench/zz-walk.md", walked: true, judged: true },
+  { id: "WK-PAGE-RECEIPTS", path: "docs/workbench/receipts/zz-walk.md", walked: true, judged: true },
+  { id: "WK-PAGE-DEEP", path: "docs/workbench/programs/zz-walk/a/b/c/d/zz-walk.md", walked: true, judged: true },
+  { id: "WK-PAGE-DOT-DIRECTORY", path: "docs/workbench/.zz-walk/zz-walk.md", walked: true, judged: true },
+  { id: "WK-PAGE-NODE-MODULES", path: "docs/workbench/node_modules/zz-walk.md", walked: true, judged: true },
+  { id: "WK-PAGE-MARKDOWN", path: "docs/workbench/zz-walk.markdown", walked: false, judged: false },
+  { id: "WK-PAGE-MDX", path: "docs/workbench/zz-walk.mdx", walked: false, judged: false },
+  { id: "WK-PAGE-UPPER-CASE", path: "docs/workbench/zz-walk.MD", walked: false, judged: false },
+  { id: "WK-PAGE-TEXT", path: "docs/workbench/zz-walk.txt", walked: false, judged: false },
+  { id: "WK-PAGE-DOCS", path: "docs/zz-walk.md", walked: false, judged: false },
+  { id: "WK-PAGE-TREE-ROOT", path: "zz-walk.md", walked: false, judged: false },
+];
+/** A symbolic link each walk row plants (path, target relative to the link): the anchor lists it as unmodelled, never as a file. */
+const WALK_LINKS: ReadonlyArray<readonly [string, string]> = [
+  ["test/zz-walk-link.ts", "../zz-walk-plant.mjs"],
+  ["docs/workbench/zz-walk-link.md", "../../zz-walk.md"],
+];
+const walkedPaths = (plants: readonly WalkPlant[]): string[] =>
+  plants
+    .filter(plant => plant.walked)
+    .map(plant => plant.path)
+    .sort();
+const judgedPaths = (plants: readonly WalkPlant[]): string[] =>
+  plants
+    .filter(plant => plant.judged)
+    .map(plant => plant.path)
+    .sort();
+
 /** Floors below today's measured counts (header), so an emptied collector reds and an additive change does not. */
 const LITERAL_FLOOR = 25;
 const IDENTIFIER_FLOOR = 200;
@@ -2077,6 +2324,17 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
       pagePlants: PAGE_PLANTS.map(plant => `${plant.id}=${plant.hits.length}/${plant.refusals.join("+")}#${digest(plant.markdown)}`),
       refusal4Lifecycle: REFUSAL_4_LIFECYCLE.map(member => `${member.id}=${[...member.mocks, ...member.tampers].join("+")}#${digest(JSON.stringify(member.edits))}`),
       refusal4Plants: REFUSAL_4_PLANTS.map(plant => `${plant.id}=${plant.drivers.join("+")}/${plant.shapes.join("+")}#${digest(`${plant.path}\n${plant.content}`)}`),
+      walks: {
+        roots: [...WALK_ROOTS],
+        pageFile: PAGE_FILE,
+        skipped: SKIPPED_DIRECTORY,
+        texts: [`${digest(WALK_PLANT_TEXT)}=${WALK_PLANT_READING}`, digest(PAGE_PLANT_TEXT)],
+        sources: WALK_PLANTS.map(plant => `${plant.id}=${plant.path}:${plant.walked ? "walked" : "unwalked"}/${plant.judged ? "judged" : "quiet"}`),
+        pages: PAGE_WALK_PLANTS.map(plant => `${plant.id}=${plant.path}:${plant.walked ? "walked" : "unwalked"}/${plant.judged ? "judged" : "quiet"}`),
+        links: WALK_LINKS.map(([path, target]) => `${path}->${target}`),
+        anchors: [...C7_ANCHORS],
+      },
+      knownClauses: KNOWN_CLAUSES.map(clause => `${clause.page}=${clause.terms.join("+")}#${clause.digest}`),
     }).toStrictEqual({
       shaped: true,
       distinct: true,
@@ -2387,6 +2645,8 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
         "R-GROUP-FORM:C6",
         "R-BIDI:C8",
         "R-REAPER:C7",
+        "R-UNWALKED:C7 C8",
+        "R-KNOWN-CLAUSE:C8",
       ],
       falsifierPlants: [
         "U1(a) childGone=F2:destructuring+F3:/proc path#e1a951873ff2",
@@ -2562,6 +2822,56 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
         "GP4-C7-18=import/F3:process-table command#21e8b969c3ea",
         "GP4-C7-19=import/F3:process-table command#9915df23a2f6",
       ],
+      walks: {
+        roots: ["test", "qa"],
+        pageFile: ".md",
+        skipped: "node_modules",
+        texts: ["f6aab656949f=import/F1:member+F2:member", "27fb05ca5021"],
+        sources: [
+          "WK-TEST-TS=test/zz-walk-plant.ts:walked/judged",
+          "WK-TEST-MTS=test/zz-walk/plant.mts:walked/judged",
+          "WK-TEST-CTS=test/zz-walk/plant.cts:walked/judged",
+          "WK-QA-JS=qa/zz-walk/plant.js:walked/judged",
+          "WK-QA-MJS=qa/zz-walk-plant.mjs:walked/judged",
+          "WK-QA-CJS=qa/zz-walk/plant.cjs:walked/judged",
+          "WK-FIXTURES=test/fixtures/zz-walk/plant.ts:walked/judged",
+          "WK-DOT-DIRECTORY=test/.zz-walk/plant.ts:walked/judged",
+          "WK-DEEP-TEST=test/zz-walk/a/b/c/d/e/plant.ts:walked/judged",
+          "WK-DEEP-QA=qa/workbench/zz-walk/a/b/c/d/plant.mjs:walked/judged",
+          "WK-SELF=test/workbench-hyperunix-custody-claims.test.ts:walked/quiet",
+          "WK-NODE-MODULES=test/node_modules/plant.ts:unwalked/quiet",
+          "WK-NODE-MODULES-DEEP=qa/zz-walk/a/node_modules/b/plant.mjs:unwalked/quiet",
+          "WK-TSX=test/zz-walk/plant.test.tsx:unwalked/quiet",
+          "WK-JSX=qa/zz-walk/plant.jsx:unwalked/quiet",
+          "WK-JSON=test/zz-walk/plant.json:unwalked/quiet",
+          "WK-SHELL=qa/zz-walk/plant.sh:unwalked/quiet",
+          "WK-UPPER-CASE=test/zz-walk/plant.TS:unwalked/quiet",
+          "WK-SRC=src/zz-walk-plant.ts:unwalked/quiet",
+          "WK-TREE-ROOT=zz-walk-plant.mjs:unwalked/quiet",
+          "WK-OTHER-DIRECTORY=scripts/zz-walk/plant.mjs:unwalked/quiet",
+        ],
+        pages: [
+          "WK-PAGE=docs/workbench/zz-walk.md:walked/judged",
+          "WK-PAGE-RECEIPTS=docs/workbench/receipts/zz-walk.md:walked/judged",
+          "WK-PAGE-DEEP=docs/workbench/programs/zz-walk/a/b/c/d/zz-walk.md:walked/judged",
+          "WK-PAGE-DOT-DIRECTORY=docs/workbench/.zz-walk/zz-walk.md:walked/judged",
+          "WK-PAGE-NODE-MODULES=docs/workbench/node_modules/zz-walk.md:walked/judged",
+          "WK-PAGE-MARKDOWN=docs/workbench/zz-walk.markdown:unwalked/quiet",
+          "WK-PAGE-MDX=docs/workbench/zz-walk.mdx:unwalked/quiet",
+          "WK-PAGE-UPPER-CASE=docs/workbench/zz-walk.MD:unwalked/quiet",
+          "WK-PAGE-TEXT=docs/workbench/zz-walk.txt:unwalked/quiet",
+          "WK-PAGE-DOCS=docs/zz-walk.md:unwalked/quiet",
+          "WK-PAGE-TREE-ROOT=zz-walk.md:unwalked/quiet",
+        ],
+        links: ["test/zz-walk-link.ts->../zz-walk-plant.mjs", "docs/workbench/zz-walk-link.md->../../zz-walk.md"],
+        anchors: [
+          "test/workbench-provider-lifecycle.test.ts",
+          "test/workbench-hyperunix-observer.test.ts",
+          "test/workbench-hyperunix-graduation-vocabulary-census.test.ts",
+          "qa/workbench/hx-task-scope-probe.mjs",
+        ],
+      },
+      knownClauses: ["docs/workbench/receipts/wb-ny54.md=child processes#720365d7f0b7"],
     });
   });
 
@@ -2672,7 +2982,7 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
     });
   });
 
-  it("C2 calibration: a reassigned, let-bound, re-declared or mutated subject, a stand-in registration on the registry, a module mock of the provider or registry through its .js or .ts specifier, an import() argument or a const-bound callee key, a file-level, in-case or aliased spy, a spy whose method name a twice-declared const spells, a global assigned or forged and restored (plainly, by array or object destructuring assignment, through a for-of target, through globalThis.Object.assign or a const alias of Object), an aliased global, a global shadowed by a local elsewhere, an alias whose name an earlier const also declares, a mutator call, fake timers, a patched import member, an assertion in a hook of the suite, a spy through call and an aliased, destructured, destructuring-assigned or rest-destructured mutator each read as a violation, and an environment write reads as none; every one of refusal #4's 33 lifecycle members (REFUSAL_4_LIFECYCLE, gate-prep-4's GP4-C2 edits verbatim - an import binding written in K2 while a same-named const, parameter, catch variable or destructured binding of another scope shadows its name, each beside its unshadowed control, and every claim word and residual-list addition refusal #4 names) reads exactly its recorded tampers and mocks, the member ids equal the readers census's GP4-C2 rows, and every C2 TAMPER FORMS word of the landed readers reads at least one of these plants", { timeout: CENSUS_TIMEOUT }, () => {
+  it("C2 calibration: a reassigned, let-bound, re-declared or mutated subject, a stand-in registration on the registry, a module mock of the provider or registry through its .js or .ts specifier, an import() argument or a const-bound callee key, a file-level, in-case or aliased spy, a spy whose method name a twice-declared const spells, a global assigned or forged and restored (plainly, by array or object destructuring assignment, through a for-of target, through globalThis.Object.assign or a const alias of Object), an aliased global, a global shadowed by a local elsewhere, an alias whose name an earlier const also declares, a mutator call, fake timers, a patched import member, an assertion in a hook of the suite, a spy through call and an aliased, destructured, destructuring-assigned or rest-destructured mutator each read as a violation, and an environment write reads as none; every one of refusal #4's 33 lifecycle members (REFUSAL_4_LIFECYCLE, gate-prep-4's GP4-C2 edits verbatim - an import binding written in K2 while a same-named const, parameter, catch variable or destructured binding of another scope shadows its name, each beside its unshadowed control, and every claim word and residual-list addition refusal #4 names) reads exactly its recorded tampers and mocks, the member ids equal the readers census's GP4-C2 rows, and every C2 TAMPER FORMS word of the landed readers reads at least one plant of this row (its own plants and refusal #4's members together)", { timeout: CENSUS_TIMEOUT }, () => {
     const text = read(LIFECYCLE);
     const plants: ReadonlyArray<readonly [string, string]> = [
       ["U8 reassigned let", plantedText(text, K2_ANCHOR, `let result: unknown = await nativeHyperUnixFind(process.cwd(), "hx.fs/regular-file");\n    result = native;`)],
@@ -2943,18 +3253,34 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
     ]);
   });
 
-  it("C7 no hand-rolled kill falsifier: no test or qa file other than this census whose text, raw or unescaped, holds the needle hyperunix (any case) and that the landed readers' hxDrivers classes as driving HX by any of its C7 DRIVER FORMS (an import, invoke or override form) carries an F1-F4 shape the landed readers' falsifierShapes reads by any of its C7 SHAPE FORMS, a command read through commandHeads, beside the hits KNOWN_REAPERS sets aside (R-REAPER)", { timeout: CENSUS_TIMEOUT }, () => {
+  it("C7 no hand-rolled kill falsifier: on the repository the C7 walk reads exactly the files node:fs's recursive listing lists under test/ and qa/ (each regular file with a SOURCE_FILE name - .ts .mts .cts .js .mjs .cjs - outside a node_modules directory, and no entry there but regular files and directories); C7 judges exactly the listed files other than this census whose text, raw or unescaped, holds the needle hyperunix (any case) and that the landed readers' hxDrivers classes as driving HX by any of its C7 DRIVER FORMS (an import, invoke or override form), three test .ts anchors and the qa .mjs anchor among them; and no judged file carries an F1-F4 shape the landed readers' falsifierShapes reads by any of its C7 SHAPE FORMS, a command read through commandHeads, beside the hits KNOWN_REAPERS sets aside (R-REAPER)", { timeout: CENSUS_TIMEOUT }, () => {
     const { sources, judged } = judgedDrivers();
     const paths = judged.map(entry => entry.path);
+    const listed = listedSources(ROOT);
+    /** The listed files C7 must judge, recomputed apart from the walk and judgeTree. */
+    const driven = listed.files.filter(path => path !== SELF && passesPrefilter(read(path)) && hxDrivers(parse(path)).length > 0);
     expect({
+      walk: {
+        unwalked: listed.files.filter(path => !sources.includes(path)),
+        unlisted: sources.filter(path => !listed.files.includes(path)),
+        unmodelled: listed.unmodelled,
+      },
+      judging: { unjudged: driven.filter(path => !paths.includes(path)), misjudged: paths.filter(path => !driven.includes(path)) },
       floor: judged.length >= JUDGED_FLOOR,
-      anchored: [LIFECYCLE, "test/workbench-hyperunix-observer.test.ts", "test/workbench-hyperunix-graduation-vocabulary-census.test.ts"].every(path => paths.includes(path)),
+      anchored: C7_ANCHORS.filter(path => !paths.includes(path)),
       selfExcluded: !paths.includes(SELF) && sources.includes(SELF),
       hits: judged.flatMap(entry => unknownHits(entry).map(hit => `${entry.path}:${hit.line} ${hit.shape} (${hit.form})`)),
-    }).toStrictEqual({ floor: true, anchored: true, selfExcluded: true, hits: [] });
+    }).toStrictEqual({
+      walk: { unwalked: [], unlisted: [], unmodelled: [] },
+      judging: { unjudged: [], misjudged: [] },
+      floor: true,
+      anchored: [],
+      selfExcluded: true,
+      hits: [],
+    });
   });
 
-  it("C7 calibration: the detector finds the SDK transport's and the RF provider's kill code and every planted member, refusal #1's, #2's and #3's among them, in its own shape and form, and the classifier classes each driving form, a const-bound, const-shadowed, escaped or node_modules-path specifier and an env-call override among them, each passing the prefilter, but never a capability-id or override data literal, a module mock, a type-only import or a type position alone; every one of refusal #4's 22 plant members (REFUSAL_4_PLANTS, gate-prep-4's GP4-C7 files verbatim, each at a path the C7 walk reads) reads exactly its recorded prefilter, drivers and shapes, the member ids equal the readers census's GP4-C7 rows, and every C7 DRIVER FORMS and SHAPE FORMS word of the landed readers reads at least one of these plants", { timeout: CENSUS_TIMEOUT }, () => {
+  it("C7 calibration: the detector finds the SDK transport's and the RF provider's kill code and every planted member, refusal #1's, #2's and #3's among them, in its own shape and form, and the classifier classes each driving form, a const-bound, const-shadowed, escaped or node_modules-path specifier and an env-call override among them, each passing the prefilter, but never a capability-id or override data literal, a module mock, a type-only import or a type position alone; every one of refusal #4's 22 plant members (REFUSAL_4_PLANTS, gate-prep-4's GP4-C7 files verbatim) reads exactly its recorded prefilter, drivers and shapes and, written as a real file at its declared path in a makeScratch tree of its own, is the one file the C7 walk reads there and is judged with exactly its recorded drivers and shapes when its recorded prefilter passes and its recorded drivers are not empty, else not judged; the member ids equal the readers census's GP4-C7 rows, and every C7 DRIVER FORMS and SHAPE FORMS word of the landed readers reads at least one plant of this row (its own plants and refusal #4's members together)", { timeout: CENSUS_TIMEOUT }, () => {
     const sdk = shapeCounts(falsifierShapes(parse(SDK_TRANSPORT)));
     const rf = shapeCounts(falsifierShapes(parse(RF_PROVIDER)));
     const falsifiers = FALSIFIER_PLANTS.map(plant => {
@@ -2970,9 +3296,18 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
       drivers: DRIVER_FORMS.filter(form => !driverSources.some(source => hxDrivers(source, [form]).length > 0)).map(form => form.word),
       shapes: SHAPE_FORMS.filter(form => !shapeSources.some(source => falsifierShapes(source, [form]).length > 0)).map(form => form.word),
     };
+    /** Each refusal #4 file written at its declared path in a tree of its own, read through the C7 walk and judging. */
+    const realized = inScratch(scratch =>
+      REFUSAL_4_PLANTS.map(plant => {
+        const root = join(scratch, plant.id);
+        plantTree(root, [[plant.path, plant.content]]);
+        const reading = judgeTree(scratchTree(root));
+        return { id: plant.id, sources: [...reading.sources], judged: reading.judged.map(judgedLine) };
+      }),
+    );
     expect({
       uncovered: uncoveredC7,
-      unwalked: REFUSAL_4_PLANTS.filter(plant => !isWalkedPath(plant.path)).map(plant => plant.id),
+      realized,
       sdk: { F1: (sdk.F1 ?? 0) > 0, F2: (sdk.F2 ?? 0) > 0, F4: (sdk.F4 ?? 0) > 0 },
       rf: (rf.F1 ?? 0) > 0,
       falsifiers,
@@ -2981,7 +3316,11 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
       lifecycle: hxDrivers(parse(LIFECYCLE)),
     }).toStrictEqual({
       uncovered: { drivers: [], shapes: [] },
-      unwalked: [],
+      realized: gateRows("GP4-C7").map(id => {
+        const plant = REFUSAL_4_PLANTS.find(entry => entry.id === id);
+        if (plant === undefined) return { id, sources: ["<no REFUSAL_4_PLANTS row>"], judged: [] };
+        return { id, sources: [plant.path], judged: plant.prefilter && plant.drivers.length > 0 ? [`${plant.path}=${plant.drivers.join("+")}/${plant.shapes.join("+")}`] : [] };
+      }),
       sdk: { F1: true, F2: true, F4: true },
       rf: true,
       falsifiers: FALSIFIER_PLANTS.map(plant => ({ id: plant.id, drivers: ["import"], shapes: [...plant.shapes] })),
@@ -2994,13 +3333,44 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
     });
   });
 
-  it("C8 docs: every .md page under docs/workbench, read in the header's view of what marked renders and a browser shows (comments, tags and Default_Ignorable code points render nothing, character references decode, units split into clauses), is a modelled page with no clause pairing the HX side with a vocabulary term unless it names the upstream HXGC-OPS-002 artifact", { timeout: CENSUS_TIMEOUT }, () => {
+  it("C7 walk: in a makeScratch tree of real files (WALK_PLANTS), the C7 walk reads exactly the walked plants - a SOURCE_FILE name of each of the six extensions, a file directly in test/ and in qa/ and six directories below each, a file in a fixtures and in a dot directory, and this census's own path - and none of the others (a file in a node_modules directory directly under test/ or deeper under qa/, a .tsx, .jsx, .json, .sh or upper-case .TS name, a file under src/, at the tree's root or under another directory); node:fs's recursive listing lists exactly the walked plants; C7 judges every walked plant but this census's path, each as an SDK import with an F1 and an F2 member; and in a second tree the listing reads a symbolic link under test/ as unmodelled, never as a file", { timeout: CENSUS_TIMEOUT }, () => {
+    const reading = inScratch(root => {
+      plantTree(
+        root,
+        WALK_PLANTS.map(plant => [plant.path, WALK_PLANT_TEXT] as const),
+      );
+      const { sources, judged } = judgeTree(scratchTree(root));
+      const listed = listedSources(root);
+      return { walked: [...sources].sort(), listed: [...listed.files], unmodelled: [...listed.unmodelled], judged: judged.map(judgedLine).sort() };
+    });
+    const link = inScratch(root => {
+      plantTree(root, [["zz-walk-plant.mjs", WALK_PLANT_TEXT]], WALK_LINKS);
+      const listed = listedSources(root);
+      return { files: [...listed.files], unmodelled: [...listed.unmodelled] };
+    });
+    const walked = walkedPaths(WALK_PLANTS);
+    expect({ ...reading, link }).toStrictEqual({
+      walked,
+      listed: walked,
+      unmodelled: [],
+      judged: judgedPaths(WALK_PLANTS).map(path => `${path}=${WALK_PLANT_READING}`),
+      link: { files: [], unmodelled: ["test/zz-walk-link.ts"] },
+    });
+  });
+
+  it("C8 docs: on the repository the C8 walk reads exactly the .md files node:fs's recursive listing lists under docs/workbench (and no entry there but regular files and directories); every page it reads, read in the header's view of what marked renders and a browser shows (comments, tags and Default_Ignorable code points render nothing, character references decode, units split into clauses), is a modelled page with no clause pairing the HX side with a vocabulary term unless it names the upstream HXGC-OPS-002 artifact, beside the clauses KNOWN_CLAUSES sets aside (R-KNOWN-CLAUSE)", { timeout: CENSUS_TIMEOUT }, () => {
     const reading = docsReading();
+    const listed = listedPages(ROOT);
     expect({
       files: reading.files.length >= 50,
+      walk: {
+        unwalked: listed.files.filter(file => !reading.files.includes(file)),
+        unlisted: reading.files.filter(file => !listed.files.includes(file)),
+        unmodelled: listed.unmodelled,
+      },
       refusals: reading.refusals,
-      hits: reading.clauses.filter(clause => isDocsHit(clause.text)).map(clause => `${clause.file} [clause ${clause.index}] [${termsIn(clause.text).join(", ")}] ${clause.text}`),
-    }).toStrictEqual({ files: true, refusals: [], hits: [] });
+      hits: unknownClauses(reading.clauses.filter(clause => isDocsHit(clause.text))).map(clause => `${clause.file} [clause ${clause.index}] [${termsIn(clause.text).join(", ")}] ${clause.text}`),
+    }).toStrictEqual({ files: true, walk: { unwalked: [], unlisted: [], unmodelled: [] }, refusals: [], hits: [] });
   });
 
   it("C8 calibration: the same view finds an RF termination clause in the frozen TRACEABILITY.md and HX clauses across the docs, reads every planted page exactly as the view models it (a combining grapheme joiner, its reference and a variation selector render nothing, a Hangul filler renders a blank), and refuses an unmodelled element or a hiding attribute", { timeout: CENSUS_TIMEOUT }, () => {
@@ -3020,6 +3390,39 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
     });
   });
 
+  it("C8 walk: in a makeScratch tree of real pages (PAGE_WALK_PLANTS), the C8 walk reads exactly the walked plants - a .md page directly in docs/workbench, in its receipts directory, six directories below it, in a dot directory and in a node_modules directory - and none of the others (a .markdown, .mdx, upper-case .MD or .txt name, a page in docs/ outside docs/workbench or at the tree's root); node:fs's recursive listing lists exactly the walked plants; C8 reads the planted termination clause on every walked page and no other; and in a second tree the listing reads a symbolic link under docs/workbench as unmodelled, never as a page", { timeout: CENSUS_TIMEOUT }, () => {
+    const reading = inScratch(root => {
+      plantTree(
+        root,
+        PAGE_WALK_PLANTS.map(plant => [plant.path, PAGE_PLANT_TEXT] as const),
+      );
+      const docs = docsReadingOf(scratchTree(root));
+      const listed = listedPages(root);
+      return {
+        walked: [...docs.files].sort(),
+        listed: [...listed.files],
+        unmodelled: [...listed.unmodelled],
+        read: docs.clauses
+          .filter(clause => isDocsHit(clause.text))
+          .map(clause => `${clause.file}: ${clause.text}`)
+          .sort(),
+      };
+    });
+    const link = inScratch(root => {
+      plantTree(root, [["zz-walk.md", PAGE_PLANT_TEXT]], WALK_LINKS);
+      const listed = listedPages(root);
+      return { files: [...listed.files], unmodelled: [...listed.unmodelled] };
+    });
+    const walked = walkedPaths(PAGE_WALK_PLANTS);
+    expect({ ...reading, link }).toStrictEqual({
+      walked,
+      listed: walked,
+      unmodelled: [],
+      read: judgedPaths(PAGE_WALK_PLANTS).map(path => `${path}: ${PAGE_PLANT_TEXT.trim()}`),
+      link: { files: [], unmodelled: ["docs/workbench/zz-walk-link.md"] },
+    });
+  });
+
   it("C9 run pin: the run pin's literals name the HX suite, every frozen case title, this file's suite and every case of this file, and each residual row's title is its RESIDUALS entry", { timeout: CENSUS_TIMEOUT }, () => {
     const pinned = new Set(literalTexts(parse(RUN_PIN)));
     const self = parse(SELF);
@@ -3031,7 +3434,7 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
       cases: own.length,
       residualRows: own.filter(entry => entry.title.startsWith("R-")).map(entry => entry.title),
       unpinned: needed.filter(title => !pinned.has(title)),
-    }).toStrictEqual({ suites: [SUITE], cases: 46, residualRows: RESIDUALS.map(residualTitle), unpinned: [] });
+    }).toStrictEqual({ suites: [SUITE], cases: 50, residualRows: RESIDUALS.map(residualTitle), unpinned: [] });
   });
 
   // ---- residual rows: each plants a member of its family, shows the reader quiet on it, and shows the same reader catching a control ----
@@ -3361,6 +3764,55 @@ describe("wb-tz2.11 HyperUnix custody-claims census (HX-ORIGINAL-GOALS-CLOSURE-R
     const loud = unknownHits({ path: first.path, drivers: hxDrivers(planted), hits: falsifierShapes(planted) }).map(hit => `${hit.shape}:${hit.form}`);
     expect({ quiet, loud }).toStrictEqual({ quiet: KNOWN_REAPERS.map(reaper => ({ path: reaper.path, hits: [...reaper.hits], unknown: [] })), loud: ["F1:member"] });
     RAN.add(residualNamed("R-REAPER").id);
+  });
+
+  it("R-UNWALKED (C7 C8): a file a walk does not read is neither judged nor read, however it drives HX and kills or claims a termination - for C7 a name outside SOURCE_FILE (a .tsx, .jsx, .json, .sh or upper-case .TS name among them), a file in a node_modules directory or a file outside test/ and qa/; for C8 a page named other than .md (a .markdown, .mdx, upper-case .MD or .txt name among them)", { timeout: CENSUS_TIMEOUT }, () => {
+    const sources = WALK_PLANTS.filter(plant => !plant.walked);
+    const pages = PAGE_WALK_PLANTS.filter(plant => !plant.walked && plant.path.startsWith(`${DOCS}/`));
+    const [control] = WALK_PLANTS;
+    const [pageControl] = PAGE_WALK_PLANTS;
+    if (control === undefined || pageControl === undefined) throw new Error("a walk plant table is empty");
+    const reading = inScratch(root => {
+      plantTree(root, [
+        ...[...sources, control].map(plant => [plant.path, WALK_PLANT_TEXT] as const),
+        ...[...pages, pageControl].map(plant => [plant.path, PAGE_PLANT_TEXT] as const),
+      ]);
+      const tree = scratchTree(root);
+      return {
+        judged: judgeTree(tree).judged.map(entry => entry.path),
+        read: docsReadingOf(tree)
+          .clauses.filter(clause => isDocsHit(clause.text))
+          .map(clause => clause.file),
+      };
+    });
+    expect({ quiet: { sources: sources.length >= 10, pages: pages.length >= 4 }, ...reading }).toStrictEqual({ quiet: { sources: true, pages: true }, judged: [control.path], read: [pageControl.path] });
+    RAN.add(residualNamed("R-UNWALKED").id);
+  });
+
+  it("R-KNOWN-CLAUSE (C8): a docs clause frozen in KNOWN_CLAUSES by page, terms and text digest (a trunk receipt's host-admission clause naming the child-processes pool beside the hyperunix.find capability id) is set aside by C8, once, so what it says is not read; a clause beside it, a second copy of it, a changed clause or a page that no longer holds it reads loud", { timeout: CENSUS_TIMEOUT }, () => {
+    const reading = docsReading();
+    const quiet = KNOWN_CLAUSES.map(known => {
+      const held = reading.clauses.filter(clause => clause.file === known.page && isDocsHit(clause.text) && digest(clause.text) === known.digest);
+      return { page: known.page, held: held.map(clause => termsIn(clause.text).join("+")), unknown: unknownClauses(held).length };
+    });
+    const [first] = KNOWN_CLAUSES;
+    if (first === undefined) throw new Error("KNOWN_CLAUSES is empty");
+    const held = reading.clauses.find(clause => clause.file === first.page && digest(clause.text) === first.digest);
+    const beside = pageView(`${read(first.page)}\n\nThe HX child processes are terminated on abort.\n`)
+      .clauses.map((text, index) => ({ file: first.page, index, text }))
+      .filter(clause => isDocsHit(clause.text));
+    expect({
+      quiet,
+      beside: unknownClauses(beside).map(clause => clause.text),
+      changed: held === undefined ? -1 : unknownClauses([{ ...held, text: `${held.text} now` }]).length,
+      twice: held === undefined ? -1 : unknownClauses([held, held]).length,
+    }).toStrictEqual({
+      quiet: KNOWN_CLAUSES.map(known => ({ page: known.page, held: [known.terms.join("+")], unknown: 0 })),
+      beside: ["The HX child processes are terminated on abort."],
+      changed: 1,
+      twice: 1,
+    });
+    RAN.add(residualNamed("R-KNOWN-CLAUSE").id);
   });
 
   it("records: every residual row ran its own case to its end", () => {
