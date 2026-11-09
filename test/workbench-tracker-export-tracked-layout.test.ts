@@ -16,15 +16,18 @@
  * Also NOT CLAIMED (wb-ff3w): the bytes of any continuation; a layout L7 and L8 do not plant - a continuation without its month's
  * monthly shard, a month whose continuations skip a letter, a plant in a month between the oldest and the newest, a planted name
  * outside the shard form, a continuation of a month after the newest, and a continuation holding a line of an id no other shard holds.
- * wb-nu12 (R694 follow-up of wb-ff3w landing 1068, F1): L9 plants three entries that are not shard files in a scratch copy of the tracked
- * export - a directory under the name of the next continuation after the newest month's latest shard, a regular file named README holding
- * text that is not JSON, and a regular file under that latest shard's name with .orig appended holding a closed row's rewritten line, the
- * copy's main export carrying that line's stub - and holds that L2's reading of the copy returns, lists the three, takes no archived line
- * from the .orig file, and that L2's assertions over that reading fail first at their named 'entries that are not shard files' assertion
- * although the reading also finds that row unmet.
+ * wb-nu12 (R694 follow-up of wb-ff3w landing 1068, F1; respin after refusal #1, U1): L9 reads two scratch copies of the tracked export -
+ * one as tracked, and one with an empty continuation planted after the newest month's latest shard, which is then that copy's newest
+ * month's latest shard - and plants in each three entries that are not shard files: a directory under the name of the next continuation
+ * after the copy's newest month's latest shard, a regular file named README holding text that is not JSON, and a regular file under the
+ * newest month's monthly shard name with .orig appended holding a closed row's rewritten line, the copy's main export carrying that
+ * line's stub. In each copy it holds that L2's reading returns, lists the three in name order with the .orig file last, takes no archived
+ * line from the .orig file, and that L2's assertions over that reading fail first at their named 'entries that are not shard files'
+ * assertion although the reading also finds that row unmet.
  * Also NOT CLAIMED (wb-nu12): whether L2's reading opens or reads an entry that is not a shard file when doing so neither fails nor yields
  * an archived line; an entry L9 does not plant - a symbolic link, a FIFO or another special file, a regular file under a shard name whose
- * text does not parse, an entry that cannot be read; and what L3, L5, L7 and L8 do with an entry that is not a shard file.
+ * text does not parse, an entry that cannot be read; what L9 holds of an archive other than its two copies; what L3, L5, L7 and L8 do
+ * with an entry that is not a shard file; and what L9 does with an entry of the tracked archive that is not a shard file.
  */
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -219,6 +222,49 @@ function copyTrackedExport(dir: string): { readonly main: string; readonly archi
   return { main, archive };
 }
 
+type NonShardCopy = {
+  readonly latest: string;
+  readonly readme: string;
+  readonly directory: string;
+  readonly orig: string;
+  readonly id: string;
+  readonly reading: ShardReading;
+};
+
+/**
+ * L9's copy (wb-nu12): a scratch copy of the tracked export with `continuations` empty continuations planted after the newest month's
+ * latest shard, then three entries that are not shard files planted in its archive - a directory under the name of the next continuation
+ * after the copy's newest month's latest shard, a regular file named README holding text that is not JSON, and a regular file under the
+ * newest month's monthly shard name with .orig appended holding one line, the main export's first closed row with updated_at rewritten
+ * and a notes field added, the copy's main export carrying that line's stub in place of the row's tracked line - and L2's reading of it.
+ * The .orig file is named after the MONTHLY shard: that name is a prefix of the .orig file's, so the .orig file sorts after every shard of
+ * its month whichever of them is the latest; under the latest shard's name it sorted before the monthly shard once a continuation was the
+ * latest, '-' before '.' (wb-nu12 refusal #1, U1).
+ */
+function nonShardCopy(continuations: number): NonShardCopy {
+  const dir = makeScratch("tracker-export-tracked-layout-");
+  scratches.push(dir);
+  const copy = copyTrackedExport(dir);
+  const trackedLatest = [...latestByMonth(shardNames(copy.archive)).values()].at(-1) ?? "";
+  for (let step = 1; step <= continuations; step += 1) writeFileSync(join(copy.archive, continuationAfter(trackedLatest, step)), "");
+  const [month = "", latest = ""] = [...latestByMonth(shardNames(copy.archive))].at(-1) ?? [];
+  const directory = continuationAfter(latest, 1);
+  const readme = "README";
+  const orig = `issues-closed-${month}.jsonl.orig`;
+  const mainLines = readFileSync(MAIN, "utf8").split("\n");
+  const index = mainLines.findIndex(line => line !== "" && parsed(line).status === "closed");
+  if (index < 0) throw new Error("the tracked main export holds no closed row");
+  const mainLine = mainLines[index] ?? "";
+  const planted: Row = { ...parsed(mainLine), updated_at: REWRITTEN_UPDATED_AT, notes: "wb-nu12 L9: a line in an entry that is not a shard file" };
+  expect(stubLine(planted) === mainLine, "the .orig line's stub equal to its row's tracked main export line").toBe(false);
+  mainLines[index] = stubLine(planted);
+  writeFileSync(copy.main, mainLines.join("\n"));
+  mkdirSync(join(copy.archive, directory));
+  writeFileSync(join(copy.archive, readme), "not a shard\n");
+  writeFileSync(join(copy.archive, orig), `${JSON.stringify(planted)}\n`);
+  return { latest, readme, directory, orig, id: String(planted.id), reading: shardReading(copy.main) };
+}
+
 describe("wb-00si the tracked tracker export, read where it is tracked", { timeout: 180_000 }, () => {
   it("L1 STUBS: the tracked main export holds closed rows, and every closed row's fields are among _type, id, title, status, updated_at, closed_at, close_reason and dependencies", () => {
     const closed = mainRows().filter(row => row.status === "closed");
@@ -335,31 +381,20 @@ describe("wb-00si the tracked tracker export, read where it is tracked", { timeo
     expect(trip.observed).toEqual(trip.expected);
   });
 
-  it("L9 NON-SHARD ENTRIES: in a scratch copy of the tracked export with three entries that are not shard files planted in its archive - a directory under the name of the next continuation after the newest month's latest shard, a regular file named README holding text that is not JSON, and a regular file under that latest shard's name with .orig appended holding one line, the main export's first closed row with updated_at rewritten and a notes field added, the copy's main export carrying that line's stub in place of the row's tracked line, which differs from it - L2's reading of the copy returns, lists the .orig file last and the three plants in name order (README first) as the entries that are not shard files, and finds exactly that row's stub line differing from its id's last archived line, so it takes no archived line from the .orig file; and L2's assertions over that reading fail first at their named 'entries that are not shard files' assertion", () => {
-    const dir = makeScratch("tracker-export-tracked-layout-");
-    scratches.push(dir);
-    const copy = copyTrackedExport(dir);
-    const newestLatest = [...latestByMonth(shardNames(ARCHIVE)).values()].at(-1) ?? "";
-    const directory = continuationAfter(newestLatest, 1);
-    const readme = "README";
-    const orig = `${newestLatest}.orig`;
-    const mainLines = readFileSync(MAIN, "utf8").split("\n");
-    const index = mainLines.findIndex(line => line !== "" && parsed(line).status === "closed");
-    if (index < 0) throw new Error("the tracked main export holds no closed row");
-    const mainLine = mainLines[index] ?? "";
-    const planted: Row = { ...parsed(mainLine), updated_at: REWRITTEN_UPDATED_AT, notes: "wb-nu12 L9: a line in an entry that is not a shard file" };
-    expect(stubLine(planted) === mainLine, "the .orig line's stub equal to its row's tracked main export line").toBe(false);
-    mainLines[index] = stubLine(planted);
-    writeFileSync(copy.main, mainLines.join("\n"));
-    mkdirSync(join(copy.archive, directory));
-    writeFileSync(join(copy.archive, readme), "not a shard\n");
-    writeFileSync(join(copy.archive, orig), `${JSON.stringify(planted)}\n`);
-    const reading = shardReading(copy.main);
-    expect({ last: reading.names.at(-1), notShards: reading.notShards, unmet: reading.unmet }).toEqual({
-      last: orig,
-      notShards: [readme, directory, orig],
-      unmet: [`${String(planted.id)}: stub line differs`],
-    });
-    expect(() => expectShards(reading)).toThrow(/^entries that are not shard files: /);
+  it("L9 NON-SHARD ENTRIES: in each of two scratch copies of the tracked export - one as tracked, and one with an empty continuation planted after the newest month's latest shard, which is then that copy's newest month's latest shard - with three entries that are not shard files planted in its archive - a directory under the name of the next continuation after the copy's newest month's latest shard, a regular file named README holding text that is not JSON, and a regular file under the newest month's monthly shard name with .orig appended holding one line, the main export's first closed row with updated_at rewritten and a notes field added, the copy's main export carrying that line's stub in place of the row's tracked line, which differs from it - L2's reading of the copy returns, lists the .orig file last and the three plants in name order (README first) as the entries that are not shard files, and finds exactly that row's stub line differing from its id's last archived line, so it takes no archived line from the .orig file; and L2's assertions over that reading fail first at their named 'entries that are not shard files' assertion", () => {
+    const trackedLatest = [...latestByMonth(shardNames(ARCHIVE)).values()].at(-1) ?? "";
+    const copies = [nonShardCopy(0), nonShardCopy(1)];
+    expect(
+      copies.map(copy => copy.latest),
+      "each copy's newest month's latest shard",
+    ).toEqual([trackedLatest, continuationAfter(trackedLatest, 1)]);
+    for (const { latest, readme, directory, orig, id, reading } of copies) {
+      expect({ last: reading.names.at(-1), notShards: reading.notShards, unmet: reading.unmet }, `the copy whose newest month's latest shard is ${latest}`).toEqual({
+        last: orig,
+        notShards: [readme, directory, orig],
+        unmet: [`${id}: stub line differs`],
+      });
+      expect(() => expectShards(reading)).toThrow(/^entries that are not shard files: /);
+    }
   });
 });
