@@ -26,19 +26,27 @@
  *       three shards that existed before the run are byte-unchanged and are the run's sealed list; every file stays under CEILING; the
  *       round trip is byte-equal.
  *   B3  the CLI over B1's December run at FW_EXPORT_SOFT_CEILING=CEILING: compact exits 0 with an empty stderr and a receipt appending
- *       four lines to issues-closed-2026-12.jsonl alone; each shard file that existed before the run keeps its inode, modification time
- *       and bytes; the December shard holds the four lines; no temporary file stays in B3's scratch directory (the one holding .beads
- *       and the full export), in .beads or in the archive directory, each of the three listed whole after the run; after the compact run
- *       the full export file holds the text the case wrote; rehydrate prints that text, the same text the full export file holds at the
- *       end of the case.
+ *       four lines to issues-closed-2026-12.jsonl alone; each of the three shard files that existed before the run, named by path -
+ *       issues-closed-2026-10.jsonl, issues-closed-2026-11.jsonl and issues-closed-2026-11-b.jsonl - keeps its inode number, its
+ *       modification time to the nanosecond and its size, as lstat with bigint: true reports them, and its bytes; the December shard
+ *       holds the four lines; no temporary file stays in B3's scratch directory (the one holding .beads and the full export), in .beads
+ *       or in the archive directory, each of the three listed whole after the run; B3 makes those after-run reads - of the three shard
+ *       files, the December shard and the three directories - after compact exits and before rehydrate runs; after the compact run the
+ *       full export file holds the text the case wrote; rehydrate prints that text, the same text the full export file holds at the end
+ *       of the case.
  * NOT CLAIMED (scope sentences): the "sealed" refusal of a shard sealed before the run - no case reaches it, since the routing never
  * appends to such a shard (the module header says so); a past month with more than one continuation; a run more than one month after
  * the continued month; a late row of a month before the continued one (C4 of the compaction suite plants one beside a month without a
  * continuation); a ceiling other than CEILING, the default among them; any other layout of the archive before the run; a temporary
  * file anywhere outside B3's scratch directory, the system temporary directory that holds it and the working directory the CLI runs
  * in among them - no listing of B3's reaches it; rehydrate's exit status and its stderr - B3 reads its stdout alone; the full export
- * file's inode, modification time and mode - B3 reads its text alone; a pre-run shard file's status-change time and mode - kept()
- * reads its inode, modification time and bytes alone.
+ * file's inode, modification time and mode - B3 reads its text alone; a pre-run shard file's other lstat fields - its access,
+ * status-change and birth times, its mode, link count, owner, group, device and special-device numbers, block size and block count -
+ * its extended attributes, and whether the run opens, reads or writes it at all - kept() reads its inode number, its modification
+ * time in nanoseconds and its size, as lstat with bigint: true reports them, and its bytes, alone; whether the December shard is a
+ * regular file, and its inode, times and mode - B3 reads its text alone; the receipt's fields other than its appended map - B3 reads
+ * that map alone; a write made after B3's after-run reads, by the rehydrate run or by a process either CLI run leaves running - B3
+ * reads nothing on disk after rehydrate runs but the full export file's text.
  * RESIDUALS: none named.
  */
 import { spawnSync } from "node:child_process";
@@ -177,7 +185,7 @@ describe("wb-3fop the month boundary after an overflow-continued month (owner ru
     expect(rehydrateTrackerText(run.main, run.shards), "the round trip").toBe(full);
   });
 
-  it("B3 CLI AT THE BOUNDARY: compact over a .beads directory holding the November run's main export and shards, at FW_EXPORT_SOFT_CEILING of the fixture's ceiling and a 2026-12 run stamp, exits 0 with an empty stderr and a receipt appending four lines to issues-closed-2026-12.jsonl alone; each shard file that existed before the run keeps its inode, modification time and bytes; the December shard holds the four lines; no temporary file stays in the scratch directory holding .beads and the full export, in .beads or in the archive directory, each of the three listed whole after the run; after the compact run the full export file holds the text the case wrote; rehydrate prints that text, the same text the full export file holds at the end of the case", () => {
+  it("B3 CLI AT THE BOUNDARY: compact over a .beads directory holding the November run's main export and shards, at FW_EXPORT_SOFT_CEILING of the fixture's ceiling and a 2026-12 run stamp, exits 0 with an empty stderr and a receipt appending four lines to issues-closed-2026-12.jsonl alone; each of the three shard files that existed before the run, named by path, keeps its inode number, its modification time to the nanosecond and its size, as lstat with bigint: true reports them, and its bytes; the December shard holds the four lines; no temporary file stays in the scratch directory holding .beads and the full export, in .beads or in the archive directory, each of the three listed whole after the run; those after-run reads are made after compact exits and before rehydrate runs; after the compact run the full export file holds the text the case wrote; rehydrate prints that text, the same text the full export file holds at the end of the case", () => {
     const before = novemberRun();
     const dir = makeScratch("tracker-export-month-boundary-");
     scratches.push(dir);
@@ -190,8 +198,17 @@ describe("wb-3fop the month boundary after an overflow-continued month (owner ru
       writeFileSync(join(archive, name), text);
       utimesSync(join(archive, name), pinned, pinned);
     }
-    const kept = (): [string, number, number, string][] =>
-      [...before.shards.keys()].map(name => [name, lstatSync(join(archive, name)).ino, lstatSync(join(archive, name)).mtimeMs, readFileSync(join(archive, name), "utf8")]);
+    // The shard files that exist before the run, each named by path: both month shards and the -b continuation.
+    const preRun = ["issues-closed-2026-10.jsonl", "issues-closed-2026-11.jsonl", "issues-closed-2026-11-b.jsonl"];
+    expect([...before.shards.keys()], "the shard files the case writes before the run, named by path").toEqual(preRun);
+    // lstat with bigint: true reads the inode number, the modification time in whole nanoseconds and the size; mtimeMs, a double, does
+    // not resolve a 100 ns change at the pinned time (GP5-01). The bytes are read whole, as a Buffer.
+    const kept = () =>
+      preRun.map(name => {
+        const path = join(archive, name);
+        const { ino, mtimeNs, size } = lstatSync(path, { bigint: true });
+        return [name, ino, mtimeNs, size, readFileSync(path)] as const;
+      });
     const keptBefore = kept();
     const fullPath = join(dir, "full.jsonl");
     writeFileSync(fullPath, textOf(december()));
@@ -199,7 +216,7 @@ describe("wb-3fop the month boundary after an overflow-continued month (owner ru
     const run = cli(["compact", "--full", fullPath, "--beads", beads, "--now", "2026-12-01T03:00:00Z"], env);
     const appended = String(run.stdout) === "" ? "no receipt" : (JSON.parse(String(run.stdout)) as Row).appended;
     expect([run.status, run.stderr, appended], "the December run").toEqual([0, "", { "issues-closed-2026-12.jsonl": 4 }]);
-    expect(kept(), "each shard file that existed before the run").toEqual(keptBefore);
+    expect(kept(), "each of the three shard files that existed before the run keeps its inode number, modification time in nanoseconds, size and bytes").toEqual(keptBefore);
     expect(readFileSync(join(archive, "issues-closed-2026-12.jsonl"), "utf8"), "the December shard holds the four lines in export order").toBe(decemberLines(december()));
     // Every directory of B3's scratch tree - the scratch directory, .beads and the archive - listed whole (readdirSync's names sort by
     // UTF-16 code unit here, so a continuation sorts before its monthly shard: "-" precedes ".").
