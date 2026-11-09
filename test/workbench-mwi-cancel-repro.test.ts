@@ -34,15 +34,27 @@
  *   PLAN-DOMAIN then makes each of those runs again with callThrough, the call-through recorder, as the experiment's
  *   runner (wb-7ak9). callThrough hands the experiment's options on to runWorkflow with one change, the surface their
  *   onControl receives is recordedSurface over the runtime's own, and counts the abort events their signal dispatches.
- *   That run must read the same whole reading, and its record must be the one namedConduct gives its plan: a skip or
- *   retry plan on the per-agent route makes one call, that WorkflowControl method on the target's row (0 at spawn, 1 at
- *   resume), returning the reading's controlAccepted, and the run's own signal dispatches no abort event; on the
- *   run-abort route it makes no WorkflowControl call and the signal dispatches one; a "none" plan, whatever its route
- *   and barrier, makes no WorkflowControl call and the signal dispatches none. CALL-THROUGH pins recordedSurface over a
- *   planted WorkflowControl: each call of each of its five methods is recorded, in call order, as `method(argument) =
- *   value` with the value the planted method returned (`pause()`, `resume()` and `isPaused() = value` for those that
- *   take no argument); the planted method is called once and its value returned. The record is read when the
- *   experiment's promise settles: a call or an abort made after that is NOT CLAIMED.
+ *   It also records its own presence: each invocation counts one run, each surface it wraps counts one surface, and it
+ *   keeps the result each run it drives settles with. That run must read the same whole reading, and the recorder must
+ *   be present in it (wb-7ak9 refusal #1, U1): in each of the 42 recorded runs callThrough is invoked once, wraps one
+ *   surface and keeps one result, and that result's status, value and target row's last progress entry (read as
+ *   FinalRow's four fields) are the reading's runStatus, scriptValue and finalRow. Its record must be the one
+ *   namedConduct gives its plan: a skip or retry plan on the per-agent route makes one call, that WorkflowControl
+ *   method on the target's row (0 at spawn, 1 at resume), returning the reading's controlAccepted, and the run's own
+ *   signal dispatches no abort event; on the run-abort route it makes no WorkflowControl call and the signal dispatches
+ *   one; a "none" plan, whatever its route and barrier, makes no WorkflowControl call and the signal dispatches none.
+ *   CALL-THROUGH pins recordedSurface over a planted WorkflowControl: each call of each of its five methods is
+ *   recorded, in call order, as `method(argument) = value` with the value the planted method returned (`pause()`,
+ *   `resume()` and `isPaused() = value` for those that take no argument; a second plant's isPaused returns false); the
+ *   planted method is called once and its value returned. CALL-THROUGH-LIVE pins callThrough's presence counts over
+ *   planted runners: a recorder made and never invoked counts nothing; each invocation counts one run; each surface a
+ *   run hands onControl counts one surface (none, one or two of them) and reaches the caller's onControl wrapped
+ *   (another object, a skip on which is recorded and passed on to the planted surface); and the result each run settles
+ *   with is kept, the same object the recorder's promise resolves with. The record is read when the experiment's
+ *   promise settles: a call or an abort made after that is NOT CLAIMED. The record reads only the runs callThrough
+ *   drives: a call the experiment makes in a run with any other runner (runWorkflow, its default, included), a run it
+ *   makes other than through its runner, and a call on such a run's WorkflowControl surface are NOT CLAIMED, and the
+ *   presence leg holds the run callThrough drove to the reading by those three fields, not by the two runs' identity.
  *   INSTRUMENT-NO-TIMER pins, by the same parser, what the helper's source text holds: no timer global's name
  *   (setTimeout, setInterval, setImmediate) as an identifier, no literal text (string, template or regular expression)
  *   containing one of those names or the text timers, no import() call and no static import of a timers module; and
@@ -145,8 +157,8 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
-import type { WorkflowEntryState } from "../src/workflow/progress.js";
-import { runWorkflow, type WorkflowControl } from "../src/workflow/runtime.js";
+import type { WorkflowAgentEntry, WorkflowEntryState } from "../src/workflow/progress.js";
+import { runWorkflow, type WorkflowControl, type WorkflowHost, type WorkflowRunResult } from "../src/workflow/runtime.js";
 import {
   type Breach,
   type FinalRow,
@@ -1572,13 +1584,26 @@ describe("EAT-R016 a per-agent retry issued while the host's beforeDispatch is p
 });
 
 /**
- * The call-through recorder's record of one run (wb-7ak9): each call the experiment made on the WorkflowControl surface
- * its onControl received, in call order, as `method(argument) = value` (`pause()`, `resume()` and `isPaused() = value`
- * for the methods that take none), and how many abort events the run's own signal dispatched.
+ * The call-through recorder's record of one run (wb-7ak9): its own presence (how many times it was invoked as the
+ * runner, how many WorkflowControl surfaces it wrapped, and the result each run it drove settled with), each call the
+ * experiment made on the WorkflowControl surface its onControl received, in call order, as `method(argument) = value`
+ * (`pause()`, `resume()` and `isPaused() = value` for the methods that take none), and how many abort events the run's
+ * own signal dispatched.
  */
 interface ControlRecord {
+  /** How many times the recorder was invoked as the runner. */
+  runs: number;
+  /** How many surfaces it wrapped: one for each time a run it drove handed onControl a WorkflowControl. */
+  surfaces: number;
+  /** The result each run it drove settled with, in the order they settled. */
+  readonly results: WorkflowRunResult[];
   readonly calls: string[];
   aborts: number;
+}
+
+/** A record of nothing yet: no invocation, no surface, no result, no call and no abort. */
+function newRecord(): ControlRecord {
+  return { runs: 0, surfaces: 0, results: [], calls: [], aborts: 0 };
 }
 
 /** A WorkflowControl whose five methods each call the surface's own method, record the call in calls and return its value. */
@@ -1612,16 +1637,59 @@ function recordedSurface(surface: WorkflowControl, calls: string[]): WorkflowCon
 
 /**
  * The call-through recorder, the runner PLAN-DOMAIN's second run of each plan passes to the experiment: it hands the
- * experiment's own options on to runWorkflow with one change, the surface their onControl receives is recordedSurface
- * over the runtime's own, and it counts the abort events their signal dispatches.
+ * experiment's own options on to run (runWorkflow unless CALL-THROUGH-LIVE plants one) with one change, the surface their
+ * onControl receives is recordedSurface over the runtime's own, and it counts the abort events their signal dispatches.
+ * Its presence is recorded too: each invocation counts one run, each surface the run hands onControl counts one surface
+ * (counted where it is wrapped), and the result the run settles with is kept before the recorder's promise resolves.
  */
-function callThrough(record: ControlRecord): ParkedRunner {
-  return options => {
+function callThrough(record: ControlRecord, run: ParkedRunner = runWorkflow): ParkedRunner {
+  return async options => {
+    record.runs += 1;
     options.signal?.addEventListener("abort", () => {
       record.aborts += 1;
     });
-    return runWorkflow({ ...options, onControl: surface => options.onControl?.(recordedSurface(surface, record.calls)) });
+    const result = await run({
+      ...options,
+      onControl: surface => {
+        record.surfaces += 1;
+        options.onControl?.(recordedSurface(surface, record.calls));
+      },
+    });
+    record.results.push(result);
+    return result;
   };
+}
+
+/** The three fields of a run's result PLAN-DOMAIN holds to the reading: its status, its value and the target row's last progress entry, read as FinalRow's fields. */
+interface SettledRun {
+  readonly runStatus: WorkflowRunResult["status"];
+  readonly scriptValue: unknown;
+  readonly finalRow: FinalRow | undefined;
+}
+
+/** A run's result on those three fields, the target being the row at `target` (FinalRow's fields from that row's last progress entry, undefined when the log holds none). */
+function settledRun(result: WorkflowRunResult, target: number): SettledRun {
+  const last = result.progress.filter((entry): entry is WorkflowAgentEntry => entry.type === "workflow_agent" && entry.index === target).at(-1);
+  return {
+    runStatus: result.status,
+    scriptValue: result.value,
+    finalRow: last === undefined ? undefined : { state: last.state, skipped: last.skipped === true, attempt: last.attempt ?? 1, reason: last.lastAttemptReason ?? null },
+  };
+}
+
+/** The recorder's presence, read off its record: its invocations, the surfaces it wrapped, and each result it kept, on those three fields. */
+function presenceOf(record: ControlRecord, target: number): { readonly runs: number; readonly surfaces: number; readonly settled: readonly SettledRun[] } {
+  return { runs: record.runs, surfaces: record.surfaces, settled: record.results.map(result => settledRun(result, target)) };
+}
+
+/**
+ * The presence the recorder must have in each run PLAN-DOMAIN makes through it: invoked once, one surface wrapped (the
+ * run's onControl call), and one result kept, whose status, value and target row's last progress entry are the
+ * reading's, so the run the recorder drove reads, on those three fields, as the run the reading is taken from
+ * (wb-7ak9 refusal #1, U1).
+ */
+function namedPresence(reading: ParkedObservation): ReturnType<typeof presenceOf> {
+  return { runs: 1, surfaces: 1, settled: [{ runStatus: reading.runStatus, scriptValue: reading.scriptValue, finalRow: reading.finalRow }] };
 }
 
 /**
@@ -2436,7 +2504,7 @@ describe("the experiment's input lists and every ParkedPlan value (wb-9v02)", ()
     });
   });
 
-  it("PLAN-DOMAIN each of the 24 ParkedPlan values, run with every field given and again with its default fields omitted: its whole reading as measured at this tree, then its verdict; each run made again through the call-through recorder reads the same whole reading and makes the WorkflowControl calls and run-signal aborts its plan names; 42 runs of each kind", { timeout: GRID_TIMEOUT }, async () => {
+  it("PLAN-DOMAIN each of the 24 ParkedPlan values, run with every field given and again with its default fields omitted: its whole reading as measured at this tree, then its verdict; each run made again through the call-through recorder reads the same whole reading, invokes the recorder once, which wraps one surface and keeps one result giving the reading's run status, script value and final row, and makes the WorkflowControl calls and run-signal aborts its plan names; 42 runs of each kind", { timeout: GRID_TIMEOUT }, async () => {
     const runs = { plain: 0, recorded: 0 };
     for (const row of PLAN_ROWS) {
       const { control, startup, route, barrier } = row.reading.plan;
@@ -2453,11 +2521,12 @@ describe("the experiment's input lists and every ParkedPlan value (wb-9v02)", ()
         runs.plain += 1;
         expect.soft(observation, label).toEqual(row.reading);
         expect.soft(judgeParkedObservation(observation), label).toEqual(row.verdict);
-        // The same run through the call-through recorder: the reading it gives, then what the recorder saw.
-        const record: ControlRecord = { calls: [], aborts: 0 };
+        // The same run through the call-through recorder: the reading it gives, the recorder's presence in it, then what the recorder saw.
+        const record = newRecord();
         const recorded = await runParkedDispatchExperiment(input, callThrough(record));
         runs.recorded += 1;
         expect.soft(recorded, `${label} (call-through)`).toEqual(row.reading);
+        expect.soft(presenceOf(record, SETUP_AGENTS[startup]), `${label} (recorder)`).toEqual(namedPresence(row.reading));
         expect.soft({ calls: record.calls, aborts: record.aborts }, `${label} (call-through)`).toEqual(namedConduct(row.reading));
       }
     }
@@ -2494,6 +2563,101 @@ describe("the experiment's input lists and every ParkedPlan value (wb-9v02)", ()
       values: [undefined, undefined, true, true, false, false, true],
       calls: ["pause()", "resume()", "isPaused() = true", "skip(7) = true", "skip(-1) = false", "retry(8) = false", "retry(2) = true"],
       planted: ["pause", "resume", "isPaused", "skip 7", "skip -1", "retry 8", "retry 2"],
+    });
+    // A second plant whose isPaused returns false: the record holds the value the planted method returned, not a constant.
+    const unpausedLog: string[] = [];
+    const unpausedCalls: string[] = [];
+    const unpaused = recordedSurface(
+      {
+        ...surface,
+        isPaused: () => {
+          unpausedLog.push("isPaused");
+          return false;
+        },
+      },
+      unpausedCalls,
+    );
+    expect({ value: unpaused.isPaused(), calls: unpausedCalls, planted: unpausedLog }).toEqual({ value: false, calls: ["isPaused() = false"], planted: ["isPaused"] });
+  });
+
+  it("CALL-THROUGH-LIVE callThrough over planted runners: a recorder made and never invoked counts nothing; each invocation counts one run, each surface a run hands onControl counts one surface (none, one or two of them) and reaches the caller's onControl wrapped, a skip on it recorded and passed on to the planted surface, and the result each run settles with is kept, the same object the recorder's promise resolves with", async () => {
+    const planted: string[] = [];
+    const surface: WorkflowControl = {
+      pause: () => {
+        planted.push("pause");
+      },
+      resume: () => {
+        planted.push("resume");
+      },
+      isPaused: () => false,
+      skip: index => {
+        planted.push(`skip ${index}`);
+        return index === 3;
+      },
+      retry: () => false,
+    };
+    // The planted runs never reach the host; the experiment's options type requires one.
+    const host: WorkflowHost = { spawnAgent: async () => ({ ok: false, error: "planted host: no agent is run" }), abortAgent: () => {} };
+    const resultOf = (value: string): WorkflowRunResult => ({
+      status: "completed",
+      meta: { name: "planted", description: "planted run" },
+      value,
+      progress: [],
+      agentCount: 0,
+      replayedCount: 0,
+      replayedNodeCount: 0,
+      reconciledNodeCount: 0,
+    });
+    /** A planted run: it hands onControl the planted surface `handed` times, then settles with the next of `results`. */
+    const plantedRun =
+      (handed: number, results: WorkflowRunResult[]): ParkedRunner =>
+      async options => {
+        for (let k = 0; k < handed; k += 1) options.onControl?.(surface);
+        const result = results.shift();
+        if (result === undefined) throw new Error("planted run: no result left");
+        return result;
+      };
+
+    // Made and never invoked: nothing is counted.
+    const idle = newRecord();
+    const neverInvoked = callThrough(idle, plantedRun(1, [resultOf("idle")]));
+    expect({ runner: typeof neverInvoked, record: idle }).toEqual({ runner: "function", record: { runs: 0, surfaces: 0, results: [], calls: [], aborts: 0 } });
+
+    // One invocation each, of runs that hand onControl none, one or two surfaces; each received surface is then called once.
+    const readOne = async (handed: number) => {
+      const record = newRecord();
+      const result = resultOf(`handed ${handed}`);
+      const received: WorkflowControl[] = [];
+      const resolved = await callThrough(record, plantedRun(handed, [result]))({ script: "", host, onControl: control => { received.push(control); } });
+      for (const control of received) control.skip(3);
+      return {
+        runs: record.runs,
+        surfaces: record.surfaces,
+        kept: record.results.length === 1 && record.results[0] === result,
+        resolved: resolved === result,
+        received: received.length,
+        wrapped: received.every(control => control !== surface),
+        calls: [...record.calls],
+      };
+    };
+    expect([await readOne(0), await readOne(1), await readOne(2)]).toEqual([
+      { runs: 1, surfaces: 0, kept: true, resolved: true, received: 0, wrapped: true, calls: [] },
+      { runs: 1, surfaces: 1, kept: true, resolved: true, received: 1, wrapped: true, calls: ["skip(3) = true"] },
+      { runs: 1, surfaces: 2, kept: true, resolved: true, received: 2, wrapped: true, calls: ["skip(3) = true", "skip(3) = true"] },
+    ]);
+    expect(planted).toEqual(["skip 3", "skip 3", "skip 3"]);
+
+    // One recorder invoked twice: two runs, two surfaces, both results kept in the order they settled.
+    const twice = newRecord();
+    const first = resultOf("first");
+    const second = resultOf("second");
+    const runner = callThrough(twice, plantedRun(1, [first, second]));
+    const settled = [await runner({ script: "", host }), await runner({ script: "", host })];
+    expect({ runs: twice.runs, surfaces: twice.surfaces, kept: twice.results.length === 2 && twice.results[0] === first && twice.results[1] === second, resolved: settled[0] === first && settled[1] === second }).toEqual({
+      runs: 2,
+      surfaces: 2,
+      kept: true,
+      resolved: true,
     });
   });
 

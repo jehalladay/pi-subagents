@@ -13,8 +13,9 @@
  * the host is parked the experiment issues the runtime's per-agent control (WorkflowControl's method named by the plan,
  * skip or retry, by row index), then releases the barrier and records what followed. Every fixture query's script
  * pushes a success and ends its stream at once (the F5 fixture shape of test/workbench-claude-cancel-faults.test.ts).
- * The suite's PLAN-DOMAIN case pins the whole reading of each of the 24 ParkedPlan values and, through its call-through
- * recorder, the WorkflowControl calls and run-signal aborts of each run.
+ * The suite's PLAN-DOMAIN case pins the whole reading of each of the 24 ParkedPlan values and, in each run it makes
+ * through its call-through recorder (whose presence in that run it pins too), the WorkflowControl calls and run-signal
+ * aborts of that run; the suite's header says what that recorder does not read.
  *
  * Recorded, never inferred: every beforeDispatch entry; every query() start, attributed to the attempt whose entry
  * preceded it; the fixture SDK's own call log, kept apart from that attribution; the abortAgent calls that reach the
@@ -60,11 +61,11 @@ import type { WorkflowAgentEntry } from "../../src/workflow/progress.js";
 import { type RunWorkflowOptions, runWorkflow, type WorkflowControl, type WorkflowHost, type WorkflowRunResult } from "../../src/workflow/runtime.js";
 import { FakeClaudeSdk, sdkSuccess } from "./claude-sdk-stream.js";
 
-/** What the experiment does while the target is parked: the runtime's skip or retry, or "none" (the no-control control: the experiment calls no WorkflowControl method and does not abort the run's own signal). */
+/** What the experiment does while the target is parked: the runtime's skip or retry, or "none" (the no-control control: in a run made through the suite's call-through recorder, until the experiment's promise settles, the experiment calls no method of the WorkflowControl surface that run hands onControl and does not abort the run's own signal; the suite's header says what that recorder does not read). */
 export type ParkedControl = "skip" | "retry" | "none";
 /** Which startup the target attempt is: a fresh spawn, or the resume of a completed origin agent. */
 export type ParkedStartup = "spawn" | "resume";
-/** How a skip or retry plan's control reaches the run: the runtime's per-agent control, or (a wrong seam) an abort of the run's own signal in its place; a "none" plan calls neither. */
+/** How a skip or retry plan's control reaches the run: the runtime's per-agent control, or (a wrong seam) an abort of the run's own signal in its place; a "none" plan calls neither, in ParkedControl's sense of "none". */
 export type ParkedRoute = "per-agent" | "run-abort";
 /** Whether the target's beforeDispatch holds the host until released, or (a wrong seam) returns at once. */
 export type ParkedBarrier = "parked" | "absent";
