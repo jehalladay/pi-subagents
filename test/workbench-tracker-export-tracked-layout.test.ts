@@ -28,6 +28,10 @@
  * an archived line; an entry L9 does not plant - a symbolic link, a FIFO or another special file, a regular file under a shard name whose
  * text does not parse, an entry that cannot be read; what L9 holds of an archive other than its two copies; what L3, L5, L7 and L8 do
  * with an entry that is not a shard file; and what L9 does with an entry of the tracked archive that is not a shard file.
+ * wb-vnuv (R694 follow-up of wb-nu12 landing 1074, F1): L9 lists the copies whose per-copy assertions ran, by each copy's newest month's
+ * latest shard, and holds that list equal to the tracked newest month's latest shard followed by the continuation after it, so L9 fails
+ * when its per-copy loop checks only one of the two copies, or one copy in place of the other.
+ * Also NOT CLAIMED (wb-vnuv): a per-copy loop that lists a copy whose per-copy assertions it does not run.
  */
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -388,6 +392,7 @@ describe("wb-00si the tracked tracker export, read where it is tracked", { timeo
       copies.map(copy => copy.latest),
       "each copy's newest month's latest shard",
     ).toEqual([trackedLatest, continuationAfter(trackedLatest, 1)]);
+    const checked: string[] = [];
     for (const { latest, readme, directory, orig, id, reading } of copies) {
       expect({ last: reading.names.at(-1), notShards: reading.notShards, unmet: reading.unmet }, `the copy whose newest month's latest shard is ${latest}`).toEqual({
         last: orig,
@@ -395,6 +400,8 @@ describe("wb-00si the tracked tracker export, read where it is tracked", { timeo
         unmet: [`${id}: stub line differs`],
       });
       expect(() => expectShards(reading)).toThrow(/^entries that are not shard files: /);
+      checked.push(latest);
     }
+    expect(checked, "the copies whose per-copy assertions ran, by newest month's latest shard").toEqual([trackedLatest, continuationAfter(trackedLatest, 1)]);
   });
 });
