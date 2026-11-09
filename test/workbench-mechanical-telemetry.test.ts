@@ -31,11 +31,11 @@
  * holds, the nearest one or the one below or above the measure (a case that names a row pins a whole number of
  * milliseconds and, where it names the timed host call, one no less than that call's whole milliseconds); for an agent's
  * admission stage, an index read from the run's running count of agents when the stage ends rather than from the call itself
- * (only R078-GATE-INDEX, R078-NODE-INDEX, R078-ADMISSION-NODE, R078-ADMISSION-INDEX, R078-ADMISSION-REFUSED and
- * R078-END-ORDER count a later call before a stage ends, for the sdk, gate, node, node admission and load stages); where
- * within its acquire call a lease's waitedMs starts and stops, past the two bounds R078-ADMISSION-ROLLBACK and
- * R078-ADMISSION-NODE pin on an admission stage (a queued request's no shorter than the holder's hold from the moment it
- * queued, every lease's no longer than its acquire call).
+ * (only R078-GATE-INDEX, R078-NODE-INDEX, R078-ADMISSION-NODE, R078-ADMISSION-INDEX, R078-ADMISSION-REFUSED, R078-END-ORDER,
+ * R078-GATE-REFUSED and R078-NODE-DISPATCH count a later call before a stage ends, for the sdk, gate, node, node admission
+ * and load stages); where within its acquire call a lease's waitedMs starts and stops, past the two bounds
+ * R078-ADMISSION-ROLLBACK and R078-ADMISSION-NODE pin on an admission stage (a queued request's no shorter than the
+ * holder's hold from the moment it queued, every lease's no longer than its acquire call).
  */
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
@@ -840,6 +840,117 @@ describe("EAT-R078: each stage a run reports is timed on the monotonic clock and
     const load = byIndex(reported("load"));
     expect(load).toEqual(["first", "second"].map((name, at) => (
       { stage: "load", kind: "workflow", index: at, durationMs: load[at]?.durationMs, bytes: utf8(scripts[name] ?? "") }
+    )));
+  }, 30_000);
+
+  it("R078-GATE-REFUSED: on a one-query host budget, three gated agents called in order, the second refused at its 40 ms queue deadline while the holder agent holds the query, so only the holder and the third reach host.spawnAgent and host.runGate: the refused agent reports no gate stage, and the holder's and the third agent's gate stages sit at their own calls' positions 0 and 2, not at their dispatches' 0 and 1, each carrying the UTF-8 bytes of its own gate output", async () => {
+    const { records, telemetry } = stageProbe();
+    const received: WorkflowEntry[] = [];
+    const hostAdmission = new HostAdmission({ sdkQueries: 1, childProcesses: 8, forgeOperations: 8, queueDeadlineMs: 40 });
+    // R078-ADMISSION-REFUSED's run with every agent gated (wb-zrzn): the holder keeps the one query until the refused agent's
+    // error row is out (5 s at most), and the third agent is called once the holder has settled. Two of the three calls are
+    // dispatched, so a gate stage numbered by the dispatches (the spawns, or the gates, in the order they ran) instead of by
+    // the calls reads 1 for the third agent here.
+    let refusalOut: () => void = () => {};
+    const refused = new Promise<void>(resolve => { refusalOut = resolve; });
+    const promptOf = new Map<string, string>();
+    const spawned: string[] = [];
+    const gated: string[] = [];
+    const gateOutputs = new Map([["holder", "gate ok \u2713"], ["third", "gate ok \u2713\u2713\u2713"]]);
+    const host: WorkflowHost = {
+      async spawnAgent(request) {
+        spawned.push(request.prompt);
+        promptOf.set(request.agentId, request.prompt);
+        if (request.prompt === "holder") {
+          let fallback: ReturnType<typeof setTimeout> | undefined;
+          await Promise.race([refused, new Promise<void>(resolve => { fallback = setTimeout(resolve, 5_000); })]);
+          clearTimeout(fallback);
+        }
+        return { ok: true, text: request.prompt };
+      },
+      abortAgent() {},
+      async runGate(_command, gateOptions) {
+        const prompt = promptOf.get(gateOptions.agentId) ?? "";
+        gated.push(prompt);
+        return { ok: true, output: gateOutputs.get(prompt) ?? "" };
+      },
+    };
+    const body = [
+      'const held = agent("holder", { gate: "npm test" });',
+      'let second = "admitted"; try { await agent("refused", { gate: "npm test" }); } catch { second = "refused"; }',
+      "await held;",
+      'return [second, await agent("third", { gate: "npm test" })];',
+    ].join("\n");
+    const result = await runWorkflow({
+      script: HEAD + body,
+      host,
+      hostAdmission,
+      concurrency: 2,
+      telemetry,
+      onProgress: entries => {
+        received.push(...entries);
+        if (agentRows(entries).some(row => row.state === "error")) refusalOut();
+      },
+    });
+    expect(result.status).toBe("completed");
+    expect(result.value).toEqual(["refused", "third"]);
+    const settledRows = agentRows(received).filter(row => row.state === "done" || row.state === "error").sort((a, b) => a.index - b.index);
+    expect(settledRows.map(row => [row.promptPreview, row.state, row.index])).toEqual([["holder", "done", 0], ["refused", "error", 1], ["third", "done", 2]]);
+    expect(settledRows[1]?.error).toMatch(/queue deadline passed/);
+    // Two dispatches, in turn: the refused agent reached neither host.spawnAgent nor host.runGate.
+    expect(spawned).toEqual(["holder", "third"]);
+    expect(gated).toEqual(["holder", "third"]);
+    const utf8 = (text: string): number => Buffer.byteLength(text, "utf8");
+    const gate = records.filter(record => record.stage === "gate").sort((a, b) => a.index - b.index);
+    expect(gate).toEqual([
+      { stage: "gate", kind: "agent", index: 0, durationMs: gate[0]?.durationMs, bytes: utf8(gateOutputs.get("holder") ?? "") },
+      { stage: "gate", kind: "agent", index: 2, durationMs: gate[1]?.durationMs, bytes: utf8(gateOutputs.get("third") ?? "") },
+    ]);
+  }, 30_000);
+
+  it("R078-NODE-DISPATCH: on a one-operation Forge budget, a holder and a queued forge.gate.status node and a later hyperunix.find node, called in that order at once, reach host.callNode with the queued node last: each reports its node stage at its own call's position, 0, 1 and 2, not at its dispatch's, carrying the bytes and the native id of its own answer", async () => {
+    const { records, telemetry } = stageProbe();
+    const received: WorkflowEntry[] = [];
+    const hostAdmission = new HostAdmission({ sdkQueries: 8, childProcesses: 8, forgeOperations: 1, queueDeadlineMs: 30_000 });
+    // R078-ADMISSION-NODE's shape with its node stages pinned (wb-zrzn): the holder keeps the one Forge operation until the
+    // later hyperunix.find node, which takes no forge-operations slot, has reached host.callNode (5 s at most), so the queued
+    // node is the last of the three dispatched. A node stage numbered by the dispatches (the host calls in the order they were
+    // made) instead of by the calls reads 2 for the queued node here.
+    let laterIn: () => void = () => {};
+    const laterCalled = new Promise<void>(resolve => { laterIn = resolve; });
+    const dispatched: string[] = [];
+    const ids: Readonly<Record<string, string>> = { holder: `op-${"f6".repeat(16)}`, queued: `op-${"a7".repeat(16)}`, later: `hx-exec-${"b8".repeat(8)}` };
+    const answerOf = (label: string): Record<string, unknown> => (label === "later"
+      ? { contract: "hyperunix.find/v1", source: { representation: "hyperunix.result/1", execution_id: ids.later, execution_status: { kind: "completed" }, matches: ["src/a.ts"] } }
+      : { contract: "forge.gate.status/v1", source: { operation_id: ids[label], status: "passed" } });
+    const host: WorkflowHost = {
+      async spawnAgent() { return { ok: true, text: "unused" }; },
+      abortAgent() {},
+      async callNode(request) {
+        dispatched.push(request.label);
+        if (request.label === "later") laterIn();
+        if (request.label === "holder") {
+          let fallback: ReturnType<typeof setTimeout> | undefined;
+          await Promise.race([laterCalled, new Promise<void>(resolve => { fallback = setTimeout(resolve, 5_000); })]);
+          clearTimeout(fallback);
+        }
+        return answerOf(request.label);
+      },
+      describeNodeEffect: () => "read",
+    };
+    const body = 'return await parallel([() => node("forge.gate.status", {}, { label: "holder" }), () => node("forge.gate.status", {}, { label: "queued" }), () => node("hyperunix.find", {}, { label: "later" })]);';
+    const result = await run(body, { host, hostAdmission, telemetry }, received);
+    expect(result.status).toBe("completed");
+    const labels = ["holder", "queued", "later"];
+    const indexOf = (label: string): number | undefined => nodeRows(received).find(row => row.label === label)?.index;
+    expect(labels.map(indexOf)).toEqual([0, 1, 2]);
+    // Three dispatches, the queued node's last: it reached host.callNode after the later node, called after it.
+    expect(dispatched).toHaveLength(3);
+    expect(dispatched.slice(0, 2).sort()).toEqual(["holder", "later"]);
+    expect(dispatched[2]).toBe("queued");
+    const node = records.filter(record => record.stage === "node").sort((a, b) => a.index - b.index);
+    expect(node).toEqual(labels.map((label, at) => (
+      { stage: "node", kind: "node", index: at, durationMs: node[at]?.durationMs, bytes: bytesOf(answerOf(label)), nativeId: ids[label] }
     )));
   }, 30_000);
 
