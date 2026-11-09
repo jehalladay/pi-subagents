@@ -83,12 +83,31 @@
  *   empty inventory lacks, in both lists and in key order, the name of every change the run's walk made (107, 422 and
  *   100 changes), and for each of those changes an inventory holding every other one, alone and in sets, lacks that
  *   change's name alone in each list it is left out of: both lists, the one-axis changes only, or the set changes only.
+ *   Three cases hold WALK-READBACK's anchors from outside each of its two anchor pairs (keyName with walkReading,
+ *   cellMoves with the cell pass), each against a spelling built from the table alone with plain loops, never with
+ *   keyName, walkReading, cellMoves or plantedWalk (wb-tnsg). WALK-NAMES-SPELLED spells every change of each whole table
+ *   (spelledChanges: for each axis in table order, each tuple position of its list and each planted position other than
+ *   it, -1 first, the change's key beside `<axis name> <from>-><to>`; 107, 422 and 100 changes): keyName decodes each
+ *   spelled key to its spelled name, and walkReading's two lists on an empty inventory are the spelled names, in the order
+ *   spelled. WALK-CELLS-SPELLED spells the moves a misplant run's cell pass is due to make on each whole table from the
+ *   table's list lengths alone (spelledCellMoves: for each axis of L values in table order, L times over, the axis read at
+ *   each position r, -1 first, and recorded at each position other than r, every other axis at position 0 in both, the
+ *   table's first tuple; 476, 6264 and 492 moves): cellMoves builds those moves, reads and records, in order; the cell
+ *   pass's readings (cellPass) are the spelled reads, in order; and with each axis read at the position the spelled moves
+ *   record the move at (spelledRecordProbe), the read-back counts no cell move as reading otherwise. NAMED-CHANGES-SHAPE
+ *   freezes NAMED_CHANGES's shape: 9, 6 and 5 rows, each one of its table's spelled changes (its key beside the same
+ *   name); on each table how many rows change its first axis, its last axis, an axis past the third, an axis of a list of
+ *   more than two values, from a tuple position past 1 and to -1 (namedCoverage, read from the keys, not with keyName),
+ *   frozen; and each of those counts at least 1. NOT CLAIMED: a spelling edited together with both members of the pair
+ *   it holds (spelledChanges with keyName and walkReading, spelledCellMoves with cellMoves and the cell pass); and a
+ *   NAMED_CHANGES row deleted together with its table's row count and coverage counts, or namedCoverage edited together
+ *   with the coverage counts, while every count stays at least 1.
  *   Which axis and position a misplant run's walk records a move at is NOT CLAIMED. A read-back or a missing list that
- *   reads the walk or its inventory otherwise than the misplant runs, their cell passes under the two probes and the
- *   planted inventories (by the misplant argument, the inventory or anything else in its scope) is NOT CLAIMED, and
- *   neither is a fault of a setter or of the walk's planting that only such a reading would miss. GRID-PRODUCTS and
- *   WALK-READBACK read no comment: that a builder's comment names the lists of its axes table, or names them in that
- *   order, is NOT CLAIMED by them.
+ *   reads the walk or its inventory otherwise than the misplant runs, their cell passes under recordProbe, offProbe and
+ *   spelledRecordProbe, the empty inventories and the planted inventories (by the misplant argument, the inventory or
+ *   anything else in its scope) is NOT CLAIMED, and neither is a fault of a setter or of the walk's planting that only
+ *   such a reading would miss. GRID-PRODUCTS and WALK-READBACK read no comment: that a builder's comment names the lists
+ *   of its axes table, or names them in that order, is NOT CLAIMED by them.
  * NOT CLAIMED: a value that no list or offset holds (for example a start, entry, abort or query count above 3, a call
  * log count more than 1 off its grid's sum, a negative or fractional count, or an entry state, attempt, reason, script
  * value, settlement list or run status that no list holds) and a reading outside those products. Production
@@ -737,7 +756,8 @@ function emptyInventory(): WalkInventory {
  * each position of its list and a value it does not hold, each such reading read back once at every other position of
  * that axis (-1 for a value the list does not hold) and position 0 on every other axis; its walk then records the one
  * move as planted and every move otherwise than it reads (at which axis and position is NOT CLAIMED). WALK-READBACK pins
- * each cell move's reading and record against cellMoves (cellPass, under the table itself, recordProbe and offProbe). A
+ * each cell move's reading and record against cellMoves (cellPass, under the table itself, recordProbe and offProbe), and
+ * WALK-CELLS-SPELLED against spelledCellMoves (cellPass under spelledRecordProbe). A
  * read-back that reads the walk otherwise than a misplant run or its cell pass under those probes, and a fault of a
  * setter or of this planting that only such a read-back would miss, are NOT CLAIMED.
  */
@@ -833,7 +853,8 @@ function plantedWalk(axes: readonly GridAxis[], base: ParkedObservation, invento
  * lack, by axis name and positions (`<axis name> <from>-><to>`, -1 for a value no list holds), in key order.
  * WALK-READBACK pins these names on each whole table against keyName, on the empty inventory and on planted inventories
  * each lacking one change of the run's walk in one list or in both (lackingIn); a missing list that reads a walk's
- * inventory otherwise than those is NOT CLAIMED.
+ * inventory otherwise than those is NOT CLAIMED. WALK-NAMES-SPELLED pins the empty inventory's names on each whole table
+ * against spelledChanges.
  */
 function walkReading(inventory: WalkInventory, axes: readonly GridAxis[]) {
   const missing = (changes: ReadonlySet<number>): readonly string[] =>
@@ -874,7 +895,8 @@ function aloneEach(missing: readonly string[]): readonly string[] {
 /**
  * A change's name decoded from its key ((axis * 64 + from) * 64 + to + 1) and the table's axis names, in walkReading's
  * form (`<axis name> <from>-><to>`, -1 for a value no list holds), without calling walkReading. NAMED_CHANGES holds it to
- * literal keys and names; WALK-READBACK pins walkReading's names against it.
+ * literal keys and names; WALK-READBACK pins walkReading's names against it; WALK-NAMES-SPELLED holds it to
+ * spelledChanges on every change of each whole table.
  */
 function keyName(axes: readonly GridAxis[], key: number): string {
   return `${axes[Math.floor(key / 4096)].name} ${Math.floor(key / 64) % 64}->${(key % 64) - 1}`;
@@ -883,7 +905,8 @@ function keyName(axes: readonly GridAxis[], key: number): string {
 /**
  * keyName's literal anchor: change keys of each whole table spelled out beside their names, on each table changes of its
  * first and last axes and of an axis past the third, of a list of more than two values, from a tuple position past 1 and
- * to -1. WALK-READBACK pins that keyName reads each key as its name.
+ * to -1. WALK-READBACK pins that keyName reads each key as its name. NAMED-CHANGES-SHAPE freezes its shape: its row
+ * counts, each row one of its table's spelled changes (spelledChanges), and those six coverage counts (namedCoverage).
  */
 const NAMED_CHANGES: Readonly<Record<"seam" | "skipOracle" | "retryOracle", readonly (readonly [number, string])[]>> = {
   seam: [
@@ -937,7 +960,8 @@ interface CellMove {
  * The moves a misplant run's cell pass is due to make on a table, in order, built from the table's lists alone (not with
  * plantedWalk): for each axis of L values, L times over (once for each position of its list), the axis reading each
  * position of its list and -1 (a value the list does not hold) with every other axis at position 0, each such reading
- * recorded at every other position of that axis and at position 0 on every other axis.
+ * recorded at every other position of that axis and at position 0 on every other axis. WALK-CELLS-SPELLED holds it to
+ * spelledCellMoves on each whole table.
  */
 function cellMoves(axes: readonly GridAxis[]): readonly CellMove[] {
   const at = (m: number, position: number): readonly number[] => axes.map((_, a) => (a === m ? position : 0));
@@ -997,6 +1021,78 @@ function recordProbe(table: readonly GridAxis[], inventory: WalkInventory): read
 /** offProbe: every axis read at another position than cellMoves records the move at (0 for -1, -1 otherwise), so the read-back must count every cell move as reading otherwise. */
 function offProbe(table: readonly GridAxis[], inventory: WalkInventory): readonly GridAxis[] {
   return cellProbe(table, inventory, recorded => (recorded === -1 ? 0 : -1));
+}
+
+/**
+ * Every change of a table spelled from the table alone, with plain loops (not with keyName, walkReading or plantedWalk):
+ * for each axis in table order, each tuple position of its list and each planted position other than it (-1, a value no
+ * list holds, first, then the list's positions), the change's key ((axis * 64 + from) * 64 + to + 1) beside its name
+ * (`<axis name> <from>-><to>`). WALK-NAMES-SPELLED holds keyName and walkReading's empty-inventory names to it, and
+ * NAMED-CHANGES-SHAPE each NAMED_CHANGES row.
+ */
+function spelledChanges(axes: readonly GridAxis[]): readonly (readonly [number, string])[] {
+  const spelled: (readonly [number, string])[] = [];
+  for (let axis = 0; axis < axes.length; axis += 1) {
+    for (let from = 0; from < axes[axis].list.length; from += 1) {
+      for (let to = -1; to < axes[axis].list.length; to += 1) {
+        if (to !== from) spelled.push([(axis * 64 + from) * 64 + to + 1, `${axes[axis].name} ${from}->${to}`]);
+      }
+    }
+  }
+  return spelled;
+}
+
+/**
+ * The moves a misplant run's cell pass is due to make on a table, spelled from the table's list lengths alone, with plain
+ * loops (not with cellMoves or plantedWalk): for each axis m of L values in table order, L times over, for each read
+ * position r (-1 first, then the list's positions) and each record position q other than r, the move whose reading holds
+ * axis m at r and whose record holds it at q, every other axis at position 0 in both (the table's first tuple).
+ * WALK-CELLS-SPELLED holds cellMoves and the cell pass to it.
+ */
+function spelledCellMoves(axes: readonly GridAxis[]): readonly CellMove[] {
+  const spelled: CellMove[] = [];
+  for (let m = 0; m < axes.length; m += 1) {
+    const length = axes[m].list.length;
+    for (let turn = 0; turn < length; turn += 1) {
+      for (let r = -1; r < length; r += 1) {
+        for (let q = -1; q < length; q += 1) {
+          if (q !== r) spelled.push({ read: axes.map((_, a) => (a === m ? r : 0)), record: axes.map((_, a) => (a === m ? q : 0)) });
+        }
+      }
+    }
+  }
+  return spelled;
+}
+
+/** spelledRecordProbe: as recordProbe, but each axis read at the position spelledCellMoves (not cellMoves) records the cell pass's current move at. */
+function spelledRecordProbe(table: readonly GridAxis[], inventory: WalkInventory): readonly GridAxis[] {
+  const due = spelledCellMoves(table);
+  return table.map((axis, a) => ({
+    name: axis.name,
+    list: axis.list,
+    read: () => {
+      const position = due[inventory.moves - 1].record[a];
+      return position === -1 ? UNLISTED : axis.list[position];
+    },
+  }));
+}
+
+/**
+ * NAMED_CHANGES's coverage of a table, in the order its doc names it: how many of the rows change the table's first axis,
+ * its last axis, an axis past the third, an axis whose list holds more than two values, from a tuple position past 1, and
+ * to -1, each read from the row's key ((axis * 64 + from) * 64 + to + 1) and the table's lists (not with keyName).
+ * NAMED-CHANGES-SHAPE freezes these counts.
+ */
+function namedCoverage(axes: readonly GridAxis[], rows: readonly (readonly [number, string])[]): readonly number[] {
+  const changes = rows.map(([key]) => ({ axis: Math.floor(key / 4096), from: Math.floor(key / 64) % 64, to: (key % 64) - 1 }));
+  return [
+    changes.filter(change => change.axis === 0).length,
+    changes.filter(change => change.axis === axes.length - 1).length,
+    changes.filter(change => change.axis > 2).length,
+    changes.filter(change => axes[change.axis].list.length > 2).length,
+    changes.filter(change => change.from > 1).length,
+    changes.filter(change => change.to === -1).length,
+  ];
 }
 
 /** A grid case's timeout: each grid judges hundreds of thousands of readings, and a loaded gate host is slow. */
@@ -1988,6 +2084,60 @@ describe("the experiment's input lists and every ParkedPlan value (wb-9v02)", ()
         return [readings, readings, readings];
       }),
     );
+  });
+
+  it("WALK-NAMES-SPELLED on each whole axes table every change spelled from the table alone (spelledChanges: each axis's own name, each tuple position of its list and each planted position other than it, -1 first; 107, 422 and 100 changes): keyName decodes each spelled key to its spelled name, and walkReading's two missing lists on an empty inventory are the spelled names, in the order spelled", () => {
+    const tables = { seam: SEAM_AXES, skipOracle: SKIP_ORACLE_AXES, retryOracle: RETRY_ORACLE_AXES };
+    const each = <T>(read: (axes: readonly GridAxis[]) => T): Record<string, T> => Object.fromEntries(Object.entries(tables).map(([id, axes]) => [id, read(axes)]));
+    expect(each(axes => spelledChanges(axes).length)).toEqual({ seam: 107, skipOracle: 422, retryOracle: 100 });
+    expect(each(axes => spelledChanges(axes).map(([key]) => keyName(axes, key)))).toEqual(each(axes => spelledChanges(axes).map(([, name]) => name)));
+    expect(
+      each(axes => {
+        const { missing, setMissing } = walkReading(emptyInventory(), axes);
+        return [missing, setMissing];
+      }),
+    ).toEqual(
+      each(axes => {
+        const names = spelledChanges(axes).map(([, name]) => name);
+        return [names, names];
+      }),
+    );
+  });
+
+  it("WALK-CELLS-SPELLED on each whole axes table the moves a cell pass is due to make spelled from the table's list lengths alone (spelledCellMoves: each axis in table order, L times over, read at each position r, -1 first, and recorded at each other position, every other axis at 0; 476, 6264 and 492 moves): cellMoves builds them, reads and records, in order; the cell pass reads the spelled reads, in order; under spelledRecordProbe its read-back reads no move otherwise", () => {
+    const tables = [
+      { id: "seam", axes: SEAM_AXES, base: PARKED_SKIP_SPAWN },
+      { id: "skipOracle", axes: SKIP_ORACLE_AXES, base: SKIP_ORACLE },
+      { id: "retryOracle", axes: RETRY_ORACLE_AXES, base: RETRY_ORACLE },
+    ] as const;
+    const each = <T>(read: (table: (typeof tables)[number]) => T): Record<string, T> => Object.fromEntries(tables.map(table => [table.id, read(table)]));
+    const spelled = each(({ axes }) => spelledCellMoves(axes));
+    const shown = (move: CellMove): string => `read ${move.read.join("/")} recorded ${move.record.join("/")}`;
+    expect(each(({ id }) => spelled[id].length)).toEqual({ seam: 476, skipOracle: 6264, retryOracle: 492 });
+    expect(each(({ axes }) => cellMoves(axes).map(shown))).toEqual(each(({ id }) => spelled[id].map(shown)));
+    const passes = each(({ id, axes, base }) => {
+      const inventory = emptyInventory();
+      const readings = cellPass(axes, spelledRecordProbe(axes, inventory), base, inventory, spelled[id].length);
+      return { counts: [inventory.moves, inventory.misread], readings };
+    });
+    expect(each(({ id }) => passes[id].counts)).toEqual({ seam: [476, 0], skipOracle: [6264, 0], retryOracle: [492, 0] });
+    expect(each(({ id }) => passes[id].readings)).toEqual(each(({ id }) => spelled[id].map(move => move.read.join("/"))));
+  });
+
+  it("NAMED-CHANGES-SHAPE NAMED_CHANGES holds 9, 6 and 5 rows, each one of its table's spelled changes (its key beside the same name); on each table, how many rows change its first axis, its last axis, an axis past the third, an axis of a list of more than two values, from a tuple position past 1 and to -1 (namedCoverage, read from the keys), frozen; and each of those counts is at least 1", () => {
+    const tables = { seam: SEAM_AXES, skipOracle: SKIP_ORACLE_AXES, retryOracle: RETRY_ORACLE_AXES } as const;
+    const ids = ["seam", "skipOracle", "retryOracle"] as const;
+    const each = <T>(read: (id: (typeof ids)[number]) => T): Record<string, T> => Object.fromEntries(ids.map(id => [id, read(id)]));
+    expect(each(id => NAMED_CHANGES[id].length)).toEqual({ seam: 9, skipOracle: 6, retryOracle: 5 });
+    expect(
+      each(id => {
+        const spelled = new Map(spelledChanges(tables[id]));
+        return NAMED_CHANGES[id].filter(([key, name]) => spelled.get(key) !== name);
+      }),
+    ).toEqual({ seam: [], skipOracle: [], retryOracle: [] });
+    const coverage = each(id => namedCoverage(tables[id], NAMED_CHANGES[id]));
+    expect(coverage).toEqual({ seam: [1, 2, 7, 7, 4, 3], skipOracle: [1, 1, 4, 5, 4, 2], retryOracle: [1, 1, 4, 4, 3, 1] });
+    expect(each(id => coverage[id].every(count => count > 0))).toEqual({ seam: true, skipOracle: true, retryOracle: true });
   });
 
   it("PLAN-DOMAIN-SHAPE the plan table holds the 24 ParkedPlan values (the product of the four plan unions the helper declares, read with the TypeScript parser), each once, in that product's order", () => {
