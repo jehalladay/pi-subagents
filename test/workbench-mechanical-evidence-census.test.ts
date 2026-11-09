@@ -43,8 +43,9 @@
  *   before the range is read in its own dated entry and found; control: the same lines less the two fence lines split at that
  *   line, whose entry is out of range, and the join is never read; fenced code text is read.
  * - R080-COMMENT-TEXT (wb-prv7 F1, the gate's W-COMMENT; wb-caoo, the wb-prv7 gate's F1 and F2; wb-349y, the wb-caoo gate's F1
- *   and F2; wb-mj6j, the wb-349y gate's F1, F2 and F3): HTML comment text is not read: the four parts inside a comment block are
- *   no witness and no partial, a level-2 line inside the block opens no entry, and the entry's text keeps the comment; THE
+ *   and F2; wb-mj6j, the wb-349y gate's F1, F2 and F3; wb-ivcm, the wb-r7th gate's F1 and F2): HTML comment text is not read in
+ *   the arrangements these rows place (any other arrangement is NOT CLAIMED, see NOT CLAIMED): the four parts inside a comment
+ *   block are no witness and no partial, a level-2 line inside the block opens no entry, and the entry's text keeps the comment; THE
  *   POSITION TABLE holds the four parts in one html token holding one or two comments at each of these twenty positions, every
  *   row lexed as one html token holding its one or two: a block line (the html token a comment opens) holding one comment (the
  *   parts inside it, after it) or two (inside the first, between them, inside the second, after the second), and a div block
@@ -137,6 +138,13 @@
  * NOT CLAIMED by this census; the context table leaves out the comment block never closed, the heading placement and the
  * no-comment, code and inline-opener controls (the four parts with no comment, in fenced code, indented code or a code span,
  * after an inline opener never closed), and each of them in a context other than its own row's is NOT CLAIMED by this census.
+ *
+ * NOT CLAIMED (wb-ivcm, the wb-r7th gate's F1 and F2: the comment words narrowed to the rows' arrangements): an html token
+ * placed otherwise than R080-COMMENT-TEXT's rows place it (in its entry, its receipt and its containers) is NOT CLAIMED by this
+ * census, among them an entry holding a second html token (a second comment block, or a second inline comment in one
+ * paragraph), an html token after another top-level block of its entry than the level-2 heading opening it (a comment block
+ * after a paragraph), an entry opened by a setext level-2 heading, by a level-2 heading whose text opens with no date or by one
+ * dated otherwise than those rows' headings, and a preamble holding a heading or another top-level block before its html token.
  *
  * RESIDUALS (rule 19(d): a named family plus a pinned quiet row, a case that reds when the quiet reading changes):
  * - R-OUTCOME-WORDS (QUIET-OUTCOME-WORDS): the fourth outcome docs/workbench/01 J03 names, indeterminate, is an ordinary word and
@@ -539,7 +547,7 @@ const CASES: readonly Case[] = [
     id: "R080-COMMENT-TEXT",
     row: "EAT-R080",
     kind: "claim",
-    title: "HTML comment text is not read: a join inside a comment is no witness, and a level-2 line inside a comment block opens no entry",
+    title: "HTML comment text is not read in the arrangements its rows place: a join inside a comment is no witness, and a level-2 line inside a comment block opens no entry",
     run: () => {
       const block = ["# wb-x: a title", "## 2026-10-20 in range", "<!--", "## 2026-10-21 inside the comment", JOINED, "-->", "after the comment"].join("\n");
       const entries = markdownEntries("store-a", "r.md", block);

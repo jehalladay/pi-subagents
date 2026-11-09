@@ -89,6 +89,19 @@
  *             quoted literal exactly once and none of the other three forms. Other fixtures, request forms, positions,
  *             reader forms and files, and any replay basis, are NOT CLAIMED.
  *
+ * Read twice at the rows wb-rrni lists (the R694 follow-up of landing 1049): each listed wb-201v row takes each of its
+ * readings when the boundary settles and again once the timer drain ends. Without an admission park, 38 rows, each with
+ * a request refused at entry: the EAT-R028 binding row; the 16 EAT-R029 rows that run the boundary (the four-grant
+ * row's dispatch included); the action grammar's row for a host reporting the unrepresentable spelling; the 9 EAT-R030
+ * unknown-identity rows (the 8 listed identities and the accessor principal); the function-definition boundary's 2
+ * rows; the 7 clean-text rows that deny a listed session before any dispatch; and the 2 host-authority rows whose
+ * caller policy names the action. With an admission park given: the 9 EAT-R028 rows above; the host-authority detached
+ * row and its 13824 descriptor forms (one drain for each host mode's 6912); and the host-authority rows of the 12
+ * listed boundary scenarios, for the 7776 listed caller policies and for the 7776 listed caller inputs (one drain for
+ * each scenario in each host mode), each ending as the host-authority paragraph lists it. A row's readings are its
+ * refusal or dispatch and the park, loader, provider, dispatch callback and getter calls it counts. Other rows, and
+ * calls that land after the timer drain ends, are NOT CLAIMED here.
+ *
  * PARTIAL by plan (BEAD-PLAN.md, B-authority: "enforcement seams land now; exact action grammar blocked on
  * MW-CONTRACT"). No action spelling is adopted: FUNCTION_ACTION_CONTRACT is unadopted, so every function dispatch
  * refuses, and one that passes the earlier rules refuses as function-action-unadopted. The suite pins adoption against
