@@ -223,8 +223,9 @@
  * paths or judged pushes hold it (G12, G14), and a line for each of two different blobs two commits write to one family path, of two
  * sizes or of one size (G4). A family blob under the ceiling passes (G2). FW_EXPORT_SOFT_CEILING - a positive whole number of bytes,
  * with no sign, padding, exponent or leading zero, at most 2^53 - 1 (G1 takes 2^53 - 1 and refuses 2^53 and 2^53 + 1) - replaces the
- * default 95 MiB = 99,614,720; an empty or absent value keeps the default (G1). The guard compares it with a blob's size as `git
- * cat-file` gives it (G2), the compaction with a file's UTF-8 bytes (C7, K3).
+ * default 95 MiB = 99,614,720; softCeiling() keeps the default for an empty or absent value (G1), and the guard and the pre-push
+ * hook each take an empty and an absent value, exiting 0 with nothing printed over G1's 10-byte export (G1). The guard compares it
+ * with a blob's size as `git cat-file` gives it (G2), the compaction with a file's UTF-8 bytes (C7, K3).
  *
  * CLI. Exit 0 done; 2 refused at the soft ceiling; 3 refused or could not run, in exactly the cases each verb lists:
  *   node qa/workbench/tracker-export.mjs compact --full <full export file> --beads <.beads dir> [--now <UTC stamp>]
@@ -297,7 +298,10 @@
  * written before it stays written); where the temporary file sits; an archive directory or a shard the process cannot list or read,
  * and a full export it cannot read for a cause other than K9's two; an archive directory that is a symlink to a directory; what the
  * tracker's importer does with a main export (STUB FIELDS above is a measurement); the time a parse of the shards takes; a family blob
- * a successful `git rev-list --objects` lists that `git cat-file` cannot size; a submodule entry at a family path; a FIFO, a socket or
+ * a successful `git rev-list --objects` lists that `git cat-file` cannot size; a submodule entry at a family path; the ceiling the
+ * guard, the pre-push hook or compact applies for an empty or absent FW_EXPORT_SOFT_CEILING (G1 plants the two at the guard and the
+ * hook over a 10-byte export only; the default's 99,614,720 bytes would need an export that size), and the exit compact gives for an
+ * empty one; a FIFO, a socket or
  * a device file of a shard's name in the archive directory (R4 and K5 plant only symlinks and directories there), and a socket or a
  * device file at a path compact would write (K14 plants directories, symlinks and FIFOs); a sha of 64 hex digits at the pre-push hook
  * other than the deleted ref's sixty-four zeros - one digit short, in upper case, or a push (G9 plants 40-digit shas beside those
