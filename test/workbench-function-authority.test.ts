@@ -192,6 +192,16 @@
  * and under the same dispatch made at every entry refusal, with an admission park or without one, it fails 57 rows: the
  * 51 above and the 6 that already fail under it on the trunk suite. A call, read or wait that lands after the timer
  * drain ends, and every other row, are NOT CLAIMED. No residual is named.
+ * wb-uqax (the R694 follow-up of landing 1066: F1 of the PASS-WITH-FINDING verdict on wb-rrni found that the timer
+ * drain describe's frozen-shape literal pins only the labels of its 5 listed claim sites, so the gate's members that
+ * swap the fifth site's cut for the fourth site's, for the first site's or for a bare cut of the drain-end phrase, and
+ * its trunk member that swaps the fourth site's cut for the third's, each read 0 failed on this suite) appends one row
+ * to that describe. Each listed site's cut opens, in the module's prose, on the 8 words the row pins for that site; and
+ * each drain-end phrase of the module's source, found there as often as the module's prose names one, sits inside
+ * exactly one listed site's text, each listed site's text holding exactly one. Red-first: each of those four members
+ * fails the new row, and so does each of them with the row's pinned words edited to match it, through the phrase
+ * positions alone. An exchange of two listed sites' cuts together with their pinned words, which keeps every listed
+ * text checked, is NOT CLAIMED; the module's words and every other row are unchanged. No residual is named.
  *
  * No spelling is adopted, so the production contract is unadopted and refuses every function dispatch (the B-authority row of
  * BEAD-PLAN.md lands "partial - enforcement seams land now; exact action grammar blocked on MW-CONTRACT"). The adopted contracts
@@ -3449,5 +3459,29 @@ describe("the timer drain (wb-m83p cut #3): it fakes the 6 listed timer function
       expect({ site, cut: text !== undefined, names: proseOf(text ?? "").includes(DRAIN_END) }).toEqual({ site, cut: true, names: true });
     }
     expect(proseOf(module).split(DRAIN_END).length - 1).toBe(CLAIM_SITES.length);
+  });
+
+  it("each listed claim site's cut is its own (wb-uqax): it cuts a text of the module whose prose opens on the 8 words this row pins for that site; and each drain-end phrase of the module's source, found there as often as the module's prose names one, sits inside exactly one listed site's text, each listed site's text holding exactly one", () => {
+    const module = readFileSync(join(DRAIN_ROOT, "src/workbench/function-authority.ts"), "utf8");
+    const cuts = CLAIM_SITES.map(([site, cut]) => {
+      const match = new RegExp(cut.source, `${cut.flags}d`).exec(module);
+      const [start, end] = match?.indices?.[1] ?? [-1, -1];
+      return { site, start, end, opening: proseOf(match?.[1] ?? "").split(" ").slice(0, 8).join(" ") };
+    });
+    expect(cuts.map(({ site, opening }) => `${site}: ${opening}`)).toEqual([
+      "the module header's final-reads paragraph: function-authority.ts — the authority seam at the FINAL",
+      "the module header's EAT-R031 line: at the suite's 4 listed requests (the final",
+      "the doc of FunctionDispatchOptions.dispatch: The loader and provider calls. At the rows",
+      "the doc of dispatchFunctionWithAuthority: The final dispatch boundary, in three steps where",
+      "the module header's wb-rrni paragraph: (the R694 follow-up of landing 1049): each listed",
+    ]);
+    const lineAt = (at: number) => module.slice(0, at).split("\n").length;
+    const phrases = [...module.matchAll(new RegExp(DRAIN_END.split(" ").join(String.raw`[\s*/]+`), "g"))].map(found => ({
+      line: lineAt(found.index),
+      sites: cuts.filter(({ start, end }) => start <= found.index && found.index + found[0].length <= end).map(({ site }) => site),
+    }));
+    expect(phrases).toHaveLength(proseOf(module).split(DRAIN_END).length - 1);
+    expect(phrases.filter(({ sites }) => sites.length !== 1)).toEqual([]);
+    expect(cuts.map(({ site }) => ({ site, phrases: phrases.filter(({ sites }) => sites.includes(site)).length }))).toEqual(cuts.map(({ site }) => ({ site, phrases: 1 })));
   });
 });
