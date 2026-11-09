@@ -57,6 +57,22 @@
  * form of each code point of a valid digest; GX02), R009-11 (WG01, the same scan over each reviewed schema name; GX01) and
  * R010-14 (WG05, an own accessor export; GX17).
  *
+ * Follow-up cut (wb-dhfk; the R694 follow-up of the wb-mqpz landing 1047 gate, its finding F1, whose member
+ * GQ-D17-PIN-AFTER-DEFERRED-READ reads the descriptor path ahead of the pin judgment and defers that read's failure) pins
+ * the read order behind the words "before any file is read" (the module header's step 1 and the titles of R008-5, R008-6,
+ * R008-9, R008-10, R008-12 and R008-13) with an observable descriptor read. Each of those six cases ends with its READ-ORDER
+ * LEG (readOrderLeg): every pin the case plants as refused pin-malformed is handed to the boundary again, one at a time, with
+ * a FIFO that no writer opens in the descriptor's place. An open of that path for reading waits for a writer, so a boundary
+ * that opens it before it judges the pin either does not settle (the row reads "blocked": the GQ-D17 form, the read awaited)
+ * or leaves a reader behind (the row ends " reader": an open started and not awaited). Each leg first runs its positive
+ * control: with the producer pin, the resolution opens that FIFO for reading (the open waits until the control's own writer
+ * appears), so the leg can see this boundary's descriptor read; that open is the only FIFO reading the legs claim. R008-14
+ * holds the legs to the titles that carry the words and to each case's row count. NOT CLAIMED by the legs: an open of the
+ * artifact path, or a stat or realpath of either path, ahead of the pin judgment (they watch the descriptor path only); a
+ * synchronous read of the descriptor path (it would wait for a writer on the suite's own thread, so no case could report it);
+ * and what the boundary reads from a FIFO, or returns, once it opens one (the module header's NOT CLAIMED list names a FIFO
+ * descriptor path).
+ *
  * Display paths added: none (the boundary returns closed-vocabulary diagnostics and composes no label or reply text).
  */
 import { execFileSync } from "node:child_process";
@@ -252,6 +268,10 @@ const RAN: Record<string, string[]> = {};
 const ran = (table: string, row: string): void => {
   RAN[table] = [...(RAN[table] ?? []), row];
 };
+/** The words whose read order the read-order legs pin (wb-dhfk): a case whose title carries them runs a leg (R008-14). */
+const READ_ORDER_WORDS = "before any file is read";
+/** The rows each read-order leg was handed, by the head of its case's title, in run order (R008-14 holds them). */
+const READ_ORDER_LEGS: Record<string, number> = {};
 
 /** The members whose absence step 5 refuses member-missing under their own name: the producer's own, but schema (step 4) and note. */
 const REQUIRED_MEMBERS: readonly string[] = MECHANICAL_DESCRIPTOR_MEMBERS.filter(name => name !== "schema" && name !== "note");
@@ -698,16 +718,22 @@ describe("wb-ocie EAT-R008: Pi refuses artifact bytes that differ from their SHA
     await expectRefused({ ...options, pin: { ...options.pin, artifactDigest: digestOf(options.artifactPath) } }, "artifact", "digest-mismatch");
   });
 
-  it("R008-5 a malformed release pin is refused before any file is read", async () => {
+  it("R008-5 a malformed release pin is refused before any file is read", { timeout: 30_000 }, async ({ task }) => {
     const { options } = plant();
     const hex = sha256Of(readFileSync(options.artifactPath));
-    for (const artifactDigest of [hex, `sha256:${hex.slice(1)}`, `sha256:${hex.toUpperCase()}`, `sha512:${hex}`, `sha256:${hex} `]) {
+    const artifactDigests = [hex, `sha256:${hex.slice(1)}`, `sha256:${hex.toUpperCase()}`, `sha512:${hex}`, `sha256:${hex} `];
+    for (const artifactDigest of artifactDigests) {
       await expectRefused({ ...options, descriptorPath: join(options.approvedRoot, "absent.json"), pin: { ...options.pin, artifactDigest } }, "pin", "pin-malformed");
     }
     await expectRefused({ ...options, pin: { ...options.pin, descriptorDigest: PRODUCER.sha256 } }, "pin", "pin-malformed");
+    const rows: LegRow[] = [
+      ...artifactDigests.map((artifactDigest, index): LegRow => [`artifactDigest ${index}`, { ...options.pin, artifactDigest }]),
+      ["descriptorDigest the bare hex", { ...options.pin, descriptorDigest: PRODUCER.sha256 }],
+    ];
+    expect(await readOrderLeg(task.name, options, rows)).toStrictEqual(legRefused(rows));
   });
 
-  it("R008-6 each pin digest is a string sha256:<64 lower-case hex>, judged before any file is read: nine malformed forms in either digest, and four pins that are not a digest pair object, are refused pin-malformed", async () => {
+  it("R008-6 each pin digest is a string sha256:<64 lower-case hex>, judged before any file is read: nine malformed forms in either digest, and four pins that are not a digest pair object, are refused pin-malformed", { timeout: 30_000 }, async ({ task }) => {
     const { options } = plant();
     const hex = sha256Of(readFileSync(options.artifactPath));
     const absent = join(options.approvedRoot, "absent.json");
@@ -723,6 +749,11 @@ describe("wb-ocie EAT-R008: Pi refuses artifact bytes that differ from their SHA
       await expectRefused({ ...options, descriptorPath: absent, pin: pin as unknown as MechanicalReleasePin }, "pin", "pin-malformed");
     }
     expect([forms.length, notPins.length]).toEqual([9, 4]);
+    const rows: LegRow[] = [
+      ...(["descriptorDigest", "artifactDigest"] as const).flatMap(member => forms.map((digest, index): LegRow => [`${member} ${index}`, { ...options.pin, [member]: digest }])),
+      ...notPins.map((pin, index): LegRow => [`not a pin ${index}`, pin]),
+    ];
+    expect(await readOrderLeg(task.name, options, rows)).toStrictEqual(legRefused(rows));
   });
 
   it("R008-7 an admitted load never calls the export: the reviewed export comes back uncalled, as the loader returned it", async () => {
@@ -759,7 +790,7 @@ describe("wb-ocie EAT-R008: Pi refuses artifact bytes that differ from their SHA
     }
   });
 
-  it("R008-9 a pin is read as an object holding the two digests: a list or a function carrying both digest members, an empty object and an object missing one digest are refused pin-malformed before any file is read; an object whose digests are inherited, a null-prototype object and a frozen object are each admitted with one load", async () => {
+  it("R008-9 a pin is read as an object holding the two digests: a list or a function carrying both digest members, an empty object and an object missing one digest are refused pin-malformed before any file is read; an object whose digests are inherited, a null-prototype object and a frozen object are each admitted with one load", { timeout: 30_000 }, async ({ task }) => {
     const { options } = plant();
     const absent = join(options.approvedRoot, "absent.json");
     const { descriptorDigest, artifactDigest } = options.pin;
@@ -784,9 +815,11 @@ describe("wb-ocie EAT-R008: Pi refuses artifact bytes that differ from their SHA
     }
     expect(readings).toEqual(["admitted loads=1", "admitted loads=1", "admitted loads=1"]);
     expect(objects).toHaveLength(3);
+    const rows = notObjects.map((pin, index): LegRow => [`not an object ${index}`, pin]);
+    expect(await readOrderLeg(task.name, options, rows)).toStrictEqual(legRefused(rows));
   });
 
-  it("R008-10 the digest grammar is anchored at the whole string: each of the ten DIGEST_FORMS (a line break, carriage return or line separator before or after, sixty-five digits, a letter that is no hex digit, no colon, an upper-case or hyphenated algorithm, empty) is refused pin-malformed in either digest before any file is read", async () => {
+  it("R008-10 the digest grammar is anchored at the whole string: each of the ten DIGEST_FORMS (a line break, carriage return or line separator before or after, sixty-five digits, a letter that is no hex digit, no colon, an upper-case or hyphenated algorithm, empty) is refused pin-malformed in either digest before any file is read", { timeout: 30_000 }, async ({ task }) => {
     const { options } = plant();
     const absent = join(options.approvedRoot, "absent.json");
     const readings: Record<string, string> = {};
@@ -799,13 +832,17 @@ describe("wb-ocie EAT-R008: Pi refuses artifact bytes that differ from their SHA
     }
     const names = ["descriptorDigest", "artifactDigest"];
     expect(readings).toEqual(Object.fromEntries(names.flatMap(name => DIGEST_FORMS.map(({ form }) => [`${name} ${form}`, "pin pin-malformed loads=0"]))));
+    const rows = (["descriptorDigest", "artifactDigest"] as const).flatMap(name =>
+      DIGEST_FORMS.map(({ form, digest }): LegRow => [`${name} ${form}`, { ...options.pin, [name]: digest(options.pin[name].slice("sha256:".length)) }]),
+    );
+    expect(await readOrderLeg(task.name, options, rows)).toStrictEqual(legRefused(rows));
   });
 
   it("R008-11 the digest forms are frozen by name: ten", () => {
     expect(DIGEST_FORMS.map(({ form }) => form)).toEqual(["a line break after", "a line break before", "a carriage return after", "a line separator after", "sixty-five digits", "a lower-case letter that is no hex digit", "no colon", "an upper-case algorithm", "a hyphenated algorithm", "empty"]);
   });
 
-  it("R008-12 COMPUTED SCAN of the digest grammar: with one digit of a valid artifact digest replaced by each BMP code point (0000-ffff, each lone surrogate included), MECHANICAL_DIGEST_PATTERN admits exactly the sixteen lower-case hex digits; through the boundary, each of the 128 ASCII code points in that place is refused pin-malformed before any file is read unless it is a lower-case hex digit, which reaches the absent descriptor (unreadable)", async () => {
+  it("R008-12 COMPUTED SCAN of the digest grammar: with one digit of a valid artifact digest replaced by each BMP code point (0000-ffff, each lone surrogate included), MECHANICAL_DIGEST_PATTERN admits exactly the sixteen lower-case hex digits; through the boundary, each of the 128 ASCII code points in that place is refused pin-malformed before any file is read unless it is a lower-case hex digit, which reaches the absent descriptor (unreadable)", { timeout: 30_000 }, async ({ task }) => {
     const { options } = plant();
     const hex = options.pin.artifactDigest.slice("sha256:".length);
     const at = (point: number): string => `sha256:${hex.slice(0, 31)}${String.fromCodePoint(point)}${hex.slice(32)}`;
@@ -821,9 +858,13 @@ describe("wb-ocie EAT-R008: Pi refuses artifact bytes that differ from their SHA
     );
     const isHexDigit = (point: number): boolean => (point >= 0x30 && point <= 0x39) || (point >= 0x61 && point <= 0x66);
     expect(readings).toEqual(Array.from({ length: 128 }, (_, point) => (isHexDigit(point) ? "descriptor unreadable" : "pin pin-malformed")));
+    const rows = Array.from({ length: 128 }, (_, point) => point)
+      .filter(point => !isHexDigit(point))
+      .map((point): LegRow => [`U+${point.toString(16).padStart(4, "0")}`, { ...options.pin, artifactDigest: at(point) }]);
+    expect(await readOrderLeg(task.name, options, rows)).toStrictEqual(legRefused(rows));
   });
 
-  it("R008-13 COMPUTED SCAN of compatibility forms through the boundary (the gate's WG02 form): with each of the 71 code points of a valid digest (sha256: and its 64 hex digits), one place at a time, replaced by its fullwidth compatibility form, which NFKC maps back to that digest, each of the 142 pins (either digest member in turn) is refused pin-malformed with zero loads before any file is read", async () => {
+  it("R008-13 COMPUTED SCAN of compatibility forms through the boundary (the gate's WG02 form): with each of the 71 code points of a valid digest (sha256: and its 64 hex digits), one place at a time, replaced by its fullwidth compatibility form, which NFKC maps back to that digest, each of the 142 pins (either digest member in turn) is refused pin-malformed with zero loads before any file is read", { timeout: 30_000 }, async ({ task }) => {
     const { options } = plant();
     const absent = join(options.approvedRoot, "absent.json");
     const planted: { readonly at: string; readonly pin: MechanicalReleasePin }[] = [];
@@ -843,6 +884,21 @@ describe("wb-ocie EAT-R008: Pi refuses artifact bytes that differ from their SHA
     );
     expect(readings).toEqual(planted.map(({ at }) => `${at} pin pin-malformed loads=0`));
     expect(planted).toHaveLength(142);
+    const rows = planted.map(({ at, pin }): LegRow => [at, pin]);
+    expect(await readOrderLeg(task.name, options, rows)).toStrictEqual(legRefused(rows));
+  });
+
+  it("R008-14 the read-order legs (wb-dhfk): the cases of this file whose titles carry the order words of the module header's step 1 are exactly the cases that ran a leg, in run order, and each leg was handed its case's rows (R008-5 6, R008-6 22, R008-9 5, R008-10 20, R008-12 112, R008-13 142), so a leg cut at its call site or moved to another case reds here", ({ task }) => {
+    const titled: string[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test" && child.name.includes(READ_ORDER_WORDS)) titled.push(titleHeadOf(child.name));
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    expect(Object.keys(READ_ORDER_LEGS), "the cases that ran a read-order leg, in run order").toEqual(titled);
+    expect(READ_ORDER_LEGS).toStrictEqual({ "R008-5": 6, "R008-6": 22, "R008-9": 5, "R008-10": 20, "R008-12": 112, "R008-13": 142 });
   });
 });
 
@@ -1147,6 +1203,75 @@ async function settledWithoutWriter<T>(fifo: string, pending: Promise<T>): Promi
     await pending.catch(() => undefined);
   }
   return first;
+}
+
+/** One row of a read-order leg: its label and the pin the boundary is handed. */
+type LegRow = readonly [at: string, pin: unknown];
+/** A read-order leg's reading. */
+interface LegReading {
+  readonly control: string;
+  readonly readings: readonly string[];
+}
+/** The head of a case title: its requirement id (R008-5, R008-14). */
+const titleHeadOf = (title: string): string => title.slice(0, title.indexOf(" "));
+/** What a read-order leg reads when the boundary judges every row's pin before it opens the descriptor path. */
+const legRefused = (rows: readonly LegRow[]): LegReading => ({ control: "opened", readings: rows.map(([at]) => `${at} pin pin-malformed loads=0`) });
+/**
+ * Whether a reader holds the FIFO at `fifo` open or waits in an open of it: a writer open that does not wait (O_NONBLOCK)
+ * succeeds only then and fails ENXIO while no reader exists; closing that writer at once lets such a reader read end of file.
+ */
+function readerAt(fifo: string): boolean {
+  try {
+    closeSync(openSync(fifo, constants.O_WRONLY | constants.O_NONBLOCK));
+    return true;
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENXIO") return false;
+    throw error;
+  }
+}
+/**
+ * A read-order leg's positive control: the producer pin's request, with the FIFO at `fifo` in the descriptor's place, opens it
+ * for reading, so a reader appears ("opened") within 3 s; the writer open that sees it lets the read end, and the resolution is
+ * awaited to its end before the leg's rows. What it then reads from the FIFO, or returns, is NOT CLAIMED.
+ */
+async function controlOpens(fifo: string, request: MechanicalEntrypointOptions): Promise<string> {
+  const pending = resolveMechanicalEntrypoint(request).then(
+    () => undefined,
+    () => undefined,
+  );
+  const deadline = Date.now() + 3_000;
+  while (!readerAt(fifo)) {
+    if (Date.now() > deadline) return "no reader within 3 s";
+    await new Promise(resolve => setTimeout(resolve, 5));
+  }
+  await pending;
+  return "opened";
+}
+/**
+ * A case's read-order leg (wb-dhfk; the suite header's follow-up paragraph), recorded under its case's title head for R008-14:
+ * the control, then each row's pin handed to the boundary with the FIFO in the descriptor's place, one row at a time, read as
+ * "<at> <field> <reason> loads=<n>" while no writer exists (settledWithoutWriter), with " reader" appended when a reader then
+ * holds or waits in an open of the FIFO. A row that does not settle reads "<at> blocked" and ends the leg, so a blocked
+ * boundary costs one wait.
+ */
+async function readOrderLeg(title: string, options: MechanicalEntrypointOptions, rows: readonly LegRow[]): Promise<LegReading> {
+  READ_ORDER_LEGS[titleHeadOf(title)] = rows.length;
+  const fifo = join(options.approvedRoot, "contracts", "entrypoints", "development.v1.fifo");
+  execFileSync("mkfifo", [fifo]);
+  /** The planted request with the FIFO in the descriptor's place, for the control and every row alike. */
+  const handed = (pin: unknown): MechanicalEntrypointOptions => ({ ...options, descriptorPath: fifo, pin: pin as MechanicalReleasePin });
+  const control = await controlOpens(fifo, handed(options.pin));
+  const readings: string[] = [];
+  for (const [at, pin] of rows) {
+    const outcome = await settledWithoutWriter(fifo, refusalOf(handed(pin)));
+    if (outcome === "blocked") {
+      readings.push(`${at} blocked`);
+      break;
+    }
+    await new Promise(resolve => setImmediate(resolve));
+    readings.push(`${at} ${diagnosticReading(outcome.diagnostic)} loads=${outcome.loads}${readerAt(fifo) ? " reader" : ""}`);
+  }
+  return { control, readings };
 }
 
 describe("wb-ocie EAT-R011: Pi refuses symlink escapes during artifact resolution", () => {
