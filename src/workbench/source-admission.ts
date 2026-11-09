@@ -8,9 +8,9 @@
  * pass; a request that fails one of them in a form a suite header entry plants through admitSourceWrite gets that rule's
  * refusal, and dispatch is not called, and what a request that fails a rule in any other form gets is NOT CLAIMED. When a
  * request fails two rules, the refusal is the earlier rule's for the clause pairs the suite header's rule-order cases fail
- * (one case for each adjacent pair of rules); which refusal answers for any other pair of failing clauses (rule 1's
- * plain-object and dispatch clauses against rule 2's cancellation among them) is NOT CLAIMED. The rules, numbered as the
- * rule-order cases name them:
+ * (one case for each adjacent pair of rules, and GEN-ORDER-PLAIN-CANCEL and GEN-ORDER-DISPATCH-CANCEL for rule 1's
+ * plain-object and dispatch clauses against rule 2's cancellation, in the forms they plant); which refusal answers for any
+ * other pair of failing clauses is NOT CLAIMED. The rules, numbered as the rule-order cases name them:
  * 1. request shape (malformed-request): request is a plain object whose invocationId is clean text, and dispatch is a function;
  * 2. cancellation (admission-cancelled): host.signal is not aborted;
  * 3. the write request (writes-not-requested): request.policy asks for writes (see writesRequested for the policies the suite
@@ -22,9 +22,9 @@
  * 6. attestation (EAT-R027): host.attestation is an object host.authority minted (attestation-absent), whose workspace is that
  *    canonical root (attestation-other-workspace) and whose sourceIdentity is that identity's digest (attestation-stale);
  * 7. the writer lease (EAT-R024, writer-held): host.leases.acquire(that canonical root, request.invocationId) returns a lease;
- *    while inv-a's lease holds that root, the suite's admissions of inv-b and inv-c there do not get one (see WriterLeases),
- *    and what an admission of any other invocation id meets while a lease holds the root (the holder's own id, or one that
- *    differs from it only in letter case, among them) is NOT CLAIMED;
+ *    while inv-a's lease holds that root, the suite's admissions there of inv-b, inv-c, inv-a itself (on ws and through a
+ *    symlink alias) and INV-A do not get one (see WriterLeases), and what an admission of any other invocation id meets
+ *    while a lease holds the root is NOT CLAIMED;
  * 8. the admission wait: host.admissionWait, when set, is called and resolves - in the forms the suite plants it is called
  *    once with one argument, host.signal (the very AbortSignal while host.signal is set and not aborted, undefined when it is
  *    unset), and what it is called with in any other form is NOT CLAIMED; a rejection refuses admission-cancelled when
@@ -199,8 +199,9 @@ function refusal(code: SourceAdmissionCode): SourceAdmissionRefusal {
 }
 
 /**
- * An object whose prototype is Object.prototype or null; an array whose prototype is Array.prototype is not one. Whether an
- * array whose prototype is Object.prototype or null is one is NOT CLAIMED.
+ * An object whose prototype is Object.prototype or null and that is not an array: the suite plants arrays whose prototype is
+ * Array.prototype, Object.prototype or null (GEN-MALFORMED-SHAPES, R027-NOT-REQUESTED, GEN-ARRAY-PROTOTYPES), and none is one.
+ * Whether any other array is one is NOT CLAIMED.
  */
 function plainObject(value: unknown): value is Record<string, unknown> {
   if (typeof value !== "object" || value === null || Array.isArray(value)) return false;
@@ -210,10 +211,11 @@ function plainObject(value: unknown): value is Record<string, unknown> {
 
 /**
  * Clean text, in the forms the suite pins: a string is not clean text when String.prototype.trim() reduces it to "", when it is
- * over 4096 UTF-8 bytes, or when it holds a code point in U+0000-U+001F or U+007F; the four 4096-byte GEN-CLEAN-TEXT references
- * and the GEN-CLEAN-TEXT-FORMS strings are clean text. Whether any other string is clean text (one holding another code point
- * inside its content, U+200B or the bidi controls U+061C, U+200E, U+200F, U+202A-U+202E and U+2066-U+2069 among them) is NOT
- * CLAIMED.
+ * over 4096 UTF-8 bytes, or when it holds a code point in U+0000-U+001F or U+007F; the four 4096-byte GEN-CLEAN-TEXT references,
+ * the GEN-CLEAN-TEXT-FORMS strings and, for every code point outside U+0000-U+001F and U+007F (U+200B, the bidi controls
+ * U+061C, U+200E, U+200F, U+202A-U+202E and U+2066-U+2069, and the lone surrogates among them), the text "a", that code point,
+ * "b" (GEN-CLEAN-TEXT-SCAN) are clean text. Whether any other string is clean text (one holding two such code points inside its
+ * content, or one at an end, among them) is NOT CLAIMED.
  */
 function cleanText(value: unknown): value is string {
   return typeof value === "string" && value.trim() !== "" && Buffer.byteLength(value) <= TEXT_BYTES && !/[\u0000-\u001f\u007f]/.test(value);
@@ -226,9 +228,9 @@ function absolutePath(value: unknown): value is string {
 /**
  * Whether path is root or inside it, judged by path.relative(root, path) and never by a string prefix: "" (root itself) is
  * inside, and ".." or a relative path that starts with "../" is outside, so a sibling that only shares root's prefix is outside.
- * The other relative paths the suite plants are inside, among them a workspace named "..ws" (R023-DOTDOT-NAME) and the two
- * manifest paths that start with ".." (R026-DOTDOT-MANIFEST); whether every other relative path is inside (a name such as
- * "...ws" among them) is NOT CLAIMED.
+ * The other relative paths the suite plants are inside, among them the workspaces named "..ws" (R023-DOTDOT-NAME) and "...ws",
+ * "..." and ".ws" (R023-DOT-NAMES) and the two manifest paths that start with ".." (R026-DOTDOT-MANIFEST); whether every other
+ * relative path is inside is NOT CLAIMED.
  */
 function contains(root: string, path: string): boolean {
   const rel = relative(root, path);
@@ -253,7 +255,15 @@ function read(git: SourceGitReader, directory: string, args: readonly string[]):
   }
 }
 
-/** The answer as UTF-8 text with one final newline removed. */
+/**
+ * The answer as UTF-8 text, with one final LF removed when it ends with one, in the forms the suite pins: the suite reader's
+ * rev-parse answers, each ending with one LF; those answers without their final LF on ws (R022-READER-FINAL-LF) and on each
+ * worktree whose directory name is w followed by one of the 20 code points String.prototype.trim() removes outside
+ * U+0000-U+001F (R022-READER-NO-LF-EDGE), which measure the identity the suite's reader measures and whose admissions
+ * dispatch; those answers on ws with a second LF, which refuse source-unmeasurable (R022-READER-FINAL-LF); and ws's commit id
+ * followed by a CR, with no LF after it and with one, as the HEAD^{commit} answer, which refuses source-unmeasurable
+ * (R022-READER-COMMIT-CR). What it reads any other answer as is NOT CLAIMED.
+ */
 function readLine(git: SourceGitReader, directory: string, args: readonly string[]): string | undefined {
   const output = read(git, directory, args)?.toString("utf8");
   return output?.endsWith("\n") ? output.slice(0, -1) : output;
@@ -315,13 +325,15 @@ function gateManifestOf(root: string, manifest: string): { readonly path: string
  * (workspace-outside-root); and it is the root git reports for it, so a subdirectory of a worktree is refused
  * (workspace-not-worktree-root). The calls the suite pins, with every argument a call does not name valid: a path that is not
  * absolute clean text in a form the suite plants (a relative path, one holding U+000A, one over 4096 UTF-8 bytes, a value that
- * is not a string), none of which resolves by realpath, refuses malformed-request, as does a git that is a string; a missing
- * workspace or authorized root refuses workspace-unresolvable; a workspace outside the root refuses workspace-outside-root, also
- * when it is a subdirectory of its own worktree; and a subdirectory of a worktree, or a reader that throws or answers with no
- * Buffer at every call in a form the suite plants (see SourceGitReader), refuses workspace-not-worktree-root. Which refusal
- * answers any other call is NOT CLAIMED, among them a path that is not absolute clean text yet resolves by realpath, a git
- * that is not a function beside a path that does not resolve or a workspace outside the root, and a workspace that is not
- * absolute clean text beside an authorized root that does not resolve.
+ * is not a string), none of which resolves by realpath, refuses malformed-request, as does a git that is a string; so do the
+ * pairs GEN-CONFINE-ORDER plants: a git that is the string "git", undefined or a plain object beside a missing workspace, a
+ * missing authorized root, a workspace outside the root, a subdirectory of a worktree or a worktree root; a workspace that is
+ * a relative path, holds U+000A or is over 4096 UTF-8 bytes beside a missing authorized root; and an authorized root that is a
+ * relative path, holds U+000A or is over 4096 UTF-8 bytes beside a missing workspace; a missing workspace or authorized root
+ * refuses workspace-unresolvable; a workspace outside the root refuses workspace-outside-root, also when it is a subdirectory
+ * of its own worktree; and a subdirectory of a worktree, or a reader that throws or answers with no Buffer at every call in a
+ * form the suite plants (see SourceGitReader), refuses workspace-not-worktree-root. Which refusal answers any other call is NOT
+ * CLAIMED, among them a path that is not absolute clean text yet resolves by realpath.
  */
 export function confineWorkspace(authorizedRoot: string, workspace: string, git: SourceGitReader): WorkspaceConfinement {
   if (!absolutePath(authorizedRoot) || !absolutePath(workspace) || typeof git !== "function") return refusal("malformed-request");
@@ -345,12 +357,13 @@ export function confineWorkspace(authorizedRoot: string, workspace: string, git:
  * edits). HEAD equality alone never admits. The calls the suite pins, with every argument a call does not name valid: a
  * relative canonicalRoot or one that is not a string, and a git that is a string, refuse malformed-request (each also fails the
  * worktree-root clause), and so does a gate manifest that is not clean text in a form the suite plants on the clean worktree
- * ws, none of which measures; each source-unmeasurable clause refuses when it is the one that fails, and so do an unmerged entry
- * that git status lists and a symlink alias of the worktree root whose declared manifest resolves outside it; a git status
- * record refuses dirty-base, also when the gate manifest is missing; and a manifest the suite plants that does not measure
- * refuses gate-manifest-unavailable. Which refusal answers any other call is NOT CLAIMED, among them a gate manifest that is not
- * clean text beside a failing clause other than its own measurement (a root that is not the worktree root, a misreporting or
- * silent reader, or a dirty base) and an absolute canonicalRoot that is not clean text.
+ * ws, none of which measures, and beside each failing clause GEN-MEASURE-ORDER plants (a root that is a subdirectory of its
+ * worktree, a silent reader, a reader whose GIT_DIR names another repository, a HEAD commit answer that is no object id, an
+ * assume-unchanged entry, an unanswered git status and a dirty base); each source-unmeasurable clause refuses when it is the
+ * one that fails, and so do an unmerged entry that git status lists and a symlink alias of the worktree root whose declared
+ * manifest resolves outside it; a git status record refuses dirty-base, also when the gate manifest is missing; and a manifest
+ * the suite plants that does not measure refuses gate-manifest-unavailable. Which refusal answers any other call is NOT
+ * CLAIMED, among them an absolute canonicalRoot that is not clean text.
  */
 export function measureSourceIdentity(canonicalRoot: string, gateManifest: string, git: SourceGitReader): SourceMeasurement {
   if (!absolutePath(canonicalRoot) || !cleanText(gateManifest) || typeof git !== "function") return refusal("malformed-request");
@@ -400,8 +413,9 @@ export class WriteBoundaryAuthority {
 /**
  * EAT-R024: the host's writer leases, keyed by canonical root, in the forms the suite pins. acquire grants a root's lease while
  * no lease holds that root, for the roots the suite's cases acquire; while inv-a's lease holds a root, it answers undefined to
- * the suite's inv-b and inv-c, and what it answers any other invocation id while a lease holds the root (the holder's own id,
- * or one that differs from it only in letter case, among them) is NOT CLAIMED. The leases of the root pairs the suite plants
+ * the suite's inv-b and inv-c and to the ids R024-HOLDER-ID-LEASES plants (inv-a itself, INV-A, Inv-A, inv-A, " inv-a",
+ * "inv-a ", inv-a2, inv-aa and inv-), and what it answers any other invocation id while a lease holds the root is NOT
+ * CLAIMED. The leases of the root pairs the suite plants
  * are independent: ws and its sibling ws2; ws and each of the two roots the suite plants inside it, sub and ignored/inner (at
  * admission, ws's committed submodule and a repository under its ignored directory); and ws and WS, whose paths differ only in
  * letter case (at admission, two directories on this file system). For each such pair, in either order: while inv-a's lease
@@ -440,9 +454,11 @@ export class WriterLeases {
 
 /**
  * The JSON policy asks for writes only when it is a plain object (see plainObject) with an own allowWrites data member whose
- * value is exactly true; an accessor is never called. It never authorizes them. The suite pins two policies that ask,
- * { allowWrites: true } and its null-prototype copy; whether any other plain object with an own allowWrites data member true
- * asks (a non-enumerable, non-writable or frozen member, or an object with other members, among them) is NOT CLAIMED.
+ * value is exactly true; an accessor is never called. It never authorizes them. The suite pins the policies that ask:
+ * { allowWrites: true } and its null-prototype copy (R027-REQUESTED); and the plain and null-prototype objects whose own
+ * allowWrites data member true has each of the eight combinations of the enumerable, writable and configurable attributes,
+ * the frozen, sealed and non-extensible { allowWrites: true }, and { allowWrites: true, foo: 1 } (R027-REQUESTED-FORMS).
+ * Whether any other plain object with an own allowWrites data member true asks is NOT CLAIMED.
  */
 function writesRequested(policy: unknown): boolean {
   if (!plainObject(policy)) return false;
