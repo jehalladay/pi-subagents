@@ -145,8 +145,8 @@ function childrenOf(token: Token): readonly Token[] {
 /**
  * The text the join reads of marked tokens: their raw text, less the comments of an html token in the arrangements the suite's
  * R080-COMMENT-TEXT rows place, a block or inline (wb-ivcm: any other arrangement, among them an html token beside another of
- * its entry or after another block of it, is NOT CLAIMED by the suite); a list reads its items and a table its cells (its
- * header's first), one per line,
+ * its entry or after another top-level block of it than the level-2 heading opening it, is NOT CLAIMED by the suite); a list
+ * reads its items and a table its cells (its header's first), one per line,
  * and a block quote its children; any other token with children keeps its own raw text around theirs; a leaf keeps its raw
  * text, so code (fenced, indented or a code span) is read with any comment form it shows, since code renders its text.
  */
