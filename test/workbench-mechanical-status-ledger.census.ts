@@ -9,7 +9,7 @@
  * each is {file, suite, title}, a case title exactly as registered under its describe path, owned by a row or by the F10
  * control.
  *
- * PINNED READER SET, every case in this file (the delivery note carries the measured counts of each falsifier):
+ * PINNED READER SET, every case in this file (this file carries no measured count of its falsifiers):
  * - TF-SHAPE (frozen shape, rule 16): FORMS holds, per row that names tested forms and for the F10 control, the number of
  *   forms the ledger names, and 293 forms in all. Red under: a form deleted from a row (CT1, CT1b), a row's forms deleted
  *   (CT4).

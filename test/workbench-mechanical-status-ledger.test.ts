@@ -30,7 +30,7 @@
  *  - SL-CLASS: a class outside the three is refused (L-CLASS).
  *  - SL-PIN: a row pin.pi or pin.mw that is another 40-hex commit, and a row without pin, are refused (L-PIN).
  *  - SL-BEAD-FABRICATED, SL-BEAD-NOT-STRING, SL-BEAD-NONE, SL-BEAD-OTHER-GROUP: a bead id the export does not hold and a bead that is a number are refused by L-BEAD and L-GROUP (EAT-R202 AC3); the bead none is quiet; a bead the export holds that is not the row's group's bead is refused by L-GROUP alone.
- *  - SL-GROUP-UNMAPPED, SL-GROUP-EXPORT-ABSENT, SL-GROUP-EXPORT-TITLE: a row group label outside the 27 mapped labels is refused (EAT-R202 AC3); an export without the B-hx-evidence bead wb-f3wd is refused by L-GROUP and by L-BEAD for EAT-R057; an export title of wb-f3wd that does not start with [MWI-hx-evidence] (text before the tag, or a longer tag) is refused (L-GROUP).
+ *  - SL-GROUP-UNMAPPED, SL-GROUP-EXPORT-ABSENT, SL-GROUP-EXPORT-TITLE: a row group label outside the 27 mapped labels is refused (EAT-R202 AC3); an export without the B-hx-evidence bead wb-f3wd is refused by L-GROUP and by L-BEAD for EAT-R057; an export title of wb-f3wd with text, a space, a tab or a line break before [MWI-hx-evidence], one whose tag is in lower case, lacks its closing bracket or runs longer ([MWI-hx-evidencex]), and an empty one are refused (L-GROUP).
  *  - SL-TESTED-NONE, SL-TESTED-NOT-TESTED, SL-TESTED-NOT-ARRAY, SL-TESTED-FORM, SL-TESTED-SUITE-EMPTY: a tested row with no tested form, a blocked row naming a form, testedForms that is not an array, and a form that is a string, null, has a white-space file, a number file, no title or a suite that is a string or holds an empty string or a number are refused (L-TESTED); a form whose suite is the empty array is quiet. No case text is read here.
  *  - SL-PARTIAL-NONE, SL-PARTIAL-TEXT, SL-PARTIAL-SOURCE, SL-PARTIAL-CARRIED: a partial/inert row without partialBecause or with a string there, with a reason text that is white space or a number, whose source anchor its receipt section does not hold or whose source is absent, and a tested row carrying partialBecause are refused (L-PARTIAL).
  *  - SL-BLOCKED-NONE, SL-BLOCKED-KIND, SL-BLOCKED-DETAIL, SL-BLOCKED-CARRIED: a blocked row without blockedBy or with a string there, with a kind outside the four, with a detail that is empty, white space or a number, and a tested row carrying blockedBy are refused (L-BLOCKED).
@@ -43,7 +43,7 @@
  *  - SL-BYTES, SL-BYTES-CASE, SL-BYTES-PERIOD, SL-BYTES-SUBSTRING, SL-BYTES-QUIET: a string naming WorktreePreservationFailedResult and byte, planted in a row title, a blocked detail, a partial reason, a tested form title, a member of a row this ledger does not use, a nested array, a member name, the F10 control's title and its fixed form, is refused, in either letter case, across a period (inside a parenthesis naming a path or a version, the period of e.g., and a sentence break), and inside longer words (WorktreePreservationFailedResultSet, kilobytes, bytestream); the type alone, the byte word alone, a member named bytes whose value names the type (the type and byte in two strings, R-BYTES-SPLIT), and a number are quiet (L-BYTES, EAT-R202 AC2).
  *  - SL-BYTES-SPLIT-QUIET, SL-BYTES-WORDING-QUIET, SL-BYTES-WATCH: the quiet rows of R-BYTES-SPLIT and R-BYTES-WORDING below.
  *  - SL-SUMMARY-NOT-OBJECT, SL-SUMMARY-ROWS, SL-SUMMARY-CLASS, SL-SUMMARY-PLAN-GROUPS, SL-SUMMARY-COMPLETE, SL-SUMMARY-EMPTY-GROUP, SL-SUMMARY-UNTESTED-ROW: a summary that is absent; summary.rows of 199, 201 or the string 200; summary.byClass with a count one lower or higher, an extra key or a key missing; summary.planGroups of 24 or 26; summary.planGroupsComplete naming all 25 plan groups, one fewer, one more, or the three out of order; a plan group left with no row still counted complete; and a plan group counted complete after one of its rows is blocked are refused (L-SUMMARY, EAT-R202 AC3).
- *  - SL-EXPORT-LOAD, SL-RECEIPTS-READ: beadsFromExport throws a SyntaxError on a line that does not parse and its own refusal on one that is an array or null or has no string id, skips empty lines and lines of spaces, reads a member that is not a string as empty and keeps an id's later line; receiptReader reads a listed receipt's text and gives null for an unlisted name, for ../README and for a name ending in .md.
+ *  - SL-EXPORT-LOAD, SL-RECEIPTS-READ: beadsFromExport throws a SyntaxError on a line that does not parse and its own refusal on a line that is an array, null, a number, a string or true, or an object whose id is a number, absent, null, true, an array or an object, skips empty lines and lines of spaces, reads a title, description or notes member that is a number, true, false, null, an object, an array of strings or an array of numbers, or that is absent, as empty while it reads the other two as written, and keeps an id's later line; receiptReader reads a listed receipt's text and gives null for an unlisted name, for ../README and for a name ending in .md.
  *
  * NAMED RESIDUALS (a named family with its pinned quiet row, rule 19(d); a residual is a known escape, not a pass):
  *  R-BYTES-SPLIT: L-BYTES reads one string at a time, so a row or control whose one string names the type and another string
@@ -60,8 +60,11 @@
  * the group table the judge carries; that a tested form is registered, run, passed or asserting (the census leg reads that), or that a tested row's forms are every case that tests its requirement;
  * what an anchor proves; the requirement titles, the blocked details and the partial reasons as statements of fact; the pins
  * as the current tips of their refs (the receipt names the measurement); the re-pin record of EAT-R201 and the joint P00/M00
- * rulings of EAT-R203..EAT-R209, which this bead does not carry; Beads state outside the export files; any letter case
- * folding beyond toLowerCase and any look-alike spelling of the type name or of byte.
+ * rulings of EAT-R203..EAT-R209, which this bead does not carry; Beads state outside the export files; that SL-LIVE stays
+ * green over a later export (a bead anchor held only by the notes of a bead the export holds open or deferred is read again
+ * from each later export, so a notes replace that drops it reds SL-LIVE once that export lands; the landing-order registry
+ * names this file's reads, R-B761); any letter case folding beyond toLowerCase and any look-alike spelling of the type name
+ * or of byte.
  */
 
 import { createHash } from "node:crypto";
@@ -322,6 +325,12 @@ describe("wb-hhxs EAT-R202 AC3: L-BEAD and L-GROUP over planted ledgers and expo
   it.each([
     ["text before the tag", "x [MWI-hx-evidence] planted"],
     ["a longer tag", "[MWI-hx-evidencex] planted"],
+    ["a space before the tag", " [MWI-hx-evidence] planted"],
+    ["a tab before the tag", "\t[MWI-hx-evidence] planted"],
+    ["a line break before the tag", "\n[MWI-hx-evidence] planted"],
+    ["the tag in lower case", "[mwi-hx-evidence] planted"],
+    ["the tag without its closing bracket", "[MWI-hx-evidence planted"],
+    ["no text (an empty title)", ""],
   ])("SL-GROUP-EXPORT-TITLE an export title of wb-f3wd with %s is refused", { timeout: BUDGET }, (_name, title) => {
     const record = beads().get("wb-f3wd");
     if (record === undefined) throw new Error("the committed export holds no wb-f3wd");
@@ -763,6 +772,23 @@ describe("wb-hhxs EAT-R202 AC3: L-SUMMARY over planted ledgers", () => {
   });
 });
 
+/** SL-EXPORT-LOAD: the three members beadsFromExport keeps, and one export record that writes each as a string. */
+const EXPORT_MEMBERS: readonly string[] = ["title", "description", "notes"];
+const WRITTEN_RECORD = { id: "wb-a", title: "T", description: "D", notes: "N" } as const;
+const WRITTEN_TEXT = { title: "T", description: "D", notes: "N" } as const;
+/** SL-EXPORT-LOAD: a value of every JSON kind but a string: a number, both booleans, null, an object and two arrays (of strings, of numbers). */
+const NOT_STRING_VALUES: readonly (readonly [string, unknown])[] = [
+  ["a number", 5],
+  ["true", true],
+  ["false", false],
+  ["null", null],
+  ["an object", { text: "planted" }],
+  ["an array of strings", ["first line", "second line"]],
+  ["an array of numbers", [1, 2]],
+];
+/** SL-EXPORT-LOAD: each kept member planted alone with each value of NOT_STRING_VALUES (member, kind, value). */
+const EXPORT_MEMBER_PLANTS: [string, string, unknown][] = EXPORT_MEMBERS.flatMap(member => NOT_STRING_VALUES.map(([kind, value]): [string, string, unknown] => [member, kind, value]));
+
 describe("wb-hhxs EAT-R202: the export and receipt readers", () => {
   it("SL-EXPORT-LOAD beadsFromExport throws a SyntaxError on a line that does not parse", () => {
     expect(() => beadsFromExport(`${JSON.stringify({ id: "wb-a" })}\nnot json\n`)).toThrow(SyntaxError);
@@ -772,6 +798,14 @@ describe("wb-hhxs EAT-R202: the export and receipt readers", () => {
     ["a line without a string id", `${JSON.stringify({ id: 5, title: "x" })}\n`],
     ["a line that is an array", '["wb-a"]\n'],
     ["a line that is null", "null\n"],
+    ["a line that is a number", "5\n"],
+    ["a line that is a string", '"wb-a"\n'],
+    ["a line that is true", "true\n"],
+    ["a line whose id is absent", `${JSON.stringify({ title: "x" })}\n`],
+    ["a line whose id is null", `${JSON.stringify({ id: null, title: "x" })}\n`],
+    ["a line whose id is true", `${JSON.stringify({ id: true, title: "x" })}\n`],
+    ["a line whose id is an array", `${JSON.stringify({ id: ["wb-a"], title: "x" })}\n`],
+    ["a line whose id is an object", `${JSON.stringify({ id: { id: "wb-a" }, title: "x" })}\n`],
   ])("SL-EXPORT-LOAD beadsFromExport throws its own refusal on %s", (_name, text) => {
     expect(() => beadsFromExport(text)).toThrow(`an export line carries no string id: ${text.trimEnd()}`);
   });
@@ -783,6 +817,16 @@ describe("wb-hhxs EAT-R202: the export and receipt readers", () => {
       "wb-b": { title: "B", description: "", notes: "" },
     });
     expect(Object.fromEntries(beadsFromExport(JSON.stringify({ id: "wb-c", title: 5, description: ["d"], notes: 7 })))).toEqual({ "wb-c": { title: "", description: "", notes: "" } });
+  });
+
+  it.each(EXPORT_MEMBER_PLANTS)("SL-EXPORT-LOAD beadsFromExport reads a %s member that is %s as empty and the other two as written", (member, _kind, value) => {
+    const line = JSON.stringify({ ...WRITTEN_RECORD, [member]: value });
+    expect(Object.fromEntries(beadsFromExport(line))).toEqual({ "wb-a": { ...WRITTEN_TEXT, [member]: "" } });
+  });
+
+  it.each(EXPORT_MEMBERS)("SL-EXPORT-LOAD beadsFromExport reads an absent %s member as empty and the other two as written", member => {
+    const line = JSON.stringify(Object.fromEntries(Object.entries(WRITTEN_RECORD).filter(([key]) => key !== member)));
+    expect(Object.fromEntries(beadsFromExport(line))).toEqual({ "wb-a": { ...WRITTEN_TEXT, [member]: "" } });
   });
 
   it("SL-RECEIPTS-READ receiptReader reads a listed receipt and gives null for an unlisted name, ../README and a name ending in .md", () => {
