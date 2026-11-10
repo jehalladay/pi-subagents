@@ -1,0 +1,5862 @@
+{
+  "schema": "workbench.mechanical-status-ledger/v1",
+  "program": "mechanical-native-interoperability-2026-11-09",
+  "bead": "wb-mit9",
+  "requirement": "EAT-R202",
+  "measuredUtc": "2026-11-09T23:50:50Z",
+  "pins": {
+    "pi": {
+      "ref": "workbench/implementation-program",
+      "commit": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8"
+    },
+    "piDefault": {
+      "ref": "master",
+      "commit": "18b016b2b3e4efd947d1afc817d5f37bd75952bc"
+    },
+    "mw": {
+      "ref": "main",
+      "commit": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+    }
+  },
+  "sources": [
+    {
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/requirements/ATOMIC-REQUIREMENTS.md",
+      "commit": "18b016b2b3e4efd947d1afc817d5f37bd75952bc",
+      "blob": "e1282572e755a83939c89ec632b6bf9351e01508",
+      "ids": "EAT-R001..EAT-R143"
+    },
+    {
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "path": "docs/workbench/programs/mechanical-interoperability-audit-2026-11-06/triage/requirements/ATOMIC-REQUIREMENTS-DELTA.md",
+      "commit": "18b016b2b3e4efd947d1afc817d5f37bd75952bc",
+      "blob": "c82b3621cb1b1a504f4f28c0e1de6390deca619a",
+      "ids": "EAT-R144..EAT-R200"
+    },
+    {
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/requirements/BEAD-PLAN.md",
+      "commit": "18b016b2b3e4efd947d1afc817d5f37bd75952bc",
+      "blob": "b6c18e9eac06db87905964621df8c4e2a6597d20",
+      "ids": "group labels"
+    },
+    {
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "path": "docs/workbench/programs/mechanical-interoperability-audit-2026-11-06/triage/requirements/BEAD-AMENDMENT-PLAN.md",
+      "commit": "18b016b2b3e4efd947d1afc817d5f37bd75952bc",
+      "blob": "b585e33982383a96dac3308ed8977867e790ee7e",
+      "ids": "bead amendments"
+    },
+    {
+      "program": "mechanical-native-interoperability-2026-11-09",
+      "path": "docs/workbench/programs/mechanical-native-interoperability-2026-11-09/requirements/ATOMIC-REQUIREMENTS.md",
+      "commit": "18b016b2b3e4efd947d1afc817d5f37bd75952bc",
+      "blob": "1fbe1b8e4eff8ae449d3b589c85a15d916eec0a9",
+      "ids": "successors (Maps-to lines)"
+    }
+  ],
+  "classes": [
+    "already-implemented/tested",
+    "partial/inert",
+    "blocked"
+  ],
+  "blockerKinds": [
+    "external",
+    "dependency",
+    "unratified",
+    "unowned"
+  ],
+  "groups": [
+    {
+      "label": "B-preserve",
+      "bead": "wb-5ik5",
+      "tag": "[MWI-preserve]"
+    },
+    {
+      "label": "B-docs",
+      "bead": "wb-12x1",
+      "tag": "[MWI-docs]"
+    },
+    {
+      "label": "B-unknowns",
+      "bead": "wb-muip",
+      "tag": "[MWI-unknowns]"
+    },
+    {
+      "label": "B-release",
+      "bead": "wb-j5y5",
+      "tag": "[MWI-release]"
+    },
+    {
+      "label": "B-contract-choice",
+      "bead": "wb-w8fk",
+      "tag": "[MWI-contract-choice]"
+    },
+    {
+      "label": "B-descriptor",
+      "bead": "wb-ocie",
+      "tag": "[MWI-descriptor]"
+    },
+    {
+      "label": "B-source",
+      "bead": "wb-s8rm",
+      "tag": "[MWI-source]"
+    },
+    {
+      "label": "B-authority",
+      "bead": "wb-201v",
+      "tag": "[MWI-authority]"
+    },
+    {
+      "label": "B-detached-grants",
+      "bead": "wb-wupg",
+      "tag": "[MWI-detached-grants]"
+    },
+    {
+      "label": "B-replay",
+      "bead": "wb-413a",
+      "tag": "[MWI-replay]"
+    },
+    {
+      "label": "B-cancel-repro",
+      "bead": "wb-9v02",
+      "tag": "[MWI-cancel-repro]"
+    },
+    {
+      "label": "B-limits",
+      "bead": "wb-ny54",
+      "tag": "[MWI-limits]"
+    },
+    {
+      "label": "B-dispatch",
+      "bead": "wb-4bxo",
+      "tag": "[MWI-dispatch]"
+    },
+    {
+      "label": "B-outcomes",
+      "bead": "wb-9a1o",
+      "tag": "[MWI-outcomes]"
+    },
+    {
+      "label": "B-effects",
+      "bead": "wb-mwsy",
+      "tag": "[MWI-effects]"
+    },
+    {
+      "label": "B-controls",
+      "bead": "wb-5a7k",
+      "tag": "[MWI-controls]"
+    },
+    {
+      "label": "B-observe",
+      "bead": "wb-upad",
+      "tag": "[MWI-observe]"
+    },
+    {
+      "label": "B-telemetry",
+      "bead": "wb-r5q2",
+      "tag": "[MWI-telemetry]"
+    },
+    {
+      "label": "B-git-census",
+      "bead": "wb-p3i2",
+      "tag": "[MWI-git-census]"
+    },
+    {
+      "label": "B-hx-evidence",
+      "bead": "wb-f3wd",
+      "tag": "[MWI-hx-evidence]"
+    },
+    {
+      "label": "B-hx-admit",
+      "bead": "wb-pxvv",
+      "tag": "[MWI-hx-admit]"
+    },
+    {
+      "label": "B-rf-admit",
+      "bead": "wb-669r",
+      "tag": "[MWI-rf-admit]"
+    },
+    {
+      "label": "B-detached-function",
+      "bead": "wb-zswl",
+      "tag": "[MWI-detached-function]"
+    },
+    {
+      "label": "B-furnace-function",
+      "bead": "wb-dlc6",
+      "tag": "[MWI-furnace-function]"
+    },
+    {
+      "label": "B-coordination",
+      "bead": "wb-0gbh",
+      "tag": "[MWI-coordination]"
+    },
+    {
+      "label": "master-recon",
+      "bead": "wb-cbt4",
+      "tag": "[MWI-master-recon]"
+    },
+    {
+      "label": "mw-tracks",
+      "bead": "wb-1zn2",
+      "tag": "[MWI-external-gates]"
+    }
+  ],
+  "summary": {
+    "rows": 200,
+    "byClass": {
+      "already-implemented/tested": 75,
+      "partial/inert": 31,
+      "blocked": 94
+    },
+    "planGroups": 25,
+    "planGroupsComplete": 3,
+    "planGroupsCompleteLabels": [
+      "B-detached-grants",
+      "B-hx-evidence",
+      "B-replay"
+    ],
+    "note": "The 25 BEAD-PLAN groups are planning labels, not 25 complete issues: a group is complete here only when every one of its rows is already-implemented/tested."
+  },
+  "controls": [
+    {
+      "id": "F10",
+      "title": "run-wide abort recheck after an awaited beforeDispatch",
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-claude-cancel-faults.test.ts",
+          "case": "F10 a run abort during beforeDispatch stops the agent before query()"
+        },
+        {
+          "file": "test/workbench-claude-cancel-faults.test.ts",
+          "case": "F10 control: the same sequence without the abort issues exactly one query"
+        }
+      ],
+      "fixedForms": [
+        "a workflow-wide run abort requested while beforeDispatch is parked is rechecked after the await: no SDK query starts and the agent settles as workflow aborted; the same sequence without the abort issues exactly one query"
+      ],
+      "pending": "Pending, outside this row: a per-agent skip or retry issued while beforeDispatch is parked (EAT-R015, EAT-R016) is a witnessed open violation (wb-9v02 receipt, status pending); this control's fixed forms do not cover it."
+    }
+  ],
+  "rows": [
+    {
+      "id": "EAT-R001",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Cleanup MUST retain recoverable edited bytes when preservation fails",
+      "group": "B-preserve",
+      "bead": "wb-5ik5",
+      "beadStatus": "closed (landing 1017)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/worktree.test.ts",
+          "case": "PF-R001-COMMIT"
+        },
+        {
+          "file": "test/worktree.test.ts",
+          "case": "PF-R001-BRANCH"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-5ik5.md",
+          "anchor": "EAT-R001"
+        }
+      ],
+      "fixedForms": [
+        "a failed status, add, commit, HEAD rev-parse or branch-name step in cleanupWorktree keeps the edited worktree and returns WorktreePreservationFailedResult { hasChanges: true, preservationFailed: true, path, diagnostic }, whose path names the kept worktree where the edited bytes stay; no destructive remove runs"
+      ],
+      "pending": "Pending, outside this row: a per-agent skip or retry issued while beforeDispatch is parked (EAT-R015, EAT-R016) is a witnessed open violation (wb-9v02 receipt, status pending); this row's fixed forms do not cover it.",
+      "successors": [
+        "EAT-R210",
+        "EAT-R215",
+        "EAT-R255"
+      ]
+    },
+    {
+      "id": "EAT-R002",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Cleanup MUST distinguish failed preservation from a clean result",
+      "group": "B-preserve",
+      "bead": "wb-5ik5",
+      "beadStatus": "closed (landing 1017)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/worktree.test.ts",
+          "case": "PF-R002-commit"
+        },
+        {
+          "file": "test/worktree.test.ts",
+          "case": "PF-R002-status"
+        },
+        {
+          "file": "test/worktree.test.ts",
+          "case": "PF-R002-branch"
+        },
+        {
+          "file": "test/worktree.test.ts",
+          "case": "PF-R002-add"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-5ik5.md",
+          "anchor": "EAT-R002"
+        }
+      ],
+      "fixedForms": [
+        "a failed status, add, commit, HEAD rev-parse or branch-name step in cleanupWorktree keeps the edited worktree and returns WorktreePreservationFailedResult { hasChanges: true, preservationFailed: true, path, diagnostic }, whose path names the kept worktree where the edited bytes stay; no destructive remove runs"
+      ],
+      "pending": "Pending, outside this row: a per-agent skip or retry issued while beforeDispatch is parked (EAT-R015, EAT-R016) is a witnessed open violation (wb-9v02 receipt, status pending); this row's fixed forms do not cover it.",
+      "successors": [
+        "EAT-R210",
+        "EAT-R255"
+      ]
+    },
+    {
+      "id": "EAT-R003",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST expose the cleanup recovery location to its caller",
+      "group": "B-preserve",
+      "bead": "wb-5ik5",
+      "beadStatus": "closed (landing 1017)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/worktree-preservation-failure-e2e.test.ts",
+          "case": "E2E-R003"
+        },
+        {
+          "file": "test/worktree-preservation-settlement.test.ts",
+          "case": "EAT-R003"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-5ik5.md",
+          "anchor": "EAT-R003"
+        }
+      ],
+      "fixedForms": [
+        "a failed status, add, commit, HEAD rev-parse or branch-name step in cleanupWorktree keeps the edited worktree and returns WorktreePreservationFailedResult { hasChanges: true, preservationFailed: true, path, diagnostic }, whose path names the kept worktree where the edited bytes stay; no destructive remove runs"
+      ],
+      "pending": "Pending, outside this row: a per-agent skip or retry issued while beforeDispatch is parked (EAT-R015, EAT-R016) is a witnessed open violation (wb-9v02 receipt, status pending); this row's fixed forms do not cover it.",
+      "successors": [
+        "EAT-R210",
+        "EAT-R215",
+        "EAT-R255"
+      ]
+    },
+    {
+      "id": "EAT-R004",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "The docs cut MUST land the corrected program and triage on workbench trunk through the machine",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R004, recorded per ruling point 1"
+        }
+      ],
+      "partialBecause": {
+        "text": "the program pages and the project skill landed on trunk and the triage stays master-only by owner ruling M:60615; the qa/workbench/mechanical-docs-cut journey the acceptance names was not part of the cut",
+        "source": {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "The qa/workbench/mechanical-docs-cut journey is not part of this cut"
+        }
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R005",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST consume one explicitly adopted selector spelling",
+      "group": "B-contract-choice",
+      "bead": "wb-w8fk",
+      "beadStatus": "open (blocked by wb-1zn2)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-w8fk",
+          "anchor": "EAT-R005"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unratified",
+        "detail": "no jointly adopted invocation ABI or action grant (MW-CONTRACT); wb-w8fk is open and blocked by the deferred MW tracker wb-1zn2"
+      },
+      "successors": [
+        "EAT-R203",
+        "EAT-R204"
+      ]
+    },
+    {
+      "id": "EAT-R006",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST reject unsupported invocation contract versions",
+      "group": "B-contract-choice",
+      "bead": "wb-w8fk",
+      "beadStatus": "open (blocked by wb-1zn2)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-w8fk",
+          "anchor": "EAT-R006"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unratified",
+        "detail": "no jointly adopted invocation ABI or action grant (MW-CONTRACT); wb-w8fk is open and blocked by the deferred MW tracker wb-1zn2"
+      },
+      "successors": [
+        "EAT-R203",
+        "EAT-R205"
+      ]
+    },
+    {
+      "id": "EAT-R007",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST read the exact producer descriptor file",
+      "group": "B-descriptor",
+      "bead": "wb-ocie",
+      "beadStatus": "closed (landing 1037)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "test/workbench-mechanical-descriptor.test.ts",
+          "anchor": "EAT-R007"
+        }
+      ],
+      "partialBecause": {
+        "text": "fixture guardrails are tested against a vendored producer descriptor; the closure gate MW-INSTALLED-CONSUMER is not met (no published package or release manifest at the producer)",
+        "source": {
+          "path": "docs/workbench/receipts/wb-ocie.md",
+          "anchor": "Explicitly partial. The closure gate is MW-INSTALLED-CONSUMER"
+        }
+      },
+      "successors": [
+        "EAT-R217",
+        "EAT-R218",
+        "EAT-R219",
+        "EAT-R224"
+      ]
+    },
+    {
+      "id": "EAT-R008",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST refuse artifact bytes that differ from their SHA-256 pin",
+      "group": "B-descriptor",
+      "bead": "wb-ocie",
+      "beadStatus": "closed (landing 1037)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "test/workbench-mechanical-descriptor.test.ts",
+          "anchor": "EAT-R008"
+        }
+      ],
+      "partialBecause": {
+        "text": "fixture guardrails are tested against a vendored producer descriptor; the closure gate MW-INSTALLED-CONSUMER is not met (no published package or release manifest at the producer)",
+        "source": {
+          "path": "docs/workbench/receipts/wb-ocie.md",
+          "anchor": "Explicitly partial. The closure gate is MW-INSTALLED-CONSUMER"
+        }
+      },
+      "successors": [
+        "EAT-R218",
+        "EAT-R220",
+        "EAT-R224"
+      ]
+    },
+    {
+      "id": "EAT-R009",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST refuse noncanonical schema references",
+      "group": "B-descriptor",
+      "bead": "wb-ocie",
+      "beadStatus": "closed (landing 1037)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "test/workbench-mechanical-descriptor.test.ts",
+          "anchor": "EAT-R009"
+        }
+      ],
+      "partialBecause": {
+        "text": "fixture guardrails are tested against a vendored producer descriptor; the closure gate MW-INSTALLED-CONSUMER is not met (no published package or release manifest at the producer)",
+        "source": {
+          "path": "docs/workbench/receipts/wb-ocie.md",
+          "anchor": "Explicitly partial. The closure gate is MW-INSTALLED-CONSUMER"
+        }
+      },
+      "successors": [
+        "EAT-R217",
+        "EAT-R219"
+      ]
+    },
+    {
+      "id": "EAT-R010",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST refuse package or export outside its fixed allowlist",
+      "group": "B-descriptor",
+      "bead": "wb-ocie",
+      "beadStatus": "closed (landing 1037)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "test/workbench-mechanical-descriptor.test.ts",
+          "anchor": "EAT-R010"
+        }
+      ],
+      "partialBecause": {
+        "text": "fixture guardrails are tested against a vendored producer descriptor; the closure gate MW-INSTALLED-CONSUMER is not met (no published package or release manifest at the producer)",
+        "source": {
+          "path": "docs/workbench/receipts/wb-ocie.md",
+          "anchor": "Explicitly partial. The closure gate is MW-INSTALLED-CONSUMER"
+        }
+      },
+      "successors": [
+        "EAT-R219",
+        "EAT-R221",
+        "EAT-R223"
+      ]
+    },
+    {
+      "id": "EAT-R011",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST refuse symlink escapes during artifact resolution",
+      "group": "B-descriptor",
+      "bead": "wb-ocie",
+      "beadStatus": "closed (landing 1037)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "test/workbench-mechanical-descriptor.test.ts",
+          "anchor": "EAT-R011"
+        }
+      ],
+      "partialBecause": {
+        "text": "fixture guardrails are tested against a vendored producer descriptor; the closure gate MW-INSTALLED-CONSUMER is not met (no published package or release manifest at the producer)",
+        "source": {
+          "path": "docs/workbench/receipts/wb-ocie.md",
+          "anchor": "Explicitly partial. The closure gate is MW-INSTALLED-CONSUMER"
+        }
+      },
+      "successors": [
+        "EAT-R222"
+      ]
+    },
+    {
+      "id": "EAT-R012",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Registered workflow_execute MUST pass host-validated detached Claude grants",
+      "group": "B-detached-grants",
+      "bead": "wb-wupg",
+      "beadStatus": "closed (landing 1019)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-detached-grants.test.ts",
+          "case": "EAT-R012: registered workflow_execute, detached"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-wupg.md",
+          "anchor": "EAT-R012"
+        }
+      ],
+      "fixedForms": [
+        "both registered detached Claude producers (workflow_execute in detached mode and workflow_detached with backend claude) pass the real detached preflight with host-validated bounded grants, and each missing host right refuses before any child launch"
+      ],
+      "pending": "Pending, outside this row: a per-agent skip or retry issued while beforeDispatch is parked (EAT-R015, EAT-R016) is a witnessed open violation (wb-9v02 receipt, status pending); this row's fixed forms do not cover it.",
+      "successors": [
+        "EAT-R211",
+        "EAT-R227"
+      ]
+    },
+    {
+      "id": "EAT-R013",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Registered workflow_detached MUST pass host-validated grants when Claude is selected",
+      "group": "B-detached-grants",
+      "bead": "wb-wupg",
+      "beadStatus": "closed (landing 1019)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-detached-grants.test.ts",
+          "case": "EAT-R013: registered workflow_detached"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-wupg.md",
+          "anchor": "EAT-R013"
+        }
+      ],
+      "fixedForms": [
+        "both registered detached Claude producers (workflow_execute in detached mode and workflow_detached with backend claude) pass the real detached preflight with host-validated bounded grants, and each missing host right refuses before any child launch"
+      ],
+      "pending": "Pending, outside this row: a per-agent skip or retry issued while beforeDispatch is parked (EAT-R015, EAT-R016) is a witnessed open violation (wb-9v02 receipt, status pending); this row's fixed forms do not cover it.",
+      "successors": [
+        "EAT-R211"
+      ]
+    },
+    {
+      "id": "EAT-R014",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Detached Claude preflight MUST continue rejecting absent SDK rights",
+      "group": "B-detached-grants",
+      "bead": "wb-wupg",
+      "beadStatus": "closed (landing 1019)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-detached-grants.test.ts",
+          "case": "EAT-R014: forged grants never stand in for a missing host right"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-wupg.md",
+          "anchor": "EAT-R014"
+        }
+      ],
+      "fixedForms": [
+        "both registered detached Claude producers (workflow_execute in detached mode and workflow_detached with backend claude) pass the real detached preflight with host-validated bounded grants, and each missing host right refuses before any child launch"
+      ],
+      "pending": "Pending, outside this row: a per-agent skip or retry issued while beforeDispatch is parked (EAT-R015, EAT-R016) is a witnessed open violation (wb-9v02 receipt, status pending); this row's fixed forms do not cover it.",
+      "successors": [
+        "EAT-R211",
+        "EAT-R227"
+      ]
+    },
+    {
+      "id": "EAT-R015",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "The cancellation experiment MUST measure skip at parked beforeDispatch",
+      "group": "B-cancel-repro",
+      "bead": "wb-9v02",
+      "beadStatus": "closed (landing 1048)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-cancel-repro.test.ts",
+          "case": "R015-SPAWN"
+        },
+        {
+          "file": "test/workbench-mwi-cancel-repro.test.ts",
+          "case": "R015-RESUME"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-9v02.md",
+          "anchor": "a violation witnessed in all four cells, status pending"
+        }
+      ],
+      "successors": [
+        "EAT-R212",
+        "EAT-R213",
+        "EAT-R216",
+        "EAT-R253"
+      ]
+    },
+    {
+      "id": "EAT-R016",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "The cancellation experiment MUST measure retry at parked beforeDispatch",
+      "group": "B-cancel-repro",
+      "bead": "wb-9v02",
+      "beadStatus": "closed (landing 1048)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-cancel-repro.test.ts",
+          "case": "R016-SPAWN"
+        },
+        {
+          "file": "test/workbench-mwi-cancel-repro.test.ts",
+          "case": "R016-RESUME"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-9v02.md",
+          "anchor": "a violation witnessed in all four cells, status pending"
+        }
+      ],
+      "successors": [
+        "EAT-R212",
+        "EAT-R214",
+        "EAT-R216",
+        "EAT-R253"
+      ]
+    },
+    {
+      "id": "EAT-R017",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Agent replay MUST invalidate on changed source revision and tree",
+      "group": "B-replay",
+      "bead": "wb-413a",
+      "beadStatus": "closed (landing 1032)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-claude-replay-dependencies.test.ts",
+          "case": "EAT-R017"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-413a.md",
+          "anchor": "EAT-R017"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R018",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Agent replay MUST invalidate on changed instruction contents",
+      "group": "B-replay",
+      "bead": "wb-413a",
+      "beadStatus": "closed (landing 1032)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-claude-replay-dependencies.test.ts",
+          "case": "EAT-R018"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-413a.md",
+          "anchor": "EAT-R018"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R019",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Agent replay MUST invalidate on changed provider identity",
+      "group": "B-replay",
+      "bead": "wb-413a",
+      "beadStatus": "closed (landing 1032)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-claude-replay-dependencies.test.ts",
+          "case": "EAT-R019"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-413a.md",
+          "anchor": "EAT-R019"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R020",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Agent replay MUST refuse unknown ambient dependencies",
+      "group": "B-replay",
+      "bead": "wb-413a",
+      "beadStatus": "closed (landing 1032)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-claude-replay-dependencies.test.ts",
+          "case": "EAT-R020"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-413a.md",
+          "anchor": "EAT-R020"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R021",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Replay MUST retain uncertain non-read denial",
+      "group": "B-replay",
+      "bead": "wb-413a",
+      "beadStatus": "closed (landing 1032)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-claude-replay-dependencies.test.ts",
+          "case": "EAT-R021"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-413a.md",
+          "anchor": "EAT-R021"
+        }
+      ],
+      "successors": [
+        "EAT-R254"
+      ]
+    },
+    {
+      "id": "EAT-R022",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST refuse a dirty implementation base",
+      "group": "B-source",
+      "bead": "wb-s8rm",
+      "beadStatus": "closed (landing 1043)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-s8rm.md",
+          "anchor": "EAT-R022"
+        },
+        {
+          "path": "test/workbench-mechanical-source-admission.test.ts",
+          "anchor": "EAT-R022"
+        }
+      ],
+      "partialBecause": {
+        "text": "the Pi-local admission seam is tested on real Git repositories but not wired: workflow_execute still refuses a function definition",
+        "source": {
+          "path": "docs/workbench/receipts/wb-s8rm.md",
+          "anchor": "Explicitly partial: the seam is not wired yet."
+        }
+      },
+      "successors": [
+        "EAT-R229",
+        "EAT-R230",
+        "EAT-R234"
+      ]
+    },
+    {
+      "id": "EAT-R023",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST confine the workspace to the authorized canonical root",
+      "group": "B-source",
+      "bead": "wb-s8rm",
+      "beadStatus": "closed (landing 1043)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-s8rm.md",
+          "anchor": "EAT-R023"
+        },
+        {
+          "path": "test/workbench-mechanical-source-admission.test.ts",
+          "anchor": "EAT-R023"
+        }
+      ],
+      "partialBecause": {
+        "text": "the Pi-local admission seam is tested on real Git repositories but not wired: workflow_execute still refuses a function definition",
+        "source": {
+          "path": "docs/workbench/receipts/wb-s8rm.md",
+          "anchor": "Explicitly partial: the seam is not wired yet."
+        }
+      },
+      "successors": [
+        "EAT-R229",
+        "EAT-R230"
+      ]
+    },
+    {
+      "id": "EAT-R024",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST bind a single writer to each materialized workspace",
+      "group": "B-source",
+      "bead": "wb-s8rm",
+      "beadStatus": "closed (landing 1043)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-s8rm.md",
+          "anchor": "EAT-R024"
+        },
+        {
+          "path": "test/workbench-mechanical-source-admission.test.ts",
+          "anchor": "EAT-R024"
+        }
+      ],
+      "partialBecause": {
+        "text": "the Pi-local admission seam is tested on real Git repositories but not wired: workflow_execute still refuses a function definition",
+        "source": {
+          "path": "docs/workbench/receipts/wb-s8rm.md",
+          "anchor": "Explicitly partial: the seam is not wired yet."
+        }
+      },
+      "successors": [
+        "EAT-R207",
+        "EAT-R232"
+      ]
+    },
+    {
+      "id": "EAT-R025",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST recheck the source basis after asynchronous admission",
+      "group": "B-source",
+      "bead": "wb-s8rm",
+      "beadStatus": "closed (landing 1043)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-s8rm.md",
+          "anchor": "EAT-R025"
+        },
+        {
+          "path": "test/workbench-mechanical-source-admission.test.ts",
+          "anchor": "EAT-R025"
+        }
+      ],
+      "partialBecause": {
+        "text": "the Pi-local admission seam is tested on real Git repositories but not wired: workflow_execute still refuses a function definition",
+        "source": {
+          "path": "docs/workbench/receipts/wb-s8rm.md",
+          "anchor": "Explicitly partial: the seam is not wired yet."
+        }
+      },
+      "successors": [
+        "EAT-R207",
+        "EAT-R231",
+        "EAT-R232",
+        "EAT-R234",
+        "EAT-R238"
+      ]
+    },
+    {
+      "id": "EAT-R026",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST bind the gate manifest digest to source identity",
+      "group": "B-source",
+      "bead": "wb-s8rm",
+      "beadStatus": "closed (landing 1043)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-s8rm.md",
+          "anchor": "EAT-R026"
+        },
+        {
+          "path": "test/workbench-mechanical-source-admission.test.ts",
+          "anchor": "EAT-R026"
+        }
+      ],
+      "partialBecause": {
+        "text": "the Pi-local admission seam is tested on real Git repositories but not wired: workflow_execute still refuses a function definition",
+        "source": {
+          "path": "docs/workbench/receipts/wb-s8rm.md",
+          "anchor": "Explicitly partial: the seam is not wired yet."
+        }
+      },
+      "successors": [
+        "EAT-R230",
+        "EAT-R231"
+      ]
+    },
+    {
+      "id": "EAT-R027",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST require an operator-attested write boundary",
+      "group": "B-source",
+      "bead": "wb-s8rm",
+      "beadStatus": "closed (landing 1043)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-s8rm.md",
+          "anchor": "EAT-R027"
+        },
+        {
+          "path": "test/workbench-mechanical-source-admission.test.ts",
+          "anchor": "EAT-R027"
+        }
+      ],
+      "partialBecause": {
+        "text": "the Pi-local admission seam is tested on real Git repositories but not wired: workflow_execute still refuses a function definition",
+        "source": {
+          "path": "docs/workbench/receipts/wb-s8rm.md",
+          "anchor": "Explicitly partial: the seam is not wired yet."
+        }
+      },
+      "successors": [
+        "EAT-R229",
+        "EAT-R233"
+      ]
+    },
+    {
+      "id": "EAT-R028",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST require workbench execute authority for a function",
+      "group": "B-authority",
+      "bead": "wb-201v",
+      "beadStatus": "closed (landing 1031)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "test/workbench-function-authority.test.ts",
+          "anchor": "EAT-R028"
+        }
+      ],
+      "partialBecause": {
+        "text": "the enforcement seam is tested; no action spelling is adopted, so every function dispatch refuses (FUNCTION_ACTION_CONTRACT unadopted, blocked on MW-CONTRACT)",
+        "source": {
+          "path": "docs/workbench/receipts/wb-201v.md",
+          "anchor": "Explicitly partial. No action spelling is adopted"
+        }
+      },
+      "successors": [
+        "EAT-R204",
+        "EAT-R225",
+        "EAT-R226",
+        "EAT-R227",
+        "EAT-R234"
+      ]
+    },
+    {
+      "id": "EAT-R029",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST require an exact host-issued function action grant",
+      "group": "B-authority",
+      "bead": "wb-201v",
+      "beadStatus": "closed (landing 1031)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "test/workbench-function-authority.test.ts",
+          "anchor": "EAT-R029"
+        }
+      ],
+      "partialBecause": {
+        "text": "the enforcement seam is tested; no action spelling is adopted, so every function dispatch refuses (FUNCTION_ACTION_CONTRACT unadopted, blocked on MW-CONTRACT)",
+        "source": {
+          "path": "docs/workbench/receipts/wb-201v.md",
+          "anchor": "Explicitly partial. No action spelling is adopted"
+        }
+      },
+      "successors": [
+        "EAT-R204",
+        "EAT-R225"
+      ]
+    },
+    {
+      "id": "EAT-R030",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST refuse changed effective principal or session",
+      "group": "B-authority",
+      "bead": "wb-201v",
+      "beadStatus": "closed (landing 1031)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "test/workbench-function-authority.test.ts",
+          "anchor": "EAT-R030"
+        }
+      ],
+      "partialBecause": {
+        "text": "the enforcement seam is tested; no action spelling is adopted, so every function dispatch refuses (FUNCTION_ACTION_CONTRACT unadopted, blocked on MW-CONTRACT)",
+        "source": {
+          "path": "docs/workbench/receipts/wb-201v.md",
+          "anchor": "Explicitly partial. No action spelling is adopted"
+        }
+      },
+      "successors": [
+        "EAT-R228",
+        "EAT-R233",
+        "EAT-R238"
+      ]
+    },
+    {
+      "id": "EAT-R031",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST re-evaluate revoked grants at dispatch",
+      "group": "B-authority",
+      "bead": "wb-201v",
+      "beadStatus": "closed (landing 1031)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "test/workbench-function-authority.test.ts",
+          "anchor": "EAT-R031"
+        }
+      ],
+      "partialBecause": {
+        "text": "the enforcement seam is tested; no action spelling is adopted, so every function dispatch refuses (FUNCTION_ACTION_CONTRACT unadopted, blocked on MW-CONTRACT)",
+        "source": {
+          "path": "docs/workbench/receipts/wb-201v.md",
+          "anchor": "Explicitly partial. No action spelling is adopted"
+        }
+      },
+      "successors": [
+        "EAT-R228",
+        "EAT-R234",
+        "EAT-R238"
+      ]
+    },
+    {
+      "id": "EAT-R032",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Registered workflow_execute MUST launch an admitted function asynchronously",
+      "group": "B-dispatch",
+      "bead": "wb-4bxo",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-4bxo",
+          "anchor": "EAT-R032"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "needs the installed MW-HOST facade and the ratified contract-choice, descriptor, source and authority rows; gate PI-FUNCTION-REGISTERED"
+      },
+      "successors": [
+        "EAT-R234",
+        "EAT-R235",
+        "EAT-R239",
+        "EAT-R240"
+      ]
+    },
+    {
+      "id": "EAT-R033",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Disabling Mechanical hosting MUST preserve script workflow behavior",
+      "group": "B-dispatch",
+      "bead": "wb-4bxo",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-4bxo",
+          "anchor": "EAT-R033"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "needs the installed MW-HOST facade and the ratified contract-choice, descriptor, source and authority rows; gate PI-FUNCTION-REGISTERED"
+      },
+      "successors": [
+        "EAT-R236"
+      ]
+    },
+    {
+      "id": "EAT-R034",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST bind application services outside the untrusted worker",
+      "group": "B-dispatch",
+      "bead": "wb-4bxo",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-4bxo",
+          "anchor": "EAT-R034"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "needs the installed MW-HOST facade and the ratified contract-choice, descriptor, source and authority rows; gate PI-FUNCTION-REGISTERED"
+      },
+      "successors": [
+        "EAT-R223"
+      ]
+    },
+    {
+      "id": "EAT-R035",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST depend only on a published MW application host boundary",
+      "group": "B-dispatch",
+      "bead": "wb-4bxo",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-4bxo",
+          "anchor": "EAT-R035"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "needs the installed MW-HOST facade and the ratified contract-choice, descriptor, source and authority rows; gate PI-FUNCTION-REGISTERED"
+      },
+      "successors": [
+        "EAT-R221"
+      ]
+    },
+    {
+      "id": "EAT-R036",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST preserve all four Mechanical outcome discriminants",
+      "group": "B-outcomes",
+      "bead": "wb-9a1o",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-9a1o",
+          "anchor": "EAT-R036"
+        }
+      ],
+      "blockedBy": {
+        "kind": "dependency",
+        "detail": "depends on B-dispatch (wb-4bxo, open)"
+      },
+      "successors": [
+        "EAT-R242"
+      ]
+    },
+    {
+      "id": "EAT-R037",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST project invocation termination independently from domain verification",
+      "group": "B-outcomes",
+      "bead": "wb-9a1o",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-9a1o",
+          "anchor": "EAT-R037"
+        }
+      ],
+      "blockedBy": {
+        "kind": "dependency",
+        "detail": "depends on B-dispatch (wb-4bxo, open)"
+      },
+      "successors": [
+        "EAT-R243",
+        "EAT-R244"
+      ]
+    },
+    {
+      "id": "EAT-R038",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST accept verified-candidate proof only at the matching native Forge basis",
+      "group": "B-outcomes",
+      "bead": "wb-9a1o",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-9a1o",
+          "anchor": "EAT-R038"
+        }
+      ],
+      "blockedBy": {
+        "kind": "dependency",
+        "detail": "depends on B-dispatch (wb-4bxo, open)"
+      },
+      "successors": [
+        "EAT-R245"
+      ]
+    },
+    {
+      "id": "EAT-R039",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST reject simulated transport-success gate-failure as verification",
+      "group": "B-outcomes",
+      "bead": "wb-9a1o",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-9a1o",
+          "anchor": "EAT-R039"
+        }
+      ],
+      "blockedBy": {
+        "kind": "dependency",
+        "detail": "depends on B-dispatch (wb-4bxo, open)"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R040",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST preserve provider diagnostic taxonomy",
+      "group": "B-outcomes",
+      "bead": "wb-9a1o",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-9a1o",
+          "anchor": "EAT-R040"
+        }
+      ],
+      "blockedBy": {
+        "kind": "dependency",
+        "detail": "depends on B-dispatch (wb-4bxo, open)"
+      },
+      "successors": [
+        "EAT-R243",
+        "EAT-R247"
+      ]
+    },
+    {
+      "id": "EAT-R041",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST persist invocation intent before its first effect dispatch",
+      "group": "B-effects",
+      "bead": "wb-mwsy",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-mwsy",
+          "anchor": "EAT-R041"
+        }
+      ],
+      "blockedBy": {
+        "kind": "dependency",
+        "detail": "depends on B-dispatch (wb-4bxo, open)"
+      },
+      "successors": [
+        "EAT-R250"
+      ]
+    },
+    {
+      "id": "EAT-R042",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST record dispatch separately from settlement",
+      "group": "B-effects",
+      "bead": "wb-mwsy",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-mwsy",
+          "anchor": "EAT-R042"
+        }
+      ],
+      "blockedBy": {
+        "kind": "dependency",
+        "detail": "depends on B-dispatch (wb-4bxo, open)"
+      },
+      "successors": [
+        "EAT-R240",
+        "EAT-R250"
+      ]
+    },
+    {
+      "id": "EAT-R043",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST preserve uncertain effects across restart without redispatch",
+      "group": "B-effects",
+      "bead": "wb-mwsy",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-mwsy",
+          "anchor": "EAT-R043"
+        }
+      ],
+      "blockedBy": {
+        "kind": "dependency",
+        "detail": "depends on B-dispatch (wb-4bxo, open)"
+      },
+      "successors": [
+        "EAT-R216",
+        "EAT-R251",
+        "EAT-R254"
+      ]
+    },
+    {
+      "id": "EAT-R044",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST require native reconciliation before authorizing an effect retry",
+      "group": "B-effects",
+      "bead": "wb-mwsy",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-mwsy",
+          "anchor": "EAT-R044"
+        }
+      ],
+      "blockedBy": {
+        "kind": "dependency",
+        "detail": "depends on B-dispatch (wb-4bxo, open)"
+      },
+      "successors": [
+        "EAT-R251",
+        "EAT-R254"
+      ]
+    },
+    {
+      "id": "EAT-R045",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST propagate caller cancellation to the owned host runner",
+      "group": "B-controls",
+      "bead": "wb-5a7k",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-5a7k",
+          "anchor": "EAT-R045"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-effects (wb-mwsy, open) and MW-CANCEL; gate PI-CANCEL-RECOVERY"
+      },
+      "successors": [
+        "EAT-R252"
+      ]
+    },
+    {
+      "id": "EAT-R046",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST retain candidate and native recovery references after stop",
+      "group": "B-controls",
+      "bead": "wb-5a7k",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-5a7k",
+          "anchor": "EAT-R046"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-effects (wb-mwsy, open) and MW-CANCEL; gate PI-CANCEL-RECOVERY"
+      },
+      "successors": [
+        "EAT-R252"
+      ]
+    },
+    {
+      "id": "EAT-R047",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST not treat late SDK terminal output as proof of cancellation",
+      "group": "B-controls",
+      "bead": "wb-5a7k",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-5a7k",
+          "anchor": "EAT-R047"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-effects (wb-mwsy, open) and MW-CANCEL; gate PI-CANCEL-RECOVERY"
+      },
+      "successors": [
+        "EAT-R252"
+      ]
+    },
+    {
+      "id": "EAT-R048",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST authorize controls against the exact invocation and child attempt",
+      "group": "B-controls",
+      "bead": "wb-5a7k",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-5a7k",
+          "anchor": "EAT-R048"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-effects (wb-mwsy, open) and MW-CANCEL; gate PI-CANCEL-RECOVERY"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R049",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST pause only at an admission boundary without producer pause support",
+      "group": "B-controls",
+      "bead": "wb-5a7k",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-5a7k",
+          "anchor": "EAT-R049"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-effects (wb-mwsy, open) and MW-CANCEL; gate PI-CANCEL-RECOVERY"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R050",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Closing an inspector MUST NOT kill an externally owned Furnace Run",
+      "group": "B-controls",
+      "bead": "wb-5a7k",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-5a7k",
+          "anchor": "EAT-R050"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-effects (wb-mwsy, open) and MW-CANCEL; gate PI-CANCEL-RECOVERY"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R051",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST reopen an invocation by its retained native identity",
+      "group": "B-observe",
+      "bead": "wb-upad",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-upad",
+          "anchor": "EAT-R051"
+        }
+      ],
+      "blockedBy": {
+        "kind": "dependency",
+        "detail": "depends on B-outcomes (wb-9a1o) and B-effects (wb-mwsy), both open"
+      },
+      "successors": [
+        "EAT-R246"
+      ]
+    },
+    {
+      "id": "EAT-R052",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST display stale and unknown evidence freshness explicitly",
+      "group": "B-observe",
+      "bead": "wb-upad",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-upad",
+          "anchor": "EAT-R052"
+        }
+      ],
+      "blockedBy": {
+        "kind": "dependency",
+        "detail": "depends on B-outcomes (wb-9a1o) and B-effects (wb-mwsy), both open"
+      },
+      "successors": [
+        "EAT-R244",
+        "EAT-R245",
+        "EAT-R247",
+        "EAT-R248"
+      ]
+    },
+    {
+      "id": "EAT-R053",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST label the tracked-file discovery authority as Git census",
+      "group": "B-git-census",
+      "bead": "wb-p3i2",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-p3i2",
+          "anchor": "EAT-R053"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-dispatch, B-outcomes and B-effects and on MW-HOST and MW-CANCEL; gate PI-GIT-CENSUS-LIVE"
+      },
+      "successors": [
+        "EAT-R262"
+      ]
+    },
+    {
+      "id": "EAT-R054",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST witness a changed native candidate from the registered installed-host path",
+      "group": "B-git-census",
+      "bead": "wb-p3i2",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-p3i2",
+          "anchor": "EAT-R054"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-dispatch, B-outcomes and B-effects and on MW-HOST and MW-CANCEL; gate PI-GIT-CENSUS-LIVE"
+      },
+      "successors": [
+        "EAT-R235",
+        "EAT-R259"
+      ]
+    },
+    {
+      "id": "EAT-R055",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST witness the candidate-matching native Forge operation",
+      "group": "B-git-census",
+      "bead": "wb-p3i2",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-p3i2",
+          "anchor": "EAT-R055"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-dispatch, B-outcomes and B-effects and on MW-HOST and MW-CANCEL; gate PI-GIT-CENSUS-LIVE"
+      },
+      "successors": [
+        "EAT-R259",
+        "EAT-R260"
+      ]
+    },
+    {
+      "id": "EAT-R056",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST witness live denial and cancellation controls before PI-3 closure",
+      "group": "B-git-census",
+      "bead": "wb-p3i2",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-p3i2",
+          "anchor": "EAT-R056"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-dispatch, B-outcomes and B-effects and on MW-HOST and MW-CANCEL; gate PI-GIT-CENSUS-LIVE"
+      },
+      "successors": [
+        "EAT-R260"
+      ]
+    },
+    {
+      "id": "EAT-R057",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "The HX probe MUST record whether installed producer can supply task-scope proof",
+      "group": "B-hx-evidence",
+      "bead": "wb-f3wd",
+      "beadStatus": "closed (landing 1013)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-hx-task-scope-probe.test.ts",
+          "case": "A1-PRODUCER-PIN"
+        },
+        {
+          "file": "test/workbench-hx-task-scope-probe.test.ts",
+          "case": "A2-RECORDED-TASK"
+        },
+        {
+          "file": "test/workbench-hx-task-scope-probe.test.ts",
+          "case": "A3-OBSERVATION-OF-RESULT"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-f3wd.md",
+          "anchor": "EAT-R057"
+        }
+      ],
+      "successors": [
+        "EAT-R299"
+      ]
+    },
+    {
+      "id": "EAT-R058",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST stop native-profile writer dispatch on incomplete HX scope",
+      "group": "B-hx-admit",
+      "bead": "wb-pxvv",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-pxvv",
+          "anchor": "EAT-R058"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-dispatch and MW-NATIVE; gate PI-HX-RF-LIVE"
+      },
+      "successors": [
+        "EAT-R299"
+      ]
+    },
+    {
+      "id": "EAT-R059",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST refuse HX evidence from another query or revision",
+      "group": "B-hx-admit",
+      "bead": "wb-pxvv",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-pxvv",
+          "anchor": "EAT-R059"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-dispatch and MW-NATIVE; gate PI-HX-RF-LIVE"
+      },
+      "successors": [
+        "EAT-R299"
+      ]
+    },
+    {
+      "id": "EAT-R060",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST refuse an RF preview as authoritative committed context",
+      "group": "B-rf-admit",
+      "bead": "wb-669r",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-669r",
+          "anchor": "EAT-R060"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-dispatch and MW-NATIVE; gate PI-HX-RF-LIVE"
+      },
+      "successors": [
+        "EAT-R300"
+      ]
+    },
+    {
+      "id": "EAT-R061",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST retain producer-backed RF render provenance at the same source basis",
+      "group": "B-rf-admit",
+      "bead": "wb-669r",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-669r",
+          "anchor": "EAT-R061"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-dispatch and MW-NATIVE; gate PI-HX-RF-LIVE"
+      },
+      "successors": [
+        "EAT-R300"
+      ]
+    },
+    {
+      "id": "EAT-R062",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST block only the native profile when native evidence is unavailable",
+      "group": "B-rf-admit",
+      "bead": "wb-669r",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-669r",
+          "anchor": "EAT-R062"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-dispatch and MW-NATIVE; gate PI-HX-RF-LIVE"
+      },
+      "successors": [
+        "EAT-R300",
+        "EAT-R303"
+      ]
+    },
+    {
+      "id": "EAT-R063",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST witness native HX and committed RF composition through the installed host",
+      "group": "B-rf-admit",
+      "bead": "wb-669r",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-669r",
+          "anchor": "EAT-R063"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-dispatch and MW-NATIVE; gate PI-HX-RF-LIVE"
+      },
+      "successors": [
+        "EAT-R299",
+        "EAT-R300"
+      ]
+    },
+    {
+      "id": "EAT-R064",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST launch detached functions only under detach authority",
+      "group": "B-detached-function",
+      "bead": "wb-zswl",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-zswl",
+          "anchor": "EAT-R064"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-dispatch, B-effects and B-observe and on MW-HOST and MW-CANCEL; gate PI-DETACHED-FUNCTION-LIVE"
+      },
+      "successors": [
+        "EAT-R226",
+        "EAT-R295"
+      ]
+    },
+    {
+      "id": "EAT-R065",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST reattach using the detached native host instance identity",
+      "group": "B-detached-function",
+      "bead": "wb-zswl",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-zswl",
+          "anchor": "EAT-R065"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-dispatch, B-effects and B-observe and on MW-HOST and MW-CANCEL; gate PI-DETACHED-FUNCTION-LIVE"
+      },
+      "successors": [
+        "EAT-R296"
+      ]
+    },
+    {
+      "id": "EAT-R066",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST refuse detached transport with incorrect same-machine ownership",
+      "group": "B-detached-function",
+      "bead": "wb-zswl",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-zswl",
+          "anchor": "EAT-R066"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-dispatch, B-effects and B-observe and on MW-HOST and MW-CANCEL; gate PI-DETACHED-FUNCTION-LIVE"
+      },
+      "successors": [
+        "EAT-R295",
+        "EAT-R296"
+      ]
+    },
+    {
+      "id": "EAT-R067",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST preserve launch-unknown after a lost detached handshake",
+      "group": "B-detached-function",
+      "bead": "wb-zswl",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-zswl",
+          "anchor": "EAT-R067"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-dispatch, B-effects and B-observe and on MW-HOST and MW-CANCEL; gate PI-DETACHED-FUNCTION-LIVE"
+      },
+      "successors": [
+        "EAT-R296"
+      ]
+    },
+    {
+      "id": "EAT-R068",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST map one callback to the producer Run Work and Attempt identities",
+      "group": "B-furnace-function",
+      "bead": "wb-dlc6",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-dlc6",
+          "anchor": "EAT-R068"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-dispatch, B-effects and B-observe and on MW-FURNACE; gate PI-FURNACE-FUNCTION-LIVE"
+      },
+      "successors": [
+        "EAT-R297",
+        "EAT-R298"
+      ]
+    },
+    {
+      "id": "EAT-R069",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST leave retry decisions with Furnace after ambiguous starts",
+      "group": "B-furnace-function",
+      "bead": "wb-dlc6",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-dlc6",
+          "anchor": "EAT-R069"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-dispatch, B-effects and B-observe and on MW-FURNACE; gate PI-FURNACE-FUNCTION-LIVE"
+      },
+      "successors": [
+        "EAT-R258",
+        "EAT-R297",
+        "EAT-R298"
+      ]
+    },
+    {
+      "id": "EAT-R070",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST forward exact authorized Attempt cancellation without asserting rollback",
+      "group": "B-furnace-function",
+      "bead": "wb-dlc6",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-dlc6",
+          "anchor": "EAT-R070"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-dispatch, B-effects and B-observe and on MW-FURNACE; gate PI-FURNACE-FUNCTION-LIVE"
+      },
+      "successors": [
+        "EAT-R252",
+        "EAT-R297"
+      ]
+    },
+    {
+      "id": "EAT-R071",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST invoke only the published pure coordination schema and export",
+      "group": "B-coordination",
+      "bead": "wb-0gbh",
+      "beadStatus": "closed (exit-superseded to wb-ub94, which closed at landing 1075)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "test/workbench-mechanical-coordination.test.ts",
+          "anchor": "EAT-R071"
+        }
+      ],
+      "partialBecause": {
+        "text": "the pure coordination seam is tested; no packed or installed coordination artifact exists (closure gate PI-COORDINATION-INSTALLED, external MW-COORDINATION)",
+        "source": {
+          "path": "test/workbench-mechanical-coordination.test.ts",
+          "anchor": "EXPLICITLY PARTIAL (closure gate PI-COORDINATION-INSTALLED; external MW-COORDINATION)"
+        }
+      },
+      "successors": [
+        "EAT-R301"
+      ]
+    },
+    {
+      "id": "EAT-R072",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST treat a coordination proposal as observation until separately authorized",
+      "group": "B-coordination",
+      "bead": "wb-0gbh",
+      "beadStatus": "closed (exit-superseded to wb-ub94, which closed at landing 1075)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "test/workbench-mechanical-coordination.test.ts",
+          "anchor": "EAT-R072"
+        }
+      ],
+      "partialBecause": {
+        "text": "the pure coordination seam is tested; no packed or installed coordination artifact exists (closure gate PI-COORDINATION-INSTALLED, external MW-COORDINATION)",
+        "source": {
+          "path": "test/workbench-mechanical-coordination.test.ts",
+          "anchor": "EXPLICITLY PARTIAL (closure gate PI-COORDINATION-INSTALLED; external MW-COORDINATION)"
+        }
+      },
+      "successors": [
+        "EAT-R302"
+      ]
+    },
+    {
+      "id": "EAT-R073",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST reject nonpositive or noninteger concurrency settings",
+      "group": "B-limits",
+      "bead": "wb-ny54",
+      "beadStatus": "closed (landing 1025)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mechanical-host-admission.test.ts",
+          "case": "R073-CONCURRENCY-"
+        },
+        {
+          "file": "test/workbench-mechanical-host-admission.test.ts",
+          "case": "R073-CAPS-"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-ny54.md",
+          "anchor": "Of this cut, only the EAT-R073 validation is on the production path."
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R074",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST enforce shared admission caps across simultaneous invocations",
+      "group": "B-limits",
+      "bead": "wb-ny54",
+      "beadStatus": "closed (landing 1025)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-ny54.md",
+          "anchor": "EAT-R074"
+        },
+        {
+          "path": "test/workbench-mechanical-host-admission.test.ts",
+          "anchor": "EAT-R074"
+        }
+      ],
+      "partialBecause": {
+        "text": "the shared host admission budget is tested, but no production caller passes it to runWorkflow",
+        "source": {
+          "path": "docs/workbench/receipts/wb-ny54.md",
+          "anchor": "No production caller passes a budget yet"
+        }
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R075",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST expose a bounded admission wait reason",
+      "group": "B-limits",
+      "bead": "wb-ny54",
+      "beadStatus": "closed (landing 1025)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-ny54.md",
+          "anchor": "EAT-R075"
+        },
+        {
+          "path": "test/workbench-mechanical-host-admission.test.ts",
+          "anchor": "EAT-R075"
+        }
+      ],
+      "partialBecause": {
+        "text": "the shared host admission budget is tested, but no production caller passes it to runWorkflow",
+        "source": {
+          "path": "docs/workbench/receipts/wb-ny54.md",
+          "anchor": "No production caller passes a budget yet"
+        }
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R076",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST remove a cancelled queued invocation before dispatch",
+      "group": "B-limits",
+      "bead": "wb-ny54",
+      "beadStatus": "closed (landing 1025)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-ny54.md",
+          "anchor": "EAT-R076"
+        },
+        {
+          "path": "test/workbench-mechanical-host-admission.test.ts",
+          "anchor": "EAT-R076"
+        }
+      ],
+      "partialBecause": {
+        "text": "the shared host admission budget is tested, but no production caller passes it to runWorkflow",
+        "source": {
+          "path": "docs/workbench/receipts/wb-ny54.md",
+          "anchor": "No production caller passes a budget yet"
+        }
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R077",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST bound retained progress and provider-output bytes",
+      "group": "B-telemetry",
+      "bead": "wb-r5q2",
+      "beadStatus": "closed (landing 1030)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-r5q2.md",
+          "anchor": "EAT-R077"
+        },
+        {
+          "path": "test/workbench-mechanical-telemetry.test.ts",
+          "anchor": "EAT-R077"
+        }
+      ],
+      "partialBecause": {
+        "text": "the byte bound is tested; no production caller passes the telemetry option",
+        "source": {
+          "path": "docs/workbench/receipts/wb-r5q2.md",
+          "anchor": "no production caller passes the telemetry option"
+        }
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R078",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST record monotonic stage timing joined to native IDs",
+      "group": "B-telemetry",
+      "bead": "wb-r5q2",
+      "beadStatus": "closed (landing 1030)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-r5q2.md",
+          "anchor": "EAT-R078"
+        },
+        {
+          "path": "test/workbench-mechanical-telemetry.test.ts",
+          "anchor": "EAT-R078"
+        }
+      ],
+      "partialBecause": {
+        "text": "the stage records are tested; no production caller passes the telemetry option",
+        "source": {
+          "path": "docs/workbench/receipts/wb-r5q2.md",
+          "anchor": "no production caller passes the telemetry option"
+        }
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R079",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Pi MUST measure host load using simultaneous real invocations",
+      "group": "B-telemetry",
+      "bead": "wb-r5q2",
+      "beadStatus": "closed (landing 1030)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-r5q2.md",
+          "anchor": "EAT-R079"
+        },
+        {
+          "path": "test/workbench-mechanical-telemetry.test.ts",
+          "anchor": "EAT-R079"
+        }
+      ],
+      "partialBecause": {
+        "text": "the fixture leg of the load journey is tested; the PI-MULTIWORKFLOW-LOAD producer leg is not run",
+        "source": {
+          "path": "docs/workbench/receipts/wb-r5q2.md",
+          "anchor": "the PI-MULTIWORKFLOW-LOAD producer leg is not run"
+        }
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R080",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "The prior-run census MUST distinguish repository absence from global absence",
+      "group": "B-unknowns",
+      "bead": "wb-muip",
+      "beadStatus": "closed (landing 1011)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-muip.md",
+          "anchor": "EAT-R080"
+        },
+        {
+          "path": "test/workbench-mechanical-evidence-census.test.ts",
+          "anchor": "EAT-R080"
+        }
+      ],
+      "partialBecause": {
+        "text": "the census and the probe judges are tested; the EVIDENCE-CENSUS legs are explicitly partial (no authorized external store census, no FORGE-TRANSPORT-CENSUS beyond the recorded argv and build)",
+        "source": {
+          "path": "docs/workbench/receipts/wb-muip.md",
+          "anchor": "EVIDENCE-CENSUS legs, explicitly partial."
+        }
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R081",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "The Forge transport probe MUST settle the exit-zero failed-gate premise from producer evidence",
+      "group": "B-unknowns",
+      "bead": "wb-muip",
+      "beadStatus": "closed (landing 1011)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-muip.md",
+          "anchor": "EAT-R081"
+        },
+        {
+          "path": "test/workbench-mechanical-evidence-census.test.ts",
+          "anchor": "EAT-R081"
+        }
+      ],
+      "partialBecause": {
+        "text": "the census and the probe judges are tested; the EVIDENCE-CENSUS legs are explicitly partial (no authorized external store census, no FORGE-TRANSPORT-CENSUS beyond the recorded argv and build)",
+        "source": {
+          "path": "docs/workbench/receipts/wb-muip.md",
+          "anchor": "EVIDENCE-CENSUS legs, explicitly partial."
+        }
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R082",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Each slice cut MUST update W11 and the project skill to its evidenced status",
+      "group": "B-release",
+      "bead": "wb-j5y5",
+      "beadStatus": "closed (landing 1026)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-release.test.ts",
+          "case": "EAT-R082"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-j5y5.md",
+          "anchor": "mutant EAT-R082:"
+        }
+      ],
+      "successors": [
+        "EAT-R208",
+        "EAT-R306",
+        "EAT-R310"
+      ]
+    },
+    {
+      "id": "EAT-R083",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Each behavior cut MUST retain a preimplementation failing consumer test",
+      "group": "B-release",
+      "bead": "wb-j5y5",
+      "beadStatus": "closed (landing 1026)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-release.test.ts",
+          "case": "EAT-R083"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-j5y5.md",
+          "anchor": "mutant EAT-R083:"
+        }
+      ],
+      "successors": [
+        "EAT-R304",
+        "EAT-R305"
+      ]
+    },
+    {
+      "id": "EAT-R084",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Each code cut MUST carry the machine accepted Forge gate receipt",
+      "group": "B-release",
+      "bead": "wb-j5y5",
+      "beadStatus": "closed (landing 1026)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-release.test.ts",
+          "case": "EAT-R084"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-j5y5.md",
+          "anchor": "mutant EAT-R084:"
+        }
+      ],
+      "successors": [
+        "EAT-R307"
+      ]
+    },
+    {
+      "id": "EAT-R085",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Each live slice claim MUST name its real infrastructure gate",
+      "group": "B-release",
+      "bead": "wb-j5y5",
+      "beadStatus": "closed (landing 1026)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-release.test.ts",
+          "case": "EAT-R085"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-j5y5.md",
+          "anchor": "mutant EAT-R085:"
+        }
+      ],
+      "successors": [
+        "EAT-R208",
+        "EAT-R241",
+        "EAT-R259",
+        "EAT-R261",
+        "EAT-R263",
+        "EAT-R303",
+        "EAT-R310"
+      ]
+    },
+    {
+      "id": "EAT-R086",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Each bead receipt MUST preserve commands versions refs and actual results",
+      "group": "B-release",
+      "bead": "wb-j5y5",
+      "beadStatus": "closed (landing 1026)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-release.test.ts",
+          "case": "EAT-R086"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-j5y5.md",
+          "anchor": "mutant EAT-R086:"
+        }
+      ],
+      "successors": [
+        "EAT-R208",
+        "EAT-R256",
+        "EAT-R261",
+        "EAT-R263",
+        "EAT-R305",
+        "EAT-R306",
+        "EAT-R309"
+      ]
+    },
+    {
+      "id": "EAT-R087",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Program cuts MUST leave historical TRACEABILITY and shared receipt indexes unchanged",
+      "group": "B-release",
+      "bead": "wb-j5y5",
+      "beadStatus": "closed (landing 1026)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-release.test.ts",
+          "case": "EAT-R087"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-j5y5.md",
+          "anchor": "mutant EAT-R087:"
+        }
+      ],
+      "successors": [
+        "EAT-R263",
+        "EAT-R308"
+      ]
+    },
+    {
+      "id": "EAT-R088",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "MW MUST publish the adopted versioned invocation ABI",
+      "group": "mw-tracks",
+      "bead": "wb-1zn2",
+      "beadStatus": "deferred",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-1zn2",
+          "anchor": "EAT-R088"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "MW-owned producer deliverable, tracked on the deferred tracker wb-1zn2; no Pi lane implements it"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R089",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "MW MUST publish an independently consumable application host facade",
+      "group": "mw-tracks",
+      "bead": "wb-1zn2",
+      "beadStatus": "deferred",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-1zn2",
+          "anchor": "EAT-R089"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "MW-owned producer deliverable, tracked on the deferred tracker wb-1zn2; no Pi lane implements it"
+      },
+      "successors": [
+        "EAT-R221"
+      ]
+    },
+    {
+      "id": "EAT-R090",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "MW MUST honor host cancellation through the in-flight SDK and runner",
+      "group": "mw-tracks",
+      "bead": "wb-1zn2",
+      "beadStatus": "deferred",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-1zn2",
+          "anchor": "EAT-R090"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "MW-owned producer deliverable, tracked on the deferred tracker wb-1zn2; no Pi lane implements it"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R091",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "MW MUST publish producer-backed native source and committed context services",
+      "group": "mw-tracks",
+      "bead": "wb-1zn2",
+      "beadStatus": "deferred",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-1zn2",
+          "anchor": "EAT-R091"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "MW-owned producer deliverable, tracked on the deferred tracker wb-1zn2; no Pi lane implements it"
+      },
+      "successors": [
+        "EAT-R300"
+      ]
+    },
+    {
+      "id": "EAT-R092",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "MW MUST expose the application callback for native Furnace hosting",
+      "group": "mw-tracks",
+      "bead": "wb-1zn2",
+      "beadStatus": "deferred",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-1zn2",
+          "anchor": "EAT-R092"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "MW-owned producer deliverable, tracked on the deferred tracker wb-1zn2; no Pi lane implements it"
+      },
+      "successors": [
+        "EAT-R297",
+        "EAT-R298"
+      ]
+    },
+    {
+      "id": "EAT-R093",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "MW MUST publish one explicit pure coordination host contract",
+      "group": "mw-tracks",
+      "bead": "wb-1zn2",
+      "beadStatus": "deferred",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-1zn2",
+          "anchor": "EAT-R093"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "MW-owned producer deliverable, tracked on the deferred tracker wb-1zn2; no Pi lane implements it"
+      },
+      "successors": [
+        "EAT-R301"
+      ]
+    },
+    {
+      "id": "EAT-R094",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M001 scoped correction for C0114",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R094"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R094"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R095",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M002 scoped correction for C0119",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R095"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R095"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R096",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M003 scoped correction for C0139",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R096"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R096"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R097",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M004 scoped correction for C0152",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R097"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R097"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R098",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M005 scoped correction for C0161",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R098"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R098"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R099",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M006 scoped correction for C0163",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R099"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R099"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R100",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M007 scoped correction for C0167",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R100"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R100"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R101",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M008 scoped correction for C0169",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R101"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R101"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R102",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M009 scoped correction for C0182",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R102"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R102"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R103",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M010 scoped correction for C0184",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R103"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R103"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R104",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M011 scoped correction for C0188",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R104"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R104"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R105",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M012 scoped correction for C0189",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R105"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R105"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R106",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M013 scoped correction for C0190",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R106"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R106"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R107",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M014 scoped correction for C0193",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R107"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R107"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R108",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M015 scoped correction for C0194",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R108"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R108"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R109",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M016 scoped correction for C0195",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R109"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R109"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R110",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M017 scoped correction for C0196",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R110"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R110"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R111",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M018 scoped correction for C0218",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R111"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R111"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R112",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M019 scoped correction for C0229",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R112"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R112"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R113",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M020 scoped correction for C0231",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R113"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R113"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R114",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M021 scoped correction for C0248",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R114"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R114"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R115",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M022 scoped correction for C0251",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R115"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R115"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R116",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M023 scoped correction for C0252",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R116"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R116"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R117",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M024 scoped correction for C0261",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R117"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R117"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R118",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M025 scoped correction for C0264",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R118"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R118"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R119",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M026 scoped correction for C0265",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R119"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R119"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R120",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M027 scoped correction for C0277",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R120"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R120"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R121",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M028 scoped correction for C0521",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R121"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R121"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R122",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M029 scoped correction for C0522",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R122"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R122"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R123",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M030 scoped correction for C0530",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R123"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R123"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R124",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M031 scoped correction for C0534",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R124"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R124"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R125",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M032 scoped correction for C0305",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R125"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R125"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R126",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M033 scoped correction for C0312",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R126"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R126"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R127",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M034 scoped correction for C0315",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R127"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R127"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R128",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M035 scoped correction for C0320",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R128"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R128"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R129",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M036 scoped correction for C0321",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R129"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R129"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R130",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M037 scoped correction for C0336",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R130"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R130"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R131",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M038 scoped correction for C0338",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R131"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R131"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R132",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M039 scoped correction for C0346",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R132"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R132"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R133",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M040 scoped correction for C0353",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R133"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R133"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R134",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M041 scoped correction for C0356",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R134"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R134"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R135",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M042 scoped correction for C0368",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R135"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R135"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R136",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M043 scoped correction for C03106",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R136"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R136"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R137",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M044 scoped correction for C03141",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R137"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R137"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R138",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M045 scoped correction for C0402",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R138"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R138"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R139",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M046 scoped correction for C0409",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R139"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R139"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R140",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M047 scoped correction for C0422",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R140"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R140"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R141",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M048 scoped correction for C0437",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R141"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R141"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R142",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M049 scoped correction for C0443",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R142"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R142"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R143",
+      "program": "mechanical-workflows-interop-2026-11-04",
+      "title": "Documentation MUST apply the M050 scoped correction for C0446",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-mwi-docs-remediation-census.test.ts",
+          "case": "EAT-R143"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-12x1.md",
+          "anchor": "EAT-R143"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R144",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Preservation fault injection MUST cover every Git step inside the cleanup catch",
+      "group": "B-preserve",
+      "bead": "wb-5ik5",
+      "beadStatus": "closed (landing 1017)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/worktree.test.ts",
+          "case": "PF-R002-status"
+        },
+        {
+          "file": "test/worktree.test.ts",
+          "case": "PF-R002-add"
+        },
+        {
+          "file": "test/worktree.test.ts",
+          "case": "PF-R002-commit"
+        },
+        {
+          "file": "test/worktree.test.ts",
+          "case": "PF-REVPARSE"
+        },
+        {
+          "file": "test/worktree.test.ts",
+          "case": "PF-R001-BRANCH"
+        }
+      ],
+      "evidence": [
+        {
+          "bead": "wb-5ik5",
+          "anchor": "EAT-R144"
+        }
+      ],
+      "successors": [
+        "EAT-R210",
+        "EAT-R215",
+        "EAT-R255"
+      ]
+    },
+    {
+      "id": "EAT-R145",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "The preserve cut MUST carry the rule-8 specification ruling for the lossy characterization test",
+      "group": "B-preserve",
+      "bead": "wb-5ik5",
+      "beadStatus": "closed (landing 1017)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-5ik5.md",
+          "anchor": "OWNER SPECIFICATION RULING"
+        },
+        {
+          "path": "test/worktree.test.ts",
+          "anchor": "PF-R001-COMMIT"
+        }
+      ],
+      "partialBecause": {
+        "text": "the wb-5ik5 receipt carries the owner specification ruling and the commit-failure rows assert the typed preservation-failed variant, but no qa/workbench receipt validator checks a specification-ruling entry (a search of qa, test and src for specification-ruling finds no file)",
+        "source": {
+          "path": "docs/workbench/receipts/wb-5ik5.md",
+          "anchor": "OWNER SPECIFICATION RULING"
+        }
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R146",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "The Claude host MUST keep refusing isolation:\"worktree\" until the preserve cut has landed with a receipt",
+      "group": "B-preserve",
+      "bead": "wb-5ik5",
+      "beadStatus": "closed (landing 1017)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-claude-host-degradation.test.ts",
+          "case": "Claude SDK worktree isolation is unavailable; refusing to run in the shared cwd."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "src/workbench/claude-host.ts",
+          "anchor": "if (request?.isolation === \"worktree\") {"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R147",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "The program's pin-relative findings MUST be re-graded at the post-landing master tip",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": [
+        "EAT-R201",
+        "EAT-R202",
+        "EAT-R309"
+      ]
+    },
+    {
+      "id": "EAT-R148",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Pi MUST consume the separated selector triple hostMode / evidenceProfile / contextProfile as three request-side fields",
+      "group": "B-contract-choice",
+      "bead": "wb-w8fk",
+      "beadStatus": "open (blocked by wb-1zn2)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-w8fk",
+          "anchor": "EAT-R148"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unratified",
+        "detail": "no jointly adopted invocation ABI or action grant (MW-CONTRACT); wb-w8fk is open and blocked by the deferred MW tracker wb-1zn2"
+      },
+      "successors": [
+        "EAT-R203"
+      ]
+    },
+    {
+      "id": "EAT-R149",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Pi MUST never read MW's result-side `mode` as a selector and the ruling MUST record its MW-stated disposition",
+      "group": "B-contract-choice",
+      "bead": "wb-w8fk",
+      "beadStatus": "open (blocked by wb-1zn2)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-w8fk",
+          "anchor": "EAT-R149"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unratified",
+        "detail": "no jointly adopted invocation ABI or action grant (MW-CONTRACT); wb-w8fk is open and blocked by the deferred MW tracker wb-1zn2"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R150",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Pi MUST validate the `mechanical.pi-host/v1` host-binding envelope as a contract distinct from the descriptor and the tool reply",
+      "group": "B-contract-choice",
+      "bead": "wb-w8fk",
+      "beadStatus": "open (blocked by wb-1zn2)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-w8fk",
+          "anchor": "EAT-R150"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unratified",
+        "detail": "no jointly adopted invocation ABI or action grant (MW-CONTRACT); wb-w8fk is open and blocked by the deferred MW tracker wb-1zn2"
+      },
+      "successors": [
+        "EAT-R203",
+        "EAT-R207"
+      ]
+    },
+    {
+      "id": "EAT-R151",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "The ABI adoption gate MUST be a cross-repository conformance test plus recorded acceptance by both owners",
+      "group": "B-contract-choice",
+      "bead": "wb-w8fk",
+      "beadStatus": "open (blocked by wb-1zn2)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-w8fk",
+          "anchor": "EAT-R151"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unratified",
+        "detail": "no jointly adopted invocation ABI or action grant (MW-CONTRACT); wb-w8fk is open and blocked by the deferred MW tracker wb-1zn2"
+      },
+      "successors": [
+        "EAT-R204",
+        "EAT-R205",
+        "EAT-R206",
+        "EAT-R225"
+      ]
+    },
+    {
+      "id": "EAT-R152",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Pi MUST keep the saved-definition digest and the Mechanical tarball digest as two independently validated pins",
+      "group": "B-descriptor",
+      "bead": "wb-ocie",
+      "beadStatus": "closed (landing 1037)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-ocie",
+          "anchor": "EAT-R152"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the wb-ocie receipt names EAT-R007..EAT-R011 and not this Nov-6 id; wb-ocie closed at landing 1037 with it undelivered"
+      },
+      "successors": [
+        "EAT-R203",
+        "EAT-R218",
+        "EAT-R220"
+      ]
+    },
+    {
+      "id": "EAT-R153",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Program source and descriptor walkers MUST lstat, realpath and refuse symlinked or directory entries",
+      "group": "B-descriptor",
+      "bead": "wb-ocie",
+      "beadStatus": "closed (landing 1037)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-ocie",
+          "anchor": "EAT-R153"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the wb-ocie receipt names EAT-R007..EAT-R011 and not this Nov-6 id; wb-ocie closed at landing 1037 with it undelivered"
+      },
+      "successors": [
+        "EAT-R217",
+        "EAT-R222"
+      ]
+    },
+    {
+      "id": "EAT-R154",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Function admission and identity MUST NOT read free-form Beads export note wording",
+      "group": "B-authority",
+      "bead": "wb-201v",
+      "beadStatus": "closed (landing 1031)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "test/workbench-function-authority.test.ts",
+          "anchor": "EAT-R154"
+        }
+      ],
+      "partialBecause": {
+        "text": "the enforcement seam is tested; no action spelling is adopted, so every function dispatch refuses (FUNCTION_ACTION_CONTRACT unadopted, blocked on MW-CONTRACT)",
+        "source": {
+          "path": "docs/workbench/receipts/wb-201v.md",
+          "anchor": "Explicitly partial. No action spelling is adopted"
+        }
+      },
+      "successors": [
+        "EAT-R223"
+      ]
+    },
+    {
+      "id": "EAT-R155",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Enabling the function branch MUST leave furnace-formula definitions refused and outside the Mechanical adapter",
+      "group": "B-dispatch",
+      "bead": "wb-4bxo",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-4bxo",
+          "anchor": "EAT-R155"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "needs the installed MW-HOST facade and the ratified contract-choice, descriptor, source and authority rows; gate PI-FUNCTION-REGISTERED"
+      },
+      "successors": [
+        "EAT-R237"
+      ]
+    },
+    {
+      "id": "EAT-R156",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Pi MUST project the function result on seven independent typed axes",
+      "group": "B-outcomes",
+      "bead": "wb-9a1o",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-9a1o",
+          "anchor": "EAT-R156"
+        }
+      ],
+      "blockedBy": {
+        "kind": "dependency",
+        "detail": "depends on B-dispatch (wb-4bxo, open)"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R157",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "A cancelled execution MUST be represented on an owner-named axis with its cancel kind",
+      "group": "B-outcomes",
+      "bead": "wb-9a1o",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-9a1o",
+          "anchor": "EAT-R157"
+        }
+      ],
+      "blockedBy": {
+        "kind": "dependency",
+        "detail": "depends on B-dispatch (wb-4bxo, open)"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R158",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "The Forge gate-envelope fields the gate axis reads MUST be pinned before selection completeness is consumed",
+      "group": "B-outcomes",
+      "bead": "wb-9a1o",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-9a1o",
+          "anchor": "EAT-R158"
+        }
+      ],
+      "blockedBy": {
+        "kind": "dependency",
+        "detail": "depends on B-dispatch (wb-4bxo, open)"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R159",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "The first live cut MUST record which README:22 defects gate it, per an owner ruling or the reused BEAD-PLAN graph",
+      "group": "B-git-census",
+      "bead": "wb-p3i2",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-p3i2",
+          "anchor": "EAT-R159"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-dispatch, B-outcomes and B-effects and on MW-HOST and MW-CANCEL; gate PI-GIT-CENSUS-LIVE"
+      },
+      "successors": [
+        "EAT-R201",
+        "EAT-R202",
+        "EAT-R206",
+        "EAT-R264"
+      ]
+    },
+    {
+      "id": "EAT-R160",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "A per-agent cancel repair MAY follow only a reproduced red and MUST take the pending-abort-state shape",
+      "group": "B-cancel-repro",
+      "bead": "wb-9v02",
+      "beadStatus": "closed (landing 1048)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-9v02",
+          "anchor": "EAT-R160"
+        },
+        {
+          "path": "docs/workbench/receipts/wb-9v02.md",
+          "anchor": "status pending"
+        }
+      ],
+      "blockedBy": {
+        "kind": "dependency",
+        "detail": "no per-agent cancel repair has landed (the reproduced record stays status pending); the repair rule binds a cut that does not exist yet"
+      },
+      "successors": [
+        "EAT-R212",
+        "EAT-R213",
+        "EAT-R214",
+        "EAT-R216",
+        "EAT-R253"
+      ]
+    },
+    {
+      "id": "EAT-R161",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "A joint Pi/MW replay-basis specification MUST exist before a 'complete' basis is claimed",
+      "group": "B-replay",
+      "bead": "wb-413a",
+      "beadStatus": "closed (landing 1032)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-replay-basis-dimensions.test.ts",
+          "case": "EAT-R161"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-413a.md",
+          "anchor": "EAT-R161"
+        }
+      ],
+      "successors": [
+        "EAT-R203"
+      ]
+    },
+    {
+      "id": "EAT-R162",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "The WorkflowHost.replayBasis doc comment MUST name only dimensions the hosts record, qualified per host",
+      "group": "B-replay",
+      "bead": "wb-413a",
+      "beadStatus": "closed (landing 1032)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "already-implemented/tested",
+      "testedForms": [
+        {
+          "file": "test/workbench-replay-basis-dimensions.test.ts",
+          "case": "EAT-R162"
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-413a.md",
+          "anchor": "EAT-R162"
+        }
+      ],
+      "successors": []
+    },
+    {
+      "id": "EAT-R163",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "The named-query task-scope route MUST be probed before hx-task-scope-v1 is called unsupported version-wide",
+      "group": "B-hx-admit",
+      "bead": "wb-pxvv",
+      "beadStatus": "open",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-pxvv",
+          "anchor": "EAT-R163"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "depends on B-dispatch and MW-NATIVE; gate PI-HX-RF-LIVE"
+      },
+      "successors": [
+        "EAT-R299"
+      ]
+    },
+    {
+      "id": "EAT-R164",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Cost figures MUST be fresh measurements with date, host, command and sample size; October figures are history only",
+      "group": "B-telemetry",
+      "bead": "wb-r5q2",
+      "beadStatus": "closed (landing 1030)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-r5q2.md",
+          "anchor": "EAT-R164"
+        },
+        {
+          "path": "test/workbench-mechanical-cost-figures.test.ts",
+          "anchor": "EAT-R164"
+        }
+      ],
+      "partialBecause": {
+        "text": "the cost-figure judges are tested; the receipt that lands them is explicitly partial",
+        "source": {
+          "path": "docs/workbench/receipts/wb-r5q2.md",
+          "anchor": "### Explicitly partial"
+        }
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R165",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Validators MUST tag every witness with its L0-L5 level and refuse a status claim backed only by lower levels",
+      "group": "B-release",
+      "bead": "wb-j5y5",
+      "beadStatus": "closed (landing 1026)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-j5y5.md",
+          "anchor": "The requirements EAT-R165 to EAT-R171 that the 2026-11-07 Phase 10 amendment on the bead adds are not served by this cut."
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "wb-j5y5's receipt says the Nov-6 release rows are not served and defers them behind EAT-R172; wb-j5y5 closed at landing 1026 with this id undelivered"
+      },
+      "successors": [
+        "EAT-R205",
+        "EAT-R208",
+        "EAT-R209",
+        "EAT-R303",
+        "EAT-R310"
+      ]
+    },
+    {
+      "id": "EAT-R166",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "A status upgrade MUST carry a recorded positive and falsifier for every applicable surface of the adversarial table",
+      "group": "B-release",
+      "bead": "wb-j5y5",
+      "beadStatus": "closed (landing 1026)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-j5y5.md",
+          "anchor": "The requirements EAT-R165 to EAT-R171 that the 2026-11-07 Phase 10 amendment on the bead adds are not served by this cut."
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "wb-j5y5's receipt says the Nov-6 release rows are not served and defers them behind EAT-R172; wb-j5y5 closed at landing 1026 with this id undelivered"
+      },
+      "successors": [
+        "EAT-R305",
+        "EAT-R310"
+      ]
+    },
+    {
+      "id": "EAT-R167",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Every Pi cut MUST close the named documentation files in the same cut and leave W11 unchanged on docs-only commits",
+      "group": "B-release",
+      "bead": "wb-j5y5",
+      "beadStatus": "closed (landing 1026)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-r5q2.md",
+          "anchor": "Documentation (EAT-R167 of the Nov-6 delta, wb-j5y5's requirement, applied here as its list)"
+        }
+      ],
+      "partialBecause": {
+        "text": "wb-r5q2 applied the documentation list in its own receipt; the qa/workbench docs-closure validator the acceptance names does not exist (a search of qa, test and src for docs-closure finds no file)",
+        "source": {
+          "path": "docs/workbench/receipts/wb-j5y5.md",
+          "anchor": "The requirements EAT-R165 to EAT-R171 that the 2026-11-07 Phase 10 amendment on the bead adds are not served by this cut."
+        }
+      },
+      "successors": [
+        "EAT-R306"
+      ]
+    },
+    {
+      "id": "EAT-R168",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Program tests MUST declare explicit time budgets and receipts MUST classify reds as assertion, timeout or collector error",
+      "group": "B-release",
+      "bead": "wb-j5y5",
+      "beadStatus": "closed (landing 1026)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "partial/inert",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "test/workbench-replay-basis-dimensions.test.ts",
+          "anchor": "each declares its own time budget (EAT-R168's form)"
+        }
+      ],
+      "partialBecause": {
+        "text": "one suite declares per-row time budgets in EAT-R168's form; the census over test/workbench-mechanical-*.test.ts (at the pin, 0 of the 7 such suites set testTimeout) and the receipt red-taxonomy validator do not exist",
+        "source": {
+          "path": "docs/workbench/receipts/wb-j5y5.md",
+          "anchor": "The requirements EAT-R165 to EAT-R171 that the 2026-11-07 Phase 10 amendment on the bead adds are not served by this cut."
+        }
+      },
+      "successors": [
+        "EAT-R256",
+        "EAT-R304"
+      ]
+    },
+    {
+      "id": "EAT-R169",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Program tests MUST live in scoped new files and MUST NOT edit shared census headers or derive membership from Beads notes",
+      "group": "B-release",
+      "bead": "wb-j5y5",
+      "beadStatus": "closed (landing 1026)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-j5y5.md",
+          "anchor": "The requirements EAT-R165 to EAT-R171 that the 2026-11-07 Phase 10 amendment on the bead adds are not served by this cut."
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "wb-j5y5's receipt says the Nov-6 release rows are not served and defers them behind EAT-R172; wb-j5y5 closed at landing 1026 with this id undelivered"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R170",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Every assertion and receipt claim MUST name its reader, pin, witness, mutant and quiet cases, and no census MAY assert beyond its pins",
+      "group": "B-release",
+      "bead": "wb-j5y5",
+      "beadStatus": "closed (landing 1026)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-j5y5.md",
+          "anchor": "The requirements EAT-R165 to EAT-R171 that the 2026-11-07 Phase 10 amendment on the bead adds are not served by this cut."
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "wb-j5y5's receipt says the Nov-6 release rows are not served and defers them behind EAT-R172; wb-j5y5 closed at landing 1026 with this id undelivered"
+      },
+      "successors": [
+        "EAT-R209",
+        "EAT-R256",
+        "EAT-R304",
+        "EAT-R310"
+      ]
+    },
+    {
+      "id": "EAT-R171",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "The accepted Forge gate receipt MUST be keyed to the merged candidate tree, not the lane branch tree",
+      "group": "B-release",
+      "bead": "wb-j5y5",
+      "beadStatus": "closed (landing 1026)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "path": "docs/workbench/receipts/wb-j5y5.md",
+          "anchor": "The requirements EAT-R165 to EAT-R171 that the 2026-11-07 Phase 10 amendment on the bead adds are not served by this cut."
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "wb-j5y5's receipt says the Nov-6 release rows are not served and defers them behind EAT-R172; wb-j5y5 closed at landing 1026 with this id undelivered"
+      },
+      "successors": [
+        "EAT-R201",
+        "EAT-R310"
+      ]
+    },
+    {
+      "id": "EAT-R172",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Bead descriptions under epic wb-1a3t MUST carry the Nov-6 pins and their delta requirement ids before a seat implements against them",
+      "group": "master-recon",
+      "bead": "wb-cbt4",
+      "beadStatus": "closed (landing 1029)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-cbt4",
+          "anchor": "nothing of it is implemented here - deferred, not dropped."
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "deferred on an owner decision about the MW baseline (M109); wb-cbt4 closed at landing 1029 with it unimplemented"
+      },
+      "successors": [
+        "EAT-R201",
+        "EAT-R202",
+        "EAT-R264",
+        "EAT-R309"
+      ]
+    },
+    {
+      "id": "EAT-R173",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "The MW tracker MUST carry an owner-confirmed map from MW-R0..MW-R8 to the Nov-4 tracks, EAT-R088..R093 and the named gates",
+      "group": "mw-tracks",
+      "bead": "wb-1zn2",
+      "beadStatus": "deferred",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-1zn2",
+          "anchor": "EAT-R173"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "MW-owned producer deliverable, tracked on the deferred tracker wb-1zn2; no Pi lane implements it"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R174",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "MW MUST publish the rig-host facade as a declared exports subpath only after an external packed-install smoke",
+      "group": "mw-tracks",
+      "bead": "wb-1zn2",
+      "beadStatus": "deferred",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-1zn2",
+          "anchor": "EAT-R174"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "MW-owned producer deliverable, tracked on the deferred tracker wb-1zn2; no Pi lane implements it"
+      },
+      "successors": [
+        "EAT-R220",
+        "EAT-R221"
+      ]
+    },
+    {
+      "id": "EAT-R175",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "MW MUST ship the explicit four-callback bundle bound to Git census, plain context, one Claude writer and Forge",
+      "group": "mw-tracks",
+      "bead": "wb-1zn2",
+      "beadStatus": "deferred",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-1zn2",
+          "anchor": "EAT-R175"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "MW-owned producer deliverable, tracked on the deferred tracker wb-1zn2; no Pi lane implements it"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R176",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "MW MUST publish the effect-class list and the dirty-write reconciliation contract that the no-duplicate guarantee covers",
+      "group": "mw-tracks",
+      "bead": "wb-1zn2",
+      "beadStatus": "deferred",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-1zn2",
+          "anchor": "EAT-R176"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "MW-owned producer deliverable, tracked on the deferred tracker wb-1zn2; no Pi lane implements it"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R177",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Every MW cut MUST close the companion skill, docs/05-08 and 10, the rig README and modified schemas in the same cut",
+      "group": "mw-tracks",
+      "bead": "wb-1zn2",
+      "beadStatus": "deferred",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-1zn2",
+          "anchor": "EAT-R177"
+        }
+      ],
+      "blockedBy": {
+        "kind": "external",
+        "detail": "MW-owned producer deliverable, tracked on the deferred tracker wb-1zn2; no Pi lane implements it"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R178",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Documentation MUST apply the M101 scoped correction for C1345",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R179",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Documentation MUST apply the M102 scoped correction for C1305",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R180",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Documentation MUST apply the M103 scoped correction for C1204",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R181",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Documentation MUST apply the M104 scoped correction for C1244",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R182",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Documentation MUST apply the M105 scoped correction for C1214",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R183",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Documentation MUST apply the M106 scoped correction for C1217",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R184",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Documentation MUST apply the M107 scoped correction for C1537",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R185",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Documentation MUST apply the M108 scoped correction for C1550",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R186",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Documentation MUST apply the M109 scoped correction for C1406",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R187",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Documentation MUST apply the M110 scoped correction for C1562",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R188",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Documentation MUST apply the M111 scoped correction for C1606",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R189",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Documentation MUST apply the M112 scoped correction for C1427",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R190",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Documentation MUST apply the M113 scoped correction for C1304 (+1)",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R191",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Documentation MUST apply the M114 scoped correction for C1315 (+1)",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R192",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Documentation MUST apply the M115 scoped correction for C1322 (+6)",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R193",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Documentation MUST apply the M116 scoped correction for C1344",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R194",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Documentation MUST apply the M117 scoped correction for C1576 (+1)",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R195",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Documentation MUST apply the M118 scoped correction for C1555",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R196",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Documentation MUST apply the M119 scoped correction for C1552 (+2)",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R197",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "The triage ledger MUST carry the M120 ledger-only correction for C1210 (no artifact change)",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R198",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Documentation MUST apply the M121 scoped correction for C1133 (+2)",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R199",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Documentation MUST apply the M122 scoped correction for C1339",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    },
+    {
+      "id": "EAT-R200",
+      "program": "mechanical-interoperability-audit-2026-11-06",
+      "title": "Documentation MUST apply the M123 scoped correction for C1628 (+1)",
+      "group": "B-docs",
+      "bead": "wb-12x1",
+      "beadStatus": "closed (landing 1045)",
+      "pin": {
+        "pi": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "mw": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a"
+      },
+      "class": "blocked",
+      "testedForms": [],
+      "evidence": [
+        {
+          "bead": "wb-12x1",
+          "anchor": "EAT-R147 and EAT-R178..EAT-R200 stay OPEN on the bead"
+        }
+      ],
+      "blockedBy": {
+        "kind": "unowned",
+        "detail": "the second docs cut was never cut; wb-12x1 closed at landing 1045 with this id undelivered and no re-home note"
+      },
+      "successors": []
+    }
+  ]
+}

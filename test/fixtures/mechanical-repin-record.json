@@ -1,0 +1,372 @@
+{
+  "schema": "workbench.mechanical-repin-record/v1",
+  "program": "mechanical-native-interoperability-2026-11-09",
+  "bead": "wb-mit9",
+  "requirement": "EAT-R201",
+  "measuredUtc": "2026-11-09T23:50:50Z",
+  "method": "git rev-parse, merge-base and merge-base --is-ancestor in the rig clone after a fetch of the machine branch; git ls-remote for both remotes; the MW tip read from a private depth-1 fetch; bd show and bd list --parent for the Beads statuses",
+  "pi": {
+    "repository": "pi-subagents",
+    "defaultBranch": "master",
+    "machineBranch": "workbench/implementation-program",
+    "refs": [
+      {
+        "name": "master",
+        "commit": "18b016b2b3e4efd947d1afc817d5f37bd75952bc",
+        "tree": "7d1261de66d427a830218aa50d66e7f88da7d6b5",
+        "package": {
+          "name": "@tintinweb/pi-subagents",
+          "version": "0.20.0"
+        },
+        "beadsExport": {
+          "path": ".beads/issues.jsonl",
+          "blob": "923daf60bbac24872cc8b49581d6a4aa8cdd6bb6"
+        },
+        "feedback": {
+          "path": "new-feedback",
+          "tree": "7aaffdeb53f608964a82610d3e65d808c5f256b7",
+          "files": 44
+        }
+      },
+      {
+        "name": "workbench/implementation-program",
+        "commit": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+        "tree": "1a2ab608fc3cc00b6a2f2fc6a2b48bdaae76af01",
+        "package": {
+          "name": "@tintinweb/pi-subagents",
+          "version": "0.20.0"
+        },
+        "beadsExport": {
+          "path": ".beads/issues.jsonl",
+          "blob": "75c3535b4194702717b305ae7f698a1cb68f9d77"
+        },
+        "feedback": {
+          "path": "new-feedback",
+          "tree": "2d0933a26e1333d7410f44026d60bead75d16469",
+          "files": 41
+        }
+      }
+    ],
+    "mergeBase": {
+      "commit": "524c225828a10357a9793918bae322c2d1eca0a4",
+      "tree": "1273922a47f32ce6549451e1caf9aa570224ab09"
+    },
+    "divergence": {
+      "defaultOnlyCommits": 34,
+      "machineOnlyCommits": 8
+    },
+    "certifiedDefault": {
+      "name": "master",
+      "commit": "18b016b2b3e4efd947d1afc817d5f37bd75952bc"
+    }
+  },
+  "mw": {
+    "repository": "MechanicalWorkflows",
+    "refs": [
+      {
+        "name": "main",
+        "commit": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a",
+        "tree": "76c97faf2f3cee4d7ec57a84d4d56407d6e94bd8",
+        "packages": [
+          {
+            "path": "package.json",
+            "name": "@mechanical/workflows-monorepo",
+            "version": "0.1.0"
+          },
+          {
+            "path": "apps/development-rig/package.json",
+            "name": "@mechanical/development-rig",
+            "version": "0.1.0"
+          },
+          {
+            "path": "packages/coordination/package.json",
+            "name": "@mechanical/workflows-coordination",
+            "version": "0.1.0"
+          },
+          {
+            "path": "packages/development/package.json",
+            "name": "@mechanical/workflows-development",
+            "version": "0.1.0"
+          }
+        ],
+        "feedback": {
+          "path": "new-feedback",
+          "files": 0
+        }
+      }
+    ]
+  },
+  "beads": {
+    "store": "wb",
+    "epics": {
+      "wb-1a3t": {
+        "status": "open",
+        "children": {
+          "wb-0gbh": "closed",
+          "wb-12x1": "closed",
+          "wb-1zn2": "deferred",
+          "wb-201v": "closed",
+          "wb-413a": "closed",
+          "wb-4bxo": "open",
+          "wb-5a7k": "open",
+          "wb-5ik5": "closed",
+          "wb-669r": "open",
+          "wb-9a1o": "open",
+          "wb-9v02": "closed",
+          "wb-cbt4": "closed",
+          "wb-dlc6": "open",
+          "wb-f3wd": "closed",
+          "wb-j5y5": "closed",
+          "wb-muip": "closed",
+          "wb-mwsy": "open",
+          "wb-ny54": "closed",
+          "wb-ocie": "closed",
+          "wb-p3i2": "open",
+          "wb-pxvv": "open",
+          "wb-r5q2": "closed",
+          "wb-s8rm": "closed",
+          "wb-upad": "open",
+          "wb-w8fk": "open",
+          "wb-wupg": "closed",
+          "wb-zswl": "open"
+        }
+      },
+      "wb-rhyt": {
+        "status": "open",
+        "children": {
+          "wb-2ukh": "open",
+          "wb-7wkb": "in_progress",
+          "wb-9bof": "open",
+          "wb-mit9": "in_progress",
+          "wb-xr1z": "in_progress",
+          "wb-y0n6": "open",
+          "wb-yiu4": "open"
+        }
+      }
+    },
+    "related": {
+      "wb-ub94": "closed",
+      "wb-7ak9": "closed",
+      "wb-3121": "in_progress"
+    }
+  },
+  "historicalPins": [
+    {
+      "side": "pi",
+      "commit": "8e2fedeb8e3ce7d94c2d3724a6ef7e2c5eb02164",
+      "role": "11-09 audit environment pin"
+    },
+    {
+      "side": "pi",
+      "commit": "b085c34ed01cb71ce0d600ac98ade7ee18e832f0",
+      "role": "11-09 program document pin"
+    },
+    {
+      "side": "mw",
+      "commit": "62a10b5924ccb10db428999cb148fa23f732e4fe",
+      "role": "11-09 audit environment pin"
+    },
+    {
+      "side": "mw",
+      "commit": "7f3809fd8d6f20d22b9b4b81b6dfdb917bcc3c73",
+      "role": "11-09 MW sibling documents"
+    },
+    {
+      "side": "mw",
+      "commit": "97e18068f3996d9a3faf242c089691b049ed04ac",
+      "role": "11-06 program-stated MW baseline"
+    },
+    {
+      "side": "mw",
+      "commit": "f7c0a9431d6cc36a15b409b1788c945ef86ad5e2",
+      "role": "11-04 MW environment pin"
+    }
+  ],
+  "implicatedChanges": [
+    {
+      "commit": "8e2fedeb8e3ce7d94c2d3724a6ef7e2c5eb02164",
+      "summary": "11-09 audit environment pin (a master merge)",
+      "inDefault": true,
+      "inMachine": false,
+      "class": "historical",
+      "role": "11-09 audit environment pin"
+    },
+    {
+      "commit": "b085c34ed01cb71ce0d600ac98ade7ee18e832f0",
+      "summary": "continuity-13 master merge, the 11-09 program document pin",
+      "inDefault": true,
+      "inMachine": false,
+      "class": "historical",
+      "role": "11-09 program document pin"
+    },
+    {
+      "commit": "adf2c52dd4016e59e96afd75a8c57a04f55311b1",
+      "summary": "docs: start the native Mechanical function-host program",
+      "inDefault": true,
+      "inMachine": false,
+      "class": "proposed"
+    },
+    {
+      "commit": "e2a94ca3448a166e07ff68483e3a7a1340c3d177",
+      "summary": "docs: audit the Pi function-host seams and the native protocol",
+      "inDefault": true,
+      "inMachine": false,
+      "class": "proposed"
+    },
+    {
+      "commit": "0324474bf8b6b1ecb655665609b461ec8ef50e19",
+      "summary": "docs: registered function implementation and QA tail",
+      "inDefault": true,
+      "inMachine": false,
+      "class": "proposed"
+    },
+    {
+      "commit": "fcbe1582fd4c3b8146de377e6b62d3a28eaf1203",
+      "summary": "docs: registered-path fault tests, native evidence, W11 tail",
+      "inDefault": true,
+      "inMachine": false,
+      "class": "proposed"
+    },
+    {
+      "commit": "18b016b2b3e4efd947d1afc817d5f37bd75952bc",
+      "summary": "docs: epistemic triage and EAT-R201..R310 requirements (master tip)",
+      "inDefault": true,
+      "inMachine": false,
+      "class": "proposed"
+    },
+    {
+      "commit": "62b3747131f19562fa9020092a3d2729b74b4e01",
+      "summary": "landing 1017: wb-5ik5 (B-preserve)",
+      "inDefault": true,
+      "inMachine": true,
+      "class": "merged"
+    },
+    {
+      "commit": "670a91e0542abb8d4e062275d58fc77c3b25fa7b",
+      "summary": "landing 1019: wb-wupg (B-detached-grants)",
+      "inDefault": true,
+      "inMachine": true,
+      "class": "merged"
+    },
+    {
+      "commit": "878f2b32971a63d424b38b896cc8d5ce4fdf3219",
+      "summary": "landing 1011: wb-muip (B-unknowns)",
+      "inDefault": true,
+      "inMachine": true,
+      "class": "merged"
+    },
+    {
+      "commit": "60a1c438c097aeb33caa3a5fae957fb2a45dd980",
+      "summary": "landing 1013: wb-f3wd (B-hx-evidence)",
+      "inDefault": true,
+      "inMachine": true,
+      "class": "merged"
+    },
+    {
+      "commit": "0c23556c100f8d64fca99a6d34eb68855ea7603f",
+      "summary": "landing 1025: wb-ny54 (B-limits)",
+      "inDefault": true,
+      "inMachine": true,
+      "class": "merged"
+    },
+    {
+      "commit": "9289bc50429db09e7c4ae61671f029fc2a828a98",
+      "summary": "landing 1026: wb-j5y5 (B-release)",
+      "inDefault": true,
+      "inMachine": true,
+      "class": "merged"
+    },
+    {
+      "commit": "ac46651b4e1a25dcb3c333e5f9fc8e833d359480",
+      "summary": "landing 1029: wb-cbt4 (master-recon)",
+      "inDefault": true,
+      "inMachine": true,
+      "class": "merged"
+    },
+    {
+      "commit": "6b5baae53eb4dbd669781e9d9f75535182a80365",
+      "summary": "landing 1030: wb-r5q2 (B-telemetry)",
+      "inDefault": true,
+      "inMachine": true,
+      "class": "merged"
+    },
+    {
+      "commit": "5615ec1c7393f8bfbdf53d370a5b7dfd31fa23bb",
+      "summary": "landing 1031: wb-201v (B-authority)",
+      "inDefault": true,
+      "inMachine": true,
+      "class": "merged"
+    },
+    {
+      "commit": "4e8a44060d736e99f6ebfc0c0a106b3730ccbb23",
+      "summary": "landing 1032: wb-413a (B-replay)",
+      "inDefault": true,
+      "inMachine": true,
+      "class": "merged"
+    },
+    {
+      "commit": "9aee0efd5b02d5138d7e660552d23e4f8dc7e36e",
+      "summary": "landing 1037: wb-ocie (B-descriptor)",
+      "inDefault": true,
+      "inMachine": true,
+      "class": "merged"
+    },
+    {
+      "commit": "66cb523308b958bbf8f762e4e3c326edca635af2",
+      "summary": "landing 1043: wb-s8rm (B-source)",
+      "inDefault": true,
+      "inMachine": true,
+      "class": "merged"
+    },
+    {
+      "commit": "c9f9088fa5cd3281e7b25dbb786a6a8a0ea3b1c6",
+      "summary": "landing 1045: wb-12x1 (B-docs)",
+      "inDefault": true,
+      "inMachine": true,
+      "class": "merged"
+    },
+    {
+      "commit": "0ebfd9ce085b05374bde22d31332f7ec3026d0e6",
+      "summary": "landings 1047..1053 batch carrying wb-9v02 (B-cancel-repro)",
+      "inDefault": true,
+      "inMachine": true,
+      "class": "merged"
+    },
+    {
+      "commit": "121e34677bf7e5c8f8a407ecc1efd1cbfeff7ab9",
+      "summary": "landing 1075: wb-ub94 (B-coordination remainder of wb-0gbh)",
+      "inDefault": true,
+      "inMachine": true,
+      "class": "merged"
+    },
+    {
+      "commit": "1d1278f771333611f83251e7216a834d9685c37b",
+      "summary": "landing 1079: wb-1ht7 (not yet on master)",
+      "inDefault": false,
+      "inMachine": true,
+      "class": "machine-only"
+    },
+    {
+      "commit": "d1b45b4ab32cef7f1b36618bfeb682056b8340ce",
+      "summary": "ledger hop closing wb-1ht7 (the base this cut was claimed on)",
+      "inDefault": false,
+      "inMachine": true,
+      "class": "machine-only"
+    },
+    {
+      "commit": "08f3f2ec9877c06fb60da8eda7d4efc8f94b080f",
+      "summary": "landing 1080: wb-g464 (not yet on master)",
+      "inDefault": false,
+      "inMachine": true,
+      "class": "machine-only"
+    },
+    {
+      "commit": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+      "summary": "ledger hop closing wb-g464 (machine tip, the base this cut merged before handoff)",
+      "inDefault": false,
+      "inMachine": true,
+      "class": "machine-only"
+    }
+  ],
+  "acceptanceRule": "A changed ref commit or package version after a packet cut invalidates that cut's final-tree acceptance until the record is re-pinned and the affected tests rerun."
+}
