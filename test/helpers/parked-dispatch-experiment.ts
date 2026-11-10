@@ -4,14 +4,20 @@
  * 0b25e14e; the triage tree stays master-only). The cases are test/workbench-mwi-cancel-repro.test.ts.
  *
  * runParkedDispatchExperiment drives the REAL runWorkflow over the REAL createClaudeWorkflowHost through the host's
- * documented fixture query seam (FakeClaudeSdk). What the suite's INSTRUMENT-NO-TIMER reads in this source's text, and
- * in the suite's own, is listed in the suite's header; whether a run of the experiment arms a timer is NOT CLAIMED.
+ * documented fixture query seam (FakeClaudeSdk). Its runner parameter is runWorkflow unless a caller passes a stand-in
+ * (the suite's call-through recorder, which its header describes). What the suite's INSTRUMENT-NO-TIMER reads in this
+ * source's text, and in the suite's own, is listed in the suite's header; whether a run of the experiment arms a timer
+ * is NOT CLAIMED.
  * The barrier is the host's own beforeDispatch option: the target attempt's call parks
  * the host inside `await config.beforeDispatch?.()` until the experiment releases it. While
  * the host is parked the experiment issues the runtime's per-agent control (WorkflowControl's method named by the plan,
  * skip or retry, by row index), then releases the barrier and records what followed. Every fixture query's script
  * pushes a success and ends its stream at once (the F5 fixture shape of test/workbench-claude-cancel-faults.test.ts).
- * The suite's PLAN-DOMAIN case pins the whole reading of each of the 24 ParkedPlan values.
+ * The suite's PLAN-DOMAIN case pins the whole reading of each of the 24 ParkedPlan values and, under its runtime
+ * witness (which reads each run made through the runtime module's runWorkflow export while the experiment runs) and in
+ * each run it makes through its call-through recorder, the presence of each in that run, the WorkflowControl calls of
+ * that run (each call recorded before it reaches the run's surface) and its run-signal aborts; the suite's header says
+ * what they do not read.
  *
  * Recorded, never inferred: every beforeDispatch entry; every query() start, attributed to the attempt whose entry
  * preceded it; the fixture SDK's own call log, kept apart from that attribution; the abortAgent calls that reach the
@@ -21,8 +27,8 @@
  *
  * judgeParkedObservation is the experiment's validation, then its oracle, by the rules below. Every rule is CLAIMED only
  * over the readings test/workbench-mwi-cancel-repro.test.ts holds, and nothing wider: its named judge rows, its three
- * judge grids (whose axis lists bound every count to 0, 1, 2 or 3 and every other field to the values they list) and
- * its 24 plan readings; that file's header lists them. A reading none of those cases holds is NOT CLAIMED.
+ * judge grids and its 24 plan readings; that file's header lists them. A reading none of those cases holds is NOT
+ * CLAIMED.
  *
  * The validation refuses a reading taken at the wrong seam, and names each reason it finds, in this order:
  * - whole-run-abort: the plan routes the control as a run abort, or the run's own signal is aborted;
@@ -54,17 +60,20 @@ import { fileURLToPath } from "node:url";
 import type { SDKSessionInfo } from "@anthropic-ai/claude-agent-sdk";
 import { type ClaudeQuery, createClaudeWorkflowHost } from "../../src/workbench/claude-host.js";
 import type { WorkflowAgentEntry } from "../../src/workflow/progress.js";
-import { runWorkflow, type WorkflowControl, type WorkflowHost, type WorkflowRunResult } from "../../src/workflow/runtime.js";
+import { type RunWorkflowOptions, runWorkflow, type WorkflowControl, type WorkflowHost, type WorkflowRunResult } from "../../src/workflow/runtime.js";
 import { FakeClaudeSdk, sdkSuccess } from "./claude-sdk-stream.js";
 
-/** What the experiment does while the target is parked: the runtime's skip or retry, or "none" (the no-control control: nothing is called). */
+/** What the experiment does while the target is parked: the runtime's skip or retry, or "none" (the no-control control: in each run the suite's PLAN-DOMAIN makes under its runtime witness, whether with the default runner or through the suite's call-through recorder, until the experiment's promise settles, the experiment calls no method of the WorkflowControl surface that a run made through the runtime module's runWorkflow export hands onControl (that witness, and in a recorded run that recorder too, records no call of any of its five methods) and does not abort the run's own signal; the suite's header says what they do not read). */
 export type ParkedControl = "skip" | "retry" | "none";
 /** Which startup the target attempt is: a fresh spawn, or the resume of a completed origin agent. */
 export type ParkedStartup = "spawn" | "resume";
-/** How a skip or retry plan's control reaches the run: the runtime's per-agent control, or (a wrong seam) an abort of the run's own signal in its place; a "none" plan calls neither. */
+/** How a skip or retry plan's control reaches the run: the runtime's per-agent control, or (a wrong seam) an abort of the run's own signal in its place; a "none" plan calls neither, in ParkedControl's sense of "none". */
 export type ParkedRoute = "per-agent" | "run-abort";
 /** Whether the target's beforeDispatch holds the host until released, or (a wrong seam) returns at once. */
 export type ParkedBarrier = "parked" | "absent";
+
+/** The run the experiment drives: runWorkflow, or a stand-in a caller passes in its place. */
+export type ParkedRunner = (options: RunWorkflowOptions) => Promise<WorkflowRunResult>;
 
 export interface ParkedPlan {
   readonly control: ParkedControl;
@@ -189,7 +198,7 @@ function attemptCounts(ordinals: readonly number[], setup: number): AttemptCount
   };
 }
 
-export async function runParkedDispatchExperiment(input: ParkedPlan): Promise<ParkedObservation> {
+export async function runParkedDispatchExperiment(input: ParkedPlan, runner: ParkedRunner = runWorkflow): Promise<ParkedObservation> {
   const plan: Required<ParkedPlan> = { route: "per-agent", barrier: "parked", ...input };
   const target = TARGETS[plan.startup];
   const targetOrdinal = target.setup + 1;
@@ -260,7 +269,7 @@ export async function runParkedDispatchExperiment(input: ParkedPlan): Promise<Pa
   };
 
   let control: WorkflowControl | undefined;
-  const outcome = runWorkflow({
+  const outcome = runner({
     script: SCRIPTS[plan.startup],
     host,
     signal: run.signal,

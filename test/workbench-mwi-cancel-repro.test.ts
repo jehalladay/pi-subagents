@@ -21,15 +21,106 @@
  * script value. EAT-R015's "Keep existing run-signal F10 and no-abort one-call controls" is pinned outside this file, by
  * test/workbench-mwi-cancel-repro.census.ts over the gate's own test report.
  *
- * PINNED READER SET (cut #3, the enumerate form). This file claims what its cases pin, each by its own rows, and nothing
- * wider. A reading that no case below holds is NOT CLAIMED.
+ * PINNED READER SET (cut #3, the enumerate form; wb-7ak9's cut #3 keeps that form under the R-B747 second-stage cap,
+ * and so does wb-3121, the structural-exit child R-B751 narrowed out of wb-7ak9).
+ * This file claims what its cases pin, each by its own rows, and nothing wider. A reading that no case below holds is
+ * NOT CLAIMED.
  * - Live cells. Each runs one plan, pins the whole reading as measured at this tree, then pins its verdict: R015-SPAWN,
  *   R015-RESUME, R015-NO-BARRIER, R015-RUN-ABORT, R015-NO-CONTROL, R016-SPAWN, R016-RESUME and R016-HIDDEN-ORIGINAL (which
  *   also pins that the live retry reading with its original start count set to 0 is refused as uncounted-sdk-start).
- *   PLAN-DOMAIN does the same for each of the 24 ParkedPlan values (3 controls x 2 startups x 2 routes x 2 barriers), run
- *   with every field given and, for the 18 plans holding a default (route "per-agent", barrier "parked"), again with
- *   those fields omitted; PLAN-DOMAIN-SHAPE pins that its table holds exactly those 24 plans, each once, in the order
- *   of the product of the four plan unions as the helper declares them (read with the TypeScript parser).
+ *   PLAN-DOMAIN does the same for each of the 24 ParkedPlan values (3 controls x 2 startups x 2 routes x 2 barriers),
+ *   run with every field given and, for the 18 plans holding a default (route "per-agent", barrier "parked"), again
+ *   with those fields omitted (42 plan inputs, counted); PLAN-DOMAIN-SHAPE pins that its table holds exactly those 24
+ *   plans, each once, in the order of the product of the four plan unions as the helper declares them (read with the
+ *   TypeScript parser).
+ *   PLAN-DOMAIN runs each plan input three times, the runtime witness installed before the first (wb-3121, R-B751):
+ *   first under the runtime witness (wb-7ak9 refusal #2, R-B749 (b)), then with callThrough, the call-through recorder,
+ *   as the experiment's runner (wb-7ak9) under a fresh witness, and last with no witness installed, the run whose whole
+ *   reading and then verdict it pins as the live cells do. The witness's replacement of the runtime module's
+ *   runWorkflow export is one spy for this whole file over the runtime's own runWorkflow, with that function's name,
+ *   length and String() (wb-3121 cut #2, R-B752): a vi.hoisted block installs it as that export before any static
+ *   import of this file is evaluated, so a module first evaluated by those imports that reads runWorkflow at its own
+ *   load (the helper among them) reads the replacement, and the runtime's own export is put back once those imports are
+ *   evaluated, before any case runs. witnessed() installs that same replacement as the export while the experiment
+ *   runs, answering with callThrough over the runtime's own runWorkflow, so each run made through it (the experiment's
+ *   default runner, callThrough's default run, a run the experiment makes through its own import of runWorkflow, and a
+ *   run made through a reference to runWorkflow such a module took at its load, alike) is read into one record; once
+ *   the experiment settles or throws, before the runtime's own export is put back, it holds the replacement's own call
+ *   log (each call it took, whichever implementation answered it) to as many calls as the runs its record counted, so a
+ *   run it took that the record did not read fails the case that called it (wb-3121). callThrough hands the
+ *   experiment's options on to its run (runWorkflow, read through the witnessed export) with one change, the surface
+ *   their onControl receives is recordedSurface over the one that run hands it, and counts the abort events their
+ *   signal dispatches. Each of recordedSurface's five methods shows, to String(), the text of the method it wraps
+ *   (wb-3121 cut #2, R-B752), so through each record a run's surface shows its own methods' text. callThrough also
+ *   records its own presence: each invocation counts one run, each surface it wraps counts one surface, and it keeps
+ *   the result each run it drives settles with. Each of the three runs must read the same whole reading, and each
+ *   record must be present in the run it reads (wb-7ak9 refusal #1, U1): in each of the 84 witnessed runs the witness,
+ *   and in each of the 42 recorded runs the recorder too, is invoked once, wraps one surface and keeps one result, and
+ *   that result's status, value and target row's last progress entry (read as FinalRow's four fields) are the reading's
+ *   runStatus, scriptValue and finalRow; the replacement's call log in each of the 84 holds that one run. Each record
+ *   (the witness's in all 84 runs, the recorder's in the 42) must be the one namedConduct gives the plan, on three legs
+ *   (wb-7ak9 refusal #2, U1): how many times each of the five methods of the surfaces it wrapped was called; the entry
+ *   of each such call, the count and the entry both recorded before the call reaches the surface it wraps; and the
+ *   abort events. A skip or retry plan on the per-agent route calls that method once and no other (its count 1, every
+ *   other count 0), its one entry naming the target's row (0 at spawn, 1 at resume) and holding the reading's
+ *   controlAccepted, and the run's own signal dispatches no abort event; on the run-abort route it calls no method
+ *   (every count 0, no entry) and the signal dispatches one; a "none" plan, whatever its route and barrier, calls no
+ *   method (every count 0, no entry) and the signal dispatches none.
+ *   CALL-THROUGH pins recordedSurface over a planted WorkflowControl: each of its seven calls (pause, resume, isPaused,
+ *   two skips and two retries) is counted by method and recorded, in call order, as `method(argument) = value` with the
+ *   value the planted method returned (`pause()`, `resume()` and `isPaused() = value` for those that take no argument;
+ *   a second plant's isPaused returns false, counted and recorded once); each calls the planted method once and returns
+ *   its value; each of its five methods is another function than the planted one it wraps and shows, to String(), that
+ *   planted method's text (five texts), and so does each method of a record made over that record (wb-3121 cut #2).
+ *   CALL-THROUGH-UNSHOWN pins five more plants: each of the five methods, called once on a plant that reads that
+ *   method's count and the record's last entry and then throws, is counted and recorded before the plant runs (each
+ *   plant reads 1 and its own call's entry), its throw reaches the caller, and its entry stays without a value
+ *   (`pause()`, `resume()`, `isPaused()`, `skip(0)`, `retry(1)`); skip and retry, each called with a Symbol, an object
+ *   whose Symbol.toPrimitive throws, a proxy each of whose traps throws and a function, call the plant once with that
+ *   same argument and return its value, the entries showing the arguments as `Symbol(gate)`, `<object>`, `<object>` and
+ *   `<function>`; and isPaused, skip and retry, each over plants returning that Symbol, that object and that proxy,
+ *   return that same value, the entries showing it the same way. NOT CLAIMED by those two cases: how recordedSurface
+ *   counts, calls and records a call with an argument or value of any other kind. CALL-THROUGH-LIVE pins callThrough's
+ *   presence counts over planted runners: a recorder made and never invoked counts nothing; each invocation counts one
+ *   run; each surface a run hands onControl counts one surface (none, one or two of them) and reaches the caller's
+ *   onControl wrapped (another object, a skip on which is counted and recorded in that run's record and passed on to
+ *   the planted surface: 0, 1 and 2 skips counted); and the result each run settles with is kept, the same object the
+ *   recorder's promise resolves with. SETTLED-RUN pins the presence leg's reader of a kept result, settledRun, over
+ *   planted results (wb-7ak9 refusal #2, F1: on the experiment's two scripts the target's row is the log's last agent
+ *   row, which left the row filter unread): their status and value, and FinalRow's four fields from the last
+ *   workflow_agent entry of the target's row, its later entry over its earlier one and never another row's later entry
+ *   or a workflow_node entry carrying the target's index (attempt 1, reason null and skipped false for an entry that
+ *   carries none of them), and finalRow undefined when the log holds no agent entry of that row. WITNESS-LIVE pins
+ *   witnessed() over planted experiments: while one runs (at its start and a turn later), runWorkflow read through this
+ *   suite's own import is not the runtime's own function, and a script-only run made through it counts one run, hands
+ *   one surface (a skip on which is counted and recorded as `skip(3) = false`) and keeps its result; that surface
+ *   shows, to String(), the text of each of the five methods of the surface a run no witness reads hands, five texts
+ *   (wb-3121 cut #2); an experiment making three such runs one after another counts three runs and three surfaces,
+ *   keeps the three results in the order they settled and records `skip(3) = false`, `skip(4) = false` and
+ *   `skip(5) = false` in its one record (wb-3121); a witness of an experiment that makes no run counts nothing; once
+ *   the experiment settles, and once it throws (the throw reaching the caller), runWorkflow is the runtime's own
+ *   function again, and a run made then lands in no witness, nor does a run made outside a witness through the function
+ *   the export held at this file's imports (neither in the record of the experiment before it nor in the call log of
+ *   the one after it; wb-3121 cut #2). witnessed()'s call-log check holds in each of those experiments, as in each of
+ *   PLAN-DOMAIN's 84 witnessed runs. At each of those reads in each of those experiments runWorkflow is one function,
+ *   the one the export held when this file's static imports had been evaluated, with the runtime's own function's name,
+ *   length and String(), and that function is not the export once the runtime's own is put back before any case runs
+ *   (wb-3121 cut #2). The records are read when the experiment's promise settles: a call or an abort made after that is
+ *   NOT CLAIMED. The witness reads only the runs made through its replacement while it is installed: a run made through
+ *   a reference to runWorkflow taken while the runtime's own export is in place (by a test, or by a module first
+ *   evaluated before this file's imports, for example), and a call on such a run's WorkflowControl surface, are NOT
+ *   CLAIMED, and so are PLAN-DOMAIN's last, unwitnessed run of each plan input and the runs of this file's other cases,
+ *   the live cells among them, which no witness reads. In a witnessed run the surface the helper's onControl is handed
+ *   shows, to String(), its run's own surface's method text, and the runner the helper reads at a call is the function
+ *   a reference to runWorkflow it took at its load holds (CALL-THROUGH and WITNESS-LIVE pin the two; wb-3121 cut #2,
+ *   R-B752): a helper that calls on a none plan only when its surface's String() shows the runtime's own source makes
+ *   that call in each of the 84 witnessed runs (GP3-PLAIN-RAW-SKIP and GP3-PLAIN-RAW-ISPAUSED red PLAN-DOMAIN), and one
+ *   that calls only when its runner is the function it read at its load makes it in each of the 42 runs it makes with
+ *   its default runner under the witness (W3-SCOPE-LIVE-CELL-ONLY reds PLAN-DOMAIN). A helper that tells a witnessed
+ *   run from another by anything else (the identity of its surface or of that surface's methods, their text read other
+ *   than through their own toString, or its runner against a reference taken while the runtime's own export is in
+ *   place, for example) is NOT CLAIMED: what it does in a run no witness reads is not read. The presence legs hold the
+ *   run each record kept to the reading by those three fields, not by the two runs' identity.
  *   INSTRUMENT-NO-TIMER pins, by the same parser, what the helper's source text holds: no timer global's name
  *   (setTimeout, setInterval, setImmediate) as an identifier, no literal text (string, template or regular expression)
  *   containing one of those names or the text timers, no import() call and no static import of a timers module; and
@@ -41,11 +132,19 @@
  *   R015-ORACLE, R015-ORACLE-ROWS, R016-ORACLE and R016-ORACLE-ROWS.
  * - Judge grids: R015-SEAM-GRID, R015-ORACLE-GRID and R016-ORACLE-GRID. Each grid is the product of the axis lists that
  *   its builder's comment names (seamGrid, skipOracleGrid, retryOracleGrid), and each of the 17 NOISE profiles is also
- *   applied to every reading of that product (a profile replaces, together, the fields that builder names as its
- *   noise). Every reading built either way must get the verdict ruledVerdict gives, and the number of readings is
- *   pinned. ruledVerdict restates the rules of the helper's header, one rule per line, in the order the verdict lists
- *   them. GRID-AXES pins each of the 16 lists of the axis-list block by value (COUNTS, CONTROLS, STARTUPS, ROUTES,
- *   BARRIERS, SETUP_AGENTS, ENTRY_STATES, FINAL_ROWS, SCRIPT_VALUES, SETTLEMENT_LISTS, RUN_STATUSES, CONTROL_VALUES,
+ *   applied to every reading of that product. GRID-NOISE pins that application on each grid (wb-7ak9): each reading's
+ *   17 visits after its first are, in NOISE's order, that first visit under each profile, the places of the NOISE
+ *   fields NOISE_FIELDS lists for the grid holding the profile's values and every other place the first visit's
+ *   (Object.is, an object by identity), with the same keys in the reading and in its plan, authorizations and
+ *   sdkStarts objects. A place is a key of the reading, or of one of those three objects: READING_PLACES is read
+ *   against Object.keys of DISTINCT_READING, whose places all hold distinct values. The same reader flags eight
+ *   planted grids (one profile throughout, the profiles reversed, a listed field kept, a field outside the list
+ *   replaced, and a key added to the reading, its plan, its authorizations or its sdkStarts). NOISE_FIELDS is this
+ *   suite's own list: which fields a noise function's comment names is NOT CLAIMED. Every reading
+ *   built either way must get the verdict ruledVerdict gives, and the number of readings is pinned. ruledVerdict
+ *   restates the rules of the helper's header, one rule per line, in the order the verdict lists them. GRID-AXES pins
+ *   each of the 16 lists of the axis-list block by value (COUNTS, CONTROLS, STARTUPS, ROUTES, BARRIERS, SETUP_AGENTS,
+ *   ENTRY_STATES, FINAL_ROWS, SCRIPT_VALUES, SETTLEMENT_LISTS, RUN_STATUSES, CONTROL_VALUES,
  *   CALL_LOG_OFFSETS, ONE_START_SPLITS, RUN_SIGNALS and PARKED_AT_CONTROL), NOISE by each profile's position in every
  *   list it draws from, that each NOISE field takes every value of its list, and that the four plan facet lists,
  *   ENTRY_STATES and RUN_STATUSES equal the unions their source files declare. GRID-PRODUCTS pins that each grid's
@@ -123,8 +222,10 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
-import { describe, expect, it } from "vitest";
-import type { WorkflowEntryState } from "../src/workflow/progress.js";
+import { describe, expect, it, vi } from "vitest";
+import type { WorkflowAgentEntry, WorkflowEntryState } from "../src/workflow/progress.js";
+import * as runtime from "../src/workflow/runtime.js";
+import { runWorkflow, type WorkflowControl, type WorkflowHost, type WorkflowRunResult } from "../src/workflow/runtime.js";
 import {
   type Breach,
   type FinalRow,
@@ -136,10 +237,40 @@ import {
   type ParkedObservation,
   type ParkedPlan,
   type ParkedRoute,
+  type ParkedRunner,
   type ParkedStartup,
   type ParkedVerdict,
   runParkedDispatchExperiment,
 } from "./helpers/parked-dispatch-experiment.js";
+
+/**
+ * The runtime witness's replacement of the runtime module's runWorkflow export (wb-3121 cut #2, R-B752): one spy for
+ * this whole file, over the runtime's own runWorkflow, whose name, length and String() are that function's and which
+ * answers with it outside a witness. vitest runs this vi.hoisted block before any static import of this file is
+ * evaluated, and the block imports the runtime module and installs the replacement as its runWorkflow export, so a
+ * module first evaluated by those imports that reads runWorkflow at its own load (the helper, imported above, among
+ * them) reads the replacement. The runtime's own export is put back below, once those imports are evaluated, and
+ * witnessed() installs the same replacement again while each experiment runs.
+ */
+const WITNESS_EXPORT = await vi.hoisted(async () => {
+  const loaded = await import("../src/workflow/runtime.js");
+  const ownDescriptor = Object.getOwnPropertyDescriptor(loaded, "runWorkflow");
+  if (ownDescriptor === undefined) throw new Error("the runtime module holds no runWorkflow export");
+  const own = loaded.runWorkflow;
+  // A spy over the runtime's own function, answering with it while no other implementation is set: it keeps that
+  // function's name and length, and its own toString shows that function's text.
+  const holder = { runWorkflow: own };
+  const replacement = vi.spyOn(holder, "runWorkflow");
+  Object.defineProperty(replacement, "toString", { value: () => String(own) });
+  Object.defineProperty(loaded, "runWorkflow", { configurable: true, enumerable: true, get: () => replacement });
+  return { own, ownDescriptor, replacement };
+});
+
+/** The runtime module's runWorkflow export as this file's static imports left it (the helper's load among them), read at the top of this module's body before the runtime's own export is put back (WITNESS-LIVE pins it: the witness's replacement). */
+const EXPORT_AT_IMPORTS: typeof runtime.runWorkflow = runtime.runWorkflow;
+restoreRuntimeExport();
+/** The export once the runtime's own export is put back, before any case of this file runs (WITNESS-LIVE pins it: the runtime's own function). */
+const EXPORT_BEFORE_CASES: unknown = runtime.runWorkflow;
 
 /** claude-host.ts: the post-await refusal a run abort produces. */
 const WORKFLOW_ABORTED = "Workflow aborted.";
@@ -1548,6 +1679,390 @@ describe("EAT-R016 a per-agent retry issued while the host's beforeDispatch is p
   });
 });
 
+/**
+ * The call-through recorder's record of one run (wb-7ak9): its own presence (how many times it was invoked as the
+ * runner, how many WorkflowControl surfaces it wrapped, and the result each run it drove settled with), how many times
+ * each of the five methods of the surface its onControl received was called and the entry of each such call, in call
+ * order (both recorded before the call reaches the run's surface; `method(argument) = value` once the call returns,
+ * `pause()` and `resume()` for the methods that return none, each argument and value shown by shown()), and how many
+ * abort events the run's own signal dispatched. The runtime witness keeps the same record of the runs it reads.
+ */
+interface ControlRecord {
+  /** How many times the recorder was invoked as the runner. */
+  runs: number;
+  /** How many surfaces it wrapped: one for each time a run it drove handed onControl a WorkflowControl. */
+  surfaces: number;
+  /** The result each run it drove settled with, in the order they settled. */
+  readonly results: WorkflowRunResult[];
+  /** How many times each of the five methods of the surfaces it wrapped was called, by method (wb-7ak9 refusal #2, U1). */
+  readonly invoked: Invocations;
+  readonly calls: string[];
+  aborts: number;
+}
+
+/** WorkflowControl's five methods. */
+type ControlMethod = keyof WorkflowControl;
+/** WorkflowControl's five methods, in the order a record counts them. */
+const CONTROL_METHODS = ["pause", "resume", "isPaused", "skip", "retry"] as const satisfies readonly ControlMethod[];
+/** A count for each of WorkflowControl's five methods. */
+type Invocations = Record<ControlMethod, number>;
+
+/** No call of any of the five methods yet. */
+function noInvocations(): Invocations {
+  return { pause: 0, resume: 0, isPaused: 0, skip: 0, retry: 0 };
+}
+
+/** A record of nothing yet: no invocation, no surface, no result, no method called, no call recorded and no abort. */
+function newRecord(): ControlRecord {
+  return { runs: 0, surfaces: 0, results: [], invoked: noInvocations(), calls: [], aborts: 0 };
+}
+
+/**
+ * How a record entry shows an argument or a value: String() of a primitive (String() describes a Symbol as
+ * `Symbol(gate)`, where a template literal throws), `<object>` for an object and `<function>` for a function, which it
+ * never converts (wb-7ak9 refusal #2, U1: the entry was formatted with a template literal, so a Symbol argument, or an
+ * object whose Symbol.toPrimitive throws, threw after the call and left no entry).
+ */
+function shown(value: unknown): string {
+  if (typeof value === "function") return "<function>";
+  if (typeof value === "object" && value !== null) return "<object>";
+  return String(value);
+}
+
+/**
+ * A WorkflowControl whose five methods each record the call before calling the surface's own method (wb-7ak9 refusal
+ * #2, R-B749 (a)): they count it in invoked, by method, and push its entry to calls (`pause()`, `resume()`,
+ * `isPaused()`, `skip(argument)` or `retry(argument)`, the argument shown by shown()). Once the surface's method has
+ * returned, the entry of isPaused, skip or retry gains ` = value` (the value shown by shown()) and the value is
+ * returned; a throw of the surface's method reaches the caller with the call counted and its entry left without a value.
+ * Each of the five methods shows, to String(), the text of the surface's own method it wraps, through its own toString
+ * (wb-3121 cut #2, R-B752: a caller that reads the surface's methods' String() reads the same text through a record).
+ */
+function recordedSurface(surface: WorkflowControl, calls: string[], invoked: Invocations): WorkflowControl {
+  /** Counts and records a call before it reaches the surface; the function it returns gives that call's entry its value. */
+  const begin = (method: ControlMethod, entry: string): ((value: unknown) => void) => {
+    invoked[method] += 1;
+    const at = calls.push(entry) - 1;
+    return value => {
+      calls[at] = `${entry} = ${shown(value)}`;
+    };
+  };
+  const recorded: WorkflowControl = {
+    pause: () => {
+      begin("pause", "pause()");
+      surface.pause();
+    },
+    resume: () => {
+      begin("resume", "resume()");
+      surface.resume();
+    },
+    isPaused: () => {
+      const valued = begin("isPaused", "isPaused()");
+      const value = surface.isPaused();
+      valued(value);
+      return value;
+    },
+    skip: index => {
+      const valued = begin("skip", `skip(${shown(index)})`);
+      const value = surface.skip(index);
+      valued(value);
+      return value;
+    },
+    retry: index => {
+      const valued = begin("retry", `retry(${shown(index)})`);
+      const value = surface.retry(index);
+      valued(value);
+      return value;
+    },
+  };
+  // Each recorded method shows, to String(), the text of the surface's own method it wraps (wb-3121 cut #2, R-B752).
+  for (const method of CONTROL_METHODS) {
+    const own = surface[method];
+    Object.defineProperty(recorded[method], "toString", { value: () => String(own) });
+  }
+  return recorded;
+}
+
+/**
+ * The call-through recorder, the runner PLAN-DOMAIN's second run of each plan passes to the experiment, and the runtime
+ * witness's replacement of runWorkflow: it hands the experiment's own options on to run (runWorkflow, read when the
+ * recorder is made, unless the witness or CALL-THROUGH-LIVE passes one) with one change, the surface their onControl
+ * receives is recordedSurface over the one that run hands it (counting and recording into this record), and it counts
+ * the abort events their signal dispatches. Its presence is recorded too: each invocation counts one run, each surface
+ * the run hands onControl counts one surface (counted where it is wrapped), and the result the run settles with is kept
+ * before the recorder's promise resolves.
+ */
+function callThrough(record: ControlRecord, run: ParkedRunner = runWorkflow): ParkedRunner {
+  return async options => {
+    record.runs += 1;
+    options.signal?.addEventListener("abort", () => {
+      record.aborts += 1;
+    });
+    const result = await run({
+      ...options,
+      onControl: surface => {
+        record.surfaces += 1;
+        options.onControl?.(recordedSurface(surface, record.calls, record.invoked));
+      },
+    });
+    record.results.push(result);
+    return result;
+  };
+}
+
+/**
+ * The runtime witness (wb-7ak9 refusal #2, R-B749 (b)): runs the experiment with the runtime module's runWorkflow export
+ * replaced by WITNESS_EXPORT's replacement, the one function the export held while this file's static imports were
+ * evaluated (wb-3121 cut #2, R-B752), answering with callThrough over the runtime's own runWorkflow, all into one fresh
+ * record, so each run made through it while the experiment runs (the experiment's default runner, callThrough's default
+ * run, a run the experiment makes through its own import of runWorkflow, a run made through a reference to runWorkflow
+ * a module took at its load) is counted and keeps its result, and each surface it hands onControl reaches its caller
+ * as recordedSurface over the runtime's own. Once the experiment settles or throws, before the runtime's own export is
+ * put back, it holds the replacement's own call log (each call it took, whichever implementation answered it) to as
+ * many calls as the runs the record counted, and a call log holding more or fewer fails, softly, the case that called
+ * it (wb-3121: under a replacement that answers only its first call, a later run through the export is a call the
+ * record never read). The replacement then answers with the runtime's own runWorkflow again, and the export is the
+ * runtime's own function again once the experiment settles or throws.
+ */
+async function witnessed<T>(experiment: () => Promise<T>): Promise<{ readonly value: T; readonly witness: ControlRecord }> {
+  const witness = newRecord();
+  const { own, replacement } = WITNESS_EXPORT;
+  replacement.mockClear();
+  replacement.mockImplementation(callThrough(witness, own));
+  installWitnessExport();
+  try {
+    return { value: await experiment(), witness };
+  } finally {
+    // Each call the replacement took while the experiment ran (whichever implementation answered it) is a run the record read.
+    expect.soft(replacement, "the runtime witness (export call log)").toHaveBeenCalledTimes(witness.runs);
+    // The replacement answers with the runtime's own runWorkflow again (every once-implementation dropped), and the export is the runtime's own.
+    replacement.mockReset();
+    restoreRuntimeExport();
+  }
+}
+
+/** Installs the witness's replacement as the runtime module's runWorkflow export: each read of the export, through any import of the module, returns it. */
+function installWitnessExport(): void {
+  Object.defineProperty(runtime, "runWorkflow", { configurable: true, enumerable: true, get: () => WITNESS_EXPORT.replacement });
+}
+
+/** Puts the runtime module's own runWorkflow export back, with the property descriptor the module gave it. */
+function restoreRuntimeExport(): void {
+  Object.defineProperty(runtime, "runWorkflow", WITNESS_EXPORT.ownDescriptor);
+}
+
+/** A record's conduct legs: each method's count, the entries and the abort events. */
+function conductOf(record: ControlRecord): { readonly invoked: Invocations; readonly calls: readonly string[]; readonly aborts: number } {
+  return { invoked: record.invoked, calls: record.calls, aborts: record.aborts };
+}
+
+/** The three fields of a run's result PLAN-DOMAIN holds to the reading: its status, its value and the target row's last progress entry, read as FinalRow's fields. */
+interface SettledRun {
+  readonly runStatus: WorkflowRunResult["status"];
+  readonly scriptValue: unknown;
+  readonly finalRow: FinalRow | undefined;
+}
+
+/** A run's result on those three fields, the target being the row at `target` (FinalRow's fields from that row's last progress entry, undefined when the log holds none). */
+function settledRun(result: WorkflowRunResult, target: number): SettledRun {
+  const last = result.progress.filter((entry): entry is WorkflowAgentEntry => entry.type === "workflow_agent" && entry.index === target).at(-1);
+  return {
+    runStatus: result.status,
+    scriptValue: result.value,
+    finalRow: last === undefined ? undefined : { state: last.state, skipped: last.skipped === true, attempt: last.attempt ?? 1, reason: last.lastAttemptReason ?? null },
+  };
+}
+
+/** The recorder's presence, read off its record: its invocations, the surfaces it wrapped, and each result it kept, on those three fields. */
+function presenceOf(record: ControlRecord, target: number): { readonly runs: number; readonly surfaces: number; readonly settled: readonly SettledRun[] } {
+  return { runs: record.runs, surfaces: record.surfaces, settled: record.results.map(result => settledRun(result, target)) };
+}
+
+/**
+ * The presence each record must have in each run PLAN-DOMAIN reads with it (the witness's in all 84 runs, the
+ * recorder's in the 42 made through it): invoked once, one surface wrapped (the run's onControl call), and one result
+ * kept, whose status, value and target row's last progress entry are the reading's, so the run the record kept reads,
+ * on those three fields, as the run the reading is taken from (wb-7ak9 refusal #1, U1).
+ */
+function namedPresence(reading: ParkedObservation): ReturnType<typeof presenceOf> {
+  return { runs: 1, surfaces: 1, settled: [{ runStatus: reading.runStatus, scriptValue: reading.scriptValue, finalRow: reading.finalRow }] };
+}
+
+/**
+ * The record a plan's words name (the helper's ParkedControl and ParkedRoute docs): a skip or retry plan on the
+ * per-agent route calls that WorkflowControl method once and no other (its count 1, every other count 0), its one
+ * entry naming the target's row and holding the reading's controlAccepted, and the run's own signal dispatches no
+ * abort event; on the run-abort route it calls no method (every count 0, no entry) and the signal dispatches one; a
+ * "none" plan calls no method (every count 0, no entry) and the signal dispatches none. The target's row is the one
+ * after the setup agents' rows (rows count agent() calls from 0): 0 at spawn, 1 at resume.
+ */
+function namedConduct(reading: ParkedObservation): { readonly invoked: Invocations; readonly calls: readonly string[]; readonly aborts: number } {
+  const { control, startup, route } = reading.plan;
+  if (control === "none") return { invoked: noInvocations(), calls: [], aborts: 0 };
+  if (route === "run-abort") return { invoked: noInvocations(), calls: [], aborts: 1 };
+  return { invoked: { ...noInvocations(), [control]: 1 }, calls: [`${control}(${SETUP_AGENTS[startup]}) = ${reading.controlAccepted}`], aborts: 0 };
+}
+
+/** Every place a reading holds a value, and how to read it there: the plan's four facets, the top-level fields, and the four counts of authorizations and of sdkStarts. */
+const READING_PLACES: readonly (readonly [string, (reading: ParkedObservation) => unknown])[] = [
+  ["plan.control", reading => reading.plan.control],
+  ["plan.startup", reading => reading.plan.startup],
+  ["plan.route", reading => reading.plan.route],
+  ["plan.barrier", reading => reading.plan.barrier],
+  ["parkedAtControl", reading => reading.parkedAtControl],
+  ["queriesBeforeControl", reading => reading.queriesBeforeControl],
+  ["controlAccepted", reading => reading.controlAccepted],
+  ["hostAbortsWhileParked", reading => reading.hostAbortsWhileParked],
+  ["runAborted", reading => reading.runAborted],
+  ["authorizations.setup", reading => reading.authorizations.setup],
+  ["authorizations.original", reading => reading.authorizations.original],
+  ["authorizations.replacement", reading => reading.authorizations.replacement],
+  ["authorizations.extra", reading => reading.authorizations.extra],
+  ["sdkStarts.setup", reading => reading.sdkStarts.setup],
+  ["sdkStarts.original", reading => reading.sdkStarts.original],
+  ["sdkStarts.replacement", reading => reading.sdkStarts.replacement],
+  ["sdkStarts.extra", reading => reading.sdkStarts.extra],
+  ["sdkCallsRecorded", reading => reading.sdkCallsRecorded],
+  ["hostSettlements", reading => reading.hostSettlements],
+  ["finalRow", reading => reading.finalRow],
+  ["runStatus", reading => reading.runStatus],
+  ["scriptValue", reading => reading.scriptValue],
+];
+
+/** The reading's objects GRID-NOISE reads key by key; every other field of a reading is one place, read whole (an object by identity). */
+const READ_BY_KEY: readonly string[] = ["plan", "authorizations", "sdkStarts"];
+
+/** A reading's places by Object.keys, in key order: each field's value, and for READ_BY_KEY's objects each of their keys' values (`object.key`). */
+function placesByKeys(reading: ParkedObservation): readonly (readonly [string, unknown])[] {
+  return Object.entries(reading).flatMap(([key, value]) =>
+    READ_BY_KEY.includes(key) && typeof value === "object" && value !== null
+      ? Object.entries(value).map(([inner, innerValue]) => [`${key}.${inner}`, innerValue] as const)
+      : [[key, value] as const],
+  );
+}
+
+/** A reading whose places all hold distinct values (by Object.is), never judged: GRID-NOISE reads READING_PLACES against it. */
+const DISTINCT_READING: ParkedObservation = {
+  plan: { control: "skip", startup: "resume", route: "run-abort", barrier: "absent" },
+  parkedAtControl: true,
+  queriesBeforeControl: 11,
+  controlAccepted: undefined,
+  hostAbortsWhileParked: 12,
+  runAborted: false,
+  authorizations: { setup: 21, original: 22, replacement: 23, extra: 24 },
+  sdkStarts: { setup: 31, original: 32, replacement: 33, extra: 34 },
+  sdkCallsRecorded: 41,
+  hostSettlements: [],
+  finalRow: { state: "progress", skipped: true, attempt: 3, reason: "a reason" },
+  runStatus: "failed",
+  scriptValue: "a script value",
+};
+
+/** Where a reading holds each field of a NOISE profile: the places that field replaces, each with the profile's value for it. */
+const NOISE_PLACES: Readonly<Record<keyof Noise, readonly (readonly [string, (noise: Noise) => unknown])[]>> = {
+  hostSettlements: [["hostSettlements", noise => noise.hostSettlements]],
+  runStatus: [["runStatus", noise => noise.runStatus]],
+  barrier: [["plan.barrier", noise => noise.barrier]],
+  finalRow: [["finalRow", noise => noise.finalRow]],
+  scriptValue: [["scriptValue", noise => noise.scriptValue]],
+  entries: [
+    ["authorizations.original", noise => noise.entries.original],
+    ["authorizations.replacement", noise => noise.entries.replacement],
+    ["authorizations.extra", noise => noise.entries.extra],
+  ],
+  oneStart: [
+    ["sdkStarts.original", noise => noise.oneStart.original],
+    ["sdkStarts.replacement", noise => noise.oneStart.replacement],
+    ["sdkStarts.extra", noise => noise.oneStart.extra],
+  ],
+};
+
+/** GRID-NOISE's lists, this suite's own (no comment is read): the NOISE fields each grid's visits under a profile replace, and no other. */
+const NOISE_FIELDS: Readonly<Record<"seam" | "skipOracle" | "retryOracle", readonly (keyof Noise)[]>> = {
+  seam: ["hostSettlements", "runStatus", "barrier", "finalRow", "scriptValue", "entries", "oneStart"],
+  skipOracle: ["hostSettlements", "runStatus", "barrier", "entries"],
+  retryOracle: ["hostSettlements", "runStatus", "barrier", "finalRow", "scriptValue"],
+};
+
+/** The keys of a reading and of its plan, authorizations and sdkStarts objects, in order. */
+function readingKeys(reading: ParkedObservation): string {
+  return [reading, reading.plan, reading.authorizations, reading.sdkStarts].map(part => Object.keys(part).join()).join("|");
+}
+
+/** A reading under a NOISE profile with a key added to one of its parts: the reading itself, or its plan, authorizations or sdkStarts object. */
+function strayKey(reading: ParkedObservation, part: "reading" | "plan" | "authorizations" | "sdkStarts"): ParkedObservation {
+  if (part === "reading") {
+    const planted = { ...reading, stray: 0 };
+    return planted;
+  }
+  if (part === "plan") {
+    const plan = { ...reading.plan, stray: 0 };
+    return { ...reading, plan };
+  }
+  if (part === "authorizations") {
+    const authorizations = { ...reading.authorizations, stray: 0 };
+    return { ...reading, authorizations };
+  }
+  const sdkStarts = { ...reading.sdkStarts, stray: 0 };
+  return { ...reading, sdkStarts };
+}
+
+/** How a grid's visits read against the NOISE profiles: the visits, how many are not their reading under the profile due, and the first three of those. */
+interface NoiseTally {
+  readonly visits: number;
+  readonly wrong: number;
+  readonly first: readonly string[];
+}
+
+/**
+ * Reads a grid's visits in runs of 1 + NOISE.length: the first visit of a run is its reading, and visit k after it (k
+ * from 1) must be that reading under NOISE[k - 1]: at each place of the fields listed, that profile's value, at every
+ * other place the first visit's, each compared with Object.is (an object by identity), and the same keys as the first
+ * visit. It names the places a wrong visit differs at.
+ */
+function noiseTally(grid: (visit: (reading: ParkedObservation) => void) => void, fields: readonly (keyof Noise)[]): NoiseTally {
+  const due = 1 + NOISE.length;
+  const replaced = new Map(fields.flatMap(field => NOISE_PLACES[field]));
+  let visits = 0;
+  let wrong = 0;
+  const first: string[] = [];
+  let bare: readonly unknown[] = [];
+  let bareKeys = "";
+  grid(reading => {
+    const k = visits % due;
+    const visit = visits;
+    visits += 1;
+    const values = READING_PLACES.map(([, read]) => read(reading));
+    if (k === 0) {
+      bare = values;
+      bareKeys = readingKeys(reading);
+      return;
+    }
+    const noise = NOISE[k - 1];
+    const off = READING_PLACES.filter(([place], i) => {
+      const profileValue = replaced.get(place);
+      return !Object.is(values[i], profileValue === undefined ? bare[i] : profileValue(noise));
+    }).map(([place]) => place);
+    if (readingKeys(reading) !== bareKeys) off.push("keys");
+    if (off.length === 0) return;
+    wrong += 1;
+    if (first.length < 3) first.push(`visit ${visit}: ${off.join(", ")}`);
+  });
+  return { visits, wrong, first };
+}
+
+/** A planted grid, never run as a grid case: PARKED_SKIP_SPAWN and PARKED_RETRY_SPAWN each visited bare, then under each NOISE profile as plant applies it (k its position in NOISE). */
+function plantedNoiseGrid(plant: (reading: ParkedObservation, noise: Noise, k: number) => ParkedObservation): (visit: (reading: ParkedObservation) => void) => void {
+  return visit => {
+    for (const reading of [PARKED_SKIP_SPAWN, PARKED_RETRY_SPAWN]) {
+      visit(reading);
+      NOISE.forEach((noise, k) => {
+        visit(plant(reading, noise, k));
+      });
+    }
+  };
+}
+
 /** One ParkedPlan value's reading and verdict, as measured at this tree. */
 interface PlanRow {
   readonly reading: ParkedObservation;
@@ -2186,7 +2701,8 @@ describe("the experiment's input lists and every ParkedPlan value (wb-9v02)", ()
     });
   });
 
-  it("PLAN-DOMAIN each of the 24 ParkedPlan values, run with every field given and again with its default fields omitted: its whole reading as measured at this tree, then its verdict", { timeout: GRID_TIMEOUT }, async () => {
+  it("PLAN-DOMAIN each of the 24 ParkedPlan values, run with every field given and again with its default fields omitted, three times: its first run, made under the runtime witness, and its second, made through the call-through recorder under a fresh witness, each read the whole reading as measured at this tree, and in each of those witnessed runs the call log of the witness's replacement of the export holds one call and the witness, and in each recorded run the recorder too, is invoked once, wraps one surface and keeps one result giving the reading's run status, script value and final row, and reads each WorkflowControl method called as often as its plan names (its per-agent skip or retry once, no method under a none plan or the run-abort route), with the entries and run-signal aborts its plan names; its third run, made with no witness installed, reads the same whole reading, then its verdict; 42 runs of each kind", { timeout: GRID_TIMEOUT }, async () => {
+    const runs = { plain: 0, witnessed: 0, recorded: 0 };
     for (const row of PLAN_ROWS) {
       const { control, startup, route, barrier } = row.reading.plan;
       const given: ParkedPlan = row.reading.plan;
@@ -2198,10 +2714,487 @@ describe("the experiment's input lists and every ParkedPlan value (wb-9v02)", ()
         [defaulted, `${planId(row.reading.plan)} (defaults omitted)`],
       ] as const) {
         if (input === undefined) continue;
+        // The first run of each plan input, made under the runtime witness, which reads every run made through the runtime module's runWorkflow while the experiment runs.
+        const plain = await witnessed(() => runParkedDispatchExperiment(input));
+        runs.witnessed += 1;
+        expect.soft(plain.value, `${label} (witnessed)`).toEqual(row.reading);
+        expect.soft(presenceOf(plain.witness, SETUP_AGENTS[startup]), `${label} (witness)`).toEqual(namedPresence(row.reading));
+        expect.soft(conductOf(plain.witness), `${label} (witness)`).toEqual(namedConduct(row.reading));
+        // The same run through the call-through recorder, under a fresh witness: the reading it gives, the recorder's presence in it, what the recorder saw, then what the witness saw.
+        const record = newRecord();
+        const viaRecorder = await witnessed(() => runParkedDispatchExperiment(input, callThrough(record)));
+        const recorded = viaRecorder.value;
+        runs.recorded += 1;
+        expect.soft(recorded, `${label} (call-through)`).toEqual(row.reading);
+        expect.soft(presenceOf(record, SETUP_AGENTS[startup]), `${label} (recorder)`).toEqual(namedPresence(row.reading));
+        expect.soft({ invoked: record.invoked, calls: record.calls, aborts: record.aborts }, `${label} (call-through)`).toEqual(namedConduct(row.reading));
+        expect.soft(presenceOf(viaRecorder.witness, SETUP_AGENTS[startup]), `${label} (call-through witness)`).toEqual(namedPresence(row.reading));
+        expect.soft(conductOf(viaRecorder.witness), `${label} (call-through witness)`).toEqual(namedConduct(row.reading));
+        // Last, the same run with no witness installed: its whole reading as measured, then its verdict, so neither depends on the witness (no record reads this run).
         const observation = await runParkedDispatchExperiment(input);
+        runs.plain += 1;
         expect.soft(observation, label).toEqual(row.reading);
         expect.soft(judgeParkedObservation(observation), label).toEqual(row.verdict);
       }
     }
+    // 24 plans with every field given and the 18 that hold a default again with it omitted, each run all three ways: two witnessed runs first, the unwitnessed run last.
+    expect(runs).toEqual({ plain: 42, witnessed: 42, recorded: 42 });
+  });
+
+  it("CALL-THROUGH recordedSurface over a planted WorkflowControl: each of its seven calls (pause, resume, isPaused, two skips, two retries) is counted by method and recorded, in call order and with the value the planted method returned, and calls that method once and returns its value; a second plant's isPaused, returning false, is counted and recorded once; each of its five methods is another function than the planted one and shows, to String(), the planted method's text, as does each method of a record made over it", () => {
+    const planted: string[] = [];
+    const surface: WorkflowControl = {
+      pause: () => {
+        planted.push("pause");
+      },
+      resume: () => {
+        planted.push("resume");
+      },
+      isPaused: () => {
+        planted.push("isPaused");
+        return true;
+      },
+      skip: index => {
+        planted.push(`skip ${index}`);
+        return index === 7;
+      },
+      retry: index => {
+        planted.push(`retry ${index}`);
+        return index !== 8;
+      },
+    };
+    const calls: string[] = [];
+    const invoked = noInvocations();
+    const recorded = recordedSurface(surface, calls, invoked);
+    const values = [recorded.pause(), recorded.resume(), recorded.isPaused(), recorded.skip(7), recorded.skip(-1), recorded.retry(8), recorded.retry(2)];
+    expect({ values, calls, planted }).toEqual({
+      values: [undefined, undefined, true, true, false, false, true],
+      calls: ["pause()", "resume()", "isPaused() = true", "skip(7) = true", "skip(-1) = false", "retry(8) = false", "retry(2) = true"],
+      planted: ["pause", "resume", "isPaused", "skip 7", "skip -1", "retry 8", "retry 2"],
+    });
+    // Each of the seven calls counted by method: one pause, one resume, one isPaused, two skips and two retries.
+    expect(invoked).toEqual({ pause: 1, resume: 1, isPaused: 1, skip: 2, retry: 2 });
+    // Each recorded method is another function than the planted one it wraps and shows, to String(), the planted method's text, and so does each method of a record made over this record (wb-3121 cut #2, R-B752): five texts.
+    const overRecord = recordedSurface(recorded, [], noInvocations());
+    expect({
+      wrapped: CONTROL_METHODS.map(method => recorded[method] !== surface[method]),
+      shown: CONTROL_METHODS.map(method => String(recorded[method])),
+      shownOverRecord: CONTROL_METHODS.map(method => String(overRecord[method])),
+      texts: new Set(CONTROL_METHODS.map(method => String(surface[method]))).size,
+    }).toEqual({
+      wrapped: [true, true, true, true, true],
+      shown: CONTROL_METHODS.map(method => String(surface[method])),
+      shownOverRecord: CONTROL_METHODS.map(method => String(surface[method])),
+      texts: 5,
+    });
+    // A second plant whose isPaused returns false: the record holds the value the planted method returned, not a constant.
+    const unpausedLog: string[] = [];
+    const unpausedCalls: string[] = [];
+    const unpausedInvoked = noInvocations();
+    const unpaused = recordedSurface(
+      {
+        ...surface,
+        isPaused: () => {
+          unpausedLog.push("isPaused");
+          return false;
+        },
+      },
+      unpausedCalls,
+      unpausedInvoked,
+    );
+    expect({ value: unpaused.isPaused(), calls: unpausedCalls, planted: unpausedLog }).toEqual({ value: false, calls: ["isPaused() = false"], planted: ["isPaused"] });
+    expect(unpausedInvoked).toEqual({ pause: 0, resume: 0, isPaused: 1, skip: 0, retry: 0 });
+  });
+
+  it("CALL-THROUGH-UNSHOWN recordedSurface over five more plants: each of the five methods, called once on a plant that reads that method's count and the record's last entry and then throws, is counted and recorded before the plant runs (each plant reads 1 and its own call's entry), its throw reaches the caller and its entry stays without a value; skip and retry, each called with a Symbol, an object whose Symbol.toPrimitive throws, a proxy each of whose traps throws and a function, call the plant once with that same argument, return its value and are recorded as Symbol(gate), <object>, <object> and <function>; isPaused, skip and retry, each over plants returning that Symbol, that object and that proxy, return that same value and record it the same way", () => {
+    // Values a string conversion would run code of: converting the object runs its Symbol.toPrimitive, and every trap of the proxy throws.
+    const gate = Symbol("gate");
+    const ranPrimitive = (): never => {
+      throw new Error("Symbol.toPrimitive ran");
+    };
+    const primitiveThrows = { [Symbol.toPrimitive]: ranPrimitive };
+    const ranTrap = (): never => {
+      throw new Error("a proxy trap ran");
+    };
+    const trapsThrow = new Proxy(
+      {},
+      {
+        get: ranTrap,
+        has: ranTrap,
+        ownKeys: ranTrap,
+        getOwnPropertyDescriptor: ranTrap,
+        getPrototypeOf: ranTrap,
+        setPrototypeOf: ranTrap,
+        defineProperty: ranTrap,
+        deleteProperty: ranTrap,
+        set: ranTrap,
+        isExtensible: ranTrap,
+        preventExtensions: ranTrap,
+      },
+    );
+    const plainFunction = (): number => 0;
+
+    // A plant whose every method reads that method's count and the record's last entry, then throws: each call is counted and recorded before the plant runs.
+    const thrownInvoked = noInvocations();
+    const thrownCalls: string[] = [];
+    const read: string[] = [];
+    const thrower =
+      (method: ControlMethod) =>
+      (): never => {
+        read.push(`${thrownInvoked[method]} ${thrownCalls.at(-1)}`);
+        throw new Error(`planted ${method} threw`);
+      };
+    const throwing = recordedSurface(
+      { pause: thrower("pause"), resume: thrower("resume"), isPaused: thrower("isPaused"), skip: thrower("skip"), retry: thrower("retry") },
+      thrownCalls,
+      thrownInvoked,
+    );
+    expect(() => throwing.pause()).toThrow("planted pause threw");
+    expect(() => throwing.resume()).toThrow("planted resume threw");
+    expect(() => throwing.isPaused()).toThrow("planted isPaused threw");
+    expect(() => throwing.skip(0)).toThrow("planted skip threw");
+    expect(() => throwing.retry(1)).toThrow("planted retry threw");
+    expect({ read, invoked: thrownInvoked, calls: thrownCalls }).toEqual({
+      read: ["1 pause()", "1 resume()", "1 isPaused()", "1 skip(0)", "1 retry(1)"],
+      invoked: { pause: 1, resume: 1, isPaused: 1, skip: 1, retry: 1 },
+      calls: ["pause()", "resume()", "isPaused()", "skip(0)", "retry(1)"],
+    });
+
+    // A plant whose skip and retry keep each argument they receive: each argument reaches it once, itself.
+    const argumentInvoked = noInvocations();
+    const argumentCalls: string[] = [];
+    const received: unknown[] = [];
+    const keeping = recordedSurface(
+      {
+        pause: () => {},
+        resume: () => {},
+        isPaused: () => false,
+        skip: index => {
+          received.push(index);
+          return true;
+        },
+        retry: index => {
+          received.push(index);
+          return false;
+        },
+      },
+      argumentCalls,
+      argumentInvoked,
+    );
+    const argumentsSent: readonly unknown[] = [gate, primitiveThrows, trapsThrow, plainFunction];
+    const argumentValues = [...argumentsSent.map(argument => keeping.skip(argument as never)), ...argumentsSent.map(argument => keeping.retry(argument as never))];
+    expect({
+      values: argumentValues,
+      // Compared by identity alone: printing the proxy would run its traps.
+      same: received.map((argument, k) => argument === argumentsSent[k % argumentsSent.length]),
+      invoked: argumentInvoked,
+      calls: argumentCalls,
+    }).toEqual({
+      values: [true, true, true, true, false, false, false, false],
+      same: [true, true, true, true, true, true, true, true],
+      invoked: { pause: 0, resume: 0, isPaused: 0, skip: 4, retry: 4 },
+      calls: [
+        "skip(Symbol(gate)) = true",
+        "skip(<object>) = true",
+        "skip(<object>) = true",
+        "skip(<function>) = true",
+        "retry(Symbol(gate)) = false",
+        "retry(<object>) = false",
+        "retry(<object>) = false",
+        "retry(<function>) = false",
+      ],
+    });
+
+    // For each of those values a plant whose isPaused, skip and retry all return it: each comes back itself and is recorded the same way.
+    const valueInvoked = noInvocations();
+    const valueCalls: string[] = [];
+    const valuesSent: readonly unknown[] = [gate, primitiveThrows, trapsThrow];
+    const returned = valuesSent.flatMap(value => {
+      const returning = recordedSurface({ pause: () => {}, resume: () => {}, isPaused: () => value as never, skip: () => value as never, retry: () => value as never }, valueCalls, valueInvoked);
+      return [returning.isPaused(), returning.skip(4), returning.retry(5)].map(back => back === value);
+    });
+    expect({ same: returned, invoked: valueInvoked, calls: valueCalls }).toEqual({
+      same: [true, true, true, true, true, true, true, true, true],
+      invoked: { pause: 0, resume: 0, isPaused: 3, skip: 3, retry: 3 },
+      calls: [
+        "isPaused() = Symbol(gate)",
+        "skip(4) = Symbol(gate)",
+        "retry(5) = Symbol(gate)",
+        "isPaused() = <object>",
+        "skip(4) = <object>",
+        "retry(5) = <object>",
+        "isPaused() = <object>",
+        "skip(4) = <object>",
+        "retry(5) = <object>",
+      ],
+    });
+  });
+
+  it("CALL-THROUGH-LIVE callThrough over planted runners: a recorder made and never invoked counts nothing; each invocation counts one run, each surface a run hands onControl counts one surface (none, one or two of them) and reaches the caller's onControl wrapped, a skip on it counted and recorded in that run's record (0, 1 and 2 skips) and passed on to the planted surface, and the result each run settles with is kept, the same object the recorder's promise resolves with", async () => {
+    const planted: string[] = [];
+    const surface: WorkflowControl = {
+      pause: () => {
+        planted.push("pause");
+      },
+      resume: () => {
+        planted.push("resume");
+      },
+      isPaused: () => false,
+      skip: index => {
+        planted.push(`skip ${index}`);
+        return index === 3;
+      },
+      retry: () => false,
+    };
+    // The planted runs never reach the host; the experiment's options type requires one.
+    const host: WorkflowHost = { spawnAgent: async () => ({ ok: false, error: "planted host: no agent is run" }), abortAgent: () => {} };
+    const resultOf = (value: string): WorkflowRunResult => ({
+      status: "completed",
+      meta: { name: "planted", description: "planted run" },
+      value,
+      progress: [],
+      agentCount: 0,
+      replayedCount: 0,
+      replayedNodeCount: 0,
+      reconciledNodeCount: 0,
+    });
+    /** A planted run: it hands onControl the planted surface `handed` times, then settles with the next of `results`. */
+    const plantedRun =
+      (handed: number, results: WorkflowRunResult[]): ParkedRunner =>
+      async options => {
+        for (let k = 0; k < handed; k += 1) options.onControl?.(surface);
+        const result = results.shift();
+        if (result === undefined) throw new Error("planted run: no result left");
+        return result;
+      };
+
+    // Made and never invoked: nothing is counted.
+    const idle = newRecord();
+    const neverInvoked = callThrough(idle, plantedRun(1, [resultOf("idle")]));
+    expect({ runner: typeof neverInvoked, record: idle }).toEqual({
+      runner: "function",
+      record: { runs: 0, surfaces: 0, results: [], invoked: { pause: 0, resume: 0, isPaused: 0, skip: 0, retry: 0 }, calls: [], aborts: 0 },
+    });
+
+    // One invocation each, of runs that hand onControl none, one or two surfaces; each received surface is then called once.
+    const readOne = async (handed: number) => {
+      const record = newRecord();
+      const result = resultOf(`handed ${handed}`);
+      const received: WorkflowControl[] = [];
+      const resolved = await callThrough(record, plantedRun(handed, [result]))({ script: "", host, onControl: control => { received.push(control); } });
+      for (const control of received) control.skip(3);
+      return {
+        runs: record.runs,
+        surfaces: record.surfaces,
+        kept: record.results.length === 1 && record.results[0] === result,
+        resolved: resolved === result,
+        received: received.length,
+        wrapped: received.every(control => control !== surface),
+        invoked: { ...record.invoked },
+        calls: [...record.calls],
+      };
+    };
+    const none = { pause: 0, resume: 0, isPaused: 0, skip: 0, retry: 0 };
+    expect([await readOne(0), await readOne(1), await readOne(2)]).toEqual([
+      { runs: 1, surfaces: 0, kept: true, resolved: true, received: 0, wrapped: true, invoked: none, calls: [] },
+      { runs: 1, surfaces: 1, kept: true, resolved: true, received: 1, wrapped: true, invoked: { ...none, skip: 1 }, calls: ["skip(3) = true"] },
+      { runs: 1, surfaces: 2, kept: true, resolved: true, received: 2, wrapped: true, invoked: { ...none, skip: 2 }, calls: ["skip(3) = true", "skip(3) = true"] },
+    ]);
+    expect(planted).toEqual(["skip 3", "skip 3", "skip 3"]);
+
+    // One recorder invoked twice: two runs, two surfaces, both results kept in the order they settled.
+    const twice = newRecord();
+    const first = resultOf("first");
+    const second = resultOf("second");
+    const runner = callThrough(twice, plantedRun(1, [first, second]));
+    const settled = [await runner({ script: "", host }), await runner({ script: "", host })];
+    expect({ runs: twice.runs, surfaces: twice.surfaces, kept: twice.results.length === 2 && twice.results[0] === first && twice.results[1] === second, resolved: settled[0] === first && settled[1] === second }).toEqual({
+      runs: 2,
+      surfaces: 2,
+      kept: true,
+      resolved: true,
+    });
+  });
+
+  it("SETTLED-RUN settledRun over planted results: their status and value, and FinalRow's four fields from the last workflow_agent entry of the target's row, its later entry over its earlier one and never another row's later entry or a workflow_node entry carrying the target's index (attempt 1, reason null and skipped false for an entry carrying none of them), and finalRow undefined when the log holds no agent entry of that row", () => {
+    const resultWith = (progress: WorkflowRunResult["progress"]): WorkflowRunResult => ({
+      status: "failed",
+      meta: { name: "planted", description: "planted run" },
+      value: "planted value",
+      progress,
+      agentCount: 3,
+      replayedCount: 0,
+      replayedNodeCount: 0,
+      reconciledNodeCount: 0,
+    });
+    const agentRow = (index: number, state: WorkflowEntryState, more: Partial<WorkflowAgentEntry> = {}): WorkflowAgentEntry => ({ type: "workflow_agent", index, label: `row ${index}`, state, ...more });
+    const targetFirst = agentRow(1, "start");
+    const targetLast = agentRow(1, "done", { skipped: true, attempt: 2, lastAttemptReason: "user-retry" });
+    // After the target's last entry: a later row's entry, and a node entry that carries the target's index.
+    const laterRow = agentRow(2, "error", { attempt: 3, lastAttemptReason: "stalled" });
+    const nodeAtTarget: WorkflowRunResult["progress"][number] = { type: "workflow_node", index: 1, callId: 0, capabilityId: "planted.read", label: "node 1", state: "error" };
+    expect(settledRun(resultWith([agentRow(0, "done"), targetFirst, targetLast, laterRow, nodeAtTarget]), 1)).toEqual({
+      runStatus: "failed",
+      scriptValue: "planted value",
+      finalRow: { state: "done", skipped: true, attempt: 2, reason: "user-retry" },
+    });
+    expect(settledRun(resultWith([targetFirst, laterRow, nodeAtTarget]), 1).finalRow).toEqual({ state: "start", skipped: false, attempt: 1, reason: null });
+    expect(settledRun(resultWith([agentRow(0, "done"), laterRow, nodeAtTarget]), 1).finalRow).toBeUndefined();
+  });
+
+  it("WITNESS-LIVE witnessed over planted experiments: while one runs, at its start and a turn later, runWorkflow read through this suite's own import is not the runtime's own function but, at each read of each experiment, the one function the export held when this file's static imports had been evaluated, with the runtime's own function's name, length and String() (the runtime's own export being back before any case runs), and a script-only run made through it counts one run, hands one surface, a skip on which is counted and recorded as skip(3) = false, whose five methods show, to String(), the text of the methods of the surface a run no witness reads hands, and keeps its result; an experiment making three such runs one after another counts three runs and three surfaces, keeps the three results in the order they settled and records skip(3), skip(4) and skip(5), each = false, in one record; a fresh witness of an experiment that makes no run counts nothing; in each of these experiments the replacement's call log holds as many calls as the runs the witness counted; once the experiment settles, and once it throws (the throw reaching the caller), runWorkflow is the runtime's own function again, and a run made then lands in no witness, nor does a run made through the function the export held at this file's imports outside a witness (neither in the record of the experiment before it nor in the call log of the one after it)", async () => {
+    const own = runWorkflow;
+    // The planted run never reaches the host; runWorkflow's options type requires one.
+    const host: WorkflowHost = { spawnAgent: async () => ({ ok: false, error: "planted host: no agent is run" }), abortAgent: () => {} };
+    const script = 'export const meta = { name: "witness-live", description: "a script-only planted run" };\nreturn 7;';
+    let atStart: unknown;
+    let afterAwait: unknown;
+    let witnessedText: readonly string[] = [];
+    const one = await witnessed(async () => {
+      atStart = runWorkflow;
+      // A turn later the export is still replaced: the witness holds for as long as the experiment runs.
+      await Promise.resolve();
+      afterAwait = runWorkflow;
+      const skipped: boolean[] = [];
+      const result = await runWorkflow({
+        script,
+        host,
+        onControl: control => {
+          witnessedText = CONTROL_METHODS.map(method => String(control[method]));
+          skipped.push(control.skip(3));
+        },
+      });
+      return { result, skipped };
+    });
+    expect({
+      replaced: [atStart !== own, afterAwait !== own],
+      restored: runWorkflow === own,
+      runs: one.witness.runs,
+      surfaces: one.witness.surfaces,
+      kept: one.witness.results.length === 1 && one.witness.results[0] === one.value.result,
+      value: one.value.result.value,
+      skipped: one.value.skipped,
+      invoked: one.witness.invoked,
+      calls: one.witness.calls,
+      aborts: one.witness.aborts,
+    }).toEqual({
+      replaced: [true, true],
+      restored: true,
+      runs: 1,
+      surfaces: 1,
+      kept: true,
+      value: 7,
+      skipped: [false],
+      invoked: { pause: 0, resume: 0, isPaused: 0, skip: 1, retry: 0 },
+      calls: ["skip(3) = false"],
+      aborts: 0,
+    });
+    // An experiment that makes three runs through the export, one after another: the one record reads each of them (each run counted, each surface wrapped, each result kept, each call recorded in call order).
+    const threeAt: unknown[] = [];
+    const three = await witnessed(async () => {
+      const results: WorkflowRunResult[] = [];
+      for (const index of [3, 4, 5]) {
+        threeAt.push(runWorkflow);
+        results.push(
+          await runWorkflow({
+            script,
+            host,
+            onControl: control => {
+              control.skip(index);
+            },
+          }),
+        );
+      }
+      return results;
+    });
+    expect({
+      runs: three.witness.runs,
+      surfaces: three.witness.surfaces,
+      kept: three.witness.results.length === 3 && three.witness.results.every((result, k) => result === three.value[k]),
+      values: three.value.map(result => result.value),
+      invoked: three.witness.invoked,
+      calls: three.witness.calls,
+      aborts: three.witness.aborts,
+    }).toEqual({
+      runs: 3,
+      surfaces: 3,
+      kept: true,
+      values: [7, 7, 7],
+      invoked: { pause: 0, resume: 0, isPaused: 0, skip: 3, retry: 0 },
+      calls: ["skip(3) = false", "skip(4) = false", "skip(5) = false"],
+      aborts: 0,
+    });
+    // An experiment that makes no run: its witness counts nothing.
+    const idle = await witnessed(async () => "no run");
+    expect({ value: idle.value, witness: idle.witness }).toEqual({ value: "no run", witness: newRecord() });
+    // An experiment that throws: the throw reaches the caller, and the runtime's own function is back.
+    await expect(
+      witnessed(async () => {
+        throw new Error("planted experiment threw");
+      }),
+    ).rejects.toThrow("planted experiment threw");
+    const after = await runWorkflow({ script, host });
+    expect({ restored: runWorkflow === own, value: after.value, earlierRuns: [one.witness.runs, idle.witness.runs] }).toEqual({ restored: true, value: 7, earlierRuns: [1, 0] });
+    expect(three.witness.runs).toBe(3);
+    // The export each experiment read, at each read, is one function, the one the export held when this file's static imports were evaluated, and not the runtime's own; and the surface the witnessed run handed shows, to String(), the text of each of the five methods of the surface a run no witness reads hands, five texts (wb-3121 cut #2, R-B752).
+    let ownText: readonly string[] = [];
+    await runWorkflow({
+      script,
+      host,
+      onControl: control => {
+        ownText = CONTROL_METHODS.map(method => String(control[method]));
+      },
+    });
+    expect({
+      reads: [atStart, afterAwait, ...threeAt].map(read => read === EXPORT_AT_IMPORTS),
+      atImportsIsOwn: EXPORT_AT_IMPORTS === own,
+      beforeCasesIsOwn: [EXPORT_BEFORE_CASES === own, WITNESS_EXPORT.own === own],
+      runner: [EXPORT_AT_IMPORTS.name, EXPORT_AT_IMPORTS.length, String(EXPORT_AT_IMPORTS)],
+      shown: witnessedText,
+      texts: new Set(ownText).size,
+    }).toEqual({ reads: [true, true, true, true, true], atImportsIsOwn: false, beforeCasesIsOwn: [true, true], runner: [own.name, own.length, String(own)], shown: ownText, texts: 5 });
+    // A run made through that function itself outside a witness (a reference to runWorkflow taken at this file's imports) answers as the runtime's own and lands in no record: neither in the record of the experiment before it nor in the call log of the one after it (wb-3121 cut #2).
+    const before = await witnessed(async () => "no run");
+    const outside = await EXPORT_AT_IMPORTS({ script, host });
+    const next = await witnessed(async () => "no run");
+    expect({ value: outside.value, before: before.witness, next: next.witness }).toEqual({ value: 7, before: newRecord(), next: newRecord() });
+  });
+
+  it("GRID-NOISE on each of the three grids every reading's 17 visits after its first are, in NOISE's order, that first visit under each profile: the places of the NOISE_FIELDS that grid lists hold the profile's values, every other place the first visit's (Object.is), with the same keys; READING_PLACES reads each place Object.keys finds; the same reader flags eight planted grids", { timeout: GRID_TIMEOUT }, () => {
+    // The places the reader reads are the keys a reading holds (its own, and its plan's, authorizations' and sdkStarts'), each read where it is.
+    expect(READING_PLACES.map(([place, read]) => [place, read(DISTINCT_READING)])).toEqual(placesByKeys(DISTINCT_READING));
+    expect(new Set(placesByKeys(DISTINCT_READING).map(([, value]) => value)).size).toBe(READING_PLACES.length);
+    expect([noiseTally(seamGrid, NOISE_FIELDS.seam), noiseTally(skipOracleGrid, NOISE_FIELDS.skipOracle), noiseTally(retryOracleGrid, NOISE_FIELDS.retryOracle)]).toEqual([
+      { visits: 110_592 * (1 + NOISE.length), wrong: 0, first: [] },
+      { visits: 19_584 * (1 + NOISE.length), wrong: 0, first: [] },
+      { visits: 8_192 * (1 + NOISE.length), wrong: 0, first: [] },
+    ]);
+    // Liveness: the reader, over planted grids that apply the profiles otherwise, counts every visit they apply wrongly.
+    const all = NOISE_FIELDS.seam;
+    const read = (plant: (reading: ParkedObservation, noise: Noise, k: number) => ParkedObservation) => {
+      const { visits, wrong } = noiseTally(plantedNoiseGrid(plant), all);
+      return `${visits}:${wrong}`;
+    };
+    expect({
+      applied: read((reading, noise) => seamNoise(reading, noise)),
+      oneProfile: read(reading => seamNoise(reading, NOISE[0])),
+      reversed: read((reading, _noise, k) => seamNoise(reading, NOISE[NOISE.length - 1 - k])),
+      fieldKept: read((reading, noise) => ({ ...seamNoise(reading, noise), finalRow: reading.finalRow })),
+      fieldMore: read((reading, noise) => ({ ...seamNoise(reading, noise), controlAccepted: !reading.controlAccepted })),
+      keyMore: read((reading, noise) => strayKey(seamNoise(reading, noise), "reading")),
+      planKeyMore: read((reading, noise) => strayKey(seamNoise(reading, noise), "plan")),
+      authorizationsKeyMore: read((reading, noise) => strayKey(seamNoise(reading, noise), "authorizations")),
+      sdkStartsKeyMore: read((reading, noise) => strayKey(seamNoise(reading, noise), "sdkStarts")),
+    }).toEqual({
+      applied: "36:0",
+      oneProfile: "36:32",
+      reversed: "36:32",
+      fieldKept: "36:34",
+      fieldMore: "36:34",
+      keyMore: "36:34",
+      planKeyMore: "36:34",
+      authorizationsKeyMore: "36:34",
+      sdkStartsKeyMore: "36:34",
+    });
   });
 });
