@@ -2,28 +2,36 @@
  * wb-mit9 [MNI-2026-11-09 P00b]: the judges of the historical requirement status ledger (EAT-R202) and the re-pin record
  * (EAT-R201) of the mechanical-native-interoperability-2026-11-09 program. The requirement text is
  * docs/workbench/programs/mechanical-native-interoperability-2026-11-09/requirements/ATOMIC-REQUIREMENTS.md at pi-subagents
- * master 18b016b2b3e4efd947d1afc817d5f37bd75952bc (blob 1fbe1b8e4eff; that program tree is on master only at this base).
+ * master 18b016b2b3e4efd947d1afc817d5f37bd75952bc (blob 1fbe1b8e4eff; master only at the claim base).
  *
  * The committed data are test/fixtures/mechanical-historical-status-ledger.json (one row per EAT-R001..EAT-R200) and
  * test/fixtures/mechanical-repin-record.json. test/workbench-mechanical-status-ledger.test.ts runs these judges over both
- * files, over the repository tree and over the Beads export, and feeds each judge the planted inputs it must refuse.
+ * files, over the repository tree and over the Beads export, and feeds each judge the planted inputs it must refuse; the
+ * census leg test/workbench-mechanical-status-ledger.census.ts judges the ledger's tested forms over the gate's own test
+ * report (wb-u62 report mode).
  *
  * Pure node: no src/ or dist/ import. The judges are pure functions of their inputs; only readBeadExport (through
  * qa/workbench/tracker-export.mjs), treeReader and the CLI touch the file system, and none of them writes.
  *
- * WHAT THE JUDGES READ. ledgerFindings reads a ledger, a map of Beads records (id -> title, text, parent) and a reader of
- * repository files. repinFindings reads a re-pin record. staleRepin compares a record with a measurement of the same refs.
- * Each finding is one string that starts with its rule id (L-* for the ledger, R-* for the record); no finding means the
- * input passes every rule listed at that function. NOT CLAIMED: that a row's class is the true state of the program (the
- * class is the ledger author's reading of the receipts, tests and Beads records the row cites; the judges check that each
- * cited anchor exists, not that it proves the class); a re-run of any cited test; the requirement titles against the master
- * documents (those trees are not on trunk); any Beads state beyond the export files this module reads.
+ * WHAT THE JUDGES READ. ledgerFindings reads a ledger, a map of Beads records (id -> title, text, parent), a reader of
+ * repository files and a reader of rendered markdown sections (sectionReader over docsSection of test/helpers/census.ts,
+ * the program's one docs reader). repinFindings reads a re-pin record. staleRepin compares a record with a measurement of
+ * the same refs. Each finding is one string that starts with its rule id (L-* for the ledger, R-* for the record); no
+ * finding means the input passes every rule listed at that function, read as that list words it.
+ *
+ * NOT CLAIMED by these judges: that a row's class is the true state of the program (the class is the ledger author's
+ * reading of the receipts, tests and Beads records the row cites); that a tested form is a case the default tier registers,
+ * runs, passes or asserts (no judge here reads a case; the census leg does, in report mode); that an anchor proves the
+ * class it supports; that a markdown anchor is visible anywhere but in the rendered text of its named section; anything a
+ * raw-text anchor of a file that is not markdown, or of a Beads record, means beyond its bytes being present; a re-run of
+ * any cited test; the requirement titles against the master documents (those trees are not on trunk); any Beads state
+ * beyond the export files this module reads.
  *
  * CLI:
  *   node qa/workbench/mechanical-status-ledger.mjs [--root <dir>]
- * judges the two committed files under <dir> (default: the repository holding this module) and prints one JSON object
- * {ledger: [...findings], record: [...findings]}; exit 0 when both lists are empty, 1 otherwise, 2 on a usage error or an
- * unreadable input.
+ * judges the two committed files under <dir> (default: the repository holding this module) with the docs reader of the
+ * test/helpers/census.ts beside this module, and prints one JSON object {ledger: [...findings], record: [...findings]};
+ * exit 0 when both lists are empty, 1 otherwise, 2 on a usage error or an unreadable input.
  */
 
 import { readFileSync } from "node:fs";
@@ -113,22 +121,40 @@ function strings(value, at) {
   return [];
 }
 
+/** @param {unknown} value @returns {value is {heading: string, depth: number, parents: string[]}} */
+function isSection(value) {
+  return (
+    isObject(value) &&
+    isText(value.heading) &&
+    Number.isInteger(value.depth) &&
+    /** @type {number} */ (value.depth) >= 1 &&
+    /** @type {number} */ (value.depth) <= 6 &&
+    Array.isArray(value.parents) &&
+    value.parents.every(isText)
+  );
+}
+
 /**
- * An evidence or source item: {path, anchor} names a repository file holding the anchor text; {bead, anchor} names a Beads
- * record whose description or notes hold it.
- * @param {unknown} item @param {string} where @param {Map<string, {title: string, text: string, parent: string | null}>} beads
- * @param {(path: string) => string | null} readFile @returns {string[]}
+ * An evidence or source item: {path, section, anchor} names a markdown file and one of its sections, whose rendered text
+ * holds the anchor; {path, anchor} names any other repository file, whose raw text holds it; {bead, anchor} names a Beads
+ * record whose description or notes hold it as raw text.
+ * @param {unknown} item @param {string} where @param {LedgerContext} context @returns {string[]}
  */
-function anchorFindings(item, where, beads, readFile) {
+function anchorFindings(item, where, context) {
   if (!isObject(item) || !isText(item.anchor)) return [`L-EVIDENCE: ${where} has no anchor`];
   const anchor = /** @type {string} */ (item.anchor);
   if (isText(item.path)) {
-    const text = readFile(/** @type {string} */ (item.path));
-    if (text === null) return [`L-EVIDENCE: ${where} names ${item.path}, which the tree does not hold`];
-    return text.includes(anchor) ? [] : [`L-EVIDENCE: ${where} anchor not found in ${item.path}: ${anchor}`];
+    const path = /** @type {string} */ (item.path);
+    const text = context.readFile(path);
+    if (text === null) return [`L-EVIDENCE: ${where} names ${path}, which the tree does not hold`];
+    if (!path.endsWith(".md")) return text.includes(anchor) ? [] : [`L-EVIDENCE: ${where} anchor not found in ${path}: ${anchor}`];
+    if (!isSection(item.section)) return [`L-EVIDENCE: ${where} names the markdown file ${path} without a section (heading, depth and parent headings)`];
+    const section = context.readSection(text, item.section);
+    if (!section.ok) return [`L-EVIDENCE: ${where} section of ${path} is not bound: ${section.why}`];
+    return section.text.includes(anchor) ? [] : [`L-EVIDENCE: ${where} anchor not found in the rendered section "${item.section.heading}" of ${path}: ${anchor}`];
   }
   if (isText(item.bead)) {
-    const record = beads.get(/** @type {string} */ (item.bead));
+    const record = context.beads.get(/** @type {string} */ (item.bead));
     if (record === undefined) return [`L-EVIDENCE: ${where} names ${item.bead}, which the Beads export does not hold`];
     return record.text.includes(anchor) ? [] : [`L-EVIDENCE: ${where} anchor not found in ${item.bead}: ${anchor}`];
   }
@@ -136,29 +162,65 @@ function anchorFindings(item, where, beads, readFile) {
 }
 
 /**
- * The ledger's rule groups, each finding prefixed with its rule:
- *  L-SCHEMA   the schema string, a rows array and the pins object;
+ * A reader of one rendered markdown section through docsSection(markdown, heading, depth, parents) of
+ * test/helpers/census.ts: the section binds when docsSection binds it, and its text is its heading, then the rendered text
+ * of each block docsSection returns (a list: its items' text; an HTML block, comments included, renders nothing).
+ * @param {(markdown: string, heading: string, depth: number, parents: readonly string[]) => {ok: boolean, why: string, blocks: ReadonlyArray<{kind: string, text?: string, items?: ReadonlyArray<{text: string}>}>}} docsSection
+ * @returns {(markdown: string, section: {heading: string, depth: number, parents: string[]}) => {ok: boolean, text: string, why: string}}
+ */
+export function sectionReader(docsSection) {
+  /** One reading per markdown text and section: a section is read again only when its file's text differs. @type {Map<string, Map<string, {ok: boolean, text: string, why: string}>>} */
+  const read = new Map();
+  return (markdown, section) => {
+    const key = JSON.stringify([section.heading, section.depth, section.parents]);
+    const known = read.get(markdown)?.get(key);
+    if (known !== undefined) return known;
+    const bound = docsSection(markdown, section.heading, section.depth, section.parents);
+    const blocks = bound.ok ? bound.blocks.map(block => (block.kind === "list" ? (block.items ?? []).map(entry => entry.text).join("\n") : (block.text ?? ""))) : [];
+    const reading = bound.ok ? { ok: true, text: [section.heading, ...blocks].join("\n"), why: "" } : { ok: false, text: "", why: bound.why };
+    if (!read.has(markdown)) read.set(markdown, new Map());
+    read.get(markdown)?.set(key, reading);
+    return reading;
+  };
+}
+
+/**
+ * @typedef {{
+ *   beads: Map<string, {title: string, text: string, parent: string | null}>,
+ *   readFile: (path: string) => string | null,
+ *   readSection: (markdown: string, section: {heading: string, depth: number, parents: string[]}) => {ok: boolean, text: string, why: string},
+ * }} LedgerContext
+ */
+
+/**
+ * The ledger's rule groups, each finding prefixed with its rule (each line says exactly what its rule reads):
+ *  L-SCHEMA   the schema string is LEDGER_SCHEMA; pins.pi.commit and pins.mw.commit are 40-hex; rows is an array of objects;
  *  L-IDS      the row ids are HISTORICAL_IDS exactly: each once, in order, none missing, none extra;
  *  L-EXPORT   every EAT-R001..EAT-R200 id that the description or notes of a GROUP_EPIC child in the Beads export names has a row;
  *  L-CLASS    each row's class is one of CLASSES;
  *  L-PIN      each row's pin.pi and pin.mw are 40-hex and equal the ledger's pins.pi.commit and pins.mw.commit;
  *  L-BEAD     each row's bead is "none" or a wb- id the Beads export holds, and that record's description or notes name the row id;
  *  L-GROUP    each row's group is a label of ledger.groups, whose bead it carries; each ledger group is a PLAN_GROUPS or EXTRA_GROUPS
- *             label, its bead's export title starts with its tag, and that tag is the [MWI-*] title tag of a GROUP_EPIC child in
- *             the export; every PLAN_GROUPS label has a ledger group (a GROUP_EPIC child filed later, with a tag no ledger group
- *             carries, is not read);
- *  L-TESTED   a tested row (and a tested control) names at least one tested form, and each form's file holds its case text;
- *  L-PARTIAL  a partial/inert row carries partialBecause with a text and a source anchor that resolves;
- *  L-BLOCKED  a blocked row carries blockedBy with a kind of BLOCKER_KINDS and a detail;
- *  L-EVIDENCE each row cites at least one evidence item and every item resolves;
- *  L-AC2      each AC2_ROWS row and the AC2_CONTROL control carry fixedForms and a pending sentence naming the parked per-agent
- *             skip or retry, its witness wb-9v02 and its pending status;
+ *             label, its bead is held by the export, its tag starts that bead's export title, and its tag is the [MWI-*] title
+ *             tag of a GROUP_EPIC child in the export; every PLAN_GROUPS label has a ledger group (a GROUP_EPIC child filed later,
+ *             with a tag no ledger group carries, is not read);
+ *  L-TESTED   a tested row (and a tested control) names at least one tested form, and each form is an object whose file is a
+ *             path the tree holds, whose title is a non-empty string and whose suite is an array of non-empty strings; no case
+ *             text is read here (the census leg judges each form in report mode);
+ *  L-PARTIAL  a partial/inert row carries partialBecause with a non-empty text and a source item that resolves as L-EVIDENCE reads one;
+ *  L-BLOCKED  a blocked row carries blockedBy with a kind of BLOCKER_KINDS and a non-empty detail;
+ *  L-EVIDENCE each row cites at least one evidence item and every item resolves: its anchor is a non-empty string; a path ending
+ *             in .md names a section (heading, depth 1-6, parent headings) that readSection binds and whose rendered text holds
+ *             the anchor; a path to any other file names a file the tree holds whose raw text holds it; a bead names a record the
+ *             export holds whose description or notes hold it as raw text; an item naming neither a path nor a bead is refused;
+ *  L-AC2      each AC2_ROWS row and the AC2_CONTROL control carry a non-empty fixedForms entry and a pending sentence holding the
+ *             words parked, skip or retry and pending (lower case, each a whole word) and the id wb-9v02, and the control exists;
  *  L-BYTES    no string of a row or control matches BYTES_CLAIM;
  *  L-SUMMARY  summary.rows and summary.byClass equal the rows; summary.planGroups is 25; summary.planGroupsComplete and
  *             planGroupsCompleteLabels equal the plan groups whose every row is already-implemented/tested;
- *  L-SUCCESSORS each successor is an EAT-R201..EAT-R310 id, once.
+ *  L-SUCCESSORS each row's successors is an array, each successor an EAT-R201..EAT-R310 id, none twice.
  * @param {unknown} ledger
- * @param {{beads: Map<string, {title: string, text: string, parent: string | null}>, readFile: (path: string) => string | null}} context
+ * @param {LedgerContext} context
  * @returns {string[]}
  */
 export function ledgerFindings(ledger, context) {
@@ -243,7 +305,7 @@ export function ledgerFindings(ledger, context) {
     if (row.class === PARTIAL) {
       const because = isObject(row.partialBecause) ? row.partialBecause : null;
       if (because === null || !isText(because.text)) findings.push(`L-PARTIAL: ${id} is partial/inert without a reason`);
-      else findings.push(...anchorFindings(because.source, `${id} partialBecause.source`, beads, readFile).map(f => f.replace("L-EVIDENCE", "L-PARTIAL")));
+      else findings.push(...anchorFindings(because.source, `${id} partialBecause.source`, context).map(f => f.replace("L-EVIDENCE", "L-PARTIAL")));
     }
     if (row.class === BLOCKED) {
       const blocker = isObject(row.blockedBy) ? row.blockedBy : null;
@@ -254,7 +316,7 @@ export function ledgerFindings(ledger, context) {
     const evidence = Array.isArray(row.evidence) ? row.evidence : [];
     if (evidence.length === 0) findings.push(`L-EVIDENCE: ${id} cites no evidence`);
     evidence.forEach((item, index) => {
-      findings.push(...anchorFindings(item, `${id} evidence[${index}]`, beads, readFile));
+      findings.push(...anchorFindings(item, `${id} evidence[${index}]`, context));
     });
 
     const successors = Array.isArray(row.successors) ? row.successors : [];
@@ -276,7 +338,9 @@ export function ledgerFindings(ledger, context) {
   const byId = new Map(rows.map(row => [row.id, row]));
   const control = controls.find(item => item.id === AC2_CONTROL);
   if (control === undefined) findings.push(`L-AC2: the ${AC2_CONTROL} control has no entry`);
-  for (const [where, entry] of [...AC2_ROWS.map(id => [id, byId.get(id)]), [`control ${AC2_CONTROL}`, control]]) {
+  /** @type {Array<[string, Record<string, unknown> | undefined]>} */
+  const ac2Entries = [...AC2_ROWS.map(id => /** @type {[string, Record<string, unknown> | undefined]} */ ([id, byId.get(id)])), [`control ${AC2_CONTROL}`, control]];
+  for (const [where, entry] of ac2Entries) {
     if (entry === undefined) continue;
     const fixed = Array.isArray(entry.fixedForms) ? entry.fixedForms.filter(isText) : [];
     if (fixed.length === 0) findings.push(`L-AC2: ${where} names no fixed, scoped form`);
@@ -311,34 +375,38 @@ export function ledgerFindings(ledger, context) {
   return findings;
 }
 
-/** @param {unknown[]} forms @param {string} where @param {(path: string) => string | null} readFile @returns {string[]} */
+/**
+ * The shape of each tested form; no case text is read (the census leg judges each form in report mode).
+ * @param {unknown[]} forms @param {string} where @param {(path: string) => string | null} readFile @returns {string[]}
+ */
 function formFindings(forms, where, readFile) {
+  /** @type {string[]} */
   const findings = [];
   forms.forEach((item, index) => {
-    if (!isObject(item) || !isText(item.file) || !isText(item.case)) {
-      findings.push(`L-TESTED: ${where} testedForms[${index}] lacks a file or a case`);
+    if (!isObject(item) || !isText(item.file) || !isText(item.title) || !Array.isArray(item.suite) || !item.suite.every(isText)) {
+      findings.push(`L-TESTED: ${where} testedForms[${index}] lacks a file, a title or a suite path`);
       return;
     }
-    const text = readFile(/** @type {string} */ (item.file));
-    if (text === null) findings.push(`L-TESTED: ${where} names ${item.file}, which the tree does not hold`);
-    else if (!text.includes(/** @type {string} */ (item.case))) findings.push(`L-TESTED: ${where} case not found in ${item.file}: ${item.case}`);
+    if (readFile(/** @type {string} */ (item.file)) === null) findings.push(`L-TESTED: ${where} names ${item.file}, which the tree does not hold`);
   });
   return findings;
 }
 
 /**
- * The record's rules, each finding prefixed with its rule:
- *  R-SCHEMA   the schema string and the pi, mw, beads and implicatedChanges members;
- *  R-SHA      every commit, tree and blob member anywhere in the record is 40 lower-case hex;
- *  R-REFS     pi.refs holds the default and the machine branch once each, each with a commit, a tree, a package name and version,
- *             a Beads export blob and a feedback tree; pi.mergeBase has a commit and a tree; mw.refs is non-empty and each ref
- *             has a commit, a tree and at least one package with a name and version;
- *  R-DEFAULT  certifiedDefault names the default branch and its ref's commit, and never the machine branch's commit while the
- *             machine branch holds commits the default branch lacks;
- *  R-BEADS    beads.store and at least one epic with a status and a children map;
- *  R-CHANGES  each implicated change has a class of CHANGE_CLASSES that agrees with its two ancestry flags (merged: both;
- *             machine-only: the machine branch only; proposed: the default branch only; historical: a role that historicalPins
- *             also names), and no commit is listed twice.
+ * The record's rules, each finding prefixed with its rule (each line says exactly what its rule reads):
+ *  R-SCHEMA   the record is an object whose schema string is RECORD_SCHEMA, with pi, mw and beads objects and an
+ *             implicatedChanges array;
+ *  R-SHA      every string member anywhere in the record whose key is commit, tree or blob is 40 lower-case hex;
+ *  R-REFS     pi.defaultBranch and pi.machineBranch are named; pi.refs holds a ref of each name exactly once, and each such ref
+ *             has a non-empty package name and version, a commit and a tree, a beadsExport.blob and a feedback.tree; pi.mergeBase
+ *             has a commit and a tree; mw.refs is non-empty and each ref has a commit, a tree and at least one package, every
+ *             package with a non-empty name and version;
+ *  R-DEFAULT  certifiedDefault's name is pi.defaultBranch and its commit is the default ref's commit; it is never the machine
+ *             ref's commit while divergence.machineOnlyCommits is not 0;
+ *  R-BEADS    beads.store is non-empty and beads.epics holds at least one epic, each with a non-empty status and a children object;
+ *  R-CHANGES  each implicated change has a class of CHANGE_CLASSES that agrees with its two ancestry flags (merged: both true;
+ *             machine-only: inDefault false and inMachine true; proposed: inDefault true and inMachine false; historical: a
+ *             non-empty role that historicalPins names for the same commit), and no commit is listed twice.
  * @param {unknown} record @returns {string[]}
  */
 export function repinFindings(record) {
@@ -428,8 +496,11 @@ export function repinFindings(record) {
 /**
  * EAT-R201 AC3: what changed between a record and a measurement of the same refs. The measurement lists, per side, the refs
  * with their commit and package versions: {pi: [{name, commit, package: {name, version}}], mw: [{name, commit, packages:
- * [{name, version}]}]}. Each change is one string; a ref the measurement lacks counts as changed. An empty list means the
- * record still pins the measured state; any entry means the cut's final-tree acceptance is invalid until a re-pin and a rerun.
+ * [{name, version}]}]}. Each change is one string: a record without pi and mw refs; per recorded ref, a ref the measurement
+ * lacks (not measured), a moved commit, and for Pi a changed package name or version, for MW each recorded package removed
+ * or at another version and each measured package added. An empty list means the record still pins the measured state; any
+ * entry means the cut's final-tree acceptance is invalid until a re-pin and a rerun. No ref is measured here: the caller
+ * supplies the measurement.
  * @param {unknown} record @param {{pi: Array<Record<string, unknown>>, mw: Array<Record<string, unknown>>}} measured @returns {string[]}
  */
 export function staleRepin(record, measured) {
@@ -463,7 +534,8 @@ export function staleRepin(record, measured) {
     const was = versions(ref.packages);
     const is = versions(now.packages);
     for (const [name, version] of was) {
-      if (is.get(name) !== version) changes.push(`mw ${ref.name}: package ${name}@${version} -> ${name}@${is.get(name)}`);
+      if (!is.has(name)) changes.push(`mw ${ref.name}: package ${name} removed`);
+      else if (is.get(name) !== version) changes.push(`mw ${ref.name}: package ${name}@${version} -> ${name}@${is.get(name)}`);
     }
     for (const name of is.keys()) if (!was.has(name)) changes.push(`mw ${ref.name}: package ${name} added`);
   }
@@ -508,7 +580,14 @@ export function treeReader(root) {
   };
 }
 
-function main(argv) {
+/** The docs reader of the test/helpers/census.ts beside this module (node strips its types when it loads it). */
+async function censusSectionReader() {
+  const census = await import("../../test/helpers/census.ts");
+  return sectionReader(census.docsSection);
+}
+
+/** @param {string[]} argv @returns {Promise<number>} */
+async function main(argv) {
   let root = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
   if (argv.length === 2 && argv[0] === "--root") root = argv[1];
   else if (argv.length !== 0) {
@@ -518,17 +597,23 @@ function main(argv) {
   let ledger;
   let record;
   let beads;
+  let readSection;
   try {
     ledger = JSON.parse(readFileSync(join(root, LEDGER_PATH), "utf8"));
     record = JSON.parse(readFileSync(join(root, RECORD_PATH), "utf8"));
     beads = readBeadExport(root);
+    readSection = await censusSectionReader();
   } catch (error) {
     process.stderr.write(`unreadable input: ${error instanceof Error ? error.message : String(error)}\n`);
     return 2;
   }
-  const verdict = { ledger: ledgerFindings(ledger, { beads, readFile: treeReader(root) }), record: repinFindings(record) };
+  const verdict = { ledger: ledgerFindings(ledger, { beads, readFile: treeReader(root), readSection }), record: repinFindings(record) };
   process.stdout.write(`${JSON.stringify(verdict)}\n`);
   return verdict.ledger.length === 0 && verdict.record.length === 0 ? 0 : 1;
 }
 
-if (process.argv[1] !== undefined && fileURLToPath(import.meta.url) === process.argv[1]) process.exitCode = main(process.argv.slice(2));
+if (process.argv[1] !== undefined && fileURLToPath(import.meta.url) === process.argv[1]) {
+  main(process.argv.slice(2)).then(code => {
+    process.exitCode = code;
+  });
+}

@@ -3,7 +3,7 @@
   "program": "mechanical-native-interoperability-2026-11-09",
   "bead": "wb-mit9",
   "requirement": "EAT-R201",
-  "measuredUtc": "2026-11-09T23:50:50Z",
+  "measuredUtc": "2026-11-10T02:05:56Z",
   "method": "git rev-parse, merge-base and merge-base --is-ancestor in the rig clone after a fetch of the machine branch; git ls-remote for both remotes; the MW tip read from a private depth-1 fetch; bd show and bd list --parent for the Beads statuses",
   "pi": {
     "repository": "pi-subagents",
@@ -12,26 +12,8 @@
     "refs": [
       {
         "name": "master",
-        "commit": "18b016b2b3e4efd947d1afc817d5f37bd75952bc",
-        "tree": "7d1261de66d427a830218aa50d66e7f88da7d6b5",
-        "package": {
-          "name": "@tintinweb/pi-subagents",
-          "version": "0.20.0"
-        },
-        "beadsExport": {
-          "path": ".beads/issues.jsonl",
-          "blob": "923daf60bbac24872cc8b49581d6a4aa8cdd6bb6"
-        },
-        "feedback": {
-          "path": "new-feedback",
-          "tree": "7aaffdeb53f608964a82610d3e65d808c5f256b7",
-          "files": 44
-        }
-      },
-      {
-        "name": "workbench/implementation-program",
-        "commit": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
-        "tree": "1a2ab608fc3cc00b6a2f2fc6a2b48bdaae76af01",
+        "commit": "0208b5f73aa61f6fd951e6d3a9c62d10559762f1",
+        "tree": "f12828872e8c491667e5412d8b255f4e0484e0d3",
         "package": {
           "name": "@tintinweb/pi-subagents",
           "version": "0.20.0"
@@ -42,22 +24,40 @@
         },
         "feedback": {
           "path": "new-feedback",
+          "tree": "7aaffdeb53f608964a82610d3e65d808c5f256b7",
+          "files": 44
+        }
+      },
+      {
+        "name": "workbench/implementation-program",
+        "commit": "d35bc9fe956eb8fcafd1f481d86c09d36cac3373",
+        "tree": "37f9b005c7287b404cadf421bd64e62efba02621",
+        "package": {
+          "name": "@tintinweb/pi-subagents",
+          "version": "0.20.0"
+        },
+        "beadsExport": {
+          "path": ".beads/issues.jsonl",
+          "blob": "a63da9dabb6ee8824cfdc83faf7c3390b98af3e3"
+        },
+        "feedback": {
+          "path": "new-feedback",
           "tree": "2d0933a26e1333d7410f44026d60bead75d16469",
           "files": 41
         }
       }
     ],
     "mergeBase": {
-      "commit": "524c225828a10357a9793918bae322c2d1eca0a4",
-      "tree": "1273922a47f32ce6549451e1caf9aa570224ab09"
+      "commit": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+      "tree": "1a2ab608fc3cc00b6a2f2fc6a2b48bdaae76af01"
     },
     "divergence": {
-      "defaultOnlyCommits": 34,
-      "machineOnlyCommits": 8
+      "defaultOnlyCommits": 35,
+      "machineOnlyCommits": 11
     },
     "certifiedDefault": {
       "name": "master",
-      "commit": "18b016b2b3e4efd947d1afc817d5f37bd75952bc"
+      "commit": "0208b5f73aa61f6fd951e6d3a9c62d10559762f1"
     }
   },
   "mw": {
@@ -65,8 +65,8 @@
     "refs": [
       {
         "name": "main",
-        "commit": "c9d0ed52ed4245d41ae2c7421d1eb059c67c1c5a",
-        "tree": "76c97faf2f3cee4d7ec57a84d4d56407d6e94bd8",
+        "commit": "15792622eb075bfab1cedb19c93309424ef0ce8d",
+        "tree": "f3960b5c14f4b4f471bdb6d218420dd31358f87f",
         "packages": [
           {
             "path": "package.json",
@@ -147,7 +147,7 @@
     "related": {
       "wb-ub94": "closed",
       "wb-7ak9": "closed",
-      "wb-3121": "in_progress"
+      "wb-3121": "closed"
     }
   },
   "historicalPins": [
@@ -180,6 +180,11 @@
       "side": "mw",
       "commit": "f7c0a9431d6cc36a15b409b1788c945ef86ad5e2",
       "role": "11-04 MW environment pin"
+    },
+    {
+      "side": "pi",
+      "commit": "0208b5f73aa61f6fd951e6d3a9c62d10559762f1",
+      "role": "continuity-14 master merge carrying landings 1079 and 1080 (the certified default tip at this re-pin)"
     }
   ],
   "implicatedChanges": [
@@ -341,28 +346,50 @@
     },
     {
       "commit": "1d1278f771333611f83251e7216a834d9685c37b",
-      "summary": "landing 1079: wb-1ht7 (not yet on master)",
-      "inDefault": false,
+      "summary": "landing 1079: wb-1ht7",
+      "inDefault": true,
       "inMachine": true,
-      "class": "machine-only"
+      "class": "merged"
     },
     {
       "commit": "d1b45b4ab32cef7f1b36618bfeb682056b8340ce",
-      "summary": "ledger hop closing wb-1ht7 (the base this cut was claimed on)",
-      "inDefault": false,
+      "summary": "ledger hop closing wb-1ht7 (the base cut #1 was claimed on)",
+      "inDefault": true,
       "inMachine": true,
-      "class": "machine-only"
+      "class": "merged"
     },
     {
       "commit": "08f3f2ec9877c06fb60da8eda7d4efc8f94b080f",
-      "summary": "landing 1080: wb-g464 (not yet on master)",
+      "summary": "landing 1080: wb-g464",
+      "inDefault": true,
+      "inMachine": true,
+      "class": "merged"
+    },
+    {
+      "commit": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
+      "summary": "ledger hop closing wb-g464 (the machine tip cut #1 merged)",
+      "inDefault": true,
+      "inMachine": true,
+      "class": "merged"
+    },
+    {
+      "commit": "0208b5f73aa61f6fd951e6d3a9c62d10559762f1",
+      "summary": "continuity-14: merge workbench/implementation-program (landing 1080) into master (the default tip at this re-pin)",
+      "inDefault": true,
+      "inMachine": false,
+      "class": "historical",
+      "role": "continuity-14 master merge carrying landings 1079 and 1080 (the certified default tip at this re-pin)"
+    },
+    {
+      "commit": "4e9d9cae044a5c7bc3bcc7fc46e3fe10d3eba29b",
+      "summary": "landing 1081: wb-3121 (the parked-dispatch witness follow-up of wb-9v02)",
       "inDefault": false,
       "inMachine": true,
       "class": "machine-only"
     },
     {
-      "commit": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
-      "summary": "ledger hop closing wb-g464 (machine tip, the base this cut merged before handoff)",
+      "commit": "d35bc9fe956eb8fcafd1f481d86c09d36cac3373",
+      "summary": "ledger hop closing wb-3121 (the machine tip this cut #2 merged)",
       "inDefault": false,
       "inMachine": true,
       "class": "machine-only"
