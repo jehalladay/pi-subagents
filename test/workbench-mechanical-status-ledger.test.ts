@@ -30,7 +30,7 @@
  *  - SL-CLASS: a class outside the three is refused (L-CLASS).
  *  - SL-PIN: a row pin.pi or pin.mw that is another 40-hex commit, and a row without pin, are refused (L-PIN).
  *  - SL-BEAD-FABRICATED, SL-BEAD-NOT-STRING, SL-BEAD-NONE, SL-BEAD-OTHER-GROUP: a bead id the export does not hold and a bead that is a number are refused by L-BEAD and L-GROUP (EAT-R202 AC3); the bead none is quiet; a bead the export holds that is not the row's group's bead is refused by L-GROUP alone.
- *  - SL-GROUP-UNMAPPED, SL-GROUP-EXPORT-ABSENT, SL-GROUP-EXPORT-TITLE: a row group label outside the 27 mapped labels is refused (EAT-R202 AC3); an export without the B-hx-evidence bead wb-f3wd is refused by L-GROUP and by L-BEAD for EAT-R057; an export title of wb-f3wd with text, a space, a tab or a line break before [MWI-hx-evidence], one whose tag is in lower case, lacks its closing bracket or runs longer ([MWI-hx-evidencex]), and an empty one are refused (L-GROUP).
+ *  - SL-GROUP-UNMAPPED, SL-GROUP-EXPORT-ABSENT, SL-GROUP-EXPORT-TITLE: a row group label outside the 27 mapped labels is refused (EAT-R202 AC3); an export without the B-hx-evidence bead wb-f3wd is refused by L-GROUP and by L-BEAD for EAT-R057; an export title of wb-f3wd with text, a space, a tab, a line break or a byte-order mark before [MWI-hx-evidence], one whose tag is in lower case, lacks its closing bracket or runs longer ([MWI-hx-evidencex]), and an empty one are refused (L-GROUP); the members of a space, a tab, a line break and a byte-order mark are planted each alone before the tag: the 17 space separators (Zs: U+0020, U+00A0, U+1680, U+2000..U+200A, U+202F, U+205F and U+3000), the tab U+0009, the line breaks U+000A, U+000B, U+000C, U+000D, U+0085, U+2028 and U+2029 and the pair U+000D U+000A, and the byte-order mark U+FEFF; one more case judges every member again and reads that table against the engine over every code point: its spaces are every Zs code point, its tab and line breaks every other White_Space code point and its byte-order mark the one code point String.prototype.trimStart strips outside White_Space, each once, so its single members are every White_Space code point and every code point trimStart strips.
  *  - SL-TESTED-NONE, SL-TESTED-NOT-TESTED, SL-TESTED-NOT-ARRAY, SL-TESTED-FORM, SL-TESTED-SUITE-EMPTY: a tested row with no tested form, a blocked row naming a form, testedForms that is not an array, and a form that is a string, null, has a white-space file, a number file, no title or a suite that is a string or holds an empty string or a number are refused (L-TESTED); a form whose suite is the empty array is quiet. No case text is read here.
  *  - SL-PARTIAL-NONE, SL-PARTIAL-TEXT, SL-PARTIAL-SOURCE, SL-PARTIAL-CARRIED: a partial/inert row without partialBecause or with a string there, with a reason text that is white space or a number, whose source anchor its receipt section does not hold or whose source is absent, and a tested row carrying partialBecause are refused (L-PARTIAL).
  *  - SL-BLOCKED-NONE, SL-BLOCKED-KIND, SL-BLOCKED-DETAIL, SL-BLOCKED-CARRIED: a blocked row without blockedBy or with a string there, with a kind outside the four, with a detail that is empty, white space or a number, and a tested row carrying blockedBy are refused (L-BLOCKED).
@@ -63,8 +63,10 @@
  * rulings of EAT-R203..EAT-R209, which this bead does not carry; Beads state outside the export files; that SL-LIVE stays
  * green over a later export (a bead anchor held only by the notes of a bead the export holds open or deferred is read again
  * from each later export, so a notes replace that drops it reds SL-LIVE once that export lands; the landing-order registry
- * names this file's reads, R-B761); any letter case folding beyond toLowerCase and any look-alike spelling of the type name
- * or of byte.
+ * names this file's reads, R-B761); that an export title of wb-f3wd is refused with one code point before [MWI-hx-evidence]
+ * that is neither printable text nor a member SL-GROUP-EXPORT-TITLE plants (a format character such as U+200B, whose name
+ * holds SPACE, or a control character outside White_Space), or with a run of two or more members other than the pair
+ * U+000D U+000A; any letter case folding beyond toLowerCase and any look-alike spelling of the type name or of byte.
  */
 
 import { createHash } from "node:crypto";
@@ -287,6 +289,31 @@ describe("wb-hhxs EAT-R202: L-SCHEMA, L-IDS, L-CLASS and L-PIN over planted ledg
   });
 });
 
+/** SL-GROUP-EXPORT-TITLE: the tag the group table names for B-hx-evidence, spelled here, never read from the judge. */
+const TITLE_TAG = "[MWI-hx-evidence]";
+/** SL-GROUP-EXPORT-TITLE: the 17 space separators (Zs) and the line breaks the PINNED line names, as code points. */
+const TITLE_SPACES: readonly number[] = [0x0020, 0x00a0, 0x1680, 0x2000, 0x2001, 0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x2007, 0x2008, 0x2009, 0x200a, 0x202f, 0x205f, 0x3000];
+const TITLE_LINE_BREAKS: readonly number[] = [0x000a, 0x000b, 0x000c, 0x000d, 0x0085, 0x2028, 0x2029];
+const codePointName = (point: number): string => `U+${point.toString(16).toUpperCase().padStart(4, "0")}`;
+/** One planted case row: its name (the item and the code points it plants) and the title with those code points before the tag. */
+const titlePlant = (item: string, points: readonly number[]): [string, string] => [`${item} ${points.map(codePointName).join(" ")} before the tag`, `${String.fromCodePoint(...points)}${TITLE_TAG} planted`];
+/** SL-GROUP-EXPORT-TITLE: every member of a space, a tab, a line break and a byte-order mark, each planted alone; the line break U+000D U+000A as a pair. */
+const TITLE_MEMBER_PLANTS: [string, string][] = [
+  ...TITLE_SPACES.map(point => titlePlant("a space", [point])),
+  titlePlant("a tab", [0x0009]),
+  ...TITLE_LINE_BREAKS.map(point => titlePlant("a line break", [point])),
+  titlePlant("a line break", [0x000d, 0x000a]),
+  titlePlant("a byte-order mark", [0xfeff]),
+];
+/** Every code point, read from the engine, whose one-code-point string `test` holds, by name in code point order. */
+const enginePoints = (test: (text: string) => boolean): string[] => {
+  const found: string[] = [];
+  for (let point = 0; point <= 0x10ffff; point++) {
+    if (test(String.fromCodePoint(point))) found.push(codePointName(point));
+  }
+  return found;
+};
+
 describe("wb-hhxs EAT-R202 AC3: L-BEAD and L-GROUP over planted ledgers and export records", () => {
   it("SL-BEAD-FABRICATED a bead id the export does not hold is refused by L-BEAD and L-GROUP", { timeout: BUDGET }, () => {
     expect(plant(ledger => (rowOf(ledger, "EAT-R005").bead = "wb-zz99"))).toEqual([
@@ -331,10 +358,41 @@ describe("wb-hhxs EAT-R202 AC3: L-BEAD and L-GROUP over planted ledgers and expo
     ["the tag in lower case", "[mwi-hx-evidence] planted"],
     ["the tag without its closing bracket", "[MWI-hx-evidence planted"],
     ["no text (an empty title)", ""],
+    ...TITLE_MEMBER_PLANTS,
   ])("SL-GROUP-EXPORT-TITLE an export title of wb-f3wd with %s is refused", { timeout: BUDGET }, (_name, title) => {
     const record = beads().get("wb-f3wd");
     if (record === undefined) throw new Error("the committed export holds no wb-f3wd");
     expect(plant(() => undefined, { beads: withBeads({ "wb-f3wd": { ...record, title } }) })).toEqual(["L-GROUP: the export title of wb-f3wd does not start with [MWI-hx-evidence]"]);
+  });
+
+  it("SL-GROUP-EXPORT-TITLE every member row judged again, and the member table read against the engine over every code point: its spaces every Zs code point, its tab and line breaks every other White_Space code point, its byte-order mark the one code point trimStart strips outside White_Space, its one pair U+000D U+000A", { timeout: BUDGET }, () => {
+    const record = beads().get("wb-f3wd");
+    if (record === undefined) throw new Error("the committed export holds no wb-f3wd");
+    const refusal = ["L-GROUP: the export title of wb-f3wd does not start with [MWI-hx-evidence]"];
+    const rows = TITLE_MEMBER_PLANTS.map(([name, title]) => ({
+      name,
+      item: name.slice(0, name.indexOf(" U+")),
+      points: [...title.slice(0, title.indexOf(TITLE_TAG))].map(char => codePointName(char.codePointAt(0) ?? -1)).join(" "),
+      findings: plant(() => undefined, { beads: withBeads({ "wb-f3wd": { ...record, title } }) }),
+    }));
+    const singles = (item: string): string[] => rows.filter(row => row.item === item && !row.points.includes(" ")).map(row => row.points);
+    const space = (text: string): boolean => /^\p{Zs}$/u.test(text);
+    const whiteSpace = (text: string): boolean => /^\p{White_Space}$/u.test(text);
+    expect({
+      findings: Object.fromEntries(rows.map(row => [row.name, row.findings])),
+      items: [...new Set(rows.map(row => row.item))],
+      spaces: singles("a space"),
+      tabAndLineBreaks: [...singles("a tab"), ...singles("a line break")].sort(),
+      byteOrderMark: singles("a byte-order mark"),
+      pairs: rows.filter(row => row.points.includes(" ")).map(row => `${row.item} ${row.points}`),
+    }).toEqual({
+      findings: Object.fromEntries(rows.map(row => [row.name, refusal])),
+      items: ["a space", "a tab", "a line break", "a byte-order mark"],
+      spaces: enginePoints(space),
+      tabAndLineBreaks: enginePoints(text => whiteSpace(text) && !space(text)),
+      byteOrderMark: enginePoints(text => text.trimStart() === "" && !whiteSpace(text)),
+      pairs: ["a line break U+000D U+000A"],
+    });
   });
 });
 
