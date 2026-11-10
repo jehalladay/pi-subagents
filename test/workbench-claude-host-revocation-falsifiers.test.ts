@@ -41,11 +41,21 @@
  *    dispatches the write fixture, through its registry under the grants and principal the host was built with, from a
  *    timer of 50 ms that it sets once the agent has settled, before the trial's own wait; at the quiescence point the
  *    write fixture has that one dispatch, carrying those grants.
+ *  - RECEIPT-ROWS: the rows this file registers (each title's leading id, as in PARK-REVOKE-GRANT) are exactly the rows
+ *    that the Rows lists of docs/workbench/receipts/wb-7wkb.md name for this file, read from every receipt line that
+ *    opens with this file's path in a code span, the cut #1 entry's line among them; and every row that a "The new rows
+ *    are" sentence of that receipt names is named by a Rows list of this file or of
+ *    test/worktree-process-kill-preservation.test.ts. The receipt is the anchor outside this file's literals (wb-7u0r):
+ *    a row removed from its case, the ROSTER and its header bullet together is still named there.
  *  - ROSTER: the tests this file registers are exactly the ROSTER titles, in order, each in run mode and none marked to
- *    fail, the ROSTER case registered last; and the leading ids of their titles, each once in order, are exactly the ids
- *    that open the bullets of this PINNED READER SET, read from this file's own source (an anchor outside its literals).
+ *    fail, the ROSTER case registered last; the leading ids of their titles, each once in order, are exactly the ids
+ *    that open the bullets of this PINNED READER SET, read from this file's own source (an anchor outside its literals);
+ *    and their rows are the rows the receipt's Rows lists name for this file, as RECEIPT-ROWS reads them, so that each
+ *    of the two cases holds the other to the receipt.
  * NOT CLAIMED by this file: a query() call, a dispatch or a beforeDispatch entry made after a trial's quiescence point
- * (from a longer timer, at a later call or event, at the test's teardown or in another process, for example);
+ * (from a longer timer, at a later call or event, at the test's teardown or in another process, for example); a hollow
+ * that also removes a row from a line of the receipt (standing rule 15 refuses a removed receipt line at the lane and at
+ * IDENTIFY); the receipt's case counts and every other sentence of it;
  * src/index.ts's own producer (its settings re-read and identity verification) and the registered workflow tools,
  * which reach this host only through the SDK module; the local-detached host and its basis() check; function authority
  * at the final dispatch boundary (test/workbench-function-authority.test.ts pins the standalone seam, and packet P03
@@ -88,6 +98,66 @@ function titleId(name: string): string {
   return /^'?([A-Z][A-Z0-9-]*)/.exec(name)?.[1] ?? name;
 }
 
+/** This file's path and its sibling suite's, as docs/workbench/receipts/wb-7wkb.md spells them in code spans. */
+const THIS_FILE = "test/workbench-claude-host-revocation-falsifiers.test.ts";
+const SIBLING_FILE = "test/worktree-process-kill-preservation.test.ts";
+/** wb-7u0r: the receipt of this file and its sibling, the anchor outside this file's literals that RECEIPT-ROWS reads. */
+const RECEIPT = new URL("../docs/workbench/receipts/wb-7wkb.md", import.meta.url);
+
+/** A registered title's row: its leading id, then the row id it.each quotes after that id, if any ("KILL-ROWS K1"). */
+function rowOf(name: string): string {
+  const match = /^'?([A-Z][A-Z0-9-]*)'?:? (?:'([A-Z][A-Z0-9-]*)')?/.exec(name);
+  if (match === null) return name;
+  return match[2] === undefined ? match[1] : `${match[1]} ${match[2]}`;
+}
+
+/** One item of a receipt Rows list as rows: "KILL-ROWS K1 to K5" (a range), "MUTANT-ROWS M-REMOVE and M-WIPE" or one id. */
+function rowsOfItem(item: string): string[] {
+  const [id, ...rest] = item.split(" ");
+  if (rest.length === 0) return [id];
+  const range = /^([A-Z]+)(\d+) to \1(\d+)$/.exec(rest.join(" "));
+  if (range === null) return rest.join(" ").split(" and ").map(member => `${id} ${member}`);
+  const from = Number(range[2]);
+  return Array.from({ length: Number(range[3]) - from + 1 }, (_, offset) => `${id} ${range[1]}${from + offset}`);
+}
+
+/**
+ * The receipt's Rows lists for `file`: each receipt line that opens (after its indent) with "- " and `file` in a code
+ * span and carries "Rows: ", read from there to its full stop with each parenthetical dropped and split at its commas,
+ * with the index of the receipt entry it sits in (0 is the first "## " entry, cut #1's).
+ */
+function receiptRowsLists(file: string): Array<{ entry: number; rows: string[] }> {
+  const lists: Array<{ entry: number; rows: string[] }> = [];
+  let entry = -1;
+  for (const line of readFileSync(RECEIPT, "utf8").split("\n")) {
+    if (line.startsWith("## ")) entry++;
+    const at = line.indexOf("Rows: ");
+    if (at === -1 || !line.trimStart().startsWith(`- \`${file}\``)) continue;
+    const after = line.slice(at + "Rows: ".length).replace(/ \([^)]*\)/g, "");
+    const end = after.indexOf(".");
+    const items = (end === -1 ? after : after.slice(0, end)).split(", ").map(item => item.replace(/^and /, ""));
+    lists.push({ entry, rows: items.flatMap(rowsOfItem) });
+  }
+  return lists;
+}
+
+/** Every row that a "The new rows are" sentence of the receipt names, in receipt order. */
+function receiptNewRows(): string[] {
+  const label = "The new rows are ";
+  return readFileSync(RECEIPT, "utf8")
+    .split("\n")
+    .filter(line => line.includes(label))
+    .flatMap(line => {
+      const after = line.slice(line.indexOf(label) + label.length);
+      return after.slice(0, after.indexOf(".")).split(/, and |, | and /);
+    });
+}
+
+/** The rows of a set of registered titles, or of receipt lists, once each and sorted, for an order-free compare. */
+function rowSet(rows: readonly string[]): string[] {
+  return [...new Set(rows)].sort();
+}
+
 /** Every test this file registers, in registration order (the ROSTER case reads vitest's task tree against it). */
 const ROSTER = [
   "'PARK-REVOKE-GRANT': settled as the IDENTITY_CONFLICT refusal; at the quiescence point one beforeDispatch entry and no query() call",
@@ -98,7 +168,8 @@ const ROSTER = [
   "'WRITE-CHANGE-PRINCIPAL': capability_invoke is rejected with the IDENTITY_CONFLICT text; at the quiescence point the write fixture has no dispatch",
   "WRITE-CONTROL: with no change the write returns; at the quiescence point exactly one dispatch, under the principal and grants the host was built with",
   "QUIESCE-WRITE: a write dispatch from a 50 ms timer set once the agent settled is counted at the quiescence point",
-  "ROSTER the registered tests of this file are exactly these, in order, each run and none marked to fail",
+  "RECEIPT-ROWS: the rows of this file's tests are exactly the rows the Rows lists of docs/workbench/receipts/wb-7wkb.md name for this file, the cut #1 entry's list among them, and each row a new-rows sentence of that receipt names is named for one of its two suites",
+  "ROSTER the registered tests of this file are exactly these, in order, each run and none marked to fail, and their rows are the rows the receipt's Rows lists name for this file",
 ] as const;
 
 /** A trial's quiescence wait, set once its agent has settled (the header's QUIESCENCE POINT). */
@@ -335,7 +406,25 @@ describe("the final write call of a live session re-reads the basis, and at the 
   });
 });
 
-it("ROSTER the registered tests of this file are exactly these, in order, each run and none marked to fail", ({ task }) => {
+it("RECEIPT-ROWS: the rows of this file's tests are exactly the rows the Rows lists of docs/workbench/receipts/wb-7wkb.md name for this file, the cut #1 entry's list among them, and each row a new-rows sentence of that receipt names is named for one of its two suites", ({ task }) => {
+  const names: string[] = [];
+  const walk = (tasks: typeof task.file.tasks): void => {
+    for (const child of tasks) {
+      if (child.type === "test") names.push(child.name);
+      else if (child.type === "suite") walk(child.tasks);
+    }
+  };
+  walk(task.file.tasks);
+  const lists = receiptRowsLists(THIS_FILE);
+  expect(lists.map(list => list.entry)).toContain(0);
+  expect(rowSet(names.map(rowOf))).toEqual(rowSet(lists.flatMap(list => list.rows)));
+  const newRows = receiptNewRows();
+  expect(newRows.length).toBeGreaterThan(0);
+  const named = new Set([...lists, ...receiptRowsLists(SIBLING_FILE)].flatMap(list => list.rows));
+  expect(newRows.filter(row => !named.has(row))).toEqual([]);
+});
+
+it("ROSTER the registered tests of this file are exactly these, in order, each run and none marked to fail, and their rows are the rows the receipt's Rows lists name for this file", ({ task }) => {
   const registered: Array<{ name: string; mode: string; fails: boolean; self: boolean }> = [];
   const walk = (tasks: typeof task.file.tasks): void => {
     for (const child of tasks) {
@@ -348,4 +437,5 @@ it("ROSTER the registered tests of this file are exactly these, in order, each r
   expect(registered.filter(entry => entry.mode !== "run" || entry.fails).map(entry => entry.name)).toEqual([]);
   expect(registered.findIndex(entry => entry.self)).toBe(registered.length - 1);
   expect([...new Set(registered.map(entry => titleId(entry.name)))]).toEqual(headerIds());
+  expect(rowSet(registered.map(entry => rowOf(entry.name)))).toEqual(rowSet(receiptRowsLists(THIS_FILE).flatMap(list => list.rows)));
 });
