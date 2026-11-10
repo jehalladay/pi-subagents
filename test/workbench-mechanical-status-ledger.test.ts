@@ -15,9 +15,14 @@
  *    byte data." AC3 "Assert an unmapped B-* label or a fabricated wb-* id fails ledger validation; the 25-group total is not
  *    treated as 25 complete issues."
  *
- * Each planted case below edits one clone of a committed file and reads the judge's findings; the expected finding is the
- * rule's own text. The tested forms are judged in report mode by test/workbench-mechanical-status-ledger.census.ts, which
- * also reads that the cases this file registers are the ones the lines below name.
+ * Each planted case below edits one clone of a committed file (or the text a reader returns for one) and reads the judge's
+ * findings; the expected finding is the rule's own text. The tested forms are judged in report mode by
+ * test/workbench-mechanical-status-ledger.census.ts, which also reads that the cases this file registers are the ones the
+ * lines below name.
+ *
+ * Cut #3 is authored in the rule-14 enumerate-the-resolvable form (refusal #2, guard R-B755, its second-stage cap engaged
+ * by R-B757): the lines below claim exactly what their cases pin, every mode known to stay unpinned is a NAMED RESIDUAL
+ * with its pinned quiet row, and every mode outside both is a NOT CLAIMED scope sentence.
  *
  * PINNED READER SET (one claim per line; each line names its cases before the colon; an input no case holds is NOT CLAIMED):
  *  - SL-LIVE-LEDGER: the committed ledger, judged with the repository tree, the Beads export and the census docs reader (sectionReader over docsSection of test/helpers/census.ts), gives no finding.
@@ -26,31 +31,39 @@
  *  - SL-COUNTS: 200 rows, 75 already-implemented/tested, 31 partial/inert and 94 blocked, and 3 of the 25 plan groups complete.
  *  - SL-R210: the tested forms of EAT-R001, EAT-R002 and EAT-R144 name the five PF cases of test/worktree.test.ts that plant EAT-R210's status, add, commit, HEAD rev-parse and branch-retry failures, each by its registered title and suite path (the census leg judges each in report mode).
  *  - SL-HEADER: these PINNED READER SET lines hold their recorded digests.
- *  - SL-CLI: the CLI judges the committed files with exit 0 and two empty lists.
- *  - SL-SCHEMA, SL-SCHEMA-LEDGER, SL-SCHEMA-ROWS, SL-SCHEMA-ROW, SL-SCHEMA-PI-PIN, SL-SCHEMA-MW-PIN: a foreign schema, a ledger that is not an object, rows that are not an array, a row that is not an object and a ledger Pi or MW pin that is not 40-hex are refused (L-SCHEMA).
- *  - SL-IDS-MISSING, SL-IDS-DUPLICATE, SL-IDS-ORDER, SL-IDS-FOREIGN: a missing, duplicated, out-of-order or foreign row id is refused (L-IDS, EAT-R202 AC1).
- *  - SL-EXPORT, SL-EXPORT-QUIET: a row deleted from the ledger is refused through the Beads export, which names every EAT-R001..EAT-R200 id on a wb-1a3t child, and an id named only outside the epic's children, out of EAT-R001..EAT-R200 or inside a longer number is not read (L-EXPORT).
- *  - SL-CLASS, SL-PIN, SL-PIN-MW, SL-PIN-NOT-SHA, SL-PIN-MW-NOT-SHA: an unknown class, a row pin.pi or pin.mw other than the ledger's pin, and a row pin equal to a ledger pin that is not 40-hex are refused (L-CLASS, L-PIN).
- *  - SL-BEAD-FABRICATED, SL-BEAD-UNNAMED, SL-BEAD-NOT-ID: a fabricated wb- id, a bead that does not name the row's id and a bead that is no wb- id are refused (L-BEAD, EAT-R202 AC3).
- *  - SL-GROUP-UNMAPPED, SL-GROUP-WRONG-BEAD, SL-GROUP-TAG, SL-GROUP-TAG-EMPTY, SL-GROUP-EXPORT-TAG, SL-GROUP-EXPORT-TAG-PARENT, SL-GROUP-BEAD-ABSENT, SL-GROUP-DROPPED, SL-GROUP-FOREIGN-LABEL: an unmapped group label, a row on another group's bead, a tag that does not start its bead's title or is empty, a tag that is no wb-1a3t child tag in the export (a prefix of one, or one found only on a bead outside the epic's children), a group bead the export does not hold, a dropped plan group and a foreign group label are refused (L-GROUP, EAT-R202 AC3).
- *  - SL-TESTED-NO-FORMS, SL-TESTED-NOT-OBJECT, SL-TESTED-NULL, SL-TESTED-NO-FILE-NAME, SL-TESTED-NO-TITLE, SL-TESTED-NO-SUITE, SL-TESTED-SUITE-ENTRY, SL-TESTED-NO-FILE: a tested row without a tested form, a form that is not an object (a string or null), that lacks a file or a title or whose suite is not an array of non-empty strings, and a form naming a file the tree does not hold are refused (L-TESTED; no case text is read).
+ *  - SL-CLI, SL-CLI-USAGE-BARE-ROOT, SL-CLI-USAGE-OTHER-FLAG, SL-CLI-USAGE-EXTRA-ARG, SL-CLI-UNREADABLE, SL-CLI-ROOT, SL-CLI-FINDINGS-LEDGER, SL-CLI-FINDINGS-RECORD: the CLI judges the committed files with exit 0 and two empty lists; --root with no directory, another flag with a directory, and --root <dir> with one more argument each exit 2 with the usage line and no output; a root that holds no ledger exits 2 naming unreadable input; and over a root whose other files are the committed ones (symlinks), the committed files exit 0 with two empty lists while a ledger finding alone or a record finding alone exits 1 with that one list non-empty.
+ *  - SL-SCHEMA, SL-SCHEMA-LEDGER, SL-SCHEMA-ROWS, SL-SCHEMA-ROW, SL-SCHEMA-PI-PIN, SL-SCHEMA-MW-PIN, SL-SCHEMA-PIN-NOT-STRING, SL-SCHEMA-MW-PIN-NOT-STRING: a foreign schema, a ledger that is not an object, rows that are not an array, a row that is not an object, a ledger Pi or MW pin that is not 40-hex, and a ledger Pi or MW pin that is not a string (an array holding the 40-hex pin) are refused (L-SCHEMA).
+ *  - SL-IDS-MISSING, SL-IDS-DUPLICATE, SL-IDS-ORDER, SL-IDS-FOREIGN, SL-IDS-ALONE-MISSING, SL-IDS-ALONE-DUPLICATE, SL-IDS-ALONE-FOREIGN: a missing, duplicated, out-of-order or foreign row id is refused, and a missing, a duplicated and a foreign row each give exactly their own L-IDS finding, with no order finding beside it (L-IDS, EAT-R202 AC1).
+ *  - SL-EXPORT, SL-EXPORT-QUIET: a row deleted from the ledger is refused through the Beads export, which names every EAT-R001..EAT-R200 id on a wb-1a3t child, and an id named only outside the epic's children, below or above EAT-R001..EAT-R200 (EAT-R000, EAT-R201, EAT-R250) or inside a longer number (EAT-R1001) is not read (L-EXPORT).
+ *  - SL-CLASS, SL-PIN, SL-PIN-MW, SL-PIN-NOT-SHA, SL-PIN-MW-NOT-SHA, SL-PIN-NOT-STRING, SL-PIN-MW-NOT-STRING: an unknown class, a row pin.pi or pin.mw other than the ledger's pin, a row pin equal to a ledger pin that is not 40-hex, and a row pin that is the ledger's own pin but not a string are refused (L-CLASS, L-PIN).
+ *  - SL-BEAD-FABRICATED, SL-BEAD-UNNAMED, SL-BEAD-NOT-ID, SL-BEAD-PREFIXED, SL-BEAD-SUFFIXED, SL-BEAD-NOT-STRING, SL-BEAD-NONE: a fabricated wb- id, a bead that does not name the row's id and a bead that is no wb- id (a string that is not one, one with a character before or after a wb- id, or an array holding one) are refused (L-BEAD, EAT-R202 AC3); a row whose bead is none draws no L-BEAD finding, and L-GROUP refuses it as not its group's bead.
+ *  - SL-GROUP-UNMAPPED, SL-GROUP-WRONG-BEAD, SL-GROUP-TAG, SL-GROUP-TAG-EMPTY, SL-GROUP-TAG-INSIDE, SL-GROUP-EXPORT-TAG, SL-GROUP-EXPORT-TAG-PARENT, SL-GROUP-BEAD-ABSENT, SL-GROUP-DROPPED, SL-GROUP-FOREIGN-LABEL: an unmapped group label, a row on another group's bead, a tag that does not start its bead's title (absent from it, empty, or held only after other text), a tag that is no wb-1a3t child tag in the export (a prefix of one, one found only on a bead outside the epic's children, or one that a child's title holds only after other text), a group bead the export does not hold, a dropped plan group and a foreign group label are refused (L-GROUP, EAT-R202 AC3).
+ *  - SL-TESTED-NO-FORMS, SL-TESTED-NOT-OBJECT, SL-TESTED-NULL, SL-TESTED-NO-FILE-NAME, SL-TESTED-NO-TITLE, SL-TESTED-NO-SUITE, SL-TESTED-SUITE-ENTRY, SL-TESTED-NO-FILE, SL-TREE-ABSOLUTE, SL-TREE-ABSOLUTE-FULL, SL-TREE-PARENT: a tested row without a tested form, a form that is not an object (a string or null), that lacks a file or a title or whose suite is not an array of non-empty strings, and a form naming a file the tree does not hold are refused, and so is a form naming an absolute path (root-absolute, or the full path) or a path with a .. segment, even when it leads to a file the root holds (L-TESTED; no case text is read).
  *  - SL-PARTIAL-NO-REASON, SL-PARTIAL-NO-TEXT, SL-PARTIAL-NO-SOURCE: a partial/inert row without partialBecause, with an empty reason text, or whose source anchor its rendered section does not hold is refused (L-PARTIAL).
  *  - SL-BLOCKED-NO-BLOCKER, SL-BLOCKED-KIND, SL-BLOCKED-NO-DETAIL: a blocked row without blockedBy, with a kind outside BLOCKER_KINDS or with an empty detail is refused (L-BLOCKED).
  *  - SL-EVIDENCE-NONE, SL-EVIDENCE-NOT-OBJECT, SL-EVIDENCE-NULL, SL-EVIDENCE-EMPTY-ANCHOR, SL-EVIDENCE-NEITHER, SL-EVIDENCE-NO-FILE, SL-EVIDENCE-RAW, SL-EVIDENCE-BEAD-ABSENT, SL-EVIDENCE-BEAD: a row without evidence, an item that is not an object (a string or null) or has an empty anchor, an item naming neither a path nor a bead, a path the tree does not hold, an anchor the raw text of a file that is not markdown does not hold, a bead the export does not hold and an anchor a bead's description and notes do not hold are refused (L-EVIDENCE).
- *  - SL-SECTION-NONE, SL-SECTION-NOT-OBJECT, SL-SECTION-HEADING, SL-SECTION-DEPTH-FRACTION, SL-SECTION-DEPTH-LOW, SL-SECTION-DEPTH-HIGH, SL-SECTION-PARENTS, SL-SECTION-PARENT-ENTRY, SL-SECTION-UNBOUND, SL-SECTION-ANCHOR, SL-SECTION-COMMENTED: a markdown anchor without a section object, with an empty heading, a depth that is not an integer from 1 to 6, or parents that are not an array of non-empty strings, a section docsSection does not bind, an anchor its section's rendered text does not hold, and an anchor hidden in an HTML comment of its receipt (the gate's GD1 plant) are refused (L-EVIDENCE, L-PARTIAL).
- *  - SL-AC2-LISTS, SL-AC2-FIXED, SL-AC2-PENDING, SL-AC2-FIXED-BLANK, SL-AC2-WITNESS, SL-AC2-NOT-PENDING, SL-AC2-NOT-PARKED, SL-AC2-NOT-SKIP-OR-RETRY: the judge reads exactly the six AC2 rows and the sixteen containing verbs; each of the six AC2 rows is refused when it drops its fixed forms or its pending sentence; EAT-R001 is refused with an empty fixed form, and EAT-R012 when its pending sentence loses wb-9v02, the word pending, the word parked or the words skip or retry (L-AC2, EAT-R202 AC2).
+ *  - SL-SECTION-NONE, SL-SECTION-NOT-OBJECT, SL-SECTION-HEADING, SL-SECTION-DEPTH-FRACTION, SL-SECTION-DEPTH-LOW, SL-SECTION-DEPTH-HIGH, SL-SECTION-PARENTS, SL-SECTION-PARENT-ENTRY, SL-SECTION-UNBOUND, SL-SECTION-ANCHOR, SL-SECTION-COMMENTED, SL-SECTION-INLINE-COMMENTED, SL-SECTION-PARAGRAPH-COMMENTED: a markdown anchor without a section object, with an empty heading, a depth that is not an integer from 1 to 6, or parents that are not an array of non-empty strings, a section docsSection does not bind, an anchor its section's rendered text does not hold, and an anchor hidden in an HTML comment of its receipt (a comment block, the gate's GD1 plant; an inline comment inside its list item, the gate's GD2 plant; an inline comment inside a paragraph) are refused (L-EVIDENCE, L-PARTIAL).
+ *  - SL-AC2-LISTS, SL-AC2-FIXED, SL-AC2-PENDING, SL-AC2-FIXED-BLANK, SL-AC2-WITNESS, SL-AC2-WITNESS-OTHER, SL-AC2-NOT-PENDING, SL-AC2-NOT-PARKED, SL-AC2-NOT-SKIP-OR-RETRY, SL-AC2-WORD-PARKED-START, SL-AC2-WORD-PARKED-END, SL-AC2-WORD-PENDING-START, SL-AC2-WORD-PENDING-END, SL-AC2-WORD-SKIP-START, SL-AC2-WORD-RETRY-END, SL-AC2-CASE-PARKED, SL-AC2-CASE-PENDING, SL-AC2-CASE-SKIP-OR-RETRY: the judge reads exactly the six AC2 rows and the sixteen containing verbs; each of the six AC2 rows is refused when it drops its fixed forms or its pending sentence; EAT-R001 is refused with an empty fixed form, and EAT-R012 when its pending sentence loses wb-9v02 (dropped, or naming wb-9v03 instead), the word pending, the word parked or the words skip or retry, or holds one of them only inside a longer word (unparked, parkeds, unpending, pendings, unskip or retry, skip or retrying) or only with capital letters (Parked, Pending, Skip or Retry) (L-AC2, EAT-R202 AC2).
  *  - SL-AC2-CONTROL, SL-AC2-CONTROL-NO-FORMS, SL-AC2-CONTROL-UNTESTED: the F10 control is refused without its fixed forms, without its pending sentence, when absent, with a form that lacks a title and, while tested, with no tested form; a control that is not tested may name none (L-AC2, L-TESTED).
- *  - SL-BYTES-VERB, SL-BYTES-QUIET: a row naming WorktreePreservationFailedResult with one of the sixteen pinned containing verbs and byte data is refused, and the quiet rows stay quiet (L-BYTES, EAT-R202 AC2).
+ *  - SL-BYTES-VERB, SL-BYTES-SINGULAR, SL-BYTES-CASE, SL-BYTES-CONTROL, SL-BYTES-QUIET, SL-BYTES-QUIET-TYPE, SL-BYTES-QUIET-VERB-END, SL-BYTES-QUIET-VERB-START, SL-BYTES-QUIET-BYTE-START, SL-BYTES-QUIET-BYTE-END, SL-BYTES-QUIET-PERIOD-VERB: a row string naming WorktreePreservationFailedResult, then one of the sixteen pinned containing verbs, then bytes or the singular byte is refused, read in any letter case, as is such a string of the F10 control; the committed wording, a path that names where the bytes stay and a sentence break (after the type, or after the verb) are quiet, as are a longer type name (WorktreePreservationFailedResultSet), a containing verb inside a longer word (containment, miscarries) and the byte word inside a longer word (kilobytes, bytestream) (L-BYTES, EAT-R202 AC2).
  *  - SL-SUMMARY-25-COMPLETE, SL-SUMMARY-LABELS, SL-SUMMARY-LABELS-MISSING, SL-SUMMARY-ROWS, SL-SUMMARY-CLASS, SL-SUMMARY-PLAN-GROUPS, SL-SUMMARY-EMPTY-GROUP: a summary counting the 25 plan groups as complete, complete labels that differ from the groups whose every row is tested or are absent, a row, class or plan-group count that differs from the rows, and a complete count that includes a plan group left with no row are refused (L-SUMMARY, EAT-R202 AC3).
- *  - SL-SUCCESSORS-RANGE, SL-SUCCESSORS-HIGH, SL-SUCCESSORS-NOT-ID, SL-SUCCESSORS-TWICE, SL-SUCCESSORS-NOT-ARRAY: a successor below EAT-R201, above EAT-R310 or not an EAT-R id, a successor named twice and successors that are not an array are refused (L-SUCCESSORS).
+ *  - SL-SUCCESSORS-RANGE, SL-SUCCESSORS-EDGE, SL-SUCCESSORS-HIGH, SL-SUCCESSORS-NOT-ID, SL-SUCCESSORS-PREFIXED, SL-SUCCESSORS-SUFFIXED, SL-SUCCESSORS-TWICE, SL-SUCCESSORS-NOT-ARRAY: a successor below EAT-R201 (EAT-R150, EAT-R200), above EAT-R310 or not an EAT-R id (no EAT- prefix, a character before it, a fourth digit), a successor named twice and successors that are not an array are refused (L-SUCCESSORS).
  *  - SL-RECORD-SCHEMA, SL-RECORD-NOT-OBJECT, SL-RECORD-PI-MISSING, SL-RECORD-CHANGES-MISSING: a foreign schema, a record that is not an object, a missing pi and missing implicatedChanges are refused (R-SCHEMA).
- *  - SL-RECORD-SHORT-SHA, SL-RECORD-SHORT-COMMIT, SL-RECORD-SHORT-BLOB: a tree, commit or blob member that is not 40-hex is refused (R-SHA).
+ *  - SL-RECORD-SHORT-SHA, SL-RECORD-SHORT-COMMIT, SL-RECORD-SHORT-BLOB, SL-RECORD-UPPER-SHA, SL-RECORD-LONG-SHA, SL-RECORD-SHA-MERGE-BASE, SL-RECORD-SHA-MW, SL-RECORD-SHA-HISTORICAL, SL-RECORD-SHA-CHANGE, SL-RECORD-SHA-KEY-QUIET: a tree, commit or blob member that is not 40 lower-case hex is refused, an upper-case one and a 41-character one included, on a Pi ref, the merge-base, an MW ref, a historical pin and an implicated change, while a member whose key only starts with commit, tree or blob is not read (R-SHA).
  *  - SL-RECORD-BRANCH-UNNAMED, SL-RECORD-MACHINE-REF, SL-RECORD-REF-TWICE, SL-RECORD-PACKAGE, SL-RECORD-PACKAGE-NAME, SL-RECORD-REF-COMMIT, SL-RECORD-REF-TREE, SL-RECORD-BEADS-BLOB, SL-RECORD-BEADS-BLOB-MISSING, SL-RECORD-FEEDBACK, SL-RECORD-FEEDBACK-TREE-MISSING, SL-RECORD-MERGE-BASE, SL-RECORD-MERGE-BASE-TREE: an unnamed default branch, a branch with no ref or with two, a Pi ref without a package version or name, a commit, a tree, a Beads export (absent, or without its blob) or a feedback snapshot (absent, or without its tree), and a merge-base without a commit or a tree are refused (R-REFS, EAT-R201 AC1).
  *  - SL-RECORD-MW-EMPTY, SL-RECORD-MW-COMMIT, SL-RECORD-MW-TREE, SL-RECORD-MW-PACKAGES, SL-RECORD-MW-PACKAGE-NAME, SL-RECORD-MW-PACKAGE-VERSION: no MW ref, an MW ref without a commit, a tree or packages, and an MW package without a name or a version are refused (R-REFS, EAT-R201 AC1).
- *  - SL-RECORD-DEFAULT-IS-MACHINE, SL-RECORD-DEFAULT-NAME, SL-RECORD-DEFAULT-COMMIT, SL-RECORD-DEFAULT-NO-REF, SL-RECORD-DEFAULT-MACHINE-MERGED, SL-RECORD-DEFAULT-NO-MACHINE: certifying the machine tip, a certified default named for another branch, a certified commit other than the default ref's and a certified default with no default ref are refused, and certifying the machine tip while the machine branch holds no commit the default lacks is not read as an unmerged tip, nor is a certified default without a commit when no machine ref exists (R-DEFAULT, EAT-R201 AC2).
+ *  - SL-RECORD-DEFAULT-IS-MACHINE, SL-RECORD-DEFAULT-NAME, SL-RECORD-DEFAULT-COMMIT, SL-RECORD-DEFAULT-NO-REF, SL-RECORD-DEFAULT-MACHINE-MERGED, SL-RECORD-DEFAULT-NO-MACHINE, SL-RECORD-DEFAULT-MASTER-MACHINE-ONLY: certifying the machine tip while the machine branch holds a commit the default lacks, a certified default named for another branch, a certified commit other than the default ref's and a certified default with no default ref are refused; certifying the machine tip while the machine branch holds no commit the default lacks is not read as an unmerged tip, nor is a certified default without a commit when no machine ref exists, nor the default ref's own commit while the machine branch holds commits the default lacks (R-DEFAULT, EAT-R201 AC2).
  *  - SL-RECORD-BEADS-STORE, SL-RECORD-BEADS-NO-EPICS, SL-RECORD-BEADS-EPIC-STATUS, SL-RECORD-BEADS-EPIC-CHILDREN: a Beads snapshot without a store, without epics, or with an epic lacking a status or children is refused (R-BEADS, EAT-R201 AC1).
- *  - SL-RECORD-MERGED-FLAGS, SL-RECORD-MACHINE-FLAGS, SL-RECORD-PROPOSED-FLAGS, SL-RECORD-HISTORICAL-ROLE, SL-RECORD-HISTORICAL-WRONG-ROLE, SL-RECORD-HISTORICAL-ROLE-UNDEFINED, SL-RECORD-UNKNOWN-CLASS, SL-RECORD-TWICE, SL-RECORD-CLASSES: a merged, machine-only or proposed change whose flags disagree, a historical change without a role (even where historicalPins holds a role-less pin of its commit) or with a role historicalPins does not name for it, an unknown class and a change listed twice are refused, and the committed record marks all four classes (R-CHANGES, EAT-R201 AC2).
+ *  - SL-RECORD-MERGED-FLAGS, SL-RECORD-MERGED-FLAGS-MACHINE, SL-RECORD-MACHINE-FLAGS, SL-RECORD-MACHINE-FLAGS-MACHINE, SL-RECORD-MACHINE-FLAGS-AGREE, SL-RECORD-PROPOSED-FLAGS, SL-RECORD-PROPOSED-FLAGS-DEFAULT, SL-RECORD-HISTORICAL-ROLE, SL-RECORD-HISTORICAL-WRONG-ROLE, SL-RECORD-HISTORICAL-ROLE-UNDEFINED, SL-RECORD-UNKNOWN-CLASS, SL-RECORD-TWICE, SL-RECORD-CLASSES: each flag of each class is read: a merged change off the default or off the machine branch, a machine-only change on the default or off the machine branch, and a proposed change on the machine or off the default branch are refused, while a machine-only change off the default and on the machine branch is not; a historical change without a role (even where historicalPins holds a role-less pin of its commit) or with a role historicalPins does not name for it, an unknown class and a change listed twice are refused; and the committed record marks 23 merged, 5 proposed and 4 historical changes and no machine-only change, its machine branch holding no commit the default lacks (R-CHANGES, EAT-R201 AC2).
  *  - SL-STALE-NONE, SL-STALE-PI-COMMIT, SL-STALE-PI-PACKAGE, SL-STALE-MW, SL-STALE-NO-RECORD, SL-STALE-PI-UNMEASURED, SL-STALE-PI-PACKAGE-NAME, SL-STALE-MW-PACKAGE-REMOVED: staleRepin names nothing for the recorded measurement, and names a moved Pi or MW commit, a changed Pi package version or name, a changed, removed or added MW package, an unmeasured Pi or MW ref, and a record that is not an object (a string or null) or lacks its pi or its mw member (EAT-R201 AC3).
+ *  - SL-RESIDUAL-HEADING-ANCHORS: the quiet row of the NAMED RESIDUAL R-HEADING-ANCHOR below: exactly 11 markdown anchors are substrings of their own section heading (evidence[0] of EAT-R015, EAT-R016, EAT-R022, EAT-R027, EAT-R161 and EAT-R162, evidence[1] of EAT-R160, the partial source of EAT-R077, EAT-R078, EAT-R079 and EAT-R164), and the section reader's text of each starts with that heading.
+ *
+ * NAMED RESIDUALS (a named family with its pinned quiet row, rule 19(d); a residual is a known escape, not a pass):
+ *  R-HEADING-ANCHOR: the section reader puts a section's heading first in its rendered text, so for an anchor that is a
+ *    substring of its own section heading L-EVIDENCE and L-PARTIAL read only that the section binds: deleting the anchor's
+ *    words from the section's body keeps the ledger quiet. The 11 such anchors are pinned by SL-RESIDUAL-HEADING-ANCHORS,
+ *    which reds when that set changes or when the reader's text stops starting with the heading.
+ *  R-HX-CONTEXT: the census leg's residual (test/workbench-mechanical-status-ledger.census.ts, quiet row TF-RESIDUAL).
  *
  * NOT CLAIMED by this file: that a row's class is the true state of the program (the class is this ledger's reading of the
  * receipts, tests and Beads records the row cites); that a tested form is registered, run, passed or asserting (no case of
@@ -58,13 +71,15 @@
  * text of its named section; the meaning of a raw-text anchor in a file that is not markdown or in a Beads record beyond its
  * bytes; a run of staleRepin against the live refs (the record was re-pinned at this cut's merged base by hand; the receipt
  * names the measurement); a re-run of any cited test or mutant; the titles against the master documents; a containing verb
- * outside BYTES_VERBS; Beads state outside the export files; the joint P00/M00 rulings of EAT-R203..EAT-R209, which need the
- * Mechanical side.
+ * outside BYTES_VERBS; Beads state outside the export files; Beads export lines that are not objects or carry no string id,
+ * and a parent dependency whose depends_on_id is not a string (the committed export holds neither); whether the module runs
+ * its CLI when it is imported rather than run; the joint P00/M00 rulings of EAT-R203..EAT-R209, which need the Mechanical
+ * side.
  */
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync, mkdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   AC2_ROWS,
@@ -80,10 +95,12 @@ import {
   treeReader,
 } from "../qa/workbench/mechanical-status-ledger.mjs";
 import { docsSection } from "./helpers/census.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 /** Every row reads files or parses JSON; each declares its own time budget (EAT-R168's form). */
 const BUDGET = 30_000;
 const REPO = join(import.meta.dirname, "..");
+installScratchLeakGuard();
 
 interface Form {
   file: string;
@@ -159,10 +176,12 @@ interface RepinRecord {
     machineBranch: string;
     refs: PiRef[];
     mergeBase: { commit?: string; tree?: string };
+    divergence: { defaultOnlyCommits: number; machineOnlyCommits: number };
     certifiedDefault: { name: string; commit: string };
   };
   mw: { refs: MwRef[] };
   beads: { store: string; epics: Record<string, { status: string; children?: Record<string, string> }> };
+  historicalPins: Array<{ side: string; commit: string; role?: string }>;
   implicatedChanges: Change[];
 }
 
@@ -229,10 +248,10 @@ const HEADER_LINES = SOURCE.slice(0, SOURCE.indexOf("*/"))
   .filter(line => line.startsWith(" *  - SL-"))
   .map(line => line.slice(" *  - ".length));
 const HEADER_DIGESTS = [
-  "738fe4e0", "93c73990", "800b7f64", "daaf84d2", "992f9cbe", "69345ad2", "95ccead5", "16d48d02",
-  "8dde8d31", "0070176e", "4ab57e9b", "3c426f54", "3105a219", "8d2afc38", "02af6e93", "33aa9162",
-  "d19adcf9", "6247487a", "44504974", "5a0aee33", "76897375", "f1469032", "71f58f6a", "51822a1e",
-  "ba2f8799", "301346e5", "9762b539", "d6b845fa", "a517c1d8", "198eca48", "108c6790",
+  "738fe4e0", "93c73990", "800b7f64", "daaf84d2", "992f9cbe", "69345ad2", "73ba3399", "552e681d",
+  "e0b69ace", "2a36f154", "84bc4113", "e50a2f3b", "5a688fd0", "4a7ec06e", "02af6e93", "33aa9162",
+  "d19adcf9", "65c72be9", "fae9fa2b", "5a0aee33", "2623bfcf", "f1469032", "c5e33b1b", "51822a1e",
+  "1585c51a", "301346e5", "9762b539", "dad30887", "a517c1d8", "ee5e720f", "108c6790", "0ca71a45",
 ];
 
 /** SL-SHAPE: the frozen shape of the 200 rows at this cut (rule 16), derived from the ledger as committed. */
@@ -401,6 +420,12 @@ describe("wb-mit9: planted ledgers each refused by their rule (EAT-R202)", { tim
     ["SL-SCHEMA-MW-PIN", value => {
       value.pins.mw.commit = value.pins.mw.commit.slice(0, 12);
     }, "L-SCHEMA: pins.mw.commit is not a 40-hex commit"],
+    ["SL-SCHEMA-PIN-NOT-STRING", value => {
+      (value.pins.pi as { commit: unknown }).commit = [value.pins.pi.commit];
+    }, "L-SCHEMA: pins.pi.commit is not a 40-hex commit"],
+    ["SL-SCHEMA-MW-PIN-NOT-STRING", value => {
+      (value.pins.mw as { commit: unknown }).commit = [value.pins.mw.commit];
+    }, "L-SCHEMA: pins.mw.commit is not a 40-hex commit"],
     ["SL-IDS-MISSING", value => value.rows.splice(99, 1), "L-IDS: EAT-R100 has no row"],
     ["SL-IDS-DUPLICATE", value => value.rows.splice(10, 0, structuredClone(row(value, "EAT-R010"))), "L-IDS: EAT-R010 has more than one row"],
     ["SL-IDS-ORDER", value => value.rows.reverse(), "L-IDS: the rows are not in EAT-R001..EAT-R200 order"],
@@ -423,6 +448,16 @@ describe("wb-mit9: planted ledgers each refused by their rule (EAT-R202)", { tim
       value.pins.mw.commit = "not-a-commit";
       for (const item of value.rows) item.pin.mw = "not-a-commit";
     }, "L-PIN: EAT-R057 pin.mw is not the ledger's MW pin"],
+    ["SL-PIN-NOT-STRING", value => {
+      const shared = [value.pins.pi.commit];
+      (value.pins.pi as { commit: unknown }).commit = shared;
+      for (const item of value.rows) (item.pin as { pi: unknown }).pi = shared;
+    }, "L-PIN: EAT-R057 pin.pi is not the ledger's Pi pin"],
+    ["SL-PIN-MW-NOT-STRING", value => {
+      const shared = [value.pins.mw.commit];
+      (value.pins.mw as { commit: unknown }).commit = shared;
+      for (const item of value.rows) (item.pin as { mw: unknown }).mw = shared;
+    }, "L-PIN: EAT-R057 pin.mw is not the ledger's MW pin"],
     ["SL-BEAD-FABRICATED", value => {
       row(value, "EAT-R057").bead = "wb-zz9q";
     }, "L-BEAD: EAT-R057 names wb-zz9q, a fabricated id the Beads export does not hold"],
@@ -432,6 +467,15 @@ describe("wb-mit9: planted ledgers each refused by their rule (EAT-R202)", { tim
     ["SL-BEAD-NOT-ID", value => {
       row(value, "EAT-R057").bead = "wb_f3wd";
     }, "L-BEAD: EAT-R057 bead wb_f3wd is not a wb- id or none"],
+    ["SL-BEAD-PREFIXED", value => {
+      row(value, "EAT-R057").bead = "xwb-f3wd";
+    }, "L-BEAD: EAT-R057 bead xwb-f3wd is not a wb- id or none"],
+    ["SL-BEAD-SUFFIXED", value => {
+      row(value, "EAT-R057").bead = "wb-f3wd_x";
+    }, "L-BEAD: EAT-R057 bead wb-f3wd_x is not a wb- id or none"],
+    ["SL-BEAD-NOT-STRING", value => {
+      (row(value, "EAT-R057") as { bead: unknown }).bead = ["wb-f3wd"];
+    }, "L-BEAD: EAT-R057 bead wb-f3wd is not a wb- id or none"],
     ["SL-GROUP-UNMAPPED", value => {
       row(value, "EAT-R057").group = "B-hx-probe";
     }, "L-GROUP: EAT-R057 group B-hx-probe is an unmapped label"],
@@ -581,6 +625,9 @@ describe("wb-mit9: planted ledgers each refused by their rule (EAT-R202)", { tim
     ["SL-SUCCESSORS-RANGE", value => row(value, "EAT-R001").successors.push("EAT-R150"), "L-SUCCESSORS: EAT-R001 successor EAT-R150 is not EAT-R201..EAT-R310"],
     ["SL-SUCCESSORS-HIGH", value => row(value, "EAT-R001").successors.push("EAT-R311"), "L-SUCCESSORS: EAT-R001 successor EAT-R311 is not EAT-R201..EAT-R310"],
     ["SL-SUCCESSORS-NOT-ID", value => row(value, "EAT-R001").successors.push("R250"), "L-SUCCESSORS: EAT-R001 successor R250 is not EAT-R201..EAT-R310"],
+    ["SL-SUCCESSORS-PREFIXED", value => row(value, "EAT-R001").successors.push("xEAT-R250"), "L-SUCCESSORS: EAT-R001 successor xEAT-R250 is not EAT-R201..EAT-R310"],
+    ["SL-SUCCESSORS-SUFFIXED", value => row(value, "EAT-R001").successors.push("EAT-R2501"), "L-SUCCESSORS: EAT-R001 successor EAT-R2501 is not EAT-R201..EAT-R310"],
+    ["SL-SUCCESSORS-EDGE", value => row(value, "EAT-R001").successors.push("EAT-R200"), "L-SUCCESSORS: EAT-R001 successor EAT-R200 is not EAT-R201..EAT-R310"],
     ["SL-SUCCESSORS-TWICE", value => row(value, "EAT-R001").successors.push("EAT-R210"), "L-SUCCESSORS: EAT-R001 names a successor twice"],
     ["SL-SUCCESSORS-NOT-ARRAY", value => {
       (row(value, "EAT-R001") as { successors: unknown }).successors = "EAT-R210";
@@ -604,6 +651,69 @@ describe("wb-mit9: planted ledgers each refused by their rule (EAT-R202)", { tim
     const heading = sectionOf(row(value, "EAT-R004").evidence[0]).heading;
     expect(findings).toContain(`L-EVIDENCE: EAT-R004 evidence[0] anchor not found in the rendered section "${heading}" of ${receipt}: EAT-R004, recorded per ruling point 1`);
     expect(findings).toContain(`L-PARTIAL: EAT-R004 partialBecause.source anchor not found in the rendered section "${sectionOf(row(value, "EAT-R004").partialBecause?.source).heading}" of ${receipt}: The qa/workbench/mechanical-docs-cut journey is not part of this cut`);
+  });
+  const R004_RECEIPT = "docs/workbench/receipts/wb-12x1.md";
+  const R004_EVIDENCE = "EAT-R004, recorded per ruling point 1";
+  const R004_PARTIAL = "The qa/workbench/mechanical-docs-cut journey is not part of this cut";
+  /** The two EAT-R004 findings a receipt read as the given text draws, in the committed sections. */
+  const r004Findings = (receiptText: string): string[] => {
+    const value = ledger();
+    const findings = judgeWith(value, path => (path === R004_RECEIPT ? receiptText : READ(path)));
+    const evidence = sectionOf(row(value, "EAT-R004").evidence[0]).heading;
+    const partial = sectionOf(row(value, "EAT-R004").partialBecause?.source).heading;
+    return findings.filter(
+      finding =>
+        finding === `L-EVIDENCE: EAT-R004 evidence[0] anchor not found in the rendered section "${evidence}" of ${R004_RECEIPT}: ${R004_EVIDENCE}` ||
+        finding === `L-PARTIAL: EAT-R004 partialBecause.source anchor not found in the rendered section "${partial}" of ${R004_RECEIPT}: ${R004_PARTIAL}`,
+    );
+  };
+  it("SL-SECTION-INLINE-COMMENTED: an anchor hidden in an inline HTML comment inside its list item is refused (the gate's GD2 plant on docs/workbench/receipts/wb-12x1.md)", () => {
+    const text = String(READ(R004_RECEIPT));
+    expect([text.split(`- ${R004_EVIDENCE}`).length, text.split(R004_PARTIAL).length]).toEqual([2, 2]);
+    const commented = text.replace(`- ${R004_EVIDENCE}`, `- Recorded <!-- ${R004_EVIDENCE} -->`).replace(R004_PARTIAL, `<!-- ${R004_PARTIAL} -->`);
+    expect(r004Findings(text)).toEqual([]);
+    expect(r004Findings(commented)).toHaveLength(2);
+  });
+  it("SL-SECTION-PARAGRAPH-COMMENTED: an anchor hidden in an inline HTML comment inside a paragraph is refused", () => {
+    const text = String(READ(R004_RECEIPT));
+    const lines = text.split("\n");
+    const at = lines.findIndex(line => line.startsWith(`- ${R004_EVIDENCE}`));
+    expect(at).toBeGreaterThan(0);
+    const paragraph = `Recorded <!-- ${R004_EVIDENCE} -->: <!-- ${R004_PARTIAL} -->.`;
+    const planted = [...lines.slice(0, at), "", paragraph, "", ...lines.slice(at + 1)].join("\n");
+    const section = sectionOf(row(ledger(), "EAT-R004").evidence[0]);
+    const bound = docsSection(planted, section.heading, section.depth, section.parents);
+    const read = bound.blocks.flatMap(block =>
+      block.kind === "paragraph" && block.markdown.includes(R004_EVIDENCE) ? [[block.kind, block.text.includes(R004_EVIDENCE), block.text.includes(R004_PARTIAL)]] : [],
+    );
+    expect(read).toEqual([["paragraph", false, false]]);
+    expect(r004Findings(planted)).toHaveLength(2);
+  });
+  const alone: Array<[string, string, (value: Ledger) => void, string]> = [
+    ["SL-IDS-ALONE-MISSING", "a missing row", value => value.rows.splice(99, 1), "L-IDS: EAT-R100 has no row"],
+    ["SL-IDS-ALONE-DUPLICATE", "a duplicated row", value => value.rows.splice(10, 0, structuredClone(row(value, "EAT-R010"))), "L-IDS: EAT-R010 has more than one row"],
+    ["SL-IDS-ALONE-FOREIGN", "a foreign row", value => value.rows.push({ ...structuredClone(row(value, "EAT-R200")), id: "EAT-R201" }), "L-IDS: EAT-R201 is not EAT-R001..EAT-R200"],
+  ];
+  it.each(alone)("%s: %s gives exactly its own L-IDS finding, with no order finding beside it", (_id, _what, mutate, expected) => {
+    expect(planted(mutate).filter(finding => finding.startsWith("L-IDS"))).toEqual([expected]);
+  });
+  it("SL-BEAD-NONE: a row whose bead is none draws no L-BEAD finding, and L-GROUP refuses it as not its group's bead", () => {
+    const findings = planted(value => {
+      row(value, "EAT-R057").bead = "none";
+    });
+    expect(findings.filter(finding => finding.startsWith("L-BEAD"))).toEqual([]);
+    expect(findings).toContain("L-GROUP: EAT-R057 bead none is not its group's bead wb-f3wd");
+  });
+  const outside: Array<[string, string, string]> = [
+    ["SL-TREE-ABSOLUTE", "a root-absolute path to a file the root holds (/package.json)", "/package.json"],
+    ["SL-TREE-ABSOLUTE-FULL", "the full absolute path of a file the root holds", join(REPO, "package.json")],
+    ["SL-TREE-PARENT", "a path with a .. segment to a file the root holds", "test/../package.json"],
+  ];
+  it.each(outside)("%s: a tested form naming %s names no file of the tree", (_id, _what, file) => {
+    expect(READ("package.json")).not.toBeNull();
+    expect(planted(value => {
+        row(value, "EAT-R057").testedForms[0].file = file;
+      })).toContain(`L-TESTED: EAT-R057 names ${file}, which the tree does not hold`);
   });
 });
 
@@ -629,6 +739,7 @@ describe("wb-mit9: the AC2 rows and the F10 control separate fixed forms from th
   });
   const words: Array<[string, string, string]> = [
     ["SL-AC2-WITNESS", "wb-9v02", "the repro"],
+    ["SL-AC2-WITNESS-OTHER", "wb-9v02", "wb-9v03"],
     ["SL-AC2-NOT-PENDING", "status pending", "status open"],
     ["SL-AC2-NOT-PARKED", "is parked", "is held"],
     ["SL-AC2-NOT-SKIP-OR-RETRY", "skip or retry", "skip"],
@@ -636,6 +747,24 @@ describe("wb-mit9: the AC2 rows and the F10 control separate fixed forms from th
   it.each(words)("%s: a pending sentence with %s replaced is refused", (_id, from, to) => {
     const pending = String(row(ledger(), "EAT-R012").pending);
     expect(pending).toContain(from);
+    expect(planted(value => {
+        row(value, "EAT-R012").pending = pending.replace(from, to);
+      })).toContain("L-AC2: EAT-R012 does not separate the pending parked per-agent skip or retry (witness wb-9v02)");
+  });
+  const inWords: Array<[string, string, string]> = [
+    ["SL-AC2-WORD-PARKED-START", "is parked", "is unparked"],
+    ["SL-AC2-WORD-PARKED-END", "is parked", "is parkeds"],
+    ["SL-AC2-WORD-PENDING-START", "status pending", "status unpending"],
+    ["SL-AC2-WORD-PENDING-END", "status pending", "status pendings"],
+    ["SL-AC2-WORD-SKIP-START", "skip or retry", "unskip or retry"],
+    ["SL-AC2-WORD-RETRY-END", "skip or retry", "skip or retrying"],
+    ["SL-AC2-CASE-PARKED", "is parked", "is Parked"],
+    ["SL-AC2-CASE-PENDING", "status pending", "status Pending"],
+    ["SL-AC2-CASE-SKIP-OR-RETRY", "skip or retry", "Skip or Retry"],
+  ];
+  it.each(inWords)("%s: a pending sentence that holds %s only as %s is refused", (_id, from, to) => {
+    const pending = String(row(ledger(), "EAT-R012").pending);
+    expect(pending.split(from)).toHaveLength(2);
     expect(planted(value => {
         row(value, "EAT-R012").pending = pending.replace(from, to);
       })).toContain("L-AC2: EAT-R012 does not separate the pending parked per-agent skip or retry (witness wb-9v02)");
@@ -672,6 +801,29 @@ describe("wb-mit9: the AC2 rows and the F10 control separate fixed forms from th
     expect(planted(value => row(value, "EAT-R002").fixedForms?.push("WorktreePreservationFailedResult names the path where the edited bytes stay"))).toEqual([]);
     expect(planted(value => row(value, "EAT-R002").fixedForms?.push("WorktreePreservationFailedResult is typed. The kept worktree holds the bytes"))).toEqual([]);
   });
+  it("SL-BYTES-SINGULAR: a row naming WorktreePreservationFailedResult with a containing verb and the singular byte is refused", () => {
+    const findings = planted(value => row(value, "EAT-R002").fixedForms?.push("WorktreePreservationFailedResult contains the edited byte"));
+    expect(findings).toContain("L-BYTES: EAT-R002.fixedForms[1] says WorktreePreservationFailedResult contains byte data");
+  });
+  it("SL-BYTES-CASE: the type, the verb and the byte word are read in any letter case", () => {
+    const findings = planted(value => row(value, "EAT-R002").fixedForms?.push("worktreepreservationfailedresult CONTAINS the edited BYTES"));
+    expect(findings).toContain("L-BYTES: EAT-R002.fixedForms[1] says WorktreePreservationFailedResult contains byte data");
+  });
+  it("SL-BYTES-CONTROL: a string of the F10 control naming WorktreePreservationFailedResult with a containing verb and bytes is refused", () => {
+    const findings = planted(value => value.controls[0].fixedForms.push("WorktreePreservationFailedResult contains the edited bytes"));
+    expect(findings).toContain("L-BYTES: control F10.fixedForms[1] says WorktreePreservationFailedResult contains byte data");
+  });
+  const quietWords: Array<[string, string, string]> = [
+    ["SL-BYTES-QUIET-TYPE", "a longer type name", "WorktreePreservationFailedResultSet contains the edited bytes"],
+    ["SL-BYTES-QUIET-VERB-END", "a containing verb followed by more letters", "WorktreePreservationFailedResult containment names the edited bytes"],
+    ["SL-BYTES-QUIET-VERB-START", "a containing verb after other letters", "WorktreePreservationFailedResult miscarries the edited bytes"],
+    ["SL-BYTES-QUIET-BYTE-START", "the byte word after other letters", "WorktreePreservationFailedResult contains the edited kilobytes"],
+    ["SL-BYTES-QUIET-BYTE-END", "the byte word followed by more letters", "WorktreePreservationFailedResult contains the edited bytestream"],
+    ["SL-BYTES-QUIET-PERIOD-VERB", "a sentence break between the verb and the byte word", "WorktreePreservationFailedResult holds a path. The edited bytes stay in the kept worktree"],
+  ];
+  it.each(quietWords)("%s: %s is quiet", (_id, _what, text) => {
+    expect(planted(value => row(value, "EAT-R002").fixedForms?.push(text))).toEqual([]);
+  });
 });
 
 describe("wb-mit9: planted re-pin records each refused by their rule (EAT-R201 AC1, AC2)", { timeout: BUDGET }, () => {
@@ -695,6 +847,12 @@ describe("wb-mit9: planted re-pin records each refused by their rule (EAT-R201 A
       const exported = value.pi.refs[0].beadsExport;
       if (exported !== undefined) exported.blob = exported.blob.slice(0, 12);
     }, "R-SHA: record.pi.refs[0].beadsExport.blob is not a 40-hex id"],
+    ["SL-RECORD-UPPER-SHA", value => {
+      value.pi.refs[0].tree = value.pi.refs[0].tree.toUpperCase();
+    }, "R-SHA: record.pi.refs[0].tree is not a 40-hex id"],
+    ["SL-RECORD-LONG-SHA", value => {
+      value.pi.refs[0].tree = `0${value.pi.refs[0].tree}`;
+    }, "R-SHA: record.pi.refs[0].tree is not a 40-hex id"],
     ["SL-RECORD-BRANCH-UNNAMED", value => {
       value.pi.defaultBranch = "";
     }, "R-REFS: the default or the machine branch is not named"],
@@ -750,6 +908,7 @@ describe("wb-mit9: planted re-pin records each refused by their rule (EAT-R201 A
     }, "R-REFS: mw main has no package names and versions"],
     ["SL-RECORD-DEFAULT-IS-MACHINE", value => {
       value.pi.certifiedDefault.commit = value.pi.refs[1].commit;
+      value.pi.divergence.machineOnlyCommits = 1;
     }, "R-DEFAULT: the machine branch's unmerged tip is certified as the default branch"],
     ["SL-RECORD-DEFAULT-NAME", value => {
       value.pi.certifiedDefault.name = "workbench/implementation-program";
@@ -776,11 +935,23 @@ describe("wb-mit9: planted re-pin records each refused by their rule (EAT-R201 A
     ["SL-RECORD-MERGED-FLAGS", value => {
       value.implicatedChanges[7].inDefault = false;
     }, "R-CHANGES: implicated {change 7} is merged but not on both branches"],
+    ["SL-RECORD-MERGED-FLAGS-MACHINE", value => {
+      value.implicatedChanges[7].inMachine = false;
+    }, "R-CHANGES: implicated {change 7} is merged but not on both branches"],
     ["SL-RECORD-MACHINE-FLAGS", value => {
-      value.implicatedChanges[27].inDefault = true;
-    }, "R-CHANGES: implicated {change 27} is machine-only but not on the machine branch alone"],
+      value.implicatedChanges[7].class = "machine-only";
+    }, "R-CHANGES: implicated {change 7} is machine-only but not on the machine branch alone"],
+    ["SL-RECORD-MACHINE-FLAGS-MACHINE", value => {
+      const change = value.implicatedChanges[7];
+      change.class = "machine-only";
+      change.inDefault = false;
+      change.inMachine = false;
+    }, "R-CHANGES: implicated {change 7} is machine-only but not on the machine branch alone"],
     ["SL-RECORD-PROPOSED-FLAGS", value => {
       value.implicatedChanges[2].inMachine = true;
+    }, "R-CHANGES: implicated {change 2} is proposed but not on the default branch alone"],
+    ["SL-RECORD-PROPOSED-FLAGS-DEFAULT", value => {
+      value.implicatedChanges[2].inDefault = false;
     }, "R-CHANGES: implicated {change 2} is proposed but not on the default branch alone"],
     ["SL-RECORD-HISTORICAL-ROLE", value => {
       value.implicatedChanges[0].role = undefined;
@@ -822,8 +993,49 @@ describe("wb-mit9: planted re-pin records each refused by their rule (EAT-R201 A
   it("SL-RECORD-NOT-OBJECT: a record that is not an object is refused", () => {
     expect(repinFindings("record")).toEqual(["R-SCHEMA: the record is not an object"]);
   });
-  it("SL-RECORD-CLASSES: the committed record marks merged, machine-only, historical and proposed changes", () => {
-    expect([...new Set(record().implicatedChanges.map(change => change.class))].sort()).toEqual(["historical", "machine-only", "merged", "proposed"]);
+  it("SL-RECORD-DEFAULT-MASTER-MACHINE-ONLY: a certified default that is the default ref's own commit is not refused while the machine branch holds commits the default lacks", () => {
+    const value = record();
+    value.pi.divergence.machineOnlyCommits = 3;
+    expect(repinFindings(value).filter(finding => finding.startsWith("R-DEFAULT"))).toEqual([]);
+  });
+  it("SL-RECORD-SHA-KEY-QUIET: a member whose key only starts with commit, tree or blob is not read as an id", () => {
+    const value = record();
+    (value.pi.refs[0] as unknown as Record<string, unknown>).treeNote = "a note, not an id";
+    (value.pi.refs[0] as unknown as Record<string, unknown>).commitMessage = "a message, not an id";
+    (value.pi.refs[0] as unknown as Record<string, unknown>).blobPath = "a path, not an id";
+    expect(repinFindings(value)).toEqual([]);
+  });
+  it("SL-RECORD-MACHINE-FLAGS-AGREE: a machine-only change off the default branch and on the machine branch draws no finding", () => {
+    const value = record();
+    const change = value.implicatedChanges[7];
+    change.class = "machine-only";
+    change.inDefault = false;
+    change.inMachine = true;
+    expect(repinFindings(value)).toEqual([]);
+  });
+  const anywhere: Array<[string, string, (value: RepinRecord) => void]> = [
+    ["SL-RECORD-SHA-MERGE-BASE", "record.pi.mergeBase.commit", value => {
+      value.pi.mergeBase.commit = String(value.pi.mergeBase.commit).slice(0, 12);
+    }],
+    ["SL-RECORD-SHA-MW", "record.mw.refs[0].tree", value => {
+      value.mw.refs[0].tree = String(value.mw.refs[0].tree).slice(0, 12);
+    }],
+    ["SL-RECORD-SHA-HISTORICAL", "record.historicalPins[0].commit", value => {
+      value.historicalPins[0].commit = value.historicalPins[0].commit.slice(0, 12);
+    }],
+    ["SL-RECORD-SHA-CHANGE", "record.implicatedChanges[7].commit", value => {
+      value.implicatedChanges[7].commit = value.implicatedChanges[7].commit.slice(0, 12);
+    }],
+  ];
+  it.each(anywhere)("%s: a short id at %s is refused", (_id, where, mutate) => {
+    expect(plantedRecord(mutate)).toContain(`R-SHA: ${where} is not a 40-hex id`);
+  });
+  it("SL-RECORD-CLASSES: the committed record marks 23 merged, 5 proposed and 4 historical changes, and no machine-only change while the machine branch holds no commit the default lacks", () => {
+    const value = record();
+    const counts: Record<string, number> = {};
+    for (const change of value.implicatedChanges) counts[change.class] = (counts[change.class] ?? 0) + 1;
+    expect(counts).toEqual({ historical: 4, merged: 23, proposed: 5 });
+    expect(value.pi.divergence.machineOnlyCommits).toBe(0);
   });
 });
 
@@ -895,7 +1107,7 @@ describe("wb-mit9: planted Beads exports, each read by its rule (EAT-R202 AC1, A
     edit(beads);
     return ledgerFindings(value, { beads, readFile: READ, readSection: SECTIONS });
   };
-  it("SL-EXPORT-QUIET: an id named only outside the epic's children, out of EAT-R001..EAT-R200 or inside a longer number is not read as a missing row", () => {
+  it("SL-EXPORT-QUIET: an id named only outside the epic's children, below or above EAT-R001..EAT-R200 (EAT-R000, EAT-R201, EAT-R250) or inside a longer number (EAT-R1001) is not read as a missing row", () => {
     const value = ledger();
     value.rows.splice(99, 1);
     const findings = judgeBeads(value, beads => {
@@ -903,7 +1115,7 @@ describe("wb-mit9: planted Beads exports, each read by its rule (EAT-R202 AC1, A
       if (docs === undefined) throw new Error("no wb-12x1");
       docs.text = docs.text.replaceAll("EAT-R100", "EAT-R10O");
       beads.set("wb-zz01", { title: "a bead outside the epic", text: "names EAT-R100", parent: "wb-rhyt" });
-      beads.set("wb-zz02", { title: "a child of the epic", text: "names EAT-R250 and EAT-R1001", parent: "wb-1a3t" });
+      beads.set("wb-zz02", { title: "a child of the epic", text: "names EAT-R000, EAT-R201, EAT-R250 and EAT-R1001", parent: "wb-1a3t" });
     });
     expect(findings).toContain("L-IDS: EAT-R100 has no row");
     expect(findings.filter(finding => finding.startsWith("L-EXPORT"))).toEqual([]);
@@ -915,5 +1127,109 @@ describe("wb-mit9: planted Beads exports, each read by its rule (EAT-R202 AC1, A
       preserve.parent = "wb-rhyt";
     });
     expect(findings).toContain("L-GROUP: the ledger tag [MWI-preserve] is no wb-1a3t child tag in the export");
+  });
+  it("SL-GROUP-TAG-INSIDE: a group tag that its bead's export title holds only after other text does not start that title and is refused", () => {
+    const findings = judgeBeads(ledger(), beads => {
+      const preserve = beads.get("wb-5ik5");
+      if (preserve === undefined) throw new Error("no wb-5ik5");
+      preserve.title = `Moved ${preserve.title}`;
+    });
+    expect(findings).toContain("L-GROUP: B-preserve's tag [MWI-preserve] does not start the title of wb-5ik5");
+    expect(findings).toContain("L-GROUP: the ledger tag [MWI-preserve] is no wb-1a3t child tag in the export");
+  });
+});
+
+/** Each CLI run reads the Beads export and loads test/helpers/census.ts (about 3 s here); SL-CLI-FINDINGS runs it three times. */
+const CLI_BUDGET = 4 * BUDGET;
+
+describe("wb-mit9: the CLI's exit codes (qa/workbench/mechanical-status-ledger.mjs)", { timeout: CLI_BUDGET }, () => {
+  const CLI = join(REPO, "qa/workbench/mechanical-status-ledger.mjs");
+  const cli = (args: readonly string[]): [number | null, string, string] => {
+    const run = spawnSync(process.execPath, [CLI, ...args], { encoding: "utf8" });
+    return [run.status, run.stdout.trim(), run.stderr.trim()];
+  };
+  /** Writes the ledger and record given under dir; every other file the ledger reads, and the Beads export, is a symlink to this repository's. */
+  const rootWith = (dir: string, ledgerValue: Ledger, recordValue: RepinRecord): void => {
+    const paths = new Set<string>();
+    for (const item of ledgerValue.rows) {
+      for (const form of item.testedForms) paths.add(form.file);
+      for (const anchor of [...item.evidence, ...(item.partialBecause === undefined ? [] : [item.partialBecause.source])]) {
+        if (anchor.path !== undefined) paths.add(anchor.path);
+      }
+    }
+    for (const control of ledgerValue.controls) for (const form of control.testedForms) paths.add(form.file);
+    for (const path of paths) {
+      if (!existsSync(join(dir, path))) {
+        mkdirSync(dirname(join(dir, path)), { recursive: true });
+        symlinkSync(join(REPO, path), join(dir, path));
+      }
+    }
+    if (!existsSync(join(dir, ".beads"))) symlinkSync(join(REPO, ".beads"), join(dir, ".beads"));
+    mkdirSync(join(dir, "test/fixtures"), { recursive: true });
+    writeFileSync(join(dir, LEDGER_PATH), JSON.stringify(ledgerValue));
+    writeFileSync(join(dir, RECORD_PATH), JSON.stringify(recordValue));
+  };
+  const usage: Array<[string, string, string[]]> = [
+    ["SL-CLI-USAGE-BARE-ROOT", "--root with no directory", ["--root"]],
+    ["SL-CLI-USAGE-OTHER-FLAG", "another flag with a directory", ["--rot", REPO]],
+    ["SL-CLI-USAGE-EXTRA-ARG", "--root <dir> with one more argument", ["--root", REPO, "--root"]],
+  ];
+  it.each(usage)("%s: %s exits 2 with the usage line and no output", (_id, _what, args) => {
+    expect(cli(args)).toEqual([2, "", "usage: node qa/workbench/mechanical-status-ledger.mjs [--root <dir>]"]);
+  });
+  it("SL-CLI-UNREADABLE: a root that holds no ledger exits 2 naming unreadable input", () => {
+    const dir = makeScratch("wb-mit9-cli-");
+    try {
+      const [status, stdout, stderr] = cli(["--root", dir]);
+      expect([status, stdout, stderr.startsWith("unreadable input: ")]).toEqual([2, "", true]);
+    } finally {
+      removeScratch(dir);
+    }
+  });
+  const verdicts: Array<[string, string, () => [Ledger, RepinRecord], [number, string]]> = [
+    ["SL-CLI-ROOT", "the committed files", () => [ledger(), record()], [0, '{"ledger":[],"record":[]}']],
+    ["SL-CLI-FINDINGS-LEDGER", "a ledger finding alone", () => [{ ...ledger(), schema: "workbench.mechanical-status-ledger/v2" }, record()], [1, '{"ledger":["L-SCHEMA: schema is not workbench.mechanical-status-ledger/v1"],"record":[]}']],
+    ["SL-CLI-FINDINGS-RECORD", "a record finding alone", () => [ledger(), { ...record(), schema: "workbench.mechanical-repin-record/v2" }], [1, '{"ledger":[],"record":["R-SCHEMA: schema is not workbench.mechanical-repin-record/v1"]}']],
+  ];
+  it.each(verdicts)("%s: over a root whose other files are the committed ones, %s gives this exit status and stdout", (_id, _what, files, expected) => {
+    const dir = makeScratch("wb-mit9-cli-");
+    try {
+      const [ledgerValue, recordValue] = files();
+      rootWith(dir, ledgerValue, recordValue);
+      // stderr carries node's module-type warning for test/helpers/census.ts, as SL-CLI's run does, so it is not compared.
+      expect(cli(["--root", dir]).slice(0, 2)).toEqual(expected);
+    } finally {
+      removeScratch(dir);
+    }
+  });
+});
+
+describe("wb-mit9: the NAMED RESIDUAL R-HEADING-ANCHOR and its pinned quiet row (rule-14 enumerate form)", { timeout: BUDGET }, () => {
+  const HEADING_ANCHORS = [
+    "EAT-R015 evidence[0]",
+    "EAT-R016 evidence[0]",
+    "EAT-R022 evidence[0]",
+    "EAT-R027 evidence[0]",
+    "EAT-R077 partialBecause.source",
+    "EAT-R078 partialBecause.source",
+    "EAT-R079 partialBecause.source",
+    "EAT-R160 evidence[1]",
+    "EAT-R161 evidence[0]",
+    "EAT-R162 evidence[0]",
+    "EAT-R164 partialBecause.source",
+  ];
+  it("SL-RESIDUAL-HEADING-ANCHORS: exactly these 11 markdown anchors are substrings of their own section heading, and the section reader's text starts with that heading", () => {
+    const found: string[] = [];
+    for (const item of ledger().rows) {
+      const anchors: Array<[string, Anchor]> = item.evidence.map((anchor, index): [string, Anchor] => [`${item.id} evidence[${index}]`, anchor]);
+      if (item.partialBecause !== undefined) anchors.push([`${item.id} partialBecause.source`, item.partialBecause.source]);
+      for (const [where, anchor] of anchors) {
+        const section = anchor.section;
+        if (anchor.path === undefined || !anchor.path.endsWith(".md") || section === undefined || !section.heading.includes(anchor.anchor)) continue;
+        found.push(where);
+        expect(SECTIONS(String(READ(anchor.path)), section).text.startsWith(section.heading)).toBe(true);
+      }
+    }
+    expect(found).toEqual(HEADING_ANCHORS);
   });
 });

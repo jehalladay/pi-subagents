@@ -164,7 +164,8 @@ function anchorFindings(item, where, context) {
 /**
  * A reader of one rendered markdown section through docsSection(markdown, heading, depth, parents) of
  * test/helpers/census.ts: the section binds when docsSection binds it, and its text is its heading, then the rendered text
- * of each block docsSection returns (a list: its items' text; an HTML block, comments included, renders nothing).
+ * of each block docsSection returns (a paragraph: its text; a list: its items' text; never a block's markdown source, so
+ * an inline HTML comment inside a paragraph or a list item renders nothing, and an HTML block renders nothing).
  * @param {(markdown: string, heading: string, depth: number, parents: readonly string[]) => {ok: boolean, why: string, blocks: ReadonlyArray<{kind: string, text?: string, items?: ReadonlyArray<{text: string}>}>}} docsSection
  * @returns {(markdown: string, section: {heading: string, depth: number, parents: string[]}) => {ok: boolean, text: string, why: string}}
  */
@@ -195,11 +196,14 @@ export function sectionReader(docsSection) {
 /**
  * The ledger's rule groups, each finding prefixed with its rule (each line says exactly what its rule reads):
  *  L-SCHEMA   the schema string is LEDGER_SCHEMA; pins.pi.commit and pins.mw.commit are 40-hex; rows is an array of objects;
- *  L-IDS      the row ids are HISTORICAL_IDS exactly: each once, in order, none missing, none extra;
- *  L-EXPORT   every EAT-R001..EAT-R200 id that the description or notes of a GROUP_EPIC child in the Beads export names has a row;
+ *  L-IDS      the row ids are HISTORICAL_IDS exactly: each once, in order, none missing, none extra; the order finding is
+ *             given only when no other L-IDS finding is;
+ *  L-EXPORT   every id the description or notes of a GROUP_EPIC child in the Beads export names, written EAT-R and three
+ *             digits not followed by a fourth, whose number is 1 to 200, has a row;
  *  L-CLASS    each row's class is one of CLASSES;
  *  L-PIN      each row's pin.pi and pin.mw are 40-hex and equal the ledger's pins.pi.commit and pins.mw.commit;
- *  L-BEAD     each row's bead is "none" or a wb- id the Beads export holds, and that record's description or notes name the row id;
+ *  L-BEAD     each row's bead is "none" (L-BEAD reads no further; L-GROUP still asks for the group's bead) or a wb- id the
+ *             Beads export holds, and that record's description or notes hold the row id as text;
  *  L-GROUP    each row's group is a label of ledger.groups, whose bead it carries; each ledger group is a PLAN_GROUPS or EXTRA_GROUPS
  *             label, its bead is held by the export, its tag starts that bead's export title, and its tag is the [MWI-*] title
  *             tag of a GROUP_EPIC child in the export; every PLAN_GROUPS label has a ledger group (a GROUP_EPIC child filed later,
@@ -214,8 +218,9 @@ export function sectionReader(docsSection) {
  *             the anchor; a path to any other file names a file the tree holds whose raw text holds it; a bead names a record the
  *             export holds whose description or notes hold it as raw text; an item naming neither a path nor a bead is refused;
  *  L-AC2      each AC2_ROWS row and the AC2_CONTROL control carry a non-empty fixedForms entry and a pending sentence holding the
- *             words parked, skip or retry and pending (lower case, each a whole word) and the id wb-9v02, and the control exists;
- *  L-BYTES    no string of a row or control matches BYTES_CLAIM;
+ *             words parked, skip or retry and pending (lower case, each a whole word) and the text wb-9v02, and the control
+ *             exists;
+ *  L-BYTES    no string member of a row or of a control, at any depth, matches BYTES_CLAIM;
  *  L-SUMMARY  summary.rows and summary.byClass equal the rows; summary.planGroups is 25; summary.planGroupsComplete and
  *             planGroupsCompleteLabels equal the plan groups whose every row is already-implemented/tested;
  *  L-SUCCESSORS each row's successors is an array, each successor an EAT-R201..EAT-R310 id, none twice.
@@ -567,7 +572,10 @@ export function readBeadExport(root) {
   return records;
 }
 
-/** A reader of repository-relative files under root: the file's text, or null when it cannot be read. @param {string} root */
+/**
+ * A reader of repository-relative files under root: the file's text, or null when it cannot be read; an absolute path or a
+ * path with a .. segment is never read. @param {string} root
+ */
 export function treeReader(root) {
   /** @param {string} path @returns {string | null} */
   return path => {

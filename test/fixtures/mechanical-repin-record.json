@@ -3,7 +3,7 @@
   "program": "mechanical-native-interoperability-2026-11-09",
   "bead": "wb-mit9",
   "requirement": "EAT-R201",
-  "measuredUtc": "2026-11-10T02:05:56Z",
+  "measuredUtc": "2026-11-10T07:05:13Z",
   "method": "git rev-parse, merge-base and merge-base --is-ancestor in the rig clone after a fetch of the machine branch; git ls-remote for both remotes; the MW tip read from a private depth-1 fetch; bd show and bd list --parent for the Beads statuses",
   "pi": {
     "repository": "pi-subagents",
@@ -12,15 +12,15 @@
     "refs": [
       {
         "name": "master",
-        "commit": "0208b5f73aa61f6fd951e6d3a9c62d10559762f1",
-        "tree": "f12828872e8c491667e5412d8b255f4e0484e0d3",
+        "commit": "8cc7657b8b907580b90a61eec0f7ef60f7d37251",
+        "tree": "32462b589efb09a4da92f8bee90e83c8f1e3038b",
         "package": {
           "name": "@tintinweb/pi-subagents",
           "version": "0.20.0"
         },
         "beadsExport": {
           "path": ".beads/issues.jsonl",
-          "blob": "75c3535b4194702717b305ae7f698a1cb68f9d77"
+          "blob": "42c714c7e451cd9351590cba1c675f1f20174426"
         },
         "feedback": {
           "path": "new-feedback",
@@ -30,15 +30,15 @@
       },
       {
         "name": "workbench/implementation-program",
-        "commit": "d35bc9fe956eb8fcafd1f481d86c09d36cac3373",
-        "tree": "37f9b005c7287b404cadf421bd64e62efba02621",
+        "commit": "fbbbf67040ed9864db71a885c2e9033edc97dc14",
+        "tree": "b26fb446738c2b109c9f69ad805031b3a4d56a0d",
         "package": {
           "name": "@tintinweb/pi-subagents",
           "version": "0.20.0"
         },
         "beadsExport": {
           "path": ".beads/issues.jsonl",
-          "blob": "a63da9dabb6ee8824cfdc83faf7c3390b98af3e3"
+          "blob": "42c714c7e451cd9351590cba1c675f1f20174426"
         },
         "feedback": {
           "path": "new-feedback",
@@ -48,16 +48,16 @@
       }
     ],
     "mergeBase": {
-      "commit": "008e25c7ebfe0623d336f7a6968fa97ca3c80de8",
-      "tree": "1a2ab608fc3cc00b6a2f2fc6a2b48bdaae76af01"
+      "commit": "fbbbf67040ed9864db71a885c2e9033edc97dc14",
+      "tree": "b26fb446738c2b109c9f69ad805031b3a4d56a0d"
     },
     "divergence": {
-      "defaultOnlyCommits": 35,
-      "machineOnlyCommits": 11
+      "defaultOnlyCommits": 36,
+      "machineOnlyCommits": 0
     },
     "certifiedDefault": {
       "name": "master",
-      "commit": "0208b5f73aa61f6fd951e6d3a9c62d10559762f1"
+      "commit": "8cc7657b8b907580b90a61eec0f7ef60f7d37251"
     }
   },
   "mw": {
@@ -65,8 +65,8 @@
     "refs": [
       {
         "name": "main",
-        "commit": "15792622eb075bfab1cedb19c93309424ef0ce8d",
-        "tree": "f3960b5c14f4b4f471bdb6d218420dd31358f87f",
+        "commit": "da101da3d7ee8636f2e948ded033a823210de00b",
+        "tree": "fccbd895197c142c808ed40fee2358613fe6e11a",
         "packages": [
           {
             "path": "package.json",
@@ -135,7 +135,7 @@
         "status": "open",
         "children": {
           "wb-2ukh": "open",
-          "wb-7wkb": "in_progress",
+          "wb-7wkb": "closed",
           "wb-9bof": "open",
           "wb-mit9": "in_progress",
           "wb-xr1z": "in_progress",
@@ -184,7 +184,12 @@
     {
       "side": "pi",
       "commit": "0208b5f73aa61f6fd951e6d3a9c62d10559762f1",
-      "role": "continuity-14 master merge carrying landings 1079 and 1080 (the certified default tip at this re-pin)"
+      "role": "continuity-14 master merge carrying landings 1079 and 1080"
+    },
+    {
+      "side": "pi",
+      "commit": "8cc7657b8b907580b90a61eec0f7ef60f7d37251",
+      "role": "continuity master merge carrying landings 1081 and 1082 (the certified default tip at this re-pin)"
     }
   ],
   "implicatedChanges": [
@@ -374,25 +379,47 @@
     },
     {
       "commit": "0208b5f73aa61f6fd951e6d3a9c62d10559762f1",
-      "summary": "continuity-14: merge workbench/implementation-program (landing 1080) into master (the default tip at this re-pin)",
+      "summary": "continuity-14: merge workbench/implementation-program (landing 1080) into master",
       "inDefault": true,
       "inMachine": false,
       "class": "historical",
-      "role": "continuity-14 master merge carrying landings 1079 and 1080 (the certified default tip at this re-pin)"
+      "role": "continuity-14 master merge carrying landings 1079 and 1080"
     },
     {
       "commit": "4e9d9cae044a5c7bc3bcc7fc46e3fe10d3eba29b",
       "summary": "landing 1081: wb-3121 (the parked-dispatch witness follow-up of wb-9v02)",
-      "inDefault": false,
+      "inDefault": true,
       "inMachine": true,
-      "class": "machine-only"
+      "class": "merged"
     },
     {
       "commit": "d35bc9fe956eb8fcafd1f481d86c09d36cac3373",
       "summary": "ledger hop closing wb-3121 (the machine tip this cut #2 merged)",
-      "inDefault": false,
+      "inDefault": true,
       "inMachine": true,
-      "class": "machine-only"
+      "class": "merged"
+    },
+    {
+      "commit": "37a01a345653d7f8b1ffcacde442716ddff66d27",
+      "summary": "landing 1082: wb-7wkb (MNI-2026-11-09 P01, the first wb-rhyt child landed)",
+      "inDefault": true,
+      "inMachine": true,
+      "class": "merged"
+    },
+    {
+      "commit": "fbbbf67040ed9864db71a885c2e9033edc97dc14",
+      "summary": "ledger hop closing wb-7wkb (the machine tip this cut #3 merged)",
+      "inDefault": true,
+      "inMachine": true,
+      "class": "merged"
+    },
+    {
+      "commit": "8cc7657b8b907580b90a61eec0f7ef60f7d37251",
+      "summary": "continuity: merge workbench/implementation-program (landings 1081 and 1082) into master (the default tip at this re-pin)",
+      "inDefault": true,
+      "inMachine": false,
+      "class": "historical",
+      "role": "continuity master merge carrying landings 1081 and 1082 (the certified default tip at this re-pin)"
     }
   ],
   "acceptanceRule": "A changed ref commit or package version after a packet cut invalidates that cut's final-tree acceptance until the record is re-pinned and the affected tests rerun."
