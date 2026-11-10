@@ -14,28 +14,35 @@
  * cleanup reaches the git step a row parks at, that call never runs: the child prints PARKED and waits, so every step
  * before it ran for real and none after it did. While the child is parked a separate verifier process (VERIFIER below)
  * takes the before snapshot; the test then SIGKILLs the child, and a fresh verifier process runs the REAL
- * pruneWorktrees on the repo (the crash-recovery prune a later Pi runs at dispose) and takes the after snapshot. A
- * snapshot holds: whether the kept path exists, its README.md and work.txt bytes, HEAD, the index (git ls-files
- * --stage), git status --porcelain, whether the repo's worktree list registers the path (the recovery path), every
- * pi-agent-* branch with its commit, and the README.md and work.txt bytes of the kept HEAD's tree. judgeRetention reads
- * the pair: retained (the after snapshot holds the agent's exact bytes at a registered path and equals the before
- * snapshot), changed (the bytes held but the after snapshot differs), lost (the path is gone or unregistered, or a byte
- * differs) or unknown (a verifier could not read a snapshot).
+ * pruneWorktrees on the repo (the crash-recovery prune a later Pi runs at dispose) and takes the after snapshot. Once
+ * that restart verifier process has exited, a third verifier process, with no prune, takes the later snapshot. A
+ * snapshot holds: whether the kept path exists, its README.md and work.txt bytes, HEAD, the index paths (the path column
+ * of git ls-files --stage), git status --porcelain, whether the repo's worktree list registers the path (the recovery
+ * path), every pi-agent-* branch with its commit, and the README.md and work.txt bytes of the kept HEAD's tree.
+ * judgeRetention reads a pair, the before snapshot and one taken after the kill: retained (the second snapshot holds the
+ * agent's exact bytes at a registered path and equals the before snapshot), changed (the bytes held but the second
+ * snapshot differs), lost (the path is gone or unregistered, or a byte differs) or unknown (a verifier could not read a
+ * snapshot).
  *
  * PINNED READER SET, each by its own case, and nothing wider:
  *  - KILL-ROWS: for each KILL_ROWS row (the child parked at git status, add, commit, branch or worktree remove, the five
  *    git steps cleanupWorktree runs when the agent changed files, in that order), the before snapshot holds the agent's
  *    exact tracked and untracked bytes, the row's HEAD (the base commit, or a new commit whose tree holds both files),
  *    the row's status lines, index paths and pi-agent-* branches, at a registered path; the child's exit is the SIGKILL;
- *    and after the restart prune the after snapshot equals the before snapshot and judgeRetention reads retained.
+ *    and the after snapshot (read after the restart prune) and the later snapshot (read by a separate process after the
+ *    restart verifier process exited) each equal the before snapshot, and judgeRetention reads retained on both pairs.
  *  - FULL-RUN: with no park the child's cleanup completes, returns the preserved variant naming the pi-agent-<id>
  *    branch, logs exactly the git steps KILL_ROWS parks at, in KILL_ROWS order (the anchor KILL-SHAPE reads), and
- *    leaves the branch's tree holding both files' bytes and no registered worktree at the path.
+ *    leaves the branch's tree holding both files' exact bytes (git show output compared untrimmed) and no registered
+ *    worktree at the path, read once the child exited by a verifier with no prune and again by one after a restart prune.
  *  - KILL-SHAPE: KILL_ROWS and MUTANT_ROWS are the frozen lists below, and KILL_ROWS's steps are the steps FULL-RUN
  *    observes the product run (an anchor outside this file's literals).
  *  - MUTANT-ROWS: the detector proof. A child that, at the commit park, first runs a destructive cleanup (the real git
  *    worktree remove --force of the kept path, or a git reset --hard plus git clean -fd inside it) is killed the same
  *    way, and judgeRetention reads lost.
+ *  - LATER-READ: the detector proof of the later snapshot. A restart verifier that, after its prune, sets a 0 ms timer
+ *    running the real git worktree remove --force of the kept path still writes an after snapshot equal to the before
+ *    snapshot (judgeRetention reads retained on that pair), and the later snapshot finds the path gone (lost).
  *  - JUDGE-ROWS: a verifier run against a repo that no longer exists yields an unreadable snapshot, and judgeRetention
  *    reads unknown, never retained, when either snapshot of a pair is unreadable; on the planted snapshots of that case it
  *    reads retained for an equal pair holding the agent's bytes, changed when only HEAD differs, and lost when the path
@@ -43,10 +50,11 @@
  *  - ROSTER: the tests this file registers are exactly the ROSTER titles, in order, each in run mode and none marked to
  *    fail, the ROSTER case registered last; and the leading ids of their titles, each once in order, are exactly the ids
  *    that open the bullets of this PINNED READER SET, read from this file's own source (an anchor outside its literals).
- * NOT CLAIMED by this file: a kill inside a running git process (each park holds the call before git starts, so no
- * index.lock or partly written object is planted), power loss, a kill of a Pi session or of an AgentManager run, the
- * preservation-failure variant (test/worktree.test.ts and test/worktree-preservation-*.test.ts pin it), cleanup with no
- * changes, and any other step, path, cwd or git state than the rows'.
+ * NOT CLAIMED by this file: a change made after a row's later snapshot (by a process the restart left running, for
+ * example); a kill inside a running git process (each park holds the call before git starts, so no index.lock or partly
+ * written object is planted), power loss, a kill of a Pi session or of an AgentManager run, the preservation-failure
+ * variant (test/worktree.test.ts and test/worktree-preservation-*.test.ts pin it), cleanup with no changes, and any
+ * other step, path, cwd or git state than the rows'.
  * RESIDUAL: none claimed.
  */
 import { type ChildProcess, execFileSync, spawn, spawnSync } from "node:child_process";
@@ -126,6 +134,8 @@ if (plan.restart) {
     });
   }) };
   await pruneWorktrees(pi, plan.repo);
+  // LATER-READ's plant: a removal of the kept path that runs only after this process has written its snapshot.
+  if (plan.deferRemove) setTimeout(() => { execFile("git", ["worktree", "remove", "--force", plan.path], { cwd: plan.repo, timeout: 10000 }, () => {}); }, 0);
 }
 const exists = existsSync(plan.path);
 const spellings = exists ? [plan.path, realpathSync(plan.path)] : [plan.path];
@@ -208,21 +218,27 @@ function titleId(name: string): string {
 
 /** Every test this file registers, in registration order (the ROSTER case reads vitest's task tree against it). */
 const ROSTER = [
-  "KILL-ROWS 'K1' parked at git 'status': exact bytes, HEAD, index, status and recovery path equal across the kill and a restart prune",
-  "KILL-ROWS 'K2' parked at git 'add': exact bytes, HEAD, index, status and recovery path equal across the kill and a restart prune",
-  "KILL-ROWS 'K3' parked at git 'commit': exact bytes, HEAD, index, status and recovery path equal across the kill and a restart prune",
-  "KILL-ROWS 'K4' parked at git 'branch': exact bytes, HEAD, index, status and recovery path equal across the kill and a restart prune",
-  "KILL-ROWS 'K5' parked at git 'worktree remove': exact bytes, HEAD, index, status and recovery path equal across the kill and a restart prune",
-  "FULL-RUN with no park the cleanup completes on the branch, logging exactly the KILL_ROWS steps in order",
+  "KILL-ROWS 'K1' parked at git 'status': exact bytes, HEAD, index paths, status and recovery path equal before the kill, after a restart prune and in a later process",
+  "KILL-ROWS 'K2' parked at git 'add': exact bytes, HEAD, index paths, status and recovery path equal before the kill, after a restart prune and in a later process",
+  "KILL-ROWS 'K3' parked at git 'commit': exact bytes, HEAD, index paths, status and recovery path equal before the kill, after a restart prune and in a later process",
+  "KILL-ROWS 'K4' parked at git 'branch': exact bytes, HEAD, index paths, status and recovery path equal before the kill, after a restart prune and in a later process",
+  "KILL-ROWS 'K5' parked at git 'worktree remove': exact bytes, HEAD, index paths, status and recovery path equal before the kill, after a restart prune and in a later process",
+  "FULL-RUN with no park the cleanup completes, its branch's tree holds both files' exact bytes, and it logs exactly the KILL_ROWS steps in order",
   "KILL-SHAPE the kill and mutant tables are frozen, and the kill steps are the steps the full run observes",
   "MUTANT-ROWS 'M-REMOVE': a destructive cleanup at the 'commit' park is read as lost",
   "MUTANT-ROWS 'M-WIPE': a destructive cleanup at the 'commit' park is read as lost",
+  "LATER-READ a removal the restart verifier defers past its own snapshot reads retained in that snapshot and lost in the later one",
   "JUDGE-ROWS an unreadable snapshot is read as unknown, never retained, and each planted pair gets its verdict",
   "ROSTER the registered tests of this file are exactly these, in order, each run and none marked to fail",
 ] as const;
 
 function git(cwd: string, ...args: string[]): string {
-  return execFileSync("git", args, { cwd, stdio: "pipe", timeout: 10_000 }).toString().trim();
+  return gitBytes(cwd, ...args).trim();
+}
+
+/** git's stdout exactly as written, untrimmed (FULL-RUN compares blob bytes through it). */
+function gitBytes(cwd: string, ...args: string[]): string {
+  return execFileSync("git", args, { cwd, stdio: "pipe", timeout: 10_000 }).toString();
 }
 
 /** A real repo with one commit; makeScratch tracks it for the leak guard. */
@@ -306,9 +322,12 @@ function startChild(plan: { repo: string; park: string | null; mutant: "none" | 
   };
 }
 
-/** One snapshot read by a separate verifier process; restart first runs the real pruneWorktrees on the repo. */
-function snapshot(repo: string, path: string, restart: boolean): Reading {
-  const env = { ...process.env, PRESERVE_VERIFY_PLAN: JSON.stringify({ repo, path, restart }) };
+/**
+ * One snapshot read by a separate verifier process, which spawnSync waits on until it exits; restart first runs the
+ * real pruneWorktrees on the repo, and deferRemove (with restart) plants LATER-READ's removal after the prune.
+ */
+function snapshot(repo: string, path: string, restart: boolean, deferRemove = false): Reading {
+  const env = { ...process.env, PRESERVE_VERIFY_PLAN: JSON.stringify({ repo, path, restart, deferRemove }) };
   const run = spawnSync(process.execPath, [...NODE_FLAGS, VERIFIER], { cwd: process.cwd(), env, encoding: "utf8", timeout: 30_000 });
   if (run.status !== 0) return { kind: "unreadable", detail: `verifier exit ${String(run.status)}: ${run.stderr.trim()}` };
   try {
@@ -323,8 +342,8 @@ function readOf(reading: Reading): Snapshot {
   return reading.snapshot;
 }
 
-/** Park the child at `park`, take the before snapshot, SIGKILL it, restart-prune, take the after snapshot. */
-async function killTrial(park: string, mutant: "none" | "remove" | "wipe") {
+/** Park the child at `park`, take the before snapshot, SIGKILL it, restart-prune and take the after snapshot, then the later one. */
+async function killTrial(park: string, mutant: "none" | "remove" | "wipe", deferRemove = false) {
   const repo = initRepo();
   scratch.push(repo);
   const run = startChild({ repo, park, mutant });
@@ -334,12 +353,14 @@ async function killTrial(park: string, mutant: "none" | "remove" | "wipe") {
   const before = snapshot(repo, created.path, false);
   run.child.kill("SIGKILL");
   const exit = await run.exit;
-  const after = snapshot(repo, created.path, true);
-  return { repo, created, before, after, exit, steps: [...run.steps] };
+  const after = snapshot(repo, created.path, true, deferRemove);
+  // A third process, started only once the restart verifier process has exited.
+  const later = snapshot(repo, created.path, false);
+  return { repo, created, before, after, later, exit, steps: [...run.steps] };
 }
 
-describe("cleanupWorktree's kept bytes survive a SIGKILL of the host process (EAT-R215)", () => {
-  it.each(KILL_ROWS)("KILL-ROWS $id parked at git $park: exact bytes, HEAD, index, status and recovery path equal across the kill and a restart prune", async row => {
+describe("cleanupWorktree's kept bytes, read by separate verifier processes before a SIGKILL of the host process, after a restart prune and later (EAT-R215)", () => {
+  it.each(KILL_ROWS)("KILL-ROWS $id parked at git $park: exact bytes, HEAD, index paths, status and recovery path equal before the kill, after a restart prune and in a later process", async row => {
     const trial = await killTrial(row.park, "none");
     expect(trial.exit.signal).toBe("SIGKILL");
     const before = readOf(trial.before);
@@ -358,10 +379,12 @@ describe("cleanupWorktree's kept bytes survive a SIGKILL of the host process (EA
     }
     expect(before.branches).toEqual(row.branched ? [`${BRANCH} ${before.head}`] : []);
     expect(readOf(trial.after)).toEqual(before);
+    expect(readOf(trial.later)).toEqual(before);
     expect(judgeRetention(trial.before, trial.after)).toBe("retained");
+    expect(judgeRetention(trial.before, trial.later)).toBe("retained");
   });
 
-  it("FULL-RUN with no park the cleanup completes on the branch, logging exactly the KILL_ROWS steps in order", async () => {
+  it("FULL-RUN with no park the cleanup completes, its branch's tree holds both files' exact bytes, and it logs exactly the KILL_ROWS steps in order", async () => {
     const repo = initRepo();
     scratch.push(repo);
     const run = startChild({ repo, park: null, mutant: "none" });
@@ -372,12 +395,17 @@ describe("cleanupWorktree's kept bytes survive a SIGKILL of the host process (EA
     expect(exit.code).toBe(0);
     expect(result).toEqual({ hasChanges: true, branch: BRANCH, path: created.path });
     expect(run.steps).toEqual(KILL_ROWS.map(row => row.park));
-    expect(git(repo, "show", `${BRANCH}:README.md`)).toBe(TRACKED_BYTES.trimEnd());
-    expect(git(repo, "show", `${BRANCH}:work.txt`)).toBe(UNTRACKED_BYTES.trimEnd());
-    const after = readOf(snapshot(repo, created.path, true));
-    expect(after.exists).toBe(false);
-    expect(after.registered).toBe(false);
-    expect(after.branches).toEqual([`${BRANCH} ${git(repo, "rev-parse", BRANCH)}`]);
+    expect(gitBytes(repo, "show", `${BRANCH}:README.md`)).toBe(TRACKED_BYTES);
+    expect(gitBytes(repo, "show", `${BRANCH}:work.txt`)).toBe(UNTRACKED_BYTES);
+    const branches = [`${BRANCH} ${git(repo, "rev-parse", BRANCH)}`];
+    const direct = readOf(snapshot(repo, created.path, false));
+    expect(direct.exists).toBe(false);
+    expect(direct.registered).toBe(false);
+    expect(direct.branches).toEqual(branches);
+    const restarted = readOf(snapshot(repo, created.path, true));
+    expect(restarted.exists).toBe(false);
+    expect(restarted.registered).toBe(false);
+    expect(restarted.branches).toEqual(branches);
   });
 
   it("KILL-SHAPE the kill and mutant tables are frozen, and the kill steps are the steps the full run observes", async () => {
@@ -398,6 +426,15 @@ describe("cleanupWorktree's kept bytes survive a SIGKILL of the host process (EA
     expect(trial.exit.signal).toBe("SIGKILL");
     expect(trial.after.kind).toBe("read");
     expect(judgeRetention(trial.before, trial.after)).toBe("lost");
+  });
+
+  it("LATER-READ a removal the restart verifier defers past its own snapshot reads retained in that snapshot and lost in the later one", async () => {
+    const trial = await killTrial("commit", "none", true);
+    expect(trial.exit.signal).toBe("SIGKILL");
+    expect(readOf(trial.after)).toEqual(readOf(trial.before));
+    expect(judgeRetention(trial.before, trial.after)).toBe("retained");
+    expect(readOf(trial.later).exists).toBe(false);
+    expect(judgeRetention(trial.before, trial.later)).toBe("lost");
   });
 
   it("JUDGE-ROWS an unreadable snapshot is read as unknown, never retained, and each planted pair gets its verdict", () => {
