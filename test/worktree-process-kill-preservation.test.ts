@@ -58,6 +58,9 @@
  *    that open the bullets of this PINNED READER SET, read from this file's own source (an anchor outside its literals);
  *    and their rows are the rows the receipt's Rows lists name for this file, as RECEIPT-ROWS reads them, so that each
  *    of the two cases holds the other to the receipt.
+ *    The file's top level, as vitest's task tree holds it, is the one describe with the other eleven cases, then
+ *    RECEIPT-ROWS, then ROSTER (wb-okve, the Claude-host suite's form), so a skip of that describe (its skip, skipIf,
+ *    runIf or todo form) leaves ROSTER running to read those eleven cases out of run mode.
  * NOT CLAIMED by this file: a change made after a row's later snapshot (by a process the restart left running, for
  * example); a hollow that also removes a row from a line of the receipt (standing rule 15 refuses a removed receipt line
  * at the lane and at IDENTIFY); the receipt's case counts and every other sentence of it; a kill inside a running git
@@ -65,6 +68,9 @@
  * loss, a kill of a Pi session or of an AgentManager run, the preservation-failure variant (test/worktree.test.ts and
  * test/worktree-preservation-*.test.ts pin it), cleanup with no changes, and any other step, path, cwd or git state
  * than the rows'.
+ * A skip, todo or fail mark that covers ROSTER itself (on its own case, with ROSTER moved back into a skipped describe,
+ * or by a new skipped describe around the whole file) is NOT CLAIMED by this file: ROSTER reads every other case's mode
+ * and mark, and RECEIPT-ROWS reads none.
  * RESIDUAL: none claimed.
  */
 import { type ChildProcess, execFileSync, spawn, spawnSync } from "node:child_process";
@@ -300,7 +306,7 @@ const ROSTER = [
   "LATER-READ a removal the restart verifier defers past its own snapshot reads retained in that snapshot and lost in the later one",
   "JUDGE-ROWS an unreadable snapshot is read as unknown, never retained, and each planted pair gets its verdict",
   "RECEIPT-ROWS the rows of this file's tests are exactly the rows the Rows lists of docs/workbench/receipts/wb-7wkb.md name for this file, the cut #1 entry's list among them, and each row a new-rows sentence of that receipt names is named for one of its two suites",
-  "ROSTER the registered tests of this file are exactly these, in order, each run and none marked to fail, and their rows are the rows the receipt's Rows lists name for this file",
+  "ROSTER the registered tests of this file are exactly these, in order, each run and none marked to fail, RECEIPT-ROWS and ROSTER at the top level after the one describe that holds the rest, and their rows are the rows the receipt's Rows lists name for this file",
 ] as const;
 
 function git(cwd: string, ...args: string[]): string {
@@ -536,38 +542,42 @@ describe("cleanupWorktree's kept bytes, read by separate verifier processes befo
     expect(judgeRetention(read(kept), read({ ...kept, tracked: BASE_BYTES }))).toBe("lost");
     expect(judgeRetention(read(kept), read({ ...kept, untracked: null }))).toBe("lost");
   });
+});
 
-  it("RECEIPT-ROWS the rows of this file's tests are exactly the rows the Rows lists of docs/workbench/receipts/wb-7wkb.md name for this file, the cut #1 entry's list among them, and each row a new-rows sentence of that receipt names is named for one of its two suites", ({ task }) => {
-    const names: string[] = [];
-    const walk = (tasks: typeof task.file.tasks): void => {
-      for (const child of tasks) {
-        if (child.type === "test") names.push(child.name);
-        else if (child.type === "suite") walk(child.tasks);
-      }
-    };
-    walk(task.file.tasks);
-    const lists = receiptRowsLists(THIS_FILE);
-    expect(lists.map(list => list.entry)).toContain(0);
-    expect(rowSet(names.map(rowOf))).toEqual(rowSet(lists.flatMap(list => list.rows)));
-    const newRows = receiptNewRows();
-    expect(newRows.length).toBeGreaterThan(0);
-    const named = new Set([...lists, ...receiptRowsLists(SIBLING_FILE)].flatMap(list => list.rows));
-    expect(newRows.filter(row => !named.has(row))).toEqual([]);
-  });
+it("RECEIPT-ROWS the rows of this file's tests are exactly the rows the Rows lists of docs/workbench/receipts/wb-7wkb.md name for this file, the cut #1 entry's list among them, and each row a new-rows sentence of that receipt names is named for one of its two suites", ({ task }) => {
+  const names: string[] = [];
+  const walk = (tasks: typeof task.file.tasks): void => {
+    for (const child of tasks) {
+      if (child.type === "test") names.push(child.name);
+      else if (child.type === "suite") walk(child.tasks);
+    }
+  };
+  walk(task.file.tasks);
+  const lists = receiptRowsLists(THIS_FILE);
+  expect(lists.map(list => list.entry)).toContain(0);
+  expect(rowSet(names.map(rowOf))).toEqual(rowSet(lists.flatMap(list => list.rows)));
+  const newRows = receiptNewRows();
+  expect(newRows.length).toBeGreaterThan(0);
+  const named = new Set([...lists, ...receiptRowsLists(SIBLING_FILE)].flatMap(list => list.rows));
+  expect(newRows.filter(row => !named.has(row))).toEqual([]);
+});
 
-  it("ROSTER the registered tests of this file are exactly these, in order, each run and none marked to fail, and their rows are the rows the receipt's Rows lists name for this file", ({ task }) => {
-    const registered: Array<{ name: string; mode: string; fails: boolean; self: boolean }> = [];
-    const walk = (tasks: typeof task.file.tasks): void => {
-      for (const child of tasks) {
-        if (child.type === "test") registered.push({ name: child.name, mode: child.mode, fails: child.fails === true, self: child === task });
-        else if (child.type === "suite") walk(child.tasks);
-      }
-    };
-    walk(task.file.tasks);
-    expect(registered.map(entry => entry.name)).toEqual([...ROSTER]);
-    expect(registered.filter(entry => entry.mode !== "run" || entry.fails).map(entry => entry.name)).toEqual([]);
-    expect(registered.findIndex(entry => entry.self)).toBe(registered.length - 1);
-    expect([...new Set(registered.map(entry => titleId(entry.name)))]).toEqual(headerIds());
-    expect(rowSet(registered.map(entry => rowOf(entry.name)))).toEqual(rowSet(receiptRowsLists(THIS_FILE).flatMap(list => list.rows)));
-  });
+it("ROSTER the registered tests of this file are exactly these, in order, each run and none marked to fail, RECEIPT-ROWS and ROSTER at the top level after the one describe that holds the rest, and their rows are the rows the receipt's Rows lists name for this file", ({ task }) => {
+  const registered: Array<{ name: string; mode: string; fails: boolean; self: boolean }> = [];
+  const walk = (tasks: typeof task.file.tasks): void => {
+    for (const child of tasks) {
+      if (child.type === "test") registered.push({ name: child.name, mode: child.mode, fails: child.fails === true, self: child === task });
+      else if (child.type === "suite") walk(child.tasks);
+    }
+  };
+  walk(task.file.tasks);
+  expect(registered.map(entry => entry.name)).toEqual([...ROSTER]);
+  expect(registered.filter(entry => entry.mode !== "run" || entry.fails).map(entry => entry.name)).toEqual([]);
+  expect(registered.findIndex(entry => entry.self)).toBe(registered.length - 1);
+  expect([...new Set(registered.map(entry => titleId(entry.name)))]).toEqual(headerIds());
+  expect(rowSet(registered.map(entry => rowOf(entry.name)))).toEqual(rowSet(receiptRowsLists(THIS_FILE).flatMap(list => list.rows)));
+  // wb-okve: the file's top level, as vitest's task tree holds it, is the one describe with every other case, then
+  // RECEIPT-ROWS and ROSTER, so a skip of that describe leaves both readers running.
+  const layout = task.file.tasks.map(child => (child.type === "suite" ? child.tasks.map(test => test.name) : child.name));
+  expect(layout).toEqual([ROSTER.slice(0, -2), ...ROSTER.slice(-2)]);
 });
