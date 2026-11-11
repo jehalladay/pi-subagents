@@ -57,7 +57,8 @@
  *    slice reads it as an unknown-relation-kind reference, never an edge, and the agent's read counts nothing and flags partial. B3 the
  *    hosted-agent report: the session adapter states only its fixed ownership, causation and grouping edges for a visual-debugging
  *    sample whose label and tool names carry the claim, a report member riding the sample is read nowhere, and src's relate() call
- *    sites are exactly the three ownership adapters (src/index.ts, which ingests the hosted agents' nodes, relates nothing). B4 the
+ *    sites are the three ownership adapters and the wb-79k.2 ReactiveFiber observe-wiring, which relays the reader adapter's one
+ *    display-grouping edge and states no kind of its own (src/index.ts, which ingests the hosted agents' nodes, relates nothing). B4 the
  *    witness rule, armed (witnessViolations) for the first mapping reader: the honest reader passes every claim, and reading
  *    identity from a debug id, a screenshot, id equality, an agent report or a partial witness fails, as do synthesizing the
  *    revision, dropping or rewriting the witness, and ignoring a witness that names another target. B5 every bound reader meets B4
@@ -163,6 +164,9 @@ installScratchLeakGuard();
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
 const ROSTER_PATH = join(HERE, "fixtures", "fiber-debug-identity-roster.json");
+/** wb-79k.2: the relate() site that relays the ReactiveFiber reader adapter's relations, and the adapter whose kinds it relays. */
+const OBSERVE_WIRING = "src/workbench/reactivefiber-wiring.ts";
+const OBSERVE_WIRING_ADAPTER = "src/workbench/reactivefiber-observer.ts";
 const BEAD = "wb-4nut.1";
 /** ReactiveFiberTSXSDK at the program-triage pin (the bead's citation). */
 const PROGRAM_PIN = "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df";
@@ -1057,17 +1061,23 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const withReport: unknown = { ...AGENT_SAMPLE, report: `React debug id 42 is fiber-optics ${FIBER_NODE.id} (${REPORT_MARKER})` };
     const reported = agentTopology(withReport as ClaudeNativeObservation);
     const writeSites: Record<string, { calls: number; kinds: string[] }> = {};
+    const kindsStated = (text: string): string[] =>
+      [...new Set([...text.matchAll(/kind: ?["'](dependency|causation|ownership|grouping|hypothesis)["']/g)].map(match => match[1] ?? ""))].sort();
     for (const file of srcFiles()) {
       const text = textOf(file);
       const calls = (text.match(/\.relate\(/g) ?? []).length;
       if (calls === 0) continue;
-      const kinds = [...new Set([...text.matchAll(/kind: ?["'](dependency|causation|ownership|grouping|hypothesis)["']/g)].map(match => match[1] ?? ""))].sort();
-      writeSites[relative(REPO, file)] = { calls, kinds };
+      writeSites[relative(REPO, file)] = { calls, kinds: kindsStated(text) };
     }
     const relations = topology.relations.map(relation => `${relation.kind} ${refName(relation.from)} -> ${refName(relation.to)}`).sort();
     expect(JSON.stringify(reported), "a report member riding the sample changes nothing").toBe(JSON.stringify(topology));
     expect(keysAndStrings(reported).some(text => text.includes(REPORT_MARKER)), "the report member is read nowhere").toBe(false);
-    expect(Object.values(writeSites).every(site => site.kinds.length === 1 && site.kinds[0] === "ownership"), "every relate() call site states ownership only").toBe(true);
+    // wb-79k.2: the host seam's ReactiveFiber observe-wiring is a fourth relate() site. It states no kind of its own - it relays the
+    // reader adapter's frozen relations - and the adapter states exactly one kind, a display grouping: never ownership, never a mapping.
+    const { [OBSERVE_WIRING]: relay, ...adapters } = writeSites;
+    expect(Object.values(adapters).every(site => site.kinds.length === 1 && site.kinds[0] === "ownership"), "every relate() call site but the observe-wiring states ownership only").toBe(true);
+    expect(relay, "the observe-wiring relates the reader adapter's edges and states no kind of its own").toEqual({ calls: 1, kinds: [] });
+    expect(kindsStated(textOf(join(REPO, OBSERVE_WIRING_ADAPTER))), "the adapter the observe-wiring relays states one display-grouping kind").toEqual(["grouping"]);
     return json({
       relations,
       refs: topology.snapshots.map(snapshot => refName(snapshot.source)).sort(),

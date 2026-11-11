@@ -16,7 +16,7 @@ import type {
   WorkflowSpawnResult,
 } from "../workflow/runtime.js";
 import { resolveWorkflowSource } from "../workflow/saved.js";
-import type { CapabilityRegistry } from "./capability-registry.js";
+import type { CapabilityRegistry, JsonValue } from "./capability-registry.js";
 import { CLAUDE_CAPABILITY_TOOL_NAMES, createCuratedTools } from "./claude-capability-tools.js";
 import { sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "./redaction.js";
 import { type ClaudeReplayDependencies, replayDependenciesMeasured } from "./replay-dependencies.js";
@@ -62,6 +62,13 @@ export interface ClaudeWorkflowHostOptions {
    * of an agent answer nor of a journaled node read. Absent, the basis is the eight policy elements alone.
    */
   replayDependencies?: ClaudeReplayDependencies;
+  /**
+   * wb-79k.2 (W13/VC-2): handed every value callNode answers a workflow node() call with, after the registry answered and before
+   * the runtime receives it, with the request it answers (src/index.ts binds the run's observe-wiring here). Observation
+   * only: a throw is contained, so the answer is the registry's whatever the hook does. A call the registry refuses answers no
+   * value and reaches no hook, and a journal replay answers from the journal without reaching the host at all.
+   */
+  onNodeValue?: (request: WorkflowNodeRequest, value: JsonValue) => void;
 }
 
 /**
@@ -377,12 +384,18 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
     ...(config.capabilities ? {
       callNode: async (request: WorkflowNodeRequest) => {
         await config.beforeDispatch?.();
-        return config.capabilities!.invoke(request.capabilityId, request.input, {
+        const value = await config.capabilities!.invoke(request.capabilityId, request.input, {
           grants: config.grants ?? [], signal: request.signal,
           invocationId: config.invocationId,
           principal: config.principal, workspace: config.cwd,
           callId: String(request.callId),
         });
+        try {
+          config.onNodeValue?.(request, value);
+        } catch {
+          // Observation never changes the answer: the hook diagnoses its own refusals (wb-79k.2).
+        }
+        return value;
       },
       // Host-side policy lookup, not script-facing discovery: the host owns
       // this registry, and the journal needs the descriptor's effect class at

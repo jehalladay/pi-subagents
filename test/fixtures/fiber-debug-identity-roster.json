@@ -619,6 +619,10 @@
         "kinds": [
          "ownership"
         ]
+       },
+       "src/workbench/reactivefiber-wiring.ts": {
+        "calls": 1,
+        "kinds": []
        }
       },
       "indexRelates": 0

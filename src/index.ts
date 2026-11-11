@@ -83,6 +83,7 @@ import { captureInvocationIdentity, type IdentityCaptureInput, identityDigest, v
 import { loadWorkbenchNative, workbenchNative } from "./workbench/native-modules.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type Presentation } from "./workbench/observation.js";
 import { OBSERVE_CURSOR_MAX_BYTES, OBSERVE_DEFAULT_MAX_BYTES, OBSERVE_MAX_LIMIT, OBSERVE_MAX_MAX_BYTES, OBSERVE_MIN_MAX_BYTES, observeInvocation } from "./workbench/observe-query.js";
+import { nativeReactiveFiberNodeObserver } from "./workbench/reactivefiber-wiring.js";
 import { createWorkflowReconcileTool } from "./workbench/reconcile-tool.js";
 import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText, WORKBENCH_TEXT_LIMIT } from "./workbench/redaction.js";
 import { type ClaudeReplayDependencies, claudeUserConfigDir, instructionDependency, providerDependency, sourceDependency } from "./workbench/replay-dependencies.js";
@@ -3218,6 +3219,14 @@ Terse command-style prompts produce shallow, generic work.
                 if (live?.sessionId !== undefined && liveClaudeSessions.get(live.sessionId) === key) liveClaudeSessions.delete(live.sessionId);
                 liveClaudeQueries.delete(key);
               },
+              // wb-79k.2 (W13/VC-2): a ReactiveFiber preview a node() call answers with reaches this run's live projection
+              // through the observe-wiring, under host-owned context only. registryFor registers the native providers, so
+              // every reading here came through the real registered CLI path; a refused reading leaves one workflow_log line.
+              onNodeValue: nativeReactiveFiberNodeObserver({
+                projection, scope, invocationId: task.id, now: () => new Date().toISOString(),
+                ...(settings.reactivefiberWorkspaceRoot !== undefined ? { authorizedRfRoot: settings.reactivefiberWorkspaceRoot } : {}),
+                log: message => updateWorkflowProgressBatch(task, [{ type: "workflow_log", message }]),
+              }),
             })
           : createWorkflowHost({
               pi, ctx, manager, signal: task.abortController.signal,

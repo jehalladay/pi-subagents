@@ -7497,6 +7497,11 @@ export const NON_RENDER: Readonly<Record<string, NonRenderReader>> = {
   "src/workbench/furnace-observer.ts": { value: [], type: ["relate"], reason: `the Furnace adapter: ${STATES_RELATE}` },
   "src/workbench/hyperunix-observer.ts": { value: [], type: ["relate"], reason: `the HyperUnix adapter: ${STATES_RELATE}` },
   "src/workbench/reactivefiber-observer.ts": { value: [], type: ["relate"], reason: `the ReactiveFiber adapter: ${STATES_RELATE}` },
+  "src/workbench/reactivefiber-wiring.ts": {
+    value: ["refresh", "relate"],
+    type: [],
+    reason: "the ReactiveFiber observe-wiring (wb-79k.2): the host seam's node-value hook admits a preview reading a workflow node() call answered with - refresh for its snapshot, relate for its display-grouping edge - inside that call's answer, never on a redraw",
+  },
 };
 
 export interface JudgedRow {

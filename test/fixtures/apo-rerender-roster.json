@@ -1706,6 +1706,14 @@
         "relate"
       ],
       "reason": "the ReactiveFiber adapter: it references the class only in the statement type relate accepts (Parameters<ObservationProjection['relate']>[0]), never in a value position; the host admits what it states"
+    },
+    "src/workbench/reactivefiber-wiring.ts": {
+      "value": [
+        "refresh",
+        "relate"
+      ],
+      "type": [],
+      "reason": "the ReactiveFiber observe-wiring (wb-79k.2): the host seam's node-value hook admits a preview reading a workflow node() call answered with - refresh for its snapshot, relate for its display-grouping edge - inside that call's answer, never on a redraw"
     }
   },
   "tests": [

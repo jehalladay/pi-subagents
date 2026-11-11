@@ -1852,7 +1852,9 @@
       ],
       "registrationNames": {
        "src/index.ts": [
+        "./workbench/reactivefiber-wiring.js",
         "discover:reactivefiber.render.preview",
+        "nativeReactiveFiberNodeObserver",
         "reactivefiberWorkspaceRoot"
        ]
       },
