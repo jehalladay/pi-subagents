@@ -1,62 +1,85 @@
 /**
- * wb-lri (W07: HyperUnix provider), the source-basis STANDING leg, cut 3. The bead: "Typed HX query capability preserving source
+ * wb-lri (W07: HyperUnix provider), the source-basis STANDING leg, cut 4. The bead: "Typed HX query capability preserving source
  * basis, coverage classification, bounds, known-empty vs incomplete/unknown. Partial coverage never becomes known-empty. Verify
  * actual installed HX SDK surface first; honest blocker if absent. Acceptance: real query coverage and source basis. Spec:
  * docs/workbench/07." Its notes: "Full source basis/observer acceptance remains open." The coverage half is landed and pinned
  * elsewhere (test/workbench-hyperunix-observer.test.ts H2 and the docs/07 census row H1); this file is the source-basis half.
  *
- * THE GATE STATE, measured by qa/workbench/hx-source-basis-probe.mjs and committed as RECORD: the vendored @hyperunix/sdk 0.1.0
- * carries a read's source basis only as ReadResult.revision, the runtime's own resolution of a pinned view (QueryResult has no
- * such member and resultToJson writes no such key). The installed hx answers the provider's find request (kind, root, best
- * effort, a 30 s wall, a 60 s wait) through the live view (hx.view/workspace-head) with no pinned-view resolution and no runtime
- * query digest, and it refuses the same request pinned to a revision ("hx find binds no view in this build", reason
- * view-binding-pending, HX-VIEW-013). No source basis exists for a find at this build; what this census claims is that the two
- * hyperunix.find registrations of src/workbench/providers/hyperunix.ts state none, in exactly the read sets enumerated below.
+ * BACKGROUND (what the committed RECORD measured with qa/workbench/hx-source-basis-probe.mjs, and what the vendored @hyperunix/sdk
+ * 0.1.0 declares in dist/workspace.d.ts; context for the rows, not a row): the SDK declares a read's source basis only as
+ * ReadResult.revision, the runtime's resolution of a pinned view ({requested, resolvedCommit}; "null when the stream carried none
+ * (a live read)"), and the record's live leg serialized no revision key. The installed hx answered the provider's find request
+ * (kind, root, best effort, a 30 s wall, a 60 s wait) through the live view hx.view/workspace-head with no pinned-view resolution
+ * and no runtime query digest, and refused the same request pinned to the base revision (reason "view-binding-pending: hx find
+ * under --view git:<base>", HX-VIEW-013), so the recorded build printed no view identity and no resolution for a pinned find. No
+ * source basis exists for a find at this build; what this census claims is that the two hyperunix.find registrations of
+ * src/workbench/providers/hyperunix.ts state none, in exactly the read sets and over exactly the results enumerated below.
  *
  * HISTORY. Cut 1 (ca61b20c) ran only the injected registration; refusal #1 (g10-gate-s289, gate-prep-36) named G1-G3. Cut 2
  * (65cb9bff) read the native registration with the TypeScript parser and cured G1-G3; refusal #2 (g10-gate-s289, gate-prep-160;
  * class guard bound by R-B778) named U1-U6: the native readings named bindings by TEXT, so a same-named parameter, local or import
  * cut the tie (U1 L01, the invoke callee; U2 L02, the native serializer; U3 L04, the native Bounds); SB4 and SB5 asserted record
  * facts the receipt's Measured record table did not anchor (U4 L06-L08); a nested receipt bullet escaped the entry's item model
- * (U5 L10); and the injected output could relay the resolution's requested revision under another name (U6 L12).
+ * (U5 L10); and the injected output could relay the resolution's requested revision under another name (U6 L12). Cut 3 (fa7cbee3)
+ * resolved the native names through the TypeScript binder, anchored the record leaf for leaf and flattened the receipt entry;
+ * refusal #3 (g10-gate-s290, gate-prep-3; the second-stage cap of rule 19(c), engaged by R-B794) named U1-U5: every run-time row
+ * built its result on the live view or a null view while its words ranged over any view, so a relay of the resolution keyed on a
+ * pinned view (U1 N01), a pinned view rewritten to the live spelling (U2 N03) and an observer subjectBasis for a pinned view (U3
+ * N04) left the census green; SB3's source-reference equality compared undefined with undefined (U4 N11); and SB6's host-path pin
+ * read seven prefixes only (U5 N10).
  *
- * FORM OF RECORD (cut 3, the rule-14 enumerate-the-resolvable form; cure form PIN-AND-FALSIFY for U1-U6, each member planted
- * verbatim as a witness): each row claims exactly the read set this header enumerates for it; every known unread family inside
- * the claimed subject is a named residual with a pinned quiet row; a spelling outside a row's read set is a member of a residual
- * family or NOT CLAIMED, never a claim of that row. "No", "every" and "exactly" below range over the enumerated forms.
+ * FORM OF RECORD (cut 4: the rule-14 enumerate-the-resolvable form the second-stage cap R-B794 requires; the rows, their pins, the
+ * residual families and the anchor rows are cut 3's, unchanged; cure form PIN-AND-FALSIFY for U1-U5): each row claims exactly the
+ * read set and the results this header enumerates for it; every known unread family inside the claimed subject is a named residual
+ * with a pinned quiet row; a spelling, result or path outside a row's enumeration is a member of a residual family or NOT CLAIMED,
+ * never a claim of that row. "No", "every", "each" and "exactly" below range over the enumerated forms. U5's survivor N10 and its
+ * paired control N10c are planted verbatim into the record text SB6 reads; U1-U4's survivors change code the run-time rows execute,
+ * which a planted text cannot reach, so each is replayed alone from refusal #3's archive and reds the rows the receipt names.
  *
- * BINDINGS (U1-U3): a name the native readings read resolves through the landed bindingOf (test/helpers/hyperunix-custody-readers.ts:
- * the TypeScript binder's own symbol at its use site, in a one-file program over the very source; its falsifier census is
- * test/workbench-hyperunix-custody-readers-census.test.ts), so a same-named declaration in another scope never answers for it. This
- * census writes a resolution as 'global'; as 'import <module> <exported name>'; or as '<kind> of <owner>' for each declaration of the
- * symbol in the file (kind: function, parameter <index>, const, let, var or catch with ' = <initializer>' white space removed, or the
- * declaration's syntax kind; owner: the enclosing function's name, a function value's property or variable name, or module), joined
- * by ' + ' when the symbol has more than one declaration; a name that resolves differently at two use sites reads both, joined by
- * ' | '. A name is read where it is a value: never a declaration's own name, a member name after a dot, a property key or a name
- * under a type.
+ * BINDINGS (refusal #2's U1-U3): a name the native readings read resolves through the landed bindingOf
+ * (test/helpers/hyperunix-custody-readers.ts: the TypeScript binder's own symbol at its use site, in a one-file program over the very
+ * source; its falsifier census is test/workbench-hyperunix-custody-readers-census.test.ts), so a same-named declaration in another
+ * scope never answers for it. This census writes a resolution as 'global'; as 'import <module> <exported name>'; or as '<kind> of
+ * <owner>' for each declaration of the symbol in the file (kind: function, parameter <index>, const, let, var or catch with
+ * ' = <initializer>' white space removed, or the declaration's syntax kind; owner: the enclosing function's name, a function value's
+ * property or variable name, or module), joined by ' + ' when the symbol has more than one declaration; a name that resolves
+ * differently at two use sites reads both, joined by ' | '. A name is read where it is a value: never a declaration's own name, a
+ * member name after a dot, a property key or a name under a type.
+ *
+ * THE ENUMERATED RESULTS (U1-U3): each run-time row invokes the injected registration with the record's request (kind and root read
+ * from the record; SB1b drops the root) over a recording reader whose runtime is version 0.1.0 and a fixed binary digest, and whose
+ * result is documentWith(<view>): one hyperunix.result/1 document whose SDK serialization has exactly the record's measured keys
+ * (SB2a), on each of the three view values the committed record holds and SB4/SB5 pin - the live leg's measured view
+ * (hx.view/workspace-head), the pinned leg's requested view (git:<base>, the record's base revision; the recorded build answered no
+ * pinned find, so this request spelling stands in for the identity a runtime would print for one) and the pinned leg's view (null).
+ * The quiet row runs each view without a resolution and with one: on the pinned view a resolution of that request (requested <base>,
+ * the request's revision text as the SDK declares it, and resolvedCommit <base>, the commit a full commit id names), on the live and
+ * null views the distinctive control RESOLUTION below (cut 3's control, kept; a live read carries none).
  *
  * THE PINNED READER SET (each case's id, row and assertion count are the receipt's Judged pins table):
  *  REQUEST     SB1a, SB1b: the injected registration over a recording reader issues the record's request (kind, root, best effort,
  *              a 30 s wall bound, a 60 s wait) with a root, and the same request without one, and never a view member.
- *              SB1c (parser, binder): the module's find calls are exactly two, the injected reader's then nativeHyperUnixFind's own,
- *              and the name find occurs in its code three times only; each passes exactly the five request members, a bounds member
- *              spelled exactly Bounds.create({wall: <the record's wall>}), the record's wait and best effort true; in
- *              nativeHyperUnixFind, Bounds resolves to the @hyperunix/sdk import of Bounds, workspace to its one const, and kind and
- *              root to its parameters 1 and 2. Witnesses:
+ *              SB1c (parser, binder): the module's find calls on an identifier receiver are exactly two, on receivers named reader
+ *              (read by its name only) and then workspace (nativeHyperUnixFind's own), and the name find occurs in its code three
+ *              times only; each passes exactly the five request members, a bounds member spelled exactly Bounds.create({wall: <the
+ *              record's wall>}), the record's wait and best effort true; in nativeHyperUnixFind, Bounds resolves to the
+ *              @hyperunix/sdk import of Bounds, workspace to its one const, and kind and root to its parameters 1 and 2. Witnesses:
  *              G2's identifier spread, a call spread and a member-access spread planted into the native call read '<spread>'; a
- *              planted raw find makes find four; L04 planted (U3) resolves the native Bounds to a const of nativeHyperUnixFind.
+ *              planted raw find makes find four; L04 planted resolves the native Bounds to a const of nativeHyperUnixFind.
  *              SB1d (parser, binder): nativeHyperUnixFind's find runs on workspace, bound once as const to the module's only
  *              HyperUnix.open call, whose argument list is exactly realpathSync(workspaceRoot) (no client options, so no client default
  *              view); HyperUnix resolves to the @hyperunix/sdk import, realpathSync to the node:fs import, workspaceRoot to the
- *              function's parameter 0; the name HyperUnix occurs only as its import and that call; no identifier, member or string
- *              literal of the code names a view. Witnesses: G1 planted reads its options argument and three view names; the planted
- *              raw find's --view names one; a planted constructed workspace reads as its binding; a planted local realpathSync reads
- *              as a const.
- *  ENVELOPE    SB2a: over a result carrying the measured view, the injected registration's output has exactly the members contract,
- *              source, workspaceRoot and runtime and equals the envelope built from the SDK's own serialization of that result (the
- *              contract, that serialization, the workspace root, the runtime's version and binary digest), source is exactly the
- *              measured result's serialized keys, source.view is the runtime's view verbatim, and no member anywhere names a revision
- *              or a basis. SB2b: a null view stays null, in the same envelope.
+ *              function's parameter 0; the name HyperUnix occurs only as its import and that call; no identifier, private name or
+ *              string or template literal text of the code contains "view" in any case. Witnesses: G1 planted reads its options
+ *              argument and three view names; the planted raw find's --view names one; a planted constructed workspace reads as its
+ *              binding; a planted local realpathSync reads as a const.
+ *  ENVELOPE    SB2a: over a result on each of the record's two string views (hx.view/workspace-head and git:<base>, both read from the
+ *              record and pinned to those spellings), the injected registration's output has exactly the members contract, source,
+ *              workspaceRoot and runtime and equals the envelope built from the SDK's own serialization of that result (the contract,
+ *              that serialization, the workspace root, the runtime's version and binary digest), source is exactly the record's
+ *              measured serialized keys, source.view is that view verbatim, and no member name anywhere matches revision, basis or
+ *              resolved in any case. SB2b: over a result on the pinned leg's null view, the output has the same four members, equals
+ *              the same envelope of that result, and source.view stays null.
  *              SB2c (parser, binder): nativeHyperUnixFind's only return is JSON.parse(JSON.stringify(<object literal>)), JSON global,
  *              whose members are exactly contract, source, workspaceRoot and runtime, valued HYPERUNIX_FIND_CONTRACT (the module's
  *              const), resultToJson(result) (resultToJson the @hyperunix/sdk import, result its one const of the awaited
@@ -64,9 +87,9 @@
  *              its one const of the awaited client.runtime()); registerNativeHyperUnixFind's body is the one statement
  *              registry.register({descriptor, invoke}), whose invoke is a direct call of nativeHyperUnixFind resolving to the module's
  *              one function declaration of that name, the one this census reads. Witnesses: G3, a spread, an early return, a let
- *              result and a wrapped invoke read as planted; L01 planted (U1) resolves the invoke callee to registerNativeHyperUnixFind's
- *              parameter 2; L02 planted (U2) resolves the native serializer to a const of nativeHyperUnixFind; a planted JSON shadow
- *              and a planted spread after invoke read as planted.
+ *              result and a wrapped invoke read as planted; L01 planted resolves the invoke callee to registerNativeHyperUnixFind's
+ *              parameter 2; L02 planted resolves the native serializer to a const of nativeHyperUnixFind; a planted JSON shadow and a
+ *              planted spread after invoke read as planted.
  *  BINDING     SB7 (binder): every name the bodies of nativeHyperUnixFind and registerNativeHyperUnixFind read resolves exactly as
  *              NATIVE_NAMES and REGISTER_NAMES pin; nativeHyperUnixFind declares exactly workspace, client, onAbort, runtime and result
  *              (each const, once) and takes exactly workspaceRoot, kind, root and signal; the names nativeHyperUnixFind and
@@ -74,14 +97,25 @@
  *              declaration or export assignment, so the name a host imports is the function read. Witnesses: a planted second
  *              nativeHyperUnixFind, an aliased import (resultFromJson as resultToJson), an export re-route and a block-level client
  *              shadow each read as planted.
- *  PROJECTION  SB3: hyperunixTopology over both injected outputs states no subjectBasis, sourceRevision or definitionDigest, keeps
- *              one source reference whatever the view, and carries the view only as its view facet.
- *  MEASURED    SB4: the record's provider-live leg (the live view, no pinned-view resolution, no runtime digest, absence not
- *              licensed). SB5: its provider-pinned leg (refused with exit 2, HX-CLI-USAGE-ERROR, view-binding-pending and
- *              HX-VIEW-013; no view, no rows, no frames). SB6: the record is the probe's (schema, script SHA-256, request,
- *              producer and SDK identity, base revision) and names no host path. Every record fact these cases assert is a leaf of
- *              the record, and ANCHOR-RECORD holds every leaf to the receipt (U4).
- * Shape and anchor rows: FROZEN-SHAPE (rule 16), TILING, ANCHOR-RECEIPT (U5: the receipt entry, read with the marked lexer
+ *  PROJECTION  SB3: over the three enumerated views (pinned to the record's three values), hyperunixTopology over the injected outputs
+ *              projects for each exactly one snapshot, with no subjectBasis, sourceRevision or definitionDigest member and the source
+ *              reference {provider hyperunix, type query, a 64-hex id, scope the workspace}; the three topologies, their view facets
+ *              set aside (one per string view, none for the null view), are equal; and each string view is exactly one view facet
+ *              holding it verbatim, the null view none.
+ *  MEASURED    SB4: the record's provider-live leg (no requested view, outcome result, the view hx.view/workspace-head, a revision
+ *              member that is null and no revision key serialized, no runtime digest and digest source absent, absence not
+ *              licensed, at least one frame). SB5: its provider-pinned leg (requested view git:<base>, outcome process-failure, exit
+ *              2, terminal usage_refused, the one diagnostic HX-CLI-USAGE-ERROR with reason "view-binding-pending: hx find under
+ *              --view git:<base>" and HX-VIEW-013 among its requirements; no view, no revision, no rows, zero frames). SB6: the
+ *              record's schema and bead, its probe entry (this probe's path and its SHA-256), its two legs in order, a 64-hex producer
+ *              binary digest, the vendored SDK's name and version, a 40-hex base revision, a UTC instant and a trailing newline; no
+ *              string value of the record holds an absolute path in ABSOLUTE_PATH's forms (a slash or tilde-slash opening the value
+ *              or following white space, a colon or an equals sign; a backslash pair; a lone drive letter before a backslash), and
+ *              its JSON serialization holds none of the seven host roots of HOST_ROOTS. Witnesses: each form in ABSOLUTE_PATH_FORMS
+ *              reads as one absolute path and each root of HOST_ROOTS as one root, and N10's /srv/ reason and N10c's /home/ reason,
+ *              each planted into the record text, read as that one absolute path (N10c also as one root). Every record fact these
+ *              cases assert is a leaf of the record, and ANCHOR-RECORD holds every leaf to the receipt.
+ * Shape and anchor rows: FROZEN-SHAPE (rule 16), TILING, ANCHOR-RECEIPT (the receipt's cut-4 entry, read with the marked lexer
  * census.ts reads, renders one flat list whose every item is a single text block - no nested list or block, no hard break - then
  * its five table sections and nothing else; its one census line is this file's title; and its Claims, Judged pins, Residuals and
  * Shape rows tables; witnesses L10's nested census bullet, a continuation paragraph, a hard break and a census paragraph each read
@@ -92,12 +126,19 @@
  * RESIDUALS (rule 19(d): a named family plus a pinned quiet row):
  *  R-DROPPED-RESOLUTION (ENVELOPE). Both registrations serialize the result with the SDK's resultToJson (each call binder-resolved to
  *  the @hyperunix/sdk import), which keeps no pinned-view resolution, so a result that carried one (a pinned view the runtime bound,
- *  were the provider's request or the runtime's default view ever pinned) would reach the output without its source basis. Quiet
- *  row QUIET-DROPPED-RESOLUTION pins that reading: at run time, the injected output over a reader result carrying the resolution
- *  equals, member for member, the output over the same result without it (so neither the requested revision nor the resolved commit
- *  reaches it under any name; U6), and its runtime member is exactly version and binarySha256; through the parser, the provider's
- *  code names no revision or resolved commit; through the binder, both serializer calls resolve to the SDK import (L02 planted
- *  reads a local one; U2). It reds the day a resolution is relayed or projected in those read forms.
+ *  were the provider's request or the runtime's default view ever pinned) would reach the output without its source basis. Quiet row
+ *  QUIET-DROPPED-RESOLUTION pins that reading at run time over the enumerated results: for each of the three views, the injected
+ *  output over the result carrying its resolution (on the pinned view git:<base>, the form a resolution travels, that request's
+ *  resolution; on the live and null views the control RESOLUTION; the three pairs pinned literally, and each reader result shown to
+ *  carry its resolution) equals, member for member, both the envelope of the SDK's own serialization of the result without it and the
+ *  output over that result, its runtime member is exactly version and binarySha256, no member of it is named revision, and its
+ *  projection equals the projection of the output without it (which SB3 pins to no subjectBasis); on the live and null views neither
+ *  half of RESOLUTION appears in the output's text. Through the parser, no identifier, private name or string or template literal
+ *  text of the provider's code contains "revision" or "resolvedcommit" in any case; through the binder, both resultToJson calls
+ *  resolve to the SDK import (L02 planted reads a local one). It reds the day an enumerated resolution reaches the injected output
+ *  over its view under any name at any depth (the output then differs from the envelope) or moves that output's projection, and the
+ *  day the code names a revision or a serializer call resolves elsewhere. Another resolution, or a resolution on a view outside the
+ *  enumeration, is NOT CLAIMED (below).
  *  R-RUNTIME-REWRITE (BINDING). A run-time rewrite of what a resolved binding holds - nativeHyperUnixFind itself, an SDK export such
  *  as Bounds.create or HyperUnix.open, a global such as JSON, or the SDK result - leaves every parser and binder reading above
  *  unchanged. Quiet row QUIET-RUNTIME-REWRITE pins the provider module's code to no write in the read forms: no assignment of any
@@ -108,21 +149,29 @@
  *  array's push) is a member of this family the quiet row does not read.
  *
  * NOT CLAIMED: a pinned find's source basis is NOT CLAIMED by this census (the installed hx refuses the request; the remainder
- * is HyperUnix-CLI's view binding for find). The observer's projection of a basis is NOT CLAIMED by this census. hx verbs other
- * than find, hx builds other than the recorded binary, and a live re-measure (the census reads the committed record) are NOT
- * CLAIMED by this census. The hyperunix.find descriptor surface (its input schema and version) is NOT CLAIMED by this census
- * (REGISTER_NAMES spells INPUT's declaration, so an edit to it reds SB7 and re-cuts this census; no claim is made of it).
- * The native registration at run time (its output values and their projection) is NOT CLAIMED by this census: its code is read
- * by the parser and the binder, never run. A view or option reaching the runtime by a route the parser does not read here (the
- * child environment, an hx or SDK configuration file, the runtime's own default view) is NOT CLAIMED by this census. SDK
- * operations or hx processes of the provider other than its two find calls are NOT CLAIMED by this census (the token pins red on
- * any that names find or a view in an identifier or a plain string literal; a name split across a template literal says
- * nothing). The native find call's kind and root values and the invoke's arguments (the parser reads member names, the bound, the
- * wait and best effort, and the binder their names' declarations, never the values a caller passes) are NOT CLAIMED by this
- * census. Names under a type (annotations, assertions, type-only imports), which carry no run-time value, are NOT CLAIMED by this
- * census. A rewrite of an SDK export, a global or a provider binding made outside the provider module (another module's code, a
- * test's spy) is NOT CLAIMED by this census. Which host registers which registration is NOT CLAIMED by this census (Pi's hosts
- * register the native one, src/workbench/hosts/local-detached.ts and src/workbench/native-modules.ts).
+ * is HyperUnix-CLI's view binding for find). For the run-time rows (SB1a, SB1b, SB2a, SB2b, QUIET-DROPPED-RESOLUTION and SB3), a
+ * request other than the record's (another kind or root), a view value other than the three enumerated (another pinned spelling,
+ * the SDK's live or epoch request spelling, an identity a later runtime prints for a pinned read), a resolution other than the two
+ * enumerated, and a result of another shape than documentWith's are NOT CLAIMED by this census. hyperunixTopology over any output
+ * other than the injected outputs for the three enumerated views (one carrying a basis included; no enumerated output carries one)
+ * is NOT CLAIMED by this census. hx verbs other than find, hx builds other than the recorded binary, and a live re-measure (the
+ * census reads the committed record) are NOT CLAIMED by this census. The hyperunix.find descriptor surface (its input schema and
+ * version) is NOT CLAIMED by this census (REGISTER_NAMES spells INPUT's declaration, so an edit to it reds SB7 and re-cuts this
+ * census; no claim is made of it). The native registration at run time (its output values and their projection) is NOT CLAIMED by
+ * this census: its code is read by the parser and the binder, never run. A view or option reaching the runtime by a route the
+ * parser does not read here (the child environment, an hx or SDK configuration file, the runtime's own default view) is NOT CLAIMED
+ * by this census. SDK operations or hx processes of the provider other than its two find calls are NOT CLAIMED by this census (the
+ * token pins red on any that names find or a view in an identifier or a plain string literal; a name split across a template
+ * literal or a string concatenation says nothing). The injected find call's receiver beyond its name is NOT CLAIMED by this census
+ * (SB1c reads it as the identifier reader, so a same-named wrapper forwarding to the injected reader, as refusal #3's boundary
+ * member N06 plants, is not read). The native find call's kind and root values and the invoke's arguments (the parser reads member
+ * names, the bound, the wait and best effort, and the binder their names' declarations, never the values a caller passes) are NOT
+ * CLAIMED by this census. Names under a type (annotations, assertions, type-only imports), which carry no run-time value, are NOT
+ * CLAIMED by this census. A rewrite of an SDK export, a global or a provider binding made outside the provider module (another
+ * module's code, a test's spy) is NOT CLAIMED by this census. Which host registers which registration is NOT CLAIMED by this census
+ * (Pi's hosts register the native one, src/workbench/hosts/local-detached.ts and src/workbench/native-modules.ts). A host path in a
+ * form SB6's two readings do not read (a relative path, a path joined to the text before it by another character, an encoded path,
+ * a path in an object key) is NOT CLAIMED by this census.
  *
  * Display paths added: none (test-only). No scratch directory is allocated: WS is a string, never created or read.
  */
@@ -135,7 +184,7 @@ import {marked, type Token, type Tokens} from 'marked';
 import ts from 'typescript';
 import {describe, expect, it, type RunnerTask} from 'vitest';
 import {CapabilityRegistry, type JsonValue} from '../src/workbench/capability-registry.js';
-import {type HyperUnixTopologyContext, hyperunixTopology} from '../src/workbench/hyperunix-observer.js';
+import {type HyperUnixProjectionTopology, type HyperUnixTopologyContext, hyperunixTopology} from '../src/workbench/hyperunix-observer.js';
 import {HYPERUNIX_FIND_CONTRACT, type HyperUnixReader, registerHyperUnixFind} from '../src/workbench/providers/hyperunix.js';
 import {docsSection, sectionTables} from './helpers/census.js';
 import {bindingOf, calleeChains, descendants, MUTATORS} from './helpers/hyperunix-custody-readers.js';
@@ -149,17 +198,17 @@ const PROVIDER = 'src/workbench/providers/hyperunix.ts';
 const PROBE = 'qa/workbench/hx-source-basis-probe.mjs';
 const RECORD_PATH = 'qa/workbench/receipts/wb-lri-hx-source-basis-probe.json';
 const RECEIPT = 'docs/workbench/receipts/wb-lri.md';
-const RECEIPT_ENTRY = '2026-11-11 receipt: the source-basis standing census and the installed-HX probe, cut 3 (machine seat ws-08; cures refusal #2, U1-U6)';
+const RECEIPT_ENTRY = '2026-11-11 receipt: the source-basis standing census and the installed-HX probe, cut 4 (machine seat ws-10; cures refusal #3, U1-U5)';
 const RECEIPT_TABLES = {
-  claims: {heading: 'Claims, wb-lri cut 3', header: ['Row', 'Claim']},
-  pins: {heading: 'Judged pins, wb-lri cut 3', header: ['Row', 'Pin', 'Assertions']},
-  residuals: {heading: 'Residuals, wb-lri cut 3', header: ['Residual', 'Quiet row']},
-  shape: {heading: 'Shape rows, wb-lri cut 3', header: ['Row', 'Assertions']},
-  measured: {heading: 'Measured record, wb-lri cut 3', header: ['Field', 'Value']},
+  claims: {heading: 'Claims, wb-lri cut 4', header: ['Row', 'Claim']},
+  pins: {heading: 'Judged pins, wb-lri cut 4', header: ['Row', 'Pin', 'Assertions']},
+  residuals: {heading: 'Residuals, wb-lri cut 4', header: ['Residual', 'Quiet row']},
+  shape: {heading: 'Shape rows, wb-lri cut 4', header: ['Row', 'Assertions']},
+  measured: {heading: 'Measured record, wb-lri cut 4', header: ['Field', 'Value']},
 } as const;
 /** The census title: the describe block's name and the receipt's census line. */
 const HEADER =
-  "wb-lri (W07) source-basis standing census: the provider module's injected hyperunix.find registration, run over a recording reader, requests no view, relays the runtime's view verbatim and outputs and projects no source basis; its native registration, read with the TypeScript parser and binder in the read sets enumerated here, spells no view in its request and no revision member in its return; and the committed record, anchored leaf for leaf, holds the installed hx's refusal of a pinned find (HX-VIEW-013)";
+  "wb-lri (W07) source-basis standing census: the provider module's injected hyperunix.find registration, run over a recording reader, issues the record's request, with and without its root, with no view member, and over results on the three view values the committed record holds (its live view, its pinned request spelling and its null view), each without and with its enumerated SDK pinned-view resolution, outputs exactly the envelope of the SDK's own serialization of the result without the resolution, so each view verbatim, while hyperunixTopology over those outputs states no subjectBasis, sourceRevision or definitionDigest; its native registration, read with the TypeScript parser and binder in the read sets enumerated here, spells no view in its request and no revision member in its return; and the committed record, anchored leaf for leaf, holds the installed hx's refusal of a pinned find (HX-VIEW-013)";
 const REGISTRATION_TITLE = "REGISTRATION: the collected task tree is exactly this file's titles in order, and every other test ran and passed before this one";
 /** The registration row's own assertion count (the receipt's Shape rows table holds it with the anchor rows'). */
 const REGISTRATION_ASSERTIONS = 3;
@@ -304,8 +353,15 @@ const documentWith = (view: string | null): Json => ({
   evidence: {support_ids: [], evidence_classes: ['observed'], derivation_handles: [], providers: ['hx.fs/provider'], provider_versions: {'hx.fs/provider': '0.1.0'}},
   digest: null, digest_source: 'absent', execution_id: null, budget_dimension: null, extensions: {},
 });
-/** The SDK's pinned-view resolution (the ReadResult member QueryResult lacks), each half a literal no output carries by accident. */
-const RESOLUTION = {requested: 'wb-lri-quiet-requested-revision', resolvedCommit: 'c0ffee'.repeat(7).slice(0, 40)};
+/** An SDK pinned-view resolution (ReadResult.revision, the member QueryResult lacks). */
+interface Resolution {
+  readonly requested: string;
+  readonly resolvedCommit: string;
+}
+/** The control resolution the quiet row puts on the live and null views (cut 3's), each half a literal no output carries by accident. */
+const RESOLUTION: Resolution = {requested: 'wb-lri-quiet-requested-revision', resolvedCommit: 'c0ffee'.repeat(7).slice(0, 40)};
+/** The resolution of the pinned leg's request git:<base>: the request's revision text, and the commit a full commit id names. */
+const pinnedResolution = (): Resolution => ({requested: record().repository.baseRevision, resolvedCommit: record().repository.baseRevision});
 
 /** The real hyperunix.find registration over a reader that records every request it receives. */
 function recording(result: () => QueryResult<ClaimBody>) {
@@ -322,8 +378,19 @@ function recording(result: () => QueryResult<ClaimBody>) {
   const invoke = (input: Json) => registry.invoke(CAPABILITY, input, {grants: ['hyperunix:read'], signal: new AbortController().signal});
   return {requests, invoke};
 }
-const outputFor = async (view: string | null): Promise<Json> =>
-  (await recording(() => resultFromJson(documentWith(view))).invoke({kind: 'hx.fs/regular-file', root: 'src'})) as Json;
+/** The reader result over documentWith(view), carrying a resolution as its revision member or none. */
+const resultOn = (view: string | null, revision: Resolution | null): QueryResult<ClaimBody> =>
+  ({...resultFromJson(documentWith(view)), ...(revision === null ? {} : {revision})}) as QueryResult<ClaimBody>;
+/** The injected registration's output for the record's request over resultOn(view, revision). */
+const outputOver = async (view: string | null, revision: Resolution | null): Promise<Json> => {
+  const {request: asked} = record();
+  const {invoke} = recording(() => resultOn(view, revision));
+  return (await invoke({kind: asked.kind, root: asked.root})) as Json;
+};
+const outputFor = (view: string | null): Promise<Json> => outputOver(view, null);
+/** The three view values the committed record holds (THE ENUMERATED RESULTS above): the live leg's view, the pinned leg's requested
+ * view and the pinned leg's view. */
+const enumeratedViews = (): (string | null)[] => [leg('provider-live').view, leg('provider-pinned').requestedView, leg('provider-pinned').view];
 /** The envelope the injected registration must output for a view, built here from the SDK's own serialization of the same result:
  * the contract, that serialization, the workspace root, and the recording reader's runtime version and binary digest. */
 const envelope = (view: string | null): Json => ({contract: HYPERUNIX_FIND_CONTRACT, source: JSON.parse(JSON.stringify(resultToJson(resultFromJson(documentWith(view))))) as JsonValue,
@@ -332,6 +399,28 @@ const envelope = (view: string | null): Json => ({contract: HYPERUNIX_FIND_CONTR
 const memberNames = (value: JsonValue): string[] =>
   Array.isArray(value) ? value.flatMap(memberNames)
     : value !== null && typeof value === 'object' ? Object.entries(value).flatMap(([key, child]) => [key, ...memberNames(child)]) : [];
+/** A topology with its view facets set aside (SB3): every other member as projected, the remaining facets in order. */
+const unviewed = (topology: HyperUnixProjectionTopology) => ({...topology, facets: (topology.facets ?? []).filter(facet => facet.kind !== 'view')});
+
+/** ABSOLUTE_PATH's forms (SB6): a slash or tilde-slash opening a string or following white space, a colon or an equals sign; a
+ * backslash pair; a lone drive letter (opening the string or following a character that is not a letter or digit) before a
+ * backslash. */
+const ABSOLUTE_PATH = /(?:^|[\s:=])~?\/|\\\\|(?:^|[^A-Za-z0-9])[A-Za-z]:\\/;
+/** One witness of each form of ABSOLUTE_PATH, each read as one absolute path. */
+const ABSOLUTE_PATH_FORMS = ['/srv/hx', 'read at /srv/hx', 'file:/srv/hx', 'config=/srv/hx', '~/hx', 'read at ~/hx', '\\\\hx-share\\etc', 'C:\\hx\\etc', 'read at D:\\hx'];
+/** The seven host roots cut 3's host-path pin read, each looked for in the record's JSON serialization. */
+const HOST_ROOTS = ['/tmp/', '/home/', '/local/', '/workplace/', '/Users/', '/private/', '/var/'];
+/** Every string value of a JSON tree, at any depth (an object key is not a value). */
+const stringsIn = (value: unknown): string[] =>
+  typeof value === 'string' ? [value] : Array.isArray(value) ? value.flatMap(stringsIn) : isObject(value) ? Object.values(value).flatMap(stringsIn) : [];
+const absolutePaths = (value: unknown): string[] => stringsIn(value).filter(text => ABSOLUTE_PATH.test(text));
+const hostRoots = (value: unknown): string[] => HOST_ROOTS.filter(root => JSON.stringify(value).includes(root));
+/** The gate's U5 survivor (N10) and its paired control (N10c): the provider-live leg's diagnostic reason as each planted it. */
+const N10_REASON = '/srv/hx/etc/view.toml: no binding';
+const N10C_REASON = '/home/hx/etc/view.toml: no binding';
+/** The committed record with the provider-live leg's diagnostic reason planted (its only null reason), parsed. */
+const recordWithLiveReason = (reason: string): unknown =>
+  JSON.parse(replaced(repoText(RECORD_PATH), RECORD_PATH, [['"reason": null,', `"reason": ${JSON.stringify(reason)},`]]));
 
 /** One find call of the provider module: its receiver, its option members in order, its bounds initializer without white space, its
  * wait and its best-effort literal. */
@@ -751,7 +840,7 @@ const CASES: readonly Case[] = [
   },
   {
     id: 'SB1c', row: 'REQUEST', kind: 'claim', assertions: 18,
-    title: "read with the TypeScript parser and binder, the provider's find calls are exactly two (the injected reader's, then nativeHyperUnixFind's own), the name find occurs in its code three times only, and each call passes exactly the five request members, a bounds member spelled exactly Bounds.create of the record's wall, the record's wait and best effort true, the native call's Bounds resolving to the @hyperunix/sdk import, its workspace to the function's one const and its kind and root to the function's parameters 1 and 2; an identifier, call or member-access spread planted into the native call reads as '<spread>' (G2 the first), a planted raw find makes find four, and L04's function-local Bounds planted resolves as a const of nativeHyperUnixFind",
+    title: "read with the TypeScript parser and binder, the provider's find calls on an identifier receiver are exactly two (on receivers named reader, read by its name only, and then workspace, nativeHyperUnixFind's own), the name find occurs in its code three times only, and each call passes exactly the five request members, a bounds member spelled exactly Bounds.create of the record's wall, the record's wait and best effort true, the native call's Bounds resolving to the @hyperunix/sdk import, its workspace to the function's one const and its kind and root to the function's parameters 1 and 2; an identifier, call or member-access spread planted into the native call reads as '<spread>' (G2 the first), a planted raw find makes find four, and L04's function-local Bounds planted resolves as a const of nativeHyperUnixFind",
     run: () => {
       const read = providerRead();
       const {request: asked} = record();
@@ -775,7 +864,7 @@ const CASES: readonly Case[] = [
   },
   {
     id: 'SB1d', row: 'REQUEST', kind: 'claim', assertions: 12,
-    title: "read with the TypeScript parser and binder, nativeHyperUnixFind's find runs on workspace, bound once as const to the module's only HyperUnix.open call, whose argument list is exactly realpathSync(workspaceRoot) (no client options, so no client default view), with HyperUnix resolving to the @hyperunix/sdk import, realpathSync to the node:fs import and workspaceRoot to the function's parameter 0; HyperUnix occurs only as its import and that call, and no code token names a view; G1's client default view planted reads its options argument and three view names, a planted raw find's string literal names one, a planted constructed workspace reads as its binding, and a planted local realpathSync resolves as a const",
+    title: "read with the TypeScript parser and binder, nativeHyperUnixFind's find runs on workspace, bound once as const to the module's only HyperUnix.open call, whose argument list is exactly realpathSync(workspaceRoot) (no client options, so no client default view), with HyperUnix resolving to the @hyperunix/sdk import, realpathSync to the node:fs import and workspaceRoot to the function's parameter 0; HyperUnix occurs only as its import and that call, and no identifier, private name or string or template literal text of the code contains view in any case; G1's client default view planted reads its options argument and three view names, a planted raw find's string literal names one, a planted constructed workspace reads as its binding, and a planted local realpathSync resolves as a const",
     run: () => {
       const read = providerRead();
       expect(read.opens).toEqual([['realpathSync(workspaceRoot)']]);
@@ -796,29 +885,35 @@ const CASES: readonly Case[] = [
     },
   },
   {
-    id: 'SB2a', row: 'ENVELOPE', kind: 'claim', assertions: 7,
-    title: "over a result carrying the measured view, the injected registration's output has exactly contract, source, workspaceRoot and runtime and equals the envelope of the contract, the SDK's own serialization of that result, the workspace root and the runtime's version and binary digest, source is exactly the measured result's serialized keys with the runtime's view verbatim, and no member names a revision or a basis",
+    id: 'SB2a', row: 'ENVELOPE', kind: 'claim', assertions: 13,
+    title: "over a result on each of the record's two string views, the live leg's measured hx.view/workspace-head and the pinned leg's requested git:<base> (both read from the record and pinned to those spellings), the injected registration's output has exactly contract, source, workspaceRoot and runtime and equals the envelope of the contract, the SDK's own serialization of that result, the workspace root and the runtime's version and binary digest, source is exactly the record's measured serialized keys with that view verbatim, and no member name matches revision, basis or resolved in any case",
     run: async () => {
       const live = leg('provider-live');
-      const output = await outputFor(live.view);
-      expect(Object.keys(output)).toEqual(OUTPUT_MEMBERS);
-      expect(output, 'the envelope, member for member').toStrictEqual(envelope(live.view));
-      expect(output.contract).toBe(HYPERUNIX_FIND_CONTRACT);
-      const source = output.source as Json;
-      expect(Object.keys(source)).toEqual(live.resultJsonKeys);
-      expect(source.view).toBe(live.view);
-      expect(live.view).toBe('hx.view/workspace-head');
-      expect(memberNames(output).filter(name => /revision|basis|resolved/i.test(name))).toEqual([]);
+      const views = [live.view, leg('provider-pinned').requestedView];
+      expect(views, "the record's two string views").toEqual(['hx.view/workspace-head', `git:${record().repository.baseRevision}`]);
+      for (const view of views) {
+        const output = await outputFor(view);
+        expect(Object.keys(output), String(view)).toEqual(OUTPUT_MEMBERS);
+        expect(output, `${view}: the envelope, member for member`).toStrictEqual(envelope(view));
+        expect(output.contract, String(view)).toBe(HYPERUNIX_FIND_CONTRACT);
+        const source = output.source as Json;
+        expect(Object.keys(source), String(view)).toEqual(live.resultJsonKeys);
+        expect(source.view, `${view}: relayed verbatim`).toBe(view);
+        expect(memberNames(output).filter(name => /revision|basis|resolved/i.test(name)), String(view)).toEqual([]);
+      }
     },
   },
   {
-    id: 'SB2b', row: 'ENVELOPE', kind: 'claim', assertions: 3,
-    title: "over a result without a view the injected registration's output keeps the same members, equals the same envelope of that result, and relays the view as null, never a requested or default spelling",
+    id: 'SB2b', row: 'ENVELOPE', kind: 'claim', assertions: 5,
+    title: "over a result on the pinned leg's null view (read from the record) the injected registration's output keeps the same four members, equals the same envelope of that result, relays the view as null, never a requested or default spelling, and no member name matches revision, basis or resolved in any case",
     run: async () => {
-      const output = await outputFor(null);
+      const view = leg('provider-pinned').view;
+      expect(view, "the pinned leg's view").toBeNull();
+      const output = await outputFor(view);
       expect(Object.keys(output)).toEqual(OUTPUT_MEMBERS);
-      expect(output, 'the envelope, member for member').toStrictEqual(envelope(null));
+      expect(output, 'the envelope, member for member').toStrictEqual(envelope(view));
       expect((output.source as Json).view).toBeNull();
+      expect(memberNames(output).filter(name => /revision|basis|resolved/i.test(name))).toEqual([]);
     },
   },
   {
@@ -853,20 +948,29 @@ const CASES: readonly Case[] = [
     },
   },
   {
-    id: 'QUIET-DROPPED-RESOLUTION', row: 'ENVELOPE', kind: 'quiet', assertions: 11,
-    title: "a reader result carrying the SDK's pinned-view resolution leaves the injected output equal, member for member, to the output without it (runtime exactly version and binary digest; no revision member, requested revision, resolved commit or subjectBasis), the provider's code, read with the TypeScript parser, names no revision or resolved commit, and both resultToJson calls resolve to the @hyperunix/sdk import; G3's relay planted names three revisions and L02's local serializer planted resolves the native call as a const",
+    id: 'QUIET-DROPPED-RESOLUTION', row: 'ENVELOPE', kind: 'quiet', assertions: 25,
+    title: "for each of the three enumerated views, the injected output over a reader result carrying its enumerated SDK pinned-view resolution (on the pinned view that request's own, requested and resolved to the record's base revision; on the live and null views the control resolution, each pair pinned and each reader result shown to carry its resolution) equals, member for member, the envelope of the SDK's own serialization of the result without it and the output over that result, its runtime is exactly version and binary digest, no member of it is named revision, and its projection equals the projection without it; on the live and null views neither half of the control resolution appears in the output's text; no identifier, private name or string or template literal text of the provider's code contains revision or resolvedcommit in any case, and both resultToJson calls resolve to the @hyperunix/sdk import; G3's relay planted names three revisions and L02's local serializer planted resolves the native call as a const",
     run: async () => {
-      const over = (revision: typeof RESOLUTION | null) =>
-        recording(() => ({...resultFromJson(documentWith('hx.view/workspace-head')), ...(revision === null ? {} : {revision})}) as QueryResult<ClaimBody>)
-          .invoke({kind: 'hx.fs/regular-file', root: 'src'});
-      const output = (await over(RESOLUTION)) as Json;
-      expect(output, 'the output over the resolution-carrying result equals the output without it').toStrictEqual(await over(null));
-      expect(Object.keys(output)).toEqual(OUTPUT_MEMBERS);
-      expect(Object.keys(output.runtime as Json)).toEqual(RUNTIME_MEMBERS);
-      expect(memberNames(output)).not.toContain('revision');
-      expect(JSON.stringify(output)).not.toContain(RESOLUTION.resolvedCommit);
-      expect(JSON.stringify(output)).not.toContain(RESOLUTION.requested);
-      expect(hyperunixTopology(output, context).snapshots[0]).not.toHaveProperty('subjectBasis');
+      const [live = null, pinnedView = null, nullView = null] = enumeratedViews();
+      const base = record().repository.baseRevision;
+      const carried: readonly (readonly [string | null, Resolution])[] = [[pinnedView, pinnedResolution()], [live, RESOLUTION], [nullView, RESOLUTION]];
+      expect(carried, 'the three views and their resolutions').toStrictEqual([[`git:${base}`, {requested: base, resolvedCommit: base}], ['hx.view/workspace-head', RESOLUTION], [null, RESOLUTION]]);
+      expect(carried.map(([view, resolution]) => (resultOn(view, resolution) as unknown as {revision?: unknown}).revision), 'each reader result carries its resolution')
+        .toStrictEqual(carried.map(([, resolution]) => resolution));
+      for (const [view, resolution] of carried) {
+        const output = await outputOver(view, resolution);
+        const bare = await outputOver(view, null);
+        expect(output, `${view}: the envelope of the result without the resolution`).toStrictEqual(envelope(view));
+        expect(output, `${view}: the output over the result without the resolution`).toStrictEqual(bare);
+        expect(Object.keys(output.runtime as Json), String(view)).toEqual(RUNTIME_MEMBERS);
+        expect(memberNames(output), String(view)).not.toContain('revision');
+        expect(hyperunixTopology(output, context), `${view}: the projection without the resolution`).toStrictEqual(hyperunixTopology(bare, context));
+      }
+      for (const view of [live, nullView]) {
+        const text = JSON.stringify(await outputOver(view, RESOLUTION));
+        expect(text, `${view}: the control resolved commit`).not.toContain(RESOLUTION.resolvedCommit);
+        expect(text, `${view}: the control requested revision`).not.toContain(RESOLUTION.requested);
+      }
       const read = providerRead();
       expect(revisionNames(read)).toEqual([]);
       expect(read.serializers).toEqual(['invoke import @hyperunix/sdk resultToJson', 'nativeHyperUnixFind import @hyperunix/sdk resultToJson']);
@@ -905,18 +1009,24 @@ const CASES: readonly Case[] = [
     },
   },
   {
-    id: 'SB3', row: 'PROJECTION', kind: 'claim', assertions: 9,
-    title: 'hyperunixTopology over both injected outputs states no subjectBasis, sourceRevision or definitionDigest, keeps one source reference whatever the view, and carries the view only as its view facet',
+    id: 'SB3', row: 'PROJECTION', kind: 'claim', assertions: 22,
+    title: 'hyperunixTopology over the injected outputs for the three enumerated views projects for each exactly one snapshot, with no subjectBasis, sourceRevision or definitionDigest member and the source reference provider hyperunix, type query, a 64-hex id and the workspace as scope; the three topologies, their view facets set aside (one per string view, none for the null view), are equal; and each string view is exactly one view facet holding it verbatim, the null view none',
     run: async () => {
-      const live = leg('provider-live');
-      const viewed = hyperunixTopology(await outputFor(live.view), context);
-      const bare = hyperunixTopology(await outputFor(null), context);
-      for (const topology of [viewed, bare]) {
-        for (const key of ['subjectBasis', 'sourceRevision', 'definitionDigest']) expect(topology.snapshots[0], key).not.toHaveProperty(key);
+      const views = enumeratedViews();
+      expect(views, 'the three enumerated views').toEqual(['hx.view/workspace-head', `git:${record().repository.baseRevision}`, null]);
+      const topologies: HyperUnixProjectionTopology[] = [];
+      for (const view of views) topologies.push(hyperunixTopology(await outputFor(view), context));
+      for (const [index, topology] of topologies.entries()) {
+        const view = views[index] ?? null;
+        expect(topology.snapshots, `${view}: its snapshots`).toHaveLength(1);
+        for (const key of ['subjectBasis', 'sourceRevision', 'definitionDigest']) expect(topology.snapshots[0], `${view}: ${key}`).not.toHaveProperty(key);
+        expect(topology.snapshots[0]?.source, `${view}: its source reference`).toStrictEqual({provider: 'hyperunix', type: 'query', id: expect.stringMatching(/^[0-9a-f]{64}$/), scope: WS});
+        expect((topology.facets ?? []).filter(facet => facet.kind === 'view'), `${view}: its view facets`).toStrictEqual(view === null ? [] : [{kind: 'view', view}]);
       }
-      expect(viewed.snapshots[0]?.source).toStrictEqual(bare.snapshots[0]?.source);
-      expect((viewed.facets ?? []).filter(facet => facet.kind === 'view')).toStrictEqual([{kind: 'view', view: live.view}]);
-      expect((bare.facets ?? []).filter(facet => facet.kind === 'view')).toStrictEqual([]);
+      expect(topologies.map(topology => (topology.facets ?? []).length - unviewed(topology).facets.length), 'the view facets set aside, one per string view').toEqual([1, 1, 0]);
+      const [viewed, pinned, bare] = topologies.map(unviewed);
+      expect(viewed, 'the live view, its view facets set aside, against the null view').toStrictEqual(bare);
+      expect(pinned, 'the pinned view, its view facets set aside, against the null view').toStrictEqual(bare);
     },
   },
   {
@@ -956,8 +1066,8 @@ const CASES: readonly Case[] = [
     },
   },
   {
-    id: 'SB6', row: 'MEASURED', kind: 'claim', assertions: 10,
-    title: "the record is the probe's: its schema and bead, the probe's script SHA-256, both legs in order, a 64-hex producer binary, the vendored SDK version, a 40-hex base revision, a zoned instant and no host path",
+    id: 'SB6', row: 'MEASURED', kind: 'claim', assertions: 15,
+    title: "the record is the probe's: its schema and bead, the probe's script path and SHA-256, both legs in order, a 64-hex producer binary, the vendored SDK's name and version, a 40-hex base revision, a UTC instant and a trailing newline; no string value of it holds an absolute path in ABSOLUTE_PATH's forms (a slash or tilde-slash opening the value or following white space, a colon or an equals sign; a backslash pair; a lone drive letter before a backslash) and its JSON serialization holds none of the seven HOST_ROOTS; each witness form reads as one absolute path and each root as one root, and N10's /srv/ reason and N10c's /home/ reason, each planted into the record text, read as that one absolute path (N10c also as the /home/ root)",
     run: () => {
       const probed = record();
       const vendored = JSON.parse(repoText('node_modules/@hyperunix/sdk/package.json')) as {version: string};
@@ -969,18 +1079,24 @@ const CASES: readonly Case[] = [
       expect(probed.producer.sdk).toStrictEqual({name: '@hyperunix/sdk', version: vendored.version});
       expect(probed.repository.baseRevision).toMatch(/^[0-9a-f]{40}$/);
       expect(probed.utc).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?Z$/);
-      expect(JSON.stringify(probed)).not.toMatch(/\/(?:tmp|home|local|workplace|Users|private|var)\//);
       expect(repoText(RECORD_PATH).endsWith('\n')).toBe(true);
+      expect(absolutePaths(probed), 'string values holding an absolute path').toEqual([]);
+      expect(hostRoots(probed), 'host roots in the JSON serialization').toEqual([]);
+      expect(ABSOLUTE_PATH_FORMS.filter(form => absolutePaths(form).length !== 1), 'each witness form reads as one absolute path').toEqual([]);
+      expect(HOST_ROOTS.filter(root => hostRoots(`x${root}y`).length !== 1), 'each root reads as one root').toEqual([]);
+      expect(absolutePaths(recordWithLiveReason(N10_REASON)), "N10's /srv/ reason planted").toEqual([N10_REASON]);
+      const n10c = recordWithLiveReason(N10C_REASON);
+      expect([absolutePaths(n10c), hostRoots(n10c)], "N10c's /home/ reason planted").toEqual([[N10C_REASON], ['/home/']]);
     },
   },
 ];
 
 /** The census rows: each the claim one header sentence makes and the cases that pin it. */
 const ROWS: readonly {readonly id: RowId; readonly text: string; readonly pins: readonly string[]}[] = [
-  {id: 'REQUEST', text: "the injected registration's request carries no view at run time, with a root and without one; read with the TypeScript parser and binder, both find calls pass exactly the five request members with a bounds member spelled Bounds.create of the record's wall, nativeHyperUnixFind opens its workspace with the realpath root alone, the names those calls read resolve to the SDK and node:fs imports and the function's own parameters and consts, and no code token names a view", pins: ['SB1a', 'SB1b', 'SB1c', 'SB1d']},
-  {id: 'ENVELOPE', text: "the injected registration's output carries exactly the contract, source, workspace root and runtime members, the runtime's view identity verbatim and no member naming a revision or a basis; read with the TypeScript parser and binder, nativeHyperUnixFind returns exactly those four members, its source being the SDK's resultToJson of its own find result, and registerNativeHyperUnixFind's one register call's invoke calls the module's nativeHyperUnixFind", pins: ['SB2a', 'SB2b', 'SB2c']},
+  {id: 'REQUEST', text: "the injected registration issues the record's request with no view member at run time, with its root and without it; read with the TypeScript parser and binder, the module's two find calls on identifier receivers (named reader and workspace) pass exactly the five request members with a bounds member spelled Bounds.create of the record's wall, nativeHyperUnixFind opens its workspace with the realpath root alone, the names its find and open calls read resolve to the SDK and node:fs imports and the function's own parameters and const, and no identifier, private name or string or template literal text of the code contains view in any case", pins: ['SB1a', 'SB1b', 'SB1c', 'SB1d']},
+  {id: 'ENVELOPE', text: "over a result on each of the three enumerated views, without a resolution, the injected registration's output equals the envelope of the contract, the SDK's own serialization of the result, the workspace root and the runtime's version and binary digest, so it relays that view verbatim and no member name in it matches revision, basis or resolved; read with the TypeScript parser and binder, nativeHyperUnixFind returns exactly the four envelope members, its source being the SDK's resultToJson of its own find result, and registerNativeHyperUnixFind's one register call's invoke calls the module's nativeHyperUnixFind", pins: ['SB2a', 'SB2b', 'SB2c']},
   {id: 'BINDING', text: "read with the TypeScript binder, every name the two native function bodies read resolves as this census's name tables pin, nativeHyperUnixFind's own declarations and parameters are exactly the pinned ones, and both registration names are each declared once, by an exported function, in a module with no export declaration or export assignment", pins: ['SB7']},
-  {id: 'PROJECTION', text: "hyperunixTopology over the injected registration's outputs states no subjectBasis, sourceRevision or definitionDigest, whatever view the runtime printed", pins: ['SB3']},
+  {id: 'PROJECTION', text: "hyperunixTopology over the injected registration's outputs for the three enumerated views projects for each exactly one snapshot with no subjectBasis, sourceRevision or definitionDigest and the hyperunix query source reference, and the three topologies, their view facets set aside, are equal", pins: ['SB3']},
   {id: 'MEASURED', text: 'the committed record, tied to its probe and anchored leaf for leaf in the receipt, measured the live view without a pinned-view resolution and the pinned request refused under HX-VIEW-013', pins: ['SB4', 'SB5', 'SB6']},
 ];
 /** The named residual families, each with its row and its pinned quiet case. */
