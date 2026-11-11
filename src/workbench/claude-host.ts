@@ -109,6 +109,24 @@ function resolvedModel(input: string | undefined): string | undefined {
 }
 
 /**
+ * One exact Claude tool name: a letter, then up to 63 letters, digits, "_" or "-", the name form the detached host's
+ * exact tool grants use (wb-wupg). docs/workbench/04 validates the tool policy before any SDK work and
+ * docs/workbench/12 treats unknown permission data as deny, so a wildcard, a rule pattern or any name the host cannot
+ * read exactly is refused, never handed to the SDK (wb-f5y).
+ */
+const TOOL_NAME = /^[A-Za-z][A-Za-z0-9_-]{0,63}$/;
+
+/** The refusal for an effective tool list that is not a list of exact tool names; the entry is named by position only. */
+function toolPolicyError(tools: unknown): string | undefined {
+  if (!Array.isArray(tools)) return outcomeText("Invalid Claude SDK tool policy: the tool list must be an array of exact tool names.");
+  const at = tools.findIndex(tool => typeof tool !== "string" || !TOOL_NAME.test(tool));
+  if (at === -1) return undefined;
+  return outcomeText(
+    `Invalid Claude SDK tool policy: entry ${at + 1} of ${tools.length} is not an exact tool name (a letter, then up to 63 letters, digits, "_" or "-"); wildcards and rule patterns are refused.`,
+  );
+}
+
+/**
  * docs/workbench/17 "Error and degradation policy": missing Claude auth is a
  * clear config error, never a silent Pi-model answer. The SDK flags it with the
  * typed assistant error "authentication_failed"; the outcome carries a stable
@@ -218,6 +236,11 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
     if ((request?.model || role?.model || config.model) && !model) {
       return { ok: false, error: `Unsupported Claude SDK model: ${request?.model ?? role?.model ?? config.model}.` };
     }
+    // The tool list this spawn runs under (a resumed session's, else the role's, else the workbench default) is checked
+    // before any dispatch or query.
+    const allowedTools = previous?.tools ?? role?.tools ?? tools;
+    const policyError = toolPolicyError(allowedTools);
+    if (policyError !== undefined) return { ok: false, error: policyError };
     try { await config.beforeDispatch?.(); } catch (error) {
       return { ok: false, error: error instanceof Error ? `${"code" in error ? String(error.code) + ": " : ""}${error.message}` : String(error) };
     }
@@ -232,7 +255,6 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
     config.signal?.addEventListener("abort", onAbort, { once: true });
     if (config.signal?.aborted) controller.abort();
     controllers.set(agentId, controller);
-    const allowedTools = previous?.tools ?? role?.tools ?? tools;
     const effectiveEffort = previous?.effort ?? request?.effort ?? role?.effort;
     const exposed = previous?.capabilities ?? role?.capabilities ?? [];
     const providerTools = exposed.length > 0 && config.capabilities ? createCuratedTools({
