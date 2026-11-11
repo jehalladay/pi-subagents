@@ -103,15 +103,21 @@
  * Row R3 (wb-x32, W10 ReactiveFiber provider/interop) binds the RF sentence "Do not declare a typed TS context-render client exists
  * without code evidence.", flipped from its unpinned half by the seat that landed its cases. Four halves, in the sentence's order:
  * declared-cli-contract binds the wb-2j3.12 carrier cases R2-1 and R2-3 (both registered descriptors state the carrier, and it
- * names reactive-fiber.cli/v1 context.render --no-commit); stated-cli-surface, no-sdk-load and no-sdk-manifest bind the cases of
- * test/workbench-rf-typed-client-evidence.test.ts, one describe each (test/helpers/rf-typed-client.ts names them): Pi's three
- * statements of its RF surface (the docs/18 risk row, the vendor/README.md ReactiveFiberCLI sentences, the provider's leading
- * comment) read as pinned, and each one edited in memory reads red; no tracked src module states an RF package specifier in the
- * six forms the reader reads, its planted load forms are read, and the named residuals R-COMPUTED, R-LOADER and R-OTHER-NAME read
- * their pinned quiet values; and no dependency text of package.json or of the two lockfiles is an RF package text, its planted
- * places are read, and the named residuals R-OTHER-NAME and R-SHADOWED read their pinned quiet values. NOT CLAIMED by row R3
- * (scope): Pi prose outside the three statements, modules outside src, untracked src files, manifests other than the three, and
- * installs outside the lockfiles. The wb-2wiv.1
+ * names reactive-fiber.cli/v1 context.render --no-commit); stated-cli-surface, src-load-forms and manifest-texts bind the cases of
+ * test/workbench-rf-typed-client-evidence.test.ts, one describe each (test/helpers/rf-typed-client.ts names them).
+ * stated-cli-surface: Pi's three statements of its RF surface (the docs/18 risk row, the vendor/README.md ReactiveFiberCLI
+ * sentences, the provider's leading comment) read as pinned, and each of the thirteen in-memory edits the S4 case names reads one
+ * finding naming its statement. src-load-forms: the specifiers moduleLoads reads in its fifteen load forms (LOAD_FORMS: import and
+ * export declarations, import-equals, dynamic import, require, member-call require, require.resolve, import.meta.resolve, import
+ * type nodes, string-named ambient module declarations, the three triple-slash directives TypeScript's parser records, and import
+ * types and @import tags in attached JSDoc) from the tracked src modules of the eight script extensions name no RF package, each of
+ * its forty-two planted modules reads one RF load, and the named residuals R-COMPUTED, R-LOADER, R-INDIRECT-CALLEE,
+ * R-EVALUATED, R-COMMENT, R-PRAGMA and R-OTHER-NAME read their pinned quiet values. manifest-texts: no key or string value of
+ * package.json or of the two lockfiles, at any depth, is an RF package text, nor is any string of their raw text that JSON.parse
+ * drops, each of its planted places reads one RF text, and the named residual R-OTHER-NAME reads its pinned quiet value. NOT
+ * CLAIMED by row R3 (scope): Pi prose outside the three statements, modules outside src, untracked src files and src files of
+ * other extensions, load forms outside LOAD_FORMS beyond the named residuals' quiet rows, TypeScript configuration, manifests
+ * other than the three, and installs outside the lockfiles. The wb-2wiv.1
  * census's C1 and C3 read the same surface more widely, but this judge cannot bind them (context-unknown: that file hands
  * afterAll to a call). The row's identity is frozen as FROZEN_R3 (rule 16); the R3 REPORT ANCHOR holds each of the three own
  * halves to exactly the cases the gate's own report collects under its describe, and the R3 RECEIPT ANCHOR holds the identity to
@@ -659,17 +665,17 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
         pin(TYPED_CLIENT, "S1: docs/workbench/18 § Key risks and mitigations holds exactly one 'No RF typed render SDK in pinned revision' row, reading weak integration and explicit unavailable block, provider-owned SDK improvement, with no HTML in the section", [RF_STATED_SURFACE_SUITE]),
         pin(TYPED_CLIENT, "S2: vendor/README.md § Native SDK artifacts renders exactly one ReactiveFiberCLI paragraph, opening 'currently uses its installed CLI JSON envelope' then 'No unverified TypeScript client or invented SDK method is substituted', with no HTML in the section", [RF_STATED_SURFACE_SUITE]),
         pin(TYPED_CLIENT, "S3: the provider module's one leading comment states the installed CLI JSON contract and no TS SDK published", [RF_STATED_SURFACE_SUITE]),
-        pin(TYPED_CLIENT, "S4: each statement edited to name a client, deleted, duplicated or hidden in an HTML comment reads red, naming the statement, and the live texts read none", [RF_STATED_SURFACE_SUITE]),
+        pin(TYPED_CLIENT, "S4: each statement reworded to name a client, deleted or duplicated, the docs/18 row and the README paragraph also hidden in an HTML comment and the provider comment also joined by a second leading comment, reads exactly one finding naming its statement, and the live texts read none", [RF_STATED_SURFACE_SUITE]),
       ]),
-      gate("no-sdk-load", [
-        pin(TYPED_CLIENT, "L1: the package specifiers of every tracked src script module name no RF package, over a reading of every module at its floor", [RF_SRC_LOAD_SUITE]),
-        pin(TYPED_CLIENT, "L2: each load form planted with an RF package is read once, naming the module, the form and the specifier", [RF_SRC_LOAD_SUITE]),
-        pin(TYPED_CLIENT, "L3: relative specifiers and near-miss names read quiet, and the named residuals R-COMPUTED, R-LOADER and R-OTHER-NAME read their pinned quiet values", [RF_SRC_LOAD_SUITE]),
+      gate("src-load-forms", [
+        pin(TYPED_CLIENT, "L1: the specifiers moduleLoads reads in its fifteen load forms from every tracked src module of the eight script extensions name no RF package, over a reading of every module at its floor", [RF_SRC_LOAD_SUITE]),
+        pin(TYPED_CLIENT, "L2: each of the forty-two LOAD_PLANTS, every load form among them, reads exactly one RF load, naming the module, the form and the specifier", [RF_SRC_LOAD_SUITE]),
+        pin(TYPED_CLIENT, "L3: relative paths to Pi's own files and near-miss names read quiet, and the named residuals R-COMPUTED, R-LOADER, R-INDIRECT-CALLEE, R-EVALUATED, R-COMMENT, R-PRAGMA and R-OTHER-NAME read their pinned quiet values", [RF_SRC_LOAD_SUITE]),
       ]),
-      gate("no-sdk-manifest", [
-        pin(TYPED_CLIENT, "M1: package.json's dependency fields and every entry of both lockfiles name no RF package, over a reading of each manifest at its floor", [RF_MANIFEST_SUITE]),
-        pin(TYPED_CLIENT, "M2: an RF package planted in each place the readers read is read once, naming the manifest and the place", [RF_MANIFEST_SUITE]),
-        pin(TYPED_CLIENT, "M3: near-miss names read quiet, and the named residuals R-OTHER-NAME and R-SHADOWED read their pinned quiet values", [RF_MANIFEST_SUITE]),
+      gate("manifest-texts", [
+        pin(TYPED_CLIENT, "M1: no key or string value of package.json or of either lockfile, at any depth, is an RF package text, and no string of their raw text is one JSON.parse drops, over a reading of each manifest at its floor", [RF_MANIFEST_SUITE]),
+        pin(TYPED_CLIENT, "M2: each of the twenty-four MANIFEST_PLANTS and, in both lockfiles, each of the eight LOCK_PLANTS reads exactly one RF text, naming the manifest and the place", [RF_MANIFEST_SUITE]),
+        pin(TYPED_CLIENT, "M3: near-miss names and reactive and fiber as two texts read quiet, and the named residual R-OTHER-NAME reads its pinned quiet value", [RF_MANIFEST_SUITE]),
       ]),
     ],
   },
@@ -984,8 +990,8 @@ const FROZEN_JUDGED_SHAPE: readonly string[] = [
   "R2/observer:3",
   "R3/declared-cli-contract:2",
   "R3/stated-cli-surface:4",
-  "R3/no-sdk-load:3",
-  "R3/no-sdk-manifest:3",
+  "R3/src-load-forms:3",
+  "R3/manifest-texts:3",
   "R4/producer-release:2",
   "R4/tsx-engine-identity:2",
   "R5/recorded-release:2",
@@ -4363,20 +4369,20 @@ const FROZEN_R3: readonly string[] = [
   "quote | Do not declare a typed TS context-render client exists without code evidence.",
   "half | declared-cli-contract | test | pinned",
   "half | stated-cli-surface | test | pinned",
-  "half | no-sdk-load | test | pinned",
-  "half | no-sdk-manifest | test | pinned",
+  "half | src-load-forms | test | pinned",
+  "half | manifest-texts | test | pinned",
   "declared-cli-contract | test | test/workbench-rf-contract-carrier.test.ts | rf contractSource single carrier (wb-2j3.12, R2) | R2-1: both registered descriptors expose the identical contractSource, and it is the exported carrier",
   "declared-cli-contract | test | test/workbench-rf-contract-carrier.test.ts | rf contractSource single carrier (wb-2j3.12, R2) | R2-3: the carrier's release component string-equals the release the R8 receipt row of record stamped, over the verified schema",
   "stated-cli-surface | test | test/workbench-rf-typed-client-evidence.test.ts | Pi's three statements of its RF surface name the CLI JSON envelope and no typed TS client (docs/07 row R3, wb-x32) | S1: docs/workbench/18 § Key risks and mitigations holds exactly one 'No RF typed render SDK in pinned revision' row, reading weak integration and explicit unavailable block, provider-owned SDK improvement, with no HTML in the section",
   "stated-cli-surface | test | test/workbench-rf-typed-client-evidence.test.ts | Pi's three statements of its RF surface name the CLI JSON envelope and no typed TS client (docs/07 row R3, wb-x32) | S2: vendor/README.md § Native SDK artifacts renders exactly one ReactiveFiberCLI paragraph, opening 'currently uses its installed CLI JSON envelope' then 'No unverified TypeScript client or invented SDK method is substituted', with no HTML in the section",
   "stated-cli-surface | test | test/workbench-rf-typed-client-evidence.test.ts | Pi's three statements of its RF surface name the CLI JSON envelope and no typed TS client (docs/07 row R3, wb-x32) | S3: the provider module's one leading comment states the installed CLI JSON contract and no TS SDK published",
-  "stated-cli-surface | test | test/workbench-rf-typed-client-evidence.test.ts | Pi's three statements of its RF surface name the CLI JSON envelope and no typed TS client (docs/07 row R3, wb-x32) | S4: each statement edited to name a client, deleted, duplicated or hidden in an HTML comment reads red, naming the statement, and the live texts read none",
-  "no-sdk-load | test | test/workbench-rf-typed-client-evidence.test.ts | no tracked src module states an RF package specifier (docs/07 row R3, wb-x32) | L1: the package specifiers of every tracked src script module name no RF package, over a reading of every module at its floor",
-  "no-sdk-load | test | test/workbench-rf-typed-client-evidence.test.ts | no tracked src module states an RF package specifier (docs/07 row R3, wb-x32) | L2: each load form planted with an RF package is read once, naming the module, the form and the specifier",
-  "no-sdk-load | test | test/workbench-rf-typed-client-evidence.test.ts | no tracked src module states an RF package specifier (docs/07 row R3, wb-x32) | L3: relative specifiers and near-miss names read quiet, and the named residuals R-COMPUTED, R-LOADER and R-OTHER-NAME read their pinned quiet values",
-  "no-sdk-manifest | test | test/workbench-rf-typed-client-evidence.test.ts | no manifest text names an RF package (docs/07 row R3, wb-x32) | M1: package.json's dependency fields and every entry of both lockfiles name no RF package, over a reading of each manifest at its floor",
-  "no-sdk-manifest | test | test/workbench-rf-typed-client-evidence.test.ts | no manifest text names an RF package (docs/07 row R3, wb-x32) | M2: an RF package planted in each place the readers read is read once, naming the manifest and the place",
-  "no-sdk-manifest | test | test/workbench-rf-typed-client-evidence.test.ts | no manifest text names an RF package (docs/07 row R3, wb-x32) | M3: near-miss names read quiet, and the named residuals R-OTHER-NAME and R-SHADOWED read their pinned quiet values",
+  "stated-cli-surface | test | test/workbench-rf-typed-client-evidence.test.ts | Pi's three statements of its RF surface name the CLI JSON envelope and no typed TS client (docs/07 row R3, wb-x32) | S4: each statement reworded to name a client, deleted or duplicated, the docs/18 row and the README paragraph also hidden in an HTML comment and the provider comment also joined by a second leading comment, reads exactly one finding naming its statement, and the live texts read none",
+  "src-load-forms | test | test/workbench-rf-typed-client-evidence.test.ts | the specifiers moduleLoads reads in its fifteen load forms from the tracked src script modules name no RF package (docs/07 row R3, wb-x32) | L1: the specifiers moduleLoads reads in its fifteen load forms from every tracked src module of the eight script extensions name no RF package, over a reading of every module at its floor",
+  "src-load-forms | test | test/workbench-rf-typed-client-evidence.test.ts | the specifiers moduleLoads reads in its fifteen load forms from the tracked src script modules name no RF package (docs/07 row R3, wb-x32) | L2: each of the forty-two LOAD_PLANTS, every load form among them, reads exactly one RF load, naming the module, the form and the specifier",
+  "src-load-forms | test | test/workbench-rf-typed-client-evidence.test.ts | the specifiers moduleLoads reads in its fifteen load forms from the tracked src script modules name no RF package (docs/07 row R3, wb-x32) | L3: relative paths to Pi's own files and near-miss names read quiet, and the named residuals R-COMPUTED, R-LOADER, R-INDIRECT-CALLEE, R-EVALUATED, R-COMMENT, R-PRAGMA and R-OTHER-NAME read their pinned quiet values",
+  "manifest-texts | test | test/workbench-rf-typed-client-evidence.test.ts | no key or string value of package.json or of either lockfile is an RF package text (docs/07 row R3, wb-x32) | M1: no key or string value of package.json or of either lockfile, at any depth, is an RF package text, and no string of their raw text is one JSON.parse drops, over a reading of each manifest at its floor",
+  "manifest-texts | test | test/workbench-rf-typed-client-evidence.test.ts | no key or string value of package.json or of either lockfile is an RF package text (docs/07 row R3, wb-x32) | M2: each of the twenty-four MANIFEST_PLANTS and, in both lockfiles, each of the eight LOCK_PLANTS reads exactly one RF text, naming the manifest and the place",
+  "manifest-texts | test | test/workbench-rf-typed-client-evidence.test.ts | no key or string value of package.json or of either lockfile is an RF package text (docs/07 row R3, wb-x32) | M3: near-miss names and reactive and fiber as two texts read quiet, and the named residual R-OTHER-NAME reads its pinned quiet value",
 ];
 
 /**
@@ -4447,7 +4453,7 @@ describe("wb-x32 docs/workbench/07 row R3: the RF typed-client sentence, bound t
     expect(row.section).toBe("ReactiveFiberCLI provider");
     expect(row.source).toBe("docs");
     expect(f6IdentityOf(row)).toEqual(FROZEN_R3);
-    expect(row.halves.map(half => `${half.id}:${half.pins.length}`)).toEqual(["declared-cli-contract:2", "stated-cli-surface:4", "no-sdk-load:3", "no-sdk-manifest:3"]);
+    expect(row.halves.map(half => `${half.id}:${half.pins.length}`)).toEqual(["declared-cli-contract:2", "stated-cli-surface:4", "src-load-forms:3", "manifest-texts:3"]);
     expect(row.halves.every(half => half.tier === "default-gate" && half.reason === undefined && half.pins.every(entry => entry.suite !== undefined))).toBe(true);
     // The sentence is the paragraph's own: the one right after the posture sentence the RF anchor leaves unbound.
     expect((SECTION_MARKDOWN["ReactiveFiberCLI provider"] ?? "").split(`${RF_UNBOUND_SENTENCES[0] ?? ""} ${row.quote} Return actual context text`)).toHaveLength(2);
@@ -4488,8 +4494,8 @@ describe("wb-x32 docs/workbench/07 row R3: the RF typed-client sentence, bound t
     const cases: readonly [string, readonly Row[], string][] = [
       ["a dropped pin", withR3(row => halfOf(row, "stated-cli-surface", half => ({ ...half, pins: half.pins.slice(1) }))), `${named3} 16 lines`],
       ["a same-seam swapped pin", withR3(row => halfOf(row, "declared-cli-contract", half => ({ ...half, pins: half.pins.map(entry => (entry.title.startsWith("R2-3:") ? swapped : entry)) }))), `${named3} 17 lines`],
-      ["a dropped half", withR3(row => ({ ...row, halves: row.halves.filter(half => half.id !== "no-sdk-manifest") })), `${named3} 13 lines`],
-      ["a relabelled tier", withR3(row => halfOf(row, "no-sdk-load", half => ({ ...half, tier: "native-read" }))), `${named3} 17 lines`],
+      ["a dropped half", withR3(row => ({ ...row, halves: row.halves.filter(half => half.id !== "manifest-texts") })), `${named3} 13 lines`],
+      ["a relabelled tier", withR3(row => halfOf(row, "src-load-forms", half => ({ ...half, tier: "native-read" }))), `${named3} 17 lines`],
       ["reordered halves", withR3(row => ({ ...row, halves: [...row.halves].reverse() })), `${named3} 17 lines`],
       ["a dropped row", TABLE.filter(row => row.row !== "R3"), "row R3: the receipt records it but the table holds no such row"],
     ];
