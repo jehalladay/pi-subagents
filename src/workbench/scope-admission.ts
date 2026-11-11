@@ -1,41 +1,35 @@
 /**
  * scope-admission.ts: the Pi-side HX scope admission guards of the hx-admit packet (wb-pxvv, MWI B-hx-admit, slice PI-5; MNI
- * packet P12). Requirements EAT-R058, EAT-R059 and EAT-R062 of mechanical-workflows-interop-2026-11-04 (triage/requirements/
- * ATOMIC-REQUIREMENTS.md at pi-subagents master 0b25e14e), vendored with their SHA-256 in
- * test/fixtures/mwi-hx-admit-requirements-roster.json; test/workbench-hx-admit-census.test.ts names the case that pins each
- * form stated here, and its header carries the NOT CLAIMED sentences.
+ * packet P12), for requirements EAT-R058, EAT-R059 and EAT-R062 of mechanical-workflows-interop-2026-11-04
+ * (triage/requirements/ATOMIC-REQUIREMENTS.md at pi-subagents master 0b25e14e), vendored with their SHA-256 in
+ * test/fixtures/mwi-hx-admit-requirements-roster.json. test/workbench-hx-admit-census.test.ts names the case that pins each
+ * form stated in this comment and in the doc comments below (the case ids in parentheses), and its header carries the NOT
+ * CLAIMED sentences.
  *
- * Pure and synchronous except dispatchAdmittedWriter, which awaits its writer once: no clock, randomness, environment, file,
- * process or SDK access. The module decides; it loads nothing and wires nothing. No registered tool composes it yet:
- * workflow_execute still refuses a function definition (execute-tool.ts, unsupported-definition-kind), so composing these
- * guards into a registered launch, and the host reader that turns a live HX answer into ScopeEvidence, belong to the dispatch
- * packet (P04), and the installed-host witness (EAT-R063, gate PI-HX-RF-LIVE) stays owed there.
+ * - judgeScopeEvidence (EAT-R058, EAT-R059): an identity is stated when it is a string other than the empty string. A stated
+ *   workspace, task digest, query digest or resolved revision that differs from the expectation's is refused with that
+ *   mismatch (root, task, query or revision; the first in SCOPE_MISMATCHES order when several differ), whatever gaps the
+ *   answer also has (R059-BEFORE-WRITER, R059-CHECK-ORDER). Without such a mismatch an answer is admitted only when answered
+ *   is true, exitCode is 0, terminalReached is true, coverage is complete, absenceLicensed is true and its workspace, task
+ *   digest, resolved revision and query digest are stated; otherwise it is needs_evidence with the gap of every condition it
+ *   misses, in SCOPE_GAPS order (R058-EACH-CONDITION, R058-GAP-ORDER). An empty answer (knownEmpty true) adds
+ *   known-empty-unlicensed unless its coverage is complete and its absence licensed (R058-FALSE-KNOWN-EMPTY,
+ *   M-EMPTY-AS-COMPLETE, R058-POSITIVE-CONTROL).
+ * - scopeBlockerOf (EAT-R062): a gate whose witness is supported has no blocker; an unsupported or missing witness is a
+ *   blocker on HX-TASK-SCOPE-PROBE scoped to native-task-scope that names git-census as not blocked (R062-NATIVE-BLOCKED).
+ * - dispatchAdmittedWriter (EAT-R062): its doc comment below states the order of its guards and what the writer receives.
  *
- * - judgeScopeEvidence (EAT-R058, EAT-R059): an HX scope answer is the invocation's only when every identity it states - the
- *   workspace root (mismatch root), the task digest, the query digest and the resolved revision - equals the expectation's; a stated identity that
- *   differs refuses with that mismatch, checked before any gap, so evidence from another task, query or revision never reads
- *   as merely incomplete. An answer of this invocation is admitted only when it was answered natively, exited 0, reached its
- *   terminal, carries coverage the runtime certified complete and licensed absence, and states its workspace, task scope,
- *   resolved revision and query digest; otherwise it is needs_evidence with every gap in SCOPE_GAPS order. An empty answer is
- *   never complete coverage: a stated empty result (or one that does not say it is not empty) without licensed complete
- *   coverage adds known-empty-unlicensed.
- * - scopeBlockerOf and dispatchAdmittedWriter (EAT-R062): only a scope gate whose witness is supported opens the native
- *   task-scope profile; any other witness is a blocker on HX-TASK-SCOPE-PROBE scoped to native-task-scope that names
- *   git-census as not blocked, and an independently authorized git-census request dispatches under its own limited label
- *   whatever the scope gate reads. dispatchAdmittedWriter calls its writer at most once, only after every guard the request
- *   asks for admits, with one frozen admission; every refusal returns before the writer and carries a closed-vocabulary code.
- *
- * Display paths: none. Refusals are closed-vocabulary codes and carry no producer text; nothing here is a label, title or reply.
+ * Display paths: none.
  */
 
-/** The program's real-infra gate whose witness opens the certified native task-scope profile. */
+/** The program's real-infra gate a scope gate witness is read for (R062-NATIVE-BLOCKED, R163-GATE-INDEPENDENT). */
 export const SCOPE_PROBE_GATE = "HX-TASK-SCOPE-PROBE";
-/** The only mode a scope gate that is not supported blocks. */
+/** The mode a scope gate that is not supported blocks (R062-NATIVE-BLOCKED). */
 export const NATIVE_SCOPE_MODE = "native-task-scope";
-/** The independently authorized mode a closed scope gate never blocks: the Git tracked-file census. */
+/** The independently authorized mode, the Git tracked-file census: a git-census request reads no scope gate (R062-GIT-CENSUS-PASSES, M-DISABLE-ALL). */
 export const GIT_CENSUS_MODE = "git-census";
 
-/** Every condition a scope answer can miss, in the order judgeScopeEvidence reports them. */
+/** Every gap judgeScopeEvidence reports, in the order it reports them (R058-GAP-ORDER). */
 export const SCOPE_GAPS = Object.freeze([
   "answer-missing",
   "exit-nonzero",
@@ -49,18 +43,18 @@ export const SCOPE_GAPS = Object.freeze([
   "query-digest-absent",
 ] as const);
 export type ScopeGap = (typeof SCOPE_GAPS)[number];
-/** The identities a scope answer can belong to another invocation by, in check order. */
+/** The mismatches judgeScopeEvidence refuses with, in the order it checks them (R059-CHECK-ORDER). */
 export const SCOPE_MISMATCHES = Object.freeze(["root", "task", "query", "revision"] as const);
 export type ScopeMismatch = (typeof SCOPE_MISMATCHES)[number];
 
-/** What the invocation's task asks: the workspace, the task and query digests and the base revision it is pinned to. */
+/** What the invocation's task asks: the workspace, the task and query digests and the base revision. */
 export interface ScopeExpectation {
   readonly workspace: string;
   readonly taskDigest: string;
   readonly queryDigest: string;
   readonly baseRevision: string;
 }
-/** The host's reading of one terminal HX answer: only what the producer stated, a null where it stated nothing. */
+/** One terminal HX answer as the host reads it; an identity the producer did not state is null. */
 export interface ScopeEvidence {
   readonly answered: boolean;
   readonly exitCode: number | null;
@@ -79,7 +73,7 @@ export type ScopeVerdict =
   | { readonly outcome: "refused"; readonly mismatch: ScopeMismatch };
 
 export type ScopeGateWitness = "supported" | "unsupported" | "missing";
-/** The scope gate's reading: the witness of the HX-TASK-SCOPE-PROBE route the host holds. */
+/** The scope gate's reading: the witness the host holds for the HX-TASK-SCOPE-PROBE route. */
 export interface ScopeGate {
   readonly witness: ScopeGateWitness;
 }
@@ -98,11 +92,11 @@ export interface NativeWriterRequest {
 export interface GitCensusWriterRequest {
   readonly mode: typeof GIT_CENSUS_MODE;
   readonly invocationId: string;
-  /** The host's own authority decision for this request (never the model's): only true dispatches. */
+  /** The host's authority decision for this request: only true dispatches (R062-GIT-CENSUS-PASSES). */
   readonly authorized: boolean;
 }
 export type WriterRequest = NativeWriterRequest | GitCensusWriterRequest;
-/** The one frozen admission the writer receives. */
+/** The frozen admission the writer receives, once per dispatch (R062-ONE-FROZEN-ADMISSION). */
 export interface WriterAdmission {
   readonly invocationId: string;
   readonly label: typeof NATIVE_SCOPE_MODE | typeof GIT_CENSUS_MODE;
@@ -184,9 +178,14 @@ function refusedWith<T>(refusal: WriterRefusal): WriterOutcome<T> {
 }
 
 /**
- * Calls `writer` at most once, with one frozen admission, and only after every guard `request` asks for admits; otherwise
- * returns the first refusal (request shape, then the git-census authority, or the native scope gate and the scope evidence)
- * without calling it. A writer's rejection or throw propagates unchanged.
+ * Calls `writer` exactly once, with one frozen admission { invocationId, label }, when every guard `request` asks for admits,
+ * and returns { dispatched: true, admission, value } with that same admission and the writer's resolved value
+ * (R062-ONE-FROZEN-ADMISSION, R058-POSITIVE-CONTROL, R062-GIT-CENSUS-PASSES). Otherwise it returns the first refusal without
+ * calling the writer (R062-REFUSAL-ORDER): stage request (malformed-request) first, for an invocation id or, on a native
+ * request, an expected identity that is the empty string; then, on a git-census request, stage authority unless authorized
+ * is true; on a native request, stage gate when scopeBlockerOf reads a blocker, then stage scope with any verdict of
+ * judgeScopeEvidence other than admitted. A writer's throw or rejection propagates unchanged: the call rejects with the
+ * same value (R062-WRITER-ERROR-PROPAGATES).
  */
 export async function dispatchAdmittedWriter<T>(request: WriterRequest, writer: (admission: WriterAdmission) => T | Promise<T>): Promise<WriterOutcome<T>> {
   if (!wellFormed(request) || typeof writer !== "function") return refusedWith({ stage: "request", reason: "malformed-request" });
