@@ -22,6 +22,12 @@
  *  RFW5 (wb-79k.3, owner extension EAT-R374 acceptance 3) "Assert missing read grants execute zero producer calls": without the
  *       reactivefiber:render grant the registered provider refuses the call before any spawn, so the stand-in rf never runs, the
  *       adapter is never called and no reactivefiber snapshot is projected. A negative guard: it holds at trunk as well.
+ *  RFW6 (wb-79k.3 respin, refusal #1 U7) the src/index.ts binding of the validated reactivefiberWorkspaceRoot setting: with the
+ *       setting naming a separate RF root, the reading of that root is projected and no refusal line is logged (falsifier: the
+ *       binding in src/index.ts, or the wiring's pass-through to the adapter, deleted: the adapter then refuses it as authorization).
+ *  RFW7 (wb-79k.3 respin, refusal #1 U8) "a refused reading leaves one workflow_log line" (src/index.ts): an envelope the provider
+ *       admits and the adapter refuses (result.blocks holding no block objects) leaves exactly one refusal line in the run's
+ *       workflow_log and projects nothing, while the node still answers (falsifier: the log binding in src/index.ts deleted).
  * The credential-shaped values are obviously fake. Nothing here needs a real rf, a TTY or the network.
  */
 import { chmodSync, existsSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
@@ -81,8 +87,9 @@ function spawnLines(log: string): string[] {
   return readFileSync(log, "utf8").trim().split(LF);
 }
 
-async function boot(grants: readonly string[] = GRANTS) {
-  sandbox = hermeticDir({ settings: { workflowsEnabled: true, workbench: { workflowAgentBackend: "claude", capabilityGrants: grants } } });
+async function boot(grants: readonly string[] = GRANTS, reactivefiberWorkspaceRoot?: string) {
+  const workbench = { workflowAgentBackend: "claude", capabilityGrants: grants, ...(reactivefiberWorkspaceRoot !== undefined ? { reactivefiberWorkspaceRoot } : {}) };
+  sandbox = hermeticDir({ settings: { workflowsEnabled: true, workbench } });
   const booted = makePi();
   subagentsExtension(booted.pi);
   const context = ctx({ cwd: sandbox.dir });
@@ -262,6 +269,36 @@ describe("wb-79k.2 the ReactiveFiber preview a workflow node() call is answered 
     expect(notification).toContain("<result>rf:authorization</result>");
     expect(existsSync(log), "the stand-in rf ran although the read grant is missing").toBe(false);
     expect(adapter).not.toHaveBeenCalled();
+    const reply = JSON.parse(await observeText(host, taskId)) as ObserveReply;
+    expect(reply.nodes.filter(node => isPreview(node.nativeRef))).toEqual([]);
+  }, TIMEOUT);
+
+  it("RFW6: with the validated reactivefiberWorkspaceRoot setting the reading of that RF root is projected, and no refusal line is logged", async () => {
+    const rfRoot = realpathSync(makeScratch("rf-observe-wiring-root-"));
+    scratches.push(rfRoot);
+    const host = await boot(GRANTS, rfRoot);
+    expect(rfRoot).not.toBe(host.projectRoot);
+    const log = standInRf(fullShapeRf(rfRoot), 0);
+    const logs = recordLogLines();
+    const { taskId, notification } = await run(host, RF_NODE);
+    expect(notification).toContain("<result>rf:ok</result>");
+    expect(spawnLines(log).map(line => JSON.parse(line) as string[]).map(argv => argv[argv.indexOf("--workspace") + 1])).toEqual([rfRoot]);
+    expect(logs.filter(line => line.includes("not projected"))).toEqual([]);
+    const reply = JSON.parse(await observeText(host, taskId)) as ObserveReply;
+    expect(reply.nodes.filter(node => isPreview(node.nativeRef)).map(node => node.kind)).toEqual(["reactivefiber.render.preview.snapshot"]);
+  }, TIMEOUT);
+
+  it("RFW7: an envelope the provider admits and the adapter refuses leaves exactly one workflow_log refusal line and projects nothing, while the node answers", async () => {
+    const host = await boot();
+    const envelope = fullShapeRf(host.projectRoot) as JsonObject;
+    (envelope.result as JsonObject).blocks = [1];
+    standInRf(envelope, 0);
+    const logs = recordLogLines();
+    const adapter = vi.spyOn(rfObserver, "reactivefiberTopology");
+    const { taskId, notification } = await run(host, RF_NODE);
+    expect(notification).toContain("<result>rf:ok</result>");
+    expect(adapter).toHaveBeenCalledTimes(1);
+    expect(logs.filter(line => line.includes("not projected"))).toEqual([expect.stringMatching(/^ReactiveFiber preview of node call [0-9]+ not projected \(validation\)$/)]);
     const reply = JSON.parse(await observeText(host, taskId)) as ObserveReply;
     expect(reply.nodes.filter(node => isPreview(node.nativeRef))).toEqual([]);
   }, TIMEOUT);

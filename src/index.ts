@@ -73,6 +73,7 @@ import type { ClaudeCallIdentity } from "./workbench/claude-host.js";
 import { type ControlExecutionSummary, type ControlExecutor, createWorkflowControlTool } from "./workbench/control-tool.js";
 import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflowSource } from "./workbench/designer.js";
 import { executeDetachedControl } from "./workbench/detached-control.js";
+import { DetachedObserveWiring } from "./workbench/detached-wiring.js";
 import { createWorkbenchEvidenceStore } from "./workbench/evidence-wiring.js";
 import { createWorkflowExecuteTool, type ExecuteLaunch } from "./workbench/execute-tool.js";
 import { createRetainedForgeControlExecutor, retainForgeOperation } from "./workbench/forge-control-retention.js";
@@ -2461,6 +2462,12 @@ Terse command-style prompts produce shallow, generic work.
   const workflowTasks = new Map<string, WorkflowTask>();
   const projection = new ObservationProjection({ maxEvents: 4_096, maxNodes: 2_000, maxEdges: 4_000, maxQuery: WORKBENCH_PROJECTION_MAX_QUERY });
   /**
+   * wb-79k.3 (W13/VC-7): the local-detached observe-wiring of this process. Both launch seams hand it the receipt their launch
+   * returned and workflow_detached's inspect hands it the reading it took; it applies that reading to the projection above
+   * under host-owned context only, and it is handed values, never a client, so it sends nothing of its own.
+   */
+  const detachedObservation = new DetachedObserveWiring();
+  /**
    * forge_gate_run (wb-a3s): the Forge operations THIS process started and still observes, keyed by the server's operation
    * id. Each owns its connection; session_shutdown disposes them, which reaps the spawned app-servers — process ownership at
    * teardown, never a control verb.
@@ -2673,6 +2680,7 @@ Terse command-style prompts produce shallow, generic work.
       providers: [], grants: claude?.grants ?? [], permissions: ["inspect", "execute"], sourceFiles: [launch.source.sourceRef],
       ...(claude ? { claude: claude.claude } : {}),
     });
+    detachedObservation.launched(receipt);
     return [
       { provider: "local-detached", type: "invocation", id: receipt.invocationId, ...referenceScope(receipt.invocationDirectory) },
       { provider: "local-detached", type: "host-instance", id: receipt.hostInstanceId },
@@ -2918,7 +2926,18 @@ Terse command-style prompts produce shallow, generic work.
         if (!grants(ctx).includes(params.action === "launch" ? "workbench:detach" : "workbench:observe")) return textResult("Permission denied: explicit detached launch or observe grant required.");
         const directory=join(getAgentDir(),"workbench-detached");
         try {
-          if (params.action === "inspect") return textResult(sanitizeWorkbenchJsonText(await workbenchNative().connectDetachedWorkflow(directory,params.invocationId).inspect(), 4096));
+          if (params.action === "inspect") {
+            const snapshot = await workbenchNative().connectDetachedWorkflow(directory,params.invocationId).inspect();
+            // wb-79k.3 (W13/VC-7): the reading this inspect took reaches the session's live projection, under this session's scope,
+            // the detached host's local operator and the host clock. Observation only: the reply stays the inspect snapshot.
+            try {
+              detachedObservation.observe({ projection, scope: observerScope(ctx), operator: () => workbenchNative().localOperator(), now: () => new Date().toISOString() },
+                params.invocationId, snapshot);
+            } catch {
+              // The wiring answers its own refusals; a scope read that throws projects nothing and never changes the reply.
+            }
+            return textResult(sanitizeWorkbenchJsonText(snapshot, 4096));
+          }
           if (params.trustedScript !== true || !params.scriptPath) return textResult("Launch requires an explicitly reviewed trusted scriptPath.");
           const source=inspectWorkflowSource({scriptPath:params.scriptPath},ctx.cwd);
           const claude=params.backend === "claude" ? detachedClaudeLaunch(ctx,sourceSettings(ctx)) : undefined;
@@ -2926,6 +2945,7 @@ Terse command-style prompts produce shallow, generic work.
             backend:params.backend ?? "deterministic",providers:[],grants:claude?.grants ?? [],permissions:["inspect","execute"],sourceFiles:[source.sourceRef],
             ...(claude ? {claude:claude.claude} : {}),
           });
+          detachedObservation.launched(receipt);
           return textResult(sanitizeWorkbenchJsonText(receipt, 4096));
         } catch (error) { return textResult(sanitizeWorkbenchText(error instanceof Error ? error.message : String(error))); }
       },

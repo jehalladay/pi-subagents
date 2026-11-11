@@ -2940,6 +2940,7 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "src/workbench/control.ts:2+0",
       "src/workbench/detached-control.ts:0+0",
       "src/workbench/detached-observer.ts:3+2",
+      "src/workbench/detached-wiring.ts:1+0",
       "src/workbench/evidence-wiring.ts:1+0",
       "src/workbench/forge-observer.ts:0+1",
       "src/workbench/forge-operation-observer.ts:3+0",

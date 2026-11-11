@@ -1588,7 +1588,7 @@
         "relate"
       ],
       "type": [],
-      "reason": "the extension entry: it builds the session projection, admits observations in tool handlers and in its workflow-lifecycle emitter, reads it in a tool handler (workflow_compare), hands the dialog seam its deps and hands the Claude host's node seam its refresh and relate (wb-79k.1: a returned hyperunix.find value's snapshot and grouping edge)"
+      "reason": "the extension entry: it builds the session projection, admits observations in tool handlers and in its workflow-lifecycle emitter, reads it in a tool handler (workflow_compare), hands the dialog seam its deps, hands the Claude host's node seam its refresh and relate (wb-79k.1: a returned hyperunix.find value's snapshot and grouping edge) and hands the detached observe-wiring the projection in workflow_detached's inspect (wb-79k.3)"
     },
     "src/workbench/beads-observer.ts": {
       "value": [],
@@ -1663,6 +1663,13 @@
         "relate"
       ],
       "reason": "the detached-run observer: applyDetachedReading admits a detached run's reading, whose statement and verdict types it spells from relate and refresh"
+    },
+    "src/workbench/detached-wiring.ts": {
+      "value": [
+        "query"
+      ],
+      "type": [],
+      "reason": "the detached observe-wiring (wb-79k.3): an inspect reading the host took reaches the projection through the landed applyDetachedReading, and the wiring reads the invocation's held node (query) for its equal-instant guard, inside the tool call that took the reading, never on a redraw"
     },
     "src/workbench/evidence-wiring.ts": {
       "value": [

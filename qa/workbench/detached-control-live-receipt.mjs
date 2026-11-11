@@ -5,11 +5,12 @@
 // source: the harness hands it measured journeys and the offline test hands it fabricated ones, and either
 // way only the observed shape is judged. A denial that opened a socket, a minted cancel echo, a rewritten
 // minted receipt and a shutdown that hid unresolvedEffects are measured violations, never papered over; the
-// one journey declared unrealised by design (the strict booted-tool reading) must cite its held bead.
+// one journey declared unrealised by design on this tier (the strict booted-tool reading) must cite its bead.
 import {basenameOnly} from './local-detached-faults-receipt.mjs';
 
 export const DETACHED_CONTROL_LIVE_CONTRACT = 'workbench.detached-control-live/v1';
-/** The held wiring bead the strict booted-tool reading cites: nothing in src ingests detached readings yet. */
+/** The wiring bead the strict booted-tool reading cites: since wb-79k.3 src projects a workflow_detached inspect reading, and the
+ * booted reading (measured in the default tier) stays unrealised under the Pi launch permissions inspect+execute. */
 export const STRICT_BOOTED_CITATION = 'wb-79k.3';
 export const STRICT_BOOTED_TOOL = 'strict-booted-tool';
 /** Free-text cap per journey string: every asserted value must ALSO be a typed field (wb-6hb.12). */
@@ -103,7 +104,7 @@ function overlongText(value) {
 /**
  * Judge observed journeys. Returns {findings: {rule, detail}[], realised}. A missing or unarmed journey makes
  * the measurement not realised (never a pass, never itself a finding) — except the strict booted-tool reading,
- * which is unrealised BY DESIGN and must cite its held bead to count. Everything else that deviates from the
+ * which is unrealised BY DESIGN on this tier and must cite its bead to count. Everything else that deviates from the
  * host's own answers is a measured finding.
  */
 export function assessDetachedControlLiveJourneys(observed) {

@@ -29,6 +29,17 @@
  *  W13 (acceptance 5) the one invoke carries exactly the host's grants, none of them a reconcile permission.
  *  W14 (acceptance 5) a failed read and another capability's value reach no adapter call.
  *  W15 (acceptance 4) the grouping source is the node call as the run's projection names it: the stated execution id, if any.
+ * W16-W20 (wb-79k.3 respin, refusal #1 U2-U6) pin the claude-host.ts claim words of the seam, each through the same harness:
+ *  W16 (U2) a snapshot refresh answers out-of-order or refused states no edge: relate is never called (falsifier: the early return
+ *      for a non-applied snapshot deleted).
+ *  W17 (U3) a refresh that throws is a typed diagnostic with nothing projected, the refusal keeping a CapabilityError's own category
+ *      (falsifier: the refresh catch answering without its typed refusal).
+ *  W18 (U4) relate refusing the edge of an applied snapshot is a typed refusal beside applied, after the adapter's diagnostics
+ *      (falsifier: the relate catch dropping its refusal).
+ *  W19 (U5) a host clock that throws reads as no instant, which the adapter refuses as a typed diagnostic: nothing is projected and
+ *      the node still answers (falsifier: the clock catch substituting another clock's reading).
+ *  W20 (U6) a throwing onObserved listener never reaches the node's value: the run completes with the registry's answer and the
+ *      snapshot stays projected (falsifier: the listener's try/catch removed).
  *
  * NOT CLAIMED: the local-detached host's node calls are NOT CLAIMED by this file, nor are a Claude agent's capability tool calls
  * (claude-capability-tools.ts) or the legacy Pi host. An execution id carried by a find stream end to end is NOT CLAIMED: the
@@ -43,7 +54,7 @@ import type { ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { resultFromJson } from "@hyperunix/sdk";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import subagentsExtension from "../src/index.js";
-import { CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
+import { CapabilityError, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
 import {
   type ClaudeNodeObservation,
   type ClaudeNodeObservationOutcome,
@@ -536,5 +547,94 @@ describe("wb-79k.1 the Claude host's node seam applies the frozen adapter result
       sources.push(hxOf(projection, { parent: source(result) }).map(node => node.kind));
     }
     expect(sources).toEqual([["hyperunix.query.snapshot"], ["hyperunix.query.snapshot"]]);
+  });
+
+  it("W16 a snapshot the projection does not admit states no edge: an out-of-order or refused refresh never reaches relate", async () => {
+    for (const answer of ["out-of-order", "refused"] as const) {
+      const { registry } = hxRegistry(hxDocument());
+      const { observation, outcomes } = observing(projectionOf());
+      const relate = vi.fn();
+      const result = await runWorkflow({ script: SCRIPT, host: hostOf(registry, { ...observation, refresh: () => answer, relate }) });
+      expect(result.status).toBe("completed");
+      expect(relate).not.toHaveBeenCalled();
+      expect(outcomes.map(outcome => ({ result: outcome.result, related: outcome.related, refusal: outcome.refusal }))).toEqual([{ result: answer, related: 0, refusal: undefined }]);
+    }
+  });
+
+  it("W17 a refresh that throws is a typed diagnostic with nothing projected, keeping a CapabilityError's own category", async () => {
+    const refusals: Array<readonly [string, string | undefined]> = [];
+    for (const failure of [new Error("wb-79k.3 fake refresh failure"), new CapabilityError("authorization", "wb-79k.3 fake refresh refusal")]) {
+      const { registry } = hxRegistry(hxDocument());
+      const projection = projectionOf();
+      const { observation, outcomes } = observing(projection);
+      const relate = vi.fn();
+      const refresh = (): never => {
+        throw failure;
+      };
+      const result = await runWorkflow({ script: SCRIPT, host: hostOf(registry, { ...observation, refresh, relate }) });
+      expect(result.status).toBe("completed");
+      expect(relate).not.toHaveBeenCalled();
+      expect(projection.stats()).toEqual({ nodes: 0, events: 0, edges: 0 });
+      expect(outcomes.map(outcome => ({ result: outcome.result, related: outcome.related, diagnostics: outcome.diagnostics, name: outcome.refusal?.name }))).toEqual([
+        { result: "diagnostic", related: 0, diagnostics: [failure.message], name: "CapabilityError" },
+      ]);
+      refusals.push([outcomes[0]?.refusal?.message ?? "", outcomes[0]?.refusal?.category]);
+    }
+    expect(refusals).toEqual([
+      ["wb-79k.3 fake refresh failure", "validation"],
+      ["wb-79k.3 fake refresh refusal", "authorization"],
+    ]);
+  });
+
+  it("W18 relate refusing the edge of an applied snapshot is a typed refusal beside applied, after the adapter's own diagnostics", async () => {
+    const { registry } = hxRegistry(hxDocument());
+    const projection = projectionOf();
+    const { observation, outcomes } = observing(projection);
+    const relate = (): never => {
+      throw new Error("wb-79k.3 fake relate refusal");
+    };
+    const result = await runWorkflow({ script: SCRIPT, host: hostOf(registry, { ...observation, relate }) });
+    expect(result.status).toBe("completed");
+    const expected = hyperunixTopology(result.value as JsonValue, {
+      scope: SCOPE,
+      target: TARGET,
+      capturedAt: T0,
+      observedAt: T1,
+      invocationId: INVOCATION,
+      operationRef: nodeCallRef(INVOCATION, nodeCall(result).callId),
+    });
+    expect(outcomes.map(outcome => ({ result: outcome.result, related: outcome.related, diagnostics: outcome.diagnostics, category: outcome.refusal?.category }))).toEqual([
+      { result: "applied", related: 0, diagnostics: [...expected.diagnostics.slice(0, 7), "wb-79k.3 fake relate refusal"], category: "validation" },
+    ]);
+    expect(hxOf(projection)).toHaveLength(1);
+  });
+
+  it("W19 a host clock that throws reads as no instant: a typed diagnostic, nothing projected, and the node still answers", async () => {
+    const { registry } = hxRegistry(hxDocument());
+    const projection = projectionOf();
+    const { observation, outcomes } = observing(projection, () => {
+      throw new Error("wb-79k.3 fake clock failure");
+    });
+    const result = await runWorkflow({ script: SCRIPT, host: hostOf(registry, observation) });
+    expect(result.status).toBe("completed");
+    expect(outcomes.map(outcome => [outcome.result, outcome.related, outcome.refusal?.category])).toEqual([["diagnostic", 0, "validation"]]);
+    expect(projection.stats()).toEqual({ nodes: 0, events: 0, edges: 0 });
+  });
+
+  it("W20 a throwing onObserved listener never reaches the node's value: the run completes with the registry's answer and the snapshot projected", async () => {
+    const { registry } = hxRegistry(hxDocument());
+    const projection = projectionOf();
+    const { observation } = observing(projection);
+    const onObserved = (): never => {
+      throw new Error("wb-79k.3 fake listener failure");
+    };
+    const result = await runWorkflow({ script: SCRIPT, host: hostOf(registry, { ...observation, onObserved }) });
+    expect(result.status).toBe("completed");
+    expect(hxOf(projection)).toHaveLength(1);
+    const unobserved = await runWorkflow({
+      script: SCRIPT,
+      host: createClaudeWorkflowHost({ cwd: SCOPE.workspace, query: NO_AGENTS, capabilities: hxRegistry(hxDocument()).registry, grants: ["hyperunix:read"], invocationId: INVOCATION }),
+    });
+    expect(result.value).toEqual(unobserved.value);
   });
 });

@@ -37,6 +37,7 @@ import { buildControlReply, MAX_CONTROL_REPLY_BYTES } from "../src/workbench/con
 import type { WorkflowSource } from "../src/workbench/designer.js";
 import { type DetachedControlClient, type DetachedControlExecution, type DetachedControlInput, executeDetachedControl } from "../src/workbench/detached-control.js";
 import { projectDetachedReading } from "../src/workbench/detached-observer.js";
+import { DetachedObserveWiring } from "../src/workbench/detached-wiring.js";
 import { type EvidenceLoader, EvidenceStore } from "../src/workbench/evidence-loader.js";
 import { buildWorkflowExecuteReply, decideExecute, EXECUTE_GRANT, type ExecuteDecision, type LaunchOutcome, type WorkflowExecuteRequest } from "../src/workbench/execute.js";
 import { readForgeOperationEvidence } from "../src/workbench/forge-evidence.js";
@@ -919,6 +920,42 @@ function grantRefusalTexts(raw: string): string[] {
   throw new Error("wb-71w: reconcileGrant admitted a corpus probe as a producer");
 }
 
+/**
+ * wb-79k.3 (display-path rule, DIRECT-CALLER row): the detached observe-wiring (detached-wiring.ts) byte-bounds a reading's
+ * diagnostic and reconcile guidance through the one helper's label layout before site 18's shown() reads them, and states its
+ * own refusal line through the same layout. The row drives the wiring's public function over a real projection: a host-lost
+ * reading carrying the probe as both texts (read back from the projection), and a refusal whose host-side failure text is the
+ * probe (the refusal line it returns).
+ */
+function detachedWiringTexts(raw: string): string[] {
+  const operator = { issuer: "local-os-dac", uid: 1000, id: "local-os:uid:1000" } as const;
+  const scope = { workspace: "/tmp/detached-ws", principal: "local-os:uid:1000" };
+  const receipt = {
+    contract: "workbench.local-detached/v1", invocationId: "inv-det-1", hostInstanceId: "a1".repeat(24), pid: 4242, sessionId: 4242, processStartTicks: "123456",
+    owner: { ...operator }, invocationDirectory: "/tmp/detached-ws/.detached/inv-det-1", socketPath: "/tmp/detached-ws/.detached/inv-det-1/host.sock",
+    launchedAt: "2026-10-15T09:00:00.000Z", deploymentDigest: "dep-digest", inputDigest: "in-digest", scriptDigest: "script-digest", snapshotDigest: "snap-digest",
+    permissions: ["inspect"], security: "same-machine-os-dac-only", lifetime: "survives-client-disconnect-not-host-crash", nativeRuntimeIdentity: "unsupported",
+    evidenceClass: "local-computation",
+  } as const;
+  const reading = {
+    contract: "workbench.local-detached/v1", invocationId: "inv-det-1", observation: "unknown", observedAt: "2026-10-15T09:00:03.000Z",
+    source: "local-client-transport", nativeRuntimeIdentity: "unsupported", droppedProgress: 0, cancellationRequested: false,
+    diagnostic: raw, reconcileHint: raw,
+  } as const;
+  const launched = () => ({ ...receipt, owner: { ...operator }, permissions: [...receipt.permissions] });
+  const projection = new ObservationProjection();
+  const wiring = new DetachedObserveWiring();
+  wiring.launched(launched());
+  const host = { projection, scope, operator: () => ({ ...operator }), now: () => "2026-10-15T09:00:05Z" };
+  wiring.observe(host, "inv-det-1", { ...reading, progress: [], controlAudit: [] });
+  const failing = (): never => {
+    throw new Error(raw);
+  };
+  const refused = new DetachedObserveWiring().observe({ ...host, operator: failing }, "inv-det-1", { ...reading, progress: [], controlAudit: [], receipt: launched() });
+  const nodes = projection.query({ scope, limit: 10 }).nodes;
+  return [...nodes.flatMap(node => [node.presentation.title, node.presentation.statusText]), ...(refused.kind === "refused" ? [refused.diagnostic] : [])];
+}
+
 interface Site {
   readonly site: string;
   readonly texts: (raw: string) => string[] | Promise<string[]>;
@@ -956,6 +993,7 @@ const SITES: readonly Site[] = [
   { site: "site 16 evidence-loader.ts safeChunks (EvidenceStore)", texts: storeTexts },
   { site: "claude-evidence.ts sanitizeRow (readClaudeMessageEvidence preview lines)", texts: claudeEvidenceTexts },
   { site: "site 18 detached-observer.ts shown (projectDetachedReading)", texts: detachedTexts },
+  { site: "wb-79k.3 detached-wiring.ts observe (DIRECT-CALLER: the byte-bounded diagnostic and reconcile guidance, and the refusal line)", texts: detachedWiringTexts },
   { site: "src/index.ts workflow_detached launch/inspect catch (DIRECT-CALLER, the detached refusal text)", texts: detachedCatchTexts },
   { site: "src/index.ts forge_gate_run catch (DIRECT-CALLER, the forge connection error text)", texts: forgeGateCatchTexts },
   { site: "src/index.ts native-load notify (DIRECT-CALLER, the load error text the operator is warned with)", texts: nativeLoadNotifyTexts },
@@ -1007,6 +1045,18 @@ describe("wb-gwr.2 site 3 facet texts are not vacuous", () => {
     const texts = hyperunixTexts(plain);
     expect(texts.filter(text => text === plain)).toHaveLength(5);
     expect(texts.filter(text => text === `HX-SCHEMA-CONFLICT ${plain}`)).toHaveLength(1);
+  });
+});
+
+describe("wb-79k.3 detached-wiring row is not vacuous", () => {
+  it("the SITES row drives the wiring, and a plain probe reaches the projected status as both texts and the refusal line, and nowhere else", async () => {
+    const row = SITES.find(entry => entry.site.startsWith("wb-79k.3 detached-wiring.ts observe"));
+    expect(row?.texts).toBe(detachedWiringTexts);
+    const plain = "wb79k3-plain-probe";
+    const texts = (await row?.texts(plain)) ?? [];
+    expect(texts).toContain(`unknown · ${plain} · ${plain}`);
+    expect(texts).toContain(plain);
+    expect(texts.filter(text => text.includes(plain))).toHaveLength(2);
   });
 });
 

@@ -18,6 +18,9 @@
  *       script still receives the registry's answer.
  *  RFS10 the hook is observation only: a throwing hook leaves the answer as the registry gave it.
  *  RFS11 (5) "the wiring never invokes rf; no new grant minted": the wiring reaches no registry method and no process.
+ *  RFS12 (wb-79k.3 respin, refusal #1 U7) the authorizedRfRoot claim words of reactivefiber-wiring.ts ("The RF workspace root the
+ *       host authorized ... when one replaces the scope"): the authorized root replaces the session scope for the reading's
+ *       workspace, and the same reading without it is refused as authorization (falsifier: the pass-through to the adapter deleted).
  */
 import { createHash } from "node:crypto";
 import { describe, expect, it, vi } from "vitest";
@@ -240,5 +243,29 @@ describe("wb-79k.2 the observe-wiring applies the adapter's frozen output under 
     expect(outcome).toEqual({ kind: "projected", refresh: "applied", related: 1 });
     for (const method of methods) expect(method).not.toHaveBeenCalled();
     vi.restoreAllMocks();
+  });
+
+  it("RFS12: the RF root the host authorized replaces the session scope for the reading's workspace; without it the same reading is refused", () => {
+    const rfRoot = "/fixture/rf-wiring-seam-authorized-root";
+    const scope: ObservationScope = { workspace: "/fixture/rf-wiring-seam-session", principal: SCOPE.principal };
+    const value = { contract: "reactivefiber.render.preview/v1", workspaceRoot: rfRoot, source: fullShapeRf(rfRoot) } as JsonValue;
+    const call = { capabilityId: "reactivefiber.render.preview", callId: 9 };
+    const now = () => "2026-11-11T05:50:00.000Z";
+    const authorized = new ObservationProjection();
+    expect(observeReactiveFiberNode({ projection: authorized, scope, seam: "rf-cli", invocationId: INVOCATION, now, authorizedRfRoot: rfRoot }, call, value)).toEqual({
+      kind: "projected",
+      refresh: "applied",
+      related: 1,
+    });
+    expect(authorized.query({ scope, limit: 10 }).nodes.filter(node => node.nativeRef.provider === "reactivefiber").map(node => node.kind)).toEqual(["reactivefiber.render.preview.snapshot"]);
+    const logs: string[] = [];
+    const unauthorized = new ObservationProjection();
+    expect(observeReactiveFiberNode({ projection: unauthorized, scope, seam: "rf-cli", invocationId: INVOCATION, now, log: line => logs.push(line) }, call, value)).toEqual({
+      kind: "refused",
+      category: "authorization",
+      diagnostic: "ReactiveFiber preview of node call 9 not projected (authorization)",
+    });
+    expect(logs).toEqual(["ReactiveFiber preview of node call 9 not projected (authorization)"]);
+    expect(unauthorized.stats()).toEqual({ nodes: 0, events: 0, edges: 0 });
   });
 });
