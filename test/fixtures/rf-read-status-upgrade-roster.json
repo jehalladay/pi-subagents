@@ -1,6 +1,6 @@
 {
   "bead": "wb-hs2j.8",
-  "provenance": "wb-hs2j.8 census roster (test/workbench-rf-read-status-upgrade-census.test.ts). statement, quote, citation, mergedQuote, mergedCitation, authority and gating are the owner filing's (bead row wb-hs2j.8 in .beads/issues.jsonl: its Full statement line, its Source line and the Merged clause of that line, its Authority restrictions quote and its Gating artifacts line), re-read at ReactiveFiberCLI 6a251bf73af5 with git show on 2026-10-23. producer is MEASURED read-only on 2026-10-23: rfVersion and rfCommit are `rf --json --version` result.version and result.provenance.commit_id of the installed rf (2618c211be0d, a descendant of the program pin by git merge-base --is-ancestor: descendsFromPin); contextLeaves and assemblyLeaves are its result.leaves paths under context. and those starting assembly or naming coverage; fields are the property names holding 'replayab' in the packaged schemas/cli/context.show.schema.json, context.history.schema.json and storage.compact.schema.json, defsNames the $defs names holding it across those and context.replay.schema.json, classesShow and classesHistory the $defs.replayability_class enum of the two read schemas, replayOutcomes the context.replay success result outcome enum, schemaDigests each schema file's sha256, and fiveLabelInstalledFiles the count of .py/.json/.md/.txt/.toml files of the installed package spelling each label; program holds 02-swarm-usage-and-command-grammar.md:60 and :88, README.md:76 and :99 and BEADS-2026-10-21.md:61, :62 and :94 at the pin, verbatim. scan holds the census's walk constants, wording families (RegExp source/flags) and the vocabularies it derives from producer. rows hold every judged row and every pin's witness; tests the registered test titles in order. wb-15hl (R694 follow-up from landing 291, 2026-10-24): scan gains outsideRoots (the top-level directories the walk leaves out: test, node_modules and the outputs .gitignore ignores; every other top-level directory holding a module must be a walk root, read from the repository tree), textAnchor (the non-module file the text leg must reach), vocabularyFlags (case-insensitive vocabulary and labels) and floors.texts (below the 6 non-module files of the walk roots measured at f8e3a48); the assemblyVerb, verifiedReplay, verifiedReplayIdentifier, byteExact and noContext families are widened; residuals gain R-SPELLING and R-PARAPHRASE; rows A and C are relabelled to their pins' scope; the A1, B3, C2 and D2 witnesses gain the new controls, and A1 textAnchorRead and unjudged.",
+  "provenance": "wb-hs2j.8 census roster (test/workbench-rf-read-status-upgrade-census.test.ts). statement, quote, citation, mergedQuote, mergedCitation, authority and gating are the owner filing's (bead row wb-hs2j.8 in .beads/issues.jsonl: its Full statement line, its Source line and the Merged clause of that line, its Authority restrictions quote and its Gating artifacts line), re-read at ReactiveFiberCLI 6a251bf73af5 with git show on 2026-10-23. producer is MEASURED read-only on 2026-10-23: rfVersion and rfCommit are `rf --json --version` result.version and result.provenance.commit_id of the installed rf (2618c211be0d, a descendant of the program pin by git merge-base --is-ancestor: descendsFromPin); contextLeaves and assemblyLeaves are its result.leaves paths under context. and those starting assembly or naming coverage; fields are the property names holding 'replayab' in the packaged schemas/cli/context.show.schema.json, context.history.schema.json and storage.compact.schema.json, defsNames the $defs names holding it across those and context.replay.schema.json, classesShow and classesHistory the $defs.replayability_class enum of the two read schemas, replayOutcomes the context.replay success result outcome enum, schemaDigests each schema file's sha256, and fiveLabelInstalledFiles the count of .py/.json/.md/.txt/.toml files of the installed package spelling each label; program holds 02-swarm-usage-and-command-grammar.md:60 and :88, README.md:76 and :99 and BEADS-2026-10-21.md:61, :62 and :94 at the pin, verbatim. scan holds the census's walk constants, wording families (RegExp source/flags) and the vocabularies it derives from producer. rows hold every judged row and every pin's witness; tests the registered test titles in order. wb-15hl (R694 follow-up from landing 291, 2026-10-24): scan gains outsideRoots (the top-level directories the walk leaves out: test, node_modules and the outputs .gitignore ignores; every other top-level directory holding a module must be a walk root, read from the repository tree), textAnchor (the non-module file the text leg must reach), vocabularyFlags (case-insensitive vocabulary and labels) and floors.texts (below the 6 non-module files of the walk roots measured at f8e3a48); the assemblyVerb, verifiedReplay, verifiedReplayIdentifier, byteExact and noContext families are widened; residuals gain R-SPELLING and R-PARAPHRASE; rows A and C are relabelled to their pins' scope; the A1, B3, C2 and D2 witnesses gain the new controls, and A1 textAnchorRead and unjudged. wb-jze3 (R694 follow-up from landing 382, 2026-10-25): scan gains textOutsideRoots (the top-level directories holding no module whose files the walk leaves out: media, new-feedback and vendor; every other top-level directory holding a file must be a walk root, the docs root or one of outsideRoots, and a module anywhere still needs a walk root or outsideRoots); the A1 witness gains 29 controls: 20 kill controls at 1 for the readings this cut adds (texts: jsonArgv, jsonInterleaved, lineContinuation, quotedWords, singleQuoted; modules: letBinding, varTemplate, objectProperty, objectElement, nestedProperty, propertyTemplate, arrayElement, enumMember, classStatic, spreadPrefix, spreadInline, regexGroup, regexNamedGroup, regexConstructor; tree: textRoot), 3 controls at 1 that pin landed readings the cut keeps (moduleRoot and moduleInTextOutside, the module rule of the tree anchor; constBeatsLet, a const's fold beside a same-named let) and 6 quiet rows at 0 (shellVariable, reassignedLet, computedProperty, destructured, memberCycle, textOutside).",
   "statement": "[RF-REACTIVE-CONTEXT-ASSEMBLY-R9] No Pi surface shall upgrade an rf read-side status: a replayability classification is presented as claimed, never replay-verified - only an executed document_exact outcome is byte-exact (gated: five-label replay classifier, rfc-kxtb5.17 + rfc-02alo open, unshipped) - and coverage-unknown stays distinct from no-results, an empty assembly coverage output is never proof that no context was needed (gated: assembly coverage, README C7, design only) - pin docs/programs/reactive-context-assembly-2026-10-18/02-swarm-usage-and-command-grammar.md:88@6a251bf73af5",
   "quote": "A read command that returns a status must distinguish `replayability claimed` from `replay verified`, and `coverage unknown` from `no results`.",
   "citation": "docs/programs/reactive-context-assembly-2026-10-18/02-swarm-usage-and-command-grammar.md:88@6a251bf73af5",
@@ -104,6 +104,11 @@
       "node_modules",
       "plan",
       "test"
+    ],
+    "textOutsideRoots": [
+      "media",
+      "new-feedback",
+      "vendor"
     ],
     "docRoot": "docs",
     "moduleExtensions": [
@@ -265,7 +270,36 @@
               "interleavedLiteral": 1,
               "shellScript": 1,
               "importedConstant": 0,
-              "spelled": 0
+              "spelled": 0,
+              "jsonArgv": 1,
+              "jsonInterleaved": 1,
+              "lineContinuation": 1,
+              "quotedWords": 1,
+              "singleQuoted": 1,
+              "shellVariable": 0,
+              "letBinding": 1,
+              "varTemplate": 1,
+              "reassignedLet": 0,
+              "constBeatsLet": 1,
+              "objectProperty": 1,
+              "objectElement": 1,
+              "nestedProperty": 1,
+              "propertyTemplate": 1,
+              "computedProperty": 0,
+              "destructured": 0,
+              "arrayElement": 1,
+              "enumMember": 1,
+              "classStatic": 1,
+              "memberCycle": 0,
+              "spreadPrefix": 1,
+              "spreadInline": 1,
+              "regexGroup": 1,
+              "regexNamedGroup": 1,
+              "regexConstructor": 1,
+              "textRoot": 1,
+              "moduleRoot": 1,
+              "moduleInTextOutside": 1,
+              "textOutside": 0
             }
           }
         },

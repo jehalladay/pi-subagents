@@ -1,0 +1,281 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mechanical-workflows/coordination-resolution.v1.schema.json",
+  "title": "Resolution v1",
+  "description": "Result of the pure reconcile function. Admitted means admissible against the basis, protected scopes and budget; it is never an authorized effect, so an admitted intent cannot declare authorized-effect.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "basis",
+    "budget",
+    "admitted",
+    "rejected",
+    "conflicts",
+    "budgetUsed"
+  ],
+  "properties": {
+    "basis": {
+      "$ref": "#/$defs/basis"
+    },
+    "budget": {
+      "$ref": "#/$defs/budget"
+    },
+    "admitted": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/admittedIntent"
+      }
+    },
+    "rejected": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "intent",
+          "code",
+          "detail"
+        ],
+        "properties": {
+          "intent": {
+            "$ref": "#/$defs/intent"
+          },
+          "code": {
+            "enum": [
+              "INTENT_BASIS_STALE",
+              "INTENT_SCOPE_PROTECTED",
+              "INTENT_WRITE_CONFLICT",
+              "INTENT_BUDGET_EXCEEDED",
+              "INTENT_DUPLICATE",
+              "INTENT_AUTHORITY_EXCEEDED",
+              "INTENT_CLAIM_INVALID"
+            ]
+          },
+          "detail": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "conflicts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "scope",
+          "intentIds"
+        ],
+        "properties": {
+          "scope": {
+            "type": "string"
+          },
+          "intentIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "budgetUsed": {
+      "$ref": "#/$defs/budget"
+    }
+  },
+  "$defs": {
+    "basis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workspaceId",
+        "revision"
+      ],
+      "properties": {
+        "workspaceId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "compute",
+        "workers",
+        "queue",
+        "latencyMs"
+      ],
+      "properties": {
+        "compute": {
+          "type": "number",
+          "minimum": 0
+        },
+        "workers": {
+          "type": "number",
+          "minimum": 0
+        },
+        "queue": {
+          "type": "number",
+          "minimum": 0
+        },
+        "latencyMs": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "intent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "intentId",
+        "policyId",
+        "target",
+        "expectedRevision",
+        "effect",
+        "claim",
+        "evidenceRefs",
+        "writeScopes",
+        "readScopes"
+      ],
+      "properties": {
+        "intentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "policyId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "uri"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "uri": {
+              "type": "string"
+            }
+          }
+        },
+        "expectedRevision": {
+          "type": "string"
+        },
+        "effect": {
+          "type": "string"
+        },
+        "claim": {
+          "$ref": "#/$defs/budget"
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "writeScopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "readScopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "authority": {
+          "enum": [
+            "propose-only",
+            "authorized-effect"
+          ]
+        }
+      }
+    },
+    "admittedIntent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "intentId",
+        "policyId",
+        "target",
+        "expectedRevision",
+        "effect",
+        "claim",
+        "evidenceRefs",
+        "writeScopes",
+        "readScopes"
+      ],
+      "properties": {
+        "intentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "policyId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "uri"
+          ],
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "uri": {
+              "type": "string"
+            }
+          }
+        },
+        "expectedRevision": {
+          "type": "string"
+        },
+        "effect": {
+          "type": "string"
+        },
+        "claim": {
+          "$ref": "#/$defs/budget"
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "writeScopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "readScopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "authority": {
+          "enum": [
+            "propose-only"
+          ]
+        }
+      }
+    }
+  }
+}

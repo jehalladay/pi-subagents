@@ -1,5 +1,5 @@
 {
- "provenance": "wb-hs2j.3 census roster (test/workbench-rf-session-lifecycle-census.test.ts). quote, citation and merged are the owner filing's (bead row wb-hs2j.3), re-read at ReactiveFiberCLI 6a251bf73af57c3a703caf6892dfe3015e06a481 with git show on 2026-10-23: 02-swarm-usage-and-command-grammar.md:42 is the quote verbatim; merged.path :72 is merged.heading and :73 is merged.line, which holds merged.quote; in merged.line <W1> <W2> stands for the two words before graph/definition basis, elided because wb-a9l2.5's landed whole-tree census (test/workbench-rf-federated-cut-claim-census.test.ts) forbids any test file to spell them joined. producer is MEASURED read-only on 2026-10-23 against the installed rf in a scratch jsonl workspace (rf init --backend jsonl): rfVersion is `rf --json --version` result.version, leafPaths its result.leaves paths in order and sessionLeaves its session.* rows (path, served); help holds the `rf context render --help`, `rf session open --help`, `rf session show --help`, `rf session close --help` and `rf session list --help` option lines whitespace-normalised; record is the result of `rf session open --json` (keys sorted, name as stated) and the status `rf session close` and `rf session show` stated after it; ticks are three measured tick forms, each argv with the scratch root, model and task replaced by placeholders (model and task fields hold the values used), openBefore and openAfter the `rf session list --status open --limit 500 --json` result.sessions counts around them, sessionIds each tick's result.session_id in order (preview: 5 --no-commit renders; sessionless: 2 committed renders without --session; pinned: 3 committed renders with --session <session>, the id `rf session open --json` minted, so its openBefore counts that open); closedRefusal.envelope is the stdout of a committed render with --session <the pinned id> after `rf session close` (exit commitExit), the scratch root rewritten to /fixture/rf-workspace, and the same render with --no-commit answered exit noCommitExit with code noCommitCode; zeroMint is the BEADS-2026-10-21.md:19 row of rfc-s24ro.7 at the program pin, journey the acceptance journey it names, presentAtPin and presentAtMain `git cat-file -e <sha>:<journey>` at programPin.sha and at mainPin.sha (origin/main of the clone, fetched 2026-10-23T02:45Z); duplicateNames is the BEADS-2026-10-21.md:90 row of rca-C055. Every witness is the expected outcome of its pin's case at this cut.",
+ "provenance": "wb-hs2j.3 census roster (test/workbench-rf-session-lifecycle-census.test.ts). quote, citation and merged are the owner filing's (bead row wb-hs2j.3), re-read at ReactiveFiberCLI 6a251bf73af57c3a703caf6892dfe3015e06a481 with git show on 2026-10-23: 02-swarm-usage-and-command-grammar.md:42 is the quote verbatim; merged.path :72 is merged.heading and :73 is merged.line, which holds merged.quote; in merged.line <W1> <W2> stands for the two words before graph/definition basis, elided because wb-a9l2.5's landed whole-tree census (test/workbench-rf-federated-cut-claim-census.test.ts) forbids any test file to spell them joined. producer is MEASURED read-only on 2026-10-23 against the installed rf in a scratch jsonl workspace (rf init --backend jsonl): rfVersion is `rf --json --version` result.version, leafPaths its result.leaves paths in order and sessionLeaves its session.* rows (path, served); help holds the `rf context render --help`, `rf session open --help`, `rf session show --help`, `rf session close --help` and `rf session list --help` option lines whitespace-normalised; record is the result of `rf session open --json` (keys sorted, name as stated) and the status `rf session close` and `rf session show` stated after it; ticks are three measured tick forms, each argv with the scratch root, model and task replaced by placeholders (model and task fields hold the values used), openBefore and openAfter the open-session counts `rf session list --status open --limit 500 --json` reported around them (its result carries the sessions as result.items, beside result.counts; result.sessions, which this provenance first named, is no field of it - wb-khhg F6, the gate's reading at rf 0.1.832, re-measured read-only at rf 0.1.836 on 2026-10-24, whose session list result keys are counts, cursor, has_more, items, limit, next_cursor, ordering and status), sessionIds each tick's result.session_id in order (preview: 5 --no-commit renders; sessionless: 2 committed renders without --session; pinned: 3 committed renders with --session <session>, the id `rf session open --json` minted, so its openBefore counts that open); closedRefusal.envelope is the stdout of a committed render with --session <the pinned id> after `rf session close` (exit commitExit), the scratch root rewritten to /fixture/rf-workspace, and the same render with --no-commit answered exit noCommitExit with code noCommitCode; zeroMint is the BEADS-2026-10-21.md:19 row of rfc-s24ro.7 at the program pin, journey the acceptance journey it names, presentAtPin and presentAtMain `git cat-file -e <sha>:<journey>` at programPin.sha and at mainPin.sha (origin/main of the clone, fetched 2026-10-23T02:45Z); duplicateNames is the BEADS-2026-10-21.md:90 row of rca-C055. wb-khhg (the R694 follow-up of landing 289) adds scan.gitListing, scan.listedUnjudged, scan.defaultIgnorable and scan.intrawordEmphasis (the listing anchors and B1's rendered reading, cut #1) and scan.descriptorCanaryFields (the descriptor fields C1's canaries fill, cut #3); the residuals R-RENDERED (cut #1), R-CONFUSABLE (cut #2), R-CALLEE-WRAPPER and R-LIVE-ROOT (cut #3); the witness fields A1, B1 and C1 listingSound, A1, C1 and B2 unscanned, B1 unread and listedSkipped and C1 descriptorsUnread (cut #1), C1 descriptorCanariesMissed (cut #2; at cut #3 every session form in every scan.descriptorCanaryFields field of every native id), and A1, B1, B2 and C1 pathControlsMissed with B1 vocabulary and liveRoot (cut #3: every control, and B1's vocabulary page, read again at every listed path through the live reading's own function; they replace cut #2's canariesMissed and directoryPlantsMissed); the A1 launch-form controls (the U2 load wrappers of cut #2 and, at cut #3, every launcher name, the remaining import, binding and specifier forms, the command folds and the R-CALLEE-WRAPPER quiet rows), the B2 and C1 controls cut #3 adds, the B1 rendered controls with the R-RENDERED quiet rows and the R-CONFUSABLE quiet row, and the B1 plants test/fixtures/expiry-note.md and docs/rendered.md. Every witness is the expected outcome of its pin's case at this cut.",
  "bead": "wb-hs2j.3",
  "quote": "Render-without-session created open sessions per tick, reaching **95 open/0 closed** in the consumer evidence before it explicitly passed a session; a later shared workspace snapshot showed 306 open/0 closed over 836 renders. Proposed lifecycle: an explicit long-lived dashboard session, idempotent recovery and explicit close/expiry semantics. No automatic expiry exists by implication.",
  "citation": "docs/programs/reactive-context-assembly-2026-10-18/02-swarm-usage-and-command-grammar.md:42@6a251bf73af5",
@@ -141,8 +141,30 @@
    "src/workbench/providers/reactivefiber.ts",
    "src/workbench/reactivefiber-observer.ts"
   ],
+  "descriptorCanaryFields": [
+   "description",
+   "version",
+   "contractSource",
+   "effectClass",
+   "permissions",
+   "supportedModes",
+   "inputSchema",
+   "outputSchema"
+  ],
   "fixtureRoot": "/fixture/rf-workspace",
-  "closedCode": "RF_SESSION_CLOSED"
+  "closedCode": "RF_SESSION_CLOSED",
+  "gitListing": [
+   "ls-files",
+   "-z",
+   "--cached",
+   "--others",
+   "--exclude-standard"
+  ],
+  "listedUnjudged": [
+   ".beads"
+  ],
+  "defaultIgnorable": "\\p{Default_Ignorable_Code_Point}/gu",
+  "intrawordEmphasis": "(?<=[\\p{L}\\p{N}])\\*+(?=[\\p{L}\\p{N}])/gu"
  },
  "producer": {
   "rfVersion": "0.1.832",
@@ -402,11 +424,15 @@
   "R-PARAPHRASE",
   "R-NEGATED",
   "R-ENCODED",
+  "R-RENDERED",
+  "R-CONFUSABLE",
   "R-OUTSIDE",
   "R-COMPOSED",
   "R-INDIRECT-LAUNCH",
+  "R-CALLEE-WRAPPER",
   "R-SESSION-ECHO",
-  "R-UNLABELED"
+  "R-UNLABELED",
+  "R-LIVE-ROOT"
  ],
  "rows": [
   {
@@ -495,8 +521,351 @@
         "rf": 1,
         "composed": 0,
         "unbound": 0
+       },
+       "dynamicImport": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "dynamicDestructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "dynamicDirect": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "importEquals": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "dynamicThen": {
+        "rf": 0,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-parentheses-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-parentheses-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-parentheses-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-parentheses-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-parentheses-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-parentheses-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-await-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-await-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-await-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-await-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-await-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-await-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-as-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-as-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-as-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-as-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-as-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-as-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-satisfies-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-satisfies-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-satisfies-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-satisfies-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-satisfies-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-satisfies-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-nonNull-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-nonNull-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-nonNull-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-nonNull-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-nonNull-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-nonNull-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-angle-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-angle-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-angle-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-angle-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-angle-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-angle-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-nested-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-nested-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-nested-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-nested-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-nested-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-nested-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "everyLauncherNamed": {
+        "rf": 7,
+        "composed": 0,
+        "unbound": 0
+       },
+       "everyLauncherNamespace": {
+        "rf": 7,
+        "composed": 0,
+        "unbound": 0
+       },
+       "everyLauncherDestructured": {
+        "rf": 7,
+        "composed": 0,
+        "unbound": 0
+       },
+       "everyLauncherDirect": {
+        "rf": 7,
+        "composed": 0,
+        "unbound": 0
+       },
+       "everyLauncherUnbound": {
+        "rf": 0,
+        "composed": 0,
+        "unbound": 7
+       },
+       "stringAlias": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "defaultAndNamed": {
+        "rf": 2,
+        "composed": 0,
+        "unbound": 0
+       },
+       "importEqualsPlain": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "requireShorthand": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "requireStringKey": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "dynamicShorthand": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "requireTemplate": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "dynamicTemplate": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "templateCommand": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "parenCommand": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "templateFold": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "calleeParen": {
+        "rf": 0,
+        "composed": 0,
+        "unbound": 0
+       },
+       "calleeComma": {
+        "rf": 0,
+        "composed": 0,
+        "unbound": 0
+       },
+       "calleeNonNull": {
+        "rf": 0,
+        "composed": 0,
+        "unbound": 0
+       },
+       "memberParen": {
+        "rf": 0,
+        "composed": 0,
+        "unbound": 0
+       },
+       "dynamicStringKey": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
        }
-      }
+      },
+      "unscanned": [],
+      "pathControlsMissed": [],
+      "listingSound": true
      }
     },
     {
@@ -551,14 +920,14 @@
        {
         "id": "reactivefiber.render.preview",
         "effectClass": "read",
-        "contractSource": "rf@0.1.784:reactive-fiber.cli/v1 context.render --no-commit"
+        "contractSource": "rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit"
        }
       ],
       "injected": [
        {
         "id": "reactivefiber.render.preview",
         "effectClass": "read",
-        "contractSource": "rf@0.1.784:reactive-fiber.cli/v1 context.render --no-commit"
+        "contractSource": "rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit"
        }
       ],
       "reconcile": [
@@ -638,7 +1007,20 @@
        "paraphrase": false,
        "negatedEarlier": false,
        "utf16": false,
-       "escaped": false
+       "escaped": false,
+       "emphasis": true,
+       "zeroWidth": true,
+       "softHyphen": true,
+       "compatibility": true,
+       "rawJoin": true,
+       "wordJoiner": true,
+       "byteOrderMark": true,
+       "singleEmphasis": true,
+       "ligature": true,
+       "htmlTag": false,
+       "htmlEntity": false,
+       "codeSpan": false,
+       "confusable": false
       },
       "plants": {
        "docs/expiry.md": true,
@@ -648,8 +1030,24 @@
        "notes/link.md": true,
        "node_modules/pkg/notes.md": false,
        ".beads/issues.jsonl": false,
-       "dist/notes.md": false
-      }
+       "dist/notes.md": false,
+       "test/fixtures/expiry-note.md": true,
+       "docs/rendered.md": true
+      },
+      "unread": [],
+      "listedSkipped": [
+       ".beads"
+      ],
+      "pathControlsMissed": [],
+      "vocabulary": {
+       "sentences": 103,
+       "flagged": 103
+      },
+      "liveRoot": {
+       "liveKeyed": true,
+       "pathControlsChanged": 0
+      },
+      "listingSound": true
      }
     },
     {
@@ -673,8 +1071,24 @@
        "regexLiteral": 0,
        "deadline": 0,
        "composedField": 0,
-       "templateFlag": 1
-      }
+       "templateFlag": 1,
+       "privateIdentifier": 1,
+       "propertyName": 1,
+       "snakeIdentifier": 1,
+       "templateMiddle": 1,
+       "templateTail": 1,
+       "templateLiteral": 1,
+       "everyLeafLiteral": 8,
+       "nestedFold": 1,
+       "crossString": 4,
+       "crossTemplateLiteral": 4,
+       "crossHead": 4,
+       "crossMiddle": 4,
+       "crossTail": 4,
+       "crossFold": 4
+      },
+      "unscanned": [],
+      "pathControlsMissed": []
      }
     },
     {
@@ -748,8 +1162,49 @@
        "composedArgv": {
         "hits": 0,
         "composed": 1
+       },
+       "everyVerbArgv": {
+        "hits": 8,
+        "composed": 0
+       },
+       "everyVerbLeaf": {
+        "hits": 8,
+        "composed": 0
+       },
+       "everyVerbCommand": {
+        "hits": 8,
+        "composed": 0
+       },
+       "templateVerb": {
+        "hits": 1,
+        "composed": 0
+       },
+       "templateLiteralVerb": {
+        "hits": 1,
+        "composed": 0
+       },
+       "flagEqualsWord": {
+        "hits": 2,
+        "composed": 0
+       },
+       "crossTemplateLiteral": {
+        "hits": 2,
+        "composed": 0
+       },
+       "crossTemplateParts": {
+        "hits": 1,
+        "composed": 0
+       },
+       "argvTemplateWords": {
+        "hits": 1,
+        "composed": 0
        }
-      }
+      },
+      "unscanned": [],
+      "descriptorsUnread": [],
+      "pathControlsMissed": [],
+      "listingSound": true,
+      "descriptorCanariesMissed": []
      }
     },
     {

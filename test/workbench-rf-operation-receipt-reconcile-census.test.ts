@@ -1,0 +1,1798 @@
+/**
+ * wb-jwc.6 (RFCLI-FEEDBACK-OPERATIONAL-CONVERGENCE-R6): the rf operation-receipt reconcile read - HONESTY CORE, STANDING LEG
+ * AND GATE TRIPWIRE, the part of the bead that lands while the R5 conjoint gate is closed. Cut #5 is the FINAL cut: orchestrator
+ * ruling R-B88 (the rule 19 structural exit at refusal #4) binds it to the FAIL-CLOSED CORE, in the enumerate-the-resolvable form
+ * (standing rule 19(c), engaged at refusal #3): this header and every pinned requirement claim exactly what the readers below
+ * resolve, for the inputs and the one run they measure, and every known mode they do not pin is a NAMED RESIDUAL with a pinned
+ * quiet row (row R). This is cut #5 re-entered as the MECHANICAL RESTATEMENT orchestrator ruling R-B109 binds over child
+ * wb-jwc.9's landed fix (the rule 19 dependency inversion at refusal #5; wb-jwc.9 landed at landing 778): the N and H
+ * acceptance.3.1 probes now feed exactly the FED SET of that child's helper (FED SET below), H acceptance.3.2 feeds its fresh
+ * reads beside its own two synthetic ones, and N's and H's claims are restated to those reads. Cut #7 is the restatement
+ * orchestrator ruling R-B299 binds at refusal #6 (its 22(d) disposition; the rule 19 loop ended at R-B109): claims equal to
+ * pins, in the pin form. N and H acceptance.3.1 now acknowledge in every ACK FORM below - the receipt cited once, as before, beside
+ * an operator resolvedValue and the one receipt cited twice - their claims are restated to those forms, and an acknowledgement in
+ * any other parameter form is the named residual R-ACK-PARAMETERS. Cut #8 is the restatement orchestrator ruling R-B324 binds at
+ * refusal #7 (its 22(d) disposition): claims equal to pins, in the pin form. Every N and H acceptance.3.1 acknowledgement, and
+ * every override after one, is now decided under every DECISION INPUT below (each task status src's WorkflowRunStatus union
+ * declares, beside each state of the committing capability in the registry the decision reads current effect classes from),
+ * and their claims, R-PROBE-CONTEXT and the Not claimed list are restated to those inputs. Cut #9 is the restatement
+ * orchestrator ruling R-B345 binds at refusal #8 (its 22(d) disposition): every header claim no wider than its pinned reader.
+ * The DECISION INPUTS now also feed the task object's shape (TASK SHAPES below: that helper's task, and the task
+ * workflow_reconcile passes, with its journal path undefined or set), so every N and H acceptance.3.1 acknowledgement, every
+ * override after one and the FED SET's evidence action are decided with each, the override with its acknowledgement's receipt
+ * still in hand, and their claims, R-PROBE-CONTEXT and the Not claimed list are restated to those task objects.
+ *
+ * OWNER FILING (the outside anchor): the tracked bead export .beads/issues.jsonl, row wb-jwc.6, read through its description
+ * only, so a note a lane appends later changes nothing read. Its STATEMENT ("When <trigger> (<conjuncts>), Pi shall <duty>;
+ * <never>.") gives clauses statement.1-3; its ACCEPTANCE list gives acceptance.1-4; its SURFACES line gives the surface files.
+ * Each clause maps to exactly one judged row or to the PARKED remainder (CLAUSE_ROWS), and that map must equal the one the filing's
+ * own text gives (respin 3 H2): the statement's trigger, duty and never clause are rows G, S and N; an acceptance item opening with
+ * the label "Negative guard (honesty core): " holds before the gate and is row H; every other acceptance item specifies the gated
+ * duty and is PARKED. Every row's pins are generated from an anchor outside this file:
+ *   G statement.1, the trigger: the gate's Pi-side conjunct (wb-x32's committing decision) is still closed. Three readers over THE
+ *     SRC TREE (respin 3 U2): every file under src/, whatever its name. A file whose extension is a TypeScript or JavaScript module
+ *     extension (.ts .mts .cts .tsx .js .mjs .cjs .jsx; a declaration file ends in one) is parsed with its own script kind; every
+ *     other file under src/ is listed in the G:id witness (none today), so a new one moves it; and a relative module specifier a
+ *     src module writes as a whole string token in an import, export or import-equals declaration (`import x = require(...)`),
+ *     an import type (`import(...)` in a type position), an import() call or a require() call that resolves outside src/ is
+ *     listed there too (none today; respin 4 reads the import-equals and import-type forms). Each reader reads only what it names:
+ *     IDS - one pin per rf capability id a whole src string token spells (a string literal or a template with no
+ *     substitution). An rf capability id is a token whose producer (src producerOf, the first `.`/`-` segment) is reactivefiber
+ *     and which the real CapabilityRegistry accepts as a descriptor id: the registry's own grammar judges every token, so no
+ *     census copy of it can be narrower than what the registry registers (respin 1 U3). Today that is only
+ *     reactivefiber.render.preview, and its naming sites are listed (a token held by an observation `kind` property passes the
+ *     same test - the observer's reactivefiber.render.preview.snapshot - and is listed in that witness, never counted as a
+ *     capability).
+ *     REGISTRATIONS (respin 2 U2) - every src spelling of a member named `register` is read: each identifier `register` and
+ *     each whole string token `register`, wherever it stands. A spelling is JUDGED only as the property-access callee of a
+ *     one-argument call whose argument is a provider object literal with no spread or computed key, holding exactly one
+ *     `descriptor` property assignment whose value is an object literal with no spread or computed key and exactly one `id`
+ *     property assignment written as a whole string token; the registry judges that id. The functions whose judged
+ *     registrations carry an rf id are exactly the two src registrars this census runs. ONE MEASURED RUN (respin 4 U2, R-B88):
+ *     each is run once, with the census's arguments (a fresh registry and WS, plus, for the injectable one, a seam answering a
+ *     fresh preview envelope) in this process's environment, and in that run each has registered the preview alone, with
+ *     effect class read and the permission reactivefiber:render, when it returns: every descriptor the registry holds then is
+ *     listed (respin 3 U2), so a capability either one registers by then through code no reader parses still moves the
+ *     witness. A registration whose id, effect class or permissions depend on a registrar's arguments or on the environment is
+ *     read for that one run only (residual R-REGISTRAR-RUNTIME). Every other spelling is UNJUDGED and listed by owner and
+ *     syntax, so a new one moves the witness: an id held by
+ *     reference or shorthand, concatenated, templated with substitutions or computed by a call; a provider or descriptor held
+ *     by reference, spread or computed key; an alias, a bind, an element access, an assignment, a type member, the method's own
+ *     declaration. Today the unjudged spellings are CapabilityRegistry's own declaration and registryFor's local-provider
+ *     pass-through in src/workbench/hosts/local-detached.ts, which re-registers the ids an outside local provider module
+ *     declares and spells none.
+ *     BINARY AND ARGV (respin 1 F1, respin 2 U1, respin 3 U1) - one pin per src declaration holding a whole string token that
+ *     names the rf binary (rf itself, a path whose last segment is rf, or a command text whose first word is either), whatever
+ *     call spawns it or const carries it; the token's use is measured. For the call that takes the binary as argument 1, the
+ *     BINDINGS are resolved, never matched by name: the TypeScript checker of a one-file program of the spawning file (no lib, no
+ *     module resolution) binds each identifier by the language's own scope rules. The callee must bind to the named import spawn
+ *     of node:child_process; argument 2 to an initialized const of the spawning function that no other identifier of the file
+ *     reads, unless it is written in place; that value to an array literal or to a call whose callee binds to the file's one
+ *     module-level function declaration of that name; and the callee's and the builder's names must each have exactly one
+ *     binding in the file (member names and an import specifier's imported name aside). Every own return of that function must be
+ *     an array literal holding the whole token --no-commit as a direct element - never behind a spread, a conditional, a filter,
+ *     a call or an identifier. Any other shape is written into the witness instead, so it fails closed. The witness names each
+ *     binding, the call's argument count and option keys, each returned literal's elements and the builder's string tokens, and
+ *     counts the src string literals and template texts naming --idempotency-key (none; respin 4 reads a template's head, middle
+ *     and tail too). The child's argv is then MEASURED: each arm of the registered
+ *     native render's inputSchema (src's oneOf) gives one input of the arm's required keys and, where the arm declares more
+ *     properties, one of every key (each value census-<key>); each runs through the registry with a recording stand-in rf as the
+ *     only PATH entry, and the witness lists every argv the stand-in received, the launch count and the provider's answer to the
+ *     stand-in's empty output.
+ *     Within those three readers, an rf capability id a whole src string token spells other than the preview (a committing id or
+ *     a receipt-read id), the preview registered in a measured registrar's one run as anything but read under
+ *     reactivefiber:render, an rf spawn whose callee, argument 2 or builder binds to any other declaration, a builder return
+ *     without a direct --no-commit, or a probed child argv without --no-commit generates a pin this table does not hold or moves
+ *     a witness: the tripwire that re-arms the PARKED remainder, for exactly those forms (respin 4 U2).
+ *   S statement.2, the duty's standing leg: one pin per file of the filing's SURFACES line, what that surface holds until the
+ *     duty lands. reactivefiber's reconcile reads are the preview alone (acceptance.1 adds the receipt read beside it); the rf
+ *     branch of nativeEvidence projects the preview envelope's own operation_id as nativeId and no domainStatus under two
+ *     receipt-shaped results - the minimal receipt, and every result key the shipped receipt carries plus each status field a
+ *     sibling branch projects domainStatus from (respin 1 F4) - and is the only rf case label of nativeEvidence's switch, where
+ *     every case label is a whole string token (a label in any other syntax is listed unjudged, so it fails closed; respin 2)
+ *     (acceptance.2 adds the receipt branch); the runtime journals the census's test-only committing rf stand-in with no native
+ *     reference: one run of it through the Claude workflow host's node() records its dispatch marker and a settled write row with
+ *     no nativeRefs and no value, and the preview receipt minted against those rows comes out operator-asserted (the filing's
+ *     rationale, measured for that one stand-in and run; respin 4); docs/workbench/08's operator reconcile journey, read through the
+ *     shared helper's rendered view (test/helpers/census.ts docsSection: the unique level-2 heading under the page's level-1
+ *     heading, bounded at the next level-1/2 heading or EOF, HTML refused; and here a rendered text that keeps a character
+ *     reference the helper leaves undecoded is refused too, respin 2 F1), holds exactly one evidence allowlist sentence, in
+ *     paragraph prose; the ids it names (every rendered word the registry accepts as an id, src's EvidenceBinding words aside;
+ *     a word splits at a run of hyphens and loses its leading and trailing dots and hyphens first, respin 2 F2) are exactly
+ *     RECONCILE_EVIDENCE_READS, and no other sentence of the section names a read in such a word (its other dotted or
+ *     producer-namespaced ids are each the name of src's ACKNOWLEDGEMENT_VALUE_CONTRACT) (respin 1 U2; acceptance.4 updates it
+ *     with acceptance.1); and
+ *     every distinct character of the section's rendered text outside printable ASCII is listed (respin 4, the gate's D30: an
+ *     invisible or look-alike character inside an id hides it from the registry's word test), so a character outside printable
+ *     ASCII the section does not already hold (today U+2014 and U+2192), added to it, moves the witness.
+ *   FED SET (R-B109, the restatement): the preview reads N and H acceptance.3.1 feed are exactly the vocabulary honestyReads() of
+ *     test/helpers/rf-operation-receipt-honesty.ts (wb-jwc.9, landed) builds over src's CapabilityErrorCategory union (read from
+ *     src/workbench/capability-registry.ts), each run through that helper's previewReceipt() - src's own registration, the
+ *     reconcile core's evidence action and mintEvidenceReceipt, against that helper's journaled {reactivefiber, operation,
+ *     rfo_journaledcommit000000000} row - and acknowledged in every ACK FORM in that helper's one context under every DECISION
+ *     INPUT, with an override after each effect-absent acknowledgement made in the same context under the same input (that
+ *     helper's overrideAfter() under that helper's input, outcome for outcome), its acknowledgement's receipt still in hand. The
+ *     evidence action that admits each read is decided under every DECISION INPUT too, in that context against that row: it
+ *     admits the same read under each as under that helper's input, and each read's receipt carries that read's task,
+ *     position, producer, capability and input digest. Eighteen reads: five fresh, each carrying the fresh rfo_ (the
+ *     bare output-text result, the helper's minimal result - its minimalResult(); whether the native preview admits a smaller
+ *     result is not read here - and the full rf 0.1.845 result through the injectable registration; the latter two through the
+ *     native registration from a stand-in rf too); seven failed (one per member of src's CapabilityErrorCategory, thrown by the
+ *     injectable seam, plus the two failures the native registration mints from a stand-in's output: a line that is not JSON, and
+ *     an rf refusal); and six unprojected (a context.show envelope and a reactive-fiber.cli/v2 context.render envelope, each
+ *     around the bare and the full result; no envelope at all; a v1 context.render envelope with no operation_id). N checks that
+ *     the failed reads the injectable seam throws are exactly src's categories. The landed honesty census
+ *     (test/workbench-rf-operation-receipt-honesty-census.test.ts, rows F, C and U) pins the same reads one by one.
+ *   ACK FORMS (refusal #6 U1 and U2, R-B299): the acknowledgement parameter forms N and H acceptance.3.1 make, each with this
+ *     file's one reason text and the determination its claim names: uncited, stating the producer unavailable, in this file's own
+ *     context; and citing the one read's receipt once and twice (receiptIds holding its id once, or twice), in the FED SET's one
+ *     context (that helper's PROBE_CONTEXT and journaled row) - each with no resolvedValue and with the one operator
+ *     resolvedValue this file passes (OPERATOR_RESOLVED_VALUE, an obviously synthetic object; R:ack-parameters reads it back from
+ *     src's acknowledgement record). The cited-once form with no resolvedValue, under that helper's DECISION INPUT, is that
+ *     helper's acknowledgeWith(), decision for decision: N and H each check it, for every read and determination they make.
+ *   DECISION INPUTS (refusal #7 U1 and U2, R-B324; refusal #8 U1, R-B345): the three inputs an ACK FORMS decision reads beside
+ *     its request context, each fed over its domain. The task's status: every member of src's WorkflowRunStatus union
+ *     (src/workflow/progress.ts; a running or paused task is denied task-active before any citation is read, a completed, failed
+ *     or killed one is settled). The task object's shape: each of the TASK SHAPES below. The decision registry, the
+ *     CapabilityRegistry the decision reads current effect classes from: src's injectable registration of the preview, beside
+ *     the committing capability unregistered - src's own registration, which registers no committing rf capability - or
+ *     registered as this file's test-only stand-in at each member of src's CapabilityDescriptor effectClass union (read through
+ *     that helper's srcUnion, as the landed honesty census reads it). Every ACK FORMS acknowledgement, every override after one
+ *     and the FED SET's evidence action are decided under each triple of the three (seventy-five today), each through
+ *     decideUnder; each of those decisions crosses decideAtSeam (wb-x3h8), the one of this file's six decideReconcile call sites
+ *     that records a decision's input: it records the deps object it hands src, read off that very object (the task's status,
+ *     the committing capability's class its registry answers, and the task object's SEAM SHAPE, below), and hands src that same
+ *     object. The other five call sites record nothing and decide with this file's deps() alone (a completed task in the
+ *     no-journal-path shape, the committing stand-in at write), never under the other DECISION INPUTS (wb-fnui, landing 898 F3;
+ *     the six as read at the cut, not by this test): previewReceipt()'s evidence action (S's runtime receipt, H acceptance.3.2's
+ *     two synthetic reads and R-ECHO's read), acknowledgeWith()'s acknowledgement and overrideAfter()'s two overrides (R-ECHO's),
+ *     and the inspect of S's runtime pin. That helper's previewReceipt() (behind every FED SET receipt) and its acknowledgeWith()
+ *     and overrideAfter() (the reference decisions N and H compare decision for decision, below) call src's decideReconcile in
+ *     that helper and cross no seam of this file. Every triple's decisions must carry exactly that triple (the DECISION-INPUT
+ *     LIVENESS), so an input dropped or changed at decideUnder's call into the seam, in a deps object that gives the seam's reads
+ *     and src's the same answers, reds (measured: the task object handed over without its journal path, the gate's GP17-C4, or
+ *     with its journal path undefined, its status replaced or the committing capability's class replaced), and so does a task
+ *     object taskOf builds whose own enumerable keys, observation scope (its keys in order and their values) or journal path
+ *     differ from its TASK SHAPE's SEAM SHAPE. The seam's own decideReconcile call is this file's judging code: an edit there
+ *     that hands src another object than the one the seam records is NOT CLAIMED by this census (R-SELF-ANCHORED). A deps
+ *     object that gives the seam's reads and src's different answers is NOT CLAIMED by this census either (wb-fnui, landing
+ *     898 F1 and F2, routed for the owner's weigh-in): the seam reads the task before src does, and no reader here compares
+ *     the seam's reads of it with src's, so a decisionDeps.task accessor answering the seam's two reads with the task taskOf
+ *     built and src's one read with that task without its journal path (the gate's X8; X8c, the same accessor at
+ *     decideUnder's call argument) keeps this census green (measured; X8 and X8c also keep it green beside the src plant
+ *     G20-JP2, which alone reds it); src never asks the committing capability's class for this census's journaled rows, which
+ *     are write-class (wb-ucgx, landing 935 F2; as read at the cut, not by this test: src's refusingRowAt returns a
+ *     write-class row before its one registry class read, which only a read-class row reaches, and src's one other class ask,
+ *     the evidence action's, is for the evidence read's capability, the preview; measured: a throw on any ask for it after
+ *     the seam's, the gate's G206-DIAG1, or on any ask src makes for it, G206-DIAG2, keeps this census green), so a
+ *     currentEffectClass answering the seam's ask for the committing capability with its class and every later ask for it
+ *     with unregistered (X9; X9c at the call argument) changes nothing src reads and keeps this census green, but hides a src
+ *     ask for it: the gate's src plant G206-CPR, which producer-confirms a citing acknowledgement when its ask for the
+ *     committing capability's class answers read, reds this census alone, and X9 and X9c each keep it green beside that plant
+ *     (measured). The input that helper decides under - a
+ *     completed task in that helper's own shape, the stand-in at write - is that helper's acknowledgeWith() and overrideAfter(),
+ *     decision for decision: N checks both, H the first. N's and H acceptance.3.1's witnesses list each distinct outcome text
+ *     once, after the inputs that give it.
+ *   TASK SHAPES (refusal #8 U1, R-B345): the task objects a decision is made with, each built from its request context; the
+ *     three shapes are this file's own literals (R-SELF-ANCHORED), the two keyed ones typed against src's ReconcileDeps task
+ *     with every key required, so a key src adds to that task fails typecheck:test. That helper's shape (no-journal-path): its
+ *     deps() task, the status and the observation scope {sessionId, workspace, principal}, and no journal path. The two shapes
+ *     of the task workflow_reconcile passes, as read at the cut and not by this test (src/workbench/reconcile-tool.ts builds
+ *     deps.task as {status, observationScope, journalPath}; src records a run's observation scope as {workspace, principal} and
+ *     then sessionId): its journal path undefined (journal-path-undefined, a run whose journal was never persisted) or this
+ *     file's one journal path for the context (journal-path: sessionTaskDir()'s layout for the context's workspace, session and
+ *     task id, <session scratch root>/<encoded workspace>/<session>/tasks/<task id>.workflow.jsonl, composed and never created;
+ *     decideReconcile reads no journal). SEAM SHAPES (wb-x3h8): each TASK SHAPE's task object as the seam must hand it to src,
+ *     declared apart from taskOf (SEAM_SHAPES, this file's own literals, R-SELF-ANCHORED): the task's own keys in order, its
+ *     observation scope's own keys in order, each holding the context's value, and its journal path - no key, the key holding
+ *     undefined, or the key holding this file's one journal path for the context (the fixture path, threaded to the seam). The
+ *     seam judges the task object it hands src against those alone, never against an object taskOf builds.
+ *   N statement.3, never commit evidence: in every ACK FORM and under every DECISION INPUT - with no read (an uncited
+ *     acknowledgement stating the producer unavailable) or with only the receipt of one read of the FED SET in hand (cited once
+ *     or twice), each with no resolvedValue and with the operator one, in a task of every src status in each TASK SHAPE (no
+ *     journal path, the journal path undefined, or this file's one journal path) and with the committing capability
+ *     unregistered or at every src effect class - no effect-absent acknowledgement is producer-confirmed, so an override after
+ *     it, under the same input and with the same receipt in hand, carries possible-duplicate and must accept that risk (citing a
+ *     fresh read's receipt, or in a running or paused task, the acknowledgement is denied); and under every DECISION INPUT the
+ *     FED SET's evidence action admits the same read as under that helper's input, the read each receipt carries (its task,
+ *     position, producer, capability and input digest). A read outside the FED SET is not fed, an acknowledgement in any other
+ *     parameter form is not made and no other request context, task object or decision registry is fed, so this claim does not
+ *     cover any of them: residuals R-FRESH-SHAPE, R-UNPROJECTED-FORM, R-PROBE-CONTEXT and R-ACK-PARAMETERS name the families.
+ *   H acceptance.3, the honesty core: one pin per claim of the item (split at its dash). H acceptance.3.1: for every
+ *     determination the src EffectDetermination union declares, in every ACK FORM - uncited (stating the producer unavailable) and
+ *     citing exactly the receipt of one read of the FED SET once or twice, each with no resolvedValue and with the operator one -
+ *     and under every DECISION INPUT (a task of every src status in each TASK SHAPE; the committing capability unregistered or at
+ *     every src effect class), the acknowledgement is denied or operator-asserted, never producer-confirmed. H
+ *     acceptance.3.2: two fresh preview reads, bare results through this file's own injectable seam,
+ *     carrying two distinct synthetic rfo_ ids (standing in for rf's per-invocation mint, which this test does not read) each
+ *     bind unbound against the journaled rfo_, and neither id is the journaled one; and each fresh read of the FED SET binds
+ *     unbound under the fresh rfo_, never the journaled one.
+ *   R the NAMED RESIDUALS (no filing clause; NOT CLAIMED), each a pinned quiet row. The row exists while an outside anchor calls for
+ *     one of its pins (respin 3 H1, respin 4, R-B109, R-B299: src holds a self-identifying reconcile read, the FED SET holds a
+ *     fresh read, an unprojected read or any read, src holds an rf registrar, or a pin's requirement is this file's words alone),
+ *     so the row removed from every literal reds.
+ *     R-ECHO (R:echo, one pin per reactivefiber reconcile read whose projection takes the envelope's own top-level operation_id
+ *     as nativeId; today the preview): an envelope under the preview contract that echoes the journaled rfo_ binds
+ *     journal-recorded and confirms producer-confirmed, and its effect-absent acknowledgement overrides at duplicate risk none: Pi
+ *     takes the envelope's operation_id as given, and no genuine rf preview carries a prior invocation's id. This quiet row pins
+ *     today's behaviour: hardening it (the preview's reference never binds, whatever its id) reds R and moves the case into N. A
+ *     receipt read that projected its own invocation id instead of the receipt's operation_id (acceptance.2) would generate an R
+ *     pin this table does not hold.
+ *     R-FRESH-SHAPE (R:fresh-shape; refusal #5 U1, R-B109): N and H acceptance.3.1 feed exactly the FED SET's fresh reads, each
+ *     carrying the fresh rfo_ (H acceptance.3.2 adds its two synthetic bare reads, for their binding alone), so a fresh read in any
+ *     other shape (another subset of the optional result keys the native preview admits, observation rows, another release,
+ *     digest, workspace or id value) is not probed by them. The quiet row lists each fed fresh read with its operation_id and its
+ *     result keys, so a fresh read the FED SET adds, drops or reshapes moves it.
+ *     R-UNPROJECTED-FORM (R:unprojected-form; refusal #5 U2, R-B109): N and H acceptance.3.1 feed exactly the FED SET's
+ *     unprojected reads (H acceptance.3.2 feeds none), so a returned read projecting no native reference in any other form
+ *     (another schema id or command, another malformed identity, another result, another workspace root) is not probed by them.
+ *     The quiet row lists each fed unprojected read with its envelope's schema, command and operation_id, so a form the FED SET
+ *     adds, drops or changes moves it.
+ *     R-PROBE-CONTEXT (R:probe-context; R-B109, R-B324, R-B345): every read of the FED SET is fed in one request context (one
+ *     task id, position, principal with its one role, session, workspace, grant set and clock) against one journaled row, under
+ *     the DECISION INPUTS alone, so a FED SET read's binding conditioned on any other request context or journaled row, on any
+ *     other task object (another observation scope or journal path, or a field beside them: only the TASK SHAPES are fed), or
+ *     on a decision registry holding anything else (the preview unregistered or registered otherwise, another capability beside
+ *     them), is not probed (this file's own reads - the uncited acknowledgements, H acceptance.3.2's synthetic reads and
+ *     R-ECHO's - run in this file's own context; the last two are minted, and R-ECHO's decided, with a completed task in the
+ *     no-journal-path shape alone). The
+ *     quiet row lists the FED SET's context with the principal's role and its whole journaled row, this file's own context and
+ *     row (the uncited forms'), each context's task object in every TASK SHAPE as decideUnder passes it, every task status the
+ *     DECISION INPUTS feed, and each decision registry's descriptors as the registry itself lists them.
+ *     R-ACK-PARAMETERS (R:ack-parameters; refusal #6 U1 and U2, R-B299): N and H acceptance.3.1 acknowledge only in the ACK FORMS,
+ *     so an acknowledgement with any other parameters (another reason text or noEvidenceReason, a noEvidenceReason beside a
+ *     citation, another resolvedValue, the receipt cited another number of times) is not probed by them. The quiet row lists each
+ *     form's parameters as src's acknowledgement record holds them (uncited, in this file's own context; cited, on the FED SET's
+ *     first unprojected read, whose acknowledgement src records), so a form whose parameters change or stop reaching src moves it.
+ *     R-REGISTRAR-RUNTIME (R:registrar-runtime; respin 4 U2, the gate's R1 and R2): each src rf registrar is measured in one
+ *     run, with the census's arguments in this process's environment, so a registration whose id, effect class or permissions
+ *     depend on a registrar's arguments or on the environment is read for that run only. The quiet row lists each registrar
+ *     src's judged register calls name, with its src parameters (read from its declaration) and the arguments this file states
+ *     the census passes it, so a registrar src adds or renames, or a parameter one gains, moves it; the stated arguments and the
+ *     REGISTRARS table that passes them are this file's own (R-SELF-ANCHORED holds them together).
+ *     R-SELF-ANCHORED (R:self-anchored; respin 3, the gate's survivors H3 and E14): a requirement in this file's words alone
+ *     (the G, S and R requirements; N's and H's are the filing's own words, read from the export) shortened together with its
+ *     frozen line, or this file's judging code (an it.each argument, an each-liveness list, a generator, a reader or an anchor
+ *     check) edited together with the literals it feeds, stays green: no source outside this file holds either. The quiet row
+ *     lists, measured against the filing description, which pins' requirements are this file's words alone, so a requirement
+ *     that comes to be held outside, or a new one held by this file alone, moves it.
+ *     R-ARGV-RUNTIME (its quiet row is G:bin's probe list): the child's argv is measured for the probed inputs only, in this
+ *     process; a runtime change to what the child receives that those probes do not present (an input value, an environment or a
+ *     call count, such as a patched builtin or prototype acting only then) is not read. Probing any other input changes the list
+ *     and moves G:bin.
+ *   PARKED the duty of statement.2 itself, acceptance.1, acceptance.2 and acceptance.4: owed in the change that opens the gate on
+ *     Pi's side (wb-jwc.5's committing capability under wb-x32's decision). G is their re-entry; S names each one's surface.
+ * GATE (measured read-only at the cut, outside this test; re-read at the R-B109 restatement): the installed rf (0.1.845 at cut
+ *   #5, 0.1.875 at the restatement) serves operation.show (served_reachable) and context render --idempotency-key, and
+ *   FOC-ADR-03 is accepted (ADR-RFC-060, recorded on the bead); wb-x32 is open with no committing decision and Pi's one rf argv
+ *   carries --no-commit. The gate stays CLOSED.
+ * FROZEN SHAPE (standing rule 16): the row shape `${row}:${clause}:${pins}`, every clause key's row, and every pin's line
+ *   `${id} | ${requirement} | ${witness}` (PIN_LINES, the witness measured from the subject) are literals; one case per pin runs
+ *   against its line. Pins are generated from the anchors above, so a member dropped from a table here leaves its generated pin
+ *   without an entry, and a line dropped alone leaves a generated pin without its line; both red. The N and H requirements are
+ *   the filing's own words, read from the export. EACH-LIVENESS (respin 1 U1): every row case and every pin case records its id
+ *   as its last statement, and the case declared last walks the collected tasks: both it.each sites must have registered
+ *   exactly one run-mode case per SHAPE row and per PIN_LINES key, in order, and every one must have reached its last statement,
+ *   so an it.each argument emptied, filtered or sliced at its call site reds.
+ * RESPIN 1 (gate verdict on cut #1 4df64c6, refusal #1, unmet U1-U3): U1 is the each-liveness record above; U2 reads the docs
+ *   allowlist through the rendered, section-bounded, heading-unique view (no raw-document regex, no first match), one sentence
+ *   only, every id it names; U3 lets the registry judge the rf id grammar. The cut also closes the gate's F1 (the rf binary is
+ *   recognised through any call or const) and F4 (the second receipt-shaped input).
+ * RESPIN 2 (gate verdict on cut #2 e9ffe9d, refusal #2, unmet U1-U2): U1 reads the argv the rf spawn receives (BINARY AND ARGV
+ *   above), so a conditional, spread or filtered --no-commit fails closed; U2 reads every register spelling and lists each
+ *   unjudged one (REGISTRATIONS above), so an id held by reference, concatenated or computed fails closed. The cut also takes the
+ *   record's LOW items F1 (a journey whose rendered text keeps an undecoded character reference such as &#46; is refused, so an
+ *   entity can never hide an id) and F2 (the hyphen-run word split), and puts the same class guard on the census's other
+ *   literal readers: a nativeEvidence case label that is not a whole string token is listed unjudged, and a src union member
+ *   that is not a string literal type refuses the union's reading.
+ * RESPIN 3 (gate verdict on cut #3 b94cd8e, refusal #3, unmet U1-U2, rule 19(c) engaged): U1 resolves the spawn's callee,
+ *   argument 2 and builder by binding and measures the argv the child receives (BINARY AND ARGV above), so a shadowing builder
+ *   and a wrapped or renamed callee fail closed, and so does a runtime change for the probed inputs; U2 reads every file under
+ *   src/ (THE SRC TREE above) and lists every descriptor the measured registrars register, so a registrar in a .mts (or any other
+ *   module extension) is read and any other file is listed. Of the gate's disclosed survivors, H1 (row R removed from every
+ *   literal) and H2 (row N re-parked) now red through the outside anchors above; H3 and E14 are R-SELF-ANCHORED.
+ * RESPIN 4 (gate verdict on cut #4 3e04894, refusal #4, unmet U1-U2; orchestrator ruling R-B88 binds this final cut to the
+ *   fail-closed core): U1 narrows the header's N and H claims to the one failure category fed (unavailable) and names
+ *   R-FAILURE-CATEGORY with its quiet row; U2 narrows the header's REGISTRATIONS claim, its tripwire and the G:id requirement to
+ *   the one measured run and names R-REGISTRAR-RUNTIME with its quiet row; the D30 member is read by listing the docs section's
+ *   characters outside printable ASCII (S), and the docs-id non-claim is restated to what the reader does. The core also narrows
+ *   the S runtime requirement to its one measured stand-in run, reads import-equals declarations and import types among the
+ *   specifiers that may leave src/, and counts --idempotency-key over template text too.
+ * REFUSAL 5 AND THE RESTATEMENT (gate verdict on cut #5 c12af96, refusal #5, unmet U1-U2; orchestrator ruling R-B109 executes
+ *   the dependency inversion R-B88 pre-binds: the members fold into child wb-jwc.9 and this bead waits on it): U1 found the N and
+ *   H probes fed one fresh envelope, {output:{text}}, a result the native preview refuses as transport, while their claims covered
+ *   every genuine fresh read (gate plants G20s142-F1, F2 and F3 in mintEvidenceReceipt read 0|23); U2 found 'an unprojected read'
+ *   measured with one context.show envelope (plant G20s142-U1, a schema-drifted render, 0|23). wb-jwc.9 landed the FED SET and a
+ *   census pinning each of its reads. This restatement feeds that set to N and H through the helper (cure route (a) of both
+ *   members), restates N's and H's claims to it, names R-FRESH-SHAPE, R-UNPROJECTED-FORM and R-PROBE-CONTEXT with pinned quiet
+ *   rows, and retires R-FAILURE-CATEGORY: every member of src's CapabilityErrorCategory is now fed, so its anchor calls for no row.
+ *   The G and S readers and the R-ECHO, R-REGISTRAR-RUNTIME, R-SELF-ANCHORED and R-ARGV-RUNTIME readers are unchanged
+ *   (R-SELF-ANCHORED's quiet row now also lists the three new rows).
+ * REFUSAL 6 AND CUT #7 (gate verdict on the restatement b5e81d09, refusal #6, unmet U1-U2; orchestrator ruling R-B299, the 22(d)
+ *   disposition: a restatement with claims equal to pins, the pin form preferred): U1 found no N or H acknowledgement passing an
+ *   operator resolvedValue (gate plants G14-RV1, RV2 and RV3 in the acknowledge loop read 0|25), U2 found every one citing its
+ *   receipt once (G14-DUP, 0|25), while the claims and the Not claimed list left the acknowledgement's own parameters open. Cut #7
+ *   acknowledges in the ACK FORMS (each plant now reds N and H acceptance.3.1), restates N's and H acceptance.3.1's claims and the
+ *   Not claimed list to those forms, and names R-ACK-PARAMETERS with a pinned quiet row; the FED SET's minimal fresh shape is
+ *   described as the helper writes it (refusal #6 F3). The G and S readers and every other residual's reader are unchanged
+ *   (R-SELF-ANCHORED's quiet row now also lists R-ACK-PARAMETERS).
+ * REFUSAL 7 AND CUT #8 (gate verdict on cut #7 dcec4002, refusal #7, unmet U1-U2; orchestrator ruling R-B324, the 22(d)
+ *   disposition: a restatement with claims equal to pins, the pin form preferred): U1 found the decision registry held at this
+ *   file's committing stand-in while src registers no committing rf capability (gate plants G16-RG1, RG2 and RG3, keyed on the
+ *   committing capability unregistered, read 0|26), U2 found every acknowledgement made in a completed task (G16-ST1, ST1k, ST2
+ *   and ST3, keyed on a failed or killed task, 0|26), and the claim words, R-PROBE-CONTEXT's elements and the Not claimed list
+ *   named neither input. Cut #8 decides every N and H acceptance.3.1 acknowledgement and every override after one under the
+ *   DECISION INPUTS (each of those plants now reds N; each that acts on the acknowledgement reds H acceptance.3.1 too),
+ *   restates N's and H acceptance.3.1's claims, R-PROBE-CONTEXT and the Not claimed list to them, and lists in R-PROBE-CONTEXT's
+ *   quiet row the principal's role (refusal #7 F3), each journaled row whole and this file's own context beside the FED SET's.
+ *   The G and S readers and every other residual's reader are unchanged.
+ * REFUSAL 8 AND CUT #9 (gate verdict on cut #8 9cfd0eb1, refusal #8, unmet U1-TASK-JOURNAL-PATH; orchestrator ruling R-B345, the
+ *   22(d) disposition: the same restatement with every header claim no wider than its pinned reader): U1 found every ACK FORMS
+ *   decision made with a task carrying no journal path, while workflow_reconcile decides every one with {status,
+ *   observationScope, journalPath} (gate plants G20-JP1, JP2 and JP3 and the seat's DI-S2, each keyed on a defined journal path,
+ *   read 0|26), and the claim words, R-PROBE-CONTEXT's elements and the Not claimed list never named the journal path. Cut #9
+ *   adds the TASK SHAPES to the DECISION INPUTS (each of those plants now reds N; each that acts on the acknowledgement reds H
+ *   acceptance.3.1 too), decides the FED SET's evidence action under every DECISION INPUT (refusal #8 F10) and the override with
+ *   its acknowledgement's receipt in hand, restates N's and H acceptance.3.1's claims, R-PROBE-CONTEXT and the Not claimed list
+ *   to them, and lists each context's task objects in R-PROBE-CONTEXT's quiet row. The G and S readers and every other
+ *   residual's reader are unchanged.
+ * wb-x3h8 (the landed-census follow-up orchestrator ruling R-B381 files on the owner's F2 weigh-in at landing 845; boundary
+ *   sentence, verbatim from the record: "the restated DECISION INPUTS words hold only up to decideUnder's decideReconcile
+ *   call."): the gate's one-site census edit GP17-C4, decideUnder handing decideReconcile the task object without its journal
+ *   path, kept this census at 0|26 and the honesty census at 0|81 and hid G20-JP2 (alone 3|23), because the DECISION-INPUT
+ *   LIVENESS recorded the shape read off the object decideUnder built. The liveness is now recorded at the decideReconcile
+ *   seam (decideAtSeam), read off the deps object handed to src, and the task object's shape is judged against SEAM_SHAPES,
+ *   declared apart from taskOf with this file's one journal path threaded in: GP17-C4 now reds N and H acceptance.3.1, alone
+ *   and with G20-JP2. The decisions, the N and H witnesses, the pin lines and every other reader are unchanged.
+ * wb-fnui (the R694 follow-up of landing 898, wb-x3h8's PASS; comments only): F3 - the DECISION INPUTS paragraph's seam words
+ *   are restated to the file's six decideReconcile call sites: decideAtSeam is the one that records a decision's input, and the
+ *   paragraph names the other five, which record nothing, and that helper's three, which cross no seam of this file. F1 and F2
+ *   (routed for the owner's weigh-in): the DECISION-INPUT LIVENESS words are narrowed to a deps object that gives the seam's
+ *   reads and src's the same answers, and a stateful one (the gate's X8, X8c, X9 and X9c) is named NOT CLAIMED. The seam, its
+ *   records, the decisions and every reader, pin line and witness are unchanged.
+ * wb-ucgx (the R694 follow-up of landing 935, wb-fnui's PASS; comments only): F2 - the NOT CLAIMED words for a deps object
+ *   that gives the seam's reads and src's different answers no longer say src asks the committing capability's class: src
+ *   never asks it for this census's journaled rows, which are write-class, so X9 and X9c alone change nothing src reads, and
+ *   they hide a src ask for it (the gate's G206-CPR). The words landing 935's F1 names (routed for the owner's weigh-in) are
+ *   unchanged. The seam, its records, the decisions and every reader, pin line and witness are unchanged.
+ * Not claimed: the rf-side conjuncts (measured at the cut, not here); the receipt projection's five-state vocabulary (the bead's
+ *   2026-10-17b note, owed with acceptance.2); an rf capability id that no whole string token spells (concatenation, a template
+ *   with substitutions) or that a `kind` property holds, except where a reader above reads every spelling - a register call's
+ *   descriptor id and a nativeEvidence case label are listed unjudged, and RECONCILE_EVIDENCE_READS is measured at runtime; a
+ *   register member reached through a name src never spells (one assembled at runtime); code outside src/ that src reaches other
+ *   than through a relative specifier, written as a whole string token, of an import, export or import-equals declaration, an
+ *   import type, an import() call or a require() call (a package; a module loaded through any other call, such as a function
+ *   createRequire returns, or through a computed specifier, as the local-provider pass-through above does), except what the two
+ *   measured registrars have registered when they return in their one measured run; a registration made after a measured
+ *   registrar returns; an
+ *   rf binary name assembled at runtime (concatenation, a template with substitutions, or a value read from the environment or a
+ *   config with no rf literal in src); a --idempotency-key flag no src string literal or template text holds whole (one
+ *   concatenated or computed at runtime); a commit effected by anything but the spawned argv (the child's environment, working
+ *   directory or a config rf reads); how rf parses the argv it receives; an rf branch of nativeEvidence written outside its
+ *   switch's case labels; a docs id the section's rendered text spells only with characters the registry's grammar refuses (it
+ *   is not read as an id even where it would render as one; S lists the section's characters outside printable ASCII, respin 4
+ *   D30); a hyphen-only
+ *   id under a producer RECONCILE_EVIDENCE_READS does not key, named outside the allowlist sentence; a host path other than the
+ *   Claude workflow host's node() journaling; for N and H acceptance.3.1, a read outside the FED SET, an acknowledgement or
+ *   override made in any other request context, with no task or a task carrying any other field or value than the TASK
+ *   SHAPES' (another task id, observation scope or journal path, or a field beside them: R-PROBE-CONTEXT) or under a decision
+ *   registry holding anything but the DECISION INPUTS' (the preview unregistered or registered otherwise, another capability
+ *   beside them: R-PROBE-CONTEXT), the FED SET's evidence action decided in any other request context, an acknowledgement in any
+ *   parameter form but the ACK FORMS (another reason text or noEvidenceReason, a noEvidenceReason beside a citation, another
+ *   resolvedValue, the receipt cited another number of times: R-ACK-PARAMETERS), an override with any other reason text or
+ *   parameters than the overrideAfter() of that helper and of this file pass, as overrideUnder() passes them under every
+ *   DECISION INPUT (confirmed, position 0 and the committing stand-in, the duplicate risk unaccepted and accepted) or decided
+ *   against any other journal than the journaled row and the one acknowledgement it overrides or with any other receipt in hand
+ *   than its acknowledgement's, and an acknowledgement citing, or holding in hand, any receipt beside the one read's own; the
+ *   named residuals (R).
+ *
+ * Display paths added: none. Test-only: writes nothing but tracked scratch directories (test/helpers/scratch.ts, each removed after
+ * its use): one holding the recording stand-in rf and its argv log (G:bin's probe), and, through the helper, one per native read
+ * of the FED SET holding that helper's stand-in rf and its one output line; starts no process but those stand-ins, each the only
+ * PATH entry while it runs (a POSIX shell script of builtins only); WS is a string, never created. Reads the bead export, the src
+ * tree and docs/workbench/08-lifecycle-and-recovery.md.
+ */
+import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { dirname, extname, join, relative, resolve, sep } from "node:path";
+import { fileURLToPath } from "node:url";
+import ts from "typescript";
+import { describe, expect, it } from "vitest";
+import { encodeCwd } from "../src/output-file.js";
+import { type CapabilityDescriptor, CapabilityError, type CapabilityErrorCategory, type CapabilityProvider, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
+import { type ClaudeQuery, createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
+import { identityDigest } from "../src/workbench/identity.js";
+import { nativeEvidence } from "../src/workbench/native-evidence.js";
+import { REACTIVE_FIBER_CLI_SCHEMA, registerNativeReactiveFiberRender, registerReactiveFiberRender } from "../src/workbench/providers/reactivefiber.js";
+import { decideReconcile, mintEvidenceReceipt, type ReconcileDecision, type ReconcileDeps, type ReconcileRequest } from "../src/workbench/reconcile-decision.js";
+import type { WorkflowJournalEntry } from "../src/workflow/journal.js";
+import type { WorkflowRunStatus } from "../src/workflow/progress.js";
+import { ACKNOWLEDGEMENT_VALUE_CONTRACT, type EvidenceReceipt, producerOf, RECONCILE_EVIDENCE_READS } from "../src/workflow/reconcile.js";
+import { runWorkflow } from "../src/workflow/runtime.js";
+import { docsSection, type RenderedBlock } from "./helpers/census.js";
+import * as honesty from "./helpers/rf-operation-receipt-honesty.js";
+import { installScratchLeakGuard, makeScratch, removeScratch, sessionScratchRoot } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+const SRC = join(ROOT, "src");
+const BEAD = "wb-jwc.6";
+const DOCS08 = "docs/workbench/08-lifecycle-and-recovery.md";
+const WS = "/workspace/rf-operation-receipt-census";
+const PREVIEW_ID = "reactivefiber.render.preview";
+const PREVIEW_PERMISSION = "reactivefiber:render";
+const PREVIEW_INPUT = { model: "m", task: "t" };
+/** The test-only stand-in for the committing rf capability the R5 gate waits for (wb-jwc.5's posture); src registers none. */
+const COMMIT_ID = "reactivefiber.render.commit";
+const COMMIT_PERMISSION = "reactivefiber:commit";
+const COMMIT_INPUT = { type: "object", properties: { model: { type: "string", minLength: 1 }, task: { type: "string", minLength: 1 } }, required: ["model", "task"], additionalProperties: false };
+/** rf ids in the rf grammar (rfo_/rfw_/rft_/rfr_ + 22-32 of [0-9a-z]); obviously synthetic. */
+const JOURNALED = "rfo_journaledcommit000000000";
+const FRESH = "rfo_freshpreview0000000000";
+const FRESH_SECOND = "rfo_freshpreviewsecond0000";
+const PROBE_OWN = "rfo_probeinvocation00000000";
+const PROBE_RECEIPT = "rfo_probereceipt000000000000";
+const WORKSPACE_ID = "rfw_censusworkspace000000000";
+const TRANSACTION_ID = "rft_censustransaction000000";
+const RENDER_ID = "rfr_censusrender0000000000";
+const TASK_ID = "wf_rfreceipt-census";
+const SESSION = "s1";
+const PRINCIPAL = "local-operator:1:s1";
+const NOW = "2026-10-28T05:00:00Z";
+const REASON = "census probe: a reconcile fed only rf preview reads";
+const GRANTS = ["workbench:observe", PREVIEW_PERMISSION, "reconcile:reactivefiber.acknowledge", "reconcile:reactivefiber.override"];
+/** The rf commands a reconcile read's envelope may name: the preview's render, and the receipt leaf the gate would admit. */
+const PROBE_COMMANDS = ["context.render", "operation.show"];
+const EM_DASH = String.fromCodePoint(0x2014);
+const HEAD = 'export const meta = { name: "rf-operation-receipt", description: "wb-jwc.6 census probe" };\n';
+const RECONCILE_TS = "src/workflow/reconcile.ts";
+/** src's failure vocabulary (respin 4 U1): the CapabilityErrorCategory union the FED SET feeds one failed read per member of (R-B109). */
+const CAPABILITY_REGISTRY_TS = "src/workbench/capability-registry.ts";
+/** src's run status vocabulary (refusal #7 U2, R-B324): the WorkflowRunStatus union the DECISION INPUTS feed every member of. */
+const PROGRESS_TS = "src/workflow/progress.ts";
+/** The producer src's producerOf names for every rf capability id. */
+const RF_PRODUCER = "reactivefiber";
+/** A whole string token naming the rf binary: rf itself, a path whose last segment is rf, or a command text whose first word is either. */
+const RF_BINARY = /^(?:\S*\/)?rf(?:\s|$)/;
+/** docs/workbench/08's level-1 page heading: the journey section's one parent (the landed binder workbench-docs08-replay-reconcile binds the same path). */
+const PARENT_08 = `08 ${EM_DASH} Execution identity, lifecycle, side effects, replay and recovery`;
+const JOURNEY = "Operator reconcile journey";
+/** The phrase that marks the journey's evidence allowlist sentence. */
+const ALLOWLIST = "allowlisted producer read";
+/** The label of the acceptance item that holds before the gate (the honesty core): the filing's own mark of a clause judged now. */
+const HONESTY_LABEL = "Negative guard (honesty core): ";
+/** The one binding the rf spawn's callee may have (respin 3 U1): the named import spawn of node:child_process. */
+const SPAWN_BINDING = "the named import spawn of node:child_process";
+/**
+ * The second receipt-shaped result (respin F4): every result key the shipped rf receipt carries (rf 0.1.845,
+ * application/operation_show.py RECEIPT_KEYS; synthetic values in its schema's shapes), plus each status field a sibling
+ * nativeEvidence branch projects domainStatus from (forge status, hyperunix execution_status.kind, furnace data.state).
+ */
+const SHIPPED_RECEIPT_RESULT: JsonValue = {
+  operation_id: JOURNALED, request_fingerprint: null, state: "committed", transaction_id: TRANSACTION_ID, render_id: RENDER_ID, commit_seq: 1,
+  output_digest: `sha256:${"0".repeat(64)}`, response_delivery: "unknown", attempts: 1, superseded_transaction_ids: [],
+  status: "committed", execution_status: { kind: "committed" }, data: { state: "committed" },
+};
+
+type RowId = "G" | "S" | "N" | "H" | "R";
+interface PinBody {
+  readonly requirement: string;
+  readonly witness: () => Promise<string>;
+}
+interface Pin extends PinBody {
+  readonly id: string;
+}
+interface Row {
+  readonly id: RowId;
+  readonly clause: string;
+  readonly pins: readonly Pin[];
+}
+/** What the census reads of the owner filing. */
+interface Filing {
+  /** Clause key (statement.1-3, acceptance.1-4) -> its text, in filing order. */
+  readonly clauses: ReadonlyMap<string, string>;
+  /** The gate's conjuncts as the statement's parenthetical lists them. */
+  readonly conjuncts: readonly string[];
+  /** The files of the SURFACES line, in filing order. */
+  readonly surfaces: readonly string[];
+  /** acceptance.3's claims, split at its dash after the "Negative guard (honesty core): " label. */
+  readonly honestyClaims: readonly string[];
+}
+interface Token {
+  readonly file: string;
+  readonly text: string;
+  readonly site: string;
+  /** The property the literal initializes (`kind` names an observation vocabulary word, never a capability). */
+  readonly property?: string;
+}
+
+const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null && !Array.isArray(value);
+
+/** The bead's description in the tracker export: the owner filing. */
+function filingText(): string {
+  for (const line of trackerExportText(join(ROOT, ".beads/issues.jsonl")).split("\n")) {
+    if (!line.includes(`"${BEAD}"`)) continue;
+    const row: unknown = JSON.parse(line);
+    if (isRecord(row) && row.id === BEAD && typeof row.description === "string") return row.description;
+  }
+  throw new Error(`${BEAD} is not in the tracker export`);
+}
+function readFiling(text: string): Filing {
+  const statement = /^STATEMENT: When (.+?) \((.+?)\), Pi shall (.+?); (.+?)\.$/m.exec(text);
+  const [trigger, conjunctText, duty, never] = statement === null ? [] : statement.slice(1);
+  const items = [...(/^ACCEPTANCE: \[(.+)\]$/m.exec(text)?.[1] ?? "").matchAll(/(["'])(.*?)\1(?=, ["']|$)/g)].map(match => match[2] ?? "");
+  const clauses = new Map<string, string>();
+  if (trigger !== undefined && conjunctText !== undefined && duty !== undefined && never !== undefined) {
+    clauses.set("statement.1", `${trigger} (${conjunctText})`);
+    clauses.set("statement.2", duty);
+    clauses.set("statement.3", never);
+  }
+  for (const [index, item] of items.entries()) clauses.set(`acceptance.${index + 1}`, item);
+  const [rfSide = "", piSide = ""] = (conjunctText ?? "").split(", conjoined with ");
+  const honesty = items[2] ?? "";
+  return {
+    clauses,
+    conjuncts: [...rfSide.replace(/ in an installed rf$/, "").split(" + "), piSide].filter(part => part.length > 0),
+    surfaces: (/^SURFACES: (.+)$/m.exec(text)?.[1] ?? "").split(", ").map(entry => entry.split(":")[0] ?? ""),
+    honestyClaims: honesty.startsWith(HONESTY_LABEL) ? honesty.slice(HONESTY_LABEL.length).replace(/\.$/, "").split(` ${EM_DASH} `) : [],
+  };
+}
+const FILING = readFiling(filingText());
+
+/** Every file under a directory, whatever its name, in sorted path order (respin 3 U2). */
+function treeFiles(dir: string): string[] {
+  return readdirSync(dir).sort().flatMap(name => {
+    const path = join(dir, name);
+    return statSync(path).isDirectory() ? treeFiles(path) : [path];
+  });
+}
+/**
+ * The script kind each TypeScript or JavaScript module extension is parsed with (respin 3 U2: a .mts registrar was read by no
+ * reader); a declaration file ends in one of these too. A src file with any other extension, or with none, is listed, never parsed.
+ */
+const MODULE_KINDS: Readonly<Record<string, ts.ScriptKind>> = {
+  ".ts": ts.ScriptKind.TS, ".mts": ts.ScriptKind.TS, ".cts": ts.ScriptKind.TS, ".tsx": ts.ScriptKind.TSX,
+  ".js": ts.ScriptKind.JS, ".mjs": ts.ScriptKind.JS, ".cjs": ts.ScriptKind.JS, ".jsx": ts.ScriptKind.JSX,
+};
+const scriptKindOf = (file: string): ts.ScriptKind | undefined => (Object.hasOwn(MODULE_KINDS, extname(file)) ? MODULE_KINDS[extname(file)] : undefined);
+const parsedFiles = new Map<string, ts.SourceFile>();
+/** A repo file parsed once, by its repo-relative path, with its extension's script kind. */
+function parsed(file: string): ts.SourceFile {
+  let source = parsedFiles.get(file);
+  if (source === undefined) {
+    source = ts.createSourceFile(file, readFileSync(join(ROOT, file), "utf8"), ts.ScriptTarget.Latest, true, scriptKindOf(file) ?? ts.ScriptKind.TS);
+    parsedFiles.set(file, source);
+  }
+  return source;
+}
+/** The src tree (respin 3 U2): every file under src/, whatever its name, by repo-relative path. */
+const srcTree = (): string[] => treeFiles(SRC).map(path => relative(ROOT, path));
+/** Every src module the three readers parse: each file of the src tree with a module extension. */
+const srcFiles = (): string[] => srcTree().filter(file => scriptKindOf(file) !== undefined);
+/** Every file of the src tree no reader parses (respin 3 U2): listed in the G:id witness, so a new one moves it. */
+const unparsedSrcFiles = (): string[] => srcTree().filter(file => scriptKindOf(file) === undefined);
+/** The function a node sits in, else the outermost variable it initializes, else <top>. */
+function enclosingDeclaration(node: ts.Node): string {
+  let variable: string | undefined;
+  for (let at: ts.Node | undefined = node.parent; at !== undefined; at = at.parent) {
+    if (ts.isFunctionDeclaration(at) && at.name !== undefined) return at.name.text;
+    if (ts.isVariableDeclaration(at) && ts.isIdentifier(at.name)) variable = at.name.text;
+  }
+  return variable ?? "<top>";
+}
+function visitAll(root: ts.Node, visit: (node: ts.Node) => void): void {
+  const walk = (node: ts.Node): void => {
+    visit(node);
+    ts.forEachChild(node, walk);
+  };
+  walk(root);
+}
+let tokens: Token[] | undefined;
+/** Every whole string-literal token in src (not a template with substitutions), with its enclosing declaration. */
+function srcTokens(): Token[] {
+  tokens ??= srcFiles().flatMap(file => {
+    const found: Token[] = [];
+    visitAll(parsed(file), node => {
+      if (!ts.isStringLiteral(node) && !ts.isNoSubstitutionTemplateLiteral(node)) return;
+      const property = ts.isPropertyAssignment(node.parent) && node.parent.initializer === node && ts.isIdentifier(node.parent.name) ? node.parent.name.text : undefined;
+      found.push({ file, text: node.text, site: enclosingDeclaration(node), ...(property !== undefined ? { property } : {}) });
+    });
+    return found;
+  });
+  return tokens;
+}
+/** The registry's verdict on each text asked about, so every token and word is judged once. */
+const registryVerdicts = new Map<string, boolean>();
+/**
+ * Whether the real CapabilityRegistry accepts `text` as a descriptor id (respin U3): a fresh registry registers a fixed, otherwise
+ * valid probe descriptor under it, so the registry's own grammar judges and this file holds no copy of it.
+ */
+function registryAcceptsId(text: string): boolean {
+  let verdict = registryVerdicts.get(text);
+  if (verdict === undefined) {
+    try {
+      new CapabilityRegistry().register({
+        descriptor: { id: text, version: "1.0.0", description: "census id-grammar probe", inputSchema: COMMIT_INPUT, effectClass: "read", permissions: [PREVIEW_PERMISSION], supportedModes: ["invoke"] },
+        invoke: async () => null,
+      });
+      verdict = true;
+    } catch (error) {
+      if (!(error instanceof CapabilityError) || error.category !== "validation") throw error;
+      verdict = false;
+    }
+    registryVerdicts.set(text, verdict);
+  }
+  return verdict;
+}
+/** An rf capability id: src's producerOf names reactivefiber, and the registry accepts the text as a descriptor id. */
+const isRfCapabilityId = (text: string): boolean => producerOf(text) === RF_PRODUCER && registryAcceptsId(text);
+/** The rf-id tokens src spells as an observation `kind`: vocabulary words that pass the id test, never capabilities. */
+const rfKindTokens = (): Token[] => srcTokens().filter(token => token.property === "kind" && isRfCapabilityId(token.text));
+/** The rf capability ids src names (every rf-id token that is not a `kind`), first-seen order. */
+const rfCapabilityIds = (): string[] => [...new Set(srcTokens().filter(token => token.property !== "kind" && isRfCapabilityId(token.text)).map(token => token.text))];
+/** How a token is used where it stands: the call it is an argument of, else the variable it initializes, else its parent's syntax kind. */
+function useOf(node: ts.StringLiteral | ts.NoSubstitutionTemplateLiteral): string {
+  const parent = node.parent;
+  if (ts.isCallExpression(parent)) {
+    const index = parent.arguments.indexOf(node);
+    const callee = ts.isIdentifier(parent.expression) ? parent.expression.text : ts.isPropertyAccessExpression(parent.expression) ? parent.expression.name.text : ts.SyntaxKind[parent.expression.kind];
+    if (index >= 0) return `${callee} argument ${index + 1}`;
+  }
+  if (ts.isVariableDeclaration(parent) && ts.isIdentifier(parent.name)) return `const ${parent.name.text}`;
+  return ts.SyntaxKind[parent.kind];
+}
+/** Every src declaration holding a whole string token that names the rf binary (respin F1): its file, its name and the token's use, in file then source order. */
+function rfBinarySites(): { readonly file: string; readonly name: string; readonly use: string }[] {
+  return srcFiles().flatMap(file => {
+    const found: { file: string; name: string; use: string }[] = [];
+    visitAll(parsed(file), node => {
+      if ((ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) && RF_BINARY.test(node.text)) found.push({ file, name: enclosingDeclaration(node), use: useOf(node) });
+    });
+    return found;
+  });
+}
+/** A whole string token: a string literal or a template with no substitution. */
+const isWholeToken = (node: ts.Node): node is ts.StringLiteral | ts.NoSubstitutionTemplateLiteral => ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node);
+/**
+ * Every relative module specifier a src module writes as a whole string token - in an import, export or import-equals
+ * declaration, an import type, an import() call or a require() call (respin 4 adds the import-equals and import-type forms) -
+ * that resolves outside src/ (respin 3 U2: the typecheck admits a declaration file outside src/ that a src import reaches, and
+ * the script beside it would run unread), as `file -> specifier`, in file then source order.
+ */
+function specifiersLeavingSrc(): string[] {
+  return srcFiles().flatMap(file => {
+    const found: string[] = [];
+    visitAll(parsed(file), node => {
+      let specifier: ts.Node | undefined;
+      if (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) specifier = node.moduleSpecifier;
+      else if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference)) specifier = node.moduleReference.expression;
+      else if (ts.isImportTypeNode(node) && ts.isLiteralTypeNode(node.argument)) specifier = node.argument.literal;
+      else if (ts.isCallExpression(node) && (node.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(node.expression) && node.expression.text === "require"))) specifier = node.arguments[0];
+      if (specifier === undefined || !isWholeToken(specifier) || !/^\.\.?(?:\/|$)/.test(specifier.text)) return;
+      const target = resolve(ROOT, dirname(file), specifier.text);
+      if (target !== SRC && !target.startsWith(`${SRC}${sep}`)) found.push(`${file} -> ${specifier.text}`);
+    });
+    return found;
+  });
+}
+/** The key a property is declared under, or undefined for a spread or a computed key. */
+function propertyKey(property: ts.ObjectLiteralElementLike): string | undefined {
+  const name = property.name;
+  return name !== undefined && (ts.isIdentifier(name) || ts.isStringLiteral(name) || ts.isNumericLiteral(name)) ? name.text : undefined;
+}
+/** The value of an object literal's one plain `key` assignment, or why the literal cannot be read for it (respin 2 U2). */
+function soleAssignment(object: ts.ObjectLiteralExpression, key: string): ts.Expression | string {
+  if (object.properties.some(property => propertyKey(property) === undefined)) return "a spread or computed key";
+  const named = object.properties.filter(property => propertyKey(property) === key);
+  const [only] = named;
+  if (only === undefined || named.length !== 1) return `${named.length} ${key} properties`;
+  return ts.isPropertyAssignment(only) ? only.initializer : `${key} ${ts.SyntaxKind[only.kind]}`;
+}
+/** A register call's descriptor id when its provider is a literal the census can read (respin 2 U2), else why it is not. */
+function judgedId(call: ts.CallExpression): { readonly id: string } | { readonly why: string } {
+  const [provider] = call.arguments;
+  if (provider === undefined || call.arguments.length !== 1) return { why: `${call.arguments.length} arguments` };
+  if (!ts.isObjectLiteralExpression(provider)) return { why: `provider ${ts.SyntaxKind[provider.kind]}` };
+  const descriptor = soleAssignment(provider, "descriptor");
+  if (typeof descriptor === "string") return { why: `provider: ${descriptor}` };
+  if (!ts.isObjectLiteralExpression(descriptor)) return { why: `descriptor ${ts.SyntaxKind[descriptor.kind]}` };
+  const id = soleAssignment(descriptor, "id");
+  if (typeof id === "string") return { why: `descriptor: ${id}` };
+  return isWholeToken(id) ? { id: id.text } : { why: `id ${ts.SyntaxKind[id.kind]}` };
+}
+/** Who holds a node: the function, or the Class.method, it sits in, else its class, else the outermost variable it initializes, else <top>. */
+function ownerOf(node: ts.Node): string {
+  let variable: string | undefined;
+  for (let at: ts.Node | undefined = node.parent; at !== undefined; at = at.parent) {
+    if (ts.isFunctionDeclaration(at) && at.name !== undefined) return at.name.text;
+    if (ts.isMethodDeclaration(at) && at.name !== node && ts.isClassDeclaration(at.parent) && at.parent.name !== undefined) return `${at.parent.name.text}.${at.name.getText()}`;
+    if (ts.isClassDeclaration(at) && at.name !== undefined) return at.name.text;
+    if (ts.isVariableDeclaration(at) && ts.isIdentifier(at.name)) variable = at.name.text;
+  }
+  return variable ?? "<top>";
+}
+interface RegisterSpelling {
+  readonly file: string;
+  readonly owner: string;
+  /** The descriptor id of a judged register call; absent when the spelling is unjudged. */
+  readonly id?: string;
+  /** How an unjudged spelling stands: the syntax holding it, or why its register call is not judged. */
+  readonly syntax: string;
+}
+let spellings: RegisterSpelling[] | undefined;
+/**
+ * Every src spelling of a member named `register` (respin 2 U2): each identifier `register` and each whole string token
+ * `register`, in file then source order. Only the property-access callee of a call whose provider soleAssignment reads plainly
+ * down to a whole-token id is judged; every other spelling is unjudged, whatever it holds.
+ */
+function registerSpellings(): RegisterSpelling[] {
+  spellings ??= srcFiles().flatMap(file => {
+    const found: RegisterSpelling[] = [];
+    visitAll(parsed(file), node => {
+      if (!(ts.isIdentifier(node) || isWholeToken(node)) || node.text !== "register") return;
+      const parent = node.parent;
+      const access = (ts.isPropertyAccessExpression(parent) && parent.name === node) || (ts.isElementAccessExpression(parent) && parent.argumentExpression === node) ? parent : node;
+      const holder = access.parent;
+      const owner = ownerOf(node);
+      if (ts.isPropertyAccessExpression(access) && ts.isCallExpression(holder) && holder.expression === access) {
+        const verdict = judgedId(holder);
+        found.push("id" in verdict ? { file, owner, id: verdict.id, syntax: "judged register call" } : { file, owner, syntax: `register call, ${verdict.why}` });
+      } else found.push({ file, owner, syntax: ts.SyntaxKind[holder.kind] });
+    });
+    return found;
+  });
+  return spellings;
+}
+/** Every src function whose judged register call carries an rf capability id, with its file, in file then source order. */
+const rfRegistrarSites = (): { readonly file: string; readonly owner: string }[] =>
+  registerSpellings().filter(spelling => spelling.id !== undefined && isRfCapabilityId(spelling.id)).map(spelling => ({ file: spelling.file, owner: spelling.owner }));
+/** Every src function whose judged register call carries an rf capability id, in file then source order. */
+const rfRegistrars = (): string[] => rfRegistrarSites().map(site => site.owner);
+/**
+ * A src rf registrar's parameters as its declaration writes them (respin 4 U2, R-REGISTRAR-RUNTIME's quiet row): the one function
+ * declaration of that name with a body in the file holding its judged register call, each parameter by name, marked when it is a
+ * rest, optional or defaulted parameter; any other count of such declarations is written instead, so it fails closed.
+ */
+function registrarParameters(file: string, name: string): string {
+  const source = parsed(file);
+  const found: ts.FunctionDeclaration[] = [];
+  visitAll(source, node => {
+    if (ts.isFunctionDeclaration(node) && node.name?.text === name && node.body !== undefined) found.push(node);
+  });
+  const [fn] = found;
+  if (fn === undefined || found.length !== 1) return `<${found.length} function declarations of ${name} with a body in ${file}>`;
+  return fn.parameters
+    .map(parameter => `${parameter.dotDotDotToken !== undefined ? "..." : ""}${parameter.name.getText(source)}${parameter.questionToken !== undefined ? "?" : ""}${parameter.initializer !== undefined ? "=<default>" : ""}`)
+    .join(", ");
+}
+/** Every register spelling the census does not judge, as file#owner syntax (respin 2 U2: a new one moves the G:id witness). */
+const unjudgedRegisterSpellings = (): string[] => registerSpellings().filter(spelling => spelling.id === undefined).map(spelling => `${spelling.file}#${spelling.owner} ${spelling.syntax}`);
+/** Every whole string token under a node, in source order. */
+function wholeTokens(root: ts.Node): string[] {
+  const found: string[] = [];
+  const walk = (node: ts.Node): void => {
+    if (isWholeToken(node)) found.push(node.text);
+    ts.forEachChild(node, walk);
+  };
+  walk(root);
+  return found;
+}
+/** The return statements of a function itself, never of a function nested in it. */
+function ownReturns(fn: ts.FunctionDeclaration): ts.ReturnStatement[] {
+  const found: ts.ReturnStatement[] = [];
+  const walk = (node: ts.Node): void => {
+    if (ts.isReturnStatement(node)) found.push(node);
+    if (!ts.isFunctionLike(node)) ts.forEachChild(node, walk);
+  };
+  if (fn.body !== undefined) ts.forEachChild(fn.body, walk);
+  return found;
+}
+/**
+ * The spawning file as a one-file TypeScript program (no lib, no module resolution) and its checker (respin 3 U1): the checker
+ * binds each identifier to its declaration by the language's own scope rules, so a name is never matched by its spelling alone.
+ */
+function oneFileProgram(file: string): { readonly source: ts.SourceFile; readonly checker: ts.TypeChecker } {
+  const path = join(ROOT, file);
+  const program = ts.createProgram({ rootNames: [path], options: { noResolve: true, noLib: true, noEmit: true, allowJs: true, types: [] } });
+  const source = program.getSourceFile(path);
+  if (source === undefined) throw new Error(`the one-file program of ${file} holds no source file`);
+  return { source, checker: program.getTypeChecker() };
+}
+/** Whether an identifier is a member name or an import specifier's imported name: a spelling that binds nothing in the file. */
+function isMemberName(node: ts.Identifier): boolean {
+  const parent = node.parent;
+  if ((ts.isPropertyAccessExpression(parent) && parent.name === node) || (ts.isQualifiedName(parent) && parent.right === node)) return true;
+  if (ts.isImportSpecifier(parent) && parent.propertyName === node) return true;
+  const member = ts.isPropertyAssignment(parent) || ts.isPropertyDeclaration(parent) || ts.isPropertySignature(parent) || ts.isMethodDeclaration(parent) ||
+    ts.isMethodSignature(parent) || ts.isGetAccessorDeclaration(parent) || ts.isSetAccessorDeclaration(parent) || ts.isEnumMember(parent);
+  return member && parent.name === node;
+}
+/** The symbol an identifier binds to (a shorthand property's value binding for a shorthand). */
+const boundSymbol = (checker: ts.TypeChecker, node: ts.Identifier): ts.Symbol | undefined =>
+  ts.isShorthandPropertyAssignment(node.parent) ? checker.getShorthandAssignmentValueSymbol(node.parent) : checker.getSymbolAtLocation(node);
+/** Every identifier of the file spelling `name` that is not a member name, with the symbol each binds to. */
+function spellingsOf(source: ts.SourceFile, checker: ts.TypeChecker, name: string): { readonly node: ts.Identifier; readonly symbol: ts.Symbol | undefined }[] {
+  const found: { node: ts.Identifier; symbol: ts.Symbol | undefined }[] = [];
+  visitAll(source, node => {
+    if (ts.isIdentifier(node) && node.text === name && !isMemberName(node)) found.push({ node, symbol: boundSymbol(checker, node) });
+  });
+  return found;
+}
+/** How many distinct bindings the file gives `name` (an unresolved spelling counts as one more). */
+const bindingCount = (source: ts.SourceFile, checker: ts.TypeChecker, name: string): number => new Set(spellingsOf(source, checker, name).map(entry => entry.symbol)).size;
+/** A symbol's one declaration, or undefined when it has none or several. */
+function soleDeclaration(symbol: ts.Symbol | undefined): ts.Declaration | undefined {
+  const declarations = symbol?.declarations ?? [];
+  return declarations.length === 1 ? declarations[0] : undefined;
+}
+/** A declaration as the witness names it: a named import with its module, else its syntax at module level or inside the declaration holding it. */
+function declarationText(declaration: ts.Declaration | undefined): string {
+  if (declaration === undefined) return "no one declaration";
+  if (ts.isImportSpecifier(declaration)) {
+    const clause = declaration.parent.parent;
+    const specifier = clause.parent.moduleSpecifier;
+    const module = ts.isStringLiteral(specifier) ? specifier.text : ts.SyntaxKind[specifier.kind];
+    const imported = declaration.propertyName === undefined ? declaration.name.text : `${declaration.propertyName.text} as ${declaration.name.text}`;
+    return `the ${declaration.isTypeOnly || clause.isTypeOnly ? "type-only " : ""}named import ${imported} of ${module}`;
+  }
+  const statement: ts.Node = ts.isVariableDeclaration(declaration) ? declaration.parent.parent : declaration;
+  return `a ${ts.SyntaxKind[declaration.kind]} ${ts.isSourceFile(statement.parent) ? "at module level" : `inside ${enclosingDeclaration(declaration)}`}`;
+}
+/** The function-like node a node sits in, or undefined at module level. */
+function spawnerOf(node: ts.Node): ts.Node | undefined {
+  for (let at: ts.Node | undefined = node.parent; at !== undefined; at = at.parent) if (ts.isFunctionLike(at)) return at;
+  return undefined;
+}
+/**
+ * The argv the rf spawn receives (respin 2 U1, respin 3 U1): the one call in `site` taking the rf binary as argument 1, its callee,
+ * argument 2 and argument 2's builder each RESOLVED BY BINDING (oneFileProgram), never matched by name: the callee binds to the
+ * named import spawn of node:child_process; argument 2 to an initialized const of the spawning function no other identifier of
+ * the file reads (or it is written in place); its value is an array literal or a call whose callee binds to the file's one
+ * module-level function declaration of that name; the callee's and the builder's names each have one binding in the file; and
+ * every own return of the builder is an array literal holding --no-commit as a direct element. A shape outside that reading is
+ * written into the text instead, so it fails closed.
+ */
+function spawnedArgv(file: string, site: string): string {
+  const { source, checker } = oneFileProgram(file);
+  const calls: ts.CallExpression[] = [];
+  visitAll(source, node => {
+    if (isWholeToken(node) && RF_BINARY.test(node.text) && enclosingDeclaration(node) === site && ts.isCallExpression(node.parent) && node.parent.arguments[0] === node) calls.push(node.parent);
+  });
+  const [call] = calls;
+  if (call === undefined || calls.length !== 1) return `<${calls.length} calls of ${site} take the rf binary as argument 1>`;
+  if (!ts.isIdentifier(call.expression)) return `<the spawn's callee is a ${ts.SyntaxKind[call.expression.kind]}, not a name the file binds>`;
+  const callee = call.expression.text;
+  const calleeBinding = declarationText(soleDeclaration(checker.getSymbolAtLocation(call.expression)));
+  const calleeBindings = bindingCount(source, checker, callee);
+  if (calleeBinding !== SPAWN_BINDING || calleeBindings !== 1) return `<the callee ${callee} binds to ${calleeBinding}, one of ${calleeBindings} bindings of the name in the file, not ${SPAWN_BINDING} alone>`;
+  let argv = call.arguments[1];
+  if (argv === undefined) return "<the spawn passes no argument 2>";
+  let origin = "written in place";
+  if (ts.isIdentifier(argv)) {
+    const passed = argv;
+    const symbol = checker.getSymbolAtLocation(passed);
+    const declaration = soleDeclaration(symbol);
+    if (declaration === undefined || !ts.isVariableDeclaration(declaration) || (ts.getCombinedNodeFlags(declaration) & ts.NodeFlags.Const) === 0 || declaration.initializer === undefined || spawnerOf(declaration) !== spawnerOf(call)) {
+      return `<argument 2 ${passed.text} binds to ${declarationText(declaration)}, not one initialized const of ${site}>`;
+    }
+    const reads = spellingsOf(source, checker, passed.text).filter(entry => entry.symbol === symbol && entry.node !== passed && entry.node !== declaration.name).length;
+    if (reads > 0) return `<${site} reads ${passed.text} ${reads} more times>`;
+    argv = declaration.initializer;
+    origin = `const ${passed.text}, read only by the spawn`;
+  }
+  let arrays: ts.ArrayLiteralExpression[];
+  let tokens: string[];
+  let builder = "an array literal";
+  if (ts.isArrayLiteralExpression(argv)) {
+    arrays = [argv];
+    tokens = wholeTokens(argv);
+  } else if (ts.isCallExpression(argv) && ts.isIdentifier(argv.expression)) {
+    const name = argv.expression.text;
+    const declarations = checker.getSymbolAtLocation(argv.expression)?.declarations ?? [];
+    const implementations = declarations.filter((declaration): declaration is ts.FunctionDeclaration => ts.isFunctionDeclaration(declaration) && declaration.body !== undefined);
+    const [fn] = implementations;
+    const bindings = bindingCount(source, checker, name);
+    if (fn === undefined || implementations.length !== 1 || bindings !== 1 || declarations.some(declaration => !ts.isFunctionDeclaration(declaration) || !ts.isSourceFile(declaration.parent))) {
+      return `<argv from ${name}(), which binds to ${declarations.length === 0 ? "no declaration" : declarations.map(declaration => declarationText(declaration)).join(" + ")}, one of ${bindings} bindings of the name in the file, not the file's one module-level function declaration of that name>`;
+    }
+    const returns = ownReturns(fn);
+    arrays = returns.flatMap(statement => (statement.expression !== undefined && ts.isArrayLiteralExpression(statement.expression) ? [statement.expression] : []));
+    const other = returns.find(statement => statement.expression === undefined || !ts.isArrayLiteralExpression(statement.expression));
+    if (returns.length === 0 || other !== undefined) return `<a return of ${name} is ${other?.expression === undefined ? "missing or empty" : `a ${ts.SyntaxKind[other.expression.kind]}`}>`;
+    tokens = wholeTokens(fn);
+    builder = `${name}(), the file's one module-level function declaration of that name`;
+  } else return `<argv ${origin} is a ${ts.SyntaxKind[argv.kind]}>`;
+  const options = call.arguments[2];
+  const optionKeys = options === undefined ? "none" : ts.isObjectLiteralExpression(options) ? options.properties.map(property => propertyKey(property) ?? `<${ts.SyntaxKind[property.kind]}>`).join(",") : `<a ${ts.SyntaxKind[options.kind]}>`;
+  const element = (node: ts.Expression): string => (isWholeToken(node) ? node.text : ts.isSpreadElement(node) ? `...${node.expression.getText(source)}` : node.getText(source));
+  const direct = arrays.every(array => array.elements.some(node => isWholeToken(node) && node.text === "--no-commit"));
+  return `callee=${callee}, bound to ${calleeBinding}, the file's one binding of the name; arguments=${call.arguments.length}, option keys=${optionKeys}; argv=${origin}, from ${builder}; returns=${arrays.map(array => `[${array.elements.map(element).join(" ")}]`).join(" | ")}; --no-commit a direct element of every returned array=${direct}; builder string tokens=${tokens.join(" ")}`;
+}
+/** nativeEvidence's switch case labels (respin 2, the U2 class guard): the whole-token labels naming an rf id, and every label in any other syntax. */
+function nativeEvidenceLabels(): { readonly rf: readonly string[]; readonly unjudged: readonly string[] } {
+  const rf: string[] = [];
+  const unjudged: string[] = [];
+  visitAll(parsed("src/workbench/native-evidence.ts"), node => {
+    if (!ts.isCaseClause(node) || enclosingDeclaration(node) !== "nativeEvidence") return;
+    if (!isWholeToken(node.expression)) unjudged.push(ts.SyntaxKind[node.expression.kind]);
+    else if (isRfCapabilityId(node.expression.text)) rf.push(node.expression.text);
+  });
+  return { rf, unjudged };
+}
+/**
+ * The string members of a src union type (src/workflow/reconcile.ts EffectDetermination and EvidenceBinding; respin 4,
+ * src/workbench/capability-registry.ts CapabilityErrorCategory; R-B324, src/workflow/progress.ts WorkflowRunStatus), in
+ * declaration order. The alias must be declared once in the file and every member must be a string literal type (respin 2, the
+ * U2 class guard): any other member refuses the reading, so a determination, a binding word, a failure category or a run status
+ * added by reference can never go unread.
+ */
+function srcUnion(file: string, alias: string): string[] {
+  const found: string[] = [];
+  let declared = 0;
+  visitAll(parsed(file), node => {
+    if (!ts.isTypeAliasDeclaration(node) || node.name.text !== alias) return;
+    declared += 1;
+    for (const member of ts.isUnionTypeNode(node.type) ? node.type.types : [node.type]) {
+      if (!ts.isLiteralTypeNode(member) || !ts.isStringLiteral(member.literal)) throw new Error(`${alias} holds a member that is not a string literal type (${ts.SyntaxKind[member.kind]}): the census refuses to read it`);
+      found.push(member.literal.text);
+    }
+  });
+  if (declared !== 1) throw new Error(`${file} declares ${alias} ${declared} times`);
+  return found;
+}
+
+type PreviewEnvelope = Awaited<ReturnType<Parameters<typeof registerReactiveFiberRender>[1]>>;
+/** An rf context.render envelope as the preview's injected seam returns it. */
+function previewEnvelope(operationId: string, result: JsonValue = { output: { text: "census context" } }, command = "context.render"): PreviewEnvelope {
+  return { schema: REACTIVE_FIBER_CLI_SCHEMA, ok: true, command, operation_id: operationId, workspace: { id: WORKSPACE_ID, root: WS }, transaction_id: null, result, diagnostics: [] };
+}
+/**
+ * The FED SET (R-B109, the restatement over wb-jwc.9's landed fix): the helper's honestyReads() vocabulary over src's
+ * CapabilityErrorCategory union - five fresh reads, one failed read per member of the union plus the native registration's two,
+ * and six unprojected reads - each run through the helper's previewReceipt() and acknowledged in every ACK FORM.
+ */
+const FED_READS: readonly honesty.HonestyRead[] = honesty.honestyReads(srcUnion(CAPABILITY_REGISTRY_TS, "CapabilityErrorCategory") as CapabilityErrorCategory[]);
+/** The categories the FED SET's injectable failed reads throw, read from each read's serve (N checks they are exactly src's union). */
+const fedFailureCategories = (): string[] => FED_READS.flatMap(read => (read.kind === "failed" && read.serve.answer === "throw" ? [read.serve.category] : []));
+/** What a read of the FED SET serves: the seam's envelope, the stand-in's line parsed, else undefined (a thrown or unparsable read). */
+function servedEnvelope(read: honesty.HonestyRead): JsonValue | undefined {
+  if (read.serve.answer === "envelope") return read.serve.envelope;
+  if (read.serve.answer !== "print") return undefined;
+  try {
+    return JSON.parse(read.serve.stdout) as JsonValue;
+  } catch {
+    return undefined;
+  }
+}
+/** One field of a served envelope as text: its string value, else <none>. */
+const envelopeField = (envelope: JsonValue | undefined, key: string): string => (isRecord(envelope) && typeof envelope[key] === "string" ? envelope[key] : "<none>");
+/** The committed render the stand-in returns: the identity a committing rf effect would carry. */
+function committedReading(): JsonValue {
+  return {
+    contract: `${COMMIT_ID}/v1`, workspaceRoot: WS,
+    source: { schema: REACTIVE_FIBER_CLI_SCHEMA, ok: true, command: "context.render", operation_id: JOURNALED, workspace: { id: WORKSPACE_ID, root: WS }, transaction_id: TRANSACTION_ID, result: { render_id: RENDER_ID }, diagnostics: [] },
+  };
+}
+/** The test-only committing stand-in at `effectClass` (its posture is write; the DECISION INPUTS register it at every src class). */
+function commitStandIn(effectClass: CapabilityDescriptor["effectClass"]): CapabilityProvider {
+  return {
+    descriptor: {
+      id: COMMIT_ID, version: "1.0.0", description: "Test-only stand-in for the committing rf render the R5 gate waits for (wb-jwc.5); src registers none",
+      inputSchema: COMMIT_INPUT, effectClass, permissions: [COMMIT_PERMISSION], supportedModes: ["invoke"],
+    },
+    invoke: async () => committedReading(),
+  };
+}
+/** The preview (src's injectable registration over `read`) beside the test-only committing stand-in. */
+function reconcileRegistry(read: () => Promise<PreviewEnvelope>): CapabilityRegistry {
+  const registry = new CapabilityRegistry();
+  registerReactiveFiberRender(registry, read, WS);
+  registry.register(commitStandIn("write"));
+  return registry;
+}
+/** The committed-effect row the filing names: a non-read rf node journaled with {reactivefiber, operation, rfo_X}. */
+const COMMIT_ROW: WorkflowJournalEntry = {
+  index: 0, key: "k0", ok: true, kind: "node", capabilityId: COMMIT_ID, effectClass: "write",
+  nativeRefs: [{ provider: "reactivefiber", type: "operation", id: JOURNALED }],
+};
+function request(action: ReconcileRequest["action"], params: Record<string, JsonValue>): ReconcileRequest {
+  return {
+    action, taskId: TASK_ID, ...(action === "inspect" ? {} : { position: 0 }), grants: GRANTS, scope: { workspace: WS, principal: PRINCIPAL },
+    sessionId: SESSION, principal: { id: PRINCIPAL, role: "local-operator" }, params,
+  };
+}
+function deps(registry: CapabilityRegistry, entries: readonly WorkflowJournalEntry[], receipts: readonly EvidenceReceipt[]): ReconcileDeps {
+  return {
+    task: { status: "completed", observationScope: { sessionId: SESSION, workspace: WS, principal: PRINCIPAL } },
+    entries, receipts, currentEffectClass: id => registry.effectClassOf(id), now: () => NOW,
+  };
+}
+/** A decision as one word: the deny policy, the acknowledgement's evidence class, or the override's duplicate risk. */
+function outcomeOf(decision: ReconcileDecision): string {
+  if (decision.decision === "denied") return `deny:${decision.policy}`;
+  const record = decision.decision === "acknowledge" || decision.decision === "override" ? decision.entry.reconcile : undefined;
+  if (record?.decision === "acknowledge") return `ack:${record.evidenceClass}`;
+  if (record?.decision === "override") return `override:${record.duplicateRisk}`;
+  return decision.decision;
+}
+/** One evidence action as workflow_reconcile performs it: the core admits the read, the registry runs it, the core mints the receipt. */
+async function previewReceipt(read: () => Promise<PreviewEnvelope>, entries: readonly WorkflowJournalEntry[] = [COMMIT_ROW]): Promise<EvidenceReceipt> {
+  const registry = reconcileRegistry(read);
+  const decision = decideReconcile(request("evidence", { evidence: { capabilityId: PREVIEW_ID, input: PREVIEW_INPUT } }), deps(registry, entries, []));
+  if (decision.decision !== "evidence") throw new Error(`the reconcile core refused the preview read: ${outcomeOf(decision)}`);
+  let result: JsonValue | undefined;
+  let failure: CapabilityErrorCategory | undefined;
+  try {
+    result = await registry.invoke(decision.read.capabilityId, decision.read.input, { grants: GRANTS, signal: new AbortController().signal });
+  } catch (error) {
+    failure = error instanceof CapabilityError ? error.category : "transport";
+  }
+  return mintEvidenceReceipt({
+    taskId: TASK_ID, position: decision.read.position, producer: decision.read.producer, capabilityId: decision.read.capabilityId,
+    input: decision.read.input, requestedAt: NOW, observedAt: NOW, ...(result !== undefined ? { result } : {}),
+    ...(failure !== undefined ? { failure } : {}), recordedNativeRefs: decision.read.recordedNativeRefs,
+  });
+}
+/** An acknowledgement of the committed-effect row citing `receipts` (R-ECHO's; the uncited acknowledgements are the ACK FORMS' uncitedIn()). */
+function acknowledgeWith(determination: string, receipts: readonly EvidenceReceipt[]): ReconcileDecision {
+  const params: Record<string, JsonValue> = { reason: REASON, determination, receiptIds: receipts.map(receipt => receipt.receiptId) };
+  return decideReconcile(request("acknowledge", params), deps(reconcileRegistry(async () => previewEnvelope(FRESH)), [COMMIT_ROW], receipts));
+}
+/** The override an acknowledgement makes possible: its duplicate risk, without and with the risk accepted. */
+function overrideAfter(acknowledgement: ReconcileDecision): string {
+  if (acknowledgement.decision !== "acknowledge") return "no acknowledgement to override";
+  const record = acknowledgement.entry.reconcile;
+  const params: Record<string, JsonValue> = {
+    reason: REASON, acknowledgementId: record?.decision === "acknowledge" ? record.acknowledgementId : "", confirmed: true, confirmPosition: 0, confirmCapabilityId: COMMIT_ID,
+  };
+  const registry = reconcileRegistry(async () => previewEnvelope(FRESH));
+  const entries = [COMMIT_ROW, acknowledgement.entry];
+  const unaccepted = decideReconcile(request("override", params), deps(registry, entries, []));
+  const accepted = decideReconcile(request("override", { ...params, acceptDuplicateRisk: true }), deps(registry, entries, []));
+  return `override unaccepted=${outcomeOf(unaccepted)} accepted=${outcomeOf(accepted)}`;
+}
+/** The one operator resolvedValue the ACK FORMS pass (refusal #6 U1): an obviously synthetic object. */
+const OPERATOR_RESOLVED_VALUE: JsonValue = { census: "an operator-supplied resolved value (synthetic)" };
+/** One acknowledgement parameter form: how often the one read's receipt is cited (0: uncited, the producer stated unavailable) and its resolvedValue, if any. */
+interface AckForm {
+  readonly name: string;
+  readonly citations: 0 | 1 | 2;
+  readonly resolvedValue?: JsonValue;
+}
+/** ACK FORMS (refusal #6 U1 and U2, R-B299): the forms N and H acceptance.3.1 acknowledge in, in the order their pins list them. */
+const ACK_FORMS: readonly AckForm[] = [
+  { name: "uncited", citations: 0 },
+  { name: "uncited with the operator resolvedValue", citations: 0, resolvedValue: OPERATOR_RESOLVED_VALUE },
+  { name: "cited once", citations: 1 },
+  { name: "cited once with the operator resolvedValue", citations: 1, resolvedValue: OPERATOR_RESOLVED_VALUE },
+  { name: "cited twice", citations: 2 },
+  { name: "cited twice with the operator resolvedValue", citations: 2, resolvedValue: OPERATOR_RESOLVED_VALUE },
+];
+/** The form the helper's acknowledgeWith() makes: the one receipt cited once, no resolvedValue. */
+const HELPER_FORM: AckForm = { name: "cited once", citations: 1 };
+/** A form's acknowledgement parameters: this file's reason text, the determination, the evidence the form cites, and its resolvedValue, if any. */
+function ackParameters(form: AckForm, determination: string, receiptId: string): Record<string, JsonValue> {
+  const evidence: Record<string, JsonValue> = form.citations === 0 ? { noEvidenceReason: "producer-unavailable" } : { receiptIds: Array.from({ length: form.citations }, () => receiptId) };
+  return { reason: REASON, determination, ...evidence, ...(form.resolvedValue === undefined ? {} : { resolvedValue: form.resolvedValue }) };
+}
+/**
+ * TASK SHAPES (refusal #8 U1, R-B345): the task objects a decision is made with - that helper's deps() shape, then the two
+ * shapes workflow_reconcile passes (src/workbench/reconcile-tool.ts: {status, observationScope, journalPath}), its journal path
+ * undefined or this file's one journal path for the context.
+ */
+const TASK_SHAPES = ["no-journal-path", "journal-path-undefined", "journal-path"] as const;
+type TaskShape = (typeof TASK_SHAPES)[number];
+/**
+ * DECISION INPUTS (refusal #7 U1 and U2, R-B324; refusal #8 U1, R-B345): the three inputs an ACK FORMS decision reads beside its
+ * request context, each fed over its domain - the task's status, the task object's shape, and the state of the committing
+ * capability in the registry the decision reads current effect classes from.
+ */
+interface DecisionInput {
+  /** The task's status: a member of src's WorkflowRunStatus union. */
+  readonly status: WorkflowRunStatus;
+  /** The committing capability's effect class in the decision registry; undefined: unregistered, as src's own registration (the preview alone) leaves it. */
+  readonly commitClass: CapabilityDescriptor["effectClass"] | undefined;
+  /** The task object's shape: one of the TASK SHAPES. */
+  readonly taskShape: TaskShape;
+}
+/** Every status of src's WorkflowRunStatus union, in declaration order. */
+const FED_STATUSES = srcUnion(PROGRESS_TS, "WorkflowRunStatus") as WorkflowRunStatus[];
+/** The committing capability unregistered (src's own registration), then at each member of src's CapabilityDescriptor effectClass union. */
+const FED_COMMIT_CLASSES: readonly (CapabilityDescriptor["effectClass"] | undefined)[] = [
+  undefined,
+  ...(honesty.srcUnion(ROOT, CAPABILITY_REGISTRY_TS, "CapabilityDescriptor", "effectClass") as CapabilityDescriptor["effectClass"][]),
+];
+/** Every triple of the three, status-major, then the committing capability's state, then the task shape. */
+const DECISION_INPUTS: readonly DecisionInput[] = FED_STATUSES.flatMap(status =>
+  FED_COMMIT_CLASSES.flatMap(commitClass => TASK_SHAPES.map(taskShape => ({ status, commitClass, taskShape }))));
+/** The input that helper decides under: its deps() hold a completed task in its own shape, its registry the committing stand-in at write. */
+const HELPER_INPUT: DecisionInput = { status: "completed", commitClass: "write", taskShape: "no-journal-path" };
+const inputLabel = (input: DecisionInput): string => `${input.status}/${input.commitClass ?? "unregistered"}/${input.taskShape}`;
+const decisionRegistries = new Map<string, CapabilityRegistry>();
+/** A decision registry, built once per committing-capability state: src's injectable preview, beside the stand-in at `commitClass` or alone. */
+function decisionRegistry(commitClass: CapabilityDescriptor["effectClass"] | undefined): CapabilityRegistry {
+  const key = commitClass ?? "unregistered";
+  let registry = decisionRegistries.get(key);
+  if (registry === undefined) {
+    registry = new CapabilityRegistry();
+    registerReactiveFiberRender(registry, async () => previewEnvelope(FRESH), WS);
+    if (commitClass !== undefined) registry.register(commitStandIn(commitClass));
+    decisionRegistries.set(key, registry);
+  }
+  return registry;
+}
+/** A request context an ACK FORMS decision is made in: this file's own, or the FED SET's one (that helper's PROBE_CONTEXT). */
+interface DecisionContext {
+  readonly taskId: string;
+  readonly position: number;
+  readonly principal: string;
+  readonly session: string;
+  readonly workspace: string;
+  readonly observedAt: string;
+  readonly grants: readonly string[];
+}
+/** This file's own context, as request() and deps() spell it. */
+const OWN_CONTEXT: DecisionContext = { taskId: TASK_ID, position: 0, principal: PRINCIPAL, session: SESSION, workspace: WS, observedAt: NOW, grants: GRANTS };
+/** The role every ACK FORMS decision's operator principal carries (R-PROBE-CONTEXT's quiet row lists it). */
+const OPERATOR_ROLE = "local-operator";
+/** This file's one journal path for a context: sessionTaskDir()'s layout for its workspace, session and task id (src's launcher names a run's journal <task id>.workflow.jsonl there), composed and never created - decideReconcile reads no journal. */
+function journalPathOf(context: DecisionContext): string {
+  return join(sessionScratchRoot(), encodeCwd(context.workspace), context.session, "tasks", `${context.taskId}.workflow.jsonl`);
+}
+/** The task object a decision in `context` under `input` is made with: that helper's deps() task, or the one workflow_reconcile passes. */
+function taskOf(input: DecisionInput, context: DecisionContext): NonNullable<ReconcileDeps["task"]> {
+  if (input.taskShape === "no-journal-path") return { status: input.status, observationScope: { sessionId: context.session, workspace: context.workspace, principal: context.principal } };
+  // src records a run's observation scope as { ...observerScope(ctx), sessionId } (the observer scope is {workspace, principal}), and the tool passes it with the task's journal path.
+  // Every key of src's task required: a key src adds to ReconcileDeps' task fails typecheck:test here.
+  const keyed: Required<NonNullable<ReconcileDeps["task"]>> = {
+    status: input.status,
+    observationScope: { workspace: context.workspace, principal: context.principal, sessionId: context.session },
+    journalPath: journalPathOf(context),
+  };
+  return input.taskShape === "journal-path" ? keyed : { ...keyed, journalPath: undefined };
+}
+/** A task object as text: every own key in order with its value (an undefined value written undefined, which JSON would drop), the session scratch root written <session scratch root> so the text is the same on every host. */
+function taskText(task: object): string {
+  const text = Object.entries(task).map(([key, value]) => `${key}=${value === undefined ? "undefined" : parameterText(value)}`).join(" ");
+  return `{${text.split(sessionScratchRoot()).join("<session scratch root>")}}`;
+}
+/** A key of the observation scope src's ReconcileDeps task carries (a key src renames fails typecheck:test in SEAM_SHAPES). */
+type ScopeKey = keyof NonNullable<NonNullable<ReconcileDeps["task"]>["observationScope"]>;
+/**
+ * SEAM SHAPES (wb-x3h8): each TASK SHAPE's task object as the decideReconcile seam must hand it to src, declared here and never
+ * built by taskOf - the task's own keys in order; its observation scope's own keys in order, each holding the context's value;
+ * and its journal path: no key, the key holding undefined, or the key holding this file's one journal path for the context
+ * (journalPathOf, the fixture path threaded to the seam).
+ */
+const SEAM_SHAPES: Readonly<Record<TaskShape, { readonly keys: readonly string[]; readonly scope: readonly ScopeKey[]; readonly journalPath: "no key" | "undefined" | "the context's" }>> = {
+  "no-journal-path": { keys: ["status", "observationScope"], scope: ["sessionId", "workspace", "principal"], journalPath: "no key" },
+  "journal-path-undefined": { keys: ["status", "observationScope", "journalPath"], scope: ["workspace", "principal", "sessionId"], journalPath: "undefined" },
+  "journal-path": { keys: ["status", "observationScope", "journalPath"], scope: ["workspace", "principal", "sessionId"], journalPath: "the context's" },
+};
+/** The TASK SHAPES member a task object handed across the seam is, judged against SEAM_SHAPES alone (no object taskOf builds is read), or what it is instead. */
+function seamShapeOf(task: ReconcileDeps["task"], context: DecisionContext): string {
+  if (task === undefined) return "<no task>";
+  const scopeValues: Readonly<Record<ScopeKey, string>> = { sessionId: context.session, workspace: context.workspace, principal: context.principal };
+  const shape = TASK_SHAPES.find(member => {
+    const declared = SEAM_SHAPES[member];
+    return JSON.stringify(Object.keys(task)) === JSON.stringify(declared.keys)
+      && JSON.stringify(Object.entries(task.observationScope ?? {})) === JSON.stringify(declared.scope.map(key => [key, scopeValues[key]]))
+      && task.journalPath === (declared.journalPath === "the context's" ? journalPathOf(context) : undefined);
+  });
+  return shape ?? `<unlisted task ${taskText(task)}>`;
+}
+/**
+ * DECISION-INPUT LIVENESS (wb-x3h8: recorded at the decideReconcile seam, never off the object decideUnder built): the input
+ * each ACK FORMS decision's deps carried across the seam - read off the deps object handed to src: its task's status, the
+ * committing capability's effect class its registry answers and its task object's SEAM SHAPE - in decision order.
+ */
+const DECIDED: string[] = [];
+/** The decideReconcile seam every decision decideUnder makes crosses: it records the deps object it hands src, read off that very object, and hands src that same object. */
+function decideAtSeam(request: ReconcileRequest, crossing: ReconcileDeps, context: DecisionContext): ReconcileDecision {
+  DECIDED.push(`${crossing.task?.status ?? "<no task>"}/${crossing.currentEffectClass(COMMIT_ID) ?? "unregistered"}/${seamShapeOf(crossing.task, context)}`);
+  return decideReconcile(request, crossing);
+}
+/** One decision in `context` under `input`: a task in that status and shape, effect classes read from that input's decision registry, handed to src across the seam. */
+function decideUnder(
+  action: "evidence" | "acknowledge" | "override",
+  params: Record<string, JsonValue>,
+  context: DecisionContext,
+  input: DecisionInput,
+  entries: readonly WorkflowJournalEntry[],
+  receipts: readonly EvidenceReceipt[],
+): ReconcileDecision {
+  const registry = decisionRegistry(input.commitClass);
+  const decisionDeps: ReconcileDeps = {
+    task: taskOf(input, context),
+    entries, receipts, currentEffectClass: id => registry.effectClassOf(id), now: () => context.observedAt,
+  };
+  return decideAtSeam(
+    {
+      action, taskId: context.taskId, position: context.position, grants: context.grants, scope: { workspace: context.workspace, principal: context.principal },
+      sessionId: context.session, principal: { id: context.principal, role: OPERATOR_ROLE }, params,
+    },
+    decisionDeps,
+    context,
+  );
+}
+/** An uncited form's acknowledgement of the committed-effect row, in this file's own context, under `input`. */
+function uncitedIn(form: AckForm, determination: string, input: DecisionInput): ReconcileDecision {
+  return decideUnder("acknowledge", ackParameters(form, determination, ""), OWN_CONTEXT, input, [COMMIT_ROW], []);
+}
+/** A cited form's acknowledgement of the helper's journaled row citing `receipt`, in the FED SET's one context (the helper's PROBE_CONTEXT), under `input`. */
+function fedAcknowledgement(form: AckForm, determination: string, receipt: EvidenceReceipt, input: DecisionInput): ReconcileDecision {
+  return decideUnder("acknowledge", ackParameters(form, determination, receipt.receiptId), honesty.PROBE_CONTEXT, input, [honesty.COMMIT_ROW], [receipt]);
+}
+/** The FED SET's evidence action under `input`, in the FED SET's one context against that helper's journaled row: the read the reconcile core admits. */
+function fedEvidenceUnder(input: DecisionInput): ReconcileDecision {
+  return decideUnder("evidence", { evidence: { capabilityId: PREVIEW_ID, input: PREVIEW_INPUT } }, honesty.PROBE_CONTEXT, input, [honesty.COMMIT_ROW], []);
+}
+/** An evidence decision as text: the read it admits (producer, capability, position, input and the journaled references it hands the mint), or its outcome. */
+function evidenceText(decision: ReconcileDecision): string {
+  if (decision.decision !== "evidence") return `evidence action: ${outcomeOf(decision)}`;
+  const { read } = decision;
+  return `evidence action admits ${read.producer}/${read.capabilityId}@${read.position} input=${parameterText(read.input)} recorded=${read.recordedNativeRefs.map(ref => `${ref.provider}:${ref.type}:${ref.id}`).join(",")}`;
+}
+/** The override an ACK FORMS acknowledgement makes possible, in its context against its row under its input with `receipts` (its acknowledgement's) in hand, with overrideAfter()'s parameters: its duplicate risk without and with the risk accepted. */
+function overrideUnder(acknowledgement: ReconcileDecision, context: DecisionContext, row: WorkflowJournalEntry, input: DecisionInput, receipts: readonly EvidenceReceipt[]): string {
+  if (acknowledgement.decision !== "acknowledge") return "no acknowledgement to override";
+  const record = acknowledgement.entry.reconcile;
+  const params: Record<string, JsonValue> = {
+    reason: REASON, acknowledgementId: record?.decision === "acknowledge" ? record.acknowledgementId : "", confirmed: true, confirmPosition: 0, confirmCapabilityId: COMMIT_ID,
+  };
+  const entries = [row, acknowledgement.entry];
+  const unaccepted = decideUnder("override", params, context, input, entries, receipts);
+  const accepted = decideUnder("override", { ...params, acceptDuplicateRisk: true }, context, input, entries, receipts);
+  return `override unaccepted=${outcomeOf(unaccepted)} accepted=${outcomeOf(accepted)}`;
+}
+/** The DECISION INPUTS, checked against src's two unions read afresh: every status, beside the committing capability unregistered and at every class, in every task shape. */
+function decisionInputs(): readonly DecisionInput[] {
+  const classes = ["unregistered", ...honesty.srcUnion(ROOT, CAPABILITY_REGISTRY_TS, "CapabilityDescriptor", "effectClass")];
+  const expected = srcUnion(PROGRESS_TS, "WorkflowRunStatus").flatMap(status => classes.flatMap(commitClass => TASK_SHAPES.map(shape => `${status}/${commitClass}/${shape}`)));
+  expect(DECISION_INPUTS.map(inputLabel), "the DECISION INPUTS are every src run status beside every committing-capability state, in every task shape").toStrictEqual(expected);
+  return DECISION_INPUTS;
+}
+/** One DECISION INPUT's witness text, with its liveness: the measure made decisions, and every one carried exactly that input. */
+function underInput(input: DecisionInput, measure: () => string): { readonly input: DecisionInput; readonly text: string } {
+  const from = DECIDED.length;
+  const text = measure();
+  expect([...new Set(DECIDED.slice(from))], `every decision under ${inputLabel(input)} carried that input`).toStrictEqual([inputLabel(input)]);
+  return { input, text };
+}
+/** The witness texts by DECISION INPUT: each distinct text once, after the inputs that give it, in DECISION_INPUTS order. */
+function byDecisionInput(measured: readonly { readonly input: DecisionInput; readonly text: string }[]): string {
+  const groups: { readonly inputs: string[]; readonly text: string }[] = [];
+  for (const { input, text } of measured) {
+    const group = groups.find(entry => entry.text === text);
+    if (group === undefined) groups.push({ inputs: [inputLabel(input)], text });
+    else group.inputs.push(inputLabel(input));
+  }
+  return groups.map(group => `[${group.inputs.length} of ${measured.length} decision inputs: ${group.inputs.join(",")}] ${group.text}`).join("; ");
+}
+/** Each read of the FED SET with its receipt, minted one after another (a native read sets PATH while it runs). */
+async function fedReceipts(): Promise<{ readonly read: honesty.HonestyRead; readonly receipt: EvidenceReceipt }[]> {
+  const out: { readonly read: honesty.HonestyRead; readonly receipt: EvidenceReceipt }[] = [];
+  for (const read of FED_READS) out.push({ read, receipt: await honesty.previewReceipt(read) });
+  return out;
+}
+/** A recorded parameter as text without double quotes: none when absent, a string as written, else its JSON with single quotes. */
+const parameterText = (value: unknown): string => (value === undefined ? "none" : typeof value === "string" ? value : JSON.stringify(value).replace(/"/g, "'"));
+/** A preview reading as src's injectable registration hands it back through the capability registry. */
+async function previewReading(envelope: PreviewEnvelope): Promise<JsonValue> {
+  const registry = new CapabilityRegistry();
+  registerReactiveFiberRender(registry, async () => envelope, WS);
+  return registry.invoke(PREVIEW_ID, PREVIEW_INPUT, { grants: [PREVIEW_PERMISSION], signal: new AbortController().signal });
+}
+/** The reconcile reads of reactivefiber whose projection names the envelope's own invocation (its top-level operation_id). */
+function selfIdentifyingReads(): string[] {
+  return (RECONCILE_EVIDENCE_READS.reactivefiber ?? []).filter(id => PROBE_COMMANDS.some(command => {
+    const source: JsonValue = JSON.parse(JSON.stringify(previewEnvelope(PROBE_OWN, { operation_id: PROBE_RECEIPT, state: "committed" }, command)));
+    return nativeEvidence(id, { contract: `${id}/v1`, workspaceRoot: WS, source }).nativeId === PROBE_OWN;
+  }));
+}
+
+/** What a reader sees of a section block, sentence by sentence: a list's items one by one, an HTML block nothing. */
+function blockSentences(block: RenderedBlock): string[] {
+  const texts = block.kind === "list" ? block.items.map(item => item.text) : block.kind === "html" ? [] : [block.text];
+  return texts.flatMap(text => text.split(/(?<=[.!?])\s+/));
+}
+/**
+ * The rendered words of a text the registry accepts as capability ids (case is kept, so a capitalised word is never one). A run
+ * of hyphens splits words, and each word loses its leading and trailing dots and hyphens before the registry judges it (respin 2
+ * F2), so a dash written as `--` or a trailing hyphen can never glue an id into a word the registry refuses.
+ */
+const idWords = (text: string): string[] => text.split(/[^A-Za-z0-9.-]+|-{2,}/).map(word => word.replace(/^[.-]+|[.-]+$/g, "")).filter(word => word.length > 0 && registryAcceptsId(word));
+/** A character reference the shared helper's decode leaves in rendered text (it maps only a fixed few); a browser renders it. */
+const CHARACTER_REFERENCE = /&(?:#[0-9]+|#x[0-9a-f]+|[a-z][a-z0-9]*);/i;
+interface JourneyReading {
+  /** Why the reading is refused; empty when the section binds, carries no HTML and holds exactly one allowlist sentence in paragraph prose. */
+  readonly why: string;
+  /** The ids the allowlist sentence names, in its order. */
+  readonly named: readonly string[];
+  /** The allowlist sentence's src EvidenceBinding words (prose about the receipt's binding, never reads). */
+  readonly binding: readonly string[];
+  /** The dotted or producer-namespaced ids the section's other sentences name. */
+  readonly others: readonly string[];
+  /** Every distinct character of the section's rendered text outside printable ASCII, as U+XXXX in code point order (respin 4, D30). */
+  readonly outside: readonly string[];
+}
+/** docs/workbench/08's operator reconcile journey as a reader sees it (respin U2): the shared helper's rendered, section-bounded view. */
+function journeyReading(): JourneyReading {
+  const refuse = (why: string): JourneyReading => ({ why, named: [], binding: [], others: [], outside: [] });
+  const section = docsSection(readFileSync(join(ROOT, DOCS08), "utf8"), JOURNEY, 2, [PARENT_08]);
+  if (!section.ok) return refuse(section.why);
+  if (section.hasHtml) return refuse("the section carries HTML, whose rendered text can hide what its source says");
+  const sentences = section.blocks.flatMap(block => blockSentences(block).map(text => ({ kind: block.kind, text })));
+  if (sentences.some(sentence => CHARACTER_REFERENCE.test(sentence.text))) return refuse("the section's rendered text keeps a character reference the shared helper leaves undecoded, whose rendered text can hide an id");
+  const allowlist = sentences.filter(sentence => sentence.text.includes(ALLOWLIST));
+  const [only] = allowlist;
+  if (only === undefined || allowlist.length !== 1) return refuse(`the section holds ${allowlist.length} evidence allowlist sentences, not exactly one`);
+  if (only.kind !== "paragraph") return refuse(`the evidence allowlist sentence sits in a ${only.kind} block, not in paragraph prose`);
+  const bindingWords = srcUnion(RECONCILE_TS, "EvidenceBinding");
+  const producers = Object.keys(RECONCILE_EVIDENCE_READS);
+  const words = idWords(only.text);
+  const outside = [...new Set(sentences.flatMap(sentence => [...sentence.text].filter(character => character < " " || character > "~")))]
+    .map(character => character.codePointAt(0) ?? 0)
+    .sort((left, right) => left - right)
+    .map(point => `U+${point.toString(16).toUpperCase().padStart(4, "0")}`);
+  return {
+    why: "",
+    named: words.filter(word => !bindingWords.includes(word)),
+    binding: words.filter(word => bindingWords.includes(word)),
+    others: sentences.filter(sentence => sentence !== only).flatMap(sentence => idWords(sentence.text)).filter(word => word.includes(".") || producers.includes(producerOf(word))),
+    outside,
+  };
+}
+
+/** The src registrars of rf descriptors this census measures, by function name. */
+const REGISTRARS: Readonly<Record<string, (registry: CapabilityRegistry) => void>> = {
+  registerReactiveFiberRender: registry => registerReactiveFiberRender(registry, async () => previewEnvelope(FRESH), WS),
+  registerNativeReactiveFiberRender: registry => registerNativeReactiveFiberRender(registry, WS),
+};
+/** What this file states the census passes each measured registrar in its one run (respin 4 U2: R-REGISTRAR-RUNTIME's quiet row lists it). */
+const REGISTRAR_ARGUMENTS: Readonly<Record<string, string>> = {
+  registerReactiveFiberRender: `a fresh CapabilityRegistry, a seam answering a fresh preview envelope, ${WS}`,
+  registerNativeReactiveFiberRender: `a fresh CapabilityRegistry, ${WS}`,
+};
+/** How many src string literals and template texts (a template's head, middle or tail too; respin 4) name --idempotency-key. */
+function idempotencyKeyTexts(): number {
+  let count = 0;
+  for (const file of srcFiles()) {
+    visitAll(parsed(file), node => {
+      if ((ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node)) && node.text.includes("--idempotency-key")) count += 1;
+    });
+  }
+  return count;
+}
+const NEVER_QUERY: ClaudeQuery = () => {
+  throw new Error("the census script calls node only: the Claude query is never invoked");
+};
+/** The line the recording stand-in writes after each launch's arguments (one argument per line before it). */
+const ARGV_END = "<end of argv>";
+/** The recording stand-in rf (respin 3 U1): a POSIX shell script of builtins only that appends each argument, then ARGV_END, to `log` and prints nothing. */
+const standIn = (log: string): string => ["#!/bin/sh", `for arg in "$@"; do printf '%s\\n' "$arg"; done >> '${log}'`, `printf '%s\\n' '${ARGV_END}' >> '${log}'`, ""].join("\n");
+/**
+ * The inputs the probe sends (respin 3 U1): for each arm of the registered native render's inputSchema (src's oneOf), one input of
+ * the arm's required keys and, where the arm declares more properties, one of every key; each value is census-<key>.
+ */
+function probeInputs(schema: Readonly<Record<string, unknown>> | undefined): Record<string, string>[] {
+  const arms: unknown[] = Array.isArray(schema?.oneOf) ? schema.oneOf : [];
+  return arms.flatMap(arm => {
+    if (!isRecord(arm) || !Array.isArray(arm.required) || !isRecord(arm.properties)) return [{}];
+    const required = arm.required.filter((key): key is string => typeof key === "string");
+    const every = Object.keys(arm.properties);
+    return [required, ...(every.length > required.length ? [every] : [])].map(keys => Object.fromEntries(keys.map(key => [key, `census-${key}`])));
+  });
+}
+/**
+ * What the rf child receives (respin 3 U1): each probe input runs through the registered native render with the recording stand-in
+ * as the only PATH entry, inside one tracked scratch directory; the text lists every argv the stand-in received, the launch count
+ * and how the provider answered the stand-in's empty output.
+ */
+async function childArgvs(): Promise<string> {
+  const registry = new CapabilityRegistry();
+  registerNativeReactiveFiberRender(registry, WS);
+  const inputs = probeInputs(registry.catalogSnapshot().find(entry => entry.descriptor.id === PREVIEW_ID)?.descriptor.inputSchema);
+  const dir = makeScratch("wb-jwc6-rf-argv-");
+  const log = join(dir, "argv.log");
+  const path = process.env.PATH;
+  const outcomes: string[] = [];
+  let received: string[][] = [];
+  try {
+    writeFileSync(join(dir, "rf"), standIn(log), { mode: 0o755 });
+    process.env.PATH = dir;
+    for (const input of inputs) {
+      try {
+        await registry.invoke(PREVIEW_ID, input, { grants: [PREVIEW_PERMISSION], signal: new AbortController().signal });
+        outcomes.push("returned");
+      } catch (error) {
+        outcomes.push(error instanceof CapabilityError ? `refused ${error.category}` : "threw");
+      }
+    }
+    if (path === undefined) Reflect.deleteProperty(process.env, "PATH");
+    else process.env.PATH = path;
+    received = existsSync(log) ? readFileSync(log, "utf8").split(`${ARGV_END}\n`).filter(block => block.length > 0).map(block => block.split("\n").filter(line => line.length > 0)) : [];
+  } finally {
+    if (path === undefined) Reflect.deleteProperty(process.env, "PATH");
+    else process.env.PATH = path;
+    removeScratch(dir);
+  }
+  const probes = inputs.map((input, index) => `{${Object.keys(input).join(",")}} -> [${received[index]?.join(" ") ?? "<no launch>"}] ${outcomes[index] ?? "<no outcome>"}`);
+  return `child argv (recording stand-in, the only PATH entry): ${probes.join("; ")}; launches=${received.length} for ${inputs.length} inputs; --no-commit in every received argv=${received.length > 0 && received.every(argv => argv.includes("--no-commit"))}`;
+}
+
+/** G: one pin per rf capability id src names, one per src function spawning rf. */
+const G_PINS: Readonly<Record<string, PinBody>> = {
+  [`id:${PREVIEW_ID}`]: {
+    requirement: "every file under src/ is read, each module parsed with its own script kind and every other file listed, and no relative specifier a src module writes as a whole string token in an import, export or import-equals declaration, an import type, an import() call or a require() call leaves src/; the one rf capability id a whole src string token spells is the preview: every naming site is listed, the functions whose judged register calls carry an rf id are the registrars measured here, and each of them, in its one measured run (the census's arguments, this process's environment), has registered the preview alone, with effect class read and the permission reactivefiber:render, when it returns; every unjudged register spelling is listed by owner and syntax",
+    witness: async () => {
+      expect(registryAcceptsId(PREVIEW_ID), "the id-grammar probe descriptor is valid: the registry accepts the preview id under it").toBe(true);
+      expect(rfRegistrars(), "every src function whose judged register call carries an rf id is measured here").toStrictEqual(Object.keys(REGISTRARS));
+      const sites = srcTokens().filter(token => token.text === PREVIEW_ID).map(token => `${token.file}#${token.site}`);
+      // respin 3 U2: every descriptor the registry holds when each measured registrar returns, so one it registers through code no reader parses still moves this witness.
+      const registered = Object.entries(REGISTRARS).map(([name, register]) => {
+        const registry = new CapabilityRegistry();
+        register(registry);
+        return `${name}:${registry.catalogSnapshot().map(({ descriptor }) => `${descriptor.id}=${descriptor.effectClass}/${descriptor.permissions.join("+")}`).join(",")}`;
+      });
+      const kinds = rfKindTokens().map(token => `${token.text}@${token.file}#${token.site}`);
+      const unparsed = unparsedSrcFiles();
+      const leaving = specifiersLeavingSrc();
+      return `src files no reader parses=${unparsed.length === 0 ? "none" : unparsed.join(", ")}; relative specifiers leaving src/=${leaving.length === 0 ? "none" : leaving.join(", ")}; sites=${sites.join(", ")}; registered=${registered.join(", ")}; id-shaped kinds (not capabilities)=${kinds.join(", ")}; unjudged register spellings=${unjudgedRegisterSpellings().join(", ")}`;
+    },
+  },
+  "bin:nativeReactiveFiberRender": {
+    requirement: "the one src declaration holding a whole string token that names the rf binary is the noncommitted render, which spawns it: resolved by binding, never by name, its callee is the named import spawn of node:child_process and its argument 2 one const of the spawning function read only by the spawn, built by the file's one module-level function declaration of that name, the callee's and the builder's names each bound once in the file, and every return of that function is an array literal holding --no-commit as a direct element; the child receives --no-commit for every probed input of the descriptor's arms; and no src string literal or template text names --idempotency-key",
+    witness: async () => {
+      const site = rfBinarySites().find(entry => entry.name === "nativeReactiveFiberRender");
+      if (site === undefined) return "<nativeReactiveFiberRender names no rf binary>";
+      return `${site.file} use=${site.use}; ${spawnedArgv(site.file, site.name)}; ${await childArgvs()}; src string literals and template texts naming --idempotency-key=${idempotencyKeyTexts()}`;
+    },
+  },
+};
+/** S: one pin per surface file of the filing. */
+const S_PINS: Readonly<Record<string, PinBody>> = {
+  "src/workflow/reconcile.ts": {
+    requirement: "reactivefiber's reconcile evidence reads are the preview alone until the receipt read is admitted beside it",
+    witness: async () => `RECONCILE_EVIDENCE_READS.reactivefiber=${JSON.stringify(RECONCILE_EVIDENCE_READS.reactivefiber ?? null)}`,
+  },
+  "src/workbench/native-evidence.ts": {
+    requirement: "the rf branch projects the preview envelope's own operation_id as nativeId and no domainStatus under both receipt-shaped results, and is the only rf case label of nativeEvidence's switch, where every case label is a whole string token",
+    witness: async () => {
+      const results: Readonly<Record<string, JsonValue>> = { minimal: { operation_id: JOURNALED, state: "committed" }, shipped: SHIPPED_RECEIPT_RESULT };
+      const parts: string[] = [];
+      for (const [name, result] of Object.entries(results)) {
+        const evidence = nativeEvidence(PREVIEW_ID, await previewReading(previewEnvelope(FRESH, result)));
+        parts.push(`${name} receipt: projection=${JSON.stringify(evidence)} domainStatus=${evidence.domainStatus ?? "absent"}`);
+      }
+      const labels = nativeEvidenceLabels();
+      return `${parts.join("; ")}; rf branches=${labels.rf.join(",")}; unjudged case labels=${labels.unjudged.length === 0 ? "none" : labels.unjudged.join(",")}`;
+    },
+  },
+  "src/workflow/runtime.ts": {
+    requirement: "one run of the census's test-only committing rf stand-in through the Claude workflow host's node() journals no native reference, so the preview receipt minted against its rows comes out operator-asserted",
+    witness: async () => {
+      const registry = reconcileRegistry(async () => previewEnvelope(FRESH));
+      const entries: WorkflowJournalEntry[] = [];
+      const run = await runWorkflow({
+        script: `${HEAD}return await node(${JSON.stringify(COMMIT_ID)}, ${JSON.stringify(PREVIEW_INPUT)});`,
+        host: createClaudeWorkflowHost({ cwd: ROOT, query: NEVER_QUERY, capabilities: registry, grants: [COMMIT_PERMISSION] }),
+        journal: { append: entry => { entries.push(entry); } },
+      });
+      const rows = entries.filter(entry => entry.kind === "node").map(entry =>
+        `${entry.dispatched === true ? "dispatched" : "settled"}:${entry.effectClass ?? "unclassified"}:refs=${entry.nativeRefs?.length ?? 0}:value=${entry.text === undefined ? "none" : "stored"}`);
+      const inspect = decideReconcile(request("inspect", {}), deps(registry, entries, []));
+      const roster = inspect.decision === "inspect"
+        ? inspect.roster.positions.map(position => `${position.position}:${position.capabilityId}:recorded=${position.recordedNativeRefs.length}:reads=${position.evidenceReads.join("+")}`)
+        : [outcomeOf(inspect)];
+      const receipt = await previewReceipt(async () => previewEnvelope(FRESH), entries);
+      return `run=${run.status}; rows=${rows.join(", ")}; inspect=${roster.join(", ")}; preview receipt=${receipt.outcome}/${receipt.binding}`;
+    },
+  },
+  [DOCS08]: {
+    requirement: "the operator reconcile journey's rendered section holds one evidence allowlist sentence, the ids it names (its rendered words the registry accepts) are exactly the reads RECONCILE_EVIDENCE_READS holds, no other sentence of the section names a read in such a word, and every distinct character of the section's rendered text outside printable ASCII is listed",
+    witness: async () => {
+      const reading = journeyReading();
+      if (reading.why !== "") return `refused: ${reading.why}`;
+      const reads = Object.values(RECONCILE_EVIDENCE_READS).flat();
+      const contract = ACKNOWLEDGEMENT_VALUE_CONTRACT.replace(/\/v\d+$/, "");
+      const equal = JSON.stringify([...reading.named].sort()) === JSON.stringify([...reads].sort());
+      return `one allowlist sentence, in paragraph prose: allowlist=${reading.named.join(",")}; binding words (src EvidenceBinding)=${reading.binding.join(",")}; equals RECONCILE_EVIDENCE_READS=${equal}; other sentences' ids=${reading.others.join(",")}, each the name of src ACKNOWLEDGEMENT_VALUE_CONTRACT=${reading.others.every(id => id === contract)}; rendered characters outside printable ASCII=${reading.outside.length === 0 ? "none" : reading.outside.join(",")}`;
+    },
+  },
+};
+/** N: statement.3, in the filing's own words. */
+const N_PINS: Readonly<Record<string, PinBody>> = {
+  "statement.3": {
+    requirement: FILING.clauses.get("statement.3") ?? "<statement.3 missing>",
+    witness: async () => {
+      expect(fedFailureCategories(), "the FED SET's injectable failed reads throw exactly src's CapabilityErrorCategory members").toStrictEqual(srcUnion(CAPABILITY_REGISTRY_TS, "CapabilityErrorCategory"));
+      const fed = await fedReceipts();
+      expect(fed.map(({ receipt }) => fedAcknowledgement(HELPER_FORM, "effect-absent", receipt, HELPER_INPUT)), "the cited-once form is the helper's acknowledgeWith(), decision for decision").toStrictEqual(fed.map(({ receipt }) => honesty.acknowledgeWith("effect-absent", [receipt])));
+      expect(fed.map(({ receipt }) => overrideUnder(fedAcknowledgement(HELPER_FORM, "effect-absent", receipt, HELPER_INPUT), honesty.PROBE_CONTEXT, honesty.COMMIT_ROW, HELPER_INPUT, [receipt])), "the override after it is the helper's overrideAfter(), override for override").toStrictEqual(fed.map(({ receipt }) => honesty.overrideAfter(honesty.acknowledgeWith("effect-absent", [receipt]))));
+      const admitted = fedEvidenceUnder(HELPER_INPUT);
+      if (admitted.decision !== "evidence") throw new Error(`the reconcile core refused the FED SET's evidence read: ${outcomeOf(admitted)}`);
+      expect(fed.map(({ receipt }) => `${receipt.taskId}@${receipt.position} ${receipt.producer}/${receipt.capabilityId} ${receipt.inputDigest}`), "each FED SET receipt carries the read the evidence action admits under that helper's input").toStrictEqual(fed.map(() => `${honesty.PROBE_CONTEXT.taskId}@${admitted.read.position} ${admitted.read.producer}/${admitted.read.capabilityId} ${identityDigest("reconcile-evidence-input", admitted.read.input)}`));
+      const measured = decisionInputs().map(input => underInput(input, () => {
+        const evidence = fedEvidenceUnder(input);
+        expect(evidence, `the FED SET's evidence action admits the same read under ${inputLabel(input)}`).toStrictEqual(admitted);
+        const parts = ACK_FORMS.map(form => {
+          if (form.citations === 0) {
+            const uncited = uncitedIn(form, "effect-absent", input);
+            return `${form.name}: ${outcomeOf(uncited)} ${overrideUnder(uncited, OWN_CONTEXT, COMMIT_ROW, input, [])}`;
+          }
+          return `${form.name}: ${fed.map(({ read, receipt }) => {
+            const acknowledgement = fedAcknowledgement(form, "effect-absent", receipt, input);
+            return `${read.key}(${receipt.outcome}): ${outcomeOf(acknowledgement)}${acknowledgement.decision === "acknowledge" ? ` ${overrideUnder(acknowledgement, honesty.PROBE_CONTEXT, honesty.COMMIT_ROW, input, [receipt])}` : ""}`;
+          }).join("; ")}`;
+        });
+        return `${evidenceText(evidence)}; ${parts.join("; ")}`;
+      }));
+      for (const { input, text } of measured) expect(text, `a preview-only effect-absent never overrides at duplicate risk none (${inputLabel(input)})`).not.toContain("override:none");
+      return byDecisionInput(measured);
+    },
+  },
+};
+/** H: acceptance.3's two claims, in the filing's own words. */
+const H_PINS: Readonly<Record<string, PinBody>> = {
+  "acceptance.3.1": {
+    requirement: FILING.honestyClaims[0] ?? "<acceptance.3 claim 1 missing>",
+    witness: async () => {
+      const determinations = srcUnion(RECONCILE_TS, "EffectDetermination");
+      const fed = await fedReceipts();
+      for (const determination of determinations) {
+        expect(fed.map(({ receipt }) => fedAcknowledgement(HELPER_FORM, determination, receipt, HELPER_INPUT)), `the cited-once form is the helper's acknowledgeWith() for ${determination}`).toStrictEqual(fed.map(({ receipt }) => honesty.acknowledgeWith(determination, [receipt])));
+      }
+      const measured = decisionInputs().map(input => underInput(input, () => {
+        const parts = ACK_FORMS.map(form => {
+          if (form.citations === 0) return `${form.name}: ${determinations.map(determination => `${determination}=${outcomeOf(uncitedIn(form, determination, input))}`).join(" ")}`;
+          return `${form.name}: ${fed.map(({ read, receipt }) => `${read.key}(${receipt.outcome}/${receipt.binding}): ${determinations.map(determination => `${determination}=${outcomeOf(fedAcknowledgement(form, determination, receipt, input))}`).join(" ")}`).join("; ")}`;
+        });
+        return parts.join("; ");
+      }));
+      for (const { input, text } of measured) expect(text, `a preview-only reconcile is never producer-confirmed (${inputLabel(input)})`).not.toContain("producer-confirmed");
+      return byDecisionInput(measured);
+    },
+  },
+  "acceptance.3.2": {
+    requirement: FILING.honestyClaims[1] ?? "<acceptance.3 claim 2 missing>",
+    witness: async () => {
+      const receipts = [await previewReceipt(async () => previewEnvelope(FRESH)), await previewReceipt(async () => previewEnvelope(FRESH_SECOND))];
+      const ids = receipts.map(receipt => receipt.nativeRef?.id ?? "none");
+      const fed: string[] = [];
+      for (const read of FED_READS.filter(entry => entry.kind === "fresh")) {
+        const receipt = await honesty.previewReceipt(read);
+        fed.push(`${read.key}=${receipt.binding}/${receipt.nativeRef?.id ?? "none"}`);
+      }
+      return `journaled=${JOURNALED}; preview refs=${ids.join(",")} distinct=${new Set(ids).size === ids.length} journaled-among=${ids.includes(JOURNALED)}; bindings=${receipts.map(receipt => receipt.binding).join(",")}; FED SET fresh reads=${fed.join(",")}`;
+    },
+  },
+};
+/** R: the named residuals - R-ECHO (one quiet row per self-identifying reconcile read), R-FRESH-SHAPE, R-UNPROJECTED-FORM and R-PROBE-CONTEXT (R-B109), R-REGISTRAR-RUNTIME (respin 4), R-SELF-ANCHORED. */
+const R_PINS: Readonly<Record<string, PinBody>> = {
+  [`echo:${PREVIEW_ID}`]: {
+    requirement: "NAMED RESIDUAL R-ECHO, not claimed: an envelope under the preview contract that echoes the journaled rfo_ binds and confirms, because Pi takes the envelope's operation_id as given and never checks it is fresh",
+    witness: async () => {
+      const receipt = await previewReceipt(async () => previewEnvelope(JOURNALED));
+      const absent = acknowledgeWith("effect-absent", [receipt]);
+      return `echo ref=${receipt.nativeRef?.id ?? "none"} binding=${receipt.binding}; effect-confirmed=${outcomeOf(acknowledgeWith("effect-confirmed", [receipt]))}; effect-absent=${outcomeOf(absent)} ${overrideAfter(absent)}`;
+    },
+  },
+  "fresh-shape": {
+    requirement: "NAMED RESIDUAL R-FRESH-SHAPE, not claimed: N and H acceptance.3.1 feed exactly the FED SET's fresh reads, each carrying the fresh rfo_, so a fresh read in any other shape (another subset of the optional result keys the native preview admits, observation rows, another release, digest, workspace or id value) is not probed by them; each fed fresh read is listed with its operation_id and its result keys",
+    witness: async () => FED_READS.filter(read => read.kind === "fresh").map(read => {
+      const envelope = servedEnvelope(read);
+      const keys = isRecord(envelope) && isRecord(envelope.result) ? Object.keys(envelope.result) : [];
+      return `${read.key} operation_id=${envelopeField(envelope, "operation_id")} result keys=${keys.join(",")}`;
+    }).join("; "),
+  },
+  "unprojected-form": {
+    requirement: "NAMED RESIDUAL R-UNPROJECTED-FORM, not claimed: N and H acceptance.3.1 feed exactly the FED SET's unprojected reads, so a returned read projecting no native reference in any other form (another schema id or command, another malformed identity, another result, another workspace root) is not probed by them; each fed unprojected read is listed with its envelope's schema, command and operation_id",
+    witness: async () => FED_READS.filter(read => read.kind === "unprojected").map(read => {
+      const envelope = servedEnvelope(read);
+      return `${read.key} schema=${envelopeField(envelope, "schema")} command=${envelopeField(envelope, "command")} operation_id=${envelopeField(envelope, "operation_id")}`;
+    }).join("; "),
+  },
+  "probe-context": {
+    requirement: "NAMED RESIDUAL R-PROBE-CONTEXT, not claimed: every read of the FED SET is fed in one request context against one journaled row under the DECISION INPUTS alone, so a FED SET read's binding conditioned on any other task id, task object (another observation scope or journal path, or a field beside them), position, principal or role, session, workspace, grant set, clock or journaled row, or on a decision registry holding anything else, is not probed; the FED SET's and this file's own context and journaled row, each context's task object in every task shape, every task status the DECISION INPUTS feed and each decision registry's descriptors are listed",
+    witness: async () => {
+      const listed = (context: DecisionContext, row: WorkflowJournalEntry): string =>
+        `task=${context.taskId} position=${context.position} principal=${context.principal} role=${OPERATOR_ROLE} session=${context.session} workspace=${context.workspace} observedAt=${context.observedAt} grants=${context.grants.join(",")}; journaled row=${parameterText(row)}; task objects by shape (each at completed)=${TASK_SHAPES.map(shape => `${shape}=${taskText(taskOf({ ...HELPER_INPUT, taskShape: shape }, context))}`).join(", ")}`;
+      const registries = FED_COMMIT_CLASSES.map(commitClass => `${commitClass ?? "unregistered"}=${decisionRegistry(commitClass).catalogSnapshot().map(({ descriptor }) => `${descriptor.id}@${descriptor.effectClass}`).join("+")}`);
+      return `FED SET: ${listed(honesty.PROBE_CONTEXT, honesty.COMMIT_ROW)}; this file's own (the uncited forms'): ${listed(OWN_CONTEXT, COMMIT_ROW)}; decision inputs: task statuses=${FED_STATUSES.join(",")}; decision registries by the committing capability's state=${registries.join(", ")}`;
+    },
+  },
+  "ack-parameters": {
+    requirement: "NAMED RESIDUAL R-ACK-PARAMETERS, not claimed: N and H acceptance.3.1 acknowledge only in the ACK FORMS - uncited stating the producer unavailable, or citing the one read's receipt once or twice, each with no resolvedValue and with the one operator resolvedValue, under one reason text - so an acknowledgement with any other parameters (another reason text or noEvidenceReason, a noEvidenceReason beside a citation, another resolvedValue, the receipt cited another number of times) is not probed by them; each form's parameters are listed as src's acknowledgement record holds them",
+    witness: async () => {
+      const read = FED_READS.find(entry => entry.kind === "unprojected");
+      const receipt = read === undefined ? undefined : await honesty.previewReceipt(read);
+      return ACK_FORMS.map(form => {
+        const decision = form.citations === 0 ? uncitedIn(form, "effect-absent", HELPER_INPUT) : receipt === undefined ? undefined : fedAcknowledgement(form, "effect-absent", receipt, HELPER_INPUT);
+        const record = decision?.decision === "acknowledge" ? decision.entry.reconcile : undefined;
+        if (record?.decision !== "acknowledge") return `${form.name}: <no acknowledgement recorded${decision === undefined ? ": the FED SET holds no unprojected read" : `: ${outcomeOf(decision)}`}>`;
+        const cited = record.evidence.map(entry => (entry.receiptId === receipt?.receiptId ? "the read's receipt" : entry.receiptId));
+        return `${form.name}${form.citations === 0 ? "" : ` (${read?.key})`}: reason=${record.reason} determination=${record.determination} evidence=[${cited.join(",")}] noEvidenceReason=${parameterText(record.noEvidenceReason)} resolvedValue=${parameterText(record.resolvedValue)}`;
+      }).join("; ");
+    },
+  },
+  "registrar-runtime": {
+    requirement: "NAMED RESIDUAL R-REGISTRAR-RUNTIME, not claimed: each src rf registrar is run once here, with the census's arguments in this process's environment, so a registration whose id, effect class or permissions depend on a registrar's arguments or on the environment is read for that one run only; each registrar's src parameters and the arguments this file states the census passes it are listed",
+    witness: async () => {
+      const sites = rfRegistrarSites();
+      expect(Object.keys(REGISTRAR_ARGUMENTS), "every src rf registrar has the arguments the census passes it stated").toStrictEqual(sites.map(site => site.owner));
+      const runs = sites.map(site => `${site.file}#${site.owner}(${registrarParameters(site.file, site.owner)}) run once with (${REGISTRAR_ARGUMENTS[site.owner] ?? "<no stated arguments>"})`);
+      return `${runs.join("; ")}; environment=this census process's own`;
+    },
+  },
+  "self-anchored": {
+    requirement: "NAMED RESIDUAL R-SELF-ANCHORED, not claimed: a requirement in this file's words alone, shortened together with its frozen line, or this file's judging code edited together with the literals it feeds, stays green; the pins whose requirement no outside text holds are listed, measured against the filing",
+    witness: async () => {
+      const own = selfAnchoredPins();
+      const filed = PINS.map(pin => pin.id).filter(id => !own.includes(id));
+      return `requirements in this file's words alone=${own.join(", ")}; requirements in the filing's own words=${filed.join(", ")}; judging code (the it.each arguments, the each-liveness lists, the generators and the readers) held by this file alone`;
+    },
+  },
+};
+
+function row(id: RowId, clause: string, pins: Readonly<Record<string, PinBody>>): Row {
+  return { id, clause, pins: Object.entries(pins).map(([key, body]) => ({ id: `${id}:${key}`, ...body })) };
+}
+const ROWS: readonly Row[] = [
+  row("G", "statement.1", G_PINS),
+  row("S", "statement.2", S_PINS),
+  row("N", "statement.3", N_PINS),
+  row("H", "acceptance.3", H_PINS),
+  row("R", "residual", R_PINS),
+];
+/** Each row's pin ids as its outside anchor generates them. */
+const GENERATED: Readonly<Record<RowId, () => string[]>> = {
+  G: () => [...rfCapabilityIds().map(id => `G:id:${id}`), ...rfBinarySites().map(site => `G:bin:${site.name}`)],
+  S: () => FILING.surfaces.map(surface => `S:${surface}`),
+  N: () => (FILING.clauses.has("statement.3") ? ["N:statement.3"] : []),
+  H: () => FILING.honestyClaims.map((_, index) => `H:acceptance.3.${index + 1}`),
+  R: () => [
+    ...selfIdentifyingReads().map(id => `R:echo:${id}`),
+    ...(FED_READS.some(read => read.kind === "fresh") ? ["R:fresh-shape"] : []),
+    ...(FED_READS.some(read => read.kind === "unprojected") ? ["R:unprojected-form"] : []),
+    ...(FED_READS.length > 0 ? ["R:probe-context"] : []),
+    ...(FED_READS.length > 0 ? ["R:ack-parameters"] : []),
+    ...(rfRegistrars().length > 0 ? ["R:registrar-runtime"] : []),
+    ...(selfAnchoredPins().length > 0 ? ["R:self-anchored"] : []),
+  ],
+};
+/**
+ * The row each filing clause takes as the filing's own text places it (respin 3 H2): the statement's three clauses - the trigger,
+ * the duty and the never clause - are rows G, S and N; an acceptance item opening with the honesty-core label holds before the gate
+ * and is row H; every other acceptance item specifies the gated duty and is PARKED.
+ */
+function clauseRowsOf(filing: Filing): Record<string, RowId | "PARKED"> {
+  const statementRows: readonly RowId[] = ["G", "S", "N"];
+  return Object.fromEntries([...filing.clauses].map(([clause, text]): [string, RowId | "PARKED"] => {
+    const position = Number(clause.slice(clause.indexOf(".") + 1)) - 1;
+    return [clause, clause.startsWith("statement.") ? (statementRows[position] ?? "PARKED") : text.startsWith(HONESTY_LABEL) ? "H" : "PARKED"];
+  }));
+}
+/** The pins whose requirement no outside text holds: this file's own words (the filing description holds the N and H requirements verbatim). */
+function selfAnchoredPins(): string[] {
+  const description = filingText();
+  return PINS.filter(pin => !description.includes(pin.requirement)).map(pin => pin.id);
+}
+/**
+ * The residual rows the outside anchors call for (respin 3 H1, respin 4, R-B109): row R while src holds a self-identifying
+ * reconcile read (R-ECHO), the FED SET holds a read (R-FRESH-SHAPE, R-UNPROJECTED-FORM, R-PROBE-CONTEXT), src holds an rf registrar
+ * (R-REGISTRAR-RUNTIME), or a pin's requirement is this file's words alone (R-SELF-ANCHORED).
+ */
+const residualRowsCalledFor = (): RowId[] =>
+  selfIdentifyingReads().length > 0 || FED_READS.length > 0 || rfRegistrars().length > 0 || selfAnchoredPins().length > 0 ? ["R"] : [];
+const CLAUSE_ROWS: Readonly<Record<string, RowId | "PARKED">> = {
+  "statement.1": "G",
+  "statement.2": "S",
+  "statement.3": "N",
+  "acceptance.1": "PARKED",
+  "acceptance.2": "PARKED",
+  "acceptance.3": "H",
+  "acceptance.4": "PARKED",
+};
+const SHAPE = ["G:statement.1:2", "S:statement.2:4", "N:statement.3:1", "H:acceptance.3:2", "R:residual:7"];
+const PIN_LINES: Readonly<Record<string, string>> = {
+  "G:id:reactivefiber.render.preview":
+    "G:id:reactivefiber.render.preview | every file under src/ is read, each module parsed with its own script kind and every other file listed, and no relative specifier a src module writes as a whole string token in an import, export or import-equals declaration, an import type, an import() call or a require() call leaves src/; the one rf capability id a whole src string token spells is the preview: every naming site is listed, the functions whose judged register calls carry an rf id are the registrars measured here, and each of them, in its one measured run (the census's arguments, this process's environment), has registered the preview alone, with effect class read and the permission reactivefiber:render, when it returns; every unjudged register spelling is listed by owner and syntax | src files no reader parses=none; relative specifiers leaving src/=none; sites=src/workbench/hosts/local-detached.ts#NATIVE_CAPABILITIES, src/workbench/native-evidence.ts#nativeEvidence, src/workbench/providers/reactivefiber.ts#registerReactiveFiberRender, src/workbench/providers/reactivefiber.ts#registerNativeReactiveFiberRender, src/workflow/reconcile.ts#RECONCILE_EVIDENCE_READS; registered=registerReactiveFiberRender:reactivefiber.render.preview=read/reactivefiber:render, registerNativeReactiveFiberRender:reactivefiber.render.preview=read/reactivefiber:render; id-shaped kinds (not capabilities)=reactivefiber.render.preview.snapshot@src/workbench/reactivefiber-observer.ts#reactivefiberTopology; unjudged register spellings=src/workbench/capability-registry.ts#CapabilityRegistry MethodDeclaration, src/workbench/hosts/local-detached.ts#registryFor PropertySignature, src/workbench/hosts/local-detached.ts#registryFor TypeOfExpression, src/workbench/hosts/local-detached.ts#registryFor VariableDeclaration, src/workbench/hosts/local-detached.ts#registryFor PropertyAccessExpression, src/workbench/hosts/local-detached.ts#registryFor BinaryExpression, src/workbench/hosts/local-detached.ts#registryFor CallExpression, src/workbench/hosts/local-detached.ts#registryFor register call, provider Identifier",
+  "G:bin:nativeReactiveFiberRender":
+    "G:bin:nativeReactiveFiberRender | the one src declaration holding a whole string token that names the rf binary is the noncommitted render, which spawns it: resolved by binding, never by name, its callee is the named import spawn of node:child_process and its argument 2 one const of the spawning function read only by the spawn, built by the file's one module-level function declaration of that name, the callee's and the builder's names each bound once in the file, and every return of that function is an array literal holding --no-commit as a direct element; the child receives --no-commit for every probed input of the descriptor's arms; and no src string literal or template text names --idempotency-key | src/workbench/providers/reactivefiber.ts use=spawn argument 1; callee=spawn, bound to the named import spawn of node:child_process, the file's one binding of the name; arguments=3, option keys=stdio,env; argv=const argv, read only by the spawn, from renderArgv(), the file's one module-level function declaration of that name; returns=[--workspace workspaceRoot context render ...select --no-commit --no-input --json]; --no-commit a direct element of every returned array=true; builder string tokens=view --view --task-id --model --model --task --workspace context render --no-commit --no-input --json; child argv (recording stand-in, the only PATH entry): {model,task} -> [--workspace /workspace/rf-operation-receipt-census context render --model census-model --task census-task --no-commit --no-input --json] refused transport; {view,taskId} -> [--workspace /workspace/rf-operation-receipt-census context render --view census-view --task-id census-taskId --no-commit --no-input --json] refused transport; {view,taskId,model} -> [--workspace /workspace/rf-operation-receipt-census context render --view census-view --task-id census-taskId --model census-model --no-commit --no-input --json] refused transport; launches=3 for 3 inputs; --no-commit in every received argv=true; src string literals and template texts naming --idempotency-key=0",
+  "S:src/workflow/reconcile.ts":
+    "S:src/workflow/reconcile.ts | reactivefiber's reconcile evidence reads are the preview alone until the receipt read is admitted beside it | RECONCILE_EVIDENCE_READS.reactivefiber=[\"reactivefiber.render.preview\"]",
+  "S:src/workbench/native-evidence.ts":
+    "S:src/workbench/native-evidence.ts | the rf branch projects the preview envelope's own operation_id as nativeId and no domainStatus under both receipt-shaped results, and is the only rf case label of nativeEvidence's switch, where every case label is a whole string token | minimal receipt: projection={\"provider\":\"reactivefiber\",\"nativeId\":\"rfo_freshpreview0000000000\"} domainStatus=absent; shipped receipt: projection={\"provider\":\"reactivefiber\",\"nativeId\":\"rfo_freshpreview0000000000\"} domainStatus=absent; rf branches=reactivefiber.render.preview; unjudged case labels=none",
+  "S:src/workflow/runtime.ts":
+    "S:src/workflow/runtime.ts | one run of the census's test-only committing rf stand-in through the Claude workflow host's node() journals no native reference, so the preview receipt minted against its rows comes out operator-asserted | run=completed; rows=dispatched:write:refs=0:value=none, settled:write:refs=0:value=none; inspect=0:reactivefiber.render.commit:recorded=0:reads=reactivefiber.render.preview; preview receipt=returned/operator-asserted",
+  "S:docs/workbench/08-lifecycle-and-recovery.md":
+    "S:docs/workbench/08-lifecycle-and-recovery.md | the operator reconcile journey's rendered section holds one evidence allowlist sentence, the ids it names (its rendered words the registry accepts) are exactly the reads RECONCILE_EVIDENCE_READS holds, no other sentence of the section names a read in such a word, and every distinct character of the section's rendered text outside printable ASCII is listed | one allowlist sentence, in paragraph prose: allowlist=furnace.run.inspect,forge.gate.status,hyperunix.find,reactivefiber.render.preview; binding words (src EvidenceBinding)=journal-recorded,operator-asserted; equals RECONCILE_EVIDENCE_READS=true; other sentences' ids=workbench.reconcile.acknowledgement, each the name of src ACKNOWLEDGEMENT_VALUE_CONTRACT=true; rendered characters outside printable ASCII=U+2014,U+2192",
+  "N:statement.3":
+    "N:statement.3 | the preview read shall never serve as commit evidence | [30 of 75 decision inputs: running/unregistered/no-journal-path,running/unregistered/journal-path-undefined,running/unregistered/journal-path,running/read/no-journal-path,running/read/journal-path-undefined,running/read/journal-path,running/write/no-journal-path,running/write/journal-path-undefined,running/write/journal-path,running/external/no-journal-path,running/external/journal-path-undefined,running/external/journal-path,running/unknown/no-journal-path,running/unknown/journal-path-undefined,running/unknown/journal-path,paused/unregistered/no-journal-path,paused/unregistered/journal-path-undefined,paused/unregistered/journal-path,paused/read/no-journal-path,paused/read/journal-path-undefined,paused/read/journal-path,paused/write/no-journal-path,paused/write/journal-path-undefined,paused/write/journal-path,paused/external/no-journal-path,paused/external/journal-path-undefined,paused/external/journal-path,paused/unknown/no-journal-path,paused/unknown/journal-path-undefined,paused/unknown/journal-path] evidence action admits reactivefiber/reactivefiber.render.preview@0 input={'model':'m','task':'t'} recorded=reactivefiber:operation:rfo_journaledcommit000000000; uncited: deny:task-active no acknowledgement to override; uncited with the operator resolvedValue: deny:task-active no acknowledgement to override; cited once: injectable:bare(returned): deny:task-active; injectable:minimal(returned): deny:task-active; injectable:full(returned): deny:task-active; native:minimal(returned): deny:task-active; native:full(returned): deny:task-active; injectable:validation(validation): deny:task-active; injectable:authorization(authorization): deny:task-active; injectable:unavailable(unavailable): deny:task-active; injectable:transport(transport): deny:task-active; injectable:uncertain-effect(uncertain-effect): deny:task-active; native:malformed(transport): deny:task-active; native:refused(unavailable): deny:task-active; injectable:show-bare(returned): deny:task-active; injectable:show-full(returned): deny:task-active; injectable:drift-bare(returned): deny:task-active; injectable:drift-full(returned): deny:task-active; injectable:no-source(returned): deny:task-active; injectable:no-identity(returned): deny:task-active; cited once with the operator resolvedValue: injectable:bare(returned): deny:task-active; injectable:minimal(returned): deny:task-active; injectable:full(returned): deny:task-active; native:minimal(returned): deny:task-active; native:full(returned): deny:task-active; injectable:validation(validation): deny:task-active; injectable:authorization(authorization): deny:task-active; injectable:unavailable(unavailable): deny:task-active; injectable:transport(transport): deny:task-active; injectable:uncertain-effect(uncertain-effect): deny:task-active; native:malformed(transport): deny:task-active; native:refused(unavailable): deny:task-active; injectable:show-bare(returned): deny:task-active; injectable:show-full(returned): deny:task-active; injectable:drift-bare(returned): deny:task-active; injectable:drift-full(returned): deny:task-active; injectable:no-source(returned): deny:task-active; injectable:no-identity(returned): deny:task-active; cited twice: injectable:bare(returned): deny:task-active; injectable:minimal(returned): deny:task-active; injectable:full(returned): deny:task-active; native:minimal(returned): deny:task-active; native:full(returned): deny:task-active; injectable:validation(validation): deny:task-active; injectable:authorization(authorization): deny:task-active; injectable:unavailable(unavailable): deny:task-active; injectable:transport(transport): deny:task-active; injectable:uncertain-effect(uncertain-effect): deny:task-active; native:malformed(transport): deny:task-active; native:refused(unavailable): deny:task-active; injectable:show-bare(returned): deny:task-active; injectable:show-full(returned): deny:task-active; injectable:drift-bare(returned): deny:task-active; injectable:drift-full(returned): deny:task-active; injectable:no-source(returned): deny:task-active; injectable:no-identity(returned): deny:task-active; cited twice with the operator resolvedValue: injectable:bare(returned): deny:task-active; injectable:minimal(returned): deny:task-active; injectable:full(returned): deny:task-active; native:minimal(returned): deny:task-active; native:full(returned): deny:task-active; injectable:validation(validation): deny:task-active; injectable:authorization(authorization): deny:task-active; injectable:unavailable(unavailable): deny:task-active; injectable:transport(transport): deny:task-active; injectable:uncertain-effect(uncertain-effect): deny:task-active; native:malformed(transport): deny:task-active; native:refused(unavailable): deny:task-active; injectable:show-bare(returned): deny:task-active; injectable:show-full(returned): deny:task-active; injectable:drift-bare(returned): deny:task-active; injectable:drift-full(returned): deny:task-active; injectable:no-source(returned): deny:task-active; injectable:no-identity(returned): deny:task-active; [45 of 75 decision inputs: completed/unregistered/no-journal-path,completed/unregistered/journal-path-undefined,completed/unregistered/journal-path,completed/read/no-journal-path,completed/read/journal-path-undefined,completed/read/journal-path,completed/write/no-journal-path,completed/write/journal-path-undefined,completed/write/journal-path,completed/external/no-journal-path,completed/external/journal-path-undefined,completed/external/journal-path,completed/unknown/no-journal-path,completed/unknown/journal-path-undefined,completed/unknown/journal-path,failed/unregistered/no-journal-path,failed/unregistered/journal-path-undefined,failed/unregistered/journal-path,failed/read/no-journal-path,failed/read/journal-path-undefined,failed/read/journal-path,failed/write/no-journal-path,failed/write/journal-path-undefined,failed/write/journal-path,failed/external/no-journal-path,failed/external/journal-path-undefined,failed/external/journal-path,failed/unknown/no-journal-path,failed/unknown/journal-path-undefined,failed/unknown/journal-path,killed/unregistered/no-journal-path,killed/unregistered/journal-path-undefined,killed/unregistered/journal-path,killed/read/no-journal-path,killed/read/journal-path-undefined,killed/read/journal-path,killed/write/no-journal-path,killed/write/journal-path-undefined,killed/write/journal-path,killed/external/no-journal-path,killed/external/journal-path-undefined,killed/external/journal-path,killed/unknown/no-journal-path,killed/unknown/journal-path-undefined,killed/unknown/journal-path] evidence action admits reactivefiber/reactivefiber.render.preview@0 input={'model':'m','task':'t'} recorded=reactivefiber:operation:rfo_journaledcommit000000000; uncited: ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; uncited with the operator resolvedValue: ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; cited once: injectable:bare(returned): deny:evidence-identity-mismatch; injectable:minimal(returned): deny:evidence-identity-mismatch; injectable:full(returned): deny:evidence-identity-mismatch; native:minimal(returned): deny:evidence-identity-mismatch; native:full(returned): deny:evidence-identity-mismatch; injectable:validation(validation): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:authorization(authorization): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:unavailable(unavailable): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:transport(transport): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:uncertain-effect(uncertain-effect): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; native:malformed(transport): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; native:refused(unavailable): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:show-bare(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:show-full(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:drift-bare(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:drift-full(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:no-source(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:no-identity(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; cited once with the operator resolvedValue: injectable:bare(returned): deny:evidence-identity-mismatch; injectable:minimal(returned): deny:evidence-identity-mismatch; injectable:full(returned): deny:evidence-identity-mismatch; native:minimal(returned): deny:evidence-identity-mismatch; native:full(returned): deny:evidence-identity-mismatch; injectable:validation(validation): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:authorization(authorization): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:unavailable(unavailable): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:transport(transport): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:uncertain-effect(uncertain-effect): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; native:malformed(transport): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; native:refused(unavailable): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:show-bare(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:show-full(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:drift-bare(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:drift-full(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:no-source(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:no-identity(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; cited twice: injectable:bare(returned): deny:evidence-identity-mismatch; injectable:minimal(returned): deny:evidence-identity-mismatch; injectable:full(returned): deny:evidence-identity-mismatch; native:minimal(returned): deny:evidence-identity-mismatch; native:full(returned): deny:evidence-identity-mismatch; injectable:validation(validation): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:authorization(authorization): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:unavailable(unavailable): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:transport(transport): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:uncertain-effect(uncertain-effect): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; native:malformed(transport): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; native:refused(unavailable): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:show-bare(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:show-full(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:drift-bare(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:drift-full(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:no-source(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:no-identity(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; cited twice with the operator resolvedValue: injectable:bare(returned): deny:evidence-identity-mismatch; injectable:minimal(returned): deny:evidence-identity-mismatch; injectable:full(returned): deny:evidence-identity-mismatch; native:minimal(returned): deny:evidence-identity-mismatch; native:full(returned): deny:evidence-identity-mismatch; injectable:validation(validation): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:authorization(authorization): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:unavailable(unavailable): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:transport(transport): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:uncertain-effect(uncertain-effect): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; native:malformed(transport): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; native:refused(unavailable): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:show-bare(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:show-full(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:drift-bare(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:drift-full(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:no-source(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:no-identity(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate",
+  "H:acceptance.3.1":
+    "H:acceptance.3.1 | a reconcile fed only a preview envelope for a committed-effect journal row is asserted NOT producer-confirmed | [30 of 75 decision inputs: running/unregistered/no-journal-path,running/unregistered/journal-path-undefined,running/unregistered/journal-path,running/read/no-journal-path,running/read/journal-path-undefined,running/read/journal-path,running/write/no-journal-path,running/write/journal-path-undefined,running/write/journal-path,running/external/no-journal-path,running/external/journal-path-undefined,running/external/journal-path,running/unknown/no-journal-path,running/unknown/journal-path-undefined,running/unknown/journal-path,paused/unregistered/no-journal-path,paused/unregistered/journal-path-undefined,paused/unregistered/journal-path,paused/read/no-journal-path,paused/read/journal-path-undefined,paused/read/journal-path,paused/write/no-journal-path,paused/write/journal-path-undefined,paused/write/journal-path,paused/external/no-journal-path,paused/external/journal-path-undefined,paused/external/journal-path,paused/unknown/no-journal-path,paused/unknown/journal-path-undefined,paused/unknown/journal-path] uncited: effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; uncited with the operator resolvedValue: effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; cited once: injectable:bare(returned/unbound): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:minimal(returned/unbound): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:full(returned/unbound): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; native:minimal(returned/unbound): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; native:full(returned/unbound): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:validation(validation/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:authorization(authorization/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:unavailable(unavailable/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:transport(transport/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:uncertain-effect(uncertain-effect/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; native:malformed(transport/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; native:refused(unavailable/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:show-bare(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:show-full(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:drift-bare(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:drift-full(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:no-source(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:no-identity(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; cited once with the operator resolvedValue: injectable:bare(returned/unbound): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:minimal(returned/unbound): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:full(returned/unbound): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; native:minimal(returned/unbound): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; native:full(returned/unbound): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:validation(validation/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:authorization(authorization/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:unavailable(unavailable/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:transport(transport/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:uncertain-effect(uncertain-effect/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; native:malformed(transport/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; native:refused(unavailable/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:show-bare(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:show-full(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:drift-bare(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:drift-full(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:no-source(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:no-identity(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; cited twice: injectable:bare(returned/unbound): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:minimal(returned/unbound): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:full(returned/unbound): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; native:minimal(returned/unbound): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; native:full(returned/unbound): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:validation(validation/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:authorization(authorization/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:unavailable(unavailable/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:transport(transport/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:uncertain-effect(uncertain-effect/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; native:malformed(transport/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; native:refused(unavailable/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:show-bare(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:show-full(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:drift-bare(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:drift-full(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:no-source(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:no-identity(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; cited twice with the operator resolvedValue: injectable:bare(returned/unbound): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:minimal(returned/unbound): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:full(returned/unbound): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; native:minimal(returned/unbound): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; native:full(returned/unbound): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:validation(validation/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:authorization(authorization/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:unavailable(unavailable/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:transport(transport/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:uncertain-effect(uncertain-effect/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; native:malformed(transport/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; native:refused(unavailable/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:show-bare(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:show-full(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:drift-bare(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:drift-full(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:no-source(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; injectable:no-identity(returned/operator-asserted): effect-confirmed=deny:task-active effect-absent=deny:task-active indeterminate=deny:task-active; [45 of 75 decision inputs: completed/unregistered/no-journal-path,completed/unregistered/journal-path-undefined,completed/unregistered/journal-path,completed/read/no-journal-path,completed/read/journal-path-undefined,completed/read/journal-path,completed/write/no-journal-path,completed/write/journal-path-undefined,completed/write/journal-path,completed/external/no-journal-path,completed/external/journal-path-undefined,completed/external/journal-path,completed/unknown/no-journal-path,completed/unknown/journal-path-undefined,completed/unknown/journal-path,failed/unregistered/no-journal-path,failed/unregistered/journal-path-undefined,failed/unregistered/journal-path,failed/read/no-journal-path,failed/read/journal-path-undefined,failed/read/journal-path,failed/write/no-journal-path,failed/write/journal-path-undefined,failed/write/journal-path,failed/external/no-journal-path,failed/external/journal-path-undefined,failed/external/journal-path,failed/unknown/no-journal-path,failed/unknown/journal-path-undefined,failed/unknown/journal-path,killed/unregistered/no-journal-path,killed/unregistered/journal-path-undefined,killed/unregistered/journal-path,killed/read/no-journal-path,killed/read/journal-path-undefined,killed/read/journal-path,killed/write/no-journal-path,killed/write/journal-path-undefined,killed/write/journal-path,killed/external/no-journal-path,killed/external/journal-path-undefined,killed/external/journal-path,killed/unknown/no-journal-path,killed/unknown/journal-path-undefined,killed/unknown/journal-path] uncited: effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; uncited with the operator resolvedValue: effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; cited once: injectable:bare(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; injectable:minimal(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; injectable:full(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; native:minimal(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; native:full(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; injectable:validation(validation/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:authorization(authorization/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:unavailable(unavailable/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:transport(transport/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:uncertain-effect(uncertain-effect/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; native:malformed(transport/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; native:refused(unavailable/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:show-bare(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:show-full(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:drift-bare(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:drift-full(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:no-source(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:no-identity(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; cited once with the operator resolvedValue: injectable:bare(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; injectable:minimal(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; injectable:full(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; native:minimal(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; native:full(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; injectable:validation(validation/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:authorization(authorization/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:unavailable(unavailable/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:transport(transport/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:uncertain-effect(uncertain-effect/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; native:malformed(transport/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; native:refused(unavailable/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:show-bare(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:show-full(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:drift-bare(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:drift-full(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:no-source(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:no-identity(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; cited twice: injectable:bare(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; injectable:minimal(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; injectable:full(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; native:minimal(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; native:full(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; injectable:validation(validation/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:authorization(authorization/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:unavailable(unavailable/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:transport(transport/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:uncertain-effect(uncertain-effect/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; native:malformed(transport/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; native:refused(unavailable/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:show-bare(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:show-full(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:drift-bare(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:drift-full(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:no-source(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:no-identity(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; cited twice with the operator resolvedValue: injectable:bare(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; injectable:minimal(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; injectable:full(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; native:minimal(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; native:full(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; injectable:validation(validation/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:authorization(authorization/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:unavailable(unavailable/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:transport(transport/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:uncertain-effect(uncertain-effect/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; native:malformed(transport/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; native:refused(unavailable/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:show-bare(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:show-full(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:drift-bare(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:drift-full(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:no-source(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:no-identity(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted",
+  "H:acceptance.3.2":
+    "H:acceptance.3.2 | the preview's freshly-minted rfo_ cannot bind the journaled rfo_ | journaled=rfo_journaledcommit000000000; preview refs=rfo_freshpreview0000000000,rfo_freshpreviewsecond0000 distinct=true journaled-among=false; bindings=unbound,unbound; FED SET fresh reads=injectable:bare=unbound/rfo_freshpreview0000000000,injectable:minimal=unbound/rfo_freshpreview0000000000,injectable:full=unbound/rfo_freshpreview0000000000,native:minimal=unbound/rfo_freshpreview0000000000,native:full=unbound/rfo_freshpreview0000000000",
+  "R:echo:reactivefiber.render.preview":
+    "R:echo:reactivefiber.render.preview | NAMED RESIDUAL R-ECHO, not claimed: an envelope under the preview contract that echoes the journaled rfo_ binds and confirms, because Pi takes the envelope's operation_id as given and never checks it is fresh | echo ref=rfo_journaledcommit000000000 binding=journal-recorded; effect-confirmed=ack:producer-confirmed; effect-absent=ack:producer-confirmed override unaccepted=override:none accepted=override:none",
+  "R:fresh-shape":
+    "R:fresh-shape | NAMED RESIDUAL R-FRESH-SHAPE, not claimed: N and H acceptance.3.1 feed exactly the FED SET's fresh reads, each carrying the fresh rfo_, so a fresh read in any other shape (another subset of the optional result keys the native preview admits, observation rows, another release, digest, workspace or id value) is not probed by them; each fed fresh read is listed with its operation_id and its result keys | injectable:bare operation_id=rfo_freshpreview0000000000 result keys=output; injectable:minimal operation_id=rfo_freshpreview0000000000 result keys=output,provenance,budget,diagnostics_summary,work,ephemeral,render_id; injectable:full operation_id=rfo_freshpreview0000000000 result keys=output,budget,diagnostics_summary,blocks,components,provenance,work_metrics,work,engine_metrics,scope,audience,bundle_revision_id,observations,necessity,judge_context,judge_context_layers,attempts,superseded_transaction_ids,retry_work,fiber_transaction_refs,replay_of_operation_id,render_id,ephemeral,commit_seq,session_id,effects,plan; native:minimal operation_id=rfo_freshpreview0000000000 result keys=output,provenance,budget,diagnostics_summary,work,ephemeral,render_id; native:full operation_id=rfo_freshpreview0000000000 result keys=output,budget,diagnostics_summary,blocks,components,provenance,work_metrics,work,engine_metrics,scope,audience,bundle_revision_id,observations,necessity,judge_context,judge_context_layers,attempts,superseded_transaction_ids,retry_work,fiber_transaction_refs,replay_of_operation_id,render_id,ephemeral,commit_seq,session_id,effects,plan",
+  "R:unprojected-form":
+    "R:unprojected-form | NAMED RESIDUAL R-UNPROJECTED-FORM, not claimed: N and H acceptance.3.1 feed exactly the FED SET's unprojected reads, so a returned read projecting no native reference in any other form (another schema id or command, another malformed identity, another result, another workspace root) is not probed by them; each fed unprojected read is listed with its envelope's schema, command and operation_id | injectable:show-bare schema=reactive-fiber.cli/v1 command=context.show operation_id=rfo_freshpreview0000000000; injectable:show-full schema=reactive-fiber.cli/v1 command=context.show operation_id=rfo_freshpreview0000000000; injectable:drift-bare schema=reactive-fiber.cli/v2 command=context.render operation_id=rfo_freshpreview0000000000; injectable:drift-full schema=reactive-fiber.cli/v2 command=context.render operation_id=rfo_freshpreview0000000000; injectable:no-source schema=<none> command=<none> operation_id=<none>; injectable:no-identity schema=reactive-fiber.cli/v1 command=context.render operation_id=<none>",
+  "R:probe-context":
+    "R:probe-context | NAMED RESIDUAL R-PROBE-CONTEXT, not claimed: every read of the FED SET is fed in one request context against one journaled row under the DECISION INPUTS alone, so a FED SET read's binding conditioned on any other task id, task object (another observation scope or journal path, or a field beside them), position, principal or role, session, workspace, grant set, clock or journaled row, or on a decision registry holding anything else, is not probed; the FED SET's and this file's own context and journaled row, each context's task object in every task shape, every task status the DECISION INPUTS feed and each decision registry's descriptors are listed | FED SET: task=wf_rfhonesty-census position=0 principal=local-operator:1:s1 role=local-operator session=s1 workspace=/workspace/rf-operation-receipt-honesty observedAt=2026-10-30T06:00:00Z grants=workbench:observe,reactivefiber:render,reconcile:reactivefiber.acknowledge,reconcile:reactivefiber.override; journaled row={'index':0,'key':'k0','ok':true,'kind':'node','capabilityId':'reactivefiber.render.commit','effectClass':'write','nativeRefs':[{'provider':'reactivefiber','type':'operation','id':'rfo_journaledcommit000000000'}]}; task objects by shape (each at completed)=no-journal-path={status=completed observationScope={'sessionId':'s1','workspace':'/workspace/rf-operation-receipt-honesty','principal':'local-operator:1:s1'}}, journal-path-undefined={status=completed observationScope={'workspace':'/workspace/rf-operation-receipt-honesty','principal':'local-operator:1:s1','sessionId':'s1'} journalPath=undefined}, journal-path={status=completed observationScope={'workspace':'/workspace/rf-operation-receipt-honesty','principal':'local-operator:1:s1','sessionId':'s1'} journalPath=<session scratch root>/workspace-rf-operation-receipt-honesty/s1/tasks/wf_rfhonesty-census.workflow.jsonl}; this file's own (the uncited forms'): task=wf_rfreceipt-census position=0 principal=local-operator:1:s1 role=local-operator session=s1 workspace=/workspace/rf-operation-receipt-census observedAt=2026-10-28T05:00:00Z grants=workbench:observe,reactivefiber:render,reconcile:reactivefiber.acknowledge,reconcile:reactivefiber.override; journaled row={'index':0,'key':'k0','ok':true,'kind':'node','capabilityId':'reactivefiber.render.commit','effectClass':'write','nativeRefs':[{'provider':'reactivefiber','type':'operation','id':'rfo_journaledcommit000000000'}]}; task objects by shape (each at completed)=no-journal-path={status=completed observationScope={'sessionId':'s1','workspace':'/workspace/rf-operation-receipt-census','principal':'local-operator:1:s1'}}, journal-path-undefined={status=completed observationScope={'workspace':'/workspace/rf-operation-receipt-census','principal':'local-operator:1:s1','sessionId':'s1'} journalPath=undefined}, journal-path={status=completed observationScope={'workspace':'/workspace/rf-operation-receipt-census','principal':'local-operator:1:s1','sessionId':'s1'} journalPath=<session scratch root>/workspace-rf-operation-receipt-census/s1/tasks/wf_rfreceipt-census.workflow.jsonl}; decision inputs: task statuses=running,completed,failed,killed,paused; decision registries by the committing capability's state=unregistered=reactivefiber.render.preview@read, read=reactivefiber.render.preview@read+reactivefiber.render.commit@read, write=reactivefiber.render.preview@read+reactivefiber.render.commit@write, external=reactivefiber.render.preview@read+reactivefiber.render.commit@external, unknown=reactivefiber.render.preview@read+reactivefiber.render.commit@unknown",
+  "R:ack-parameters":
+    "R:ack-parameters | NAMED RESIDUAL R-ACK-PARAMETERS, not claimed: N and H acceptance.3.1 acknowledge only in the ACK FORMS - uncited stating the producer unavailable, or citing the one read's receipt once or twice, each with no resolvedValue and with the one operator resolvedValue, under one reason text - so an acknowledgement with any other parameters (another reason text or noEvidenceReason, a noEvidenceReason beside a citation, another resolvedValue, the receipt cited another number of times) is not probed by them; each form's parameters are listed as src's acknowledgement record holds them | uncited: reason=census probe: a reconcile fed only rf preview reads determination=effect-absent evidence=[] noEvidenceReason=producer-unavailable resolvedValue=none; uncited with the operator resolvedValue: reason=census probe: a reconcile fed only rf preview reads determination=effect-absent evidence=[] noEvidenceReason=producer-unavailable resolvedValue={'census':'an operator-supplied resolved value (synthetic)'}; cited once (injectable:show-bare): reason=census probe: a reconcile fed only rf preview reads determination=effect-absent evidence=[the read's receipt] noEvidenceReason=none resolvedValue=none; cited once with the operator resolvedValue (injectable:show-bare): reason=census probe: a reconcile fed only rf preview reads determination=effect-absent evidence=[the read's receipt] noEvidenceReason=none resolvedValue={'census':'an operator-supplied resolved value (synthetic)'}; cited twice (injectable:show-bare): reason=census probe: a reconcile fed only rf preview reads determination=effect-absent evidence=[the read's receipt,the read's receipt] noEvidenceReason=none resolvedValue=none; cited twice with the operator resolvedValue (injectable:show-bare): reason=census probe: a reconcile fed only rf preview reads determination=effect-absent evidence=[the read's receipt,the read's receipt] noEvidenceReason=none resolvedValue={'census':'an operator-supplied resolved value (synthetic)'}",
+  "R:registrar-runtime":
+    "R:registrar-runtime | NAMED RESIDUAL R-REGISTRAR-RUNTIME, not claimed: each src rf registrar is run once here, with the census's arguments in this process's environment, so a registration whose id, effect class or permissions depend on a registrar's arguments or on the environment is read for that one run only; each registrar's src parameters and the arguments this file states the census passes it are listed | src/workbench/providers/reactivefiber.ts#registerReactiveFiberRender(registry, invoke, workspaceRoot) run once with (a fresh CapabilityRegistry, a seam answering a fresh preview envelope, /workspace/rf-operation-receipt-census); src/workbench/providers/reactivefiber.ts#registerNativeReactiveFiberRender(registry, workspaceRoot) run once with (a fresh CapabilityRegistry, /workspace/rf-operation-receipt-census); environment=this census process's own",
+  "R:self-anchored":
+    "R:self-anchored | NAMED RESIDUAL R-SELF-ANCHORED, not claimed: a requirement in this file's words alone, shortened together with its frozen line, or this file's judging code edited together with the literals it feeds, stays green; the pins whose requirement no outside text holds are listed, measured against the filing | requirements in this file's words alone=G:id:reactivefiber.render.preview, G:bin:nativeReactiveFiberRender, S:src/workflow/reconcile.ts, S:src/workbench/native-evidence.ts, S:src/workflow/runtime.ts, S:docs/workbench/08-lifecycle-and-recovery.md, R:echo:reactivefiber.render.preview, R:fresh-shape, R:unprojected-form, R:probe-context, R:ack-parameters, R:registrar-runtime, R:self-anchored; requirements in the filing's own words=N:statement.3, H:acceptance.3.1, H:acceptance.3.2; judging code (the it.each arguments, the each-liveness lists, the generators and the readers) held by this file alone",
+};
+const PINS = ROWS.flatMap(entry => entry.pins);
+/** EACH-LIVENESS (respin U1): the ids the row cases and the pin cases recorded as their last statement this run, in run order. */
+const REACHED: { readonly rows: string[]; readonly pins: string[] } = { rows: [], pins: [] };
+const ROW_CASE = "row %s carries exactly the pins its outside anchor generates";
+const PIN_CASE = "pin %s";
+
+describe("wb-jwc.6 the rf operation-receipt reconcile read: honesty core, standing leg and gate tripwire", () => {
+  it("reads the owner filing: seven clauses, the gate's four conjuncts, the four surfaces and acceptance.3's two claims", () => {
+    expect([...FILING.clauses.keys()]).toStrictEqual(["statement.1", "statement.2", "statement.3", "acceptance.1", "acceptance.2", "acceptance.3", "acceptance.4"]);
+    expect(FILING.conjuncts).toStrictEqual(["rf operation show", "--idempotency-key", "FOC-ADR-03", "wb-x32's committing decision"]);
+    expect(FILING.surfaces).toStrictEqual(["src/workflow/reconcile.ts", "src/workbench/native-evidence.ts", "src/workflow/runtime.ts", DOCS08]);
+    expect(FILING.honestyClaims).toHaveLength(2);
+  });
+
+  it("maps every filing clause to one judged row or to the PARKED remainder, and every clause row to its own clause", () => {
+    expect(Object.keys(CLAUSE_ROWS)).toStrictEqual([...FILING.clauses.keys()]);
+    const rowIds = ROWS.map(entry => entry.id);
+    for (const [clause, target] of Object.entries(CLAUSE_ROWS)) {
+      if (target === "PARKED") continue;
+      expect(rowIds, `${clause} maps to row ${target}`).toContain(target);
+      expect(ROWS.find(entry => entry.id === target)?.clause, `row ${target} judges ${clause}`).toBe(clause);
+    }
+    expect(Object.keys(GENERATED), "every generated row is a judged row").toStrictEqual(rowIds);
+    expect(CLAUSE_ROWS, "the clause map is the one the filing's own text gives (respin 3 H2)").toStrictEqual(clauseRowsOf(FILING));
+    const clauseRowIds = Object.values(CLAUSE_ROWS);
+    expect(rowIds.filter(id => !clauseRowIds.includes(id)), "the rows no clause maps to are the residual rows an outside anchor calls for (respin 3 H1)").toStrictEqual(residualRowsCalledFor());
+  });
+
+  it("holds the frozen row shape (standing rule 16)", () => {
+    expect(ROWS.map(entry => `${entry.id}:${entry.clause}:${entry.pins.length}`)).toStrictEqual(SHAPE);
+  });
+
+  it.each(ROWS.map(entry => entry.id))(ROW_CASE, rowId => {
+    expect(ROWS.find(entry => entry.id === rowId)?.pins.map(pin => pin.id)).toStrictEqual(GENERATED[rowId]());
+    REACHED.rows.push(rowId);
+  }, 60_000);
+
+  it("holds exactly one frozen line per pin", () => {
+    expect(Object.keys(PIN_LINES)).toStrictEqual(PINS.map(pin => pin.id));
+  });
+
+  it.each(PINS.map(pin => pin.id))(PIN_CASE, async id => {
+    const pin = PINS.find(entry => entry.id === id);
+    if (pin === undefined) throw new Error(`no pin ${id}`);
+    const line = `${pin.id} | ${pin.requirement} | ${await pin.witness()}`;
+    expect(line).toBe(PIN_LINES[id]);
+    REACHED.pins.push(id);
+  }, 60_000);
+
+  it("each-liveness (standing rule 16, respin U1): both it.each sites registered one run-mode case per frozen row and per frozen pin line, in order, and every one reached its last statement", ({ task }) => {
+    const registered: string[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "suite") walk(child.tasks);
+        else if (child.type === "test" && /^(?:row|pin) /.test(child.name)) registered.push(`${child.name}|${child.mode}`);
+      }
+    };
+    walk(task.file.tasks);
+    const rowIds = SHAPE.map(entry => entry.slice(0, entry.indexOf(":")));
+    const pinIds = Object.keys(PIN_LINES);
+    expect(registered, "the run-mode cases the two it.each sites registered").toStrictEqual([...rowIds.map(id => `${ROW_CASE.replace("%s", id)}|run`), ...pinIds.map(id => `${PIN_CASE.replace("%s", id)}|run`)]);
+    expect(REACHED.rows, "the row cases that reached their last statement this run").toStrictEqual(rowIds);
+    expect(REACHED.pins, "the pin cases that reached their last statement this run").toStrictEqual(pinIds);
+  });
+});
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

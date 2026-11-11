@@ -43,8 +43,9 @@
  * seams; its respin (owner ruling R727) brought it under rows A-D as the SCOPE note below requires (A4, B6, C5, D3) and re-pinned T
  * (its label, T4). The census pins the remaining absence, binds that reader and arms the acceptance for the next Pi surface:
  *  T, the trigger. T1 no walked root (PROGRAM_SCANS: src, qa, examples, .agents, .pi, .github, .codex,
- *    .beads/hooks, the tracker's own files (.beads/README.md, config.yaml, metadata.json, .gitignore; its export and interactions
- *    log omitted, R4) and the root's own files - every surface that acts or instructs an agent) names the program, a work package
+ *    .beads/hooks, the tracker's own files (.beads/README.md, config.yaml, metadata.json, .gitignore; its export, the export's
+ *    archive and the interactions log omitted, R4) and the root's own files - every surface that acts or instructs an agent)
+ *    names the program, a work package
  *    or an H2 bead (H2, any case, a key or the program name separated by hyphens, underscores or whitespace), and every path the
  *    git index tracks is held by a T1 root, by a named not-walked residual (NOT_WALKED: R3, R4, R12) or is binary (media/: a NUL
  *    byte, no text to judge);
@@ -52,8 +53,8 @@
  *    T3 Pi's beads reader, driven through a recording seam with the gate's snapshot row closed and ruled in its notes, calls show
  *    alone, keeps the creation title and no description, notes, close-reason or labels, and the reference reader reads no verdict
  *    from what it keeps; T4 the walked roots' files spelling a verdict word (VERDICT_WORDS: ADOPT or REJECT, case-sensitive, at word
- *    bounds) are exactly GATE_READERS, the Pi surfaces that read a gate verdict, and this file imports every one of them (A4, B6,
- *    C5 and D3 drive it).
+ *    bounds; in a script file its code only, comments and JSDoc unread, wb-k888) are exactly GATE_READERS, the Pi surfaces that
+ *    read a gate verdict, and this file imports every one of them (A4, B6, C5 and D3 drive it; the drive record holds them to it).
  *  A, acceptance (a). A1 Pi's store as its tracked export: a floor of rows read, this bead's row read, no row with a gated wp label,
  *    any wp:tsx-h2- label or an rftsx id; A2 no gate text Pi can reach reads ADOPT (no gate row in Pi's store; the producer's gate
  *    row reads no-verdict, the substring count reads ADOPT - F-1); A3 packetViolations, the guard a Pi bead machine must meet, over
@@ -66,13 +67,16 @@
  *    (closure, labels, close reason, substring count, first of many, case-folded); B5 the creation title and every listed
  *    alternative form read no-verdict while the substring count reads ADOPT; B6 the program readiness reader's gate verdict, driven
  *    through its bd seams: the judge over READER_CASES passes it, and it equals the reference's on every B1-B3 and B5 input, on R5's
- *    case variants and on the seven gate-authored inputs of the wb-4nut.5 cut #1 gate's paired probe (PAIRED_INPUTS).
+ *    case variants and on the seven gate-authored inputs of the wb-4nut.5 cut #1 gate's paired probe (PAIRED_INPUTS); on the
+ *    READER_ONLY rows (a text field that is not a string) the reader alone reads unknown (store unreachable) where the reference
+ *    reads a verdict (wb-k888), so a case that swaps in the reference changes them.
  *  C, acceptance (c). The reference compile step compileGated over the vendored gated list: C1 REJECT and DEFER create no bead and
  *    archive the five packets with their verdict; C2 ADOPT creates the five under the epic, each with one `related` edge to the gate
  *    and no family: label; C3 no verdict creates and archives nothing; C4 judgeCompile refuses each mutant (creating without ADOPT,
  *    a skipped or extra archive, a blocks edge, a draft outside the epic, a family: label, a dropped packet); C5 the program
  *    readiness reader's verdict compiles as the reference's (judgeCompile passes it for REJECT, DEFER, ADOPT and no-verdict gates)
- *    and the reader refuses a blocks edge from a packet to its gate: a premise is a `related` edge.
+ *    and the reader refuses a blocks edge from a packet to its gate: a premise is a `related` edge; an unreadable gate (READER_ONLY's
+ *    titled row) reads unknown and compiles nothing, so against the reference's ADOPT the judge names exactly c:packets (wb-k888).
  *  D, acceptance (d). D1 Pi's store holds no program-labelled bead and no family: label; the producer's six program-labelled rows
  *    carry none while rftsx-auqdi reads open; D2 familyViolations over constructed stores; D3 the program readiness reader writes
  *    nothing: over a store whose epic carries a family: label while rftsx-auqdi is open it reads through show and dependents
@@ -84,17 +88,30 @@
  *  F, the owner filing: F1 wb-4nut.4's row in the tracked bead export carries every FILING_CONSTANTS entry and an acceptance whose
  *    "(x) ..." clauses are exactly rows A-D, each label equal to its clause.
  *  M, the matchers: MH1-MH6 hit the H2 family, MW1-MW9 the bd write family, MG1-MG3 the prerequisites.
- *  R, the named residuals, each with a pinned quiet row: R1 R-COMPOSED an id or a bd argv assembled at runtime; R2 R-GENERIC-RUNNER
+ *  R, the named residuals, each with a pinned quiet row: R1 R-COMPOSED an id, a bd argv or a verdict word assembled at runtime
+ *    (the composed verdict word is T4's escape, wb-k888); R2 R-GENERIC-RUNNER
  *    a launch whose command and argv come from data; R3 R-TEST-TREE test/ is not walked (it quotes bd writes and names the program
  *    in censuses, this file included); R4 R-TRACKER-DATA the export and the interactions log are data, not surfaces (the export's
- *    wb-4nut rows name the program); R5 R-CASE-VARIANT a ruling in another letter case reads no-verdict (verbatim); R6
- *    R-ALTERNATIVE-UNLISTED an alternative joined by a word MARKER does not list reads as a marker (the one known false-ADOPT
- *    form); R7 R-DEFER-UNREAD (F-2); R8 R-OTHER-FIELD a marker only in design, acceptance_criteria or close_reason is not read; R9
+ *    wb-4nut rows name the program), and so is the export's archive (wb-294d: the closed rows' bodies in month shards under
+ *    .beads/archive/; every tracked path below it is held by R4 under the export and by no root - the quiet row plants a
+ *    compacting hop's tracker data); R5 R-CASE-VARIANT a ruling in another letter case reads no-verdict (verbatim); R6
+ *    R-ALTERNATIVE-UNLISTED an alternative joined by a word MARKER does not list reads as a marker (a known false-ADOPT form; R13
+ *    is the other); R7 R-DEFER-UNREAD (F-2); R8 R-OTHER-FIELD a marker only in design, acceptance_criteria or close_reason is not read; R9
  *    R-SNAPSHOT the census reads the export and the vendored map, never a live store (a bead filed after the last export is
  *    invisible here: 707 live against 706 exported at the cut); R10 R-OTHER-STORE an H2 bead in another store (a hosted agent's
  *    shell in the rftsx checkout) is invisible to A1; R11 R-BD-INTEGRATION bd's own hook verbs (hooks run, codex-hook) sync the
  *    tracker and are not write spellings; R12 R-PROSE-RECORDS docs/, new-feedback/ and vendor/ are prose and records T1 does not
- *    walk, and G1 reads docs but its receipts, which quote bead titles (a later wb-4nut receipt names the program by its title).
+ *    walk, and G1 reads docs but its receipts, which quote bead titles (a later wb-4nut receipt names the program by its title);
+ *    R13 R-NEGATED-PROSE a negated marker inside prose ('not yet ruled ADOPT') reads ADOPT under the reference and the program
+ *    readiness reader alike (the wb-4nut.5 census pins it as its gate form G08); R14 R-COORDINATED-PIN a pin removed from every
+ *    literal at once (ROWS, IMPL, the roster, the frozen count and every list here) stays green unless something outside this
+ *    file and the roster requires it: the OUTSIDE ANCHORS below hold every delivered pin (rows T to M by the delivered floors,
+ *    R1-R12 by the delivered residual names, rows E and K by wb-ze6u's filing, rows V and X by wb-mdfe's and row N by wb-52th's:
+ *    the CARRY ANCHORS),
+ *    the drive record requires T4's walk and the A4,
+ *    B6, C5 and D3 drives of each walked gate reader, and a single-pin row's describe empties; a pin a later cut adds above
+ *    its row's floor (R13 and R14, wb-k888's), a paired input or an A4 gate state is held by the roster alone (R14 derives
+ *    the held and the quiet pins from the run and the export).
  *  E, the escapes wb-ze6u's filing names (F3), each judged: E01 a path-qualified argv executable, E02 a path-qualified shell
  *    command word, E03 a quoted global-flag value before the verb and E09 an argv array split across lines hit the write family;
  *    E04 the underscore key spelling and E05 the spaced program name hit the H2 family; E06 .beads/README.md and E07
@@ -105,16 +122,31 @@
  *    M7 a skip marker on row D's describe, M8 a guarded return before the T pins' witness compare, M9 a todo in place of P4, I18 a
  *    liveness-only compare under a subject change (K20: a family: label on a non-program export row), I12 a zeroed export floor,
  *    I16 .agents dropped from T1's roots.
+ *  V, the invocation and re-evaluation judges the closing case applies, one control per mutant wb-mdfe's filing names (F1), each
+ *    the closing judge over a constructed model of that mutant: V1 the bypass (a case body comparing the roster's own witness and
+ *    never invoking its IMPL), V2 the bypass beside a planted subject change that the re-evaluation reads.
+ *  X, the escapes wb-mdfe's filing names (F2-F5), each judged: W1-W8 the command-array, quoted-verb, continued-line, runner-argv,
+ *    spread, computed-flag-value, .exe and env-prefix write spellings hit the write family; H1-H5 the camelCase key, the dotted
+ *    program name, the unpadded key, the PascalCase gate key and the dotted bead id hit the H2 family; G-1-G-3 the underscore and
+ *    spaced spellings hit the prerequisite family; TR1 the tracker's own root reads only the files the git index tracks, so the
+ *    bd runtime files the filing lists are never read.
+ *  N, the end judge the closing case and the afterAll hook apply, and the end shape this file's harness keeps, one control per
+ *    guarded return wb-52th's filing names (F1): L2-DRRET (a return in the drive record after its first compare) and L2-JSRET
+ *    (one in the judged set after its frozen-shape compare), each judged as the end record that mutant leaves - the case it cuts
+ *    short is unended at the closing case and at the afterAll hook - and as this file's source with that case's end record moved
+ *    above the return, which the end shape reads out of place.
  * FOLLOW-UP (wb-ze6u, the R694 follow-up of landing 307; cut #1 on trunk 9f6b726, respun under owner ruling R760 on trunk
  * 24e0d5b over wb-4nut.5's landed rows T4, A4, B6, C5 and D3): the gate's LEG 2 survivors of wb-4nut.4 cut #1
  * are cured here - F1 by REGISTRATION, F2 by the OUTSIDE ANCHORS, F3 by row E - and row K holds a control per named mutant.
  * REGISTRATION (F1): each pin records its witness in REACHED after its compare. The judged-set case, registered first, reads the
- * collected vitest task tree: the registered tests of this file are exactly the roster's list, once each and in order, each in
- * run mode and not inverted, so a skip marker, a skip-if, an options-object skip, a todo or an inverted case anywhere (the
+ * collected vitest task tree: the registered tests of this file are exactly the roster's list and, after it, the drive record
+ * case (wb-k888), once each and in order, each in run mode and not inverted, so a skip marker, a skip-if, an options-object
+ * skip, a todo or an inverted case anywhere (the
  * closing case's own included) reds before any pin runs. The closing case, registered last, reads the tree again after the run
  * (every other case ran) and holds REACHED to the roster: every pin reached its compare, in roster order, and every reached
  * witness equals its roster witness - a second compare, so a liveness-only compare at a pin no longer leaves its witness held by
- * one line. An afterAll hook holds the closing case to its end, so a runtime skip or a guarded return there reds the file too.
+ * one line. An afterAll hook holds the closing case to its end, so a runtime skip or a guarded return there reds the file too
+ * (since wb-52th it holds every harness case to its end: the END RECORD below).
  * OUTSIDE ANCHORS (F2): rows T to R are held to the frozen shape and the residual names wb-4nut.4's delivery recorded in the
  * tracked export (the first "Frozen shape" and "named residuals" statements of its notes; the shape as a floor per row, so a later
  * cut may add a pin but none may drop below the delivered count), rows T to D to the frozen shape wb-4nut.5's delivery recorded
@@ -127,16 +159,79 @@
  * (SCRIPTLESS_ROOTS; CLAIMLESS_ROOTS, with docs added); and every walk holds every tracked file below its root, so an emptied or
  * narrowed walk reds whatever its floor. A1 and D1 (the export's rows), T4 and G1 (the walked trees), T3 (readBeadsWork itself)
  * and A4, B6, C5 and D3 (readBeadsProgramReadiness itself) keep their own anchors.
+ * THE DRIVE RECORD (wb-k888, the landing-381 F18 class): an anchor of a pin's witness is no anchor of the pin's reading - a
+ * case that stops walking or driving keeps its pin, its row's count and, with its roster witness edited, its compare - so each
+ * case runs with its pin recorded, readProgram files the pin's drive and T4's walk its walker, and the drive record case,
+ * registered after the pins, holds every gate reader the walk finds to a T pin's walk and a drive from each of rows A, B, C
+ * and D.
+ * CARRY (wb-mdfe, the R694 follow-up of landing 432, hop 2 of the landing-307 chain; cut #1 re-cut by reference over wb-k888's
+ * landed rows R13, R14 and the drive record, landing 498): its lead F1 is cured by INVOCATION, its rides F2-F4 by the widened
+ * families row X judges and F5 by the TRACKED ROOT.
+ * INVOCATION (F1): REACHED is written by the case body from the witness it compared, so a body that compares the roster's own
+ * witness (const witness = rosterWitness(pin)) held both compares by construction and never ran its IMPL. The drive record reds
+ * that body for every pin at once (no case drives a gate reader), but a one-line bypass that leaves rows A-D and T4 invoking (T1's
+ * alone, say) kept its compares and hid a planted subject change before this cure. Now IMPL is CASES, each
+ * case wrapped: the wrapper records the witness its case returned in INVOKED at that return (a body that never invokes its IMPL
+ * leaves the pin uninvoked), and the closing case runs every case of CASES once more itself, outside the body and the wrapper, and
+ * holds the fresh witnesses to the roster as well - three evaluations, so a one-site bypass at the body, the wrapper or the
+ * re-evaluation cannot hide a subject change the other two read. CASES and IMPL are frozen: no later line swaps a case.
+ * FAMILIES (F2-F4): the write family reads a launch array whose first element is the executable (W1, W4), a quoted verb (W2), a
+ * backslash-newline continuation (W3), a spread or a call-valued flag among the leading elements (W5, W6) and the .exe suffix
+ * (W7); the H2 family separates a key, the program name or a bead id by nothing or a dot as well and reads an unpadded key
+ * (H1-H5); the prerequisite family reads the pin document and the mapping key separated by an underscore, a space, a dot or
+ * nothing (G-1-G-3). The current tree spells none of them: T1, T2 and G1 read as before.
+ * TRACKED ROOT (F5): the tracker's own root reads only its own files the git index tracks; bd's runtime files beside them
+ * (daemon logs, state files, .env: .beads/.gitignore ignores each) are machine data, so a checkout with a live store reads as a
+ * clean one.
+ * Rows V and X are held to wb-mdfe's filing in the tracked export (its first F1-F5 bullets): the findings it routes are exactly
+ * CARRY_CURES', each of F2-F4 cured by the pins named as its bullet names them, F1 by one control per mutant its cure names and
+ * F5 by one pin per cure candidate, whose model drops every runtime file the bullet lists.
+ * END RECORD (wb-52th, the R694 follow-up of landing 498, hop 3 of the landing-381 chain): its lead F1 is cured here, its rides
+ * F2 and F3 in the program readiness census (test/workbench-beads-program-readiness.test.ts). Only the closing case was held to
+ * its end: a guarded return in the drive record after its first compare (L2-DRRET) or in the judged set after its frozen-shape
+ * compare (L2-JSRET) kept the file green and switched off every compare after it - the drive record's only kill of an undriven
+ * gate reader (L2-DRNEW), the judged set's outside anchors. Now each harness case writes its own title to ENDED on its last line;
+ * the closing case holds the two cases before it to their end and the afterAll hook every one of them, once each and in order
+ * (endGaps). The END SHAPE, read from this file's code by the TypeScript AST in the judged set and again in the closing case,
+ * holds each harness case's end record to that case's last statement, spelled once, ENDED to those three pushes and the end
+ * judge's reads (any other spelling of it - a splice, an alias, a length write - is a stray), the closing case to its hold of
+ * the two before it and the afterAll hook's callback to the one statement judging ENDED against HARNESS, so an end record moved
+ * above a return, written twice, written another way or dropped reds the file, and a return in one reader of the shape leaves
+ * the other reading it. Row N holds one control per guarded return the filing's first F1 bullet names in the tracked export (an id
+ * ending RET): the end judge over the record that mutant leaves at either hold, and the end shape over this file with that
+ * case's end record moved above the mutant's return.
+ * GUARDED COMPARES (wb-2fb4, the R694 follow-up of landing 590, hop 4 of the landing-381 chain: its F3 rides here, its lead F1 in
+ * the program readiness census): a guard that never fires switched a compare off without a return or a skip - GL2-DRNEW-DEADWRAP
+ * wrapped the drive record's drive compare in `if (readers.length < 0)`, GL2-FLOOR900-DEADWRAP the judged set's export-floor
+ * compare in `if (rows.length < 0)` - and every case still ran to its end. Now the end shape reads each harness case's compares
+ * as well: every `expect` in its callback heads one of its own top-level statements (one under an if, a loop, a try, a nested
+ * function or an operand, or aliased, is a guarded compare), and the count of those statements is held to HARNESS_COMPARES, which
+ * the out-of-file roster mirrors, so a compare dropped from a case or moved into a helper reds too. The judged set models each
+ * dead-wrap mutant the landing-590 verdict's F3 line names in wb-52th's tracked export notes (wb-2fb4's filing carries that line
+ * byte-identically; its own row is not in the export at this cut's base) on this file and holds the gaps each reads.
  * NOT CLAIMED: an edit of this file together with the roster and the export rows it reads; every case of this file skipped at
  * once (vitest then runs no case and no hook; the delivered-file marker scan is the backstop); the exclusion sets, NOT_WALKED and
  * each scan's anchor token are literals here; a liveness-only compare at a pin with no subject change (I18 alone) reads the same
- * witness and stays green - what it used to hollow, the single compare, now has a second. The out-of-file roster
+ * witness and stays green - what it used to hollow, the single compare, now has two more. Of the evaluations: a one-site bypass
+ * with no subject change stays green at the re-evaluation, and at the wrapper or at a body that also writes INVOKED itself while
+ * the drive record's cases still run (one that stops every case reds the drive record; the plain body bypass reds, uninvoked),
+ * the other evaluations still reading the subject; a coordinated edit of the re-evaluation with the wrapper, or with such a body,
+ * on the same terms; and an edit of the case table itself (one case or every case made to return the roster's witness)
+ * or of a helper the cases share (familyScan's hits emptied, say), which all three evaluations read alike. The root's own untracked
+ * files are still read (a plant there is seen); only the tracker's own
+ * root is held to the index, so an untracked file there is never read, whatever it names. A launch whose executable or verb is
+ * computed stays R1 and R2, and a family spelling outside the ones listed is not claimed. Of the end record: the end shape
+ * reads the harness by its names (ENDED, HARNESS, endGaps, expect, it, afterAll and the three title constants), so a
+ * coordinated edit of the shape's reader with the harness, or a rename of both, stays green; a guard inside a helper a harness
+ * case calls, or a compare whose matcher is weakened in place, keeps its case's count and is not claimed (wb-2fb4: a guard
+ * around a compare in the case itself is read). The out-of-file roster
  * test/fixtures/h2-bead-graph-roster.json holds every row's id, label and pins, every pin's witness, the pinned constants and the
  * vendored producer lines; FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal.
  * SCOPE: readGateVerdict, packetViolations, compileGated and familyViolations are the rule a future Pi bead machine must meet, not a
  * bead machine: nothing here spawns bd, writes a store or reads a live one. A later cut that adds a Pi surface reading the gate or
  * writing beads brings it under rows A-D and re-pins T. wb-4nut.5's respin did so for the program readiness reader (fake bd
- * seams, no live store): a later gate reader joins GATE_READERS and the A4, B6, C5 and D3 drives; a bead writer re-pins T again.
+ * seams, no live store): a later gate reader joins GATE_READERS and the A4, B6, C5 and D3 drives (the drive record reds until it
+ * does); a bead writer re-pins T again.
  *
  * Display paths added: none. Test-only: nothing is spawned or written; the repository files read are only read.
  */
@@ -144,9 +239,10 @@ import { createHash } from "node:crypto";
 import { type Dirent, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import ts from "typescript";
 import { afterAll, describe, expect, it } from "vitest";
 import { type BeadsReadClient, type BeadsShowCall, type BeadsShowResult, readBeadsWork } from "../src/workbench/beads-observer.js";
-import { type BeadsProgramClient, type BeadsProgramReadiness, readBeadsProgramReadiness } from "../src/workbench/beads-program-readiness.js";
+import { type BeadsProgramClient, type BeadsProgramReadiness, readBeadsProgramReadiness, STORE_UNREACHABLE } from "../src/workbench/beads-program-readiness.js";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
 
 type Json = null | boolean | number | string | Json[] | { [key: string]: Json };
@@ -169,6 +265,69 @@ const FOLLOW_UP_ROWS: readonly string[] = ["E", "K"];
 const READER_CUT = "wb-4nut.5";
 /** The rows that cut re-pinned, in order (its statement holds rows G to R unchanged). */
 const READER_CUT_ROWS: readonly string[] = ["T", "A", "B", "C", "D"];
+/** The R694 follow-up of landing 432 (wb-ze6u's gate verdict F1-F5); its filing in the tracked export anchors rows V and X. */
+const CARRY = "wb-mdfe";
+/** The rows the carry added after the follow-up's. */
+const CARRY_ROWS: readonly string[] = ["V", "X"];
+interface Cure {
+  readonly finding: string;
+  readonly pins: readonly string[];
+  /** What the finding's bullet names for its pins to cure: its item ids (a pattern), the mutants its cure is red-first against,
+   * or its cure candidates. */
+  readonly named: { readonly ids: string } | "mutants" | "candidates";
+}
+/** The findings the carry's filing routes (F1 leads; F2-F5 ride), each with the pins that cure it, in row order. */
+const CARRY_CURES: readonly Cure[] = [
+  { finding: "F1", pins: ["V1", "V2"], named: "mutants" },
+  { finding: "F2", pins: ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8"], named: { ids: "W\\d+" } },
+  { finding: "F3", pins: ["H1", "H2", "H3", "H4", "H5"], named: { ids: "H\\d+" } },
+  { finding: "F4", pins: ["G-1", "G-2", "G-3"], named: { ids: "G-\\d+" } },
+  { finding: "F5", pins: ["TR1"], named: "candidates" },
+];
+/** The R694 follow-up of landing 498 (wb-k888's gate verdict F1-F3); its filing in the tracked export anchors row N. */
+const END_CARRY = "wb-52th";
+/** The row the end carry added after the carry's. */
+const END_CARRY_ROWS: readonly string[] = ["N"];
+/** The finding the end carry's filing routes here (F1 leads), with the pins that cure it: one control per guarded-return mutant
+ * its bullet names (an id ending RET). */
+const END_CURES: readonly Cure[] = [{ finding: "F1", pins: ["L2-DRRET", "L2-JSRET"], named: { ids: "L2-[A-Z]+RET" } }];
+/** The end carry's rides, cured in the program readiness census (its D3 reach scan and its abort cases), never here. */
+const END_ELSEWHERE: readonly string[] = ["F2", "F3"];
+/** The landing-590 verdict on the end carry's cut, in that bead's notes in the tracked export: its F1 and F3 lines are wb-2fb4's
+ * filing byte-identically (wb-2fb4's own row is not yet in the export at this cut's base), and its F3 line names the
+ * never-firing-guard mutants of this file's harness. F1 is cured in the program readiness census, never here. */
+const GUARD_VERDICT = END_CARRY;
+/** One never-firing-guard mutant (wb-2fb4 F3): a compare of a harness case wrapped in a guard that never fires. */
+interface DeadWrap {
+  /** The mutant's id as the verdict's F3 line names it. */
+  readonly id: string;
+  /** The harness case it wraps, by its title constant. */
+  readonly harness: string;
+  /** The opening text of the compare it wraps, a top-level statement of that case. */
+  readonly compare: string;
+  /** The condition of the guard, which never holds. */
+  readonly guard: string;
+  /** The end shape this file reads with that compare wrapped. */
+  readonly reads: readonly string[];
+}
+/** The verdict's dead-wrap mutants, each modeled on this file: the drive record's drive compare and the judged set's export-floor
+ * compare, each wrapped as the verdict wraps it. */
+const DEAD_WRAPS: readonly DeadWrap[] = [
+  {
+    id: "GL2-DRNEW-DEADWRAP",
+    harness: "DRIVE_RECORD",
+    compare: "expect(readers.map(",
+    guard: "readers.length < 0",
+    reads: ["DRIVE_RECORD compares x3", "DRIVE_RECORD guarded compare x1"],
+  },
+  {
+    id: "GL2-FLOOR900-DEADWRAP",
+    harness: "JUDGED_SET",
+    compare: "expect(exportFloorGaps(EXPORT_FLOOR,",
+    guard: "rows.length < 0",
+    reads: ["JUDGED_SET compares x23", "JUDGED_SET guarded compare x1"],
+  },
+];
 
 /** The tracker's executable name, composed so that no line of this file spells a bd command. */
 const BD = ["b", "d"].join("");
@@ -187,11 +346,14 @@ const TEXT_FIELDS: readonly string[] = ["title", "description", "notes"];
 const ARCHIVE_VERDICTS: readonly string[] = ["DEFER", "REJECT"];
 
 /** T1's family, in any case: the program's directory and label name, its work-package keys and labels (tsx-h2-00 to -05 and
- * tsx-h2-adr) and the six bead ids of its map. A key or the program name may be separated by hyphens, underscores or whitespace
- * (TSX_H2_01, 'harness2 reactive evolution': wb-ze6u E04, E05), and an identifier may run on past a key with "_" or "-". */
-const H2 = /harness2[-_\s]+reactive[-_\s]+evolution|tsx[-_\s]h2[-_\s](?:0[0-5]|adr)(?![a-z0-9])|rftsx[-_](?:bhmrd|7sy4c|8er6b|e9a5e|auqdi|rupqh)(?![a-z0-9])/i;
-/** G1's family: the gate's prerequisites - the API pin document, the vocabulary mapping and the pin's audit test. */
-const GATE_PREREQUISITES = /API-PIN|TSX-FED-01|harness2-api-pin/i;
+ * tsx-h2-adr) and the six bead ids of its map. A key or the program name may be separated by hyphens, underscores, whitespace or
+ * dots (TSX_H2_01, 'harness2 reactive evolution': wb-ze6u E04, E05; harness2.reactive.evolution: wb-mdfe H2) or by nothing
+ * (tsxH201, TsxH2Adr: H1, H4), a key's number may drop its padding (TSX-H2-1: H3), a bead id's prefix may end in a dot (rftsx.rupqh:
+ * H5), and an identifier may run on past a key with "_" or "-". */
+const H2 = /harness2[-_\s.]*reactive[-_\s.]*evolution|tsx[-_\s.]?h2[-_\s.]?(?:0?[0-5]|adr)(?![a-z0-9])|rftsx[-_.]?(?:bhmrd|7sy4c|8er6b|e9a5e|auqdi|rupqh)(?![a-z0-9])/i;
+/** G1's family: the gate's prerequisites - the API pin document, the vocabulary mapping and the pin's audit test, each name's
+ * parts separated by a hyphen, an underscore, whitespace, a dot or nothing (API_PIN.md, TSX_FED_01, 'api pin': wb-mdfe G-1-G-3). */
+const GATE_PREREQUISITES = /API[-_\s.]?PIN|TSX[-_\s.]?FED[-_\s.]?0?1|harness2[-_\s.]?api[-_\s.]?pin/i;
 /** T2's verb family: every bd verb that writes a store, makes one or brings rows into one. */
 const WRITE_VERBS: readonly string[] = [
   "create",
@@ -229,19 +391,24 @@ const VERB_GROUP = WRITE_VERBS.join("|");
 const FLAG_GROUP = WRITE_FLAGS.join("|");
 /** A path that may qualify the executable (/usr/local/bin/, ./, node_modules/.bin/): wb-ze6u E01, E02. */
 const EXEC_PATH = "(?:[\\w.~-]*/)*";
+/** The executable: bd, perhaps path-qualified, perhaps with the .exe suffix (wb-mdfe W7). */
+const EXEC = `${EXEC_PATH}${BD}(?:\\.exe)?`;
+/** A call's argument list, one nesting level deep (join("/x", "y.db")): a computed element (wb-mdfe W6). */
+const CALL = "\\((?:[^()]|\\([^()]*\\))*\\)";
+/** A launch array's leading elements before its verb: a spread (wb-mdfe W5), or a flag element perhaps followed by one value
+ * element - quoted, a bare name or a call (W6). */
+const LEADING = `(?:\\.\\.\\.[\\w.$]+(?:${CALL})?\\s*,\\s*|["'\`]-[^"'\`]*["'\`]\\s*,\\s*(?:(?:["'\`][^-"'\`][^"'\`]*["'\`]|[\\w.$]+(?:${CALL})?)\\s*,\\s*)?)*`;
 /** A shell-form bd command word: bd not inside an identifier, perhaps quoted and path-qualified, its global flags (with their
- * values, quoted or bare: E03), then a write verb. */
+ * values, quoted or bare: E03), then a write verb, perhaps quoted (wb-mdfe W2). */
 const WRITE_SHELL = new RegExp(
-  `(?<![\\w./-])["']?${EXEC_PATH}${BD}["']?(?:\\s+-{1,2}[A-Za-z][\\w-]*(?:[=\\s](?!-)(?:"[^"\\n]*"|'[^'\\n]*'|[^\\s'"\`]+))?)*\\s+(${VERB_GROUP})(?![\\w-])`,
+  `(?<![\\w./-])["']?${EXEC}["']?(?:\\s+-{1,2}[A-Za-z][\\w-]*(?:[=\\s](?!-)(?:"[^"\\n]*"|'[^'\\n]*'|[^\\s'"\`]+))?)*\\s+(?<quote>["']?)(?<verb>${VERB_GROUP})\\k<quote>(?![\\w-])`,
 );
-/** An argv-form launch: the quoted, perhaps path-qualified executable, then its leading flag elements (each perhaps with one value
- * element), then a quoted write verb. It is read over the whole text, so an array split across lines (E09) is one launch. */
-const WRITE_ARGV = new RegExp(
-  `["'\`]${EXEC_PATH}${BD}["'\`]\\s*,\\s*\\[\\s*(?:["'\`]-[^"'\`]*["'\`]\\s*,\\s*(?:(?:["'\`][^-"'\`][^"'\`]*["'\`]|[\\w.$]+)\\s*,\\s*)?)*["'\`](${VERB_GROUP})["'\`]`,
-  "g",
-);
+/** An argv-form launch: the quoted executable then its argv array, or a launch array whose first element is the executable
+ * (wb-mdfe W1, and a runner's argv such as npx's: W4); then the leading elements, then a quoted write verb. It is read over the
+ * whole text, so an array split across lines (E09) is one launch. */
+const WRITE_ARGV = new RegExp(`(?:["'\`]${EXEC}["'\`]\\s*,\\s*\\[|\\[\\s*["'\`]${EXEC}["'\`]\\s*,)\\s*${LEADING}["'\`](${VERB_GROUP})["'\`]`, "g");
 /** A bd command word on a line that also carries a write flag, in either form. */
-const WRITE_FLAG = new RegExp(`(?:(?<![\\w./-])["']?${EXEC_PATH}${BD}["']?\\s|["'\`]${EXEC_PATH}${BD}["'\`]\\s*,).*?(${FLAG_GROUP})(?![\\w-])`);
+const WRITE_FLAG = new RegExp(`(?:(?<![\\w./-])["']?${EXEC}["']?\\s|["'\`]${EXEC}["'\`]\\s*,).*?(${FLAG_GROUP})(?![\\w-])`);
 /** What follows a marker when it is the first member of an alternative: separators, at most one joining word, a verdict word. */
 const SEPARATORS = "[\\s()\\[\\],;:/|'\"`]*";
 /** A ruling marker: "ruled ADOPT" or "ruled REJECT" verbatim, at a word start, the verdict word ending where no letter, digit, "_"
@@ -253,6 +420,31 @@ const VERDICT_WORDS = /(?<![\w-])(?:ADOPT|REJECT)(?![\w-])/;
 /** T4's binding: every Pi surface that reads a gate verdict (wb-4nut.5's program readiness reader). Each is imported here and
  * driven by A4, B6, C5 and D3; a walked file spelling a verdict word outside this list reds T4. */
 const GATE_READERS: readonly string[] = ["src/workbench/beads-program-readiness.ts"];
+/** T4 reads a script file's code only (wb-k888, the landing-381 F20 false red: a comment spelling REJECT read as a reader): the
+ * tokens the TypeScript parser reads, comments and JSDoc left out. Any other walked file is read whole: an instruction file
+ * that spells a verdict word reads as a reader. */
+const SCRIPT_FILE = /\.(?:[cm]?[jt]s|[jt]sx)$/;
+function codeOf(path: string, text: string): string {
+  const kind = path.endsWith(".tsx") ? ts.ScriptKind.TSX : path.endsWith(".jsx") ? ts.ScriptKind.JSX : /\.[cm]?js$/.test(path) ? ts.ScriptKind.JS : ts.ScriptKind.TS;
+  const file = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, kind);
+  const tokens: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isJSDoc(node)) return;
+    const children = node.getChildren(file);
+    if (children.length === 0) tokens.push(node.getText(file));
+    else for (const child of children) visit(child);
+  };
+  visit(file);
+  return tokens.join(" ");
+}
+/** T4's reading of one text: a verdict word in its code (a script file) or anywhere in it (any other walked file). */
+const spellsVerdict = (path: string, text: string): boolean => VERDICT_WORDS.test(text) && (!SCRIPT_FILE.test(path) || VERDICT_WORDS.test(codeOf(path, text)));
+/** The drive record (wb-k888, the landing-381 F18 coordinated hollows): the pin whose case is running, each gate reader's
+ * driving pins by the reader's path, and the pins that ran T4's walk. The closing case holds rows T and A-D to the walk. */
+let running: string | undefined;
+const DRIVES = new Map<string, Set<string>>();
+const WALKERS = new Set<string>();
+const PROGRAM_READER = "src/workbench/beads-program-readiness.ts";
 /** B6's paired inputs: the seven gate-authored gate texts of the wb-4nut.5 cut #1 gate's paired probe (PREP, run g10-gate-s62),
  * verbatim; the probe compared that cut's reader with readGateVerdict on them and read six divergences (owner ruling R727). */
 const PAIRED_INPUTS: readonly { readonly id: string; readonly fields: JsonObject }[] = [
@@ -265,6 +457,10 @@ const PAIRED_INPUTS: readonly { readonly id: string; readonly fields: JsonObject
   { id: "padded-crlf", fields: { notes: "Owner ruling recorded.\r\n  ruled ADOPT  \r\nAPI-PIN.md landed." } },
 ];
 
+/** B6 and C5's reader-only rows (wb-k888, the landing-381 F19 liveness-only substitutions): gate texts the store returns with a
+ * text field that is not a string. The program reader reads them unknown (store unreachable); the reference, which reads string
+ * fields only, reads a verdict. Only the reader itself reads these rows, so a case that swaps in the reference changes them. */
+const READER_ONLY: readonly JsonObject[] = [{ notes: 7 }, { title: "gate - ruled ADOPT", notes: 7 }];
 /** sha256 of each vendored block, newline-terminated lines: `git -C <ReactiveFiberTSXSDK> show 76bbbffd9d4a:<path> | sed -n '<lines>p'`. */
 const EXCERPT_SHA256: Readonly<Record<string, string>> = {
   storeRead: "6caa3b6c1b914cacb0ba4e723baf081fd3702565fa6b5a3971b10a1eaceec746",
@@ -290,14 +486,21 @@ interface ScanRoot {
   readonly omit: readonly string[];
   /** Read only the root's own regular files, never a directory below it (as "." always is). */
   readonly own?: boolean;
+  /** Read only the files the git index tracks: the tracker's own root, whose untracked neighbours are bd's runtime data (wb-mdfe F5). */
+  readonly tracked?: boolean;
 }
 /** The tracker's data (R4): the export and the interactions log, never a surface. */
 const TRACKER_DATA: readonly string[] = [".beads/issues.jsonl", ".beads/interactions.jsonl"];
+/** The export's archive (wb-294d): the month shards its compaction moves the closed rows' bodies into, which every export reader reads
+ * back through the rehydrating reader. A tracked path below it is the export's data: R4 holds it under the export (TRACKER_DATA[0])
+ * and no root walks it, so a checkout whose hop committed the shards classifies as one whose export is whole. */
+const EXPORT_ARCHIVE = ".beads/archive";
 /** T1's roots: every surface that acts or tells an agent what to do. Each floor sits below the count measured at base 7718651
  * (src 115, qa 67, examples 7, .agents 2, .pi 1, .github 2, .codex 2, .beads/hooks 5, the root's own files 27; the tracker's own
  * files 4 at 9f6b726), so an emptied walk reds and an additive change does not; "." and an own root read their own regular files
- * (never .git) and nothing below them - the tracker's own root never descends into a local store. docs/, new-feedback/ and vendor/
- * are prose and records, not walked here (residual R12). */
+ * (never .git) and nothing below them - the tracker's own root never descends into a local store, and reads only the own files
+ * the git index tracks (wb-mdfe F5: bd's runtime files beside them are data). docs/, new-feedback/ and vendor/ are prose and
+ * records, not walked here (residual R12). */
 const PROGRAM_SCANS: readonly ScanRoot[] = [
   { pin: "T1", root: "src", floor: 100, anchorFile: "workbench/beads-observer.ts", anchorToken: "BeadsReadClient", omit: [] },
   { pin: "T1", root: "qa", floor: 50, anchorFile: "workbench/live-furnace-vc4-launch.mjs", anchorToken: "'init'", omit: [] },
@@ -307,7 +510,7 @@ const PROGRAM_SCANS: readonly ScanRoot[] = [
   { pin: "T1", root: ".github", floor: 2, anchorFile: "workflows/ci.yml", anchorToken: "runs-on", omit: [] },
   { pin: "T1", root: ".codex", floor: 2, anchorFile: "hooks.json", anchorToken: `${BD} codex-hook`, omit: [] },
   { pin: "T1", root: ".beads/hooks", floor: 5, anchorFile: "pre-commit", anchorToken: `${BD} hooks run`, omit: [] },
-  { pin: "T1", root: ".beads", floor: 3, anchorFile: "README.md", anchorToken: "AI-Native Issue Tracking", omit: ["issues.jsonl", "interactions.jsonl"], own: true },
+  { pin: "T1", root: ".beads", floor: 3, anchorFile: "README.md", anchorToken: "AI-Native Issue Tracking", omit: ["issues.jsonl", "interactions.jsonl", "archive"], own: true, tracked: true },
   { pin: "T1", root: ".", floor: 20, anchorFile: "package.json", anchorToken: '"extensions"', omit: [] },
 ];
 /** T2's script roots, Markdown never read (instruction text, residual R3's sibling); its own literal, so no row borrows T1's. */
@@ -338,7 +541,8 @@ const CLAIMLESS_ROOTS: readonly string[] = [".github", ".codex", ".beads/hooks",
 const CLAIM_ROOTS: readonly string[] = ["docs"];
 /** The tracked paths no T1 root holds, by the named residual that leaves them unwalked: a top-level directory or a file. */
 const NOT_WALKED: Readonly<Record<string, readonly string[]>> = { R3: ["test"], R4: TRACKER_DATA, R12: ["docs", "new-feedback", "vendor"] };
-/** Row R's pins and the residual each names, held to the list wb-4nut.4's delivery recorded in the export. */
+/** Row R's pins and the residual each names, held to the list wb-4nut.4's delivery recorded in the export, then the residuals
+ * wb-k888 adds after it (ADDED_RESIDUALS). */
 const RESIDUALS: readonly { readonly pin: string; readonly name: string }[] = [
   { pin: "R1", name: "R-COMPOSED" },
   { pin: "R2", name: "R-GENERIC-RUNNER" },
@@ -352,7 +556,12 @@ const RESIDUALS: readonly { readonly pin: string; readonly name: string }[] = [
   { pin: "R10", name: "R-OTHER-STORE" },
   { pin: "R11", name: "R-BD-INTEGRATION" },
   { pin: "R12", name: "R-PROSE-RECORDS" },
+  { pin: "R13", name: "R-NEGATED-PROSE" },
+  { pin: "R14", name: "R-COORDINATED-PIN" },
 ];
+/** The residuals the R694 follow-up of wb-4nut.5's landing 381 adds after the delivered list (wb-k888: F21's second known
+ * false-ADOPT form, F18's coordinated pin); a later cut may add a residual after them, never drop or reorder a delivered one. */
+const ADDED_RESIDUALS: readonly string[] = ["R-NEGATED-PROSE", "R-COORDINATED-PIN"];
 /** T2's roster: every bd write spelling of the script roots at base 7718651, as "<file> <verb> x<lines>". */
 const WRITE_ROSTER: readonly string[] = [".gitignore init x1", "qa/workbench/live-furnace-vc4-launch.mjs init x4"];
 /** A2/R4's floor on the export's rows (706 at base 7718651). */
@@ -429,8 +638,8 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "R",
-    label: "the named residuals R1-R12 stay pinned quiet",
-    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12"],
+    label: "the named residuals R1-R14 stay pinned quiet",
+    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14"],
   },
   {
     id: "E",
@@ -441,6 +650,21 @@ const ROWS: readonly Row[] = [
     id: "K",
     label: "the registration, reached-record, floor and surface judges this census applies to its own run flag a constructed model of each mutant wb-ze6u's filing names",
     pins: ["M1", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "I18", "I12", "I16"],
+  },
+  {
+    id: "V",
+    label: "the invocation and re-evaluation judges the closing case applies flag a constructed model of each bypass wb-mdfe's filing names: the case body comparing the roster's own witness, alone and beside a planted subject change",
+    pins: ["V1", "V2"],
+  },
+  {
+    id: "X",
+    label: "the escapes wb-mdfe's filing names are judged: its write, H2 and prerequisite spellings hit their families, and the tracker's own root reads only the files the git index tracks, never the bd runtime files it lists",
+    pins: ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8", "H1", "H2", "H3", "H4", "H5", "G-1", "G-2", "G-3", "TR1"],
+  },
+  {
+    id: "N",
+    label: "the end judge the closing case and the afterAll hook apply, and the end shape this file's harness keeps, flag a constructed model of each guarded return wb-52th's filing names: the harness case it cuts short reads unended, and its end record moved above the return reads out of place",
+    pins: ["L2-DRRET", "L2-JSRET"],
   },
 ];
 
@@ -527,12 +751,19 @@ const constants = (): Json =>
     pairedInputs: PAIRED_INPUTS,
     families: { h2: H2.source, prerequisites: GATE_PREREQUISITES.source, marker: MARKER.source, verdictWords: VERDICT_WORDS.source },
     trackerData: TRACKER_DATA,
+    exportArchive: EXPORT_ARCHIVE,
     scriptlessRoots: SCRIPTLESS_ROOTS,
     claimlessRoots: CLAIMLESS_ROOTS,
     claimRoots: CLAIM_ROOTS,
     notWalked: NOT_WALKED,
     residuals: RESIDUALS,
     followUpRows: FOLLOW_UP_ROWS,
+    carryRows: CARRY_ROWS,
+    carryCures: CARRY_CURES,
+    endCarryRows: END_CARRY_ROWS,
+    endCures: END_CURES,
+    endElsewhere: END_ELSEWHERE,
+    harnessCompares: HARNESS_COMPARES,
   });
 
 // --- the walk ---------------------------------------------------------------------------------------------------------
@@ -573,11 +804,18 @@ function ownFiles(directory: string): string[] {
   }
 }
 const isOwnRoot = (scan: ScanRoot): boolean => scan.root === "." || scan.own === true;
-/** A root's files: the whole tree below it, or for "." and an own root its own regular files, but the omitted subtrees and files. */
-function filesOf(scan: ScanRoot): string[] {
+/** A walk's rule over a listing of absolute paths: the omitted subtrees and files are dropped and, for a tracked root, every path
+ * the git index does not track (wb-mdfe F5; TR1 applies the rule to a constructed listing too). */
+function walkOf(scan: ScanRoot, listing: readonly string[], tracked: readonly string[]): string[] {
   const base = join(REPO, scan.root);
   const omitted = scan.omit.map(path => join(base, path));
-  return (isOwnRoot(scan) ? ownFiles(base) : filesBelow(base)).filter(file => !omitted.some(path => file === path || file.startsWith(`${path}/`)));
+  const indexed = new Set(tracked.map(path => join(REPO, path)));
+  return listing.filter(file => !omitted.some(path => file === path || file.startsWith(`${path}/`)) && (scan.tracked !== true || indexed.has(file)));
+}
+/** A root's files: the whole tree below it, or for "." and an own root its own regular files, under the walk's rule. */
+function filesOf(scan: ScanRoot, tracked: readonly string[]): string[] {
+  const base = join(REPO, scan.root);
+  return walkOf(scan, isOwnRoot(scan) ? ownFiles(base) : filesBelow(base), tracked);
 }
 
 // --- the git index ----------------------------------------------------------------------------------------------------
@@ -642,19 +880,21 @@ interface Surface {
   readonly notWalked: Record<string, string[]>;
 }
 /** A family's surface against the git index: every tracked path is held by one of its roots, by a NOT_WALKED residual (recorded by
- * its member) or is binary (recorded by its top-level directory); any other tracked path is unclassified. */
+ * its member; a path below the export's archive by the export, wb-294d) or is binary (recorded by its top-level directory); any other
+ * tracked path is unclassified. Each record lists its members in name order, so a path the index sorts first records nothing new. */
 function surfaceOf(scans: readonly ScanRoot[], tracked: readonly string[]): Surface {
   const unclassified: string[] = [];
   const notWalked: Record<string, string[]> = {};
   const note = (key: string, member: string): void => {
     const members = notWalked[key] ?? [];
     if (!members.includes(member)) members.push(member);
-    notWalked[key] = members;
+    notWalked[key] = members.sort();
   };
   for (const path of tracked) {
     if (scans.some(scan => holds(scan, path))) continue;
+    const subject = path.startsWith(`${EXPORT_ARCHIVE}/`) ? (TRACKER_DATA[0] ?? path) : path;
     const named = Object.entries(NOT_WALKED).flatMap(([residual, members]) =>
-      members.filter(member => path === member || path.startsWith(`${member}/`)).map(member => ({ residual, member })),
+      members.filter(member => subject === member || subject.startsWith(`${member}/`)).map(member => ({ residual, member })),
     )[0];
     if (named !== undefined) note(named.residual, named.member);
     else if (isBinary(join(REPO, path))) note("binary", path.split("/")[0] ?? path);
@@ -680,21 +920,44 @@ function walked(scan: ScanRoot, files: readonly string[], tracked: readonly stri
 }
 const rel = (path: string): string => relative(REPO, path);
 function familyScan(scan: ScanRoot, family: RegExp, spelled: string, tracked: readonly string[]): Json {
-  const walk = walked(scan, filesOf(scan), tracked);
+  const walk = walked(scan, filesOf(scan, tracked), tracked);
   const hits = walk.files.filter(file => family.test(textOf(file))).map(rel);
   expect(hits, `files spelling ${spelled} under ${scan.root}`).toEqual([]);
   return { root: scan.root, floorMet: walk.floorMet, anchorRead: walk.anchorRead, trackedRead: walk.trackedRead, hits };
 }
+interface LogicalLine {
+  readonly text: string;
+  readonly first: number;
+  readonly last: number;
+}
+/** The text's lines, each shell backslash-newline continuation joined onto the line it continues (wb-mdfe W3): the joined text,
+ * its first line and its last. */
+function logicalLines(text: string): LogicalLine[] {
+  const lines = text.split("\n");
+  const logical: LogicalLine[] = [];
+  for (let at = 0; at < lines.length; at += 1) {
+    const first = at;
+    let joined = lines[at] ?? "";
+    while (/\\\r?$/.test(joined) && at + 1 < lines.length) {
+      at += 1;
+      joined = `${joined.replace(/\\\r?$/, " ")}${lines[at] ?? ""}`;
+    }
+    logical.push({ text: joined, first, last: at });
+  }
+  return logical;
+}
 /** T2's matcher: the write verb (or flag) of every line spelling a bd write, in line order. An argv launch is read over the whole
- * text and counts on its executable's line, so one split across lines (E09) counts once. */
+ * text and counts on its executable's line, so one split across lines (E09) counts once; a shell command continued across lines
+ * by backslash-newlines (wb-mdfe W3) is read, and counts, as one line. */
 function writeHits(text: string): string[] {
   const argvVerbs = new Map<number, string>();
   for (const match of text.matchAll(WRITE_ARGV)) {
     const line = text.slice(0, match.index).split("\n").length - 1;
     if (!argvVerbs.has(line)) argvVerbs.set(line, match[1] ?? "");
   }
-  return text.split("\n").flatMap((line, index) => {
-    const verb = WRITE_SHELL.exec(line)?.[1] ?? argvVerbs.get(index) ?? WRITE_FLAG.exec(line)?.[1];
+  return logicalLines(text).flatMap(({ text: joined, first, last }) => {
+    const argv = Array.from({ length: last - first + 1 }, (_, step) => argvVerbs.get(first + step)).find(verb => verb !== undefined);
+    const verb = WRITE_SHELL.exec(joined)?.groups?.verb ?? argv ?? WRITE_FLAG.exec(joined)?.[1];
     return verb === undefined ? [] : [verb];
   });
 }
@@ -703,7 +966,7 @@ const isMarkdown = (path: string): boolean => path.endsWith(".md");
 function writeScan(scan: ScanRoot, tracked: readonly string[]): { readonly walk: Walk; readonly spellings: string[] } {
   const walk = walked(
     scan,
-    filesOf(scan).filter(file => !isMarkdown(file)),
+    filesOf(scan, tracked).filter(file => !isMarkdown(file)),
     tracked.filter(path => !isMarkdown(path)),
   );
   const spellings = walk.files.flatMap(file => {
@@ -714,12 +977,19 @@ function writeScan(scan: ScanRoot, tracked: readonly string[]): { readonly walk:
   return { walk, spellings };
 }
 
+/** T4's walk: the walked roots' files whose code spells a verdict word, recorded for the pin that runs it. */
+function gateReaderWalk(tracked: readonly string[]): string[] {
+  if (running !== undefined) WALKERS.add(running);
+  return PROGRAM_SCANS.flatMap(scan => walked(scan, filesOf(scan, tracked), tracked).files.filter(file => spellsVerdict(file, textOf(file))).map(rel)).sort();
+}
+const rowOf = (pin: string): string => ROWS.find(row => row.pins.includes(pin))?.id ?? "";
+
 // --- the bead export --------------------------------------------------------------------------------------------------
 
 /** Every row of the tracked bead export (the store's rows at the last ledger hop), unparsable lines dropped. */
 function exportRows(): JsonObject[] {
   const rows: JsonObject[] = [];
-  for (const line of textOf(BEAD_EXPORT).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(BEAD_EXPORT), BEAD_EXPORT).split("\n")) {
     if (line.trim() === "") continue;
     try {
       const parsed: unknown = JSON.parse(line);
@@ -887,7 +1157,7 @@ interface Compiled {
 }
 /** The reference compile step: ADOPT creates every packet under the epic with one `related` edge to its gate; DEFER and REJECT
  * archive every packet with the verdict; anything else leaves the list gated. No family: label is ever minted (the ruling's). */
-function compileGated(verdict: CompileVerdict, packets: readonly Packet[]): Compiled {
+function compileGated(verdict: CompileVerdict | typeof STORE_UNREACHABLE, packets: readonly Packet[]): Compiled {
   if (verdict === "ADOPT") {
     return { created: packets.map(packet => ({ key: packet.key, parent: EPIC, labels: [PROGRAM_LABEL, `wp:${packet.key.toLowerCase()}`], edges: [{ type: "related", to: GATE }] })), archived: [] };
   }
@@ -1012,6 +1282,7 @@ function programClient(store: readonly StoreBead[]): { readonly client: BeadsPro
 /** readBeadsProgramReadiness over a modeled store, host-bound to a fixture workspace; the host binds readBeadsWork as its work
  * reader (the module imports no Beads reader: the wb-kku9.3 claim re-check census holds that reader's importers empty). */
 async function readProgram(client: BeadsProgramClient, gates: Readonly<Record<string, string>>): Promise<BeadsProgramReadiness> {
+  if (running !== undefined) DRIVES.set(PROGRAM_READER, new Set([...(DRIVES.get(PROGRAM_READER) ?? []), running]));
   const workspaceRoot = "/fixture/rftsx";
   return readBeadsProgramReadiness(client, {
     program: { epics: [EPIC], gates },
@@ -1057,13 +1328,14 @@ async function refusal(promise: Promise<unknown>): Promise<string> {
 
 interface Spelling {
   readonly pin: string;
-  readonly family: "h2" | "write" | "prerequisite";
+  readonly family: "h2" | "write" | "prerequisite" | "verdict";
   readonly text: string;
   readonly hit: boolean;
 }
 const familyHits = (spelling: Spelling): boolean => {
   if (spelling.family === "h2") return H2.test(spelling.text);
   if (spelling.family === "prerequisite") return GATE_PREREQUISITES.test(spelling.text);
+  if (spelling.family === "verdict") return spellsVerdict("spelling.ts", spelling.text);
   return writeHits(spelling.text).length > 0;
 };
 /** MH1-MH6, MW1-MW9 and MG1-MG3 must hit; R1, R2 and R11 are quiet rows of their named residuals. */
@@ -1092,6 +1364,7 @@ const QUIET: Readonly<Record<string, readonly Spelling[]>> = {
   R1: [
     { pin: "R1", family: "h2", text: 'const gate = ["rftsx", "rupqh"].join("-");', hit: false },
     { pin: "R1", family: "write", text: 'spawnSync(["b", "d"].join(""), ["create", "x"]);', hit: false },
+    { pin: "R1", family: "verdict", text: "const WORD = ['ADO', 'PT'].join('');\nexport const gateAdopts = (notes: string): boolean => notes.includes('ruled ' + WORD);\n", hit: false },
   ],
   R2: [{ pin: "R2", family: "write", text: "spawnSync(command.binary, command.argv, { cwd });", hit: false }],
   R11: [
@@ -1117,6 +1390,26 @@ const ESCAPES: readonly Spelling[] = [
   { pin: "E05", family: "h2", text: "the harness2 reactive evolution program", hit: true },
   { pin: "E09", family: "write", text: `spawnSync("${BD}", [\n  "create",\n  "--title",\n  "x",\n]);`, hit: true },
 ];
+/** wb-mdfe F2-F4's spellings, each now a hit of its family: the gate's plants at wb-ze6u cut #1 (PREP gate-prep-23), their launch
+ * or comment line verbatim. */
+const CARRY_ESCAPES: readonly Spelling[] = [
+  { pin: "W1", family: "write", text: `export const argv = ["${BD}", "create", "--title", "x"];`, hit: true },
+  { pin: "W2", family: "write", text: `${BD} 'create' --title x`, hit: true },
+  { pin: "W3", family: "write", text: `${BD} \\\n  create --title x`, hit: true },
+  { pin: "W4", family: "write", text: `spawnSync("npx", ["${BD}", "create", "x"]);`, hit: true },
+  { pin: "W5", family: "write", text: `execFileSync("${BD}", [...GLOBAL, "create"]);`, hit: true },
+  { pin: "W6", family: "write", text: `spawnSync("${BD}", ["--db", join("/x", "y.db"), "create"]);`, hit: true },
+  { pin: "W7", family: "write", text: `${BD}.exe create x`, hit: true },
+  { pin: "W8", family: "write", text: `env BEADS_DIR=/x ${BD} create x`, hit: true },
+  { pin: "H1", family: "h2", text: "export const tsxH201 = 1;", hit: true },
+  { pin: "H2", family: "h2", text: "// see harness2.reactive.evolution", hit: true },
+  { pin: "H3", family: "h2", text: "// TSX-H2-1 lands first", hit: true },
+  { pin: "H4", family: "h2", text: "export const TsxH2Adr = 1;", hit: true },
+  { pin: "H5", family: "h2", text: "// rftsx.rupqh records the ruling", hit: true },
+  { pin: "G-1", family: "prerequisite", text: "// API_PIN.md has landed", hit: true },
+  { pin: "G-2", family: "prerequisite", text: "// the TSX_FED_01 mapping exists", hit: true },
+  { pin: "G-3", family: "prerequisite", text: "// the api pin document has landed", hit: true },
+];
 /** A spelling's case: its family judges it as the roster says, and the witness carries its digest, never the text. */
 const spellingCase = (spelling: Spelling): Json => {
   const hit = familyHits(spelling);
@@ -1130,7 +1423,7 @@ function trackerFile(path: string, tracked: readonly string[]): Json {
     path,
     tracked: tracked.includes(path),
     root: scan?.root ?? null,
-    read: scan !== undefined && filesOf(scan).includes(join(REPO, path)),
+    read: scan !== undefined && filesOf(scan, tracked).includes(join(REPO, path)),
     hit: H2.test(textOf(join(REPO, path))),
   };
   expect(witness).toStrictEqual({ path, tracked: true, root: ".beads", read: true, hit: false });
@@ -1142,11 +1435,193 @@ function trackerFile(path: string, tracked: readonly string[]): Json {
 /** The top suite of this file, the case registered first and the case registered last. */
 const SUITE = "wb-4nut.4 H2 bead-graph census (TSX-HARNESS2-REACTIVE-EVOLUTION-R4, absent-today leg)";
 const JUDGED_SET = "the judged set: the frozen shape, the out-of-file roster and the cases agree";
-const CLOSING = "the registered tests ran and every pin reached its witness compare, in roster order, with the roster's witness";
+const CLOSING =
+  "the registered tests ran and every pin reached its witness compare, in roster order, with the roster's witness, which its case returned when its pin invoked it and again when run here";
+/** The drive record case (wb-k888), registered after the pins and before the closing case. */
+const DRIVE_RECORD = "the drive record (wb-k888): every gate reader the walk finds is walked by a T pin and driven by a pin of each of rows A, B, C and D";
+/** The harness cases registered after the pins, in order. */
+const AFTER_PINS: readonly string[] = [DRIVE_RECORD, CLOSING];
 /** The pins that reached their witness compare, with the witness each recorded, in run order; the closing case holds it. */
 const REACHED = new Map<string, Json>();
-/** Set by the closing case's last line; the suite's afterAll hook holds it. */
-const CLOSED = { done: false };
+/** The harness cases, in registration order: the judged set, then the drive record and the closing case after the pins. */
+const HARNESS: readonly string[] = [JUDGED_SET, ...AFTER_PINS];
+/** The end record (wb-52th F1): each harness case writes its own title here on its last line, so a case a runtime skip or a
+ * guarded return cuts short is missing; the closing case holds the two before it, the suite's afterAll hook every one. */
+const ENDED: string[] = [];
+/** A harness case by the short name its end gaps carry. */
+const HARNESS_NAMES: ReadonlyMap<string, string> = new Map([
+  [JUDGED_SET, "judged set"],
+  [DRIVE_RECORD, "drive record"],
+  [CLOSING, "closing case"],
+]);
+/** The end rule as a predicate over an end record: every expected harness case ended, once each and in order, and no other did. */
+function endGaps(ended: readonly string[], expected: readonly string[]): string[] {
+  const name = (title: string): string => HARNESS_NAMES.get(title) ?? title;
+  const gaps = [
+    ...expected.filter(title => !ended.includes(title)).map(title => `unended ${name(title)}`),
+    ...ended.filter(title => !expected.includes(title)).map(title => `unexpected ${name(title)}`),
+    ...ended.filter((title, at) => ended.indexOf(title) !== at).map(title => `twice ${name(title)}`),
+  ];
+  if (gaps.length === 0 && !sameList(ended, expected)) gaps.push("order");
+  return gaps;
+}
+/** The harness cases' title constants as this file's code spells them, in registration order: the end shape reads them by name. */
+const HARNESS_CONSTANTS: readonly string[] = ["JUDGED_SET", "DRIVE_RECORD", "CLOSING"];
+/** The compares each harness case makes as its own top-level statements (wb-2fb4 F3), by its title constant; the out-of-file roster
+ * mirrors it, so a compare dropped, guarded or moved out of its case reds unless the roster is edited with it. */
+const HARNESS_COMPARES: Readonly<Record<string, number>> = { JUDGED_SET: 24, DRIVE_RECORD: 4, CLOSING: 4 };
+const isName = (node: ts.Node | undefined, name: string): boolean => node !== undefined && ts.isIdentifier(node) && node.text === name;
+/** The block a call's last argument runs: the callback of `it(...)` or `afterAll(...)`. */
+function callbackBody(call: ts.CallExpression): ts.Block | undefined {
+  const last = call.arguments[call.arguments.length - 1];
+  return last !== undefined && (ts.isArrowFunction(last) || ts.isFunctionExpression(last)) && ts.isBlock(last.body) ? last.body : undefined;
+}
+/** `expect(endGaps(ENDED, <against>)[, message]).toEqual([]);` as one statement: the code text of what it holds ENDED against. */
+function endHold(statement: ts.Statement): string | undefined {
+  if (!ts.isExpressionStatement(statement) || !ts.isCallExpression(statement.expression)) return undefined;
+  const compare = statement.expression;
+  const [want] = compare.arguments;
+  if (!ts.isPropertyAccessExpression(compare.expression) || compare.expression.name.text !== "toEqual") return undefined;
+  if (compare.arguments.length !== 1 || want === undefined || !ts.isArrayLiteralExpression(want) || want.elements.length !== 0) return undefined;
+  const subject = compare.expression.expression;
+  if (!ts.isCallExpression(subject) || !isName(subject.expression, "expect")) return undefined;
+  const [judge] = subject.arguments;
+  if (judge === undefined || !ts.isCallExpression(judge) || !isName(judge.expression, "endGaps") || judge.arguments.length !== 2 || !isName(judge.arguments[0], "ENDED")) return undefined;
+  return judge.arguments[1]?.getText(statement.getSourceFile());
+}
+/** The `expect(...)` call a statement's chain starts at when the statement is a compare: `[await] expect(...)<.member>(...)`. */
+function compareRoot(statement: ts.Statement): ts.CallExpression | undefined {
+  if (!ts.isExpressionStatement(statement)) return undefined;
+  let node: ts.Expression = ts.isAwaitExpression(statement.expression) ? statement.expression.expression : statement.expression;
+  for (;;) {
+    if (ts.isCallExpression(node) && isName(node.expression, "expect")) return node;
+    if (ts.isCallExpression(node) || ts.isPropertyAccessExpression(node)) node = node.expression;
+    else return undefined;
+  }
+}
+/** A harness case's compares (wb-2fb4 F3): its top-level compare statements, held to HARNESS_COMPARES, and every other spelling of
+ * `expect` in its callback - under an if, a loop, a try, a nested function or an operand, or aliased - a guarded compare. */
+function compareGaps(name: string, body: ts.Block): string[] {
+  const heads = new Set<ts.Node>();
+  for (const statement of body.statements) {
+    const root = compareRoot(statement);
+    if (root !== undefined) heads.add(root.expression);
+  }
+  let guarded = 0;
+  const visit = (node: ts.Node): void => {
+    if (isName(node, "expect") && !heads.has(node)) guarded += 1;
+    ts.forEachChild(node, visit);
+  };
+  visit(body);
+  return [
+    ...(heads.size === HARNESS_COMPARES[name] ? [] : [`${name} compares x${heads.size}`]),
+    ...(guarded > 0 ? [`${name} guarded compare x${guarded}`] : []),
+  ];
+}
+/** The harness of a source text, read by the TypeScript AST: each harness case's callback (by its title constant), the afterAll
+ * hook's callback, every ENDED.push call and every other spelling of ENDED but its declaration. */
+function harnessOf(text: string): {
+  readonly file: ts.SourceFile;
+  readonly cases: Map<string, ts.Block[]>;
+  readonly hooks: ts.Block[];
+  readonly writes: ts.CallExpression[];
+  readonly strays: ts.Identifier[];
+} {
+  const file = ts.createSourceFile("census.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const cases = new Map<string, ts.Block[]>();
+  const hooks: ts.Block[] = [];
+  const writes: ts.CallExpression[] = [];
+  const strays: ts.Identifier[] = [];
+  // ENDED is read only as the end judge's first argument and written only through a push call: any other spelling is a stray.
+  const kept = (node: ts.Identifier): boolean => {
+    const parent = node.parent;
+    if (ts.isVariableDeclaration(parent) && parent.name === node) return true;
+    if (ts.isCallExpression(parent) && isName(parent.expression, "endGaps") && parent.arguments[0] === node) return true;
+    return ts.isPropertyAccessExpression(parent) && parent.expression === node && parent.name.text === "push" && ts.isCallExpression(parent.parent) && parent.parent.expression === parent;
+  };
+  const visit = (node: ts.Node): void => {
+    if (isName(node, "ENDED") && ts.isIdentifier(node) && !kept(node)) strays.push(node);
+    if (ts.isCallExpression(node)) {
+      const body = callbackBody(node);
+      const name = HARNESS_CONSTANTS.find(constant => isName(node.arguments[0], constant));
+      if (isName(node.expression, "it") && name !== undefined && body !== undefined) cases.set(name, [...(cases.get(name) ?? []), body]);
+      if (isName(node.expression, "afterAll") && body !== undefined) hooks.push(body);
+      if (ts.isPropertyAccessExpression(node.expression) && isName(node.expression.expression, "ENDED") && node.expression.name.text === "push") writes.push(node);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return { file, cases, hooks, writes, strays };
+}
+/** The end shape (wb-52th F1) as a predicate over a source text: each harness case is registered once and its callback's last
+ * statement is `ENDED.push(<its title constant>);`, ENDED is pushed to nowhere else and spelled only there and as the end
+ * judge's first argument, the closing case holds the two cases before it and the afterAll hook's callback is the one statement
+ * holding ENDED against HARNESS; and (wb-2fb4 F3) each harness case makes exactly its HARNESS_COMPARES compares, every one a
+ * top-level statement of its callback, never under a guard. Its gaps, by kind. */
+function endShapeGaps(text: string): string[] {
+  const { file, cases, hooks, writes, strays } = harnessOf(text);
+  const gaps: string[] = [];
+  const written = (write: ts.CallExpression): string => {
+    const [only] = write.arguments;
+    return write.arguments.length === 1 && only !== undefined && ts.isIdentifier(only) ? only.text : "";
+  };
+  for (const name of HARNESS_CONSTANTS) {
+    const bodies = cases.get(name) ?? [];
+    const own = writes.filter(write => written(write) === name);
+    const last = bodies[0]?.statements[bodies[0].statements.length - 1];
+    if (bodies.length !== 1) gaps.push(`${name} registered x${bodies.length}`);
+    else if (own.length !== 1) gaps.push(`${name} written x${own.length}`);
+    else if (last === undefined || !ts.isExpressionStatement(last) || last.expression !== own[0]) gaps.push(`${name} end not last`);
+    const body = bodies.length === 1 ? bodies[0] : undefined;
+    if (body !== undefined) gaps.push(...compareGaps(name, body));
+  }
+  for (const write of writes) if (!HARNESS_CONSTANTS.includes(written(write))) gaps.push(`stray write ${written(write) || "?"}`);
+  for (const stray of strays) gaps.push(`stray ENDED at line ${file.getLineAndCharacterOfPosition(stray.getStart(file)).line + 1}`);
+  const closing = cases.get("CLOSING")?.[0]?.statements ?? [];
+  if (!closing.some(statement => endHold(statement) === "[JUDGED_SET, DRIVE_RECORD]")) gaps.push("closing case unheld");
+  const hook = hooks.length === 1 ? (hooks[0]?.statements ?? []) : [];
+  if (hook.length !== 1 || hook[0] === undefined || endHold(hook[0]) !== "HARNESS") gaps.push("afterAll unheld");
+  return gaps;
+}
+/** A source text with a harness case's end record moved to just after the case's first compare, behind a return there: the form
+ * of a guarded return the end record alone would not see (row N's model of each filed mutant). */
+function movedEnd(text: string, name: string): string {
+  const { file, cases } = harnessOf(text);
+  const statements = cases.get(name)?.[0]?.statements ?? [];
+  const compare = statements.find(statement => statement.getText(file).startsWith("expect("));
+  const last = statements[statements.length - 1];
+  if (compare === undefined || last === undefined || compare === last) throw new Error(`the harness case ${name} has no compare above its end record`);
+  return `${text.slice(0, compare.end)}\n    ${last.getText(file)}\n    if (${name}.length > 0) return;${text.slice(compare.end, last.getFullStart())}${text.slice(last.end)}`;
+}
+/** A source text with one harness case's compare wrapped in a guard that never fires (wb-2fb4 F3, the verdict's form). */
+function deadWrapped(text: string, wrap: DeadWrap): string {
+  const { file, cases } = harnessOf(text);
+  const target = (cases.get(wrap.harness)?.[0]?.statements ?? []).find(statement => statement.getText(file).startsWith(wrap.compare));
+  if (target === undefined) throw new Error(`the harness case ${wrap.harness} has no compare ${wrap.compare}`);
+  return `${text.slice(0, target.getStart(file))}if (${wrap.guard}) {\n      ${target.getText(file)}\n    }${text.slice(target.end)}`;
+}
+/** The never-firing-guard mutants the landing-590 verdict's F3 line names: the -DEADWRAP ids of the first `- F3 <grade> <role>:`
+ * line of the notes given (wb-52th's, in the tracked export). */
+function verdictDeadWraps(notes: string): string[] {
+  const line = /^- F3 (?:LOW|MEDIUM|HIGH) (?:LEADS|RIDES): (.*)$/m.exec(notes)?.[1] ?? "";
+  return [...new Set(line.match(/(?<![\w-])GL2-[A-Z0-9]+-DEADWRAP(?![\w-])/g) ?? [])];
+}
+/** Row N's model of a guarded return in a harness case (wb-52th F1): the end record each hold reads when that case is cut short,
+ * and the end shape of this file with that case's end record moved above the return. */
+function endModel(cut: string, name: string): Json {
+  const before = HARNESS.filter(title => title !== CLOSING);
+  return {
+    closing: endGaps(
+      before.filter(title => title !== cut),
+      before,
+    ),
+    afterAll: endGaps(
+      HARNESS.filter(title => title !== cut),
+      HARNESS,
+    ),
+    moved: endShapeGaps(movedEnd(textOf(THIS_FILE), name)),
+  };
+}
 /** A registered test of this file as the vitest task tree reads it. */
 interface Registered {
   readonly name: string;
@@ -1177,11 +1652,12 @@ function registeredOf(file: { readonly tasks: readonly TaskNode[] }, self: unkno
   visit(file.tasks, []);
   return found;
 }
-/** The tests this file must register, in order, read from the roster: the judged set, every row's pins, the closing case. */
+/** The tests this file must register, in order, read from the roster: the judged set, every row's pins, the drive record case
+ * and the closing case. */
 const expectedTitles = (): string[] => [
   `${SUITE} > ${JUDGED_SET}`,
   ...ROSTER.rows.flatMap(row => row.pins.map(pin => `${SUITE} > ${row.id} ${row.label} > ${pin.id}`)),
-  `${SUITE} > ${CLOSING}`,
+  ...AFTER_PINS.map(title => `${SUITE} > ${title}`),
 ];
 const tail = (title: string): string => title.slice(title.lastIndexOf(" > ") + 3);
 type Phase = "collected" | "ran";
@@ -1230,6 +1706,11 @@ function reachedGaps(reached: ReadonlyMap<string, Json>): string[] {
   ];
   if (gaps.length === 0 && !sameList(keys, ids)) gaps.push("order");
   return gaps;
+}
+/** The closing judge (wb-mdfe F1): REACHED (the case bodies' record), INVOKED (the record IMPL's wrapper writes) and the
+ * re-evaluation's fresh witnesses, each held to the roster as reachedGaps holds a record; invoked and fresh gaps carry their name. */
+function closingGaps(reached: ReadonlyMap<string, Json>, invoked: ReadonlyMap<string, Json>, fresh: ReadonlyMap<string, Json>): string[] {
+  return [...reachedGaps(reached), ...reachedGaps(invoked).map(gap => `invoked-${gap}`), ...reachedGaps(fresh).map(gap => `fresh-${gap}`)];
 }
 
 // --- the export's records (wb-ze6u F2) --------------------------------------------------------------------------------
@@ -1280,6 +1761,41 @@ function filedIds(notes: string): { readonly lead: string[]; readonly f2: string
   const bullet = (label: string): string => new RegExp(`^- ${label}: (.*)$`, "m").exec(notes)?.[1] ?? "";
   return { lead: idsIn(bullet("F1 leads")), f2: idsIn(bullet("F2 rides")), f3: idsIn(bullet("F3 rides")) };
 }
+/** The findings the carry's filing routes, in its order ("[leads] - F1 ...", "[rides] - F2 ..."), each with its first bullet. */
+function carryFiling(notes: string): { readonly routed: string[]; readonly bullets: Readonly<Record<string, string>> } {
+  const bullets: Record<string, string> = {};
+  for (const match of notes.matchAll(/^\[(?:leads|rides)\] - (F\d+) (.*)$/gm)) {
+    const finding = match[1] ?? "";
+    if (!Object.hasOwn(bullets, finding)) bullets[finding] = match[2] ?? "";
+  }
+  return { routed: Object.keys(bullets), bullets };
+}
+/** What a carry bullet names for its pins to cure, in order: its item ids, the mutants its cure is red-first against, or its cure
+ * candidates. */
+function namedBy(bullet: string, named: Cure["named"]): string[] {
+  if (named === "mutants") return (/red-first against (.+?) mutants/.exec(bullet)?.[1] ?? "").split(/,\s*|\s+and\s+/).filter(name => name !== "");
+  if (named === "candidates") return [...bullet.matchAll(/Cure candidate: ([^.;]*)/g)].map(match => match[1] ?? "");
+  return [...new Set([...bullet.matchAll(new RegExp(`(?<![\\w-])(?:${named.ids})(?![\\w-])`, "g"))].map(match => match[0]))];
+}
+/** The carry's cures against its filing: a routed finding without a cure here or a named cure elsewhere (or the reverse), and a
+ * cure whose pins are not what its bullet names - the ids themselves, or one pin per named mutant or cure candidate. */
+function carryGaps(cures: readonly Cure[], notes: string, elsewhere: readonly string[] = []): string[] {
+  const filing = carryFiling(notes);
+  const findings = [...cures.map(cure => cure.finding), ...elsewhere];
+  const gaps = [...filing.routed.filter(finding => !findings.includes(finding)).map(finding => `uncured ${finding}`), ...findings.filter(finding => !filing.routed.includes(finding)).map(finding => `unrouted ${finding}`)];
+  for (const cure of cures) {
+    const named = namedBy(filing.bullets[cure.finding] ?? "", cure.named);
+    const held = typeof cure.named === "object" ? sameList(cure.pins, named) : cure.pins.length === named.length;
+    if (!held || named.length === 0) gaps.push(`${cure.finding} names ${named.length === 0 ? "nothing" : named.join(", ")}; cured by ${cure.pins.join(", ") || "nothing"}`);
+  }
+  return gaps;
+}
+/** The bd runtime files a carry bullet names below the tracker's root - the ones it planted and its parenthesized list - as paths. */
+function runtimeFilesIn(bullet: string): string[] {
+  const planted = [...bullet.matchAll(/\.beads\/([\w.*-]+)/g)].map(match => match[1] ?? "");
+  const listed = (/runtime text files \(([^)]*)\)/.exec(bullet)?.[1] ?? "").split(", ").filter(name => name !== "");
+  return [...new Set([...planted, ...listed])].map(name => `.beads/${name}`);
+}
 /** The export floor's rule against the count the delivery recorded: below it, and at or above four fifths of it. */
 function exportFloorGaps(floor: number, recorded: number): string[] {
   if (!Number.isInteger(recorded) || recorded <= 0) return ["no export count recorded"];
@@ -1307,10 +1823,10 @@ interface RowPin {
   readonly pin: string;
 }
 /** The task tree a run of this file would read with every case as the roster lists it, then `change` applied to each pin's
- * entry; the two harness cases are never changed, and the reader is the judged set when collected, the closing case when ran. */
+ * entry; the harness cases are never changed, and the reader is the judged set when collected, the closing case when ran. */
 function modelRegistration(phase: Phase, change: (entry: Registered, at: RowPin) => Registered | undefined): Registered[] {
   const titles = expectedTitles();
-  const pins: (RowPin | undefined)[] = [undefined, ...ROSTER.rows.flatMap(row => row.pins.map(pin => ({ row: row.id, pin: pin.id }))), undefined];
+  const pins: (RowPin | undefined)[] = [undefined, ...ROSTER.rows.flatMap(row => row.pins.map(pin => ({ row: row.id, pin: pin.id }))), ...AFTER_PINS.map(() => undefined)];
   const reader = phase === "collected" ? 0 : titles.length - 1;
   return titles.flatMap((name, at) => {
     const entry: Registered = { name, mode: "run", inverted: false, state: phase === "ran" && at !== reader ? "pass" : undefined, self: at === reader };
@@ -1327,7 +1843,8 @@ const modelReached = (): Map<string, Json> => new Map(ROSTER.rows.flatMap(row =>
 
 // --- the cases --------------------------------------------------------------------------------------------------------
 
-const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
+/** Every pin's case. The pin cases reach a case only through IMPL; the closing case runs each once more itself (wb-mdfe F1). */
+const CASES: Readonly<Record<string, () => Promise<Json>>> = Object.freeze({
   T1: async () => {
     const tracked = trackedPaths();
     const roots = PROGRAM_SCANS.map(scan => familyScan(scan, H2, "the H2 family", tracked));
@@ -1361,12 +1878,19 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   },
   T4: async () => {
     const tracked = trackedPaths();
-    const readers = PROGRAM_SCANS.flatMap(scan => walked(scan, filesOf(scan), tracked).files.filter(file => VERDICT_WORDS.test(textOf(file))).map(rel)).sort();
+    const readers = gateReaderWalk(tracked);
     const imports = ownImports();
     const driven = GATE_READERS.map(path => imports.includes(`../${path.replace(/\.ts$/, ".js")}`));
+    // wb-k888 (F20): a comment spelling a verdict word reads no reader, the same word in code does, and JSDoc is a comment.
+    const controls = [
+      spellsVerdict("comment.ts", '// REJECT here is an HTTP-style outcome, not a gate verdict.\nexport const OUTCOME = "deny";\n'),
+      spellsVerdict("reader.ts", 'export const adopts = (notes: string): boolean => notes.includes("ruled ADOPT");\n'),
+      spellsVerdict("doc.ts", '/** A gate here is ruled ADOPT by its owner, and this module reads none. */\nexport const OUTCOME = "deny";\n'),
+    ];
     expect(readers, "the walked files spelling a verdict word").toEqual([...GATE_READERS]);
     expect(driven).toEqual(GATE_READERS.map(() => true));
-    return { readers, driven };
+    expect(controls).toEqual([false, true, false]);
+    return { readers, driven, controls };
   },
   A1: async () => {
     const rows = exportRows();
@@ -1504,9 +2028,11 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       ...[creationTitle(), "ruled ADOPT or REJECT", "ruled ADOPT|REJECT", "ruled ADOPT / REJECT", "ruled ADOPT, DEFER or REJECT", "(ruled ADOPT or ruled REJECT)"].map((title, index) => ({ id: `b5:${index + 1}`, bead: gate({ title }) })),
       ...["Ruled ADOPT", "ruled Adopt", "RULED ADOPT", "ruled adopt"].map((notes, index) => ({ id: `r5:${index + 1}`, bead: gate({ notes }) })),
       ...PAIRED_INPUTS.map(input => ({ id: `paired:${input.id}`, bead: gate(input.fields) })),
+      ...READER_ONLY.map((fields, index) => ({ id: `reader-only:${index + 1}`, bead: gate(fields) })),
     ];
     const readings = new Map<string, string>();
     for (const input of inputs) readings.set(JSON.stringify(input.bead), await programVerdict(input.bead));
+    const judgedInputs = inputs.filter(input => !input.id.startsWith("reader-only:"));
     const programReader: Reader = bead => {
       const verdict = readings.get(JSON.stringify(bead));
       if (verdict !== "ADOPT" && verdict !== "REJECT" && verdict !== "no-verdict") throw new Error(`the program reader read ${String(verdict)} for a judged bead`);
@@ -1514,10 +2040,12 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     };
     const witness = {
       judged: judgeReader(programReader),
-      diverging: inputs.filter(input => programReader(input.bead) !== reference(input.bead)).map(input => input.id),
-      readings: inputs.map(input => `${input.id} ${programReader(input.bead)}`),
+      diverging: judgedInputs.filter(input => programReader(input.bead) !== reference(input.bead)).map(input => input.id),
+      readings: judgedInputs.map(input => `${input.id} ${programReader(input.bead)}`),
+      readerOnly: inputs.filter(input => input.id.startsWith("reader-only:")).map(input => `${input.id} ${readings.get(JSON.stringify(input.bead))} (reference ${reference(input.bead)})`),
     };
     expect([witness.judged, witness.diverging]).toEqual([[], []]);
+    expect(witness.readerOnly).toEqual([`reader-only:1 ${STORE_UNREACHABLE} (reference no-verdict)`, `reader-only:2 ${STORE_UNREACHABLE} (reference ADOPT)`]);
     return witness;
   },
   C1: async () => {
@@ -1551,12 +2079,12 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   },
   C5: async () => {
     const packets = gatedPackets();
-    const gates: Readonly<Record<string, JsonObject>> = { reject: { notes: "ruled REJECT" }, defer: { notes: "ruled DEFER" }, adopt: { notes: "ruled ADOPT" }, none: { notes: "awaiting" }, titleOnly: { title: creationTitle() } };
+    const gates: Readonly<Record<string, JsonObject>> = { reject: { notes: "ruled REJECT" }, defer: { notes: "ruled DEFER" }, adopt: { notes: "ruled ADOPT" }, none: { notes: "awaiting" }, titleOnly: { title: creationTitle() }, unreadable: READER_ONLY[1] ?? {} };
     const compiled: Record<string, Json> = {};
     for (const [name, fields] of Object.entries(gates)) {
       const bead = { id: GATE, ...fields };
       const verdict = await programVerdict(bead);
-      if (verdict !== "ADOPT" && verdict !== "REJECT" && verdict !== "DEFER" && verdict !== "no-verdict") throw new Error(`the program reader read ${verdict} for the ${name} gate`);
+      if (verdict !== "ADOPT" && verdict !== "REJECT" && verdict !== "DEFER" && verdict !== "no-verdict" && verdict !== STORE_UNREACHABLE) throw new Error(`the program reader read ${verdict} for the ${name} gate`);
       compiled[name] = { verdict, judged: judgeCompile(reference(bead), compileGated(verdict, packets), packets, true) };
     }
     const epic: StoreBead = { id: EPIC, title: "epic", status: "open", issue_type: "epic", priority: 2, labels: [PROGRAM_LABEL] };
@@ -1568,7 +2096,9 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       blocksEdge: await refusal(readProgram(programClient([epic, gate, blocked]).client, { "TSX-H2-01": GATE })),
       relatedEdge: (await readProgram(programClient([epic, gate, related]).client, { "TSX-H2-01": GATE })).ready,
     };
-    expect(Object.values(compiled).map(entry => (isObject(entry) ? entry.judged : null))).toEqual(Object.keys(gates).map(() => []));
+    // The unreadable gate: the reader reads it unknown and compiles nothing, so against the reference's ADOPT the judge names
+    // exactly c:packets (wb-k888, F19: fail-closed, never a created packet); every other gate compiles as the reference's verdict.
+    expect(Object.entries(compiled).map(([name, entry]) => [name, isObject(entry) ? entry.judged : null])).toEqual(Object.keys(gates).map(name => [name, name === "unreadable" ? ["c:packets"] : []]));
     expect([witness.blocksEdge, witness.relatedEdge]).toEqual(["validation", ["TSX-H2-01"]]);
     return witness;
   },
@@ -1681,7 +2211,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     expect(constantsQuoted).toEqual([...FILING_CONSTANTS]);
     return { clauses, labelsEqual, constantsQuoted: constantsQuoted.length };
   },
-  ...Object.fromEntries([...SPELLINGS, ...ESCAPES].map(spelling => [spelling.pin, async () => spellingCase(spelling)])),
+  ...Object.fromEntries([...SPELLINGS, ...ESCAPES, ...CARRY_ESCAPES].map(spelling => [spelling.pin, async () => spellingCase(spelling)])),
   E06: async () => trackerFile(".beads/README.md", trackedPaths()),
   E07: async () => trackerFile(".beads/config.yaml", trackedPaths()),
   M1: async () => registrationModel("collected", entry => skipped(entry)),
@@ -1710,6 +2240,32 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     );
     return { unclassifiedRoots: [...new Set(surface.unclassified.map(path => path.split("/")[0] ?? path))] };
   },
+  // wb-mdfe F1's bypass: every case body compares the roster's own witness and records it, so no IMPL runs and nothing is invoked.
+  V1: async () => gapWitness(closingGaps(modelReached(), new Map(), modelReached())),
+  V2: async () => {
+    // The bypass beside the filing's plant (TSX_H2_01 in src/zz-gate-probe.ts): only the re-evaluation reads the changed subject.
+    const fresh = modelReached();
+    const t1 = fresh.get("T1") ?? null;
+    const planted = (root: Json): Json => (isObject(root) && root.root === "src" ? { ...root, hits: ["src/zz-gate-probe.ts"] } : root);
+    fresh.set("T1", isObject(t1) && Array.isArray(t1.roots) ? { ...t1, roots: t1.roots.map(planted) } : t1);
+    return gapWitness(closingGaps(modelReached(), new Map(), fresh));
+  },
+  // wb-52th F1's guarded returns: the drive record cut after its first compare, the judged set after its frozen-shape compare.
+  "L2-DRRET": async () => endModel(DRIVE_RECORD, "DRIVE_RECORD"),
+  "L2-JSRET": async () => endModel(JUDGED_SET, "JUDGED_SET"),
+  TR1: async () => {
+    const tracked = trackedPaths();
+    const scan = PROGRAM_SCANS.find(entry => entry.tracked === true);
+    expect(scan?.root, "the tracked root is the tracker's own").toBe(".beads");
+    if (scan === undefined) return null;
+    const own = tracked.filter(path => holds(scan, path)).sort();
+    const walk = filesOf(scan, tracked).map(rel).sort();
+    const runtime = runtimeFilesIn(carryFiling(notesOf(exportRows(), CARRY)).bullets.F5 ?? "");
+    const modelWalk = walkOf(scan, [...own, ...runtime].map(path => join(REPO, path)), tracked).map(rel).sort();
+    expect(runtime.length, `the runtime files ${CARRY}'s F5 bullet lists`).toBeGreaterThan(0);
+    expect([walk, modelWalk], "the tracker's own walk reads its tracked own files only, beside the listed runtime files too").toEqual([own, own]);
+    return { root: scan.root, own, walk, runtime, modelWalk };
+  },
   R1: async () => quietRow("R1"),
   R2: async () => quietRow("R2"),
   R3: async () => {
@@ -1726,14 +2282,32 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   R4: async () => {
     const rows = exportRows();
     const data = TRACKER_DATA.map(path => join(REPO, path));
-    const walkedFiles = [...PROGRAM_SCANS, ...EXEC_SCANS, ...GATED_SCANS].flatMap(scan => filesOf(scan));
+    const tracked = trackedPaths();
+    const scans = [...PROGRAM_SCANS, ...EXEC_SCANS, ...GATED_SCANS];
+    const walkedFiles = scans.flatMap(scan => filesOf(scan, tracked));
+    // The tracker data a compacting hop commits (wb-294d), planted in the git index's order so the quiet row reads it before any hop
+    // commits a shard: two month shards below the export's archive, then the interactions log and the export.
+    const hopData = [`${EXPORT_ARCHIVE}/issues-closed-2026-10.jsonl`, `${EXPORT_ARCHIVE}/issues-closed-2026-11.jsonl`, ".beads/interactions.jsonl", ".beads/issues.jsonl"];
+    const planted = surfaceOf(PROGRAM_SCANS, hopData);
     const witness = {
       // The tracker's own files are walked by T1 (wb-ze6u E06, E07); its data never is: no walk reads the export or the log.
       trackerDataWalked: walkedFiles.some(file => data.includes(file)),
       exportNamesProgram: rows.some(row => idOf(row).startsWith("wb-4nut") && H2.test(JSON.stringify(row))),
       floorMet: rows.length >= EXPORT_FLOOR,
+      // No root holds the hop's data; R4 holds it all, the shards under the export, so it records what a whole export records.
+      hopData: { paths: hopData, heldByRoot: hopData.some(path => scans.some(scan => holds(scan, path))), unclassified: planted.unclassified, notWalked: planted.notWalked },
     };
-    expect(witness).toStrictEqual({ trackerDataWalked: false, exportNamesProgram: true, floorMet: true });
+    expect(witness).toStrictEqual({
+      trackerDataWalked: false,
+      exportNamesProgram: true,
+      floorMet: true,
+      hopData: {
+        paths: [".beads/archive/issues-closed-2026-10.jsonl", ".beads/archive/issues-closed-2026-11.jsonl", ".beads/interactions.jsonl", ".beads/issues.jsonl"],
+        heldByRoot: false,
+        unclassified: [],
+        notWalked: { R4: [".beads/interactions.jsonl", ".beads/issues.jsonl"] },
+      },
+    });
     return witness;
   },
   R5: async () => {
@@ -1768,27 +2342,91 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     return witness;
   },
   R11: async () => quietRow("R11"),
+  R13: async () => {
+    const notes = "not yet ruled ADOPT";
+    const witness = { reference: reference({ notes }), reader: await programVerdict({ id: GATE, notes }), driven: DRIVES.get(PROGRAM_READER)?.has("R13") === true };
+    expect(witness).toStrictEqual({ reference: "ADOPT", reader: "ADOPT", driven: true });
+    return witness;
+  },
+  R14: async () => {
+    // Each anchor outside this file and the roster that reds a pin removed from every literal at once: the delivered floors and
+    // residual names, wb-ze6u's filing, wb-mdfe's and wb-52th's (the export), the drive record (a row's sole drive, T's sole walk)
+    // and an emptied single-pin describe. A pin none of them holds is held by the roster alone.
+    const rows = exportRows();
+    const delivered = deliveredRecord(notesOf(rows, BEAD));
+    const floors = new Map<string, number>();
+    for (const entry of [...delivered.shape, ...readerCutShape(notesOf(rows, READER_CUT))]) {
+      const [id = "", count = ""] = entry.split(":");
+      floors.set(id, Math.max(floors.get(id) ?? 0, Number(count)));
+    }
+    const filed = filedIds(notesOf(rows, FOLLOW_UP));
+    const filedPins = [...filed.lead, ...filed.f2, ...filed.f3];
+    const carries = [
+      { cures: CARRY_CURES, filing: carryFiling(notesOf(rows, CARRY)) },
+      { cures: END_CURES, filing: carryFiling(notesOf(rows, END_CARRY)) },
+    ];
+    const pinsOf = (pin: string): readonly string[] => ROWS.find(row => row.pins.includes(pin))?.pins ?? [];
+    const soleIn = (pins: Iterable<string>, pin: string): boolean => [...pins].filter(other => rowOf(other) === rowOf(pin)).join(" ") === pin;
+    const anchors: Readonly<Record<string, (pin: string) => boolean>> = {
+      floor: pin => pinsOf(pin).length - 1 < (floors.get(rowOf(pin)) ?? 0),
+      residualName: pin => delivered.residuals.includes(RESIDUALS.find(residual => residual.pin === pin)?.name ?? ""),
+      filing: pin => filedPins.includes(pin),
+      // wb-mdfe's and wb-52th's cures (CARRY ANCHORS): a pin its bullet names by id, or a pin of a cure whose count its bullet
+      // names (one control per mutant, one pin per cure candidate), so dropping it leaves the cure short.
+      carry: pin =>
+        carries.some(({ cures, filing }) =>
+          cures.some(cure => {
+            if (!cure.pins.includes(pin)) return false;
+            const named = namedBy(filing.bullets[cure.finding] ?? "", cure.named);
+            return typeof cure.named === "object" ? named.includes(pin) : cure.pins.length - 1 < named.length;
+          }),
+        ),
+      drive: pin => ["A", "B", "C", "D"].includes(rowOf(pin)) && [...DRIVES.values()].some(drivers => soleIn(drivers, pin)),
+      walk: pin => rowOf(pin) === "T" && soleIn(WALKERS, pin),
+      describe: pin => pinsOf(pin).length === 1,
+    };
+    const pins = ROWS.flatMap(row => row.pins);
+    return {
+      heldBy: Object.fromEntries(Object.entries(anchors).map(([anchor, holds]) => [anchor, pins.filter(holds)])),
+      quiet: pins.filter(pin => !Object.values(anchors).some(holds => holds(pin))),
+    };
+  },
   R12: async () => {
     const receipts = filesBelow(join(REPO, "docs", "workbench", "receipts")).filter(file => file.endsWith(".md"));
     const docsScan = GATED_SCANS.find(scan => scan.root === "docs");
     const witness = {
       proseWalkedByT1: PROGRAM_SCANS.some(scan => ["docs", "new-feedback", "vendor"].includes(scan.root)),
       g1OmitsReceipts: docsScan?.omit.includes("workbench/receipts") === true,
-      receiptsReadByG1: docsScan === undefined ? -1 : filesOf(docsScan).filter(file => receipts.includes(file)).length,
+      receiptsReadByG1: docsScan === undefined ? -1 : filesOf(docsScan, trackedPaths()).filter(file => receipts.includes(file)).length,
       receiptsQuoteTitles: receipts.length > 0 && receipts.every(file => /^# wb-[\w.]+: \S/.test(textOf(file))),
     };
     expect(witness).toStrictEqual({ proseWalkedByT1: false, g1OmitsReceipts: true, receiptsReadByG1: 0, receiptsQuoteTitles: true });
     return witness;
   },
-};
+});
+/** Each pin's witness as its case returned it, recorded by IMPL's wrapper at that return and by no case body (wb-mdfe F1). */
+const INVOKED = new Map<string, Json>();
+/** The pin cases' way to a case: CASES, each case wrapped so that its return records the witness in INVOKED. */
+const IMPL: Readonly<Record<string, () => Promise<Json>>> = Object.freeze(
+  Object.fromEntries(
+    Object.entries(CASES).map(([pin, run]) => [
+      pin,
+      async (): Promise<Json> => {
+        const witness = await run();
+        INVOKED.set(pin, clone(witness));
+        return witness;
+      },
+    ]),
+  ),
+);
 
 describe(SUITE, () => {
   afterAll(() => {
-    expect(CLOSED.done, "the closing case ran to its end (a runtime skip or a guarded return there leaves this unset)").toBe(true);
+    expect(endGaps(ENDED, HARNESS), "every harness case ran to its end (a runtime skip or a guarded return in one leaves it unended)").toEqual([]);
   });
 
   it(JUDGED_SET, ({ task }) => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:4", "A:4", "B:6", "C:5", "D:3", "G:1", "P:4", "F:1", "M:18", "R:12", "E:8", "K:11"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:4", "A:4", "B:6", "C:5", "D:3", "G:1", "P:4", "F:1", "M:18", "R:14", "E:8", "K:11", "V:2", "X:17", "N:2"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
@@ -1799,16 +2437,36 @@ describe(SUITE, () => {
     // OUTSIDE ANCHORS (wb-ze6u F2): the delivery's record and the follow-up's filing, read from the tracked bead export.
     const rows = exportRows();
     const delivered = deliveredRecord(notesOf(rows, BEAD));
-    expect(ROWS.map(row => row.id), "the rows are the delivered rows T to R, then the follow-up's").toEqual([...delivered.shape.map(entry => entry.split(":")[0] ?? ""), ...FOLLOW_UP_ROWS]);
+    expect(ROWS.map(row => row.id), "the rows are the delivered rows T to R, then the follow-up's, the carry's and the end carry's").toEqual([
+      ...delivered.shape.map(entry => entry.split(":")[0] ?? ""),
+      ...FOLLOW_UP_ROWS,
+      ...CARRY_ROWS,
+      ...END_CARRY_ROWS,
+    ]);
     expect(belowShape(delivered.shape), `rows T to R hold at least the pins ${BEAD}'s delivery recorded (a later cut may add a pin, never drop one)`).toEqual([]);
     const readerShape = readerCutShape(notesOf(rows, READER_CUT));
     expect(readerShape.map(entry => entry.split(":")[0] ?? ""), `the rows ${READER_CUT}'s delivery re-pinned`).toEqual([...READER_CUT_ROWS]);
     expect(belowShape(readerShape), `rows T to D hold at least the pins ${READER_CUT}'s delivery recorded (T4, A4, B6, C5 and D3 among them)`).toEqual([]);
-    expect(RESIDUALS.map(residual => residual.name), "the residual names against the delivery's list").toEqual(delivered.residuals);
+    expect(RESIDUALS.map(residual => residual.name), "the residual names against the delivery's list, then wb-k888's additions").toEqual([
+      ...delivered.residuals,
+      ...ADDED_RESIDUALS,
+    ]);
     expect(RESIDUALS.map(residual => residual.pin), "the residuals are row R's pins").toEqual([...(ROWS.find(row => row.id === "R")?.pins ?? [])]);
     const filed = filedIds(notesOf(rows, FOLLOW_UP));
     expect([...(ROWS.find(row => row.id === "E")?.pins ?? [])], `row E against the escapes ${FOLLOW_UP}'s filing names`).toEqual(filed.f3);
     expect([...(ROWS.find(row => row.id === "K")?.pins ?? [])], `row K against the mutants ${FOLLOW_UP}'s filing names`).toEqual([...filed.lead, ...filed.f2]);
+    // CARRY ANCHORS (wb-mdfe): rows V and X against the carry's filing - its first F1-F5 bullets - in the export.
+    expect(carryGaps(CARRY_CURES, notesOf(rows, CARRY)), `the cures against the findings ${CARRY}'s filing routes and what each bullet names`).toEqual([]);
+    expect(
+      CARRY_ROWS.flatMap(id => ROWS.find(row => row.id === id)?.pins ?? []),
+      "rows V and X are the carry's cures, in finding order",
+    ).toEqual(CARRY_CURES.flatMap(cure => cure.pins));
+    // END ANCHORS (wb-52th): row N against the end carry's filing - its first F1 bullet - in the export; F2 and F3 ride elsewhere.
+    expect(carryGaps(END_CURES, notesOf(rows, END_CARRY), END_ELSEWHERE), `the cures against the findings ${END_CARRY}'s filing routes`).toEqual([]);
+    expect(
+      END_CARRY_ROWS.flatMap(id => ROWS.find(row => row.id === id)?.pins ?? []),
+      "row N is the end carry's cure",
+    ).toEqual(END_CURES.flatMap(cure => cure.pins));
     expect(exportFloorGaps(EXPORT_FLOOR, delivered.exportRows), "EXPORT_FLOOR against the export rows the delivery recorded").toEqual([]);
     expect(rootsOf(EXEC_SCANS), "T2's roots: T1's but the scriptless ones").toEqual(rootsOf(PROGRAM_SCANS).filter(root => !SCRIPTLESS_ROOTS.includes(root)));
     expect(rootsOf(GATED_SCANS).sort(), "G1's roots: T1's but the claimless ones, and docs").toEqual(
@@ -1816,6 +2474,16 @@ describe(SUITE, () => {
     );
     // REGISTRATION (wb-ze6u F1), first: every case of this file is collected exactly as the roster lists it, in run mode.
     expect(registrationGaps(registeredOf(task.file, task), expectedTitles(), "collected"), "the collected task tree against the roster").toEqual([]);
+    // END SHAPE (wb-52th F1), read here and again by the closing case: every harness case ends with its own end record.
+    expect(endShapeGaps(textOf(THIS_FILE)), "the end shape of this file's harness").toEqual([]);
+    // GUARDED COMPARES (wb-2fb4 F3): each dead-wrap mutant the landing-590 verdict names, modeled on this file, reads its gaps.
+    expect(DEAD_WRAPS.map(wrap => wrap.id), `the dead-wrap mutants the landing-590 verdict's F3 names in ${GUARD_VERDICT}'s notes`).toEqual(
+      verdictDeadWraps(notesOf(rows, GUARD_VERDICT)),
+    );
+    expect(DEAD_WRAPS.map(wrap => `${wrap.id}: ${endShapeGaps(deadWrapped(textOf(THIS_FILE), wrap)).join(", ")}`)).toEqual(
+      DEAD_WRAPS.map(wrap => `${wrap.id}: ${wrap.reads.join(", ")}`),
+    );
+    ENDED.push(JUDGED_SET);
   });
 
   for (const row of ROWS) {
@@ -1824,17 +2492,44 @@ describe(SUITE, () => {
         it(pin, { timeout: 60_000 }, async () => {
           const impl = IMPL[pin];
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
-          const witness = impl === undefined ? null : await impl();
-          expect(witness).toStrictEqual(rosterWitness(pin));
-          REACHED.set(pin, witness);
+          running = pin;
+          try {
+            const witness = impl === undefined ? null : await impl();
+            expect(witness).toStrictEqual(rosterWitness(pin));
+            REACHED.set(pin, witness);
+          } finally {
+            running = undefined;
+          }
         });
       }
     });
   }
 
-  it(CLOSING, ({ task }) => {
+  it(DRIVE_RECORD, () => {
+    const readers = gateReaderWalk(trackedPaths());
+    expect(readers.length, "the walk finds a gate reader").toBeGreaterThan(0);
+    const rows = (reader: string): string => ["A", "B", "C", "D"].filter(row => [...(DRIVES.get(reader) ?? [])].some(pin => rowOf(pin) === row)).join("");
+    expect(readers.map(reader => `${reader} ${rows(reader)}`)).toEqual(readers.map(reader => `${reader} ABCD`));
+    expect([...WALKERS].map(rowOf)).toContain("T");
+    // A negative control: a module no case drives reads no row.
+    expect(rows("src/workbench/observation.ts")).toBe("");
+    ENDED.push(DRIVE_RECORD);
+  });
+
+  it(CLOSING, { timeout: 120_000 }, async ({ task }) => {
     expect(registrationGaps(registeredOf(task.file, task), expectedTitles(), "ran"), "the task tree after the run against the roster").toEqual([]);
-    expect(reachedGaps(REACHED), "REACHED against the roster: every pin, in order, its recorded witness equal to the roster's").toEqual([]);
-    CLOSED.done = true;
+    // RE-EVALUATION (wb-mdfe F1): every case once more, run here from CASES, outside the case bodies and IMPL's wrapper.
+    const fresh = new Map<string, Json>();
+    for (const pin of ROSTER.rows.flatMap(row => row.pins.map(entry => entry.id))) {
+      const run = CASES[pin];
+      fresh.set(pin, run === undefined ? null : await run());
+    }
+    expect(closingGaps(REACHED, INVOKED, fresh), "REACHED, INVOKED and the re-evaluation against the roster: every pin, in order, each witness the roster's").toEqual([]);
+    // END RECORD (wb-52th F1): the end shape read once more, and the two harness cases before this one ran to their end.
+    expect(endShapeGaps(textOf(THIS_FILE)), "the end shape of this file's harness, read again").toEqual([]);
+    expect(endGaps(ENDED, [JUDGED_SET, DRIVE_RECORD]), "the judged set and the drive record ran to their end").toEqual([]);
+    ENDED.push(CLOSING);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

@@ -99,10 +99,17 @@ describe('Forge gate.status reader adapter', () => {
     // Forge's CommandStatus vocabulary is success/partial/error/usage_error: a gate that ran to completion and failed records error.
     const forgeFailed = forgeGateTopology(withPackages(current('code:a', 'error'), current('code:b', 'success')), context);
     expect(forgeFailed.snapshots.map(snapshot => snapshot.node.statusTone)).toStrictEqual(['failure', 'failure', 'success']);
+    // wb-2j8q (wb-bbnl F2): coverage reads the read status and current authority, never the last results - a successful read
+    // of current packages is complete on the workspace and on every package, the failed one included.
+    expect(forgeFailed.snapshots.map(snapshot => snapshot.coverage)).toStrictEqual(['complete', 'complete', 'complete']);
     const mixed = forgeGateTopology(withPackages(current('code:a', 'failure'), HISTORICAL), context);
     expect(mixed.snapshots.map(snapshot => snapshot.node.statusTone)).toStrictEqual(['unknown', 'failure', 'unknown']);
+    // One historical package leaves the workspace unjudged, so partial; the current package's own snapshot stays complete.
+    expect(mixed.snapshots.map(snapshot => snapshot.coverage)).toStrictEqual(['partial', 'complete', 'partial']);
     const undecided = forgeGateTopology(withPackages(current('code:a', 'partial'), current('code:b', 'usage_error')), context);
     expect(undecided.snapshots.map(snapshot => snapshot.node.statusTone)).toStrictEqual(['unknown', 'unknown', 'unknown']);
+    // An undecided reading is observed just as completely: every package current on a successful read, so complete throughout.
+    expect(undecided.snapshots.map(snapshot => snapshot.coverage)).toStrictEqual(['complete', 'complete', 'complete']);
   });
 
   it('withholds workspace success that the read status or a declared verdict does not support, and says so', () => {
@@ -113,6 +120,9 @@ describe('Forge gate.status reader adapter', () => {
       expect(result.diagnostics).toHaveLength(1);
       expect(result.diagnostics[0]).toMatch(/success is withheld/);
     }
+    // wb-bbnl: the coverage keeps its read-status leg - a degraded read of a current package is partial on both snapshots.
+    const degraded = forgeGateTopology(reading({status: 'partial', envelope: {verdict: null, reason_code: 'FORGE_GATE_INCOMPLETE'}, data: {packages: [current('code:a', 'success')]}}), context);
+    expect(degraded.snapshots.map(snapshot => snapshot.coverage)).toStrictEqual(['partial', 'partial']);
   });
 
   // docs/workbench/19 § "Example H: native evidence refusal": "Pi must show "verification indeterminate", not success,
@@ -132,6 +142,9 @@ describe('Forge gate.status reader adapter', () => {
     const vacuous = forgeGateTopology(reading({...SOURCE, data: {packages: []}}), context);
     expect(vacuous.snapshots).toHaveLength(1);
     expect(vacuous.snapshots[0].node.statusTone).toBe('unknown');
+    // wb-bbnl (wb-6ps1.1 clause (b): "coverage never 'complete'"): every() over zero packages is vacuously true, so the
+    // workspace coverage reads the same judged guard as the tone - partial, never complete.
+    expect(vacuous.snapshots[0].coverage).toBe('partial');
     expect(vacuous.diagnostics).toHaveLength(1);
   });
 

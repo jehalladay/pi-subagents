@@ -1,5 +1,5 @@
 {
-  "provenance": "wb-ojm5.2 GP cache scope census roster (test/workbench-gp-cache-scope-census.test.ts). Producer lines MEASURED read-only by the cutting seat ws-01 (run g10-work-s58, 2026-10-23) with git show and git grep in the local GraphPolicyCLI checkout at the program pin, no fetch: each line's text is the file's line verbatim and its blob is git rev-parse <pin>:<path>; sourceInvalidate is `git grep -l SOURCE_INVALIDATE <pin>` (matches) and the same grep under ts, python and fixtures (underCode). title is the bead's title in the tracker export (.beads/issues.jsonl at Pi base feebb63). Every witness was written as the cut's specification before the census first ran against it. wb-yco1 (seat ws-03, run g10-work-s87, 2026-10-25, base 24e0d5b): D3's witness (adopters, choices, readings), constants.adopters, the D1 controls 'embedding2Cache beside a Map' and 'graphPolicy2 beside a Map' and Q7's zeroWidthInside, digitInside, kind and kindZeroWidth were written as that cut's specification before the census ran against them; constants.choices first carried the landed header's claim (every choice free), D3 read red against it, and the provenance triple's entry now carries the measured binding (A-PROVENANCE).",
+  "provenance": "wb-ojm5.2 GP cache scope census roster (test/workbench-gp-cache-scope-census.test.ts). Producer lines MEASURED read-only by the cutting seat ws-01 (run g10-work-s58, 2026-10-23) with git show and git grep in the local GraphPolicyCLI checkout at the program pin, no fetch: each line's text is the file's line verbatim and its blob is git rev-parse <pin>:<path>; sourceInvalidate is `git grep -l SOURCE_INVALIDATE <pin>` (matches) and the same grep under ts, python and fixtures (underCode). title is the bead's title in the tracker export (.beads/issues.jsonl at Pi base feebb63). Every witness was written as the cut's specification before the census first ran against it. wb-yco1 (seat ws-03, run g10-work-s87, 2026-10-25, base 24e0d5b): D3's witness (adopters, choices, readings), constants.adopters, the D1 controls 'embedding2Cache beside a Map' and 'graphPolicy2 beside a Map' and Q7's zeroWidthInside, digitInside, kind and kindZeroWidth were written as that cut's specification before the census ran against them; constants.choices first carried the landed header's claim (every choice free), D3 read red against it, and the provenance triple's entry now carries the measured binding (A-PROVENANCE). wb-ne7z (seat ws-02, run g10-work-s103, 2026-10-26, base fced7bf): A2's three new refusals (producer empty, checkpoint empty, receipt absent), D3's four new adopters with their witnesses, the choice 'a string in each provenance field' and five readings, and constants.adopters (their lenient readings) and constants.choices were written as that cut's specification before the census ran against them; with the landed four PROVENANCE_CASES the census read red against them (A2, D3, the records case), and PROVENANCE_CASES now reads every field of the triple both absent and empty.",
   "bead": "wb-ojm5.2",
   "programPin": "0107c72992f35cf6832a37615a25c7df45747ebc",
   "title": "[GPC-GRAPH-NATIVE-LLM-RLP-R2] No Pi surface shall reuse cached GP scores, embeddings or posteriors across a source scope boundary, and Pi shall invalidate any such cache on graph/source revision change or permission change/revocation, carrying provenance and tenant scope in every cached object (posture; no gating artifact, no GP cache exists in Pi today) - docs/programs/graph-native-llm-rlp-2026-10-18/14-sparse-query-design-and-bayesian-certification.md:13@0107c72992f3",
@@ -285,6 +285,43 @@
           "checkpoint",
           "receipt"
         ]
+      },
+      "token keys, an absent receipt accepted": {
+        "keys": "token",
+        "provenance": [
+          "producer",
+          "checkpoint"
+        ],
+        "lenient": {
+          "receipt": "empty"
+        }
+      },
+      "token keys, empty producer and checkpoint accepted": {
+        "keys": "token",
+        "provenance": [],
+        "lenient": {
+          "producer": "absent",
+          "checkpoint": "absent",
+          "receipt": "empty"
+        }
+      },
+      "token keys, empty fields accepted": {
+        "keys": "token",
+        "provenance": [],
+        "lenient": {
+          "producer": "absent",
+          "checkpoint": "absent",
+          "receipt": "absent"
+        }
+      },
+      "token keys, provenance values of any type": {
+        "keys": "token",
+        "provenance": [],
+        "lenient": {
+          "producer": "absent or empty",
+          "checkpoint": "absent or empty",
+          "receipt": "absent or empty"
+        }
       }
     },
     "choices": [
@@ -292,11 +329,21 @@
         "choice": "the provenance fields (producer, checkpoint, receipt)",
         "adopters": [
           "token keys, the producer only",
-          "token keys, the producer and the receipt"
+          "token keys, the producer and the receipt",
+          "token keys, an absent receipt accepted",
+          "token keys, empty producer and checkpoint accepted",
+          "token keys, empty fields accepted"
         ],
         "bound": [
           "A-PROVENANCE"
         ]
+      },
+      {
+        "choice": "a string in each provenance field",
+        "adopters": [
+          "token keys, provenance values of any type"
+        ],
+        "bound": []
       },
       {
         "choice": "the subject part",
@@ -435,7 +482,10 @@
             "refusals": {
               "provenance absent": "missing:provenance",
               "producer absent": "missing:provenance.producer",
+              "producer empty": "missing:provenance.producer",
               "checkpoint absent": "missing:provenance.checkpoint",
+              "checkpoint empty": "missing:provenance.checkpoint",
+              "receipt absent": "missing:provenance.receipt",
               "receipt empty": "missing:provenance.receipt",
               "tenant scope absent": "missing:tenantScope",
               "tenant principal absent": "missing:tenantScope",
@@ -800,12 +850,23 @@
               "token keys, the producer and the receipt": [
                 "A-PROVENANCE"
               ],
-              "record keys, the provenance triple": []
+              "record keys, the provenance triple": [],
+              "token keys, an absent receipt accepted": [
+                "A-PROVENANCE"
+              ],
+              "token keys, empty producer and checkpoint accepted": [
+                "A-PROVENANCE"
+              ],
+              "token keys, empty fields accepted": [
+                "A-PROVENANCE"
+              ],
+              "token keys, provenance values of any type": []
             },
             "choices": {
               "the provenance fields (producer, checkpoint, receipt)": [
                 "A-PROVENANCE"
               ],
+              "a string in each provenance field": [],
               "the subject part": [],
               "a kind check at put": [],
               "invalidated as the prior key's reading": [],
@@ -819,7 +880,12 @@
               "token keys: an embedding put under a score key": "accepted",
               "token keys: the prior key after a revision bump": "miss",
               "token keys: the prior key after the revision rolls back": "hit",
-              "record keys: a complete hand-built key": "hit"
+              "record keys: a complete hand-built key": "hit",
+              "an absent receipt accepted: an object without its receipt": "hit",
+              "empty producer and checkpoint accepted: both empty, no receipt": "hit",
+              "empty fields accepted: every field empty": "hit",
+              "provenance values of any type: a numeric receipt": "hit",
+              "the reference: a numeric receipt": "missing:provenance.receipt"
             }
           }
         }

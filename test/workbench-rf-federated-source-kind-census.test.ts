@@ -5,6 +5,7 @@
  * fw-b FW-08b rfc-0txnl.19 ship (neither at the pin), Pi pins that <GATED_KIND> is absent from rf's closed source_kinds()
  * vocabulary (task, git, literal, file, lens_key)." (harness2-federated-peer-2026-10-20/BEADS-2026-10-21.md:14@6a251bf73af5).
  * wb-sjx2 (the landing-253 follow-up, R694) cures that cut's PREP findings F1-F4; FOLLOW-UP below says where each lands.
+ * wb-yf50 (the landing-346 follow-up, R694) cures wb-sjx2's gate findings F1-F3 the same way.
  *
  * <GATED_KIND> is that federated source kind. This file never spells it: GATED_KIND composes it from its two words at runtime and
  * every label writes the placeholder, so row A's whole-tree scan holds over this file and its roster too (residual R-COMPOSED
@@ -20,7 +21,11 @@
  * GLOBAL_OPTIONS, "the eight global options, accepted before and after the subcommand with identical semantics" (CLI-A25),
  * and VERBOSE_FLAGS (:277; a run such as -vv, _VERBOSE_RUN :291). _add_globals (:3141-3201) registers them on every group
  * parser (_add_group :3458), so a global standing between "graph" and the leaf still runs the leaf. RF_VALUE_OPTIONS (:286)
- * are the three that take a value, spelled `--opt VALUE` or `--opt=VALUE`.
+ * are the three that take a value, spelled `--opt VALUE` or `--opt=VALUE`. The end-of-options marker (wb-yf50): ARGV_END
+ * (:241) is "--", and argparse reads every word after it as a positional, so a group parser takes the leaf after it and
+ * refuses a global there - installed rf 0.1.836 dispatched `rf graph -- show` as graph.show (gate-prep-13, wb-sjx2 F2), and
+ * an argparse model of the group parser under Python 3.12.15 and 3.15.0 (installed rf 0.1.844's interpreter) reads
+ * `graph -- show` and `graph --json -- show` as show and refuses `graph -- --json show`.
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label):
  *  A, acceptance (a). A1-A4 scan every file of src, test, docs and qa as UTF-8 for GATED_FAMILY (SCAN_ROOTS: a floor on the
@@ -40,11 +45,12 @@
  *    the native and the injected registration; C3 and C4 the spawned argv of both input arms (renderArgv,
  *    providers/reactivefiber.ts:111-115) against a stand-in rf; C5 an AST scan of every src module (each .ts module git lists
  *    under src must be scanned) for an rf graph verb - an argv "graph" followed by a GRAPH_LEAVES word once rf's group-global
- *    options are skipped (a value global with its value, literal or not), or a string or template literal spelling one, globals
- *    between "graph" and the leaf included - and of every native descriptor; C6 the receipt rule: a registered reactivefiber.*
- *    descriptor beyond the preview needs a docs/workbench/receipts file naming it and both GATING_ARTIFACTS, each as a whole id
- *    (rfc-lr9nu.20 does not name rfc-lr9nu.2). None exists, so the real reading is empty; synthetic registrations exercise the
- *    checker.
+ *    options are skipped (a value global with its value, literal or not) or past rf's end-of-options marker, or a string or
+ *    template literal spelling one, globals between "graph" and the leaf included - and of every native descriptor; C6 the
+ *    receipt rule: a registered reactivefiber.* descriptor beyond the preview needs a docs/workbench/receipts file naming it and
+ *    both GATING_ARTIFACTS, each as a whole id (no id character before it or after it and no dot continuation: rfc-lr9nu.20,
+ *    rfc-lr9nu.2.1 and xrfc-lr9nu.2 do not name rfc-lr9nu.2). None exists, so the real reading is empty; synthetic
+ *    registrations exercise the checker.
  *  M, the matcher row A reads: M1-M10 the spellings GATED_FAMILY must catch (M10 a run of several separators); Q1-Q3 the
  *    pinned quiet rows of the residuals.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id,
@@ -55,12 +61,19 @@
  * the separator class, a zero-width code point (Q1) or a homoglyph letter (Q2), is not caught; R-COMPOSED a spelling assembled
  * at runtime from parts, this file's own mechanism, is invisible to any text scan (Q3), and A6 is the runtime backstop for
  * served descriptor text only; R-ARGV-COMPOSED an rf graph argv or command built from non-literal parts (an argv element or
- * spread, a template slot holding the leaf) is invisible to C5 (C5's composedArgv, spreadArgv and slotLeaf controls stay 0).
+ * spread, a template slot holding the leaf, a value global's =VALUE element composed as one template) is invisible to C5
+ * (C5's composedArgv, spreadArgv, slotLeaf and composedValueArgv controls stay 0).
  * FOLLOW-UP (wb-sjx2, the landing-253 PREP findings): F1 C5 skips rf's group-global options between "graph" and the leaf in
  * both the argv check and GRAPH_VERB (must-hit controls flagArgv, valueArgv, equalsArgv, flagLiteral, valueLiteral and
  * templateValue); F2 M10 pins the separator-run tolerance (the class repeats, so a matcher allowing one separator misses
  * M10); F3 the A1-A4 and C5 walks are held to git's list of their root, not to a count floor alone; F4 C6 reads each id as a
  * whole id (controls prefixCollided and idCollided stay unreceipted, sentenceEnd is receipted).
+ * FOLLOW-UP (wb-yf50, the landing-346 gate findings): F1 C6 holds each boundary clause of namesWhole to a control of its own -
+ * wordLed, dotLed and hyphenLed (an id character before the id: the leading boundary), dotContinued and dotContinuedLeaf (the
+ * dot continuation) and hyphenTrailed (a hyphen after it) stay unreceipted, and formatted (markdown punctuation around each
+ * id) is receipted; F2 C5's argv check reads rf's end-of-options marker - endOfOptionsArgv and globalThenEndArgv must hit,
+ * endThenGlobalArgv (a global after the marker, which rf refuses) stays 0, and endOfOptionsLiteral holds the hyphen in
+ * GRAPH_VERB's separator run; F3 composedValueArgv pins the R-ARGV-COMPOSED member N09 quiet.
  * SCOPE: the vocabularies are producer facts at 6a251bf73af5; Pi vendors no rf schema, so a producer-side change is seen only
  * when an rf pin-bump re-reads them. The armed half (surface the row from its stored receipt) waits for rfc-lr9nu.2: no reader
  * is added or faked here.
@@ -123,6 +136,9 @@ const LEAF_WORDS = [...new Set(GRAPH_LEAVES.map(leaf => leaf.split(".")[0] ?? le
 const FLAG_GLOBALS = GROUP_GLOBALS.filter(option => !VALUE_GLOBALS.includes(option));
 /** A run of -v is one verbosity step per v (-vv; parser.py:291 _VERBOSE_RUN). */
 const VERBOSE_RUN = /^-v+$/;
+/** rf's end-of-options marker (ARGV_END, parser.py:241): argparse reads every later word as a positional, so the leaf may
+ * stand right after it and a global there is no global (wb-yf50 F2). */
+const ARGV_END = "--";
 const literally = (text: string): string => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 /** One group global inside a command string, then whitespace: a value global with its value (=VALUE, or the next word, quoted
  * or bare), a flag, or a -v run. No two alternatives match the same text, so a long run of globals cannot backtrack
@@ -403,11 +419,13 @@ interface VerbScan {
   readonly renderArgv: number;
 }
 /** The argv word at or after `from` once rf's group globals are skipped: a flag or a -v run alone, a value global with its
- * value (literal or not) or as --opt=VALUE; "" when the argv ends first or a non-literal element stands there. */
+ * value (literal or not) or as --opt=VALUE; past an end-of-options marker, the word right after it, never skipped; "" when
+ * the argv ends first or a non-literal element stands there. */
 function wordAfterGlobals(words: readonly string[], from: number): string {
   let at = from;
   while (at < words.length) {
     const word = words[at] ?? "";
+    if (word === ARGV_END) return words[at + 1] ?? "";
     if (VALUE_GLOBALS.includes(word)) at += 2;
     else if (FLAG_GLOBALS.includes(word) || VERBOSE_RUN.test(word) || VALUE_GLOBALS.some(option => word.startsWith(`${option}=`))) at += 1;
     else return word;
@@ -441,8 +459,9 @@ function scanVerbs(fileName: string, text: string): VerbScan {
   return { verbArgv, verbLiterals, renderArgv };
 }
 
-/** Whether a text names an id whole: no id character before it and none after it, a sentence's closing dot aside (F4:
- * rfc-lr9nu.20 and rfc-lr9nu.2.1 do not name rfc-lr9nu.2). */
+/** Whether a text names an id whole: no id character (a word character, "." or "-") before it, no word character or "-"
+ * after it and no "." continued by a word character, a sentence's closing dot aside (F4: rfc-lr9nu.20 and rfc-lr9nu.2.1 do
+ * not name rfc-lr9nu.2; wb-yf50 F1 holds each clause to a C6 control of its own). */
 function namesWhole(text: string, id: string): boolean {
   return new RegExp(`(?<![\\w.-])${literally(id)}(?![\\w-]|\\.\\w)`).test(text);
 }
@@ -585,10 +604,16 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       flagLiteral: control('const cmd = "rf graph --no-input test --candidate C --json";'),
       valueLiteral: control("const cmd = \"rf graph --actor ops --workspace '/w a' --yes rollback\";"),
       templateValue: control(["const cmd = `rf graph --workspace $", "{root} show`;"].join("")),
+      // wb-yf50 F2: rf's end-of-options marker before the leaf (must hit); a global after it is refused by rf (quiet).
+      endOfOptionsArgv: control('spawn("rf", ["graph", "--", "show"]);'),
+      globalThenEndArgv: control('spawn("rf", ["graph", "--json", "--", "show"]);'),
+      endThenGlobalArgv: control('spawn("rf", ["graph", "--", "--json", "show"]);'),
+      endOfOptionsLiteral: control('const cmd = "rf graph -- show";'),
       // R-ARGV-COMPOSED: non-literal parts stay unread (quiet).
       composedArgv: control('const leaf = "test"; spawn("rf", ["graph", leaf]);'),
       spreadArgv: control('spawn("rf", ["graph", ...globals, "test"]);'),
       slotLeaf: control(["const cmd = `rf graph --json $", "{leaf}`;"].join("")),
+      composedValueArgv: control(['spawn("rf", ["graph", `--workspace=$', '{root}`, "test"]);'].join("")),
     };
     return { srcFloorMet, renderArgvSeen, verbArgv, verbLiterals, descriptorVerbs, missedModules, controls };
   },
@@ -610,6 +635,15 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       prefixCollided: unreceiptedLeaves(ids, [`# wb-x: registers ${leaf} under ${GATING_ARTIFACTS[0]}0 and ${GATING_ARTIFACTS[1]}`]),
       idCollided: unreceiptedLeaves(ids, [`# wb-x: registers ${leaf}s under ${both}`]),
       sentenceEnd: unreceiptedLeaves(ids, [`# wb-x: registers ${leaf} under ${both}.`]),
+      // wb-yf50 F1: each boundary clause of namesWhole by itself - an id character before the id (the leading boundary), a dot
+      // continuation or a trailing hyphen leaves the leaf unreceipted; markdown punctuation around each id does not.
+      wordLed: unreceiptedLeaves(ids, [`# wb-x: registers ${leaf} under x${GATING_ARTIFACTS[0]} and ${GATING_ARTIFACTS[1]}`]),
+      dotLed: unreceiptedLeaves(ids, [`# wb-x: registers sub.${leaf} under ${both}`]),
+      hyphenLed: unreceiptedLeaves(ids, [`# wb-x: registers ${leaf} under ${GATING_ARTIFACTS[0]} and x-${GATING_ARTIFACTS[1]}`]),
+      dotContinued: unreceiptedLeaves(ids, [`# wb-x: registers ${leaf} under ${GATING_ARTIFACTS[0]}.1 and ${GATING_ARTIFACTS[1]}`]),
+      dotContinuedLeaf: unreceiptedLeaves(ids, [`# wb-x: registers ${leaf}.v2 under ${both}`]),
+      hyphenTrailed: unreceiptedLeaves(ids, [`# wb-x: registers ${leaf} under ${GATING_ARTIFACTS[0]} and ${GATING_ARTIFACTS[1]}-rc`]),
+      formatted: unreceiptedLeaves(ids, [`# wb-x: registers \`${leaf}\` (${GATING_ARTIFACTS[0]}), ${GATING_ARTIFACTS[1]}, landed`]),
     };
   },
   ...Object.fromEntries(

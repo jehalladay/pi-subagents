@@ -48,8 +48,12 @@
  *    Pi reads names those producers, are never read. E2 a lexical scan of every src module (literals and identifiers, camelCase split)
  *    finds no H2 record term and no distinctive state word, with a floor and three anchors (the observer, the registry,
  *    telemetry.ts) scanned and quiet. E1's and E2's walks each equal an independent recursive listing of src (node:fs readdirSync
- *    recursive, not filesBelow), so a walk narrowed by a subtree or a file reds whatever the floor's margin. E3 the detector's
- *    controls: flagged lines (every term and word flags one), quiet lines and the residuals' quiet rows.
+ *    recursive, not filesBelow) and git's own listing of src (GIT_LISTING, a frozen roster constant: tracked or untracked files,
+ *    ignored ones included, regular files only, run through two node functions bound before any case runs, every path it tests
+ *    built through no node path function), so a walk narrowed by a subtree or a file reds whatever the floor's margin, and so does
+ *    a walk narrowed together with the in-file listing; E1 also replaces each of those two, and path's join and normalize, in node's
+ *    own module objects at run time and reads git's listing unchanged. E3 the detector's controls: flagged lines (every term and
+ *    word flags one), quiet lines and the residuals' quiet rows.
  * MEASURED PRODUCER FACTS (roster `producers`, read-only git show on the local checkouts, 2026-10-23): the program README at the four
  * pins the epic wb-4nut names (FiberOpticsSDK e803f66c5fb9, ReactiveFiberTSXSDK 76bbbffd9d4a, ReactiveInferenceSDK 485f3615db1e,
  * ReactiveLensesSDK bfe1f4ac7fa0), its blob and every line the filing cites (FO 25, 27, 35, 36, 44, 47; TSX 37, 48; RI 23, 24, 34,
@@ -72,13 +76,104 @@
  * holds that end, so a registration case that returns early or skips itself at run time reds after it has run. The judge reads
  * which cases were selected to run from the collected tree before the first case runs (beforeEach, once): under a test-name filter
  * that deselects the registration case it holds nothing.
+ * THE WALK ANCHOR (wb-cd1r, the landing-400 gate's F1: filesBelow and the in-file listing narrowed by the same subtree, src/workflow,
+ * kept the census green, the two equal and the walk above the floor): the in-file listing is this file's own code, so it binds a
+ * walk narrowed alone, never one narrowed with it; git's listing comes from git's own walk of the checkout, read through two node
+ * functions this file binds before any case runs (below), so a walk and the in-file listing narrowed together still differ from it.
+ * Git runs with GIT_LISTING as it stands, its whole argv with the src pathspec in it, and the judged set holds GIT_LISTING to the
+ * roster, so an argument of it narrowed, dropped or added reds there whatever the walks do (wb-fugf, the landing-494 gate's F1: the
+ * src pathspec was in-file code at gitListedSrc's call site, which the roster did not hold). GIT_LISTING is frozen where it is
+ * declared, and the judged set holds that to the roster too (its Object.isFrozen reading against the roster's gitListingFrozen), so
+ * the argv the judged set holds is the argv gitListedSrc hands git: an edit of GIT_LISTING at run time (a push, a splice, an index
+ * or its length written) throws a TypeError where it is made, so the case it is made in reds (from a hook, the case the hook runs
+ * for; at module load, the file), the edits made after the judged set has read it included, and an edit caught where it is made
+ * leaves GIT_LISTING as the judged set read it, so walks narrowed with it still red at E1 and E2 (wb-iwhu, the landing-585 gate's
+ * F1: GIT_LISTING was a plain array, so a push made in D2 or in beforeEach after the judged set had read it, with both walks
+ * narrowed by the same path, kept the census green). gitListedSrc hands it to git through child_process's execFileSync and tests
+ * each path git lists through fs's lstatSync as this module's first statements bound them (BOUND_EXEC_FILE_SYNC and
+ * BOUND_LSTAT_SYNC, read from its imports before any case, hook or later module line runs), never through node's live imports, so
+ * a replacement of either in node's own module object installed after those lines (process.getBuiltinModule with
+ * module.syncBuiltinESMExports, which every import of it then reads), from a case, a hook or a later module line, never reaches
+ * git's argv, its output or the regular-file test, and walks narrowed with it still red at E1 and E2 (wb-ccea, the landing-633
+ * gate's F1: a replacement of execFileSync that added an exclude pathspec to git's argv, or dropped src/workflow from its output,
+ * installed in D2, in beforeEach or at module load, with both walks narrowed by the same path, kept the census green). The path the
+ * regular-file test reads is a template literal, REPO and the path git lists joined by '/', built through no node path function,
+ * so a replacement of path's join or normalize never reaches it either (wb-tsi6, the landing-697 gate's F1: a bound path.join held
+ * join's identity, not its behaviour, since join reads normalize off node's own path module object at every call, so one statement
+ * replacing normalize after the bindings, in D2, with both walks narrowed by src/workflow, kept the census green). E1 replaces
+ * each of those four in turn, reads the replacement live at this module's own import (normalize through its join) and reads git's
+ * listing unchanged. Each replacement narrows by one file, the first git lists, through exactly what its own code reads, and E1's
+ * probe calls it in one form, the narrowed form (wb-yvw7, the landing-731 gate's F1: a live lstatSync or join called on the
+ * repo-relative path git lists, with a run-time replacement keyed to that path and both walks narrowed by src/workflow, kept the
+ * census green with E1's control untouched; wb-yvw7's refusal #1: so did git run on GIT_LISTING through a live execFileSync whose
+ * options carry env GIT_LITERAL_PATHSPECS=1, with a replacement keyed to that env and both walks narrowed). execFileSync's
+ * replacement hands the function it replaced the file and the options it is handed unchanged and the argv with ':(exclude)' and that
+ * file's path appended, which git run on GIT_LISTING reads as an exclude pathspec unless its pathspec magic is off (with
+ * GIT_LITERAL_PATHSPECS=1 in the env it runs in, git reads a literal path that names no file); lstatSync's throws when its first
+ * argument, as a string, is targetPath, the file's absolute path as join(REPO, path) spells it, and hands every other call to the
+ * function it replaced; join's and normalize's move a result equal to targetPath off it (join reads normalize at every call). The
+ * probe runs git on GIT_LISTING through the live execFileSync with the options gitListedSrc passes (cwd REPO, encoding utf8,
+ * maxBuffer 1 << 26 and no env of its own, so git runs in the process environment), calls the live lstatSync on targetPath and calls
+ * the live join on REPO and the file. So a listing, gitListedSrc with regularFile, that moves a call of theirs to the live function
+ * of one or more of the four (an import of it, or the function read off node's own module object at the call), every call made there
+ * in the narrowed form (git on GIT_LISTING's argv, the frozen constant or a copy of it, with those options; for each path git lists,
+ * the absolute path join(REPO, path) spells, a string or a Buffer holding it, as lstatSync's argument, or that path as join's or
+ * normalize's result), or that builds its path through a bound join, the rest of gitListedSrc and regularFile as they stand, reds
+ * there, alone or beside a run-time replacement that wraps that node function (normalize, for a bound join) and does nothing but
+ * narrow by a src subtree, with both walks narrowed by the same subtree in their own code, E1's control untouched and no other
+ * run-time replacement standing; a call in another form, a narrowed-form call made for some of the paths git lists only, a second
+ * call beside one in the narrowed form, another edit of how the two read a call's result and a node function the control does not
+ * replace are NOT CLAIMED by this census (Not claimed).
  * Not claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the filing anchors rows, clauses and words, not
  * pins); an assertion removed from this file together with its pinned count in the roster; the file-end judge or the selection it
  * reads removed (no claim rides them alone: the registration case still holds the record); every case of the file skipped at once
  * (no case runs to read the tree, and vitest runs no hook for a file with nothing to run); the native provider seam
  * (providers/reactivefiber.ts isPreviewEnvelope, which refuses the same committed shapes before a reading exists) and the control
  * adapters' executions (claude-control.ts, detached-control.ts: their exported outcome tables are read here, their suites execute
- * them).
+ * them); gitListedSrc's own code narrowed together with filesBelow and the in-file listing by the same path, whichever of its parts
+ * carries the edit: an argument added at its call site, its filter of git's output (regularFile included), the result it returns,
+ * there or where E1 or E2 reads it, or one of the two bindings it runs on made a narrowing wrapper over the function it read (an
+ * edit of three sites: the declared filter form and the landing-494 gate's G7 and G10, which no in-file check reads, and a wrapper
+ * binding, which E1's control runs through without telling it from node's function); GIT_LISTING narrowed in this file and the
+ * roster together with filesBelow and the in-file listing (the roster moving with the census, an edit of four sites visible in any
+ * diff: that gate's G4); GIT_LISTING's freeze removed together with the judged set's reading of it, in the roster (gitListingFrozen
+ * false) or in this file (the reading replaced by a literal true), and a run-time edit of it with filesBelow and the in-file listing
+ * narrowed by the same path (an edit of five sites, in this file alone or in this file and the roster, visible in any diff);
+ * gitListedSrc or regularFile made to run on node's live import of one of the four functions E1's control replaces (in place of a
+ * binding or of the template literal) in the narrowed form E1's probe reads (git on GIT_LISTING's argv with the options gitListedSrc
+ * passes and no env of its own; the absolute path join(REPO, path) spells, a string or a Buffer holding it, as lstatSync's argument;
+ * that path as join's or normalize's result), or regularFile's path built through a bound join to that absolute path again, together
+ * with E1's control hollowed, a run-time replacement of that function and filesBelow and the in-file listing narrowed by the same
+ * path (in this file's code alone an edit of five sites or more visible in any diff; fewer when a run-time replacement of what the
+ * control or the walks run on does the hollowing or the narrowing); gitListedSrc or regularFile made to call node's live import of
+ * one of the four in a form E1's probe does not read (wb-yvw7), together with a run-time replacement of that function, or of the
+ * normalize a live join reads, keyed to that form and filesBelow and the in-file listing narrowed by the same path (an edit of four
+ * sites or more visible in any diff, E1's control untouched; fewer when a run-time replacement of what the walks run on, fs's
+ * readdirSync among them, does the narrowing): whether E1's control narrows such a call is NOT CLAIMED either way, since each
+ * replacement narrows exactly what its own code reads (THE WALK ANCHOR), so some forms pass it unread - lstatSync on another
+ * spelling of a path git lists (repo-relative, resolved against the process cwd; with './' before it; a non-normalized absolute
+ * spelling; a file URL), join or normalize returning the repo-relative spelling (the absolute path composed outside them),
+ * execFileSync running a shell whose command string runs git (the appended exclude lands in the shell's $0), git with its
+ * --literal-pathspecs option ahead of GIT_LISTING, and git on GIT_LISTING with options whose env sets GIT_LITERAL_PATHSPECS=1
+ * (wb-yvw7's refusal #1: git reads the appended exclude as a literal path) - while others are narrowed and red at the control (git
+ * on an argv without GIT_LISTING's '--', and a shell that hands its arguments on to git); gitListedSrc or regularFile making a call
+ * in the narrowed form together with a second call in another form for the same path (wb-yvw7's refusal #1: the absolute path tested
+ * through the live lstatSync and, when that throws, the repo-relative one), or together with another edit of how it reads the call's
+ * result (a thrown test read as a regular file, say), or making it for some of the paths git lists only (the subtree it narrows),
+ * with a run-time replacement keyed to what the listing then reads and filesBelow and the in-file listing narrowed by the same path
+ * (an edit of four sites visible in any diff, E1's control untouched: the control narrows the first path git lists only, at its
+ * narrowed-form call, and in each of these the listing's answer for that path does not come from that call's narrowed result);
+ * gitListedSrc or regularFile made to call a live import of a node function E1's control does not replace (child_process's spawnSync
+ * read at the call, say), together with a run-time replacement of it and filesBelow and the in-file listing narrowed by the same
+ * path (an edit of four sites visible in any diff, E1's control untouched: it reads only the four functions it replaces, so a
+ * listing re-routed to another node function passes it unread); and a run-time
+ * replacement the two bindings do not keep out, with both walks narrowed by the same path (in their code, or by a replacement of
+ * what they run on, fs's readdirSync among them): one of the two replaced before this module's first statements bind it, so the
+ * binding holds the replacement (in a setup file, in a module this file imports or on a line above the bindings), any other node
+ * function, object or setting git's listing runs on (Buffer's or Stats' methods, a node function one of the two reads off node's
+ * own module objects at call time, the environment git runs in: process.env and its PATH), or a language intrinsic
+ * (String.prototype.split, Array.prototype.filter or sort, Set): the census holds its own code and the two functions it binds, not
+ * the platform it runs on.
  * RESIDUALS (named families, each with a pinned quiet row): R-FOREIGN-VALUE the observer knows rf's two observed words only, so a
  * producer VALUE reads not observed, verbatim (A1's VALUE reading); R-LISTED-FOUR the observations note lists at most four distinct
  * words, a fifth is counted and marked, never renamed (A2's five-word note); R-REFUSED-FLAG a missing flag is refused rather than
@@ -93,10 +188,13 @@
  * spells a record term or state word: the reader FO-H2-02/03, TSX-H2-04, RI-H2-04/05 or RL-H2-04 calls for reds this census first,
  * and its cut re-pins (a) to (d) at that reader's own display.
  *
- * Display paths added: none. Test-only: no file is written and no process is spawned; src, package.json, node_modules' directory
- * names and the tracker export are only read.
+ * Display paths added: none. Test-only: no file is written and the one process spawned is `git ls-files` (a read-only listing below
+ * src); src, package.json, node_modules' directory names and the tracker export are only read; E1's control replaces four node
+ * functions in node's own module objects, each for one synchronous read, and puts each back before the next.
  */
-import { type Dirent, readdirSync, readFileSync } from "node:fs";
+import { type ExecFileSyncOptions, execFileSync } from "node:child_process";
+import { type Dirent, lstatSync, type PathLike, readdirSync, readFileSync, type StatSyncOptions } from "node:fs";
+import { syncBuiltinESMExports } from "node:module";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
@@ -120,6 +218,17 @@ import {
   type TelemetryEvent,
 } from "../src/workbench/telemetry.js";
 import { fullShapeRf } from "./helpers/rf-render-fixture.js";
+
+/** The two node functions git's listing runs on, bound as this module's first statements, before any case, hook or later module
+ * line runs (wb-ccea): gitListedSrc runs git through BOUND_EXEC_FILE_SYNC and regularFile tests each path git lists through
+ * BOUND_LSTAT_SYNC, never through node's live imports, so a replacement of either in node's own module object installed after these
+ * lines (process.getBuiltinModule with module.syncBuiltinESMExports, which every import then reads) never reaches git's argv, its
+ * output or the regular-file test. The path regularFile tests is built through no node path function (wb-tsi6: a bound path.join
+ * held join's identity, not its behaviour, since join reads normalize off node's own path module object at every call), so a
+ * replacement of path's join or normalize never reaches it either; E1's control replaces each of the four and reads git's listing
+ * unchanged. */
+const BOUND_EXEC_FILE_SYNC = execFileSync;
+const BOUND_LSTAT_SYNC = lstatSync;
 
 type JsonObject = { [key: string]: JsonValue };
 
@@ -181,6 +290,11 @@ const STATE = new RegExp(`(?<![A-Za-z0-9])(?:${STATE_WORDS.join("|")})(?![A-Za-z
 const ANCHORS: readonly string[] = ["src/workbench/reactivefiber-observer.ts", "src/workbench/capability-registry.ts", "src/workbench/telemetry.ts"];
 /** Sits below the count measured at base 282caa0: 115 src files, every one a .ts module. */
 const MODULE_FLOOR = 100;
+/** The listing E1's and E2's walks are also held to (wb-cd1r): git's own list of the files below src, tracked or untracked with
+ * ignored ones included, so it names every file the walk reads, from a walk this file does not compute. It is git's whole argv,
+ * the src pathspec included, so the roster holds every argument git runs with (wb-fugf). It is frozen here, so no case, hook or
+ * module line edits it at run time, before the judged set reads it or after: an edit throws a TypeError where it is made (wb-iwhu). */
+const GIT_LISTING: readonly string[] = Object.freeze(["ls-files", "-z", "--cached", "--others", "--", "src"]);
 const RESIDUAL_FAMILIES: readonly string[] = [
   "R-FOREIGN-VALUE", "R-LISTED-FOUR", "R-REFUSED-FLAG", "R-OPTIONAL-COMMIT-SEQ", "R-READ-TIMEOUT", "R-COUNT-NOT-WORD", "R-COMPOSED",
   "R-GENERIC-WORD", "R-COMMENT",
@@ -317,7 +431,7 @@ function producerLine(short: string, line: number): string {
 
 /** The filing's own notes in the tracker export: the text rows A to E, FO L25's words and the gating ids are held to. */
 function beadNotes(): string {
-  for (const line of readFileSync(EXPORT_PATH, "utf8").split("\n")) {
+  for (const line of trackerExportText(EXPORT_PATH).split("\n")) {
     if (!line.includes(`"id":"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === BEAD && typeof row.notes === "string") return row.notes;
@@ -603,8 +717,111 @@ function listedSrc(): string[] {
     .map(entry => relative(REPO, join(entry.parentPath, entry.name)).split("\\").join("/"))
     .sort();
 }
+/** Whether a repo-relative path is a regular file now (a symlink, a directory or a vanished path is not), tested through the bound
+ * lstatSync (wb-ccea) on REPO and the path joined by '/' in a template literal, through no node path function (wb-tsi6): git's -z
+ * output names each path repo-relative with '/' separators, so the literal names the file path.join would name. */
+function regularFile(path: string): boolean {
+  try {
+    return BOUND_LSTAT_SYNC(`${REPO}/${path}`).isFile();
+  } catch {
+    return false;
+  }
+}
+/** Every regular file git lists below src (GIT_LISTING), sorted: read from git, never from a walk of this file, so a walk and the
+ * in-file listing narrowed together still differ from it; a tracked path deleted from the checkout is no file. Git runs with
+ * GIT_LISTING as it stands, nothing added at this call site (wb-fugf), and frozen, it stands as the judged set read it (wb-iwhu);
+ * git runs through BOUND_EXEC_FILE_SYNC and each path is tested through BOUND_LSTAT_SYNC, never through node's live imports
+ * (wb-ccea), on a path built through no node path function (wb-tsi6). */
+function gitListedSrc(): string[] {
+  const out = BOUND_EXEC_FILE_SYNC("git", GIT_LISTING, { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 26 });
+  return [...new Set(out.split("\0").filter(path => path !== "" && regularFile(path)))].sort();
+}
 function walkedFiles(modules: readonly { readonly file: string }[]): string[] {
   return modules.map(({ file }) => file).sort();
+}
+/** Runs read while node's own module object (the one process.getBuiltinModule returns) holds replacement at key, published to every
+ * import of it by module.syncBuiltinESMExports, and puts the original back, published the same way, before it returns or throws. */
+function whileReplaced<T>(holder: object, key: string, replacement: unknown, read: () => T): T {
+  const original: unknown = Reflect.get(holder, key);
+  if (!Reflect.set(holder, key, replacement)) throw new Error(`node's module object refused a replacement of ${key}`);
+  syncBuiltinESMExports();
+  try {
+    return read();
+  } finally {
+    Reflect.set(holder, key, original);
+    syncBuiltinESMExports();
+  }
+}
+interface BoundReading {
+  readonly binding: string;
+  /** This module's own import of the function (for normalize, this module's join, which reads it at the call), read while the
+   * replacement stands, reads the narrowed result. */
+  readonly liveNarrowed: boolean;
+  /** gitListedSrc, run while the replacement stands, lists exactly what E1 read before it. */
+  readonly gitListingUnchanged: boolean;
+}
+/** E1's control (wb-ccea, wb-tsi6, wb-yvw7): each of the two node functions git's listing runs on, and path's join and normalize
+ * (the path functions a regular-file path could be built with: join reads normalize off node's own path module object at every
+ * call), is replaced in turn, in node's own module object, by one that narrows by one file, the first git lists, through exactly
+ * what its own code reads: execFileSync's hands the function it replaced the file and the options it is handed unchanged and the
+ * argv with ':(exclude)' and the file's path appended (git run on GIT_LISTING reads that as an exclude pathspec unless its pathspec
+ * magic is off, as with GIT_LITERAL_PATHSPECS=1 in the env it runs in); lstatSync's throws when its first argument, as a string, is
+ * targetPath, the file's absolute path as join(REPO, path) spells it; join's and normalize's move a result equal to targetPath off
+ * it. While it stands the probe reads it at this module's own import in the narrowed form (git on GIT_LISTING with the options
+ * gitListedSrc passes and no env of its own; lstatSync on targetPath; join on REPO and the file, normalize through it), narrowed,
+ * and gitListedSrc must still list what E1 read before it, so a listing whose every call moved to the live function of one of the
+ * four is in the narrowed form (for lstatSync, join and normalize, a call for each path git lists on the absolute path
+ * join(REPO, path) spells, a string or a Buffer holding it, as lstatSync's argument, or with that path as join's or normalize's
+ * result), or that builds its path through a bound join, the rest of gitListedSrc and regularFile as they stand, reds here; whether
+ * a call in another form is narrowed while the replacement stands is NOT CLAIMED either way, and a listing re-routed to a node
+ * function the control does not replace is not read here (Not claimed). */
+function boundControl(gitListed: readonly string[]): BoundReading[] {
+  const target = gitListed[0];
+  if (target === undefined) throw new Error("git lists no src file for E1's control to narrow by");
+  const targetPath = join(REPO, target);
+  const unchanged = (): boolean => isDeepStrictEqual(gitListedSrc(), gitListed);
+  const childProcessModule = process.getBuiltinModule("node:child_process");
+  const fsModule = process.getBuiltinModule("node:fs");
+  const pathModule = process.getBuiltinModule("node:path");
+  const runGit = childProcessModule.execFileSync;
+  const statPath = fsModule.lstatSync;
+  const joinPath = pathModule.join;
+  const normalizePath = pathModule.normalize;
+  const narrowedRun = (file: string, args: readonly string[], options: ExecFileSyncOptions) => runGit(file, [...args, `:(exclude)${target}`], options);
+  const narrowedStat = (file: PathLike, options?: StatSyncOptions) => {
+    if (String(file) === targetPath) throw new Error("E1's control: the narrowed file's regular-file test fails");
+    return statPath(file, options);
+  };
+  const narrowedJoin = (...parts: string[]): string => {
+    const joined = joinPath(...parts);
+    return joined === targetPath ? `${joined}.narrowed` : joined;
+  };
+  const narrowedNormalize = (path: string): string => {
+    const normalized = normalizePath(path);
+    return normalized === targetPath ? `${normalized}.narrowed` : normalized;
+  };
+  const liveRegular = (): boolean => {
+    try {
+      return lstatSync(targetPath).isFile();
+    } catch {
+      return false;
+    }
+  };
+  return [
+    {
+      binding: "node:child_process execFileSync",
+      ...whileReplaced(childProcessModule, "execFileSync", narrowedRun, () => ({
+        liveNarrowed: !execFileSync("git", GIT_LISTING, { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 26 }).split("\0").includes(target),
+        gitListingUnchanged: unchanged(),
+      })),
+    },
+    { binding: "node:fs lstatSync", ...whileReplaced(fsModule, "lstatSync", narrowedStat, () => ({ liveNarrowed: !liveRegular(), gitListingUnchanged: unchanged() })) },
+    { binding: "node:path join", ...whileReplaced(pathModule, "join", narrowedJoin, () => ({ liveNarrowed: join(REPO, target) !== targetPath, gitListingUnchanged: unchanged() })) },
+    {
+      binding: "node:path normalize",
+      ...whileReplaced(pathModule, "normalize", narrowedNormalize, () => ({ liveNarrowed: join(REPO, target) !== targetPath, gitListingUnchanged: unchanged() })),
+    },
+  ];
 }
 /** Whether an edit of the clean render's result.provenance.sdk_versions leaves its projection byte-identical. */
 function siblingUnread(clean: string, edit: (versions: JsonObject) => void): boolean {
@@ -832,7 +1049,18 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const installed = installedPackages().filter(name => H2_PACKAGE.test(name));
     const modules = srcModules();
     const listed = listedSrc();
+    const gitListed = gitListedSrc();
     expect(walkedFiles(modules), "E1's walk is every file below src (an independent recursive listing)").toEqual(listed);
+    expect(walkedFiles(modules), "E1's walk is every file git lists below src (tracked or untracked, ignored ones included)").toEqual(gitListed);
+    // wb-ccea, wb-tsi6: git's listing runs on the two node functions this module bound before any case ran, never on node's live
+    // imports, and the path each regular-file test reads is built through no node path function.
+    const bound = boundControl(gitListed);
+    expect(bound, "each of the two node functions git's listing runs on, and path's join and normalize, replaced at run time, reads narrowed at this module's import and leaves git's listing as E1 read it").toEqual([
+      { binding: "node:child_process execFileSync", liveNarrowed: true, gitListingUnchanged: true },
+      { binding: "node:fs lstatSync", liveNarrowed: true, gitListingUnchanged: true },
+      { binding: "node:path join", liveNarrowed: true, gitListingUnchanged: true },
+      { binding: "node:path normalize", liveNarrowed: true, gitListingUnchanged: true },
+    ]);
     const named = modules.flatMap(({ file, items }) => items.filter(item => H2_PACKAGE.test(item)).map(item => `${file}: ${item}`));
     expect(declared, "an H2 producer package in package.json").toEqual([]);
     expect(installed, "an H2 producer package in node_modules").toEqual([]);
@@ -849,12 +1077,17 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       }),
     ]);
     expect(unread, "every sibling entry, changed and removed, is unread").toEqual(SIBLING_ENTRIES.flatMap(() => [true, true]));
-    return json({ pin: "E1", declared, installed, named, siblingEntries: SIBLING_ENTRIES.length, unread: unread.every(Boolean), walkComplete: isDeepStrictEqual(walkedFiles(modules), listed) });
+    return json({
+      pin: "E1", declared, installed, named, siblingEntries: SIBLING_ENTRIES.length, unread: unread.every(Boolean), walkComplete: isDeepStrictEqual(walkedFiles(modules), listed),
+      walkGitListed: isDeepStrictEqual(walkedFiles(modules), gitListed), bound,
+    });
   },
   E2: async () => {
     const modules = srcModules();
     const listed = listedSrc();
+    const gitListed = gitListedSrc();
     expect(walkedFiles(modules), "E2's walk is every file below src (an independent recursive listing)").toEqual(listed);
+    expect(walkedFiles(modules), "E2's walk is every file git lists below src (tracked or untracked, ignored ones included)").toEqual(gitListed);
     const nonModules = modules.filter(({ file }) => !file.endsWith(".ts")).map(({ file }) => file);
     const hits = modules.flatMap(({ file, items }) => hitsOf(items).map(hit => `${file}: ${hit}`));
     expect(nonModules, "a src file that is not a .ts module").toEqual([]);
@@ -865,7 +1098,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       return { file, scanned: found !== undefined && found.items.length > 0, hits: found === undefined ? null : hitsOf(found.items).length };
     });
     expect(anchors.map(anchor => anchor.scanned), "every anchor module was scanned").toEqual(ANCHORS.map(() => true));
-    return json({ pin: "E2", aboveFloor: modules.length >= MODULE_FLOOR, walkComplete: isDeepStrictEqual(walkedFiles(modules), listed), nonModules, hits, anchors });
+    return json({
+      pin: "E2", aboveFloor: modules.length >= MODULE_FLOOR, walkComplete: isDeepStrictEqual(walkedFiles(modules), listed),
+      walkGitListed: isDeepStrictEqual(walkedFiles(modules), gitListed), nonModules, hits, anchors,
+    });
   },
   E3: async () => {
     const lexicon = (text: string): string[] => lexiconOf("control.ts", text);
@@ -959,7 +1195,7 @@ describe("wb-4nut.10 H2 state-promotion census (TSX-HARNESS2-REACTIVE-EVOLUTION-
       bead: BEAD, publicationWords: PUBLICATION_WORDS, nonTerminal: NON_TERMINAL, controlWord: CONTROL_WORD, reportCarriers: REPORT_CARRIERS, bareFlag: BARE_FLAG,
       committedShapes: COMMITTED_SHAPES, requiredFlags: REQUIRED_FLAGS, optionalFlag: OPTIONAL_FLAG, effectful: EFFECTFUL, deadlineMs: DEADLINE_MS,
       outcomeKeys: OUTCOME_KEYS, h2Packages: H2_PACKAGES, siblingEntries: SIBLING_ENTRIES, recordTerms: RECORD_TERMS, stateWords: STATE_WORDS,
-      anchors: ANCHORS, moduleFloor: MODULE_FLOOR, residuals: RESIDUAL_FAMILIES,
+      anchors: ANCHORS, moduleFloor: MODULE_FLOOR, gitListing: GIT_LISTING, gitListingFrozen: Object.isFrozen(GIT_LISTING), residuals: RESIDUAL_FAMILIES,
     }).toStrictEqual({ bead: ROSTER.bead, ...ROSTER.constants, residuals: [...ROSTER.residuals] });
     // The producer facts: the program README at the four pins, each with its blob and the cited lines.
     expect(ROSTER.producers.map(entry => [entry.short, entry.sha.length, entry.path, entry.blob.length, Object.keys(entry.lines)])).toEqual([
@@ -1023,3 +1259,5 @@ describe("wb-4nut.10 H2 state-promotion census (TSX-HARNESS2-REACTIVE-EVOLUTION-
     REACHED.push(`${REGISTRATION_ID}:${expect.getState().assertionCalls}`);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

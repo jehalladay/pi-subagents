@@ -1,5 +1,5 @@
 {
- "provenance": "wb-fb2z.4 TSX replay status census roster. Producer facts MEASURED read-only by the cutting seat ws-02 (run g10-work-s44) at ReactiveFiberTSXSDK program pin 76bbbffd9d4a419f972d6fefc8b7f9dc524df8df (git show), and at the TSX distribution the installed rf 0.1.832 runs (integrations/tsx/runtime-lock.json: @reactive-fiber/tsx 0.1.649 from 5da03a7d49f42a9be7612d34f73d7d9ef950c52c, an ancestor of the pin). fixtures.base is the producer's example ReplayReport verbatim (docs/guides/replay.md:160 fence at the pin); every other fixture is CONSTRUCTED as base plus the named delta (drift per the gating row BEADS-2026-10-21.md:29, rftsx-3ajfy TSX-IO-04, its severity and message the census's since the producer mints neither yet; mismatched per src/replay/replay.ts:652-666 over the guide's branch example; failed per replay.ts:514-523 and the empty fill :367-377). ajv 2020-12 against the pin's replay-report schema: base, drift, equal, opaque, mismatched and failed 0 errors; incompatible and unsupported refused at the status enum; absent refused at the required status. Witnesses are the census's own measured outcomes at base 6653728. wb-fgjz (R694 follow-up of landing 301; seat ws-02, run g10-work-s77, 2026-10-24): producer.schemaNames re-read read-only at the same pin (git show: src/replay/report.ts:35 REPLAY_REPORT_SCHEMA, src/replay/replay.ts:83 RENDER_CAPTURE_SCHEMA, blob ids below); constants.genericReportKeys is the census's split of the schema's required keys; the witnesses of A1, A2, B2 and C1 are re-measured at trunk f2e138e with the planted controls (A1, B2), the source-verbatim pin (A2) and the schema-valid list (C1).",
+ "provenance": "wb-fb2z.4 TSX replay status census roster. Producer facts MEASURED read-only by the cutting seat ws-02 (run g10-work-s44) at ReactiveFiberTSXSDK program pin 76bbbffd9d4a419f972d6fefc8b7f9dc524df8df (git show), and at the TSX distribution the installed rf 0.1.832 runs (integrations/tsx/runtime-lock.json: @reactive-fiber/tsx 0.1.649 from 5da03a7d49f42a9be7612d34f73d7d9ef950c52c, an ancestor of the pin). fixtures.base is the producer's example ReplayReport verbatim (docs/guides/replay.md:160 fence at the pin); every other fixture is CONSTRUCTED as base plus the named delta (drift per the gating row BEADS-2026-10-21.md:29, rftsx-3ajfy TSX-IO-04, its severity and message the census's since the producer mints neither yet; mismatched per src/replay/replay.ts:652-666 over the guide's branch example; failed per replay.ts:514-523 and the empty fill :367-377). ajv 2020-12 against the pin's replay-report schema: base, drift, equal, opaque, mismatched and failed 0 errors; incompatible and unsupported refused at the status enum; absent refused at the required status. Witnesses are the census's own measured outcomes at base 6653728. wb-fgjz (R694 follow-up of landing 301; seat ws-02, run g10-work-s77, 2026-10-24): producer.schemaNames re-read read-only at the same pin (git show: src/replay/report.ts:35 REPLAY_REPORT_SCHEMA, src/replay/replay.ts:83 RENDER_CAPTURE_SCHEMA, blob ids below); constants.genericReportKeys is the census's split of the schema's required keys; the witnesses of A1, A2, B2 and C1 are re-measured at trunk f2e138e with the planted controls (A1, B2), the source-verbatim pin (A2) and the schema-valid list (C1). wb-gmx1 (R694 follow-up of landing 390, hop 3 of the landing-301 chain in the R739 TERMINAL form; seat ws-03, run g10-work-s96, 2026-10-25): no producer fact is re-read or changed; the witnesses of A1 and B2 gain each judge application's record outcome (judged: the record is the owed one, the anchor input judged with its real text), row Q gains Q8 (R-SELECTIVE on constructed inputs: the selective application drops the real hit while its record stays the owed one), all measured at trunk bdccfe8.",
  "bead": "wb-fb2z.4",
  "programPin": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
  "producer": {
@@ -392,6 +392,9 @@
    ],
    "R-UNIT": [
     "Q7"
+   ],
+   "R-SELECTIVE": [
+    "Q8"
    ]
   },
   "genericReportKeys": [
@@ -771,6 +774,7 @@
   "Q5",
   "Q6",
   "Q7",
+  "Q8",
   "the registered tests and the reached pins equal the roster, in order and both ways"
  ],
  "rows": [
@@ -844,6 +848,24 @@
         "reactive-fiber/tsx"
        ],
        "unrelated": []
+      },
+      "judged": {
+       "A1 modules": {
+        "owed": true,
+        "anchor": true
+       },
+       "A1 descriptors": {
+        "owed": true,
+        "anchor": true
+       },
+       "A1 roster text": {
+        "owed": true,
+        "anchor": true
+       },
+       "A1 roster entries": {
+        "owed": true,
+        "anchor": true
+       }
       }
      }
     },
@@ -948,6 +970,24 @@
        "schema": true,
        "label": true,
        "claim": 1
+      },
+      "judged": {
+       "B2 src": {
+        "owed": true,
+        "anchor": true
+       },
+       "B2 docs": {
+        "owed": true,
+        "anchor": true
+       },
+       "B2 qa": {
+        "owed": true,
+        "anchor": true
+       },
+       "B2 front matter (root *.md, examples/)": {
+        "owed": true,
+        "anchor": true
+       }
       }
      }
     }
@@ -1398,6 +1438,41 @@
       "sentences": 0,
       "heading": 0,
       "oneUnit": 1
+     }
+    },
+    {
+     "id": "Q8",
+     "witness": {
+      "modules": {
+       "honest": {
+        "owed": true,
+        "hits": [
+         "constructed: a real module that spells the vocabulary",
+         "planted:trigger module"
+        ]
+       },
+       "selective": {
+        "owed": true,
+        "hits": [
+         "planted:trigger module"
+        ]
+       }
+      },
+      "pages": {
+       "honest": {
+        "owed": true,
+        "hits": [
+         "constructed: a real page that spells an RFTSX code",
+         "planted:docs"
+        ]
+       },
+       "selective": {
+        "owed": true,
+        "hits": [
+         "planted:docs"
+        ]
+       }
+      }
      }
     }
    ]

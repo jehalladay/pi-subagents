@@ -29,7 +29,8 @@
  *    readings through the registered provider, where the two stops the statement names carry the SDK's own typed facts: the
  *    resource-cap stop (budget-exhausted) its kernel budget dimension (result.d.ts:47-48, :124; bounds.d.ts:7 "wall") with the
  *    HX-BUDGET-EXHAUSTED code, the snapshot-change stop (view-invalidated) a view identity (result.d.ts:116), and those facts
- *    reach the adapter's input yet move nothing in its projection (strictEqual the fact-free document's); and a stop kind the
+ *    reach the adapter's input yet move nothing in its projection but the facets wb-gwr.2 relays (the snapshot-change stop's
+ *    view surfaces verbatim as its own view facet; every other output field strictEqual the fact-free document's); and a stop kind the
  *    SDK does not register (a planner failure surfacing under a new kind) decodes to protocol-failed and stays a failure.
  *  B, acceptance (b). The reason this census plants is a typed record for each of the program's three causes (CAUSES: this
  *    census's tokens for step 7's three conditions; the program names no token). B1 on the adapter, the record (or a bare
@@ -43,17 +44,20 @@
  *    diagnostic frame lands (protocol/query.d.ts: "fields preserved"), the status's diagnostic code, an extension frame, a
  *    certificate's cause and body, an incomplete region, the result coverage, the actual cost, the execution id and a support
  *    id) - each carrier reaches the adapter's input (its paths are pinned) and still reaches no output field: projection
- *    strictEqual, nothing spelled.
+ *    strictEqual, nothing spelled. Each carrier sits outside the shapes wb-gwr.2 relays verbatim as a facet (R-RELAYED-SHAPE).
  *  C, acceptance (c), gated. C1 the typed reason is unshipped: the filing's own grep (its pattern read from the bead row's
  *    "Shipped: no" sentence) finds nothing in the vendored result.d.ts (read from the tarball, byte-equal to the installed copy
  *    package.json resolves) or in the adapter, and over every declaration file the tarball ships the reason family is spelled
  *    only at the recorded other-sense sites (error, plan-only and schema reasons; none on the result path Pi reads), so a
  *    re-vendor that declares a reason anywhere reds C1 until (c) lands with it. C2 the adapter reads no slot that could carry
- *    it: the property names its source reads (property access, string element access, destructuring; TypeScript AST) that are
+ *    it beyond the three slots wb-gwr.2's relayed facets read (a reason carried inside a relayed shape is R-RELAYED-SHAPE):
+ *    the property names its source reads (property access, string element access, destructuring; TypeScript AST) that are
  *    keys of the served SDK representation (every key at any depth of a provider reading carrying both stop facts: the SDK's
  *    own serializer is the anchor) are exactly the pinned read set, which holds every input key the adapter projects from and
- *    none of the CARRIERS slots, the typed stop facts or the reason family - so a read of any other representation key reds
- *    C2, and the cut that lands (c) re-cuts this census with (c)'s cases.
+ *    no CARRIERS slot, typed stop fact or reason-family name beyond the three slots wb-gwr.2's relayed facets read for their
+ *    measured members (diagnostics for a conflict code, incomplete_regions for a scope and target, view for the view identity:
+ *    the slots the adapter's own HYPERUNIX_CONSUMED_FIELDS 'relayed' entries name) - so a read of any other representation key
+ *    reds C2, and the cut that lands (c) re-cuts this census with (c)'s cases.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row (id, label, pins), every
  * pin's witness (each carries its pin id), the scan constants, the causes, the residual families and the registered test titles
  * are held to the out-of-file roster (test/fixtures/hx-planner-fallback-roster.json). OUTSIDE ANCHORS (the anchor case is its own
@@ -66,7 +70,8 @@
  * R-PIN-HOLLOW below.
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run
  * mode, not inverted, ran; every pin's case reached its end (REACHED).
- * RESIDUALS (named families, each with a pinned quiet row: the C witnesses' controls, and the anchor case for R-PIN-HOLLOW):
+ * RESIDUALS (named families, each with a pinned quiet row: the C witnesses' controls, B2's relayed-shape control for
+ * R-RELAYED-SHAPE, and the anchor case for R-PIN-HOLLOW):
  * R-GRAMMAR a typed reason carried through the
  * existing diagnostic grammar as a new registered code needs no new declaration, so C1 stays quiet when the runtime starts
  * emitting one (C1 grammar: the Diagnostic declaration's nine keys, among them a free code, details and the preserved extra
@@ -79,7 +84,16 @@
  * catch an output effect only in the slots they plant; a digest or scope read outside them is seen by neither.
  * R-PIN-HOLLOW a pin removed from ROWS, the frozen literal, IMPL and the roster together: the anchor case reads row
  * labels, so it cannot see one (its quiet row pins the unseen pins, A1 to C2, beside a liveness reading: removing any
- * row is seen).
+ * row is seen). R-RELAYED-SHAPE (wb-noq8, the landing-646 follow-up) a reason carried inside a shape wb-gwr.2 relays verbatim
+ * (a string view, a diagnostic code naming CONFLICT bounded on both sides (a capital A-Z or a digit 0-9 glues; every other
+ * character and a code end bound), an incomplete region with a string scope and target)
+ * surfaces as that facet by that bead's design, so B2's carriers read quiet only in the shapes they are planted in and B2's
+ * "reaches no output field" holds for them, not for a relayed shape. Its quiet row, B2's relayed-shape control, plants the
+ * reason in each relayed shape (RELAYED_SHAPES, one per slot the adapter's own HYPERUNIX_CONSUMED_FIELDS 'relayed' entries name)
+ * through the registered provider for every readable kind, licence and cause, and pins that it reaches the adapter's input at
+ * its slot, surfaces verbatim as its own facet and nothing else, and moves nothing outside the facets: snapshot (coverage,
+ * tone, status text, evidence), relations and diagnostics strictEqual the reason-free projection - never an absent graph fact,
+ * a known-empty answer or a coverage change.
  * Display paths added: none. Test-only: it spawns nothing and writes nothing; it reads the tarball, the installed declaration
  * and manifest, the adapter source, package.json, the roster and the bead export.
  */
@@ -92,6 +106,7 @@ import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
 import {
+  HYPERUNIX_CONSUMED_FIELDS,
   HYPERUNIX_EXECUTION_KINDS,
   type HyperUnixProjectionTopology,
   type HyperUnixTopologyContext,
@@ -176,7 +191,7 @@ const PROJECTED_KEYS = [
   "version",
   "workspaceRoot",
 ];
-const RESIDUAL_FAMILIES = ["R-GRAMMAR", "R-RENAMED", "R-DYNAMIC", "R-HOMONYM", "R-PIN-HOLLOW"];
+const RESIDUAL_FAMILIES = ["R-GRAMMAR", "R-RENAMED", "R-DYNAMIC", "R-HOMONYM", "R-PIN-HOLLOW", "R-RELAYED-SHAPE"];
 /** R-PIN-HOLLOW: the pins whose removal from every literal (ROWS, the frozen literal, IMPL, the roster) the anchor case cannot see. */
 const PIN_HOLLOW_MEMBERS = ["A1", "A2", "A3", "B1", "B2", "C1", "C2"];
 const FROZEN_TITLE = "the judged set: the frozen shape and the out-of-file roster agree";
@@ -206,7 +221,7 @@ const ROWS: readonly Row[] = [
   {
     id: "C",
     label:
-      "(c) on landing: a typed reason with rows [] and kind 'incomplete' surfaces verbatim as its own facet, statusText still 'absence not licensed', and changing only the reason text leaves coverage, statusTone and evidenceRefs byte-identical: gated - If an HX result Pi consumes ever carries the program's typed planner-fallback reason: the vendored SDK's declarations spell no reason outside the recorded other-sense sites and the adapter's read set holds none of the carrier slots",
+      "(c) on landing: a typed reason with rows [] and kind 'incomplete' surfaces verbatim as its own facet, statusText still 'absence not licensed', and changing only the reason text leaves coverage, statusTone and evidenceRefs byte-identical: gated - If an HX result Pi consumes ever carries the program's typed planner-fallback reason: the vendored SDK's declarations spell no reason outside the recorded other-sense sites and the adapter's read set holds no carrier slot beyond the three wb-gwr.2's relayed facets read",
     pins: ["C1", "C2"],
   },
 ];
@@ -307,7 +322,7 @@ let beadRow: BeadRow | undefined;
 /** The owner filing's row in the tracked bead export: exactly one row carries the bead's id. */
 function readBeadRow(): BeadRow {
   if (beadRow !== undefined) return beadRow;
-  const rows = readFileSync(join(REPO, BEAD_EXPORT), "utf8")
+  const rows = trackerExportText(join(REPO, BEAD_EXPORT))
     .split("\n")
     .filter(line => line.includes(`"${BEAD}"`))
     .map(line => objectOf(JSON.parse(line), "bead export row"))
@@ -553,6 +568,31 @@ const CARRIERS: readonly (readonly [string, string, Plant])[] = [
 ];
 /** The slot keys of the SDK's typed stop facts (A3), which C2 reads for beside the carriers. */
 const STOP_FACT_SLOTS = ["budget_dimension", "dimension", "view"];
+/** R-RELAYED-SHAPE: the shapes wb-gwr.2 relays verbatim as a facet, one per relayed slot (name, slot, plant, the facet the planted
+ * reason must surface as). Every B2 carrier stays outside them; B2's relayed-shape control plants the reason in each. */
+const RELAYED_SHAPES: readonly (readonly [string, string, Plant, (reason: JsonValue) => JsonValue])[] = [
+  ["view", "view", (document, reason) => ({ ...document, view: `fallback:${tokenOf(reason)}` }), reason => ({ kind: "view", view: `fallback:${tokenOf(reason)}` })],
+  [
+    "conflict-code",
+    "diagnostics",
+    (document, reason) => ({
+      ...document,
+      diagnostics: [
+        { code: `HX-PLANNER-FALLBACK-${tokenOf(reason).toUpperCase()}-CONFLICT`, severity: "info", message: "census plant", details: {}, remediation: null, request: null },
+      ],
+    }),
+    reason => ({ kind: "conflict", code: `HX-PLANNER-FALLBACK-${tokenOf(reason).toUpperCase()}-CONFLICT` }),
+  ],
+  [
+    "region-target",
+    "incomplete_regions",
+    (document, reason) => ({
+      ...document,
+      coverage_summary: { ...field(document, "coverage_summary"), incomplete_regions: [{ scope: "fs:src", target: `fallback:${tokenOf(reason)}` }] },
+    }),
+    reason => ({ kind: "incomplete-region", scope: "fs:src", target: `fallback:${tokenOf(reason)}` }),
+  ],
+];
 
 /** Every path of `value` whose key or string leaf spells the reason family or the cause token. */
 function marks(value: unknown, cause: string, path: string): string[] {
@@ -592,6 +632,9 @@ function readNames(source: string): string[] {
   return sorted(names);
 }
 const carrierSlots = (): string[] => sorted([...CARRIERS.map(([, slot]) => slot), ...STOP_FACT_SLOTS]);
+/** The carrier and stop-fact slots wb-gwr.2's relayed facets read, named by the adapter's own manifest (C2; R-RELAYED-SHAPE). */
+const manifestRelayedSlots = (): string[] =>
+  carrierSlots().filter(slot => HYPERUNIX_CONSUMED_FIELDS.some(field => field.use === "relayed" && field.path.split(/\.|\[\]/).includes(slot)));
 /** C1/C2 residual controls: a declaration and reads in shapes the scans are blind to (each must stay quiet). */
 const RENAMED_DECLARATION = "    readonly plannerCause: string | null;\n";
 const RENAMED_READ = "const why = source.planner_cause;\n";
@@ -624,6 +667,7 @@ const SCAN: JsonObject = {
   shapes: SHAPES.map(([name]) => name),
   drops: DROPS.map(([name]) => name),
   carriers: CARRIERS.map(([name, slot]) => `${name}:${slot}`),
+  relayedShapes: RELAYED_SHAPES.map(([name, slot]) => `${name}:${slot}`),
   stopFactSlots: STOP_FACT_SLOTS,
   projectedKeys: PROJECTED_KEYS,
   pinHollowMembers: PIN_HOLLOW_MEMBERS,
@@ -692,9 +736,12 @@ const IMPL: { readonly [pin: string]: Impl } = {
           ];
           expect(carried.length > 0, `${kind}'s typed facts reach the adapter's input`).toBe(true);
           facts[kind] = carried;
-          expect(hyperunixTopology(value, CONTEXT), `${kind}'s typed facts move nothing in the projection`).toStrictEqual(
+          // wb-gwr.2: the snapshot-change stop's view is relayed verbatim as its own facet; nothing else in the projection moves.
+          const { facets: relayedFacets, ...movedRest } = hyperunixTopology(value, CONTEXT);
+          expect(movedRest, `${kind}'s typed facts move nothing in the projection but the relayed facets`).toStrictEqual(
             hyperunixTopology(await served(sdkDocument(kind, licensed)), CONTEXT),
           );
+          expect(relayedFacets, `${kind}'s relayed facets`).toStrictEqual(kind === "view-invalidated" ? [{ kind: "view", view: "hx-view:census-1" }] : undefined);
         }
         const topology = hyperunixTopology(value, CONTEXT);
         const tuple = tupleOf(kind, licensed, topology);
@@ -788,7 +835,45 @@ const IMPL: { readonly [pin: string]: Impl } = {
     expect(unequal, "projections a carried reason changed").toEqual([]);
     expect(leaked, "projections spelling a carried reason").toEqual([]);
     expect(runs).toBe(kinds.length * LICENCES.length * CAUSES.length * (DROPS.length + CARRIERS.length));
-    return done("B2", { kinds, runs, dropped, carried, unequal, leaked });
+    // R-RELAYED-SHAPE quiet row: a reason inside each shape wb-gwr.2 relays reaches the adapter's input at its slot, surfaces
+    // verbatim as its own facet and nothing else, and moves nothing outside the facets.
+    expect(sorted(RELAYED_SHAPES.map(([, slot]) => slot)), "R-RELAYED-SHAPE plants one shape per slot the adapter's manifest relays").toEqual(manifestRelayedSlots());
+    let relayedRuns = 0;
+    const relayedReached: { [name: string]: string[] } = {};
+    const relayedMoved: string[] = [];
+    const relayedOff: string[] = [];
+    for (const kind of kinds) {
+      for (const licensed of LICENCES) {
+        const base = sdkDocument(kind, licensed);
+        const expected = hyperunixTopology(await served(base), CONTEXT);
+        for (const [cause] of CAUSES) {
+          for (const [name, , plant, facetOf] of RELAYED_SHAPES) {
+            relayedRuns++;
+            const reason = typedReason(cause);
+            const value = await served(plant(base, reason));
+            const paths = sorted(marks(value, cause, "reading"));
+            const previous = relayedReached[name];
+            if (previous === undefined) relayedReached[name] = paths;
+            else expect(paths, `relayed shape ${name} reaches the reading at the same paths for every kind, licence and cause`).toEqual(previous);
+            const { facets, ...rest } = hyperunixTopology(value, CONTEXT);
+            const at = `${kind}/${licensed}/${name}/${cause}`;
+            if (JSON.stringify(rest) !== JSON.stringify(expected)) relayedMoved.push(at);
+            if (JSON.stringify(facets) !== JSON.stringify([facetOf(reason)])) relayedOff.push(at);
+          }
+        }
+      }
+    }
+    for (const [name, slot] of RELAYED_SHAPES) {
+      expect(
+        (relayedReached[name] ?? []).some(path => path.split(".").includes(slot)),
+        `relayed shape ${name} reaches the adapter's input under ${slot}`,
+      ).toBe(true);
+    }
+    expect(relayedMoved, "R-RELAYED-SHAPE: projections a relayed-shape reason moved outside the facets").toEqual([]);
+    expect(relayedOff, "R-RELAYED-SHAPE: projections whose facets are not exactly the planted reason, verbatim").toEqual([]);
+    expect(relayedRuns).toBe(kinds.length * LICENCES.length * CAUSES.length * RELAYED_SHAPES.length);
+    const relayedShape = { runs: relayedRuns, reached: relayedReached, moved: relayedMoved, off: relayedOff };
+    return done("B2", { kinds, runs, dropped, carried, unequal, leaked, relayedShape });
   },
   C1: () => {
     const notes = readBeadRow().notes;
@@ -846,7 +931,10 @@ const IMPL: { readonly [pin: string]: Impl } = {
       slots.filter(slot => !keys.includes(slot)),
       "every carrier and stop-fact slot is a key of the served SDK representation",
     ).toEqual([]);
-    expect(carriersRead, "carrier and stop-fact slots the adapter reads").toEqual([]);
+    // wb-gwr.2: the carrier slots the relayed facets read, from the adapter's own manifest; no other slot is read.
+    const relayedSlots = manifestRelayedSlots();
+    expect(relayedSlots, "the carrier slots wb-gwr.2's relayed facets name").toEqual(["diagnostics", "incomplete_regions", "view"]);
+    expect(carriersRead, "carrier and stop-fact slots the adapter reads").toEqual(relayedSlots);
     expect(familyRead, "reason-family names the adapter reads").toEqual([]);
     expect(projectedMissing, "projected input keys the adapter no longer reads (a collapsed collector)").toEqual([]);
     const control = (source: string): { readonly names: string[]; readonly added: string[]; readonly flagged: string[] } => {
@@ -863,9 +951,10 @@ const IMPL: { readonly [pin: string]: Impl } = {
     expect([...renamed.added, ...renamed.flagged], "R-RENAMED: a carrier read under another name stays quiet").toEqual([]);
     expect([...dynamic.added, ...dynamic.flagged], "R-DYNAMIC: a spread, reflective or computed read stays quiet").toEqual([]);
     expect(homonym.added, "R-HOMONYM: a read of a representation key the adapter already spells elsewhere adds nothing").toEqual([]);
-    const forms = control("const d = source.diagnostics;\nconst {extensions} = source;\nconst c = source['cost'];\nconst v = record(source)?.view;\n");
-    expect(forms.flagged, "the collector reads each access form").toEqual(["cost", "diagnostics", "extensions", "view"]);
-    expect(forms.added, "and each such read adds to the read set").toEqual(["cost", "diagnostics", "extensions", "view"]);
+    // Each access form over a slot the adapter never reads (wb-gwr.2 now reads diagnostics and view, so those two would add nothing).
+    const forms = control("const d = source.support_ids;\nconst {extensions} = source;\nconst c = source['cost'];\nconst v = record(source)?.extra;\n");
+    expect(forms.flagged, "the collector reads each access form").toEqual(["cost", "extensions", "extra", "support_ids"]);
+    expect(forms.added, "and each such read adds to the read set").toEqual(["cost", "extensions", "extra", "support_ids"]);
     return done("C2", { keys, reads, slots, carriersRead, familyRead, projectedMissing, controls: { renamed, dynamic, homonym } });
   },
 };
@@ -955,3 +1044,5 @@ describe("wb-z3ft.1 HX planner-fallback reason census (HX-CERTIFIED-STRUCTURAL-O
     expect(REACHED, "every pin's case reached its end, in row order").toEqual(ROWS.flatMap(row => row.pins));
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

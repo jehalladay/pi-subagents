@@ -1,7 +1,7 @@
 {
   "bead": "wb-o4h0.6",
   "pin": "6a251bf73af5",
-  "basis": "The out-of-file roster of test/workbench-rf-sensitivity-echo-census.test.ts (standing rule 16): every judged row's id, label, parts and pins, every pin's witness and the vocabularies, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. excerpts vendors seven producer excerpts verbatim from ReactiveFiberCLI 6a251bf73af57c3a703caf6892dfe3015e06a481 (read-only git show; the census holds each to its sha256), and levels, rowClasses, linkSchema and linkFields are derived from them: levels from src/reactive_fiber_cli/domain/trust.py:553-554, rowClasses from the result.observations sensitivity property of src/reactive_fiber_cli/schemas/cli/context.render.schema.json:1529-1536, linkSchema and linkFields from federated-workspaces-2026-10-18/03-protocol-and-storage.md:10. gatingArtifacts are the bead's (FW-08 rfc-0txnl.17, FW-04 rfc-0txnl.10, FW-04b-2 rfc-0txnl.20). Rows A-D carry the bead's four acceptance clauses verbatim (the census holds them to the tracked bead export). Follow-up wb-ox13 (R694 from landing 268) adds row MD and the pins B5, MA13-MA18, QA4-QA5, MC8-MC9 and QC3, and narrows the MA and MC labels to the enumerated shapes; the census holds every row's pin count to the first cut's landed shape (its delivery note in the bead export) plus those additions.",
+  "basis": "The out-of-file roster of test/workbench-rf-sensitivity-echo-census.test.ts (standing rule 16): every judged row's id, label, parts and pins, every pin's witness and the vocabularies, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. excerpts vendors seven producer excerpts verbatim from ReactiveFiberCLI 6a251bf73af57c3a703caf6892dfe3015e06a481 (read-only git show; the census holds each to its sha256), and levels, rowClasses, linkSchema and linkFields are derived from them: levels from src/reactive_fiber_cli/domain/trust.py:553-554, rowClasses from the result.observations sensitivity property of src/reactive_fiber_cli/schemas/cli/context.render.schema.json:1529-1536, linkSchema and linkFields from federated-workspaces-2026-10-18/03-protocol-and-storage.md:10. gatingArtifacts are the bead's (FW-08 rfc-0txnl.17, FW-04 rfc-0txnl.10, FW-04b-2 rfc-0txnl.20). Rows A-D carry the bead's four acceptance clauses verbatim (the census holds them to the tracked bead export). Follow-up wb-ox13 (R694 from landing 268) adds row MD and the pins B5, MA13-MA18, QA4-QA5, MC8-MC9 and QC3, and narrows the MA and MC labels to the enumerated shapes; the census holds every row's pin count to the first cut's landed shape (its delivery note in the bead export) plus those additions. Follow-up wb-o7os (R694 from landing 363; hop 3 of the chain, written in the R739 TERMINAL enumerate-the-resolvable form) adds the pins B6, MA19-MA31, QA6, MC10-MC13, QC4, MD3-MD5 and QD2; the census holds every row's pin count to both landed shapes of record (the first cut's and wb-ox13's delivery notes in the bead export) plus the later hops' additions.",
   "excerpts": {
     "docs/programs/federated-workspaces-2026-10-18/05-authority-consistency.md:25": "No alternate implementation may downgrade B sensitive/secret outputs by relabeling them internal or public. Read scopes and redaction follow strictest applicable owner and consumer policies. No secrets in committed link aliases.",
     "docs/programs/federated-workspaces-2026-10-18/03-protocol-and-storage.md:10": "- reactive-fiber.federation-link/v1: A local aliases, {alias,locator,expected_workspace_id,expected_backend_instance_id?,pin_policy,capability_ref?}. Transport credentials/capability secrets are never committed as ordinary shared manifest content.",
@@ -178,7 +178,8 @@
             "B2",
             "B3",
             "B4",
-            "B5"
+            "B5",
+            "B6"
           ]
         }
       ],
@@ -266,6 +267,18 @@
             "ownerMarkersKept": 2,
             "labelsVerbatim": true,
             "sameAsMultiLine": true
+          }
+        },
+        {
+          "id": "B6",
+          "witness": {
+            "surfaced": "{\"capture_id\":\"fixture.block.one\",\"redacted\":true,\"redacted_without_digest\":true} {\"digest\":\"sha256:4444444444444444444444444444444444444444444444444444444444444444\",\"redacted\":true,\"size_bytes\":42} lens fixture.lens2: password=[REDACTED] plain context line",
+            "multiLine": true,
+            "consumerRedactions": 1,
+            "fakeValueShown": false,
+            "ownerMarkersKept": 2,
+            "labelsVerbatim": true,
+            "sameAsStructured": true
           }
         }
       ]
@@ -580,6 +593,97 @@
           }
         },
         {
+          "id": "MA19",
+          "witness": {
+            "digest": "bc3bca4311822413",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA20",
+          "witness": {
+            "digest": "db7ef42c06c2b092",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA21",
+          "witness": {
+            "digest": "d3ffd7f58d6dfb09",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA22",
+          "witness": {
+            "digest": "e0bcb34b39ae611b",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA23",
+          "witness": {
+            "digest": "1d8162cb21acfe87",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA24",
+          "witness": {
+            "digest": "30f72054626387e6",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA25",
+          "witness": {
+            "digest": "33cd1148ed58319c",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA26",
+          "witness": {
+            "digest": "f103c0b541808890",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA27",
+          "witness": {
+            "digest": "5cc65541b38afcc9",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA28",
+          "witness": {
+            "digest": "94a82845b66a689b",
+            "hits": 3
+          }
+        },
+        {
+          "id": "MA29",
+          "witness": {
+            "digest": "d6ba2f724df51000",
+            "hits": 2
+          }
+        },
+        {
+          "id": "MA30",
+          "witness": {
+            "digest": "368ab470df7ce084",
+            "hits": 2
+          }
+        },
+        {
+          "id": "MA31",
+          "witness": {
+            "digest": "3f19313437010e0f",
+            "hits": 4
+          }
+        },
+        {
           "id": "QA1",
           "witness": {
             "digest": "e218cc3d626e5479",
@@ -611,6 +715,13 @@
           "id": "QA5",
           "witness": {
             "digest": "dc20408961b3cf1c",
+            "hits": 0
+          }
+        },
+        {
+          "id": "QA6",
+          "witness": {
+            "digest": "291ee3fd23b0ac06",
             "hits": 0
           }
         },
@@ -698,6 +809,34 @@
           }
         },
         {
+          "id": "MC10",
+          "witness": {
+            "digest": "994badf4712b9756",
+            "read": 1
+          }
+        },
+        {
+          "id": "MC11",
+          "witness": {
+            "digest": "457c03abb22f094b",
+            "read": 1
+          }
+        },
+        {
+          "id": "MC12",
+          "witness": {
+            "digest": "a195be1eae4fa7a7",
+            "read": 1
+          }
+        },
+        {
+          "id": "MC13",
+          "witness": {
+            "digest": "b44547eea541f56c",
+            "read": 3
+          }
+        },
+        {
           "id": "QC1",
           "witness": {
             "digest": "fea99f7af2239f8e",
@@ -715,6 +854,13 @@
           "id": "QC3",
           "witness": {
             "digest": "ac6c7f140934c7e8",
+            "read": 0
+          }
+        },
+        {
+          "id": "QC4",
+          "witness": {
+            "digest": "12caa5254d90812f",
             "read": 0
           }
         }
@@ -740,9 +886,37 @@
           }
         },
         {
+          "id": "MD3",
+          "witness": {
+            "digest": "d576ba0a64ca5f92",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MD4",
+          "witness": {
+            "digest": "bb0275eddc1a0587",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MD5",
+          "witness": {
+            "digest": "43cf514a668f1aea",
+            "hits": 2
+          }
+        },
+        {
           "id": "QD1",
           "witness": {
             "digest": "6d033cf66291346f",
+            "hits": 0
+          }
+        },
+        {
+          "id": "QD2",
+          "witness": {
+            "digest": "2109c53e6322b688",
             "hits": 0
           }
         }

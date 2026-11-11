@@ -282,7 +282,34 @@
     "followUp": "wb-hzwr",
     "livePins": [
       "C1"
-    ]
+    ],
+    "secondFollowUp": "wb-rxog",
+    "hollows": {
+      "moved": [
+        "B2->B1",
+        "B1->B2",
+        "C2->C1",
+        "A1->A2",
+        "A2->A1",
+        "A3->A2"
+      ],
+      "stopped": [
+        "B2",
+        "C2",
+        "A1",
+        "A3"
+      ]
+    },
+    "hollowPins": [
+      "B2",
+      "B1",
+      "C2",
+      "C1",
+      "A1",
+      "A2",
+      "A3"
+    ],
+    "ownFloor": 1
   },
   "residuals": [
     "R-UNTYPED-FLOW",
@@ -621,14 +648,14 @@
     "records: every registered test ran once in run mode in roster order and every pin reached its end"
   ],
   "assertions": [
-    "judged:43",
-    "A1:44",
-    "A2:18",
-    "A3:4",
-    "B1:29",
-    "B2:7",
-    "C1:38",
-    "C2:7"
+    "judged:49",
+    "A1:45",
+    "A2:19",
+    "A3:5",
+    "B1:30",
+    "B2:8",
+    "C1:39",
+    "C2:8"
   ],
   "producer": {
     "pin": "0107c72992f35cf6832a37615a25c7df45747ebc",

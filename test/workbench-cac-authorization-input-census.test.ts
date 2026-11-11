@@ -1,0 +1,2637 @@
+/**
+ * wb-rdlh.1 (LIBRARY-COMPOSITIONAL-AUTONOMOUS-COMPUTATION-R1, program-triage-2026-10-22): the authorization-input posture census
+ * for the Library design program's records, a standing until-then pin (no Pi reader of the records exists; they are design
+ * proposals, unshipped). Statement: the owner filing's full statement (its first note paragraph), read from the tracked bead export
+ * at run time with the filing's other six paragraphs and held to the roster's sha-256, never retyped here. Acceptance: the
+ * filing's "Acceptance:" clause, whose four parts (a)-(d) are the labels of rows A-D verbatim and in order (ROWS); the labels tile
+ * the clause (only white space, commas, semicolons and the list markers between them) and each row's pin quotes tile its label
+ * (only white space, commas, semicolons and a hyphen before white space between them).
+ *
+ * THE SOURCE AT THE PIN (Library 72d79ed704d884e63c39c3d34e3ea9425b952140, read with read-only git show from a blob-filtered bare
+ * clone by the cutting seat on 2026-10-29; this hermetic test never re-queries upstream). Every record line this census reads is
+ * one the absence census already vendors (wb-zzb4's base lines and the wb-rdlh.2 extension's, test/fixtures/cac-absence-roster.json,
+ * base64 beside its sha-256): this census reads those vendored lines, never copies of its own, so the records' names, members and
+ * statuses are the absence census's bytes (row C2). Of its 50 record lines, three list their records' members as identifiers: ChoiceCertificateV2
+ * (12-generalized-choice-temporal-v4.md:17), TemporalRelianceCertificateV1 (:19) and SourceBeliefSafetyCertificateV1
+ * (14-belief-transport-approximation-v6.md:15), the record the fixtures are shaped as (its fourteen members, guardOrRelyReceipt
+ * among them, and its three-valued status PASS/FAIL/UNKNOWN); 29 define their records in prose (25 bold definition lines and four
+ * list-item definitions); and 18 are headings whose records are defined on lines the roster does not vendor (the
+ * R-UNVENDORED-MEMBERS residual: 03-contracts-api.md:20, for one, lists ObservationCertificateV1's closureVerdict). The roster
+ * vendors four further lines the same way: the filing's quote 13-hypergraph-transport-safety-v5.md:47 (held to the filing's quote
+ * text verbatim), 18-proof-carrying-finite-protocol-v10.md:55 (UNKNOWN is a missing-evidence category, not an invitation to bypass a
+ * source denial), 14-belief-transport-approximation-v6.md:29 (failed/expired source checks remain FAIL/UNKNOWN, not probabilistic
+ * success) and :44 (the harnesses keep admission and denial).
+ *
+ * MEASURED AT 04123dc0d0f2 (trunk tip at the first cut's claim, landing 671), re-measured at 57cb1c0ca9a4 (landing 677) and
+ * aa95f436d802 (landing 678) for the second cut, at c2695d76773c (landing 686), a9bfea3f49c4 (landing 688) and cdf5484d8d1b (landing
+ * 689) for the third, at 3c9db90d55f3 (landing 717) for the fourth, at 1e985b6f7d7d (landing 805), 04c8bbb06ccc (landing 807) and
+ * f5cb912999ba (landing 808) for the fifth, at e23b18e15bd7 (landing 810), 5779ecaf1161 (landing 814) and 28eea0277c20 (landing
+ * 816) for the sixth and at a9a10bbaa2fa (landing 834) for this one, each merged into the branch. Among the first seven, no src path
+ * and no other path this census reads changed but the bead export, of which it reads the wb-rdlh.1 row's first seven paragraphs,
+ * unchanged (the row gained notes after them), and, at landing
+ * 691 (wb-ycue), the absence roster (a followUp block and two residual families; its 50 vendored lines, all this census reads of it,
+ * unchanged) and the absence census (which still names that roster, all this census reads of it);
+ * docs/workbench/18-decisions-and-risks.md, which it does not read, gained two lines at landing 673. From the fourth to the fifth's
+ * first: the bead export (the row gained notes after the seven paragraphs, which are unchanged; refusal #4's UNMET members, which this
+ * cut reads, are among them), the absence roster (a depth block; its 50 vendored lines unchanged), the absence census (it still names
+ * that roster), one src doc comment (src/workbench/hyperunix-observer.ts, two lines; no count below moved) and wb-rdlh.3's
+ * section-source reader, added at landing 798 (test/helpers/docs-section-source.ts), which D1 now reads through;
+ * docs/workbench/12-security.md is unchanged (blob ff7a76a7). From the fifth's first to its second, of the paths this census reads only
+ * the bead export (this row's status) and test/helpers/census.ts changed: wb-aalz's one blockText hunk renders a block quote's block
+ * children, which turns one check of D1 at one plant, G-T-ITEM-QUOTE-LIST's rendered check (NOT CLAIMED below), and no other check of
+ * any plant; every count below re-measured equal at both. From the fifth's second to the sixth, of the paths this census reads only the
+ * bead export changed: this row's notes are byte-equal at f5cb912999ba and at e23b18e15bd7 gain refusal #5's record and its disposition
+ * after every line this census reads (the seven paragraphs, refusal #3's GATE PLANTS block and refusal #4's member lines unchanged),
+ * and at 5779ecaf1161 and 28eea0277c20 only the bead export again (this row's status at the first; its notes byte-equal at both);
+ * every count below re-measured equal at e23b18e15bd7, 5779ecaf1161 and 28eea0277c20. From the sixth's last merge (00b18a9c0eae,
+ * landing 817) to this one, of the paths this census reads only the bead export and the absence census changed: this row's notes gain
+ * refusal #6's record and its disposition after every line this census reads (the seven paragraphs, refusal #3's GATE PLANTS block,
+ * refusal #4's member lines and refusal #5's UNMET record unchanged; refusal #6's UNMET record, which this cut reads, is among the
+ * additions), and the absence census still names that roster, all this census reads of it; every count below re-measured equal at
+ * a9a10bbaa2fa. wb-vx6i's cut (the R694 follow-up of this census's landing 846) merged trunk cb2e7c450358 (landing 875), then
+ * 4eaba5334b89 (landing 877) and 418a654f08d1 (landing 878): from a9a10bbaa2fa to cb2e7c450358, of the paths this census reads, no
+ * src path and not the docs page changed (src's file count and the principal and status line counts below re-measured equal there);
+ * this census, its roster and the provenance test's clause (a) block landed (landing 846); the absence census changed and still names
+ * that roster, all this census reads of it; and the bead export changed: this row closed and gained notes after every line this
+ * census reads, and wb-vx6i's row, whose first F1 and F2 lines this cut reads, was added; from cb2e7c450358 to 418a654f08d1, of those
+ * paths only the bead export changed (wb-vx6i's status at 4eaba5334b89; its notes and this row byte-equal at both).
+ * wb-rdlh.4's cut (row D pinned) read them again at 36cb64856c54 (landing 892, trunk at its claim) and at
+ * fbe12f0274af (landing 894, merged into the branch; of the paths this census reads only the bead export changed between the two, and
+ * not this row): of the paths this census reads, that cut edits docs/workbench/12-security.md (clause (d)'s bullet, after the eighth)
+ * and the wb-gs2.3 census test/workbench-docs12-authorization.census.ts (its ninth AUTH_MARKDOWN entry), and every count below
+ * re-measured equal, each docs count on the parked page (DOCS below). Its re-cut merged trunk 59b8f4b225b6 (landing 909; wb-vx6i's
+ * landing 900 among the landings since), then 08a61f18e90f (landing 912), into the branch: from fbe12f0274af to 59b8f4b225b6, of
+ * the paths this census reads only the bead export and this file changed (this file by wb-vx6i's landed cut, the paragraph above,
+ * whose readings the merge keeps beside this cut's), and from 59b8f4b225b6 to 08a61f18e90f only the bead export; in the export this
+ * row is byte-equal at all three, and wb-vx6i's row closed and gained notes after its first F1 and F2 lines, each byte-equal at all
+ * three (the whole row byte-equal at the last two); every count below re-measured equal on the merged tree, each docs count on the
+ * parked page. Not pinned:
+ * src/workbench/control.ts:255 declares the filing's cited predicate (export function isCoreMintedDecision); src holds 117 files,
+ * every one a .ts module, no symlink; the core and the
+ * six modules with a value import of it (claude-control, control-reply, control-tool, detached-control, forge-control and
+ * furnace-control under src/workbench; src/workflow/task.ts imports a type only) form the admission/decision set; the three record
+ * lines name 40 distinct camel- or Pascal-case members and the absence roster's lines 50 distinct schema names, none of the 90
+ * spelled in src as a word (git grep -w over src), and two one-word
+ * members, principal (spelled on 169 src lines: Pi's own principal, a member of NativeControlRequest and ObservationScope) and
+ * status (492 lines), which src reads as properties of its own and its producers' shapes; no src module reads any of the 40 as a
+ * property. The filing measured 0 identifiers of the program at Pi d75b68d; the absence census holds the program's names at zero
+ * outside its holders today.
+ *
+ * READINGS.
+ * - FIXTURES (row A): the roster's three negative records, one per condition the filing's clause (a) lists, in its order, each the
+ *   source-safety record's fourteen members plus its name and its status slot (the line's three-valued vocabulary, which the line
+ *   keys by no member name), each aimed at the provenance test's observed run, so a reader that took it as an authorization input
+ *   would have a reason to permit: N1 a PASS record whose guardOrRelyReceipt is current at the roster's clock (the provenance
+ *   request's instant), N2 the same record with status UNKNOWN, N3 the PASS record whose guardOrRelyReceipt expired before the
+ *   clock; N2 and N3 each differ from N1 in their one condition member only.
+ * - PERMITS (row A): the real decision core, no mock: isCoreMintedDecision over five forms of each record (the record itself and
+ *   four permit-shaped wrappers); decideControl over the provenance test's request shape and projection (restated here), each
+ *   record at five placements (three beside a request's own fields, two where the core reads a native value: the operator
+ *   confirmation and a grant), over the permitted request and the eight requests the core denies, one per deny policy.
+ * - DENIALS (row B): the landed rf reader (src/workbench/reactivefiber-observer.ts reactivefiberTopology, given the provider's output
+ *   shape) over rf's refusal envelope (ok false, one primary RF_ error diagnostic): its snapshot and the projection's presentation of
+ *   it, with the UNKNOWN record planted at five positions the reader accepts (beside the reading's own fields, in the primary
+ *   diagnostic's metadata, as a second info diagnostic, as the primary's hint and as its message) and at three it refuses; and over
+ *   two source checks rf reports on an ok render, a failed one (an observation row that observed no value: denied, degraded) and an
+ *   expired one (a row replayed from an earlier render: freshness reused), each with the PASS and the expired records planted at
+ *   four positions.
+ * - FIELDS (row C): what a src module spells, from its TypeScript AST over decoded names (a unicode escape in an identifier or a
+ *   string reads as the character it encodes): the name of a member access (optional chains included) and the last part of a
+ *   qualified name (a type query such as typeof value.member); every object binding pattern's identifier key (a parameter, a
+ *   declaration, a for-of head or a catch clause; renamed or shorthand); an object literal's identifier key when a destructuring
+ *   assignment writes to the literal (the left of `=`, a default inside a pattern included, a for-of head, or a property value, an
+ *   element or an array spread inside such a target; renamed or shorthand); and EVERY string literal and no-substitution template
+ *   literal in the module's code (a comment, JSDoc included, is the WORDS reading's), wherever it sits, read through the parentheses
+ *   and the as, satisfies, non-null and angle-bracket type assertions around it and attributed by where it stands: an element access
+ *   key (element), an `in` test's left operand (in), a binding pattern's string or computed key (binding), an assignment pattern's
+ *   string or computed key (assignment), and any other position (literal: the key of an own-key call, direct, through .call or
+ *   .apply or through an alias, a comparison or case operand, a collection entry, a type). A record-shaped field is one of the 40
+ *   members (the identifier members of the three record lines that list them) or one of the 50 schema names of the absence roster's
+ *   two line sets. The admission/decision set is derived: the core plus every src module with a value import that resolves to it.
+ * - WORDS (row C): each src file's raw text, for every record-shaped name spelled as a word (not preceded or followed by an
+ *   identifier character), in code, strings, comments and patterns alike; it complements FIELDS, which reads decoded names that the
+ *   raw text does not spell.
+ * - DOCS (row D): the page's 'Authorization design' section, read through two views of the one page, each claimed at the forms D1's
+ *   pins hold and no wider. Since wb-rdlh.4 the page carries clause (d)'s sentence (CLAUSE_SENTENCE) as the section's ninth bullet,
+ *   right after the eighth: the PARKED PAGE is the page with that one bullet set aside where it follows the eighth exactly once
+ *   (parkedPage; the page refusals #1 to #6 measured), the readings below that name FROZEN_SECTION, the parked sentence's terms or a
+ *   docs plant are taken on it, and DELIVERED (the end of this paragraph) reads the page itself. THE SECTION-SOURCE READER:
+ *   wb-rdlh.3's, landed at landing 798 (test/helpers/docs-section-source.ts) and
+ *   imported unedited (sectionSource, termsStated) by one import declaration, whose two names docsBinding calls; no function, variable
+ *   or class declaration, parameter or binding element of this file takes either name at the placements PROVENANCE names, and no
+ *   import declaration of it names marked (the provenance case, at the forms PROVENANCE names; a copy of termsStated feeding the
+ *   terms beside docsBinding's own call, a named function expression and a dynamic import are not read: R-UNREAD-PROVENANCE), and
+ *   that reader's own census
+ *   (test/workbench-docs12-section-source-census.test.ts) pins what it reads. SOURCE: sectionSource's source, the page's own text from
+ *   the first character marked 18.0.11's top-level lexer step for the heading token consumed up to the first character the step for the
+ *   next top-level level-1 or level-2 heading token consumed (or the
+ *   page's end), its CR and CRLF line endings and every link reference definition in that span as the page spells them, held to the
+ *   sha-256 of its UTF-8 encoding, whose byte count it is (TITLE-NBSP's no-break space counts two); a refused reading's source is
+ *   empty. TILING: sectionSource's tiled, whether the page's top-level token raws, re-joined, are the page itself. The lexer departs
+ *   from the page in the two ways refusal #3 measured: it rewrites every CR and CRLF to LF before it tokenizes, and at top level it
+ *   consumes a link reference definition whose label repeats an earlier definition's without a token; on a page whose section binds,
+ *   either reds D1 untiled, wherever on the page it sits. A repeated-label definition nested in a list item is carried by the list's
+ *   raw, so its page stays tiled (refusal #4's member (b)). BINDING, twice over one page: sectionSource binds the one top-level level-2
+ *   heading whose TOKEN TEXT is the heading (the text marked's inline tokens carry: an HTML token none, markup its children's text, a
+ *   character reference as spelled and never decoded; white space collapsed), the section running to the next top-level level-1 or
+ *   level-2 heading, and refuses when no such heading exists or more than one; the shared rendered view (test/helpers/census.ts
+ *   docsSection) binds the section under the page's title by its own rules and gives its blocks. TERMS: termsStated over the source,
+ *   either of the parked sentence's two terms ('authorization input', 'never softens') spelled out in it, in any letter case, a run of
+ *   white space between its words read as one space (D1's plants pin a line break, two spaces, a tab and a no-break space; other white
+ *   space is NOT CLAIMED below), wherever in the span it sits (a refused reading's empty source states none). SHAPE: the section
+ *   against its shape frozen at this cut's base (FROZEN_SECTION): the shared view's blocks are one list and no other block, holding
+ *   eight items in all, the shared view finds no HTML in the section's blocks (docsSection's hasHtml,
+ *   which reads the blocks under the heading and not the heading line: HEADING-COMMENT), the items' text as the shared view renders it
+ *   is held to a sha-256, and the section's source to a second sha-256 (1121 bytes, which marked's top-level tokens carry on this page
+ *   as four raws re-joined: the heading 23, a space 2, the list 1094 and a space 2, refusal #4's member (c)). CHECKS: D1 names every
+ *   check a reading fails, in this order (DOCS_CHECKS): view (the shared view refuses the section), tokens (sectionSource refuses it)
+ *   and untiled (sectionSource binds it and reads the page untiled), html, blocks, bullets, rendered and source (the shape) and terms
+ *   (termsStated reads a term in the source); each holds on the parked page and fails on one docs plant at least. DELIVERED: the same
+ *   two views read the page itself, held to its delivered shape (FROZEN_PINNED: one list of nine items, no HTML, the items' text and
+ *   the section's source each held to a sha-256, the source's bytes and its four raws, the list's longer by clause (d)'s line); D1 names
+ *   every delivered check a page fails, in this order (CLAUSE_CHECKS): view, tokens and untiled as above, html, blocks, bullets,
+ *   rendered and source against FROZEN_PINNED, terms (the source does not spell out both terms, in order) and base (clause (d)'s bullet
+ *   does not follow the eighth exactly once, or the page with it set aside fails a check above); each holds on the page and fails on
+ *   one clause plant at least. THE BINDING: the string elements of the one AUTH_MARKDOWN array literal of the wb-gs2.3 census
+ *   (test/workbench-docs12-authorization.census.ts, read from its TypeScript AST) equal the section's items as the shared view gives
+ *   their markdown, clause (d)'s sentence the ninth; that census's own run and the strength of its rows' pins are NOT CLAIMED by this
+ *   census.
+ *
+ * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label):
+ *  A. A1 the wb-pjj provenance test (its header names wb-pjj) reads this roster by path and registers one describe for clause (a)
+ *    with four registrations that read the fixtures, and the cited core file exports the cited predicate: a binding, not a proof
+ *    that those cases are strong (R-HOLLOW-BINDING; A3 drives the same fixtures through the core itself). A2 the three fixtures
+ *    are the clause's three conditions, in order, each holding the source-safety record's members exactly, aimed at the
+ *    provenance run and isolating its condition. A3 none yields a permit: no form of a record reads minted; beside a request's own
+ *    fields a record changes no decision (the permitted request keeps its receipt, every denial stays the same denial); in place
+ *    of a native value it denies, the permitted request included; and the only permits are the permitted request's own.
+ *  B. B1 the refusal renders tone failure and the text 'refused · RF_RENDER_FAILED'; with the UNKNOWN record at each of the five
+ *    accepted positions the snapshot and its projected presentation are unchanged, and at each of three refused positions the
+ *    reading is refused as malformed (validation), with no snapshot and a message that echoes none of the record's name, status,
+ *    epoch and proof tier. B2 both source checks render UNKNOWN (tone unknown, coverage partial) beside the refusal's FAIL (tone
+ *    failure), unchanged by the PASS and the expired records at each of four positions; a clean render renders success (the
+ *    reader's control). B3 no B reading surfaces a probability-shaped string or a success tone, and five probability texts planted
+ *    in the refusal's text slots never surface (the matcher reads each).
+ *  C. C1 the derived admission/decision set holds the core and its six readers, every member yields reads (the core's include
+ *    principal), none reads a record-shaped field, and neither does any src module; the reader's 53 controls (one synthetic module
+ *    each) flag every form, position, wrapper and escape FIELDS names, each at its form; and the reader flags each of refusal #1's
+ *    plants at its form (P1-P11 and O1-O4, each bound by its id and that form: R-PLANT-EDIT) and both of its core plants inside the
+ *    core's own text.
+ *    C2 the tie to R2: the fixture record is the absence roster's own vendored line (held to the sha-256 this roster measured)
+ *    and a schema name that census judges, as is each record line the members come from; its census names that roster; the
+ *    three-valued status is the line's; the one-word members are exactly the shared names, each one src reads as a property (in a
+ *    form other than a bare literal); the schema family of both line sets joins the field reading; and the word reading covers
+ *    every record-shaped name (the 40 members and the 50 schema names), finds none spelled in src, and reads the name in each of
+ *    refusal #1's plants.
+ *  D. PINNED since wb-rdlh.4: clause (d)'s sentence was parked under standing rule 3 (the user's W19 INPUT HYGIENE order keeps agents
+ *    to product input-hygiene tests) until the owner's security-design ruling R-B459 approved it, and wb-rdlh.4 delivered it with its
+ *    wb-gs2.3 census entry in one commit. D1 holds the delivered state: the row carries no reason; the page carries clause (d)'s bullet
+ *    once, right after the eighth; the page's tokens tile it and the section binds in both views; it spells out both terms of the
+ *    sentence, each of which row D's label (the filing's clause (d)) spells; the sentence renders as the ninth item and as no other; the
+ *    section's source is the delivered source and marked carries it as four raws; the page fails no delivered check; with the bullet
+ *    set aside the page is the parked page, failing no parked check and stating no term, and the delivery adds that one bullet line and
+ *    leaves the eight parked items as they were (it removes and rewords nothing); the wb-gs2.3 census's AUTH_MARKDOWN literal is the
+ *    section's items, clause (d)'s sentence the ninth, and each of three edits of that census's source made in memory (BINDING_EDITS:
+ *    the entry dropped, the entry reworded, the literal renamed) unbinds it. Its delivered controls (CLAUSE_PLANTS: each the page with one edit
+ *    made in memory, and every delivered check it fails) are clause (d)'s bullet removed, its never-softens clause and its
+ *    authorization-input clause reworded, the bullet moved under the next section, nested under the eighth, hidden in an HTML comment,
+ *    split into two bullets and doubled; the seventh bullet reworded and removed; a CR on the page's title line; a level-1 heading
+ *    placed above the section; and the heading's space spelled as an entity. D1 keeps the parked readings, each on the parked page: its
+ *    tokens tile it, the section binds in both views, its source is the frozen source and marked carries it as the four raws member
+ *    (c) names, it spells out neither term of the parked sentence, and it fails no check. So an edit of the parked page's section source
+ *    (any character of the span: a bullet added, removed, reworded or re-marked; a block added or the list removed; a link, an image, a
+ *    definition, a table, a block quote or HTML added, at any depth; a CR or a CRLF; white space changed; the heading line edited; the
+ *    parked sentence added in any form or wording) reds the parked reading by source, and by each further check it fails: untiled when
+ *    the section still binds and the edit is one marked's top-level tokens do not carry (a CR, a CRLF, a top-level definition whose
+ *    label repeats one), tokens when the heading no longer binds, terms when the section still binds and the edit spells a term of the
+ *    parked sentence out in the span. Its parked controls (DOCS_PLANTS: each the parked page with one edit made in memory, and every
+ *    check it fails) are refusal #1's docs plants (the
+ *    sentence as a bullet, a nested item, a paragraph, a block quote and an HTML block, and the paraphrase as a bullet); refusal #2's
+ *    (the sentence as a link title in the first bullet, L2-D1; as a reference link's title with its definition after the page's last
+ *    line, L2-D1b, which reds by source alone, its definition outside the span; as an empty-alt image's title, L2-D3) with that gate's
+ *    two controls (the sentence's first clause as an image's alt text, L2-D2; a definition inside the section, L2-D4); refusal #3's
+ *    (the sentence as a repeated definition's title in place of the blank line after the heading, L2G-DUPDEF; a CR on the second
+ *    bullet's line, on the blank line after the heading and on the eight section lines no anchor sits on, L2G-CR-BULLET2, L2G-CR-BLANK
+ *    and L2G-CRLF-BODY), each untiled and by source, D1's source of each the slice that gate measured, as are a lone CR in place of the
+ *    second bullet's LF (LONE-CR) and a CRLF on the heading, first-bullet and eighth-bullet lines (CRLF-ANCHOR-LINES), with that gate's
+ *    three controls (the same definition with no earlier label, L2G-DUPDEF-NOOUT; a space where the CR went, L2G-SPACE-BULLET2 and
+ *    L2G-SPACE-BLANK) and the same two departures outside the section (a CR on the page's title line, CR-OUTSIDE; a repeated definition
+ *    after the page's last line, DUPDEF-OUTSIDE), untiled alone; the paraphrase inside the eighth bullet; the sentence, a clause or a
+ *    term of it as a table cell, a code block, a subsection heading, an HTML comment and an HTML tag's title in a bullet, a link's and
+ *    an image's destination, a definition's label and destination, a code block's info string, and a link title on the section's own
+ *    heading, in a nested item, in a block quote and in a table cell; a term in mixed case, a term split by a line break, two spaces or
+ *    a no-break space in a link title, by a tab in a definition's title, and by a line break in an HTML tag's title and in a code
+ *    block, each read as the term; eight edits that spell no term out: a term spelled with an entity, a term percent-escaped in a
+ *    destination, a link title stating the paraphrase, a term split by a zero-width space in a link title, an emphasis added, a hard
+ *    line break, a task box and the heading's closing hashes; a bullet removed and the list removed; six binding edits: the heading's
+ *    space spelled as an entity, which the shared view reads as the heading and sectionSource does not; the heading repeated after the
+ *    page's last line, which both views refuse; a level-1 heading placed above the section, which re-homes it in the shared view; the
+ *    heading repeated inside a block quote after the page's last line, which the shared view counts and sectionSource, reading
+ *    top-level headings only, does not; an HTML comment inside the heading line, which neither view reads as heading text
+ *    (HEADING-COMMENT), and the heading's two words two spaces apart, which both views read with white space collapsed
+ *    (HEADING-SPACES), each bound and by source alone; and refusal #4's members of record, each an edit after the eighth bullet bound by
+ *    id and order to the members' lines and by every check it fails (R-PLANT-EDIT): member (a)'s sixteen placements of the sentence or
+ *    a term (a table in the eighth bullet, in a block quote or in a block quote in the eighth bullet; a list in a block quote in the
+ *    eighth bullet or in a block quote; and the shallower and
+ *    already-read placements the member names), each by source and by terms, and member (b)'s three (the repeated definition nested in
+ *    the eighth bullet with its title, G-S-ITEM-DUPDEF, by source and terms, and without it, G-S-ITEM-DUPDEF-NOTITLE, by source, each
+ *    page tiled; the same definition at top level, C-TOP-DUPDEF, untiled, by source and terms).
+ *    D1 reads that one section (R-OTHER-SECTION).
+ * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` and `${id}:${status}` as literals and equals the roster's copy
+ * (beside each pin's witness). OUTSIDE ANCHORS: the owner filing in the tracked export (its seven paragraphs, each trimmed, held to the
+ * roster's sha-256): its acceptance clause is tiled by the labels, its clause (a) yields the fixture conditions, the cited predicate
+ * and file, its quote paragraph yields the first vendored line's text and site, and it cites the Library pin, so a pin or a row removed
+ * from every census literal and from the roster still reds against the owner's text; refusal #3's GATE PLANTS lines in the same row's
+ * notes (the first such block: refusal #5's appended block WX2 is not read) yield GATE_SLICES, the bytes and sha-256/16 that gate
+ * measured; refusal #4's UNMET members (a), (b) and (c) in the same row's notes (the first line of each, read at run time; notes only
+ * append: refusal #5's appended member lines WX1 are not read) yield D1's member plants by id and in order, the nine placements member
+ * (a) measured without terms with the checks it measured each by, and member (c)'s four raws; refusal #5's UNMET record in the same
+ * row's notes (its '| U1-' line up to its '| CURE' line, the first such block: a later quotation appended is not read) names the
+ * thirteen witnesses and escapes this census holds, each by its id (W- a provenance form, E- an R-UNREAD-PROVENANCE escape,
+ * W-MEMBER-SWAP- an R-PLANT-EDIT swap, WX an appended-note witness); refusal #6's UNMET record in the same row's notes (its '| U1-'
+ * line through its '| U2-' line, the first such block: a later quotation appended is not read) names the ten witnesses this census
+ * holds as binding placements, each by its id (W- or WD-); wb-vx6i's row in the same export (the R694 follow-up filed at this
+ * census's landing 846; its first '[leads] - F1' line and its first '[rides] - F2' line, read at run time: a later line appended is not
+ * read) names the six identity swaps and the eight sub-form witnesses this census holds, each by its id (SC7- an identity swap, WT7- a
+ * sub-form control); the absence roster's vendored lines yield the records, their members and the statuses; the src tree yields the
+ * admission/decision set;
+ * and the docs page's section yields D1's frozen shape.
+ * SELF-READ: the judged set parses this file's IMPL and requires every pin to name one of READERS and not ROSTER (direct
+ * identifiers only, R-HOLLOW-IMPL); each pin's witness carries the digest of its own quote; the records case requires every pin and
+ * every quiet row to have run to its end; the residual ids this header's RESIDUALS paragraph names, in order, must equal QUIET's
+ * keys and the roster's; the binding placements this header's PROVENANCE placement sentence names, in order, must equal
+ * BINDING_PLACEMENTS'; and the sub-form controls its sub-form sentence names, in order, must equal SUB_FORMS'. PROVENANCE: this file's
+ * source, parsed as TypeScript and judged four ways, each at the forms the case's
+ * controls hold: its one import declaration of the section-source reader binds exactly sectionSource and termsStated as values (a
+ * type-only specifier or a type-only import declaration of the reader binds none); docsBinding calls both by name (a call outside
+ * docsBinding is not read as one); no function, variable or class declaration, parameter or binding element of this file takes
+ * either name at the placements the binding controls make (BINDING_PLACEMENTS, each made once with each name): in docsBinding's body
+ * a function declaration (W-FUNCDECL); in its parameter list a parameter (W-PARAM); in its body a shorthand element of a const's
+ * object pattern (W-BINDING); in plantEdit's body a class declaration (W-CLASS2); in docsBinding's body a const (W-VARDECL), a let
+ * (WD-LET) and a var (W-VAR); a const in a lone block in its body (WD-BLOCK); a const in the block body of an arrow function its
+ * return calls (WD-ARROW); the parameter of an arrow function its return calls (WD-ARROW-PARAM); in its body a shorthand element of an
+ * object pattern nested in a const's object pattern (WD-NESTED-PATTERN), a renamed element of a const's object pattern
+ * (W-RENAMED-ELEMENT), an element of a const's array pattern (W-ARRAY-ELEMENT), a catch clause's variable (W-CATCH) and a for-of
+ * head's const (W-FOR-OF); a const in the body of a function expression its return calls (W-FUNCEXPR-BODY) and in the body of an
+ * object literal's method its return calls (W-METHOD-BODY); and at this file's top level a const (W-TOP; the synthetic module holds one
+ * too); a declaration of either name at any other placement,
+ * in any other form or with any other modifier (for one: a generator, async or overload function, a using declaration, a rest
+ * element or parameter, a function type's parameter, a declaration nested deeper than its placement) is NOT CLAIMED by this census;
+ * at nine of those placements a sub-form control declares the name, at that placement's frozen shape, in a second sub-form, the
+ * parts it differs from the placement's binding control in (SUB_FORMS, each made once with each name): a function declaration with no
+ * return type (WT7-FUNCDECL-UNTYPED, at W-FUNCDECL), a const with a type annotation (WT7-VARDECL-TYPED, at W-VARDECL), a catch
+ * clause's variable with one (WT7-CATCH-TYPED, at W-CATCH), a parameter with no type annotation of an arrow function with no return
+ * type (WT7-ARROW-PARAM-UNTYPED, at WD-ARROW-PARAM), a shorthand element with a default (WT7-BINDING-DEFAULT, at W-BINDING), a class
+ * with no member (WT7-CLASS-EMPTY, at W-CLASS2), and a const with no type annotation in an arrow function with no return type
+ * (WT7-ARROW-UNTYPED, at WD-ARROW), in a method with none (WT7-METHOD-UNTYPED, at W-METHOD-BODY) and in a function expression with
+ * none (SF-FUNCEXPR-UNTYPED, at W-FUNCEXPR-BODY); the first eight are wb-vx6i's sub-form witnesses, each spelled as gate s191 spelled
+ * it and bound by its id; at every placement the binding judgement is claimed only at the declarations its controls make, as they
+ * spell them, so a declaration at a binding placement spelled otherwise than every control there (for one: a function declaration
+ * with no parameter, a class with a heritage clause, a let with a type annotation) is NOT CLAIMED by this census;
+ * and no import declaration of this file names marked (a named value, type-only, type-only specifier, namespace, default or
+ * side-effect import of it each reds). The controls are the synthetic module and one edit of this file's own source per form, made in
+ * memory (the forms of refusal #5's gate witnesses W-FUNCDECL, W-PARAM, W-BINDING, W-CLASS2, W-TYPEIMPORT3 and W-VALUES-TYPE and of
+ * refusal #6's WD-LET, WD-BLOCK, WD-ARROW, WD-ARROW-PARAM and WD-NESTED-PATTERN among them, each bound by its id), each held to the
+ * judgements it reds; each binding placement and each sub-form control is made with the two names the reader's import binds, and
+ * placementShape reads back the declaration it makes, alike with either name, and holds it to its placement's frozen shape (a sub-form
+ * control to the shape of the placement it stands at); placementShape reads two parts of a declaration: its form, one of the twelve
+ * the frozen shape spells (a function, class, parameter, const, let or var, a for-of head's const, a catch clause's variable, a
+ * shorthand, renamed or array-pattern element, or a shorthand element of a pattern nested in an element), and, outward to this
+ * file's top level, each arrow function, function expression, method, lone block (a block statement directly in a block) and function
+ * declaration (by its name) around it, or none (top); subFormOf reads back, alike with either name, the sub-form parts each sub-form
+ * control differs from its placement's binding control in (a function declaration's return type, a variable declaration's or a
+ * parameter's type annotation, a binding element's default, a class's members, and the return type of each arrow function, function
+ * expression and method around it), each pair held to a frozen literal. A part of a control neither reads (for one: a modifier, the
+ * keyword of the declaration a binding element's pattern belongs to, a block an if, loop, try or other statement owns, the object
+ * literal or class a method belongs to, whether a call or a return holds a function around it, a function's parameters) is NOT
+ * CLAIMED as read back by this census: the placement and sub-form sentences' words for such a part (a const's pattern, an object
+ * literal's method, a function its return calls, a body or the top level as the block a declaration sits in directly, the absence of
+ * a modifier) say how each control is spelled, and wb-vx6i's six identity swaps (SC7-W-VARDECL-IN-IF, SC7-W-FUNCDECL-ASYNC,
+ * SC7-W-TOP-EXPORT, SC7-W-BINDING-LET, SC7-W-METHOD-AS-CLASS-METHOD and SC7-WD-ARROW-UNCALLED), each its gate's respelling of a
+ * binding control in such a part, read their placement's frozen shape alike. The forms' shape is a frozen literal, and refusal #5's
+ * and refusal #6's records hold their witnesses and wb-vx6i's record its identity swaps and sub-form witnesses (OUTSIDE ANCHORS); the
+ * forms the case does not read are R-UNREAD-PROVENANCE.
+ * CASES (the pinned reader set, in registration order): 'judged set, frozen shape', 'judged set, roster', 'judged set, outside
+ * anchors: the owner filing ...', 'judged set, outside anchors: refusal #4's UNMET members ...', 'judged set, outside anchors: every
+ * witness and escape refusal #5's UNMET record names ...', 'judged set, outside anchors: every witness refusal #6's UNMET record
+ * names ...', 'judged set, outside anchors: every identity swap and sub-form witness wb-vx6i's record names ...', 'judged set,
+ * self-read', 'judged set, provenance', the nine pins (A1-A3,
+ * B1-B3, C1-C2 and D1, each titled by its id under its row's label), the ten quiet rows under 'residuals: each named family's quiet
+ * row', and 'records'.
+ * NOT CLAIMED (scope sentences of the DOCS reading and three of PROVENANCE's; each bounds what its case reads and names no residual):
+ * - The shared view's text at the nine placements refusal #4's member (a) measured without terms (a table nested in a list item or a
+ *   block quote, a list inside a block quote nested in a list item or a block quote: the wb-aalz family) is NOT CLAIMED by the rendered
+ *   check: D1 holds every other check of those nine plants exactly, and each reds by source and by terms.
+ * - A term spelled otherwise in the source (a character reference, a backslash or percent escape, inline markup, a comment or an
+ *   invisible character between its words, a paraphrase) is NOT CLAIMED by the terms check; such an edit of the span reds by source.
+ * - A term split by white space other than the runs D1's plants pin (a line break, two spaces, a tab and a no-break space; an em space,
+ *   for one) is NOT CLAIMED by the terms check; such an edit of the span reds by source.
+ * - A term outside the span (the title of a definition placed after the section, one a link of the section resolves to included:
+ *   L2-D1b) is NOT CLAIMED by the terms check; the link's own edit of the span reds by source.
+ * - A heading's text with its character references decoded is NOT CLAIMED by sectionSource's binding, which reads token text (the
+ *   shared view binds by its own rules; HEADING-ENTITY reds by tokens and source).
+ * - sectionSource's refusal when its instrumented lexer's tokens are not marked.lexer's own or its steps miss a token, and a page with
+ *   a lone surrogate, are NOT CLAIMED by this census (no page here reaches either).
+ * - A declaration of either name at a placement PROVENANCE does not name (each binding control makes one placement, once with each
+ *   name) is NOT CLAIMED by the provenance case's binding judgement.
+ * - A declaration at a binding placement spelled otherwise than every control there (BINDING_PLACEMENTS and SUB_FORMS; for one: a
+ *   function declaration with no parameter, a class with a heritage clause, a let with a type annotation) is NOT CLAIMED by the
+ *   provenance case's binding judgement.
+ * - A part of a control that neither placementShape nor subFormOf reads is NOT CLAIMED as read back (wb-vx6i's six identity swaps
+ *   read their placement's frozen shape alike), and placementShape's and subFormOf's own reading of this file's declarations (each
+ *   reads every declaration of the name in the source it is given, this file's own included) is NOT CLAIMED by this census.
+ * RESIDUALS (named families, each with a pinned quiet row in QUIET): R-OTHER-PRODUCER row B reads rf's refusal only; R-SHARED-NAME
+ * a one-word member (principal, status) is not judged by name; R-DYNAMIC-KEY a key the source never spells whole, as a literal or
+ * as a word (a variable, a concatenation, a template with a substitution, its head spelling the name whole included, a fragment
+ * matched by a string method or a pattern, the whole name in a pattern before its end anchor, a constant imported from outside src),
+ * escapes both the field and the word reading;
+ * R-PROSE-RECORD a member the program names only in prose is not read;
+ * R-UNVENDORED-MEMBERS the members of the 18 records whose vendored line is a heading are not read; R-HOLLOW-BINDING A1 binds the
+ * provenance cases by presence and reads, so a case hollowed in place still reads bound; R-HOLLOW-IMPL SELF-READ judges an IMPL
+ * entry by the identifiers it names, so an entry that names a reader beside a constant witness still reads bound; R-OTHER-SECTION
+ * D1 reads the 'Authorization design' section only (its source over the span sectionSource binds, no definition elsewhere, one a link
+ * of the section resolves to included, and the tiling page-wide), so, on a page its tokens tile, the sentence placed outside the
+ * section's source, on another section of the page (a level-1 or level-2 heading placed after the section's last block starts one, and
+ * the section's heading text set as a level-3 heading starts none; HTML wrapped around the section sits in its neighbours) or on
+ * another page, is not read; R-UNREAD-PROVENANCE the provenance case reads import declarations, the five declaration kinds (claimed at
+ * the binding placements) and docsBinding's calls by name, so marked loaded by a dynamic import() (refusal #5's E-DYNIMPORT2), either
+ * name bound by a named function expression (E-FUNCEXPR2) and a copy of termsStated under another name feeding D1's terms beside
+ * docsBinding's own call of it (an object's method, E-METHOD) are not read; R-PLANT-EDIT a gate's plant is bound by its id and by
+ * every check it fails or the form it is read at (refusal #4's members also by order, from their lines in the export; refusal #3's
+ * four also by the slices that gate measured), so a plant's edit or module swapped for another that reds or reads alike is not
+ * read (refusal #5's W-MEMBER-SWAP-A and W-MEMBER-SWAP-B, a refusal #1 and a refusal #2 docs plant, a refusal #1 module). The
+ * list's anchors are this paragraph, QUIET and the roster, which one coordinated edit changes together:
+ * the program states no residual list to anchor it outside the cut.
+ * Display paths added: none. Test-only: no scratch (every synthetic module is parsed in memory); src, the docs, both rosters, the
+ * two test sources it binds, the wb-gs2.3 census source it reads the binding from, the section-source reader it imports and the bead
+ * export are only read.
+ */
+import { createHash } from "node:crypto";
+import { readdirSync, readFileSync } from "node:fs";
+import { dirname, join, relative, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import ts from "typescript";
+import { describe, expect, it } from "vitest";
+import { CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
+import { type ControlDecision, decideControl, isCoreMintedDecision, type NativeControlRequest } from "../src/workbench/control.js";
+import { type NativeRef, ObservationProjection, type ObservationScope, type Presentation } from "../src/workbench/observation.js";
+import { type ReactiveFiberProjectionTopology, type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
+import { docsSection, sourceStructure } from "./helpers/census.js";
+import { sectionSource, termsStated } from "./helpers/docs-section-source.js";
+import { rfFixtureBlock, rfFixtureDecision } from "./helpers/rf-render-fixture.js";
+
+type JsonRecord = { [key: string]: JsonValue };
+interface Pin {
+  readonly id: string;
+  readonly quote: string;
+}
+type RowStatus = "pinned" | "parked";
+interface Row {
+  readonly id: string;
+  readonly status: RowStatus;
+  readonly label: string;
+  /** A parked row: why its clause part is not delivered, never counted satisfied. */
+  readonly reason?: string;
+  readonly pins: readonly Pin[];
+}
+interface Span {
+  readonly site: string;
+  readonly textBase64: string;
+  readonly sha256: string;
+}
+interface Fixture {
+  readonly id: string;
+  readonly condition: string;
+  readonly record: JsonRecord;
+}
+interface Roster {
+  readonly bead: string;
+  readonly producer: string;
+  readonly pin: string;
+  readonly program: string;
+  readonly filing: { readonly export: string; readonly paragraphs: number; readonly sha256: string };
+  readonly record: { readonly roster: string; readonly site: string; readonly sha256: string };
+  readonly citations: readonly Span[];
+  readonly clock: string;
+  readonly fixtures: readonly Fixture[];
+  readonly rows: readonly (Omit<Row, "pins"> & { readonly pins: readonly (Pin & { readonly witness: JsonValue })[] })[];
+  readonly residuals: readonly { readonly id: string; readonly family: string }[];
+}
+interface AbsenceRoster {
+  readonly spans: readonly Span[];
+  readonly extension: { readonly spans: readonly Span[] };
+}
+type ReadForm = "member" | "element" | "binding" | "assignment" | "in" | "literal";
+interface FieldRead {
+  readonly file: string;
+  readonly line: number;
+  readonly name: string;
+  readonly form: ReadForm;
+}
+type Permit = Extract<ControlDecision, { decision: "permitted" }>;
+type Carried = "metadata" | "in-place";
+
+const HERE = fileURLToPath(import.meta.url);
+const REPO = join(dirname(HERE), "..");
+const SELF = relative(REPO, HERE);
+const ROSTER_FILE = "test/fixtures/cac-authorization-input-roster.json";
+const ABSENCE_ROSTER_FILE = "test/fixtures/cac-absence-roster.json";
+const ABSENCE_CENSUS = "test/workbench-cac-absence-census.test.ts";
+const EXPORT_FILE = ".beads/issues.jsonl";
+const BEAD = "wb-rdlh.1";
+const PROVENANCE = "test/workbench-control-provenance.test.ts";
+const PROVENANCE_SUITE = "wb-rdlh.1 (a): a Library design-program record never yields a permit";
+const DOCS_FILE = "docs/workbench/12-security.md";
+const DOCS_PARENT = "12 — Trust model, authorization, isolation and sensitive data";
+const DOCS_HEADING = "Authorization design";
+const readRepo = (file: string): string => readFileSync(join(REPO, file), "utf8");
+const ROSTER = JSON.parse(readRepo(ROSTER_FILE)) as Roster;
+const ABSENCE = JSON.parse(readRepo(ABSENCE_ROSTER_FILE)) as AbsenceRoster;
+/** The functions that read the subject; every IMPL entry names one directly (SELF-READ). */
+const READERS: readonly string[] = ["admissionSet", "definitionLines", "docsBinding", "fieldReads", "fixtureRead", "permitOutcomes", "provenanceBinding", "recordLine", "rfTopology"];
+
+const ROWS: readonly Row[] = [
+  {
+    id: "A",
+    status: "pinned",
+    label:
+      "the wb-pjj provenance test (isCoreMintedDecision, src/workbench/control.ts:255) gains CAC negative fixtures (PASS record, status UNKNOWN, expired guardOrRelyReceipt) - none yields a permit",
+    pins: [
+      { id: "A1", quote: "the wb-pjj provenance test (isCoreMintedDecision, src/workbench/control.ts:255) gains CAC negative fixtures" },
+      { id: "A2", quote: "(PASS record, status UNKNOWN, expired guardOrRelyReceipt)" },
+      { id: "A3", quote: "none yields a permit" },
+    ],
+  },
+  {
+    id: "B",
+    status: "pinned",
+    label:
+      "a producer denial fixture (bd/furnace/forge/hx/rf) plus a CAC UNKNOWN row renders the denial unchanged in tone and text; a failed/expired source check renders FAIL/UNKNOWN, no success probability synthesized",
+    pins: [
+      { id: "B1", quote: "a producer denial fixture (bd/furnace/forge/hx/rf) plus a CAC UNKNOWN row renders the denial unchanged in tone and text" },
+      { id: "B2", quote: "a failed/expired source check renders FAIL/UNKNOWN" },
+      { id: "B3", quote: "no success probability synthesized" },
+    ],
+  },
+  {
+    id: "C",
+    status: "pinned",
+    label: "static census: no src admission/decision path reads a CAC-shaped field (ties to R2)",
+    pins: [
+      { id: "C1", quote: "static census: no src admission/decision path reads a CAC-shaped field" },
+      { id: "C2", quote: "(ties to R2)" },
+    ],
+  },
+  {
+    id: "D",
+    status: "pinned",
+    label:
+      "docs/workbench/12-security.md 'Authorization design' gains one falsifiable sentence (CAC output never an authorization input; UNKNOWN never softens a denial) bound by the wb-gs2.3 census test",
+    pins: [
+      {
+        id: "D1",
+        quote:
+          "docs/workbench/12-security.md 'Authorization design' gains one falsifiable sentence (CAC output never an authorization input; UNKNOWN never softens a denial) bound by the wb-gs2.3 census test",
+      },
+    ],
+  },
+];
+const pinIds = (): string[] => ROWS.flatMap(row => row.pins.map(pin => pin.id)).sort();
+const sha256 = (data: string | Buffer): string => createHash("sha256").update(data).digest("hex");
+const claim = (id: string): string => sha256(ROWS.flatMap(row => row.pins).find(pin => pin.id === id)?.quote ?? "").slice(0, 16);
+
+// --- the owner's text: the filing in the tracked export --------------------------------------------------------------------------------
+/** The bead's notes in the tracked export, whole (the census needs exactly one row for the bead, with notes). */
+function beadNotes(bead: string): string {
+  const rows = rehydrateTrackerExport(readRepo(EXPORT_FILE), join(REPO, EXPORT_FILE))
+    .split("\n")
+    .filter(line => line.includes(`"${bead}"`))
+    .map(line => JSON.parse(line) as { readonly id?: unknown; readonly notes?: unknown })
+    .filter(row => row.id === bead);
+  const notes = rows.length === 1 ? rows[0]?.notes : undefined;
+  if (typeof notes !== "string") throw new Error(`${EXPORT_FILE} carries ${rows.length} ${bead} rows; the census needs exactly one, with notes`);
+  return notes;
+}
+/** The first paragraphs of the bead's notes in the tracked export, each trimmed (bd appends a later note after them, so trimming keeps
+ * the hashed text identical before and after every append; the absence census's reading). */
+function filing(bead: string, paragraphs: number): string {
+  return beadNotes(bead)
+    .split(/\n\s*\n/)
+    .slice(0, paragraphs)
+    .map(paragraph => paragraph.trim())
+    .join("\n\n");
+}
+interface Statement {
+  readonly acceptance: string;
+  readonly conditions: readonly string[];
+  readonly predicate: string;
+  readonly file: string;
+  readonly quote: string;
+  readonly quoteSite: string;
+}
+const ACCEPTANCE_CLAUSE = /^Acceptance: (\(a\) .+)\.$/m;
+const CONDITIONS_CLAUSE = /negative fixtures \(([^)]+)\) - none yields a permit/;
+const PREDICATE_CLAUSE = /^\(a\) the wb-pjj provenance test \((\w+), (src\/[\w./-]+\.ts):\d+\)/;
+const QUOTE_CLAUSE = /^Quote: '(.+?)' docs\/programs\/[\w-]+\/([\w.-]+\.md:\d+)@[0-9a-f]{12}\./m;
+function statement(text: string): Statement {
+  const acceptance = ACCEPTANCE_CLAUSE.exec(text)?.[1];
+  const conditions = acceptance === undefined ? undefined : CONDITIONS_CLAUSE.exec(acceptance)?.[1];
+  const predicate = acceptance === undefined ? null : PREDICATE_CLAUSE.exec(acceptance);
+  const quote = QUOTE_CLAUSE.exec(text);
+  if (acceptance === undefined || conditions === undefined || predicate === null || quote === null) {
+    throw new Error("the filing no longer carries its acceptance clause, its clause (a) conditions and citation, and its quote");
+  }
+  return { acceptance, conditions: conditions.split(", "), predicate: predicate[1] ?? "", file: predicate[2] ?? "", quote: quote[1] ?? "", quoteSite: quote[2] ?? "" };
+}
+const STATEMENT = statement(filing(BEAD, ROSTER.filing.paragraphs));
+
+// --- the record: the absence census's vendored line ------------------------------------------------------------------------------------
+/** A vendored line's text, held to its measured sha-256. */
+function vendored(span: Span): string {
+  const bytes = Buffer.from(span.textBase64, "base64");
+  if (sha256(bytes) !== span.sha256) throw new Error(`${span.site}: the vendored line is not the line measured at the pin`);
+  return bytes.toString("utf8");
+}
+const SCHEMA_NAME = /\b[A-Z][A-Za-z]+V\d+\b/g;
+const RECORD_LINE = /^\*\*([A-Z][A-Za-z]+V\d+):\*\* (.+)\.$/;
+const MEMBER = /^[a-z][A-Za-z]+$/;
+interface RecordLine {
+  readonly site: string;
+  readonly sha256: string;
+  readonly schema: string;
+  readonly members: readonly string[];
+  readonly statuses: readonly string[];
+}
+/** The record's definition line as the absence roster vendors it: its schema name, its members (identifiers, in order) and its
+ * three-valued status vocabulary, the line's last item. */
+function recordLine(): RecordLine {
+  const spans = [...ABSENCE.spans, ...ABSENCE.extension.spans].filter(span => span.site === ROSTER.record.site);
+  const span = spans.length === 1 ? spans[0] : undefined;
+  if (span === undefined) throw new Error(`the absence roster vendors ${spans.length} lines at ${ROSTER.record.site}`);
+  if (span.sha256 !== ROSTER.record.sha256) throw new Error(`${span.site}: the absence roster's line is not the one this roster measured`);
+  const parsed = RECORD_LINE.exec(vendored(span));
+  if (parsed === null) throw new Error(`${span.site} is no record definition line`);
+  const items = (parsed[2] ?? "").split(", ");
+  const statuses = (items.at(-1) ?? "").split("/");
+  const members = items.slice(0, -1);
+  if (!members.every(member => MEMBER.test(member)) || !statuses.every(word => /^[A-Z]+$/.test(word))) {
+    throw new Error(`${span.site}: the record line no longer lists identifier members and a status vocabulary`);
+  }
+  return { site: span.site, sha256: span.sha256, schema: parsed[1] ?? "", members, statuses };
+}
+/** The schema names of both of the absence roster's vendored line sets, one per line (its own reading). */
+function schemaFamily(): string[] {
+  return [...ABSENCE.spans, ...ABSENCE.extension.spans].map(span => {
+    const found = vendored(span).match(SCHEMA_NAME) ?? [];
+    if (found.length !== 1) throw new Error(`${span.site}: the vendored line names ${found.length} schemas, not one`);
+    return found[0] ?? "";
+  });
+}
+/** A record definition line of the absence roster: optionally numbered, the schema name in bold with its colon inside or after. */
+const DEFINITION = /^(?:\d+\. )?\*\*([A-Z][A-Za-z]+V\d+)(?::\*\*|\*\*:) (.+)$/;
+/** A member identifier: one camel- or Pascal-case token with an inner capital (a one-word item is R-SHARED-NAME). */
+const IDENTIFIER = /^(?:[a-z]+|[A-Z][a-z]+)(?:[A-Z][A-Za-z0-9]*)+$/;
+const ONE_WORD = /^[a-z]+$/;
+interface DefinitionLine {
+  readonly site: string;
+  readonly schema: string;
+  readonly members: readonly string[];
+  readonly words: readonly string[];
+}
+/** Every record definition line of the absence roster's two line sets that lists member identifiers: the items of its first
+ * sentence (separated by commas, " OR " and " and "), its identifiers and its one-word items. */
+function definitionLines(): DefinitionLine[] {
+  return [...ABSENCE.spans, ...ABSENCE.extension.spans].flatMap(span => {
+    const parsed = DEFINITION.exec(vendored(span));
+    if (parsed === null) return [];
+    const sentence = (parsed[2] ?? "").split(/\.(?:\s|$)/)[0] ?? "";
+    const items = sentence.split(/,\s*|\s+OR\s+|\s+and\s+/).map(item => item.trim());
+    const members = items.filter(item => IDENTIFIER.test(item));
+    return members.length === 0 ? [] : [{ site: span.site, schema: parsed[1] ?? "", members, words: items.filter(item => ONE_WORD.test(item)) }];
+  });
+}
+/** A list-item record definition (16-decentralized-information-privacy-progress-v8.md's form): a dash, the schema name, a colon. */
+const LIST_DEFINITION = /^- ([A-Z][A-Za-z]+V\d+): (.+)$/;
+/** The absence roster's record lines by kind: the identifier lines above, prose definitions, and headings with no definition text. */
+function lineKinds(): { readonly identifiers: number; readonly prose: number; readonly headings: readonly string[] } {
+  const spans = [...ABSENCE.spans, ...ABSENCE.extension.spans];
+  const identifiers = definitionLines().map(line => line.site);
+  const defined = spans.filter(span => DEFINITION.test(vendored(span)) || LIST_DEFINITION.test(vendored(span))).map(span => span.site);
+  return { identifiers: identifiers.length, prose: defined.filter(site => !identifiers.includes(site)).length, headings: spans.map(span => span.site).filter(site => !defined.includes(site)) };
+}
+/** The one-word members (R-SHARED-NAME): names src already reads as properties of its own and its producers' shapes. */
+const SHARED: readonly string[] = ["principal", "status"];
+const NATIVE_INTERFACES: readonly (readonly [string, string])[] = [
+  ["src/workbench/control.ts", "NativeControlRequest"],
+  ["src/workbench/observation.ts", "ObservationScope"],
+];
+/** The property members the Pi-native interfaces declare, read from their own source. */
+function nativeMembers(): string[] {
+  return NATIVE_INTERFACES.flatMap(([file, name]) => {
+    const source = ts.createSourceFile(file, readRepo(file), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+    const found = source.statements.filter((statement): statement is ts.InterfaceDeclaration => ts.isInterfaceDeclaration(statement) && statement.name.text === name);
+    if (found.length !== 1) throw new Error(`${file} declares ${found.length} ${name} interfaces`);
+    return (found[0]?.members ?? []).flatMap(member => (ts.isPropertySignature(member) && ts.isIdentifier(member.name) ? [member.name.text] : []));
+  });
+}
+const RECORD = recordLine();
+/** The judged members: every member identifier of every record definition line, once each. */
+const JUDGED_FIELDS: readonly string[] = [...new Set(definitionLines().flatMap(line => line.members))].sort();
+/** A record-shaped field: a judged member or a schema name of the absence roster's two line sets. */
+const SHAPED: ReadonlySet<string> = new Set([...JUDGED_FIELDS, ...schemaFamily()]);
+const shaped = (reads: readonly FieldRead[]): FieldRead[] => reads.filter(read => SHAPED.has(read.name));
+
+// --- the field reading ------------------------------------------------------------------------------------------------------------------
+type Outer = ts.ParenthesizedExpression | ts.AsExpression | ts.SatisfiesExpression | ts.NonNullExpression | ts.TypeAssertion;
+/** The wrappers a key is read through: parentheses and the as, satisfies, non-null and angle-bracket type assertions. */
+const isOuter = (node: ts.Node): node is Outer =>
+  ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isNonNullExpression(node) || ts.isTypeAssertionExpression(node);
+/** The outermost expression a node stands as, through every wrapper around it. */
+function outermost(node: ts.Node): ts.Node {
+  let current = node;
+  while (isOuter(current.parent) && current.parent.expression === current) current = current.parent;
+  return current;
+}
+/** An object or array literal a destructuring assignment writes to: the left of `=` (a default inside a pattern included), a for-of
+ * head, or a property value, an element or a spread inside such a target. */
+function assignmentTarget(node: ts.Node): boolean {
+  const current = outermost(node);
+  const parent = current.parent;
+  if (ts.isBinaryExpression(parent)) return parent.operatorToken.kind === ts.SyntaxKind.EqualsToken && parent.left === current;
+  if (ts.isForOfStatement(parent)) return parent.initializer === current;
+  if (ts.isPropertyAssignment(parent)) return parent.initializer === current && assignmentTarget(parent.parent);
+  if (ts.isSpreadAssignment(parent) || ts.isSpreadElement(parent)) return assignmentTarget(parent.parent);
+  if (ts.isArrayLiteralExpression(parent)) return assignmentTarget(parent);
+  return false;
+}
+/** Where a string literal stands, through its wrappers: an element access key, an `in` test's left operand, a binding or
+ * assignment pattern's string or computed key, or any other position (literal). */
+function literalForm(node: ts.StringLiteral | ts.NoSubstitutionTemplateLiteral): ReadForm {
+  const key = outermost(node);
+  const parent = key.parent;
+  if (ts.isElementAccessExpression(parent) && parent.argumentExpression === key) return "element";
+  if (ts.isBinaryExpression(parent) && parent.operatorToken.kind === ts.SyntaxKind.InKeyword && parent.left === key) return "in";
+  const name = ts.isComputedPropertyName(parent) ? parent : key;
+  const holder = name.parent;
+  if (ts.isBindingElement(holder) && holder.propertyName === name && ts.isObjectBindingPattern(holder.parent)) return "binding";
+  if (ts.isPropertyAssignment(holder) && holder.name === name && assignmentTarget(holder.parent)) return "assignment";
+  return "literal";
+}
+/** Every property read and every string literal one module spells, read from its TypeScript AST over decoded names (the FIELDS
+ * reading). */
+function fieldReads(file: string, text: string): FieldRead[] {
+  const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const reads: FieldRead[] = [];
+  const add = (node: ts.Node, name: string, form: ReadForm): void => {
+    reads.push({ file, line: source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1, name, form });
+  };
+  const visit = (node: ts.Node): void => {
+    if (ts.isPropertyAccessExpression(node)) add(node.name, node.name.text, "member");
+    else if (ts.isQualifiedName(node)) add(node.right, node.right.text, "member");
+    else if (ts.isBindingElement(node) && ts.isObjectBindingPattern(node.parent)) {
+      const key = node.propertyName ?? node.name;
+      if (ts.isIdentifier(key)) add(key, key.text, "binding");
+    } else if (ts.isObjectLiteralExpression(node) && assignmentTarget(node)) {
+      for (const property of node.properties) {
+        if (ts.isShorthandPropertyAssignment(property)) add(property.name, property.name.text, "assignment");
+        else if (ts.isPropertyAssignment(property) && ts.isIdentifier(property.name)) add(property.name, property.name.text, "assignment");
+      }
+    } else if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) add(node, node.text, literalForm(node));
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return reads;
+}
+/** One synthetic module per read form and spelling, each reading one record-shaped name: the reader's positive controls. */
+const PLANTED_READS: readonly (readonly [ReadForm, string, string])[] = [
+  ["member", "guardOrRelyReceipt", "export const read = (value: Record<string, unknown>) => value.guardOrRelyReceipt;\n"],
+  ["member", "proofTier", "export const read = (value?: Record<string, unknown>) => value?.proofTier;\n"],
+  ["member", "selectorTVBound", "export const read = (value: Record<string, unknown>) => value.selectorTVBound;\n"],
+  ["member", "admissionVerdict", "export const read = (value: Record<string, unknown>) => value.admissionVerdict;\n"],
+  ["member", "SourceBeliefSafetyCertificateV1", "export const read = (value: Record<string, unknown>) => value.SourceBeliefSafetyCertificateV1;\n"],
+  ["member", "worldScope", "declare const value: Record<string, unknown>;\nexport type Read = typeof value.worldScope;\n"],
+  ["member", "branchEffects", "export const read = (value: Record<string, unknown>) => value.branchEffect\\u0073;\n"],
+  ["element", "modelCoverage", 'export const read = (value: Record<string, unknown>) => value["modelCoverage"];\n'],
+  ["element", "policyEpoch", "export const read = (value: Record<string, unknown>) => value[`policyEpoch`];\n"],
+  ["element", "checkerPolicySnapshot", 'export const read = (value: Record<string, unknown>) => value[("checkerPolicySnapshot")];\n'],
+  ["element", "clientBoundaryVersion", 'export const read = (value: Record<string, unknown>) => value["clientBoundaryVersion" as const];\n'],
+  ["element", "currentUsePredicate", 'export const read = (value: Record<string, unknown>) => value["currentUsePredicate" satisfies string];\n'],
+  ["element", "exactPredicateRef", 'export const read = (value: Record<string, unknown>) => value["exactPredicateRef"!];\n'],
+  ["element", "inductiveInvariantRef", 'export const read = (value: Record<string, unknown>) => value[<const>"inductiveInvariantRef"];\n'],
+  ["element", "validityHorizon", 'export const read = (value?: Record<string, unknown>) => value?.["validityHorizon"];\n'],
+  ["element", "realizationRef", 'export const read = (value: Record<string, unknown>) => value["realizationR\\u0065f"];\n'],
+  ["binding", "legalActionSets", "export const read = ({ legalActionSets }: Record<string, unknown>) => legalActionSets;\n"],
+  ["binding", "originalEvidenceSnapshot", "export const read = ({ originalEvidenceSnapshot: snapshot }: Record<string, unknown>) => snapshot;\n"],
+  ["binding", "observableEventSchema", 'export const read = ({ ["observableEventSchema"]: schema }: Record<string, unknown>) => schema;\n'],
+  ["binding", "partialWriteDependencies", 'export const read = ({ "partialWriteDependencies": dependencies }: Record<string, unknown>) => dependencies;\n'],
+  ["binding", "revocationHandling", 'export const read = ({ [("revocationHandling" as const)]: handling }: Record<string, unknown>) => handling;\n'],
+  ["binding", "selectionKernelRef", "export const read = (list: Record<string, unknown>[]) => { for (const { selectionKernelRef } of list) return selectionKernelRef; };\n"],
+  ["binding", "ObserverDependenceV2", "export const read = (value: Record<string, unknown>) => { const { ObserverDependenceV2: dependence } = value; return dependence; };\n"],
+  ["binding", "ConcurrentSwapCertificateV1", "export const read = (run: () => void) => { try { run(); } catch ({ ConcurrentSwapCertificateV1 }) { return ConcurrentSwapCertificateV1; } };\n"],
+  ["assignment", "selectorOperationalReads", "export const read = (value: Record<string, unknown>) => { let reads: unknown; ({ selectorOperationalReads: reads } = value); return reads; };\n"],
+  ["assignment", "selectorSemanticDependencies", "export const read = (value: Record<string, unknown>) => { let selectorSemanticDependencies: unknown; ({ selectorSemanticDependencies } = value); return selectorSemanticDependencies; };\n"],
+  ["assignment", "sourceAuthorityRefs", 'export const read = (value: Record<string, unknown>) => { let refs: unknown; ({ ["sourceAuthorityRefs" as const]: refs } = value); return refs; };\n'],
+  ["assignment", "sourceGuardReceipt", 'export const read = (value: Record<string, unknown>) => { let receipt: unknown; ({ "sourceGuardReceipt": receipt } = value); return receipt; };\n'],
+  ["assignment", "sourceRevisions", "export const read = (list: Record<string, unknown>[]) => { let revisions: unknown; for ({ sourceRevisions: revisions } of list) break; return revisions; };\n"],
+  ["assignment", "unionWrites", "export const read = (list: Record<string, unknown>[]) => { let writes: unknown; [{ unionWrites: writes }] = list; return writes; };\n"],
+  ["assignment", "winningSupportFixedPoint", "export const read = (value: Record<string, unknown>) => { let point: unknown; ({ outer: { winningSupportFixedPoint: point } } = { outer: value }); return point; };\n"],
+  ["assignment", "ObserverQuotientCertificateV1", "export const read = (value: Record<string, unknown>) => { let quotient: unknown; ({ outer: { ObserverQuotientCertificateV1: quotient } = {} } = { outer: value }); return quotient; };\n"],
+  ["assignment", "DistinguishabilityHypergraphCertificateV1", "export const read = (list: unknown[]) => { let certificate: unknown; [...[{ DistinguishabilityHypergraphCertificateV1: certificate }]] = [list]; return certificate; };\n"],
+  ["in", "memorylessWitness", 'export const read = (value: object) => "memorylessWitness" in value;\n'],
+  ["in", "observableChoiceTraceRef", 'export const read = (value: object) => ("observableChoiceTraceRef" as const) in value;\n'],
+  ["literal", "supportUpdate", 'export const read = (value: object) => Object.hasOwn(value, "supportUpdate");\n'],
+  ["literal", "sourceId", 'export const read = (value: object) => Reflect.get(value, "sourceId");\n'],
+  ["literal", "initialBeliefSupport", 'export const read = (value: object) => value.hasOwnProperty("initialBeliefSupport");\n'],
+  ["literal", "exactOrApproximateLocalityBound", 'export const read = (value: object) => Object.prototype.hasOwnProperty.call(value, "exactOrApproximateLocalityBound");\n'],
+  ["literal", "completeTransitionSupportEvidence", 'export const read = (value: object) => Object.getOwnPropertyDescriptor(value, "completeTransitionSupportEvidence");\n'],
+  ["literal", "activeSupportPolicy", 'export const read = (value: object) => Reflect.has(value, "activeSupportPolicy");\n'],
+  ["literal", "HardOKProofRefs", 'export const read = (value: object) => Reflect.getOwnPropertyDescriptor(value, "HardOKProofRefs");\n'],
+  ["literal", "branchRefs", 'export const read = (value: object) => value.propertyIsEnumerable("branchRefs");\n'],
+  ["literal", "completenessProofRefOfEnvironmentTransitionRelation", 'export const read = (value: object) => Object.prototype.propertyIsEnumerable.call(value, "completenessProofRefOfEnvironmentTransitionRelation");\n'],
+  ["literal", "ChoiceCertificateV2", 'export const read = (value: object) => Object.hasOwn.call(null, value, "ChoiceCertificateV2");\n'],
+  ["literal", "TemporalRelianceCertificateV1", 'export const read = (value: object) => Reflect.get.apply(Reflect, [value, "TemporalRelianceCertificateV1"]);\n'],
+  ["literal", "ObservationCertificateV1", 'const own = Object.hasOwn;\nexport const read = (value: object) => own(value, "ObservationCertificateV1");\n'],
+  ["literal", "EvidenceCertificateV1", 'export const read = (value: object) => Object.keys(value).includes("EvidenceCertificateV1");\n'],
+  ["literal", "CapabilityBoundaryV1", 'export const read = (key: string) => key === ("CapabilityBoundaryV1" as string);\n'],
+  ["literal", "TypedEffectContractV2", 'export const read = (key: string) => { switch (key) { case "TypedEffectContractV2": return true; default: return false; } };\n'],
+  ["literal", "EvidenceClaimV2", 'export type Read = Record<string, unknown>["EvidenceClaimV2"];\n'],
+  ["literal", "ReplacementAssessmentV2", "export const read = (value: Record<string, unknown>) => value[String.raw`ReplacementAssessmentV2`];\n"],
+  ["literal", "ChoiceTransportCertificateV1", 'export const read = () => new Map([["ChoiceTransportCertificateV1", true]]);\n'],
+];
+/** The refusal-#1 plants (gate s137 LEG 2: U1's P1-P11 and F3's O1-O4), each a synthetic module bound by its id and by the read the
+ * field reading must flag in it (which module a plant carries is R-PLANT-EDIT). */
+const GATE_HEAD = "export const read = (value: Record<string, unknown>): unknown => ";
+const REFUSAL_PLANTS: readonly (readonly [string, string, string])[] = [
+  ["P1", "element:guardOrRelyReceipt", `${GATE_HEAD}value[("guardOrRelyReceipt")];\n`],
+  ["P2", "element:policyEpoch", `${GATE_HEAD}value["policyEpoch" as const];\n`],
+  ["P3", "element:proofTier", `${GATE_HEAD}value["proofTier" as keyof typeof value];\n`],
+  ["P4", "element:modelCoverage", `${GATE_HEAD}value["modelCoverage"!];\n`],
+  ["P5", "in:memorylessWitness", 'export const read = (value: object): boolean => ("memorylessWitness") in value;\n'],
+  ["P6", "binding:checkerTier", 'export const read = ({ [("checkerTier")]: tier }: Record<string, unknown>): unknown => tier;\n'],
+  ["P7", "literal:supportUpdate", 'export const read = (value: object): unknown => Object.hasOwn.call(null, value, "supportUpdate");\n'],
+  ["P8", "literal:sourceId", 'export const read = (value: object): unknown => Reflect.get.call(Reflect, value, "sourceId");\n'],
+  ["P9", "element:SourceBeliefSafetyCertificateV1", `${GATE_HEAD}value[("SourceBeliefSafetyCertificateV1")];\n`],
+  ["P10", "element:TemporalRelianceCertificateV1", `${GATE_HEAD}value["TemporalRelianceCertificateV1" as const];\n`],
+  ["P11", "literal:ChoiceCertificateV2", 'export const read = (value: object): boolean => Object.hasOwn(value, "ChoiceCertificateV2" as const);\n'],
+  ["O1", "assignment:guardOrRelyReceipt", "export const read = (value: Record<string, unknown>): unknown => { let g: unknown; ({ guardOrRelyReceipt: g } = value); return g; };\n"],
+  ["O2", "assignment:SourceBeliefSafetyCertificateV1", "export const read = (value: Record<string, unknown>): unknown => { let s: unknown; ({ SourceBeliefSafetyCertificateV1: s } = value); return s; };\n"],
+  ["O3", "literal:admissionVerdict", 'export const read = (value: object): boolean => Object.keys(value).includes("admissionVerdict");\n'],
+  ["O4", "literal:ObservationCertificateV1", 'export const read = (value: object): unknown => Object.entries(value).find(([key]) => key === "ObservationCertificateV1");\n'],
+];
+/** The refusal-#1 core plants, each appended to the decision core's own text, where the gate measured both src-landable (tsc and
+ * biome rc 0): the schema-name read through an as-const key and the member read through a keyof key. */
+const CORE_PLANTS: readonly (readonly [string, string, string])[] = [
+  ["CORE-SCHEMA", "element:TemporalRelianceCertificateV1", '\nexport const gateProbeRead = (request: NativeControlRequest): unknown => (request as unknown as Record<string, unknown>)["TemporalRelianceCertificateV1" as const];\n'],
+  ["CORE-MEMBER", "element:guardOrRelyReceipt", '\nexport const gateProbeMember = (request: NativeControlRequest): unknown => request["guardOrRelyReceipt" as keyof NativeControlRequest];\n'],
+];
+/** The record-shaped reads one module makes, as form:name. */
+const flagged = (file: string, text: string): string[] => shaped(fieldReads(file, text)).map(read => `${read.form}:${read.name}`);
+const WORD = (name: string): RegExp => new RegExp(`(?<![A-Za-z0-9_$])${name}(?![A-Za-z0-9_$])`);
+/** The names the word reading reads. */
+const RECORD_WORDS: readonly string[] = [...SHAPED].sort();
+const wordsIn = (text: string): string[] => RECORD_WORDS.filter(name => WORD(name).test(text));
+
+// --- the src tree -----------------------------------------------------------------------------------------------------------------------
+function walkTree(dir: string, unread: string[]): string[] {
+  return readdirSync(join(REPO, dir), { withFileTypes: true })
+    .flatMap(entry => {
+      const path = `${dir}/${entry.name}`;
+      if (entry.isDirectory()) return walkTree(path, unread);
+      if (entry.isFile()) return [path];
+      unread.push(path);
+      return [];
+    })
+    .sort();
+}
+const CORE = "src/workbench/control.ts";
+/** The core's readers at the measured base: the derived set must keep each (a reader that stops importing the core reds C1). */
+const ADMISSION_ANCHORS: readonly string[] = [
+  "src/workbench/claude-control.ts",
+  "src/workbench/control-reply.ts",
+  "src/workbench/control-tool.ts",
+  "src/workbench/detached-control.ts",
+  "src/workbench/forge-control.ts",
+  "src/workbench/furnace-control.ts",
+];
+const SRC_FLOOR = 100;
+const resolvedModule = (from: string, specifier: string): string => relative(REPO, resolve(REPO, dirname(from), specifier)).replace(/\.js$/, ".ts");
+/** The admission/decision set: the core plus every src module with a value import resolving to it; and the whole src walk. */
+function admissionSet(): { readonly modules: readonly string[]; readonly src: readonly string[]; readonly unread: readonly string[] } {
+  const unread: string[] = [];
+  const src = walkTree("src", unread);
+  const readers = src.filter(file => {
+    if (file === CORE) return false;
+    const structure = sourceStructure(REPO, file);
+    if (!structure.ok) throw new Error(structure.why);
+    return structure.imports.some(entry => !entry.typeOnly && entry.module.startsWith(".") && resolvedModule(file, entry.module) === CORE);
+  });
+  return { modules: [CORE, ...readers], src, unread };
+}
+
+// --- the provenance test's binding ------------------------------------------------------------------------------------------------------
+/** The block's own identifiers that show it drives the fixtures through the core and the adapters. */
+const BLOCK_READS: readonly string[] = ["NEGATIVE_FIXTURES", "PLACEMENTS", "DENIED_REQUESTS", "SUBJECTS", "decideOver", "minted"];
+/** What the wb-pjj provenance test's source says of clause (a): its header word, how often it names this roster, the describe
+ * titled for the clause and the registrations and identifiers inside it, and whether the cited file exports the cited predicate. */
+function provenanceBinding(text: string = readRepo(PROVENANCE)): {
+  readonly header: string;
+  readonly roster: number;
+  readonly suites: number;
+  readonly registrations: number;
+  readonly reads: readonly string[];
+  readonly predicate: boolean;
+} {
+  const source = ts.createSourceFile(PROVENANCE, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  let roster = 0;
+  const suites: ts.CallExpression[] = [];
+  const visit = (node: ts.Node): void => {
+    if ((ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) && node.text.replace(/^\.\//, "test/") === ROSTER_FILE) roster += 1;
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "describe") {
+      const title = node.arguments[0];
+      if (title !== undefined && ts.isStringLiteral(title) && title.text === PROVENANCE_SUITE) suites.push(node);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  let registrations = 0;
+  const names = new Set<string>();
+  const inner = (node: ts.Node): void => {
+    if (ts.isCallExpression(node)) {
+      const callee = node.expression;
+      if (ts.isIdentifier(callee) && callee.text === "it") registrations += 1;
+      if (ts.isCallExpression(callee) && ts.isPropertyAccessExpression(callee.expression) && ts.isIdentifier(callee.expression.expression) &&
+        callee.expression.expression.text === "it" && callee.expression.name.text === "each") registrations += 1;
+    }
+    if (ts.isIdentifier(node)) names.add(node.text);
+    ts.forEachChild(node, inner);
+  };
+  for (const suite of suites) {
+    const body = suite.arguments[1];
+    if (body !== undefined) inner(body);
+  }
+  return {
+    header: /^\/\*\*\s*\*\s*(\S+)/.exec(text)?.[1] ?? "",
+    roster,
+    suites: suites.length,
+    registrations,
+    reads: BLOCK_READS.filter(name => names.has(name)),
+    predicate: new RegExp(`^export function ${STATEMENT.predicate}\\(`, "m").test(readRepo(STATEMENT.file)),
+  };
+}
+
+// --- the fixtures and the decision core -----------------------------------------------------------------------------------------------
+function fixtureRead(): { readonly fixtures: readonly Fixture[]; readonly conditions: readonly string[]; readonly clock: number; readonly instant: string } {
+  return { fixtures: ROSTER.fixtures, conditions: STATEMENT.conditions, clock: Date.parse(ROSTER.clock), instant: ROSTER.clock };
+}
+function fixtureNamed(condition: string): Fixture {
+  const found = fixtureRead().fixtures.filter(fixture => fixture.condition === condition);
+  const fixture = found.length === 1 ? found[0] : undefined;
+  if (fixture === undefined) throw new Error(`the roster holds ${found.length} fixtures for ${condition}`);
+  return fixture;
+}
+const receiptWindow = (record: JsonRecord): { readonly issuedAt: number; readonly expiresAt: number } => {
+  const receipt = record.guardOrRelyReceipt;
+  const value = typeof receipt === "object" && receipt !== null && !Array.isArray(receipt) ? receipt : {};
+  return { issuedAt: Date.parse(String(value.issuedAt)), expiresAt: Date.parse(String(value.expiresAt)) };
+};
+const differing = (left: JsonRecord, right: JsonRecord): string[] =>
+  [...new Set([...Object.keys(left), ...Object.keys(right)])].filter(key => JSON.stringify(left[key]) !== JSON.stringify(right[key])).sort();
+
+/** The provenance test's world, restated here so the core is driven without that file: its workspace, run, request and clock. */
+const PWS = "/tmp/provenance-ws";
+const PSCOPE: ObservationScope = { workspace: PWS, principal: "operator" };
+const P_AT = "2026-10-15T06:00:00Z";
+const P_REQUESTED = "2026-10-15T07:00:00Z";
+const P_DECIDED = "2026-10-15T07:00:01Z";
+const P_RUN: NativeRef = { provider: "furnace", type: "run", id: "frn-run-r1", scope: PWS };
+const P_ATTEMPT: NativeRef = { provider: "furnace", type: "attempt", id: "frn-atm-a1", scope: PWS };
+function coreProjection(): ObservationProjection {
+  const projection = new ObservationProjection();
+  for (const source of [P_RUN, P_ATTEMPT]) {
+    projection.refresh({ source, scope: PSCOPE, capturedAt: P_AT, observedAt: P_AT, kind: `${source.provider}.${source.type}.snapshot`,
+      node: { title: `${source.provider} ${source.type} ${source.id}`, type: "workflow", statusText: "active", statusTone: "active" } });
+  }
+  projection.relate({ scope: PSCOPE, from: P_RUN, to: P_ATTEMPT, kind: "ownership", provenance: { source: "furnace", observedAt: P_AT, nativeConfirmationRef: "frn-req-attempts-1" } });
+  return projection;
+}
+function coreRequest(overrides: Partial<NativeControlRequest> = {}): NativeControlRequest {
+  return {
+    scope: { ...PSCOPE }, principal: { id: PSCOPE.principal, role: "local-operator" }, grants: ["observe:furnace.run.inspect", "control:furnace.stop"],
+    target: { ...P_RUN }, action: "stop", params: { confirmed: true }, invocationId: "inv-provenance-1", requestedAt: P_REQUESTED, ...overrides,
+  };
+}
+/** The eight requests the core denies, one per deny policy. */
+const DENIALS: readonly Partial<NativeControlRequest>[] = [
+  { grants: undefined }, { grants: ["observe:furnace.run.inspect"] }, { invocationId: "" }, { action: "start", grants: ["control:furnace.start"] },
+  { grants: ["control:furnace.pause"] }, { target: { ...P_RUN, id: "frn-run-unseen" } }, { target: { ...P_ATTEMPT } }, { params: {} },
+];
+function paramsOf(base: NativeControlRequest): JsonRecord {
+  const { params } = base;
+  return typeof params === "object" && params !== null && !Array.isArray(params) ? { ...params } : {};
+}
+const PLACEMENTS: readonly (readonly [string, Carried, (base: NativeControlRequest, record: JsonRecord) => NativeControlRequest])[] = [
+  ["beside the params", "metadata", (base, record) => ({ ...base, params: { ...paramsOf(base), assessment: record } })],
+  ["beside the request's own fields", "metadata", (base, record) => Object.assign({}, base, { assessment: record })],
+  ["beside the principal's id and role", "metadata", (base, record) => ({ ...base, principal: Object.assign({}, base.principal, { certificate: record }) })],
+  ["as the operator confirmation", "in-place", (base, record) => ({ ...base, params: { confirmed: record } })],
+  ["as one more grant", "in-place", (base, record) => ({ ...base, grants: [...(base.grants ?? []), JSON.stringify(record)] })],
+];
+function wrapperForms(record: JsonRecord, genuine: Permit): readonly (readonly [string, unknown])[] {
+  return [
+    ["the record itself", record],
+    ["the record as a permit's receipt", Object.freeze({ decision: "permitted", receipt: record })],
+    ["the genuine receipt beside the record", Object.freeze({ decision: "permitted", receipt: genuine.receipt, assessment: record })],
+    ["the genuine permit's own fields beside the record", Object.freeze({ ...genuine, certificate: record })],
+    ["a receipt whose ownership confirmation is the record", Object.freeze({ decision: "permitted", receipt: Object.freeze({ ...genuine.receipt, ownershipConfirmationRef: JSON.stringify(record) }) })],
+  ];
+}
+interface Outcome {
+  readonly label: string;
+  readonly carried: Carried;
+  readonly permittedRequest: boolean;
+  readonly plain: ControlDecision;
+  readonly decided: ControlDecision;
+}
+/** The real core over every fixture: the identity check on each wrapper, and each placement over the permitted request and the denials. */
+function permitOutcomes(): { readonly genuine: ControlDecision; readonly wrappers: readonly (readonly [string, boolean])[]; readonly outcomes: readonly Outcome[] } {
+  const decide = (request: NativeControlRequest): ControlDecision => decideControl(request, { projection: coreProjection(), now: () => P_DECIDED });
+  const genuine = decide(coreRequest());
+  if (genuine.decision !== "permitted") throw new Error("the provenance request no longer reads permitted");
+  const { fixtures } = fixtureRead();
+  const wrappers = fixtures.flatMap(({ id, record }) => wrapperForms(record, genuine).map(([form, value]) => [`${id}: ${form}`, isCoreMintedDecision(value)] as const));
+  const requests: readonly (readonly [string, Partial<NativeControlRequest>])[] = [["the permitted request", {}], ...DENIALS.map((overrides, index) => [`denial ${index + 1}`, overrides] as const)];
+  const outcomes = fixtures.flatMap(({ id, record }) =>
+    PLACEMENTS.flatMap(([where, carried, place]) =>
+      requests.map(([name, overrides]) => ({
+        label: `${id} ${where} over ${name}`, carried, permittedRequest: name === "the permitted request",
+        plain: decide(coreRequest(overrides)), decided: decide(place(coreRequest(overrides), record)),
+      })),
+    ),
+  );
+  return { genuine, wrappers, outcomes };
+}
+
+// --- the rf reader ----------------------------------------------------------------------------------------------------------------------
+const RF_WS = "/tmp/cac-authorization-input-rf-ws";
+const RF_SCOPE: ObservationScope = { workspace: RF_WS, principal: "local-operator:census" };
+const RF_CONTEXT: ReactiveFiberTopologyContext = { scope: RF_SCOPE, seam: "rf-cli", capturedAt: "2026-10-15T10:00:00Z", observedAt: "2026-10-15T10:00:01Z" };
+const RF_OPERATION = "rfo_0123456789abcdefghijkl";
+const RF_WORKSPACE = "rfw_0123456789abcdefghijkl";
+const RF_DENIAL_CODE = "RF_RENDER_FAILED";
+function rfResult(over: JsonRecord = {}): JsonRecord {
+  return {
+    ephemeral: true, render_id: null, output: { text: "context" }, provenance: { graph_revision_id: `sha256:${"a1".repeat(32)}` },
+    budget: { formula_terms: { context_window: 8192, output_reserve: 1024, occupied_tokens: 900, overhead: 100, safety_margin: 200, available_context_tokens: 5968 } },
+    diagnostics_summary: { errors: 0, warnings: 0, has_errors: false, has_warnings: false },
+    work: { source_capture_count: 3, fiber_signal_count: 5, component_render_count: 2, lens_resolution_count: 1, necessity_eval_count: 4, storage_write_count: 0 },
+    blocks: [rfFixtureBlock()], necessity: [rfFixtureDecision()], ...over,
+  };
+}
+function rfEnvelope(over: JsonRecord = {}): JsonRecord {
+  return { schema: "reactive-fiber.cli/v1", ok: true, command: "context.render", operation_id: RF_OPERATION, workspace: { id: RF_WORKSPACE, root: RF_WS },
+    transaction_id: null, result: rfResult(), diagnostics: [], ...over };
+}
+const rfReading = (source: JsonRecord, top: JsonRecord = {}): JsonRecord => ({ contract: "reactivefiber.render.preview/v1", workspaceRoot: RF_WS, source, ...top });
+const rfPrimary = (over: JsonRecord = {}): JsonRecord => ({ code: RF_DENIAL_CODE, severity: "error", message: "render failed", hint: null, source: null, metadata: {}, ...over });
+const rfDenial = (over: JsonRecord = {}): JsonRecord => rfEnvelope({ ok: false, result: null, diagnostics: [rfPrimary()], ...over });
+const rfInfo = (record: JsonRecord): JsonRecord => ({ code: "RF_SOURCE_ASSESSMENT", severity: "info", message: String(record.status), hint: null, source: null, metadata: { assessment: record } });
+/** The rf reader over one provider output, under the census's host context. */
+const rfTopology = (reading: JsonRecord): ReactiveFiberProjectionTopology => reactivefiberTopology(reading, RF_CONTEXT);
+/** The presentation the projection holds for a topology's snapshot: what a view renders. */
+function presentationOf(topology: ReactiveFiberProjectionTopology): Presentation | undefined {
+  const snapshot = topology.snapshots[0];
+  if (snapshot === undefined) return undefined;
+  const projection = new ObservationProjection();
+  if (projection.refresh(snapshot) !== "applied") return undefined;
+  const node = projection.query({ scope: RF_SCOPE, ref: snapshot.source, limit: 1 }).nodes[0];
+  return node === undefined ? undefined : { ...node.presentation };
+}
+function thrownBy(read: () => unknown): unknown {
+  try {
+    read();
+  } catch (error) {
+    return error;
+  }
+  return undefined;
+}
+/** Every string a topology carries: what any surface could show of it. */
+function surfaced(value: unknown): string[] {
+  if (typeof value === "string") return [value];
+  if (typeof value !== "object" || value === null) return [];
+  const children: unknown[] = Object.values(value);
+  return children.flatMap(surfaced);
+}
+/** The UNKNOWN record planted beside the refusal at each position the rf reader accepts. */
+const DENIAL_PLANTS: readonly (readonly [string, (record: JsonRecord) => JsonRecord])[] = [
+  ["beside the reading's own fields", record => rfReading(rfDenial(), { assessment: record })],
+  ["in the primary diagnostic's metadata", record => rfReading(rfDenial({ diagnostics: [rfPrimary({ metadata: { assessment: record } })] }))],
+  ["as a second, info diagnostic", record => rfReading(rfDenial({ diagnostics: [rfPrimary(), rfInfo(record)] }))],
+  ["as the primary diagnostic's hint", record => rfReading(rfDenial({ diagnostics: [rfPrimary({ hint: `source check ${String(record.status)}` })] }))],
+  ["as the primary diagnostic's message", record => rfReading(rfDenial({ diagnostics: [rfPrimary({ message: `render failed; source check ${String(record.status)}` })] }))],
+];
+/** ...and at three positions it refuses: the envelope's and the diagnostic's closed key sets, and a failed envelope's null result. */
+const DENIAL_REFUSED: readonly (readonly [string, (record: JsonRecord) => JsonRecord])[] = [
+  ["beside the envelope's eight keys", record => rfReading({ ...rfDenial(), assessment: record })],
+  ["beside the primary diagnostic's six keys", record => rfReading(rfDenial({ diagnostics: [{ ...rfPrimary(), assessment: record }] }))],
+  ["as the failed envelope's result", record => rfReading(rfDenial({ result: record }))],
+];
+/** The two source checks rf reports on an ok render: a failed check and an expired one. */
+const CHECKS: readonly (readonly [string, JsonRecord])[] = [
+  ["failed", { status: "denied", freshness: "captured_at_render", replayed: false, degraded: true }],
+  ["expired", { status: "observed", freshness: "reused", replayed: true }],
+];
+const checkReading = (row: JsonRecord, top: JsonRecord = {}, result: JsonRecord = {}, diagnostics: JsonValue[] = []): JsonRecord =>
+  rfReading(rfEnvelope({ result: rfResult({ observations: [row], ...result }), diagnostics }), top);
+const CHECK_PLANTS: readonly (readonly [string, (row: JsonRecord, record: JsonRecord) => JsonRecord])[] = [
+  ["beside the reading's own fields", (row, record) => checkReading(row, { assessment: record })],
+  ["beside the result's own fields", (row, record) => checkReading(row, {}, { assessment: record })],
+  ["beside the observation row's own fields", (row, record) => checkReading({ ...row, assessment: record })],
+  ["in an info diagnostic's metadata", (row, record) => checkReading(row, {}, {}, [rfInfo(record)])],
+];
+/** A probability, likelihood or confidence a reader could synthesize: a percentage, a word of the family, an assignment or a bare
+ * fraction of one (a dotted version such as 0.1.845 is not one). */
+const PROBABILITY = /\d\s*%|\bprobab|\blikel(?:y|ihood)\b|\bchance\b|\bconfidence\b|\bp\s*[=:]\s*\d|(?<![\d.])0?\.\d+(?![\d.])/i;
+const PROBABILITY_TEXTS: readonly string[] = ["success probability 0.97", "97% likely to succeed", "p=0.97", "confidence 0.9", "chance of success: high"];
+
+// --- the docs page --------------------------------------------------------------------------------------------------------------------
+/** The parked sentence's two terms: a section whose source spells either out (termsStated: in any letter case, every run of white
+ * space read as one space) states the sentence clause (d) asks for. */
+const PARKED_TERMS: readonly string[] = ["authorization input", "never softens"];
+/** The section's shape frozen on the page this cut reads (blob ff7a76a7, unchanged since b0a1892): the shared view's blocks one list
+ * (kinds) of eight items (items), the items' text as the shared view renders it, joined by newlines, held to sha256; and the section's
+ * source (sectionSource's: the page's own text over the span) held to source, its UTF-8 encoding bytes long, which marked's top-level
+ * tokens carry on this page as four raws re-joined (tokens: the heading token's 23, a space's 2, the list's 1094 and a space's 2;
+ * refusal #4's member (c)). */
+const FROZEN_SECTION = {
+  kinds: ["list"],
+  items: 8,
+  sha256: "afc98664a6f9bb2d5ae8196d7745cbe41e90f7ea5de442c1515db6175b937ca5",
+  source: "481acac650cbfb4957a6677ea590b04ca0a41562cebcbe5803bd2b40139756a7",
+  bytes: 1121,
+  tokens: ["heading:23", "space:2", "list:1094", "space:2"],
+} as const;
+/** The section's shape on the delivered page (wb-rdlh.4: FROZEN_SECTION's eight items and clause (d)'s ninth): the shared view's blocks
+ * one list (kinds) of nine items (items), the items' text as the shared view renders it, joined by newlines, held to sha256; and the
+ * section's source held to source, its UTF-8 encoding bytes long, which marked's top-level tokens carry on the page as four raws
+ * re-joined (tokens: FROZEN_SECTION's four, the list's raw longer by clause (d)'s bullet line). */
+const FROZEN_PINNED = {
+  kinds: ["list"],
+  items: 9,
+  sha256: "d2963bffc68649c6e3a149e8c69e2aff40f5fd4f003950064d9f39918caf571c",
+  source: "a2671b857c116a4b3163c67377eee5af04a9e04b9299cb51dbef78bfffe743b3",
+  bytes: 1361,
+  tokens: ["heading:23", "space:2", "list:1334", "space:2"],
+} as const;
+interface DocsReading {
+  /** The shared view binds the section. */
+  readonly view: boolean;
+  /** sectionSource binds it: exactly one top-level level-2 heading whose token text is the section's. */
+  readonly bound: boolean;
+  /** sectionSource's tiling: the page's top-level token raws, re-joined, are the page itself (false on a refused reading). */
+  readonly tiled: boolean;
+  /** The shared view finds HTML in the section's blocks under the heading (docsSection's hasHtml). */
+  readonly html: boolean;
+  readonly kinds: readonly string[];
+  readonly items: readonly string[];
+  /** The sha-256 of the section's source (sectionSource's; the empty text on a refused reading), that source's UTF-8 byte count and
+   * the section's top-level tokens as marked carries them (type and raw length). */
+  readonly source: string;
+  readonly bytes: number;
+  readonly tokens: readonly string[];
+  /** The parked sentence's terms the source spells out, in PARKED_TERMS order (termsStated). */
+  readonly terms: readonly string[];
+}
+/** D1's reading of a page: its 'Authorization design' section bound in both views; the section's source, the page's tiling and the
+ * section's tokens as wb-rdlh.3's landed reader reads them (sectionSource, imported unedited); the parked sentence's terms termsStated
+ * reads in that source; and what the SHAPE checks hold the section to. */
+function docsBinding(markdown: string = readRepo(DOCS_FILE)): DocsReading {
+  const section = docsSection(markdown, DOCS_HEADING, 2, [DOCS_PARENT]);
+  const read = sectionSource(markdown, DOCS_HEADING);
+  return {
+    view: section.ok,
+    bound: read.ok,
+    tiled: read.tiled,
+    html: section.hasHtml,
+    kinds: section.blocks.map(block => block.kind),
+    items: section.blocks.flatMap(block => (block.kind === "list" ? block.items.map(item => item.text) : [])),
+    source: read.sha256,
+    bytes: read.bytes,
+    tokens: read.tokens.map(token => `${token.type}:${token.length}`),
+    terms: termsStated(read.source, PARKED_TERMS),
+  };
+}
+/** D1's checks, in the order a red names them: each holds on the real page and fails on at least one docs plant. BINDING: view (the
+ * shared view refuses the section), tokens (sectionSource refuses it) and untiled (sectionSource binds it and reads the page's
+ * top-level token raws, re-joined, as other than the page). SHAPE: html (the shared view finds HTML in the section's blocks under the
+ * heading), blocks (its blocks are not exactly the one list), bullets (the section's lists do not hold eight items in all), rendered
+ * (the items' text as the shared view renders it is not the frozen text) and source (the section's source is not the frozen source).
+ * TERMS: terms (the source spells a term of the parked sentence out). */
+const DOCS_CHECKS: Readonly<Record<string, (reading: DocsReading) => boolean>> = {
+  view: reading => !reading.view,
+  tokens: reading => !reading.bound,
+  untiled: reading => reading.bound && !reading.tiled,
+  html: reading => reading.html,
+  blocks: reading => JSON.stringify(reading.kinds) !== JSON.stringify(FROZEN_SECTION.kinds),
+  bullets: reading => reading.items.length !== FROZEN_SECTION.items,
+  rendered: reading => sha256(reading.items.join("\n")) !== FROZEN_SECTION.sha256,
+  source: reading => reading.source !== FROZEN_SECTION.source,
+  terms: reading => reading.terms.length > 0,
+};
+/** Why a reading reds D1: every check it fails, in DOCS_CHECKS order. */
+const docsCauses = (reading: DocsReading): string[] =>
+  Object.entries(DOCS_CHECKS)
+    .filter(([, fails]) => fails(reading))
+    .map(([check]) => check);
+/** The section's heading line, its first bullet and its eighth (the anchor): each docs plant edits one of them, or the page's end, in
+ * memory, never on disk. */
+const HEADING_LINE = "## Authorization design\n";
+const FIRST_BULLET = "- Caller identity and scope bound at workbench entry point; impersonation from script payload prohibited.\n";
+const DOCS_ANCHOR = "- Source/deployment pin must be checked before loading; malformed schema/unsupported contract fails closed.\n";
+const ENTRY = "workbench entry point";
+const PARKED_SENTENCE = "A design-program record is never an authorization input; UNKNOWN never softens a native denial.";
+const PARAPHRASE = "A design-program certificate is metadata that never authorizes a control, and an UNKNOWN never weakens a native denial.";
+/** The page's title line, the section's second bullet and the next section's heading line: further plant anchors. */
+const PAGE_TITLE = `# ${DOCS_PARENT}\n`;
+const SECOND_BULLET = "- Separate discover, inspect, observe, invoke and control grants.\n";
+const NEXT_HEADING = "## Credential boundaries\n";
+const CR = String.fromCodePoint(0x0d);
+/** The page's text from the section's heading line up to the next section's heading line, found by the anchors (plant machinery only). */
+const sectionSlice = (page: string): string => page.slice(page.indexOf(HEADING_LINE), page.indexOf(NEXT_HEADING));
+/** A CR before the LF of every line of the slice that carries none of the three anchors (the heading line, the first and the eighth bullet). */
+const crlfBody = (slice: string): string =>
+  slice
+    .split("\n")
+    .map((line, index, lines) => (index === lines.length - 1 || [HEADING_LINE, FIRST_BULLET, DOCS_ANCHOR].includes(`${line}\n`) ? line : `${line}${CR}`))
+    .join("\n");
+type PageEdit = (page: string) => string;
+/** The eighth bullet replaced by the edit given (which keeps it before what it adds, or rewrites it in place). */
+const atAnchor =
+  (edit: string): PageEdit =>
+  page =>
+    page.replace(DOCS_ANCHOR, () => edit);
+/** The first bullet's 'workbench entry point' replaced by the markdown given. */
+const atEntry =
+  (markdown: string): PageEdit =>
+  page =>
+    page.replace(FIRST_BULLET, () => FIRST_BULLET.replace(ENTRY, () => markdown));
+/** The first bullet with the markdown given appended before its line end. */
+const afterFirst =
+  (markdown: string): PageEdit =>
+  page =>
+    page.replace(FIRST_BULLET, () => `${FIRST_BULLET.slice(0, -1)}${markdown}\n`);
+/** The heading line replaced by the line given. */
+const atHeading =
+  (line: string): PageEdit =>
+  page =>
+    page.replace(HEADING_LINE, () => line);
+/** Further characters a plant spells with, each built from its code point: a tab, a no-break space and a zero-width space. */
+const TAB = String.fromCodePoint(0x09);
+const NBSP = String.fromCodePoint(0xa0);
+const ZWSP = String.fromCodePoint(0x200b);
+/** A link on the first bullet's 'workbench entry point' whose title is the text given. */
+const titled = (title: string): PageEdit => atEntry(`[${ENTRY}](#authorization-design "${title}")`);
+/** The block given after the eighth bullet (refusal #4's gate's placement). */
+const afterAnchor = (block: string): PageEdit => atAnchor(`${DOCS_ANCHOR}${block}`);
+/** Refusal #3's two definitions of one label (its L2G-DUPDEF line's): the one after the page's title line, and the one whose title is
+ * the parked sentence; refusal #4's member (b) nests the second in the eighth bullet, with its title and without. */
+const OUTSIDE_DEFINITION = "[gate-dup]: #threat-categories";
+const TITLED_DEFINITION = `[gate-dup]: #authorization-design "${PARKED_SENTENCE}"`;
+const UNTITLED_DEFINITION = "[gate-dup]: #authorization-design";
+const withOutside: PageEdit = page => page.replace(PAGE_TITLE, () => `${PAGE_TITLE}${OUTSIDE_DEFINITION}\n`);
+/** Clause (d)'s sentence as wb-rdlh.4 delivered it (owner security-design ruling R-B459): the section's ninth bullet, right after the
+ * eighth (DOCS_ANCHOR), and the ninth entry of the wb-gs2.3 census's AUTH_MARKDOWN. */
+const CLAUSE_SENTENCE =
+  "A design-program record (the output of a Library design program) is never an authorization input, and an UNKNOWN evaluation never softens a denial: UNKNOWN resolves toward deny and never upgrades, defers or conditions an existing denial.";
+const CLAUSE_BULLET = `- ${CLAUSE_SENTENCE}\n`;
+/** The section's seventh bullet, which clause (d)'s sentence complements (two clause plants edit it). */
+const SEVENTH_BULLET = "- Treat unknown permission data as deny.\n";
+/** A page's parked page: the page with clause (d)'s bullet set aside where it follows the eighth bullet exactly once (the page refusals
+ * #1 to #6 measured, whose section FROZEN_SECTION holds); undefined when the bullet does not follow the eighth exactly once. */
+function parkedPage(page: string): string | undefined {
+  const added = `${DOCS_ANCHOR}${CLAUSE_BULLET}`;
+  return page.split(added).length === 2 ? page.replace(added, () => DOCS_ANCHOR) : undefined;
+}
+/** The parked page of the page given (the page on disk by default), on which the parked readings are taken: the docs plants, refusal
+ * #3's slices and refusal #4's members; it throws when clause (d)'s bullet does not follow the eighth exactly once. */
+function basePage(page: string = readRepo(DOCS_FILE)): string {
+  const base = parkedPage(page);
+  if (base === undefined) throw new Error(`${DOCS_FILE} does not carry clause (d)'s bullet once, right after the eighth bullet`);
+  return base;
+}
+/** D1's reading of a delivered page: the page's own reading (docsBinding), and the reading of its parked page (undefined when clause
+ * (d)'s bullet does not follow the eighth exactly once). */
+interface ClauseReading {
+  readonly reading: DocsReading;
+  readonly base: DocsReading | undefined;
+}
+const clauseBinding = (page: string): ClauseReading => {
+  const base = parkedPage(page);
+  return { reading: docsBinding(page), base: base === undefined ? undefined : docsBinding(base) };
+};
+/** D1's checks of a delivered page (row D pinned), in the order a red names them: BINDING as DOCS_CHECKS reads it (view, tokens,
+ * untiled); SHAPE held to FROZEN_PINNED (html, blocks, bullets, rendered, source); TERMS: terms (the source does not spell out both terms
+ * of clause (d)'s sentence, in PARKED_TERMS order); and BASE: base (clause (d)'s bullet does not follow the eighth exactly once, or the
+ * page with it set aside fails a check of DOCS_CHECKS, so it is not the parked page). */
+const CLAUSE_CHECKS: Readonly<Record<string, (clause: ClauseReading) => boolean>> = {
+  view: ({ reading }) => !reading.view,
+  tokens: ({ reading }) => !reading.bound,
+  untiled: ({ reading }) => reading.bound && !reading.tiled,
+  html: ({ reading }) => reading.html,
+  blocks: ({ reading }) => JSON.stringify(reading.kinds) !== JSON.stringify(FROZEN_PINNED.kinds),
+  bullets: ({ reading }) => reading.items.length !== FROZEN_PINNED.items,
+  rendered: ({ reading }) => sha256(reading.items.join("\n")) !== FROZEN_PINNED.sha256,
+  source: ({ reading }) => reading.source !== FROZEN_PINNED.source,
+  terms: ({ reading }) => JSON.stringify(reading.terms) !== JSON.stringify(PARKED_TERMS),
+  base: ({ base }) => base === undefined || docsCauses(base).length > 0,
+};
+/** Why a delivered page reds D1: every check of CLAUSE_CHECKS it fails, in order. */
+const clauseCauses = (clause: ClauseReading): string[] =>
+  Object.entries(CLAUSE_CHECKS)
+    .filter(([, fails]) => fails(clause))
+    .map(([check]) => check);
+/** The clause plants, each the delivered page with one edit made in memory and every check of CLAUSE_CHECKS it fails: clause (d)'s bullet
+ * removed, its never-softens clause and its authorization-input clause reworded, the bullet moved under the next section, nested under
+ * the eighth, hidden in an HTML comment, split into two bullets and doubled; the seventh bullet reworded and removed (the delivery is
+ * additive); a CR on the page's title line; a level-1 heading placed above the section; the heading's space spelled as an entity. */
+const CLAUSE_PLANTS: readonly (readonly [string, PageEdit, readonly string[]])[] = [
+  ["C-REMOVED", page => page.replace(CLAUSE_BULLET, () => ""), ["bullets", "rendered", "source", "terms", "base"]],
+  ["C-SOFTENS", page => page.replace(CLAUSE_BULLET, () => CLAUSE_BULLET.replace("never softens", "never weakens")), ["rendered", "source", "terms", "base"]],
+  ["C-INPUT", page => page.replace(CLAUSE_BULLET, () => CLAUSE_BULLET.replace("authorization input", "authorization signal")), ["rendered", "source", "terms", "base"]],
+  ["C-ELSEWHERE", page => page.replace(CLAUSE_BULLET, () => "").replace(NEXT_HEADING, () => `${NEXT_HEADING}\n${CLAUSE_BULLET}`), ["bullets", "rendered", "source", "terms", "base"]],
+  ["C-NESTED", page => page.replace(CLAUSE_BULLET, () => `  ${CLAUSE_BULLET}`), ["bullets", "rendered", "source", "base"]],
+  ["C-COMMENTED", page => page.replace(CLAUSE_BULLET, () => `<!-- ${CLAUSE_SENTENCE} -->\n`), ["html", "blocks", "bullets", "rendered", "source", "base"]],
+  ["C-SPLIT", page => page.replace(CLAUSE_BULLET, () => CLAUSE_BULLET.replace(", and an UNKNOWN evaluation", ".\n- An UNKNOWN evaluation")), ["bullets", "rendered", "source", "base"]],
+  ["C-DOUBLED", page => page.replace(CLAUSE_BULLET, () => `${CLAUSE_BULLET}${CLAUSE_BULLET}`), ["bullets", "rendered", "source", "base"]],
+  ["C-SEVENTH-REWORDED", page => page.replace(SEVENTH_BULLET, () => SEVENTH_BULLET.replace("as deny", "as allow")), ["rendered", "source", "base"]],
+  ["C-SEVENTH-REMOVED", page => page.replace(SEVENTH_BULLET, () => ""), ["bullets", "rendered", "source", "base"]],
+  ["C-CR-OUTSIDE", page => page.replace(PAGE_TITLE, () => `${PAGE_TITLE.slice(0, -1)}${CR}\n`), ["untiled", "base"]],
+  ["C-RE-HOMED", page => page.replace(HEADING_LINE, () => `# Appendix\n\n${HEADING_LINE}`), ["view", "blocks", "bullets", "rendered", "base"]],
+  ["C-HEADING-ENTITY", atHeading("## Authorization&nbsp;design\n"), ["tokens", "source", "terms", "base"]],
+];
+/** The wb-gs2.3 census, whose frozen 'Authorization design' items bind clause (d)'s sentence (the label's 'bound by the wb-gs2.3 census
+ * test'). */
+const DOCS12_CENSUS = "test/workbench-docs12-authorization.census.ts";
+/** The wb-gs2.3 census's frozen items, read from its source's TypeScript AST: the elements of its one AUTH_MARKDOWN array literal, each a
+ * string literal's text (an element of another kind reads as null); undefined unless exactly one such declaration exists. */
+function censusItems(text: string): (string | null)[] | undefined {
+  const source = ts.createSourceFile(DOCS12_CENSUS, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const found: (string | null)[][] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === "AUTH_MARKDOWN" && node.initializer !== undefined && ts.isArrayLiteralExpression(node.initializer)) {
+      found.push(node.initializer.elements.map(element => (ts.isStringLiteralLike(element) ? element.text : null)));
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return found.length === 1 ? found[0] : undefined;
+}
+/** Clause (d)'s sentence as the wb-gs2.3 census's source spells its entry (a double-quoted literal). */
+const CLAUSE_LITERAL = JSON.stringify(CLAUSE_SENTENCE);
+/** Three edits of the wb-gs2.3 census's source, made in memory: each unbinds clause (d)'s sentence from that census's frozen items. */
+const BINDING_EDITS: readonly (readonly [string, (text: string) => string])[] = [
+  ["B-ENTRY-DROPPED", text => text.replace(`  ${CLAUSE_LITERAL},\n`, () => "")],
+  ["B-ENTRY-REWORDED", text => text.replace(CLAUSE_LITERAL, () => CLAUSE_LITERAL.replace("never softens", "never weakens"))],
+  ["B-LITERAL-RENAMED", text => text.replace("const AUTH_MARKDOWN:", () => "const AUTH_BULLETS:")],
+];
+/** The docs plants, each with every check it fails, in DOCS_CHECKS order (docsCauses; at the nine placements refusal #4's member (a)
+ * measured without terms, every check but rendered, which is NOT CLAIMED there), each bound by its id and those checks (which edit a
+ * plant carries is R-PLANT-EDIT): refusal #1's (gate s137 LEG 2: D-CTRL, D-NESTED, D-PARA, D-BLOCKQUOTE, D-HTML and the rider
+ * D-PARAPHRASE); refusal #2's (gate s144 LEG 2: L2-D1, L2-D1b and L2-D3, the three placements of the parked sentence the cut #2 reader
+ * missed, and that gate's controls L2-D2 and L2-D4); refusal #3's (gate s154 LEG 2: L2G-DUPDEF, L2G-CR-BULLET2, L2G-CR-BLANK and
+ * L2G-CRLF-BODY, each also held to the length and sha-256/16 of the section slice that gate measured, and that gate's controls
+ * L2G-DUPDEF-NOOUT, L2G-SPACE-BULLET2, L2G-SPACE-BLANK and its CRLF on the anchor lines, CRLF-ANCHOR-LINES) with the same two departures
+ * outside the section (CR-OUTSIDE, DUPDEF-OUTSIDE); the reader's further controls, one for each channel of the source a term can be
+ * spelled in, each spelling of a term it reads or does not read, each part of the source that no rendered text shows, each removal and
+ * each binding edit; and refusal #4's members of record (gate s157 PREP: member (a)'s sixteen and member (b)'s three, last, in the order
+ * the members name them, also bound by id and order to their lines in the export). */
+/** Refusal #3's four plants as that gate measured them: each planted page's section slice, its length and sha-256/16. */
+const GATE_SLICES: Readonly<Record<string, readonly [number, string]>> = {
+  "L2G-DUPDEF": [1252, "dfb9c6d47070c7b6"],
+  "L2G-CR-BULLET2": [1122, "4548bda88fe060b8"],
+  "L2G-CR-BLANK": [1122, "94e33e1a7651bd6c"],
+  "L2G-CRLF-BODY": [1129, "a40bd66646f66726"],
+};
+const DOCS_PLANTS: readonly (readonly [string, PageEdit, readonly string[]])[] = [
+  ["D-CTRL", atAnchor(`${DOCS_ANCHOR}- ${PARKED_SENTENCE}\n`), ["bullets", "rendered", "source", "terms"]],
+  ["D-NESTED", atAnchor(`${DOCS_ANCHOR}  - ${PARKED_SENTENCE}\n`), ["rendered", "source", "terms"]],
+  ["D-PARA", atAnchor(`${DOCS_ANCHOR}\n${PARKED_SENTENCE}\n`), ["blocks", "source", "terms"]],
+  ["D-BLOCKQUOTE", atAnchor(`${DOCS_ANCHOR}\n> ${PARKED_SENTENCE}\n`), ["blocks", "source", "terms"]],
+  ["D-HTML", atAnchor(`${DOCS_ANCHOR}\n<p>${PARKED_SENTENCE}</p>\n`), ["html", "blocks", "source", "terms"]],
+  ["D-PARAPHRASE", atAnchor(`${DOCS_ANCHOR}- ${PARAPHRASE}\n`), ["bullets", "rendered", "source"]],
+  ["L2-D1", atEntry(`[${ENTRY}](#authorization-design "${PARKED_SENTENCE}")`), ["source", "terms"]],
+  ["L2-D1b", page => `${atEntry(`[${ENTRY}][gate-d1]`)(page)}\n[gate-d1]: #authorization-design "${PARKED_SENTENCE}"\n`, ["source"]],
+  ["L2-D3", afterFirst(` ![](#authorization-design "${PARKED_SENTENCE}")`), ["source", "terms"]],
+  ["L2-D2", afterFirst(` ![${PARKED_SENTENCE.slice(0, PARKED_SENTENCE.indexOf(";"))}](#authorization-design)`), ["rendered", "source", "terms"]],
+  ["L2-D4", atAnchor(`${DOCS_ANCHOR}\n[gate-d4]: #authorization-design "${PARKED_SENTENCE}"\n`), ["blocks", "source", "terms"]],
+  ["L2G-DUPDEF", page => page.replace(PAGE_TITLE, () => `${PAGE_TITLE}[gate-dup]: #threat-categories\n`).replace(`${HEADING_LINE}\n`, () => `${HEADING_LINE}[gate-dup]: #authorization-design "${PARKED_SENTENCE}"\n`), ["untiled", "source", "terms"]],
+  ["L2G-CR-BULLET2", page => page.replace(SECOND_BULLET, () => `${SECOND_BULLET.slice(0, -1)}${CR}\n`), ["untiled", "source"]],
+  ["L2G-CR-BLANK", page => page.replace(`${HEADING_LINE}\n`, () => `${HEADING_LINE}${CR}\n`), ["untiled", "source"]],
+  ["L2G-CRLF-BODY", page => page.replace(sectionSlice(page), slice => crlfBody(slice)), ["untiled", "source"]],
+  ["LONE-CR", page => page.replace(SECOND_BULLET, () => `${SECOND_BULLET.slice(0, -1)}${CR}`), ["untiled", "source"]],
+  ["CRLF-ANCHOR-LINES", page => [HEADING_LINE, FIRST_BULLET, DOCS_ANCHOR].reduce((text, line) => text.replace(line, () => `${line.slice(0, -1)}${CR}\n`), page), ["untiled", "source"]],
+  ["L2G-DUPDEF-NOOUT", page => page.replace(`${HEADING_LINE}\n`, () => `${HEADING_LINE}[gate-dup]: #authorization-design "${PARKED_SENTENCE}"\n`), ["blocks", "source", "terms"]],
+  ["L2G-SPACE-BULLET2", page => page.replace(SECOND_BULLET, () => `${SECOND_BULLET.slice(0, -1)} \n`), ["source"]],
+  ["L2G-SPACE-BLANK", page => page.replace(`${HEADING_LINE}\n`, () => `${HEADING_LINE} \n`), ["source"]],
+  ["CR-OUTSIDE", page => page.replace(PAGE_TITLE, () => `${PAGE_TITLE.slice(0, -1)}${CR}\n`), ["untiled"]],
+  ["DUPDEF-OUTSIDE", page => `${page}\n[gate-out]: #threat-categories\n[gate-out]: #auditability\n`, ["untiled"]],
+  ["IN-PLACE", atAnchor(DOCS_ANCHOR.replace("fails closed.", `fails closed; ${PARAPHRASE.charAt(0).toLowerCase()}${PARAPHRASE.slice(1)}`)), ["rendered", "source"]],
+  ["TABLE", atAnchor(`${DOCS_ANCHOR}\n| Record rule |\n| --- |\n| ${PARKED_SENTENCE} |\n`), ["blocks", "source", "terms"]],
+  ["CODE", atAnchor(`${DOCS_ANCHOR}\n\`\`\`text\n${PARKED_SENTENCE}\n\`\`\`\n`), ["blocks", "source", "terms"]],
+  ["SUBSECTION", atAnchor(`${DOCS_ANCHOR}\n### A design-program record is never an authorization input\n`), ["blocks", "source", "terms"]],
+  ["COMMENT", atAnchor(DOCS_ANCHOR.replace("fails closed.", "fails closed. <!-- never softens a native denial -->")), ["html", "source", "terms"]],
+  ["HTML-TITLE", atEntry(`<abbr title="${PARKED_SENTENCE}">${ENTRY}</abbr>`), ["html", "source", "terms"]],
+  ["LINK-DESTINATION", atEntry(`[${ENTRY}](<#${PARKED_SENTENCE}>)`), ["source", "terms"]],
+  ["IMAGE-SOURCE", afterFirst(` ![](<#${PARKED_SENTENCE}>)`), ["source", "terms"]],
+  ["DEFINITION-LABEL", atAnchor(`${DOCS_ANCHOR}\n[authorization input]: #authorization-design\n`), ["blocks", "source", "terms"]],
+  ["DEFINITION-DESTINATION", atAnchor(`${DOCS_ANCHOR}\n[gate-dd]: <#${PARKED_SENTENCE}>\n`), ["blocks", "source", "terms"]],
+  ["CODE-INFO", atAnchor(`${DOCS_ANCHOR}\n\`\`\`${PARKED_SENTENCE}\nrecord\n\`\`\`\n`), ["blocks", "source", "terms"]],
+  ["HEADING-TITLE", atHeading(`## [Authorization design](#authorization-design "${PARKED_SENTENCE}")\n`), ["source", "terms"]],
+  ["NESTED-TITLE", atAnchor(`${DOCS_ANCHOR}  - [nested entry](#authorization-design "${PARKED_SENTENCE}")\n`), ["rendered", "source", "terms"]],
+  ["QUOTE-TITLE", atAnchor(`${DOCS_ANCHOR}\n> [quoted entry](#authorization-design "${PARKED_SENTENCE}")\n`), ["blocks", "source", "terms"]],
+  ["TABLE-TITLE", atAnchor(`${DOCS_ANCHOR}\n| Record rule |\n| --- |\n| [cell entry](#authorization-design "${PARKED_SENTENCE}") |\n`), ["blocks", "source", "terms"]],
+  ["TERM-CASE", titled("A design-program record is never an Authorization INPUT"), ["source", "terms"]],
+  ["TITLE-NEWLINE", titled("A design-program record is never an authorization\ninput"), ["source", "terms"]],
+  ["TITLE-SPACES", titled("UNKNOWN never  softens a native denial"), ["source", "terms"]],
+  ["DEFINITION-TITLE-TAB", atAnchor(`${DOCS_ANCHOR}\n[gate-tab]: #authorization-design "UNKNOWN never${TAB}softens a native denial"\n`), ["blocks", "source", "terms"]],
+  ["TITLE-NBSP", titled(`A design-program record is never an authorization${NBSP}input`), ["source", "terms"]],
+  ["HTML-ATTR-NEWLINE", atEntry(`<abbr title="UNKNOWN never\nsoftens a native denial">${ENTRY}</abbr>`), ["html", "source", "terms"]],
+  ["CODE-NEWLINE", atAnchor(`${DOCS_ANCHOR}\n\`\`\`text\nnever\nsoftens\n\`\`\`\n`), ["blocks", "source", "terms"]],
+  ["ENTITY", atAnchor(DOCS_ANCHOR.replace("fails closed.", "fails closed; a design-program record is never an authorization&#32;input.")), ["rendered", "source"]],
+  ["ESCAPED-DESTINATION", atEntry(`[${ENTRY}](#authorization%20input)`), ["source"]],
+  ["TITLE-PARAPHRASE", titled(PARAPHRASE), ["source"]],
+  ["TITLE-INVISIBLE", titled(`UNKNOWN never${ZWSP}softens a native denial`), ["source"]],
+  ["EMPHASIS", atEntry(`*${ENTRY}*`), ["source"]],
+  ["HARD-BREAK", page => page.replace(FIRST_BULLET, () => FIRST_BULLET.replace("point; ", () => "point;  \n")), ["source"]],
+  ["TASK-BOX", page => page.replace(FIRST_BULLET, () => `- [x] ${FIRST_BULLET.slice(2)}`), ["source"]],
+  ["HEADING-CLOSE", atHeading("## Authorization design ##\n"), ["source"]],
+  ["REMOVE-BULLET", page => page.replace(SECOND_BULLET, () => ""), ["bullets", "rendered", "source"]],
+  ["REMOVE-LIST", page => page.replace(sectionSlice(page), () => `${HEADING_LINE}\n`), ["blocks", "bullets", "rendered", "source"]],
+  ["HEADING-ENTITY", atHeading("## Authorization&nbsp;design\n"), ["tokens", "source"]],
+  ["DUP-HEADING", page => `${page}\n${HEADING_LINE}\n${PARKED_SENTENCE}\n`, ["view", "tokens", "blocks", "bullets", "rendered", "source"]],
+  ["RE-HOMED", page => page.replace(HEADING_LINE, () => `# Appendix\n\n${HEADING_LINE}`), ["view", "blocks", "bullets", "rendered"]],
+  ["NESTED-HEADING", page => `${page}\n> ${HEADING_LINE}`, ["view", "blocks", "bullets", "rendered"]],
+  ["HEADING-COMMENT", atHeading("## Authorization <!-- note --> design\n"), ["source"]],
+  ["HEADING-SPACES", atHeading("## Authorization  design\n"), ["source"]],
+  ["G-T-NESTED-TABLE-BODY", afterAnchor(`\n  | Record rule |\n  | --- |\n  | ${PARKED_SENTENCE} |\n`), ["source", "terms"]],
+  ["G-T-NESTED-TABLE-HEAD", afterAnchor(`\n  | ${PARKED_SENTENCE} |\n  | --- |\n  | record |\n`), ["source", "terms"]],
+  ["G-T-NESTED-TABLE-TERM-ONLY", afterAnchor("\n  | Record rule |\n  | --- |\n  | never softens |\n"), ["source", "terms"]],
+  ["G-T-ITEM-QUOTE-LIST", afterAnchor(`\n  > - ${PARKED_SENTENCE}\n`), ["source", "terms"]],
+  ["G-T-ITEM-QUOTE-TABLE", afterAnchor(`\n  > | Record rule |\n  > | --- |\n  > | ${PARKED_SENTENCE} |\n`), ["source", "terms"]],
+  ["G-T-NESTED-ITEM-TABLE", afterAnchor(`  - nested entry\n\n    | Record rule |\n    | --- |\n    | ${PARKED_SENTENCE} |\n`), ["source", "terms"]],
+  ["G-T-QUOTE-TABLE", afterAnchor(`\n> | Record rule |\n> | --- |\n> | ${PARKED_SENTENCE} |\n`), ["blocks", "source", "terms"]],
+  ["G-T-QUOTE-TABLE-TERM-ONLY", afterAnchor("\n> | Record rule |\n> | --- |\n> | authorization input |\n"), ["blocks", "source", "terms"]],
+  ["G-T-QUOTE-QUOTE-LIST", afterAnchor(`\n> > - ${PARKED_SENTENCE}\n`), ["blocks", "source", "terms"]],
+  ["C-TOP-TABLE", afterAnchor(`\n| Record rule |\n| --- |\n| ${PARKED_SENTENCE} |\n`), ["blocks", "source", "terms"]],
+  ["C-TOP-QUOTE-LIST", afterAnchor(`\n> - ${PARKED_SENTENCE}\n`), ["blocks", "source", "terms"]],
+  ["G-T-QUOTE-LIST", afterAnchor(`\n> - ${PARKED_SENTENCE}\n`), ["blocks", "source", "terms"]],
+  ["G-T-QUOTE-QUOTE-PARA", afterAnchor(`\n> > ${PARKED_SENTENCE}\n`), ["blocks", "source", "terms"]],
+  ["G-T-ITEM-QUOTE-PARA", afterAnchor(`\n  > ${PARKED_SENTENCE}\n`), ["rendered", "source", "terms"]],
+  ["G-T-TABLE-HEAD-TOP", afterAnchor(`\n| ${PARKED_SENTENCE} |\n| --- |\n| record |\n`), ["blocks", "source", "terms"]],
+  ["G-T-QUOTE-INDENTED-CODE", afterAnchor(`\n>     ${PARKED_SENTENCE}\n`), ["blocks", "source", "terms"]],
+  ["G-S-ITEM-DUPDEF", page => afterAnchor(`\n  ${TITLED_DEFINITION}\n`)(withOutside(page)), ["source", "terms"]],
+  ["G-S-ITEM-DUPDEF-NOTITLE", page => afterAnchor(`\n  ${UNTITLED_DEFINITION}\n`)(withOutside(page)), ["source"]],
+  ["C-TOP-DUPDEF", page => afterAnchor(`\n${TITLED_DEFINITION}\n`)(withOutside(page)), ["untiled", "source", "terms"]],
+];
+/** A docs plant's edit, by its id. */
+function plantEdit(id: string): PageEdit {
+  const found = DOCS_PLANTS.find(([plant]) => plant === id);
+  if (found === undefined) throw new Error(`no docs plant ${id}`);
+  return found[1];
+}
+interface Refusal4Members {
+  /** Member (a)'s and member (b)'s plant ids, each once, in the order the member first names them. */
+  readonly a: readonly string[];
+  readonly b: readonly string[];
+  /** The placements member (a) measured without terms, each with the checks it measured it by ('G-T-QUOTE-TABLE [blocks, source]'). */
+  readonly measured: readonly (readonly [string, readonly string[]])[];
+  /** Member (c)'s four raws ('four tokens: heading 23, space 2, list 1094, space 2 = 1121') as 'type:length', and their sum. */
+  readonly raws: readonly string[];
+  readonly bytes: number;
+}
+/** Refusal #4's UNMET members (a), (b) and (c), read from this bead's notes in the tracked export: the first line of each (notes only
+ * append, so a later note never moves it). */
+function refusal4Members(notes: string = beadNotes(BEAD)): Refusal4Members {
+  const member = (letter: string): string => {
+    const text = new RegExp(`^> \\(${letter}\\) [A-Z0-9_ ]+\\. (.+)$`, "m").exec(notes)?.[1];
+    if (text === undefined) throw new Error(`${EXPORT_FILE}'s ${BEAD} notes carry no refusal #4 UNMET member (${letter})`);
+    return text;
+  };
+  const ids = (text: string): string[] => [...new Set(text.match(/\b(?:G-[TS]|C-TOP)-[A-Z]+(?:-[A-Z]+)*\b/g) ?? [])];
+  const [a, b, c] = [member("a"), member("b"), member("c")];
+  const four = /four tokens: ([a-z]+ \d+(?:, [a-z]+ \d+)+) = (\d+)/.exec(c);
+  if (four === null) throw new Error("refusal #4's member (c) names no four raws");
+  return {
+    a: ids(a),
+    b: ids(b),
+    measured: [...a.matchAll(/\b(G-T-[A-Z]+(?:-[A-Z]+)*) \[([a-z, ]+)\]/g)].map(match => [match[1] ?? "", (match[2] ?? "").split(", ")] as const),
+    raws: (four[1] ?? "").split(", ").map(part => part.replace(" ", ":")),
+    bytes: Number(four[2]),
+  };
+}
+const MEMBERS = refusal4Members();
+/** Refusal #3's gate plants as this bead's notes record them (its '> GATE PLANTS.' block, the first): each id with the bytes and the
+ * sha-256/16 that gate measured for its section slice. */
+function refusal3Slices(notes: string = beadNotes(BEAD)): Record<string, readonly [number, string]> {
+  const lines = notes.split("\n");
+  const at = lines.findIndex(line => line.startsWith("> GATE PLANTS."));
+  if (at === -1) throw new Error(`${EXPORT_FILE}'s ${BEAD} notes carry no refusal #3 GATE PLANTS block`);
+  const slices: Record<string, readonly [number, string]> = {};
+  for (const line of lines.slice(at + 1)) {
+    if (!line.startsWith("> - ")) break;
+    const match = /^> - (L2G-[A-Z0-9-]+): .+ \((\d+) bytes, (?:sha256\/16 )?([0-9a-f]{16})\)\.$/.exec(line);
+    if (match === null) throw new Error(`refusal #3's gate plant line does not read as a measured plant: ${line.slice(0, 80)}`);
+    slices[match[1] ?? ""] = [Number(match[2]), match[3] ?? ""];
+  }
+  return slices;
+}
+/** Refusal #5's appended-note witnesses (gate s184 LEG 2, by id), each appended to this row's notes in memory: a later note quoting
+ * member lines (WX1) and one quoting a GATE PLANTS block (WX2). The export readers read the first line of each member and the first
+ * block, so neither moves a reading (the refusal #4 case and D1 hold it). */
+const APPENDED_WITNESSES = {
+  WX1: "\n\nGATE WITNESS NOTE (gate-prep-1 LEG 2, an appended later note quoting member lines):\n> (a) WITNESS MEMBER. G-T-WITNESS-ONLY [source]\n> (b) WITNESS MEMBER. G-S-WITNESS-ONLY\n> (c) WITNESS MEMBER. four tokens: heading 23, space 2, list 1094, space 2 = 1121",
+  WX2: "\n\nGATE WITNESS NOTE (gate-prep-1 LEG 2, an appended later note quoting a plant block):\n> GATE PLANTS.\n> - L2G-CR-BLANK: a later quotation of the plant (1122 bytes, sha256/16 94e33e1a7651bd6c).",
+} as const;
+/** Refusal #5's UNMET record in this bead's notes (gate s184; its '| U1-' line up to its '| CURE' line, the first such block): the
+ * witness and escape ids it names, in order, each once (W-, E- and WX ids). */
+function refusal5Witnesses(notes: string = beadNotes(BEAD)): string[] {
+  const lines = notes.split("\n");
+  const at = lines.findIndex(line => line.startsWith("| U1-MEDIUM-CONFIRMED-R514-R515-R668-PROVENANCE-BINDING-KINDS-UNPINNED."));
+  const end = lines.findIndex((line, index) => at !== -1 && index > at && line.startsWith("| CURE "));
+  if (at === -1 || end === -1) throw new Error(`${EXPORT_FILE}'s ${BEAD} notes carry no refusal #5 UNMET record`);
+  return [...new Set(lines.slice(at, end).join("\n").match(/\b(?:[WE]-[A-Z0-9]+(?:-[A-Z0-9]+)*|WX\d)\b/g) ?? [])];
+}
+/** A later quotation of refusal #5's record, appended in memory (this census's control of refusal5Witnesses' first block). */
+const APPENDED_RECORD = "\n\n| U1-MEDIUM-CONFIRMED-R514-R515-R668-PROVENANCE-BINDING-KINDS-UNPINNED. A later quotation of the record.\n| - W-QUOTED-ONLY: a quoted witness.\n| CURE (quoted).";
+/** Refusal #6's UNMET record in this bead's notes (gate s186; its '| U1-' line through its '| U2-' line, the first such block): the
+ * witness ids it names, in order, each once (W- and WD- ids). */
+function refusal6Witnesses(notes: string = beadNotes(BEAD)): string[] {
+  const lines = notes.split("\n");
+  const at = lines.findIndex(line => line.startsWith("| U1-MEDIUM-CONFIRMED-R514-R515-R668-PROVENANCE-BINDING-DEPTH-FORMS-UNPINNED:"));
+  const end = lines.findIndex((line, index) => at !== -1 && index > at && line.startsWith("| U2-LOW-CONFIRMED-R514-R515-R668-PROVENANCE-VARIABLE-DECLARATION-FORMS-UNPINNED:"));
+  if (at === -1 || end === -1) throw new Error(`${EXPORT_FILE}'s ${BEAD} notes carry no refusal #6 UNMET record`);
+  return [...new Set(lines.slice(at, end + 1).join("\n").match(/\bWD?-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g) ?? [])];
+}
+/** A later quotation of refusal #6's record, appended in memory (this census's control of refusal6Witnesses' first block). */
+const APPENDED_RECORD6 =
+  "\n\n| U1-MEDIUM-CONFIRMED-R514-R515-R668-PROVENANCE-BINDING-DEPTH-FORMS-UNPINNED: a later quotation of the record.\n| - WD-QUOTED-ONLY: a quoted witness.\n| U2-LOW-CONFIRMED-R514-R515-R668-PROVENANCE-VARIABLE-DECLARATION-FORMS-UNPINNED: quoted.";
+/** The R694 follow-up of this census's landing 846, whose row in the tracked export names the gate's identity swaps (its F1 line) and
+ * sub-form witnesses (its F2 line). */
+const FOLLOW_UP = "wb-vx6i";
+const F1_LEAD = "[leads] - F1 LOW LEADS:";
+const F2_LEAD = "[rides] - F2 LOW RIDES:";
+/** The ids the first line of wb-vx6i's notes that opens with the lead names, by their prefix, in order, each once: its F1 line's SC7-
+ * swaps or its F2 line's WT7- witnesses (bd appends a later note after them, so the first such line stays the record's). */
+function followUpIds(lead: string, prefix: string, notes: string = beadNotes(FOLLOW_UP)): string[] {
+  const line = notes.split("\n").find(entry => entry.startsWith(lead));
+  if (line === undefined) throw new Error(`${EXPORT_FILE}'s ${FOLLOW_UP} notes carry no line opening ${lead}`);
+  return [...new Set(line.match(new RegExp(`\\b${prefix}-[A-Z0-9]+(?:-[A-Z0-9]+)*\\b`, "g")) ?? [])];
+}
+/** The nine placements refusal #4's member (a) measured without terms: the shared view's text there is NOT CLAIMED (the wb-aalz
+ * family), so D1 pins every check of those plants but rendered. */
+const AT_DEPTH: ReadonlySet<string> = new Set(MEMBERS.measured.map(([id]) => id));
+const pinnedCauses = (id: string, causes: readonly string[]): string[] => (AT_DEPTH.has(id) ? causes.filter(check => check !== "rendered") : [...causes]);
+/** The section-source reader's module, as this file imports it. */
+const SECTION_READER = "./helpers/docs-section-source.js";
+interface Provenance {
+  /** The values each import of the section-source reader binds. */
+  readonly reader: readonly (readonly string[])[];
+  /** The import declarations naming marked, of any form (a dynamic import() is not one: R-UNREAD-PROVENANCE). */
+  readonly marked: number;
+  /** The names the walk collects from this file's function, variable and class declarations, parameters and binding elements (its
+   * imports excluded), claimed at the binding placements only (BINDING_PLACEMENTS; elsewhere NOT CLAIMED, and the forms
+   * R-UNREAD-PROVENANCE names are not read). */
+  readonly declared: readonly string[];
+  /** The functions docsBinding calls by name. */
+  readonly calls: readonly string[];
+}
+/** This file's own source, parsed as TypeScript: its import declarations of the section-source reader (their value specifiers) and of
+ * marked (counted), the names the walk collects from its five declaration kinds (claimed at the binding placements only) and the calls
+ * docsBinding makes by name. */
+function provenance(text: string = readFileSync(HERE, "utf8")): Provenance {
+  const source = ts.createSourceFile(SELF, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const imports = source.statements.filter(ts.isImportDeclaration);
+  const moduleOf = (statement: ts.ImportDeclaration): string => (ts.isStringLiteral(statement.moduleSpecifier) ? statement.moduleSpecifier.text : "");
+  const values = (statement: ts.ImportDeclaration): string[] => {
+    const clause = statement.importClause;
+    const named = clause?.namedBindings;
+    if (clause === undefined || clause.isTypeOnly || named === undefined || !ts.isNamedImports(named)) return [];
+    return named.elements.filter(element => !element.isTypeOnly).map(element => element.name.text);
+  };
+  const declared: string[] = [];
+  const calls: string[] = [];
+  const visit = (node: ts.Node, inside: boolean): void => {
+    if (ts.isImportDeclaration(node)) return;
+    if ((ts.isFunctionDeclaration(node) || ts.isVariableDeclaration(node) || ts.isParameter(node) || ts.isBindingElement(node) || ts.isClassDeclaration(node)) && node.name !== undefined && ts.isIdentifier(node.name)) {
+      declared.push(node.name.text);
+    }
+    const within = inside || (ts.isFunctionDeclaration(node) && node.name?.text === "docsBinding");
+    if (within && ts.isCallExpression(node) && ts.isIdentifier(node.expression)) calls.push(node.expression.text);
+    ts.forEachChild(node, child => visit(child, within));
+  };
+  visit(source, false);
+  return { reader: imports.filter(statement => moduleOf(statement) === SECTION_READER).map(values), marked: imports.filter(statement => moduleOf(statement) === "marked").length, declared, calls };
+}
+
+/** The four judgements the provenance case makes of a reading, each named by what it holds: the reader's one import declaration binds
+ * exactly sectionSource and termsStated as values (reader), no import declaration names marked (marked), docsBinding calls both by name
+ * (calls), and no declaration of the five kinds the walk collects takes either name (binding; claimed at the binding placements). */
+const PROVENANCE_JUDGEMENTS: Readonly<Record<string, (read: Provenance) => boolean>> = {
+  reader: read => JSON.stringify(read.reader) === JSON.stringify([["sectionSource", "termsStated"]]),
+  marked: read => read.marked === 0,
+  calls: read => ["sectionSource", "termsStated"].every(name => read.calls.includes(name)),
+  binding: read => !read.declared.some(name => name === "sectionSource" || name === "termsStated"),
+};
+/** The judgements a reading fails, in PROVENANCE_JUDGEMENTS order. */
+const provenanceDefects = (read: Provenance): string[] =>
+  Object.entries(PROVENANCE_JUDGEMENTS)
+    .filter(([, holds]) => !holds(read))
+    .map(([judgement]) => judgement);
+/** What a binding placement declares, read back from its edited source: for each declaration of the name the walk would collect (the
+ * five kinds), its form (a function, class, parameter, const, let or var, a for-of head's const, a catch clause's variable, or a
+ * shorthand, renamed or array-pattern element, nested when its pattern is an element's) and, outward to this file's top level, each
+ * arrow function, function expression, method, lone block and function declaration (by its name) around it ('top' when none is). It
+ * reads no other part of the declaration or of what is around it (for one: a modifier, the keyword of the declaration a binding
+ * element's pattern belongs to, a block an if, loop, try or other statement owns, the object literal or class a method belongs to, a
+ * call or a return around a function). */
+function placementShape(text: string, name: string): string[] {
+  const source = ts.createSourceFile(SELF, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const form = (node: ts.Node): string => {
+    if (ts.isFunctionDeclaration(node)) return "function";
+    if (ts.isClassDeclaration(node)) return "class";
+    if (ts.isParameter(node)) return "parameter";
+    if (ts.isBindingElement(node)) {
+      const element = ts.isArrayBindingPattern(node.parent) ? "array element" : node.propertyName === undefined ? "shorthand element" : "renamed element";
+      return ts.isBindingElement(node.parent.parent) ? `nested ${element}` : element;
+    }
+    if (!ts.isVariableDeclaration(node)) return "other";
+    if (ts.isCatchClause(node.parent)) return "catch variable";
+    const keyword = (node.parent.flags & ts.NodeFlags.Const) !== 0 ? "const" : (node.parent.flags & ts.NodeFlags.Let) !== 0 ? "let" : "var";
+    return ts.isForOfStatement(node.parent.parent) ? `for-of ${keyword}` : keyword;
+  };
+  const around = (node: ts.Node): string => {
+    const scopes: string[] = [];
+    for (let at: ts.Node = node.parent; !ts.isSourceFile(at); at = at.parent) {
+      if (ts.isArrowFunction(at)) scopes.push("arrow");
+      else if (ts.isFunctionExpression(at)) scopes.push("function expression");
+      else if (ts.isMethodDeclaration(at)) scopes.push("method");
+      else if (ts.isFunctionDeclaration(at)) scopes.push(at.name?.text ?? "function");
+      else if (ts.isBlock(at) && ts.isBlock(at.parent)) scopes.push("block");
+    }
+    return scopes.length === 0 ? "top" : scopes.join(" in ");
+  };
+  const shapes: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) && node.text === name) {
+      const declaration = node.parent;
+      const declares = ts.isClassDeclaration(declaration) || ts.isFunctionDeclaration(declaration) || ts.isBindingElement(declaration) || ts.isParameter(declaration) || ts.isVariableDeclaration(declaration);
+      if (declares && declaration.name === node) shapes.push(`${form(declaration)} in ${around(declaration)}`);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return shapes;
+}
+/** The sub-form part a control makes, read back from its edited source for each declaration of the name the walk would collect (the
+ * five kinds), in placementShape's order: a function declaration's return type, a variable declaration's or a parameter's type
+ * annotation, a binding element's default or a class's members, then, outward to this file's top level, the return type of each arrow
+ * function, function expression and method around it. It reads no other part (a function's parameters, a class's heritage, a
+ * variable's initializer, a modifier). */
+function subFormOf(text: string, name: string): string[] {
+  const source = ts.createSourceFile(SELF, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const own = (node: ts.Node): string => {
+    if (ts.isFunctionDeclaration(node)) return node.type === undefined ? "no return type" : "a return type";
+    if (ts.isClassDeclaration(node)) return node.members.length === 0 ? "no member" : "members";
+    if (ts.isBindingElement(node)) return node.initializer === undefined ? "no default" : "a default";
+    if (ts.isParameter(node) || ts.isVariableDeclaration(node)) return node.type === undefined ? "no type annotation" : "a type annotation";
+    return "other";
+  };
+  const around = (node: ts.Node): string[] => {
+    const scopes: string[] = [];
+    for (let at: ts.Node = node.parent; !ts.isSourceFile(at); at = at.parent) {
+      if (ts.isArrowFunction(at) || ts.isFunctionExpression(at) || ts.isMethodDeclaration(at)) {
+        const kind = ts.isArrowFunction(at) ? "an arrow function" : ts.isFunctionExpression(at) ? "a function expression" : "a method";
+        scopes.push(`in ${kind} with ${at.type === undefined ? "no return type" : "a return type"}`);
+      }
+    }
+    return scopes;
+  };
+  const parts: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) && node.text === name) {
+      const declaration = node.parent;
+      const declares = ts.isClassDeclaration(declaration) || ts.isFunctionDeclaration(declaration) || ts.isBindingElement(declaration) || ts.isParameter(declaration) || ts.isVariableDeclaration(declaration);
+      if (declares && declaration.name === node) parts.push([own(declaration), ...around(declaration)].join(" "));
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return parts;
+}
+/** One edit of this file's own source: an anchor the source spells once (lines of this file), and what replaces it. */
+type SourceEdit = readonly [string, string];
+/** This file's own source with each edit made in turn, in memory, never on disk. */
+function edited(edits: readonly SourceEdit[], text: string = readFileSync(HERE, "utf8")): string {
+  return edits.reduce((source, [anchor, replacement]) => {
+    if (source.split(anchor).length !== 2) throw new Error(`${SELF} does not spell a source edit's anchor once: ${anchor.slice(0, 60)}`);
+    return source.replace(anchor, () => replacement);
+  }, text);
+}
+// The lines refusal #5's gate edited (gate s184 LEG 2), each spelled once in this file.
+const AT_URL_IMPORT = 'import { fileURLToPath } from "node:url";\n';
+const AT_READER_IMPORT = 'import { sectionSource, termsStated } from "./helpers/docs-section-source.js";\n';
+const AT_DOCS_BINDING = "function docsBinding(markdown: string = readRepo(DOCS_FILE)): DocsReading {\n";
+const AT_SOURCE_READ = "  const read = sectionSource(markdown, DOCS_HEADING);\n";
+const AT_TILED = "    tiled: read.tiled,\n";
+const AT_TERMS = "    terms: termsStated(read.source, PARKED_TERMS),\n";
+const AT_TOKENS = "  readonly tokens: readonly string[];\n  /** The parked sentence's terms the source spells out, in PARKED_TERMS order (termsStated). */\n";
+const AT_PLANT_EDIT = "function plantEdit(id: string): PageEdit {\n  const found = DOCS_PLANTS.find(([plant]) => plant === id);\n";
+// The spans wb-vx6i's sub-form witnesses edit, where gate s191 placed them, and this cut's SF- control: docsBinding's shared-view line
+// (four insert after it), its bound line (three, and the SF- control, rewrite it) and plantEdit's lookup (one inserts after it); each
+// spelled once in this file.
+const AT_SECTION = "  const section = docsSection(markdown, DOCS_HEADING, 2, [DOCS_PARENT]);\n";
+const AT_BOUND = "    bound: read.ok,\n";
+const AT_PLANT_FOUND = `${AT_PLANT_EDIT}  if (found === undefined) throw new Error(\`no docs plant \${id}\`);\n`;
+// docsBinding's return, from the reader's call to its first member and from the terms to the function's end: the spans the block,
+// arrow, function expression and method placements edit; each spelled once in this file.
+const AT_RETURN = `${AT_SOURCE_READ}  return {\n    view: section.ok,\n`;
+const AT_RETURN_END = `${AT_TERMS}  };\n}\n`;
+/** The body of a local copy of termsStated's reading (the placements of refusal #5's witnesses declare one). */
+const LOCAL_TERMS = 'const flat = text.replace(/\\s+/g, " ").toLowerCase(); return terms.filter(term => flat.includes(term.toLowerCase()));';
+/** A local copy of termsStated's reading, declared as a const, let or var of the name at the indent. */
+const localCopy = (keyword: string, name: string, indent: string): string =>
+  `${indent}${keyword} ${name} = (text: string, terms: readonly string[]): string[] => {\n${indent}  const flat = text.replace(/\\s+/g, " ").toLowerCase();\n${indent}  return terms.filter(term => flat.includes(term.toLowerCase()));\n${indent}};\n`;
+/** The placements the binding judgement is claimed at (PROVENANCE's placement sentence names each, in this order): each one edit (or two)
+ * of this file's own source that declares the name once, at one placement and in one form (placementShape reads back its form and the
+ * arrow functions, function expressions, methods, lone blocks and function declarations around it, the two parts its row's frozen
+ * shape spells, and no other part), made in memory with each of the reader's two names. The placements of refusal #5's gate witnesses
+ * (W-FUNCDECL, W-PARAM, W-BINDING, W-CLASS2) and of refusal #6's (WD-LET, WD-BLOCK, WD-ARROW, WD-ARROW-PARAM, WD-NESTED-PATTERN) are
+ * among them, each bound by its id, the judgement it reds and the declaration it makes; each further placement is one PROVENANCE
+ * names. */
+const BINDING_PLACEMENTS: readonly (readonly [string, (name: string) => readonly SourceEdit[]])[] = [
+  ["W-FUNCDECL", name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}  function ${name}(text: string, terms: readonly string[]): string[] {\n    ${LOCAL_TERMS}\n  }\n`]]],
+  [
+    "W-PARAM",
+    name => [[AT_DOCS_BINDING, `function docsBinding(markdown: string = readRepo(DOCS_FILE), ${name}: (text: string, terms: readonly string[]) => string[] = (text, terms) => { ${LOCAL_TERMS} }): DocsReading {\n`]],
+  ],
+  ["W-BINDING", name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}  const { ${name} } = { ${name}: (text: string, terms: readonly string[]): string[] => { ${LOCAL_TERMS} } };\n`]]],
+  ["W-CLASS2", name => [[AT_PLANT_EDIT, `function plantEdit(id: string): PageEdit {\n  class ${name} {\n    static readonly of = id;\n  }\n  const found = DOCS_PLANTS.find(([plant]) => plant === ${name}.of);\n`]]],
+  ["W-VARDECL", name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}  const ${name} = (text: string, terms: readonly string[]): string[] => { ${LOCAL_TERMS} };\n`]]],
+  ["WD-LET", name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}${localCopy("let", name, "  ")}`]]],
+  ["W-VAR", name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}${localCopy("var", name, "  ")}`]]],
+  [
+    "WD-BLOCK",
+    name => [
+      [AT_RETURN, `${AT_SOURCE_READ}  {\n${localCopy("const", name, "    ")}    return {\n    view: section.ok,\n`],
+      [AT_RETURN_END, `${AT_TERMS}  };\n  }\n}\n`],
+    ],
+  ],
+  [
+    "WD-ARROW",
+    name => [
+      [AT_RETURN, `${AT_SOURCE_READ}  return ((): DocsReading => {\n${localCopy("const", name, "    ")}    return {\n    view: section.ok,\n`],
+      [AT_RETURN_END, `${AT_TERMS}  };\n  })();\n}\n`],
+    ],
+  ],
+  [
+    "WD-ARROW-PARAM",
+    name => [
+      [AT_RETURN, `${AT_SOURCE_READ}  return ((${name}: (text: string, terms: readonly string[]) => string[]): DocsReading => ({\n    view: section.ok,\n`],
+      [AT_RETURN_END, `${AT_TERMS}  }))((text, terms) => {\n    const flat = text.replace(/\\s+/g, " ").toLowerCase();\n    return terms.filter(term => flat.includes(term.toLowerCase()));\n  });\n}\n`],
+    ],
+  ],
+  [
+    "WD-NESTED-PATTERN",
+    name => [
+      [
+        AT_SOURCE_READ,
+        `${AT_SOURCE_READ}  const {\n    probe: { ${name} },\n  } = {\n    probe: {\n      ${name}: (text: string, terms: readonly string[]): string[] => {\n        const flat = text.replace(/\\s+/g, " ").toLowerCase();\n        return terms.filter(term => flat.includes(term.toLowerCase()));\n      },\n    },\n  };\n`,
+      ],
+    ],
+  ],
+  ["W-RENAMED-ELEMENT", name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}  const { probe: ${name} } = { probe: (text: string, terms: readonly string[]): string[] => { ${LOCAL_TERMS} } };\n`]]],
+  ["W-ARRAY-ELEMENT", name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}  const [${name}] = [(text: string, terms: readonly string[]): string[] => { ${LOCAL_TERMS} }] as const;\n`]]],
+  ["W-CATCH", name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}  try {\n    void read;\n  } catch (${name}) {\n    void ${name};\n  }\n`]]],
+  ["W-FOR-OF", name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}  for (const ${name} of [(text: string, terms: readonly string[]): string[] => { ${LOCAL_TERMS} }]) {\n    void ${name};\n  }\n`]]],
+  [
+    "W-FUNCEXPR-BODY",
+    name => [
+      [AT_RETURN, `${AT_SOURCE_READ}  return (function (): DocsReading {\n${localCopy("const", name, "    ")}    return {\n    view: section.ok,\n`],
+      [AT_RETURN_END, `${AT_TERMS}  };\n  })();\n}\n`],
+    ],
+  ],
+  [
+    "W-METHOD-BODY",
+    name => [
+      [AT_RETURN, `${AT_SOURCE_READ}  return {\n    reading(): DocsReading {\n${localCopy("const", name, "      ")}      return {\n    view: section.ok,\n`],
+      [AT_RETURN_END, `${AT_TERMS}  };\n    },\n  }.reading();\n}\n`],
+    ],
+  ],
+  ["W-TOP", name => [[AT_URL_IMPORT, `${AT_URL_IMPORT}const ${name} = 0;\n`]]],
+];
+/** The reader's two names, each a binding placement is made with. */
+const READER_NAMES = ["termsStated", "sectionSource"] as const;
+/** A binding placement's control, by its id. */
+function placementEdits(placement: string): (name: string) => readonly SourceEdit[] {
+  const found = BINDING_PLACEMENTS.find(([id]) => id === placement);
+  if (found === undefined) throw new Error(`no binding placement ${placement}`);
+  return found[1];
+}
+/** What a reading of the declaration reads of a control made with each of the reader's two names: its distinct readings, joined. */
+const alike = (read: (text: string, name: string) => string[], place: (name: string) => readonly SourceEdit[]): string =>
+  [...new Set(READER_NAMES.flatMap(name => read(edited(place(name)), name)))].join("; ");
+/** termsStated's reading over two lines at the indent (the bodies of wb-vx6i's sub-form witnesses spell it so). */
+const localLines = (indent: string): string =>
+  `${indent}const flat = text.replace(/\\s+/g, " ").toLowerCase();\n${indent}return terms.filter(term => flat.includes(term.toLowerCase()));\n`;
+/** The binding judgement's second sub-forms (wb-vx6i F2; PROVENANCE's sub-form sentence names each, in this order): at nine binding
+ * placements, one edit of this file's own source that declares the name once, at the frozen shape of the placement it stands at
+ * (placementShape) and in sub-form parts its placement's binding control does not make (subFormOf), made in memory with each of the
+ * reader's two names; each entry its id, the placement it stands at and its edit. The first eight are the gate's paired real-tree
+ * witnesses of wb-vx6i's F2 record (gate s191 LEG 2), each spelled as that gate spelled it and bound by its id; the ninth (SF-) is this
+ * cut's, for the third kind of function a placement's declaration sits in. */
+const SUB_FORMS: readonly (readonly [string, string, (name: string) => readonly SourceEdit[]])[] = [
+  ["WT7-FUNCDECL-UNTYPED", "W-FUNCDECL", name => [[AT_SECTION, `${AT_SECTION}  function ${name}(text: string, terms: readonly string[]) {\n${localLines("    ")}  }\n`]]],
+  [
+    "WT7-VARDECL-TYPED",
+    "W-VARDECL",
+    name => [[AT_SECTION, `${AT_SECTION}  const ${name}: (text: string, terms: readonly string[]) => string[] = (text, terms) => {\n${localLines("    ")}  };\n`]],
+  ],
+  ["WT7-CATCH-TYPED", "W-CATCH", name => [[AT_SECTION, `${AT_SECTION}  try {\n    void markdown;\n  } catch (${name}: unknown) {\n    void ${name};\n  }\n`]]],
+  ["WT7-ARROW-PARAM-UNTYPED", "WD-ARROW-PARAM", name => [[AT_BOUND, `    bound: (${name} => ${name})(read.ok),\n`]]],
+  [
+    "WT7-BINDING-DEFAULT",
+    "W-BINDING",
+    name => [
+      [
+        AT_SECTION,
+        `${AT_SECTION}  const { ${name} = (text: string, terms: readonly string[]): string[] => {\n${localLines("    ")}  } }: { ${name}?: (text: string, terms: readonly string[]) => string[] } = {};\n`,
+      ],
+    ],
+  ],
+  ["WT7-CLASS-EMPTY", "W-CLASS2", name => [[AT_PLANT_FOUND, `${AT_PLANT_FOUND}  class ${name} {}\n  void ${name};\n`]]],
+  ["WT7-ARROW-UNTYPED", "WD-ARROW", name => [[AT_BOUND, `    bound: (() => {\n      const ${name} = read.ok;\n      return ${name};\n    })(),\n`]]],
+  ["WT7-METHOD-UNTYPED", "W-METHOD-BODY", name => [[AT_BOUND, `    bound: {\n      probe() {\n        const ${name} = read.ok;\n        return ${name};\n      },\n    }.probe(),\n`]]],
+  ["SF-FUNCEXPR-UNTYPED", "W-FUNCEXPR-BODY", name => [[AT_BOUND, `    bound: (function () {\n      const ${name} = read.ok;\n      return ${name};\n    })(),\n`]]],
+];
+/** wb-vx6i's six identity swaps (gate s191 LEG 2, its F1 record, by id): each the gate's respelling of one binding control in a part
+ * placementShape does not read (an if block around the const, an async function, an exported const, a let's pattern, a class's method
+ * for an object literal's, an arrow its return does not call), spelled as that gate spelled it (SC7-WD-ARROW-UNCALLED without the
+ * gate's second edit, a no-op that replaced the return's end with itself); each entry its id, the placement whose control it respells
+ * and its edits. Each reads that placement's frozen shape alike: the part it changes is NOT CLAIMED as read back. */
+const IDENTITY_SWAPS: readonly (readonly [string, string, (name: string) => readonly SourceEdit[]])[] = [
+  [
+    "SC7-W-VARDECL-IN-IF",
+    "W-VARDECL",
+    name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}  if (read.ok) {\n    const ${name} = (text: string, terms: readonly string[]): string[] => { ${LOCAL_TERMS} };\n  }\n`]],
+  ],
+  [
+    "SC7-W-FUNCDECL-ASYNC",
+    "W-FUNCDECL",
+    name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}  async function ${name}(text: string, terms: readonly string[]): Promise<string[]> {\n    ${LOCAL_TERMS}\n  }\n`]],
+  ],
+  ["SC7-W-TOP-EXPORT", "W-TOP", name => [[AT_URL_IMPORT, `${AT_URL_IMPORT}export const ${name} = 0;\n`]]],
+  [
+    "SC7-W-BINDING-LET",
+    "W-BINDING",
+    name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}  let { ${name} } = { ${name}: (text: string, terms: readonly string[]): string[] => { ${LOCAL_TERMS} } };\n`]],
+  ],
+  [
+    "SC7-W-METHOD-AS-CLASS-METHOD",
+    "W-METHOD-BODY",
+    name => [
+      [AT_RETURN, `${AT_SOURCE_READ}  return new (class {\n    reading(): DocsReading {\n${localCopy("const", name, "      ")}      return {\n    view: section.ok,\n`],
+      [AT_RETURN_END, `${AT_TERMS}  };\n    }\n  })().reading();\n}\n`],
+    ],
+  ],
+  [
+    "SC7-WD-ARROW-UNCALLED",
+    "WD-ARROW",
+    name => [[AT_RETURN, `${AT_SOURCE_READ}  const unused = (): void => {\n${localCopy("const", name, "    ")}  };\n  void unused;\n  return {\n    view: section.ok,\n`]],
+  ],
+];
+/** The forms the four judgements are claimed at, each one edit (or two) of this file's own source with the judgements it reds: the binding
+ * placements made with termsStated (BINDING_PLACEMENTS), the forms of refusal #5's gate witnesses W-TYPEIMPORT3 and W-VALUES-TYPE (each
+ * bound by its id and the judgements it reds), and one more for each further form PROVENANCE names. */
+const PROVENANCE_FORMS: readonly (readonly [string, readonly SourceEdit[], readonly string[]])[] = [
+  ...BINDING_PLACEMENTS.map(([placement, place]) => [placement, place("termsStated"), ["binding"]] as const),
+  [
+    "W-TYPEIMPORT3",
+    [
+      [AT_URL_IMPORT, `${AT_URL_IMPORT}import type { Token } from "marked";\n`],
+      [AT_TOKENS, AT_TOKENS.replace("\n", "\n  readonly probe?: Token;\n")],
+    ],
+    ["marked"],
+  ],
+  ["W-MARKED-VALUE", [[AT_URL_IMPORT, `${AT_URL_IMPORT}import { lexer } from "marked";\n`]], ["marked"]],
+  ["W-MARKED-TYPE-SPECIFIER", [[AT_URL_IMPORT, `${AT_URL_IMPORT}import { type Token } from "marked";\n`]], ["marked"]],
+  ["W-MARKED-NAMESPACE", [[AT_URL_IMPORT, `${AT_URL_IMPORT}import * as markedModule from "marked";\n`]], ["marked"]],
+  ["W-MARKED-DEFAULT", [[AT_URL_IMPORT, `${AT_URL_IMPORT}import markedDefault from "marked";\n`]], ["marked"]],
+  ["W-MARKED-SIDE-EFFECT", [[AT_URL_IMPORT, `${AT_URL_IMPORT}import "marked";\n`]], ["marked"]],
+  [
+    "W-VALUES-TYPE",
+    [
+      [AT_READER_IMPORT, 'import { type SectionSource, sectionSource, termsStated } from "./helpers/docs-section-source.js";\n'],
+      [AT_SOURCE_READ, "  const read: SectionSource = sectionSource(markdown, DOCS_HEADING);\n"],
+    ],
+    [],
+  ],
+  ["W-READER-TYPE-ONLY", [[AT_READER_IMPORT, `${AT_READER_IMPORT}import type { SectionSource } from "./helpers/docs-section-source.js";\n`]], ["reader"]],
+  [
+    "W-READER-RENAMED",
+    [
+      [AT_READER_IMPORT, 'import { sectionSource, termsStated as statedTerms } from "./helpers/docs-section-source.js";\n'],
+      [AT_TERMS, "    terms: statedTerms(read.source, PARKED_TERMS),\n"],
+    ],
+    ["reader", "calls"],
+  ],
+  ["W-NO-TERMS-CALL", [[AT_TERMS, "    terms: [],\n"]], ["calls"]],
+];
+/** A provenance form's edits, by its id. */
+function formEdits(form: string): readonly SourceEdit[] {
+  const found = PROVENANCE_FORMS.find(([id]) => id === form);
+  if (found === undefined) throw new Error(`no provenance form ${form}`);
+  return found[1];
+}
+/** Refusal #5's direct escapes (gate s184 LEG 2, by id), each one edit (two) of this file's own source and the text that spells its
+ * form: a dynamic import of marked feeding the tiling, a named function expression binding termsStated, and an object's method copying
+ * termsStated beside docsBinding's own call of it. None is read (R-UNREAD-PROVENANCE). */
+const UNREAD_ESCAPES: readonly (readonly [string, readonly SourceEdit[], string])[] = [
+  ["E-DYNIMPORT2", [[AT_DOCS_BINDING, `const markedModule = await import("marked");\n${AT_DOCS_BINDING}`], [AT_TILED, "    tiled: read.tiled && markedModule.lexer(markdown).length >= 0,\n"]], 'await import("marked")'],
+  ["E-FUNCEXPR2", [[AT_DOCS_BINDING, `const termsProbe = function termsStated(): string[] {\n  return [];\n};\n${AT_DOCS_BINDING}`], [AT_TERMS, "    terms: [...termsStated(read.source, PARKED_TERMS), ...termsProbe()],\n"]], "function termsStated()"],
+  [
+    "E-METHOD",
+    [
+      [AT_DOCS_BINDING, `const LOCAL = {\n  termsStated(text: string, terms: readonly string[]): string[] {\n    ${LOCAL_TERMS}\n  },\n};\n${AT_DOCS_BINDING}`],
+      [AT_TERMS, '    terms: [...termsStated("", PARKED_TERMS), ...LOCAL.termsStated(read.source, PARKED_TERMS)],\n'],
+    ],
+    "LOCAL.termsStated(read.source",
+  ],
+];
+/** Docs plants' edits swapped for another D1 reads alike (R-PLANT-EDIT): refusal #5's W-MEMBER-SWAP-A and W-MEMBER-SWAP-B (gate s184
+ * LEG 2, refusal #4's members), a refusal #1 docs plant's and a refusal #2 one's; each the swap's id, the plant's, what changes, the edit. */
+const PLANT_SWAPS: readonly (readonly [string, string, string, PageEdit])[] = [
+  ["W-MEMBER-SWAP-A", "G-T-QUOTE-TABLE", "the table header 'Record rule' as 'Record'", afterAnchor(`\n> | Record |\n> | --- |\n> | ${PARKED_SENTENCE} |\n`)],
+  ["W-MEMBER-SWAP-B", "G-S-ITEM-DUPDEF-NOTITLE", "the definition's destination as #auditability", planted => afterAnchor("\n  [gate-dup]: #auditability\n")(withOutside(planted))],
+  ["D-BLOCKQUOTE-SWAP", "D-BLOCKQUOTE", "the block quote with no space after its marker", atAnchor(`${DOCS_ANCHOR}\n>${PARKED_SENTENCE}\n`)],
+  ["L2-D1-SWAP", "L2-D1", "the link title in single quotes", atEntry(`[${ENTRY}](#authorization-design '${PARKED_SENTENCE}')`)],
+];
+/** A refusal #1 module swapped for another the field reading flags at its form (R-PLANT-EDIT): P1 with its key parenthesized twice. */
+const MODULE_SWAP: readonly [string, string] = ["P1", `${GATE_HEAD}value[(("guardOrRelyReceipt"))];\n`];
+
+// --- the cases ------------------------------------------------------------------------------------------------------------------------------
+const IMPL: Readonly<Record<string, () => JsonValue>> = {
+  A1: () => {
+    const binding = provenanceBinding();
+    expect(binding.header, "the file is the wb-pjj provenance test").toBe("wb-pjj");
+    expect(binding.roster, "it reads this roster by path").toBeGreaterThanOrEqual(1);
+    expect(binding.suites, "it registers one describe for clause (a)").toBe(1);
+    expect(binding.registrations, "the describe registers its four cases").toBe(4);
+    expect(binding.reads, "the cases read the fixtures and drive the core and the adapters").toEqual([...BLOCK_READS]);
+    expect([STATEMENT.predicate, STATEMENT.file, binding.predicate], "the cited file exports the cited predicate").toEqual(["isCoreMintedDecision", CORE, true]);
+    return { claim: claim("A1"), test: PROVENANCE, header: binding.header, roster: ROSTER_FILE, suite: PROVENANCE_SUITE, registrations: binding.registrations, reads: [...binding.reads], predicate: STATEMENT.predicate, core: STATEMENT.file };
+  },
+  A2: () => {
+    const { fixtures, conditions, clock, instant } = fixtureRead();
+    expect(fixtures.map(fixture => fixture.condition), "the fixtures are the clause's conditions, in order").toEqual([...conditions]);
+    const members = ["record", ...RECORD.members, "status"].sort();
+    for (const { id, record } of fixtures) {
+      expect(Object.keys(record).sort(), `${id} holds the record's members exactly`).toEqual(members);
+      expect(record.record, `${id} names the record`).toBe(RECORD.schema);
+      expect(RECORD.statuses, `${id}'s status is one of the line's`).toContain(record.status);
+      expect(record, `${id} is aimed at the provenance run`).toMatchObject({ sourceId: P_RUN.provider, principal: PSCOPE.principal, worldScope: PWS, memorylessWitness: { [`${P_RUN.id}:active`]: "stop" } });
+    }
+    expect(clock, "the roster's clock is the provenance request's instant").toBe(Date.parse(P_REQUESTED));
+    const [pass, unknown, expired] = [fixtureNamed("PASS record").record, fixtureNamed("status UNKNOWN").record, fixtureNamed("expired guardOrRelyReceipt").record];
+    const current = (record: JsonRecord): boolean => receiptWindow(record).issuedAt <= clock && clock < receiptWindow(record).expiresAt;
+    expect([pass.status, current(pass)], "N1 is a PASS record with a current receipt").toEqual(["PASS", true]);
+    expect([unknown.status, current(unknown)], "N2's status is UNKNOWN").toEqual(["UNKNOWN", true]);
+    expect([expired.status, receiptWindow(expired).expiresAt <= clock], "N3's receipt expired before the clock").toEqual(["PASS", true]);
+    expect([differing(pass, unknown), differing(pass, expired)], "each fixture isolates its condition").toEqual([["status"], ["guardOrRelyReceipt"]]);
+    return { claim: claim("A2"), record: RECORD.schema, members: members.length, statuses: [...RECORD.statuses], conditions: [...conditions], clock: instant, isolated: ["status", "guardOrRelyReceipt"] };
+  },
+  A3: () => {
+    const { genuine, wrappers, outcomes } = permitOutcomes();
+    expect(isCoreMintedDecision(genuine), "the provenance request is permitted and minted (the core's control)").toBe(true);
+    expect(wrappers.filter(([, minted]) => minted).map(([label]) => label), "no record or wrapper reads minted").toEqual([]);
+    const permits = outcomes.filter(outcome => outcome.decided.decision === "permitted");
+    expect(permits.filter(outcome => !(outcome.carried === "metadata" && outcome.permittedRequest)).map(outcome => outcome.label), "the only permits are the permitted request's own").toEqual([]);
+    expect(outcomes.filter(outcome => outcome.carried === "metadata" && JSON.stringify(outcome.decided) !== JSON.stringify(outcome.plain)).map(outcome => outcome.label), "beside a request's fields a record changes no decision").toEqual([]);
+    expect(outcomes.filter(outcome => outcome.carried === "in-place" && outcome.decided.decision !== "denied").map(outcome => outcome.label), "in place of a native value a record denies").toEqual([]);
+    expect(permits.filter(outcome => !isCoreMintedDecision(outcome.decided)).map(outcome => outcome.label)).toEqual([]);
+    const denied = outcomes.filter(outcome => outcome.decided.decision === "denied");
+    return {
+      claim: claim("A3"),
+      fixtures: fixtureRead().fixtures.length,
+      wrappers: wrappers.length,
+      placements: PLACEMENTS.map(([where, carried]) => `${carried}:${where}`),
+      requests: DENIALS.length + 1,
+      permitted: permits.length,
+      denied: denied.length,
+      policies: [...new Set(denied.map(outcome => (outcome.decided.decision === "denied" ? outcome.decided.policy : "")))].sort(),
+    };
+  },
+  B1: () => {
+    const record = fixtureNamed("status UNKNOWN").record;
+    const base = rfTopology(rfReading(rfDenial()));
+    const shown = presentationOf(base);
+    expect(base.snapshots[0]?.node, "the refusal renders failure with its code").toMatchObject({ statusTone: "failure", statusText: `refused · ${RF_DENIAL_CODE}` });
+    expect(shown).toMatchObject({ statusTone: "failure", statusText: `refused · ${RF_DENIAL_CODE}` });
+    const unchanged = DENIAL_PLANTS.map(([label, plant]) => {
+      const topology = rfTopology(plant(record));
+      expect(topology, `${label}: the snapshot is unchanged`).toStrictEqual(base);
+      expect(presentationOf(topology), `${label}: the presentation is unchanged`).toStrictEqual(shown);
+      return label;
+    });
+    const values = [record.record, record.status, record.policyEpoch, record.proofTier].map(String);
+    const refused = DENIAL_REFUSED.map(([label, plant]) => {
+      const error = thrownBy(() => rfTopology(plant(record)));
+      expect(error, `${label}: refused`).toBeInstanceOf(CapabilityError);
+      expect((error as CapabilityError).category, `${label}: refused as malformed`).toBe("validation");
+      const message = (error as Error).message;
+      expect(values.filter(text => message.includes(text)), `${label}: the refusal echoes nothing of the record`).toEqual([]);
+      return label;
+    });
+    return { claim: claim("B1"), producer: base.snapshots[0]?.source.provider ?? "", status: String(record.status), tone: shown?.statusTone ?? "", text: shown?.statusText ?? "", unchanged, refused };
+  },
+  B2: () => {
+    const clean = rfTopology(rfReading(rfEnvelope()));
+    expect(clean.snapshots[0]?.node?.statusTone, "the reader renders success for a clean render (its control)").toBe("success");
+    const fail = rfTopology(rfReading(rfDenial())).snapshots[0]?.node?.statusTone;
+    expect(fail, "the refusal renders FAIL").toBe("failure");
+    const records = [fixtureNamed("PASS record").record, fixtureNamed("expired guardOrRelyReceipt").record];
+    const checks = CHECKS.map(([name, row]) => {
+      const base = rfTopology(checkReading(row));
+      expect(base.snapshots[0], `the ${name} check renders UNKNOWN`).toMatchObject({ coverage: "partial", node: { statusTone: "unknown" } });
+      for (const record of records) {
+        for (const [label, plant] of CHECK_PLANTS) expect(rfTopology(plant(row, record)), `${name} check, ${String(record.status)} record ${label}`).toStrictEqual(base);
+      }
+      return { check: name, tone: base.snapshots[0]?.node?.statusTone ?? "", coverage: base.snapshots[0]?.coverage ?? "" };
+    });
+    return { claim: claim("B2"), fail: fail ?? "", checks, clean: clean.snapshots[0]?.node?.statusTone ?? "", plants: CHECK_PLANTS.map(([label]) => label), records: records.length };
+  },
+  B3: () => {
+    const records = fixtureRead().fixtures.map(fixture => fixture.record);
+    const readings: ReactiveFiberProjectionTopology[] = [
+      rfTopology(rfReading(rfDenial())),
+      ...records.flatMap(record => DENIAL_PLANTS.map(([, plant]) => rfTopology(plant(record)))),
+      ...CHECKS.flatMap(([, row]) => [rfTopology(checkReading(row)), ...records.flatMap(record => CHECK_PLANTS.map(([, plant]) => rfTopology(plant(row, record))))]),
+      ...PROBABILITY_TEXTS.map(text => rfTopology(rfReading(rfDenial({ diagnostics: [rfPrimary({ message: text, hint: text, metadata: { estimate: text } })] })))),
+    ];
+    expect(PROBABILITY_TEXTS.filter(text => !PROBABILITY.test(text)), "the matcher reads each planted probability text").toEqual([]);
+    const strings = readings.flatMap(surfaced);
+    expect(strings.length, "the readings surface strings").toBeGreaterThan(readings.length);
+    expect(strings.filter(text => PROBABILITY.test(text)), "no reading surfaces a probability").toEqual([]);
+    expect(readings.filter(reading => reading.snapshots[0]?.node?.statusTone === "success").length, "no reading renders success").toBe(0);
+    return {
+      claim: claim("B3"),
+      readings: readings.length,
+      tones: [...new Set(readings.map(reading => reading.snapshots[0]?.node?.statusTone ?? ""))].sort(),
+      planted: PROBABILITY_TEXTS.length,
+      probability: strings.filter(text => PROBABILITY.test(text)).length,
+    };
+  },
+  C1: () => {
+    const { modules, src, unread } = admissionSet();
+    expect(unread, "no symlink or special entry hides a src file").toEqual([]);
+    expect(src.length, "the src walk meets its floor").toBeGreaterThanOrEqual(SRC_FLOOR);
+    expect(src.filter(file => !file.endsWith(".ts")), "every src file is a module the reader parses").toEqual([]);
+    expect([CORE, ...ADMISSION_ANCHORS].filter(file => !modules.includes(file)), "the derived set holds the core and its six readers").toEqual([]);
+    const reads = modules.map(file => fieldReads(file, readRepo(file)));
+    expect(reads.map(list => list.length >= 10), "every admission/decision module yields reads").toEqual(modules.map(() => true));
+    expect(reads[0]?.map(read => read.name), "the core's reads include Pi's own principal (the reader's control on real code)").toContain("principal");
+    expect(reads.flatMap(shaped), "no admission/decision path reads a record-shaped field").toEqual([]);
+    expect(src.flatMap(file => shaped(fieldReads(file, readRepo(file)))), "no src module reads one").toEqual([]);
+    expect(REFUSAL_PLANTS.map(([id, , text]) => [id, flagged("plant.ts", text)]), "each refusal-#1 plant is flagged at its form").toEqual(REFUSAL_PLANTS.map(([id, read]) => [id, [read]]));
+    const core = readRepo(CORE);
+    expect(CORE_PLANTS.map(([id, , line]) => [id, flagged(CORE, core + line)]), "each core plant is flagged inside the core's own text").toEqual(CORE_PLANTS.map(([id, read]) => [id, [read]]));
+    expect(PLANTED_READS.map(([, , text]) => flagged("plant.ts", text)), "each planted read form is flagged once").toEqual(PLANTED_READS.map(([form, name]) => [`${form}:${name}`]));
+    return {
+      claim: claim("C1"),
+      core: CORE,
+      anchors: ADMISSION_ANCHORS.length,
+      modules: modules.length >= ADMISSION_ANCHORS.length + 1,
+      src: true,
+      judged: SHAPED.size,
+      forms: [...new Set(PLANTED_READS.map(([form]) => form))],
+      controls: PLANTED_READS.length,
+      plants: [...REFUSAL_PLANTS, ...CORE_PLANTS].map(([id]) => id),
+    };
+  },
+  C2: () => {
+    const line = recordLine();
+    const family = schemaFamily();
+    const definitions = definitionLines();
+    expect(family, "the fixture record is one of the schema names the absence census judges").toContain(line.schema);
+    expect(definitions.map(entry => entry.schema), "and one of the record lines the members come from").toContain(line.schema);
+    expect(definitions.filter(entry => !family.includes(entry.schema)).map(entry => entry.site), "each such line's record is a judged schema name").toEqual([]);
+    expect(readRepo(ABSENCE_CENSUS).includes(`"${ABSENCE_ROSTER_FILE}"`), "the absence census names that roster").toBe(true);
+    expect(line.statuses, "the three-valued status is the line's").toEqual(["PASS", "FAIL", "UNKNOWN"]);
+    expect([...new Set(definitions.flatMap(entry => entry.words))].sort(), "the one-word members are the shared names").toEqual([...SHARED]);
+    const { src } = admissionSet();
+    const read = new Set(src.flatMap(file => fieldReads(file, readRepo(file)).filter(entry => entry.form !== "literal").map(entry => entry.name)));
+    expect(SHARED.filter(name => !read.has(name)), "src reads each shared name as a property").toEqual([]);
+    expect(SHARED.filter(name => nativeMembers().includes(name)), "principal is a Pi-native interface member").toEqual(["principal"]);
+    expect(family.every(name => SHAPED.has(name)) && JUDGED_FIELDS.every(name => SHAPED.has(name)), "the schema family joins the field reading").toBe(true);
+    const words = src.flatMap(file => wordsIn(readRepo(file)).map(name => `${file}:${name}`));
+    expect(words, "no src file spells a record-shaped name as a word").toEqual([]);
+    expect([...SHAPED].filter(name => !RECORD_WORDS.includes(name)), "the word reading reads every record-shaped name: the 40 members and the 50 schema names").toEqual([]);
+    expect(RECORD_WORDS.filter(name => !WORD(name).test(`const x = value.${name};`)), "the word reading reads each name (control)").toEqual([]);
+    expect([...REFUSAL_PLANTS, ...CORE_PLANTS].filter(([, , text]) => wordsIn(text).length === 0).map(([id]) => id), "and reads each refusal-#1 plant's name").toEqual([]);
+    return {
+      claim: claim("C2"),
+      roster: ABSENCE_ROSTER_FILE,
+      site: line.site,
+      sha256: line.sha256,
+      schema: line.schema,
+      members: line.members.length,
+      definitions: definitions.map(entry => `${entry.schema}:${entry.members.length}`),
+      shared: [...SHARED],
+      judged: JUDGED_FIELDS.length,
+      family: family.length,
+      words: words.length,
+      wordNames: RECORD_WORDS.length,
+    };
+  },
+  D1: () => {
+    const row = ROWS.find(entry => entry.id === "D");
+    expect([row?.status, row?.reason], "clause (d) is pinned: wb-rdlh.4 delivered its sentence, and the row carries no parked reason").toEqual(["pinned", undefined]);
+    const live = readRepo(DOCS_FILE);
+    expect(live.split(`${DOCS_ANCHOR}${CLAUSE_BULLET}`).length - 1, "the page carries clause (d)'s sentence once, as the bullet right after the eighth").toBe(1);
+    const docs = docsBinding(live);
+    expect([docs.tiled, docs.view, docs.bound], "the page's top-level token raws re-join to the page itself, and the section binds in both views").toEqual([true, true, true]);
+    expect(docs.terms, "the section's source spells out both terms of clause (d)'s sentence, in order").toEqual([...PARKED_TERMS]);
+    expect(
+      PARKED_TERMS.filter(term => !(row?.label ?? "").includes(term)),
+      "each term is spelled by row D's label, the filing's clause (d)",
+    ).toEqual([]);
+    expect(
+      docs.items.flatMap((item, index) => (item === CLAUSE_SENTENCE ? [index] : [])),
+      "clause (d)'s sentence renders as the section's ninth item, and as no other",
+    ).toEqual([8]);
+    expect([docs.source, docs.bytes], "the section's source, the page's own text over the span sectionSource binds, is the delivered source").toEqual([FROZEN_PINNED.source, FROZEN_PINNED.bytes]);
+    expect(docs.tokens, "marked's top-level tokens carry it as four raws, the list's longer than the parked list by clause (d)'s line").toEqual([...FROZEN_PINNED.tokens]);
+    expect(clauseCauses(clauseBinding(live)), "the page fails no delivered check: one list of nine items, no HTML, its items' text and its source held to the sha-256s, both terms, the parked page beneath").toEqual([]);
+    const page = basePage(live);
+    const parked = docsBinding(page);
+    expect([parked.terms, docsCauses(parked)], "with clause (d)'s bullet set aside the page is the parked page: it spells out neither term and fails no parked check").toEqual([[], []]);
+    expect(
+      [docs.bytes - parked.bytes, docs.items.slice(0, -1)],
+      "so the delivery adds that one bullet line and leaves the eight parked items as they were",
+    ).toEqual([Buffer.byteLength(CLAUSE_BULLET, "utf8"), [...parked.items]]);
+    const section = docsSection(live, DOCS_HEADING, 2, [DOCS_PARENT]);
+    const markdown = section.blocks.flatMap(block => (block.kind === "list" ? block.items.map(item => item.markdown) : []));
+    const census = readRepo(DOCS12_CENSUS);
+    expect([censusItems(census), markdown.at(-1)], "bound by the wb-gs2.3 census: its AUTH_MARKDOWN literal is the section's items, clause (d)'s sentence the ninth").toEqual([
+      markdown,
+      CLAUSE_SENTENCE,
+    ]);
+    expect(
+      BINDING_EDITS.map(([id, edit]) => [id, edit(census) !== census, JSON.stringify(censusItems(edit(census))) === JSON.stringify(markdown)]),
+      "each binding edit of that census's source edits it and unbinds the sentence",
+    ).toEqual(BINDING_EDITS.map(([id]) => [id, true, false]));
+    expect(CLAUSE_PLANTS.filter(([, edit]) => edit(live) === live).map(([id]) => id), "every clause plant edits the page").toEqual([]);
+    const delivered = CLAUSE_PLANTS.map(([id, edit]) => [id, clauseCauses(clauseBinding(edit(live)))] as const);
+    expect(delivered, "each clause plant reds D1 by every delivered check it fails").toEqual(CLAUSE_PLANTS.map(([id, , causes]) => [id, [...causes]]));
+    expect(Object.keys(CLAUSE_CHECKS).filter(check => !delivered.some(([, causes]) => causes.includes(check))), "every delivered check fails at least one clause plant").toEqual([]);
+    // The parked readings, each taken on the parked page (the page refusals #1 to #6 measured).
+    expect([parked.tiled, parked.view, parked.bound], "the parked page's top-level token raws re-join to it, and its section binds in both views").toEqual([true, true, true]);
+    expect([parked.source, parked.bytes], "its section's source, the parked page's own text over the span sectionSource binds, is the frozen source").toEqual([FROZEN_SECTION.source, FROZEN_SECTION.bytes]);
+    expect(parked.tokens, "marked's top-level tokens carry it as the four raws refusal #4's member (c) names").toEqual([...FROZEN_SECTION.tokens]);
+    expect([HEADING_LINE, FIRST_BULLET, DOCS_ANCHOR, PAGE_TITLE, SECOND_BULLET, NEXT_HEADING].map(line => page.split(line).length), "each plant anchor occurs once on the parked page").toEqual([2, 2, 2, 2, 2, 2]);
+    expect(sha256(sectionSlice(page)), "the parked page's own text from the section's heading line up to the next section's is that source").toBe(parked.source);
+    expect(DOCS_PLANTS.filter(([, edit]) => edit(page) === page).map(([id]) => id), "every docs plant edits the parked page").toEqual([]);
+    const readings = new Map(DOCS_PLANTS.map(([id, edit]) => [id, docsBinding(edit(page))] as const));
+    const readingOf = (id: string): DocsReading => {
+      const reading = readings.get(id);
+      if (reading === undefined) throw new Error(`no reading of docs plant ${id}`);
+      return reading;
+    };
+    expect(GATE_SLICES, "GATE_SLICES is what refusal #3's GATE PLANTS lines record, plant for plant").toEqual(refusal3Slices());
+    expect(refusal3Slices(`${beadNotes(BEAD)}${APPENDED_WITNESSES.WX2}`), "a later GATE PLANTS block appended (refusal #5's WX2) is not read: the first such block").toEqual(refusal3Slices());
+    const slices = Object.keys(GATE_SLICES).map(id => {
+      const slice = sectionSlice(plantEdit(id)(page));
+      return [id, slice.length, sha256(slice).slice(0, 16), readingOf(id).bytes, readingOf(id).source.slice(0, 16)];
+    });
+    expect(slices, "refusal #3's four plants are that gate's edits, slice for slice, and D1 reads each slice as the section's source").toEqual(
+      Object.entries(GATE_SLICES).map(([id, [length, digest]]) => [id, length, digest, length, digest]),
+    );
+    const spaced = sectionSlice(plantEdit("TITLE-NBSP")(page));
+    expect([readingOf("TITLE-NBSP").bytes, spaced.length + 1], "D1 counts the source's UTF-8 bytes: TITLE-NBSP's no-break space is two of them").toEqual([
+      Buffer.byteLength(spaced, "utf8"),
+      Buffer.byteLength(spaced, "utf8"),
+    ]);
+    const verdicts = DOCS_PLANTS.map(([id]) => [id, pinnedCauses(id, docsCauses(readingOf(id)))] as const);
+    expect(verdicts.filter(([, causes]) => causes.length === 0).map(([id]) => id), "every docs plant reds D1's parked reading").toEqual([]);
+    expect(verdicts, "each by every check it fails (at the nine placements refusal #4's member (a) measured without terms, every check but rendered)").toEqual(
+      DOCS_PLANTS.map(([id, , causes]) => [id, [...causes]]),
+    );
+    expect(Object.keys(DOCS_CHECKS).filter(check => !verdicts.some(([, causes]) => causes.includes(check))), "every check fails at least one plant").toEqual([]);
+    return {
+      claim: claim("D1"),
+      status: "pinned",
+      page: DOCS_FILE,
+      section: DOCS_HEADING,
+      sentence: CLAUSE_SENTENCE,
+      tiled: docs.tiled,
+      kinds: [...docs.kinds],
+      items: docs.items.length,
+      sha256: FROZEN_PINNED.sha256.slice(0, 16),
+      source: FROZEN_PINNED.source.slice(0, 16),
+      bytes: docs.bytes,
+      tokens: [...docs.tokens],
+      terms: [...docs.terms],
+      binding: DOCS12_CENSUS,
+      checks: Object.keys(CLAUSE_CHECKS),
+      plants: CLAUSE_PLANTS.map(([id]) => id),
+      parked: {
+        items: parked.items.length,
+        sha256: FROZEN_SECTION.sha256.slice(0, 16),
+        source: FROZEN_SECTION.source.slice(0, 16),
+        bytes: parked.bytes,
+        tokens: [...parked.tokens],
+        checks: Object.keys(DOCS_CHECKS),
+        plants: DOCS_PLANTS.map(([id]) => id),
+      },
+    };
+  },
+};
+
+// --- the residuals' quiet rows ----------------------------------------------------------------------------------------------------------
+const QUIET: Readonly<Record<string, () => void>> = {
+  "R-OTHER-PRODUCER": () => {
+    // Row B's reader is rf's: a reading of another producer is outside its reach, refused before any tone is judged.
+    const foreign = { contract: "furnace.run.show/v1", workspaceRoot: RF_WS, source: { ok: false, error: { code: "run_not_found" } } };
+    const error = thrownBy(() => rfTopology(foreign));
+    expect(error).toBeInstanceOf(CapabilityError);
+    expect(rfTopology(rfReading(rfDenial())).snapshots.map(snapshot => snapshot.source.provider)).toEqual(["reactivefiber"]);
+  },
+  "R-SHARED-NAME": () => {
+    const reads = fieldReads("quiet.ts", "export const read = (value: Record<string, unknown>) => [value.principal, value.status, value[\"principal\"]];\n");
+    expect(reads.map(read => read.name), "the reader sees the reads").toEqual(["principal", "status", "principal"]);
+    expect(shaped(reads), "and judges neither one-word member").toEqual([]);
+    expect(SHARED.filter(name => JUDGED_FIELDS.includes(name))).toEqual([]);
+  },
+  "R-DYNAMIC-KEY": () => {
+    const quiet = [
+      'import { RECEIPT_KEY } from "outside-package";',
+      'const key = "guardOr" + "RelyReceipt";',
+      `export const read = (value: Record<string, unknown>, name: string) => [value[key], value[name], value[\`${"$"}{"proof"}Tier\`], value[RECEIPT_KEY]];`,
+      'export const find = (value: object) => Object.keys(value).find(name => name.endsWith("RelyReceipt") || /^admission/.test(name));',
+      "",
+    ].join("\n");
+    expect(quiet).toContain("value[`$" + '{"proof"}Tier`]');
+    expect(shaped(fieldReads("quiet.ts", quiet)), "a key the source never spells whole escapes the field reading").toEqual([]);
+    expect(wordsIn(quiet), "and the word reading").toEqual([]);
+    const literal = "export const read = (value: Record<string, unknown>) => [value[\"guardOrRelyReceipt\"], value[`proofTier`]];\n";
+    expect(shaped(fieldReads("plant.ts", literal)).map(read => read.name), "the same keys spelled as literals are read").toEqual(["guardOrRelyReceipt", "proofTier"]);
+    // Refusal #2's L2-C4 and L2-C10 (its F3): a template whose head spells the name whole before a substitution is neither a literal
+    // nor a word (the word reading's boundary counts the substitution's $ as an identifier character), in a fresh module and
+    // appended to the decision core's own text.
+    const headWhole = (name: string): string => `export const read = (value: Record<string, unknown>) => value[\`${name}${"$"}{""}\`];\n`;
+    expect(headWhole("guardOrRelyReceipt")).toContain("value[`guardOrRelyReceipt$" + '{""}`]');
+    expect(shaped(fieldReads("quiet.ts", headWhole("guardOrRelyReceipt"))), "a template head spelling a member whole escapes the field reading").toEqual([]);
+    expect(wordsIn(headWhole("guardOrRelyReceipt")), "and the word reading").toEqual([]);
+    const core = `${readRepo(CORE)}\n${headWhole("TemporalRelianceCertificateV1")}`;
+    expect(shaped(fieldReads(CORE, core)), "a template head spelling a schema name whole, appended to the core, escapes the field reading").toEqual([]);
+    expect(wordsIn(core), "and the word reading").toEqual([]);
+    // Refusal #3's GC-5a (its F4): the whole name in a pattern before its end anchor is neither a literal nor a word (the word reading's
+    // boundary counts the anchor's $ as an identifier character); the same pattern without the anchor spells the name as a word.
+    const anchored = "export const find = (value: object) => Object.keys(value).find(name => /^guardOrRelyReceipt$/.test(name));\n";
+    expect(anchored).toContain("/^guardOrRelyReceipt$/");
+    expect(shaped(fieldReads("quiet.ts", anchored)), "the whole name before a pattern's end anchor escapes the field reading").toEqual([]);
+    expect(wordsIn(anchored), "and the word reading").toEqual([]);
+    expect(wordsIn(anchored.replace("$/", "/")), "without the end anchor the word reading reads it").toEqual(["guardOrRelyReceipt"]);
+  },
+  "R-PROSE-RECORD": () => {
+    expect(lineKinds().prose, "29 record lines define their records in prose").toBe(29);
+    const reads = fieldReads("quiet.ts", "export const read = (value: Record<string, unknown>) => value.expiryTriggers;\n");
+    expect(reads.map(read => read.name)).toEqual(["expiryTriggers"]);
+    expect(shaped(reads), "a member named only in another record's prose is not judged").toEqual([]);
+  },
+  "R-UNVENDORED-MEMBERS": () => {
+    const { identifiers, prose, headings } = lineKinds();
+    expect([identifiers, prose, headings.length], "3 identifier lines, 29 prose lines, 18 headings: the roster's 50").toEqual([3, 29, 18]);
+    expect(headings, "a heading's record lists its members on a line the roster does not vendor").toContain("03-contracts-api.md:18");
+    const reads = fieldReads("quiet.ts", "export const read = (value: Record<string, unknown>) => value.closureVerdict;\n");
+    expect(reads.map(read => read.name)).toEqual(["closureVerdict"]);
+    expect(shaped(reads), "ObservationCertificateV1's closureVerdict (03-contracts-api.md:20, unvendored) is not judged").toEqual([]);
+  },
+  "R-HOLLOW-BINDING": () => {
+    // The provenance block with every case body emptied: the binding still reads it bound, so A1 is no strength proof.
+    const hollow = [
+      "/**",
+      " * wb-pjj (hollowed copy)",
+      " */",
+      'const NEGATIVE_FIXTURES = JSON.parse(readFileSync(new URL("./fixtures/cac-authorization-input-roster.json", import.meta.url), "utf8"));',
+      `describe(${JSON.stringify(PROVENANCE_SUITE)}, () => {`,
+      '  it("a", () => { void NEGATIVE_FIXTURES; void PLACEMENTS; void DENIED_REQUESTS; void decideOver; void minted; });',
+      '  it("b", () => {});',
+      '  it("c", () => {});',
+      '  it.each(SUBJECTS)("d", () => {});',
+      "});",
+      "",
+    ].join("\n");
+    const binding = provenanceBinding(hollow);
+    expect([binding.header, binding.roster, binding.suites, binding.registrations, binding.reads], "a hollowed block still reads bound").toEqual(["wb-pjj", 1, 1, 4, [...BLOCK_READS]]);
+  },
+  "R-HOLLOW-IMPL": () => {
+    // An IMPL entry that names a reader without using it (a constant witness beside `void rfTopology`) still passes SELF-READ.
+    const hollow = 'const IMPL = { B3: () => { void rfTopology; return { claim: "0000000000000000", readings: 47 }; } };\n';
+    const reads = implReads(hollow);
+    expect(reads.B3, "the hollow entry names a reader").toContain("rfTopology");
+    expect(selfReadDefects(reads), "and the self-read reads it bound").toEqual([]);
+  },
+  "R-OTHER-SECTION": () => {
+    // The sentence placed outside the section's source leaves D1's reading as it was: under another section; as a level-2 heading
+    // placed after the section's last block (refusal #2's L2-D7, the setext form, and the ATX form) or a level-1 one, which starts
+    // another section; as the summary of a details element wrapped around the section, which sits in the section before it; under the
+    // section's heading text set as a level-3 heading, which the binding reads as no section heading; and as the title of a definition
+    // that no link of the section names. Each such page is one its tokens tile.
+    const page = readRepo(DOCS_FILE);
+    const next = "\n## Credential boundaries\n";
+    const elsewhere: readonly (readonly [string, string])[] = [
+      ["a paragraph under Credential boundaries", page.replace(next, () => `${next}\n${PARKED_SENTENCE}\n`)],
+      ["a setext level-2 heading after the list (L2-D7)", page.replace(next, () => `\n${PARKED_SENTENCE}\n---\n${next}`)],
+      ["an ATX level-2 heading after the list", page.replace(next, () => `\n## ${PARKED_SENTENCE}\n${next}`)],
+      ["an ATX level-1 heading after the list", page.replace(next, () => `\n# ${PARKED_SENTENCE}\n${next}`)],
+      [
+        "a details element's summary wrapped around the section",
+        page.replace(HEADING_LINE, () => `<details><summary>${PARKED_SENTENCE}</summary>\n\n${HEADING_LINE}`).replace("\n## Input and output hardening\n", () => "\n</details>\n\n## Input and output hardening\n"),
+      ],
+      ["the section's heading text as a level-3 heading after the page's last line, which starts no section of its own", `${page}\n### ${DOCS_HEADING}\n\n${PARKED_SENTENCE}\n`],
+      ["a definition after the page's last line that no link of the section names", `${page}\n[gate-free]: #auditability "${PARKED_SENTENCE}"\n`],
+    ];
+    for (const [form, planted] of elsewhere) {
+      expect([planted === page, planted.includes(PARKED_SENTENCE)], `${form}: the plant is on the page`).toEqual([false, true]);
+      expect(docsBinding(planted), `${form}: D1's reading of its section is the reading without it`).toEqual(docsBinding(page));
+    }
+  },
+  "R-UNREAD-PROVENANCE": () => {
+    // Refusal #5's direct escapes, each made in memory on this file's own source: the four judgements read each as they read this file.
+    const self = readFileSync(HERE, "utf8");
+    for (const [form, edits, spelled] of UNREAD_ESCAPES) {
+      const text = edited(edits, self);
+      expect(text.split(spelled).length - self.split(spelled).length, `${form}: the edited source spells the form once more than this file`).toBe(1);
+      expect(provenanceDefects(provenance(text)), `${form}: the four judgements read it as they read this file`).toEqual([]);
+    }
+  },
+  "R-PLANT-EDIT": () => {
+    // A plant's edit swapped for another D1 reads alike, and a refusal #1 module swapped for another the field reading flags alike.
+    expect(PLANT_SWAPS.map(([swap, id]) => `${swap}:${id}`), "the swaps' frozen shape").toEqual([
+      "W-MEMBER-SWAP-A:G-T-QUOTE-TABLE",
+      "W-MEMBER-SWAP-B:G-S-ITEM-DUPDEF-NOTITLE",
+      "D-BLOCKQUOTE-SWAP:D-BLOCKQUOTE",
+      "L2-D1-SWAP:L2-D1",
+    ]);
+    const page = basePage();
+    for (const [swapId, id, change, swapped] of PLANT_SWAPS) {
+      const [plant, swap] = [plantEdit(id)(page), swapped(page)];
+      expect([swap === plant, swap === page], `${swapId} (${id}, ${change}): the swap edits the page, otherwise than the plant`).toEqual([false, false]);
+      const [ofPlant, ofSwap] = [docsBinding(plant), docsBinding(swap)];
+      expect([ofSwap.tiled, pinnedCauses(id, docsCauses(ofSwap))], `${swapId} (${id}, ${change}): D1 reads the swap as it reads the plant`).toEqual([ofPlant.tiled, pinnedCauses(id, docsCauses(ofPlant))]);
+    }
+    const [id, swapped] = MODULE_SWAP;
+    const module = REFUSAL_PLANTS.find(([plant]) => plant === id);
+    expect([swapped === module?.[2], flagged("plant.ts", swapped)], `${id} with its key parenthesized twice: the field reading flags it at ${id}'s form`).toEqual([false, [module?.[1]]]);
+  },
+};
+
+// --- the self-read ------------------------------------------------------------------------------------------------------------------------
+/** The identifiers each IMPL entry names, read from this file's own source. */
+function implReads(text: string = readFileSync(HERE, "utf8")): Record<string, string[]> {
+  const source = ts.createSourceFile(SELF, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const reads: Record<string, string[]> = {};
+  const visit = (node: ts.Node): void => {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === "IMPL" && node.initializer !== undefined && ts.isObjectLiteralExpression(node.initializer)) {
+      for (const property of node.initializer.properties) {
+        if (!ts.isPropertyAssignment(property) || !ts.isIdentifier(property.name)) continue;
+        const names = new Set<string>();
+        const collect = (inner: ts.Node): void => {
+          if (ts.isIdentifier(inner)) names.add(inner.text);
+          ts.forEachChild(inner, collect);
+        };
+        collect(property.initializer);
+        reads[property.name.text] = [...names].sort();
+      }
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return reads;
+}
+/** The pins whose IMPL entry names no reader, or names the roster (the SELF-READ judgement). */
+const selfReadDefects = (reads: Readonly<Record<string, readonly string[]>>): string[] =>
+  Object.entries(reads)
+    .filter(([, names]) => !names.some(name => READERS.includes(name)) || names.includes("ROSTER"))
+    .map(([pin]) => pin);
+/** The residual ids this file's header names, in order (its RESIDUALS paragraph): QUIET's and the roster's anchor outside both. */
+function headerResiduals(text: string = readFileSync(HERE, "utf8")): string[] {
+  const header = /^\/\*\*([\s\S]*?)\*\//.exec(text)?.[1] ?? "";
+  const paragraph = /\n \* RESIDUALS \(([\s\S]*?)\n \* Display paths added:/.exec(header)?.[1] ?? "";
+  return [...new Set(paragraph.match(/\bR-[A-Z]+(?:-[A-Z]+)*\b/g) ?? [])];
+}
+/** The binding placements this file's header claims, in order: the W- and WD- ids its PROVENANCE paragraph's placement sentence names
+ * (from 'the binding controls make' to '; a declaration of either name at any other placement'), read with the comment's line breaks
+ * joined. */
+function headerPlacements(text: string = readFileSync(HERE, "utf8")): string[] {
+  const header = (/^\/\*\*([\s\S]*?)\*\//.exec(text)?.[1] ?? "").replace(/\n \* */g, " ");
+  const sentence = /the binding controls make \(BINDING_PLACEMENTS, each made once with each name\): ([\s\S]*?); a declaration of either name at any other placement/.exec(header)?.[1] ?? "";
+  return [...new Set(sentence.match(/\bWD?-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g) ?? [])];
+}
+/** The sub-form controls this file's header claims, in order: the WT7- and SF- ids its PROVENANCE paragraph's sub-form sentence names
+ * (from '(SUB_FORMS, each made once with each name): ' to '; the first eight are'), read with the comment's line breaks joined. */
+function headerSubForms(text: string = readFileSync(HERE, "utf8")): string[] {
+  const header = (/^\/\*\*([\s\S]*?)\*\//.exec(text)?.[1] ?? "").replace(/\n \* */g, " ");
+  const sentence = /\(SUB_FORMS, each made once with each name\): ([\s\S]*?); the first eight are/.exec(header)?.[1] ?? "";
+  return [...new Set(sentence.match(/\b(?:WT7|SF)-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g) ?? [])];
+}
+/** The labels tile the clause when each follows the last with only white space, commas, semicolons and list markers between. */
+const LIST_SEPARATOR = /^(?:[\s,;]|\([a-z]\)(?=\s))*$/;
+/** A row's pin quotes tile its label with the same separators and a spaced hyphen. */
+const PIN_SEPARATOR = /^(?:[\s,;]|-(?=\s))*$/;
+function tiled(text: string, parts: readonly string[], separator: RegExp): boolean {
+  let cursor = 0;
+  for (const part of parts) {
+    const at = text.indexOf(part, cursor);
+    if (at < 0 || !separator.test(text.slice(cursor, at))) return false;
+    cursor = at + part.length;
+  }
+  return separator.test(text.slice(cursor));
+}
+const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null && !Array.isArray(value);
+
+const JUDGED = new Set<string>();
+const REACHED = new Set<string>();
+const QUIETED = new Set<string>();
+
+describe("wb-rdlh.1 Library design-program authorization-input census (LIBRARY-COMPOSITIONAL-AUTONOMOUS-COMPUTATION-R1)", () => {
+  it("judged set, frozen shape: ROWS pins its own row/pin-count and status literals", () => {
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:3", "C:2", "D:1"]);
+    expect(ROWS.map(row => `${row.id}:${row.status}`)).toEqual(["A:pinned", "B:pinned", "C:pinned", "D:pinned"]);
+    expect(ROWS.filter(row => (row.status === "parked") !== (row.reason !== undefined)).map(row => row.id), "a reason exactly on a parked row").toEqual([]);
+  });
+
+  it("judged set, roster: ROWS, the IMPL keys and the residuals equal the roster's copy", () => {
+    expect(ROWS).toEqual(ROSTER.rows.map(({ pins, ...row }) => ({ ...row, pins: pins.map(pin => ({ id: pin.id, quote: pin.quote })) })));
+    expect(Object.keys(IMPL).sort()).toEqual(pinIds());
+    expect([ROSTER.bead, ROSTER.producer, ROSTER.filing.export, ROSTER.record.roster]).toEqual([BEAD, "Library", EXPORT_FILE, ABSENCE_ROSTER_FILE]);
+    expect(ROSTER.fixtures.map(fixture => fixture.id)).toEqual(["N1", "N2", "N3"]);
+    expect(ROSTER.residuals.map(item => item.id)).toEqual(Object.keys(QUIET));
+    expect(headerResiduals(), "the header's RESIDUALS paragraph names exactly the quiet rows, in order").toEqual(Object.keys(QUIET));
+  });
+
+  it("judged set, outside anchors: the owner filing tiles the labels and yields the quote the first vendored line holds", () => {
+    const text = filing(BEAD, ROSTER.filing.paragraphs);
+    expect(sha256(text), "the owner filing is the text the roster measured").toBe(ROSTER.filing.sha256);
+    expect(text.includes(`@${ROSTER.pin.slice(0, 12)}`), "the filing cites the Library pin").toBe(true);
+    expect(text.includes(`${ROSTER.program}/`), "the filing cites the roster's program directory").toBe(true);
+    expect(tiled(STATEMENT.acceptance, ROWS.map(row => row.label), LIST_SEPARATOR), "the row labels tile the filing's acceptance clause").toBe(true);
+    expect(ROWS.map(row => tiled(row.label, row.pins.map(pin => pin.quote), PIN_SEPARATOR)), "each row's quotes tile its label").toEqual(ROWS.map(() => true));
+    expect(ROSTER.citations.map(span => [span.site, sha256(Buffer.from(span.textBase64, "base64")) === span.sha256]), "each vendored line is the line measured at the pin").toEqual(
+      ROSTER.citations.map(span => [span.site, true]),
+    );
+    const [quote] = ROSTER.citations;
+    expect([quote?.site, quote === undefined ? "" : vendored(quote)], "the first vendored line is the filing's quote, verbatim").toEqual([STATEMENT.quoteSite, STATEMENT.quote]);
+  });
+
+  it("judged set, outside anchors: refusal #4's UNMET members (a), (b) and (c) are D1's member plants, the checks it pins at the nine placements (a) measured without terms and its frozen raws", () => {
+    const ids = [...MEMBERS.a, ...MEMBERS.b];
+    expect([MEMBERS.a.length, MEMBERS.b.length, MEMBERS.measured.length], "member (a) names sixteen plants and measures nine without terms; member (b) names three").toEqual([16, 3, 9]);
+    expect(DOCS_PLANTS.slice(-ids.length).map(([id]) => id), "the plants members (a) and (b) name are the last docs plants, in the members' order").toEqual(ids);
+    expect(DOCS_PLANTS.filter(([id]) => ids.includes(id)).length, "and no other docs plant takes one of their ids").toBe(ids.length);
+    expect(refusal4Members(`${beadNotes(BEAD)}${APPENDED_WITNESSES.WX1}`), "a later note's member lines appended (refusal #5's WX1) are not read: the first line of each").toEqual(MEMBERS);
+    const page = basePage();
+    const causes = (id: string): string[] => docsCauses(docsBinding(plantEdit(id)(page)));
+    expect(MEMBERS.a.filter(id => !causes(id).includes("source") || !causes(id).includes("terms")), "each of member (a)'s placements reds D1 by source and by terms").toEqual([]);
+    const ordered = (checks: readonly string[]): string[] => Object.keys(DOCS_CHECKS).filter(check => checks.includes(check));
+    expect(MEMBERS.measured.map(([id]) => [id, pinnedCauses(id, causes(id))]), "the nine member (a) measured without terms: now by terms, every other check but rendered as that refusal measured it").toEqual(
+      MEMBERS.measured.map(([id, checks]) => [id, ordered([...checks.filter(check => check !== "rendered"), "terms"])]),
+    );
+    expect(
+      MEMBERS.b.map(id => [id, docsBinding(plantEdit(id)(page)).tiled, causes(id)]),
+      "member (b): nested in the eighth bullet the repeated definition leaves the page tiled and reds by source, by terms when titled; at top level, untiled",
+    ).toEqual([
+      ["G-S-ITEM-DUPDEF", true, ["source", "terms"]],
+      ["G-S-ITEM-DUPDEF-NOTITLE", true, ["source"]],
+      ["C-TOP-DUPDEF", false, ["untiled", "source", "terms"]],
+    ]);
+    expect([MEMBERS.raws, MEMBERS.bytes], "member (c)'s four raws and their sum are FROZEN_SECTION's").toEqual([[...FROZEN_SECTION.tokens], FROZEN_SECTION.bytes]);
+    expect([docsBinding(page).tokens, MEMBERS.raws.reduce((sum, raw) => sum + Number(raw.split(":")[1]), 0)], "and the parked page's section tokens, their raws' lengths summing to the source's bytes").toEqual([
+      [...FROZEN_SECTION.tokens],
+      FROZEN_SECTION.bytes,
+    ]);
+  });
+
+  it("judged set, outside anchors: every witness and escape refusal #5's UNMET record names is a provenance form, an escape, a swap or an appended-note witness this census holds", () => {
+    const named = refusal5Witnesses();
+    expect(named.length, "refusal #5's UNMET record names thirteen witnesses and escapes").toBe(13);
+    const holder = (id: string): readonly string[] => {
+      if (id.startsWith("E-")) return UNREAD_ESCAPES.map(([form]) => form);
+      if (id.startsWith("WX")) return Object.keys(APPENDED_WITNESSES);
+      if (id.startsWith("W-MEMBER-SWAP-")) return PLANT_SWAPS.map(([swap]) => swap);
+      return PROVENANCE_FORMS.map(([form]) => form);
+    };
+    expect(named.filter(id => !holder(id).includes(id)), "each an R-UNREAD-PROVENANCE escape (E-), an appended-note witness (WX), an R-PLANT-EDIT swap (W-MEMBER-SWAP-) or a provenance form (W-)").toEqual([]);
+    expect(refusal5Witnesses(`${beadNotes(BEAD)}${APPENDED_RECORD}`), "a later quotation of the record appended is not read: the first such block").toEqual(named);
+  });
+
+  it("judged set, outside anchors: every witness refusal #6's UNMET record names is a binding placement this census holds", () => {
+    const named = refusal6Witnesses();
+    expect(named.length, "refusal #6's UNMET record names ten witnesses").toBe(10);
+    const placements = BINDING_PLACEMENTS.map(([placement]) => placement);
+    expect(named.filter(id => !placements.includes(id)), "each a binding placement (W- or WD-)").toEqual([]);
+    expect(refusal6Witnesses(`${beadNotes(BEAD)}${APPENDED_RECORD6}`), "a later quotation of the record appended is not read: the first such block").toEqual(named);
+  });
+
+  it("judged set, outside anchors: every identity swap and sub-form witness wb-vx6i's record names is an identity swap or a sub-form control this census holds", () => {
+    const swaps = followUpIds(F1_LEAD, "SC7");
+    const witnesses = followUpIds(F2_LEAD, "WT7");
+    expect([swaps.length, witnesses.length], "wb-vx6i's F1 line names six identity swaps and its F2 line eight sub-form witnesses").toEqual([6, 8]);
+    expect(swaps, "each an identity swap this census holds, in the record's order").toEqual(IDENTITY_SWAPS.map(([swap]) => swap));
+    expect(witnesses, "each a sub-form control this census holds, in the record's order (the ninth control, SF-, is this census's own)").toEqual(
+      SUB_FORMS.map(([form]) => form).filter(form => form.startsWith("WT7-")),
+    );
+    const later = `${beadNotes(FOLLOW_UP)}\n\n${F1_LEAD} a later quotation (SC7-QUOTED-ONLY).\n${F2_LEAD} a later quotation (WT7-QUOTED-ONLY).`;
+    expect([followUpIds(F1_LEAD, "SC7", later), followUpIds(F2_LEAD, "WT7", later)], "a later line appended is not read: the first such line").toEqual([swaps, witnesses]);
+    const quoting = `a note quoting ${F1_LEAD} (SC7-MIDLINE-ONLY) and ${F2_LEAD} (WT7-MIDLINE-ONLY)\n${beadNotes(FOLLOW_UP)}`;
+    expect([followUpIds(F1_LEAD, "SC7", quoting), followUpIds(F2_LEAD, "WT7", quoting)], "a line quoting a lead after other text is not read: the line opens with it").toEqual([swaps, witnesses]);
+  });
+
+  it("judged set, self-read: every IMPL entry names a reader and not the roster", () => {
+    const reads = implReads();
+    expect(Object.keys(reads).sort()).toEqual(pinIds());
+    expect(selfReadDefects(reads)).toEqual([]);
+  });
+
+  it("judged set, provenance: one import declaration binds the landed section-source reader's sectionSource and termsStated as values, docsBinding calls both by name, no declaration of the five kinds takes either name at a binding placement and no import declaration names marked", { timeout: 180_000 }, () => {
+    const read = provenance();
+    expect(read.reader, "one import declaration of the reader, binding exactly sectionSource and termsStated as values").toEqual([["sectionSource", "termsStated"]]);
+    expect(read.marked, "no import declaration of this file names marked").toBe(0);
+    expect(["sectionSource", "termsStated"].filter(name => !read.calls.includes(name)), "docsBinding calls both by name").toEqual([]);
+    expect(read.declared.filter(name => name === "sectionSource" || name === "termsStated"), "no declaration this file's walk collects takes either name").toEqual([]);
+    expect(provenanceDefects(read), "so this file fails none of the four judgements the controls replay").toEqual([]);
+    const control = provenance(
+      [
+        'import { lexer } from "marked";',
+        'import { sectionSource, termsStated } from "./helpers/docs-section-source.js";',
+        'function docsBinding(markdown: string) { return [sectionSource(markdown, "x"), lexer(markdown)]; }',
+        "function elsewhere(text: string) { return termsStated(text, []); }",
+        "const termsStated = 0;",
+        "",
+      ].join("\n"),
+    );
+    expect([control.reader, control.marked, control.calls, control.declared.filter(name => name === "termsStated")], "the reader's control: an import from marked counted, a call outside docsBinding not read, a binding of the name read").toEqual([
+      [["sectionSource", "termsStated"]],
+      1,
+      ["sectionSource", "lexer"],
+      ["termsStated"],
+    ]);
+    expect(PROVENANCE_FORMS.map(([form, edits, judgements]) => `${form}:${edits.length}:${judgements.join("+") || "none"}`), "the forms' frozen shape").toEqual([
+      "W-FUNCDECL:1:binding",
+      "W-PARAM:1:binding",
+      "W-BINDING:1:binding",
+      "W-CLASS2:1:binding",
+      "W-VARDECL:1:binding",
+      "WD-LET:1:binding",
+      "W-VAR:1:binding",
+      "WD-BLOCK:2:binding",
+      "WD-ARROW:2:binding",
+      "WD-ARROW-PARAM:2:binding",
+      "WD-NESTED-PATTERN:1:binding",
+      "W-RENAMED-ELEMENT:1:binding",
+      "W-ARRAY-ELEMENT:1:binding",
+      "W-CATCH:1:binding",
+      "W-FOR-OF:1:binding",
+      "W-FUNCEXPR-BODY:2:binding",
+      "W-METHOD-BODY:2:binding",
+      "W-TOP:1:binding",
+      "W-TYPEIMPORT3:2:marked",
+      "W-MARKED-VALUE:1:marked",
+      "W-MARKED-TYPE-SPECIFIER:1:marked",
+      "W-MARKED-NAMESPACE:1:marked",
+      "W-MARKED-DEFAULT:1:marked",
+      "W-MARKED-SIDE-EFFECT:1:marked",
+      "W-VALUES-TYPE:2:none",
+      "W-READER-TYPE-ONLY:1:reader",
+      "W-READER-RENAMED:2:reader+calls",
+      "W-NO-TERMS-CALL:1:calls",
+    ]);
+    expect(
+      PROVENANCE_FORMS.map(([form, edits]) => [form, provenanceDefects(provenance(edited(edits)))]),
+      "each form, one edit of this file's own source made in memory, reds exactly the judgements it names (refusal #5's witnesses among them)",
+    ).toEqual(PROVENANCE_FORMS.map(([form, , judgements]) => [form, [...judgements]]));
+    expect(
+      BINDING_PLACEMENTS.map(([placement, place]) => [
+        placement,
+        READER_NAMES.map(name => {
+          const placed = provenance(edited(place(name)));
+          return [placed.declared.filter(declared => declared === name).length, provenanceDefects(placed)];
+        }),
+      ]),
+      "each binding placement, made once with each of the reader's two names, declares that name once and reds the binding judgement alone",
+    ).toEqual(BINDING_PLACEMENTS.map(([placement]) => [placement, READER_NAMES.map(() => [1, ["binding"]])]));
+    expect([...READER_NAMES].sort(), "the placements are made with the two names the reader's one import declaration binds").toEqual([...(read.reader[0] ?? [])].sort());
+    expect(
+      BINDING_PLACEMENTS.map(([placement, place]) => [placement, ...new Set(READER_NAMES.flatMap(name => placementShape(edited(place(name)), name)))].join(": ")),
+      "each binding placement declares, alike with either name, the one declaration its row names (placementShape)",
+    ).toEqual([
+      "W-FUNCDECL: function in docsBinding",
+      "W-PARAM: parameter in docsBinding",
+      "W-BINDING: shorthand element in docsBinding",
+      "W-CLASS2: class in plantEdit",
+      "W-VARDECL: const in docsBinding",
+      "WD-LET: let in docsBinding",
+      "W-VAR: var in docsBinding",
+      "WD-BLOCK: const in block in docsBinding",
+      "WD-ARROW: const in arrow in docsBinding",
+      "WD-ARROW-PARAM: parameter in arrow in docsBinding",
+      "WD-NESTED-PATTERN: nested shorthand element in docsBinding",
+      "W-RENAMED-ELEMENT: renamed element in docsBinding",
+      "W-ARRAY-ELEMENT: array element in docsBinding",
+      "W-CATCH: catch variable in docsBinding",
+      "W-FOR-OF: for-of const in docsBinding",
+      "W-FUNCEXPR-BODY: const in function expression in docsBinding",
+      "W-METHOD-BODY: const in method in docsBinding",
+      "W-TOP: const in top",
+    ]);
+    expect(headerPlacements(), "the header's placement sentence claims exactly the binding placements, in order").toEqual(BINDING_PLACEMENTS.map(([placement]) => placement));
+    expect(headerSubForms(), "the header's sub-form sentence claims exactly the sub-form controls, in order").toEqual(SUB_FORMS.map(([form]) => form));
+    expect(
+      SUB_FORMS.map(([form, , make]) => [
+        form,
+        READER_NAMES.map(name => {
+          const placed = provenance(edited(make(name)));
+          return [placed.declared.filter(declared => declared === name).length, provenanceDefects(placed)];
+        }),
+      ]),
+      "each sub-form control, made once with each of the reader's two names, declares that name once and reds the binding judgement alone",
+    ).toEqual(SUB_FORMS.map(([form]) => [form, READER_NAMES.map(() => [1, ["binding"]])]));
+    expect(
+      SUB_FORMS.map(([form, , make]) => `${form}: ${alike(placementShape, make)}`),
+      "each sub-form control declares, alike with either name, at the frozen shape of the placement it stands at (placementShape)",
+    ).toEqual(SUB_FORMS.map(([form, placement]) => `${form}: ${alike(placementShape, placementEdits(placement))}`));
+    expect(
+      SUB_FORMS.map(([form, placement, make]) => `${form} at ${placement}: ${alike(subFormOf, placementEdits(placement))} -> ${alike(subFormOf, make)}`),
+      "each sub-form control differs from its placement's binding control in the sub-form parts subFormOf reads, alike with either name",
+    ).toEqual([
+      "WT7-FUNCDECL-UNTYPED at W-FUNCDECL: a return type -> no return type",
+      "WT7-VARDECL-TYPED at W-VARDECL: no type annotation -> a type annotation",
+      "WT7-CATCH-TYPED at W-CATCH: no type annotation -> a type annotation",
+      "WT7-ARROW-PARAM-UNTYPED at WD-ARROW-PARAM: a type annotation in an arrow function with a return type -> no type annotation in an arrow function with no return type",
+      "WT7-BINDING-DEFAULT at W-BINDING: no default -> a default",
+      "WT7-CLASS-EMPTY at W-CLASS2: members -> no member",
+      "WT7-ARROW-UNTYPED at WD-ARROW: no type annotation in an arrow function with a return type -> no type annotation in an arrow function with no return type",
+      "WT7-METHOD-UNTYPED at W-METHOD-BODY: no type annotation in a method with a return type -> no type annotation in a method with no return type",
+      "SF-FUNCEXPR-UNTYPED at W-FUNCEXPR-BODY: no type annotation in a function expression with a return type -> no type annotation in a function expression with no return type",
+    ]);
+    expect(
+      IDENTITY_SWAPS.map(([swap, placement, make]) => [swap, READER_NAMES.every(name => edited(make(name)) !== edited(placementEdits(placement)(name))), alike(placementShape, make)]),
+      "each of wb-vx6i's identity swaps respells its placement's binding control and reads that placement's frozen shape alike (placementShape reads no part a swap changes: NOT CLAIMED as read back)",
+    ).toEqual(IDENTITY_SWAPS.map(([swap, placement]) => [swap, true, alike(placementShape, placementEdits(placement))]));
+    expect(IDENTITY_SWAPS.map(([swap, placement]) => `${swap}:${placement}`), "the identity swaps' frozen shape").toEqual([
+      "SC7-W-VARDECL-IN-IF:W-VARDECL",
+      "SC7-W-FUNCDECL-ASYNC:W-FUNCDECL",
+      "SC7-W-TOP-EXPORT:W-TOP",
+      "SC7-W-BINDING-LET:W-BINDING",
+      "SC7-W-METHOD-AS-CLASS-METHOD:W-METHOD-BODY",
+      "SC7-WD-ARROW-UNCALLED:WD-ARROW",
+    ]);
+    expect(
+      ["W-VALUES-TYPE", "W-READER-TYPE-ONLY"].map(form => provenance(edited(formEdits(form))).reader),
+      "a type-only specifier of the reader, and a type-only import declaration of it, bind no value",
+    ).toEqual([[["sectionSource", "termsStated"]], [["sectionSource", "termsStated"], []]]);
+  });
+
+  for (const row of ROWS) {
+    describe(`${row.id} ${row.label}`, () => {
+      for (const pin of row.pins) {
+        it(pin.id, { timeout: 180_000 }, () => {
+          JUDGED.add(pin.id);
+          const impl = IMPL[pin.id];
+          expect(impl).toBeTypeOf("function");
+          const witness = impl === undefined ? null : impl();
+          expect(isRecord(witness) ? witness.claim : undefined).toBe(claim(pin.id));
+          const held = ROSTER.rows.flatMap(entry => entry.pins).find(entry => entry.id === pin.id);
+          expect(witness).toEqual(held?.witness);
+          REACHED.add(pin.id);
+        });
+      }
+    });
+  }
+
+  describe("residuals: each named family's quiet row", () => {
+    for (const [id, quiet] of Object.entries(QUIET)) {
+      it(id, () => {
+        quiet();
+        QUIETED.add(id);
+      });
+    }
+  });
+
+  it("records: every pin and every quiet row ran its own case to the end", () => {
+    expect([...JUDGED].sort()).toEqual(pinIds());
+    expect([...REACHED].sort()).toEqual(pinIds());
+    expect([...QUIETED].sort()).toEqual(Object.keys(QUIET).sort());
+  });
+});
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

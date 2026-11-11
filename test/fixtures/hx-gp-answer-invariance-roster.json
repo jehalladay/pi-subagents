@@ -331,6 +331,11 @@
    }
   ],
   "residualsLead": "RESIDUALS (named, each with a pinned quiet row in row R): ",
+  "mapLead": "ACCEPTANCE MAP. ",
+  "anchorsLead": "\nANCHORS: ",
+  "unanchored": [
+   "M"
+  ],
   "sdkKeeps": {
    "coverage[0].cause": "kept",
    "coverage[0].scope": "kept",

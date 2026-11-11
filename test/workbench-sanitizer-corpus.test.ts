@@ -349,13 +349,19 @@ const HX_SCOPE: ObservationScope = { workspace: "/tmp/hyperunix-observer-ws", pr
 function hyperunixTexts(raw: string): string[] {
   const reading: JsonValue = {
     contract: "hyperunix.find/v1",
-    source: { representation: "hyperunix.result/1", execution_status: { kind: "incomplete" }, coverage_summary: { licenses_absence: false }, rows: [], rows_retained: true, operation: raw },
+    source: {
+      representation: "hyperunix.result/1", execution_status: { kind: "incomplete" }, rows: [], rows_retained: true, operation: raw,
+      // wb-gwr.2: the relayed facet fields carry the probe too - the view, a listed provider and its version, a conflict code, a region.
+      coverage_summary: { licenses_absence: false, incomplete_regions: [{ scope: raw, target: raw }] },
+      view: raw, evidence: { providers: [raw], provider_versions: { [raw]: raw } }, diagnostics: [{ code: `HX-SCHEMA-CONFLICT ${raw}`, message: raw }],
+    },
     workspaceRoot: HX_SCOPE.workspace,
     runtime: { version: "0.1.0", binarySha256: "3501da39d77f559548590e59d3fe0ed3b742285520f3bd854c95f977a754fc9d" },
   };
   const context: HyperUnixTopologyContext = { scope: HX_SCOPE, target: { kind: "hx.fs/regular-file", root: raw }, capturedAt: "2026-10-15T08:40:00Z", observedAt: "2026-10-15T08:40:01Z" };
   const topology = hyperunixTopology(reading, context);
-  return [...topology.snapshots.flatMap(snapshot => [snapshot.node.title, snapshot.node.statusText]), ...topology.diagnostics];
+  const facetTexts = (topology.facets ?? []).flatMap(facet => Object.entries(facet).filter(([key]) => key !== "kind").map(([, text]) => String(text)));
+  return [...topology.snapshots.flatMap(snapshot => [snapshot.node.title, snapshot.node.statusText]), ...topology.diagnostics, ...facetTexts];
 }
 
 function claudeTexts(raw: string): string[] {
@@ -961,6 +967,15 @@ describe("wb-72c native-load notify row is not vacuous", () => {
   it("a plain load refusal reaches the notify path and comes back as the reason in the warning", async () => {
     const plain = "wb-72c obviously fake optional install missing";
     expect((await nativeLoadNotifyTexts(plain))[0]).toContain(`native modules failed to load (${plain})`);
+  });
+});
+
+describe("wb-gwr.2 site 3 facet texts are not vacuous", () => {
+  it("a plain probe reaches the view, the listed provider and its version, the region scope and target, and the conflict code", () => {
+    const plain = "wb-gwr.2 plain facet probe";
+    const texts = hyperunixTexts(plain);
+    expect(texts.filter(text => text === plain)).toHaveLength(5);
+    expect(texts.filter(text => text === `HX-SCHEMA-CONFLICT ${plain}`)).toHaveLength(1);
   });
 });
 

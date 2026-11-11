@@ -17,17 +17,23 @@
  *   a missing title), so the label is only ever carried by the gate's own report.
  * - UNPINNED HALVES: five clauses have no landed case at base 1a36ece (CLAIM_BASE, the trunk this cut merges). Each is
  *   listed WITH a reason and a title probe, and SLOT_ROUTING records who holds its pin flip as the bead store read at
- *   that sha: an open producer (RA4/b wb-5uh and wb-4ap.17, RA5/b wb-4ap.13) or a blocked one (RA7/a,b wb-04s, wb-w12),
+ *   that sha: an open producer (RA4/c wb-5uh, RA5/b wb-4ap.13) or a blocked one (RA7/a,b wb-04s, wb-w12),
  *   whose lander pins the half in the same commit, or, where the store holds no producer (RA2/b), the census owner
  *   wb-752.15. A closed bead whose acceptance quoted a clause without landing a case that evidences it is named as such
  *   (RA2/b wb-6ze.3, RA5/b wb-6ze.7). Every claim is dated by that sha, never by a day. The probe is a REPORTER-VERIFIED
  *   title probe: it tests the registered case names the gate's own report holds (fullName), never a file's text, so a
  *   comment, a string or a docs quotation can never move it (the false-red class of the 06:52Z landing-merge red). A
- *   registered case that names the clause turns the half red until it is pinned. The RA5/b and RA4/b probes carry their
+ *   registered case that names the clause turns the half red until it is pinned. The RA5/b and RA4/c probes carry their
  *   producers' wording (typed directional refs, related-to, a bounded or HX-scoped neighborhood, ancestry or traversal;
- *   verdict axes, gated_commit); the bare kind verbs (produces, consumes, depends, blocks, verifies), a bare
+ *   gate axes, verdict axes); the bare kind verbs (produces, consumes, depends, blocks, verifies), a bare
  *   neighborhood, a path traversal and a relation kind stay out, because registered names at that sha already carry
  *   them and would flip the half falsely.
+ * - RA4 SPLIT (wb-4ap.17, COLLECTIVE-ADAPTATION-R17): the Forge clause "build revision and gate axes" was one unpinned half
+ *   whose open producers were wb-5uh (the gate axes) and wb-4ap.17 (the build revision), routed to whichever landed its
+ *   case first, splitting the half if that case evidenced only one of the two. wb-4ap.17 landed the build revision: the
+ *   gate.run reader echoes the reply's own run-start pin (data.gated_commit, with data.gated_tree read beside it) as the
+ *   verdict's subjectBasis and reads it against the host's head, so RA4/b "build revision" is pinned to those cases and
+ *   the gate axes stand alone as the unpinned RA4/c, still routed to wb-5uh.
  * - RECORD HONESTY (gate cmd_e7d15ee63790 U1): each unpinned reason is checked against SLOT_ROUTING: it names the base
  *   sha and no calendar day, names every producer with the landing-order duty, claims that no producer is on file only
  *   where none is, and names each closed quoter with its reading. These rows prove the record agrees with itself; that
@@ -52,6 +58,11 @@
  *   table's row/half/pin-count shape and RA6's identity (clauses and bindings) are literals, never derived from ROWS, and
  *   the RA6 ANCHOR reads the live document: every sentence of the RF bullet is covered clause by clause by RA6's halves,
  *   so a half removed from every literal of this file (CT5/CT6) is still red against the docs.
+ * - RA6 f (wb-grmo.2, RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2, the until-then leg; folded into wb-973.17's RF bullet, which
+ *   landed first): the bullet's fourth sentence, an RF prediction rendering as unverified context with no epistemic status
+ *   claimed. Half f binds three cases of the wb-grmo.2 freeze-and-flip census (test/workbench-rf-epistemic-status-census.test.ts)
+ *   under their describe paths: T2, the captured SCG-R11 roster naming no epistemic key, and Z1 and Z2, src naming no
+ *   epistemic word and the adapter composing none. That census quotes this half's clause and this file's pin of it (its row D1).
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -152,6 +163,26 @@ const GRAPH_AC2: Pin = {
   suite: [GRAPH_VIEW_SUITE],
 };
 
+/** wb-grmo.2: the freeze-and-flip census RA6/f binds, and the describe paths of its rows T and Z (outermost first). */
+const EPISTEMIC_CENSUS = "test/workbench-rf-epistemic-status-census.test.ts";
+const EPISTEMIC_SUITE = "wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2)";
+const EPISTEMIC_TRIGGER_SUITE = [EPISTEMIC_SUITE, "T a default-gate test reads the SCG-R11 fixture roster and fails when a captured envelope names epistemic_status or a scenario key before those cases exist (freeze-and-flip)"];
+const EPISTEMIC_CLAIMS_SUITE = [EPISTEMIC_SUITE, "Z until then Pi claims nothing"];
+const GRMO_T2: Pin = {
+  file: EPISTEMIC_CENSUS,
+  title: "T2 fails when a captured envelope names epistemic_status (ARMED): no key of the roster's four lists spells an epistemic form, and the roster diff reds a result-level one",
+  suite: EPISTEMIC_TRIGGER_SUITE,
+};
+const GRMO_Z1: Pin = {
+  file: EPISTEMIC_CENSUS,
+  title: "Z1 Pi claims nothing in code: no src module's identifiers, strings, templates or regexes spell an epistemic, scenario, uncertified or speculative word",
+  suite: EPISTEMIC_CLAIMS_SUITE,
+};
+const GRMO_Z2: Pin = {
+  file: EPISTEMIC_CENSUS,
+  title: "Z2 Pi composes no epistemic claim: an envelope marked with each RF-WM-001 word, the shipped block markers or the scenario form projects and evidences byte for byte as its unmarked twin",
+  suite: EPISTEMIC_CLAIMS_SUITE,
+};
 /** wb-973.17: the describe paths of the wb-973.8 SCG-R8 and wb-973.9 SCG-R9 cases RA6 b-e bind (outermost first). */
 const BUNDLE_SUITE = ["bundle revision from result.bundle_revision_id (wb-973.8 SCG-R8)"];
 const FRESHNESS_SUITE = ["observation rows from result.observations (wb-973.10 SCG-R10)", "observation freshness, replay and degradation (wb-973.9 SCG-R9)"];
@@ -177,6 +208,29 @@ const R9_NOT_FRESH: Pin = {
 };
 const R9_PROVIDER_PARTIAL = inSuite(REACTIVEFIBER_OBSERVER, "SCG-R9 provider: the full-shape envelope with fresh and not-fresh rows passes unchanged and projects partial end to end", FRESHNESS_SUITE);
 const R9_REFRESH = inSuite(REACTIVEFIBER_OBSERVER, "SCG-R9: after ObservationProjection.refresh every not-fresh row leaves the node partial, and freshness stays projection-owned", FRESHNESS_SUITE);
+/** wb-4ap.17 (R17): the gate.run reader's cases, under their describe path; they evidence RA4/b's build revision. */
+const FORGE_OPERATION_OBSERVER = "test/workbench-forge-operation-observer.test.ts";
+const BASIS_SUITE = ["wb-4ap.17 (R17): the gate.run reply's own run-start pin is the verdict's basis"];
+const R17_ECHO = inSuite(
+  FORGE_OPERATION_OBSERVER,
+  "wb-4ap.17 (R17 a): the measured clean reply's subjectBasis echoes data.gated_commit verbatim, and data.gated_tree is read separately as the pin's second half",
+  BASIS_SUITE,
+);
+const R17_HEAD = inSuite(
+  FORGE_OPERATION_OBSERVER,
+  "wb-4ap.17 (R17 b): statusText says current only when the pin equals the supplied observed head, and stale when the head moved on, its tree differs or the run gated a dirty tree",
+  BASIS_SUITE,
+);
+const R17_NULL_PIN = inSuite(
+  FORGE_OPERATION_OBSERVER,
+  "wb-4ap.17 (R17 c): the measured null pin (a directory in no repository) yields no subjectBasis, one diagnostic naming the missing pin, basis indeterminate and never a success tone",
+  BASIS_SUITE,
+);
+const R17_LIVE = inSuite(
+  FORGE_OPERATION_OBSERVER,
+  "wb-4ap.17 (R17 i): through the live observer the host's head seam is read when the reply settles - equal settles current with the pinned subjectBasis, a later head stale, no head indeterminate",
+  BASIS_SUITE,
+);
 
 /**
  * The trunk sha this cut merges, at which every unpinned-half claim in the table was verified: the bead store's title,
@@ -247,12 +301,13 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
         pin(FORGE_OBSERVER, "F1: a historical last_result is not a verdict: unknown tone and partial coverage, never a success tone"),
         pin(PROJECTION_INVALIDATION, "carries forge-operation evidence refs onto ObservedNode and keeps the 32-reference cap"),
       ]),
+      pinned("b", "build revision", "gated_commit", [R17_ECHO, R17_HEAD, R17_NULL_PIN, R17_LIVE]),
       unpinned(
-        "b",
-        "build revision and gate axes",
-        `no landed case evidences this clause at base ${CLAIM_BASE}: the forge cases pinned above speak of verdict, evidence and projection, and the landed wb-4ap collective-adaptation forge cases echo a per-package invalidation-basis descriptor (its digest and freshness word, docs/07's source basis); none states a build revision or a per-axis gate state. Its producers are open: wb-5uh (W08 Forge provider: "Preserve native verdict axes, source basis") owns the gate axes, and wb-4ap.17 (a gate.run consumer whose subjectBasis echoes the envelope's gated_commit, decided under wb-5uh) owns the build revision; whichever lands its case first ${landerPins("RA4/b")}, splitting the half if that case evidences only one of the two.`,
-        /build revision|gate axes|verdict axes|gated[_ ]commit/iu,
-        "projects the forge build revision and the gate axes",
+        "c",
+        "gate axes",
+        `no landed case evidences this clause at base ${CLAIM_BASE}: the forge cases pinned above speak of verdict, evidence, projection and, since wb-4ap.17 split RA4/b by landing the build revision, the gate.run reply's own run-start pin as the verdict's basis; none states a per-axis gate state. Its producer is open: wb-5uh (W08 Forge provider: "Preserve native verdict axes, source basis") owns the gate axes; whichever lands its case ${landerPins("RA4/c")}.`,
+        /gate axes|verdict axes/iu,
+        "projects the forge gate axes",
       ),
     ],
   },
@@ -284,6 +339,8 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
       // wb-973.17 (SCG-R17 (b)): not-fresh rows demote to partial; freshness stays the projection's own reading.
       pinned("d", "Reused, replayed or non-observed observation rows demote an RF preview to partial", "partial", [R9_NOT_FRESH, R9_PROVIDER_PARTIAL]),
       pinned("e", "the projection's freshness is the host's reading witness, never a currentness claim about the rows", "freshness", [R9_REFRESH]),
+      // wb-grmo.2 (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2, until then): an RF prediction is unverified context; Pi claims no epistemic status.
+      pinned("f", "An RF prediction renders as unverified context, and Pi claims no epistemic status for a render", "epistemic", [GRMO_T2, GRMO_Z1, GRMO_Z2]),
     ],
   },
   {
@@ -398,8 +455,8 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
 ]);
 
 const EXPECTED_ROW_IDS: readonly string[] = ["RA1", "RA2", "RA3", "RA4", "RA5", "RA6", "RA7", "RA8", "RA9", "RA10", "RA11", "RL1", "RL2", "RL3", "RL4", "RL5"];
-const EXPECTED_UNPINNED: readonly string[] = ["RA2/b", "RA4/b", "RA5/b", "RA7/a", "RA7/b"];
-const DISTINCT_PINS = 43;
+const EXPECTED_UNPINNED: readonly string[] = ["RA2/b", "RA4/c", "RA5/b", "RA7/a", "RA7/b"];
+const DISTINCT_PINS = 50;
 
 /**
  * wb-973.17 (standing rule 16): the table's shape frozen as a literal, never derived from ROWS - every half as
@@ -412,7 +469,8 @@ const FROZEN_HALF_SHAPE: readonly string[] = [
   "RA3/a:2",
   "RA3/b:1",
   "RA4/a:2",
-  "RA4/b:0",
+  "RA4/b:4",
+  "RA4/c:0",
   "RA5/a:2",
   "RA5/b:0",
   "RA6/a:2",
@@ -420,6 +478,7 @@ const FROZEN_HALF_SHAPE: readonly string[] = [
   "RA6/c:1",
   "RA6/d:2",
   "RA6/e:1",
+  "RA6/f:3",
   "RA7/a:0",
   "RA7/b:0",
   "RA8/a:2",
@@ -460,7 +519,29 @@ const FROZEN_RA6: readonly string[] = [
   "d | test/workbench-reactivefiber-observer.test.ts | observation rows from result.observations (wb-973.10 SCG-R10) > observation freshness, replay and degradation (wb-973.9 SCG-R9) | SCG-R9 provider: the full-shape envelope with fresh and not-fresh rows passes unchanged and projects partial end to end",
   "e | clause | the projection's freshness is the host's reading witness, never a currentness claim about the rows",
   "e | test/workbench-reactivefiber-observer.test.ts | observation rows from result.observations (wb-973.10 SCG-R10) > observation freshness, replay and degradation (wb-973.9 SCG-R9) | SCG-R9: after ObservationProjection.refresh every not-fresh row leaves the node partial, and freshness stays projection-owned",
+  "f | clause | An RF prediction renders as unverified context, and Pi claims no epistemic status for a render",
+  "f | test/workbench-rf-epistemic-status-census.test.ts | wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2) > T a default-gate test reads the SCG-R11 fixture roster and fails when a captured envelope names epistemic_status or a scenario key before those cases exist (freeze-and-flip) | T2 fails when a captured envelope names epistemic_status (ARMED): no key of the roster's four lists spells an epistemic form, and the roster diff reds a result-level one",
+  "f | test/workbench-rf-epistemic-status-census.test.ts | wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2) > Z until then Pi claims nothing | Z1 Pi claims nothing in code: no src module's identifiers, strings, templates or regexes spell an epistemic, scenario, uncertified or speculative word",
+  "f | test/workbench-rf-epistemic-status-census.test.ts | wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2) > Z until then Pi claims nothing | Z2 Pi composes no epistemic claim: an envelope marked with each RF-WM-001 word, the shipped block markers or the scenario form projects and evidences byte for byte as its unmarked twin",
 ];
+/**
+ * wb-4ap.17 (standing rule 16): row RA4's identity frozen as a literal in FROZEN_RA6's form, never derived from ROWS, so the
+ * split cannot be hollowed: a shortened clause, a dropped pin, a pin swapped for an unrelated passing case or a dropped half
+ * reds here, and the RA4 anchor reads the live Forge bullet beside it.
+ */
+const FROZEN_RA4: readonly string[] = [
+  "a | clause | native operation/verdict/artifact evidence",
+  "a | test/workbench-forge-observer.test.ts |  | F1: a historical last_result is not a verdict: unknown tone and partial coverage, never a success tone",
+  "a | test/workbench-projection-invalidation.test.ts |  | carries forge-operation evidence refs onto ObservedNode and keeps the 32-reference cap",
+  "b | clause | build revision",
+  "b | test/workbench-forge-operation-observer.test.ts | wb-4ap.17 (R17): the gate.run reply's own run-start pin is the verdict's basis | wb-4ap.17 (R17 a): the measured clean reply's subjectBasis echoes data.gated_commit verbatim, and data.gated_tree is read separately as the pin's second half",
+  "b | test/workbench-forge-operation-observer.test.ts | wb-4ap.17 (R17): the gate.run reply's own run-start pin is the verdict's basis | wb-4ap.17 (R17 b): statusText says current only when the pin equals the supplied observed head, and stale when the head moved on, its tree differs or the run gated a dirty tree",
+  "b | test/workbench-forge-operation-observer.test.ts | wb-4ap.17 (R17): the gate.run reply's own run-start pin is the verdict's basis | wb-4ap.17 (R17 c): the measured null pin (a directory in no repository) yields no subjectBasis, one diagnostic naming the missing pin, basis indeterminate and never a success tone",
+  "b | test/workbench-forge-operation-observer.test.ts | wb-4ap.17 (R17): the gate.run reply's own run-start pin is the verdict's basis | wb-4ap.17 (R17 i): through the live observer the host's head seam is read when the reply settles - equal settles current with the pinned subjectBasis, a later head stale, no head indeterminate",
+  "c | clause | gate axes",
+];
+/** The Forge bullet's label in the live document; the RA4 anchor reads the sentence after it. */
+const FORGE_BULLET_LABEL = "Forge: ";
 /** A row's identity in FROZEN_RA6's form: each half's clause, then one line per pin. */
 const identityOf = (row: Row): string[] =>
   row.halves.flatMap(half => [
@@ -489,7 +570,7 @@ interface SlotRouting {
  */
 const SLOT_ROUTING: Readonly<Record<string, SlotRouting>> = freezeDeep<Readonly<Record<string, SlotRouting>>>({
   "RA2/b": { openProducers: [], blockedProducers: [], closedQuoters: ["wb-6ze.3"] },
-  "RA4/b": { openProducers: ["wb-5uh", "wb-4ap.17"], blockedProducers: [], closedQuoters: [] },
+  "RA4/c": { openProducers: ["wb-5uh"], blockedProducers: [], closedQuoters: [] },
   "RA5/b": { openProducers: ["wb-4ap.13"], blockedProducers: [], closedQuoters: ["wb-6ze.7"] },
   "RA7/a": { openProducers: [], blockedProducers: ["wb-04s", "wb-w12"], closedQuoters: [] },
   "RA7/b": { openProducers: [], blockedProducers: ["wb-04s"], closedQuoters: [] },
@@ -529,7 +610,7 @@ const READERS_BULLETS: readonly string[] = [
   "Furnace: native Run status/event stream and possible descendant references.",
   "Forge: native operation/verdict/artifact evidence, build revision and gate axes.",
   "HX: query coverage/bounds/query basis, and optional graph traversal of linked native refs.",
-  "RF: render context provenance and context artifact references. An RF snapshot's definition basis is bundle_revision_id when the envelope carries it, with graph_revision_id remaining the topology identity only. Reused, replayed or non-observed observation rows demote an RF preview to partial, and the projection's freshness is the host's reading witness, never a currentness claim about the rows.",
+  "RF: render context provenance and context artifact references. An RF snapshot's definition basis is bundle_revision_id when the envelope carries it, with graph_revision_id remaining the topology identity only. Reused, replayed or non-observed observation rows demote an RF preview to partial, and the projection's freshness is the host's reading witness, never a currentness claim about the rows. An RF prediction renders as unverified context, and Pi claims no epistemic status for a render.",
   "MechanicalWorkflows: invocation outcome, service spans if instrumented; arbitrary plain TypeScript calls are not magically discoverable.",
   "Beads: supported work readiness and linkage, never reconstructed from heuristics alone.",
 ];
@@ -713,12 +794,33 @@ describe("wb-752.15 docs/workbench/09 § Reader adapters and § Relationships ce
     expect(rf).toHaveLength(1);
     const clauses = (ROWS.find(row => row.id === "RA6")?.halves ?? []).map(half => half.clause);
     const sentences = (rf[0] ?? "").slice(RF_BULLET_LABEL.length).split(/(?<=\.) /u);
-    expect(sentences).toHaveLength(3);
+    expect(sentences).toHaveLength(4);
     for (const sentence of sentences) {
       const rest = clauses.reduce((left, clause) => left.replace(clause, ""), sentence);
       expect(rest, `the RF bullet sentence ${JSON.stringify(sentence)} states text no RA6 half binds`).toMatch(CONNECTIVES);
     }
     for (const clause of clauses) expect(sentences.filter(sentence => sentence.includes(clause)), `RA6 clause ${JSON.stringify(clause)}`).toHaveLength(1);
+  });
+
+  it("AC1 (wb-4ap.17): row RA4 binds the Forge bullet's build-revision clause to the R17 gate.run reader cases by file, describe path and verbatim title, keeps the gate axes unpinned, frozen as a literal", () => {
+    const ra4 = ROWS.find(row => row.id === "RA4");
+    expect(ra4).toBeDefined();
+    if (ra4 === undefined) return;
+    expect(identityOf(ra4)).toEqual(FROZEN_RA4);
+    expect(ra4.halves.map(half => `${half.id}:${isPinned(half) ? "pinned" : "unpinned"}`)).toEqual(["a:pinned", "b:pinned", "c:unpinned"]);
+  });
+
+  it("RA4 anchor (wb-4ap.17, rule 16): the LIVE docs/09 Forge bullet is covered clause by clause by RA4's halves, read from the document, never from this file's literals", () => {
+    const found = docsSection(readRepo(DOCS_FILE), READERS, 2, [DOCS_PARENT]);
+    expect(found.ok, found.why).toBe(true);
+    const items = found.blocks.flatMap(block => (block.kind === "list" ? block.items.map(item => item.text) : []));
+    const forge = items.filter(item => item.startsWith(FORGE_BULLET_LABEL));
+    expect(forge).toHaveLength(1);
+    const bullet = (forge[0] ?? "").slice(FORGE_BULLET_LABEL.length);
+    const clauses = (ROWS.find(row => row.id === "RA4")?.halves ?? []).map(half => half.clause);
+    const rest = clauses.reduce((left, clause) => left.replace(clause, ""), bullet);
+    expect(rest, `the Forge bullet ${JSON.stringify(bullet)} states text no RA4 half binds`).toMatch(CONNECTIVES);
+    for (const clause of clauses) expect(bullet.split(clause).length - 1, `RA4 clause ${JSON.stringify(clause)}`).toBe(1);
   });
 
   it("RL3: the half is pinned to wb-6ze.34's named graph-view cases under its named describe, not left unpinned", () => {
@@ -784,10 +886,25 @@ describe("wb-752.15 liveness: the adopted judge is not accept-all (the real repo
     expect(verdict?.code).toBe("tier-mismatch");
   });
 
+  /**
+   * wb-ro6u (owner tune M:16183): the explicit budget of the next case ALONE (the R546 sizing recipe, file-local); every
+   * other case, this file and the suite keep vitest's 5000 ms default. The case is one synchronous judge() over all 63
+   * pins of the table (17 files; wb-4ap.17 added RA4/b's four R17 cases and their file, and wb-grmo.2 added RA6/f's
+   * three census cases and their file, to the 56 pins and 15 files this budget was sized at): judge() reads the
+   * default tier's whole report and analyses each pinned file with its
+   * relative import closure on the calling thread, so the case awaits nothing that a tighter setup could bound. vitest
+   * fails a synchronous body that returns after its budget but cannot interrupt one, so the budget moves only that
+   * duration verdict, never an assertion. Measured at base 4c97422 against a full default-tier report (17037 cases,
+   * written by `npm run test` at 8 workers), this file alone under vitest.census.config.ts at cap 1: 3635-5645 ms over
+   * 10 runs, 5 of them past 5000 ms. Sized as 5 x the costliest wall of record, the case at 11620 ms in the file-alone
+   * serial leg of the wb-sjx2 gate (cmd_d4fd9ea78492, 2026-10-24): 58100 ms, rounded up to a whole 5 s.
+   */
+  const WHOLE_TABLE_BUDGET_MS = 60_000;
+
   it("a present, passing case is never reported absent, skipped or inverted: the whole table is ok through roster rows only", () => {
     const verdicts = judge(REPORT, ALL_PINS.map(entry => casePin(entry)));
     expect(verdicts.map(verdict => verdict.code)).toEqual(ALL_PINS.map(() => "ok"));
-  });
+  }, WHOLE_TABLE_BUDGET_MS);
 });
 
 describe("wb-752.15 attribution: a mutated report is red for its TRUE cause, on independent fixtures", () => {
@@ -868,7 +985,7 @@ describe("wb-752.15 attribution: a mutated report is red for its TRUE cause, on 
     const registers = loadReport(REPORT);
     registers.testResults.push({ name: join(ROOT, "test/decoy.test.ts"), assertionResults: [{ title: "projects the forge build revision and the gate axes", fullName: "decoy projects the forge build revision and the gate axes", ancestorTitles: ["decoy"], status: "passed" }] });
     const lines = flipFindings(registers);
-    expect(namedRows(lines)).toEqual(["RA4/b"]);
+    expect(namedRows(lines)).toEqual(["RA4/c"]);
     expect(lines[0]).toContain("[pin-flip]");
     const mentions = loadReport(REPORT);
     mentions.testResults.push({
@@ -1031,11 +1148,16 @@ describe("wb-752.15 record honesty: each unpinned half names who holds its pin f
   });
 
   it.each([
+    "projects the forge gate axes",
     "projects the forge build revision and the gate axes",
-    "subjectBasis echoes the gate.run envelope's gated_commit verbatim",
     "preserves the native verdict axes of a gate.status answer",
-  ])("the RA4/b probe fires on the wording of its producers wb-5uh and wb-4ap.17, and only RA4/b flips: %s", name => {
-    expect(namedRows(flipFindings(reportOf([name])))).toEqual(["RA4/b"]);
+  ])("the RA4/c probe fires on the wording of its producer wb-5uh, and only RA4/c flips: %s", name => {
+    expect(namedRows(flipFindings(reportOf([name])))).toEqual(["RA4/c"]);
+  });
+
+  it("wb-4ap.17: the build-revision wording now names the pinned RA4/b, so a gated_commit or build-revision case flips no half", () => {
+    expect(flipFindings(reportOf(["subjectBasis echoes the gate.run envelope's gated_commit verbatim", "projects the forge build revision", R17_ECHO.title]))).toEqual([]);
+    expect(PINNED_HALVES.filter(({ row, half }) => row.id === "RA4" && half.id === "b").map(({ half }) => half.pins.length)).toEqual([4]);
   });
 
   it("the widened probes stay quiet on near misses: a bare neighborhood, a path traversal (also under HX), a relation kind, a typed refusal, gate.run, bare axes and a bare ref-kind verb", () => {
@@ -1053,5 +1175,779 @@ describe("wb-752.15 record honesty: each unpinned half names who holds its pin f
         ]),
       ),
     ).toEqual([]);
+  });
+});
+
+// ---- wb-vm71 (R694 follow-up of wb-ro6u landing 443, F2): every row anchored like RA6, outside this file's literals ----
+
+/**
+ * wb-vm71 (standing rule 16, CT-BATTERY v2; gate F2 of the wb-ro6u landing 443, its LEG 2 G4): until this cut only RA6
+ * carried a clause-level identity literal and a live-docs anchor, so a shortened clause (CT2: RA1/a cut to its prefix;
+ * G4: RL2/a cut to "Store edge provenance"), a pin swapped for an unrelated passing case (CT3: RA10/a's IDLE_CANCEL) and
+ * a row taken out of every literal of this file (CT6: RL4) all passed - the per-clause docs check above is a substring
+ * check and FROZEN_HALF_SHAPE is count-level. Two legs now hold EVERY row the way RA6 is held:
+ * - FROZEN_ROWS: the whole table's identity as a literal, never derived from ROWS - each half's clause, then each pin as
+ *   "row/half | file | describe path | title" (an it.each pin adds its table-row floor) - with RA6's lines equal to
+ *   FROZEN_RA6 and each half's pin lines counted as FROZEN_HALF_SHAPE counts them, so a shortened clause, a swapped pin
+ *   or a dropped pin is red against the literal (CT1, CT2, CT3, G4). Re-measured by wb-vm71 cut #2 from a throwaway dump
+ *   of ROWS at trunk 00f821f, once wb-4ap.17's RA4 split (RA4/b "build revision" pinned to its four R17 cases, RA4/c
+ *   "gate axes" unpinned) and wb-grmo.2's RA6/f (its three census cases) had landed: 97 lines, 34 clauses and 63 pins,
+ *   with RA4's lines equal to FROZEN_RA4. A cut that changes a row re-measures this literal in the same commit.
+ * - TABLE ANCHOR: the LIVE docs/09 sections, read from the document and never from this file's docs mirrors, are tiled
+ *   by the table's clauses: each clause occurs in exactly one rendered sentence of its section, and once every clause is
+ *   cut out each sentence keeps only punctuation and one joining "and" (CONNECTIVES), or is one of UNBOUND_LEADS. A
+ *   shortened clause leaves its cut words behind (CT2, G4) and a row taken out of every literal of this file leaves its
+ *   whole sentence behind (CT6), each red against the document.
+ * NOT CLAIMED (each pinned by a quiet row below): which pins evidence which clause has no anchor outside this file - the
+ * docs state clauses, never pins, and judge() reads only that a pinned case passed - so a pin dropped, swapped or moved
+ * between halves in every literal of this file at once (ROWS, FROZEN_ROWS, FROZEN_HALF_SHAPE, DISTINCT_PINS) stays
+ * quiet; and the two UNBOUND_LEADS sentences are bound by no row (each is the lead-in that closes the paragraph opening
+ * its section's bullet list, and the anchor forgives no other text). Two halves' clauses swapped there with their pins
+ * left in place, and words moved across the boundary of two neighbouring halves, were quiet here too (gate F4 and F3 of
+ * the wb-vm71 landing 570); wb-kw2r's SPAN BINDING at the end of this file reds both where the document marks the
+ * boundary and names the rest as residuals with their own quiet rows.
+ */
+const FROZEN_ROWS: readonly string[] = [
+  "RA1/a | clause | Every supported provider offers at least a read-current-snapshot function where its SDK supports it.",
+  "RA1/a | test/workbench-claude-topology.test.ts |  | A1: one sample with a session, a message reference and two tools projects agent-call, session and two tool-use snapshots",
+  "RA1/a | test/workbench-furnace-topology.test.ts |  | A1/A2: Run snapshot first, one Attempt snapshot per returned item, one furnace-confirmed ownership edge each",
+  "RA1/a | test/workbench-forge-observer.test.ts |  | projects the fixture provider output of registerForgeGateStatus exactly like its source",
+  "RA1/a | test/workbench-hyperunix-observer.test.ts |  | projects what registerHyperUnixFind returns for the measured incomplete read: partial, coverage evidence, no bodies",
+  "RA1/a | test/workbench-reactivefiber-observer.test.ts |  | R1: a clean noncommitted preview projects one snapshot keyed by operation_id with the graph digest as sourceRevision and a payload reference",
+  "RA1/a | test/workbench-beads-observer.test.ts |  | snapshot shape: sdk-operation, epic -> group, coverage from completeness, nothing invented",
+  "RA1/a | test/workbench-detached-observer.test.ts |  | carries the host instant as capturedAt, the injected instant as observedAt, the snapshot digest as revision and a never-inlined payload reference",
+  "RA2/a | clause | SDK message events from sessions controlled by Workbench",
+  "RA2/a | test/workbench-claude-topology.test.ts |  | A1: one sample with a session, a message reference and two tools projects agent-call, session and two tool-use snapshots",
+  "RA2/a | test/workbench-claude-observer.test.ts |  | parallel calls retain independent native session identity and permission evidence",
+  "RA2/b | clause | external Claude sessions may be unobservable unless records are available",
+  "RA3/a | clause | native Run status/event stream",
+  "RA3/a | test/workbench-furnace-topology.test.ts |  | A1/A2: Run snapshot first, one Attempt snapshot per returned item, one furnace-confirmed ownership edge each",
+  "RA3/a | test/workbench-furnace-observer.test.ts |  | rejects invalid polling budgets, and never describes an Attempt output stream as a Run lifecycle stream",
+  "RA3/b | clause | possible descendant references",
+  "RA3/b | test/workbench-furnace-topology.test.ts |  | A3: a partial Attempt page yields edges only for returned items and synthesizes nothing for the missing tail",
+  "RA4/a | clause | native operation/verdict/artifact evidence",
+  "RA4/a | test/workbench-forge-observer.test.ts |  | F1: a historical last_result is not a verdict: unknown tone and partial coverage, never a success tone",
+  "RA4/a | test/workbench-projection-invalidation.test.ts |  | carries forge-operation evidence refs onto ObservedNode and keeps the 32-reference cap",
+  "RA4/b | clause | build revision",
+  "RA4/b | test/workbench-forge-operation-observer.test.ts | wb-4ap.17 (R17): the gate.run reply's own run-start pin is the verdict's basis | wb-4ap.17 (R17 a): the measured clean reply's subjectBasis echoes data.gated_commit verbatim, and data.gated_tree is read separately as the pin's second half",
+  "RA4/b | test/workbench-forge-operation-observer.test.ts | wb-4ap.17 (R17): the gate.run reply's own run-start pin is the verdict's basis | wb-4ap.17 (R17 b): statusText says current only when the pin equals the supplied observed head, and stale when the head moved on, its tree differs or the run gated a dirty tree",
+  "RA4/b | test/workbench-forge-operation-observer.test.ts | wb-4ap.17 (R17): the gate.run reply's own run-start pin is the verdict's basis | wb-4ap.17 (R17 c): the measured null pin (a directory in no repository) yields no subjectBasis, one diagnostic naming the missing pin, basis indeterminate and never a success tone",
+  "RA4/b | test/workbench-forge-operation-observer.test.ts | wb-4ap.17 (R17): the gate.run reply's own run-start pin is the verdict's basis | wb-4ap.17 (R17 i): through the live observer the host's head seam is read when the reply settles - equal settles current with the pinned subjectBasis, a later head stale, no head indeterminate",
+  "RA4/c | clause | gate axes",
+  "RA5/a | clause | query coverage/bounds/query basis",
+  "RA5/a | test/workbench-hyperunix-observer.test.ts |  | H1: the measured incomplete read projects exactly one partial, unknown-toned query snapshot that refreshes a projection",
+  "RA5/a | test/workbench-hyperunix-observer.test.ts |  | H2: a 0-row incomplete answer that does not license absence stays partial and never reads as known-empty",
+  "RA5/b | clause | optional graph traversal of linked native refs",
+  "RA6/a | clause | render context provenance and context artifact references",
+  "RA6/a | test/workbench-reactivefiber-observer.test.ts |  | R1: a clean noncommitted preview projects one snapshot keyed by operation_id with the graph digest as sourceRevision and a payload reference",
+  "RA6/a | test/workbench-reactivefiber-observer.test.ts |  | R6: output text, diagnostics and budget payloads never appear in any surfaced string",
+  "RA6/b | clause | An RF snapshot's definition basis is bundle_revision_id when the envelope carries it",
+  "RA6/b | test/workbench-reactivefiber-observer.test.ts | bundle revision from result.bundle_revision_id (wb-973.8 SCG-R8) | SCG-R8: bundle_revision_id rides as rf-bundle evidence and the version cohort key",
+  "RA6/b | test/workbench-reactivefiber-observer.test.ts | bundle revision from result.bundle_revision_id (wb-973.8 SCG-R8) | SCG-R8: equal graph digests with distinct bundle ids split the version cohort, and equal bundle ids share it",
+  "RA6/b | test/workbench-reactivefiber-observer.test.ts | bundle revision from result.bundle_revision_id (wb-973.8 SCG-R8) | SCG-R8: an envelope without bundle_revision_id states no rf-bundle reference and no sourceVersion, and its cohort stays the graph digest",
+  "RA6/c | clause | with graph_revision_id remaining the topology identity only",
+  "RA6/c | test/workbench-reactivefiber-observer.test.ts | bundle revision from result.bundle_revision_id (wb-973.8 SCG-R8) | SCG-R8: nativeEvidence of the same reading prefers the bundle as sourceBasis while the snapshot keeps the graph digest as sourceRevision",
+  "RA6/d | clause | Reused, replayed or non-observed observation rows demote an RF preview to partial",
+  "RA6/d | test/workbench-reactivefiber-observer.test.ts | observation rows from result.observations (wb-973.10 SCG-R10) > observation freshness, replay and degradation (wb-973.9 SCG-R9) | SCG-R9: %s on an otherwise clean rf-cli envelope projects partial and non-success with one note naming it | each >= 4",
+  "RA6/d | test/workbench-reactivefiber-observer.test.ts | observation rows from result.observations (wb-973.10 SCG-R10) > observation freshness, replay and degradation (wb-973.9 SCG-R9) | SCG-R9 provider: the full-shape envelope with fresh and not-fresh rows passes unchanged and projects partial end to end",
+  "RA6/e | clause | the projection's freshness is the host's reading witness, never a currentness claim about the rows",
+  "RA6/e | test/workbench-reactivefiber-observer.test.ts | observation rows from result.observations (wb-973.10 SCG-R10) > observation freshness, replay and degradation (wb-973.9 SCG-R9) | SCG-R9: after ObservationProjection.refresh every not-fresh row leaves the node partial, and freshness stays projection-owned",
+  "RA6/f | clause | An RF prediction renders as unverified context, and Pi claims no epistemic status for a render",
+  "RA6/f | test/workbench-rf-epistemic-status-census.test.ts | wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2) > T a default-gate test reads the SCG-R11 fixture roster and fails when a captured envelope names epistemic_status or a scenario key before those cases exist (freeze-and-flip) | T2 fails when a captured envelope names epistemic_status (ARMED): no key of the roster's four lists spells an epistemic form, and the roster diff reds a result-level one",
+  "RA6/f | test/workbench-rf-epistemic-status-census.test.ts | wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2) > Z until then Pi claims nothing | Z1 Pi claims nothing in code: no src module's identifiers, strings, templates or regexes spell an epistemic, scenario, uncertified or speculative word",
+  "RA6/f | test/workbench-rf-epistemic-status-census.test.ts | wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2) > Z until then Pi claims nothing | Z2 Pi composes no epistemic claim: an envelope marked with each RF-WM-001 word, the shipped block markers or the scenario form projects and evidences byte for byte as its unmarked twin",
+  "RA7/a | clause | invocation outcome, service spans if instrumented",
+  "RA7/b | clause | arbitrary plain TypeScript calls are not magically discoverable",
+  "RA8/a | clause | supported work readiness and linkage",
+  "RA8/a | test/workbench-beads-observer.test.ts |  | a dependency id outside the bd id shape is unavailable, never a borrowed node key",
+  "RA8/a | test/workbench-beads-observer.test.ts |  | snapshot shape: sdk-operation, epic -> group, coverage from completeness, nothing invented",
+  "RA8/b | clause | never reconstructed from heuristics alone",
+  "RA8/b | test/workbench-beads-observer.test.ts |  | C4: no ownership or hypothesis edge is ever minted and the projection accepts every edge",
+  "RA9/a | clause | Reader adapter returns snapshot {nativeRef, capturedAt, observedAt, sourceRevision?, coverage?, nativePayloadRef}",
+  "RA9/a | test/workbench-detached-observer.test.ts |  | carries the host instant as capturedAt, the injected instant as observedAt, the snapshot digest as revision and a never-inlined payload reference",
+  "RA9/a | test/workbench-reactivefiber-observer.test.ts |  | R1: a clean noncommitted preview projects one snapshot keyed by operation_id with the graph digest as sourceRevision and a payload reference",
+  "RA9/a | test/workbench-hyperunix-observer.test.ts |  | H5: tolerates unknown producer fields and never copies them into any output field",
+  "RA9/b | clause | optional change stream with cursor",
+  "RA9/b | test/workbench-observation.test.ts |  | requires provider-qualified hot cursor and reports evicted prefix as a gap, not an empty history",
+  "RA10/a | clause | Poll only where streaming unsupported, with explicit rate/budget.",
+  "RA10/a | test/workbench-furnace-observer.test.ts |  | rejects invalid polling budgets, and never describes an Attempt output stream as a Run lifecycle stream",
+  "RA10/a | test/workbench-furnace-observer.test.ts |  | closing cancels an idle polling wait without native control, and abort signal refuses an initial read",
+  "RA11/a | clause | Handle stream reconnect and cursor gaps as stale/unknown until refreshed.",
+  "RA11/a | test/workbench-observation.test.ts |  | deduplicates IDs, rejects old sequence updates, and treats a cursor gap as stale until snapshot",
+  "RA11/a | test/workbench-observation.test.ts |  | disconnect invalidates known nodes; reconnect alone cannot restore current without snapshot",
+  "RA11/a | test/workbench-observation.test.ts |  | requires provider-qualified hot cursor and reports evicted prefix as a gap, not an empty history",
+  "RA11/a | test/workbench-observation-recovery-receipt.test.ts |  | catches an evicted cursor reported as a complete resume",
+  "RL1/a | clause | declared dependency (from source/policy)",
+  "RL1/a | test/workbench-topology-slice.test.ts |  | separates declared dependency, observed causal, native-confirmed ownership, grouping and inferred hypothesis",
+  "RL1/b | clause | observed causal edge (tool call to native result)",
+  "RL1/b | test/workbench-topology-slice.test.ts |  | separates declared dependency, observed causal, native-confirmed ownership, grouping and inferred hypothesis",
+  "RL1/c | clause | lifecycle ownership (only if native producer confirms)",
+  "RL1/c | test/workbench-topology-slice.test.ts |  | does not present ownership without a native confirmation from the owning provider as lifecycle ownership",
+  "RL1/c | test/workbench-observation.test.ts |  | uses provider-qualified native keys, preserves native failure and does not infer ownership",
+  "RL1/c | test/workbench-control.test.ts |  | rule 6: causation, grouping, dependency and hypothesis never confer lifecycle ownership, and the owned child holds no owner rights",
+  "RL1/d | clause | grouping only (phase, display scope)",
+  "RL1/d | test/workbench-topology-slice.test.ts |  | separates declared dependency, observed causal, native-confirmed ownership, grouping and inferred hypothesis",
+  "RL1/d | test/workbench-control.test.ts |  | rule 6: causation, grouping, dependency and hypothesis never confer lifecycle ownership, and the owned child holds no owner rights",
+  "RL1/e | clause | inferred possible relationship (hypothesis; never treated as authoritative)",
+  "RL1/e | test/workbench-topology-slice.test.ts |  | states a hypothesis-only focus as an incomplete trace, not as an authoritative neighborhood",
+  "RL1/e | test/workbench-topology-slice.test.ts |  | separates declared dependency, observed causal, native-confirmed ownership, grouping and inferred hypothesis",
+  "RL2/a | clause | Store edge provenance with timestamp and source",
+  "RL2/a | test/workbench-observation.test.ts |  | updates all semantic indexes when a node changes and keeps edges typed, explicit, provenance-bearing",
+  "RL2/a | test/workbench-topology-slice.test.ts |  | lists upstream and downstream neighbors of the focus, each edge carrying class, timestamp and source",
+  "RL2/a | test/workbench-topology-slice.test.ts |  | reports an unknown endpoint, an unknown relation kind and an unprovenanced edge as references with no invented fields",
+  "RL3/a | clause | Graph view styles each differently.",
+  "RL3/a | test/workbench-inspector.test.ts | W15-B6 graph view draws the graph-view model (wb-6ze.34) | AC1 draws counted aggregates before node rows, each edge with a direction glyph, its class and [source], and both references as reference rows",
+  "RL3/a | test/workbench-inspector.test.ts | W15-B6 graph view draws the graph-view model (wb-6ze.34) | AC2 a declared edge to a never-observed endpoint is a declared dependency marked unobserved endpoint, never unknown-dynamic",
+  "RL4/a | clause | Missing edges do not imply independence.",
+  "RL4/a | test/workbench-topology-slice.test.ts |  | returns empty slices labeled incomplete-trace for a node with no observed relations",
+  "RL4/a | test/workbench-topology-slice.test.ts |  | lets a hypothesis collapse into the remainder before any authoritative edge when a cap bites",
+  "RL5/a | clause | Shared nodes may have multiple causal readers",
+  "RL5/a | test/workbench-observation.test.ts |  | returns a child once when multiple proven relationship types share it, without false truncation",
+  "RL5/b | clause | without one cancellation owner",
+  "RL5/b | test/workbench-control.test.ts |  | rule 6: causation, grouping, dependency and hypothesis never confer lifecycle ownership, and the owned child holds no owner rights",
+];
+
+/** A row's identity in FROZEN_ROWS's form: FROZEN_RA6's lines, each led by the row id. */
+const tableIdentityOf = (row: Row): string[] => identityOf(row).map(line => `${row.id}/${line}`);
+/** A FROZEN_ROWS clause line ("row/half | clause | text"), as against a pin line ("row/half | file | describe path | title"). */
+const CLAUSE_LINE = /^[A-Z]+\d+\/[a-z] \| clause \| /u;
+
+/** A reader bullet's provider label in the live document ("Claude: ", "RF: "): a label, never a requirement clause. */
+const BULLET_LABEL = /^[A-Z][A-Za-z]*: /u;
+
+/**
+ * The only rendered sentences no row binds, as "section | sentence": each section's lead-in, the sentence that closes
+ * the paragraph opening its bullet list. NOT CLAIMED: no row pins them; the anchor forgives exactly these and no other
+ * text, and only where the live document places them as a lead-in.
+ */
+const UNBOUND_LEADS: readonly string[] = [`${READERS} | Streaming observer optional:`, `${RELATIONS} | At minimum differentiate:`];
+
+/** What the table anchor reads: one line per broken tiling, and the lead-ins it forgave. */
+interface TableAnchor {
+  /** One line per clause or live sentence the tiling breaks, naming the row or the section. */
+  readonly failures: readonly string[];
+  /** The live sentences no clause binds that close the paragraph opening a list and end with a colon, as "section | sentence". */
+  readonly leads: readonly string[];
+}
+
+/** One rendered sentence of a live section, and whether it closes the paragraph that opens the section's list. */
+interface LiveSentence {
+  readonly text: string;
+  readonly opensList: boolean;
+}
+
+/** The rendered sentences of a section in document order: each block's text (each bullet's, its label cut) split after a full stop. */
+function liveSentences(blocks: readonly RenderedBlock[]): LiveSentence[] {
+  return blocks.flatMap((block, index) => {
+    const units = block.kind === "list" ? block.items.map(item => item.text.replace(BULLET_LABEL, "")) : [block.text];
+    const opensList = block.kind === "paragraph" && blocks[index + 1]?.kind === "list";
+    return units.flatMap(unit => {
+      const parts = unit.split(/(?<=\.) /u);
+      return parts.map((text, at) => ({ text, opensList: opensList && at === parts.length - 1 }));
+    });
+  });
+}
+
+/**
+ * The table anchor over a docs/09 markdown text and a table: each clause must occur in exactly one rendered sentence of
+ * its section, and each sentence, once every clause of the section is cut out of it (longest clause first), keeps only
+ * CONNECTIVES - or, untouched by any clause, is the colon-ended lead-in that closes the paragraph opening a list.
+ */
+function tableAnchor(markdown: string, rows: readonly Row[]): TableAnchor {
+  const failures: string[] = [];
+  const leads: string[] = [];
+  for (const heading of [READERS, RELATIONS]) {
+    const found = docsSection(markdown, heading, 2, [DOCS_PARENT]);
+    if (!found.ok) {
+      failures.push(`${DOCS_FILE} § ${heading}: the section is refused: ${found.why}`);
+      continue;
+    }
+    const sentences = liveSentences(found.blocks);
+    const halves = rows.filter(row => row.section === heading).flatMap(row => row.halves.map(half => ({ key: halfKey(row, half), clause: half.clause })));
+    for (const { key, clause } of halves) {
+      const hits = sentences.filter(sentence => sentence.text.includes(clause)).length;
+      if (hits !== 1) failures.push(`row ${key}: its clause ${JSON.stringify(clause)} occurs in ${hits} rendered sentences of the live ${DOCS_FILE} § ${heading}; the anchor needs exactly one`);
+    }
+    const longestFirst = [...halves].sort((left, right) => right.clause.length - left.clause.length);
+    for (const sentence of sentences) {
+      const rest = longestFirst.reduce((left, { clause }) => left.replace(clause, ""), sentence.text);
+      if (CONNECTIVES.test(rest)) continue;
+      if (sentence.opensList && rest === sentence.text && rest.endsWith(":")) leads.push(`${heading} | ${rest}`);
+      else failures.push(`${DOCS_FILE} § ${heading}: the live sentence ${JSON.stringify(sentence.text)} keeps ${JSON.stringify(rest.trim())}, which no row's clause binds`);
+    }
+  }
+  return { failures, leads };
+}
+
+/** A copy of the table with one half's clause replaced: a hollowing fixture, the frozen table itself never edited. */
+const withClause = (rows: readonly Row[], key: string, clause: string): Row[] =>
+  rows.map(row => ({ ...row, halves: row.halves.map(half => (halfKey(row, half) === key ? { ...half, clause } : half)) }));
+/** A copy of the table without one row. */
+const withoutRow = (rows: readonly Row[], id: string): Row[] => rows.filter(row => row.id !== id);
+/** A copy of the table with one pin dropped from one pinned half (the NOT CLAIMED pin-level hollow). */
+const withoutPin = (rows: readonly Row[], key: string, title: string): Row[] =>
+  rows.map(row => ({ ...row, halves: row.halves.map(half => (halfKey(row, half) === key && isPinned(half) ? { ...half, pins: half.pins.filter(entry => entry.title !== title) } : half)) }));
+/** A copy of the table with every pin stripped from every half: the anchor's reading must not move (NOT CLAIMED). */
+const stripPins = (rows: readonly Row[]): Row[] => rows.map((row): Row => ({ ...row, halves: row.halves.map((half): Half => (isPinned(half) ? { ...half, pins: [] } : half)) }));
+/**
+ * The pins a copy of the table carries, in table order: one half's by its key ("RA10/a"), or every half's. wb-nz86 (R694
+ * follow-up of wb-kw2r landing 638, gate F3): each withoutPin page is read back through it next to its use - RA10/a 2 -> 1
+ * pins with POLL_BUDGET kept, the whole table exactly one pin short - so a withoutPin that drops nothing (gate-authored
+ * gw1), the wrong pin or more than one pin reds the quiet row that uses the page instead of leaving it green.
+ */
+const pinsOf = (rows: readonly Row[], key?: string): Pin[] => rows.flatMap(row => row.halves.filter(half => key === undefined || halfKey(row, half) === key).flatMap(half => [...half.pins]));
+
+describe("wb-vm71 every row is anchored like RA6: the table's identity is frozen, and the LIVE docs/09 sections are tiled by its clauses", () => {
+  it("FROZEN_ROWS (rule 16): every row's identity - each half's clause, then each pin by file, describe path and verbatim title - equals the literal", () => {
+    expect(ROWS.flatMap(tableIdentityOf)).toEqual(FROZEN_ROWS);
+    expect(FROZEN_ROWS.filter(line => line.startsWith("RA6/")).map(line => line.slice("RA6/".length))).toEqual(FROZEN_RA6);
+    const pinLines = (key: string): number => FROZEN_ROWS.filter(line => line.startsWith(`${key} | `) && !CLAUSE_LINE.test(line)).length;
+    expect(FROZEN_ROWS.filter(line => CLAUSE_LINE.test(line)).map(line => line.slice(0, line.indexOf(" | ")))).toEqual(FROZEN_HALF_SHAPE.map(entry => entry.slice(0, entry.indexOf(":"))));
+    expect(FROZEN_HALF_SHAPE.map(entry => `${entry.slice(0, entry.indexOf(":"))}:${pinLines(entry.slice(0, entry.indexOf(":")))}`)).toEqual(FROZEN_HALF_SHAPE);
+  });
+
+  it("TABLE ANCHOR: every clause of every row tiles the LIVE docs/09 sections, read from the document and never from this file's docs mirrors, and only the two named lead-ins stay unbound", () => {
+    const anchor = tableAnchor(readRepo(DOCS_FILE), ROWS);
+    expect(anchor.failures).toEqual([]);
+    expect(anchor.leads).toEqual(UNBOUND_LEADS);
+  });
+
+  describe("the gate's named survivors now red against the LIVE document: each adds exactly its own failure to the frozen table's tiling (a differential against that tiling, so a hollow elsewhere in the table neither masks nor fakes it)", () => {
+    const live = (): string => readRepo(DOCS_FILE);
+    /** The failures a hollowed copy of the table adds to the frozen table's live-docs tiling. */
+    const added = (rows: readonly Row[]): string[] => {
+      const base = tableAnchor(live(), ROWS).failures;
+      return tableAnchor(live(), rows).failures.filter(line => !base.includes(line));
+    };
+
+    it("G4: RL2/a's clause cut to 'Store edge provenance' leaves its cut words behind in the live closing sentence", () => {
+      const lines = added(withClause(ROWS, "RL2/a", "Store edge provenance"));
+      expect(lines).toHaveLength(1);
+      expect(lines[0]).toContain(`§ ${RELATIONS}: the live sentence`);
+      expect(lines[0]).toContain("with timestamp and source");
+    });
+
+    it("CT2: RA1/a's clause cut to its prefix leaves the rest of the live lead sentence behind", () => {
+      const lines = added(withClause(ROWS, "RA1/a", "Every supported provider offers at least a read-current-snapshot function"));
+      expect(lines).toHaveLength(1);
+      expect(lines[0]).toContain(`§ ${READERS}: the live sentence`);
+      expect(lines[0]).toContain("where its SDK supports it.");
+    });
+
+    it("CT6: row RL4 taken out of the table leaves its whole live sentence unbound", () => {
+      const lines = added(withoutRow(ROWS, "RL4"));
+      expect(lines).toHaveLength(1);
+      expect(lines[0]).toContain('the live sentence "Missing edges do not imply independence."');
+    });
+
+    it("NOT CLAIMED, pinned quiet: the anchor reads clauses, never pins - a pin-stripped table, and the table without RA10/a's IDLE_CANCEL, tile the live document exactly as the frozen table does", () => {
+      const frozen = tableAnchor(live(), ROWS);
+      const stripped = stripPins(ROWS);
+      expect(stripped.flatMap(row => row.halves).every(half => half.pins.length === 0)).toBe(true);
+      expect(tableAnchor(live(), stripped)).toEqual(frozen);
+      const dropped = withoutPin(ROWS, "RA10/a", IDLE_CANCEL.title);
+      expect({ before: pinsOf(ROWS, "RA10/a"), after: pinsOf(dropped, "RA10/a"), lost: pinsOf(ROWS).length - pinsOf(dropped).length }).toEqual({ before: [POLL_BUDGET, IDLE_CANCEL], after: [POLL_BUDGET], lost: 1 });
+      expect(tableAnchor(live(), dropped)).toEqual(frozen);
+    });
+  });
+
+  describe("the anchor names its true cause, over an independent fixture (its own two sections and table, never this file's docs mirror or ROWS)", () => {
+    const fixtureHalf = (id: string, clause: string): PinnedHalf => pinned(id, clause, "fixture", [pin("test/fixture.test.ts", `fixture: ${clause}`)]);
+    const FIXTURE_ROWS: readonly Row[] = [
+      { id: "F1", section: READERS, halves: [fixtureHalf("a", "Every fixture provider offers a snapshot read.")] },
+      { id: "F2", section: READERS, halves: [fixtureHalf("a", "first fixture duty"), fixtureHalf("b", "second fixture duty")] },
+      { id: "F3", section: READERS, halves: [fixtureHalf("a", "third fixture duty")] },
+      { id: "F4", section: READERS, halves: [fixtureHalf("a", "Fourth fixture duty holds."), fixtureHalf("b", "Fifth fixture duty holds.")] },
+      { id: "F5", section: RELATIONS, halves: [fixtureHalf("a", "sixth fixture edge")] },
+      { id: "F6", section: RELATIONS, halves: [fixtureHalf("a", "Seventh fixture rule holds"), fixtureHalf("b", "eighth fixture rule holds")] },
+    ];
+    const FIXTURE_LEADS: readonly string[] = [`${READERS} | Fixture lead:`, `${RELATIONS} | Edge lead:`];
+    const fixture = [
+      `# ${DOCS_PARENT}`,
+      "",
+      `## ${READERS}`,
+      "",
+      "Every fixture provider offers a snapshot read. Fixture lead:",
+      "- Alpha: first fixture duty and second fixture duty.",
+      "- Beta: third fixture duty.",
+      "",
+      "Fourth fixture duty holds. Fifth fixture duty holds.",
+      "",
+      `## ${RELATIONS}`,
+      "",
+      "Edge lead:",
+      "- sixth fixture edge",
+      "",
+      "Seventh fixture rule holds; eighth fixture rule holds.",
+      "",
+    ].join("\n");
+    const unbound = (heading: string, sentence: string, rest: string = sentence): string =>
+      `${DOCS_FILE} § ${heading}: the live sentence ${JSON.stringify(sentence)} keeps ${JSON.stringify(rest)}, which no row's clause binds`;
+
+    it("control: the fixture tiles with no failure and exactly its two lead-ins, so every red below is its own edit", () => {
+      const anchor = tableAnchor(fixture, FIXTURE_ROWS);
+      expect(anchor.failures).toEqual([]);
+      expect(anchor.leads).toEqual(FIXTURE_LEADS);
+    });
+
+    it("a shortened clause leaves its cut words behind, naming the section and the words", () => {
+      expect(tableAnchor(fixture, withClause(FIXTURE_ROWS, "F4/a", "Fourth fixture duty")).failures).toEqual([unbound(READERS, "Fourth fixture duty holds.", "holds.")]);
+    });
+
+    it("a row taken out of the table leaves its whole sentence unbound", () => {
+      expect(tableAnchor(fixture, withoutRow(FIXTURE_ROWS, "F3")).failures).toEqual([unbound(READERS, "third fixture duty.")]);
+    });
+
+    it("a clause that renders in two sentences, or in none, names its row", () => {
+      const twice = tableAnchor(fixture.replace("- Beta: third fixture duty.", "- Beta: third fixture duty; first fixture duty."), FIXTURE_ROWS);
+      expect(namedRows(twice.failures)).toEqual(["F2/a"]);
+      expect(twice.failures).toHaveLength(1);
+      const none = tableAnchor(fixture, withClause(FIXTURE_ROWS, "F5/a", "sixth fixture edges"));
+      expect(namedRows(none.failures)).toEqual(["F5/a"]);
+      expect(none.failures).toContain(unbound(RELATIONS, "sixth fixture edge"));
+    });
+
+    it("a sentence added to a closing paragraph or to a bullet is unbound and red, naming its section", () => {
+      expect(tableAnchor(fixture.replace("Fifth fixture duty holds.", "Fifth fixture duty holds. A host may skip it."), FIXTURE_ROWS).failures).toEqual([unbound(READERS, "A host may skip it.")]);
+      expect(tableAnchor(fixture.replace("- Beta: third fixture duty.", "- Beta: third fixture duty. Beta may skip it."), FIXTURE_ROWS).failures).toEqual([unbound(READERS, "Beta may skip it.")]);
+    });
+
+    it("a lead-in is forgiven only where it opens a list and ends with a colon: a colon-ended sentence closing a section is unbound, and a lead-in without its colon is too", () => {
+      const trailing = tableAnchor(fixture.replace("eighth fixture rule holds.", "eighth fixture rule holds. Exceptions:"), FIXTURE_ROWS);
+      expect(trailing.failures).toEqual([unbound(RELATIONS, "Exceptions:")]);
+      expect(trailing.leads).toEqual(FIXTURE_LEADS);
+      const unled = tableAnchor(fixture.replace("Edge lead:", "Edge lead."), FIXTURE_ROWS);
+      expect(unled.failures).toEqual([unbound(RELATIONS, "Edge lead.")]);
+      expect(unled.leads).toEqual([`${READERS} | Fixture lead:`]);
+    });
+
+    it("a refused section is a failure naming it, never a silent pass", () => {
+      const anchor = tableAnchor(fixture.replace(`## ${RELATIONS}`, "## Edge notes"), FIXTURE_ROWS);
+      expect(anchor.failures).toHaveLength(1);
+      expect(anchor.failures[0]).toContain(`§ ${RELATIONS}: the section is refused`);
+    });
+
+    it("pins never move the anchor: the pin-stripped fixture tiles exactly as the fixture does", () => {
+      expect(tableAnchor(fixture, stripPins(FIXTURE_ROWS))).toEqual(tableAnchor(fixture, FIXTURE_ROWS));
+    });
+  });
+});
+
+// ---- wb-kw2r (R694 follow-up of wb-vm71 landing 570, gate cmd_e01fc0d25b31: F3 leads, F4 rides): each half bound to its own span ----
+
+/**
+ * wb-kw2r (the R694 follow-up of wb-vm71 landing 570, gate cmd_e01fc0d25b31: F3 leads, F4 rides). The TABLE ANCHOR above
+ * reads WHICH words a section's clauses cover, never WHERE one half's clause ends and its neighbour's begins, so words
+ * moved from one half's clause to its neighbour's inside one rendered sentence, coordinated with every identity literal of
+ * this file, still tiled the live document (F3): the gate's resid-ra6-shift (", and the projection's freshness" from RA6/e
+ * into RA6/d), resid-ra4-shift (at its base RA4/b read "build revision and gate axes"; since wb-4ap.17 split RA4 in three
+ * its form here is "gate" moved from the unpinned RA4/c into the pinned RA4/b) and resid-rl5-shift ("without one" from
+ * RL5/b into RL5/a) read red=0, and so did two halves' clauses swapped with their pins left in place, the named
+ * clause-swap residual that had no quiet row of its own (resid-ra3-swap, F4). SPAN BINDING reads the LIVE document again,
+ * never this file's docs mirrors, and binds each half to its own rendered span:
+ * - JOIN LEG: inside each rendered sentence the bound clauses follow one another with nothing between two neighbours but
+ *   one of the sentence's own clause separators (CLAUSE_SEPARATORS, read longest first and never overlapping, so only the
+ *   comma or only the "and" of a ", and" is not one), and the sentence opens with its first clause and closes with its
+ *   last, a full stop at most after it. A boundary moved inside a span leaves two neighbours meeting at a bare space,
+ *   which no separator is: resid-ra6-shift and the RA4 form are red against the document.
+ * - ORDER LEG: the table's halves, read in table order, render in document order, and each row's halves are lettered a,
+ *   b, c in table order. Two halves' clauses swapped render out of order (resid-ra3-swap is red); put back into document
+ *   order the halves are lettered out of table order (red); relettered as well, the clauses are the frozen table's and
+ *   only the pins have moved between halves - the NOT CLAIMED pin family above, which reads quiet here too.
+ * NAMED RESIDUALS (each a named family with its pinned quiet row below; the document marks no separator to bind them by):
+ * - R-UNMARKED-JOIN: a sentence docs/09 renders with no clause separator at all marks no span boundary, so its halves
+ *   meet at a bare space and a boundary moved inside it stays quiet. UNMARKED_JOINS is that set at this cut: RL5/a+RL5/b
+ *   only, where resid-rl5-shift stays quiet, and UNMARKED_PAGE_READINGS its nine boundary moves: eight quiet, and "owner"
+ *   alone red only through the one-sentence counts, as it also renders inside "ownership" (RL1/c). The row also shows the
+ *   same move red once the document marks the join.
+ * - R-WHOLE-SPAN: the boundary of two neighbours moved to another clause separator inside their span - a whole span
+ *   crossing the join - leaves every join a separator and stays quiet. WHOLE_SPAN_JOINS is that set at this cut
+ *   (RA6/d+RA6/e, RA7/a+RA7/b, RA8/a+RA8/b, RA9/a+RA9/b, RL2/a+RL3/a), and WHOLE_SPAN_PAGES its ten moves; the row reads
+ *   every one of them quiet.
+ * Neither set is this file's own word: SPAN BINDING and the page builder derive both from the live document and the
+ * table, and the rows hold each to its literal, so a docs edit that marks, unmarks or splits a join reds until it is
+ * re-measured.
+ */
+
+/** The clause separators docs/09 renders between neighbouring halves of one sentence, longest first. */
+const CLAUSE_SEPARATORS: readonly string[] = [", and ", ", ", "; ", " and "];
+/** R-UNMARKED-JOIN at this cut: the joins of a sentence the live document renders with no clause separator. */
+const UNMARKED_JOINS: readonly string[] = ["RL5/a+RL5/b"];
+/** R-WHOLE-SPAN at this cut: the marked joins of two neighbours whose span carries another clause separator. */
+const WHOLE_SPAN_JOINS: readonly string[] = ["RA6/d+RA6/e", "RA7/a+RA7/b", "RA8/a+RA8/b", "RA9/a+RA9/b", "RL2/a+RL3/a"];
+/** R-WHOLE-SPAN's pages at this cut, one per other clause separator inside a whole-span join's span, as that join. */
+const WHOLE_SPAN_PAGES: readonly string[] = [
+  "RA6/d+RA6/e",
+  "RA6/d+RA6/e",
+  "RA7/a+RA7/b",
+  "RA8/a+RA8/b",
+  "RA9/a+RA9/b",
+  "RA9/a+RA9/b",
+  "RA9/a+RA9/b",
+  "RA9/a+RA9/b",
+  "RA9/a+RA9/b",
+  "RL2/a+RL3/a",
+];
+/** R-UNMARKED-JOIN's pages at this cut, each as "left clause | right clause | what the two instruments add". */
+const UNMARKED_PAGE_READINGS: readonly string[] = [
+  "Shared | nodes may have multiple causal readers without one cancellation owner | anchor +0 | binding +0",
+  "Shared nodes | may have multiple causal readers without one cancellation owner | anchor +0 | binding +0",
+  "Shared nodes may | have multiple causal readers without one cancellation owner | anchor +0 | binding +0",
+  "Shared nodes may have | multiple causal readers without one cancellation owner | anchor +0 | binding +0",
+  "Shared nodes may have multiple | causal readers without one cancellation owner | anchor +0 | binding +0",
+  "Shared nodes may have multiple causal | readers without one cancellation owner | anchor +0 | binding +0",
+  "Shared nodes may have multiple causal readers without | one cancellation owner | anchor +0 | binding +0",
+  "Shared nodes may have multiple causal readers without one | cancellation owner | anchor +0 | binding +0",
+  "Shared nodes may have multiple causal readers without one cancellation | owner | anchor +1 | binding +2",
+];
+/** The letters a row's halves carry, in table order. */
+const HALF_LETTERS = "abcdefghijklmnopqrstuvwxyz";
+
+/** What the span binding reads: one line per broken span, and the joins it reads as each named residual's members. */
+interface SpanBinding {
+  /** One line per broken span, naming the row, the half pair or the section. */
+  readonly failures: readonly string[];
+  /** Joins at a bare space in a sentence that renders no clause separator (R-UNMARKED-JOIN), as "left+right". */
+  readonly unmarked: readonly string[];
+  /** Separator joins whose two clauses' span carries another clause separator (R-WHOLE-SPAN), as "left+right". */
+  readonly movable: readonly string[];
+}
+
+/** Where a half's clause renders: the one sentence of its section holding it, and its offset there. */
+interface PlacedHalf {
+  readonly key: string;
+  readonly clause: string;
+  readonly sentence: number;
+  readonly at: number;
+}
+
+/** Every offset at which needle occurs in text, overlapping occurrences included (an empty needle occurs at each offset). */
+function offsetsOf(text: string, needle: string): number[] {
+  if (needle === "") return Array.from({ length: text.length + 1 }, (_, at) => at);
+  const out: number[] = [];
+  for (let at = text.indexOf(needle); at !== -1; at = text.indexOf(needle, at + 1)) out.push(at);
+  return out;
+}
+
+/** The clause separators a text renders, as [offset, separator]: the longest at each offset, never two overlapping. */
+function separatorMarks(text: string): (readonly [number, string])[] {
+  const marks: (readonly [number, string])[] = [];
+  let at = 0;
+  while (at < text.length) {
+    const separator = CLAUSE_SEPARATORS.find(entry => text.startsWith(entry, at));
+    if (separator === undefined) {
+      at += 1;
+    } else {
+      marks.push([at, separator]);
+      at += separator.length;
+    }
+  }
+  return marks;
+}
+
+/**
+ * The span binding over a docs/09 markdown text and a table: each half's clause renders exactly once in its section;
+ * read in table order the halves render in document order, each row lettered a, b, c; and inside each sentence its bound
+ * clauses tile it as clause, separator, clause ... clause (a full stop at most after the last), each separator one of the
+ * sentence's own clause separators, except that a sentence rendering none joins two clauses at a bare space.
+ */
+function spanBinding(markdown: string, rows: readonly Row[]): SpanBinding {
+  const failures: string[] = [];
+  const unmarked: string[] = [];
+  const movable: string[] = [];
+  for (const row of rows) {
+    const letters = row.halves.map(half => half.id).join(", ");
+    const expected = [...HALF_LETTERS.slice(0, row.halves.length)].join(", ");
+    if (letters !== expected) failures.push(`row ${row.id}: its halves are lettered ${letters} in table order; the span binding needs ${expected}`);
+  }
+  for (const heading of [READERS, RELATIONS]) {
+    const found = docsSection(markdown, heading, 2, [DOCS_PARENT]);
+    if (!found.ok) {
+      failures.push(`${DOCS_FILE} § ${heading}: the section is refused: ${found.why}`);
+      continue;
+    }
+    const sentences = liveSentences(found.blocks);
+    const placed: PlacedHalf[] = [];
+    for (const row of rows.filter(entry => entry.section === heading)) {
+      for (const half of row.halves) {
+        const key = halfKey(row, half);
+        const homes = sentences.flatMap((sentence, index) => offsetsOf(sentence.text, half.clause).map(at => ({ sentence: index, at })));
+        const home = homes[0];
+        if (homes.length === 1 && home !== undefined) placed.push({ key, clause: half.clause, ...home });
+        else failures.push(`row ${key}: its clause ${JSON.stringify(half.clause)} renders ${homes.length} times in the live ${DOCS_FILE} § ${heading}; the span binding needs exactly one`);
+      }
+    }
+    for (const [index, half] of placed.entries()) {
+      const before = placed[index - 1];
+      if (before !== undefined && (half.sentence < before.sentence || (half.sentence === before.sentence && half.at < before.at))) {
+        failures.push(`row ${half.key}: its clause renders before ${before.key}'s in the live ${DOCS_FILE} § ${heading}, against table order`);
+      }
+    }
+    for (const [index, sentence] of sentences.entries()) {
+      const spans = placed.filter(half => half.sentence === index).sort((left, right) => left.at - right.at);
+      const first = spans[0];
+      const last = spans[spans.length - 1];
+      if (first === undefined || last === undefined) continue;
+      const where = `${DOCS_FILE} § ${heading}: the live sentence ${JSON.stringify(sentence.text)}`;
+      if (first.at > 0) failures.push(`${where} opens with ${JSON.stringify(sentence.text.slice(0, first.at))} before ${first.key}'s clause`);
+      const tail = sentence.text.slice(last.at + last.clause.length);
+      if (tail !== "" && tail !== ".") failures.push(`${where} closes with ${JSON.stringify(tail)} after ${last.key}'s clause`);
+      const marks = separatorMarks(sentence.text);
+      for (const [at, right] of spans.entries()) {
+        const left = spans[at - 1];
+        if (left === undefined) continue;
+        const end = left.at + left.clause.length;
+        if (right.at < end) {
+          failures.push(`${where} renders ${left.key} and ${right.key} overlapping`);
+          continue;
+        }
+        const join = sentence.text.slice(end, right.at);
+        const pair = `${left.key}+${right.key}`;
+        if (marks.some(([offset, separator]) => offset === end && offset + separator.length === right.at)) {
+          if (marks.some(([offset, separator]) => offset !== end && offset >= left.at && offset + separator.length <= right.at + right.clause.length)) movable.push(pair);
+        } else if (marks.length === 0 && join === " ") {
+          unmarked.push(pair);
+        } else {
+          failures.push(`${where} joins ${left.key} and ${right.key} at ${JSON.stringify(join)}, which is not one of its clause separators`);
+        }
+      }
+    }
+  }
+  return { failures, unmarked, movable };
+}
+
+/** Each half's clause by its key ("RA6/d"). */
+const clausesByKey = (rows: readonly Row[]): Map<string, string> => new Map(rows.flatMap(row => row.halves.map((half): [string, string] => [halfKey(row, half), half.clause])));
+/** The keys whose clause a copy of the table changed against the frozen table: what a probe page carries. */
+function changedHalves(rows: readonly Row[]): string[] {
+  const frozen = clausesByKey(ROWS);
+  return [...clausesByKey(rows)].filter(([key, clause]) => frozen.get(key) !== clause).map(([key]) => key);
+}
+/** A copy of the table with the clauses of two neighbouring halves replaced: one boundary move. */
+const withJoin = (rows: readonly Row[], left: string, leftClause: string, right: string, rightClause: string): Row[] => withClause(withClause(rows, left, leftClause), right, rightClause);
+
+/** R-WHOLE-SPAN's pages: each whole-span join's two clauses re-cut at every other clause separator of their live span. */
+function wholeSpanPages(markdown: string): { readonly join: string; readonly rows: Row[] }[] {
+  const clauses = clausesByKey(ROWS);
+  return WHOLE_SPAN_JOINS.flatMap(join => {
+    const [left = "", right = ""] = join.split("+");
+    const leftClause = clauses.get(left) ?? "";
+    const rightClause = clauses.get(right) ?? "";
+    const separator = CLAUSE_SEPARATORS.find(entry => markdown.includes(`${leftClause}${entry}${rightClause}`));
+    if (separator === undefined) return [];
+    const span = `${leftClause}${separator}${rightClause}`;
+    return separatorMarks(span)
+      .filter(([at]) => at !== leftClause.length)
+      .map(([at, mark]) => ({ join, rows: withJoin(ROWS, left, span.slice(0, at), right, span.slice(at + mark.length)) }));
+  });
+}
+
+/** R-UNMARKED-JOIN's pages: each unmarked join's two clauses re-cut at every other bare space of their live span. */
+function unmarkedPages(): { readonly join: string; readonly rows: Row[] }[] {
+  const clauses = clausesByKey(ROWS);
+  return UNMARKED_JOINS.flatMap(join => {
+    const [left = "", right = ""] = join.split("+");
+    const leftClause = clauses.get(left) ?? "";
+    const span = `${leftClause} ${clauses.get(right) ?? ""}`;
+    return offsetsOf(span, " ")
+      .filter(at => at !== leftClause.length)
+      .map(at => ({ join, rows: withJoin(ROWS, left, span.slice(0, at), right, span.slice(at + 1)) }));
+  });
+}
+
+describe("wb-kw2r each half is bound to its own rendered span: neighbouring clauses meet only at one of their sentence's clause separators, in table order (R694 follow-up of wb-vm71 landing 570: F3 leads, F4 rides)", () => {
+  const live = (): string => readRepo(DOCS_FILE);
+  /** The failures a changed copy of the table adds to the frozen table's span binding (a differential, as `added` above). */
+  const addedSpans = (rows: readonly Row[]): string[] => {
+    const base = spanBinding(live(), ROWS).failures;
+    return spanBinding(live(), rows).failures.filter(line => !base.includes(line));
+  };
+
+  it("SPAN BINDING: every half binds its own span of the LIVE docs/09 sections, read from the document and never from this file's docs mirrors; its unmarked and whole-span joins are exactly the named residuals' sets, and pins never move it", () => {
+    const binding = spanBinding(live(), ROWS);
+    expect(binding.failures).toEqual([]);
+    expect(binding.unmarked).toEqual(UNMARKED_JOINS);
+    expect(binding.movable).toEqual(WHOLE_SPAN_JOINS);
+    expect(spanBinding(live(), stripPins(ROWS))).toEqual(binding);
+    const dropped = withoutPin(ROWS, "RA10/a", IDLE_CANCEL.title);
+    expect({ before: pinsOf(ROWS, "RA10/a"), after: pinsOf(dropped, "RA10/a"), lost: pinsOf(ROWS).length - pinsOf(dropped).length }).toEqual({ before: [POLL_BUDGET, IDLE_CANCEL], after: [POLL_BUDGET], lost: 1 });
+    expect(spanBinding(live(), dropped)).toEqual(binding);
+  });
+
+  describe("the gate's boundary and swap probes now red against the LIVE document: the TABLE ANCHOR reads each exactly as the frozen table (the finding, reproduced) and SPAN BINDING adds exactly its own failure", () => {
+    it("resid-ra6-shift (F3): ', and the projection's freshness' moved from RA6/e into RA6/d joins the two at a bare space inside a sentence that marks its clauses", () => {
+      const page = withJoin(
+        ROWS,
+        "RA6/d",
+        "Reused, replayed or non-observed observation rows demote an RF preview to partial, and the projection's freshness",
+        "RA6/e",
+        "is the host's reading witness, never a currentness claim about the rows",
+      );
+      expect(changedHalves(page)).toEqual(["RA6/d", "RA6/e"]);
+      expect(tableAnchor(live(), page)).toEqual(tableAnchor(live(), ROWS));
+      const lines = addedSpans(page);
+      expect(lines).toHaveLength(1);
+      expect(lines[0]).toContain(`${DOCS_FILE} § ${READERS}: the live sentence "Reused, replayed or non-observed observation rows`);
+      expect(lines[0]).toContain('joins RA6/d and RA6/e at " ", which is not one of its clause separators');
+    });
+
+    it("resid-ra4-shift (F3) in today's table (wb-4ap.17 split RA4 in three): 'gate' moved from the unpinned RA4/c into the pinned RA4/b joins the two at a bare space", () => {
+      const page = withJoin(ROWS, "RA4/b", "build revision and gate", "RA4/c", "axes");
+      expect(changedHalves(page)).toEqual(["RA4/b", "RA4/c"]);
+      expect(tableAnchor(live(), page)).toEqual(tableAnchor(live(), ROWS));
+      expect(addedSpans(page)).toEqual([
+        `${DOCS_FILE} § ${READERS}: the live sentence "native operation/verdict/artifact evidence, build revision and gate axes." joins RA4/b and RA4/c at " ", which is not one of its clause separators`,
+      ]);
+    });
+
+    it("resid-ra3-swap (F4): RA3's two clauses swapped with their pins left in place render out of table order; put back into document order its halves are lettered out of table order; relettered as well, only the pins have moved (the NOT CLAIMED pin family)", () => {
+      const swapped = withJoin(ROWS, "RA3/a", "possible descendant references", "RA3/b", "native Run status/event stream");
+      expect(changedHalves(swapped)).toEqual(["RA3/a", "RA3/b"]);
+      expect(tableAnchor(live(), swapped)).toEqual(tableAnchor(live(), ROWS));
+      expect(addedSpans(swapped)).toEqual([`row RA3/b: its clause renders before RA3/a's in the live ${DOCS_FILE} § ${READERS}, against table order`]);
+      const reordered = swapped.map(row => (row.id === "RA3" ? { ...row, halves: [...row.halves].reverse() } : row));
+      expect(addedSpans(reordered)).toEqual(["row RA3: its halves are lettered b, a in table order; the span binding needs a, b"]);
+      const relettered = reordered.map(row => (row.id === "RA3" ? { ...row, halves: row.halves.map((half, at) => ({ ...half, id: HALF_LETTERS.charAt(at) })) } : row));
+      expect(changedHalves(relettered)).toEqual([]);
+      expect(relettered.find(row => row.id === "RA3")?.halves.map(half => half.pins.length)).toEqual([1, 2]);
+      expect(ROWS.find(row => row.id === "RA3")?.halves.map(half => half.pins.length)).toEqual([2, 1]);
+      expect(spanBinding(live(), relettered)).toEqual(spanBinding(live(), ROWS));
+    });
+  });
+
+  describe("NAMED RESIDUALS, pinned quiet: the moves the LIVE document marks no separator to bind (each page carries its move, so a silenced page reds its row)", () => {
+    it("RESIDUAL R-UNMARKED-JOIN: RL5's sentence renders no clause separator, so 'without one' moved from RL5/b into RL5/a (resid-rl5-shift) binds as the frozen table does, every other bare-space boundary of its span reads as UNMARKED_PAGE_READINGS, and once the document marks the join the same move is red and the frozen table binds", () => {
+      const page = withJoin(ROWS, "RL5/a", "Shared nodes may have multiple causal readers without one", "RL5/b", "cancellation owner");
+      expect(changedHalves(page)).toEqual(["RL5/a", "RL5/b"]);
+      expect(tableAnchor(live(), page)).toEqual(tableAnchor(live(), ROWS));
+      expect(spanBinding(live(), page)).toEqual(spanBinding(live(), ROWS));
+      // Every other bare-space boundary of the unmarked span, read through both instruments: the family at this cut. Only
+      // "owner" alone reads red, and only because it also renders inside "ownership" (RL1/c): a one-sentence count, no span.
+      const readings = unmarkedPages().map(({ join, rows }) => {
+        const [left = "", right = ""] = join.split("+");
+        const anchor = tableAnchor(live(), rows).failures.filter(line => !tableAnchor(live(), ROWS).failures.includes(line)).length;
+        const clauses = clausesByKey(rows);
+        return `${clauses.get(left)} | ${clauses.get(right)} | anchor +${anchor} | binding +${addedSpans(rows).length}`;
+      });
+      expect(readings).toEqual(UNMARKED_PAGE_READINGS);
+      const marked = live().replace("multiple causal readers without one cancellation owner.", "multiple causal readers, without one cancellation owner.");
+      expect(marked).not.toBe(live());
+      expect(spanBinding(marked, ROWS)).toEqual({ failures: [], unmarked: [], movable: WHOLE_SPAN_JOINS });
+      const moved = spanBinding(marked, withJoin(ROWS, "RL5/a", "Shared nodes may have multiple causal readers, without one", "RL5/b", "cancellation owner"));
+      expect(moved.failures).toHaveLength(1);
+      expect(moved.failures[0]).toContain('joins RL5/a and RL5/b at " ", which is not one of its clause separators');
+    });
+
+    it("RESIDUAL R-WHOLE-SPAN: every move of a whole-span join's boundary to another clause separator of its live span (WHOLE_SPAN_PAGES, ten pages) binds and tiles as the frozen table does", () => {
+      const pages = wholeSpanPages(live());
+      expect(pages.map(page => page.join)).toEqual(WHOLE_SPAN_PAGES);
+      for (const page of pages) {
+        expect(changedHalves(page.rows), page.join).toEqual(page.join.split("+"));
+        expect(tableAnchor(live(), page.rows), page.join).toEqual(tableAnchor(live(), ROWS));
+        expect(spanBinding(live(), page.rows), page.join).toEqual(spanBinding(live(), ROWS));
+      }
+    });
+  });
+
+  describe("the binding names its true cause, over an independent fixture (its own two sections and table, never this file's docs mirror or ROWS)", () => {
+    const fixtureHalf = (id: string, clause: string): PinnedHalf => pinned(id, clause, "fixture", [pin("test/fixture.test.ts", `fixture: ${clause}`)]);
+    const SPAN_ROWS: readonly Row[] = [
+      { id: "K1", section: READERS, halves: [fixtureHalf("a", "Every fixture provider offers a snapshot read.")] },
+      { id: "K2", section: READERS, halves: [fixtureHalf("a", "north gate"), fixtureHalf("b", "south door"), fixtureHalf("c", "east wall")] },
+      { id: "K3", section: READERS, halves: [fixtureHalf("a", "red lamp and blue lamp"), fixtureHalf("b", "green lamp")] },
+      { id: "K4", section: READERS, halves: [fixtureHalf("a", "first bell"), fixtureHalf("b", "second bell")] },
+      { id: "K5", section: READERS, halves: [fixtureHalf("a", "Seventh duty holds"), fixtureHalf("b", "without one owner")] },
+      { id: "K6", section: RELATIONS, halves: [fixtureHalf("a", "eighth edge")] },
+      { id: "K7", section: RELATIONS, halves: [fixtureHalf("a", "Ninth rule holds"), fixtureHalf("b", "tenth rule stands")] },
+    ];
+    const fixture = [
+      `# ${DOCS_PARENT}`,
+      "",
+      `## ${READERS}`,
+      "",
+      "Every fixture provider offers a snapshot read. Fixture lead:",
+      "- Alpha: north gate, south door and east wall.",
+      "- Beta: red lamp and blue lamp; green lamp.",
+      "- Gamma: first bell, and second bell.",
+      "",
+      "Seventh duty holds without one owner.",
+      "",
+      `## ${RELATIONS}`,
+      "",
+      "Edge lead:",
+      "- eighth edge",
+      "",
+      "Ninth rule holds; tenth rule stands.",
+      "",
+    ].join("\n");
+    const CONTROL: SpanBinding = { failures: [], unmarked: ["K5/a+K5/b"], movable: ["K3/a+K3/b"] };
+    const joinsAt = (heading: string, sentence: string, left: string, right: string, join: string): string =>
+      `${DOCS_FILE} § ${heading}: the live sentence ${JSON.stringify(sentence)} joins ${left} and ${right} at ${JSON.stringify(join)}, which is not one of its clause separators`;
+
+    it("control: the fixture binds with no failure, its unmarked and whole-span joins read as built, and the TABLE ANCHOR tiles it with its two lead-ins, so every red below is its own edit", () => {
+      expect(spanBinding(fixture, SPAN_ROWS)).toEqual(CONTROL);
+      expect(tableAnchor(fixture, SPAN_ROWS)).toEqual({ failures: [], leads: [`${READERS} | Fixture lead:`, `${RELATIONS} | Edge lead:`] });
+    });
+
+    it("a boundary moved inside a span, which the TABLE ANCHOR reads as the fixture, joins its two halves at a bare space", () => {
+      const moved = withJoin(SPAN_ROWS, "K2/b", "south", "K2/c", "door and east wall");
+      expect(tableAnchor(fixture, moved).failures).toEqual([]);
+      expect(spanBinding(fixture, moved).failures).toEqual([joinsAt(READERS, "north gate, south door and east wall.", "K2/b", "K2/c", " ")]);
+    });
+
+    it("a boundary inside a ', and' (only its comma, or only its 'and', crossing the join) is not one of the sentence's clause separators", () => {
+      const comma = withJoin(SPAN_ROWS, "K4/a", "first bell,", "K4/b", "second bell");
+      const and = withJoin(SPAN_ROWS, "K4/a", "first bell", "K4/b", "and second bell");
+      expect(tableAnchor(fixture, comma).failures).toEqual([]);
+      expect(tableAnchor(fixture, and).failures).toEqual([]);
+      expect(spanBinding(fixture, comma).failures).toEqual([joinsAt(READERS, "first bell, and second bell.", "K4/a", "K4/b", " and ")]);
+      expect(spanBinding(fixture, and).failures).toEqual([joinsAt(READERS, "first bell, and second bell.", "K4/a", "K4/b", ", ")]);
+    });
+
+    it("two clauses swapped render out of table order, and halves put back into document order are lettered out of table order", () => {
+      const swapped = withJoin(SPAN_ROWS, "K7/a", "tenth rule stands", "K7/b", "Ninth rule holds");
+      expect(tableAnchor(fixture, swapped).failures).toEqual([]);
+      expect(spanBinding(fixture, swapped).failures).toEqual([`row K7/b: its clause renders before K7/a's in the live ${DOCS_FILE} § ${RELATIONS}, against table order`]);
+      const reordered = swapped.map(row => (row.id === "K7" ? { ...row, halves: [...row.halves].reverse() } : row));
+      expect(spanBinding(fixture, reordered).failures).toEqual(["row K7: its halves are lettered b, a in table order; the span binding needs a, b"]);
+    });
+
+    it("a sentence that opens or closes with words no clause binds is named by its sentence and the words", () => {
+      expect(spanBinding(fixture, withClause(SPAN_ROWS, "K1/a", "fixture provider offers a snapshot read.")).failures).toEqual([
+        `${DOCS_FILE} § ${READERS}: the live sentence "Every fixture provider offers a snapshot read." opens with "Every " before K1/a's clause`,
+      ]);
+      expect(spanBinding(fixture, withClause(SPAN_ROWS, "K1/a", "Every fixture provider offers a snapshot")).failures).toEqual([
+        `${DOCS_FILE} § ${READERS}: the live sentence "Every fixture provider offers a snapshot read." closes with " read." after K1/a's clause`,
+      ]);
+    });
+
+    it("overlapping clauses are named as overlapping, and a clause that renders twice names its row", () => {
+      expect(spanBinding(fixture, withClause(SPAN_ROWS, "K2/b", "south door and east")).failures).toEqual([
+        `${DOCS_FILE} § ${READERS}: the live sentence "north gate, south door and east wall." renders K2/b and K2/c overlapping`,
+      ]);
+      const twice = spanBinding(fixture.replace("- Gamma: first bell, and second bell.", "- Gamma: first bell, and second bell; green lamp."), SPAN_ROWS).failures;
+      expect(namedRows(twice)).toEqual(["K3/b"]);
+      expect(twice).toContain(`row K3/b: its clause "green lamp" renders 2 times in the live ${DOCS_FILE} § ${READERS}; the span binding needs exactly one`);
+    });
+
+    it("an unmarked sentence joins at a bare space and a move inside it stays quiet (R-UNMARKED-JOIN), and once a separator marks it a bare-space join is red", () => {
+      expect(spanBinding(fixture, withJoin(SPAN_ROWS, "K5/a", "Seventh duty holds without", "K5/b", "one owner"))).toEqual(CONTROL);
+      const marked = fixture.replace("Seventh duty holds without one owner.", "Seventh duty holds, without one owner.");
+      expect(marked).not.toBe(fixture);
+      expect(spanBinding(marked, SPAN_ROWS)).toEqual({ failures: [], unmarked: [], movable: ["K3/a+K3/b"] });
+      expect(spanBinding(marked, withJoin(SPAN_ROWS, "K5/a", "Seventh duty holds, without", "K5/b", "one owner")).failures).toEqual([
+        joinsAt(READERS, "Seventh duty holds, without one owner.", "K5/a", "K5/b", " "),
+      ]);
+    });
+
+    it("a whole span moved across a marked join stays quiet and its join stays a whole-span join (R-WHOLE-SPAN)", () => {
+      expect(spanBinding(fixture, withJoin(SPAN_ROWS, "K3/a", "red lamp", "K3/b", "blue lamp; green lamp"))).toEqual(CONTROL);
+    });
+
+    it("a refused section is a failure naming it, never a silent pass", () => {
+      const binding = spanBinding(fixture.replace(`## ${RELATIONS}`, "## Edge notes"), SPAN_ROWS);
+      expect(binding.failures).toHaveLength(1);
+      expect(binding.failures[0]).toContain(`${DOCS_FILE} § ${RELATIONS}: the section is refused`);
+    });
   });
 });

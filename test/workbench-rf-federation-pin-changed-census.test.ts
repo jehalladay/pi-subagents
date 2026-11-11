@@ -39,14 +39,130 @@
  *  A, the trigger, absent today. A1 an AST scan of every src module: the one rf render argv carries --no-commit, the one rf launch
  *    is the provider's, no literal spells an uncommitted render or a commit-time flag, with controls. A launch is a call of a
  *    launcher - a bare child_process name, a child_process import alias, a variable bound or destructured to a launcher, or a
- *    member or element call such as childProcess.spawn, pi.exec or cp["spawn"] - whose program literal is rf (a shell string
- *    whose first word is rf included); an argv is read through inline spreads and literal .concat chains, a render is a "context"
- *    word with a later "render" word (flags may sit between), and a '+' chain of string literals is read as one text (wb-w1g3
- *    F1(iv): G15, G17); A2 a stand-in rf on PATH sees --no-commit on both input arms; A3 the rf roster stays the read preview:
- *    native and injected registrations selected by id, permission or an rf contractSource (rf@ release or the reactive-fiber.cli
- *    schema), never the id prefix alone (wb-w1g3 F1(iv): G14), the carrier contractSource, RECONCILE_EVIDENCE_READS.reactivefiber
- *    at src/workflow/reconcile.ts:67; A4 no src or qa file spells the pin-change vocabulary, read raw and with its escape
- *    sequences decoded (wb-w1g3 F2: G18), floors and anchors per root.
+ *    member or element call such as childProcess.spawn, pi.exec or cp["spawn"] - whose program literal is rf or a path to it
+ *    (/usr/local/bin/rf, C:\tools\rf.exe; wb-s4j3 F3), a shell string whose first word is one included, its callee, its program
+ *    and a launcher's binding each read through parentheses and type and non-null assertions (wb-29wk F1: spawn("rf" as string,
+ *    argv), (spawn as typeof spawn)("rf", argv), const run = spawn as typeof spawn); an argv is read through inline spreads,
+ *    literal .concat chains, type and non-null assertions, and every later push that completes a declared array literal in its
+ *    scope (wb-s4j3 F3) - a literal a declaration binds to a name: a variable's initializer, a parameter's default or the
+ *    default of a binding element in a declaration's or a parameter's destructuring pattern (function f(w, argv = [...]),
+ *    const { argv = [...] } = opts, const [argv = [...]] = lists; a parameter's scope, its pattern's included, is its function,
+ *    claimed only for the parameters A1's controls spell, each exactly as its control spells it (wb-shnw F1; wb-11rf F4): a
+ *    push inside the function is read in four non-exported function declarations (paramDefault, paramDefaultLaunch,
+ *    patternParamDefault and paramAlias) and in the body of an arrow function a variable declaration binds, a class's method
+ *    and an exported function declaration, each holding nestedPatternScoped's nest with a three-element default as
+ *    arrowNestScoped, methodNestScoped and exportedNestScoped spell it (arrowPushInside, methodPushInside and
+ *    exportedPushInside; wb-8cgw F2), and, with that nest, in four more places, each exactly as one of its controls writes
+ *    it: inside the launch's argv argument in the concise body of an arrow function a variable declaration binds
+ *    (arrowConcisePushInside); as the left operand, the push argv.push("render", "--json"), of the parenthesized comma
+ *    expression that is the whole concise body of such an arrow function, its right operand the launch, the arrow bound in
+ *    a const statement with no export keyword (arrowConciseCommaPushInside; wb-sp4w), or the bare argv, the arrow
+ *    launching nothing, its variable statement exported by its own export keyword and declared by const
+ *    (arrowConciseCommaPushReturned; wb-sp4w cut #2), let (arrowConciseCommaPushLet) or var (arrowConciseCommaPushVar;
+ *    wb-sp4w cut #3), the arrow its declarator's initializer with nothing around it - and, in such a const statement, with
+ *    one of those two forms written otherwise (wb-sp4w cut #4): the arrow in one pair of parentheses as the initializer
+ *    (arrowConciseCommaPushParenthesizedArrow) or the right operand the argv in one pair of parentheses, (argv)
+ *    (arrowConciseCommaPushParenthesizedRight); in the block body of a nested arrow function with no parameter that an
+ *    exported function declaration binds to a const as its initializer, with nothing around it, and then calls by a
+ *    statement that is the bare call of that const's name alone (add();), the block body exactly the one push statement
+ *    argv.push("render", "--json");, the declaration then returning the launch, exported by export function
+ *    (nestedFunctionPushInside; wb-2l05 F3), or the argv itself by return argv;, launching nothing
+ *    (nestedFunctionPushReturned; wb-sp4w cut #2); and in the block body of an anonymous function expression with no
+ *    parameter that such a declaration binds and calls the same way, its block body the same one push statement, the
+ *    declaration then returning the launch, exported by export function (nestedFunctionExpressionPushInside; wb-sp4w), or
+ *    the argv itself, launching nothing
+ *    (nestedFunctionExpressionPushReturned; wb-sp4w cut #2) - each host returning the argv itself exported by export
+ *    function (those two controls), by export default function with its name (nestedFunctionPushDefault and
+ *    nestedFunctionExpressionPushDefault) or by export default function with no name (nestedFunctionPushDefaultAnonymous
+ *    and nestedFunctionExpressionPushDefaultAnonymous; wb-sp4w cut #3) - and, for either nested kind in a host exported by
+ *    export function and returning the argv itself, with one of three forms written otherwise (wb-sp4w cut #4): the block
+ *    body the two push statements argv.push("render"); then argv.push("--json"); (nestedFunctionPushTwoStatements and
+ *    nestedFunctionExpressionPushTwoStatements), the call (add)();, its callee in one pair of parentheses
+ *    (nestedFunctionPushParenthesizedCall and nestedFunctionExpressionPushParenthesizedCall), or the return return (argv);,
+ *    the argv in one pair of parentheses (nestedFunctionPushParenthesizedReturn and
+ *    nestedFunctionExpressionPushParenthesizedReturn) - and, for each launch-less place (the comma place's bare-argv branch
+ *    in a const statement, and either nested kind in a host exported by export function returning the argv itself), with
+ *    one facet of its text written otherwise (wb-sp4w cut #5): its file holding one more statement,
+ *    export type Argv = string[];, before the place (nestedFunctionPushBesideStatement,
+ *    nestedFunctionExpressionPushBesideStatement and arrowConciseCommaPushBesideStatement); a name: the nested function's
+ *    const named run and called by run(); (nestedFunctionPushRenamedConst and nestedFunctionExpressionPushRenamedConst),
+ *    the host named build (nestedFunctionPushRenamedHost and nestedFunctionExpressionPushRenamedHost) or the comma place's
+ *    arrow bound to build (arrowConciseCommaPushRenamedBinding); its line layout: the host written on one line
+ *    (nestedFunctionPushOneLine and nestedFunctionExpressionPushOneLine) or the comma place's statement broken after its =>
+ *    onto a second line (arrowConciseCommaPushTwoLines); or a comment: the line comment // the verb and the output flag on
+ *    its own line before the nested push (nestedFunctionPushCommented and nestedFunctionExpressionPushCommented); each
+ *    place is claimed only in exactly the text one of its controls writes, that text alone its whole file - its statements,
+ *    the parentheses and the keywords, modifiers, type annotations, parameters and declarators, its names (the parameter
+ *    argv; the nested function's const and its call add, or run as the two renamed-const controls write them; the host f,
+ *    or build as the two renamed-host controls write it, or no name as the two anonymous default-exported controls write
+ *    it; the comma place's arrow f, or build as arrowConciseCommaPushRenamedBinding writes it), its line breaks, spacing
+ *    and indentation, its string literals and its comments, each exactly as that control writes it - and any other text of
+ *    a place or of its file is NOT CLAIMED (among them an async or generator function, a return type, a variable's type
+ *    annotation, a type parameter, a parameter annotation left out, a further declarator, a further parameter of the host
+ *    or of the arrow, a nested function with a parameter, a nested function's body holding a further statement or any
+ *    statement but those pushes, a push of other words or through another receiver or callee in a nested function or a
+ *    comma, a nested function in parentheses or an assertion as its const's initializer, a push, a comma expression, a
+ *    callee, a returned argv, an arrow initializer or a right operand in more parentheses than its controls write or in a
+ *    type or non-null assertion, a call with an argument, an optional call, a call through call, apply or bind, a call that
+ *    is not the whole of its statement; a further statement in the file but the one export type Argv = string[]; before the
+ *    place (two such statements, or one after the place, among them); a name no control writes there (the parameter, the
+ *    nested function's const and its call, the host or the comma place's arrow named otherwise); a line break, spacing or
+ *    indentation no control writes (a blank line in the nested body, the comma place's statement over three lines, among
+ *    them); a comment no control writes (a block comment in the nested body, a line comment in the host outside the nested
+ *    function, a comment inside the comma place's statement, among them); a string literal written otherwise (the pushed
+ *    words in single quotes among them); and two forms written otherwise at once - a default-exported host, or a let or var
+ *    statement, with one of the wb-sp4w cut #4 or cut #5 forms, or two cut #5 facets together, among them),
+ *    and a later function's push stays out for each parameter a quiet control spells, the later function exactly where that
+ *    control spells it, in a host holding exactly the members that control writes (a later top-level function in a file of
+ *    the parameter's statement and that function, or with a third statement between them for threeStatementScoped; or for
+ *    three a later function inside the parameter's own class, array literal or statement holding those two members, or with
+ *    a third member after them for methodThreeMemberScoped, arrowThreeElementScoped and arrowThreeDeclaratorScoped; wb-8cgw
+ *    F1; wb-2l05 F2), so a declarationScope loop that climbs one of them to anything but its parameter reds
+ *    A1 - in a function declaration with a
+ *    one-element default, the parameter itself (paramScoped), one pattern level of each kind (patternScoped and
+ *    arrayPatternScoped; wb-gdqz) and seventeen nests (wb-ia9d): six with one binding element per pattern level, each object element
+ *    keyed by shorthand or an identifier, no outer default, no rest element and no hole - two levels deep, one per pairing, an
+ *    array in an array (nestedPatternScoped), an array in an object (arrayInObjectScoped), an object in an array
+ *    (objectInArrayScoped) and an object in an object (objectInObjectScoped), and three levels deep, one per kind, three array
+ *    patterns (threeArrayScoped) and three object patterns (threeObjectScoped) - and eleven two levels deep, each one element
+ *    shape off that form: the nest after a sibling, a shorthand one in an object pattern and an identifier in an array pattern
+ *    (afterSiblingInObjectScoped, afterSiblingInArrayScoped), and before one (beforeSiblingInObjectScoped,
+ *    beforeSiblingInArrayScoped); the outer element defaulted to an empty array or an empty object (outerArrayDefaultScoped,
+ *    outerObjectDefaultScoped); a rest element holding the nest (restNestScoped); the outer element keyed by a computed name, a
+ *    numeric literal or a string literal (computedKeyScoped, numericKeyScoped, stringKeyScoped); one hole before the nest
+ *    (holeBeforeNestScoped) - and seven more two levels deep, each one element shape off one of those eleven (wb-11rf F2): an
+ *    object pattern as the nest after a sibling, in an object pattern and in an array pattern (objectAfterSiblingInObjectScoped,
+ *    objectAfterSiblingInArrayScoped); the outer element defaulted to a name (outerIdentifierDefaultScoped); keyed by a
+ *    computed member access (memberKeyScoped) or the numeric literal 1 (numericKeyOneScoped); two holes before the nest
+ *    (twoHolesBeforeNestScoped); a rest element holding an object pattern (restObjectNestScoped); then, with a three-element
+ *    default, nestedPatternScoped's nest in an arrow function, a method and an exported function declaration (arrowNestScoped,
+ *    methodNestScoped, exportedNestScoped) and objectInObjectScoped's in an arrow function (arrowObjectNestScoped; wb-11rf F3);
+ *    and one pattern level, an array pattern in an arrow function with a one-element default (arrowPatternScoped) and an object
+ *    pattern in a function declaration with a three-element default (multiDefaultPatternScoped; wb-11rf F4); and three whose
+ *    later function sits inside the parameter's own host (wb-8cgw F1): methodNestScoped's parameter in a class whose later
+ *    sibling method pushes (methodSiblingScoped), and arrowNestScoped's in an arrow function that is an array literal's
+ *    element before a pushing arrow element (arrowElementSiblingScoped) or a statement's declarator before a pushing arrow
+ *    declarator (arrowDeclaratorSiblingScoped); and four whose host holds a third member (wb-2l05 F2): each of those three
+ *    hosts with one more member after the pushing one, a method, an element or a declarator (methodThreeMemberScoped,
+ *    arrowThreeElementScoped, arrowThreeDeclaratorScoped), and exportedNestScoped's parameter in a file with a third
+ *    statement between its two functions (threeStatementScoped); no other parameter holds one (NOT CLAIMED)): a .push or
+ *    ["push"] call, its callee and
+ *    receiver read through the same wrappers, made on the literal's name
+ *    ((argv as string[]).push, argv!.push) or on a name declared to that name in its scope after it (const same = argv, let and
+ *    var too, a wrapped initializer, an alias of an alias; wb-29wk F1; a parameter's or a binding element's default too:
+ *    function f(argv = [...], same = argv), const { same = argv } = opts; wb-shnw F1), never a push made or an alias declared
+ *    before the literal's declaration nor a push after its scope ends (wb-shnw F4: earlierPush, earlierAlias and laterPush, each
+ *    a quiet control); a render is a "context" word with a later "render" word (flags may sit between), and a '+' chain of
+ *    string literals is read as one text (wb-w1g3 F1(iv): G15, G17); A2 a
+ *    stand-in rf on PATH sees --no-commit on both
+ *    input arms; A3 the rf roster stays the read preview: native and injected registrations selected by id, permission or an rf
+ *    contractSource (rf@ release or the reactive-fiber.cli schema), never the id prefix alone (wb-w1g3 F1(iv): G14), and by reach
+ *    (wb-s4j3 F2): the rf provider's two registrations are read whole, unfiltered, each the preview alone, and every src reference
+ *    to the function enclosing src's rf launch (nativeReactiveFiberRender) is pinned - the preview registration's invoke and the
+ *    legacy nativeReactiveFiberPreview wrapper, which no src module references - so a capability carrying no rf marker that drives
+ *    the launcher shows; the carrier contractSource, RECONCILE_EVIDENCE_READS.reactivefiber at src/workflow/reconcile.ts:67; A4 no
+ *    src or qa file spells the pin-change vocabulary, read raw and with its escape sequences and line continuations decoded
+ *    (wb-w1g3 F2: G18; wb-s4j3 F4), floors and anchors per root.
  *  B, acceptance (a). B1 the fixture: the code, the analogue's metadata keys, r1 at expected_revision, r2 at current_revision, exit
  *    4 and the unshipped status ride the roster; B2 the native typed refusal at exit 4 names the code verbatim, one spawn, no
  *    reading; B3 it is held to a nonzero exit (exit 0 is a contradiction, exit 7 reads as exit 4); B4 a stand-in that would answer
@@ -63,17 +179,22 @@
  *    it; D3 the noncommitted relay probe comes back byte for byte through both seams, pinnedReceiptIdentity r1, r2 nowhere, the
  *    reading keyed exactly contract, source, workspaceRoot; D4 no reader surface these rows reach (both projections, the typed
  *    refusal, both aborts, every part a relayed reading adds outside its source and every key or string a relay adds inside it,
- *    the host root spelled <root>) carries a freshness word, nothing is added inside a relayed source, the quiet control reads the
+ *    the host root spelled <root>) carries a freshness word, read raw and with its identifier joints opened (wb-s4j3 F1:
+ *    fresh_output, isFresh, rendered_live_now), nothing is added inside a relayed source, the quiet control reads the
  *    seam label the probe projection surfaces (never a hard-coded copy), and the projection of the relay probe names neither
  *    receipt.
- *  M, the vocabulary matcher A4 reads, raw and decoded: M1-M15 the spellings it catches (an escape inside the code per decoder
- *    branch, the partial PIN_CHANGED token and the two forms the landed Q1 and Q3 rows held among them, wb-w1g3 F2: G18, G19),
- *    Q1-Q3 the quiet rows of its named residuals.
- *  L, the freshness matcher D4 reads (wb-w1g3 F1(ii): inflections and synonyms, G11, G12): L1-L12 the spellings it catches beside
- *    D4's five base controls, LQ1-LQ3 the quiet rows of its named residuals.
+ *  M, the vocabulary matcher A4 reads, raw and decoded: M1-M17 the spellings it catches (an escape inside the code per decoder
+ *    branch, the partial PIN_CHANGED token and the two forms the landed Q1 and Q3 rows held among them, wb-w1g3 F2: G18, G19; M16
+ *    and M17 a line continuation inside the code, LF and CRLF, wb-s4j3 F4), Q1-Q3 the quiet rows of its named residuals.
+ *  L, the freshness matcher D4 reads, raw and with identifier joints opened (wb-w1g3 F1(ii): inflections and synonyms, G11, G12;
+ *    wb-s4j3 F1: joined identifiers): L1-L12 the spellings it catches beside D4's five base controls, L13-L17 a family word joined
+ *    into an identifier, one per joint (L13 and L15 a snake underscore, L14 a camel hump, L16 an acronym's end, L17 a letter-digit
+ *    seam), L18 the capitalised inflection only the raw reading keeps, LQ1-LQ4 the quiet rows of its named residuals.
  *  N, the receipt-naming matcher C2, C3, D1 and D4 read (wb-w1g3 F1(iii)): a receipt is named in full or by the first 8 hex digits
  *    of its digest, bare or prefixed (G13), the record id and the producer message by their full text; N1-N5 the texts it names,
  *    each a positive control (X-NAMED, X-NAMED1), NQ1-NQ2 its quiet rows.
+ *  H, the witness guard every pin's case runs under (wb-s4j3 F5): a case that reads a roster witness is refused, and so is a case
+ *    handing back an object the roster holds; H1 its positive controls, HQ1 the quiet row of its named residual.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id, label
  * and pins, every pin's witness, the code, exit, gating artifacts, conflict keys, publication fields, spellings, residuals, the
  * registered test titles and each pin's own assertion count - is held to the out-of-file roster, whose envelopes, receipts and
@@ -83,7 +204,8 @@
  * roster quotes and the Acceptance line whose clause tags (a), (b), (c) are exactly the tags rows B to D carry) and the delivered
  * note's RESIDUALS paragraph (every residual it names is named here with its quiet pins judged). The last case reads the vitest
  * task tree: every registered test, in roster order, in run mode, not inverted, ran before it, and every pin reached its witness
- * compare after its own pinned number of assertions (wb-w1g3 F3: X-EACH, X-THIRD).
+ * compare after its own pinned number of assertions (wb-w1g3 F3: X-EACH, X-THIRD), having handed back its own reading, never a
+ * roster witness (wb-s4j3 F5: row H).
  * RESIDUALS (named, each with a pinned quiet row): R-WITHHELD the typed refusal and the projection carry the code but withhold the
  *   witness, so r1 rides only the relayed reading (quiet rows C2, C3); R-EXIT-UNREAD Pi reads rf's exit as zero or nonzero only, so
  *   an exit-4 and an exit-7 refusal read alike and no surface names the class (quiet row B3); R-RESUME-REREAD a resume re-runs a
@@ -98,10 +220,85 @@
  *   counted as a launch (quiet rows: A1's wrappedLaunch and constantProgram controls; their literal argv is still read, and A3
  *   holds every registered capability); R-FRESH-PARAPHRASE a freshness claim worded outside every family (quiet row LQ1), R-FRESH-HOMOGLYPH (LQ2) and
  *   R-FRESH-INTERRUPTED (LQ3) a homoglyph letter or an invisible split hiding a family word, escape the freshness matcher;
- *   R-SHORT-PREFIX a receipt abbreviated below 8 hex digits is not read as naming it (quiet row NQ2).
- * NOT CLAIMED: a coordinated edit of this file and the roster that drops a residual this cut adds or re-maps a residual to other
- * quiet pins, or that rewrites a pin's assertion count: the tracker export anchors only the eight residuals the landed note named
- * and the clause tags of rows B to D.
+ *   R-SHORT-PREFIX a receipt abbreviated below 8 hex digits is not read as naming it (quiet row NQ2); R-FRESH-RUNON a freshness
+ *   word run into another word with no joint (isfresh) escapes the freshness matcher (quiet row LQ4); R-RELAYED-REACH an rf
+ *   capability A3 binds by neither marker nor reach - one relaying the read preview through the registry, or one reaching the
+ *   launcher through a name assembled at runtime - is not selected (quiet rows: A3's registryRelay and assembledName controls);
+ *   R-MUTATED-ARGV a render argv completed by a mutation other than a push in its declaring scope (unshift, splice, an index write,
+ *   a reassignment) is read as its declared literal alone (quiet rows: A1's unshiftArgv control and its element twin
+ *   elementUnshift, argv["unshift"](...), wb-shnw F4); R-INDIRECT-PUSH a push reached
+ *   other than as a .push or ["push"] call on the literal's name, a wrapper of it or a variable declared to it - through
+ *   Array.prototype.push.call or .apply, Reflect.apply, a helper the argv is passed to, or an alias made by assignment rather than
+ *   by a declaration - is not folded, so the argv is read as its declared literal alone (quiet row: A1's indirectPush control,
+ *   wb-29wk F1); its members also include, each named with a pinned quiet row (wb-shnw F2, F3), an alias declared to an
+ *   expression other than the bare name read through wrappers - among them a comma (const same = (0, argv)), a conditional
+ *   (flag ? argv : argv) and a nullish expression (argv ?? []) - a name destructured from a literal holding the argv or the
+ *   literal itself (const [same] = [argv], const { argv } = { argv: [...] }), a literal bound by an assignment rather than by a
+ *   declaration (let argv; argv = [...], and an assignment pattern's default, ({ argv = [...] } = opts)), a member receiver
+ *   (const box = { argv }; box.argv.push(...)) and a bound push (argv.push.bind(argv)(...)) (quiet rows: A1's commaAlias,
+ *   conditionalAlias, nullishAlias, arrayPatternAlias, objectPatternLiteral, assignedLiteral, assignmentPatternDefault,
+ *   memberReceiver and boundPush controls); R-VACUOUS-PAYLOAD a case that
+ *   makes its pinned number of assertions on values it never measured and returns a deep copy of its witness, read from the
+ *   roster's rows directly or written out as a literal, keeps its reached count and passes the witness guard (quiet row HQ1).
+ * NOT CLAIMED: a coordinated edit of this file and the roster that drops a residual the landed note did not name or re-maps a
+ * residual to other quiet pins, that drops a control together with its entry in the pin's roster witness (A1's wb-29wk,
+ * wb-shnw, wb-gdqz, wb-ia9d, wb-11rf, wb-8cgw, wb-2l05 and wb-sp4w controls among them), or that rewrites a pin's assertion count: the tracker export anchors only the eight residuals
+ * the landed note named and the clause tags of rows B to D; nor an edit of the per-pin wrapper's own guard lines; nor an edit of
+ * an A1 control's source text alone that keeps its counts (the roster holds each control's counts, never its source; wb-gdqz);
+ * nor declarationScope's loop climbing a parameter no A1 control spells as it is written there (wb-ia9d; wb-11rf) - among them
+ * a pattern nested deeper than three levels, one three levels deep mixing the two kinds, one holding a sibling, a default, a
+ * key or a hole other than the one each of the eighteen two-level element-shape controls spells, or two of those shapes at
+ * once, and one in a host or with a default no control spells as written (a function expression, a constructor, an accessor
+ * and an object literal's method among the hosts; an arrow function's, a method's or an exported function declaration's
+ * parameter other than the five the wb-11rf F3 and F4 controls spell, each where its control or a wb-8cgw or wb-2l05
+ * control writes it; a default of two or more elements in any other
+ * parameter): a loop that stops short of such a parameter is not pinned, and the two such loops measured, G2-THREELEVEL (a
+ * climb of at most three pattern levels) and G2-MIXTHIRD (a third level climbed only in the declaration's own pattern kind),
+ * stay green; nor the read of a push inside any parameter's function but those four non-exported function declarations,
+ * the three wb-8cgw F2 hosts, the two wb-2l05 F3 places and the two wb-sp4w places, each only as one of its controls
+ * spells it (a push statement in the body, after its F3 nest parameter, of an arrow function a variable declaration
+ * binds, a class's method or an exported function declaration; a push inside the launch's argv argument in the concise
+ * body of such an arrow function; the push argv.push("render", "--json") as the left operand of the parenthesized comma
+ * expression that is such an arrow function's whole concise body, its right operand the launch, the arrow in a const
+ * statement with no export keyword, or the bare argv, the variable statement then exported by its own export keyword and
+ * declared by const, let or var, the arrow its declarator's initializer with nothing around it, or, in such a const
+ * statement, one of two forms written otherwise, the arrow in one pair of parentheses as the initializer or the right
+ * operand (argv); the one push statement argv.push("render", "--json"); as the whole block body of a nested arrow
+ * function or an anonymous function expression with no parameter that such an exported function declaration binds to a
+ * const as its initializer, with nothing around it, and then calls by a statement that is the bare call of that const's
+ * name alone (add();), the declaration then returning the launch, exported by export function, or the argv itself by
+ * return argv;, a host returning the argv itself exported by export function, by export default function with its name
+ * or by export default function with no name, or, in a host exported by export function returning the argv itself, one
+ * of three forms written otherwise, the two push statements argv.push("render"); then argv.push("--json"); as the block
+ * body, the call (add)(); or the return return (argv);, or, for each launch-less place, one facet of its text written
+ * otherwise (wb-sp4w cut #5), its file holding one more statement export type Argv = string[]; before the place, the nested
+ * function's const named run and called by run();, the host named build or the comma place's arrow bound to build, the host
+ * on one line or the comma place's statement broken after its =>, or the line comment // the verb and the output flag on
+ * its own line before the nested push; a push in another parameter's default, in
+ * any other concise body (a push as a comma's right operand, beside a right operand other than the launch or the argv
+ * itself, beside the argv itself in a variable statement without its own export keyword, one exported only by a separate
+ * export statement included, or in a comma nested in another among them) or in any other nested function - a
+ * named function expression, one bound other than to a const and called after it, a nested function declaration, a
+ * nested function in another host (a function declaration exported only by a separate export statement among them), one
+ * never called, or one whose host's body is anything but exactly its declaration, its call and then a return of the
+ * launch or of the argv itself (a host returning nothing or anything else, or holding a further statement, among them) -
+ * or in any of those places written otherwise than exactly the text one of its controls writes, that text alone its whole
+ * file - its statements, its parentheses and its keywords, modifiers, type annotations, parameters and declarators, its
+ * names, its line breaks, spacing and indentation, its string literals and its comments (an async or generator function, a
+ * return type, a variable's type annotation, a type parameter, a parameter annotation left out, a further declarator, a
+ * further parameter of the host or of the arrow, a nested function with a parameter, a nested function's body holding a
+ * further statement or any statement but those pushes, a push of other words or through another receiver or callee in a
+ * nested function or a comma, a nested function in parentheses or an assertion as its const's initializer, a push, a comma
+ * expression, a callee, a returned argv, an arrow initializer or a right operand in more parentheses than its controls
+ * write or in a type or non-null assertion, a call with an argument, an optional call, a call through call, apply or bind,
+ * a call that is not the whole of its statement, a further statement in the file but the one export type Argv = string[];
+ * before the place, a name no control writes there, a line break, spacing, indentation, comment or string-literal quoting
+ * no control writes, and two forms written otherwise at once - a default-exported host, or a let or var statement, with one
+ * of the wb-sp4w cut #4 or cut #5 forms, or two cut #5 facets together - among them) is not pinned); nor a later
+ * function's push kept out of a quiet control's parameter anywhere but where that control spells the later function, or in
+ * a host holding members other than those its control writes (a later argument of the same call, a later property of the
+ * same object literal, and a class, array literal, statement or file holding a fourth member, or a third member anywhere
+ * but where a wb-2l05 control writes it, are not pinned).
  * SCOPE: the code, metadata shape and record fields are producer facts at the pin; Pi vendors no rf schema, so a producer-side
  * change is seen only when the roster is re-read. The armed half (a committing capability with --idempotency-key and rf operation
  * show reconciliation) is owner-reserved under wb-jwc.5: no committing capability, argv or reader is added here, and the committing
@@ -175,8 +372,9 @@ const COMMIT_FLAGS = ["--idempotency-key", "--strict"];
 const LAUNCHERS = ["spawn", "spawnSync", "exec", "execSync", "execFile", "execFileSync", "fork"];
 /** The modules whose named imports bind a launcher under another local name (import { spawn as run }). */
 const CHILD_PROCESS = ["child_process", "node:child_process"];
-/** A program literal naming rf: the bare program, or a shell command whose first word is rf. */
-const RF_PROGRAM = /^\s*rf(?:\s|$)/;
+/** A program literal naming rf: the bare program or a path whose last segment is rf (rf.exe included, wb-s4j3 F3), or a shell command
+ * whose first word is one. */
+const RF_PROGRAM = /^\s*(?:\S*[\\/])?rf(?:\.exe)?(?:\s|$)/;
 /** A literal spelling an rf render: `context` then `render`, flag words allowed between (wb-w1g3 F1(iv): interleaved argv). */
 const SPACED_RENDER = /\bcontext(?:\s+--?[A-Za-z][\w-]*(?:=\S*)?)*\s+render\b/;
 /** rf's CLI schema family: a contractSource naming it (or an rf@ release) states an rf-driving capability, whatever its id. */
@@ -202,6 +400,11 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-FRESH-HOMOGLYPH": ["LQ2"],
   "R-FRESH-INTERRUPTED": ["LQ3"],
   "R-SHORT-PREFIX": ["NQ2"],
+  "R-FRESH-RUNON": ["LQ4"],
+  "R-RELAYED-REACH": ["A3"],
+  "R-MUTATED-ARGV": ["A1"],
+  "R-INDIRECT-PUSH": ["A1"],
+  "R-VACUOUS-PAYLOAD": ["HQ1"],
 };
 const JUDGED_TITLE = "the judged set: the frozen shape, the out-of-file roster and the cases agree";
 const REGISTRATION_TITLE = "the registered tests and the reached pins equal the roster, in order and both ways";
@@ -237,18 +440,23 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "M",
-    label: "the pin-change vocabulary matcher A4 reads, raw and with escape sequences decoded: the spellings it catches (M1-M15) and the pinned quiet rows of its named residuals (Q1 R-INTERRUPTED, Q2 R-HOMOGLYPH, Q3 R-COMPOSED)",
-    pins: ["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "M10", "M11", "M12", "M13", "M14", "M15", "Q1", "Q2", "Q3"],
+    label: "the pin-change vocabulary matcher A4 reads, raw and with escape sequences and line continuations decoded: the spellings it catches (M1-M17) and the pinned quiet rows of its named residuals (Q1 R-INTERRUPTED, Q2 R-HOMOGLYPH, Q3 R-COMPOSED)",
+    pins: ["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "M10", "M11", "M12", "M13", "M14", "M15", "M16", "M17", "Q1", "Q2", "Q3"],
   },
   {
     id: "L",
-    label: "the freshness matcher D4 reads: the inflections and synonyms it catches (L1-L12) and the pinned quiet rows of its named residuals (LQ1 R-FRESH-PARAPHRASE, LQ2 R-FRESH-HOMOGLYPH, LQ3 R-FRESH-INTERRUPTED)",
-    pins: ["L1", "L2", "L3", "L4", "L5", "L6", "L7", "L8", "L9", "L10", "L11", "L12", "LQ1", "LQ2", "LQ3"],
+    label: "the freshness matcher D4 reads, raw and with identifier joints opened: the inflections and synonyms it catches (L1-L12), the joined spellings it opens (L13-L17), the capitalised inflection only its raw reading keeps (L18), and the pinned quiet rows of its named residuals (LQ1 R-FRESH-PARAPHRASE, LQ2 R-FRESH-HOMOGLYPH, LQ3 R-FRESH-INTERRUPTED, LQ4 R-FRESH-RUNON)",
+    pins: ["L1", "L2", "L3", "L4", "L5", "L6", "L7", "L8", "L9", "L10", "L11", "L12", "L13", "L14", "L15", "L16", "L17", "L18", "LQ1", "LQ2", "LQ3", "LQ4"],
   },
   {
     id: "N",
     label: "the receipt-naming matcher C2, C3, D1 and D4 read: a receipt named in full or by an 8-hex prefix of its digest, the record id and the producer message (N1-N5, each a positive control) and the pinned quiet rows (NQ1 a digest that is no receipt, NQ2 R-SHORT-PREFIX)",
     pins: ["N1", "N2", "N3", "N4", "N5", "NQ1", "NQ2"],
+  },
+  {
+    id: "H",
+    label: "the witness guard every pin's case runs under: a case reading a roster witness, or handing back an object the roster holds, is refused (H1, the guard's positive controls), and the pinned quiet row of its named residual (HQ1 R-VACUOUS-PAYLOAD)",
+    pins: ["H1", "HQ1"],
   },
 ];
 
@@ -276,6 +484,8 @@ const SPELLINGS: readonly Spelling[] = [
   { pin: "M13", text: 'if (primary.code.endsWith("_PIN_CHANGED")) return;', hit: true },
   { pin: "M14", text: 'const code = "RF_FEDERATION_" + "PIN_CHANGED";', hit: true },
   { pin: "M15", text: `RF_FEDERATION${String.fromCodePoint(0x200b)}_PIN_CHANGED`, hit: true },
+  { pin: "M16", text: 'export const CODE = "RF_FEDERATION_PIN_\\\nCHANGED";', hit: true },
+  { pin: "M17", text: 'export const CODE = "RF_FEDERATION_PIN_\\\r\nCHANGED";', hit: true },
   { pin: "Q1", text: `RF_FEDERATION_PIN${String.fromCodePoint(0x200b)}_CHANGED`, hit: false },
   { pin: "Q2", text: `pinn${String.fromCodePoint(0x0435)}dReceiptIdentity`, hit: false },
   { pin: "Q3", text: 'const code = ["RF", "FEDERATION", "PIN", "CHANGED"].join("_");', hit: false },
@@ -295,9 +505,16 @@ const FRESH_SPELLINGS: readonly Spelling[] = [
   { pin: "L10", text: "a recent render", hit: true },
   { pin: "L11", text: "recently rendered", hit: true },
   { pin: "L12", text: "freshness", hit: true },
+  { pin: "L13", text: "fresh_output", hit: true },
+  { pin: "L14", text: "isFresh", hit: true },
+  { pin: "L15", text: "rendered_live_now", hit: true },
+  { pin: "L16", text: "LIVEPreview", hit: true },
+  { pin: "L17", text: "fresh2render", hit: true },
+  { pin: "L18", text: "the NEWest receipt", hit: true },
   { pin: "LQ1", text: "rendered as of now", hit: false },
   { pin: "LQ2", text: `fr${String.fromCodePoint(0x0435)}sh output`, hit: false },
   { pin: "LQ3", text: `fre${String.fromCodePoint(0x200b)}sh output`, hit: false },
+  { pin: "LQ4", text: "isfresh", hit: false },
 ];
 
 interface RosterPin {
@@ -411,10 +628,18 @@ const ROSTER = readRoster();
 const R1 = ROSTER.receipts.pinned;
 const R2 = ROSTER.receipts.accepted;
 
+/** The pin whose case is running, while it runs (wb-s4j3 F5): a case measures its witness, so rosterWitness refuses a read from
+ * inside one. */
+let runningCase: string | null = null;
 function rosterWitness(pin: string): JsonValue {
+  if (runningCase !== null) throw new Error(`${runningCase}'s case read the roster witness of ${pin}: a case measures its witness, never reads it`);
   const found = ROSTER.rows.flatMap(row => row.pins).find(entry => entry.id === pin);
   if (found === undefined) throw new Error(`the roster holds no pin ${pin}`);
   return found.witness;
+}
+/** A pin's witness object as the roster holds it, read from its rows directly (row H's controls): never a case's own reading. */
+function heldWitness(pin: string): JsonValue {
+  return ROSTER.rows.flatMap(row => row.pins).find(entry => entry.id === pin)?.witness ?? null;
 }
 
 /** The roster's refusal envelope with its workspace at this run's root, the root the native reader and the adapter read under. */
@@ -771,11 +996,14 @@ interface RfScan {
 }
 /** The local names a module binds to a launcher, read in source order: the bare LAUNCHERS, a named child_process import under
  * another name (import { spawn as run }), a variable bound to a launcher or a launcher member (const run = spawn, const run =
- * cp.spawn) and a destructured launcher (const { spawn: run } = childProcess). */
+ * cp.spawn), its initializer read through parentheses and type and non-null assertions (const run = spawn as typeof spawn;
+ * wb-29wk F1), and a destructured launcher (const { spawn: run } = childProcess). */
 function launcherNames(file: ts.SourceFile): Set<string> {
   const names = new Set<string>(LAUNCHERS);
-  const isLauncher = (node: ts.Expression): boolean =>
-    (ts.isIdentifier(node) && names.has(node.text)) || (ts.isPropertyAccessExpression(node) && LAUNCHERS.includes(node.name.text));
+  const isLauncher = (expression: ts.Expression): boolean => {
+    const node = unwrapped(expression);
+    return (ts.isIdentifier(node) && names.has(node.text)) || (ts.isPropertyAccessExpression(node) && LAUNCHERS.includes(node.name.text));
+  };
   const visit = (node: ts.Node): void => {
     if (ts.isImportDeclaration(node) && ts.isStringLiteral(node.moduleSpecifier) && CHILD_PROCESS.includes(node.moduleSpecifier.text)) {
       const bindings = node.importClause?.namedBindings;
@@ -798,14 +1026,29 @@ function launcherNames(file: ts.SourceFile): Set<string> {
   return names;
 }
 /** Whether a call launches rf: its callee is a launcher - a bound name, or a member such as childProcess.spawn, pi.exec or
- * cp["spawn"] - and its program literal names rf (a shell command whose first word is rf included). */
+ * cp["spawn"] - and its program literal names rf (a shell command whose first word is rf included); the callee and the program
+ * are each read through parentheses and type and non-null assertions ((spawn as typeof spawn)("rf", argv), spawn("rf" as string,
+ * argv); wb-29wk F1). */
 function launchesRf(call: ts.CallExpression, launchers: ReadonlySet<string>): boolean {
-  const callee = call.expression;
+  const callee = unwrapped(call.expression);
   const launcher = (ts.isIdentifier(callee) && launchers.has(callee.text)) ||
     (ts.isPropertyAccessExpression(callee) && LAUNCHERS.includes(callee.name.text)) ||
     (ts.isElementAccessExpression(callee) && ts.isStringLiteralLike(callee.argumentExpression) && LAUNCHERS.includes(callee.argumentExpression.text));
-  const program = call.arguments[0];
+  const argument = call.arguments[0];
+  const program = argument === undefined ? undefined : unwrapped(argument);
   return launcher && program !== undefined && ts.isStringLiteralLike(program) && RF_PROGRAM.test(program.text);
+}
+/** Whether a node wraps an expression the argv reading sees through: parentheses, a type assertion (as, satisfies, <T>) or a
+ * non-null assertion (wb-s4j3 F3). */
+function isWrapper(node: ts.Node): node is ts.ParenthesizedExpression | ts.AsExpression | ts.SatisfiesExpression | ts.TypeAssertion | ts.NonNullExpression {
+  return ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isTypeAssertionExpression(node) || ts.isNonNullExpression(node);
+}
+/** The expression inside every wrapper isWrapper sees through (wb-29wk F1): a push call's callee and receiver, an alias's
+ * initializer, a launcher binding's initializer, and a launch's callee and program are each read through it. */
+function unwrapped(node: ts.Expression): ts.Expression {
+  let at = node;
+  while (isWrapper(at)) at = at.expression;
+  return at;
 }
 /** The receiver of a `.concat(...)` call, or undefined when the node is none. */
 function concatReceiver(node: ts.Node): ts.Expression | undefined {
@@ -814,7 +1057,7 @@ function concatReceiver(node: ts.Node): ts.Expression | undefined {
 /** The words of an argv expression: a string literal by its text, an inline array spread and a literal .concat chain flattened, any
  * other part null (composed); undefined when the expression is no argv. */
 function argvWords(node: ts.Expression): (string | null)[] | undefined {
-  if (ts.isParenthesizedExpression(node)) return argvWords(node.expression);
+  if (isWrapper(node)) return argvWords(node.expression);
   if (ts.isArrayLiteralExpression(node)) {
     return node.elements.flatMap(element => {
       if (ts.isSpreadElement(element)) return argvWords(element.expression) ?? [null];
@@ -830,7 +1073,7 @@ function argvWords(node: ts.Expression): (string | null)[] | undefined {
 /** Whether an argv expression is part of a larger one (an inline spread, or a .concat receiver or argument), so it is read there. */
 function insideArgv(node: ts.Node): boolean {
   let at: ts.Node = node;
-  while (ts.isParenthesizedExpression(at.parent)) at = at.parent;
+  while (isWrapper(at.parent)) at = at.parent;
   const parent = at.parent;
   if (ts.isSpreadElement(parent) && ts.isArrayLiteralExpression(parent.parent)) return true;
   if (ts.isPropertyAccessExpression(parent) && parent.expression === at && ts.isCallExpression(parent.parent) && concatReceiver(parent.parent) !== undefined) {
@@ -841,12 +1084,90 @@ function insideArgv(node: ts.Node): boolean {
 }
 /** The literal texts of a '+' chain, or undefined when any part is not a string literal. */
 function plusLiterals(node: ts.Expression): string[] | undefined {
-  if (ts.isParenthesizedExpression(node)) return plusLiterals(node.expression);
+  if (isWrapper(node)) return plusLiterals(node.expression);
   if (ts.isStringLiteralLike(node)) return [node.text];
   if (!ts.isBinaryExpression(node) || node.operatorToken.kind !== ts.SyntaxKind.PlusToken) return undefined;
   const left = plusLiterals(node.left);
   const right = plusLiterals(node.right);
   return left === undefined || right === undefined ? undefined : [...left, ...right];
+}
+/** The block, module block or source file a declaration's name is visible in. */
+function scopeOf(node: ts.Node): ts.Node {
+  let at: ts.Node = node;
+  while (!(ts.isBlock(at) || ts.isModuleBlock(at) || ts.isSourceFile(at)) && at.parent !== undefined) at = at.parent;
+  return at;
+}
+/** A declaration pushFolded reads (wb-shnw F1): a variable, a parameter, or a binding element of a destructuring pattern in either,
+ * its name bound to its initializer - for a parameter or a binding element, its default. */
+type Declaration = ts.VariableDeclaration | ts.ParameterDeclaration | ts.BindingElement;
+function isDeclaration(node: ts.Node): node is Declaration {
+  return ts.isVariableDeclaration(node) || ts.isParameter(node) || ts.isBindingElement(node);
+}
+/** The node a declared name is visible in (wb-shnw F1): a parameter's function, for the parameter and for every binding element of
+ * its pattern; otherwise the block, module block or source file around the declaration. */
+function declarationScope(node: Declaration): ts.Node {
+  let at: ts.Node = node;
+  while (ts.isBindingElement(at) || ts.isObjectBindingPattern(at) || ts.isArrayBindingPattern(at)) at = at.parent;
+  return ts.isParameter(at) ? at.parent : scopeOf(at);
+}
+/** The name a push call is made on (wb-29wk F1): a `.push(...)` or `["push"](...)` call, its callee and its receiver each read
+ * through parentheses and type and non-null assertions ((argv as string[]).push, argv!.push, (argv.push)(...)), when the receiver
+ * is a bare name; undefined for any other call (Array.prototype.push.call(argv, ...) among them: R-INDIRECT-PUSH). */
+function pushReceiver(call: ts.CallExpression): string | undefined {
+  const callee = unwrapped(call.expression);
+  let receiver: ts.Expression | undefined;
+  if (ts.isPropertyAccessExpression(callee) && callee.name.text === "push") receiver = callee.expression;
+  if (ts.isElementAccessExpression(callee) && ts.isStringLiteralLike(callee.argumentExpression) && callee.argumentExpression.text === "push") receiver = callee.expression;
+  if (receiver === undefined) return undefined;
+  const name = unwrapped(receiver);
+  return ts.isIdentifier(name) ? name.text : undefined;
+}
+/** The argvs a push completes (wb-s4j3 F3; wb-29wk F1; wb-shnw F1): each array literal a declaration binds to a local name - a
+ * variable's initializer, a parameter's default or a destructuring binding element's default, in a declaration or a parameter, read
+ * through wrappers - followed by the words of every later push call on it in the declaring scope (a parameter's, its pattern's
+ * included, is its function), in source order - a pushReceiver call on the name, or on a name a later declaration of the same kinds
+ * binds to it in that scope (its initializer or default the name, read through wrappers: const same = argv, let and var too,
+ * function f(argv = [...], same = argv), const { same = argv } = opts; an alias of an alias the same way), each alias's pushes read
+ * in its own scope after its declaration; a pushed part that is no string literal reads null (composed). Any other mutation
+ * (unshift, splice, an index write, a reassignment) is not folded: R-MUTATED-ARGV; nor is a push reached any other way (push.call,
+ * .apply or a bound push, Reflect.apply, a member receiver, a helper the argv is passed to, an alias made by assignment, an alias
+ * declared to any expression other than the name (a comma, conditional or nullish one among them), a name destructured from a
+ * literal holding the argv or the literal itself, a literal bound by an assignment or by an assignment pattern's default):
+ * R-INDIRECT-PUSH. */
+function pushFolded(file: ts.SourceFile): Map<ts.Node, (string | null)[]> {
+  const declared: { readonly name: string; readonly scope: ts.Node; readonly end: number; readonly literal: ts.ArrayLiteralExpression }[] = [];
+  const aliases: { readonly name: string; readonly target: string; readonly scope: ts.Node; readonly start: number; readonly end: number }[] = [];
+  const pushes: { readonly name: string; readonly call: ts.CallExpression }[] = [];
+  const visit = (node: ts.Node): void => {
+    if (isDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined) {
+      const literal = unwrapped(node.initializer);
+      const scope = declarationScope(node);
+      if (ts.isArrayLiteralExpression(literal)) declared.push({ name: node.name.text, scope, end: node.end, literal });
+      if (ts.isIdentifier(literal)) aliases.push({ name: node.name.text, target: literal.text, scope, start: node.getStart(), end: node.end });
+    }
+    if (ts.isCallExpression(node)) {
+      const receiver = pushReceiver(node);
+      if (receiver !== undefined) pushes.push({ name: receiver, call: node });
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  const folded = new Map<ts.Node, (string | null)[]>();
+  for (const { name, scope, end, literal } of declared) {
+    // The names the literal is reached by, in source order: its own, then every name a declaration - a variable, a parameter
+    // default or a destructuring default - binds to one of them in that name's scope after its declaration (wb-29wk F1; wb-shnw F1).
+    const handles: { readonly name: string; readonly scope: ts.Node; readonly end: number }[] = [{ name, scope, end }];
+    for (const alias of aliases) {
+      if (handles.some(handle => handle.name === alias.target && alias.start >= handle.end && alias.end <= handle.scope.end)) handles.push(alias);
+    }
+    const later = pushes.filter(push => handles.some(handle => push.name === handle.name && push.call.getStart() >= handle.end && push.call.end <= handle.scope.end));
+    const head = argvWords(literal);
+    if (later.length === 0 || head === undefined) continue;
+    const pushed = later.flatMap(({ call }) => call.arguments.flatMap(argument =>
+      ts.isSpreadElement(argument) ? (argvWords(argument.expression) ?? [null]) : [ts.isStringLiteralLike(argument) ? argument.text : null]));
+    folded.set(literal, [...head, ...pushed]);
+  }
+  return folded;
 }
 function isPlus(node: ts.Node): boolean {
   return ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken;
@@ -857,6 +1178,7 @@ function isPlus(node: ts.Node): boolean {
 function scanRf(fileName: string, source: string): RfScan {
   const file = ts.createSourceFile(fileName, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const launchers = launcherNames(file);
+  const folded = pushFolded(file);
   const scan: RfScan = { renderSites: [], uncommitted: [], uncommittedLiterals: [], commitFlags: [], rfLaunches: [], composedArgv: 0 };
   let composed = 0;
   const readArgv = (words: readonly (string | null)[]): void => {
@@ -868,7 +1190,7 @@ function scanRf(fileName: string, source: string): RfScan {
   };
   const visit = (node: ts.Node): void => {
     if ((ts.isArrayLiteralExpression(node) || ts.isCallExpression(node)) && !insideArgv(node)) {
-      const words = argvWords(node);
+      const words = folded.get(node) ?? argvWords(node);
       if (words !== undefined) readArgv(words);
     }
     if (ts.isStringLiteralLike(node)) {
@@ -906,11 +1228,13 @@ const VOCABULARY_ROOTS: readonly ScanRoot[] = [
   { root: "src", floor: 100, anchorFile: "workbench/providers/reactivefiber.ts", anchorToken: "RF render refused" },
   { root: "qa", floor: 50, anchorFile: "workbench/receipts-index.mjs", anchorToken: "docs/workbench/receipts" },
 ];
-/** A text with its JavaScript and JSON escape sequences decoded - \u{...}, \uXXXX, \xXX and an identity escape such as \_ - so an
+/** A text with its JavaScript and JSON escape sequences decoded - \u{...}, \uXXXX, \xXX, a line continuation (a backslash before a
+ * line break - LF, CRLF, CR, U+2028 or U+2029 - which a string literal drops, wb-s4j3 F4) and an identity escape such as \_ - so an
  * escaped spelling reads as the value a runtime builds from it (wb-w1g3 F2: G18); an escaped backslash stays one backslash. */
 function decodeEscapes(value: string): string {
-  return value.replace(/\\(?:u\{([0-9a-fA-F]{1,6})\}|u([0-9a-fA-F]{4})|x([0-9a-fA-F]{2})|([^0-9A-Za-z\r\n]))/g, (whole: string, ...groups: unknown[]) => {
-    const [braced, unicode, hex, identity] = groups.slice(0, 4).map(group => (typeof group === "string" ? group : undefined));
+  return value.replace(/\\(?:u\{([0-9a-fA-F]{1,6})\}|u([0-9a-fA-F]{4})|x([0-9a-fA-F]{2})|(\r\n|[\r\n\u2028\u2029])|([^0-9A-Za-z\r\n]))/g, (whole: string, ...groups: unknown[]) => {
+    const [braced, unicode, hex, continuation, identity] = groups.slice(0, 5).map(group => (typeof group === "string" ? group : undefined));
+    if (continuation !== undefined) return "";
     if (identity !== undefined) return identity;
     const point = Number.parseInt(braced ?? unicode ?? hex ?? "", 16);
     return Number.isInteger(point) && point <= 0x10ffff ? String.fromCodePoint(point) : whole;
@@ -919,6 +1243,22 @@ function decodeEscapes(value: string): string {
 /** The vocabulary reading A4 and row M share: a text spells the pin-change vocabulary raw or with its escapes decoded. */
 function vocabularyHit(value: string): boolean {
   return PIN_VOCABULARY.test(value) || PIN_VOCABULARY.test(decodeEscapes(value));
+}
+/** A text with its identifier joints opened into word breaks (wb-s4j3 F1): a snake underscore, a camel hump (a lower-case letter or a
+ * digit before a capital), an acronym's end (a capital run before a capitalised word, LIVEPreview) and a letter-digit seam, so a
+ * freshness word joined into an identifier (fresh_output, isFresh, rendered_live_now) reads as a word. A word run into another with no
+ * joint (isfresh) stays one word: R-FRESH-RUNON. */
+function identifierWords(value: string): string {
+  return value
+    .replace(/_/g, " ")
+    .replace(/([a-z0-9])(?=[A-Z])/g, "$1 ")
+    .replace(/([A-Z])(?=[A-Z][a-z])/g, "$1 ")
+    .replace(/([A-Za-z])(?=[0-9])|([0-9])(?=[A-Za-z])/g, "$1$2 ");
+}
+/** The freshness reading D4 and row L share: a text carries a freshness word raw, or with its identifier joints opened. The raw
+ * reading stays beside it, since opening an acronym's end splits a capitalised inflection (NEWest reads "NE West", L18). */
+function freshLabelled(value: string): boolean {
+  return FRESH_LABEL.test(value) || FRESH_LABEL.test(identifierWords(value));
 }
 function scanVocabulary(scan: ScanRoot): JsonValue {
   const base = join(REPO, scan.root);
@@ -948,11 +1288,97 @@ function descriptorShape(descriptor: CapabilityDescriptor): JsonValue {
   };
 }
 
+/** The rf provider's two registrations, native and injected, as A3's whole reads run them. */
+function nativeRegistration(registry: CapabilityRegistry): void {
+  registerNativeReactiveFiberRender(registry, ROOT);
+}
+function injectedRegistration(registry: CapabilityRegistry): void {
+  registerReactiveFiberRender(registry, () => Promise.reject(new Error("the injected reader is never invoked here")), ROOT);
+}
+/** A registration read whole (wb-s4j3 F2): every descriptor the registry holds once it ran, unfiltered, after any it already held. */
+function wholeRead(registration: (registry: CapabilityRegistry) => void, registry: CapabilityRegistry = new CapabilityRegistry()): CapabilityDescriptor[] {
+  registration(registry);
+  return registry.catalogSnapshot().map(entry => entry.descriptor);
+}
+/** A registry already holding a test-only stand-in for the UNMARKED capability (never invoked; src registers none): the control
+ * each whole read runs on. */
+function unmarkedRegistry(): CapabilityRegistry {
+  const registry = new CapabilityRegistry();
+  registry.register({
+    descriptor: { ...UNMARKED, version: "1.0.0", description: "Test-only unmarked stand-in (wb-s4j3 F2); src registers none", inputSchema: COMMIT_INPUT, effectClass: "write", supportedModes: ["invoke"] },
+    invoke: () => Promise.reject(new Error("the unmarked stand-in is never invoked")),
+  });
+  return registry;
+}
+/** The wb-w1g3 L2-04 probe's descriptor: a write-class capability carrying no rf marker in its id, permission or contractSource. */
+const UNMARKED = { id: "context.render.commit", permissions: ["context:commit"], contractSource: "local:context.render" };
+interface Reach {
+  readonly launchers: string[];
+  readonly sites: string[];
+  readonly wrappers: string[];
+  readonly wrapperSites: string[];
+}
+function parsed(fileName: string, source: string): ts.SourceFile {
+  return ts.createSourceFile(fileName, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+}
+const MODULE_SCOPE = "<module>";
+/** The name a node sits under: the nearest named function declaration, a function bound to a variable, or a class method
+ * (Class.method), looking through object-literal members; MODULE_SCOPE at module scope. */
+function enclosingName(node: ts.Node): string {
+  for (let at: ts.Node | undefined = node.parent; at !== undefined; at = at.parent) {
+    if (ts.isFunctionDeclaration(at) && at.name !== undefined) return at.name.text;
+    if ((ts.isArrowFunction(at) || ts.isFunctionExpression(at)) && ts.isVariableDeclaration(at.parent) && ts.isIdentifier(at.parent.name)) return at.parent.name.text;
+    if (ts.isMethodDeclaration(at) && ts.isClassDeclaration(at.parent) && at.parent.name !== undefined && ts.isIdentifier(at.name)) return `${at.parent.name.text}.${at.name.text}`;
+  }
+  return MODULE_SCOPE;
+}
+/** The functions enclosing each rf launch A1 counts in a module: the launchers src's reach is read from (wb-s4j3 F2). */
+function launchingFunctions(file: ts.SourceFile): string[] {
+  const launchers = launcherNames(file);
+  const found: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isCallExpression(node) && launchesRf(node, launchers)) found.push(enclosingName(node));
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return found;
+}
+/** Every reference a module makes to one of the named functions - an identifier (a call, an alias, an import or export specifier,
+ * a namespace member) or a string literal spelling the name (a literal member) - as "<module path> > <enclosing name>"; a function's
+ * own declared name is no reference. */
+function referenceSites(fileName: string, file: ts.SourceFile, names: readonly string[]): string[] {
+  const sites: string[] = [];
+  const visit = (node: ts.Node): void => {
+    const named = (ts.isIdentifier(node) || ts.isStringLiteralLike(node)) && names.includes(node.text);
+    const declared = ts.isFunctionDeclaration(node.parent) && node.parent.name === node;
+    if (named && !declared) sites.push(`${fileName} > ${enclosingName(node)}`);
+    ts.forEachChild(node, visit);
+  };
+  ts.forEachChild(file, visit);
+  return sites;
+}
+/** Where src reaches rf's launch (wb-s4j3 F2): the launchers are the functions enclosing an rf launch; their sites are every src
+ * reference to one; the wrappers are the functions those sites sit in, other than the rf provider's two registrations (read whole
+ * by A3); and the wrapper sites are every src reference to a wrapper. */
+function rfReach(): Reach {
+  const modules = filesBelow(join(REPO, "src")).filter(file => file.endsWith(".ts")).map(file => {
+    const name = relative(REPO, file);
+    return { name, file: parsed(name, textOf(file)) };
+  });
+  const launchers = [...new Set(modules.flatMap(({ file }) => launchingFunctions(file)))].sort();
+  const sites = modules.flatMap(({ name, file }) => referenceSites(name, file, launchers)).sort();
+  const registrations = [registerNativeReactiveFiberRender.name, registerReactiveFiberRender.name];
+  const wrappers = [...new Set(sites.map(site => site.slice(site.indexOf(" > ") + " > ".length)))]
+    .filter(name => name !== MODULE_SCOPE && !registrations.includes(name)).sort();
+  const wrapperSites = modules.flatMap(({ name, file }) => referenceSites(name, file, wrappers)).sort();
+  return { launchers, sites, wrappers, wrapperSites };
+}
+
 const PIN_REFUSAL: Refusal = { category: "unavailable", message: `RF render refused: ${PIN_CHANGED}` };
 
 /** wb-tnz5.5's notes in the tracker export; the cases read them through two append-only paragraphs only, never whole. */
 function beadNotes(): string {
-  for (const line of textOf(TRACKER_EXPORT).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(TRACKER_EXPORT), TRACKER_EXPORT).split("\n")) {
     if (!line.includes(`"id":"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === BEAD && typeof row.notes === "string") return row.notes;
@@ -1024,6 +1450,277 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       // name held in a constant is no program literal; both argv literals are still read.
       wrappedLaunch: control('function launch(program: string, argv: string[]) { return spawn(program, argv); }\nlaunch("rf", ["context", "render", "--no-commit"]);'),
       constantProgram: control('const RF = "rf";\nspawn(RF, ["context", "render", "--no-commit"]);'),
+      // wb-s4j3 F3: a program spelled as a path to rf, an argv behind a type assertion, and an argv a push completes.
+      absolutePath: control('spawn("/usr/local/bin/rf", ["--workspace", w, "context", "render", "--no-commit", "--json"]);'),
+      windowsPath: control('execFile("C:\\\\tools\\\\rf.exe", ["context", "render", "--no-commit"]);'),
+      assertedArgv: control('spawn("rf", ["context", "render", "--json"] as string[]);'),
+      assertedPlus: control('const cmd = "rf context " + ("render --model m" as string);'),
+      pushArgv: control('const argv = ["--workspace", w, "context"];\nargv.push("render", "--model", m, "--json");\nspawn("rf", argv);'),
+      pushComposed: control('const argv = ["context"];\nargv.push(verb);\nspawn("rf", argv);'),
+      // R-MUTATED-ARGV, its pinned quiet row: a mutation other than a push in the declaring scope is not folded.
+      unshiftArgv: control('const argv = ["--workspace", w];\nargv.unshift("context", "render");\nspawn("rf", argv);'),
+      // wb-29wk F1: a push through a wrapped receiver or callee, a ["push"] element call and a push on a declared alias (an alias of
+      // an alias through <T> and satisfies included; a variable aliasing another name, or declared outside the argv's scope, is no
+      // alias of the argv), a launch whose program, callee or launcher binding sits behind a wrapper, then the gate's four double
+      // escapes (G2-F3c, G2-F3c3, G2-F3e, G2-F3f).
+      assertedReceiver: control('const argv = ["--workspace", w, "context"];\n(argv as string[]).push("render", "--model", m, "--json");\nspawn("rf", argv);'),
+      nonNullReceiver: control('const argv = ["context"];\nargv!.push("render", "--json");\nspawn("rf", argv);'),
+      elementPush: control('const argv = ["context"];\nargv["push"]("render", "--json");\nspawn("rf", argv);'),
+      wrappedPushCallee: control('const argv = ["context"];\n(argv.push)("render", "--json");\nspawn("rf", argv);'),
+      aliasPush: control('const argv = ["context"];\nconst same = argv;\nsame.push("render", "--json");\nspawn("rf", argv);'),
+      aliasChain: control('const argv = ["context"];\nlet first = <string[]>argv;\nvar second = (first satisfies string[]);\nsecond.push("render", "--json");\nspawn("rf", argv);'),
+      foreignAlias: control('const argv = ["context"];\nconst other = list;\nother.push("render", "--json");\nspawn("rf", argv);'),
+      scopedAlias: control('{ const argv = ["context"]; spawn("rf", argv); }\nconst same = argv;\nsame.push("render", "--json");'),
+      assertedProgram: control('spawn(("rf" as string), ["context", "render", "--no-commit"]);'),
+      wrappedLauncherCallee: control('(spawn as typeof spawn)("rf", ["context", "render", "--no-commit"]);'),
+      assertedLauncherAlias: control('const run = (spawn as typeof spawn);\nrun("rf", ["context", "render", "--no-commit"]);'),
+      assertedBoth: control('const argv = ["--workspace", w, "context"];\n(argv as string[]).push("render", "--json");\nspawn("rf" as string, argv);'),
+      nonNullBoth: control('const argv = ["--workspace", w, "context"];\nargv!.push("render", "--json");\nspawn("rf" as string, argv);'),
+      constantAsserted: control('const RF = "rf";\nconst argv = ["--workspace", w, "context"];\n(argv as string[]).push("render", "--json");\nspawn(RF, argv);'),
+      constantAlias: control('const RF = "rf";\nconst argv = ["--workspace", w, "context"];\nconst same = argv;\nsame.push("render", "--json");\nspawn(RF, argv);'),
+      // R-INDIRECT-PUSH, its pinned quiet row: a push reached through Array.prototype.push.call is not folded.
+      indirectPush: control('const argv = ["context"];\nArray.prototype.push.call(argv, "render", "--json");\nspawn("rf", argv);'),
+      // wb-shnw F1: a literal a parameter default or a destructuring default declares - the gate's E-PARAM-DEFAULT and
+      // E-DESTRUCT-DEFAULT double escapes (each launching through the constant program, R-WRAPPED-LAUNCH) and
+      // E-PARAM-DEFAULT-LITLAUNCH, a parameter's own pattern and an array pattern - and a name a parameter default or a
+      // destructuring default declares to the argv.
+      paramDefault: control('function f(w: string, argv = ["--workspace", w, "context"]) {\n  const RF = "rf";\n  argv.push("render", "--json");\n  return spawn(RF, argv);\n}'),
+      destructDefault: control('const { argv = ["--workspace", w, "context"] } = opts;\nconst RF = "rf";\nargv.push("render", "--json");\nspawn(RF, argv);'),
+      paramDefaultLaunch: control('function f(w: string, argv = ["--workspace", w, "context"]) {\n  argv.push("render", "--json");\n  return spawn("rf", argv);\n}'),
+      patternParamDefault: control('function f({ argv = ["context"] }: Options) {\n  argv.push("render", "--json");\n  return spawn("rf", argv);\n}'),
+      arrayDefault: control('const [argv = ["context"]] = lists;\nargv.push("render", "--json");\nspawn("rf", argv);'),
+      paramAlias: control('function f(argv = ["context"], same = argv) {\n  same.push("render", "--json");\n  return spawn("rf", argv);\n}'),
+      bindingAlias: control('const argv = ["context"];\nconst { same = argv } = opts;\nsame.push("render", "--json");\nspawn("rf", argv);'),
+      // wb-shnw F1, quiet: a parameter's literal, its pattern's too, is completed only inside its own function.
+      paramScoped: control('function f(argv = ["context"]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      patternScoped: control('function f({ argv = ["context"] }: Options) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      // wb-gdqz: patternScoped's array-pattern twin, so each pattern arm of declarationScope's loop holds a quiet row of its own
+      // (deleting the ObjectBindingPattern arm reds patternScoped, deleting the ArrayBindingPattern arm reds arrayPatternScoped).
+      arrayPatternScoped: control('function f([argv = ["context"]]: string[][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      // wb-ia9d: six nests of the two pattern kinds, one binding element per pattern level, each a quiet row of its own, so a
+      // declarationScope loop that climbs one of them, exactly as written here, to anything but its parameter reds A1 (the eleven
+      // element-shape nests, wb-11rf's thirteen parameters, wb-8cgw's three sibling hosts and wb-2l05's four three-member hosts
+      // below hold one each too; no other: NOT CLAIMED). Two levels deep,
+      // one per pairing: an array in an
+      // array (GX-ONELEVEL, a climb of exactly one level, if (ts.isBindingElement(at)) at = at.parent.parent, reds it), an array
+      // in an object (G2-OBJONCE, an object arm climbing only the declaration's own pattern, reds it), an object in an array
+      // (G2-OBJTOP, an object arm climbing only a top-level pattern, reds it) and an object in an object (both of those red it);
+      // three levels deep, one per kind (G2-TWOLEVEL, a loop climbing at most two pattern levels, reds both).
+      nestedPatternScoped: control('function f([[argv = ["context"]]]: string[][][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      arrayInObjectScoped: control('function f({ lists: [argv = ["context"]] }: { lists: string[][] }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      objectInArrayScoped: control('function f([{ argv = ["context"] }]: Options[]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      objectInObjectScoped: control('function f({ opts: { argv = ["context"] } }: { opts: Options }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      threeArrayScoped: control('function f([[[argv = ["context"]]]]: string[][][][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      threeObjectScoped: control('function f({ a: { b: { argv = ["context"] } } }: { a: { b: Options } }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      // wb-ia9d cut #3 (enumerate-the-resolvable, R-B183): eleven two-level nests, each one element shape off the six above and
+      // each a quiet row of its own, so a declarationScope loop that climbs one of them, exactly as written here, to anything but
+      // its parameter reds A1 (wb-11rf's thirteen, wb-8cgw's three sibling hosts and wb-2l05's four three-member hosts below
+      // hold one each too; no other: NOT CLAIMED). Each of refusal #2's seven loop
+      // mutants reds A1 here: G1-NESTFIRST (an
+      // outer element climbs only as its pattern's first element) reds afterSiblingInObjectScoped, afterSiblingInArrayScoped and
+      // holeBeforeNestScoped; G1-OBJSINGLE (an outer object pattern climbs only holding one element) reds the object sibling pair;
+      // G1-ARRSINGLE (the same on the array arm) reds the array sibling pair and holeBeforeNestScoped; G1-OUTERDEFAULT (an outer
+      // element with a default stops the climb) reds the two defaulted outers; G1-RESTSTOP (a rest element stops it) reds
+      // restNestScoped; G1-KEYKIND (an outer element keyed by a computed or literal name stops it) reds the three keyed controls;
+      // G1-HOLESTOP (an outer array pattern holding a hole stops it) reds holeBeforeNestScoped.
+      afterSiblingInObjectScoped: control('function f({ cwd, lists: [argv = ["context"]] }: { cwd: string; lists: string[][] }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      afterSiblingInArrayScoped: control('function f([cwd, [argv = ["context"]]]: [string, string[][]]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      beforeSiblingInObjectScoped: control('function f({ lists: [argv = ["context"]], cwd }: { lists: string[][]; cwd: string }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      beforeSiblingInArrayScoped: control('function f([[argv = ["context"]], cwd]: [string[][], string]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      outerArrayDefaultScoped: control('function f({ lists: [argv = ["context"]] = [] }: { lists?: string[][] }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      outerObjectDefaultScoped: control('function f({ opts: { argv = ["context"] } = {} }: { opts?: Options }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      restNestScoped: control('function f([...[argv = ["context"]]]: string[][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      computedKeyScoped: control('function f({ [key]: [argv = ["context"]] }: Record<string, string[][]>) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      numericKeyScoped: control('function f({ 0: [argv = ["context"]] }: string[][][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      stringKeyScoped: control('function f({ "lists": [argv = ["context"]] }: { lists: string[][] }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      holeBeforeNestScoped: control('function f([, [argv = ["context"]]]: string[][][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      // wb-11rf (the R694 follow-up of wb-ia9d's landing 759): thirteen more parameters, each a quiet row of its own, so a
+      // declarationScope loop that climbs one of them, exactly as written here, to anything but its parameter reds A1 (wb-8cgw's
+      // three sibling hosts and wb-2l05's four three-member hosts below hold one each too; no other parameter: NOT CLAIMED). F2, two-level nests in a function declaration with a one-element default, each one element shape
+      // off the eleven above: GP10-SIBOBJ (an outer element after a sibling climbs only when its name is an array pattern) reds
+      // objectAfterSiblingInObjectScoped and objectAfterSiblingInArrayScoped; GP10-DEFLITERAL (an outer element whose default is no
+      // array or object literal stops the climb) reds outerIdentifierDefaultScoped; GP10-KEYEXPR (a computed key whose expression
+      // is no identifier stops it) reds memberKeyScoped; GP10-NUMKEYZERO (a numeric key other than 0 stops it) reds
+      // numericKeyOneScoped; GP10-HOLETWO (an outer array pattern holding two or more holes stops it) reds
+      // twoHolesBeforeNestScoped; GP10-RESTOBJ (a rest element holding an object pattern stops it) reds restObjectNestScoped. F3,
+      // nestedPatternScoped's and objectInObjectScoped's nests in three other hosts, each with a three-element default:
+      // GP10-ARROWNEST (an outer array pattern in an arrow function's parameter stops it) reds arrowNestScoped; GP10-ARROWOBJ (the
+      // same on the object arm) reds arrowObjectNestScoped; GP10-METHODNEST (an outer array pattern in a method's parameter stops
+      // it) reds methodNestScoped; GP10-EXPORTNEST (an outer array pattern in an exported function declaration's parameter stops
+      // it) reds exportedNestScoped. F4, one pattern level: GP10-ARROWONE (an array pattern directly in an arrow function's
+      // parameter stops it) reds arrowPatternScoped and arrowNestScoped; GP10-OWNDEFLEN (the declaration's own binding element
+      // climbs only when its default has fewer than two elements) reds multiDefaultPatternScoped and the four F3 controls. Of
+      // refusal #2's seven members above, each reds these too: G1-NESTFIRST the two object-after-sibling nests and
+      // twoHolesBeforeNestScoped; G1-OBJSINGLE objectAfterSiblingInObjectScoped; G1-ARRSINGLE objectAfterSiblingInArrayScoped and
+      // twoHolesBeforeNestScoped; G1-OUTERDEFAULT outerIdentifierDefaultScoped; G1-RESTSTOP restObjectNestScoped; G1-KEYKIND
+      // memberKeyScoped and numericKeyOneScoped; G1-HOLESTOP twoHolesBeforeNestScoped.
+      objectAfterSiblingInObjectScoped: control('function f({ cwd, opts: { argv = ["context"] } }: { cwd: string; opts: Options }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      objectAfterSiblingInArrayScoped: control('function f([cwd, { argv = ["context"] }]: [string, Options]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      outerIdentifierDefaultScoped: control('function f({ lists: [argv = ["context"]] = NO_LISTS }: { lists?: string[][] }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      memberKeyScoped: control('function f({ [KEYS.lists]: [argv = ["context"]] }: { lists: string[][] }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      numericKeyOneScoped: control('function f({ 1: [argv = ["context"]] }: string[][][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      twoHolesBeforeNestScoped: control('function f([, , [argv = ["context"]]]: string[][][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      restObjectNestScoped: control('function f([...{ 0: argv = ["context"] }]: string[][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      arrowNestScoped: control('const f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => { return spawn("rf", argv); };\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      arrowObjectNestScoped: control('const f = ({ opts: { argv = ["--workspace", "w", "context"] } }: { opts: Options }) => { return spawn("rf", argv); };\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      methodNestScoped: control('class Launcher { run([[argv = ["--workspace", "w", "context"]]]: string[][][]) { return spawn("rf", argv); } }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      exportedNestScoped: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      arrowPatternScoped: control('const f = ([argv = ["context"]]: string[][]) => { return spawn("rf", argv); };\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      multiDefaultPatternScoped: control('function f({ argv = ["--workspace", "w", "context"] }: Options) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      // wb-8cgw (the R694 follow-up of wb-11rf's landing 794): six more rows, each holding nestedPatternScoped's nest with the
+      // three-element default the F3 controls spell above. F1, three quiet rows whose later function sits inside the parameter's
+      // own host, so a return line that takes a method's parameter to its class, or an arrow function's to the array literal
+      // holding it or to its variable statement, reds A1: GP23-METHODCLASS (a method parameter's scope is its class)
+      // reds methodSiblingScoped (methodNestScoped's parameter, a later sibling method pushing); GP23-ARROWPARENT (an arrow
+      // function parameter's scope is the arrow's parent node) reds arrowElementSiblingScoped (arrowNestScoped's, a later arrow
+      // element of the same array literal pushing); GP23-ARROWSTMT (an arrow in a variable declaration takes its variable
+      // statement) reds arrowDeclaratorSiblingScoped (arrowNestScoped's, a later arrow declarator of the same statement pushing).
+      // F2, three rows whose push sits in the parameter's own function body (render 1, uncommitted 1), so a return line that keeps
+      // one of those parameters' scope to the parameter itself reds A1: GP23-PI-ARROW (an arrow function's) reds arrowPushInside,
+      // its method twin W8-PI-METHOD reds methodPushInside and its exported twin W8-PI-EXPORTED (an exported function
+      // declaration's) reds exportedPushInside.
+      methodSiblingScoped: control('class Launcher {\n  run([[argv = ["--workspace", "w", "context"]]]: string[][][]) { return spawn("rf", argv); }\n  other(argv: string[]) { argv.push("render", "--json"); }\n}'),
+      arrowElementSiblingScoped: control('const launchers = [([[argv = ["--workspace", "w", "context"]]]: string[][][]) => { return spawn("rf", argv); }, (argv: string[]) => { argv.push("render", "--json"); }];'),
+      arrowDeclaratorSiblingScoped: control('const f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => { return spawn("rf", argv); }, g = (argv: string[]) => { argv.push("render", "--json"); };'),
+      arrowPushInside: control('const f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => {\n  argv.push("render", "--json");\n  return spawn("rf", argv);\n};'),
+      methodPushInside: control('class Launcher {\n  run([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n    argv.push("render", "--json");\n    return spawn("rf", argv);\n  }\n}'),
+      exportedPushInside: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  argv.push("render", "--json");\n  return spawn("rf", argv);\n}'),
+      // wb-2l05 (the R694 follow-up of wb-8cgw's landing 828): six more rows, each holding the nest the wb-8cgw rows spell. F2,
+      // four quiet rows whose parameter's host holds one member more than the row each is built from, so a return line that
+      // climbs a parameter to its host only when the host holds more than two members reds A1: GP16-NC-METHOD3 (a method
+      // parameter's scope is its class when the class has more than two members) reds methodThreeMemberScoped
+      // (methodSiblingScoped's class with a third method after the pushing one); GP16-NC-ELEMENT3 (an array-element arrow's scope
+      // is the array literal when it holds more than two elements) reds arrowThreeElementScoped (arrowElementSiblingScoped's array
+      // literal with a third element after the pushing arrow); GP16-NC-DECL3 (an arrow declarator's scope is its variable
+      // statement when the list holds more than two declarators) reds arrowThreeDeclaratorScoped (arrowDeclaratorSiblingScoped's
+      // statement with a third declarator after the pushing arrow); GP16-NC-FILE3 (a parameter's scope is its source file when the
+      // file holds more than two statements) reds threeStatementScoped (exportedNestScoped's two functions with a third statement
+      // between them). F3, two rows whose push sits inside the parameter's own function (render 1, uncommitted 1): GP16-NC-CONCISE
+      // (an arrow function with a concise body keeps its parameter's scope to the parameter itself) reds arrowConcisePushInside
+      // (arrowPushInside's arrow with a concise body that pushes inside its launch's argv argument), and GP16-NC-NESTEDFN (the
+      // later-push filter keeps out a push whose nearest enclosing function is not the parameter's own) reds
+      // nestedFunctionPushInside (exportedPushInside's function pushing inside a nested arrow function it declares and calls).
+      methodThreeMemberScoped: control('class Launcher {\n  run([[argv = ["--workspace", "w", "context"]]]: string[][][]) { return spawn("rf", argv); }\n  other(argv: string[]) { argv.push("render", "--json"); }\n  stop() {}\n}'),
+      arrowThreeElementScoped: control('const launchers = [([[argv = ["--workspace", "w", "context"]]]: string[][][]) => { return spawn("rf", argv); }, (argv: string[]) => { argv.push("render", "--json"); }, () => undefined];'),
+      arrowThreeDeclaratorScoped: control('const f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => { return spawn("rf", argv); }, g = (argv: string[]) => { argv.push("render", "--json"); }, h = 0;'),
+      threeStatementScoped: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) { return spawn("rf", argv); }\nconst unrelated = 1;\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      arrowConcisePushInside: control('const f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => spawn("rf", (argv.push("render", "--json"), argv));'),
+      nestedFunctionPushInside: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = () => {\n    argv.push("render", "--json");\n  };\n  add();\n  return spawn("rf", argv);\n}'),
+      // wb-sp4w (the R694 follow-up of wb-2l05's landing 880, F2): two more rows, each one shape off a wb-2l05 F3 row, holding
+      // the same nest (render 1, uncommitted 1). G13-NC-C-NOTINCALL (the push-record line keeps a push whose parent is a comma
+      // expression only when that comma, parenthesized, is a call's argument) reds arrowConciseCommaPushInside
+      // (arrowConcisePushInside's arrow with its push moved out of the launch's argv argument: the concise body is the
+      // parenthesized comma, the push its left operand and the launch its right), and G13-NC-N-FNEXPR (the later-push filter
+      // keeps out a push inside a nested function expression) reds nestedFunctionExpressionPushInside
+      // (nestedFunctionPushInside's function with its nested arrow written as an anonymous function expression).
+      arrowConciseCommaPushInside: control('const f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => (argv.push("render", "--json"), spawn("rf", argv));'),
+      nestedFunctionExpressionPushInside: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = function () {\n    argv.push("render", "--json");\n  };\n  add();\n  return spawn("rf", argv);\n}'),
+      // wb-sp4w cut #2 (refusal #1 O:2018, ruling R-B515: U1 owed; BIND F2 and F3 taken): three more rows, each one of the
+      // three push places above in a host that completes the argv without launching it (render 1, uncommitted 1, launches
+      // 0), so a reader that keeps a place's push only when its host launches reds A1: GP8-NC-FNEXPR-NOLAUNCH (the
+      // later-push filter keeps a nested function expression's push only when the host function declaration returns a
+      // call) reds nestedFunctionExpressionPushReturned (nestedFunctionExpressionPushInside's host returning the argv
+      // itself); GP8-NC-ARROW-NOLAUNCH (the same for a nested arrow function) reds nestedFunctionPushReturned
+      // (nestedFunctionPushInside's host returning the argv itself); and GP8-NC-COMMA-NOTLAUNCH (the push-record line drops
+      // a comma's left-operand push whose right operand is no call, outside a call's argument) reds
+      // arrowConciseCommaPushReturned (arrowConciseCommaPushInside's comma with the argv itself as its right operand, in an
+      // exported variable statement).
+      nestedFunctionPushReturned: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = () => {\n    argv.push("render", "--json");\n  };\n  add();\n  return argv;\n}'),
+      nestedFunctionExpressionPushReturned: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = function () {\n    argv.push("render", "--json");\n  };\n  add();\n  return argv;\n}'),
+      arrowConciseCommaPushReturned: control('export const f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => (argv.push("render", "--json"), argv);'),
+      // wb-sp4w cut #3 (refusal #2 O:2046, ruling R-B533: U1 and U2 owed, each a new claim set at rung 1): six more rows,
+      // each a launch-less control above with its declaration keyword or its export form changed (render 1, uncommitted 1,
+      // launches 0), so a reader that keeps a launch-less place's push only for the keyword or the export form the controls
+      // above write reds A1: GP2-C-CONSTONLY (the push-record line drops a comma's left-operand push beside a right operand
+      // that is no call, outside a call's argument, unless its variable declaration list is const) reds
+      // arrowConciseCommaPushLet and arrowConciseCommaPushVar (arrowConciseCommaPushReturned declared by let and by var), and
+      // GP2-AN-NODEFAULT (the later-push filter drops a push inside a function nested in the declaring function when that host
+      // is a default-exported function declaration) reds nestedFunctionPushDefault and nestedFunctionExpressionPushDefault
+      // (nestedFunctionPushReturned and nestedFunctionExpressionPushReturned exported as export default function f) and their
+      // twins with no name (nestedFunctionPushDefaultAnonymous and nestedFunctionExpressionPushDefaultAnonymous).
+      arrowConciseCommaPushLet: control('export let f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => (argv.push("render", "--json"), argv);'),
+      arrowConciseCommaPushVar: control('export var f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => (argv.push("render", "--json"), argv);'),
+      nestedFunctionPushDefault: control('export default function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = () => {\n    argv.push("render", "--json");\n  };\n  add();\n  return argv;\n}'),
+      nestedFunctionPushDefaultAnonymous: control('export default function ([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = () => {\n    argv.push("render", "--json");\n  };\n  add();\n  return argv;\n}'),
+      nestedFunctionExpressionPushDefault: control('export default function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = function () {\n    argv.push("render", "--json");\n  };\n  add();\n  return argv;\n}'),
+      nestedFunctionExpressionPushDefaultAnonymous: control('export default function ([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = function () {\n    argv.push("render", "--json");\n  };\n  add();\n  return argv;\n}'),
+      // wb-sp4w cut #4 (refusal #3 O:2081, ruling R-B557: U1-U5 owed; U2's and U3's N parts re-fail R-B515's host-launch
+      // set, whose guard R-B557 binds; U1, U2's and U3's A parts, U4 and U5 are new claim sets at rung 1): eight more
+      // launch-less rows (render 1, uncommitted 1, launches 0), each a launch-less control above with one form written
+      // otherwise, the twin text of record (gate-prep-17's specs/twin-texts.json without its trailing newline), so a reader that
+      // keeps a launch-less place's push only for the form the controls above write reds A1: GP17-AN-ONESTMT (the later-push
+      // filter reads a nested function's push only when its block body holds exactly one statement) reds
+      // nestedFunctionPushTwoStatements and nestedFunctionExpressionPushTwoStatements (nestedFunctionPushReturned and
+      // nestedFunctionExpressionPushReturned with the push split over two push statements); GP17-AN-BARECALL (only when the
+      // host calls the nested function's const through a bare-name callee) reds nestedFunctionPushParenthesizedCall and
+      // nestedFunctionExpressionPushParenthesizedCall (the host's call written (add)();); GP17-AN-BARERETURN (only when the
+      // host returns a bare name or an unwrapped call) reds nestedFunctionPushParenthesizedReturn and
+      // nestedFunctionExpressionPushParenthesizedReturn (the host's return written return (argv);); GP17-C-DIRECTARROW (the
+      // push-record line drops a comma's left-operand push beside a right operand that is no call when its arrow is not
+      // directly a variable declaration's initializer) reds arrowConciseCommaPushParenthesizedArrow
+      // (arrowConciseCommaPushReturned with its arrow in one pair of parentheses as the initializer); and GP17-C-BARERIGHT
+      // (when its right operand is neither a call nor a bare name) reds arrowConciseCommaPushParenthesizedRight
+      // (arrowConciseCommaPushReturned with its right operand written (argv)).
+      nestedFunctionPushTwoStatements: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = () => {\n    argv.push("render");\n    argv.push("--json");\n  };\n  add();\n  return argv;\n}'),
+      nestedFunctionExpressionPushTwoStatements: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = function () {\n    argv.push("render");\n    argv.push("--json");\n  };\n  add();\n  return argv;\n}'),
+      nestedFunctionPushParenthesizedCall: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = () => {\n    argv.push("render", "--json");\n  };\n  (add)();\n  return argv;\n}'),
+      nestedFunctionExpressionPushParenthesizedCall: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = function () {\n    argv.push("render", "--json");\n  };\n  (add)();\n  return argv;\n}'),
+      nestedFunctionPushParenthesizedReturn: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = () => {\n    argv.push("render", "--json");\n  };\n  add();\n  return (argv);\n}'),
+      nestedFunctionExpressionPushParenthesizedReturn: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = function () {\n    argv.push("render", "--json");\n  };\n  add();\n  return (argv);\n}'),
+      arrowConciseCommaPushParenthesizedArrow: control('export const f = (([[argv = ["--workspace", "w", "context"]]]: string[][][]) => (argv.push("render", "--json"), argv));'),
+      arrowConciseCommaPushParenthesizedRight: control('export const f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => (argv.push("render", "--json"), (argv));'),
+      // wb-sp4w cut #5 (refusal #4 O:2107, ruling R-B571: the SECOND-STAGE CAP froze the N place's host-launch claim words,
+      // so this cut is authored in the enumerate-the-resolvable form; U1-U4 owed): thirteen more launch-less rows (render 1,
+      // uncommitted 1, launches 0), each a launch-less control above with one facet written otherwise, the twin text of record
+      // (gate-prep-8's specs/b4-twins-texts.json without its trailing newline), so a reader that keeps a launch-less place's
+      // push only for the facet the controls above write reds A1: GP8B-AN-SOLEHOST (the later-push filter reads a nested
+      // function's push only when its host is the only statement of its file) reds nestedFunctionPushBesideStatement and
+      // nestedFunctionExpressionPushBesideStatement (nestedFunctionPushReturned and nestedFunctionExpressionPushReturned after
+      // the statement export type Argv = string[];), and GP8B-C-SOLESTMT (the push-record line drops a comma's left-operand
+      // push beside a right operand that is no call when its variable statement is not the only statement of its file) reds
+      // arrowConciseCommaPushBesideStatement (arrowConciseCommaPushReturned after that statement); GP8B-AN-CONSTNAME (only
+      // when the nested function's const is named add) and GP8B-AN-CALLNAME (only when the host calls the name add) red
+      // nestedFunctionPushRenamedConst and nestedFunctionExpressionPushRenamedConst (the const and its call named run);
+      // GP8B-AN-HOSTNAME (only when the host is named f or has no name) reds nestedFunctionPushRenamedHost and
+      // nestedFunctionExpressionPushRenamedHost (the host named build), and GP8B-C-BINDNAME (the push-record line drops that
+      // comma push when its declarator is named other than f) reds arrowConciseCommaPushRenamedBinding (the arrow bound to
+      // build); GP8B-AN-LATERLINE (only when the nested push starts on a later line than the literal's declaration ends) reds
+      // nestedFunctionPushOneLine and nestedFunctionExpressionPushOneLine (each host written on one line), and GP8B-C-SAMELINE
+      // (the push-record line drops that comma push unless it starts on its variable statement's first line) reds
+      // arrowConciseCommaPushTwoLines (the statement broken after its =>); and GP8B-AN-NOCOMMENT (only when the nested
+      // function's text holds no line comment) reds nestedFunctionPushCommented and nestedFunctionExpressionPushCommented (the
+      // line comment // the verb and the output flag on its own line before the push).
+      nestedFunctionPushBesideStatement: control('export type Argv = string[];\nexport function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = () => {\n    argv.push("render", "--json");\n  };\n  add();\n  return argv;\n}'),
+      nestedFunctionExpressionPushBesideStatement: control('export type Argv = string[];\nexport function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = function () {\n    argv.push("render", "--json");\n  };\n  add();\n  return argv;\n}'),
+      arrowConciseCommaPushBesideStatement: control('export type Argv = string[];\nexport const f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => (argv.push("render", "--json"), argv);'),
+      nestedFunctionPushRenamedConst: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const run = () => {\n    argv.push("render", "--json");\n  };\n  run();\n  return argv;\n}'),
+      nestedFunctionExpressionPushRenamedConst: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const run = function () {\n    argv.push("render", "--json");\n  };\n  run();\n  return argv;\n}'),
+      nestedFunctionPushRenamedHost: control('export function build([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = () => {\n    argv.push("render", "--json");\n  };\n  add();\n  return argv;\n}'),
+      nestedFunctionExpressionPushRenamedHost: control('export function build([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = function () {\n    argv.push("render", "--json");\n  };\n  add();\n  return argv;\n}'),
+      arrowConciseCommaPushRenamedBinding: control('export const build = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => (argv.push("render", "--json"), argv);'),
+      nestedFunctionPushOneLine: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) { const add = () => { argv.push("render", "--json"); }; add(); return argv; }'),
+      nestedFunctionExpressionPushOneLine: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) { const add = function () { argv.push("render", "--json"); }; add(); return argv; }'),
+      arrowConciseCommaPushTwoLines: control('export const f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) =>\n  (argv.push("render", "--json"), argv);'),
+      nestedFunctionPushCommented: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = () => {\n    // the verb and the output flag\n    argv.push("render", "--json");\n  };\n  add();\n  return argv;\n}'),
+      nestedFunctionExpressionPushCommented: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  const add = function () {\n    // the verb and the output flag\n    argv.push("render", "--json");\n  };\n  add();\n  return argv;\n}'),
+      // R-INDIRECT-PUSH members named, each a pinned quiet row: wb-shnw F2's aliases declared to a comma, conditional or nullish
+      // expression or destructured from a literal holding the argv, F3's member receiver and bound push, and beside them the
+      // literal itself destructured from a literal holding it and a literal bound by an assignment or an assignment pattern.
+      commaAlias: control('const argv = ["context"];\nconst same = (0, argv);\nsame.push("render", "--json");\nspawn("rf", argv);'),
+      conditionalAlias: control('const argv = ["context"];\nconst same = flag ? argv : argv;\nsame.push("render", "--json");\nspawn("rf", argv);'),
+      nullishAlias: control('const argv = ["context"];\nconst same = argv ?? [];\nsame.push("render", "--json");\nspawn("rf", argv);'),
+      arrayPatternAlias: control('const argv = ["context"];\nconst [same] = [argv];\nsame.push("render", "--json");\nspawn("rf", argv);'),
+      objectPatternLiteral: control('const { argv } = { argv: ["context"] };\nargv.push("render", "--json");\nspawn("rf", argv);'),
+      assignedLiteral: control('let argv;\nargv = ["context"];\nargv.push("render", "--json");\nspawn("rf", argv);'),
+      assignmentPatternDefault: control('let argv;\n({ argv = ["context"] } = opts);\nargv.push("render", "--json");\nspawn("rf", argv);'),
+      memberReceiver: control('const argv = ["context"];\nconst box = { argv };\nbox.argv.push("render", "--json");\nspawn("rf", argv);'),
+      boundPush: control('const argv = ["context"];\nargv.push.bind(argv)("render", "--json");\nspawn("rf", argv);'),
+      // wb-shnw F4, the guards no control pinned, each a quiet row: an alias declared before the literal, a push before it or
+      // after its scope ends, and an element call other than ["push"] (the element twin of unshiftArgv, R-MUTATED-ARGV).
+      earlierAlias: control('const same = argv;\n{ const argv = ["context"]; same.push("render", "--json"); spawn("rf", argv); }'),
+      earlierPush: control('argv.push("render", "--json");\n{ const argv = ["context"]; spawn("rf", argv); }'),
+      laterPush: control('{ const argv = ["context"]; spawn("rf", argv); }\nargv.push("render", "--json");'),
+      elementUnshift: control('const argv = ["--workspace", w];\nargv["unshift"]("context", "render");\nspawn("rf", argv);'),
     };
     expect(controls).toStrictEqual({
       uncommittedArgv: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, noCommitArgv: { render: 1, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
@@ -1034,6 +1731,87 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       elementSpread: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, piExec: { render: 1, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
       shellString: { render: 0, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, plusLiteral: { render: 0, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
       wrappedLaunch: { render: 1, uncommitted: 0, flags: 0, composed: 0, launches: 0 }, constantProgram: { render: 1, uncommitted: 0, flags: 0, composed: 0, launches: 0 },
+      absolutePath: { render: 1, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, windowsPath: { render: 1, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      assertedArgv: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, assertedPlus: { render: 0, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      pushArgv: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
+      pushComposed: { render: 0, uncommitted: 0, flags: 0, composed: 1, launches: 1 }, unshiftArgv: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      assertedReceiver: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, nonNullReceiver: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
+      elementPush: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, wrappedPushCallee: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
+      aliasPush: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, aliasChain: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
+      foreignAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, scopedAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      assertedProgram: { render: 1, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      wrappedLauncherCallee: { render: 1, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, assertedLauncherAlias: { render: 1, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      assertedBoth: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, nonNullBoth: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
+      constantAsserted: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 }, constantAlias: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      indirectPush: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      paramDefault: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 }, destructDefault: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      paramDefaultLaunch: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, patternParamDefault: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
+      arrayDefault: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, paramAlias: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
+      bindingAlias: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, paramScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      patternScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, arrayPatternScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      nestedPatternScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      arrayInObjectScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, objectInArrayScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      objectInObjectScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, threeArrayScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      threeObjectScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      afterSiblingInObjectScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, afterSiblingInArrayScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      beforeSiblingInObjectScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, beforeSiblingInArrayScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      outerArrayDefaultScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, outerObjectDefaultScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      restNestScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, computedKeyScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      numericKeyScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, stringKeyScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      holeBeforeNestScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      objectAfterSiblingInObjectScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, objectAfterSiblingInArrayScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      outerIdentifierDefaultScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, memberKeyScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      numericKeyOneScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, twoHolesBeforeNestScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      restObjectNestScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, arrowNestScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      arrowObjectNestScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, methodNestScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      exportedNestScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, arrowPatternScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      multiDefaultPatternScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      methodSiblingScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, arrowElementSiblingScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      arrowDeclaratorSiblingScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      arrowPushInside: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, methodPushInside: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
+      exportedPushInside: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
+      methodThreeMemberScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, arrowThreeElementScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      arrowThreeDeclaratorScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, threeStatementScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      arrowConcisePushInside: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, nestedFunctionPushInside: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
+      arrowConciseCommaPushInside: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
+      nestedFunctionExpressionPushInside: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
+      nestedFunctionPushReturned: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionExpressionPushReturned: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      arrowConciseCommaPushReturned: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      arrowConciseCommaPushLet: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      arrowConciseCommaPushVar: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionPushDefault: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionPushDefaultAnonymous: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionExpressionPushDefault: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionExpressionPushDefaultAnonymous: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionPushTwoStatements: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionExpressionPushTwoStatements: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionPushParenthesizedCall: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionExpressionPushParenthesizedCall: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionPushParenthesizedReturn: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionExpressionPushParenthesizedReturn: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      arrowConciseCommaPushParenthesizedArrow: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      arrowConciseCommaPushParenthesizedRight: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionPushBesideStatement: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionExpressionPushBesideStatement: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      arrowConciseCommaPushBesideStatement: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionPushRenamedConst: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionExpressionPushRenamedConst: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionPushRenamedHost: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionExpressionPushRenamedHost: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      arrowConciseCommaPushRenamedBinding: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionPushOneLine: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionExpressionPushOneLine: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      arrowConciseCommaPushTwoLines: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionPushCommented: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      nestedFunctionExpressionPushCommented: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      commaAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      conditionalAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, nullishAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      arrayPatternAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, objectPatternLiteral: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      assignedLiteral: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, assignmentPatternDefault: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      memberReceiver: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, boundPush: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      earlierAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, earlierPush: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      laterPush: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, elementUnshift: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
     });
     return { srcFloorMet, ...found, controls };
   },
@@ -1055,23 +1833,48 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A3: async () => {
     // wb-w1g3 F1(iv): the roster is every descriptor that reaches rf by id, permission or contractSource, not the id prefix alone.
     const native = (await nativeDescriptors()).filter(drivesRf);
-    const injectedRegistry = new CapabilityRegistry();
-    registerReactiveFiberRender(injectedRegistry, () => Promise.reject(new Error("the injected reader is never invoked here")), ROOT);
-    const injected = injectedRegistry.catalogSnapshot().map(entry => entry.descriptor).filter(drivesRf);
+    // wb-s4j3 F2: and by reach - the rf provider's two registrations are read whole, unfiltered, and src's references to its rf
+    // launcher are pinned, so a capability carrying no rf marker that drives the launcher shows.
+    const provider = wholeRead(nativeRegistration);
+    const injected = wholeRead(injectedRegistration);
     const reconcile = [...(RECONCILE_EVIDENCE_READS.reactivefiber ?? [])];
+    const reach = rfReach();
     const shape = { id: PREVIEW_ID, effectClass: "read", permissions: PREVIEW_GRANTS, modes: ["invoke"], carrier: true, noCommitSource: true };
     expect(native.map(descriptorShape)).toStrictEqual([shape]);
+    expect(provider.map(descriptorShape)).toStrictEqual([shape]);
     expect(injected.map(descriptorShape)).toStrictEqual([shape]);
     expect(reconcile).toStrictEqual([PREVIEW_ID]);
+    expect(reach, "src reaches rf's launch only through the preview's registration and the uncalled legacy wrapper").toStrictEqual({
+      launchers: ["nativeReactiveFiberRender"],
+      sites: ["src/workbench/providers/reactivefiber.ts > nativeReactiveFiberPreview", "src/workbench/providers/reactivefiber.ts > registerNativeReactiveFiberRender"],
+      wrappers: ["nativeReactiveFiberPreview"], wrapperSites: [],
+    });
+    const reachControl = (source: string): string[] => referenceSites("control.ts", parsed("control.ts", source), reach.launchers);
     const controls = {
       otherIdRfRelease: drivesRf({ id: "rf.render.commit", permissions: ["rf:commit"], contractSource: "rf@0.1.784:reactive-fiber.cli/v1 context.render" }),
       otherIdSchemaOnly: drivesRf({ id: "render.commit", permissions: [], contractSource: "local:reactive-fiber.cli/v2 context.render" }),
       otherIdPermissionOnly: drivesRf({ id: "render.commit", permissions: ["reactivefiber:commit"] }),
       prefixOnly: drivesRf({ id: "reactivefiber.render.commit", permissions: [] }),
       forgeQuiet: drivesRf({ id: "forge.gate.status", permissions: ["forge:read"], contractSource: "@forge/sdk@0.1.0:ServerConnection.request(gate.status)" }),
+      // The marker reading alone misses the unmarked capability (wb-s4j3 F2); each whole read, run on a registry already holding
+      // it, sees it beside the preview.
+      unmarkedMarker: drivesRf(UNMARKED),
+      nativeWholeWithUnmarked: wholeRead(nativeRegistration, unmarkedRegistry()).map(descriptor => descriptor.id),
+      injectedWholeWithUnmarked: wholeRead(injectedRegistration, unmarkedRegistry()).map(descriptor => descriptor.id),
+      importedCall: reachControl('import { nativeReactiveFiberRender } from "./providers/reactivefiber.js";\nexport function commitRender(w: string) {\n  return nativeReactiveFiberRender({ model: "m", task: "t" }, w);\n}'),
+      namespaceCall: reachControl('import * as rf from "./providers/reactivefiber.js";\nexport const commitRender = (w: string) => rf.nativeReactiveFiberRender({ model: "m", task: "t" }, w);'),
+      literalMember: reachControl('export async function commitRender(w: string) {\n  const rf = await import("./providers/reactivefiber.js");\n  return rf["nativeReactiveFiberRender"]({ model: "m", task: "t" }, w);\n}'),
+      // R-RELAYED-REACH, its pinned quiet rows: a capability relaying the read preview through the registry, and one reaching the
+      // launcher through a name assembled at runtime, leave no reference A3 can bind.
+      registryRelay: reachControl('export function commitRender(registry: CapabilityRegistry, context: InvocationContext) {\n  return registry.invoke("reactivefiber.render.preview", { model: "m", task: "t" }, context);\n}'),
+      assembledName: reachControl('export async function commitRender(w: string) {\n  const rf = await import("./providers/reactivefiber.js");\n  const name = ["native", "ReactiveFiber", "Render"].join("");\n  return rf[name]({ model: "m", task: "t" }, w);\n}'),
     };
-    expect(controls).toStrictEqual({ otherIdRfRelease: true, otherIdSchemaOnly: true, otherIdPermissionOnly: true, prefixOnly: true, forgeQuiet: false });
-    return { native: native.map(descriptorShape), injected: injected.map(descriptorShape), reconcile, controls };
+    expect(controls).toStrictEqual({
+      otherIdRfRelease: true, otherIdSchemaOnly: true, otherIdPermissionOnly: true, prefixOnly: true, forgeQuiet: false, unmarkedMarker: false,
+      nativeWholeWithUnmarked: [UNMARKED.id, PREVIEW_ID], injectedWholeWithUnmarked: [UNMARKED.id, PREVIEW_ID], importedCall: ["control.ts > <module>", "control.ts > commitRender"],
+      namespaceCall: ["control.ts > commitRender"], literalMember: ["control.ts > commitRender"], registryRelay: [], assembledName: [],
+    });
+    return { native: native.map(descriptorShape), provider: provider.map(descriptorShape), injected: injected.map(descriptorShape), reconcile, reach: { ...reach }, controls };
   },
   A4: async () => ({ roots: VOCABULARY_ROOTS.map(scanVocabulary) }),
   B1: async () => {
@@ -1318,7 +2121,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       injectedRefusalSource: sourceAddedParts(injectedRefusal.reading, refusalEnvelope),
     };
     const labelled = Object.entries({ ...surfaces, ...added }).flatMap(([name, texts]) =>
-      rootless(texts).filter(item => FRESH_LABEL.test(item)).map(item => `${name}: ${item}`));
+      rootless(texts).filter(item => freshLabelled(item)).map(item => `${name}: ${item}`));
     // Non-vacuity: every surface judged holds at least one non-empty text; the in-source readings are empty by design, so their
     // control plants a label in place and reads it back.
     const everySurfaceRead = Object.values(surfaces).every(texts => texts.some(item => item.length > 0));
@@ -1327,7 +2130,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const labelledCopy = pinChanged();
     metadataOf(labelledCopy).freshness = "current";
     const addedControl = sourceAddedParts(previewReading(labelledCopy), refusalEnvelope);
-    expect({ addedControl, read: addedControl.every(item => FRESH_LABEL.test(item)) }).toStrictEqual({ addedControl: ["freshness", "current"], read: true });
+    expect({ addedControl, read: addedControl.every(item => freshLabelled(item)) }).toStrictEqual({ addedControl: ["freshness", "current"], read: true });
     const probeNamed = namedIn(probe.shown);
     const snapshot = probe.topology.snapshots[0];
     expect(labelled).toEqual([]);
@@ -1337,8 +2140,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const seamLabel = (snapshot?.node.statusText ?? "").split(` ${String.fromCodePoint(0x00b7)} `)[0] ?? "";
     expect(seamLabel.length).toBeGreaterThan(0);
     const controls = {
-      fresh: FRESH_LABEL.test("fresh output"), current: FRESH_LABEL.test("the current owner read"), latest: FRESH_LABEL.test("latest render"),
-      upToDate: FRESH_LABEL.test("up-to-date"), newest: FRESH_LABEL.test("newest receipt"), quiet: FRESH_LABEL.test(seamLabel),
+      fresh: freshLabelled("fresh output"), current: freshLabelled("the current owner read"), latest: freshLabelled("latest render"),
+      upToDate: freshLabelled("up-to-date"), newest: freshLabelled("newest receipt"), quiet: freshLabelled(seamLabel),
     };
     expect(controls).toStrictEqual({ fresh: true, current: true, latest: true, upToDate: true, newest: true, quiet: false });
     return {
@@ -1346,6 +2149,25 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       probe: { coverage: snapshot?.coverage ?? null, statusTone: snapshot?.node.statusTone ?? null, namesPinned: probeNamed.namesPinned, namesAccepted: probeNamed.namesAccepted },
       seamLabel, controls,
     };
+  },
+  H1: async () => {
+    // wb-s4j3 F5: a case measures; it never reads a roster witness, and it never hands back an object the roster holds.
+    let readRefused = false;
+    try {
+      rosterWitness("B4");
+    } catch {
+      readRefused = true;
+    }
+    const held = heldWitness("B4");
+    const guard = { readRefused, heldFlagged: sharesObject(held, ROSTER), nestedFlagged: sharesObject({ copy: [held] }, ROSTER) };
+    expect(guard).toStrictEqual({ readRefused: true, heldFlagged: true, nestedFlagged: true });
+    return guard;
+  },
+  HQ1: async () => {
+    // R-VACUOUS-PAYLOAD, its pinned quiet row: a deep copy of a witness read from the roster's rows shares no object with the roster.
+    const copyFlagged = sharesObject(json(heldWitness("B4")), ROSTER);
+    expect(copyFlagged).toBe(false);
+    return { copyFlagged };
   },
   ...Object.fromEntries(
     SPELLINGS.map(spelling => [
@@ -1361,7 +2183,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     FRESH_SPELLINGS.map(spelling => [
       spelling.pin,
       async (): Promise<JsonValue> => {
-        const hit = FRESH_LABEL.test(spelling.text);
+        const hit = freshLabelled(spelling.text);
         expect(hit).toBe(spelling.hit);
         return { form: printable(spelling.text), hit };
       },
@@ -1381,7 +2203,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
 
 describe("wb-tnz5.5 rf federation pin-changed census (RF-CERTIFIED-FEDERATED-REACTIVE-REFINEMENT-R6, absent-today leg)", () => {
   it(JUDGED_TITLE, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:9", "C:3", "D:4", "M:18", "L:15", "N:7"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:9", "C:3", "D:4", "M:20", "L:22", "N:7", "H:2"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
@@ -1428,8 +2250,16 @@ describe("wb-tnz5.5 rf federation pin-changed census (RF-CERTIFIED-FEDERATED-REA
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
           // wb-w1g3 F3: the case's own assertions are counted around it, so a case returning its witness early counts short.
           const before = expect.getState().assertionCalls;
-          const witness = impl === undefined ? null : await impl();
+          runningCase = pin;
+          let witness: JsonValue = null;
+          try {
+            witness = impl === undefined ? null : await impl();
+          } finally {
+            runningCase = null;
+          }
           const asserted = expect.getState().assertionCalls - before;
+          // wb-s4j3 F5: the witness a case hands back is its own reading, never an object the roster holds (row H).
+          expect(sharesObject(witness, ROSTER), `${pin}'s case handed back an object the roster holds`).toBe(false);
           expect(witness).toStrictEqual(rosterWitness(pin));
           REACHED.push(`${pin}:${asserted}`);
         });
@@ -1461,3 +2291,5 @@ describe("wb-tnz5.5 rf federation pin-changed census (RF-CERTIFIED-FEDERATED-REA
     expect(REACHED, "every pin reached its witness compare after its own pinned number of assertions, in row order").toEqual([...ROSTER.reached]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

@@ -451,7 +451,78 @@
        true,
        true,
        true
-      ]
+      ],
+      "receipts": [
+       {
+        "phrase": "a Forge gate status",
+        "producers": [
+         "forge"
+        ],
+        "roots": [
+         {
+          "ref": "forge:gate-status:workspace",
+          "tone": "success",
+          "text": "success · FORGE_OK · current gate passed",
+          "own": true
+         }
+        ],
+        "spelled": true
+       },
+       {
+        "phrase": "a Furnace attempt",
+        "producers": [
+         "furnace"
+        ],
+        "roots": [
+         {
+          "ref": "furnace:run:frn-run-kku9",
+          "tone": "success",
+          "text": "completed",
+          "own": true
+         }
+        ],
+        "spelled": true
+       },
+       {
+        "phrase": "Beads readiness",
+        "producers": [
+         "beads"
+        ],
+        "roots": [
+         {
+          "ref": "beads:work:wb-kku9-receipt",
+          "tone": "unknown",
+          "text": "closed",
+          "own": true
+         }
+        ],
+        "spelled": true
+       },
+       {
+        "phrase": "a Git revision",
+        "producers": [
+         "git"
+        ],
+        "roots": [],
+        "spelled": false
+       }
+      ],
+      "composed": {
+       "extraNodes": [],
+       "wordNodes": [],
+       "extraEdges": [],
+       "crossEdges": [],
+       "wordEdges": [],
+       "foreignRefs": [],
+       "wordRefs": []
+      },
+      "gitControls": {
+       "literal": true,
+       "constant": true,
+       "typed": true,
+       "named": true,
+       "conditional": true
+      }
      }
     }
    ]

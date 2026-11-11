@@ -1,5 +1,5 @@
 {
-  "provenance": "wb-pfxo.5 census roster (test/workbench-rf-replay-outcome-echo-census.test.ts). envelopes.measured is MEASURED: the stdout of `rf context replay RENDER --json` (exit 0) from the installed rf 0.1.832 on 2026-10-23 over a render committed in a scratch workspace (`rf init`, then `rf context render --model m --task t --context-window 200000 --max-output 64000`), only the scratch workspace root rewritten to /fixture/rf-workspace. envelopes.deniedEffects, envelopes.variance, envelopes.mismatch and envelopes.trustDenied are the producer's own valid fixtures at ReactiveFiberCLI 6a251bf73af5 (read-only git show of schemas/fixtures/context.replay/valid/ok_reproduced.json, ok_reproduced_with_declared_variance.json, failure_mismatch_exit_11.json and failure_trust_denied_exit_5.json), byte-for-byte in content. fragments.incomplete is CONSTRUCTED from those fixtures' values (render_id and versions of ok_reproduced; the revision, component and policy digest of failure_trust_denied_exit_5) under the fragment schema's TRUST-SEC-A52 rule, with trust reason codes from the producer's domain/trust.py TRUST_REASON_CODES (deny_unapproved, no_matching_rule); no producer fixture carries a replay status. Every envelope validates against the installed context.replay.schema.json and the fragment against schemas/cli/context/replay-result.json (ajv 2020-12, 0 errors; both schemas byte-identical between the installed 0.1.832 and the pin); the fragment without its trust_denied reason is refused, and the envelope schema refuses the fragment as the result of an ok envelope and of a failure envelope. outcomes, statuses: the fragment enums at replay-result.json :30-33 and :121-122. rows: the judged set, each pin's witness measured by its own case. wb-hmre (2026-10-24, the pfxo.5 gate's F1 and F2 follow-up): the A1, B3 and D1 witnesses gain the git-index walk fields (every file the index tracks under each root is walked; A1 reads every tracked src .ts module), B3 gains the copula controls of <CLAIM-R>, Q4 pins the thirteen PARAPHRASES members of R-PARAPHRASE beside the arms their plain spellings meet, and Q5 pins the U+2011 dash-homoglyph member of R-INTERRUPTED; nothing here is re-measured from rf.",
+  "provenance": "wb-pfxo.5 census roster (test/workbench-rf-replay-outcome-echo-census.test.ts). envelopes.measured is MEASURED: the stdout of `rf context replay RENDER --json` (exit 0) from the installed rf 0.1.832 on 2026-10-23 over a render committed in a scratch workspace (`rf init`, then `rf context render --model m --task t --context-window 200000 --max-output 64000`), only the scratch workspace root rewritten to /fixture/rf-workspace. envelopes.deniedEffects, envelopes.variance, envelopes.mismatch and envelopes.trustDenied are the producer's own valid fixtures at ReactiveFiberCLI 6a251bf73af5 (read-only git show of schemas/fixtures/context.replay/valid/ok_reproduced.json, ok_reproduced_with_declared_variance.json, failure_mismatch_exit_11.json and failure_trust_denied_exit_5.json), byte-for-byte in content. fragments.incomplete is CONSTRUCTED from those fixtures' values (render_id and versions of ok_reproduced; the revision, component and policy digest of failure_trust_denied_exit_5) under the fragment schema's TRUST-SEC-A52 rule, with trust reason codes from the producer's domain/trust.py TRUST_REASON_CODES (deny_unapproved, no_matching_rule); no producer fixture carries a replay status. Every envelope validates against the installed context.replay.schema.json and the fragment against schemas/cli/context/replay-result.json (ajv 2020-12, 0 errors; both schemas byte-identical between the installed 0.1.832 and the pin); the fragment without its trust_denied reason is refused, and the envelope schema refuses the fragment as the result of an ok envelope and of a failure envelope. outcomes, statuses: the fragment enums at replay-result.json :30-33 and :121-122. rows: the judged set, each pin's witness measured by its own case. wb-hmre (2026-10-24, the pfxo.5 gate's F1 and F2 follow-up): the A1, B3 and D1 witnesses gain the git-index walk fields (every file the index tracks under each root is walked; A1 reads every tracked src .ts module), B3 gains the copula controls of <CLAIM-R>, Q4 pins the thirteen PARAPHRASES members of R-PARAPHRASE beside the arms their plain spellings meet, and Q5 pins the U+2011 dash-homoglyph member of R-INTERRUPTED; nothing here is re-measured from rf. wb-w1kd (2026-10-25, the wb-hmre gate's F1-F3 follow-up): separators pins the claim matcher's separator class; the B3 witness gains a control for every separator (keyed by code point), the gate's markup and punctuation forms, both hyphen homoglyphs and a letter-edge quiet control; Q4 pins each PARAPHRASES member's plain spelling word for word (plainWords); Q5 pins the comma, semicolon, ellipsis, HTML-tag and link-target members of R-INTERRUPTED in place of the U+2011 dash homoglyph, a separator now; nothing here is re-measured from rf.",
   "rfVersion": "0.1.832",
   "pin": "6a251bf73af5",
   "outcomes": [
@@ -92,6 +92,22 @@
       "the",
       "as",
       "a"
+    ]
+  },
+  "separators": {
+    "ascii": "_.:/-*`\"'()[]{}<>!?~|#$%&+=@\\^",
+    "unicode": [
+      8208,
+      8209,
+      8210,
+      8211,
+      8212,
+      8213,
+      8722,
+      8216,
+      8217,
+      8220,
+      8221
     ]
   },
   "residuals": {
@@ -702,6 +718,161 @@
               "copulaSentence": [
                 "CLAIM-R reexecution, then equal"
               ],
+              "boldEmphasis": [
+                "CLAIM-R reexecution, then equal"
+              ],
+              "codeSpan": [
+                "CLAIM-R reexecution, then equal"
+              ],
+              "parenthesized": [
+                "CLAIM-R reexecution, then equal"
+              ],
+              "emDash": [
+                "CLAIM-R reexecution, then equal"
+              ],
+              "underscoreEmphasis": [
+                "CLAIM-R reexecution, then equal"
+              ],
+              "doubleQuoted": [
+                "CLAIM-R reexecution, then equal"
+              ],
+              "starEmphasisEffects": [
+                "CLAIM-E effect, then redo"
+              ],
+              "hyphenHomoglyphs": [
+                [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                [
+                  "CLAIM-R reexecution, then equal"
+                ]
+              ],
+              "everySeparator": {
+                "U+005F": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+002E": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+003A": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+002F": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+002D": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+002A": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+0060": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+0022": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+0027": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+0028": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+0029": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+005B": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+005D": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+007B": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+007D": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+003C": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+003E": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+0021": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+003F": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+007E": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+007C": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+0023": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+0024": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+0025": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+0026": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+002B": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+003D": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+0040": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+005C": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+005E": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+2010": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+2011": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+2012": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+2013": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+2014": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+2015": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+2212": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+2018": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+2019": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+201C": [
+                  "CLAIM-R reexecution, then equal"
+                ],
+                "U+201D": [
+                  "CLAIM-R reexecution, then equal"
+                ]
+              },
+              "letterEdgeQuiet": [],
               "snakeJoined": [
                 "CLAIM-E effect, then redo"
               ],
@@ -1046,6 +1217,10 @@
                 "member": "synonym: happened again",
                 "variant": "the side effects happened again",
                 "caught": [],
+                "plainWords": [
+                  "effects",
+                  "reproduced"
+                ],
                 "plain": [
                   "CLAIM-E effect, then redo"
                 ]
@@ -1054,6 +1229,11 @@
                 "member": "synonym: ran a second time",
                 "variant": "every effect ran a second time",
                 "caught": [],
+                "plainWords": [
+                  "every",
+                  "effect",
+                  "re-executed"
+                ],
                 "plain": [
                   "CLAIM-E effect, then redo"
                 ]
@@ -1062,6 +1242,10 @@
                 "member": "inflection: equals",
                 "variant": "re-execution equals",
                 "caught": [],
+                "plainWords": [
+                  "re-execution",
+                  "equal"
+                ],
                 "plain": [
                   "CLAIM-R reexecution, then equal"
                 ]
@@ -1070,6 +1254,10 @@
                 "member": "inflection: plural",
                 "variant": "re-executions equal",
                 "caught": [],
+                "plainWords": [
+                  "re-execution",
+                  "equal"
+                ],
                 "plain": [
                   "CLAIM-R reexecution, then equal"
                 ]
@@ -1078,6 +1266,11 @@
                 "member": "linking: under",
                 "variant": "equal under re-execution",
                 "caught": [],
+                "plainWords": [
+                  "equal",
+                  "to",
+                  "re-execution"
+                ],
                 "plain": [
                   "CLAIM-R equal, then reexecution"
                 ]
@@ -1086,6 +1279,11 @@
                 "member": "linking: on",
                 "variant": "equality on re-execution",
                 "caught": [],
+                "plainWords": [
+                  "equality",
+                  "of",
+                  "re-execution"
+                ],
                 "plain": [
                   "CLAIM-R equal, then reexecution"
                 ]
@@ -1094,6 +1292,11 @@
                 "member": "auxiliary: have been",
                 "variant": "effects have been reproduced",
                 "caught": [],
+                "plainWords": [
+                  "effects",
+                  "been",
+                  "reproduced"
+                ],
                 "plain": [
                   "CLAIM-E effect, then redo"
                 ]
@@ -1102,6 +1305,11 @@
                 "member": "auxiliary: being",
                 "variant": "effects being reproduced",
                 "caught": [],
+                "plainWords": [
+                  "effects",
+                  "are",
+                  "reproduced"
+                ],
                 "plain": [
                   "CLAIM-E effect, then redo"
                 ]
@@ -1110,6 +1318,10 @@
                 "member": "inflection: reproduce",
                 "variant": "effects reproduce",
                 "caught": [],
+                "plainWords": [
+                  "effects",
+                  "reproduced"
+                ],
                 "plain": [
                   "CLAIM-E effect, then redo"
                 ]
@@ -1118,6 +1330,11 @@
                 "member": "inflection: reproducing",
                 "variant": "reproducing the effects",
                 "caught": [],
+                "plainWords": [
+                  "reproduced",
+                  "the",
+                  "effects"
+                ],
                 "plain": [
                   "CLAIM-E redo, then effect"
                 ]
@@ -1126,6 +1343,12 @@
                 "member": "synonym: match",
                 "variant": "the external effects match",
                 "caught": [],
+                "plainWords": [
+                  "the",
+                  "external",
+                  "effects",
+                  "equal"
+                ],
                 "plain": [
                   "CLAIM-E external effect, then equal"
                 ]
@@ -1134,6 +1357,12 @@
                 "member": "synonym: stay",
                 "variant": "external effects stay identical",
                 "caught": [],
+                "plainWords": [
+                  "external",
+                  "effects",
+                  "are",
+                  "identical"
+                ],
                 "plain": [
                   "CLAIM-E external effect, then equal"
                 ]
@@ -1142,6 +1371,12 @@
                 "member": "linking: with",
                 "variant": "equality with external effects",
                 "caught": [],
+                "plainWords": [
+                  "equality",
+                  "of",
+                  "external",
+                  "effects"
+                ],
                 "plain": [
                   "CLAIM-E equal, then external effect"
                 ]
@@ -1155,7 +1390,11 @@
           "witness": {
             "zeroWidth": [],
             "homoglyph": [],
-            "dashHomoglyph": [],
+            "comma": [],
+            "semicolon": [],
+            "ellipsis": [],
+            "htmlTag": [],
+            "linkTarget": [],
             "plainCaught": true,
             "plainDashCaught": true
           }

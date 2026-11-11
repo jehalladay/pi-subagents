@@ -6,6 +6,25 @@
  * seed is shipped, RI-DEC-01/03/06-10 are not); pin docs/programs/unified-decision-inference-2026-10-21/03-conformance.md:16
  * @485f3615db1e". The acceptance is the owner filing's, verbatim but for the placeholders: the labels of rows A, B and C.
  *
+ * FOLLOW-UP wb-p46r (the R694 follow-up of the landing-351 gate verdict: F2 and F4 lead, F3 rides). The docs page selector now
+ * reads .markdown pages too, in any case (F2's extension member, cured; MS1 is its control); R-RENDERED names the rest of the
+ * rendered-text family (F2's splits and F3's hidden marker) and R-COORDINATED the coordinated census + roster hollow (F4), each
+ * with its pinned quiet row (R11, R12).
+ *
+ * FOLLOW-UP wb-crmt (the R694 follow-up of the landing-449 gate verdict: F1 leads). MS1 pinned the page selector at its
+ * predicate only, so reverting either use of it in the docs walk to a lowercase .md test (G9 the root filter, G10 the DOC_DIRS
+ * filter) left the census green beside a root .MARKDOWN or a vendor .Markdown page that the unmutated census reds. MS1 now runs
+ * docFiles itself, the walk rows A and B read, over a constructed tree (FileTree: a root, a lister and a reader, never the
+ * disk; PAGE_TREE lists its entries), so each use, the root's name order, the walk's order, depth and entry kinds and the
+ * DOC_DIRS set decide its outcome; R11's unread pages go through the same walk.
+ *
+ * FOLLOW-UP wb-nfhy (the R694 follow-up of the landing-555 gate verdict: F1 leads; hop 3 of the chain wb-tz4r.8 -> wb-p46r ->
+ * wb-crmt, so the R739 terminal enumerate-the-resolvable form). MS1 pinned the walk's depth only as nested versus flat:
+ * PAGE_TREE's deepest pages sat one directory below their DOC_DIRS directory while the disk's sit two below theirs, so a cap
+ * on the walk's recursion at two levels (the gate's X7) or a bound of four path segments at the DOC_DIRS use of the selector
+ * (X7d) left MS1 green on the landed copy and the cut alike. PAGE_TREE now holds a page three directories below every DOC_DIRS
+ * directory, deeper than every disk page; DEPTH names the classes that resolves and R-DEPTH the bounds it leaves (R13).
+ *
  * THE PLACEHOLDERS. Acceptance (c)'s grep has three alternatives: <DE> is the producer's typed decision module (two words, one
  * underscore), <NDB> its native backend class (three words, Pascal case) and <DI> the bead's own two prose words (one space).
  * This file and its roster never spell one: NEEDLE_PARTS holds the words, NEEDLES composes each alternative at runtime by array
@@ -37,7 +56,13 @@
  * (712 rows at c6369e0, 739 at 187591e) names a family in seven rows, the owner filings wb-tz4r.1-.6 and wb-tz4r.8
  * (FILING_ROWS), and every string value that names one carries a marker and the pin; the epic wb-tz4r, wb-tz4r.7 and the
  * residuals bead wb-nzdh name the program only (R-PROGRAM). The live store read the same, with the delivery notes the next
- * export carries.
+ * export carries. RE-MEASURED AT b1ce8c1 (landing 392, the wb-p46r cut): 98 docs pages, every one .md (0 .markdown, 0 under
+ * another markdown extension), 46 receipts and 814 export rows; rows A and B read 0 docs mentions. RE-MEASURED AT 6a61219
+ * (landing 454, the wb-crmt cut): 102 docs pages, every one .md, 47 receipts and 869 export lines; the root's pages are A1's
+ * five; rows A and B read 0 docs mentions. RE-MEASURED AT 88086c9 (landing 583, the wb-nfhy cut): 105 docs pages, every one
+ * .md, 50 receipts and 946 export lines; by path segments 5 pages have 1, 23 have 2, 26 have 3 and 51 have 4, so the deepest
+ * pages sit two directories below their DOC_DIRS directory (the 50 receipts and .agents/skills/beads/SKILL.md); rows A and B
+ * read 0 docs mentions.
  *
  * READINGS
  * - MENTIONS, matched in any case: M1 <DI>, its two words joined directly or by any run of white space, "_", "." or "-", except
@@ -50,9 +75,10 @@
  *    the capability, unmarked (no marker) or unpinned (a marker, no pin). The window is the lines a mention spans in a docs file
  *    (R-LINE) and the whole string value in a bead row (R-FIELD: the filings quote the producer in Authority and Gating paragraphs
  *    of their own, so 25 of the 49 mentions in their fields carry no marker or no pin on their own line, measured on the live
- *    store, while every field carries both). DOC_ROOTS: every markdown file directly in the repository root and below docs/,
- *    new-feedback/, .agents/, .pi/, .beads/, examples/ and vendor/ (95 at base); src, test and qa are row C's (R-SCOPE). A1 the
- *    walk is not blind (floors, the two pages the clause names, the export); A2 every docs mention admitted (0 mentions at base);
+ *    store, while every field carries both). DOC_ROOTS: every markdown page (MARKDOWN_PAGE: a file name ending .md or .markdown,
+ *    in any case) directly in the repository root and below docs/, new-feedback/, .agents/, .pi/, .beads/, examples/ and vendor/
+ *    (95 at base, 98 at b1ce8c1); src, test and qa are row C's (R-SCOPE). A1 the walk is not blind (floors, the two pages the
+ *    clause names, the export); A2 every docs mention admitted (0 mentions at base);
  *    A3 every export string value naming a family admitted, and every filing row judged; A4 no descriptor of the native
  *    registration or of the four injected ones spells a family (the registry; its page 06-capability-registry.md is read by A2).
  *  B, acceptance (b), the receipt rule. A mention in a docs file outside docs/workbench/receipts/ is admitted only when the lines
@@ -74,12 +100,25 @@
  *  M, the matchers' controls on constructed inputs, each the very function its row reads: MM1-MV1 the mention, marker, pin,
  *    window, export, citation and echo readers; MN1 the needle detector C1, C2 and records share finds each NEEDLE once; MD1
  *    A4's descriptor scan finds a family in a description and in a schema key; MQ1 the quote partition and verbatim reading on
- *    a constructed tree and filing. R, the residuals' pinned quiet rows.
+ *    a constructed tree and filing; MS1 docFiles itself, the walk rows A and B read, over a constructed tree (PAGE_TREE): it
+ *    selects the .md and .markdown pages in any case directly in the root, in name order, and below every DOC_DIRS directory
+ *    down to three directories deep (DEPTH), in walk order, and no other name, directory, symlink or root. R, the residuals'
+ *    pinned quiet rows.
+ *  DEPTH (wb-nfhy, the R739 terminal form: the depth classes this census resolves, by name). D1 a cap on the walk's
+ *    recursion, which rows A, B and C share (the landing-555 gate's X7 lists two levels of directories below a DOC_DIRS
+ *    directory, X7b one); D2 a bound on a page's path segments at the DOC_DIRS use of the selector (X7d keeps at most four):
+ *    a bound of n segments drops exactly the pages a cap of n - 2 levels drops; D3 either one written for a single DOC_DIRS
+ *    directory instead of all. PAGE_TREE's page three directories below each DOC_DIRS directory falls to every member that
+ *    caps below three levels or bounds below five segments, so MS1 reds under each; below no DOC_DIRS directory does a disk
+ *    page sit deeper than PAGE_TREE's (R13 reds when one does), so every member that hides a disk page from rows A and B also
+ *    hides a PAGE_TREE page from MS1. NOT CLAIMED: a member that caps at three or more levels, or bounds at five or more
+ *    segments, keeps every page of both trees and so reads exactly as the unbounded walk (R-DEPTH, R13).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every row's id, label and pins, every pin's
  * witness, the constants and the registered test titles are held to the out-of-file roster
  * test/fixtures/ri-decision-seed-claim-roster.json, and the records case walks this file's vitest task tree against it, so a pin
  * deleted, relabelled, swapped or removed from every literal of this file at once still reds there or against the filing (F1
- * counts the filing's clauses against the judged rows, so a judged row hollowed from both files at once reds too).
+ * counts the filing's clauses against the judged rows, so a judged row hollowed from both files at once reds too). Anything
+ * else hollowed from both files at once survives: R-COORDINATED.
  * RESIDUALS (named families, each a pinned quiet row in row R; the escape stays uncaught and the row reds when that changes):
  * R-LINE a marker and the pin anywhere on a docs mention's lines admit it, whatever they qualify; R-FIELD the same for a whole
  * bead string value; R-PROGRAM the words right after "unified" are read as the program's name, never a mention; R-VOCABULARY a
@@ -90,20 +129,43 @@
  * text, so a receipt quoting a measurement it never ran passes; R-SCOPE a code-root mention outside the three needles (a
  * work-package id in a test, the module's words spaced) is judged by no row; R-SIBLING-QUOTE a sibling owner filing's landed
  * census or roster that quotes its own bead text verbatim spells <DI> inside the quote - wb-tz4r.5's census at :3 (its quoted
- * title), :9 (its quoted acceptance (b)) and :614 (row B's label) and its roster at :222 (the same label) - and C1 admits exactly
+ * title), :9 (its quoted acceptance (b)) and :616 (row B's label; :614 until wb-cbt4's two lines above it) and its roster at :222 (the same label) - and C1 admits exactly
  * those four sites (path, line and needle, one occurrence each) only while each line is its quote and a frame (a comment marker
  * or a label key, nothing else) and the quote is verbatim in that bead's title or notes in the tracked export, so any other,
- * additional, moved or reworded site reds C1, and R10 pins the four exempt, carried and filed.
+ * additional, moved or reworded site reds C1, and R10 pins the four exempt, carried and filed. R-RENDERED rows A and B read a
+ * page's source text, never its rendering: a family whose words markdown or HTML syntax outside the join's characters splits
+ * (an asterisk strong or emphasis marker, a link's brackets, an HTML tag or comment, a character reference such as &nbsp;) is
+ * no mention, while an underscore marker is a join character, so its split reads as a mention (the edge R11 pins); a marker,
+ * the pin or a receipt
+ * citation that only an HTML comment carries still counts on the mention's lines (R-LINE reads the source, so the landing-351
+ * gate's hidden-marker plant reads admitted, caught only by A2's and B1's pinned zero counts); and a markdown page named other
+ * than .md or .markdown (.mdown, .mkd, .mkdn, .mdwn, .mdx) is read by neither row (R11 reads them through docFiles on a
+ * constructed tree); R11 pins each member quiet. R-COORDINATED a
+ * pin, a row or a constant removed or rewritten in this file and its roster at once agrees with itself in both, so only a
+ * reading outside the two files can see it: the filing, whose F1 reading counts its clauses against the judged rows A-C and
+ * compares their labels, and the real tree (C1 and R10 need the needle detector and the quote partition to find wb-tz4r.5's
+ * four sites; A1-A4, B1 and C2 read the docs, the export and the registrations). A pin of any row, or row F, M or R whole, so
+ * hollowed survives (the landing-351 gate's X2, X3, X5-X7 and Y7b, 38/38 each); a judged row so hollowed reds through F1 (Y5),
+ * and a hollow that also breaks a reader the tree exercises reds there (Y6, Y7c). R12 pins F1's reading of the real filing
+ * blind to the first and seeing the second. R-DEPTH a cap on the walk of three or more levels, or a bound of five or more
+ * segments at the DOC_DIRS use, for every DOC_DIRS directory or a single one, keeps every page of PAGE_TREE and of the disk,
+ * so MS1 and rows A and B read it exactly as the unbounded walk (DEPTH); R13 runs docFiles over PAGE_TREE seen through caps
+ * of 0 to 3 levels (a lister that refuses every deeper directory, where a capped recursion stops), pins the first three seen
+ * and the fourth unseen, the deepest page below each DOC_DIRS directory through every cap and unbounded (three below every
+ * one) and the depth comparison on two of those views, and reds when a disk page sits deeper than PAGE_TREE's deepest below
+ * its DOC_DIRS directory.
  * SCOPE: the producer facts are read at the shas named and the census is hermetic (Pi vendors no RI source); a later cut that
  * names the capability in docs brings its receipt and its markers, and one that ships an RI consumer re-cuts row C.
  *
  * Display paths added: none. Test-only: the docs, src, qa, the receipts, the export and the registrations are only read; no
  * scratch is made.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { createHash } from "node:crypto";
-import { type Dirent, readdirSync, readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+import { isDeepStrictEqual } from "node:util";
 import { describe, expect, it } from "vitest";
 import { type CapabilityDescriptor, CapabilityRegistry } from "../src/workbench/capability-registry.js";
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
@@ -112,6 +174,7 @@ import { registerFurnaceRunInspect } from "../src/workbench/providers/furnace.js
 import { registerHyperUnixFind } from "../src/workbench/providers/hyperunix.js";
 import { registerReactiveFiberRender } from "../src/workbench/providers/reactivefiber.js";
 import type { Json } from "./helpers/rf-render-fixture.js";
+import { isTriageArchivePath } from "./helpers/triage-archive.js";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
@@ -189,6 +252,9 @@ const MEASUREMENT = /`[^`\n]+`|\bcmd_[0-9a-f]{12}\b/;
 
 /** The docs the rows A and B walk: the root's own markdown files and every markdown file below these directories. */
 const DOC_DIRS: readonly string[] = ["docs", "new-feedback", ".agents", ".pi", ".beads", "examples", "vendor"];
+/** A markdown page, the files rows A and B read below DOC_ROOTS: a name ending .md or .markdown, in any case (R-RENDERED names the rest). */
+const MARKDOWN_PAGE = /\.(?:md|markdown)$/i;
+const isMarkdownPage = (path: string): boolean => MARKDOWN_PAGE.test(path);
 /** The two pages acceptance (a) names, each with a token the walk must read in it. */
 const DOC_ANCHORS: readonly (readonly [string, string])[] = [
   ["docs/workbench/feature-matrix.md", "reactivefiber.render.preview"],
@@ -215,7 +281,7 @@ const ECHO = new RegExp(
 );
 const RESIDUALS: readonly string[] = [
   "R-LINE", "R-FIELD", "R-PROGRAM", "R-VOCABULARY", "R-INTERRUPTED", "R-CASE", "R-COMPOSED", "R-RECEIPT-TEXT", "R-SCOPE",
-  "R-SIBLING-QUOTE",
+  "R-SIBLING-QUOTE", "R-RENDERED", "R-COORDINATED", "R-DEPTH",
 ];
 /** The bead whose filing the R-SIBLING-QUOTE sites quote. */
 const QUOTE_SOURCE = "wb-tz4r.5";
@@ -253,7 +319,7 @@ const QUOTED_SITES: readonly QuotedSite[] = [
   },
   {
     path: "test/workbench-ri-observation-authority-census.test.ts",
-    line: 614,
+    line: 616,
     placeholder: "<DI>",
     quote: "(b) adoption: every observation source and effect reaching the <DI> is enumerated in a Pi-owned authorization record before the call, an unlisted source is refused with a typed reason",
     filed: "notes",
@@ -291,13 +357,13 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "M",
-    label: "the mention, marker, pin, window, export, receipt-citation, echo, needle, descriptor and quote matchers judge their pinned inputs in order",
-    pins: ["MM1", "MM2", "MM3", "MM4", "MK1", "MP1", "MW1", "MF1", "MR1", "MV1", "MN1", "MD1", "MQ1"],
+    label: "the mention, marker, pin, window, export, receipt-citation, echo, needle, descriptor, quote and page matchers judge their pinned inputs in order",
+    pins: ["MM1", "MM2", "MM3", "MM4", "MK1", "MP1", "MW1", "MF1", "MR1", "MV1", "MN1", "MD1", "MQ1", "MS1"],
   },
   {
     id: "R",
-    label: "the named residuals R-LINE, R-FIELD, R-PROGRAM, R-VOCABULARY, R-INTERRUPTED, R-CASE, R-COMPOSED, R-RECEIPT-TEXT, R-SCOPE and R-SIBLING-QUOTE stay pinned quiet",
-    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10"],
+    label: "the named residuals R-LINE, R-FIELD, R-PROGRAM, R-VOCABULARY, R-INTERRUPTED, R-CASE, R-COMPOSED, R-RECEIPT-TEXT, R-SCOPE, R-SIBLING-QUOTE, R-RENDERED, R-COORDINATED and R-DEPTH stay pinned quiet",
+    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13"],
   },
 ];
 
@@ -371,6 +437,7 @@ function constants(): Json {
     receiptCite: RECEIPT_CITE.source,
     measurement: MEASUREMENT.source,
     docDirs: [...DOC_DIRS],
+    markdownPage: `/${MARKDOWN_PAGE.source}/${MARKDOWN_PAGE.flags}`,
     docAnchors: DOC_ANCHORS.map(([path, token]) => `${path}:${token}`),
     floors: { docs: DOCS_FLOOR, receipts: RECEIPTS_FLOOR, exportRows: EXPORT_FLOOR, ...FLOORS, echoReceipts: ECHO_RECEIPTS_FLOOR },
     filingRows: [...FILING_ROWS],
@@ -392,20 +459,40 @@ function textOf(path: string): string {
     return "";
   }
 }
-/** Every regular file below a directory, in name order; symlinks are listed apart and never followed. */
-function walk(directory: string, files: string[], symlinks: string[]): void {
-  let entries: Dirent[];
+/** A directory entry as the walks read it: fs.Dirent satisfies it, and so does a constructed tree's entry. */
+interface TreeEntry {
+  readonly name: string;
+  isFile(): boolean;
+  isDirectory(): boolean;
+  isSymbolicLink(): boolean;
+}
+/** A tree the walks read: its root, a lister that throws for a directory it cannot read (as readdirSync does) and a page reader. */
+interface FileTree {
+  readonly root: string;
+  readonly list: (directory: string) => readonly TreeEntry[];
+  readonly read: (path: string) => string;
+}
+/** The repository on disk, the tree rows A, B and C read. */
+const DISK: FileTree = {
+  root: REPO,
+  list: directory => readdirSync(directory, { withFileTypes: true }),
+  read: path => textOf(join(REPO, path)),
+};
+/** Every regular file below a directory of a tree, in name order; symlinks are listed apart and never followed. */
+function walk(directory: string, files: string[], symlinks: string[], from: FileTree): void {
+  let entries: TreeEntry[];
   try {
-    entries = readdirSync(directory, { withFileTypes: true });
+    entries = [...from.list(directory)];
   } catch {
     return;
   }
   entries.sort((left, right) => (left.name < right.name ? -1 : left.name > right.name ? 1 : 0));
   for (const entry of entries) {
     const path = join(directory, entry.name);
-    if (entry.isSymbolicLink()) symlinks.push(posix(relative(REPO, path)));
-    else if (entry.isDirectory()) walk(path, files, symlinks);
-    else if (entry.isFile()) files.push(posix(relative(REPO, path)));
+    if (entry.isSymbolicLink()) symlinks.push(posix(relative(from.root, path)));
+    else if (entry.isDirectory()) {
+      if (!isTriageArchivePath(posix(relative(from.root, path)))) walk(path, files, symlinks, from);
+    } else if (entry.isFile()) files.push(posix(relative(from.root, path)));
   }
 }
 
@@ -413,22 +500,68 @@ interface SourceFile {
   readonly path: string;
   readonly text: string;
 }
-let docsCache: SourceFile[] | undefined;
-/** DOC_ROOTS: the root's own markdown files, then every markdown file below DOC_DIRS. */
-function docFiles(): SourceFile[] {
-  if (docsCache === undefined) {
-    const paths = readdirSync(REPO, { withFileTypes: true })
-      .filter(entry => entry.isFile() && entry.name.endsWith(".md"))
-      .map(entry => entry.name)
-      .sort();
-    for (const directory of DOC_DIRS) {
-      const files: string[] = [];
-      walk(join(REPO, directory), files, []);
-      paths.push(...files.filter(file => file.endsWith(".md")));
-    }
-    docsCache = paths.map(path => ({ path, text: textOf(join(REPO, path)) }));
+const docsCache = new WeakMap<FileTree, SourceFile[]>();
+/**
+ * DOC_ROOTS of a tree with each page's text: the root's own markdown files in name order, then every markdown file below
+ * DOC_DIRS in walk order. Rows A and B read the disk (cached per tree); MS1 and R11 run this very function over constructed
+ * trees, so both of its page-selector uses are pinned where rows A and B read them.
+ */
+function docFiles(from: FileTree = DISK): SourceFile[] {
+  const cached = docsCache.get(from);
+  if (cached !== undefined) return cached;
+  const paths = from
+    .list(from.root)
+    .filter(entry => entry.isFile() && isMarkdownPage(entry.name))
+    .map(entry => entry.name)
+    .sort();
+  for (const directory of DOC_DIRS) {
+    const files: string[] = [];
+    walk(join(from.root, directory), files, [], from);
+    paths.push(...files.filter(isMarkdownPage));
   }
-  return docsCache;
+  const pages = paths.map(path => ({ path, text: from.read(path) }));
+  docsCache.set(from, pages);
+  return pages;
+}
+type EntryKind = "file" | "directory" | "symlink";
+const treeEntry = (name: string, kind: EntryKind): TreeEntry => ({
+  name,
+  isFile: () => kind === "file",
+  isDirectory: () => kind === "directory",
+  isSymbolicLink: () => kind === "symlink",
+});
+/**
+ * A constructed tree, never on disk (MS1, R11): one line per entry in listing order, a root-relative path naming a file, with a
+ * trailing "/" a directory and with " -> <target>" a symlink (the walks never follow one); each parent directory is listed where
+ * it first appears, and every page reads as empty text.
+ */
+function constructedTree(lines: readonly string[]): FileTree {
+  const root = join(sep, "constructed-tree");
+  const listing = new Map<string, TreeEntry[]>([[root, []]]);
+  for (const line of lines) {
+    const arrow = line.indexOf(" -> ");
+    const spec = arrow >= 0 ? line.slice(0, arrow) : line;
+    const kind: EntryKind = arrow >= 0 ? "symlink" : spec.endsWith("/") ? "directory" : "file";
+    const names = spec.split("/").filter(name => name !== "");
+    let parent = root;
+    for (const [index, name] of names.entries()) {
+      const entryKind: EntryKind = index === names.length - 1 ? kind : "directory";
+      const entries = listing.get(parent) ?? [];
+      if (!entries.some(entry => entry.name === name)) entries.push(treeEntry(name, entryKind));
+      listing.set(parent, entries);
+      parent = join(parent, name);
+      if (entryKind === "directory" && !listing.has(parent)) listing.set(parent, []);
+    }
+  }
+  return {
+    root,
+    list: directory => {
+      const entries = listing.get(directory);
+      if (entries === undefined) throw new Error(`the constructed tree has no directory ${directory}`);
+      return entries;
+    },
+    read: () => "",
+  };
 }
 const isReceipt = (path: string): boolean => path.startsWith(`${RECEIPTS}/`);
 /** The real receipts by file name. */
@@ -545,7 +678,7 @@ function parseExport(text: string): BeadExport {
 }
 let exportCache: BeadExport | undefined;
 const beadExport = (): BeadExport => {
-  exportCache ??= parseExport(textOf(join(REPO, BEAD_EXPORT)));
+  exportCache ??= parseExport(rehydrateTrackerExport(textOf(join(REPO, BEAD_EXPORT)), join(REPO, BEAD_EXPORT)));
   return exportCache;
 };
 /** Row A's reading of an export: the rows naming a family and one finding per string value naming one without both. */
@@ -563,7 +696,7 @@ function exportFindings(data: BeadExport): { judged: Set<string>; findings: stri
   return { judged, findings };
 }
 function beadRow(id: string): { title: string; notes: string } {
-  const raw = textOf(join(REPO, BEAD_EXPORT))
+  const raw = rehydrateTrackerExport(textOf(join(REPO, BEAD_EXPORT)), join(REPO, BEAD_EXPORT))
     .split("\n")
     .filter(line => line.trim() !== "")
     .map((line): unknown => JSON.parse(line))
@@ -626,7 +759,7 @@ function tree(): TreeReading {
     const walked = new Set<string>();
     for (const root of SCAN_ROOTS) {
       const below: string[] = [];
-      walk(join(REPO, root), below, symlinks);
+      walk(join(REPO, root), below, symlinks, DISK);
       files.set(root, below.length);
       for (const path of below) {
         walked.add(path);
@@ -680,6 +813,32 @@ function quoteReading(sites: readonly string[], pinned: readonly QuoteSite[], li
     verbatim: verdicts.map(verdict => `${verdict.key}: ${verdict.carried ? "carried" : "not carried"}, ${verdict.filed}`),
   };
 }
+/**
+ * F1's reading of a filing against a row set (R12 reads it too): the judged rows (a label opening with a clause mark), the
+ * filing's Acceptance clause count, and the facts F1 pins - the clause marks, the judged rows whose labels equal their clauses
+ * with the placeholders composed back, the grep, the quote, the citation, the title tail and the two pages.
+ */
+function filingReading(rows: readonly Row[], filing: Filing) {
+  const acceptance = /^Acceptance: (.*)$/m.exec(filing.notes)?.[1] ?? "";
+  const clauses = acceptance.split(/;\s+(?=\([a-z]\) )/).map(clause => clause.replace(/\.$/, ""));
+  const judged = rows.filter(entry => /^\([a-z]\) /.test(entry.label));
+  const grep = /^\(c\) pin: grep (.+?) over Pi /.exec(clauses[2] ?? "")?.[1]?.split("|") ?? [];
+  const quoted = /^'(.+)' (\S+)\.$/m.exec(filing.notes);
+  return {
+    judged: judged.map(entry => entry.id),
+    clauses: clauses.length,
+    reading: {
+      clauses: clauses.map(clause => clause.slice(0, 4)),
+      labelsEqual: judged.filter((entry, index) => clauses[index] === expand(entry.label)).map(entry => entry.id),
+      grepIsNeedles: grep.length === NEEDLES.length && grep.every((alternative, index) => alternative === NEEDLES[index]),
+      quote: quoted?.[1] === QUOTE,
+      citation: quoted?.[2] === CITATION,
+      titleCites: filing.title.endsWith(`pin ${CITATION}`),
+      pagesNamed: DOC_ANCHORS.map(([path]) => acceptance.includes(path.slice(path.lastIndexOf("/") + 1))),
+    },
+  };
+}
+
 let quoteCache: QuoteReading | undefined;
 /** The real reading: C1's needle sites against QUOTED_SITES and the quoted bead's row in the tracked export. */
 function treeQuotes(): QuoteReading {
@@ -707,7 +866,7 @@ function echoesOf(text: string): Echo[] {
   });
 }
 
-type CaseKind = "mention" | "export" | "receipt" | "cite" | "needle" | "echo";
+type CaseKind = "mention" | "export" | "receipt" | "cite" | "needle" | "echo" | "page";
 interface Case {
   readonly pin: string;
   readonly kind: CaseKind;
@@ -728,6 +887,46 @@ const MEASURING_RECEIPT = [
   `- ${caps(DI)} stays proposed beyond that seed.`,
 ].join("\n");
 const exportLine = (row: Record<string, string>): string => JSON.stringify(row);
+/**
+ * MS1's constructed tree (constructedTree), one entry per line in listing order: pages and non-pages directly in the root,
+ * a root directory and a root symlink named like pages, a page at some depth below every DOC_DIRS directory (two docs
+ * entries listed out of name order, nested pages and a symlink among them, and below each directory a page three
+ * directories deep, DEPTH), and two code roots outside DOC_DIRS that hold pages. docFiles reads it as rows A and B read the
+ * disk, so both page-selector uses, the root's name order, the walk's order, depth and entry kinds and the DOC_DIRS set
+ * each decide MS1's outcome; R13 reads it through capped views.
+ */
+const PAGE_TREE: readonly string[] = [
+  "README.md",
+  "AGENTS.MD",
+  "NOTES.MARKDOWN",
+  "draft.mdx",
+  "page.md.txt",
+  "notes.md/",
+  "index.md -> README.md",
+  "docs/b.Markdown",
+  "docs/a.markdown",
+  "docs/c.md.txt",
+  "docs/d.txt",
+  "docs/e.mdown",
+  "docs/f.mdx",
+  "docs/workbench/g.MD",
+  "docs/workbench/x/y/p.md",
+  "docs/link.md -> a.markdown",
+  "new-feedback/h.md",
+  "new-feedback/x/y/z/q.md",
+  ".agents/i.md",
+  ".agents/x/y/z/r.md",
+  ".pi/j.Md",
+  ".pi/x/y/z/s.md",
+  ".beads/k.md",
+  ".beads/x/y/z/t.md",
+  "examples/deep/l.markdown",
+  "examples/deep/y/z/u.md",
+  "vendor/m.Markdown",
+  "vendor/x/y/z/v.md",
+  "src/n.md",
+  "qa/o.MARKDOWN",
+];
 /** M judges the matchers on constructed texts, R the residuals' quiet rows, B2-B7 constructed docs lines. */
 const CASES: readonly Case[] = [
   { pin: "B2", kind: "receipt", texts: [`${caps(DI)} stays proposed at ${RI_PIN}.`], outcome: ["doc.md:1 M1: receipt-absent"] },
@@ -829,6 +1028,17 @@ const CASES: readonly Case[] = [
     outcome: ["1:0.2.60.20261018120223", "2:0.2.55", "3:0.1.17"],
   },
   { pin: "MN1", kind: "needle", texts: [[DE, NDB, DI].join("\n")], outcome: ["x.ts:1 <DE>", "x.ts:2 <NDB>", "x.ts:3 <DI>", "mentions:M1,M2,M3"] },
+  {
+    pin: "MS1",
+    kind: "page",
+    texts: [PAGE_TREE.join("\n")],
+    outcome: [
+      "AGENTS.MD", "NOTES.MARKDOWN", "README.md", "docs/a.markdown", "docs/b.Markdown", "docs/workbench/g.MD",
+      "docs/workbench/x/y/p.md", "new-feedback/h.md", "new-feedback/x/y/z/q.md", ".agents/i.md", ".agents/x/y/z/r.md", ".pi/j.Md",
+      ".pi/x/y/z/s.md", ".beads/k.md", ".beads/x/y/z/t.md", "examples/deep/l.markdown", "examples/deep/y/z/u.md",
+      "vendor/m.Markdown", "vendor/x/y/z/v.md",
+    ],
+  },
   { pin: "R1", kind: "mention", texts: [`${caps(DI)} serves Pi today; the seed only preflight at ${RI_PIN} is older.`], outcome: ["M1:1:admitted"] },
   {
     pin: "R2",
@@ -872,6 +1082,7 @@ function outcomeOf(kind: CaseKind, texts: readonly string[]): string[] {
     return receiptFindings([{ path: "doc.md", text }], receipts);
   }
   if (kind === "cite") return citedReceipts(text);
+  if (kind === "page") return docFiles(constructedTree(text.split("\n"))).map(file => file.path);
   if (kind === "needle") {
     const sites = needleSites("x.ts", text);
     const mentions = mentionsOf(text).map(mention => mention.family);
@@ -908,6 +1119,57 @@ const QUOTE_CONTROL_PINNED: readonly QuoteSite[] = [
   { path: "q.ts", line: 4, placeholder: "<DI>", quote: "<DI> serves Pi" },
   { path: "p.ts", line: 1, placeholder: "<DI>", quote: "an unfiled <DI> quote" },
 ];
+
+/**
+ * R-RENDERED's split members (header, RESIDUALS), one per line: strong, emphasis, link, character-reference, tag and comment
+ * splits; the last line is the residual's edge, an underscore emphasis split, which the join reads as a mention.
+ */
+const RENDERED_SPLITS = [
+  `**${caps(WORD.decision)}** ${WORD.inference} is runnable in Pi today.`,
+  `*${WORD.decision}* ${WORD.inference} is supported in Pi today.`,
+  `${caps(WORD.decision)} [${WORD.inference}](x.md) is runnable in Pi today.`,
+  `${caps(WORD.decision)}&nbsp;${WORD.inference} is runnable in Pi today.`,
+  `<b>${caps(WORD.decision)}</b> ${WORD.inference} is runnable in Pi today.`,
+  `${caps(WORD.decision)}<!-- -->${WORD.inference} is runnable in Pi today.`,
+  `_${WORD.decision}_ ${WORD.inference} is runnable in Pi today.`,
+].join("\n");
+/** R-RENDERED's hidden members: a docs line whose marker and pin, then also its receipt citation, only an HTML comment carries. */
+const RENDERED_HIDDEN = `${caps(DI)} runs in Pi today. <!-- proposed at ${RI_PIN} -->`;
+const RENDERED_HIDDEN_CITE = `${caps(DI)} runs in Pi today. <!-- proposed at ${RI_PIN}; docs/workbench/receipts/wb-x.md -->`;
+/** R-RENDERED's page member: markdown pages under other extensions, which MARKDOWN_PAGE does not select. */
+const UNREAD_PAGES: readonly string[] = ["docs/a.mdown", "docs/b.mkd", "docs/c.mkdn", "docs/d.mdwn", "docs/e.mdx"];
+/** R-COORDINATED's hollows (header, RESIDUALS): what each leaves of the rows when it is applied to this file and the roster at once. */
+const COORDINATED_HOLLOWS: readonly (readonly [string, (rows: readonly Row[]) => readonly Row[]])[] = [
+  ["pin B6 of row B", rows => rows.map(row => (row.id === "B" ? { ...row, pins: row.pins.filter(pin => pin !== "B6") } : row))],
+  ["row F", rows => rows.filter(row => row.id !== "F")],
+  ["row M", rows => rows.filter(row => row.id !== "M")],
+  ["row R", rows => rows.filter(row => row.id !== "R")],
+  ["row C", rows => rows.filter(row => row.id !== "C")],
+];
+/** R-DEPTH's caps (header, DEPTH): a capped walk lists directories at most this many levels below a DOC_DIRS directory. */
+const DEPTH_CAPS: readonly number[] = [0, 1, 2, 3];
+/** The deepest page below a DOC_DIRS directory: the most directories between it and one of the pages (-1 when none). */
+const deepestBelow = (paths: readonly string[], directory: string): number =>
+  Math.max(-1, ...paths.filter(path => path.startsWith(`${directory}/`)).map(path => path.split("/").length - 2));
+/** The DOC_DIRS directories below which one page list reaches deeper than another (R13's disk guard and its control). */
+const deeperBelow = (paths: readonly string[], than: readonly string[]): string[] =>
+  DOC_DIRS.filter(directory => deepestBelow(paths, directory) > deepestBelow(than, directory));
+/**
+ * R13's capped view of a tree (header, DEPTH, D1): its lister refuses every directory more than `levels` directories below a
+ * DOC_DIRS directory, so the walk, which reads a refusal as an unreadable directory, stops where a capped recursion stops.
+ */
+function capped(from: FileTree, levels: number): FileTree {
+  return {
+    root: from.root,
+    list: directory => {
+      if (directory !== from.root && relative(from.root, directory).split(sep).length - 1 > levels) {
+        throw new Error(`capped at ${levels} levels: ${directory}`);
+      }
+      return from.list(directory);
+    },
+    read: from.read,
+  };
+}
 
 /** The pins whose case reached its end, in the order they ran. */
 const REACHED: string[] = [];
@@ -1014,26 +1276,11 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     return done("C2", reading);
   },
   F1: async () => {
-    const row = beadRow(BEAD);
-    const acceptance = /^Acceptance: (.*)$/m.exec(row.notes)?.[1] ?? "";
-    const clauses = acceptance.split(/;\s+(?=\([a-z]\) )/).map(clause => clause.replace(/\.$/, ""));
-    const judged = ROWS.filter(entry => /^\([a-z]\) /.test(entry.label));
-    expect(judged.length, "one judged row per clause of the filing's Acceptance, counted from the filing").toBe(clauses.length);
-    const labelsEqual = judged.filter((entry, index) => clauses[index] === expand(entry.label)).map(entry => entry.id);
-    const grep = /^\(c\) pin: grep (.+?) over Pi /.exec(clauses[2] ?? "")?.[1]?.split("|") ?? [];
-    const quoted = /^'(.+)' (\S+)\.$/m.exec(row.notes);
-    const reading = {
-      clauses: clauses.map(clause => clause.slice(0, 4)),
-      labelsEqual,
-      grepIsNeedles: grep.length === NEEDLES.length && grep.every((alternative, index) => alternative === NEEDLES[index]),
-      quote: quoted?.[1] === QUOTE,
-      citation: quoted?.[2] === CITATION,
-      titleCites: row.title.endsWith(`pin ${CITATION}`),
-      pagesNamed: DOC_ANCHORS.map(([path]) => acceptance.includes(path.slice(path.lastIndexOf("/") + 1))),
-    };
+    const { judged, clauses, reading } = filingReading(ROWS, beadRow(BEAD));
+    expect(judged.length, "one judged row per clause of the filing's Acceptance, counted from the filing").toBe(clauses);
     expect(reading).toStrictEqual({
       clauses: ["(a) ", "(b) ", "(c) "],
-      labelsEqual: judged.map(entry => entry.id),
+      labelsEqual: [...judged],
       grepIsNeedles: true,
       quote: true,
       citation: true,
@@ -1076,6 +1323,53 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     });
     return done("R10", reading);
   },
+  R11: async () => {
+    const reading = {
+      splits: outcomeOf("mention", [RENDERED_SPLITS]),
+      hidden: outcomeOf("mention", [RENDERED_HIDDEN]),
+      hiddenCite: outcomeOf("receipt", [RENDERED_HIDDEN_CITE, MEASURING_RECEIPT]),
+      pages: outcomeOf("page", [UNREAD_PAGES.join("\n")]),
+    };
+    expect(reading, "R-RENDERED: rows A and B read the source text, so an asterisk, link, reference, tag or comment split is no mention (an underscore split is), hidden text still counts and other extensions stay unread").toStrictEqual({
+      splits: ["M1:7:unmarked"],
+      hidden: ["M1:1:admitted"],
+      hiddenCite: [],
+      pages: [],
+    });
+    return done("R11", { digest: digestOf([RENDERED_SPLITS, RENDERED_HIDDEN, RENDERED_HIDDEN_CITE, ...UNREAD_PAGES]), ...reading });
+  },
+  R12: async () => {
+    const filing = beadRow(BEAD);
+    const landed = filingReading(ROWS, filing);
+    const outcome = COORDINATED_HOLLOWS.map(([name, hollow]) => `${name}: ${isDeepStrictEqual(filingReading(hollow(ROWS), filing), landed) ? "unseen" : "seen"}`);
+    expect(outcome, "R-COORDINATED: the filing reads the judged rows, never a pin or the rows F, M and R").toStrictEqual([
+      "pin B6 of row B: unseen",
+      "row F: unseen",
+      "row M: unseen",
+      "row R: unseen",
+      "row C: seen",
+    ]);
+    return done("R12", { outcome });
+  },
+  R13: async () => {
+    const pageTree = constructedTree(PAGE_TREE);
+    const unbounded = docFiles(pageTree).map(file => file.path);
+    const views = DEPTH_CAPS.map(levels => ({ levels, read: docFiles(capped(pageTree, levels)).map(file => file.path) }));
+    const depths = (paths: readonly string[]): string => DOC_DIRS.map(directory => deepestBelow(paths, directory)).join(" ");
+    const reading = {
+      caps: views.map(view => `cap ${view.levels}: ${isDeepStrictEqual(view.read, unbounded) ? "unseen" : "seen"}`),
+      deepest: [...views.map(view => `cap ${view.levels}: ${depths(view.read)}`), `unbounded: ${depths(unbounded)}`],
+      deeperCap1ThanCap0: deeperBelow(views[1]?.read ?? [], views[0]?.read ?? []),
+      deeperOnDisk: deeperBelow(docFiles().map(file => file.path), unbounded),
+    };
+    expect(reading, "R-DEPTH: a cap is seen only while it drops a PAGE_TREE page, PAGE_TREE reaches three directories below every DOC_DIRS directory and no disk page sits deeper").toStrictEqual({
+      caps: ["cap 0: seen", "cap 1: seen", "cap 2: seen", "cap 3: unseen"],
+      deepest: ["cap 0: 0 0 0 0 0 -1 0", "cap 1: 1 0 0 0 0 1 0", "cap 2: 1 0 0 0 0 1 0", "cap 3: 3 3 3 3 3 3 3", "unbounded: 3 3 3 3 3 3 3"],
+      deeperCap1ThanCap0: ["docs", "examples"],
+      deeperOnDisk: [],
+    });
+    return done("R13", reading);
+  },
   ...Object.fromEntries(
     CASES.map(entry => [
       entry.pin,
@@ -1093,7 +1387,7 @@ const titleOf = (row: Row): string => `${row.id} ${row.label}`;
 
 describe("wb-tz4r.8 ReactiveInference seed-only claim census (program-triage-2026-10-22 R8, standing posture)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the constants agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:7", "C:2", "F:1", "M:13", "R:10"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:7", "C:2", "F:1", "M:14", "R:13"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
@@ -1144,3 +1438,5 @@ describe("wb-tz4r.8 ReactiveInference seed-only claim census (program-triage-202
     expect([...suites, ...titles].flatMap(name => needleSites("title", name)), "registered titles spelling a needle").toEqual([]);
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

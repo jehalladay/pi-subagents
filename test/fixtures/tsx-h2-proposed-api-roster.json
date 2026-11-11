@@ -158,7 +158,8 @@
    "R-COMPOSED",
    "R-COMMENT",
    "R-OUTSIDE",
-   "R-HOLLOWED"
+   "R-HOLLOWED",
+   "R-INDIRECT"
   ],
   "skipModes": [
    "skip",
@@ -192,13 +193,29 @@
    "only",
    "fails"
   ],
+  "caseRoots": [
+   "it",
+   "test"
+  ],
+  "suiteRoots": [
+   "describe",
+   "suite"
+  ],
+  "readModes": [
+   "argument unknown",
+   "no function",
+   "table unknown",
+   "empty table",
+   "placement unknown",
+   "context skip"
+  ],
   "plants": [
    "docs/zz-wb-4n55-plant.md:49829697f77f8102",
    "docs/workbench/zz-wb-4n55-plant.md:b4510a2b678457dd",
    "src/zz-wb-4n55-plant.ts:93264b3ccf569cf0",
    "qa/zz-wb-4n55-plant.mjs:24f03202cc75e8b0",
    "src/zz-wb-4n55-plant.json:f46a570484143858",
-   "test/zz-wb-4n55-registration-plant.test.ts:517b55b05cd4dc03",
+   "test/zz-wb-4n55-registration-plant.test.ts:66799c1ac0303bbb",
    "planted.descriptor:f5a5b6ae19b2b0c6"
   ]
  },
@@ -1091,11 +1108,43 @@
         "plant optionsFalse",
         "plant optionsTimeout",
         "plant commented",
-        "plant hollowedBody"
+        "plant hollowedBody",
+        "plant suiteSkipWrapper",
+        "plant constTitleWrapper",
+        "plant optionsReference",
+        "plant optionsAsConst",
+        "plant optionsParenthesized",
+        "plant contextElementSkip",
+        "plant contextBodyDestructured",
+        "plant emptyEach",
+        "plant conditionalCase",
+        "plant emptyDescribeEach",
+        "plant describeSwitch",
+        "plant elementHead",
+        "plant argumentCall",
+        "plant optionsLet",
+        "plant optionsWritten",
+        "plant optionsShadowed",
+        "plant noFunction",
+        "plant wrappedHead",
+        "plant tableUnknown",
+        "plant emptyTableReference",
+        "plant placementAfterReturn",
+        "plant suitePlain",
+        "plant constTitlePlain",
+        "plant optionsReferenceTimeout",
+        "plant optionsFalseAsConst",
+        "plant functionReference",
+        "plant timeoutReference",
+        "plant tableReference",
+        "plant placedAfterDeclarations",
+        "plant hookSkip",
+        "plant contextHandoff",
+        "plant computedMember"
        ],
        "skipped": [
         "test/zz-wb-4n55-registration-plant.test.ts: plant caseSkip: skip",
-        "test/zz-wb-4n55-registration-plant.test.ts: plant caseTodo: todo",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant caseTodo: todo, no function",
         "test/zz-wb-4n55-registration-plant.test.ts: plant caseOnly: only",
         "test/zz-wb-4n55-registration-plant.test.ts: plant caseFails: fails",
         "test/zz-wb-4n55-registration-plant.test.ts: plant caseSkipIf: skipIf",
@@ -1117,7 +1166,28 @@
         "test/zz-wb-4n55-registration-plant.test.ts: plant describeOptions: options skip",
         "test/zz-wb-4n55-registration-plant.test.ts: plant outerDescribe: skip",
         "test/zz-wb-4n55-registration-plant.test.ts: plant contextSkip: context skip",
-        "test/zz-wb-4n55-registration-plant.test.ts: plant destructuredSkip: context skip"
+        "test/zz-wb-4n55-registration-plant.test.ts: plant destructuredSkip: context skip",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant suiteSkipWrapper: skip",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant constTitleWrapper: skip",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant optionsReference: options skip",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant optionsAsConst: options skip",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant optionsParenthesized: options skip",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant contextElementSkip: context skip",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant contextBodyDestructured: context skip",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant emptyEach: empty table",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant conditionalCase: placement unknown",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant emptyDescribeEach: empty table",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant describeSwitch: skip",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant elementHead: skip",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant argumentCall: argument unknown",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant optionsLet: argument unknown",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant optionsWritten: argument unknown",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant optionsShadowed: argument unknown",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant noFunction: no function",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant wrappedHead: skip",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant tableUnknown: table unknown",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant emptyTableReference: empty table",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant placementAfterReturn: placement unknown"
        ]
       }
      }

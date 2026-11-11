@@ -58,6 +58,25 @@
    "^\\s*(?:nowhere|nothing|none|not|never|no)\\b"
   ],
   "clauseSplit": "(?<=[.!?])\\s+|;",
+  "carrierView": {
+   "unshown": [
+    "html",
+    "image",
+    "def",
+    "del",
+    "space",
+    "hr"
+   ],
+   "element": "^<\\/?[A-Za-z]",
+   "footnote": [
+    "\\[\\^[^\\]\\n]+\\]",
+    "^\\s*(?:>\\s*)*\\[\\^[^\\]\\n]+\\]:"
+   ],
+   "footnoteFlags": [
+    "g",
+    ""
+   ]
+  },
   "units": [
    "^\\s*(?:>\\s*)*$",
    "^\\s*(?:>\\s*)*(?:[-*+]|\\d{1,9}[.)])\\s+",
@@ -169,12 +188,28 @@
    ],
    "R-DOCUMENT-SCOPE": [
     "Q11"
+   ],
+   "R-DEFINITION-HIDES-NEGATION": [
+    "Q12"
+   ]
+  },
+  "residualAnchor": {
+   "doc": "docs/workbench/14-qa-and-benchmarks.md",
+   "title": "14 — Test strategy, conformance suite, benchmark and adversarial controls",
+   "heading": "MW workflow-composition citation-status census residuals",
+   "columns": [
+    "Quiet row",
+    "Residual family",
+    "Exemplar",
+    "Clear form",
+    "Clear form reads"
    ]
   }
  },
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster and the cases agree",
   "the outside anchors: the bead's own row binds the rows, the pin quotes, the scopes, the citation, the carriers, the subjects and the existence words; wb-klr7's row and the producer block carry clause (c) and the status",
+  "the residual anchor: docs/14's residual table names exactly the residual families and their quiet rows, each row's exemplar is its quiet row's probe's, and its clear form reads what the table says",
   "A1",
   "A2",
   "A3",
@@ -203,6 +238,7 @@
   "Q9",
   "Q10",
   "Q11",
+  "Q12",
   "the registered tests and the reached pins equal the roster, in order and both ways"
  ],
  "rows": [
@@ -439,6 +475,314 @@
        {
         "id": "one-of-two",
         "causes": []
+       },
+       {
+        "id": "comment",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "link-destination",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "link-title",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "image-alt",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "definition",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "element",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "struck",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-punct",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-second",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-second-punct",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-space-before",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-punct-space-before",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-after-period",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-punct-after-period",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-word-after",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-punct-word-after",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-space-after",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-punct-space-after",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-second-space-after",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-second-punct-space-after",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-quoted",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-unspaced-quote",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-nested-quote",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-nested-unspaced",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-nested-first-spaced",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-nested-second-spaced",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-indented",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-deep-indent",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-tab-indent",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-long-label",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-triple-quote",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-quote-two-spaces",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-quote-tab",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-indented-quote",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-mixed-indent",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-punct-label",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-unspaced-colon",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-emphasis",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-second",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-quoted-second",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-cr-led",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-colon-only",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-not-definition-mid-line",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-not-definition-no-colon",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-not-definition-line-separator",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "hidden-citation",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "shown-link-text",
+        "causes": []
+       },
+       {
+        "id": "shown-code-span",
+        "causes": []
+       },
+       {
+        "id": "shown-escape",
+        "causes": []
+       },
+       {
+        "id": "shown-emphasis",
+        "causes": []
+       },
+       {
+        "id": "definition-cannot-interrupt",
+        "causes": []
        }
       ]
      }
@@ -446,6 +790,7 @@
     {
      "id": "A6",
      "witness": {
+      "sentence": "As of 2026-10-18 (19ca8d4) these are interface/theorem research requirements, not a claim that source code was modified or native workflows were run.",
       "sentenceWords": 22,
       "controls": [
        {
@@ -480,6 +825,30 @@
        },
        {
         "id": "readme3-line",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "line-reference",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "path-reference",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "linked-reference",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "comment",
         "causes": [
          "unqualified"
         ]
@@ -590,6 +959,46 @@
         "causes": [
          "unqualified"
         ]
+       },
+       {
+        "id": "comment-across-blocks",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "quoted-comment-across-blocks",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "html-block",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "reference-image",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "list-paragraph",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "fence-info-string",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "code-block",
+        "causes": []
        }
       ]
      }
@@ -656,6 +1065,7 @@
     {
      "id": "B2",
      "witness": {
+      "subject": "CACWorkflowCompositionV0",
       "controls": [
        {
         "id": "qualified-shipped-type",
@@ -915,60 +1325,88 @@
     {
      "id": "Q2",
      "witness": {
+      "path": "docs/workbench/receipts/wb-kku9.1.md",
+      "text": "# wb-kku9.1: [MW-CAC-WORKFLOW-COMPOSITION-R1] No Pi surface shall present an observation as source evidence\n",
       "causes": []
      }
     },
     {
      "id": "Q3",
      "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "Pi reads the MW 2026-10-18 composition deposit and its CAC assurance program.",
       "causes": []
      }
     },
     {
      "id": "Q4",
      "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "cac-workflow-composition-2026-10-18 is not, as of today, design-only.",
       "causes": []
      }
     },
     {
      "id": "Q5",
      "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "cac-workflow-composition-2026-10-18 (design-only): Pi hands CACWorkflowCompositionV0 to the bridge checker, which vets each step.",
       "causes": []
      }
     },
     {
      "id": "Q6",
      "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "If anything, CACWorkflowCompositionV0 shipped (design-only).",
       "causes": []
      }
     },
     {
      "id": "Q7",
      "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "CACWorkflowCompositionV0 is design-only. It shipped anyway.",
       "causes": []
      }
     },
     {
      "id": "Q8",
      "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "cac-workflow-composition-2026-10-18 (design-only): the checker for the bridge ships, and Pi's MechanicalWorkflows integration is live.",
       "causes": []
      }
     },
     {
      "id": "Q9",
      "witness": {
+      "path": "src/x.ts",
+      "text": "export const A = \"CACWorkflow\" + \"CompositionV0\";",
       "causes": []
      }
     },
     {
      "id": "Q10",
      "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "The CAC\\-workflow\\-composition program and cac&#45;workflow&#45;composition.",
       "causes": []
      }
     },
     {
      "id": "Q11",
      "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "cac-workflow-composition-2026-10-18 is design-only.\n\nThe Pi MW adapter is wired.",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q12",
+     "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "Pi reads the cac-workflow-composition-2026-10-18 program, which is\n[^x]: not\ndesign-only.",
       "causes": []
      }
     }

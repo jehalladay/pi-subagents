@@ -681,13 +681,26 @@ export interface SourceRow {
   readonly pins: readonly string[];
 }
 
+/**
+ * Every printable ASCII character (U+0020 to U+007E) that is not a word character (a letter, digit, _ or $), in code order:
+ * T-FIELD bounds one field on both sides by each, so a scan that reads any of them as a word character under-reports.
+ */
+const BOUNDARY_CHARS: readonly string[] = Array.from({ length: 0x7f - 0x20 }, (_, offset) => String.fromCharCode(0x20 + offset)).filter(char => !/[A-Za-z0-9_$]/.test(char));
+
+/**
+ * One ASCII word character of each class, in this order: a lower-case letter, an upper-case letter, a digit, _ and $.
+ * C-LONGER-NAMES puts each directly before and directly after a field and the shared name, so a scan that reads any class as a
+ * boundary, or that reads text with no whole-word test, over-reports.
+ */
+const WORD_CLASS_CHARS: readonly string[] = ["x", "X", "7", "_", "$"];
+
 /** One row per touch kind; every pin is a source the scan must report exactly once, under that kind only. */
 export const TOUCHPOINTS: readonly (SourceRow & { readonly kind: TouchKind })[] = [
   {
     id: "T-FIELD",
     kind: "FIELD",
     label:
-      "a gp join-value field in code: input_snapshot, graph_digest or canonical_digest, or a camel-case mirror, as a name, a private name, a member, a string, a template part or a regular expression",
+      "a gp join-value field in code: input_snapshot, graph_digest or canonical_digest, or a camel-case mirror, as a name, a private name, a member, a string, a template head, middle or tail, a template without substitutions or a regular expression, and in text as a whole word wherever it stands: inside a dotted path, bounded on both sides by any one printable ASCII character that is not a letter, digit, _ or $, after one, two or sixteen longer names that hold it, or before one",
     pins: [
       'if (receipt.input_snapshot !== exported) throw new Error("mismatch");',
       "const { graph_digest } = reply.result.decision;",
@@ -698,12 +711,22 @@ export const TOUCHPOINTS: readonly (SourceRow & { readonly kind: TouchKind })[] 
       ["const path = `decision.$", "{port}.graph_digest`;"].join(""),
       "const shaped = /canonicalDigest/.test(line);",
       'class Receipt { #inputSnapshot = ""; }',
+      'const path = "receipt.input_snapshot.value";',
+      'const text = "xinput_snapshot input_snapshot";',
+      'const text = "input_snapshot, not input_snapshots";',
+      ["const path = `receipt.input_snapshot.$", "{part}`;"].join(""),
+      ["const path = `$", "{a}.graph_digest.$", "{b}`;"].join(""),
+      "const path = `receipt.input_snapshot`;",
+      'const text = "xinput_snapshot xinput_snapshot input_snapshot";',
+      `const text = "${"xinput_snapshot ".repeat(16)}input_snapshot";`,
+      ...BOUNDARY_CHARS.map(char => `const text = ${JSON.stringify(`decision${char}graph_digest${char}value`)};`),
     ],
   },
   {
     id: "T-IDENTITIES",
     kind: "IDENTITIES",
-    label: "gp's whole-document identity read as identities.graph: a member chain, an optional chain, an element access, a binding or assignment pattern, or a path string, slashed or dotted",
+    label:
+      "gp's whole-document identity read as identities.graph: a member chain, an optional chain, an element access, a binding or assignment pattern, or a path string, slashed or dotted, as the whole string or at the start, inside or at the end of a longer path, or a path in a template head, middle or tail or a template without substitutions",
     pins: [
       "const id = envelope.identities.graph;",
       "const id = check.identities?.graph;",
@@ -713,6 +736,16 @@ export const TOUCHPOINTS: readonly (SourceRow & { readonly kind: TouchKind })[] 
       "({ graph: documentId } = check.identities);",
       'const pointer = "/identities/graph";',
       'const id = get(check, "identities.graph");',
+      'const pointer = "/identities/graph/0";',
+      'const path = "check.identities.graph.value";',
+      'const pointer = "identities/graph";',
+      'const pointer = "identities/graph/0";',
+      'const path = "identities.graph.value";',
+      'const path = "check.identities.graph";',
+      ["const pointer = `/identities/graph/$", "{index}`;"].join(""),
+      ["const path = `$", "{root}.identities.graph.$", "{key}`;"].join(""),
+      ["const pointer = `$", "{base}/identities/graph`;"].join(""),
+      "const path = `check.identities.graph`;",
     ],
   },
   {
@@ -724,8 +757,19 @@ export const TOUCHPOINTS: readonly (SourceRow & { readonly kind: TouchKind })[] 
   {
     id: "T-SHARED",
     kind: "SHARED",
-    label: "snapshotDigest, the name gp's journal and observation records give the join value, or its snake-case mirror, as a member, a private name, a binding or a string",
-    pins: ["if (reply.snapshotDigest !== exported) refuse();", 'const value = record["snapshotDigest"];', "const { snapshot_digest } = row;", 'class Host { #snapshotDigest = ""; }'],
+    label:
+      "snapshotDigest, the name gp's journal and observation records give the join value, or its snake-case mirror, as a member, a private name, a binding or a string, whole or inside a dotted path, or in a template head, middle or tail or a template without substitutions",
+    pins: [
+      "if (reply.snapshotDigest !== exported) refuse();",
+      'const value = record["snapshotDigest"];',
+      "const { snapshot_digest } = row;",
+      'class Host { #snapshotDigest = ""; }',
+      'const path = "record.snapshotDigest.value";',
+      ["const path = `record.snapshotDigest.$", "{part}`;"].join(""),
+      ["const path = `$", "{a}.snapshot_digest.$", "{b}`;"].join(""),
+      ["const path = `record.$", "{key}.snapshotDigest`;"].join(""),
+      "const path = `record.snapshotDigest`;",
+    ],
   },
 ];
 
@@ -745,6 +789,14 @@ export const CLEAN: readonly SourceRow[] = [
     id: "C-NEAR-NAMES",
     label: "near names: another identities member, the members in the other order, prose with spaces, a longer name, the bare graphpolicy.snapshot words",
     pins: ["const id = envelope.identities.program;", "const graph = envelope.graph.identities;", 'const text = "the input snapshot and the graph digest";', "const graph_digests = [];", 'const kind = "graphpolicy.snapshot";'],
+  },
+  {
+    id: "C-LONGER-NAMES",
+    label:
+      "a field or the shared name in text only inside a longer name: one ASCII word character of each class (a lower-case letter, an upper-case letter, a digit, _ and $) directly before it or directly after it, the other side a dot, so no occurrence stands as a whole word",
+    pins: ["input_snapshot", "snapshotDigest"].flatMap(name =>
+      WORD_CLASS_CHARS.flatMap(char => [`const text = ${JSON.stringify(`receipt.${char}${name}.value`)};`, `const text = ${JSON.stringify(`receipt.${name}${char}.value`)};`]),
+    ),
   },
   {
     id: "C-COMMENT",

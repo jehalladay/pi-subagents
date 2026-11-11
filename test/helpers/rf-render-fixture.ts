@@ -19,8 +19,8 @@ export const RF_FIXTURE_GRAPH_REVISION = digest('a');
 /** The fixture's result.output.text. */
 export const RF_FIXTURE_TEXT = 'context';
 /** The producer release the fixture states in result.provenance.cli_version: the pinned rf the roster mirrors (re-pinned from
- * 0.1.716 by wb-973.17, then from 0.1.768 by wb-c7ku). */
-export const RF_FIXTURE_RELEASE = '0.1.784';
+ * 0.1.716 by wb-973.17, then from 0.1.768 by wb-c7ku, then from 0.1.784 by wb-jwc.4). */
+export const RF_FIXTURE_RELEASE = '0.1.845';
 /** wb-hs2j.1 (RF-REACTIVE-CONTEXT-ASSEMBLY-R1): the one candidate the fixture's document includes, as rf states it twice: its row of
  * result.blocks (context.render.schema.json :628-640 at ReactiveFiberCLI 6a251bf73af5: final_index, candidate_key, component_id,
  * the priced token_cost and its token_cost_kind) and its judged result.necessity decision record (:907-936: the eight required
@@ -55,6 +55,15 @@ export function fullShapeWorkMetrics(): JsonObject {
   };
 }
 
+/** result.judge_context at the pinned rf 0.1.845 (NEC-A13, context.render.schema.json $defs.judge_context): exactly the seven
+ * keys, the task as its digest only, no tags, agent or request, the session step A minted and the one NEC-A11 fact. */
+export function fullShapeJudgeContext(): JsonObject {
+  return {
+    task_digest: digest('3'), task_tags: [], agent_id: null, agent_role: null, session_id: `rfs_${id}`,
+    explicit_requests: [], workspace_facts: { 'session.active': true },
+  };
+}
+
 /** result.retry_work at the pinned rf (PMO-13-a): no superseded attempt and one zero wasted_<key> per work_metrics key. */
 export function fullShapeRetryWork(): JsonObject {
   return { superseded_attempts: [], ...Object.fromEntries(Object.keys(fullShapeWorkMetrics()).map(key => [`wasted_${key}`, 0])) };
@@ -83,13 +92,18 @@ export function fullShapeRf(workspaceRoot: string): JsonObject {
           reactive_inference: { distribution_version: '0.2.55', contract_fingerprint: digest('1') },
           fiber_optics_wire_format: '2',
         },
-        // rf 0.1.784 (DOLT-A29 AC3): the eighth provenance key, the committing backend beside its engine version (null on jsonl).
+        // rf 0.1.784 and 0.1.845 (DOLT-A29 AC3): the eighth provenance key, the committing backend beside its engine version (null on jsonl).
         storage: { backend: 'jsonl', engine_version: null },
       },
       work_metrics: fullShapeWorkMetrics(), work: fullShapeWork(),
       engine_metrics: { tsx_worker_spawns: 0, tsx_resource_rounds: 0 },
-      scope: null, audience: 'model', bundle_revision_id: digest('2'), observations: [], necessity: [rfFixtureDecision()], attempts: 1,
-      superseded_transaction_ids: [], retry_work: fullShapeRetryWork(), fiber_transaction_refs: [],
+      scope: null, audience: 'model', bundle_revision_id: digest('2'), observations: [], necessity: [rfFixtureDecision()],
+      // rf 0.1.845 (ADR-RFC-005 slice 8 / NEC-A13 AC2): the judge's seven-key context document beside necessity, and the lens layer
+      // that owned each judge key's winning binding, shaped as the run of record's --no-commit capture states them.
+      judge_context: fullShapeJudgeContext(), judge_context_layers: { 'task.tags': 'defaults', 'agent.role': 'defaults' },
+      attempts: 1, superseded_transaction_ids: [], retry_work: fullShapeRetryWork(), fiber_transaction_refs: [],
+      // rf 0.1.845 (rfc-epju8.4): the operation that committed a replayed request key; null on every other render.
+      replay_of_operation_id: null,
       render_id: null, ephemeral: true, commit_seq: null, session_id: null, effects: [], plan: { operations: [], would_commit: false },
     },
     diagnostics: [],
@@ -156,7 +170,9 @@ export function readRfResultRoster(): RfResultRoster {
  * captured roster is exhaustive in both directions (owner ruling R649 (3), wb-973.20): a silent new key is the rf surface drift
  * the pin exists to catch, and the legitimate path for one is the gated rf-pin-bump cut that re-captures the roster. A
  * constructed roster (read off the emitter, before a capture promotes it) is a floor: the provider admits additive keys, so beyond
- * it they are recorded, never a failure. */
+ * it they are recorded, never a failure. Last come the freeze-and-flip tripwire's entries (wb-grmo.1, speculativeMarkers below),
+ * under every roster whatever its source: `speculative <path>` for a speculative member or marker key, `speculative label <path>`
+ * for a speculative label, sorted. */
 export interface RfRosterDiff {
   failures: string[];
   extraResultKeys: string[];
@@ -177,5 +193,70 @@ export function diffAgainstRoster(roster: RfResultRoster, result: Readonly<Recor
   exactKeys('result.work_metrics', result.work_metrics, roster.workMetricsKeys, failures);
   const extraResultKeys = Object.keys(result).filter(key => !roster.resultKeys.includes(key)).sort();
   if (roster.source === 'captured') for (const key of extraResultKeys) failures.push(`unexpected result.${key}`);
+  failures.push(...speculativeMarkers(result));
   return { failures, extraResultKeys };
+}
+
+/** wb-grmo.1 (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R1, the until-then leg): the SCG-R11 roster diff's freeze-and-flip tripwire. RFCLI
+ * serves a labeled WhatIf view on `rf context render --scenario PATH` from 0.1.844 on (RFCLI 8bd35ecd4651); Pi's legacy and --view
+ * argv never pass --scenario and rf states these members absent on those renders, so a capture of Pi's own arms names none of
+ * them at any pinned release (measured on a real rf 0.1.845 render). FREEZE: until Pi's refusal cases
+ * exist (both readers refuse a speculative-marked result as 'validation', a speculative render lives only behind its own
+ * capability id and grant), every tier that holds a result to the roster fails on any name below, whatever the roster's source,
+ * so a pin-bump re-capture cannot adopt a speculative member as a roster key. FLIP: the cut that adds those cases replaces this
+ * tripwire with them. The names are producer facts measured at RFCLI 8bd35ecd4651 and the installed rf 0.1.845; the census
+ * test/workbench-rf-speculative-context-census.test.ts holds them to its roster. */
+/** The nine result members rf states exactly on a --scenario render and on no legacy or --view render (context.render.schema.json
+ * $defs/result), read as top-level result members only: several are ordinary words (notice, labels, suppressions). */
+export const SPECULATIVE_RESULT_KEYS: readonly string[] = [
+  'speculative', 'notice', 'labels', 'exclusion_stages', 'counts_by_stage', 'suppressions', 'lens_snapshots', 'rendered_output', 'effects_denied',
+];
+/** Marker keys read at any depth: the design name ScenarioResult.rendered_speculative_view (02-architecture.md:9@82bd879eee52),
+ * the two host markers rf stamps in the metadata of a block rendered from a scenario (domain/scenario.py SCENARIO_ID_MARKER_KEY,
+ * EPISTEMIC_STATUS_MARKER_KEY), and the scenario identity keys, which no pinned or installed schema property spells outside a
+ * scenario member. */
+export const SPECULATIVE_MARKER_KEYS: readonly string[] = ['rendered_speculative_view', 'rf.scenario_id', 'rf.epistemic_status', 'scenario_id', 'scenario'];
+/** Label values read exactly, at any depth: the notice block's key (application/scenario_view.py NOTICE_BLOCK_KEY). */
+export const SPECULATIVE_LABEL_VALUES: readonly string[] = ['rf.whatif_notice'];
+/** The notice line that opens a WhatIf document's output.text (application/scenario_view.py WhatIfNotice.text). */
+export const SPECULATIVE_TEXT_PREFIX = 'WHAT-IF VIEW of scenario ';
+
+/** A key appended to a path: `.key` for an identifier, `["key"]` for any other spelling (rf.scenario_id). */
+function keyPath(path: string, key: string): string {
+  return /^[A-Za-z_][A-Za-z0-9_]*$/.test(key) ? `${path}.${key}` : `${path}[${JSON.stringify(key)}]`;
+}
+
+/** The tripwire's reading of one render result, sorted: a top-level SPECULATIVE_RESULT_KEYS member, present whatever its value,
+ * and a SPECULATIVE_MARKER_KEYS key at any depth each give `speculative <path>` (neither is read further); a string equal to a
+ * SPECULATIVE_LABEL_VALUES entry at any depth, and a result.output.text opening with SPECULATIVE_TEXT_PREFIX, each give
+ * `speculative label <path>`. Keys are read in rf's exact spelling and labels only where rf places them, so a marker word inside
+ * free text is not read. An object reached twice is read once. */
+export function speculativeMarkers(result: Readonly<Record<string, unknown>>): string[] {
+  const found: string[] = [];
+  const seen = new WeakSet<object>([result]);
+  const visit = (value: unknown, path: string): void => {
+    if (typeof value === 'string') {
+      if (SPECULATIVE_LABEL_VALUES.includes(value)) found.push(`speculative label ${path}`);
+      return;
+    }
+    if (value === null || typeof value !== 'object' || seen.has(value)) return;
+    seen.add(value);
+    if (Array.isArray(value)) {
+      for (const [index, item] of value.entries()) visit(item, `${path}[${index}]`);
+      return;
+    }
+    for (const [key, item] of Object.entries(value)) {
+      const at = keyPath(path, key);
+      if (SPECULATIVE_MARKER_KEYS.includes(key)) found.push(`speculative ${at}`);
+      else visit(item, at);
+    }
+  };
+  for (const [key, item] of Object.entries(result)) {
+    const at = keyPath('result', key);
+    if (SPECULATIVE_RESULT_KEYS.includes(key) || SPECULATIVE_MARKER_KEYS.includes(key)) found.push(`speculative ${at}`);
+    else visit(item, at);
+  }
+  const output = isRecord(result.output) ? result.output : undefined;
+  if (typeof output?.text === 'string' && output.text.startsWith(SPECULATIVE_TEXT_PREFIX)) found.push('speculative label result.output.text');
+  return found.sort();
 }

@@ -895,20 +895,58 @@ describe("pause and the concurrency limit", () => {
     return { host, started: () => started, finish: (id: string, text: string) => release.get(id)?.({ ok: true, text }) };
   }
 
-  it("holds back an agent that was already queued behind the limit", async () => {
+  /**
+   * The deadline for every wait in a case: four fifths of the case's own
+   * timeout, so a starved worker gets most of the budget while an agent that
+   * never starts still fails on an expect(), not on the timeout. vitest reads
+   * a timeout of 0 as none, and so does this.
+   */
+  function waitDeadline(timeout: number): number {
+    return timeout > 0 ? performance.now() + timeout * 0.8 : Number.POSITIVE_INFINITY;
+  }
+
+  /**
+   * Poll until `ready` holds or the clock passes `deadline`, and leave the
+   * verdict to the expect() after the call. The bound is wall-clock, not a
+   * count of sleeps: the run starts its script on a worker thread, and under
+   * CPU starvation that start outlasted a 40 x 5 ms (200 ms) poll, so the
+   * expect() read [] before 'a' had started (wb-6ax6).
+   */
+  async function pollUntil(ready: () => boolean, deadline: number): Promise<void> {
+    while (!ready() && performance.now() < deadline) await sleep(5);
+  }
+
+  it("holds back an agent that was already queued behind the limit", async ({ task }) => {
     // The gate is before the semaphore, so an agent waiting for a permit when
     // the pause lands never passed it. Without a second look after the permit
     // arrives, a pause leaks exactly as many agents as happened to be queued.
+    const deadline = waitDeadline(task.timeout);
     const stub = holdingHost();
+    // Agents in the order their first progress row arrived. That row is
+    // emitted on the way to the pause gate with no await in between, so an
+    // agent seen here has already passed the gate.
+    const queued: string[] = [];
     let control: WorkflowControl | undefined;
     const done = run(
       "const r = await parallel([() => agent('a'), () => agent('b')]); return JSON.stringify(r);",
-      { host: stub.host, concurrency: 1, onControl: c => { control = c; } },
+      {
+        host: stub.host,
+        concurrency: 1,
+        onControl: c => { control = c; },
+        onProgress: entries => {
+          for (const { agentId } of agentEntries(entries)) {
+            if (agentId !== undefined && !queued.includes(agentId)) queued.push(agentId);
+          }
+        },
+      },
     );
 
-    // One permit, so 'a' runs and 'b' is queued behind it.
-    for (let i = 0; i < 40 && stub.started().length < 1; i++) await sleep(5);
+    // One permit, so 'a' runs and 'b' is queued behind it. Waiting to see 'b'
+    // as well is what makes that so: a pause that lands before 'b' reaches
+    // the gate holds it there, and the second look would go untested.
+    await pollUntil(() => stub.started().length >= 1 && queued.length >= 2, deadline);
     expect(stub.started()).toEqual(["wf-agent-0"]);
+    expect(queued).toEqual(["wf-agent-0", "wf-agent-1"]);
 
     control?.pause();
     stub.finish("wf-agent-0", "first");
@@ -917,7 +955,10 @@ describe("pause and the concurrency limit", () => {
     expect(stub.started()).toEqual(["wf-agent-0"]);
 
     control?.resume();
-    for (let i = 0; i < 40 && stub.started().length < 2; i++) await sleep(5);
+    await pollUntil(() => stub.started().length >= 2, deadline);
+    // Judged here rather than left to the run's value: a 'b' that never
+    // started would leave the run unsettled until the test timed out.
+    expect(stub.started()).toEqual(["wf-agent-0", "wf-agent-1"]);
     stub.finish("wf-agent-1", "second");
     expect((await done).value).toBe('["first","second"]');
   });

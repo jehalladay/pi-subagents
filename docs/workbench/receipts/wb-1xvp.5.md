@@ -151,3 +151,142 @@
 - Readers run on the final bytes (default tier, direct vitest, 4 workers): over trunk b3670d6, 63 files that read docs/ or its receipts, 2308 of 2308 passed, among them receipts-shape, receipts-convention, traceability-freeze, traceability-feedback-receipts, both W10 guards, unsafe-display-oracle, source-hygiene, the docs census of storage claims and every whole-tree rf, tsx and h2 docs census of the landing registry. The same set, with each docs census landed since, re-ran green at every later base.
 - Contacts: a ref-less probe commit of this cut on trunk b3670d6 was merged with merge-tree against each of the 37 gate-queue entries, and each returned rc 0; the check re-ran at every later base with rc 0 each time. Four entries touch the guard's read set (wb-4nut.5 and wb-6ps1.2 in src/; wb-6ps1.2, wb-kku9.1 and wb-kku9.4 in docs/), and their files read no site and no unbacked claim under the guard's own readers. Ten queued censuses that walk the docs ran against this receipt, each green; the gp-provenance census of wb-gxd7.5 first read two new version-token lines here, and both were reworded before this entry was final.
 - Non-claims: no gp process ran in Pi and no decision cost was measured; this entry states no latency figure. The judge leg is located by an import and string tokens (R-REPORT); whether a future leg's judge call reads the bound cases is that leg's own judgment. The seat ran no complete gate and no census tier, and the composed trees of the queued entries were not run whole.
+
+## 2026-10-25 receipt: the follow-up wb-vkdl reads this file's headings, markup and listing as a reader sees them
+
+- Follow-up of record: wb-vkdl, filed at fold 348 under R694 for the PREP findings F1-F7 of the wb-mqm6 gate cmd_d77afd3cf49c (seat gate-prep-14, run g10-gate-s73): F1 leads and F2-F7 ride. Base: trunk 44971fa, where every edit was made and every count below was measured. Scope: this guard and this receipt; no src file, dependency or settings key changes.
+- F1 (the heading pin read column-0 '## ' lines only, so a setext, indented or nested entry heading passed): the anchor also reads every heading marked's block lexer finds, ATX or setext, at any level, indented up to three spaces, inside a block quote or a list item, and holds them to this file's title and its entry headings alone. The F4 line of the entry above therefore holds as written for every heading the lexer reads: an entry inserted anywhere reads red.
+- F2 (a listing wrapped in an HTML comment passed): the lexer must find no HTML token in this file, block or inline, and the listing is also read as the items of the last entry's lists, so a listing hidden in markup, fenced as code, quoted or nested under another item reads red. The anchor forms below pin each of these readers on the forms it must and must not read.
+- F3 (denials phrased outside the bottleneck grammar): named as the residual R-PHRASING, whose quiet row reads the fifteen measured phrasings and the two split-line forms as no claim beside a paired control that reads one.
+- F4 (requirement and question lines read as denials): named as the residual R-REQUIREMENT, an over-read whose quiet row holds the five measured lines as claims beside a requirement the family leaves quiet.
+- F5 (two launcher spellings escaped): the binary marker drops a .bat or .ps1 extension as it drops .cmd and .exe; a launcher with any other extension is the residual R-LAUNCHER.
+- F6 (reader weakenings outside the digests): each measured weakening reads red through a table row: an option value after = (marker binary, option-value), the snake and spaced producer names (namespace snake and spaced, identifier snake-binding), a module that only extends the census helper's name (judge case 12), an evaluation outside the receipts directory (evidence case 10), and both sides of the forty-character figure bound, each cited by a receipt id with a dot (evidence cases 11 and 12).
+- F7 (an it.each call site sliced with its table intact passed): every case records its key at its last line, and a closing tally reads vitest's own task tree, so a case not set to run, a row sliced off its it.each, a case cut short before its last line or a case registered after the tally reads red. The case set is digested below.
+- Anchor listing. The guard's anchor row holds its tables to the lines below, in order, read from this entry, the last one, both as written and as the items of its list. Each line is plain text.
+
+- Clause a: each gp call and observation records latency, subprocess count, beads_calls (= fake seam invocations), latency_ms and serialized_bytes; a receipt missing them is refused.
+- Clause b: read budget N -> the fake bd seam sees at most N calls and the receipt marks completeness 'partial'; an over-budget telemetry cycle is cut and marked partial; budgets are declared settings.
+- Clause c: fake rpc seam: N decisions in one run open one session, not N processes; a verb rpc refuses (unsupported-method) is recorded transport='cli', never relabelled.
+- Clause d: an evaluation receipt aggregates p50/p95/p99 from recorded per-call values, instrumentation overhead apart from inference.
+- Marker binary: a word of a string token whose command name is gp: the bare name, a path ending in gp under either separator, a gp.cmd, gp.exe, gp.bat or gp.ps1 launcher, gp with an @ version suffix as npx spells it, an argv word, an option value after =, or a word of a shell line.
+- Marker namespace: a string token naming the producer: the graph-policy-cli package, a graphpolicy envelope schema such as graphpolicy.rpc.v1, or GraphDataIR, with graph and policy joined, hyphenated, snake-cased or spaced.
+- Marker identifier: an identifier naming GraphPolicy, in camel or snake case, or GraphDataIR, such as a client class, a binding or a type.
+- Claim family bottleneck: a bottleneck denied, read before the word bottleneck or bottlenecks: no, without or nor with up to two words between, or not, never, cannot or n't with an optional be, become or becomes, then a, an or the and an optional word between, such as no bottleneck, no-bottleneck, without a new bottleneck, isn't the bottleneck and will not become a bottleneck.
+- Claim family percentile: a p50, p95 or p99 figure: the percentile, then a number and a time unit within forty characters.
+- Claim family negligible: a cost called negligible, cheap, zero or low: negligible, cheap, zero-cost, low-latency, low-overhead.
+- Figure p50: p50, the median decision latency.
+- Figure p95: p95, the 95th percentile decision latency.
+- Figure p99: p99, the 99th percentile decision latency.
+- Figure inference: inference, the time spent in gp inference.
+- Figure instrumentation-overhead: instrumentation overhead, the instrumentation cost, apart from inference.
+- Residual R-RUNTIME: a binary name built at run time or read from settings or the environment is no string token, so its spawn is no site.
+- Residual R-SCOPE: only the .ts files under src/ are read; qa/, examples/ and test/ hold tooling and evaluation, never the machine's decision loop.
+- Residual R-REPORT: a bound case is located in its test source, never judged in vitest's report, so a case that fails, never collects or asserts nothing passes this locator; the judge leg G2 requires is located the same way, by its import of judge and the case's file and title as string tokens, never by reading its judge call or the verdict that call returns.
+- Residual R-LINE: a cost claim whose subject is named on another line is not read as a gp claim.
+- Residual R-FIGURES: an evaluation receipt is admitted by the shape of its figures, never by recomputing them from per-call records.
+- Residual R-LOCATOR: the binding locator reads a registration's call chain and its enclosing suites only, so an options object such as { skip: true }, { todo: true }, { only: true } or { fails: true } on a case or a suite, a skip called through the test context, an empty each table, a shadowed it, a registration in a function never called or under if (false), a hollow body and an unrelated title each read as registered; G2 therefore never admits a binding on this locator alone.
+- Residual R-MARKUP: a claim spelled through markup that marked's inline lexer leaves as written, such as a character reference or an undefined reference-style link between its words, is read as its raw text.
+- Residual R-PHRASING: a bottleneck denial phrased outside the bottleneck family's grammar, such as bottleneck-free, hardly a bottleneck, far from a bottleneck or does not constitute a bottleneck, or split across a line break, reads no claim.
+- Residual R-REQUIREMENT: a requirement, a question or an open doubt spelled in the bottleneck family's grammar beside the subject, such as must not be a bottleneck, is it not a bottleneck? or whether it is not a bottleneck, reads as a denial, so a docs line that restates the program directive in that form cites an evaluation receipt or is reworded.
+- Residual R-LAUNCHER: a launcher spelled with another extension, such as gp.com, gp.sh or gp.vbs, names no gp binary, since only an @ version and a .cmd, .exe, .bat or .ps1 extension are dropped.
+- Hold skip: the case or the suite never runs.
+- Hold todo: the case is recorded as todo and never runs.
+- Hold only: the case is focused, which the gate refuses with allowOnly false.
+- Hold skipIf: the case runs only while its condition is false.
+- Hold runIf: the case runs only while its condition is true.
+- Hold fails: the case passes only when its body fails.
+- Quiet general-purpose: the src/agent-types.ts binding gp names the general-purpose agent, an identifier and never a string token.
+- Quiet other-binaries: gpg, rf and git are other binaries.
+- Quiet word-parts: gpu, gpt, gp2 and gp-agent are other words.
+- Quiet comment: a comment is prose and never a site, even when it names the binary and GraphPolicyCLI.
+- Quiet other-extensions: a module gp.js and a gpx.exe launcher name no gp binary, since only an @ version and a .cmd, .exe, .bat or .ps1 extension are dropped.
+- Claim quiet no-subject: a percentile figure beside no gp subject, the docs/10 navigation line.
+- Claim quiet no-claim: GraphPolicyCLI named beside no cost word.
+- Claim quiet directive: the program's directive not to make inference a new bottleneck denies nothing.
+- Claim quiet requirement: the requirement to measure the percentiles states no figure.
+- Claim quiet must-not: a requirement that a call must not create one denies nothing.
+- Claim quiet affirmed: a bottleneck affirmed is no denial.
+- Binding case 1: a bound site whose four clauses each name a registered case is accepted.
+- Binding case 2: an unbound site refuses, naming the file, the line and the marker.
+- Binding case 3: a binding for a file with no site is stale.
+- Binding case 4: a clause that binds no case refuses, naming the clause.
+- Binding case 5: a case in an absent test file refuses.
+- Binding case 6: an unregistered title refuses.
+- Binding case 7: a held case refuses.
+- Binding case 8: a case of a held suite refuses.
+- Binding case 9: a case held by skip refuses.
+- Binding case 10: a case held by todo refuses.
+- Binding case 11: a case held by only refuses.
+- Binding case 12: a case held by runIf refuses.
+- Binding case 13: a case held by fails refuses.
+- Judge case 1: a binding whose every case a census-tier leg names beside an imported judge is judged.
+- Judge case 2: an aliased judge import is a leg.
+- Judge case 3: a binding with no census-tier leg refuses every bound case.
+- Judge case 4: a leg that names the cases but imports no judge is no leg.
+- Judge case 5: a judge imported from another module is no leg.
+- Judge case 6: a judge imported from a module that only extends the helper's name is no leg.
+- Judge case 7: a leg that names another test file leaves every bound case unjudged.
+- Judge case 8: a leg that names another title leaves the bound case unjudged.
+- Judge case 9: a title the leg names only in a comment is not named.
+- Judge case 10: an import type statement is no leg.
+- Judge case 11: a type-only judge specifier is no leg.
+- Judge case 12: an empty table owes no leg.
+- Evidence case 1: a claim citing an evaluation receipt is evidenced.
+- Evidence case 2: a claim inside an evaluation receipt is its own evidence.
+- Evidence case 3: a claim citing no receipt refuses.
+- Evidence case 4: a claim citing an absent receipt refuses.
+- Evidence case 5: a receipt without the p50 figure is no evaluation receipt.
+- Evidence case 6: a receipt without the p95 figure is no evaluation receipt.
+- Evidence case 7: a receipt without the p99 figure is no evaluation receipt.
+- Evidence case 8: a receipt without the inference figure is no evaluation receipt.
+- Evidence case 9: a receipt without the instrumentation overhead figure is no evaluation receipt.
+- Evidence case 10: an evaluation outside docs/workbench/receipts/ is not its own evidence.
+- Evidence case 11: a figure forty non-digit characters after its label is stated.
+- Evidence case 12: a figure forty-one non-digit characters after its label is not stated.
+- Anchor form atx: an ATX heading is a heading.
+- Anchor form setext: a line underlined with hyphens is a level-2 heading.
+- Anchor form setext-level-1: a line underlined with equals signs is a level-1 heading.
+- Anchor form indented: an ATX heading indented up to three spaces is a heading.
+- Anchor form tab: an ATX heading whose hashes a tab follows is a heading.
+- Anchor form deeper: a level-3 heading is a heading.
+- Anchor form closed: a closing run of hashes is no part of the heading text.
+- Anchor form quoted: a heading inside a block quote is a heading.
+- Anchor form list-item: a heading inside a list item is a heading.
+- Anchor form fenced: a heading line inside a code fence is code.
+- Anchor form indented-code: a heading line indented four spaces is code.
+- Anchor form escaped: an escaped hash opens no heading.
+- Anchor form no-space: hashes with no space or tab after them open no heading.
+- Anchor form commented: a heading line inside an HTML comment is markup, which the html reader reads.
+- Anchor form comment: an HTML comment is markup.
+- Anchor form element: an HTML heading element is markup.
+- Anchor form inline: an inline tag is markup.
+- Anchor form in-item: a comment inside a list item is markup.
+- Anchor form in-cell: a tag inside a table cell is markup.
+- Anchor form code-span: a tag inside a code span and a less-than sign in prose are no markup.
+- Anchor form listing: the anchor lines are the items of the last entry's lists.
+- Anchor form last-entry: only the last entry's items are read.
+- Anchor form loose: an item of a loose list is read without the line break before the next item.
+- Anchor form fenced-listing: an anchor line inside a code fence is no item.
+- Anchor form quoted-listing: an anchor line inside a block quote is no item of the entry's lists.
+- Anchor form nested-listing: an anchor line nested under another item is no item of its own.
+- Digest markers: bf92133bc7692fa5.
+- Digest quiet: 732a250aaadc1d38.
+- Digest claim-families: 1961edbb21232d43.
+- Digest claim-quiet: 028f12f1bc249cb3.
+- Digest bindings: cf1cbc40e31a2ff3.
+- Digest judge-leg: dbf9e32a755d1561.
+- Digest evidence: 60c6bdaf4d5cc010.
+- Digest residuals: db318dd8533075ed.
+- Digest anchor-forms: ea39792e4a930690.
+- Digest cases: 7c322f40f66b408d.
+
+- Red first, phase 1: the final guard with the landed launcher set (.cmd and .exe only) reads 5 failed | 138 passed (143): the bat and ps1 binary fixtures, the per-marker positivity row, the residual R-LAUNCHER and the closing tally.
+- Red first, plants: thirteen receipt plants, each made on this file and removed after its run, read 0 red on the landed guard and receipts-shape at this base (128 of 128 each), but for a setext level-1 heading inside the last entry, which receipts-shape alone reads (2 red). The plants: a setext first entry, a setext entry at the end of the file, the last listing in an HTML comment, the last listing in a code fence, an entry heading indented one space, a setext heading inside the last entry before its listing, a level-3 entry heading, an entry heading in a block quote, an entry heading in a list item, an entry heading with a tab after its hashes, an h2 element, the last listing inside a hidden div, and that level-1 heading. On the final guard each reads the anchor row and the closing tally red (2 red; the level-1 heading 4, with receipts-shape).
+- Red first, mutants: each PREP survivor of F6 and F7, replayed on a throwaway copy of the guard and removed after its run, read 0 red on the landed guard at this base and reads red on the final guard: the census helper pattern loosened (2 red) or unanchored (2), the namespace pattern without its _ and space separators (4), the identifier pattern without _ (3), the word split without = (3), the cited receipt narrowed to one file (2), self-evidence outside the receipts directory (2), the figure window narrowed to 4 (2) or widened to 400 (2), and each it.each call site sliced with its table intact, for QUIET, EVIDENCE_CASES, JUDGE_CASES, CLAIM_QUIET, BINDING_CASES and RESIDUALS (1 each, the closing tally).
+- Green: 143 of 143 (`vitest run test/workbench-gp-decision-cost.test.ts`) on the final bytes of the guard and of this file.
+- CT battery (standing rule 16, v2), each member on a throwaway copy of the guard, removed after its run: CT-BATTERY v2: CT1 red=3; CT1b red=3; CT2 red=3; CT3 red=3; CT4 red=3; CT5 red=2; CT6 red=2.
+  - CT1 deletes the binary bat fixture and CT1b the bottleneck measurable fixture; CT2 shortens clause b; CT3 swaps the quoted anchor form's text for the atx form's; CT4 deletes evidence case 11. Each reads the frozen-shape and anchor rows red, and the closing tally with them.
+  - CT5 deletes the quoted anchor form with its frozen element, and CT6 removes the residual R-PHRASING from every literal; both also rewrite the guard's digest literal and its table count, and each reads the anchor row red against this file, and the closing tally with it.
+- Seat probes beyond the battery, each killed: the token walk at the top level only (6 red), without table cells (2) or without list items (3); the outline at level 2 only (4) or as a column-0 line scan (12); the markup reader at block level only (4); the listing reader keeping each item's line break (3), reading every list of the file (3), reading nested lists (3) or reading raw lines (2); the figure window at 39 (2) or 41 (2); the cited receipt without the dot in its id class (2); the launcher set without .ps1 (3); a guarded return before a fixed case's assertions (1) or before an anchor form's record (1); a fixed case held by skipIf (1); a case registered after the tally (1); and the it.each call sites of ANCHOR_FORMS, MARKER_ROWS and CLAIM_ROWS sliced (1 each).
+- Readers and contacts: the default-tier and census-tier tests that read docs, receipts or the test tree, and a merge-tree contact check of a ref-less probe commit of this cut against every gate-queue entry, ran on the final bytes of the guard and of this file; their counts are in the delivery note.
+- Non-claims: no gp process ran in Pi and no decision cost was measured; this entry states no latency figure. The closing tally's own assertions are held by nothing but its run, so a tally hollowed in place stays green; whether it ran is the census tier's judgment. The seat ran no complete gate and no census tier of record, and the composed trees of the queued entries were not run whole.

@@ -1,0 +1,1055 @@
+{
+  "bead": "wb-693.8",
+  "provenance": "wb-693.8 rf TSX cost-adequacy census roster (test/workbench-rf-tsx-cost-adequacy-census.test.ts). Producer facts MEASURED read-only by the cutting seat on 2026-10-26 at the ReactiveFiberCLI pin; rows and witnesses are the census's own judged set.",
+  "producer": {
+    "repository": "ReactiveFiberCLI",
+    "pin": "e20f565fd7604c4ca3be7b9a66fd5c3173ea49fa",
+    "listing": {
+      "count": 10209,
+      "sha256": "a14e398e3c705051c9dc70be42eff8c648b9cecbf373f7c2b4a9b0052a8c99d1",
+      "filterWord": "baseline",
+      "filtered": [
+        "docs/plans/forge-ib-adoption-2026-10-10/00-baseline-and-gap-register.md",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/00-BASELINE-AND-FINDINGS.md",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/phase-ii-resource-frontier/02-BASELINE-AND-EVIDENCE.md",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/phase-ii-resource-frontier/evidence/RFC2-P14-a2/cross-controlled-cli-baselines-fit.json",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/phase-ii-resource-frontier/evidence/RFC2-P14-a2/cross-shared-cli-baselines-fit.json",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/phase-ii-resource-frontier/evidence/RFC2-P14-a2/opt-cli-controlled-candidate-cli-baselines.json",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/phase-ii-resource-frontier/evidence/RFC2-P14-a2/opt-cli-graded-test_cli_baselines.json",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/phase-ii-resource-frontier/evidence/RFC2-P14-a2/opt-cli-shared-candidate-cli-baselines.json",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/phase-ii-resource-frontier/evidence/RFC2-P14-a2/ref-cli-controlled-baseline-cli-baselines.json",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/phase-ii-resource-frontier/evidence/RFC2-P14-a2/ref-cli-controlled-baseline-legacy_render.json",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/phase-ii-resource-frontier/evidence/RFC2-P14-a2/ref-cli-graded-test_cli_baselines.json",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/phase-ii-resource-frontier/evidence/RFC2-P14-a2/ref-cli-shared-baseline-cli-baselines.json",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/phase-ii-resource-frontier/evidence/RFC2-P14-a2/ref-cli-shared-baseline-legacy_render.json",
+        "new-feedback/2026-09-18-CORROBORATION-realized-cost-forge-toml-127s-load-85-projection-fired-7-test-steps-killed-at-5400-s-longest-pass-94-8-pct-of-budget-and-the-re-baseline-rule-plus-equality-audit-hold-the-raise-shut.md",
+        "new-feedback/2026-10-15-CORROBORATION-the-new-feedback-conventions-audit-is-still-red-at-1010a4812-with-9-deviations-7-filename-1-metadata-1-grade-up-from-6-and-1-at-74c82dfef-after-151-new-feedback-commits-and-0-edits-to-the-rule-the-baseline-or-the-readme.md",
+        "new-feedback/2026-10-17-POSITIVE-the-rf-perf-baseline-selector-refuses-7-of-12-spellings-with-exit-2-in-42-of-72-head-0-1-722-runs-and-keeps-the-envelope-equal-in-2-of-2-comparisons-while-0-1-717-ignores-all-12-in-72-of-72.md",
+        "new-feedback/2026-10-17-the-bootstrap-sync-baseline-pre-fetch-object-probe-leaks-one-fatal-not-a-valid-object-name-stderr-line-per-stale-checkout-in-4-of-4-successful-exit-0-runs-at-head-0-1-734-6fc7a84c8.md",
+        "new-feedback/2026-10-24-POSITIVE-head-0-1-844-history-projection-seam-decoded-exactly-the-page-in-7-of-7-default-reads-of-a-31-render-store-where-baseline-and-installed-0-1-836-decoded-all-31-and-items-matched-across-all-three-arms-in-9-of-9-cases.md",
+        "scripts/refresh_sdk_baseline.py",
+        "tests/audit/new_feedback_baseline.json",
+        "tests/audit/sdk_baseline.json",
+        "tests/audit/test_bench_baselines.py",
+        "tests/bench/test_cli_baselines.py",
+        "tests/bench/test_j1_journey_baselines.py",
+        "tests/bench/test_scg_baselines.py",
+        "tests/bench/test_tsx_baselines.py",
+        "tests/fixtures/golden/s0_baseline_context_render_component.txt",
+        "tests/fixtures/renders/legacy_baseline.py",
+        "tests/fixtures/renders/legacy_baseline_component_v1.json",
+        "tests/fixtures/renders/legacy_baseline_plain_v1.json",
+        "tests/fixtures/renders/legacy_baseline_v1.receipt.json",
+        "tests/fixtures/trainingworks/baseline_v1.json",
+        "tests/fixtures/trainingworks/baseline_v1.receipt.json",
+        "tests/fixtures/trainingworks/schemas/intervention/valid/baseline_record.json",
+        "tests/journeys/test_agent_perf_baseline_switch.py",
+        "tests/unit/test_refresh_sdk_baseline.py",
+        "tests/unit/test_training_baseline.py"
+      ]
+    },
+    "excerpts": [
+      {
+        "site": ".gitignore:52-53",
+        "textBase64": "IyDilIDilIAgQmVuY2htYXJrIHJlcG9ydHMgKC5yZi1iZW5jaC88bmFtZT4uanNvbiB3cml0dGVuIGJ5IGBweXRlc3QgLW0gYmVuY2hgLCBPQlMtUEVSRi1BMjYpIOKUgOKUgAovLnJmLWJlbmNoLw==",
+        "sha256": "012ecb3632494b1e1f2be82633f76aaf4a2f69161999a90caa496f2576d2425c"
+      },
+      {
+        "site": "tests/bench/test_tsx_baselines.py:63-64",
+        "textBase64": "SW52b2NhdGlvbjogYGBweXRlc3QgLW0gYmVuY2ggdGVzdHMvYmVuY2gvdGVzdF90c3hfYmFzZWxpbmVzLnB5YGAgKGBgUkZfQkVOQ0hfVFNYX1JVTlNgYCBzZXRzIGssIGBgUkZfQkVOQ0hfRElSYGAKcmVkaXJlY3RzIHRoZSByZXBvcnQpLiBXcml0ZXMgYGAucmYtYmVuY2gvdHN4LWJhc2VsaW5lcy5qc29uYGAsIHZhbGlkYXRlZCBhZ2FpbnN0IGBgc2NoZW1hcy9iZW5jaC9yZXBvcnQtdjEuanNvbmBgIGJ5",
+        "sha256": "5b93299d60d1dcea582388ea20ba4c4f531f92115fa078e6a6c350762fe47216"
+      },
+      {
+        "site": "tests/bench/test_tsx_baselines.py:161",
+        "textBase64": "UkVQT1JUX05BTUU6IEZpbmFsID0gInRzeC1iYXNlbGluZXMi",
+        "sha256": "628a16408c07bdf5bc0f0eda583c5c4952252e5b5f014aebe0e289b12799b5bb"
+      },
+      {
+        "site": "tests/bench/test_tsx_baselines.py:172-175",
+        "textBase64": "Q09NUE9ORU5UX1NURVBTOiBGaW5hbFt0dXBsZVtpbnQsIC4uLl1dID0gKDEsIDEwLCAxMDApCiIiIkkyMTogY29tcG9uZW50cyBwZXIgcmVuZGVyLCBmb3IgZWFjaCBvZiB0aGUgdGhyZWUgZ3JhcGgga2luZHMuIiIiClJFU09VUkNFX1NURVBTOiBGaW5hbFt0dXBsZVtpbnQsIC4uLl1dID0gKDEsIDEwLCAxMDApCiIiIkkyMTogcmVzb3VyY2VzIHJlcXVlc3RlZCBwZXIgYXR0ZW1wdCAob25lIHBlbmRpbmcgcm91bmQsIHRoZW4gY29tcGxldGUpLiIiIg==",
+        "sha256": "c1824382c9c7ef3769351eae6939ec75fa8abdd6c860a2f65310f69d7c4af3c3"
+      }
+    ],
+    "schema": {
+      "path": "schemas/bench/report-v1.json",
+      "blob": "f36108fce119a9cfde15afe90405347c096f1985",
+      "id": "https://reactive-fiber-cli.dev/schemas/bench/report-v1.json",
+      "slices": [
+        {
+          "pointer": "/required",
+          "textBase64": "WyJuYW1lIiwiZml4dHVyZV9zaGFwZSIsImJhY2tlbmQiLCJjbGlfdmVyc2lvbiIsInNka192ZXJzaW9ucyIsImVudmlyb25tZW50IiwibWV0cmljcyJd",
+          "sha256": "e85c9aac2a085c23f06616d5bcc30517a25ff9a0a5ddb8e8afc962e81bb2387d"
+        },
+        {
+          "pointer": "/$defs/runtime/required",
+          "textBase64": "WyJlbmdpbmUiLCJyb3dzIiwicGVha19yc3Nfa2liIiwiaXBjX2J5dGVzIiwiY2FjaGVfaGl0cyIsInJlbmRlcl9pbnZvY2F0aW9uX2NvdW50Iiwid29ya2VyX3NwYXducyJd",
+          "sha256": "55c051a07ee52b5771ada7fad4183dc4a5e9a00e3b30ee1720f2a93c0aded72f"
+        },
+        {
+          "pointer": "/$defs/runtime_row/required",
+          "textBase64": "WyJuYW1lIiwiZ3JhcGgiLCJjb250ZXh0Iiwic2FtcGxlcyIsImV4aXRfY29kZSIsInNoYXBlIiwid2FsbF9tcyIsImNwdV9tcyIsInBlYWtfcnNzX2tpYiIsImlwY19ieXRlcyIsImNhY2hlX2hpdCIsInJlbmRlcl9pbnZvY2F0aW9uX2NvdW50Iiwid29ya2VyX3NwYXducyJd",
+          "sha256": "d8b068f3a8606038677ef19c130d801f28d5ce96ed083793a792a9df59fb9850"
+        },
+        {
+          "pointer": "/$defs/runtime_row/properties/graph/enum",
+          "textBase64": "WyJweXRob25fb25seSIsImluYWN0aXZlX3RzeCIsImFjdGl2ZV90c3giXQ==",
+          "sha256": "add2aaade40b11799803084e3967d9ebdbd3ef5dd9925f5dfdb360ddc0af1d10"
+        },
+        {
+          "pointer": "/$defs/runtime_shape/required",
+          "textBase64": "WyJjb21wb25lbnRfY291bnQiLCJ0c3hfY29tcG9uZW50X2NvdW50IiwicmVzb3VyY2VfY291bnQiLCJyb3VuZHMiLCJuZXN0aW5nX2RlcHRoIiwiZG9jdW1lbnRfYnl0ZXMiLCJzbmFwc2hvdF9ieXRlcyJd",
+          "sha256": "d85854e43b9a445b0e8fc214b035d1206ed9c0e4e18359c40254f83e09400c5a"
+        }
+      ]
+    }
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "Gate check: the artifact exists upstream and validates against report-v1 with the three instance axes present",
+      "pins": [
+        {
+          "id": "A1",
+          "quote": "Gate check: the artifact exists upstream",
+          "witness": {
+            "claim": "60bc8aaa17ac",
+            "repository": "ReactiveFiberCLI",
+            "pin": "e20f565fd7604c4ca3be7b9a66fd5c3173ea49fa",
+            "listed": 10209,
+            "filtered": 37,
+            "report": "tsx-baselines.json",
+            "state": "ABSENT",
+            "matches": [],
+            "present": [
+              "PRESENT",
+              "PRESENT",
+              "PRESENT"
+            ],
+            "near": [
+              "ABSENT",
+              "ABSENT",
+              "ABSENT",
+              "ABSENT"
+            ],
+            "written": ".rf-bench/tsx-baselines.json",
+            "schema": "schemas/bench/report-v1.json",
+            "residuals": {
+              "R-RENAMED": {
+                "tests/bench/baselines/tsx_baselines.json": "ABSENT",
+                "Tsx-Baselines.json": "ABSENT"
+              },
+              "R-NON-TREE": {
+                "outputIgnored": true,
+                "benchModule": [
+                  "tests/bench/test_tsx_baselines.py"
+                ],
+                "state": "ABSENT"
+              }
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "quote": "and validates against report-v1",
+          "witness": {
+            "claim": "2edbb96125ea",
+            "schema": {
+              "path": "schemas/bench/report-v1.json",
+              "blob": "f36108fce119a9cfde15afe90405347c096f1985",
+              "id": "https://reactive-fiber-cli.dev/schemas/bench/report-v1.json"
+            },
+            "reached": false,
+            "standIn": "constructed from the vendored slices, not a producer report",
+            "standInValid": true,
+            "droppedTop": 7,
+            "droppedRow": 13,
+            "strayGraph": [
+              "/runtime/rows/0/graph"
+            ],
+            "residuals": {
+              "R-SCHEMA-SLICE": []
+            }
+          }
+        },
+        {
+          "id": "A3",
+          "quote": "with the three instance axes present",
+          "witness": {
+            "claim": "25efd807c0bd",
+            "steps": [
+              1,
+              10,
+              100
+            ],
+            "graphs": 3,
+            "reached": false,
+            "full": {
+              "covered": true,
+              "missing": {}
+            },
+            "dropped": {
+              "covered": false,
+              "missing": {
+                "active_tsx": [
+                  100
+                ]
+              }
+            },
+            "bareMissing": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "On landing: a recorded TRACEABILITY comparison row (policy vs N x cold-process cost per axis) and either an explicit 'policies unchanged, adequate because ...' note or a re-derived numeric change citing the baseline",
+      "pins": [
+        {
+          "id": "B1",
+          "quote": "On landing: a recorded TRACEABILITY comparison row (policy vs N x cold-process cost per axis)",
+          "witness": {
+            "claim": "2fe49bc4287c",
+            "live": {
+              "traceabilityLines": 0,
+              "receipt": false
+            },
+            "owed": false,
+            "planted": {
+              "traceabilityLines": 1,
+              "receipt": true
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "quote": "and either an explicit 'policies unchanged, adequate because ...' note or a re-derived numeric change citing the baseline",
+          "witness": {
+            "claim": "864bc419c6bd",
+            "gate": "ABSENT",
+            "note": "policies unchanged, adequate because",
+            "noteControl": [
+              "docs/probe.md:1 anchor+cost+policy: asserted-adequate"
+            ],
+            "liveFindings": 0,
+            "numericChange": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "Negative (holds and is testable NOW): no commit changes the :81/:98 numerics citing TSX costs, and no docs/receipt claims TSX-cost adequacy, before the baseline exists",
+      "pins": [
+        {
+          "id": "C1",
+          "quote": "Negative (holds and is testable NOW): no commit changes the :81/:98 numerics citing TSX costs",
+          "witness": {
+            "claim": "94963df331a3",
+            "module": "src/workbench/providers/reactivefiber.ts",
+            "policy": {
+              "deadlines": [
+                60000
+              ],
+              "caps": [
+                {
+                  "stream": "stderr",
+                  "operator": ">",
+                  "bound": 262144
+                },
+                {
+                  "stream": "stdout",
+                  "operator": ">",
+                  "bound": 262144
+                }
+              ]
+            },
+            "stated": {
+              "deadlineMs": 60000,
+              "capBytes": 262144
+            },
+            "changed": {
+              "deadline 30 s": true,
+              "stdout cap 512 KiB": true,
+              "stdout cap inclusive": true,
+              "shared cap 128 KiB": true,
+              "runtime deadline": true,
+              "other timer by name beside a deadline function": false,
+              "other timer bound to a name beside a deadline binding": false,
+              "other timer by a block name shadowing a deadline function": false,
+              "other timer by a name used beside the deadline reason": false,
+              "other timer passing another reason": false,
+              "second deadline timer": true,
+              "second deadline timer by a function expression": true,
+              "second deadline timer whose arrow stops in a nested function": true,
+              "second deadline timer whose function expression stops in a nested function": true,
+              "second deadline timer by an optional call": true,
+              "second deadline timer by name": true,
+              "second deadline timer by a shadowed name": true,
+              "second deadline timer by a let-bound name": true,
+              "second deadline timer by a var-bound name": true,
+              "second deadline timer by a using-bound name": true,
+              "second deadline timer by an await-using-bound name": true,
+              "second deadline timer by a name bound to a parenthesized callback": true,
+              "second deadline timer by a name bound to an asserted arrow": true,
+              "second deadline timer by call": true,
+              "second deadline timer by a call over a nested arrow": true,
+              "second deadline timer by an alias": true,
+              "second deadline timer by an assigned name": true,
+              "second deadline timer by a name assigned with ||=": true,
+              "second deadline timer by a name assigned with &&=": true,
+              "second deadline timer by a name assigned with ??=": true,
+              "second deadline timer by a destructured name": true,
+              "second deadline timer by a renamed destructured name": true,
+              "second deadline timer by a parenthesized callback": true,
+              "second deadline timer passing the reason": true,
+              "second deadline timer with a template reason": true,
+              "second deadline timer with a parenthesized reason": true,
+              "second deadline timer with a const-bound reason": true,
+              "duplicate deadline timer": true,
+              "renamed deadline binding": false
+            },
+            "forms": {
+              "deadline 30 s": "30_000",
+              "stdout cap 512 KiB": "512*1024",
+              "stdout cap inclusive": ">=",
+              "shared cap 128 KiB": "128*1024",
+              "runtime deadline": "Date.now()",
+              "other timer by name beside a deadline function": "function onDecoyDeadline(){stop(\"deadline\");}\nfunction onQuietKill(){child.kill(\"SIGKILL\");}\nsetTimeout(onQuietKill,500);",
+              "other timer bound to a name beside a deadline binding": "const onDecoyDeadline=()=>stop(\"deadline\");\nconst onQuietKill=()=>child.kill(\"SIGKILL\");\nsetTimeout(onQuietKill,500);",
+              "other timer by a block name shadowing a deadline function": "function onShadowedKill(){stop(\"deadline\");}\n{const onShadowedKill=()=>child.kill(\"SIGKILL\");setTimeout(onShadowedKill,500);}",
+              "other timer by a name used beside the deadline reason": "const onUsedKill=()=>child.kill(\"SIGKILL\");\nrecord(onUsedKill,\"deadline\");\nsetTimeout(onUsedKill,500);",
+              "other timer passing another reason": "setTimeout(stop,500,\"stdout\");",
+              "second deadline timer": "setTimeout(()=>stop(\"deadline\"),5_000);",
+              "second deadline timer by a function expression": "setTimeout(function(){stop(\"deadline\");},5_000);",
+              "second deadline timer whose arrow stops in a nested function": "setTimeout(()=>{const onLateInner=()=>stop(\"deadline\");onLateInner();},5_000);",
+              "second deadline timer whose function expression stops in a nested function": "setTimeout(function(){function onLateNested(){stop(\"deadline\");}onLateNested();},5_000);",
+              "second deadline timer by an optional call": "setTimeout?.(()=>stop(\"deadline\"),5_000);",
+              "second deadline timer by name": "function onLateDeadline(){stop(\"deadline\");}\nsetTimeout(onLateDeadline,5_000);",
+              "second deadline timer by a shadowed name": "function onShadowedDeadline(){}\n{const onShadowedDeadline=()=>stop(\"deadline\");setTimeout(onShadowedDeadline,5_000);}",
+              "second deadline timer by a let-bound name": "let onLateLet=()=>stop(\"deadline\");\nsetTimeout(onLateLet,5_000);",
+              "second deadline timer by a var-bound name": "var onLateVar=()=>stop(\"deadline\");\nsetTimeout(onLateVar,5_000);",
+              "second deadline timer by a using-bound name": "using onLateUsing=()=>stop(\"deadline\");\nsetTimeout(onLateUsing,5_000);",
+              "second deadline timer by an await-using-bound name": "await using onLateAwaitUsing=()=>stop(\"deadline\");\nsetTimeout(onLateAwaitUsing,5_000);",
+              "second deadline timer by a name bound to a parenthesized callback": "const onLateParenthesized=(()=>stop(\"deadline\"));\nsetTimeout(onLateParenthesized,5_000);",
+              "second deadline timer by a name bound to an asserted arrow": "const onLateAsserted=(()=>stop(\"deadline\")) as ()=>void;\nsetTimeout(onLateAsserted,5_000);",
+              "second deadline timer by call": "setTimeout(stop.bind(null,\"deadline\"),5_000);",
+              "second deadline timer by a call over a nested arrow": "const onceLate=(run:()=>void)=>()=>run();\nsetTimeout(onceLate(()=>stop(\"deadline\")),5_000);",
+              "second deadline timer by an alias": "const onLateTarget=()=>stop(\"deadline\");\nconst onLateAlias=onLateTarget;\nsetTimeout(onLateAlias,5_000);",
+              "second deadline timer by an assigned name": "let onLateAssigned:()=>void;\nonLateAssigned=()=>stop(\"deadline\");\nsetTimeout(onLateAssigned,5_000);",
+              "second deadline timer by a name assigned with ||=": "let onLateOr:(()=>void)|undefined;\nonLateOr||=()=>stop(\"deadline\");\nsetTimeout(onLateOr,5_000);",
+              "second deadline timer by a name assigned with &&=": "let onLateAnd:()=>void=()=>{};\nonLateAnd&&=()=>stop(\"deadline\");\nsetTimeout(onLateAnd,5_000);",
+              "second deadline timer by a name assigned with ??=": "let onLateNullish:(()=>void)|undefined;\nonLateNullish??=()=>stop(\"deadline\");\nsetTimeout(onLateNullish,5_000);",
+              "second deadline timer by a destructured name": "const {onLateDestructured}={onLateDestructured:()=>stop(\"deadline\")};\nsetTimeout(onLateDestructured,5_000);",
+              "second deadline timer by a renamed destructured name": "const {late:onLateRenamed}={late:()=>stop(\"deadline\")};\nsetTimeout(onLateRenamed,5_000);",
+              "second deadline timer by a parenthesized callback": "setTimeout((()=>stop(\"deadline\")),5_000);",
+              "second deadline timer passing the reason": "setTimeout(stop,5_000,\"deadline\");",
+              "second deadline timer with a template reason": "setTimeout(()=>stop(`deadline`),5_000);",
+              "second deadline timer with a parenthesized reason": "setTimeout(()=>stop((\"deadline\")),5_000);",
+              "second deadline timer with a const-bound reason": "const LATE_REASON=\"deadline\";\nsetTimeout(()=>stop(LATE_REASON),5_000);",
+              "duplicate deadline timer": "setTimeout(()=>stop(\"deadline\"),60_000);",
+              "renamed deadline binding": "const DEADLINE_MS=60_000; DEADLINE_MS",
+              "stdout cap read through a let binding": "let STDOUT_LIMIT",
+              "deadline read through a let binding": "let DEADLINE_LIMIT",
+              "stream reason in an unrelated call under a comparison": "if(n>0) console.debug(\"stdout\");",
+              "deadline reason in an unrelated call inside a timer": "setTimeout(()=>console.debug(\"deadline\"),50_000);",
+              "deadline reason in an unrelated call inside a named timer callback": "function onSlowWarning(){console.debug(\"deadline\");}\nsetTimeout(onSlowWarning,50_000);",
+              "deadline reason passed by a timer to an unrelated callback": "setTimeout(console.warn,50_000,\"deadline\");",
+              "template deadline reason in an unrelated call inside a timer": "setTimeout(()=>console.warn(`deadline`),50_000);",
+              "template stream reason in an unrelated call under a comparison": "if(n>0) console.debug(`stdout`);",
+              "const-bound stream reason in an unrelated call under a comparison": "const STREAM_LABEL=\"stdout\";\nif(n>0) console.debug(STREAM_LABEL);",
+              "deadline reason in a closure a named timer callback returns": "function makeLater(){return ()=>stop(\"deadline\");}\nsetTimeout(makeLater,50_000);",
+              "const-bound deadline reason in an unrelated call inside a timer": "const SLOW_REASON=\"deadline\";\nsetTimeout(()=>console.warn(SLOW_REASON),50_000);",
+              "deadline reason bound into an unrelated callback": "setTimeout(console.warn.bind(console,\"deadline\"),50_000);",
+              "R-OTHER-KILL-PATH a kill timer": "setTimeout(()=>child.kill(\"SIGKILL\"),30_000);",
+              "R-OTHER-KILL-PATH a reason assignment beside a kill": "setTimeout(()=>{stopReason=\"deadline\";child.kill(\"SIGTERM\");},5_000);",
+              "R-INDIRECT-DEADLINE a wrapper": "const onLate=()=>stop(\"deadline\");\nsetTimeout(()=>onLate(),5_000);",
+              "R-INDIRECT-DEADLINE a member": "const handlers={deadline:()=>stop(\"deadline\")};\nsetTimeout(handlers.deadline,5_000);",
+              "R-INDIRECT-DEADLINE a parameter": "function armLate(onArmed:()=>void){setTimeout(onArmed,5_000);}\narmLate(()=>stop(\"deadline\"));",
+              "R-INDIRECT-DEADLINE an array destructuring": "const [onLateItem]=[()=>stop(\"deadline\")];\nsetTimeout(onLateItem,5_000);",
+              "R-INDIRECT-DEADLINE a destructuring of a name": "const lateHandlers={onLateKey:()=>stop(\"deadline\")};\nconst {onLateKey}=lateHandlers;\nsetTimeout(onLateKey,5_000);",
+              "R-INDIRECT-DEADLINE an element access": "const lateTable={deadline:()=>stop(\"deadline\")};\nsetTimeout(lateTable[\"deadline\"],5_000);",
+              "R-INDIRECT-DEADLINE a class's static method": "class LateHandlers{static late(){stop(\"deadline\");}}\nsetTimeout(LateHandlers.late,5_000);",
+              "R-INDIRECT-DEADLINE an imported name": "import { onImportedLate } from \"./late.js\";\nsetTimeout(onImportedLate,5_000);",
+              "R-INDIRECT-DEADLINE a parameter default": "function armDefault(onLateDefault=()=>stop(\"deadline\")){setTimeout(onLateDefault,5_000);}\narmDefault();",
+              "R-INDIRECT-DEADLINE a member through a rest destructuring": "const {...lateRest}={late:()=>stop(\"deadline\")};\nsetTimeout(lateRest.late,5_000);",
+              "R-UNREAD-BINDING a destructuring assignment": "let onEarlyDA:()=>void=()=>{};\n({onEarlyDA}={onEarlyDA:()=>stop(\"deadline\")});\nsetTimeout(onEarlyDA,5_000);",
+              "R-UNREAD-BINDING a destructuring assignment under a renamed key": "let onEarlyDB:()=>void=()=>{};\n({late:onEarlyDB}={late:()=>stop(\"deadline\")});\nsetTimeout(onEarlyDB,5_000);",
+              "R-UNREAD-BINDING a renamed destructuring of a shorthand property": "const onEarlySrc=()=>stop(\"deadline\");\nconst {onEarlySrc:onEarlyCb}={onEarlySrc};\nsetTimeout(onEarlyCb,5_000);",
+              "R-UNREAD-BINDING a destructuring default": "const {onEarlyDef=()=>stop(\"deadline\")}:{onEarlyDef?:()=>void}={};\nsetTimeout(onEarlyDef,5_000);",
+              "R-UNREAD-BINDING a destructuring of a parenthesized object literal": "const {late:onEarlyP}=({late:()=>stop(\"deadline\")});\nsetTimeout(onEarlyP,5_000);",
+              "R-UNREAD-BINDING a destructuring of an asserted object literal": "const {late:onEarlyAs}={late:()=>stop(\"deadline\")} as {late:()=>void};\nsetTimeout(onEarlyAs,5_000);",
+              "R-UNREAD-BINDING a destructuring of a method property": "const {late:onEarlyM}={late(){stop(\"deadline\");}};\nsetTimeout(onEarlyM,5_000);",
+              "R-UNREAD-BINDING a destructuring under a string key": "const {\"late\":onLateQuoted}={\"late\":()=>stop(\"deadline\")};\nsetTimeout(onLateQuoted,5_000);",
+              "R-UNREAD-BINDING a destructuring of a later duplicate key": "const {late:onLateDuplicate}={late:()=>{},late:()=>stop(\"deadline\")};\nsetTimeout(onLateDuplicate,5_000);",
+              "R-UNREAD-BINDING a nested destructuring": "const {outer:{late:onLateNested}}={outer:{late:()=>stop(\"deadline\")}};\nsetTimeout(onLateNested,5_000);",
+              "R-UNREAD-BINDING a destructuring of a spread literal": "const {late:onLateSpread}={...{late:()=>stop(\"deadline\")}};\nsetTimeout(onLateSpread,5_000);",
+              "R-UNREAD-BINDING an array destructuring assignment": "let onLateArrayed:()=>void=()=>{};\n[onLateArrayed]=[()=>stop(\"deadline\")];\nsetTimeout(onLateArrayed,5_000);",
+              "R-UNREAD-BINDING an assignment to a parenthesized name": "let onLateWrapped:()=>void=()=>{};\n(onLateWrapped)=()=>stop(\"deadline\");\nsetTimeout(onLateWrapped,5_000);",
+              "R-UNREAD-BINDING a destructuring of a satisfies-wrapped object literal": "const {late:onEarlySat}={late:()=>stop(\"deadline\")} satisfies {late:()=>void};\nsetTimeout(onEarlySat,5_000);",
+              "R-UNREAD-BINDING a destructuring of a non-null-asserted object literal": "const {late:onEarlyBang}={late:()=>stop(\"deadline\")}!;\nsetTimeout(onEarlyBang,5_000);",
+              "R-WRAPPED-CALLBACK an as assertion": "setTimeout((()=>stop(\"deadline\")) as ()=>void,5_000);",
+              "R-WRAPPED-CALLBACK a non-null assertion": "const onEarlyNN:(()=>void)|undefined=()=>stop(\"deadline\");\nsetTimeout(onEarlyNN!,5_000);",
+              "R-WRAPPED-CALLBACK a satisfies expression": "setTimeout((()=>stop(\"deadline\")) satisfies ()=>void,5_000);",
+              "R-WRAPPED-CALLBACK a conditional": "const lateGate={aborted:false};\nsetTimeout(lateGate.aborted?()=>{}:()=>stop(\"deadline\"),5_000);",
+              "R-WRAPPED-CALLBACK an angle-bracket assertion": "setTimeout(<()=>void>(()=>stop(\"deadline\")),5_000);",
+              "R-WRAPPED-CALLBACK a nullish fallback": "const lateFallback:(()=>void)|undefined=undefined;\nsetTimeout(lateFallback??(()=>stop(\"deadline\")),5_000);",
+              "R-WRAPPED-CALLBACK a logical-or fallback": "const lateOrFallback:(()=>void)|undefined=undefined;\nsetTimeout(lateOrFallback||(()=>stop(\"deadline\")),5_000);",
+              "R-WRAPPED-CALLBACK a comma expression": "setTimeout((0,()=>stop(\"deadline\")),5_000);",
+              "R-WRAPPED-CALLBACK an alias through as": "const onLateCast=()=>stop(\"deadline\");\nconst onLateCastAlias=onLateCast as ()=>void;\nsetTimeout(onLateCastAlias,5_000);",
+              "R-WRAPPED-CALLBACK an alias through a parenthesized as": "const onLateCastP=()=>stop(\"deadline\");\nconst onLateCastPAlias=(onLateCastP as ()=>void);\nsetTimeout(onLateCastPAlias,5_000);",
+              "R-WRAPPED-CALLBACK an alias through a non-null assertion": "const onLateMaybe:(()=>void)|undefined=()=>stop(\"deadline\");\nconst onLateSure=onLateMaybe!;\nsetTimeout(onLateSure,5_000);",
+              "R-OTHER-TIMER globalThis.setTimeout": "globalThis.setTimeout(()=>stop(\"deadline\"),5_000);",
+              "R-OTHER-TIMER an aliased timers import": "import { setTimeout as later } from \"node:timers\";\nlater(()=>stop(\"deadline\"),5_000);",
+              "R-OTHER-TIMER setInterval": "setInterval(()=>stop(\"deadline\"),5_000);",
+              "R-OTHER-TIMER a parenthesized setTimeout": "(setTimeout)(()=>stop(\"deadline\"),5_000);",
+              "R-OTHER-TIMER setTimeout.call": "setTimeout.call(null,()=>stop(\"deadline\"),5_000);",
+              "R-OTHER-TIMER a const alias of setTimeout": "const laterTimer=setTimeout;\nlaterTimer(()=>stop(\"deadline\"),5_000);",
+              "R-COMPUTED-REASON a spread": "setTimeout(()=>stop(...[\"deadline\"]),5_000);",
+              "R-COMPUTED-REASON a concatenation": "setTimeout(()=>stop(\"dead\"+\"line\"),5_000);",
+              "R-COMPUTED-REASON an assertion": "setTimeout(()=>stop(\"deadline\" as const),5_000);",
+              "R-COMPUTED-REASON a let-bound name": "let LATE_LET_REASON=\"deadline\";\nsetTimeout(()=>stop(LATE_LET_REASON),5_000);",
+              "R-COMPUTED-REASON a var-bound name": "var LATE_VAR_REASON=\"deadline\";\nsetTimeout(()=>stop(LATE_VAR_REASON),5_000);",
+              "R-COMPUTED-REASON a destructured const name": "const {lateReason}={lateReason:\"deadline\"};\nsetTimeout(()=>stop(lateReason),5_000);",
+              "R-COMPUTED-REASON a const name bound to an assertion": "const LATE_ASSERTED_REASON=\"deadline\" as const;\nsetTimeout(()=>stop(LATE_ASSERTED_REASON),5_000);",
+              "R-COMPUTED-REASON a template with a substitution": "setTimeout(()=>stop(`dead${String()}line`),5_000);",
+              "R-COMPUTED-REASON a member": "const LATE_REASONS={late:\"deadline\"};\nsetTimeout(()=>stop(LATE_REASONS.late),5_000);",
+              "R-COMPUTED-REASON a spread after the delay": "setTimeout(stop,5_000,...[\"deadline\"]);",
+              "R-COMPUTED-REASON an apply array": "setTimeout(()=>stop.apply(null,[\"deadline\"]),5_000);",
+              "R-COMPUTED-REASON a Reflect.apply array": "setTimeout(()=>Reflect.apply(stop,null,[\"deadline\"]),5_000);",
+              "R-COMPUTED-REASON a comma expression": "setTimeout(()=>stop((0,\"deadline\")),5_000);",
+              "R-COMPUTED-REASON a conditional": "const lateFlag=true;\nsetTimeout(()=>stop(lateFlag?\"deadline\":\"stdout\"),5_000);",
+              "R-COMPUTED-REASON an inline-literal member": "setTimeout(()=>stop({late:\"deadline\"}.late),5_000);",
+              "R-COMPUTED-REASON a String.raw template": "setTimeout(()=>stop(String.raw`deadline`),5_000);",
+              "R-OTHER-CAP-FORM a conditional expression": "stdoutBytes>128*1024 ? stop(\"stdout\") : undefined;",
+              "R-OTHER-CAP-FORM a logical and": "stdoutBytes>128*1024 && stop(\"stdout\");",
+              "R-OTHER-CAP-FORM an else branch": "if(stdoutBytes<=128*1024) {} else stop(\"stdout\");",
+              "R-OTHER-CAP-FORM a loop": "while(stdoutBytes>128*1024) {stop(\"stdout\");break;}",
+              "R-OTHER-CAP-FORM a negated condition": "if(!(stdoutBytes<=128*1024)) stop(\"stdout\");",
+              "R-OTHER-CAP-FORM a parenthesized condition": "if((stdoutBytes>128*1024)) stop(\"stdout\");",
+              "R-OTHER-CAP-FORM a guard clause": "function capGuard(){if(stdoutBytes<=128*1024) return; stop(\"stdout\");}\ncapGuard();",
+              "R-OTHER-CAP-FORM a switch case": "switch(true){case stdoutBytes>128*1024: stop(\"stdout\");}"
+            },
+            "refactored": {
+              "deadline bound in its function to the variant's name": {
+                "unchanged": true,
+                "drift": []
+              },
+              "deadline bound at module scope to the variant's name": {
+                "unchanged": true,
+                "drift": []
+              },
+              "deadline bound in its function to another name": {
+                "unchanged": true,
+                "drift": []
+              },
+              "deadline delay as a sum": {
+                "unchanged": true,
+                "drift": []
+              },
+              "deadline delay as a difference": {
+                "unchanged": true,
+                "drift": []
+              },
+              "deadline delay parenthesized": {
+                "unchanged": true,
+                "drift": []
+              },
+              "deadline callback bound to a name": {
+                "unchanged": true,
+                "drift": []
+              },
+              "deadline callback declared as a function": {
+                "unchanged": true,
+                "drift": []
+              },
+              "deadline callback through an alias": {
+                "unchanged": true,
+                "drift": []
+              },
+              "deadline callback assigned to a name": {
+                "unchanged": true,
+                "drift": []
+              },
+              "deadline callback destructured from an object literal": {
+                "unchanged": true,
+                "drift": []
+              },
+              "deadline reason bound by const": {
+                "unchanged": true,
+                "drift": []
+              },
+              "deadline reason bound by const to a template": {
+                "unchanged": true,
+                "drift": []
+              },
+              "deadline reason passed by the timer": {
+                "unchanged": true,
+                "drift": []
+              },
+              "stderr cap on its own binding": {
+                "unchanged": true,
+                "drift": []
+              },
+              "stdout cap on its own binding": {
+                "unchanged": true,
+                "drift": []
+              },
+              "stdout cap through an alias binding": {
+                "unchanged": true,
+                "drift": []
+              },
+              "stderr cap through an alias binding": {
+                "unchanged": true,
+                "drift": []
+              },
+              "both caps on their own bindings": {
+                "unchanged": true,
+                "drift": []
+              },
+              "both caps inlined": {
+                "unchanged": true,
+                "drift": []
+              }
+            },
+            "failClosed": {
+              "stdout cap read through a let binding": {
+                "deadlines": [
+                  60000
+                ],
+                "caps": [
+                  {
+                    "stream": "stderr",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": null
+                  }
+                ]
+              },
+              "deadline read through a let binding": {
+                "deadlines": [
+                  null
+                ],
+                "caps": [
+                  {
+                    "stream": "stderr",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 262144
+                  }
+                ]
+              },
+              "stream reason in an unrelated call under a comparison": {
+                "deadlines": [
+                  60000
+                ],
+                "caps": [
+                  {
+                    "stream": "stderr",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 0
+                  }
+                ]
+              },
+              "deadline reason in an unrelated call inside a timer": {
+                "deadlines": [
+                  60000,
+                  50000
+                ],
+                "caps": [
+                  {
+                    "stream": "stderr",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 262144
+                  }
+                ]
+              },
+              "deadline reason in an unrelated call inside a named timer callback": {
+                "deadlines": [
+                  60000,
+                  50000
+                ],
+                "caps": [
+                  {
+                    "stream": "stderr",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 262144
+                  }
+                ]
+              },
+              "deadline reason passed by a timer to an unrelated callback": {
+                "deadlines": [
+                  60000,
+                  50000
+                ],
+                "caps": [
+                  {
+                    "stream": "stderr",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 262144
+                  }
+                ]
+              },
+              "template deadline reason in an unrelated call inside a timer": {
+                "deadlines": [
+                  60000,
+                  50000
+                ],
+                "caps": [
+                  {
+                    "stream": "stderr",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 262144
+                  }
+                ]
+              },
+              "template stream reason in an unrelated call under a comparison": {
+                "deadlines": [
+                  60000
+                ],
+                "caps": [
+                  {
+                    "stream": "stderr",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 0
+                  }
+                ]
+              },
+              "const-bound stream reason in an unrelated call under a comparison": {
+                "deadlines": [
+                  60000
+                ],
+                "caps": [
+                  {
+                    "stream": "stderr",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 0
+                  }
+                ]
+              },
+              "deadline reason in a closure a named timer callback returns": {
+                "deadlines": [
+                  60000,
+                  50000
+                ],
+                "caps": [
+                  {
+                    "stream": "stderr",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 262144
+                  }
+                ]
+              },
+              "const-bound deadline reason in an unrelated call inside a timer": {
+                "deadlines": [
+                  60000,
+                  50000
+                ],
+                "caps": [
+                  {
+                    "stream": "stderr",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 262144
+                  }
+                ]
+              },
+              "deadline reason bound into an unrelated callback": {
+                "deadlines": [
+                  60000,
+                  50000
+                ],
+                "caps": [
+                  {
+                    "stream": "stderr",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 262144
+                  }
+                ]
+              }
+            },
+            "fresh": {
+              "free": "A",
+              "nested": "A_2"
+            },
+            "scoped": [
+              60000
+            ],
+            "residuals": {
+              "R-OTHER-KILL-PATH": {
+                "a kill timer": "unchanged",
+                "a reason assignment beside a kill": "unchanged"
+              },
+              "R-INDIRECT-DEADLINE": {
+                "a wrapper": "unchanged",
+                "a member": "unchanged",
+                "a parameter": "unchanged",
+                "an array destructuring": "unchanged",
+                "a destructuring of a name": "unchanged",
+                "an element access": "unchanged",
+                "a class's static method": "unchanged",
+                "an imported name": "unchanged",
+                "a parameter default": "unchanged",
+                "a member through a rest destructuring": "unchanged"
+              },
+              "R-UNREAD-BINDING": {
+                "a destructuring assignment": "unchanged",
+                "a destructuring assignment under a renamed key": "unchanged",
+                "a renamed destructuring of a shorthand property": "unchanged",
+                "a destructuring default": "unchanged",
+                "a destructuring of a parenthesized object literal": "unchanged",
+                "a destructuring of an asserted object literal": "unchanged",
+                "a destructuring of a method property": "unchanged",
+                "a destructuring under a string key": "unchanged",
+                "a destructuring of a later duplicate key": "unchanged",
+                "a nested destructuring": "unchanged",
+                "a destructuring of a spread literal": "unchanged",
+                "an array destructuring assignment": "unchanged",
+                "an assignment to a parenthesized name": "unchanged",
+                "a destructuring of a satisfies-wrapped object literal": "unchanged",
+                "a destructuring of a non-null-asserted object literal": "unchanged"
+              },
+              "R-WRAPPED-CALLBACK": {
+                "an as assertion": "unchanged",
+                "a non-null assertion": "unchanged",
+                "a satisfies expression": "unchanged",
+                "a conditional": "unchanged",
+                "an angle-bracket assertion": "unchanged",
+                "a nullish fallback": "unchanged",
+                "a logical-or fallback": "unchanged",
+                "a comma expression": "unchanged",
+                "an alias through as": "unchanged",
+                "an alias through a parenthesized as": "unchanged",
+                "an alias through a non-null assertion": "unchanged"
+              },
+              "R-OTHER-TIMER": {
+                "globalThis.setTimeout": "unchanged",
+                "an aliased timers import": "unchanged",
+                "setInterval": "unchanged",
+                "a parenthesized setTimeout": "unchanged",
+                "setTimeout.call": "unchanged",
+                "a const alias of setTimeout": "unchanged"
+              },
+              "R-COMPUTED-REASON": {
+                "a spread": "unchanged",
+                "a concatenation": "unchanged",
+                "an assertion": "unchanged",
+                "a let-bound name": "unchanged",
+                "a var-bound name": "unchanged",
+                "a destructured const name": "unchanged",
+                "a const name bound to an assertion": "unchanged",
+                "a template with a substitution": "unchanged",
+                "a member": "unchanged",
+                "a spread after the delay": "unchanged",
+                "an apply array": "unchanged",
+                "a Reflect.apply array": "unchanged",
+                "a comma expression": "unchanged",
+                "a conditional": "unchanged",
+                "an inline-literal member": "unchanged",
+                "a String.raw template": "unchanged"
+              },
+              "R-OTHER-CAP-FORM": {
+                "a conditional expression": "unchanged",
+                "a logical and": "unchanged",
+                "an else branch": "unchanged",
+                "a loop": "unchanged",
+                "a negated condition": "unchanged",
+                "a parenthesized condition": "unchanged",
+                "a guard clause": "unchanged",
+                "a switch case": "unchanged"
+              }
+            }
+          }
+        },
+        {
+          "id": "C2",
+          "quote": "and no docs/receipt claims TSX-cost adequacy",
+          "witness": {
+            "claim": "b2f95e642564",
+            "floors": {
+              "docs": true,
+              "src": true,
+              "qa": true,
+              "examples": true,
+              ".agents": true
+            },
+            "pages": true,
+            "findings": [],
+            "coverage": [
+              "docs/wb-693.8-coverage-probe.md:1 anchor+cost+policy: asserted-adequate",
+              "docs/wb-693.8-coverage-probe.md:3 anchor+cost+policy: asserted-sufficient"
+            ],
+            "anchors": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "families": [
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+policy: asserted-adequate",
+              "docs/probe.md:1 anchor+policy: asserted-adequate",
+              "docs/probe.md:1 anchor+policy: asserted-adequate",
+              "docs/probe.md:1 anchor+policy: asserted-adequate"
+            ],
+            "inflections": [
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-sufficient",
+              "docs/probe.md:1 anchor+cost: asserted-sufficient",
+              "docs/probe.md:1 anchor+cost: asserted-sufficient",
+              "docs/probe.md:1 anchor+cost: asserted-sufficient",
+              "docs/probe.md:1 anchor+cost: asserted-enough"
+            ],
+            "markers": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "cuts": {
+              "period": 0,
+              "semicolon": 0,
+              "blankLine": 0,
+              "tableRow": 0,
+              "listItem": 0,
+              "dataLine": 0,
+              "listItemOutsideMarkdown": 1,
+              "wrappedLine": 1
+            },
+            "walk": {
+              "entries": [
+                "README.md",
+                "docs/tracked.md",
+                "docs/untracked.md"
+              ],
+              "refused": [
+                "docs/link.md",
+                "docs/screen.png"
+              ],
+              "findings": [
+                "README.md:1 anchor+cost: asserted-adequate",
+                "docs/tracked.md:1 anchor+cost: asserted-adequate",
+                "docs/untracked.md:1 anchor+cost: asserted-adequate"
+              ]
+            },
+            "residuals": {
+              "R-UNANCHORED": 0,
+              "R-MARKER-ANYWHERE": 0,
+              "R-SPLIT": 0,
+              "R-PARAPHRASE": 0,
+              "R-LOOKALIKE": [
+                0,
+                0
+              ],
+              "R-JOINED": [
+                0,
+                0
+              ],
+              "R-OUTSIDE-ROOTS": {
+                "outside": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ],
+                "inside": true
+              }
+            }
+          }
+        },
+        {
+          "id": "C3",
+          "quote": "before the baseline exists",
+          "witness": {
+            "claim": "6e32a16b3e14",
+            "gate": "ABSENT",
+            "live": {
+              "state": "armed",
+              "violations": []
+            },
+            "armedViolations": 2,
+            "holding": "PRESENT",
+            "stood": {
+              "state": "stood-down",
+              "violations": []
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "residuals": [
+    {
+      "id": "R-RENAMED",
+      "quietPin": "A1"
+    },
+    {
+      "id": "R-NON-TREE",
+      "quietPin": "A1"
+    },
+    {
+      "id": "R-SCHEMA-SLICE",
+      "quietPin": "A2"
+    },
+    {
+      "id": "R-OTHER-KILL-PATH",
+      "quietPin": "C1"
+    },
+    {
+      "id": "R-INDIRECT-DEADLINE",
+      "quietPin": "C1"
+    },
+    {
+      "id": "R-UNREAD-BINDING",
+      "quietPin": "C1"
+    },
+    {
+      "id": "R-WRAPPED-CALLBACK",
+      "quietPin": "C1"
+    },
+    {
+      "id": "R-OTHER-TIMER",
+      "quietPin": "C1"
+    },
+    {
+      "id": "R-COMPUTED-REASON",
+      "quietPin": "C1"
+    },
+    {
+      "id": "R-OTHER-CAP-FORM",
+      "quietPin": "C1"
+    },
+    {
+      "id": "R-UNANCHORED",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-MARKER-ANYWHERE",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-SPLIT",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-PARAPHRASE",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-LOOKALIKE",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-JOINED",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-OUTSIDE-ROOTS",
+      "quietPin": "C2"
+    }
+  ]
+}

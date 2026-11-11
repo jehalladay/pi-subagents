@@ -899,6 +899,9 @@
    "registerModuleConst": [
     "#registerProbe"
    ],
+   "registerConstChain": [
+    "#registerProbe"
+   ],
    "registerHeldDescriptor": [
     "#registerProbe"
    ],
@@ -908,8 +911,17 @@
    "registerComputedName": [
     "#registerProbe"
    ],
+   "registerStringName": [
+    "#registerProbe"
+   ],
    "registerArrow": [
     "#registerProbe"
+   ],
+   "registerDefaultExport": [
+    "#default"
+   ],
+   "registerDefaultFunction": [
+    "#default"
    ],
    "registerListed": [
     "#registerProbe"
@@ -919,8 +931,11 @@
    ],
    "registerComposedId": [],
    "registerImportedId": [],
+   "registerLetId": [],
+   "registerVarId": [],
    "registerClassField": [],
    "registerAssignedId": [],
+   "registerGetterId": [],
    "toolNamed": [
     "#probe_invoke"
    ],
@@ -936,7 +951,16 @@
    "toolRebound": [
     "#probe_invoke"
    ],
+   "toolReboundMember": [
+    "#probe_invoke"
+   ],
+   "toolReboundChain": [
+    "#probe_invoke"
+   ],
    "toolDestructured": [
+    "#probe_invoke"
+   ],
+   "toolDestructuredDefault": [
     "#probe_invoke"
    ],
    "toolAssigned": [
@@ -945,7 +969,28 @@
    "toolAssignedLogical": [
     "#probe_invoke"
    ],
+   "toolAssignedOrOr": [
+    "#probe_invoke"
+   ],
+   "toolAssignedAndAnd": [
+    "#probe_invoke"
+   ],
+   "toolAssignedInModule": [
+    "#probe_invoke"
+   ],
+   "toolAssignedInFunction": [
+    "#probe_invoke"
+   ],
+   "toolAssignedMember": [
+    "#probe_invoke"
+   ],
+   "toolAssignedChain": [
+    "#probe_invoke"
+   ],
    "toolNamespaceElement": [
+    "#probe_invoke"
+   ],
+   "toolDefaultImportElement": [
     "#probe_invoke"
    ],
    "toolHandlerReference": [
@@ -961,6 +1006,9 @@
     "#probe_invoke"
    ],
    "toolNameConst": [
+    "#probe_invoke"
+   ],
+   "toolNameConstChain": [
     "#probe_invoke"
    ],
    "toolNameComposed": [
@@ -981,6 +1029,10 @@
    "toolDestructuringAssignment": [],
    "toolHelperCall": [],
    "toolHelperChosen": [],
+   "toolHelperComma": [],
+   "toolHelperCallComma": [],
+   "toolHelperChained": [],
+   "toolHelperParameter": [],
    "toolSdkSubpath": [],
    "projectModifier": [
     "#project"
@@ -1000,6 +1052,9 @@
    "projectDefaultValue": [
     "#default"
    ],
+   "projectDefaultArrow": [
+    "#default"
+   ],
    "projectRebound": [
     "#used"
    ],
@@ -1009,16 +1064,33 @@
    "projectTypeAlias": [
     "#project"
    ],
+   "projectTypeAliasChain": [
+    "#project"
+   ],
    "projectParenthesized": [
+    "#project"
+   ],
+   "projectParenthesizedAlias": [
+    "#project"
+   ],
+   "projectParenthesizedImportAlias": [
+    "#project"
+   ],
+   "projectNestedParenthesized": [
+    "#project"
+   ],
+   "projectNestedParenthesizedAlias": [
     "#project"
    ],
    "projectUnexported": [],
    "projectScalar": [],
    "projectOptionalReading": [],
+   "projectTypeParameter": [],
    "projectMember": [],
    "projectReexport": [],
    "projectSchemaLiteral": [],
    "projectQualifiedType": [],
+   "projectImportType": [],
    "projectContextualType": [],
    "projectAssignedValue": []
   }

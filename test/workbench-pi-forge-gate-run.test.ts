@@ -4,12 +4,19 @@
  * scope, owned by the server's own step statement) and cancels it over the retained connection. No live forge: @forge/sdk's
  * ServerConnection and OperationClient are replaced by a frame-pushing fake, so every verb is counted at the seam.
  */
-import { mkdirSync } from "node:fs";
-import { join } from "node:path";
+import { execFileSync } from "node:child_process";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import type * as ForgeSdk from "@forge/sdk";
+import ts from "typescript";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import subagentsExtension from "../src/index.js";
+import subagentsExtension, { observedPackageHead } from "../src/index.js";
 import { ctx, hermeticDir, makePi, textOf } from "./helpers/boot-extension.js";
+import { nonRepoScratch } from "./helpers/non-repo-scratch.js";
+import { makeScratch, removeScratch } from "./helpers/scratch.js";
+
+const REPO = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 type Sink = (frame: { method: string; params: unknown }) => void;
 const seam = vi.hoisted(() => ({
@@ -120,5 +127,60 @@ describe("forge_gate_run through the booted extension (wb-a3s)", () => {
     await pi.lifecycle.get("session_shutdown")?.({}, ctx({ cwd: dir }));
     expect(seam.closes).toBe(1);
     expect(seam.cancels).toStrictEqual([]);
+  });
+});
+
+/**
+ * wb-4ap.17 (COLLECTIVE-ADAPTATION-R17): the registered consumer compares the reply's run-start pin with the host's own reading of
+ * the package repository, taken when the reply settles. The host side is observedPackageHead (git rev-parse HEAD and HEAD^{tree}
+ * at the gate.run root); the seam is handed to the observer by the registered tool, read here from src/index.ts's own syntax.
+ */
+describe("forge_gate_run compares the reply's pin with the host's head (wb-4ap.17)", () => {
+  it("wb-4ap.17: observedPackageHead reads the repository's HEAD commit and tree at the root it is given, and nothing for an unborn branch or a directory in no repository", () => {
+    const repo = makeScratch("forge-head-");
+    try {
+      const git = (...args: string[]): string =>
+        execFileSync("git", ["-C", repo, "-c", "user.email=probe@example.invalid", "-c", "user.name=probe", "-c", "commit.gpgsign=false", ...args], {
+          encoding: "utf8", stdio: ["ignore", "pipe", "pipe"],
+        }).trim();
+      git("init", "-q");
+      expect(observedPackageHead(repo)).toBeUndefined();
+      mkdirSync(join(repo, "pkg"), { recursive: true });
+      writeFileSync(join(repo, "pkg", "README.md"), "probe\n");
+      git("add", "-A");
+      git("commit", "-q", "-m", "probe");
+      const head = { commit: git("rev-parse", "HEAD"), tree: git("rev-parse", "HEAD^{tree}") };
+      expect(head.commit).toMatch(/^[0-9a-f]{40,64}$/);
+      expect(observedPackageHead(repo)).toStrictEqual(head);
+      expect(observedPackageHead(join(repo, "pkg"))).toStrictEqual(head);
+      // An uncommitted edit moves neither half: the reading is HEAD's, and a dirty run's own "" tree is what tells it apart.
+      writeFileSync(join(repo, "pkg", "README.md"), "probe dirty\n");
+      expect(observedPackageHead(repo)).toStrictEqual(head);
+    } finally {
+      removeScratch(repo);
+    }
+    const outside = nonRepoScratch("forge-head-none-");
+    try {
+      expect(observedPackageHead(outside.dir)).toBeUndefined();
+    } finally {
+      outside.dispose();
+    }
+  });
+
+  it("wb-4ap.17: the registered tool hands its gate.run observer the host's head reading at the gate.run root, as a seam the observer reads when the reply settles", () => {
+    const file = ts.createSourceFile("src/index.ts", readFileSync(join(REPO, "src", "index.ts"), "utf8"), ts.ScriptTarget.Latest, true);
+    const calls: ts.CallExpression[] = [];
+    const visit = (node: ts.Node): void => {
+      if (ts.isCallExpression(node) && node.expression.getText(file) === "observeForgeGateRun") calls.push(node);
+      ts.forEachChild(node, visit);
+    };
+    visit(file);
+    expect(calls).toHaveLength(1);
+    const options = calls[0]?.arguments[1];
+    if (options === undefined || !ts.isObjectLiteralExpression(options)) throw new Error("observeForgeGateRun takes its deps as an object literal");
+    const named = (name: string): string[] =>
+      options.properties.filter(property => property.name?.getText(file) === name).map(property => property.getText(file));
+    expect(named("root")).toStrictEqual(["root"]);
+    expect(named("observedHead")).toStrictEqual(["observedHead: () => observedPackageHead(root)"]);
   });
 });

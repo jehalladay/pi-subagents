@@ -46,12 +46,13 @@
  * preview shape and stays open to additive keys; the injected seam validates nothing) and its reader adapter
  * (reactivefiber-observer.ts), which projects a fixed set of evidence refs and references output.text by digest alone.
  *  A, acceptance (a). Every regular file under the four SCAN_ROOTS is read as UTF-8 and every occurrence of the twelve SPELLINGS
- *    is a site. A1 src: zero sites, a file floor, every file a .ts module, and precision anchors (the part words decision, engine,
- *    response, backend and Native each occur in src and are no site); A2 test and qa: zero sites, floors, and this file
- *    and its roster walked, each carrying all four placeholders and no site; A3 docs/workbench: zero sites, a floor, every file
- *    markdown; A4 the exclusion: the reactive_inference echo files are walked (a floor) and read no site, the fixture's own echo is
- *    present, and no spelling is a substring of the echo key, so the exclusion holds by the rule, never by a path; A5 the matcher's
- *    controls: flagged spellings, quiet near-misses and the residuals' quiet rows.
+ *    is a site. A1 src: zero sites, a file floor and its tracked floor, every file a .ts module, and precision anchors (the part
+ *    words decision, engine, response, backend and Native each occur in src and are no site); A2 test and qa: zero sites, floors
+ *    and tracked floors, and this file and its roster walked, each carrying all four placeholders and no site; A3 docs/workbench:
+ *    zero sites, a floor and its tracked floor, every file markdown; A4 the exclusion: the reactive_inference echo files are
+ *    walked (a floor) and read no site, the fixture's own echo is present, and no spelling is a substring of the echo key, so the
+ *    exclusion holds by the rule, never by a path; A5 the matcher's controls: flagged spellings, quiet near-misses and the
+ *    residuals' quiet rows.
  *  B, acceptance (b), the until-then posture over the fixture. B1 tag absent: the native reader (a stand-in rf on PATH) admits the
  *    fixture in one spawn of the --no-commit render argv and its reading carries it byte for byte, the injected seam likewise, and
  *    each seam's projection names only the four measured ref kinds, references the fixture's own output digest, never reads the
@@ -68,8 +69,10 @@
  *    projection, and row A's matcher on a module typing that result; C4 the checker's quiet controls.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id, label,
  * until-then reading and pins, every pin's witness and covered phrases, the identifiers and their digests, the generative keys, the
- * roots, the placements, the resource, the registered tests and each pin's assertion count - is held to the out-of-file roster
- * test/fixtures/ri-decision-resource-roster.json; the last case walks this file's vitest task tree against the roster.
+ * roots (each with its walkFloors entry, in order), the placements, the resource, the registered tests, each pin's assertion count
+ * and this header's Not-claimed lists (wb-gbxz: each Not-claimed sentence below, split at its semicolons, in order) - is held to the
+ * out-of-file roster test/fixtures/ri-decision-resource-roster.json; the last case walks this file's vitest task tree against the
+ * roster.
  * OUTSIDE ANCHOR (respin #1, the gate's F2): the bead's own row in the tracked export (.beads/issues.jsonl at the tree under test).
  * Its first `Acceptance:` line splits into exactly the clauses (a)-(c), and each clause, its four names written as their
  * placeholders, equals its row label; the four names it spells hash to the IDENTIFIERS digests; each pin's covered phrases (COVERS)
@@ -81,6 +84,27 @@
  * which pin owns a word).
  * WALK ANCHOR (the gate's F3): each root's walk equals what git would commit below it (tracked or untracked, never ignored), so a
  * walk that skips a directory reds even while every file floor holds.
+ * TRACKED FLOORS (wb-w3tz, the cure of the respin gate's F6): that anchor is computed in this file, so its LEG-2 survivor G30 - two
+ * edits here, a walk skipping every directory named ui and git's list swapped for the walk's own - stayed 16/16 with a src/ui
+ * plant. Each root's walk is therefore also held to counts outside this file: the roster's walkFloors pin, per root, what git
+ * tracked below it at walkFloors.measuredAt (git ls-files --cached): its file count and each directory holding a tracked file of
+ * its own. A1-A3 hold that the walk keeps (git-ignored files aside) at least that many files and, of each measured directory still
+ * on disk, at least one file of its own, so G30 reds through the roster alone (src keeps 105 of 116 and src/ui goes unwalked).
+ * They are floors, never equalities: an added file never reds them (test/ gained 225 files over the 400 first-parent commits to
+ * the measuring tree) and a deleted directory drops out by existence; only a deletion can red them - a root left holding fewer
+ * files than its floor, or a measured directory left on disk without a file of its own (5 per-root decreases in the 1216
+ * first-parent commits to the measuring tree, none after 2026-10-19) - and the deleting cut re-measures walkFloors in the same
+ * commit. Not claimed: a narrowing confined to fewer files than a root has gained since measuredAt (the slack, 0 at the measuring
+ * tree) that leaves each measured directory a walked file of its own; a directory created after measuredAt; a hollow that also
+ * lowers a floor or drops a directory in the roster (the floors are measured numbers that no in-file source re-derives: the
+ * repository's CI checks out at depth 1, so the census reads no git history); a hollow in this file's reading or comparison code
+ * rather than its literals - a reading forged to return what its comparisons expect or re-pointed to a source that always meets
+ * them (the wb-w3tz gate's L2-07 and L2-08 keep G30's two edits and also have trackedOf return a held floor outright or read git's
+ * list in place of the walk's kept files, and its L2-10, one edit, drops scanOf's sites below a ui directory, each green with a
+ * src/ui plant), or a comparison dropped from a case whose assertion count the RECORD does not hold (every case but the pins',
+ * this list's own comparison included): every roster value reaches a case only through comparison code in this file, so wb-gbxz
+ * names the class instead of adding an in-file anchor, which would admit a next-order in-file hollow. A re-cut or fold that
+ * re-measures walkFloors restores the margin.
  * RECORD (the gate's F4): each pin's case records its vitest assertion count after its witness compares equal, and the last case
  * holds the counts to the roster, so a case that hands back a copy of its roster witness without measuring reds.
  * THE GATE-OPENING SIGNAL: when RI ships its typed decision envelope and resource tag (RI-DEC-06/07) and rf surfaces it, a
@@ -99,6 +123,7 @@
  * record) is a shipped shape the re-cut measures, not one constructed here. No reader is added or faked here.
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src is only read.
+ * ARCHIVE SCOPE (wb-cbt4; owner specification ruling M:60615 point 4): the triage archive, docs/workbench/programs/<program>/triage/ and every path below it, is NOT CLAIMED by this census; each walk the archive turned red at master's tree, with any listing that walk is held equal to, drops it through test/helpers/triage-archive.ts.
  */
 import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -116,6 +141,7 @@ import {
 import { type ReactiveFiberSeam, type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
 import { RECONCILE_EVIDENCE_READS } from "../src/workflow/reconcile.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+import { withoutTriageArchive } from "./helpers/triage-archive.js";
 
 installScratchLeakGuard(afterAll);
 
@@ -292,6 +318,13 @@ interface RosterIdentifier {
   readonly canonical: string;
   readonly sha256: string;
 }
+/** One root's tracked floor (wb-w3tz): git's tracked file count below it and each directory holding a tracked file of its own, both
+ * measured at walkFloors.measuredAt with git ls-files --cached. */
+interface WalkFloor {
+  readonly root: string;
+  readonly tracked: number;
+  readonly directories: readonly string[];
+}
 interface Roster {
   readonly bead: string;
   readonly rfVersion: string;
@@ -301,11 +334,15 @@ interface Roster {
   readonly identifiers: readonly RosterIdentifier[];
   readonly generativeKeys: readonly string[];
   readonly scanRoots: readonly string[];
+  /** The tracked floors, one per scan root in order, and the tree they were measured at. */
+  readonly walkFloors: { readonly measuredAt: string; readonly roots: readonly WalkFloor[] };
   readonly placements: readonly Placement[];
   readonly resource: JsonObject;
   readonly exit: number;
   readonly envelope: JsonObject;
   readonly rows: readonly RosterRow[];
+  /** The header's Not-claimed lists (wb-gbxz): each Not-claimed sentence of this file's header, in order, as its items. */
+  readonly notClaimed: readonly (readonly string[])[];
   readonly tests: readonly string[];
   /** `${pin}:${assertion count}` for every pin, in row order. */
   readonly reached: readonly string[];
@@ -396,14 +433,35 @@ function readRoster(): Roster {
     if (!isObject(entry) || typeof entry.id !== "string") throw new Error(`roster placements[${index}] needs an id`);
     return { id: entry.id, path: strings(entry.path, `placements[${index}].path`) };
   });
+  const floors = raw.walkFloors;
+  if (!isObject(floors) || typeof floors.measuredAt !== "string" || !/^[0-9a-f]{40}$/.test(floors.measuredAt) || !Array.isArray(floors.roots)) {
+    throw new Error("roster walkFloors needs a full measuredAt sha and a roots list");
+  }
+  const walkFloors = {
+    measuredAt: floors.measuredAt,
+    roots: floors.roots.map((entry: unknown, index: number): WalkFloor => {
+      if (!isObject(entry) || typeof entry.root !== "string" || typeof entry.tracked !== "number" || !Number.isSafeInteger(entry.tracked) || entry.tracked < 1) {
+        throw new Error(`roster walkFloors.roots[${index}] needs a root and a positive integer tracked count`);
+      }
+      const root = entry.root;
+      const directories = strings(entry.directories, `walkFloors.roots[${index}].directories`);
+      if (directories.length === 0 || directories.some(directory => directory !== root && !directory.startsWith(`${root}/`))) {
+        throw new Error(`roster walkFloors.roots[${index}].directories must list at least one directory at or below ${root}`);
+      }
+      return { root, tracked: entry.tracked, directories };
+    }),
+  };
   if (typeof raw.bead !== "string" || typeof raw.rfVersion !== "string" || typeof raw.riPin !== "string" || typeof raw.riProbe !== "string" ||
     typeof raw.tsxPin !== "string" || typeof raw.exit !== "number" || !Number.isSafeInteger(raw.exit)) {
     throw new Error("roster needs bead, rfVersion, riPin, riProbe, tsxPin and an integer exit");
   }
+  if (!Array.isArray(raw.notClaimed)) throw new Error("roster needs a notClaimed list");
+  const notClaimed = raw.notClaimed.map((entry: unknown, index: number): string[] => strings(entry, `notClaimed[${index}]`));
   return {
     bead: raw.bead, rfVersion: raw.rfVersion, riPin: raw.riPin, riProbe: raw.riProbe, tsxPin: raw.tsxPin, identifiers,
-    generativeKeys: strings(raw.generativeKeys, "generativeKeys"), scanRoots: strings(raw.scanRoots, "scanRoots"), placements,
+    generativeKeys: strings(raw.generativeKeys, "generativeKeys"), scanRoots: strings(raw.scanRoots, "scanRoots"), walkFloors, placements,
     resource: objectOf(json(raw.resource), "roster resource"), exit: raw.exit, envelope: envelopeOf(raw.envelope, "fixture"), rows,
+    notClaimed,
     tests: strings(raw.tests, "tests"),
     reached: strings(raw.reached, "reached"),
   };
@@ -457,7 +515,7 @@ function filesBelow(directory: string): string[] {
 /** What git would commit below a root: tracked or untracked, never ignored (the walk's outside anchor). */
 function gitListed(root: string): string[] {
   const out = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", root], { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 26 });
-  return [...new Set(out.split("\0").filter(path => path !== "" && existsSync(join(REPO, path))))].sort();
+  return withoutTriageArchive([...new Set(out.split("\0").filter(path => path !== "" && existsSync(join(REPO, path))))]).sort();
 }
 /** The walked paths git ignores (a tracked path is never reported). */
 function gitIgnored(paths: readonly string[]): Set<string> {
@@ -474,6 +532,8 @@ type WalkAgreement = {
 };
 interface RootScan {
   readonly files: readonly string[];
+  /** The walked files git does not ignore: what the tracked floor counts. */
+  readonly kept: readonly string[];
   readonly texts: ReadonlyMap<string, string>;
   readonly sites: readonly string[];
   readonly walk: WalkAgreement;
@@ -483,18 +543,45 @@ const scans = new Map<string, RootScan>();
 function scanOf(root: string): RootScan {
   const cached = scans.get(root);
   if (cached !== undefined) return cached;
-  const files = filesBelow(join(REPO, root)).map(file => relative(REPO, file));
+  const files = withoutTriageArchive(filesBelow(join(REPO, root)).map(file => relative(REPO, file)));
   const ignored = gitIgnored(files);
   const kept = new Set(files.filter(file => !ignored.has(file)));
   const listed = gitListed(root);
   const known = new Set(listed);
   const walk = { walkOnly: [...kept].filter(file => !known.has(file)).sort(), gitOnly: listed.filter(file => !kept.has(file)) };
   const texts = new Map(files.map(file => [file, readFileSync(join(REPO, file), "utf8")]));
-  const scan = { files, texts, sites: files.flatMap(file => sitesOf(file, texts.get(file) ?? "")), walk };
+  const scan = { files, kept: [...kept], texts, sites: files.flatMap(file => sitesOf(file, texts.get(file) ?? "")), walk };
   scans.set(root, scan);
   return scan;
 }
 const AGREED: WalkAgreement = { walkOnly: [], gitOnly: [] };
+
+/** A root's walk against its roster floor (a type alias, so a witness carrying it stays a JSON value). */
+type TrackedFloor = {
+  /** The walk keeps at least the files git tracked below the root at walkFloors.measuredAt. */
+  readonly floorMet: boolean;
+  /** Measured directories still on disk that hold no kept file of their own (a skipped directory lands here). */
+  readonly unwalked: string[];
+};
+const FLOOR_HELD: TrackedFloor = { floorMet: true, unwalked: [] };
+function floorFor(root: string): WalkFloor {
+  const floor = ROSTER.walkFloors.roots.find(entry => entry.root === root);
+  if (floor === undefined) throw new Error(`the roster holds no walk floor for ${root}`);
+  return floor;
+}
+/** The outside count each root's walk answers to: read from the roster, never derived from this file's own walk or git anchor. */
+function trackedOf(root: string): TrackedFloor {
+  const floor = floorFor(root);
+  const kept = scanOf(root).kept;
+  const walkedDirectories = new Set(kept.map(file => dirname(file)));
+  return {
+    floorMet: kept.length >= floor.tracked,
+    unwalked: floor.directories.filter(directory => existsSync(join(REPO, directory)) && !walkedDirectories.has(directory)),
+  };
+}
+function floorNote(root: string): string {
+  return `the ${root} walk keeps ${scanOf(root).kept.length} files against the roster's tracked floor ${floorFor(root).tracked} (walkFloors.measuredAt ${ROSTER.walkFloors.measuredAt.slice(0, 12)}; a cut deleting tracked files below ${root} re-measures walkFloors)`;
+}
 
 const oldPath = process.env.PATH;
 const scratches: string[] = [];
@@ -712,7 +799,7 @@ function siteCount(text: string): number {
 
 /** The tracked bead export's row for `id` (every line must parse; a malformed export is refused, never skipped). */
 function exportRow(id: string): { [key: string]: unknown } {
-  const rows = readFileSync(join(REPO, BEAD_EXPORT), "utf8")
+  const rows = trackerExportText(join(REPO, BEAD_EXPORT))
     .split("\n")
     .filter(line => line.trim() !== "")
     .map((line, index): unknown => {
@@ -780,6 +867,18 @@ function anchorOf(title: string, notes: string, rows: readonly Row[] = ROWS, cov
   };
 }
 
+/** The Not-claimed lists of a census source's header (its leading block comment, line prefixes dropped): each sentence that opens
+ * with the words "Not claimed" and a colon, read up to its closing period, split at its semicolons, in header order. */
+function notClaimedOf(source: string): string[][] {
+  const end = source.indexOf("*/");
+  const header = (end < 0 ? "" : source.slice(0, end))
+    .split("\n")
+    .map(line => line.replace(/^\s*\/?\*+ ?/, ""))
+    .join(" ")
+    .replace(/\s+/g, " ");
+  return [...header.matchAll(/Not claimed: (.+?)\.(?= [A-Z]|\s*$)/g)].map(match => (match[1] ?? "").split("; "));
+}
+
 /** `${pin}:${assertion count}`, pushed by each pin's case after its witness compares equal; the last case holds it to the roster. */
 const REACHED: string[] = [];
 
@@ -793,12 +892,14 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       const whole = new RegExp(`\\b${word}\\b`);
       return [word, [...scan.texts.values()].some(text => whole.test(text))];
     }));
+    const tracked = trackedOf("src");
     expect(floor, `src files ${scan.files.length}`).toBe(true);
     expect(scan.walk, "the src walk against what git would commit below src").toStrictEqual(AGREED);
+    expect(tracked, floorNote("src")).toStrictEqual(FLOOR_HELD);
     expect(allTs, "a src file that is not a .ts module").toBe(true);
     expect(Object.values(anchors)).toEqual(PART_WORDS.map(() => true));
     expect(scan.sites, "a src site of one of the twelve spellings").toEqual([]);
-    return { files: { floor, allTs }, walk: scan.walk, anchors, sites: [...scan.sites] };
+    return { files: { floor, allTs }, walk: scan.walk, tracked, anchors, sites: [...scan.sites] };
   },
   A2: async () => {
     const test = scanOf("test");
@@ -812,21 +913,25 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const ownFiles = { census: own(SELF_PATH), roster: own(ROSTER_PATH) };
     const sites = [...test.sites, ...qa.sites];
     const walks = { test: test.walk, qa: qa.walk };
+    const tracked = { test: trackedOf("test"), qa: trackedOf("qa") };
     expect(files, `test files ${test.files.length}, qa files ${qa.files.length}`).toStrictEqual({ test: true, qa: true });
     expect(walks, "the test and qa walks against what git would commit below them").toStrictEqual({ test: AGREED, qa: AGREED });
+    expect(tracked, `${floorNote("test")}; ${floorNote("qa")}`).toStrictEqual({ test: FLOOR_HELD, qa: FLOOR_HELD });
     expect(ownFiles).toStrictEqual({ census: { walked: true, sites: 0, placeholders: 4 }, roster: { walked: true, sites: 0, placeholders: 4 } });
     expect(sites, "a test or qa site of one of the twelve spellings").toEqual([]);
-    return { files, walks, own: ownFiles, sites };
+    return { files, walks, tracked, own: ownFiles, sites };
   },
   A3: async () => {
     const scan = scanOf("docs/workbench");
     const floor = scan.files.length >= 60;
     const allMarkdown = scan.files.every(file => file.endsWith(".md"));
+    const tracked = trackedOf("docs/workbench");
     expect(floor, `docs/workbench files ${scan.files.length}`).toBe(true);
     expect(scan.walk, "the docs/workbench walk against what git would commit below it").toStrictEqual(AGREED);
+    expect(tracked, floorNote("docs/workbench")).toStrictEqual(FLOOR_HELD);
     expect(allMarkdown).toBe(true);
     expect(scan.sites, "a docs/workbench site of one of the twelve spellings").toEqual([]);
-    return { files: { floor, allMarkdown }, walk: scan.walk, sites: [...scan.sites] };
+    return { files: { floor, allMarkdown }, walk: scan.walk, tracked, sites: [...scan.sites] };
   },
   A4: async () => {
     const walked = SCAN_ROOTS.flatMap(root => [...scanOf(root).texts.entries()]);
@@ -1058,6 +1163,11 @@ describe("wb-tz4r.1 RI decision resource census (RI-UNIFIED-DECISION-INFERENCE-R
       generativeKeys: [...ROSTER.generativeKeys], scanRoots: [...ROSTER.scanRoots], placements: ROSTER.placements.map(({ id, path }) => ({ id, path: [...path] })),
       resource: ROSTER.resource,
     });
+    // The tracked floors (wb-w3tz): one roster entry per scan root, in order, so no root's walk goes unanchored outside this file.
+    expect(ROSTER.walkFloors.roots.map(floor => floor.root), "one roster walk floor per scan root, in order").toEqual([...SCAN_ROOTS]);
+    // The disclosures (wb-gbxz): every Not-claimed list of this file's header, in order, held to the roster, so a disclosure dropped
+    // from the header, or one added to it without the roster, reds.
+    expect(notClaimedOf(readFileSync(SELF_PATH, "utf8")), "the header's Not-claimed lists against the roster").toStrictEqual(ROSTER.notClaimed.map(list => [...list]));
     // The composed spellings are the acceptance's own names: each digest was taken from the bead's spelling at cut time.
     expect(IDENTIFIERS.map(identifier => sha256(spelled(identifier.words, identifier.canonical)))).toEqual(ROSTER.identifiers.map(entry => entry.sha256));
     expect(SPELLINGS).toHaveLength(12);
@@ -1132,3 +1242,5 @@ describe("wb-tz4r.1 RI decision resource census (RI-UNIFIED-DECISION-INFERENCE-R
     expect(REACHED, "every pin reached its end, in row order, with its pinned assertion count").toEqual([...ROSTER.reached]);
   });
 });
+
+import { trackerExportText } from "../qa/workbench/tracker-export.mjs";

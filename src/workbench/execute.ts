@@ -7,7 +7,7 @@
  * accepted, launched or refused. Completion belongs to the producer's own later answer, never to this reply.
  */
 import { CapabilityError, type CapabilityErrorCategory, type JsonValue } from "./capability-registry.js";
-import { canonicalJson, type DefinitionRef, identityDigest } from "./identity.js";
+import { canonicalJson, type DefinitionRef, identityDigest, withoutBeadsNotes } from "./identity.js";
 import type { NativeRef } from "./observation.js";
 import { sanitizeWorkbenchJson, sanitizeWorkbenchText, stripUnsafeText } from "./redaction.js";
 
@@ -34,7 +34,12 @@ export interface ExecuteHostContext {
 
 export type ExecuteRefusalPolicy = "malformed-request" | "non-digest-definition" | "unknown-host-mode" | "malformed-policy" | "unknown-permission-data" | "missing-execute-grant";
 
-/** What was admitted. The input itself is never retained, only its digest; the policy is the caller's, copied and frozen. */
+/**
+ * What was admitted. The input itself is never retained, only its digest; the policy is the caller's, copied and frozen.
+ * For a function definition, at the request forms the EAT-R154 rows of test/workbench-function-authority.test.ts list,
+ * both are taken from the request through withoutBeadsNotes (identity.ts), the Beads note omission EAT-R154 asks of a
+ * function admission; other request forms are NOT CLAIMED.
+ */
 export interface ExecuteAdmission {
   readonly contractVersion: typeof EXECUTE_CONTRACT_VERSION;
   readonly invocationId: string;
@@ -77,8 +82,8 @@ const REQUEST_KEYS: readonly string[] = ["definitionRef", "input", "hostMode", "
 const DEFINITION_KEYS: readonly string[] = ["kind", "id", "schemaVersion", "artifactDigest"];
 const DEFINITION_KINDS: readonly string[] = ["script", "function", "furnace-formula"];
 const DIGEST = /^sha256:[0-9a-f]{64}$/;
-/** The workbench.capabilityGrants grammar settings.ts enforces: explicit namespace:permission, no wildcard. */
-const GRANT = /^[a-z][a-z0-9.-]*:[a-z][a-z0-9.-]*$/;
+/** The workbench.capabilityGrants grammar settings.ts enforces: explicit namespace:permission, or one exact claude:tool:<name> Claude tool right (wb-wupg), no wildcard. */
+const GRANT = /^(?:[a-z][a-z0-9.-]*:[a-z][a-z0-9.-]*|claude:tool:[A-Za-z][A-Za-z0-9_-]{0,63})$/;
 const LAUNCH_STATUSES: readonly string[] = ["accepted", "launched", "refused"];
 const INPUT_BYTES = 64 * 1024;
 const POLICY_BYTES = 4096;
@@ -147,7 +152,10 @@ function grantList(value: unknown): string[] | undefined {
 /**
  * Synchronous and side-effect free. Rules apply in order and the first match wins: request shape, host invocation
  * reference, digest-pinned definition, hostMode allowlist, policy, input, then authority. The definition is checked
- * before any grant is consulted, so an unpinned reference is never authorized. Reasons never echo caller text.
+ * before any grant is consulted, so an unpinned reference is never authorized. Reasons never echo caller text. For a
+ * function definition, at the request forms the EAT-R154 rows of test/workbench-function-authority.test.ts list, the
+ * policy and input rules judge the request's policy and input through withoutBeadsNotes; other request forms are NOT
+ * CLAIMED.
  */
 export function decideExecute(request: WorkflowExecuteRequest, host: ExecuteHostContext): ExecuteDecision {
   const invocationId = plainObject(host) && cleanText(host.invocationId) ? host.invocationId : undefined;
@@ -174,13 +182,15 @@ export function decideExecute(request: WorkflowExecuteRequest, host: ExecuteHost
     return refuse("unknown-host-mode", "validation", "unknown hostMode", invocationId);
   }
   const mode = hostMode.value as ExecuteHostMode;
+  const judged = (value: unknown): unknown => (kind === "function" ? withoutBeadsNotes(value) : value);
   let policyCopy: JsonValue | undefined;
   if (policy.value !== undefined) {
-    const text = plainObject(policy.value) ? boundedJson(policy.value, POLICY_BYTES) : undefined;
+    const policyValue = judged(policy.value);
+    const text = plainObject(policyValue) ? boundedJson(policyValue, POLICY_BYTES) : undefined;
     if (text === undefined) return refuse("malformed-policy", "validation", "malformed execute policy", invocationId);
     policyCopy = deepFreeze(JSON.parse(text) as JsonValue);
   }
-  const inputText = boundedJson(input.value, INPUT_BYTES);
+  const inputText = boundedJson(judged(input.value), INPUT_BYTES);
   if (inputText === undefined) return malformed();
   const grants = grantList(host.grants);
   if (!grants) return refuse("unknown-permission-data", "authorization", "unknown permission data", invocationId);

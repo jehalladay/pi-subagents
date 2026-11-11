@@ -970,7 +970,7 @@ function rfIds(descriptors: readonly CapabilityDescriptor[]): string[] {
 
 /** The bead's own notes in the tracker export, the text rows A to E are held to. */
 function beadNotes(): string {
-  for (const line of textOf(EXPORT_PATH).split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(EXPORT_PATH), EXPORT_PATH).split("\n")) {
     if (!line.includes(`"id":"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === BEAD && typeof row.notes === "string") return row.notes;
@@ -1477,3 +1477,5 @@ describe("wb-4nut.7 H2 budget echo census (TSX-HARNESS2-REACTIVE-EVOLUTION-R7, g
     CLOSED.closing = true;
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

@@ -1,0 +1,27 @@
+{
+  "comment": "wb-mgss roster (owner ruling R735 on the wb-agwj gate cmd_f48ab3750faf F3: ONE structural site-binding follow-up outside the spelling chain): the OUT-OF-FILE anchor of the wb-mgss site binding at the end of test/workbench-claude-message-ref.test.ts. requirement is what every bound row asserts of the reading it judges. sets are the bound row sets in run order: each set's title stem, the roster that lists its rows and the field that holds them (a list of rows, or one row). Every row of a bound set, at every site its roster row names, measures where its reading came from and asserts the requirement; the census compares each measurement, in run order, to the rows these rosters derive. requiredBoundRows is that count (rows times sites).",
+  "requirement": "the reading a bound row judges came from the site its title names: that site's file, with exactly the text the row's own tabled placement makes of the site's real source, and from no other site",
+  "sets": [
+    {
+      "stem": "wb-e3eh quiet",
+      "roster": "test/fixtures/claude-message-ref-e3eh.json",
+      "field": "residuals"
+    },
+    {
+      "stem": "wb-agwj quiet",
+      "roster": "test/fixtures/claude-message-ref-agwj.json",
+      "field": "residuals"
+    },
+    {
+      "stem": "wb-agwj channel",
+      "roster": "test/fixtures/claude-message-ref-agwj.json",
+      "field": "channel"
+    },
+    {
+      "stem": "wb-agwj twin",
+      "roster": "test/fixtures/claude-message-ref-agwj.json",
+      "field": "twins"
+    }
+  ],
+  "requiredBoundRows": 132
+}

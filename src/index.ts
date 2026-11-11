@@ -13,7 +13,7 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, realpathSync, unlinkSync, writeFileSync } from "node:fs";
-import { userInfo } from "node:os";
+import { homedir, userInfo } from "node:os";
 import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineTool, type ExtensionAPI, type ExtensionCommandContext, type ExtensionContext, getAgentDir, getSettingsListTheme } from "@earendil-works/pi-coding-agent";
@@ -76,7 +76,7 @@ import { executeDetachedControl } from "./workbench/detached-control.js";
 import { createWorkbenchEvidenceStore } from "./workbench/evidence-wiring.js";
 import { createWorkflowExecuteTool, type ExecuteLaunch } from "./workbench/execute-tool.js";
 import { createRetainedForgeControlExecutor, retainForgeOperation } from "./workbench/forge-control-retention.js";
-import { type ForgeOperationObserver, observeForgeGateRun } from "./workbench/forge-operation-observer.js";
+import { type ForgeObservedHead, type ForgeOperationObserver, observeForgeGateRun } from "./workbench/forge-operation-observer.js";
 import { executeFurnaceControl } from "./workbench/furnace-control.js";
 import { FurnaceObserver } from "./workbench/furnace-observer.js";
 import { captureInvocationIdentity, type IdentityCaptureInput, identityDigest, verifyInvocationIdentity, WORKFLOW_SCRIPT_SCHEMA_VERSION } from "./workbench/identity.js";
@@ -85,6 +85,7 @@ import { type NativeRef, ObservationProjection, type ObservationScope, type Pres
 import { OBSERVE_CURSOR_MAX_BYTES, OBSERVE_DEFAULT_MAX_BYTES, OBSERVE_MAX_LIMIT, OBSERVE_MAX_MAX_BYTES, OBSERVE_MIN_MAX_BYTES, observeInvocation } from "./workbench/observe-query.js";
 import { createWorkflowReconcileTool } from "./workbench/reconcile-tool.js";
 import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText, WORKBENCH_TEXT_LIMIT } from "./workbench/redaction.js";
+import { type ClaudeReplayDependencies, claudeUserConfigDir, instructionDependency, providerDependency, sourceDependency } from "./workbench/replay-dependencies.js";
 import { type ByteCapMarker, buildWorkflowCatalogReply, buildWorkflowInspectReply, INSPECT_VIEWS, TOOL_REPLY_CONTRACT_VERSION, TOOL_REPLY_DEFAULT_MAX_BYTES, TOOL_REPLY_MAX_LIMIT } from "./workbench/tool-replies.js";
 import {
   type BuildWorkflowValidateReplyInput,
@@ -396,6 +397,22 @@ function workspaceCandidateBasis(cwd: string): { sourceBasis: string; state: "me
     }
     return { sourceBasis: identityDigest("git-candidate", { root, tree, index: `sha256:${createHash("sha256").update(index).digest("hex")}`, files }), state: "measured" };
   } catch { return unavailable; }
+}
+
+/**
+ * wb-4ap.17: the host's own reading of a package repository's HEAD at a gate.run root (`git rev-parse HEAD` and `HEAD^{tree}`),
+ * which the forge_gate_run observer compares with the reply's run-start pin when the reply settles. Undefined when git cannot
+ * answer (no repository, an unborn branch, git unavailable); a reading is never repaired.
+ */
+export function observedPackageHead(root: string): ForgeObservedHead | undefined {
+  const revision = (spec: string): string => execFileSync("git", ["-C", root, "rev-parse", "--verify", "--quiet", spec], {
+    timeout: 5_000, maxBuffer: 64 * 1024, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"],
+  }).trim();
+  try {
+    return { commit: revision("HEAD"), tree: revision("HEAD^{tree}") };
+  } catch {
+    return undefined;
+  }
 }
 
 /**
@@ -1593,11 +1610,11 @@ export default function (pi: ExtensionAPI, injected: SubagentsExtensionInjection
   // With no per-result note by design, the model would have every reason to go
   // on reporting a `pi-agent-*` branch that was never created.
   const isolationGuideline = isWorktreeIsolationEnabled()
-    ? `\n- Use isolation: "worktree" to give the agent its own git worktree (safe parallel file modifications); leave it unset, or pass "off", for none. The worktree is removed when the agent finishes; if it made changes, they are committed to a branch and the branch is named in the result.`
+    ? `\n- Use isolation: "worktree" to give the agent its own git worktree (safe parallel file modifications); leave it unset, or pass "off", for none. When the agent finishes, any changes it made are committed to a branch named in the result and the worktree is removed; if Git preservation fails, no branch is created and the worktree is kept instead, with the agent's work in it.`
     : "";
 
   const isolationCompactGuideline = isWorktreeIsolationEnabled()
-    ? `\n- isolation: "worktree" gives the agent its own git worktree (removed on completion); changes land on a branch named in the result.`
+    ? `\n- isolation: "worktree" gives the agent its own git worktree; on completion, changes land on a branch named in the result and the worktree is removed, but if Git preservation fails, the worktree is kept and no branch is created.`
     : "";
 
   // Compact Agent tool description (#91, `toolDescriptionMode: "compact"`) —
@@ -2572,6 +2589,28 @@ Terse command-style prompts produce shallow, generic work.
     };
   }
 
+  /**
+   * wb-413a: the readings the run's Claude host replays under (replay-dependencies.ts, whose module doc lists the Git
+   * candidate forms claimed): the source reading of the cwd's HEAD with the identity capture's Git candidate, and the
+   * instruction and provider readings of the setting sources the run names (as the wiring suite names them: user,
+   * project, local, and user with local) under claudeUserConfigDir (CLAUDE_CONFIG_DIR, else ~/.claude). A run whose
+   * settingSources is unset hands both readers no source: the eight user, project and local instruction and setting
+   * files the fail-closed suite changes leave the readings equal and the recorded answer replays (wb-6b3z
+   * FCB-UNNAMED-SOURCES). NOT CLAIMED: which identity the provider reading is handed here (one process cannot vary its
+   * SDK), and a settingSources set to the empty list.
+   */
+  function claudeReplayDependencies(ctx: ExtensionContext, task: WorkflowTask, settings: WorkbenchSettings,
+    input: IdentityCaptureInput): ClaudeReplayDependencies {
+    const cwd = realpathSync(ctx.cwd);
+    const sources = settings.settingSources ?? [];
+    const configDir = claudeUserConfigDir(process.env, homedir(), cwd);
+    return {
+      source: sourceDependency(observedPackageHead(cwd), { sourceBasis: input.workspace.sourceBasis, state: task.workspaceSourceState ?? "unknown" }),
+      instructions: instructionDependency(cwd, sources, configDir),
+      provider: providerDependency(task.identityReceipt, cwd, sources, configDir),
+    };
+  }
+
   /** A native reference scope the pure reply builder admits (clean text within its 256-byte identity bound), else none. */
   function referenceScope(path: string): { scope: string } | Record<string, never> {
     return Buffer.byteLength(path) <= 256 && stripUnsafeText(path) === path ? { scope: path } : {};
@@ -2602,15 +2641,36 @@ Terse command-style prompts produce shallow, generic work.
     void runWorkflowTask(ctx, task).then(() => notifyWorkflowFinished(task));
     return [{ provider: "pi-workflow", type: "task", id: runId, ...referenceScope(launch.scope.workspace) }];
   }
+  /**
+   * The Claude half of a registered detached launch, its Claude config and its grants, for both producers (wb-wupg, MWI
+   * EAT-R012/EAT-R013). What it returns is claimed only for the settings, held rights and launches that
+   * test/workbench-detached-grants.test.ts pins through both producers, as that file's header lists them; for any other
+   * settings shape, held right list or launch it is NOT CLAIMED here.
+   */
+  function detachedClaudeLaunch(ctx: ExtensionContext, settings: WorkbenchSettings | undefined) {
+    const tools = settings?.tools ?? [];
+    const roles = settings?.roles;
+    const roleTools = Object.values(roles ?? {}).flatMap(role => role.tools ?? []);
+    const required = new Set(["claude:invoke", ...[...tools, ...roleTools].map(tool => `claude:tool:${tool}`)]);
+    const held = grants(ctx);
+    return {
+      claude: {
+        ...(settings?.model !== undefined ? { model: settings.model } : {}),
+        ...(settings?.tools !== undefined ? { tools: settings.tools } : {}),
+        ...(roles !== undefined ? { roles } : {}),
+      },
+      grants: [...required].filter(grant => held.includes(grant)),
+    };
+  }
   async function launchDetachedWorkflow(ctx: ExtensionContext, launch: ExecuteLaunch): Promise<readonly NativeRef[]> {
     const settings = sourceSettings(ctx);
-    const claude = settings?.workflowAgentBackend === "claude";
+    const claude = settings?.workflowAgentBackend === "claude" ? detachedClaudeLaunch(ctx, settings) : undefined;
     // The review assertion is the operator's own: a digest-pinned saved source launched under the execute+detach conjunction.
     const receipt = await workbenchNative().launchDetachedWorkflow({
       directory: join(getAgentDir(), "workbench-detached"), invocationId: launch.invocationId, scriptPath: launch.source.sourceRef,
       cwd: ctx.cwd, input: launch.input, trustedScript: true, backend: claude ? "claude" : "deterministic",
-      providers: [], grants: [], permissions: ["inspect", "execute"], sourceFiles: [launch.source.sourceRef],
-      ...(claude ? { claude: { model: settings?.model, tools: settings?.tools ?? [], roles: settings?.roles } } : {}),
+      providers: [], grants: claude?.grants ?? [], permissions: ["inspect", "execute"], sourceFiles: [launch.source.sourceRef],
+      ...(claude ? { claude: claude.claude } : {}),
     });
     return [
       { provider: "local-detached", type: "invocation", id: receipt.invocationId, ...referenceScope(receipt.invocationDirectory) },
@@ -2813,6 +2873,8 @@ Terse command-style prompts produce shallow, generic work.
             root, projection, scope, now: controlNow, timeoutMs: 30_000,
             // wb-cra.1: the issuing connection is retained under the server's operation id, so workflow_control's forge leg can reach it.
             retain: (operationId, issuing) => retainForgeOperation(operationId, { operations: issuing.operations, connection: issuing, workspaceRoot: scope.workspace }),
+            // wb-4ap.17: the reply's run-start pin is the verdict's basis, compared with the host's own HEAD reading when the reply settles.
+            observedHead: () => observedPackageHead(root),
           });
           liveForgeOperations.set(observer.operationId, observer);
           void observer.settled.then(() => { liveForgeOperations.delete(observer.operationId); });
@@ -2858,10 +2920,10 @@ Terse command-style prompts produce shallow, generic work.
           if (params.action === "inspect") return textResult(sanitizeWorkbenchJsonText(await workbenchNative().connectDetachedWorkflow(directory,params.invocationId).inspect(), 4096));
           if (params.trustedScript !== true || !params.scriptPath) return textResult("Launch requires an explicitly reviewed trusted scriptPath.");
           const source=inspectWorkflowSource({scriptPath:params.scriptPath},ctx.cwd);
-          const settings=sourceSettings(ctx);
+          const claude=params.backend === "claude" ? detachedClaudeLaunch(ctx,sourceSettings(ctx)) : undefined;
           const receipt=await workbenchNative().launchDetachedWorkflow({ directory,invocationId:params.invocationId,scriptPath:source.sourceRef,cwd:ctx.cwd,input:null,trustedScript:true,
-            backend:params.backend ?? "deterministic",providers:[],grants:[],permissions:["inspect","execute"],sourceFiles:[source.sourceRef],
-            ...(params.backend === "claude" ? {claude:{model:settings?.model,tools:settings?.tools ?? [],roles:settings?.roles}} : {}),
+            backend:params.backend ?? "deterministic",providers:[],grants:claude?.grants ?? [],permissions:["inspect","execute"],sourceFiles:[source.sourceRef],
+            ...(claude ? {claude:claude.claude} : {}),
           });
           return textResult(sanitizeWorkbenchJsonText(receipt, 4096));
         } catch (error) { return textResult(sanitizeWorkbenchText(error instanceof Error ? error.message : String(error))); }
@@ -2870,7 +2932,7 @@ Terse command-style prompts produce shallow, generic work.
     pi.registerTool(defineTool({
       name: "workflow_observe",
       label: "Observe workflow",
-      description: "Read a bounded, redacted workflow projection by task ID: paged nodes (cursor), tone/kind/relations/events selectors, freshness summary, anomalies and a byte cap. Requires workbench:observe; not an execution authority.",
+      description: "Read a bounded, redacted workflow projection by task ID: paged nodes (cursor), tone/kind/relations/events selectors, the scope's typed identity refusals (identityRefusals selector), freshness summary, anomalies and a byte cap. Requires workbench:observe; not an execution authority.",
       parameters: Type.Object({
         taskId: Type.String(),
         limit: Type.Optional(Type.Integer({ minimum: 1, maximum: OBSERVE_MAX_LIMIT })),
@@ -2887,6 +2949,8 @@ Terse command-style prompts produce shallow, generic work.
               projectionEventId: Type.String(),
             })),
           })),
+          // wb-86q: one bounded page of the request scope's typed identity refusals (closed vocabulary, never the refused text).
+          identityRefusals: Type.Optional(Type.Object({ limit: Type.Integer({ minimum: 1, maximum: OBSERVE_MAX_LIMIT }) })),
         })),
       }),
       execute: async (_id, params, _signal, _onUpdate, ctx) => {
@@ -3098,6 +3162,7 @@ Terse command-style prompts produce shallow, generic work.
         updateWorkflowProgressBatch(task, [updated]);
       }, createClaudeControlObserver({ invocationId: task.id, scope, projection, now: () => new Date().toISOString(), retention: claudeControlRetention }));
       let beforeDispatch: (() => void) | undefined;
+      let replayDependencies: ClaudeReplayDependencies | undefined;
       if (settings) {
         const registry = registryFor(ctx.cwd);
         const descriptors = registry.discover({ grants: [
@@ -3107,6 +3172,7 @@ Terse command-style prompts produce shallow, generic work.
         const input = invocationInput(ctx, task, settings, descriptors);
         task.identityReceipt = captureInvocationIdentity(input);
         task.inputDigest = identityDigest("workflow-input", task.args === undefined ? { supplied: false } : { supplied: true, value: task.args });
+        replayDependencies = claudeReplayDependencies(ctx, task, settings, input);
         beforeDispatch = () => {
           // Re-read operator settings and measured candidate; pinned settings
           // alone would hide a mid-run grant revocation from verification.
@@ -3136,6 +3202,7 @@ Terse command-style prompts produce shallow, generic work.
               invocationId: task.id,
               principal: { id: scope.principal, role: "local-operator" },
               beforeDispatch,
+              replayDependencies,
               onMessage: (message, call) => {
                 if (message.type === "system" && message.subtype === "init") {
                   const live = liveClaudeQueries.get(liveClaudeKey(task.id, call));

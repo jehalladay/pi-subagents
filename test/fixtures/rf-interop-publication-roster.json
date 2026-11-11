@@ -116,9 +116,35 @@
               [
                 "interop",
                 "rftsx"
+              ],
+              [
+                "publication"
+              ],
+              [
+                "publication"
+              ],
+              [
+                "interop"
+              ],
+              [
+                "publication"
+              ],
+              [
+                "interop"
+              ],
+              [
+                "publication"
               ]
             ],
             "quiet": [
+              [],
+              [],
+              [],
+              [],
+              [],
+              [],
+              [],
+              [],
               [],
               []
             ],
@@ -170,10 +196,19 @@
                   ],
                   [
                     "interop"
+                  ],
+                  [
+                    "interop"
+                  ],
+                  [
+                    "interop"
+                  ],
+                  [
+                    "interop"
                   ]
                 ],
                 "narrower": "interoprecordreader",
-                "misses": 7,
+                "misses": 10,
                 "subjectStillHit": true,
                 "tails": [
                   [
@@ -209,10 +244,19 @@
                   ],
                   [
                     "publication"
+                  ],
+                  [
+                    "publication"
+                  ],
+                  [
+                    "publication"
+                  ],
+                  [
+                    "publication"
                   ]
                 ],
                 "narrower": "publicationconsumer",
-                "misses": 7,
+                "misses": 10,
                 "subjectStillHit": true,
                 "tails": [
                   [
@@ -639,6 +683,11 @@
       "id": "R-REAUTHORED",
       "quietPin": "claims bound",
       "family": "A pin's case, claims and roster witness rewritten together, in whole or in part, are held by no anchor beyond the term tiling; the claims bound quiet row re-authors C3 as one fact under one claim, which shows that claim and is accepted by no registered pin's claims."
+    },
+    {
+      "id": "R-UNFOLDED",
+      "quietPin": "A1",
+      "family": "A name the scanner does not fold escapes the scan when no constant part spells the word alone: a regex whose folded pattern text does not hold the word (a wildcard inside it), a constant reached through any other operation (another method such as replace, a method named through an element access, a spread, an array concat) or through a non-string part (a number), each member pinned quiet in A1's quiet fact."
     }
   ],
   "claimsBound": {

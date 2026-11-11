@@ -17,6 +17,97 @@
  * riders are pinned controls: F3 a 7-hex sha pin and an "HX GP" mark in an attributed file (A2); F4 a bare and a short cmd_ token
  * (B2), two adjacent list items and a heading line (C2).
  *
+ * FOLLOW-UP (wb-9chv, the R694 follow-up of the landing-376 gate's F1): clause (b) reads the rows of marked table tokens, so a
+ * table written in raw HTML - an HTML block, table tags inline in a paragraph, a table inside a list item - renders no table row
+ * and is not read. The R-HTML-TABLE residual names that with its pinned quiet row Q12, which also holds both judged documents to
+ * render no HTML block and to hold no table tag (so every table row they render is a marked table row) and cites the two
+ * gate-level guards that close the route for them: the W10 stamped-claim guard's page check on the matrix and the TRACEABILITY
+ * freeze. The follow-up is test-only: it edits no product, docs, ledger or matrix text.
+ *
+ * FOLLOW-UP (wb-325x, the R694 follow-up of the landing-473 gate's F1): Q12's closure reading - htmlTableRoutes: the HTML blocks a
+ * page renders and its html tokens naming a table element outside a comment (htmlRaws) - ran only on the two judged documents, which
+ * read 0/0, so a reader returning 0/0, dropping either count, the table-cell, list-item or inline-children descent, or the comment
+ * exception stayed green (the gate's mutants GM1-GM7). Q12 now holds that reading, as far as SCOPE states it and no further, to
+ * flagged and quiet controls, each with its counts pinned in the roster: every control that hides a table from clause (b) is flagged
+ * (an HTML table block, table tags inline in a paragraph, a table inside a list item) and every markdown table row is quiet; flagged
+ * besides are a div block (an HTML block alone), a table block with no visible text (a table tag alone: it renders no block), and
+ * table tags inline in a heading, in a later list item, in header and body cells, in a blockquote and in upper case, and every table
+ * element inline in one paragraph (one html token per tag, so an element dropped from TABLE_TAG reads fewer table tags); quiet are a
+ * table inside a complete comment, a table tag inside an inline comment and a custom element whose name begins with tr. Test-only:
+ * census, roster.
+ *
+ * RESPIN 1 (wb-325x cut #2, curing refusal #1 of cut #1, U1): cut #1's SCOPE said its controls pin the reading, yet five census-only
+ * class mutants of the reader stayed green: L2-01 no strong, em, del or link descent, L2-02 no nested-list descent, L2-06 no
+ * nested-blockquote descent, L2-03 the comment exception only for a token that begins with a comment, L2-04 a table tag counted only
+ * where it begins its token. Q12 adds the gate's control for each (table tags in strong and link text, in a nested list item and in
+ * a nested blockquote; an empty table inside a div block; quiet, a table in a comment inside a div block) and, under the bead's
+ * class-level guard, the CLOSURE MATRIX (closureMatrix: a table-tag pair planted between quiet words in every container pair it
+ * names and in long collections, each document's html tokens held to their container path by htmlPaths, a generic walk of marked's
+ * token tree that never calls htmlRaws, and its reading to the planted counts) and controls for the members beside them: each inline
+ * wrapper alone, the first and the last element of the collections SCOPE's POSITION names (not yet a paragraph's or an item text's
+ * first child: RESPIN 2 adds them), variants of a token type, comment and tag shapes, tokens that hold no html, large counts, a long
+ * page and a deep offset. SCOPE claims exactly what Q12's controls pin, as RESPIN 2 restates it; NOT CLAIMED names the bounds past
+ * them, each measured.
+ *
+ * RESPIN 2 (wb-325x cut #3, curing refusal #2 of cut #2, U1, in the enumerate-the-resolvable form of rule 19(c); the census and
+ * roster shape is frozen at cut #2 and this cut only adds): cut #2's header and SCOPE claimed more of Q12's closure reading than its
+ * controls pinned. Fifteen gate-authored census-only class mutants of the reader stayed green against explicit claims - G01 tags
+ * read in all-lower or all-upper case only; G02, G03 and G04 an HTML block counted only with a word character, a letter or digit, or
+ * a Latin letter; G05b a greedy comment pattern; G14 and G15 a paragraph's and an item text's first child skipped; G22 single-quoted
+ * attribute values blanked; G25 and G26 ordered lists not starting at 1, or delimited by ')', skipped; G29 '[X]' task items skipped;
+ * G35 to G38 reference links, reference images, '__' strong and '~' del skipped - and seven more outside them: G06 a comment
+ * replaced by a space, G07 CDATA and G08 declarations and processing instructions excepted, G09 marked's inline raw-block state
+ * skipped, G21 the name's lookahead narrowed to a space, a tab or a line feed, G23 references decoded, G24 type-7 HTML blocks
+ * skipped. Q12 adds the gate's 23 archived plants for the 22 as route controls, byte for byte (two each for G05b and G14, one shared
+ * by G02 and G03), so each of those mutants now reds Q12, and fourteen more in the same families: every table element in upper and
+ * in mixed case; HTML blocks of a plus sign and of a Cyrillic letter alone; table tags after a vertical tab and a no-break space;
+ * '*' and '+' bullets; ordered lists from 0 and from 10; a processing instruction inside a block; blocks that open with a processing
+ * instruction, a declaration and a CDATA section; script, style and textarea blocks; decimal and hex references in attribute values;
+ * a tag opening an item's text; an indented code block; a comment opener inside an attribute value of an HTML block. It names one
+ * more member it found unpinned as the NAMED RESIDUAL R-COMMENT-BANG, with its pinned quiet row. SCOPE now claims exactly what the
+ * controls and the matrix pin, spelling by spelling, and corrects the two sentences refusal #2 found false: a paragraph or an item's
+ * text can begin with what holds a table tag (a strong, an image tag), and RESPIN 1's first and last elements are those of the
+ * collections POSITION names.
+ *
+ * FOLLOW-UP (wb-tcak, the R694 follow-up of the landing-573 gate's F1 and F3; test-only: census, roster). F1: seven census-only
+ * class mutants of Q12's closure reading stayed green on cut #3 - N33 an HTML block counted only when its visible text holds a
+ * letter, number, punctuation or symbol; E01 and E02 a paragraph's children after a hard or a soft line break skipped; E04 the
+ * name's lookahead without the Unicode spaces U+1680, U+2000-U+200A, U+2028, U+2029, U+202F, U+205F, U+3000 and U+FEFF; E05 ordered
+ * lists from 10 with "." skipped; E06 ordered lists from 2 skipped; E07 the first child of a heading other than level 2 skipped. Q12
+ * adds the gate's seven plants as route controls, byte for byte, so each of those mutants now reds Q12, and five more in their
+ * families: a backslash hard line break, a hard and a soft line break in item texts, table tags after every one of those Unicode
+ * spaces (each code point JavaScript's white space holds past the ones pinned before), an ordered list from 2 with ")", and table
+ * tags opening ATX headings of levels 3 to 6. F3: a browser ends a comment at "--!>" as well as at "-->", and the rendered view did
+ * not - HIDDEN_HTML ran an HTML block's comment to its next "-->", and an inline comment token (marked ends one at its first "-->")
+ * rendered nothing - so a citation or a sentence after a comment ended at "--!>" was hidden from clauses (a) and (c) while a browser
+ * shows it; an inline processing instruction or CDATA section, which a browser ends at its first ">" and marked at "?>" or "]]>",
+ * hid the text between the same way. HIDDEN_HTML now ends a comment at "--!>" too, and an inline comment, processing instruction,
+ * declaration or CDATA section renders what HIDDEN_HTML leaves of it (INLINE_NON_TAG); A2 and C2 pin both forms, each in both
+ * directions, and quiet controls hold that a complete inline comment, an inline processing instruction ending at its only ">", a
+ * comment holding "--!" without a ">" and an inline tag's attribute value holding tags still hide what they hold (a tag renders
+ * nothing inline, whatever its attribute values hold). R-COMMENT-BANG (wb-325x cut #3), the same comment-end family read
+ * through Q12's closure reading, is cured with them: HTML_COMMENT ends a comment where a browser does (the form the residual's quiet
+ * row read its page with, HTML_COMMENT_AS_HTML, now the one comment pattern), the residual's page is a flagged route control with
+ * its counts pinned beside the same table tag after a "--!>" end inside an inline comment token, and the residual leaves RESIDUALS.
+ *
+ * FOLLOW-UP (wb-m883, the R694 follow-up of the landing-636 gate's F1; test-only: census, roster). Four census-only class mutants of
+ * INLINE_NON_TAG's rendering stayed green on wb-tcak's cut (0 failed | 22 passed): G01 an inline non-tag token rendered as the text
+ * after its first ">", G01h the same for a comment token holding no "--!>", G01e an inline CDATA section rendered as its content and
+ * G01g an inline declaration rendered as its content. A2's quiet controls held a complete inline comment only with no ">" inside it,
+ * and wb-tcak's quiet-control sentence above ("quiet controls hold that a complete inline comment, ...") claimed no inline CDATA
+ * section or declaration quiet. A2 adds the gate's three plants as quiet controls, byte for byte - a complete inline comment holding
+ * a ">" before its end, and an inline CDATA section and an inline declaration that each end at their only ">" - and one more in
+ * G01's family, a complete inline comment holding a "->", so each of those mutants now reds A2, each falsifier at its control (G01
+ * and G01h at mention-inside-an-inline-comment-holding-a-bracket; S01, the seat's mutant rendering a complete inline comment after
+ * an inner "->", at mention-inside-an-inline-comment-holding-a-dash-and-a-bracket; G01e at
+ * mention-inside-a-complete-inline-cdata-section; G01g at mention-inside-an-inline-declaration). That sentence and this paragraph
+ * claim each shape only as A2's quiet controls spell it, and nothing past them: a complete inline comment whose body holds no ">",
+ * one whose body holds " > " and one whose body holds " -> " ahead of the mention; an inline processing instruction, CDATA section
+ * and declaration, each ending at its only ">"; a comment holding "--!" without a ">"; and an inline tag's attribute value holding
+ * tags - each still hiding the mention it holds. Any spelling of these shapes other than the controls' own texts (such as a ">"
+ * in a complete inline comment's body other than " > " or " -> " ahead of the mention, or a CDATA section or declaration holding
+ * other text) is NOT CLAIMED by this census. No reader changes.
+ *
  * MEASURED (read-only, by the cutting seats, 2026-10-23 and 2026-10-24; the producer facts ride the roster with their blob ids):
  * each deposit's README.md:3 at its pin is its status line, and DEPOSITS holds that line's status clause verbatim: HX "no new HX
  * code implemented", Forge "proposed additive source adapter, not implemented", Furnace "no simulator or policy hooks implemented by
@@ -34,13 +125,23 @@
  * the matrix has a row naming TrainingWorks, the HX x GP program, gp beside hx, or an hx speedup, and no docs sentence spells a
  * fixture side, "live", Furnace or Beads and a success word together. The 71 tracked docs pages hold no HTML comment, no HTML
  * block, no image and no character reference; their raw HTML is seven inline placeholders (<id>, <TBD>, ...), which render nothing.
+ * Re-measured for R-HTML-TABLE (wb-9chv, at trunk 799eebe): TRACEABILITY.md holds no html token and feature-matrix.md two, the
+ * inline <id> placeholders of its invoke:<id> cells; neither renders an HTML block or holds a table tag. Re-measured for wb-325x (at
+ * trunk 215c025, marked 18.0.11): both documents still read 0 HTML blocks and 0 table tags; at its cut #3 (trunk 39570b6) as well.
+ * Re-measured for wb-tcak (at trunk 8d458c6, marked 18.0.11): both documents read 0 HTML blocks and 0 table tags, and none of the
+ * 77 tracked docs pages spells "<!" or "<?" (so no comment, declaration, CDATA section or processing instruction), so the view's
+ * new comment ends and its inline rule change no real reading (A1, B1 and C2's walks read as before). Re-measured for wb-m883 (at
+ * trunk 9ad61f3, marked 18.0.11): none of the 79 tracked docs pages spells "<!" or "<?", and the cut changes no reader, so no real
+ * reading changes.
  *
  * RENDERED VIEW. What a reader sees of a markdown page, read through marked's lexer (the repository's marked devDependency, 18.0.11
  * at this cut, the renderer the refusal's readings used). A PIECE is one rendered block: a heading, a paragraph, a list item's own
  * text, a table row (its rendered cells joined by " | "), one line of a code block, or the visible text of an HTML block. Raw HTML
- * renders no text of its own (HIDDEN_HTML): a tag, a comment (an unterminated one runs to the end of its HTML block, as CommonMark
- * reads it), a processing instruction, a declaration or a CDATA section (each to its first ">", as a browser reads them); the
- * text between tags renders. Inline markup renders its
+ * renders no text of its own (HIDDEN_HTML): a tag, a comment (to its first "-->" or "--!>", or abruptly, as a browser ends one; an
+ * unterminated one runs to the end of its HTML block, as CommonMark reads it), a processing instruction, a declaration or a CDATA
+ * section (each to its first ">", as a browser reads them); the text between tags renders. Inline, a tag renders nothing, and a
+ * comment, processing instruction, declaration or CDATA section renders what HIDDEN_HTML leaves of marked's token (INLINE_NON_TAG:
+ * marked can end one past where a browser does, and a browser shows the text after the end). Inline markup renders its
  * text, so emphasis, a tag or a comment inside a word does not split it; a code span or a code block renders its literal text; a
  * link renders its text, not its destination; an image renders its alt text (as test/helpers/census.ts reads it). Outside code,
  * character references are decoded (every numeric one, and the named ones in NAMED_REFERENCES), format characters (Unicode Cf:
@@ -58,9 +159,11 @@
  * and the family tells them apart), or, pinning none, any phrase of the family; the phrase must sit within 400 characters of the
  * match (the characters strictly between the two). A match citing neither family is a namesake: attributed when its page's
  * rendered text names the graph-policy-machine-control program (its program id or its directory), otherwise owed some deposit's
- * phrase within the window like any citation. (b) Every rendered table row of TRACEABILITY.md and feature-matrix.md is read with
- * the Status cell of its table. A row names a subject when it spells TrainingWorks or graph-policy-optimization, or gp, GraphPolicy
- * or GraphDataIR beside hx or HyperUnix; it presents the subject as shipped when its status is one of the three words (b) quotes or
+ * phrase within the window like any citation. (b) Every rendered table row of TRACEABILITY.md and feature-matrix.md - each row of a
+ * marked table token; a table written in raw HTML renders no table token and is not read (R-HTML-TABLE), and Q12 holds both
+ * documents to render no HTML block and no table tag - is read with the Status cell of its table. A row names a subject when it
+ * spells TrainingWorks or graph-policy-optimization, or gp, GraphPolicy or GraphDataIR beside hx or HyperUnix; it presents the
+ * subject as shipped when its status is one of the three words (b) quotes or
  * a matrix status whose legend definition is or names landed-gated (landed-gated, partial), or when its text spells one of the
  * three words. A row spelling hx or HyperUnix beside a speedup word owes a cmd_ receipt in the row. (c) The guard is the product's:
  * qa/workbench/status-ledger.mjs refuses (integrity rule receipt-tier) a shipped, gate-pass or live-sdk row whose receipt clauses -
@@ -77,8 +180,14 @@
  *    the HX x GP family, the unattributed namesake, a line-wrapped phrase, and the rendered view: a phrase, an attribution or a
  *    mention only inside a comment, a name split by markup, a reference or an invisible character, an unterminated comment (one
  *    holding a ">" too), an empty comment, a CDATA section, processing instruction or declaration, an HTML block's text, code, a
- *    blockquote, a table header cell, a named reference in the HX x GP title, a phrase split across list items, and a finding's
- *    source line). B, (b): B1 the real ledger and matrix - every rendered table row read (each document's own table-line count
+ *    blockquote, a table header cell, a named reference in the HX x GP title, a phrase split across list items, a finding's source
+ *    line, and wb-tcak's: a mention, a phrase or a referenced name after a comment a browser ends at "--!>" - opening an HTML block,
+ *    inside a div block or inside an inline comment token marked runs to a later "-->" - and a mention after an inline processing
+ *    instruction or CDATA section a browser ends at its first ">", flagged or quiet as a browser shows them, beside a mention inside
+ *    a complete inline comment, an inline processing instruction to its only ">", a comment holding "--!" without a ">" and an
+ *    inline tag's attribute value holding tags, quiet; and wb-m883's: a mention inside a complete inline comment holding a ">" or a
+ *    "->", and inside an inline CDATA section and an inline declaration that each end at their only ">", quiet).
+ *    B, (b): B1 the real ledger and matrix - every rendered table row read (each document's own table-line count
  *    outside code and HTML blocks), the product parser's 50 WB rows among them with their statuses, every matrix status a legend
  *    word, no finding; B2 the judge on ledger and matrix controls (with a bare and a short cmd_ token, and the rendered view: a
  *    subject split by a comment, an emphasized status, a receipt or a claim word only inside a comment, and a row only inside a
@@ -87,8 +196,10 @@
  *    second vocabulary line, a renamed heading, a comment between the vocabulary line and its list, a malformed item). C, (c): C1
  *    the guard through the product module - each claim status refused on fixture-tier receipts alone (live cell or a labelled cmd_
  *    clause), a mixed row and non-claim rows accepted, the live ledger clean; C2 the real docs walk (git-tracked, exact) - no
- *    finding - and the sentence judge on controls (with two adjacent list items and a heading line, and the rendered view). Q, the
- *    residuals' pinned quiet rows (RESIDUALS).
+ *    finding - and the sentence judge on controls (with two adjacent list items and a heading line, and the rendered view, wb-tcak's
+ *    an equation after a comment a browser ends at "--!>", opening an HTML block and inside an inline comment token, and a negation
+ *    there that a browser shows). Q, the residuals' pinned quiet rows (RESIDUALS); Q12 also pins its closure reading on flagged and
+ *    quiet controls and a matrix.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and pins,
  * every pin's witness, the constants and every registered test title - is held to the out-of-file roster
  * (test/fixtures/trainingworks-status-roster.json). OUTSIDE ANCHORS (their own registered case): the bead's own row in the tracker
@@ -99,8 +210,20 @@
  * helper, binds MATRIX_LEGEND and MATRIX_CLAIMS. The last case reads the vitest task tree (every registered test, in roster order,
  * in run mode, ran before it) and the pins reached.
  * NOT CLAIMED (edits of this file and the roster together below row level): a pin removed from ROWS, the literal, IMPL and the
- * roster (the bead text anchors rows, not pins); a control removed while every remaining control still holds; a pin's case
- * replaced by one that echoes its roster witness; the outside-anchor case or the closing case removed with its roster title.
+ * roster (the bead text anchors rows, not pins); a control removed while every remaining control still holds; a control's text
+ * replaced by another of the same reading, which needs no roster edit (wb-tcak's cured R-COMMENT-BANG page closed as a complete
+ * comment reads 1/1 as well: 22 of 22; the comment-end cure stays held by the inline-token control, A2 and C2); a pin's case
+ * replaced by one that echoes its roster witness; the outside-anchor case or the closing case removed with its roster title; a
+ * constant narrowed in both, such as a cited guard's spelling rewritten in both. (Until wb-325x an element dropped from TABLE_TAG in
+ * both was the example - td dropped from both with a <td> tag planted in a matrix cell: 22 of 22 pass; Q12's every-element closure
+ * control now reads fewer table tags for any element dropped. Until its cut #2 the comment pattern narrowed to complete comments in
+ * both was one too, 22 of 22; Q12's unterminated-comment control now reads a table tag under it.) Of Q12's closure reading, the
+ * bounds past what SCOPE claims (each measured: a reader that stops just past one stays 22 of 22, and each sits above both judged
+ * documents): a nesting deeper than the chain's (htmlRaws recursion depth 11; the documents reach 2); a collection longer than its
+ * long case (100 items, blocks, rows or a row's cells, 203 inline children, 202 in a cell; the documents' largest is a 50-row
+ * table); more than 1,000 table-tag tokens or 100 HTML blocks in one page (the documents hold none); a page longer than the
+ * long-page control, and a table tag later in one token than the deep-block control's, both built at run time past the longer judged
+ * document.
  * RESIDUALS (named, each with its pinned quiet row): R-ATTRIBUTED-FILE a GraphPolicy mention without a family mark in a page that
  * names the graph-policy-machine-control program is attributed to that program, so an HX x GP citation spelled there without its
  * directory, title or "HX GP" is not held to "design only" (Q1); R-UNPINNED a TrainingWorks citation pinning no deposit sha is held
@@ -116,18 +239,79 @@
  * NAMED_REFERENCES ("&hyphen;") is not folded, so the spelling is no match (Q9); R-LINK-TARGET a link destination renders no text,
  * so a deposit sha carried only there pins nothing and the citation is held to its family (Q10); R-HIDDEN-HTML an element a browser
  * hides (the hidden attribute, a display:none style, template, script, style) still renders its text in this view, so a phrase
- * hidden that way satisfies its citation (Q11).
+ * hidden that way satisfies its citation (Q11); R-HTML-TABLE a table written in raw HTML (an HTML block, table tags inline in a
+ * paragraph, a table inside a list item) renders no marked table token, so clause (b) reads none of its rows: an HTML row
+ * presenting a TrainingWorks subject as landed-gated or shipped, or an hx speedup without a cmd_ receipt, reads no finding, while
+ * the same row as a markdown table row is flagged (Q12). The route is closed for the two judged documents outside this census -
+ * the W10 stamped-claim guard (test/workbench-w10-stamped-claim-guard.test.ts) refuses every raw HTML token on the matrix but a
+ * complete comment, and the TRACEABILITY freeze (test/workbench-traceability-freeze.test.ts) pins the ledger byte-exact - and Q12
+ * cites both (the guard's page check applied to the matrix; the freeze's pinned hash equal to the ledger's sha256) and holds both
+ * documents to render no HTML block and no table tag. R-COMMENT-BANG, named at wb-325x cut #3 (a browser ends a comment at "--!>"
+ * as well as at "-->", but HTML_COMMENT and HIDDEN_HTML ended one only at "-->", so a table after a comment ended that way read
+ * quiet), is cured by wb-tcak (FOLLOW-UP): both patterns end a comment where a browser does, and its page is a flagged route
+ * control.
  * SCOPE: the tier is read from the ledger's own words, never from the producer: a receipt's tier is what its clause says. The
  * sentence judge reads words, not meaning: an affirmative sentence that names both sides around a copula (OVER-READ, disclosed;
  * none today) reads as an equation. The 400-character window counts UTF-16 code units of the rendered text. A row's subject and
  * claim words are read anywhere in its rendered cells. The product guard reads the ledger's source cells: TRACEABILITY.md is frozen
  * byte-exact, so its source and rendered views cannot drift apart without reddening the landed freeze test. No docs, ledger or
  * matrix text is edited by this cut; the guard is the only product change.
+ * Q12 reads a document's HTML blocks in the rendered view (a complete comment renders nothing and is no HTML block there) and its
+ * table tags in the html tokens htmlRaws collects, a table tag inside a comment excepted. What it claims of that reading (wb-325x
+ * cut #3, in the enumerate-the-resolvable form, and wb-tcak) is exactly the reading of its route controls and its closure matrix -
+ * each text in Q12, each reading pinned in the roster's Q12 witness - and nothing past them; the members named here are what those
+ * texts exercise, each claimed only as far as its texts spell it. DESCENT: an html token is read in a paragraph, a heading, the
+ * middle item of a tight list, a header cell and a body cell, each alone and inside strong (**), em (_), del (~~), an inline link's
+ * text and an inline image's alt text; in each of those five wrappers inside each of the five in a paragraph, but a link in a link
+ * (marked never nests one); in a paragraph also inside __ strong, * em, ~ del and a full-reference link's text and image's alt text,
+ * and after a hard line break (two spaces or a backslash) and a soft line break, and in an item's text after a two-space hard line
+ * break and a soft line break; in each holder and in an HTML block inside a blockquote and inside the later block of a loose list's
+ * middle item, one or two deep in either order; along one fourteen-container chain; in a nested list item and a nested blockquote;
+ * in ordered lists from 0, 1, 2, 3 and 10 with "." and from 1, 2 and 10 with ")"; in "-", "*" and "+" bullet lists; in unchecked and
+ * checked task items ([ ], [x] and [X]); in headings of every level (ATX and setext); in aligned cells; in a pre block, script,
+ * style and textarea blocks, a block that opens with a comment, a type-7 block (a span tag alone on its line) and blocks that open
+ * with a processing instruction, a declaration and a CDATA section; and inside an inline code element (marked's raw-block state).
+ * POSITION: besides the middle ones the matrix uses, in the first and the last of a page's, a blockquote's and a list item's blocks,
+ * a list's items, a table's header cells, body rows and a row's cells, and a heading's (the first at every ATX level, 1 to 6) and
+ * each matrix inline wrapper's children; last among a paragraph's and an item text's children, and first among them (a strong
+ * holding table tags, and an image tag holding one); after 99 quiet elements of each of those collections and of a paragraph's, an
+ * item text's and a cell's children; and in the last block of a page longer than either judged document. COUNT: one per html token,
+ * for each of the ten table elements in lower case, in upper case and in one mixed-case spelling of each (td also as <Td> and
+ * </tD>), followed by a space, a tab, a line break or a form feed, "/", ">" or the token's end, at any offset of the token up to the
+ * deep block's (past the longer judged document), to 1,000 tokens in a paragraph; excepted inside a comment as HTML_COMMENT spans it
+ * (a complete one, an unterminated one, each of two in one token, one holding "--!" without a ">"), and read beside one (after a
+ * complete one, after an abrupt <!--> or <!--->, after one ended at "--!>" in a block that opens with it and inside an inline
+ * comment token marked runs to a later "-->") and between two in one token (in a div block and in a block that opens with one); a
+ * custom element whose name begins like a table element's, and a malformed tag marked keeps as text, are none; code spans, fenced
+ * and indented code, escaped tags and character references in text hold no html token, and named, decimal and hex references in an
+ * attribute value read no table tag. These readings differ from what renders and are pinned as read: a table tag in an image's alt
+ * text; in another tag's double- or single-quoted attribute value; inside a CDATA section, a declaration or a processing instruction
+ * (none of which a browser reads a tag in); in a script, style or textarea block; one a comment splits (<t<!-- -->d>, read once the
+ * comment is removed); a table element's name followed by a vertical tab, a no-break space or any other white space JavaScript's \s
+ * holds (U+1680, U+2000 to U+200A, U+2028, U+2029, U+202F, U+205F, U+3000, U+FEFF: white space to TABLE_TAG, not to HTML; a carriage
+ * return reaches no token, marked reads one as a line feed); an unclosed tag ending an HTML block (read as a table tag and as
+ * visible text); and, the other way, a table tag after a comment opener inside an attribute value of an HTML block, which
+ * HTML_COMMENT runs to the token's end (the block still reads as an HTML block). HTML BLOCKS: a block is counted when its visible
+ * text holds Latin letters, digits alone (<div>42</div>), hyphens alone (<div>--</div>), a plus sign alone, a Cyrillic letter alone
+ * or a combining mark alone (U+0301), and when that text follows a comment it opens with and a browser ends at "--!>"; each script,
+ * style or textarea block, its text between the tags read as visible (a browser shows none of a script's or a style's:
+ * R-HIDDEN-HTML's family); each block that opens with a processing instruction, a declaration or a CDATA section, the text after its
+ * first ">" visible as a browser shows it; two on later lines and a hundred in one page, in a blockquote and in a later list item;
+ * none for a block of tags or comments alone. KNOWN PAST THE CLAIM: the NOT CLAIMED bounds above (each measured); no other member is
+ * known: of the 299 census-only class mutants cut #3's battery ran on cut #2 and on cut #3 (the refusal-#2 gate's PREP set of 59,
+ * cut #2's 202 and cut #3's 38), every one red Q12 at cut #3 but 21 bound probes past those bounds and 3 equivalents (a list-item
+ * branch htmlRaws never reaches); wb-tcak's battery replays the archived sets with the landing-573 gate's 39 LEG 2 mutants on trunk
+ * 8d458c6 and on this cut (its counts ride the delivery note); wb-m883's replays the landing-636 gate's four (G01, G01h, G01e, G01g)
+ * and the seat's S01 (a complete inline comment rendered after an inner "->") on trunk 9ad61f3 and on its cut (its counts ride the
+ * delivery note). An escape found later is a residual-list addition. It reads the two
+ * guards it cites by their source spellings, so a cut renaming the W10 guard's page check or the freeze's target or hash constant
+ * re-measures Q12 in the same commit.
  *
  * Display paths added: none (the receipt-tier detail is a qa/workbench CLI receipt string; src/ is untouched). Test-only otherwise:
- * no scratch is allocated; docs, .beads and qa are only read.
+ * no scratch is allocated; docs, .beads, qa and the two guard files Q12 cites are only read.
  */
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -270,8 +454,10 @@ const NAMED_REFERENCES: Readonly<Record<string, string>> = {
   hellip: cp(0x2026),
 };
 const REFERENCE = /&(?:#(\d{1,7})|#[xX]([0-9A-Fa-f]{1,6})|([A-Za-z][A-Za-z0-9]{1,31}));/g;
-/** Raw HTML that renders no text: a comment (an empty one, or to its --> or the end), a declaration, processing instruction or CDATA section (to its first >, as a browser reads them), a tag. */
-const HIDDEN_HTML = /<!--(?:-?>|[\s\S]*?(?:-->|$))|<[!?][^>]*(?:>|$)|<\/?[A-Za-z][^<>]*>/g;
+/** Raw HTML that renders no text: a comment (an empty one, or to its first --> or --!> as a browser ends one, or the end), a declaration, processing instruction or CDATA section (to its first >, as a browser reads them), a tag. */
+const HIDDEN_HTML = /<!--(?:-?>|[\s\S]*?(?:--!?>|$))|<[!?][^>]*(?:>|$)|<\/?[A-Za-z][^<>]*>/g;
+/** An inline html token that is no tag - a comment, a declaration or a CDATA section (<!) or a processing instruction (<?): marked can end one past where a browser does, so it renders what HIDDEN_HTML leaves of it (wb-tcak). */
+const INLINE_NON_TAG = /^<[!?]/;
 /** Format characters (Unicode Cf) render nothing. */
 const FORMAT = /\p{Cf}/gu;
 /** The white space a status phrase may hold between its words: inside one piece only. */
@@ -281,6 +467,16 @@ const LEGEND_HEADING = "Status legend";
 const LEGEND_PARENTS = ["Workbench release feature matrix"];
 const LEGEND_LEAD = "Status vocabulary (exactly one per row):";
 const LEGEND_ITEM = /^([a-z-]+): (.*)$/;
+/** R-HTML-TABLE (Q12): a table-structure tag, a comment (no tag inside one counts), and each judged document's gate-level guard with the source spellings Q12 cites it by. */
+const TABLE_TAG = /<\/?(?:table|caption|colgroup|col|thead|tbody|tfoot|tr|th|td)(?=[\s/>]|$)/i;
+/** A comment as a browser ends it - abruptly (<!--> or <!--->), at the first --> or --!>, or at the end (wb-tcak: R-COMMENT-BANG cured). */
+const HTML_COMMENT = /<!--(?:-?>|[\s\S]*?(?:--!?>|$))/g;
+const W10_GUARD = "test/workbench-w10-stamped-claim-guard.test.ts";
+const W10_MATRIX = /^const MATRIX = "([^"\n]+)";$/m;
+const W10_PAGE_CHECK = "htmlRefusals(tokens, MATRIX,";
+const FREEZE_GUARD = "test/workbench-traceability-freeze.test.ts";
+const FREEZE_TARGET = /new URL\("\.\.\/([^"\n]+)", import\.meta\.url\)/;
+const FREEZE_HASH = /^const FROZEN_SHA256 = "([0-9a-f]{64})";$/m;
 
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-ATTRIBUTED-FILE": ["Q1"],
@@ -294,6 +490,7 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-ENCODED": ["Q9"],
   "R-LINK-TARGET": ["Q10"],
   "R-HIDDEN-HTML": ["Q11"],
+  "R-HTML-TABLE": ["Q12"],
 };
 
 interface Row {
@@ -320,7 +517,7 @@ const ROWS: readonly Row[] = [
       "(c) validateLedger refuses a 'shipped'/'gate-pass'/'live-sdk' row backed only by a hermetic or fixture receipt (new guard), and no docs or TRACEABILITY sentence equates a fixture run with live Furnace/Beads success",
     pins: ["C1", "C2"],
   },
-  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11"] },
+  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12"] },
 ];
 
 interface RosterPin {
@@ -400,6 +597,13 @@ function trackedMarkdown(directory: string): string[] {
     .filter(path => path.endsWith(".md"))
     .sort();
 }
+/** Whether git tracks a repo path. */
+function tracked(path: string): boolean {
+  return execFileSync("git", ["ls-files", "--", path], { cwd: REPO, encoding: "utf8" }).split("\n").includes(path);
+}
+function sha256Of(path: string): string {
+  return createHash("sha256").update(readFileSync(join(REPO, path))).digest("hex");
+}
 function escaped(text: string): string {
   return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
@@ -457,11 +661,14 @@ function referencesDecoded(text: string): string {
 function clean(text: string): string {
   return text.replace(FORMAT, "").replace(/\s+/g, " ").trim();
 }
-/** What a reader sees of inline tokens: raw HTML (a tag, a complete comment) renders nothing, markup its text, code its literal text. */
+/** What a reader sees of inline tokens: a tag renders nothing, a comment, processing instruction, declaration or CDATA section what a browser shows after its end (INLINE_NON_TAG), markup its text, code its literal text. */
 function inlineOf(tokens: readonly Token[]): string {
   let out = "";
   for (const token of tokens) {
-    if (token.type === "html") continue;
+    if (token.type === "html") {
+      if (INLINE_NON_TAG.test(token.raw)) out += referencesDecoded(token.raw.replace(HIDDEN_HTML, ""));
+      continue;
+    }
     if (token.type === "br") out += "\n";
     else if (token.type === "codespan" || token.type === "escape") out += tokenText(token);
     else if (childrenOf(token).length > 0) out += inlineOf(childrenOf(token));
@@ -503,6 +710,140 @@ function renderInto(tokens: readonly Token[], line: number, kind: "paragraph" | 
       push("other", here, childrenOf(token).length > 0 ? inlineOf(childrenOf(token)) : referencesDecoded(tokenText(token)));
     }
   }
+}
+/** The raw text of the html tokens below the given tokens (block or inline; through table cells, list items, block quotes and inline children): Q12's closure reading, pinned as far as SCOPE states (wb-325x). */
+function htmlRaws(tokens: readonly Token[]): string[] {
+  return tokens.flatMap(token => {
+    if (token.type === "html") return [token.raw];
+    if (isTable(token)) return [...token.header, ...token.rows.flat()].flatMap(cell => htmlRaws(cell.tokens));
+    if (isList(token)) return token.items.flatMap(item => htmlRaws(childrenOf(item)));
+    return htmlRaws(childrenOf(token));
+  });
+}
+/** R-HTML-TABLE's closure reading of a page: the HTML blocks it renders (pieces of the rendered view) and the html tokens naming a table element outside a comment. */
+function htmlTableRoutes(markdown: string): { htmlBlocks: number; tableTags: number } {
+  return {
+    htmlBlocks: rendered(markdown).pieces.filter(piece => piece.kind === "html").length,
+    tableTags: htmlRaws(marked.lexer(markdown)).filter(raw => TABLE_TAG.test(raw.replace(HTML_COMMENT, ""))).length,
+  };
+}
+/** The ancestor path of every html token in a page: "page", then the type of each token down to it, a table cell named header-cell or body-cell (a generic walk over every value of marked's token tree, never htmlRaws; Q12's closure matrix checks the structure of its documents with it). */
+function htmlPaths(markdown: string): string[] {
+  const paths: string[] = [];
+  const walk = (node: unknown, path: readonly string[]): void => {
+    if (Array.isArray(node)) {
+      for (const child of node) walk(child, path);
+      return;
+    }
+    if (node === null || typeof node !== "object") return;
+    const record = node as Record<string, unknown>;
+    if (record.type === "html") {
+      paths.push(path.join("/"));
+      return;
+    }
+    const label = typeof record.type === "string" ? record.type : typeof record.header === "boolean" ? (record.header ? "header-cell" : "body-cell") : undefined;
+    const below = label === undefined ? path : [...path, label];
+    for (const value of Object.values(record)) if (value !== null && typeof value === "object") walk(value, below);
+  };
+  walk(marked.lexer(markdown), ["page"]);
+  return paths;
+}
+/** Q12's closure matrix (wb-325x cut #2): CLOSURE_LEAF, a table-tag pair (two inline html tokens), planted between quiet words in every container pair below, and CLOSURE_HTML_BLOCK, an HTML block holding it (one block html token with visible text). */
+const CLOSURE_LEAF = "<td>landed-gated</td>";
+const CLOSURE_HTML_BLOCK = `<div>\n${CLOSURE_LEAF}\n</div>`;
+type ClosureWrap = (inner: string) => string;
+/** The inline wrappers, each holding its inner text between two quiet words. */
+const CLOSURE_INLINE: readonly (readonly [string, ClosureWrap])[] = [
+  ["strong", inner => `**a ${inner} b**`],
+  ["em", inner => `_a ${inner} b_`],
+  ["del", inner => `~~a ${inner} b~~`],
+  ["link", inner => `[a ${inner} b](https://e.x)`],
+  ["image", inner => `![a ${inner} b](https://e.x)`],
+];
+/** The blocks holding inline text, with the token path down to that text: a paragraph, a heading, the middle item of a tight list, the middle header cell, the middle cell of the middle body row. */
+const CLOSURE_HOLDERS: readonly (readonly [string, string, ClosureWrap])[] = [
+  ["paragraph", "paragraph", inner => `Pi notes ${inner} here`],
+  ["heading", "heading", inner => `## Pi notes ${inner} here`],
+  ["tight-item", "list/list_item/text", inner => `- quiet\n- Pi notes ${inner} here\n- quiet`],
+  ["header-cell", "table/header-cell", inner => `| a | Pi ${inner} | c |\n| --- | --- | --- |\n| d | e | f |`],
+  ["body-cell", "table/body-cell", inner => `| a | b | c |\n| --- | --- | --- |\n| d | e | f |\n| g | Pi ${inner} | i |\n| j | k | l |`],
+];
+/** The blocks holding blocks, with their token path: a blockquote (its middle block) and the middle item of a loose list (the item's later block). */
+const CLOSURE_BLOCKS: readonly (readonly [string, string, ClosureWrap])[] = [
+  ["blockquote", "blockquote", inner => ["quiet", "", ...inner.split("\n"), "", "quiet"].map(line => (line === "" ? ">" : `> ${line}`)).join("\n")],
+  ["list-item", "list/list_item", inner => ["- quiet", "- quiet lead", "", ...inner.split("\n").map(line => (line === "" ? "" : `  ${line}`)), "", "- quiet"].join("\n")],
+];
+interface ClosureReading {
+  readonly htmlBlocks: number;
+  readonly tableTags: number;
+}
+interface ClosureCase {
+  readonly id: string;
+  readonly text: string;
+  readonly path: string;
+  readonly planted: ClosureReading;
+}
+/** Q12's closure matrix: each holder alone and around each inline wrapper; the inline wrappers around each other in a paragraph, but no link in a link (marked never nests one, as CommonMark reads it); the HTML block on the page; each block wrapper around each holder and the HTML block, alone and two deep in either order; one chain of fourteen containers (a blockquote, a list and its item, three times, then a paragraph, strong, em, del and a link); and the long cases, each collection with the pair after 99 quiet elements (a blockquote's, a list item's and a list's blocks or items, a table's header cells, body rows and a row's cells, and the inline children of a paragraph, a heading, an item's text, a cell and each inline wrapper). */
+function closureMatrix(): ClosureCase[] {
+  const pair: ClosureReading = { htmlBlocks: 0, tableTags: 2 };
+  const block: ClosureReading = { htmlBlocks: 1, tableTags: 1 };
+  const cases: ClosureCase[] = [];
+  const add = (id: string, text: string, containers: readonly string[], planted: ClosureReading): void => {
+    cases.push({ id, text, path: ["page", ...containers].join("/"), planted });
+  };
+  for (const [holder, holderPath, hold] of CLOSURE_HOLDERS) {
+    add(holder, hold(CLOSURE_LEAF), [holderPath], pair);
+    for (const [wrapper, wrap] of CLOSURE_INLINE) add(`${holder}>${wrapper}`, hold(wrap(CLOSURE_LEAF)), [holderPath, wrapper], pair);
+  }
+  for (const [outer, wrapOuter] of CLOSURE_INLINE) {
+    for (const [inner, wrapInner] of CLOSURE_INLINE) {
+      if (outer !== "link" || inner !== "link") add(`paragraph>${outer}>${inner}`, `Pi notes ${wrapOuter(wrapInner(CLOSURE_LEAF))} here`, ["paragraph", outer, inner], pair);
+    }
+  }
+  add("html-block", CLOSURE_HTML_BLOCK, [], block);
+  const leaves = [
+    ...CLOSURE_HOLDERS.map(([id, holderPath, hold]) => ({ id, text: hold(CLOSURE_LEAF), containers: [holderPath], planted: pair })),
+    { id: "html-block", text: CLOSURE_HTML_BLOCK, containers: [], planted: block },
+  ];
+  for (const [outer, outerPath, wrapOuter] of CLOSURE_BLOCKS) {
+    for (const leaf of leaves) add(`${outer}>${leaf.id}`, wrapOuter(leaf.text), [outerPath, ...leaf.containers], leaf.planted);
+    for (const [inner, innerPath, wrapInner] of CLOSURE_BLOCKS) {
+      for (const leaf of leaves) add(`${outer}>${inner}>${leaf.id}`, wrapOuter(wrapInner(leaf.text)), [outerPath, innerPath, ...leaf.containers], leaf.planted);
+    }
+  }
+  const inlineChain = CLOSURE_INLINE.filter(([name]) => name !== "image");
+  let text = `Pi notes ${inlineChain.reduceRight((inner, [, wrap]) => wrap(inner), CLOSURE_LEAF)} here`;
+  let containers = ["paragraph", ...inlineChain.map(([name]) => name)];
+  for (let round = 0; round < 3; round += 1) {
+    for (const [, blockPath, wrap] of [...CLOSURE_BLOCKS].reverse()) {
+      text = wrap(text);
+      containers = [blockPath, ...containers];
+    }
+  }
+  add("chain", text, containers, pair);
+  const run = (count: number, unit: string): string => unit.repeat(count);
+  const quietInline = run(99, "**q** ");
+  const longCases: readonly (readonly [string, string, readonly string[]])[] = [
+    ["blockquote-blocks", `${run(99, "> quiet\n>\n")}> Pi notes ${CLOSURE_LEAF} here`, ["blockquote", "paragraph"]],
+    ["list-items", `${run(99, "- quiet\n")}- Pi notes ${CLOSURE_LEAF} here`, ["list", "list_item", "text"]],
+    ["item-blocks", `- quiet\n${run(98, "\n  quiet\n")}\n  Pi notes ${CLOSURE_LEAF} here`, ["list", "list_item", "paragraph"]],
+    ["header-cells", `|${run(99, " q |")} Pi ${CLOSURE_LEAF} |\n|${run(100, " --- |")}\n|${run(100, " q |")}`, ["table", "header-cell"]],
+    ["body-rows", `| a | b | c |\n| --- | --- | --- |\n${run(99, "| q | q | q |\n")}| q | q | Pi ${CLOSURE_LEAF} |`, ["table", "body-cell"]],
+    ["row-cells", `|${run(100, " h |")}\n|${run(100, " --- |")}\n|${run(99, " q |")} Pi ${CLOSURE_LEAF} |`, ["table", "body-cell"]],
+    ["paragraph-children", `Pi ${quietInline}${CLOSURE_LEAF} here`, ["paragraph"]],
+    ["heading-children", `## Pi ${quietInline}${CLOSURE_LEAF} here`, ["heading"]],
+    ["item-text-children", `- Pi ${quietInline}${CLOSURE_LEAF} here`, ["list", "list_item", "text"]],
+    ["cell-children", `| a | Pi ${quietInline}${CLOSURE_LEAF} |\n| --- | --- |\n| b | c |`, ["table", "header-cell"]],
+    ...CLOSURE_INLINE.map(
+      ([name, wrap]): readonly [string, string, readonly string[]] => [
+        `${name}-children`,
+        `Pi notes ${wrap(`${run(99, name === "strong" ? "_q_ " : "**q** ")}${CLOSURE_LEAF}`)} here`,
+        ["paragraph", name],
+      ],
+    ),
+  ];
+  for (const [id, longText, longContainers] of longCases) add(`long:${id}`, longText, longContainers, pair);
+  return cases;
 }
 const VIEWS = new Map<string, Rendered>();
 /** A markdown page's rendered view (memoized by its text). */
@@ -727,7 +1068,7 @@ const MATRIX_HEADER = "| Feature | Status | Evidence | Caveats |";
 
 /** The bead's own notes in the tracker export. */
 function beadNotes(): string {
-  for (const line of textOf(".beads/issues.jsonl").split("\n")) {
+  for (const line of rehydrateTrackerExport(textOf(".beads/issues.jsonl"), join(REPO, ".beads/issues.jsonl")).split("\n")) {
     if (!line.includes(`"id":"${BEAD}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === BEAD && typeof row.notes === "string") return row.notes;
@@ -840,6 +1181,23 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "phrase-in-a-declaration", path: "docs/workbench/x.md", text: "TrainingWorks (Forge @3ce473386133).\n\n<!NOTE proposed additive source adapter, not implemented>", flagged: true },
       { id: "text-after-an-empty-comment", path: "docs/workbench/x.md", text: "<!--> Pi reads the TrainingWorks export.", flagged: true },
       { id: "title-with-a-named-reference", path: "docs/workbench/x.md", text: "HyperUnix &times; GraphPolicyCLI ranks physical plans.", flagged: true },
+      // wb-tcak F3: a comment a browser ends at "--!>", and an inline processing instruction or CDATA section it ends at its first ">".
+      { id: "text-after-a-comment-a-browser-ends-at-bang", path: "docs/workbench/x.md", text: "<!-- note --!> Pi reads the TrainingWorks export.", flagged: true },
+      { id: "text-after-a-bang-ended-comment-inside-an-html-block", path: "docs/workbench/x.md", text: "<div>\n<!-- note --!> Pi reads the TrainingWorks export.\n</div>", flagged: true },
+      { id: "text-after-a-bang-ended-comment-inside-an-inline-comment-token", path: "docs/workbench/x.md", text: "Pi notes <!-- note --!> Pi reads the TrainingWorks export. --> here.", flagged: true },
+      { id: "name-spelled-by-a-reference-after-a-bang-ended-comment-inside-an-inline-comment-token", path: "docs/workbench/x.md", text: "Pi notes <!-- note --!> Pi reads the Training&#87;orks export. --> here.", flagged: true },
+      { id: "phrase-after-a-comment-a-browser-ends-at-bang", path: "docs/workbench/x.md", text: "TrainingWorks (Forge @3ce473386133).\n\n<!-- note --!> proposed additive source adapter, not implemented", flagged: false },
+      { id: "text-after-an-inline-processing-instruction-a-browser-ends-at-its-first-bracket", path: "docs/workbench/x.md", text: "Pi notes <?note a > Pi reads the TrainingWorks export. ?> here.", flagged: true },
+      { id: "text-after-an-inline-cdata-section-a-browser-ends-at-its-first-bracket", path: "docs/workbench/x.md", text: "Pi notes <![CDATA[ a > Pi reads the TrainingWorks export. ]]> here.", flagged: true },
+      { id: "mention-inside-a-complete-inline-comment", path: "docs/workbench/x.md", text: "Pi notes <!-- Pi reads the TrainingWorks export. --> here.", flagged: false },
+      { id: "mention-inside-an-inline-processing-instruction", path: "docs/workbench/x.md", text: "Pi notes <?note Pi reads the TrainingWorks export. ?> here.", flagged: false },
+      { id: "mention-inside-a-comment-holding-a-bang-without-a-bracket", path: "docs/workbench/x.md", text: "<!-- note --! Pi reads the TrainingWorks export. -->", flagged: false },
+      { id: "mention-inside-an-attribute-value-of-an-inline-tag", path: "docs/workbench/x.md", text: 'Pi notes <span title="<b>Pi reads the TrainingWorks export.</b>">x</span> here.', flagged: false },
+      // wb-m883 (the landing-636 gate's F1: its three plants byte for byte, and one more in G01's family): a mention inside a complete inline comment holding " > " or " -> ", or inside an inline CDATA section or declaration ending at its only ">", reads quiet as spelled here.
+      { id: "mention-inside-an-inline-comment-holding-a-bracket", path: "docs/workbench/x.md", text: "Pi notes <!-- a > Pi reads the TrainingWorks export. --> here.", flagged: false },
+      { id: "mention-inside-an-inline-comment-holding-a-dash-and-a-bracket", path: "docs/workbench/x.md", text: "Pi notes <!-- a -> Pi reads the TrainingWorks export. --> here.", flagged: false },
+      { id: "mention-inside-a-complete-inline-cdata-section", path: "docs/workbench/x.md", text: "Pi notes <![CDATA[ Pi reads the TrainingWorks export. ]]> here.", flagged: false },
+      { id: "mention-inside-an-inline-declaration", path: "docs/workbench/x.md", text: "Pi notes <!NOTE Pi reads the TrainingWorks export.> here.", flagged: false },
     ];
     const readings = controls.map(control => {
       const reading = citationsIn(control.path, control.text);
@@ -1006,6 +1364,10 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "html-block-text", text: "<div>A fixture run equals live Furnace success.</div>", flagged: true },
       { id: "equation-in-code", text: "```\nA fixture run equals live Furnace success.\n```", flagged: true },
       { id: "equation-in-a-blockquote", text: "> A fixture run equals live Furnace success.", flagged: true },
+      // wb-tcak F3: a sentence after a comment a browser ends at "--!>", in an HTML block and inside an inline comment token.
+      { id: "equation-after-a-comment-a-browser-ends-at-bang", text: "<!-- note --!> A fixture run equals live Furnace success.", flagged: true },
+      { id: "equation-after-a-bang-ended-comment-inside-an-inline-comment-token", text: "Pi notes. <!-- note --!> A fixture run equals live Furnace success. --> Done.", flagged: true },
+      { id: "negation-after-a-bang-ended-comment-inside-an-inline-comment-token", text: "A fixture run <!-- a --!> never --> equals live Furnace success.", flagged: false },
     ];
     const readings = controls.map(control => {
       const found = sentenceFindings("docs/workbench/x.md", control.text);
@@ -1085,11 +1447,212 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     expect(reading.findings, "a phrase in an element a browser hides still renders in this view").toEqual([]);
     return { citations: reading.citations, findings: reading.findings.length };
   },
+  Q12: () => {
+    const html = (header: readonly string[], row: readonly string[]): string =>
+      `<table>\n<tr>${header.map(cell => `<th>${cell}</th>`).join("")}</tr>\n<tr>${row.map(cell => `<td>${cell}</td>`).join("")}</tr>\n</table>`;
+    const markdown = (header: readonly string[], row: readonly string[]): string => tableOf(`| ${header.join(" | ")} |`, [`| ${row.join(" | ")} |`]);
+    const matrixHeader = cellsOf(MATRIX_HEADER);
+    const ledgerHeader = ["Requirement", "Status"];
+    const subject = "TrainingWorks Forge export adapter (proposed additive source adapter, not implemented)";
+    const subjectRow = [subject, "landed-gated", "test/x.test.ts", DASH];
+    const speedupRow = ["hx query planning", "landed-gated", "hx answers 3x faster", DASH];
+    const shippedRow = ["TrainingWorks export adapter (no code, test or task-store mutation)", "shipped"];
+    const controls: { id: string; text: string; quiet: boolean }[] = [
+      { id: "html-matrix-subject-landed-gated", text: html(matrixHeader, subjectRow), quiet: true },
+      { id: "html-matrix-hx-speedup-without-a-receipt", text: html(matrixHeader, speedupRow), quiet: true },
+      { id: "html-ledger-subject-shipped", text: html(ledgerHeader, shippedRow), quiet: true },
+      { id: "table-tags-inline-in-a-paragraph", text: `Pi notes <table><tr><td>${subject}</td><td>landed-gated</td></tr></table>`, quiet: true },
+      { id: "html-table-inside-a-list-item", text: `- <table><tr><td>${subject}</td><td>landed-gated</td></tr></table>`, quiet: true },
+      { id: "markdown-matrix-subject-landed-gated", text: markdown(matrixHeader, subjectRow), quiet: false },
+      { id: "markdown-matrix-hx-speedup-without-a-receipt", text: markdown(matrixHeader, speedupRow), quiet: false },
+      { id: "markdown-ledger-subject-shipped", text: markdown(ledgerHeader, shippedRow), quiet: false },
+    ];
+    const readings = controls.map(control => {
+      const rows = tableRows("docs/workbench/x.md", control.text);
+      const findings = rowFindings(rows);
+      expect(findings.length === 0, `${control.id} is ${control.quiet ? "quiet: a table in raw HTML renders no table row for clause (b)" : "flagged as a markdown table row"}`).toBe(control.quiet);
+      if (control.quiet) expect([rows.length, tableLineCount(control.text)], `${control.id}: no row in the rendered read or the source count`).toEqual([0, 0]);
+      return { id: control.id, rows: rows.length, findings: findings.length };
+    });
+    const judged = [LEDGER, MATRIX].map(path => textOf(path));
+    const longest = Math.max(...judged.map(page => page.length));
+    const quietBlock = "A quiet paragraph of a long page.\n\n";
+    const longPage = `${quietBlock.repeat(Math.ceil(longest / quietBlock.length) + 1)}Pi notes <td>landed-gated</td>`;
+    const quietTag = "<p>quiet</p>\n";
+    const deepBlock = `<div>\n${quietTag.repeat(Math.ceil(longest / quietTag.length) + 1)}<td>landed-gated</td>\n</div>`;
+    const unicodeSpaces = [0x1680, 0x2000, 0x2001, 0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x2007, 0x2008, 0x2009, 0x200a, 0x2028, 0x2029, 0x202f, 0x205f, 0x3000, 0xfeff];
+    const elsewhere = [0x9, 0xa, 0xb, 0xc, 0xd, 0x20, 0xa0];
+    expect(
+      unicodeSpaces,
+      "the E04 family's code points are every one TABLE_TAG's white space (\\s) matches but a tab, a line feed, a vertical tab, a form feed, a carriage return (marked reads one as a line feed), a space and a no-break space",
+    ).toEqual(Array.from({ length: 0x10000 }, (_, point) => point).filter(point => /\s/.test(cp(point)) && !elsewhere.includes(point)));
+    expect(
+      judged.every(page => page.length < longPage.length && page.split("\n").length < longPage.split("\n").length),
+      "the long page is longer than either judged document, in characters and in lines",
+    ).toBe(true);
+    expect(deepBlock.indexOf("<td>"), "the deep block's table tag sits past the longer judged document's length").toBeGreaterThan(longest);
+    const routeControls: { id: string; text: string; flagged: boolean }[] = [
+      ...controls.map(control => ({ id: control.id, text: control.text, flagged: control.quiet })),
+      { id: "a-div-html-block", text: `<div>${subject}: landed-gated</div>`, flagged: true },
+      { id: "a-table-html-block-with-no-visible-text", text: "<table>\n<tr><td></td></tr>\n</table>", flagged: true },
+      { id: "table-tags-inline-in-a-heading", text: `## ${subject} <td>landed-gated</td>`, flagged: true },
+      { id: "table-tags-inline-in-a-later-list-item", text: `- A quiet first item\n- ${subject} <td>landed-gated</td>`, flagged: true },
+      { id: "table-tags-inline-in-header-and-body-cells", text: tableOf("| Feature | <th>Status</th> |", [`| ${subject} | <td>landed-gated</td> |`]), flagged: true },
+      { id: "table-tags-inline-in-a-blockquote", text: `> ${subject} <td>landed-gated</td>`, flagged: true },
+      { id: "table-tags-in-upper-case", text: `Pi notes <TABLE><TR><TD>${subject}</TD><TD>landed-gated</TD></TR></TABLE>`, flagged: true },
+      {
+        id: "every-table-element-inline-in-a-paragraph",
+        text: "Pi notes <table><caption>c</caption><colgroup><col></colgroup><thead><tr><th>h</th></tr></thead><tbody><tr><td>d</td></tr></tbody><tfoot><tr><td>f</td></tr></tfoot></table>",
+        flagged: true,
+      },
+      { id: "a-table-inside-a-complete-comment", text: `<!-- <table><tr><td>${subject}</td><td>landed-gated</td></tr></table> -->`, flagged: false },
+      { id: "a-table-tag-inside-an-inline-comment", text: "Pi notes <!-- <td>landed-gated</td> --> nothing more", flagged: false },
+      { id: "a-custom-element-named-like-a-table-tag", text: "Pi notes <tr-note>landed-gated</tr-note> here", flagged: false },
+      { id: "table-tags-in-strong-and-link-text", text: "Pi notes **<td>landed-gated</td>** and [<td>x</td>](https://e.x)", flagged: true },
+      { id: "table-tags-in-a-nested-list-item", text: `- A quiet first item\n  - ${subject} <td>landed-gated</td>`, flagged: true },
+      { id: "table-tags-in-a-nested-blockquote", text: `> > ${subject} <td>landed-gated</td>`, flagged: true },
+      { id: "a-table-in-a-comment-inside-a-div-block", text: "<div>\n<!-- <table><tr><td>x</td></tr></table> -->\n</div>", flagged: false },
+      { id: "an-empty-table-inside-a-div-block", text: "<div>\n<table><tr><td></td></tr></table>\n</div>", flagged: true },
+      { id: "table-tags-in-emphasis-text", text: "Pi notes *<td>landed-gated</td>* and _<td>x</td>_", flagged: true },
+      { id: "table-tags-in-strikethrough-text", text: "Pi notes ~~<td>landed-gated</td>~~ here", flagged: true },
+      { id: "table-tags-in-an-image-alt-text", text: "Pi notes ![<td>landed-gated</td>](https://e.x) here", flagged: true },
+      {
+        id: "table-tags-in-the-first-and-last-header-cells-rows-and-cells",
+        text: tableOf("| <th>a</th> | b | <th>c</th> |", ["| <td>d</td> | e | <td>f</td> |", "| g | h | i |", "| <td>j</td> | k | <td>l</td> |"]),
+        flagged: true,
+      },
+      {
+        id: "table-tags-first-and-last-in-inline-markup",
+        text: "Pi notes **<td>a</td> b <td>c</td>** and _<td>d</td> e <td>f</td>_ and ~~<td>g</td> h <td>i</td>~~ and [<td>j</td> k <td>l</td>](https://e.x) and ![<td>m</td> n <td>o</td>](https://e.x)",
+        flagged: true,
+      },
+      { id: "table-tags-first-and-last-in-a-heading", text: "## <td>a</td> heading <td>b</td>", flagged: true },
+      { id: "table-tags-in-the-first-and-last-list-items", text: "- Pi <td>a</td>\n- quiet\n- Pi <td>b</td>", flagged: true },
+      { id: "table-tags-in-the-first-and-last-blocks-of-a-list-item", text: "- Pi <td>a</td>\n\n  quiet\n\n  Pi <td>b</td>", flagged: true },
+      { id: "table-tags-in-the-first-and-last-blocks-of-a-blockquote", text: "> Pi <td>a</td>\n>\n> quiet\n>\n> Pi <td>b</td>", flagged: true },
+      { id: "table-tags-in-the-first-and-last-blocks-of-a-page", text: "Pi <td>a</td>\n\nquiet\n\nPi <td>b</td>", flagged: true },
+      { id: "table-tags-after-a-page-longer-than-either-judged-document", text: longPage, flagged: true },
+      { id: "two-html-blocks-on-later-lines", text: `A quiet paragraph\n\n<div>${subject}</div>\n\nA quiet paragraph\n\n<table><tr><td>landed-gated</td></tr></table>`, flagged: true },
+      { id: "an-html-table-block-in-a-later-list-item", text: `- A quiet first item\n- <table><tr><td>${subject}</td><td>landed-gated</td></tr></table>`, flagged: true },
+      { id: "a-table-tag-inside-an-unterminated-comment-block", text: `<!-- ${subject} <td>landed-gated</td>`, flagged: false },
+      { id: "table-tags-inside-two-comments-in-one-block", text: "<div>\n<!-- <td>a</td> --><!-- <td>b</td> -->\n</div>", flagged: false },
+      { id: "a-table-tag-beside-a-complete-comment-in-one-block", text: "<div>\n<!-- quiet --><td></td>\n</div>", flagged: true },
+      { id: "a-table-tag-after-an-abrupt-empty-comment", text: "<div>\n<!--><td></td>\n</div>", flagged: true },
+      { id: "a-table-tag-after-an-abrupt-dash-comment", text: "<div>\n<!---><td></td>\n</div>", flagged: true },
+      { id: "table-tags-with-attributes-after-a-space-a-tab-and-a-line-break", text: 'Pi notes <td class="x">a</td> <th\tscope="row">b</th> <td\nclass="y">c</td>', flagged: true },
+      { id: "self-closing-col-tags", text: "Pi notes <col/> and <col />", flagged: true },
+      { id: "an-unclosed-table-tag-ending-an-html-block", text: "<div>\n<td", flagged: true },
+      { id: "table-tags-in-a-code-span", text: "Pi notes `<td>landed-gated</td>` as code", flagged: false },
+      { id: "a-table-in-a-fenced-code-block", text: "```html\n<table><tr><td>landed-gated</td></tr></table>\n```", flagged: false },
+      { id: "escaped-table-tags", text: "Pi notes \\<td>landed-gated\\</td> here", flagged: false },
+      { id: "table-tags-as-character-references", text: "Pi notes &lt;td&gt;landed-gated&lt;/td&gt; here", flagged: false },
+      { id: "a-malformed-table-tag-marked-keeps-as-text", text: 'Pi notes <td x=">landed-gated here', flagged: false },
+      { id: "table-tags-in-an-ordered-list-item", text: `1. A quiet first item\n2. ${subject} <td>landed-gated</td>`, flagged: true },
+      { id: "table-tags-in-unchecked-and-checked-task-items", text: `- [ ] ${subject} <td>landed-gated</td>\n- [x] ${subject} <td>landed-gated</td>`, flagged: true },
+      {
+        id: "table-tags-in-headings-of-every-level-atx-and-setext",
+        text: "# a <td>1</td>\n\n## b <td>2</td>\n\n### c <td>3</td>\n\n#### d <td>4</td>\n\n##### e <td>5</td>\n\n###### f <td>6</td>\n\nSetext one <td>7</td>\n===\n\nSetext two <td>8</td>\n---",
+        flagged: true,
+      },
+      { id: "table-tags-in-aligned-cells", text: "| <th>a</th> | <th>b</th> | <th>c</th> |\n| :--- | :---: | ---: |\n| <td>d</td> | <td>e</td> | <td>f</td> |", flagged: true },
+      { id: "a-table-inside-a-pre-html-block", text: "<pre>\n<table><tr><td>landed-gated</td></tr></table>\n</pre>", flagged: true },
+      { id: "a-table-tag-after-a-comment-opening-an-html-block", text: "<!-- quiet --><td>landed-gated</td>", flagged: true },
+      { id: "a-thousand-table-tags-in-a-paragraph", text: `Pi notes ${"<td>x</td> ".repeat(500)}here`, flagged: true },
+      { id: "a-hundred-html-table-blocks", text: "<table><tr><td>x</td></tr></table>\n\n".repeat(100), flagged: true },
+      { id: "a-table-tag-deep-inside-a-long-html-block", text: deepBlock, flagged: true },
+      { id: "table-tags-in-strong-opening-a-paragraph", text: "**<td>x</td>** here", flagged: true },
+      { id: "a-tag-holding-a-table-tag-opening-a-paragraph", text: '<img alt="<td>"> here', flagged: true },
+      { id: "table-tags-in-strong-opening-an-item-text", text: "- **<td>x</td>** here", flagged: true },
+      { id: "table-tags-in-mixed-case", text: "Pi notes <Td>a</tD> here", flagged: true },
+      { id: "an-html-block-of-hyphens-alone", text: "<div>--</div>", flagged: true },
+      { id: "an-html-block-of-digits-alone", text: "<div>42</div>", flagged: true },
+      { id: "a-table-tag-between-two-comments-in-one-block", text: "<div>\n<!-- a --><td>x</td><!-- b -->\n</div>", flagged: true },
+      { id: "a-table-tag-between-two-comments-opening-an-html-block", text: "<!-- a --><td>x</td><!-- b -->", flagged: true },
+      { id: "table-tags-in-an-ordered-list-starting-at-3", text: "3. quiet <td>x</td>", flagged: true },
+      { id: "table-tags-in-an-ordered-list-with-a-paren-delimiter", text: "1) quiet <td>x</td>", flagged: true },
+      { id: "table-tags-in-an-upper-case-checked-task-item", text: "- quiet\n- [X] done <td>b</td>", flagged: true },
+      { id: "table-tags-in-a-reference-link-text", text: "Pi notes [a <td>x</td> b][r] here\n\n[r]: https://e.x", flagged: true },
+      { id: "table-tags-in-a-reference-image-alt-text", text: "Pi notes ![a <td>x</td> b][r] here\n\n[r]: https://e.x", flagged: true },
+      { id: "table-tags-in-underscore-strong-text", text: "Pi notes __a <td>x</td> b__ here", flagged: true },
+      { id: "table-tags-in-single-tilde-strikethrough-text", text: "Pi notes ~a <td>x</td> b~ here", flagged: true },
+      { id: "a-table-tag-inside-a-single-quoted-attribute-value", text: "Pi notes <img alt='<td>x</td>'> here", flagged: true },
+      { id: "a-table-tag-a-comment-splits", text: "<div>\n<t<!-- -->d>x\n</div>", flagged: true },
+      { id: "a-table-tag-inside-a-cdata-section", text: "<div>\n<![CDATA[<td>]]>\n</div>", flagged: true },
+      { id: "a-table-tag-inside-a-declaration", text: "<div>\n<!DOCTYPE <td>>\n</div>", flagged: true },
+      { id: "table-tags-inside-an-inline-code-element", text: "Pi notes <code><td>x</td></code> here", flagged: true },
+      { id: "table-tags-after-a-form-feed", text: 'Pi notes <td\fclass="x">y</td> here', flagged: true },
+      { id: "a-table-tag-as-named-references-in-an-attribute-value", text: 'Pi notes <span title="&lt;td&gt;">x</span> here', flagged: false },
+      { id: "a-table-tag-in-a-type-7-html-block", text: "<span>\n<td>x</td>\n</span>", flagged: true },
+      { id: "every-table-element-in-upper-case", text: "Pi notes <TABLE><CAPTION>C</CAPTION><COLGROUP><COL></COLGROUP><THEAD><TR><TH>H</TH></TR></THEAD><TBODY><TR><TD>D</TD></TR></TBODY><TFOOT><TR><TD>F</TD></TR></TFOOT></TABLE>", flagged: true },
+      { id: "every-table-element-in-mixed-case", text: "Pi notes <tAbLe><CaPtIoN>c</CaPtIoN><cOlGrOuP><cOl></CoLgRoUp><ThEaD><tR><tH>h</Th></Tr></ThEaD><tBoDy><Tr><Td>D</tD></tR></tBoDy><TfOoT><tR><tD>f</Td></Tr></TfOoT></tAbLe>", flagged: true },
+      { id: "an-html-block-of-a-plus-sign-alone", text: "<div>+</div>", flagged: true },
+      { id: "an-html-block-of-a-cyrillic-letter-alone", text: `<div>${cp(0x436)}</div>`, flagged: true },
+      { id: "table-tags-after-a-vertical-tab-and-a-no-break-space", text: `Pi notes <td${cp(0xb)}class="x">a</td> <th${cp(0xa0)}class="y">b</th> here`, flagged: true },
+      { id: "table-tags-in-star-and-plus-bullet-items", text: "* Pi <td>a</td>\n+ Pi <td>b</td>", flagged: true },
+      { id: "a-table-tag-inside-a-processing-instruction", text: "<div>\n<?x <td>?>\n</div>", flagged: true },
+      { id: "html-blocks-opening-with-a-processing-instruction-a-declaration-and-a-cdata-section", text: "<?x <td>?>\n\n<!DOCTYPE <td>>\n\n<![CDATA[<td>]]>", flagged: true },
+      { id: "table-tags-as-decimal-and-hex-references-in-attribute-values", text: 'Pi notes <span title="&#60;td&#62;" lang="&#x3C;tr&#x3E;">x</span> here', flagged: false },
+      { id: "a-tag-holding-a-table-tag-opening-an-item-text", text: '- <img alt="<td>"> here', flagged: true },
+      { id: "a-table-tag-after-a-comment-opener-in-an-attribute-value-of-an-html-block", text: '<div>\n<img alt="<!--"><td>x</td>\n</div>', flagged: true },
+      { id: "a-table-in-an-indented-code-block", text: "    <table><tr><td>landed-gated</td></tr></table>", flagged: false },
+      { id: "table-tags-inside-script-style-and-textarea-html-blocks", text: "<script>\n<td>a</td>\n</script>\n\n<style>\n<td>b</td>\n</style>\n\n<textarea>\n<td>c</td>\n</textarea>", flagged: true },
+      { id: "table-tags-in-ordered-lists-starting-at-0-and-at-10", text: "0. quiet <td>a</td>\n\n10) quiet <td>b</td>", flagged: true },
+      { id: "a-table-tag-inside-an-attribute-value", text: 'Pi notes <img alt="<td>landed-gated</td>"> here', flagged: true },
+      // wb-tcak F1: the landing-573 gate's plants for N33, E01, E02, E04, E05, E06 and E07, byte for byte, then their families.
+      { id: "an-html-block-of-a-combining-mark-alone", text: `<div>${cp(0x301)}</div>`, flagged: true },
+      { id: "table-tags-after-a-hard-line-break", text: "Pi notes  \nquiet <td>x</td> here", flagged: true },
+      { id: "table-tags-after-a-soft-line-break", text: "Pi notes\nquiet <td>x</td> here", flagged: true },
+      { id: "a-table-tag-after-a-line-separator", text: `Pi notes <td${cp(0x2028)}class="x">y</td> here`, flagged: true },
+      { id: "table-tags-in-an-ordered-list-from-10-with-a-dot", text: "10. quiet <td>x</td>", flagged: true },
+      { id: "table-tags-in-an-ordered-list-from-2", text: "2. quiet <td>x</td>", flagged: true },
+      { id: "a-table-tag-opening-a-level-1-heading", text: "# <td>a</td> heading", flagged: true },
+      { id: "table-tags-after-a-backslash-hard-line-break", text: "Pi notes\\\nquiet <td>x</td> here", flagged: true },
+      { id: "table-tags-after-a-hard-and-a-soft-line-break-in-item-texts", text: "- Pi notes  \n  quiet <td>x</td>\n- Pi notes\n  quiet <td>y</td>", flagged: true },
+      { id: "table-tags-after-every-other-unicode-white-space", text: `Pi notes ${unicodeSpaces.map(point => `<td${cp(point)}class="x">y</td>`).join(" ")} here`, flagged: true },
+      { id: "table-tags-in-an-ordered-list-from-2-with-a-paren", text: "2) quiet <td>x</td>", flagged: true },
+      { id: "table-tags-opening-atx-headings-of-levels-3-to-6", text: "### <td>3</td> c\n\n#### <td>4</td> d\n\n##### <td>5</td> e\n\n###### <td>6</td> f", flagged: true },
+      // wb-tcak F3 (R-COMMENT-BANG cured): a comment ends where a browser ends it, at "--!>" too, and not at "--!" alone.
+      { id: "a-table-after-a-comment-a-browser-ends-at-bang", text: "<!-- a --!>\n<table><tr><td>x</td></tr></table>", flagged: true },
+      { id: "a-table-tag-after-a-bang-ended-comment-inside-an-inline-comment-token", text: "Pi notes <!-- a --!> <td>x</td> --> here", flagged: true },
+      { id: "a-table-tag-inside-a-comment-holding-a-bang-without-a-bracket", text: "<div>\n<!-- a --! <td>x</td> -->\n</div>", flagged: false },
+    ];
+    const routes = routeControls.map(control => {
+      const reading = htmlTableRoutes(control.text);
+      expect(
+        reading.htmlBlocks + reading.tableTags > 0,
+        `${control.id} is ${control.flagged ? "flagged by the closure reading: an HTML block or a table tag" : "quiet for the closure reading: no HTML block and no table tag"}`,
+      ).toBe(control.flagged);
+      return { id: control.id, ...reading };
+    });
+    const matrix = closureMatrix().map(entry => {
+      const reading = htmlTableRoutes(entry.text);
+      const paths = htmlPaths(entry.text);
+      expect(paths.length > 0 && paths.every(path => path === entry.path), `${entry.id}: every html token sits at ${entry.path}`).toBe(true);
+      expect(reading, `${entry.id}: the closure reading reads the planted tags at ${entry.path}`).toEqual(entry.planted);
+      return `${entry.id}: ${entry.path} ${reading.htmlBlocks}/${reading.tableTags}`;
+    });
+    const documents = [LEDGER, MATRIX].map(path => ({ path, ...htmlTableRoutes(textOf(path)) }));
+    expect(documents, "neither judged document renders an HTML block or holds a table tag, so every table row they render is a marked table row").toEqual(
+      [LEDGER, MATRIX].map(path => ({ path, htmlBlocks: 0, tableTags: 0 })),
+    );
+    const w10 = textOf(W10_GUARD);
+    const freeze = textOf(FREEZE_GUARD);
+    const guards = {
+      matrix: { guard: W10_GUARD, tracked: tracked(W10_GUARD), document: W10_MATRIX.exec(w10)?.[1] ?? "", pageChecks: w10.split(W10_PAGE_CHECK).length - 1 },
+      ledger: { guard: FREEZE_GUARD, tracked: tracked(FREEZE_GUARD), document: FREEZE_TARGET.exec(freeze)?.[1] ?? "", frozenSha256: FREEZE_HASH.exec(freeze)?.[1] ?? "" },
+    };
+    expect([guards.matrix.tracked, guards.ledger.tracked], "both cited guards are git-tracked test files").toEqual([true, true]);
+    expect(guards.matrix.document, "the W10 stamped-claim guard reads the matrix").toBe(MATRIX);
+    expect(guards.matrix.pageChecks, "and applies its raw-HTML page check to it once").toBe(1);
+    expect(guards.ledger.document, "the TRACEABILITY freeze reads the ledger").toBe(LEDGER);
+    expect(guards.ledger.frozenSha256, "and its pinned hash is the ledger's sha256").toBe(sha256Of(LEDGER));
+    return { controls: readings, routes, matrix, documents, guards };
+  },
 };
 
 describe("wb-4wmu.1 TrainingWorks status census (BEADS-TRAININGWORKS-R1)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:3", "C:2", "Q:11"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:3", "C:2", "Q:12"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect(ROSTER.bead).toBe(BEAD);
@@ -1113,9 +1676,16 @@ describe("wb-4wmu.1 TrainingWorks status census (BEADS-TRAININGWORKS-R1)", () =>
         receipt: RECEIPT.source,
         fixtureTier: FIXTURE_TIER.source,
         sentence: [LIVE.source, NATIVE.source, SUCCESS.source, EQUATING.source, NEGATION_BEFORE.source, NEGATION_AFTER.source, CLAUSE_BREAK.source, SENTENCE_BREAK.source],
-        rendered: { namedReferences: NAMED_REFERENCES, reference: REFERENCE.source, hiddenHtml: HIDDEN_HTML.source, format: FORMAT.source, phraseSpace: PHRASE_SPACE },
+        rendered: { namedReferences: NAMED_REFERENCES, reference: REFERENCE.source, hiddenHtml: HIDDEN_HTML.source, inlineNonTag: INLINE_NON_TAG.source, format: FORMAT.source, phraseSpace: PHRASE_SPACE },
         legend: { heading: LEGEND_HEADING, parents: LEGEND_PARENTS, lead: LEGEND_LEAD, item: LEGEND_ITEM.source },
         residuals: RESIDUALS,
+        htmlTable: {
+          tableTag: TABLE_TAG.source,
+          comment: HTML_COMMENT.source,
+          guards: [W10_GUARD, FREEZE_GUARD],
+          w10: [W10_MATRIX.source, W10_PAGE_CHECK],
+          freeze: [FREEZE_TARGET.source, FREEZE_HASH.source],
+        },
       }),
     ).toStrictEqual(ROSTER.constants);
     for (const members of Object.values(RESIDUALS)) for (const member of members) expect(ROWS.flatMap(row => row.pins), `${member} is a judged pin`).toContain(member);
@@ -1201,3 +1771,5 @@ describe("wb-4wmu.1 TrainingWorks status census (BEADS-TRAININGWORKS-R1)", () =>
     expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(row => row.pins));
   });
 });
+
+import { rehydrateTrackerExport } from "../qa/workbench/tracker-export.mjs";

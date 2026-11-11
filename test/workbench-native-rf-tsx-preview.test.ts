@@ -13,10 +13,22 @@
  * rf_tsx_missing_configuration naming every variable it lacks: never a skip, never a green pass
  * (docs/workflows.md: native tiers refuse missing fixture configuration). Each passing row prints
  * one RF-TSX-RECEIPT line, so the Forge command receipt carries what the row measured.
+ *
+ * wb-70xe (RF-NATIVE-TSX-COMPONENTS-R2; RFCLI ruling A4: the operator provisions Deno at the lock pin, no lane installs it):
+ * the success row holds the deno that PATH resolves for rf to the pin the installed rf reports, never executing it
+ * (test/helpers/rf-tsx-deno.ts). Before rf is launched it refuses, typed, an unresolved deno (rf_tsx_deno_unresolved) or a
+ * version-manager shim (rf_tsx_deno_shim: executing one can install Deno over the network); once the render reports
+ * provenance.sdk_versions.tsx_runtime.contract_fingerprint (rf's reading of its packaged runtime-lock.json for this host) it
+ * refuses a pin that is not a sha256 (rf_tsx_deno_unpinned) and a resolved file whose sha256 differs (rf_tsx_deno_mismatch).
+ * A passing row then prints one RF-TSX-ENGINE line (deno_resolved, deno_realpath, deno_sha256: the deno it held to the pin)
+ * before its RF-TSX-RECEIPT line, whose four R9 fields stay as wb-693.7's receipt of record renders them (the W10 guard,
+ * test/workbench-w10-stamped-claim-guard.test.ts, binds those fields to that receipt both ways); the receipt line prints
+ * only once the digests are equal, so its contract_fingerprint is the measured sha256 of the deno PATH resolves for rf.
  */
 import { describe, expect, it } from "vitest";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
 import { nativeReactiveFiberPreview, REACTIVEFIBER_RENDER_PREVIEW_CONTRACT } from "../src/workbench/providers/reactivefiber.js";
+import { echoPath, pinnedDenoDigest, provisionedDeno } from "./helpers/rf-tsx-deno.js";
 
 const FIXTURE = "WORKBENCH_RF_TSX_FIXTURE";
 const NO_DENO_PATH = "WORKBENCH_RF_TSX_NO_DENO_PATH";
@@ -63,11 +75,20 @@ function receipt(row: string, fields: Readonly<Record<string, unknown>>): void {
   process.stdout.write(`\nRF-TSX-RECEIPT ${JSON.stringify({ row, ...fields })}\n`);
 }
 
+/**
+ * wb-70xe: the success row's engine identity, one RF-TSX-ENGINE line in receipt()'s direct-write form, printed only once
+ * the PATH-resolved deno's sha256 equals the pin the render reports. A record of its own, never an R9 receipt field.
+ */
+function engineLine(fields: Readonly<Record<string, string>>): void {
+  process.stdout.write(`\nRF-TSX-ENGINE ${JSON.stringify(fields)}\n`);
+}
+
 describe("RF TSX-era native context producer (R9 receipt rows)", () => {
   it(
     "success row: an ephemeral TSX-era preview with a worker spawn and engine identity",
     async () => {
       const [workspace = ""] = configured(FIXTURE);
+      const engine = provisionedDeno(process.env.PATH);
       const preview = await nativeReactiveFiberPreview(MODEL, TASK, workspace);
       expect(preview).toMatchObject({ contract: REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, workspaceRoot: workspace });
       const result = at(preview, "source", "result");
@@ -87,6 +108,8 @@ describe("RF TSX-era native context producer (R9 receipt rows)", () => {
       const cliVersion = at(result, "provenance", "cli_version");
       expect(typeof cliVersion, "R9 success: provenance.cli_version is captured into the receipt").toBe("string");
       expect(cliVersion, "R9 success: provenance.cli_version is captured into the receipt").not.toBe("");
+      const denoSha256 = pinnedDenoDigest(engine, fingerprint);
+      engineLine({ deno_resolved: echoPath(engine.resolved), deno_realpath: echoPath(engine.realpath), deno_sha256: denoSha256 });
       receipt("success", { cli_version: cliVersion, tsx_worker_spawns: spawns, distribution_version: distribution, contract_fingerprint: fingerprint });
     },
     ROW_BUDGET_MS,

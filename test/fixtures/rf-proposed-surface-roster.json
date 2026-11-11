@@ -1,7 +1,7 @@
 {
   "bead": "wb-a9l2.7",
   "pin": "6a251bf73af5",
-  "basis": "The out-of-file roster of test/workbench-rf-proposed-surface-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness and the pinned constants, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Witnesses were measured by the cutting seat on trunk 0b2a80f; the gated source kind is never spelled here (labels carry <GATED_KIND>). wb-svce (the wb-a9l2.7 gate's PREP F1-F7 follow-up) re-measured every witness on trunk c27bd4b: the widened A4, A6, B1, C1 and C2 witnesses, the receipt base receiptExempt and flipId constants, and the new pins B7, B8, G1-G5, MC11, MC12, MA9-MA17 and ME2.",
+  "basis": "The out-of-file roster of test/workbench-rf-proposed-surface-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness and the pinned constants, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Witnesses were measured by the cutting seat on trunk 0b2a80f; the gated source kind is never spelled here (labels carry <GATED_KIND>). wb-svce (the wb-a9l2.7 gate's PREP F1-F7 follow-up) re-measured every witness on trunk c27bd4b: the widened A4, A6, B1, C1 and C2 witnesses, the receipt base receiptExempt and flipId constants, and the new pins H1, H2 (drafted as B7, B8 and moved to row H before the cut landed), G1-G5, MC11, MC12, MA9-MA17 and ME2. wb-5e99 (the wb-svce gate's PREP F1-F3 follow-up) re-measured every witness on trunk b887fa2 and added the constants separatorPoints and namedSeparators, A4's argvFlagFederated control and the pins H3, MC13-MC16, MA18-MA29, R9 and R10.",
   "constants": {
     "pinnedRoster": ["reactivefiber.render.preview"],
     "receiptExempt": ["reactivefiber.render.preview"],
@@ -13,6 +13,8 @@
     "foreignPinRows": ["wb-4nut.2@978f6515c302", "wb-4nut.9@978f6515c302"],
     "families": ["P1", "P2", "P3"],
     "markers": ["proposed", "illustrative", "unshipped", "not shipped", "not installed", "uninstalled", "unavailable", "not available", "not served", "gated"],
+    "separatorPoints": [9, 10, 11, 12, 13, 32, 45, 46, 92, 95, 160, 5760, 8192, 8193, 8194, 8195, 8196, 8197, 8198, 8199, 8200, 8201, 8202, 8232, 8233, 8239, 8287, 12288, 65279],
+    "namedSeparators": ["bsol", "emsp", "emsp13", "emsp14", "ensp", "hairsp", "lowbar", "MediumSpace", "nbsp", "NewLine", "NonBreakingSpace", "numsp", "period", "puncsp", "Tab", "ThickSpace", "thinsp", "ThinSpace", "UnderBar", "VeryThinSpace"],
     "fedId": "reactivefiber.federation.read",
     "flipId": "reactivefiber.graph.test"
   },
@@ -24,7 +26,7 @@
         {"id": "A1", "witness": {"site": "src/workflow/reconcile.ts:67", "reactivefiber": ["reactivefiber.render.preview"]}},
         {"id": "A2", "witness": {"native": [{"id": "reactivefiber.render.preview", "effectClass": "read"}], "injected": [{"id": "reactivefiber.render.preview", "effectClass": "read"}]}},
         {"id": "A3", "witness": {"legacy": [["--workspace", "<root>", "context", "render", "--model", "m", "--task", "t", "--no-commit", "--no-input", "--json"]], "view": [["--workspace", "<root>", "context", "render", "--view", "v", "--task-id", "t", "--model", "m", "--no-commit", "--no-input", "--json"]]}},
-        {"id": "A4", "witness": {"srcFloorMet": true, "walkCoversGit": true, "renderArgvSeen": true, "hits": [], "controls": {"argvFlag": 1, "literalFamily": 1, "template": 1, "gatedLiteral": 1, "argvFederation": 1, "rootOperand": 1, "pathOperand": 1, "homeOperand": 1}}},
+        {"id": "A4", "witness": {"srcFloorMet": true, "walkCoversGit": true, "renderArgvSeen": true, "hits": [], "controls": {"argvFlag": 1, "literalFamily": 1, "template": 1, "gatedLiteral": 1, "argvFederation": 1, "argvFlagFederated": 1, "rootOperand": 1, "pathOperand": 1, "homeOperand": 1}}},
         {"id": "A5", "witness": {"descriptorFloorMet": true, "families": ["P1", "P2", "P3"], "hits": []}},
         {"id": "A6", "witness": {"floorMet": true, "anchorRead": true, "coversGit": true, "markers": 10, "findings": []}}
       ]
@@ -72,7 +74,8 @@
       "label": "the receipt rule row B1 applies: a member of a flipped roster still owes its receipt, and a receipt names an id only as a whole token",
       "pins": [
         {"id": "H1", "witness": {"digest": "4f53cda18c2baa0c", "outcome": ["reactivefiber.federation.read: beyond-roster", "reactivefiber.federation.read: receipt-absent", "reactivefiber.graph.test: receipt-absent"]}},
-        {"id": "H2", "witness": {"digest": "64c7f2f8ec088636", "outcome": ["reactivefiber.federation.read: receipt-absent"]}}
+        {"id": "H2", "witness": {"digest": "64c7f2f8ec088636", "outcome": ["reactivefiber.federation.read: receipt-absent"]}},
+        {"id": "H3", "witness": {"digest": "5dcbe2369ad727b4", "outcome": ["reactivefiber.federation.read: receipt-absent"]}}
       ]
     },
     {
@@ -91,6 +94,10 @@
         {"id": "MC10", "witness": {"digest": "bf838bfa691a015d", "outcome": ["admitted", "unpinned"]}},
         {"id": "MC11", "witness": {"digest": "891bf911f3c35375", "outcome": ["unpinned", "unpinned", "unpinned", "unpinned"]}},
         {"id": "MC12", "witness": {"digest": "c27044c1a05d67e8", "outcome": ["admitted", "unpinned", "unpinned", "foreign-pin"]}},
+        {"id": "MC13", "witness": {"digest": "ceb5c2925dbe881c", "outcome": ["unpinned", "unpinned", "unpinned", "unpinned", "unpinned"]}},
+        {"id": "MC14", "witness": {"digest": "4e81202806028125", "outcome": ["foreign-pin", "foreign-pin", "foreign-pin", "foreign-pin", "foreign-pin", "foreign-pin"]}},
+        {"id": "MC15", "witness": {"digest": "b4c138fb9b378fdf", "outcome": ["foreign-pin", "foreign-pin", "foreign-pin", "foreign-pin", "foreign-pin"]}},
+        {"id": "MC16", "witness": {"digest": "6e4b75d2331167c9", "outcome": ["unpinned", "unpinned"]}},
         {"id": "MA1", "witness": {"digest": "15a3b8e6f0f34f59", "outcome": ["P2:available"]}},
         {"id": "MA2", "witness": {"digest": "1bda2d39919906dd", "outcome": ["P1:available"]}},
         {"id": "MA3", "witness": {"digest": "ae49ad95ef590331", "outcome": ["P3:available", "P3:available"]}},
@@ -108,13 +115,25 @@
         {"id": "MA15", "witness": {"digest": "742d8a6a2cd50d6e", "outcome": ["P3:available", "P3:available"]}},
         {"id": "MA16", "witness": {"digest": "072c54d6af33adf7", "outcome": ["P1:available", "P1:available", "P1:available"]}},
         {"id": "MA17", "witness": {"digest": "e4f098deb471ec9f", "outcome": ["P2:available", "P2:marked"]}},
+        {"id": "MA18", "witness": {"digest": "23b6ed291172ca37", "outcome": ["P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available"]}},
+        {"id": "MA19", "witness": {"digest": "f1203919c9e2e441", "outcome": ["P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available", "P1:available"]}},
+        {"id": "MA20", "witness": {"digest": "3a431ba4d25419b9", "outcome": ["P1:available", "P1:available", "P1:available", "P1:available"]}},
+        {"id": "MA21", "witness": {"digest": "18a8001a18a5a817", "outcome": ["P2:available", "P2:available", "P2:available", "P2:available", "P2:available", "P2:available", "P2:available", "P3:available"]}},
+        {"id": "MA22", "witness": {"digest": "c2a702e84ff2004d", "outcome": ["P2:available"]}},
+        {"id": "MA23", "witness": {"digest": "b5866d63c505556b", "outcome": ["P2:marked", "P2:marked", "P2:marked"]}},
+        {"id": "MA24", "witness": {"digest": "9cffbc23b3883a84", "outcome": ["P2:available", "P2:marked", "P2:marked", "P2:available", "P2:available"]}},
+        {"id": "MA25", "witness": {"digest": "128dda2dd93a4c19", "outcome": ["P2:available", "P2:available", "P2:available", "P2:available", "P2:available", "P2:available", "P2:marked"]}},
+        {"id": "MA26", "witness": {"digest": "c428a8e39fa9d0ef", "outcome": ["P2:available", "P2:available", "P2:available"]}},
+        {"id": "MA27", "witness": {"digest": "e756e6b63daa9cfe", "outcome": ["P2:available", "P2:available", "P2:available", "P2:available", "P2:available", "P2:available", "P2:available", "P2:marked", "P2:available", "P2:marked"]}},
+        {"id": "MA28", "witness": {"digest": "6ce642ee83505e15", "outcome": ["P2:marked", "P2:marked", "P2:marked", "P2:marked", "P2:available"]}},
+        {"id": "MA29", "witness": {"digest": "fd69d9b4657e5959", "outcome": ["P2:marked", "P2:available", "P2:available", "P2:marked", "P2:marked", "P2:marked"]}},
         {"id": "ME1", "witness": {"digest": "33a337d9e23d5240", "outcome": ["wb-x.1 README.md:37", "wb-x.2@978f6515c302", "line 3 unreadable"]}},
         {"id": "ME2", "witness": {"digest": "ffa09e4084cc24dc", "outcome": ["wb-x.3 README.md:37", "wb-x.4@978f6515c302"]}}
       ]
     },
     {
       "id": "R",
-      "label": "the named residuals R1-R8 stay pinned quiet",
+      "label": "the named residuals R1-R10 stay pinned quiet",
       "pins": [
         {"id": "R1", "witness": {"digest": "0abeed0df31597b7", "outcome": []}},
         {"id": "R2", "witness": {"digest": "6796034384a9cec1", "outcome": []}},
@@ -123,7 +142,9 @@
         {"id": "R5", "witness": {"digest": "ac7740b1b75d9c8e", "outcome": []}},
         {"id": "R6", "witness": {"digest": "7a01493c0d9bfb3a", "outcome": []}},
         {"id": "R7", "witness": {"digest": "3ed4b234e29be9a3", "outcome": []}},
-        {"id": "R8", "witness": {"digest": "9d431c467fe0691b", "outcome": ["admitted", "admitted"]}}
+        {"id": "R8", "witness": {"digest": "9d431c467fe0691b", "outcome": ["admitted", "admitted"]}},
+        {"id": "R9", "witness": {"digest": "a179c32d5b6d4652", "outcome": []}},
+        {"id": "R10", "witness": {"digest": "6e511ad585844481", "outcome": ["P2:marked", "P2:marked", "P2:marked", "P2:marked"]}}
       ]
     }
   ]

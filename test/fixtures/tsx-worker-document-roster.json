@@ -1,5 +1,5 @@
 {
- "provenance": "wb-fb2z.3 census roster (test/workbench-tsx-worker-document-census.test.ts). quote and citation are the owner filing's (bead row wb-fb2z.3 of the tracked export .beads/issues.jsonl). producer is MEASURED read-only on 2026-10-23: the two ReactiveFiberTSXSDK pins by git show, ls-tree and grep on the local checkout; rfVersion by rf --json --version; runtimeLock from the installed rf's integrations/tsx/runtime-lock.json; rfBoundsMs from its application/config.py:1189-1191; rfWorkerEnds from its runtime/tsx_worker.py (each end's raising site). existingPins and childCrashShape are the case titles measured at trunk f69ce85 under the named describes. Every witness is the value its pin's case returns. wb-nh4s (2026-10-24, R694 follow-up of wb-fb2z.3 landing 302): scan gains jsonLinesExtensions, the vitest.config.ts walk anchor, skipModes, runMembers and optionModes; residuals gain R-DATAFILE and R-HOLLOWED; A1 gains the JSON Lines controls and four planted-tree controls, B5 and C4 a skipped reading per describe, B5 its registration controls and D2 skippedClaim, each the value its case returns on trunk 4083efe plus the cut.",
+ "provenance": "wb-fb2z.3 census roster (test/workbench-tsx-worker-document-census.test.ts). quote and citation are the owner filing's (bead row wb-fb2z.3 of the tracked export .beads/issues.jsonl). producer is MEASURED read-only on 2026-10-23: the two ReactiveFiberTSXSDK pins by git show, ls-tree and grep on the local checkout; rfVersion by rf --json --version; runtimeLock from the installed rf's integrations/tsx/runtime-lock.json; rfBoundsMs from its application/config.py:1189-1191; rfWorkerEnds from its runtime/tsx_worker.py (each end's raising site). existingPins and childCrashShape are the case titles measured at trunk f69ce85 under the named describes. Every witness is the value its pin's case returns. wb-nh4s (2026-10-24, R694 follow-up of wb-fb2z.3 landing 302): scan gains jsonLinesExtensions, the vitest.config.ts walk anchor, skipModes, runMembers and optionModes; residuals gain R-DATAFILE and R-HOLLOWED; A1 gains the JSON Lines controls and four planted-tree controls, B5 and C4 a skipped reading per describe, B5 its registration controls and D2 skippedClaim, each the value its case returns on trunk 4083efe plus the cut. wb-mdvg (2026-10-25, R694 follow-up of wb-nh4s landing 394): scan gains registrationRoots, suiteRoots, hookMembers, fixtureMembers and runnerStateMembers; residuals gain R-INDIRECT, R-EMPTIED and R-RUNFILTER; B5 gains its wb-mdvg registration controls and D2 suiteClaim and nonMemberCall, each the value its case returns on trunk 72bcbea plus the cut.",
  "bead": "wb-fb2z.3",
  "quote": "- TSX worker crash/timeout and malformed publication: typed failure, no mistaken success block or silent reuse.",
  "citation": "docs/programs/component-assembly-2026-10-18/RFCLI-INTEROP.md:29@76bbbffd9d4a",
@@ -97,6 +97,34 @@
    "todo",
    "only",
    "fails"
+  ],
+  "registrationRoots": [
+   "it",
+   "test",
+   "describe",
+   "suite"
+  ],
+  "suiteRoots": [
+   "describe",
+   "suite"
+  ],
+  "hookMembers": [
+   "afterAll",
+   "afterEach",
+   "aroundAll",
+   "aroundEach",
+   "beforeAll",
+   "beforeEach"
+  ],
+  "fixtureMembers": [
+   "override",
+   "scoped"
+  ],
+  "runnerStateMembers": [
+   "fails",
+   "mode",
+   "pending",
+   "result"
   ]
  },
  "producer": {
@@ -248,7 +276,10 @@
   "R-PASSTHROUGH",
   "R-DEADLINE",
   "R-DATAFILE",
-  "R-HOLLOWED"
+  "R-HOLLOWED",
+  "R-INDIRECT",
+  "R-EMPTIED",
+  "R-RUNFILTER"
  ],
  "rows": [
   {
@@ -562,7 +593,54 @@
        "optionsFalse": false,
        "optionsTimeout": false,
        "commented": false,
-       "hollowedBody": false
+       "hollowedBody": false,
+       "optionsReference": true,
+       "describeOptionsReference": true,
+       "optionsWrapped": true,
+       "optionsMutated": true,
+       "optionsLet": true,
+       "optionsLetTimeout": true,
+       "optionsUnbound": true,
+       "wrappedCase": true,
+       "noFunction": true,
+       "bodyDestructured": true,
+       "memberRead": true,
+       "elementSkip": true,
+       "chainSkip": true,
+       "restSkip": true,
+       "stateWrite": true,
+       "hookSkip": true,
+       "hookChain": true,
+       "hookAfter": true,
+       "hookFile": true,
+       "hookOuter": true,
+       "hookReference": true,
+       "hookUnbound": true,
+       "hookState": true,
+       "fixtureOverride": true,
+       "suiteSkip": true,
+       "elementHead": true,
+       "deadBranch": true,
+       "afterReturn": true,
+       "describePlacement": true,
+       "rootRebound": true,
+       "siblingOnly": true,
+       "emptyTable": true,
+       "optionsReferenceTimeout": false,
+       "optionsWrappedTimeout": false,
+       "caseReference": false,
+       "timeoutReference": false,
+       "rowContext": false,
+       "plainHook": false,
+       "hookReferencePlain": false,
+       "suiteSwitch": false,
+       "suitePlain": false,
+       "stateRead": false,
+       "contextHandoff": false,
+       "aliasedHook": false,
+       "computedMember": false,
+       "emptiedBinding": false,
+       "taggedCase": false
       }
      }
     }
@@ -731,7 +809,9 @@
        "eachTitle": true,
        "skippedClaim": true,
        "unrelated": false,
-       "labelOnly": false
+       "labelOnly": false,
+       "suiteClaim": true,
+       "nonMemberCall": false
       }
      }
     }

@@ -1,0 +1,1670 @@
+/** wb-3ht.2 (HyperUnix evidence-projection requirement R6, program-triage-2026-10-18), STANDING leg only. Statement (the owner
+ * filing's title, the program's acronym before "claim" left out and the rest verbatim): "When an @hyperunix/sdk result Pi consumes
+ * carries a claim/proof-confidence status (01-query-observer-contract.md:4,:9@694570cd00c2, unshipped), the HX adapter shall surface
+ * it as its own typed facet beside K3 coverage and tone: a proof status never moves coverage, absence or tone, K3 unknown is never
+ * read as unverified/refuted, no verified label is minted; without the field the output is byte-identical."
+ *
+ * The filing's acceptance is its on-landing leg: "an adapter fixture carrying the field surfaces the status verbatim (sanitized) as
+ * its own facet; across all 13 kinds x both licences x each proof-status value, coverage, statusTone and absence are unchanged
+ * (toStrictEqual against the field-less projection plus the facet); a refuted/failed proof status never flips tone to failure nor
+ * coverage to unknown, a verified status never flips tone to success nor licenses absence; the not.toContain('"verified":true') leak
+ * check stays; a result without the field projects byte-identically." Its gate is external and unmet, so no facet is built here and
+ * no record is faked. The HX program is design only (its README.md:3@694570cd00c2 "Design only."), its names are "Illustrative
+ * design names, not shipped CLI flags or SDK methods" (01-query-observer-contract.md:25@694570cd00c2), and the vendored
+ * @hyperunix/sdk 0.1.0 result carries no such status. Re-measured read-only by the cutting seat (ws-05, run g10-work-s129) at
+ * HyperUnix-CLI origin/main 8bb511fa (2026-10-28): the TypeScript SDK there is still 0.1.0, its QueryResult the same 20 members,
+ * its result module spells no proof, confidence, verified or refuted word, and the program's README.md:3 still reads "Design only.".
+ * Re-measured the same way by the respin seat (ws-03, run g10-work-s130) at origin/main eef91d3e (2026-10-28, read from the local
+ * clone's own origin/main object): the same four readings, and 8bb511fa..eef91d3e touches no path of the TypeScript SDK or the program.
+ * Re-measured the same way by the second respin seat (ws-01, run g10-work-s133) at origin/main 4dda00e0 (2026-10-29, git ls-remote
+ * equal to the local clone's origin/main object): the same four readings, and eef91d3e..4dda00e0 touches no path of either.
+ * What can be held before the field ships, for the adapter (hyperunixTopology) and the live invariant (hxLiveInvariant) only (another
+ * reader of the same provider output, such as nativeEvidence, is not judged here):
+ *   T1 the trigger at the declaration: the SDK result records (QueryResult, ExecutionStatus over every variant, CoverageSummary,
+ *      Coverage, EvidenceSummary) are exactly today's members at type level (keyof under the TypeScript checker, gate-enforced by
+ *      typecheck:test, so a member a record inherits through a type alias or a generic parent is read as well), and each record's
+ *      own declaration block in the shipped dist/result.d.ts text declares exactly those members (the tsc-free witness, which reads
+ *      no heritage); that text spells no proof, confidence, verified or refuted word, and the representation is hyperunix.result/1;
+ *   T2 the trigger at the live decoder: each of the eleven closed core bodies the shipped decoder declares (its seven native
+ *      observation bodies, read from dist/protocol/decoder.js OBSERVATION_FIELDS, and its header, result-coverage, answer and
+ *      answer-coverage key sets) refuses each proof-shaped member under each of the seven values as SDK_PROTOCOL_MALFORMED at that
+ *      member, each of its three empty-body kinds (EMPTY_BODY_KINDS, read from the same text) refuses a body carrying one as
+ *      SDK_PROTOCOL_MALFORMED at the body, and the three proof-named frame kinds are refused under each value as
+ *      SDK_PROTOCOL_INCOMPATIBLE at their kind; the one confidence member the shipped SDK names (measured at the cut, not pinned: the
+ *      one case-insensitive "confidence" in the installed dist/, the native support body's own, HX's support confidence; the "remain
+ *      distinct from" clause of 01:9 is about "HX three-valued/partial semantic statuses", not this member) decodes under each value
+ *      and the evidence summary drops it; a node claim's attribute list is open, so a proof-named attribute decodes there;
+ *   T3 the representation round trip the provider applies (resultFromJson, resultToJson), over the twenty placements this file
+ *      plants on (PLACEMENTS): a proof-shaped member is dropped at each of the nine typed-record placements (the result, the
+ *      execution status, the run status, the coverage summary, the evidence summary, a certificate, a diagnostic, the transport
+ *      record, a stream summary) and carried verbatim at each of the eleven open-value placements (a certificate's body, cause,
+ *      scope and target, the result coverage, an incomplete region, a diagnostic's details and extra, the cost, a row, the extensions
+ *      sidecar). The twenty are what was measured, not a bound: the representation may keep producer JSON verbatim elsewhere too;
+ *   R1 a proof status moves neither output today: a proof-shaped member at each of the twenty placements, under each of the four
+ *      member spellings and seven values, on every cell, leaves the adapter's projection (or refusal) and the live verdict exactly
+ *      the field-less reading's, and no consumed field (HYPERUNIX_CONSUMED_FIELDS) names one;
+ *   R2 neither reader reads it through a trap the tracer records: a tracing proxy over each of those variant readings records no
+ *      get, in check or descriptor read of the planted member, and no listing of the own keys of an object that holds it, by the
+ *      adapter or the live invariant, and the traced reading yields exactly the plain reading's outputs (the payload control: a
+ *      reader whose outputs on the traced reading differ from those on the plain one, such as one that reads the source through a
+ *      structured clone, which a proxy refuses, reds here instead of reading as blind); the instrument's controls exercise each leg:
+ *      a serialization of the reading records the holder's key listing, the member's descriptor read and its get, in that order,
+ *      and an in check, a descriptor read and a key listing on the holder are each recorded once. The channels the tracer records
+ *      nothing for are named below (R-UNTRAPPED, R-PROXY-AWARE);
+ *   A1 a proof status never moves coverage, absence or tone: coverage, status tone, status text and the licensed absence are the
+ *      field-less reading's on every one of those cells and variants, and a mutation outcome stays refused;
+ *   A2 the two directions of the acceptance: a refuted or failed status never flips tone to failure nor coverage to unknown on a
+ *      kind that is not a failure, and a verified status never flips tone to success, coverage to complete or the licence on any of
+ *      those cells short of the runtime-licensed complete reading; the licensed complete readings stay the one success and the
+ *      failure kinds stay failures (the controls that show both directions are reachable);
+ *   K1 K3 unknown is never read as unverified or refuted, in two legs. (a) No output moves with K3 values, set one place at a time
+ *      or jointly: on every one of those cells, each K3 reading below yields exactly the outputs of the same reading without it. The
+ *      places and values are the SDK's: truth unknown, known_absent or known_present; the coverage summary's completeness, and the
+ *      result-coverage body's completeness the summary's is read from, each complete, incomplete or unknown (its Truth and
+ *      Completeness types, pinned at type level, at the places its declaration types one on a result, pinned against its text). On the
+ *      field-less reading, read through the real registration (whose output is the cell's with only those values set), the readings
+ *      are the nine single ones (one value at one place) and the 54 joint ones (every combination of values at two places or at all
+ *      three, each once), the four the SDK itself pairs first, each pinned against the SDK's own derivation: the summary's
+ *      completeness read from the result-coverage body's (coverageSummaryOf) at each value, and from that pair unknown a scalar
+ *      operation's truth unknown (truthOf, for show and select; find, the operation the cells read, is not one). Beside every
+ *      variant's planted status, the readings are the nine single ones, one place at a time, and those four pairings; the other 50
+ *      joint readings are R-JOINT-BESIDE there (below). Both legs count a canary: every reading the readers get carries each value
+ *      its K3 reading sets. The cells' result-coverage body already reads incomplete, so a reading that sets it incomplete reads as
+ *      its other places alone (the single one is the field-less reading itself). "Exactly" is identical's reading, here and in R1,
+ *      R2 and P1: the same plain objects, lists and primitives member by member, key order aside, a symbol-keyed member and a
+ *      non-enumerable one included (toStrictEqual does not see the latter; the controls show identical sees each difference they
+ *      plant), with toStrictEqual first printing any difference it sees; each comparison, and each judgement of (b) below, returns
+ *      the 1 its loop counts, so one deleted from a loop reds that loop's count. So no spelling, synonym or encoding of a K3 reading
+ *      reaches either output on those cells. (b) No named word is minted: none of the proof-status stems verif, refut, prove, proof
+ *      and confiden (PROOF_STEM: the filing's verified, unverified and refuted, the program's proven, proof and confidence) in any
+ *      case, and none of the admission statuses PASS, FAIL and UNKNOWN (ADMISSION_STEM) in upper case or capitalized, is anywhere in
+ *      either reader's whole output on any of those cells, field-less or under each K3 reading of (a)'s registration leg (the nine
+ *      single and the 54 joint): the projection (its snapshot with the evidence references, its relations, diagnostics and facets)
+ *      or its refusal, and the live verdict (its violations and version class), serialized with member names; nor in Pi's own texts
+ *      (coverage, tone, status text, title, node type, diagnostics, or the refusal text of a mutation outcome) on those readings or
+ *      on any variant. "Anywhere" is a substring read: a named word alone, and joined into an identifier, a path or a value
+ *      (SPELLINGS: the word alone, upper case, capitalized, snake_case, kebab-case, camelCase, PascalCase, UPPER_SNAKE, dotted, run
+ *      together, a member name, a member value; each form controlled on every named word). Two texts are not read: the fixture's
+ *      workspace path WS, the host's own identity, which the projection repeats in its scope and in an incomplete-region facet and
+ *      whose "proof" a stem would read, and the stem "prove" inside the word provenance, the relations' own provenance member; the
+ *      controls show that each cut is needed, that it takes nothing else, and that the judged text holds the verdict and the
+ *      evidence references. A variant's whole output is R1's to judge (today exactly the field-less reading's), not (b)'s: the
+ *      landing's facet will quote a producer's status verbatim in it, so a whole-output word leg over the variants would red at the
+ *      landing, and K1 holds across it. The spellings the judge does not read, and the members the serialization does not show, are
+ *      named below (R-INFLECTED, R-SYNONYM, R-SPLIT, R-CONFUSABLE, R-ENCODED, R-ADMISSION-CASE, R-UNSERIALIZED); by (a), none of them
+ *      carries a K3 value into either output on those cells at a reading (a) judges;
+ *   L1 the leak check the landing keeps, for the title's "no verified label is minted": no output on any of those cells and
+ *      variants holds "verified":true;
+ *   L2 today no output on any of those cells and variants holds the word verified at all (the landing's facet will quote a
+ *      producer's status verbatim, as data);
+ *   P1 the pre-landing snapshot: five field-less results through the real hyperunix.find registration project exactly the frozen
+ *      topology and live verdict below, the baseline the on-landing toStrictEqual compares against;
+ *   Q the residuals' quiet rows: the residual list is exactly the ten families below (a literal of ids and counts); for each of
+ *      K1's judge, every exemplar is read by neither stem pattern and its paired nearest form is read; for K1 (a)'s R-JOINT-BESIDE,
+ *      the family is exactly the 50 joint readings the variant leg does not set and its exemplars are one per joint shape (each set
+ *      of places a joint reading sets, read from JOINT_K3S), and K1 (a)'s own two legs, run over probes in place of the readers on
+ *      one cell, read quiet a probe moved only by an exemplar's values beside a planted status, and flag its twins: the same values
+ *      without a planted status (the registration leg, at the exemplar's own reading) and each of the exemplar's places alone
+ *      beside a planted status (the variant leg, on every variant); and that probe's positive control, built outside the legs on
+ *      the same cell: each variant (a planted status) with the exemplar's values set on it fires the probe and its registration
+ *      twin (read off the probe's own record of the readings it judged: one judgement per variant, each the reading of the variant
+ *      at its turn, pairwise distinct; and off the same record, the verdict it gave on each: the probe and its registration twin,
+ *      frozen, the very list the control holds from its call at that turn; a record the control reads only through a copy, frozen
+ *      and fresh on each read, each [reading, verdict] pair in it frozen; each recorded reading a copy fired took at the call, not
+ *      the reading it was handed, frozen at every depth; and, before the control runs, the probe list fired filters frozen, each
+ *      probe and its expected list too, and the variants list the control rebuilds its readings from frozen, each variant at every
+ *      depth; and each judgement fired makes, made while neither Object.prototype nor Array.prototype holds an own toJSON and
+ *      Array.prototype's prototype is Object.prototype, each of the three read after fired takes its copy and before the first list
+ *      it serializes after it (valuesOf's list of the copy's K3 values) (P15: fired refuses a call while one is set, removing what
+ *      it can of the three, recording nothing (the record's length the same after the call as before it, and the record at Q's
+ *      end the judgements' own entries, as below) and throwing; P15's controls, five calls on Q's cell reading before the positive
+ *      control, set each of the three before the call, a toJSON on Object.prototype through a getter of the handed reading while
+ *      fired copies it, and one that removes itself at its second top-level call, and read each such call refused, unrecorded and
+ *      its member removed; and P15's guards: just before each judgement fired makes in Q after them (the field-less control's,
+ *      the positive control's at each variant's turn, and k3Legs'), one call of fired on that judgement's reading with one of the
+ *      three set for that call, the six settings in turn (each of the three set before the call, then each set through a getter of
+ *      the handed reading's source while fired copies it, each a toJSON that removes what is set at its first top-level call on a
+ *      list), each guard call read refused, naming the member it set, with that member removed and nothing recorded (the record's
+ *      length the same after the call as before it), and the guards' count equal to those judgements; and the record, at Q's end,
+ *      those judgements' own entries: as many as the judgements fired makes after its controls, and at each index, in call order,
+ *      the very [reading, verdict] pair the record ended with just after that judgement's call, holding the very list fired
+ *      returned there and a reading whose serialization is that of the reading the call site handed fired (the three kept at the
+ *      call by note, outside guard and fired), so no entry a call fired refuses in Q writes is in it beside those entries or in
+ *      place of one of them, save as a later judgement's own pair as just read (NOT CLAIMED below))),
+ *      and the field-less reading with them set fires the twin alone, so a reading at the exemplar's values beside a planted status
+ *      fires the probe the legs read quiet; for each of R2's, the channel reads or detects the planted member of a traced reading
+ *      while the tracer records nothing (util.inspect shows it, util.types.isProxy tells the proxy, a structured clone refuses it
+ *      while the plain reading clones with the member), and R2's rows, and the channels the quiet rows visit, equal the out-of-file
+ *      trap roster test/fixtures/hyperunix-proof-status-trap-roster.json (each family's id and channels), both ways and in order.
+ * RESIDUALS (standing rule 19(c), the enumerate-the-resolvable form: each a named family one instrument here does not read, each
+ * pinned by its quiet row in Q): for K1's judge, R-INFLECTED an inflection of "prove" that drops its final e (proving, provable,
+ * unprovable); R-SYNONYM a word of the same reading built on no named stem (unconfirmed, falsified, certified, attested, untrusted,
+ * disputed); R-SPLIT a named word split inside by a visible or an invisible character; R-CONFUSABLE a letter of another script
+ * standing for a Latin one; R-ENCODED a named word written through an encoding or a transformation (a percent escape, a backslash
+ * escape, base64, reversed); R-ADMISSION-CASE an admission status, or the filing's "failed", in neither upper case nor capitalized
+ * (Pi's own and the SDK's lowercase vocabulary holds unknown, failure and the four -failed kinds, so those forms are not read);
+ * R-UNSERIALIZED a member a serialization does not show (non-enumerable, or symbol-keyed) is not in the whole-output text (identical
+ * sees both, so K1 (a), R1, R2's payload control and P1 compare them); for K1 (a)'s variant leg, R-JOINT-BESIDE a joint K3 reading
+ * other than the four the SDK pairs, set beside a planted status (each of those 50 readings is judged on the field-less reading
+ * through the registration, and each of its places alone beside every variant; a reader moved only by such a reading beside a
+ * planted status reads green here); for R2's tracer, R-UNTRAPPED a read through a channel no proxy trap observes (util.inspect reads
+ * a proxy's target directly) that leaves both outputs unchanged; R-PROXY-AWARE a reader that tells a traced reading from a plain one
+ * (util.types.isProxy, or a structured clone, which reads every member of a plain reading and refuses a proxy) and reads the member
+ * only when untraced, its outputs unchanged. By K1 (a) no K3 reading it judges (on the field-less reading one place at a time and
+ * jointly; beside a planted status one place at a time and as the four pairings the SDK makes), and by R1 no planted status, moves
+ * either output on those cells today, so a K1 residual reaches an output only as the readers' own making, alike on every reading of
+ * its cell that K1 (a) and R1 judge (P1 freezes five field-less readings whole).
+ * THE CELLS of R1, R2, A1, A2, K1, L1 and L2: every kind under each licence in each of two document shapes (SHAPES), read through
+ * the real registration, each carrying one producer diagnostic, a result coverage, one incomplete region and an empty cost so every
+ * open-value placement exists: 'narrow' (one row, none on complete-empty; rows retained; one certificate; the plain host context)
+ * and 'wide' (no row, from a stream that did not retain rows; three certificates; the host context naming the invoking node call).
+ * The rows claim nothing about a reading of another shape.
+ * T1, T2, T3, R1, R2 and L2 state the vendored SDK 0.1.0 and today's adapter and move with the landing (each names this bead's
+ * on-landing leg); A1, A2, K1, L1, P1 and Q hold before and after it. NOT ARMED, by design: a status an SDK release carries only inside
+ * an open producer value (T3's eleven open-value placements carry one verbatim today, among them the extensions sidecar, the
+ * declaration's "Lossless sidecar of negotiated extension frames") changes no record, closed body or frame kind, so T1-T3 stay
+ * green on it; R1 and R2 hold the adapter blind to it there, and reading it is the on-landing leg's.
+ * Values: the filing's own words (verified, unverified, refuted, failed) and the explicit admission statuses of
+ * 02-adoption-qa.md:4@694570cd00c2 ("explicit PASS/FAIL/UNKNOWN admission statuses"). Member spellings and placements are this
+ * file's own illustrative literals, as every name of the program is illustrative (a scalar proof status, a proof confidence, a claim
+ * status, and a list of 01:4's proposed Claims(receipt,predicate,snapshot,checker,status) records); no outside anchor holds them.
+ * K1's named words, SPELLINGS and the residual exemplars are this file's own literals too; the K3 values are the SDK's (its types),
+ * and so are the four pairings (its coverageSummaryOf and truthOf, read in K1).
+ * wb-xmxx (the R694 follow-up of landing 671, its gate's F1 and F2): K1 (a) set one K3 place at a time, so a reader moved only by K3
+ * values at two places at once read green here (the gate's X5, a coverage diagnostic on the summary and the result-coverage
+ * completeness both unknown, the pairing the SDK itself makes; X6, a live clause on truth and the summary completeness both unknown).
+ * (a) now sets the joint readings, K1's title and the residual sentence above say which readings each leg sets, and R-JOINT-BESIDE
+ * names the joint readings it does not set beside a planted status.
+ * wb-hoda (the R694 follow-up of landing 716, its gate's F2): nothing showed Q's R-JOINT-BESIDE probe could fire, so a probe no
+ * reading moves (the gate's Z6 emptied its values) read quiet through the legs and Q stayed green. Q now holds each exemplar's probe
+ * to its positive control above, on every variant of Q's cell.
+ * wb-i3iu (the R694 follow-up of landing 763, its gate's F1): the control pinned the distinctness of the readings it built, not of
+ * the readings its probe judged, so a control that judged the first reading on every pass (the gate's H01) or in place of the last
+ * one (H02), or that keyed that distinctness by object identity (H03), read green on its own and beside a second edit that the
+ * control otherwise reds: H01 beside L05 (a probe blind to the proof_confidence variants), H02 beside L06 (blind to the last
+ * variant), H03 beside Z9 (a control that reads the first variant on every pass). The probe now records each reading it is given,
+ * and the control reads off that record one judgement per variant, each given the reading of the variant at its turn (rebuilt
+ * from that variant, compared by serialization), and the judged readings pairwise distinct.
+ * wb-w6yw (the R694 follow-up of landing 816, its gate's F1): the probe's record held the readings it judged, not its verdict on
+ * them, so the control's one assertion of that verdict, edited at its subject to keep the call and hold its own expected list in
+ * place of the verdict (the gate's G01, [fired(reading), [label, twin]][1], and G02, fired(reading) && [label, twin]), read green
+ * beside a second edit that the control otherwise reds: G01 beside L05 or L06, G02 beside L05. The probe now records, beside each
+ * reading it is given, its verdict on that reading (frozen, and the same list fired returns), and the control also reads that
+ * verdict off the record: at each variant's turn, the probe and its registration twin (compared by serialization), frozen, and the
+ * very list the control holds from its call at that turn (compared by identity).
+ * wb-sidb (the R694 follow-up of landing 872, its gate's F1): the control's own statements could write both the probe's record and
+ * the list the control holds, so one edit at the subject of the control's assertion of the verdict (the gate's G05Q) or at the
+ * control's call (CFORGEQ) that put one frozen [label, twin] into the record's last entry and into the held list's last entry read
+ * green beside a probe hollow the control otherwise reds (L05, L06, or the gate's HODD, a probe blind to readings whose
+ * serialization has an odd length). The record is now kept in a list only the probe's closure holds, one frozen [reading, verdict]
+ * pair per call, and the control reads it only through record(), a fresh frozen copy of that list on each read; the control also
+ * checks that the copy it read is frozen and is not the copy a second read returns, and that each pair it read is frozen.
+ * wb-68s5 (the R694 follow-up of landing 921, its gate's F1 and F2): the data fired judges could still be written from Q's scope, the
+ * probe list it filters (plain objects, readonly only in the type) and the reading the control hands it, so one edit at the control's
+ * call that swapped the probe list for the call (the gate's PSWAP), rewrote the exemplar probe's expected list for it (PMUT), or
+ * padded the handed reading for it and removed the pad after (RMUT) read green beside a probe hollow the control otherwise reds (L05,
+ * L06, HODD). The probe list, each probe and each probe's expected list are now frozen, and so is the variants list, each variant at
+ * every depth (P5 rebuilds each judged reading from it, and L06 reads it), each read frozen before the control runs (P13); and fired
+ * judges and records a copy of the handed reading taken at the call, its serialization parsed back and frozen at every depth, which
+ * the control reads off the record as not the handed reading and frozen at every depth (P14). R2's rows were anchored only by this
+ * file's literals (F2: the gate's CT6T removed structuredClone from R-PROXY-AWARE's row, the frozen-shape literal's count and the
+ * channels literal together and read green); they and the channels the quiet rows visit are now judged against the trap roster. An
+ * edit that replaces a builtin the control's pins or fired read through, beside a probe hollow, is NOT CLAIMED by this census. An
+ * edit at the control's call that writes the cell, the host context or this file's module-level tables (among them K3_PLACES and
+ * MEMBERS, which fired reads through valuesOf and planted), beside a probe hollow that reads them, is NOT CLAIMED by this census. A
+ * coordinated hollow of one of K1's word-residual rows across this file's literals is NOT CLAIMED by this census: those rows have no
+ * anchor outside this file, as before this cut.
+ * wb-2g18 (the R694 follow-up of landing 940, its gate's F1): one edit at the control's call could still change what fired's later
+ * serializations read without writing fired's data or replacing a builtin: it set Object.prototype.toJSON, the member JSON.stringify
+ * consults on each object it serializes, for the call and deleted it after (the gate's PROTOJSON, PROTOJSONL and PROTOJSON6), so the
+ * copy fired took read exact while a probe hollow's serialization of that copy read the hook's rewrite, and each read green beside
+ * the hollow the control otherwise reds (HODD, L05, L06). fired now refuses such a call at P15 (Q above; P15 reads through
+ * Object.hasOwn and Object.getPrototypeOf, builtins fired reads through). An edit at the control's call that adds a member, or a
+ * prototype holding one, that a builtin or an operator consults (a property read, a destructuring, an iteration), beside a probe
+ * hollow that reads through it, is NOT CLAIMED by this census unless P15 reads it as set: among those NOT CLAIMED are any other
+ * member of Object.prototype or Array.prototype, a member of another intrinsic (such as a return method on the array iterator
+ * prototypes, which the destructuring in valuesOf calls after P15's read), and a toJSON on either prototype that code run after
+ * P15's read sets. An edit at the control's call that sets one of the three so that fired cannot remove it (such as a
+ * non-configurable toJSON), beside a probe hollow, is NOT CLAIMED by this census either: fired still refuses the call, but the
+ * toJSON left set also reaches vitest's own serializer, which then recurses and drops Q's failure (measured: Q reported failed with
+ * no message, or Q and P1 reported pending and the file passed).
+ * wb-ekl1 (the R694 follow-up of landing 958, its gate's F1 and F2): P15's controls held P15 at fired's first five calls only, each
+ * on Q's cell reading, so a fired that read P15 at its first five calls alone (the gate's HKFIRST5), or only on a copy equal to Q's
+ * cell reading (HKCELL), read green beside the landing-940 form PROTOJSON at the positive control's call and HODD; and they pinned
+ * both ends of the read's place for Object.prototype.toJSON's read only, so a fired that took the two Array.prototype reads, or
+ * one of them, before its copy (HKSPLIT, HKSPLITA, HKSPLITC) read green beside the gate's in-copy installs PROTOINA and PROTOINC
+ * and HODD, and one that took them after valuesOf (HKLATE) read green alone. Measured by this cut on the base beside them: one that
+ * read P15 only while it had recorded nothing (HKREC) read green beside PROTOJSON and HODD, and one that read it at the calls
+ * before k3Legs only (HKFIRST2249) read green beside PROTOJSON's form at k3Legs' call and a hollow of the variant twins, which
+ * k3Legs alone reads. P15's guards (Q above) now set one of the three before each judgement fired makes in Q after the controls, the
+ * six settings in turn, so before every judgement one of the three is read set, and each, in each setting, before every sixth;
+ * the controls are unchanged. A fired that tells a guard call from the judgement after it by anything but P15's three reads (its
+ * call count or order, which the guards make regular, or the getter on the handed reading's source an in-copy guard hands it),
+ * and reads one of the three, or reads it at its place, only at the guard calls, beside an edit at a judgement's call that sets
+ * it and a probe hollow, is NOT CLAIMED by this census: each guard is a call of its own, so no finite set of them pins a read at a
+ * call they do not make.
+ * wb-qzqd (the R694 follow-up of landing 980, its gate's F1): beside P15's guard calls Q read the record only at the positive
+ * control's turns (P5) and across k3Legs (the count pin), so a fired that recorded the four field-less control's guard calls (the
+ * gate's GPRECFL, fired's calls 6, 1128, 2250 and 3372, whose records land before P5's first index and before k3Legs) read green.
+ * Measured by this cut on the base beside it: a fired that records each call it refuses after its fifth, its copy beside its
+ * verdict, and returns that verdict unrecorded at the call after it (GPRECSHIFT5: every guard call recorded, the guards' records
+ * standing in for the judgements' at P5 and across k3Legs) read green too, and so did the same shift keyed on the copy instead of
+ * the count (each refused call whose copy is not Q's cell reading, GPRECSHIFTCELL) and the same shift at the four field-less
+ * guard calls only (GPRECSHIFTFL). guard now reads the record's length before and after each call it makes, through record(), and
+ * each guard row must read it unchanged; and Q reads the record at its end as one entry per judgement fired made after its
+ * controls, a count kept outside guard and fired (the field-less control's judgements, the positive control's and k3Legs'). Each
+ * of guard's reads copies the record (record() returns a fresh frozen copy), and after P15's settings have swapped
+ * Array.prototype's prototype the engine copies arrays on its slow path, so Q's timeout is K1's, 180 s.
+ * wb-x4ph (the R694 follow-up of landing 999, its gate's F1): Q read the record's entries only at P5, the positive control's slice
+ * at each joint's end, and the rest of the record by count (guard's growth, the count pin and the whole-record pin), so a fired
+ * that wrote a refused call's entry in place of an earlier one, which keeps every count, read green: the gate's GXSWAPFL (at the
+ * field-less control's guard calls 1128, 2250 and 3372, each over the previous joint's last entry), GXSWAPUNPL (data-keyed: each
+ * refused call after the fifth whose copy holds no planted member) and GXSHIFTOLDFL (at the same three calls the oldest entry
+ * dropped and the refused call's appended). Measured by this cut on the base beside them: the same swap at the first
+ * positive-control guard call over the field-less judgement's entry (GXSWAPPC1), at k3Legs' second guard call over its first
+ * judgement's (GXSWAPLEGS2) and at each of k3Legs' guard calls after its first (GXSWAPLEGSALL), and at the field-less guard
+ * calls with the replaced entry's own list kept (GXSWAPKEEP) or with a new pair of the replaced entry's reading and list
+ * (GXSWAPSAME), each read green; so did a fired that returned, at k3Legs' judgements, a fresh equal list in place of the one it
+ * recorded (GXRETCOPYLEGS), or that recorded there the record's first reading in place of its copy (GXSTALELEGS). Now, at each
+ * judgement fired makes after P15's controls, its call site hands note the serialization of the reading it hands fired, taken
+ * just before the call, and the list fired returned; note keeps both beside the pair the record ends with just after the call
+ * (read through record()), in a list only its closure holds, which noted() returns as a fresh frozen copy; and at Q's end Q reads
+ * the record whole against them: as many entries as judgements noted, and at each index the noted pair itself (by identity),
+ * holding the noted list (by identity) and a reading that serializes as the noted text; noted() is read as P5 reads record(), the
+ * copy frozen and not the copy a second read returns. A pair, or a copy, that a call fired refused made, standing at Q's end as a
+ * later judgement's own pair as read here (the pair the record ended with just after that judgement's call, holding the list it
+ * returned and a reading that serializes as the one its call site handed fired; each guard call hands fired a reading that
+ * serializes as the one of the judgement after it), is NOT CLAIMED by this census: Q reads which call made a judgement's own pair,
+ * and which copy it holds, by those three readings alone (P14 reads, at the positive control's turns, that the copy is not the
+ * handed reading and is frozen at every depth). Among them: this seat's GXREUSE (each judgement's pair holding the copy fired took
+ * at the guard call before it), which reads green, and wb-qzqd's GPRECSHIFT5 beside its GQR (guard's record reads removed), whose
+ * guard-call pairs stand as the judgements' own, so guard's growth read stays its sole reader. Q reads the entries whole at its end
+ * only, so a write to the record that a later call undoes before then (other than one P5 reads at a joint's end) is NOT CLAIMED
+ * by this census, and neither is an edit of record() itself, the one reader every read of the record goes through (guard's, P5's,
+ * the count pins', note's and the end's), that changes what it returns (such as one that hides some entries). An edit at a
+ * judgement's call site that changes what it hands note there (the text or the list), beside a fired that records otherwise, is
+ * NOT CLAIMED by this census.
+ * Display paths added: none (test-only). Pure: no HX binary, scratch directory, clock, network or file write; the only files read
+ * are two installed SDK files, dist/result.d.ts (T1, K1) and dist/protocol/decoder.js (T2), and Q's trap roster fixture. The only
+ * global state written is P15's: its controls and guards set a toJSON on Object.prototype or Array.prototype, or a prototype for
+ * Array.prototype, for one call each and remove it after, and fired removes what it can of one it finds (Q reads that none of the
+ * three is left set after the controls, and that fired removed the one each guard set). */
+import {readFileSync} from 'node:fs';
+import {inspect, types} from 'node:util';
+import {
+  type Completeness, type Coverage, type CoverageSummary, coverageSummaryOf, decodeResultStream, type EvidenceSummary, type ExecutionStatus,
+  evidenceOf, ProtocolError, type QueryResult, resultFromJson, resultToJson, SCALAR_OPERATIONS, SDK_REPRESENTATION, type Truth, truthOf,
+} from '@hyperunix/sdk';
+import {describe, expect, expectTypeOf, it} from 'vitest';
+import {CapabilityRegistry, type JsonValue} from '../src/workbench/capability-registry.js';
+import {
+  HYPERUNIX_CONSUMED_FIELDS, HYPERUNIX_EXECUTION_KINDS, type HyperUnixLiveVerdict, type HyperUnixProjectionTopology,
+  type HyperUnixTopologyContext, hxLiveInvariant, hyperunixTopology,
+} from '../src/workbench/hyperunix-observer.js';
+import {registerHyperUnixFind} from '../src/workbench/providers/hyperunix.js';
+
+type Json = {[key: string]: JsonValue};
+/** The runtime identity of the measured live read (test/workbench-hyperunix-observer.test.ts BINARY). */
+const BINARY = '3501da39d77f559548590e59d3fe0ed3b742285520f3bd854c95f977a754fc9d';
+const WS = '/srv/hx-proof-status-ws';
+const SCOPE = {workspace: WS, principal: 'local-operator:tester'};
+const context: HyperUnixTopologyContext = {scope: SCOPE, target: {kind: 'hx.fs/regular-file', root: 'src'},
+  capturedAt: '2026-10-19T01:46:52Z', observedAt: '2026-10-19T01:46:53Z'};
+/** The P1 incomplete row names the invoking workflow node call, so the baseline also pins the grouping edge and the trace. */
+const invokedContext: HyperUnixTopologyContext = {...context, invocationId: 'wf_hx_3ht2',
+  operationRef: {provider: 'pi-workflow', type: 'node-call', id: 'wf_hx_3ht2:0'}};
+const CAPABILITY_CONTEXT = {grants: ['hyperunix:read'], signal: new AbortController().signal};
+
+/** The filing's own proof-status words, then the admission statuses 02-adoption-qa.md:4@694570cd00c2 names. */
+const VALUES: readonly string[] = ['verified', 'unverified', 'refuted', 'failed', 'PASS', 'FAIL', 'UNKNOWN'];
+/** "a refuted/failed proof status", with the admission status FAIL. */
+const NEGATIVE: ReadonlySet<string> = new Set(['refuted', 'failed', 'FAIL']);
+/** "a verified status", with the admission status PASS. */
+const POSITIVE: ReadonlySet<string> = new Set(['verified', 'PASS']);
+/** Spellings a proof status could take in a hyperunix.result/1 source. */
+const MEMBERS = ['proof_status', 'proof_confidence', 'claim_status', 'claims'] as const;
+type Member = (typeof MEMBERS)[number];
+/** One step from a hyperunix.result/1 source toward a placement: an object member or a list index. */
+type Step = string | number;
+/** The nine typed-record placements: the provider's round trip rebuilds each from the SDK's own fields, so a member there is
+ * dropped (T3). */
+const TYPED_PLACEMENTS: readonly (readonly [string, readonly Step[]])[] = [
+  ['result', []], ['execution-status', ['execution_status']], ['run-status', ['status']], ['coverage-summary', ['coverage_summary']],
+  ['evidence', ['evidence']], ['certificate', ['coverage', 0]], ['diagnostic', ['diagnostics', 0]], ['transport', ['transport']],
+  ['stream', ['status', 'streams', 0]],
+];
+/** The eleven open-value placements: the round trip keeps each producer value verbatim, so a member there survives it (T3). */
+const OPEN_PLACEMENTS: readonly (readonly [string, readonly Step[]])[] = [
+  ['certificate-body', ['coverage', 0, 'body']], ['certificate-cause', ['coverage', 0, 'cause']],
+  ['certificate-scope', ['coverage', 0, 'scope']], ['certificate-target', ['coverage', 0, 'target']],
+  ['result-coverage', ['coverage_summary', 'result_coverage']], ['incomplete-region', ['coverage_summary', 'incomplete_regions', 0]],
+  ['diagnostic-details', ['diagnostics', 0, 'details']], ['diagnostic-extra', ['diagnostics', 0, 'extra']], ['cost', ['cost']],
+  ['row', ['rows', 0]], ['extensions', ['extensions']],
+];
+const PLACEMENTS: readonly (readonly [string, readonly Step[]])[] = [...TYPED_PLACEMENTS, ...OPEN_PLACEMENTS];
+const CARRIED: ReadonlySet<string> = new Set(OPEN_PLACEMENTS.map(([placement]) => placement));
+const MUTATION_KINDS: ReadonlySet<string> = new Set(['mutation-rejected', 'mutation-partial']);
+const READ_KINDS = HYPERUNIX_EXECUTION_KINDS.filter(kind => !MUTATION_KINDS.has(kind));
+const LICENCES = [true, false] as const;
+/** K1 (b)'s judge. The named proof-status stems, read in any case anywhere in a text, so a stem joined into an identifier, a path or a
+ * value reads too; "prove" is not read inside the word provenance (the relations' own provenance member). */
+const PROOF_STEM = /verif|refut|prove(?!nance)|proof|confiden/i;
+/** The admission statuses of 02-adoption-qa.md:4, read anywhere in a text in upper case or capitalized, so an UPPER_SNAKE, camelCase
+ * or PascalCase join reads too; their lowercase forms are Pi's own and the SDK's vocabulary (R-ADMISSION-CASE). */
+const ADMISSION_STEM = /PASS|FAIL|UNKNOWN|Pass|Fail|Unknown/;
+/** Whether a text holds a named word in a spelling K1's judge reads. */
+const named = (text: string): boolean => PROOF_STEM.test(text) || ADMISSION_STEM.test(text);
+/** The named words: the filing's and the program's proof-status words, and the admission statuses. */
+const PROOF_WORDS = ['verified', 'unverified', 'refuted', 'proven', 'proof', 'confidence'] as const;
+const ADMISSION_WORDS = ['PASS', 'FAIL', 'UNKNOWN'] as const;
+const capitalized = (word: string): string => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+/** The spelling forms K1's judge reads, each built on one named word: alone and in each case, joined to another word into an
+ * identifier or a dotted path, and as a member name or a member value of serialized output. */
+const SPELLINGS: readonly (readonly [string, (word: string) => string])[] = [
+  ['word', word => word],
+  ['upper case', word => word.toUpperCase()],
+  ['capitalized', word => capitalized(word)],
+  ['snake_case', word => `truth_${word}`],
+  ['kebab-case', word => `truth-${word}`],
+  ['camelCase', word => `truth${capitalized(word)}`],
+  ['PascalCase', word => `Truth${capitalized(word)}`],
+  ['UPPER_SNAKE', word => `TRUTH_${word.toUpperCase()}`],
+  ['dotted', word => `truth.${word}`],
+  ['run together', word => `truth${word}`],
+  ['member name', word => JSON.stringify({[`truth${capitalized(word)}`]: true})],
+  ['member value', word => JSON.stringify({truth: word})],
+];
+/** The SDK's K3 values: its Truth and Completeness types (dist/result.d.ts), pinned to them at type level in K1. */
+const TRUTHS = ['known_present', 'known_absent', 'unknown'] as const;
+const COMPLETENESSES = ['complete', 'incomplete', 'unknown'] as const;
+/** Where a hyperunix.result/1 source carries a K3 value, as the SDK types one on a result: QueryResult.truth, CoverageSummary.completeness,
+ * and the result-coverage body's completeness the summary's is read from (pinned against dist/result.d.ts in K1). */
+type K3Place = 'truth' | 'completeness' | 'result-coverage';
+/** The three places in place order, each with the SDK's values for it. */
+const K3_PLACES: readonly (readonly [K3Place, readonly string[]])[] = [['truth', TRUTHS], ['completeness', COMPLETENESSES],
+  ['result-coverage', COMPLETENESSES]];
+/** One K3 value at one place. */
+type K3Setting = readonly [K3Place, string];
+/** One K3 reading: the values it sets, at one, two or all three places, one value per place, in place order. */
+type K3 = readonly K3Setting[];
+/** A K3 reading's label: each place it sets with its value, in place order. */
+const k3Label = (k3: K3): string => k3.map(([place, value]) => `${place} ${value}`).join(' + ');
+/** The nine single readings: each value at one place. */
+const K3S: readonly K3[] = K3_PLACES.flatMap(([place, values]) => values.map((value): K3 => [[place, value]]));
+/** The four joint readings the SDK itself pairs from one K3 value, pinned against its own derivations in K1: the summary's completeness
+ * read from the result-coverage body's (coverageSummaryOf), at each value, and from that pair unknown a scalar operation's truth unknown
+ * (truthOf), the three places unknown at once. */
+const PAIRED_K3S: readonly K3[] = [...COMPLETENESSES.map((value): K3 => [['completeness', value], ['result-coverage', value]]),
+  [['truth', 'unknown'], ['completeness', 'unknown'], ['result-coverage', 'unknown']]];
+/** Every joint reading: each combination of values at two places (27) or at all three (27), the four the SDK pairs first. */
+const JOINT_K3S: readonly K3[] = (() => {
+  const joint: K3[] = [];
+  for (const places of [[0, 1], [0, 2], [1, 2], [0, 1, 2]]) {
+    let readings: K3[] = [[]];
+    for (const index of places) {
+      const [place, values] = K3_PLACES[index];
+      readings = readings.flatMap(reading => values.map((value): K3 => [...reading, [place, value]]));
+    }
+    joint.push(...readings);
+  }
+  const paired = new Set(PAIRED_K3S.map(k3Label));
+  return [...PAIRED_K3S, ...joint.filter(k3 => !paired.has(k3Label(k3)))];
+})();
+/** K1 (a)'s registration leg sets each of these on the field-less reading: the nine single readings, then the 54 joint ones. */
+const REGISTERED_K3S: readonly K3[] = [...K3S, ...JOINT_K3S];
+/** K1 (a)'s variant leg sets each of these beside a planted status: the nine single readings, one place at a time, then the four the
+ * SDK pairs (the other 50 joint readings are R-JOINT-BESIDE there). */
+const BESIDE_K3S: readonly K3[] = [...K3S, ...PAIRED_K3S];
+/** K1's word residuals: each family's quiet pairs, an exemplar neither stem pattern reads beside its nearest form they read (Q). The
+ * invisible and other-script characters are built from their code points. */
+const WORD_RESIDUALS: readonly (readonly [string, readonly (readonly [string, string])[]])[] = [
+  ['R-INFLECTED', [['proving', 'proven'], ['provable', 'proved'], ['unprovable', 'unproven']]],
+  ['R-SYNONYM', [['unconfirmed', 'unverified'], ['falsified', 'refuted'], ['certified', 'verified'], ['attested', 'proven'],
+    ['untrusted', 'unverified'], ['disputed', 'refuted']]],
+  ['R-SPLIT', [['veri_fied', 'verified'], ['ref-uted', 'refuted'], ['pro of', 'proof'], [`confi${String.fromCodePoint(0x200b)}dence`, 'confidence']]],
+  ['R-CONFUSABLE', [[`v${String.fromCodePoint(0x435)}rified`, 'verified'], [`pr${String.fromCodePoint(0x43e)}of`, 'proof']]],
+  ['R-ENCODED', [['%76erified', 'verified'], ['\\u0076erified', 'verified'], [Buffer.from('unverified').toString('base64'), 'unverified'],
+    [[...'unverified'].reverse().join(''), 'unverified']]],
+  ['R-ADMISSION-CASE', [['truth_unknown', 'TRUTH_UNKNOWN'], ['admission-pass', 'admissionPass'], ['status.fail', 'statusFail'],
+    ['failed', 'Failed'], ['pASS', 'PASS'], ['UnKnOwN', 'Unknown']]],
+  ['R-UNSERIALIZED', [[JSON.stringify(Object.defineProperty({}, 'truthUnverified', {value: true})), JSON.stringify({truthUnverified: true})],
+    [JSON.stringify({[Symbol('truthUnverified')]: true}), JSON.stringify({truthUnverified: true})]]],
+];
+/** R2's residuals: the channels each family names, each reading or detecting a traced reading with no trap the tracer records (Q). */
+const TRAP_RESIDUALS: readonly (readonly [string, readonly string[]])[] = [
+  ['R-UNTRAPPED', ['util.inspect']],
+  ['R-PROXY-AWARE', ['util.types.isProxy', 'structuredClone']],
+];
+/** R2's rows held out of this file (wb-68s5, the hk9l / R660 roster pattern): each family's id and channels, in this file's order. */
+interface TrapRoster {
+  readonly comment: string;
+  readonly residuals: readonly {readonly id: string; readonly channels: readonly string[]}[];
+}
+const TRAP_ROSTER = new URL('fixtures/hyperunix-proof-status-trap-roster.json', import.meta.url);
+/** K1 (a)'s residual: the joint readings its variant leg does not set beside a planted status, each family's exemplars (Q). None sets the
+ * result-coverage body incomplete, the value every cell already carries there. */
+const JOINT_RESIDUALS: readonly (readonly [string, readonly K3[]])[] = [
+  ['R-JOINT-BESIDE', [[['truth', 'unknown'], ['completeness', 'unknown']], [['truth', 'unknown'], ['result-coverage', 'unknown']],
+    [['completeness', 'unknown'], ['result-coverage', 'complete']],
+    [['truth', 'known_absent'], ['completeness', 'complete'], ['result-coverage', 'complete']]]],
+];
+const TRIGGER = 'wb-3ht.2 trigger: the vendored @hyperunix/sdk result or the adapter now carries a claim or proof-confidence status; build '
+  + 'the on-landing leg (the status verbatim, sanitized, as its own facet; A1, A2, K1, L1 and P1 unchanged) before re-pinning this';
+
+/** Today's members of the SDK result records, in declaration order (dist/result.d.ts). */
+const RESULT_MEMBERS = ['operation', 'rows', 'rowsRetained', 'coverage', 'coverageSummary', 'status', 'terminal', 'truth', 'diagnostics',
+  'view', 'evidence', 'queryDigest', 'digestSource', 'executionId', 'actualCost', 'budgetDimension', 'extensions', 'transport',
+  'workspaceRoot', 'streams'] as const;
+/** StatusBase's members, then the variants' own (the kind of every variant, the dimension of budget-exhausted). */
+const STATUS_MEMBERS = ['exitCode', 'signal', 'terminalReached', 'framesTotal', 'diagnosticCode', 'kind', 'dimension'] as const;
+const SUMMARY_MEMBERS = ['certificates', 'modes', 'completeness', 'licensesAbsence', 'certificatesLicenseAbsence', 'incompleteRegions',
+  'resultCoverage', 'answerCount'] as const;
+const COVERAGE_MEMBERS = ['mode', 'cause', 'scope', 'target', 'provider', 'stream', 'batchId', 'body'] as const;
+const EVIDENCE_MEMBERS = ['supportIds', 'evidenceClasses', 'derivationHandles', 'providers', 'providerVersions'] as const;
+/** Every member name across the variants of a union. */
+type Members<T> = T extends unknown ? keyof T : never;
+
+const json = (value: unknown): JsonValue => JSON.parse(JSON.stringify(value)) as JsonValue;
+function asRecord(value: JsonValue | undefined): Json {
+  if (value === null || value === undefined || typeof value !== 'object' || Array.isArray(value)) throw new Error('expected a JSON object');
+  return value;
+}
+/** The object at a path from a source, or undefined when a step is missing or lands on no object (a 0-row reading has no row). */
+function holderAt(source: JsonValue, path: readonly Step[]): Json | undefined {
+  let node: JsonValue | undefined = source;
+  for (const step of path) {
+    if (typeof step === 'number') node = Array.isArray(node) ? node[step] : undefined;
+    else node = node !== null && node !== undefined && typeof node === 'object' && !Array.isArray(node) ? node[step] : undefined;
+  }
+  return node !== null && node !== undefined && typeof node === 'object' && !Array.isArray(node) ? node : undefined;
+}
+/** A copy of node with the member set on the object at path, copying only the objects and lists along that path. */
+function plantedAt(node: JsonValue, path: readonly Step[], member: string, memberValue: JsonValue): JsonValue {
+  const [step, ...rest] = path;
+  if (step === undefined) return {...asRecord(node), [member]: memberValue};
+  if (typeof step === 'number') {
+    if (!Array.isArray(node) || node[step] === undefined) throw new Error(`no element ${step} on the path`);
+    return node.map((item, index) => (index === step ? plantedAt(item, rest, member, memberValue) : item));
+  }
+  const record = asRecord(node);
+  const child = record[step];
+  if (child === undefined) throw new Error(`no ${step} on the path`);
+  return {...record, [step]: plantedAt(child, rest, member, memberValue)};
+}
+/** Freezes a tree in place, so variants that share its untouched branches can never see a reader write into them. */
+function deepFreeze<T>(value: T): T {
+  if (typeof value === 'object' && value !== null && !Object.isFrozen(value)) {
+    Object.freeze(value);
+    const children: unknown[] = Object.values(value);
+    for (const child of children) deepFreeze(child);
+  }
+  return value;
+}
+/** Whether a tree is frozen at every depth: the value itself and each object and list it holds (Q, wb-68s5). */
+function frozenThrough(value: unknown): boolean {
+  if (typeof value !== 'object' || value === null) return true;
+  return Object.isFrozen(value) && Object.values(value).every(frozenThrough);
+}
+/** A member's value: the status itself, or one proposed Claims record (01:4) carrying it. */
+const memberValue = (member: string, value: string): JsonValue => member === 'claims'
+  ? [{receipt: 'receipt-1', predicate: 'predicate-1', snapshot: 'snapshot-1', checker: 'checker-1', status: value}] : value;
+/** One proof-shaped variant of a provider output: the member planted in its source. */
+interface Variant {
+  readonly label: string;
+  readonly member: Member;
+  readonly value: string;
+  readonly reading: JsonValue;
+}
+/** Every placement the reading holds, under every member spelling and value, one at a time (each variant copies only its path). */
+function* variantsOf(reading: JsonValue): Generator<Variant> {
+  const top = asRecord(reading);
+  const source = asRecord(top.source);
+  for (const [placement, path] of PLACEMENTS) {
+    if (holderAt(source, path) === undefined) continue;
+    for (const member of MEMBERS) {
+      for (const value of VALUES) {
+        yield {label: `${placement} ${member} ${value}`, member, value,
+          reading: {...top, source: plantedAt(source, path, member, memberValue(member, value))}};
+      }
+    }
+  }
+}
+/** A copy of a hyperunix.result/1 source (or document) carrying one K3 value, copying only the objects along its path. */
+function withK3Setting(source: Json, [place, value]: K3Setting): Json {
+  if (place === 'truth') return {...source, truth: value};
+  const summary = asRecord(source.coverage_summary);
+  return {...source, coverage_summary: place === 'completeness' ? {...summary, completeness: value}
+    : {...summary, result_coverage: {...asRecord(summary.result_coverage), completeness: value}}};
+}
+/** A copy of a hyperunix.result/1 source (or document) carrying a K3 reading's values, each set in turn. */
+const withK3 = (source: Json, k3: K3): Json => k3.reduce(withK3Setting, source);
+/** A provider output whose source carries a K3 reading's values. */
+function k3Reading(reading: JsonValue, k3: K3): JsonValue {
+  const top = asRecord(reading);
+  return {...top, source: withK3(asRecord(top.source), k3)};
+}
+/** The value a provider output's source carries at a K3 place. */
+function k3Value(reading: JsonValue, place: K3Place): JsonValue | undefined {
+  const source = asRecord(asRecord(reading).source);
+  if (place === 'truth') return source.truth;
+  const summary = asRecord(source.coverage_summary);
+  return place === 'completeness' ? summary.completeness : asRecord(summary.result_coverage).completeness;
+}
+/** Every member dist/result.d.ts types as a K3 value, named by the declaration that holds it. */
+function declaredK3(declaration: string): string[] {
+  const found: string[] = [];
+  let owner = '';
+  for (const line of declaration.split('\n')) {
+    const opening = /^(?:export )?(?:declare )?(?:interface|type) (\w+)/.exec(line);
+    if (opening !== null) owner = opening[1];
+    const member = /^\s+readonly (\w+)\??: (?:Truth|Completeness)\b/.exec(line);
+    if (member !== null) found.push(`${owner}.${member[1]}`);
+  }
+  return found;
+}
+/** Whether two trees are one tree member by member: the same primitives (Object.is); plain objects or lists alike (any other object,
+ * whose state its own keys need not show, is never called identical); and the same own members (Reflect.ownKeys, so an
+ * undefined-valued member, a symbol-keyed one and a non-enumerable one, which toStrictEqual does not see, all count; key order does
+ * not, as for toStrictEqual), each a data member of the same enumerability holding an identical value. */
+function identical(left: unknown, right: unknown): boolean {
+  if (Object.is(left, right)) return true;
+  if (typeof left !== 'object' || typeof right !== 'object' || left === null || right === null) return false;
+  const prototype: unknown = Object.getPrototypeOf(left);
+  if (prototype !== Object.getPrototypeOf(right) || prototype !== Object.prototype && prototype !== Array.prototype) return false;
+  const keys = Reflect.ownKeys(left);
+  return keys.length === Reflect.ownKeys(right).length && keys.every(key => {
+    const mine = Object.getOwnPropertyDescriptor(left, key);
+    const theirs = Object.getOwnPropertyDescriptor(right, key);
+    if (mine === undefined || theirs === undefined || !('value' in mine) || !('value' in theirs) || mine.enumerable !== theirs.enumerable) return false;
+    const value: unknown = mine.value;
+    return identical(value, theirs.value);
+  });
+}
+/** The arbiter wherever this file claims exactly the same outputs (R1, R2's payload control, K1 (a), P1): the two trees are identical;
+ * a pair that is not goes to toStrictEqual first, so a difference it sees is printed, and then fails on identical. It returns the 1
+ * its loop counts, so a comparison deleted from a loop reds that loop's count. */
+function expectIdentical(actual: unknown, expected: unknown, label: string): 1 {
+  if (!identical(actual, expected)) {
+    expect(actual, label).toStrictEqual(expected);
+    expect(identical(actual, expected), `${label} (a difference toStrictEqual does not see)`).toBe(true);
+  }
+  return 1;
+}
+/** K1 (b)'s judgement of one reading's texts: each text named reads is recorded in minted under the label, with the word read. It
+ * returns the 1 its loop counts, so a judgement deleted from a loop reds that loop's count. */
+function judgeTexts(texts: readonly string[], label: string, minted: string[]): 1 {
+  for (const text of texts) if (named(text)) minted.push(`${label}: ${(PROOF_STEM.exec(text) ?? ADMISSION_STEM.exec(text))?.[0]}`);
+  return 1;
+}
+/** Wraps a JSON tree so every get, in check or descriptor read of the given member, and every listing of the own keys of an object
+ * that holds it, anywhere in the tree, lands in reads (R2). */
+function traced(value: JsonValue, member: string, reads: string[]): JsonValue {
+  if (typeof value !== 'object' || value === null) return value;
+  return new Proxy(value, {
+    get(target, key, receiver) {
+      if (key === member) reads.push('get');
+      const item: unknown = Reflect.get(target, key, receiver);
+      return typeof key === 'string' && Object.hasOwn(target, key) ? traced(item as JsonValue, member, reads) : item;
+    },
+    has(target, key) {
+      if (key === member) reads.push('in');
+      return Reflect.has(target, key);
+    },
+    getOwnPropertyDescriptor(target, key) {
+      if (key === member) reads.push('descriptor');
+      const descriptor = Reflect.getOwnPropertyDescriptor(target, key);
+      return descriptor !== undefined && 'value' in descriptor && typeof key === 'string'
+        ? {...descriptor, value: traced(descriptor.value as JsonValue, member, reads)} : descriptor;
+    },
+    ownKeys(target) {
+      if (Object.hasOwn(target, member)) reads.push('keys');
+      return Reflect.ownKeys(target);
+    },
+  });
+}
+
+/** The two document shapes every matrix cell is read in, each through the real registration and in its own host context. 'narrow':
+ * one row (none on complete-empty, which the SDK reads only for zero node-claims), rows retained, one opportunistic certificate, the
+ * plain host context. 'wide': no row, from a stream that did not retain rows, three opportunistic certificates, and the host context
+ * that names the invoking workflow node call (so its outputs carry the grouping edge and the trace). */
+const SHAPES = ['narrow', 'wide'] as const;
+type Shape = (typeof SHAPES)[number];
+const rowsOf = (kind: string, shape: Shape): number => (shape === 'narrow' && kind !== 'complete-empty' ? 1 : 0);
+/** The variants one cell yields: every placement but the row on a 0-row cell. */
+const variantCount = (kind: string, shape: Shape, values: number): number =>
+  (PLACEMENTS.length - (rowsOf(kind, shape) === 0 ? 1 : 0)) * MEMBERS.length * values;
+
+/** One coverage certificate in the SDK's JSON representation, shaped as the measured live read certified its batches. */
+const certificate = (batch_id: string, mode: string): Json => ({mode, cause: {cause: 'other', detail: 'No_change_exclusion'},
+  scope: {path: [], scope: 'fs-subtree'}, target: {target: 'relation-expansion'}, provider: 'hx.fs/builtin', stream: 'hx-fs', batch_id,
+  body: {mode}});
+/** A hyperunix.result/1 document with no row, certificate, view, listed provider, diagnostic, incomplete region or proof status. */
+function sdkDocument(overrides: Json = {}): Json {
+  return {representation: 'hyperunix.result/1', operation: 'find', rows: [], rows_retained: true, coverage: [],
+    status: {exit_code: 0, signal: null, streams: [{name: 'hx-fs', frames: 3, ended: true, mode: 'observation'}], terminal_reached: true, frames_total: 3},
+    execution_status: {kind: 'incomplete', diagnostic_code: null}, diagnostics: [], view: null, cost: null,
+    transport: {started_at: '2026-10-19T01:46:51.000Z', startup_latency_s: 0.01, process_duration_s: 0.2, stdout_bytes: 300, stderr_bytes: 0,
+      stderr_bytes_retained: 0, frames: 3},
+    workspace_root: WS, terminal: 'complete', truth: null,
+    coverage_summary: {modes: [], completeness: null, licenses_absence: false, certificates_license_absence: false, incomplete_regions: [],
+      result_coverage: null, answer_count: null},
+    evidence: {support_ids: [], evidence_classes: [], derivation_handles: [], providers: [], provider_versions: {}},
+    digest: null, digest_source: 'absent', execution_id: null, budget_dimension: null, extensions: {}, ...overrides};
+}
+/** The one producer diagnostic every cell carries, so the diagnostic placements exist. */
+const DIAGNOSTIC: Json = {code: 'HX-COVERAGE-INCOMPLETE', severity: 'warning', message: 'coverage incomplete', details: {}, remediation: null,
+  request: null, origin: 'hxs', stream: 'hx-fs', extra: {}};
+/** One kind under one licence in one shape (SHAPES), the cell every matrix row varies; every open-value placement exists in it. */
+const cellDocument = (kind: string, licensed: boolean, shape: Shape = 'narrow'): Json => sdkDocument({
+  execution_status: {kind, diagnostic_code: null}, rows: rowsOf(kind, shape) === 1 ? [{path: 'src/index.ts'}] : [],
+  rows_retained: shape === 'narrow', coverage: (shape === 'narrow' ? ['b1'] : ['b1', 'b2', 'b3']).map(id => certificate(id, 'opportunistic')),
+  diagnostics: [DIAGNOSTIC], cost: {},
+  coverage_summary: {modes: ['opportunistic'], completeness: null, licenses_absence: licensed, certificates_license_absence: false,
+    incomplete_regions: [{scope: `fs:${WS}/src`, target: 'hx.fs/directory-entry'}], result_coverage: {completeness: 'incomplete'},
+    answer_count: null}});
+/** What the registered hyperunix.find capability returns for a document: the real registration, invoked through the registry. */
+async function provided(document: Json): Promise<JsonValue> {
+  const native = resultFromJson(document);
+  const registry = new CapabilityRegistry();
+  registerHyperUnixFind(registry, {find: async () => native, runtime: async () => ({version: '0.1.0', binarySha256: BINARY}),
+    close: async () => {}}, WS);
+  return registry.invoke('hyperunix.find', {kind: 'hx.fs/regular-file', root: 'src'}, CAPABILITY_CONTEXT);
+}
+/** One matrix cell: a kind under a licence in a shape, its document, the host context it is read in and the provider output. */
+interface Cell {
+  readonly label: string;
+  readonly kind: string;
+  readonly shape: Shape;
+  readonly host: HyperUnixTopologyContext;
+  readonly document: Json;
+  readonly reading: JsonValue;
+}
+/** Every given kind under each licence in each shape, read through the real registration; each output is frozen, since every
+ * variant shares its untouched branches. */
+async function cellsOf(kinds: readonly string[]): Promise<Cell[]> {
+  const cells: Cell[] = [];
+  for (const shape of SHAPES) {
+    for (const kind of kinds) {
+      for (const licensed of LICENCES) {
+        const document = cellDocument(kind, licensed, shape);
+        cells.push({label: `${shape} ${kind} ${licensed}`, kind, shape, host: shape === 'narrow' ? context : invokedContext, document,
+          reading: deepFreeze(await provided(document))});
+      }
+    }
+  }
+  return cells;
+}
+
+function thrown(fn: () => unknown): unknown {
+  try { fn(); } catch (error) { return error; }
+  throw new Error('expected a refusal');
+}
+/** Everything the adapter and the live invariant make of one reading: the projection (or its refusal) and the verdict. */
+interface Outputs {
+  readonly projection: HyperUnixProjectionTopology | {readonly refused: string};
+  readonly verdict: HyperUnixLiveVerdict;
+}
+function outputsOf(reading: JsonValue, host: HyperUnixTopologyContext = context): Outputs {
+  let projection: Outputs['projection'];
+  try { projection = hyperunixTopology(reading, host); } catch (error) { projection = {refused: (error as Error).message}; }
+  return {projection, verdict: hxLiveInvariant(reading)};
+}
+/** The reading's coverage, tone, status text and licensed absence, or the refusal of a mutation outcome. */
+interface Axis {
+  readonly refused?: string;
+  readonly coverage?: string;
+  readonly statusTone?: string;
+  readonly statusText?: string;
+  readonly absenceLicensed: boolean;
+}
+function axisOf(reading: JsonValue, host: HyperUnixTopologyContext = context): Axis {
+  const {absenceLicensed} = hxLiveInvariant(reading);
+  try {
+    const [snapshot] = hyperunixTopology(reading, host).snapshots;
+    return {coverage: snapshot.coverage, statusTone: snapshot.node.statusTone, statusText: snapshot.node.statusText, absenceLicensed};
+  } catch (error) {
+    return {refused: (error as Error).message, absenceLicensed};
+  }
+}
+/** Pi's own texts in one reading's outputs: every text the adapter composes, or the refusal it raises. */
+function ownText({projection}: Outputs): string[] {
+  if ('refused' in projection) return [projection.refused];
+  const [snapshot] = projection.snapshots;
+  return [snapshot.coverage ?? '', snapshot.node.statusTone, snapshot.node.statusText, snapshot.node.title, snapshot.node.type, ...projection.diagnostics];
+}
+/** The whole of one reading's outputs as K1 judges it: the projection (or its refusal) and the live verdict serialized, member names
+ * included, with the fixture's workspace path WS cut out (the host's own identity, which the projection repeats in its scope and in
+ * an incomplete-region facet, and whose "proof" PROOF_STEM would read). */
+const wholeText = (outputs: Outputs): string => JSON.stringify(outputs).replaceAll(WS, '');
+/** K1 (a)'s two legs on one cell, with the reader and the judge given: K1 passes the two judged readers (outputsOf) and expectIdentical,
+ * Q's quiet row a probe and a judge that records what moved. The registration leg sets each of REGISTERED_K3S on the cell's document and
+ * reads it through the real registration: its output must be the cell's with only those values set (always expectIdentical's to judge),
+ * and the reader's outputs on it the field-less reading's. The variant leg sets each of BESIDE_K3S beside every variant's planted status,
+ * the reader's outputs on it the variant's own. It returns each leg's count and the canary of both legs (the readings the reader got
+ * that carry every value their K3 reading sets, so a reading that loses one of its values reds the count). */
+async function k3Legs<T>(cell: Cell, reader: (reading: JsonValue, host: HyperUnixTopologyContext) => T,
+  judge: (actual: T, expected: T, label: string) => 1): Promise<{registered: number; swept: number; carried: number}> {
+  const carries = (reading: JsonValue, k3: K3): boolean => k3.every(([place, value]) => k3Value(reading, place) === value);
+  const bare = reader(cell.reading, cell.host);
+  let registered = 0;
+  let swept = 0;
+  let carried = 0;
+  for (const k3 of REGISTERED_K3S) {
+    const reading = await provided(withK3(cell.document, k3));
+    registered += expectIdentical(reading, k3Reading(cell.reading, k3), `${cell.label} ${k3Label(k3)} (registration)`);
+    registered += judge(reader(reading, cell.host), bare, `${cell.label} ${k3Label(k3)}`);
+    if (carries(reading, k3)) carried++;
+  }
+  for (const variant of variantsOf(cell.reading)) {
+    const plain = reader(variant.reading, cell.host);
+    for (const k3 of BESIDE_K3S) {
+      const reading = k3Reading(variant.reading, k3);
+      swept += judge(reader(reading, cell.host), plain, `${cell.label} ${variant.label} ${k3Label(k3)}`);
+      if (carries(reading, k3)) carried++;
+    }
+  }
+  return {registered, swept, carried};
+}
+/** The member names of one declaration block of dist/result.d.ts, from its opening line to its closing brace. */
+function declaredMembers(declaration: string, opening: string, closing = '\n}'): string[] {
+  const start = declaration.indexOf(opening);
+  if (start < 0) throw new Error(`the declaration has no ${opening}`);
+  const block = declaration.slice(start, declaration.indexOf(closing, start));
+  return [...new Set([...block.matchAll(/^\s+readonly (\w+)\??:/gm)].map(match => match[1]))];
+}
+
+/** One HXS line on stream hx-fs; an observation payload frame carries its batch id. */
+const frameLine = (seq: number, kind: string, body: Json, batch?: string): string =>
+  JSON.stringify({hxs: '1.0', stream: 'hx-fs', seq, kind, body, ...(batch === undefined ? {} : {batch_id: batch})});
+/** The header under its mode, the one frame under test (inside batch b1 when it is an observation payload) and the end frame. */
+function streamOf(mode: 'observation' | 'results', kind: string, body: Json, batched: boolean): string {
+  const header = frameLine(0, 'header', {mode, schema_requirements: []});
+  const rest = batched
+    ? [frameLine(1, 'observation-begin', {}, 'b1'), frameLine(2, kind, body, 'b1'), frameLine(3, 'observation-end', {}, 'b1'), frameLine(4, 'end', {})]
+    : [frameLine(1, kind, body), frameLine(2, 'end', {})];
+  return [header, ...rest].join('\n');
+}
+const SUPPORT: Json = {id: 's1', provider: {$id: 'hx.fs/builtin'}, provider_version: '0.1.0', status: 'observed', view: {$id: 'view-1'}};
+const supportStream = (extra: Json): string => streamOf('observation', 'support', {...SUPPORT, ...extra}, true);
+const NODE_CLAIM: Json = {element: {$id: 'n1'}, identities: [], kinds: [], locators: [], attributes: [], supports: []};
+const nodeClaimStream = (extra: Json): string => streamOf('observation', 'node-claim', {...NODE_CLAIM, ...extra}, true);
+/** An answer frame names an earlier node claim by its seq, so its stream carries one batch with that claim first, and the answer
+ * projection closes with its answer-coverage (ordered, count 1). */
+const answerStream = (extra: Json): string => [frameLine(0, 'header', {mode: 'observation', schema_requirements: []}),
+  frameLine(1, 'observation-begin', {}, 'b1'), frameLine(2, 'node-claim', NODE_CLAIM, 'b1'), frameLine(3, 'observation-end', {}, 'b1'),
+  frameLine(4, 'answer', {ref: {$int: '2'}, supports: [], ordinal: {$int: '1'}, ...extra}),
+  frameLine(5, 'answer-coverage', {count: {$int: '1'}, ordered: true, completeness: 'complete', incomplete_regions: [], certificates: []}),
+  frameLine(6, 'end', {})].join('\n');
+/** Every closed core body the shipped decoder declares, each as a decodable stream extended by the given members. */
+const CLOSED_BODIES: readonly (readonly [string, (extra: Json) => string])[] = [
+  ['support', supportStream],
+  ['derivation', extra => streamOf('observation', 'derivation', {id: 'd1', rule: 'rule-1', inputs: [], ...extra}, true)],
+  ['node-claim', nodeClaimStream],
+  ['edge-claim', extra => streamOf('observation', 'edge-claim', {element: {$id: 'e1'}, relation: 'contains', identity: [], scope: [], incidences: [],
+    attributes: [], supports: [], ...extra}, true)],
+  ['kind-claim', extra => streamOf('observation', 'kind-claim', {element: {$id: 'n1'}, kind: 'hx.fs/regular-file', supports: [], ...extra}, true)],
+  ['attribute-claim', extra => streamOf('observation', 'attribute-claim', {element: {$id: 'n1'}, attribute: 'size', value: 'v', supports: [], ...extra}, true)],
+  ['coverage', extra => streamOf('observation', 'coverage', {target: {target: 'relation-expansion'}, scope: {scope: 'fs-subtree', path: []},
+    mode: 'complete-within-scope', provider: {$id: 'hx.fs/builtin'}, cause: {cause: 'other', detail: 'No_change_exclusion'}, ...extra}, true)],
+  ['header', extra => [frameLine(0, 'header', {mode: 'observation', schema_requirements: [], ...extra}), frameLine(1, 'end', {})].join('\n')],
+  ['result-coverage', extra => streamOf('results', 'result-coverage', {completeness: 'complete', incomplete_regions: [], certificates: [], ...extra}, false)],
+  ['answer', answerStream],
+  ['answer-coverage', extra => streamOf('observation', 'answer-coverage', {count: {$int: '0'}, ordered: true, completeness: 'complete',
+    incomplete_regions: [], certificates: [], ...extra}, false)],
+];
+/** The kinds whose body must be empty, each as a decodable stream whose body of that kind carries the given members. */
+const EMPTY_BODIES: readonly (readonly [string, (extra: Json) => string])[] = [
+  ['end', extra => [frameLine(0, 'header', {mode: 'observation', schema_requirements: []}), frameLine(1, 'end', extra)].join('\n')],
+  ['observation-begin', extra => [frameLine(0, 'header', {mode: 'observation', schema_requirements: []}), frameLine(1, 'observation-begin', extra, 'b1'),
+    frameLine(2, 'observation-end', {}, 'b1'), frameLine(3, 'end', {})].join('\n')],
+  ['observation-end', extra => [frameLine(0, 'header', {mode: 'observation', schema_requirements: []}), frameLine(1, 'observation-begin', {}, 'b1'),
+    frameLine(2, 'observation-end', extra, 'b1'), frameLine(3, 'end', {})].join('\n')],
+];
+/** The empty-body kinds the shipped decoder text declares (EMPTY_BODY_KINDS). */
+function declaredEmptyBodies(decoder: string): string[] {
+  const match = decoder.match(/^const EMPTY_BODY_KINDS = new Set\(\[([^\]]*)\]\);$/m);
+  if (match === null) throw new Error('the decoder has no EMPTY_BODY_KINDS');
+  return [...match[1].matchAll(/"([^"]+)"/g)].map(found => found[1]);
+}
+/** The closed core bodies the shipped decoder text declares: its OBSERVATION_FIELDS records, then its <BODY>_KEYS sets by body name. */
+function declaredClosedBodies(decoder: string): string[] {
+  const start = decoder.indexOf('const OBSERVATION_FIELDS = Object.freeze({');
+  if (start < 0) throw new Error('the decoder has no OBSERVATION_FIELDS');
+  const block = decoder.slice(start, decoder.indexOf('\n});', start));
+  const observed = [...block.matchAll(/^\s+'?([a-z-]+)'?: \[/gm)].map(match => match[1]);
+  const keyed = [...decoder.matchAll(/^const ([A-Z_]+)_KEYS = new Set\(/gm)].map(match => match[1].toLowerCase().replaceAll('_', '-'));
+  return [...observed, ...keyed];
+}
+/** Frame kinds a proof status could travel as, each read under an observation and a results header. */
+const PROOF_KINDS = ['proof-status', 'claim-status', 'claims'] as const;
+const MODES = ['observation', 'results'] as const;
+
+/** The pre-landing snapshot (P1): five field-less results, the context each is read in, and exactly what today's adapter and live
+ * invariant make of them through the real registration. */
+interface BaselineRow {
+  readonly name: string;
+  readonly document: Json;
+  readonly context: HyperUnixTopologyContext;
+  readonly topology: HyperUnixProjectionTopology;
+  readonly verdict: HyperUnixLiveVerdict;
+}
+const LICENSED_SUMMARY: Json = {modes: ['complete-within-scope'], completeness: 'complete', licenses_absence: true,
+  certificates_license_absence: true, incomplete_regions: [], result_coverage: null, answer_count: 0};
+const BINARY_REF = `hx-binary:sha256:${BINARY}`;
+const DERIVED = 'query id is a derived digest, not a native identifier: HX find hx.fs/regular-file src';
+const snapshotOf = (id: string, coverage: 'complete' | 'partial' | 'unknown', statusText: string,
+  statusTone: 'success' | 'unknown' | 'failure', evidenceRefs: readonly string[]) => ({
+  source: {provider: 'hyperunix', type: 'query', id, scope: WS}, scope: {workspace: WS, principal: 'local-operator:tester'},
+  capturedAt: '2026-10-19T01:46:52Z', observedAt: '2026-10-19T01:46:53Z', coverage,
+  node: {title: 'HX find hx.fs/regular-file src', type: 'sdk-operation' as const, statusText, statusTone}, kind: 'hyperunix.query.snapshot',
+  sourceVersion: '0.1.0', evidenceRefs: [...evidenceRefs]});
+const BASELINE: readonly BaselineRow[] = [
+  {name: 'runtime-licensed complete-empty',
+    document: sdkDocument({execution_status: {kind: 'complete-empty', diagnostic_code: null}, coverage: [certificate('b1', 'complete-within-scope')],
+      coverage_summary: LICENSED_SUMMARY}),
+    context,
+    topology: {snapshots: [snapshotOf('d9d97b771f27b96d937d0117655b100ec79d36208b579fc39fa03a3bb4e1fd6f', 'complete',
+      'known-empty (runtime-licensed) · rows 0', 'success', [BINARY_REF, 'hx-coverage:b1'])],
+    relations: [], diagnostics: [DERIVED, 'no native interval supplied']},
+    verdict: {holds: true, violations: [], absenceLicensed: true, versionClass: 'unstamped'}},
+  {name: 'complete with two rows, without the licence',
+    document: sdkDocument({execution_status: {kind: 'complete', diagnostic_code: null}, rows: [{path: 'src/a.ts'}, {path: 'src/b.ts'}],
+      coverage: [certificate('b1', 'opportunistic')], coverage_summary: {...LICENSED_SUMMARY, modes: ['opportunistic'], licenses_absence: false,
+        certificates_license_absence: false, answer_count: 2}}),
+    context,
+    topology: {snapshots: [snapshotOf('d9d97b771f27b96d937d0117655b100ec79d36208b579fc39fa03a3bb4e1fd6f', 'partial',
+      'complete · rows 2 · absence not licensed', 'unknown', [BINARY_REF, 'hx-coverage:b1'])],
+    relations: [], diagnostics: [DERIVED, 'no native interval supplied', 'runtime did not license absence']},
+    verdict: {holds: true, violations: [], absenceLicensed: false, versionClass: 'unstamped'}},
+  {name: 'incomplete read with two certificates, named by its invoking node call',
+    document: sdkDocument({execution_status: {kind: 'incomplete', diagnostic_code: 'HX-COVERAGE-INCOMPLETE'}, rows: [{path: 'src/index.ts'}],
+      coverage: [certificate('b1', 'opportunistic'), certificate('b2', 'opportunistic')],
+      coverage_summary: {modes: ['opportunistic'], completeness: 'incomplete', licenses_absence: false, certificates_license_absence: false,
+        incomplete_regions: [], result_coverage: null, answer_count: 1}}),
+    context: invokedContext,
+    topology: {snapshots: [{...snapshotOf('75681f2ebb106898dd91671426356ad6b451b8a7ef2c93f12689d99613c01bc0', 'partial',
+      'incomplete · rows 1 · absence not licensed', 'unknown', [BINARY_REF, 'hx-coverage:b1', 'hx-coverage:b2']), trace: {invocationId: 'wf_hx_3ht2'}}],
+    relations: [{scope: {workspace: WS, principal: 'local-operator:tester'}, from: {provider: 'pi-workflow', type: 'node-call', id: 'wf_hx_3ht2:0'},
+      to: {provider: 'hyperunix', type: 'query', id: '75681f2ebb106898dd91671426356ad6b451b8a7ef2c93f12689d99613c01bc0', scope: WS}, kind: 'grouping',
+      provenance: {source: 'hyperunix', observedAt: '2026-10-19T01:46:53Z'}}],
+    diagnostics: [DERIVED, 'no native interval supplied']},
+    verdict: {holds: true, violations: [], absenceLicensed: false, versionClass: 'unstamped'}},
+  {name: 'cancelled with a contradicting licence, rows not retained',
+    document: sdkDocument({execution_status: {kind: 'cancelled', diagnostic_code: null}, rows_retained: false,
+      coverage_summary: {...LICENSED_SUMMARY, completeness: null, answer_count: null}}),
+    context,
+    topology: {snapshots: [snapshotOf('8bdec6bac8aa9a82f57f8a3f0b3dbd95282e6c0df342c9725cb4b101962fcaa1', 'partial',
+      'cancelled · rows 0 · absence not licensed (rows not retained)', 'unknown', [BINARY_REF])],
+    relations: [], diagnostics: [DERIVED, 'no native interval supplied',
+      'runtime licensed absence on a cancelled result, which is not honoured: only a complete kind establishes absence']},
+    verdict: {holds: false, violations: ['licence-without-complete-kind'], absenceLicensed: false, versionClass: 'unstamped'}},
+  {name: 'usage-error',
+    document: sdkDocument({execution_status: {kind: 'usage-error', diagnostic_code: null}}),
+    context,
+    topology: {snapshots: [snapshotOf('8bdec6bac8aa9a82f57f8a3f0b3dbd95282e6c0df342c9725cb4b101962fcaa1', 'unknown', 'usage-error', 'failure',
+      [BINARY_REF])],
+    relations: [], diagnostics: [DERIVED, 'no native interval supplied']},
+    verdict: {holds: true, violations: [], absenceLicensed: false, versionClass: 'unstamped'}},
+];
+
+describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off coverage, absence and tone until the SDK ships one', () => {
+  it('T1: QueryResult, ExecutionStatus, CoverageSummary, Coverage and EvidenceSummary are exactly today\'s members, result.d.ts spells no proof, confidence, verified or refuted word, and the representation is hyperunix.result/1', () => {
+    expectTypeOf<keyof QueryResult>().toEqualTypeOf<(typeof RESULT_MEMBERS)[number]>();
+    expectTypeOf<Members<ExecutionStatus>>().toEqualTypeOf<(typeof STATUS_MEMBERS)[number]>();
+    expectTypeOf<keyof CoverageSummary>().toEqualTypeOf<(typeof SUMMARY_MEMBERS)[number]>();
+    expectTypeOf<keyof Coverage>().toEqualTypeOf<(typeof COVERAGE_MEMBERS)[number]>();
+    expectTypeOf<keyof EvidenceSummary>().toEqualTypeOf<(typeof EVIDENCE_MEMBERS)[number]>();
+    // The tsc-free witness of the same declarations, read from the installed SDK.
+    const declaration = readFileSync(new URL('../node_modules/@hyperunix/sdk/dist/result.d.ts', import.meta.url), 'utf8');
+    expect(declaration.match(/proof|confidence|verif|refut/gi), TRIGGER).toBeNull();
+    expect(declaredMembers(declaration, 'export interface QueryResult<'), TRIGGER).toStrictEqual([...RESULT_MEMBERS]);
+    expect([...declaredMembers(declaration, 'interface StatusBase {'), ...declaredMembers(declaration, 'export type ExecutionStatus =', ';\nexport type')],
+      TRIGGER).toStrictEqual([...STATUS_MEMBERS]);
+    expect(declaredMembers(declaration, 'export interface CoverageSummary {'), TRIGGER).toStrictEqual([...SUMMARY_MEMBERS]);
+    expect(declaredMembers(declaration, 'export interface Coverage {'), TRIGGER).toStrictEqual([...COVERAGE_MEMBERS]);
+    expect(declaredMembers(declaration, 'export interface EvidenceSummary {'), TRIGGER).toStrictEqual([...EVIDENCE_MEMBERS]);
+    expect(SDK_REPRESENTATION, TRIGGER).toBe('hyperunix.result/1');
+  });
+
+  it('T2: every closed core body and empty-body kind the shipped decoder declares refuses each proof-shaped member under each value, the three proof-named frame kinds are refused under each value, and the native support confidence decodes and is dropped', () => {
+    // The bodies driven below are exactly the closed core bodies the shipped decoder declares, read from its own text.
+    const decoder = readFileSync(new URL('../node_modules/@hyperunix/sdk/dist/protocol/decoder.js', import.meta.url), 'utf8');
+    expect(CLOSED_BODIES.map(([body]) => body), TRIGGER).toStrictEqual(declaredClosedBodies(decoder));
+    let refusals = 0;
+    for (const [body, stream] of CLOSED_BODIES) {
+      // The plain frame decodes, so each refusal below is the member, never a malformed fixture.
+      expect(decodeResultStream(stream({})).frames.length, body).toBeGreaterThanOrEqual(2);
+      for (const member of [...MEMBERS, 'confidence']) {
+        // The support body's own confidence member is the native one, read below.
+        if (body === 'support' && member === 'confidence') continue;
+        for (const value of VALUES) {
+          const error = thrown(() => decodeResultStream(stream({[member]: memberValue(member, value)})));
+          expect(error, `${TRIGGER} (${body} ${member} ${value})`).toBeInstanceOf(ProtocolError);
+          expect(error, `${TRIGGER} (${body} ${member} ${value})`).toMatchObject({code: 'SDK_PROTOCOL_MALFORMED', path: `body.${member}`});
+          refusals++;
+        }
+      }
+    }
+    expect(refusals).toBe((CLOSED_BODIES.length * (MEMBERS.length + 1) - 1) * VALUES.length);
+    // Each kind whose body must be empty refuses a body carrying one, at the body itself.
+    expect(EMPTY_BODIES.map(([kind]) => kind), TRIGGER).toStrictEqual(declaredEmptyBodies(decoder));
+    let emptied = 0;
+    for (const [kind, stream] of EMPTY_BODIES) {
+      expect(decodeResultStream(stream({})).frames.length, kind).toBeGreaterThanOrEqual(2);
+      for (const member of [...MEMBERS, 'confidence']) {
+        for (const value of VALUES) {
+          const error = thrown(() => decodeResultStream(stream({[member]: memberValue(member, value)})));
+          expect(error, `${TRIGGER} (${kind} ${member} ${value})`).toBeInstanceOf(ProtocolError);
+          expect(error, `${TRIGGER} (${kind} ${member} ${value})`).toMatchObject({code: 'SDK_PROTOCOL_MALFORMED', path: 'body'});
+          emptied++;
+        }
+      }
+    }
+    expect(emptied).toBe(EMPTY_BODIES.length * (MEMBERS.length + 1) * VALUES.length);
+    let kinds = 0;
+    for (const kind of PROOF_KINDS) {
+      for (const mode of MODES) {
+        for (const value of VALUES) {
+          const error = thrown(() => decodeResultStream(streamOf(mode, kind, {status: value}, mode === 'observation')));
+          expect(error, `${TRIGGER} (${kind} under ${mode}, ${value})`).toBeInstanceOf(ProtocolError);
+          expect(error, `${TRIGGER} (${kind} under ${mode}, ${value})`).toMatchObject({code: 'SDK_PROTOCOL_INCOMPATIBLE', path: 'kind'});
+          kinds++;
+        }
+      }
+    }
+    expect(kinds).toBe(PROOF_KINDS.length * MODES.length * VALUES.length);
+    // The one confidence the protocol carries today decodes, and the evidence summary is the one the same support gets without it.
+    const plain = evidenceOf(decodeResultStream(supportStream({})).frames);
+    expect(plain).toMatchObject({supportIds: ['hx-fs/b1/s1'], evidenceClasses: ['observed']});
+    for (const confidence of [{$float: '0x1.8p-1'}, ...VALUES]) {
+      expect(evidenceOf(decodeResultStream(supportStream({confidence})).frames), TRIGGER).toStrictEqual(plain);
+    }
+    // A node claim's attribute list is open: a proof-named attribute decodes under each value, which is how a row can carry one on
+    // the live path.
+    for (const value of VALUES) {
+      expect(decodeResultStream(nodeClaimStream({attributes: [{name: 'proof_status', value}]})).frames.length, value).toBe(5);
+    }
+  });
+
+  it('T3: the provider\'s round trip drops a proof status at each of the nine typed-record placements and carries one verbatim at each of the eleven open-value placements', {timeout: 60_000}, () => {
+    const document = cellDocument('incomplete', false);
+    const bare = json(resultToJson(resultFromJson(document)));
+    // Every placement exists in this document and in its round trip, so no cell below is vacuous.
+    expect(PLACEMENTS.filter(([, path]) => holderAt(document, path) === undefined || holderAt(bare, path) === undefined)).toStrictEqual([]);
+    expect([TYPED_PLACEMENTS.length, OPEN_PLACEMENTS.length]).toStrictEqual([9, 11]);
+    let cells = 0;
+    for (const [placement, path] of PLACEMENTS) {
+      for (const member of MEMBERS) {
+        for (const value of VALUES) {
+          const rebuilt = json(resultToJson(resultFromJson(asRecord(plantedAt(document, path, member, memberValue(member, value))))));
+          expect(rebuilt, `${TRIGGER} (${placement} ${member} ${value})`)
+            .toStrictEqual(CARRIED.has(placement) ? plantedAt(bare, path, member, memberValue(member, value)) : bare);
+          cells++;
+        }
+      }
+    }
+    expect(cells).toBe(PLACEMENTS.length * MEMBERS.length * VALUES.length);
+  });
+
+  it('R1: a proof status at any of the twenty placements, four spellings and seven values moves neither output on any cell here, and no consumed field names one', {timeout: 60_000}, async () => {
+    const cells = await cellsOf(HYPERUNIX_EXECUTION_KINDS);
+    expect(cells).toHaveLength(SHAPES.length * HYPERUNIX_EXECUTION_KINDS.length * LICENCES.length);
+    // The wide shape is another reading, never a copy of the narrow one: its incomplete projection carries the grouping edge, the
+    // trace, three certified batches and the retention note.
+    const wide = cells.find(cell => cell.label === 'wide incomplete false');
+    expect(wide === undefined ? undefined : outputsOf(wide.reading, wide.host).projection).toMatchObject({relations: [{kind: 'grouping'}],
+      snapshots: [{trace: {invocationId: 'wf_hx_3ht2'}, evidenceRefs: [BINARY_REF, 'hx-coverage:b1', 'hx-coverage:b2', 'hx-coverage:b3'],
+        node: {statusText: 'incomplete · rows 0 · absence not licensed (rows not retained)'}}]});
+    let judged = 0;
+    let expected = 0;
+    for (const cell of cells) {
+      const bare = outputsOf(cell.reading, cell.host);
+      for (const variant of variantsOf(cell.reading)) {
+        judged += expectIdentical(outputsOf(variant.reading, cell.host), bare, `${TRIGGER} (${cell.label} ${variant.label})`);
+      }
+      expected += variantCount(cell.kind, cell.shape, VALUES.length);
+    }
+    expect(judged).toBe(expected);
+    expect(HYPERUNIX_CONSUMED_FIELDS.filter(field => /proof|confidence|claim/i.test(field.path)), TRIGGER).toStrictEqual([]);
+  });
+
+  it('R2: neither reader reads the planted member through a trap the tracer records: a tracing proxy over every variant reading here records no get, in check, descriptor read or own-key listing of it by the adapter or the live invariant, and the traced reading yields exactly the plain reading\'s outputs', {timeout: 60_000}, async () => {
+    const cells = await cellsOf(HYPERUNIX_EXECUTION_KINDS);
+    // The instrument's controls, one per leg, on the first variant (its member sits on the source itself): a full serialization lists
+    // the holder's own keys, reads the member's descriptor and gets it, in that order, and an in check, a descriptor read and a key
+    // listing on the holder are each recorded as exactly one read.
+    const [control] = variantsOf(cells[0].reading);
+    const holder = (reads: string[]): Json => asRecord(asRecord(traced(json(control.reading), control.member, reads)).source);
+    const serialized: string[] = [];
+    JSON.stringify(traced(json(control.reading), control.member, serialized));
+    expect(serialized).toStrictEqual(['keys', 'descriptor', 'get']);
+    const checked: string[] = [];
+    expect(control.member in holder(checked)).toBe(true);
+    expect(checked).toStrictEqual(['in']);
+    const described: string[] = [];
+    const descriptor = Object.getOwnPropertyDescriptor(holder(described), control.member);
+    expect(descriptor?.value).toStrictEqual(memberValue(control.member, control.value));
+    expect(described).toStrictEqual(['descriptor']);
+    const listed: string[] = [];
+    expect(Reflect.ownKeys(holder(listed))).toContain(control.member);
+    expect(listed).toStrictEqual(['keys']);
+    let judged = 0;
+    let expected = 0;
+    for (const cell of cells) {
+      for (const variant of variantsOf(cell.reading)) {
+        const reads: string[] = [];
+        // A JSON copy: the cell's frozen branches cannot be wrapped (a proxy may not report another value for a frozen member).
+        const outputs = outputsOf(traced(json(variant.reading), variant.member, reads), cell.host);
+        expect(reads, `${TRIGGER} (${cell.label} ${variant.label})`).toStrictEqual([]);
+        // The payload control: the readers' outputs on the traced reading are those on the plain one, so a reader whose traced
+        // outputs differ (one that reads the source through a structured clone, which a proxy refuses) is never read as blind.
+        const plain = outputsOf(variant.reading, cell.host);
+        judged += expectIdentical(outputs, plain, `${TRIGGER} (${cell.label} ${variant.label}, traced)`);
+      }
+      expected += variantCount(cell.kind, cell.shape, VALUES.length);
+    }
+    expect(judged).toBe(expected);
+  });
+
+  it('A1: a proof status never moves coverage, absence or tone: on every kind, licence, shape and variant here the coverage, tone, status text and licence are the field-less reading\'s', {timeout: 60_000}, async () => {
+    let judged = 0;
+    let expected = 0;
+    for (const cell of await cellsOf(HYPERUNIX_EXECUTION_KINDS)) {
+      const bare = axisOf(cell.reading, cell.host);
+      // A mutation outcome is refused and every read kind projects: the axis compared below is never an empty shape.
+      expect(bare.refused !== undefined, cell.label).toBe(MUTATION_KINDS.has(cell.kind));
+      for (const variant of variantsOf(cell.reading)) {
+        expect(axisOf(variant.reading, cell.host), `${cell.label} ${variant.label}`).toStrictEqual(bare);
+        judged++;
+      }
+      expected += variantCount(cell.kind, cell.shape, VALUES.length);
+    }
+    expect(judged).toBe(expected);
+  });
+
+  it('A2: on every cell here a refuted or failed status never flips tone to failure nor coverage to unknown, and a verified status never flips tone to success nor licenses absence', {timeout: 60_000}, async () => {
+    const successes: string[] = [];
+    const failures: string[] = [];
+    let negatives = 0;
+    let positives = 0;
+    let expectedNegatives = 0;
+    let expectedPositives = 0;
+    for (const cell of await cellsOf(READ_KINDS)) {
+      const bare = axisOf(cell.reading, cell.host);
+      if (bare.statusTone === 'success') successes.push(cell.label);
+      if (bare.statusTone === 'failure') failures.push(cell.label);
+      for (const variant of variantsOf(cell.reading)) {
+        const label = `${cell.label} ${variant.label}`;
+        if (NEGATIVE.has(variant.value) && bare.statusTone !== 'failure') {
+          const axis = axisOf(variant.reading, cell.host);
+          expect(axis.statusTone, label).not.toBe('failure');
+          expect(axis.coverage, label).not.toBe('unknown');
+          negatives++;
+        }
+        if (POSITIVE.has(variant.value) && bare.statusTone !== 'success') {
+          const axis = axisOf(variant.reading, cell.host);
+          expect(axis.statusTone, label).not.toBe('success');
+          expect(axis.coverage, label).not.toBe('complete');
+          expect(axis.statusText, label).not.toContain('known-empty');
+          expect(axis.absenceLicensed, label).toBe(false);
+          positives++;
+        }
+      }
+      if (bare.statusTone !== 'failure') expectedNegatives += variantCount(cell.kind, cell.shape, NEGATIVE.size);
+      if (bare.statusTone !== 'success') expectedPositives += variantCount(cell.kind, cell.shape, POSITIVE.size);
+    }
+    // The controls, in each shape: the runtime-licensed complete readings are the one success, and the five failure kinds stay failures.
+    expect(successes).toStrictEqual(SHAPES.flatMap(shape => [`${shape} complete true`, `${shape} complete-empty true`]));
+    expect(failures).toStrictEqual(SHAPES.flatMap(shape => ['provider-failed', 'schema-failed', 'internal-failed', 'protocol-failed', 'usage-error']
+      .flatMap(kind => [`${shape} ${kind} true`, `${shape} ${kind} false`])));
+    expect(negatives).toBe(expectedNegatives);
+    expect(positives).toBe(expectedPositives);
+    expect(negatives).toBeGreaterThan(0);
+    expect(positives).toBeGreaterThan(0);
+  });
+
+  it('K1: K3 unknown is never read as unverified or refuted: on every cell here no output moves with the SDK\'s K3 values at the three places a result carries one, set one place at a time or jointly at two or three places on the field-less reading, and one place at a time or as the four joint readings the SDK pairs beside any variant\'s planted status, and no named proof-status stem (any case) or upper-case or capitalized admission status is in either reader\'s whole output on a field-less or K3 reading, alone or joined into an identifier or a value (only the workspace path cut out, and "prove" not read inside provenance), nor in Pi\'s own texts on any variant', {timeout: 180_000}, async () => {
+    // The K3 values are the SDK's own Truth and Completeness, at type level, and the places are where its declaration types one on a
+    // result (the classifier's input is the one other member typed so); the summary's completeness is read from the result-coverage
+    // body's, the third place.
+    expectTypeOf<Truth>().toEqualTypeOf<(typeof TRUTHS)[number]>();
+    expectTypeOf<Completeness>().toEqualTypeOf<(typeof COMPLETENESSES)[number]>();
+    const declaration = readFileSync(new URL('../node_modules/@hyperunix/sdk/dist/result.d.ts', import.meta.url), 'utf8');
+    expect(declaredK3(declaration)).toStrictEqual(['CoverageSummary.completeness', 'QueryResult.truth', 'ClassificationInput.completeness']);
+    expect(K3S.map(k3Label)).toStrictEqual(['truth known_present', 'truth known_absent', 'truth unknown',
+      'completeness complete', 'completeness incomplete', 'completeness unknown', 'result-coverage complete', 'result-coverage incomplete',
+      'result-coverage unknown']);
+    // The joint readings: every combination of the places' values at two places or at all three, each once and in place order, the four
+    // the SDK pairs first.
+    expect(JOINT_K3S.slice(0, PAIRED_K3S.length).map(k3Label)).toStrictEqual(['completeness complete + result-coverage complete',
+      'completeness incomplete + result-coverage incomplete', 'completeness unknown + result-coverage unknown',
+      'truth unknown + completeness unknown + result-coverage unknown']);
+    expect(JOINT_K3S).toHaveLength(TRUTHS.length * COMPLETENESSES.length * 2 + COMPLETENESSES.length ** 2 + TRUTHS.length * COMPLETENESSES.length ** 2);
+    expect(new Set(JOINT_K3S.map(k3Label)).size).toBe(JOINT_K3S.length);
+    // Each joint reading sets two or three distinct places, in place order, each to one of its place's values.
+    const order = K3_PLACES.map(([place]) => place);
+    const malformed = JOINT_K3S.filter(k3 => k3.length < 2 || k3.some(([place, value], index) =>
+      !(K3_PLACES[order.indexOf(place)]?.[1] ?? []).includes(value) || (index > 0 && order.indexOf(place) <= order.indexOf(k3[index - 1][0]))));
+    expect(malformed).toStrictEqual([]);
+    expect([REGISTERED_K3S.length, BESIDE_K3S.length]).toStrictEqual([63, 13]);
+    // The four pairings are the SDK's own derivations, read from it: a decoded result's summary completeness is its result-coverage
+    // body's at each value (coverageSummaryOf), and on that pair unknown each scalar operation's truth reads unknown (truthOf). find,
+    // the operation the cells read, is not one of them, so its truth is the representation's to carry.
+    const derived: string[] = [];
+    const summaries = COMPLETENESSES.map(value => coverageSummaryOf([], decodeResultStream(streamOf('results', 'result-coverage',
+      {completeness: value, incomplete_regions: [], certificates: []}, false)).checker, 'complete', []));
+    for (const summary of summaries) {
+      derived.push(`completeness ${String(summary.completeness)} + result-coverage ${String(summary.resultCoverage?.completeness)}`);
+    }
+    const [unknownSummary] = summaries.filter(summary => summary.completeness === 'unknown');
+    expect([...SCALAR_OPERATIONS]).toStrictEqual(['show', 'select']);
+    const scalarTruths = [...SCALAR_OPERATIONS].map(operation => truthOf(operation, 'complete', 0, unknownSummary));
+    expect(scalarTruths).toStrictEqual(['unknown', 'unknown']);
+    expect(truthOf('find', 'complete', 0, unknownSummary)).toBeUndefined();
+    derived.push(`truth ${String(scalarTruths[0])} + completeness ${String(unknownSummary.completeness)} + result-coverage ${
+      String(unknownSummary.resultCoverage?.completeness)}`);
+    expect(PAIRED_K3S.map(k3Label)).toStrictEqual(derived);
+    const cells = await cellsOf(HYPERUNIX_EXECUTION_KINDS);
+    // The judge's controls: every named word is read in every spelling form; the one stem exclusion is needed (a bare "prove" reads
+    // provenance) and takes nothing else.
+    expect(SPELLINGS.map(([form]) => form)).toStrictEqual(['word', 'upper case', 'capitalized', 'snake_case', 'kebab-case', 'camelCase',
+      'PascalCase', 'UPPER_SNAKE', 'dotted', 'run together', 'member name', 'member value']);
+    const read: string[] = [];
+    const labels: string[] = [];
+    let spelled = 0;
+    for (const word of [...PROOF_WORDS, ...ADMISSION_WORDS]) {
+      for (const [form, spell] of SPELLINGS) {
+        labels.push(`${word} ${form}`);
+        spelled += judgeTexts([spell(word)], `${word} ${form}`, read);
+      }
+    }
+    // Each spelling is read by the judgement the legs below use, exactly once.
+    expect(read.map(entry => entry.slice(0, entry.indexOf(':')))).toStrictEqual(labels);
+    expect(spelled).toBe((PROOF_WORDS.length + ADMISSION_WORDS.length) * SPELLINGS.length);
+    expect('provenance').toMatch(/prove/i);
+    expect(named('provenance')).toBe(false);
+    expect(['proved', 'disproved', 'unproven', 'PROVEN', 'truthProven', 'proven_ance'].filter(text => !named(text))).toStrictEqual([]);
+    // The whole-output text: it holds the live verdict and the projection's evidence references, its one cut, the fixture's
+    // workspace path, is exactly what the uncut serialization of a field-less reading would otherwise be read for, and the cut takes
+    // nothing else; the wide shape's text holds the relations' provenance member, the exclusion's one reading.
+    const sample = outputsOf(cells[0].reading, cells[0].host);
+    const uncut = JSON.stringify(sample);
+    expect(uncut).toContain(WS);
+    expect(named(uncut)).toBe(true);
+    expect(wholeText(sample)).toBe(uncut.replaceAll(WS, ''));
+    expect(named(wholeText(sample))).toBe(false);
+    expect(wholeText(sample)).toContain('"versionClass":"unstamped"');
+    expect(wholeText(sample)).toContain(`"evidenceRefs":["${BINARY_REF}"`);
+    const words = [...PROOF_WORDS, ...ADMISSION_WORDS].join(' ');
+    expect(wholeText({projection: {refused: `${WS} ${words}`}, verdict: sample.verdict})).toContain(`"refused":" ${words}"`);
+    const wide = cells.find(cell => cell.label === 'wide incomplete false');
+    expect(wide === undefined ? '' : wholeText(outputsOf(wide.reading, wide.host))).toContain('"provenance":{');
+    // identical calls a tree one with its copy (and with its keys reordered, as toStrictEqual does) and never with a changed copy,
+    // each change one toStrictEqual sees too; it also sees a non-enumerable member, which toStrictEqual does not, so expectIdentical
+    // fails on one.
+    const copy = asRecord(json(sample));
+    const verdict = asRecord(copy.verdict);
+    const violations = Array.isArray(verdict.violations) ? verdict.violations : [];
+    const changes: readonly (readonly [string, unknown])[] = [
+      ['a changed value', {...copy, verdict: {...verdict, holds: verdict.holds !== true}}],
+      ['an added member', {...copy, verdict: {...verdict, truthUnverified: true}}],
+      ['an added undefined-valued member', {...copy, verdict: {...verdict, truthUnverified: undefined}}],
+      ['a removed member', {projection: copy.projection}],
+      ['an added list element', {...copy, verdict: {...verdict, violations: [...violations, 'truth-unknown']}}],
+      ['another prototype', Object.assign(Object.create(null), copy)],
+      ['an added symbol-keyed member', {...copy, verdict: {...verdict, [Symbol('truthUnverified')]: true}}],
+      ['a member made non-enumerable', {...copy, verdict: Object.defineProperty({...verdict}, 'holds', {value: verdict.holds, enumerable: false})}],
+    ];
+    expect(identical(sample, copy)).toBe(true);
+    expect(expectIdentical(sample, copy, 'a copy')).toBe(1);
+    for (const [label, changed] of changes) {
+      expect(identical(sample, changed), label).toBe(false);
+      expect(changed, label).not.toStrictEqual(sample);
+    }
+    const reordered = Object.fromEntries(Object.entries(copy).reverse());
+    expect(Object.keys(reordered)).toStrictEqual([...Object.keys(copy)].reverse());
+    expect(identical(sample, reordered)).toBe(true);
+    const hidden = {...copy, verdict: Object.defineProperty({...verdict}, 'truthUnverified', {value: true})};
+    expect(hidden).toStrictEqual(sample);
+    expect(identical(sample, hidden)).toBe(false);
+    expect(() => expectIdentical(hidden, sample, 'a non-enumerable member')).toThrow();
+    // An object whose state its own keys do not show (a date) is never called identical, even to an equal one.
+    expect(identical({at: new Date(0)}, {at: new Date(1)})).toBe(false);
+    expect(identical({at: new Date(0)}, {at: new Date(0)})).toBe(false);
+    // (a) No output moves with K3 values (k3Legs): through the real registration on the field-less reading (its output is the cell's
+    // with only those values set), each single and each joint reading; then beside every variant's planted status, each single reading,
+    // one place at a time, and each of the four the SDK pairs.
+    let registered = 0;
+    let swept = 0;
+    let carried = 0;
+    let expectedSweep = 0;
+    for (const cell of cells) {
+      const legs = await k3Legs(cell, outputsOf, expectIdentical);
+      registered += legs.registered;
+      swept += legs.swept;
+      carried += legs.carried;
+      expectedSweep += variantCount(cell.kind, cell.shape, VALUES.length) * BESIDE_K3S.length;
+    }
+    expect(registered).toBe(cells.length * REGISTERED_K3S.length * 2);
+    expect(swept).toBe(expectedSweep);
+    // Both legs' canary: every registered output and every swept reading carries each value its K3 reading sets.
+    expect(carried).toBe(cells.length * REGISTERED_K3S.length + swept);
+    // (b) No named word is minted: each cell's field-less reading and the 63 K3 readings of (a)'s registration leg judged whole, and
+    // Pi's own texts on those readings and on every variant.
+    const minted: string[] = [];
+    let wholes = 0;
+    let owned = 0;
+    let unknowns = 0;
+    for (const cell of cells) {
+      const readings: (readonly [string, JsonValue])[] = [['field-less', cell.reading],
+        ...REGISTERED_K3S.map(k3 => [k3Label(k3), k3Reading(cell.reading, k3)] as const)];
+      for (const [label, value] of readings) {
+        wholes += judgeTexts([wholeText(outputsOf(value, cell.host))], `${cell.label} ${label} (whole output)`, minted);
+      }
+      for (const variant of variantsOf(cell.reading)) readings.push([variant.label, variant.reading]);
+      const axis = axisOf(cell.reading, cell.host);
+      if (axis.coverage === 'unknown' || axis.statusTone === 'unknown') unknowns++;
+      for (const [label, value] of readings) {
+        owned += judgeTexts(ownText(outputsOf(value, cell.host)), `${cell.label} ${label}`, minted);
+      }
+    }
+    expect(minted).toStrictEqual([]);
+    // Every cell's field-less and 63 K3 readings judged whole; Pi's own texts on those and on every variant; the unknown readings are
+    // all but the licensed complete ones.
+    expect(wholes).toBe(cells.length * (1 + REGISTERED_K3S.length));
+    expect(owned).toBe(cells.reduce((sum, cell) => sum + 1 + REGISTERED_K3S.length + variantCount(cell.kind, cell.shape, VALUES.length), 0));
+    expect(unknowns).toBe(SHAPES.length * (READ_KINDS.length * LICENCES.length - 2));
+  });
+
+  it('L1: the leak check the landing keeps: no output holds "verified":true on any cell or variant here', {timeout: 60_000}, async () => {
+    const cells = await cellsOf(HYPERUNIX_EXECUTION_KINDS);
+    let judged = 0;
+    for (const cell of cells) {
+      for (const variant of [{label: 'field-less', reading: cell.reading}, ...variantsOf(cell.reading)]) {
+        expect(JSON.stringify(outputsOf(variant.reading, cell.host)), `${cell.label} ${variant.label}`).not.toContain('"verified":true');
+        judged++;
+      }
+    }
+    expect(judged).toBe(cells.reduce((sum, cell) => sum + 1 + variantCount(cell.kind, cell.shape, VALUES.length), 0));
+  });
+
+  it('L2: today no output holds the word verified at all, on any cell or variant here', {timeout: 60_000}, async () => {
+    const cells = await cellsOf(HYPERUNIX_EXECUTION_KINDS);
+    let judged = 0;
+    for (const cell of cells) {
+      for (const variant of [{label: 'field-less', reading: cell.reading}, ...variantsOf(cell.reading)]) {
+        expect(JSON.stringify(outputsOf(variant.reading, cell.host)).match(/verified/gi), `${TRIGGER} (${cell.label} ${variant.label})`).toBeNull();
+        judged++;
+      }
+    }
+    expect(judged).toBe(cells.reduce((sum, cell) => sum + 1 + variantCount(cell.kind, cell.shape, VALUES.length), 0));
+  });
+
+  it('P1: the pre-landing snapshot: five field-less results through the real registration project exactly the frozen topology and verdict', async () => {
+    expect(BASELINE.map(row => row.name)).toStrictEqual(['runtime-licensed complete-empty', 'complete with two rows, without the licence',
+      'incomplete read with two certificates, named by its invoking node call', 'cancelled with a contradicting licence, rows not retained',
+      'usage-error']);
+    let pinned = 0;
+    for (const row of BASELINE) {
+      const reading = await provided(row.document);
+      pinned += expectIdentical(hyperunixTopology(reading, row.context), row.topology, row.name);
+      pinned += expectIdentical(hxLiveInvariant(reading), row.verdict, row.name);
+    }
+    expect(pinned).toBe(BASELINE.length * 2);
+  });
+
+  it('Q: the named residuals, each pinned by its quiet row: K1\'s judge reads no exemplar of its seven families and reads each one\'s nearest named form, K1 (a)\'s legs read quiet a probe moved only by an R-JOINT-BESIDE exemplar beside a planted status (a probe the exemplar\'s values fire beside every planted status, outside the legs) and flag each of its twins, and R2\'s tracer records nothing for the channels that read or detect a traced reading', {timeout: 180_000}, async () => {
+    expect([...WORD_RESIDUALS, ...JOINT_RESIDUALS, ...TRAP_RESIDUALS].map(([id, members]) => `${id}:${members.length}`)).toStrictEqual([
+      'R-INFLECTED:3', 'R-SYNONYM:6', 'R-SPLIT:4', 'R-CONFUSABLE:2', 'R-ENCODED:4', 'R-ADMISSION-CASE:6', 'R-UNSERIALIZED:2',
+      'R-JOINT-BESIDE:4', 'R-UNTRAPPED:1', 'R-PROXY-AWARE:2']);
+    // K1's: each exemplar is read by neither stem pattern, and its nearest form is read, so each family sits at the judge's edge.
+    let pairs = 0;
+    for (const [id, quiet] of WORD_RESIDUALS) {
+      for (const [blind, read] of quiet) {
+        expect(named(blind), `${id} ${blind}`).toBe(false);
+        expect(named(read), `${id} ${read}`).toBe(true);
+        pairs++;
+      }
+    }
+    expect(pairs).toBe(WORD_RESIDUALS.reduce((sum, [, quiet]) => sum + quiet.length, 0));
+    // R2's: on R2's control holder (the first variant of a cell, its member on the source itself) each channel reads or detects the
+    // planted member while the tracer records nothing; a serialization, which the tracer records, is their nearest form.
+    const [cell] = await cellsOf(['incomplete']);
+    const [control] = variantsOf(cell.reading);
+    const holder = (reads: string[]): Json => asRecord(asRecord(traced(json(control.reading), control.member, reads)).source);
+    const serialized: string[] = [];
+    JSON.stringify(holder(serialized));
+    expect(serialized).toStrictEqual(['keys', 'descriptor', 'get']);
+    const channels: string[] = [];
+    for (const [id, names] of TRAP_RESIDUALS) {
+      for (const channel of names) {
+        const reads: string[] = [];
+        const wrapped = holder(reads);
+        if (channel === 'util.inspect') expect(inspect(wrapped), id).toContain(control.member);
+        else if (channel === 'util.types.isProxy') expect(types.isProxy(wrapped), id).toBe(true);
+        else if (channel === 'structuredClone') {
+          expect(thrown(() => structuredClone(wrapped)), id).toMatchObject({name: 'DataCloneError'});
+          expect(Object.hasOwn(structuredClone(asRecord(asRecord(json(control.reading)).source)), control.member), id).toBe(true);
+        } else throw new Error(`no quiet row for ${channel}`);
+        expect(reads, `${id} ${channel}`).toStrictEqual([]);
+        channels.push(channel);
+      }
+    }
+    expect(channels).toStrictEqual(['util.inspect', 'util.types.isProxy', 'structuredClone']);
+    // R2's rows are also held out of this file (wb-68s5): the trap roster names each family's id and channels, and TRAP_RESIDUALS and
+    // the channels the quiet rows visited are judged against it exactly, both ways and in order. So a channel removed from its row, from
+    // the frozen-shape literal's count and from the channels literal together (the gate's CT6T) reds here, at the roster.
+    const roster = JSON.parse(readFileSync(TRAP_ROSTER, 'utf8')) as TrapRoster;
+    expect(Object.keys(roster), '(the trap roster\'s members)').toStrictEqual(['comment', 'residuals']);
+    expect(TRAP_RESIDUALS.map(([id, names]) => ({id, channels: [...names]})), '(R2\'s rows against the trap roster)').toStrictEqual(roster.residuals);
+    expect(channels, '(the channels the quiet rows visited against the trap roster)').toStrictEqual(roster.residuals.flatMap(row => row.channels));
+    // K1 (a)'s: on the same cell, K1 (a)'s own legs (k3Legs) run over probes in place of the readers. The exemplar's probe moves only
+    // on the exemplar's values exactly (at each place the exemplar's value, else the cell's own) beside a planted status, and reads
+    // quiet through both legs; its twins are flagged: the same values without a planted status by the registration leg (at the
+    // exemplar's own reading), and each of the exemplar's places alone beside a planted status by the variant leg (on every variant).
+    // The family is exactly the joint readings the variant leg does not set, 50, each set by the registration leg; its exemplars are
+    // one per joint shape (each set of places a joint reading sets), so the exemplar list is held by JOINT_K3S beside its own literal.
+    const beside = new Set(BESIDE_K3S.map(k3Label));
+    const family = JOINT_K3S.filter(k3 => !beside.has(k3Label(k3)));
+    expect(family).toHaveLength(50);
+    expect(family.length).toBe(JOINT_K3S.length - PAIRED_K3S.length);
+    const shapeOf = (k3: K3): string => k3.map(([place]) => place).join(' + ');
+    expect(JOINT_RESIDUALS.flatMap(([, joints]) => joints.map(shapeOf)).sort()).toStrictEqual([...new Set(JOINT_K3S.map(shapeOf))].sort());
+    const valuesOf = (reading: JsonValue): string => JSON.stringify(K3_PLACES.map(([place]) => k3Value(reading, place) ?? null));
+    const planted = (reading: JsonValue): boolean => MEMBERS.some(member => JSON.stringify(reading).includes(`"${member}"`));
+    // The planted test reads every variant and not the field-less reading.
+    const variants = [...variantsOf(cell.reading)];
+    expect(planted(cell.reading)).toBe(false);
+    expect(variants.filter(variant => !planted(variant.reading)).map(variant => variant.label)).toStrictEqual([]);
+    // The variants list is frozen, each variant at every depth (wb-68s5): the positive control rebuilds the reading each turn must have
+    // judged from it (P5), so an edit at the control's call can neither rewrite the variant P5 rebuilds from nor extend the list.
+    deepFreeze(variants);
+    interface Probe {
+      readonly id: string;
+      readonly values: string;
+      readonly beside: boolean;
+      readonly expected: readonly string[];
+    }
+    const probes: Probe[] = [];
+    for (const [id, joints] of JOINT_RESIDUALS) {
+      for (const joint of joints) {
+        const label = `${id} ${k3Label(joint)}`;
+        // Each exemplar is a joint reading the registration leg sets and the variant leg does not, at none of the cell's own values.
+        expect(REGISTERED_K3S.map(k3Label), label).toContain(k3Label(joint));
+        expect(BESIDE_K3S.map(k3Label), label).not.toContain(k3Label(joint));
+        expect(joint.filter(([place, value]) => k3Value(cell.reading, place) === value), label).toStrictEqual([]);
+        const values = valuesOf(k3Reading(cell.reading, joint));
+        const registeredAt = REGISTERED_K3S.filter(k3 => valuesOf(k3Reading(cell.reading, k3)) === values).map(k3 => `${cell.label} ${k3Label(k3)}`);
+        expect(registeredAt, label).toContain(`${cell.label} ${k3Label(joint)}`);
+        probes.push({id: label, values, beside: true, expected: []});
+        probes.push({id: `${label} (registration twin)`, values, beside: false, expected: registeredAt});
+        for (const setting of joint) {
+          probes.push({id: `${label} (variant twin ${k3Label([setting])})`, values: valuesOf(k3Reading(cell.reading, [setting])), beside: true,
+            expected: variants.map(variant => `${cell.label} ${variant.label} ${k3Label([setting])}`)});
+        }
+      }
+    }
+    expect(probes.map(probe => probe.expected.length > 0)).toStrictEqual(JOINT_RESIDUALS.flatMap(([, joints]) =>
+      joints.flatMap(joint => [false, true, ...joint.map(() => true)])));
+    // The probe list fired filters is frozen, each probe in it and each probe's expected list too (wb-68s5), so an edit at the control's
+    // call can neither swap the list for probes its reading fires (the gate's PSWAP) nor rewrite a probe (PMUT): each throws. P13 reads
+    // both freezes, this one and the variants', before the control runs.
+    deepFreeze(probes);
+    expect([Object.isFrozen(probes), probes.filter(probe => !Object.isFrozen(probe) || !Object.isFrozen(probe.expected)).map(probe => probe.id),
+      Object.isFrozen(variants), variants.filter(variant => !frozenThrough(variant)).map(variant => variant.label)],
+    '(P13: the probe list, a probe or its expected list, or the variants list or a variant at some depth, not frozen before the control)')
+      .toStrictEqual([true, [], true, []]);
+    // P15 (wb-2g18): JSON.stringify consults a toJSON member on each object and list it serializes, read through the object's
+    // prototypes, and the copy fired takes holds plain objects and lists only, which inherit from Object.prototype and Array.prototype
+    // alone. So fired reads, after it takes its copy and before it reads that copy, whether Object.prototype or Array.prototype holds an
+    // own toJSON or Array.prototype's prototype is not Object.prototype; while one of the three is set, fired refuses the call: it
+    // removes what it can of the three (unhook), records nothing and throws. Removing them lets the refusal reach the report: a
+    // toJSON left on Object.prototype also reaches vitest's own serializer, which then recurses and drops Q's failure message or
+    // reports Q pending. So an edit at the control's call that sets a toJSON for fired's call and deletes it after (the gate's
+    // PROTOJSON, PROTOJSONL and PROTOJSON6, which a probe hollow's serialization of the copy read through while the copy itself read
+    // exact) reds here, alone and beside a probe hollow.
+    const hooks = (): readonly string[] => [
+      ...(Object.hasOwn(Object.prototype, 'toJSON') ? ['Object.prototype.toJSON'] : []),
+      ...(Object.hasOwn(Array.prototype, 'toJSON') ? ['Array.prototype.toJSON'] : []),
+      ...(Object.getPrototypeOf(Array.prototype) === Object.prototype ? [] : ["Array.prototype's prototype"]),
+    ];
+    const unhook = (): void => {
+      Reflect.deleteProperty(Object.prototype, 'toJSON');
+      Reflect.deleteProperty(Array.prototype, 'toJSON');
+      Object.setPrototypeOf(Array.prototype, Object.prototype);
+    };
+    // fired records each reading it is given beside its verdict on that reading (the ids of the probes the reading fires, frozen) and
+    // returns that same list, in call order, so the positive control below reads the readings it judged off the probe's own record, not
+    // off the readings it built (wb-i3iu), and its verdict on each off that record too, not only off the value its assertion holds; and
+    // the list the control holds from each call is that recorded list itself (wb-w6yw). The record is no longer a list the control
+    // holds (wb-sidb): kept is a list only this closure holds, of one frozen [reading, verdict] pair per call, and the control reads it
+    // only through record(), which returns a fresh frozen copy of kept on each read. And the reading fired judges and records is not the
+    // one it is handed (wb-68s5): it is a copy taken at the call, the handed reading's serialization parsed back and frozen at every
+    // depth, so an edit at the control's call that writes the handed reading for the call and restores it after (the gate's RMUT)
+    // leaves that write in the reading fired judged and recorded, where P5 reads it. Between taking that copy and reading it, fired
+    // reads P15 (wb-2g18, above).
+    const {fired, record} = (() => {
+      const kept: (readonly [JsonValue, readonly string[]])[] = [];
+      return {
+        fired: (handed: JsonValue): readonly string[] => {
+          const reading = deepFreeze(json(handed));
+          const found = hooks();
+          if (found.length > 0) {
+            unhook();
+            throw new Error(`fired refused a call: P15 read ${found.join(', ')}`);
+          }
+          const values = valuesOf(reading);
+          const verdict = Object.freeze(probes.filter(probe => probe.values === values && (!probe.beside || planted(reading))).map(probe => probe.id));
+          kept.push(Object.freeze([reading, verdict] as const));
+          return verdict;
+        },
+        record: (): readonly (readonly [JsonValue, readonly string[]])[] => Object.freeze([...kept]),
+      };
+    })();
+    // P15's controls: each of the three P15 reads, set for one call of fired, makes fired refuse that call, record nothing for it and
+    // remove that member before it throws: a toJSON on Object.prototype, one on Array.prototype and a prototype for Array.prototype
+    // that holds one, each set before the call; a toJSON on Object.prototype that a getter of the handed reading sets while fired takes
+    // its copy (so P15 reads after the copy); and a toJSON on Object.prototype set before the call that removes itself at its second
+    // top-level call, the first serialization fired makes of its copy (so P15 reads before fired reads its copy). Each toJSON set here
+    // returns the object it is given, so no serialization changes while it is set; after the controls none of the three is left set.
+    const passive = {configurable: true, writable: true, value(this: unknown): unknown { return this; }};
+    let consulted = 0;
+    const fleeting = {configurable: true, writable: true, value(this: unknown, key: string): unknown {
+      if (key === '' && ++consulted === 2) Reflect.deleteProperty(Object.prototype, 'toJSON');
+      return this;
+    }};
+    const refused = (set: () => unknown, handed: JsonValue): readonly [string, readonly string[], number] => {
+      const before = record().length;
+      set();
+      try {
+        const refusal = thrown(() => fired(handed));
+        return [refusal instanceof Error ? refusal.message : String(refusal), hooks(), record().length - before];
+      } finally {
+        unhook();
+      }
+    };
+    const copied: JsonValue = Object.defineProperty({...asRecord(cell.reading)}, 'source', {enumerable: true, get: (): JsonValue => {
+      Object.defineProperty(Object.prototype, 'toJSON', passive);
+      return asRecord(asRecord(cell.reading).source);
+    }});
+    expect([
+      refused(() => Object.defineProperty(Object.prototype, 'toJSON', passive), cell.reading),
+      refused(() => Object.defineProperty(Array.prototype, 'toJSON', passive), cell.reading),
+      refused(() => Object.setPrototypeOf(Array.prototype, Object.create(Object.prototype, {toJSON: passive})), cell.reading),
+      refused(() => undefined, copied),
+      refused(() => Object.defineProperty(Object.prototype, 'toJSON', fleeting), cell.reading),
+    ], '(P15\'s controls: a member P15 reads, set for one call, not refused, recorded, or left set by fired)').toStrictEqual([
+      ['fired refused a call: P15 read Object.prototype.toJSON', [], 0],
+      ['fired refused a call: P15 read Array.prototype.toJSON', [], 0],
+      ["fired refused a call: P15 read Array.prototype's prototype", [], 0],
+      ['fired refused a call: P15 read Object.prototype.toJSON', [], 0],
+      ['fired refused a call: P15 read Object.prototype.toJSON', [], 0],
+    ]);
+    expect(hooks(), '(P15: a member P15 reads left set after its controls)').toStrictEqual([]);
+    // P15's guards (wb-ekl1): the controls above hold P15 at fired's first five calls, on Q's cell reading, and pin both ends of the
+    // read's place for Object.prototype.toJSON's read only (the landing-958 gate's F1 and F2). So before each judgement fired makes in
+    // Q after them, the field-less control's, the positive control's at each variant's turn and k3Legs', guard hands fired that
+    // judgement's reading once with one of the three set for that call, the six settings in turn: each of the three set before the
+    // call (so P15 reads it before valuesOf's list, the first list fired serializes after its copy), then each set by a getter of the
+    // handed reading's source while fired copies it (so P15 reads it after the copy and before that list). Each is set to transient, a
+    // toJSON that returns the object it is given and removes what is set (unhook) at its first top-level call on a list, so a read
+    // after valuesOf's list misses it. guard returns the member, the setting, what the call did and the record's growth across the
+    // call (its length after the call less its length before it, each read through record()), and each judgement's guard must read
+    // refused, naming that member, with that member removed and nothing recorded (wb-qzqd: the growth is 0 at every guard call;
+    // beside it the positive control reads one judgement per variant at its turns, P5, the record's growth across k3Legs equals its
+    // judgements, and the record at Q's end holds as many entries as the judgements after the controls, each that judgement's own
+    // pair, wb-x4ph, read against note below), and every judgement is guarded (the guards' count equals the field-less,
+    // positive-control and k3Legs judgements).
+    const transient = {configurable: true, writable: true, value(this: unknown, key: string): unknown {
+      if (key === '' && Array.isArray(this)) unhook();
+      return this;
+    }};
+    const P15_SET: readonly (readonly [string, () => unknown])[] = [
+      ['Object.prototype.toJSON', () => Object.defineProperty(Object.prototype, 'toJSON', transient)],
+      ['Array.prototype.toJSON', () => Object.defineProperty(Array.prototype, 'toJSON', transient)],
+      ["Array.prototype's prototype", () => Object.setPrototypeOf(Array.prototype, Object.create(Object.prototype, {toJSON: transient}))],
+    ];
+    type Guarded = readonly [string, string, string, number];
+    let guarded = 0;
+    const guard = (reading: JsonValue): Guarded => {
+      const [name, set] = P15_SET[guarded % 3];
+      const inCopy = Math.floor(guarded / 3) % 2 === 1;
+      guarded++;
+      const handed = inCopy ? Object.defineProperty({...asRecord(reading)}, 'source', {enumerable: true, get: (): JsonValue => {
+        set();
+        return asRecord(reading).source;
+      }}) : reading;
+      const before = record().length;
+      if (!inCopy) set();
+      const form = inCopy ? 'set while fired copies' : 'set before the call';
+      try {
+        fired(handed);
+        return [name, form, 'not refused', record().length - before];
+      } catch (error) {
+        return [name, form, `${error instanceof Error ? error.message : String(error)}; left set: ${hooks().join(', ') || 'none'}`,
+          record().length - before];
+      } finally {
+        unhook();
+      }
+    };
+    const refusing = ([name, form]: Guarded): Guarded => [name, form, `fired refused a call: P15 read ${name}; left set: none`, 0];
+    // note (wb-x4ph): at each judgement fired makes in Q after P15's controls (the field-less control's, the positive control's at
+    // each variant's turn and k3Legs'), its call site hands note the serialization of the reading it hands fired, taken just before
+    // the call, and the list fired returned; note keeps both beside the pair the record ends with just after the call (read through
+    // record()), in a list only its closure holds, which noted() returns as a fresh frozen copy. Q reads the record whole against
+    // them at its end.
+    type Noted = readonly [string, readonly string[], (readonly [JsonValue, readonly string[]]) | undefined];
+    const {note, noted} = (() => {
+      const list: Noted[] = [];
+      return {
+        note: (text: string, verdict: readonly string[]): readonly string[] => {
+          list.push(Object.freeze([text, verdict, record().at(-1)] as const));
+          return verdict;
+        },
+        noted: (): readonly Noted[] => Object.freeze([...list]),
+      };
+    })();
+    // The exemplar's probe has a positive control, built outside k3Legs (wb-hoda): on every variant (each a planted status), the
+    // variant with the exemplar's values set on it fires that probe and its registration twin, and the field-less reading with them
+    // set fires the twin alone. The control's readings are one per variant and pairwise distinct, so none stands in for another, and
+    // the readings fired judged are read off its own record (wb-i3iu): one judgement per variant, each given the reading of the variant
+    // at its turn (rebuilt from that variant, compared by serialization), and pairwise distinct; and the verdict fired gave on each
+    // judged reading is read off the same record (wb-w6yw): at each variant's turn, the probe and its registration twin (compared by
+    // serialization), frozen, and the very list the control holds from its call at that turn (compared by identity); and the record
+    // is read only through record() (wb-sidb): the copy the control reads is frozen and is not the copy a second read returns, and
+    // each [reading, verdict] pair in it is frozen; and each reading in it is a copy fired took at the call, not the reading the control
+    // handed it, frozen at every depth (wb-68s5, P14). So the probe the legs read quiet is one such a reading fires: a probe whose values
+    // no reading holds, or that fired never reports, reds here, where the legs alone read it quiet.
+    let controlled = 0;
+    for (const [id, joints] of JOINT_RESIDUALS) {
+      for (const joint of joints) {
+        const label = `${id} ${k3Label(joint)}`;
+        const twin = `${label} (registration twin)`;
+        const unjoined = guard(k3Reading(cell.reading, joint));
+        expect(unjoined, `${label} (field-less control, P15's guard)`).toStrictEqual(refusing(unjoined));
+        const fieldless = k3Reading(cell.reading, joint);
+        const fieldlessText = JSON.stringify(fieldless);
+        expect(note(fieldlessText, fired(fieldless)), `${label} (field-less control)`).toStrictEqual([twin]);
+        const readings = variants.map(variant => k3Reading(variant.reading, joint));
+        expect(new Set(readings.map(reading => JSON.stringify(reading))).size, `${label} (positive control)`).toBe(variants.length);
+        const first = record().length;
+        const returned: (readonly string[])[] = [];
+        for (const [index, reading] of readings.entries()) {
+          const turn = guard(reading);
+          expect(turn, `${label} (positive control, P15's guard, ${variants[index].label})`).toStrictEqual(refusing(turn));
+          const turnText = JSON.stringify(reading);
+          const verdict = fired(reading);
+          returned.push(verdict);
+          note(turnText, verdict);
+          expect(verdict, `${label} (positive control, ${variants[index].label})`).toStrictEqual([label, twin]);
+          controlled++;
+        }
+        const copy = record();
+        const pairs = copy.slice(first);
+        const judged = pairs.map(([reading]) => JSON.stringify(reading));
+        const unjudged = variants.filter((variant, index) => judged[index] !== JSON.stringify(k3Reading(variant.reading, joint)));
+        expect(unjudged.map(variant => variant.label), `${label} (positive control, a variant not judged at its turn)`).toStrictEqual([]);
+        expect(judged, `${label} (positive control, one judgement per variant)`).toHaveLength(variants.length);
+        expect(new Set(judged).size, `${label} (positive control, the judged readings pairwise distinct)`).toBe(variants.length);
+        const recorded = pairs.map(([, verdict]) => verdict);
+        const misjudged = variants.filter((_, index) => JSON.stringify(recorded[index]) !== JSON.stringify([label, twin]));
+        expect(misjudged.map(variant => variant.label), `${label} (positive control, a variant whose recorded verdict is not the probe and its twin)`)
+          .toStrictEqual([]);
+        const unrecorded = variants.filter((_, index) => returned[index] !== recorded[index]);
+        expect(unrecorded.map(variant => variant.label), `${label} (positive control, a variant whose returned verdict is not the recorded one)`)
+          .toStrictEqual([]);
+        const unfrozen = variants.filter((_, index) => !Object.isFrozen(recorded[index]));
+        expect(unfrozen.map(variant => variant.label), `${label} (positive control, a variant whose recorded verdict is not frozen)`).toStrictEqual([]);
+        expect([Object.isFrozen(copy), copy !== record()], `${label} (positive control, the record not read through a frozen copy fresh on each read)`)
+          .toStrictEqual([true, true]);
+        const unsealed = variants.filter((_, index) => !Object.isFrozen(pairs[index]));
+        expect(unsealed.map(variant => variant.label), `${label} (positive control, a variant whose recorded pair is not frozen)`).toStrictEqual([]);
+        const copies = pairs.map(([reading]) => reading);
+        const uncopied = variants.filter((_, index) => copies[index] === readings[index] || !frozenThrough(copies[index]));
+        expect(uncopied.map(variant => variant.label), `${label} (positive control, P14: a variant whose recorded reading is the one handed at its call or not frozen at every depth)`)
+          .toStrictEqual([]);
+      }
+    }
+    expect(controlled).toBe(JOINT_RESIDUALS.reduce((sum, [, joints]) => sum + joints.length, 0) * variants.length);
+    const moved = new Map<string, string[]>(probes.map(probe => [probe.id, []]));
+    const legsFrom = [record().length, guarded] as const;
+    const legs = await k3Legs(cell, (reading: JsonValue): readonly string[] => {
+      const turn = guard(reading);
+      expect(turn, '(k3Legs, P15\'s guard)').toStrictEqual(refusing(turn));
+      const legText = JSON.stringify(reading);
+      return note(legText, fired(reading));
+    }, (actual, expected, label) => {
+      for (const id of [...actual.filter(one => !expected.includes(one)), ...expected.filter(one => !actual.includes(one))]) {
+        moved.get(id)?.push(label);
+      }
+      return 1;
+    });
+    const sweep = variants.length * BESIDE_K3S.length;
+    expect(legs).toStrictEqual({registered: REGISTERED_K3S.length * 2, swept: sweep, carried: REGISTERED_K3S.length + sweep});
+    const judgements = 1 + REGISTERED_K3S.length + variants.length + sweep;
+    const unjoinedCount = JOINT_RESIDUALS.reduce((sum, [, joints]) => sum + joints.length, 0);
+    expect([record().length - legsFrom[0], guarded - legsFrom[1], guarded],
+      '(P15\'s guards: a judgement k3Legs made not recorded once or not guarded, or a judgement in Q not guarded)')
+      .toStrictEqual([judgements, judgements, unjoinedCount + controlled + judgements]);
+    // The record's length whole (wb-qzqd): as many entries as the judgements fired made after its controls, the field-less
+    // control's, the positive control's and k3Legs', counted outside guard and fired.
+    expect(record().length, '(P15: a refused call in Q recorded: the record not one entry per judgement fired made after its controls)')
+      .toBe(unjoinedCount + controlled + judgements);
+    // The record's entries whole (wb-x4ph): the judgements' own, read against what note kept at each judgement's call: as many as
+    // the judgements noted, and at each index, in call order, the very pair the record ended with just after that judgement's call,
+    // holding the very list fired returned there and a reading whose serialization is the text its call site handed note. So no
+    // entry a call fired refused in Q wrote (a control's or a guard's) is in the record at Q's end beside the judgements' entries or
+    // in place of one of them (the gate's GXSWAPFL, GXSWAPUNPL and GXSHIFTOLDFL), save as a later judgement's own pair as read here
+    // (NOT CLAIMED: the header's wb-x4ph paragraph). noted() is read as P5 reads record(): the copy is frozen and is not the copy a
+    // second read returns.
+    const entries = record();
+    const notes = noted();
+    const astray = notes.flatMap(([text, verdict, pair], index) =>
+      pair !== undefined && entries[index] === pair && pair[1] === verdict && JSON.stringify(pair[0]) === text ? [] : [index]);
+    expect([notes.length, entries.length, astray.length, astray.slice(0, 4), Object.isFrozen(notes), notes !== noted()],
+      '(P15: the record at Q\'s end not the judgements\' own entries: an entry a refused call wrote, a judgement not noted, or noted() not a frozen copy fresh on each read)')
+      .toStrictEqual([unjoinedCount + controlled + judgements, unjoinedCount + controlled + judgements, 0, [], true, true]);
+    expect(variants).toHaveLength(variantCount(cell.kind, cell.shape, VALUES.length));
+    for (const probe of probes) expect(moved.get(probe.id), probe.id).toStrictEqual(probe.expected);
+  });
+});

@@ -873,7 +873,18 @@
        "widenedAgrees": false,
        "widenedUnlisted": [
         "src/zz-census-unlisted.ts"
-       ]
+       ],
+       "symlinked": {
+        "walked": [
+         "src/kept.ts"
+        ],
+        "agrees": false,
+        "unwalked": [
+         "src/sub/zz-dirlink",
+         "src/zz-link.ts"
+        ],
+        "unlisted": []
+       }
       },
       "controls": {
        "argv": 1,

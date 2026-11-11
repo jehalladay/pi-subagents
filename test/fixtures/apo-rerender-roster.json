@@ -1,0 +1,1861 @@
+{
+  "comment": "wb-021.5 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R7; the hk9l/5jha/1xvp.4/o4h0.3 roster pattern): the OUT-OF-FILE anchor of test/workbench-apo-rerender-census.test.ts (cut #8; wb-vgri, final cut #4; wb-97ah; wb-021.10; wb-021.7, its cut #5 over the landed wb-021.10). rows: every judged row of test/helpers/apo-rerender-census.ts in census order (SURFACES, ADMISSION, INVOCATION, EFFECT, IDENTITY, QUIET, READERS, ABSENCE, REACH, NAMES) - table, id, label, the SHA-256 of each case as written (JSON of the case: its input and its expected reading) and the registered test. nonRender: the named non-render readers, each with its measured member references (value, type), its reason and, where the forms judge refuses a use in it, those refused uses site by site, and where a typed reader in it keeps an admission member, those writers. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its non-render readers, its registered tests (vitest task tree, run modes and timeouts) and its residual families against this file at test time, in order and both ways. It is a literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here. The outside anchors are src (the modules that reach the projection, the non-render readers' member references, refused uses, typed writers and runtime closure, the render modules' references and forms, the forms src's nodes stand in, the class's own declaration's element kinds, the projection's public members, the registry's effect classes and the dialog's actions), the pinned typescript's declaration file (the ClassElement kinds and their SyntaxKinds) and the bead's own export row (.beads/issues.jsonl, wb-021.5: the title and the owner filing, each pinned byte for byte, and the judged statement the table quotes and their pinned junctions compose; and, in its notes, the cut #8 delivery record's one enumeration of FAIL_CLOSED, each kind with the row that plants it: wb-vgri; the kinds wb-021.7 reads instead, RETIRED, each with the row that pins its reading: wb-021.7 cut #5), so a SURFACES row, a NON_RENDER entry, an admission plant, an effect-class plant, a dialog-action plant, a class-element kind or a fail-closed kind removed from the census and this file together still reds.",
+  "rows": [
+    {
+      "table": "SURFACES",
+      "id": "GRAPH-VIEW",
+      "label": "the graph-view model, built and rebuilt by its cached builder, reads quiet over N refreshes",
+      "pins": [
+        "f803f4e932e10f393b3b91d05bcfaecd1634105eae7852d0620506519b5ec8c2",
+        "d798d4167c55bc3ee18b05bf7b699f0e640d3cbbd90562ec178d984165f8283c",
+        "cbe0fabdfe8898e33009f2eb58c89aba9329fa77913fc5648f9a2d66f50d5dce"
+      ],
+      "test": "SURFACES GRAPH-VIEW"
+    },
+    {
+      "table": "SURFACES",
+      "id": "TIMELINE",
+      "label": "the timeline lanes at two zoom and pan settings read quiet over N refreshes",
+      "pins": [
+        "72ec94c2a259a40c6777992a62731c4ad92782ddade8b5d3cbe5e1b66d9d0970",
+        "f5c4d386baaa2ccd45e7a37894f4588d9d84e64a10d61976d5f90e88132c7058"
+      ],
+      "test": "SURFACES TIMELINE"
+    },
+    {
+      "table": "SURFACES",
+      "id": "OBSERVE",
+      "label": "the model-facing observe reply, bare and with relations and events, reads quiet over N refreshes",
+      "pins": [
+        "da6969e3e2d15c4ae4e478abf41f69ed79064f062060ee1957533b39739396ea",
+        "7f8f7f5818ba727c49179a7c8104f88e5c541841907d68a747a9e4c524e2fe64"
+      ],
+      "test": "SURFACES OBSERVE"
+    },
+    {
+      "table": "SURFACES",
+      "id": "TOPOLOGY",
+      "label": "the linked topology slice of two focused nodes reads quiet over N refreshes",
+      "pins": [
+        "a13e77a06d42e2c06541b9a4580532779aeac5da0576c3e0c8c6ab8b9932fc3c",
+        "2685c8851ef4b48f882c7eb86ffe94b32edb52c5fb4d5f2848af82029352f86b"
+      ],
+      "test": "SURFACES TOPOLOGY"
+    },
+    {
+      "table": "SURFACES",
+      "id": "ATTENTION",
+      "label": "the attention report at two bottleneck caps reads quiet over N refreshes",
+      "pins": [
+        "c33194c9226c25036858343e00d29c47f15cd16d92d113ca4a8da94fba49f864",
+        "b041014bb904015235c26e1a53ea14df5a595431099ddc6fe05fcb2159fbc379"
+      ],
+      "test": "SURFACES ATTENTION"
+    },
+    {
+      "table": "SURFACES",
+      "id": "LATENCY",
+      "label": "the latency decomposition reads quiet over N refreshes",
+      "pins": [
+        "057c348786f6801e2cf571dc0f2c5fd8fafd9edc904ed92fe0d1e98e6c820a48"
+      ],
+      "test": "SURFACES LATENCY"
+    },
+    {
+      "table": "SURFACES",
+      "id": "TELEMETRY",
+      "label": "the operations telemetry report reads quiet over N refreshes",
+      "pins": [
+        "93298a199fe4fb2d516c89975315af8ae0048f618c9b4d902013e7f976f24f79"
+      ],
+      "test": "SURFACES TELEMETRY"
+    },
+    {
+      "table": "SURFACES",
+      "id": "INSPECTOR",
+      "label": "the inspector layout of each of the four views reads quiet over N redraws",
+      "pins": [
+        "7a584b7ba9d8714cd2e0a31ce9c37f0b10754accd37a276f363ed2806e9ed897",
+        "b467719b0489c3a017a6558e155d69d966fe39ff47d9b7b809dcc230bbeb42af",
+        "e6f7c8f058dde1d109bea33801b026fd09bb0dde6a15e9a6b0876ac4c26742f5",
+        "d5fd619e6e42f37792ff72ba70d6b149ef21cdc62b08071e6243c066a12724ac"
+      ],
+      "test": "SURFACES INSPECTOR"
+    },
+    {
+      "table": "SURFACES",
+      "id": "DIALOG",
+      "label": "the real host seam's dialog redraw of each of the four views, its per-redraw model builders included, reads quiet over N redraws",
+      "pins": [
+        "c84376bd2b177868ddb7f80e5196855b659b98d4c1f0b5c23a11a36cb2c1d460",
+        "dd0cd7567d8925f83fc2e175f24d59ffd2b300049921e85223d89e6261f335cd",
+        "39af2e67623ffd4364e88cc0215b739da04ac87f0c93329ed35419304a7f3b21",
+        "677357f966e7d4f36e5a758fb9633c943ba54b35bdc767af9aa30f66340b300b"
+      ],
+      "test": "SURFACES DIALOG"
+    },
+    {
+      "table": "SURFACES",
+      "id": "REPROJECTION",
+      "label": "each read member of the projection itself reads quiet over N re-projections",
+      "pins": [
+        "db4966bb96e5e196e1eaf02def91962b02f07fb281a67477c9478386470be562",
+        "23f0fb552905e0c429bd7e0923e060ad7bb5f7fd8407b909daf6de387a9b1357",
+        "7b8d2fccb31a8116f2ce6a2253ad8bdb84a8b184ddaa0d9d53d56bb10a9900dd",
+        "d49af9fd2c622f29780e137373313388a1a70489d3ae2100263072acd1609005",
+        "bdab7952fc40a88642a8fff80330f38c4fe1c286e51480c69492be4eb4696952",
+        "46eb36dec67f12f44dd32a6cdf283b9d13a929804a7d5de9f9ca2364252efa2a",
+        "ee1646bb780884bacf40ce58be08448a74a6e99646f85c138a9dbe902cb01876",
+        "cb85f5574d067a366f62043bd1d96fb48c29f06bfcd557a9b070402299358fc8",
+        "81b06d77b58177604f167f0ea56e5210d7cd29b9242fd5617313d8f24c4619bc",
+        "8afbb794d50e9acf11466713047d10803ccf0e7dc52a0dff794f3d4f6d7aa2e9",
+        "b30f4e6e7a2d077cea4e55877388cad625c970ca677b9173e4846666f2008ff3",
+        "4a58a61dc54b6191629226f5dd498296539960c57b7e409d2512af917e123378"
+      ],
+      "test": "SURFACES REPROJECTION"
+    },
+    {
+      "table": "ADMISSION",
+      "id": "EVERY-ADMISSION-MEMBER",
+      "label": "a render that calls any admission member of the projection is read by the tap and by the state digest",
+      "pins": [
+        "0b894c02d9e39da362ba53ad3b8cf5f1312c398a513c57c3d388285dd1364cd5",
+        "6b6ccd2d586398c9d116d0e9ea8c97444e99d8808bffa4a19c361298408c1b61",
+        "1339881ac30125e7efadfd0794d6850a5354c82a5b3dbd728279fe994e662130",
+        "4754136e718915b776aff6e43ab00639068267c8bde6fdcdee01a4bc5aaee90e",
+        "babe84737150dd3df02f651d144722c024a840f127045517daa455f0a29869ca",
+        "f22a07324e85ffd5b1b43ae034b4a5401e6c987bc86263c8637e18a23e912129"
+      ],
+      "test": "ADMISSION EVERY-ADMISSION-MEMBER"
+    },
+    {
+      "table": "ADMISSION",
+      "id": "WRITE-ANY-ROUTE",
+      "label": "a property written through the tap, and a write that bypasses the tap, are each read",
+      "pins": [
+        "9188dd3577367d40056f2031c9ced62d5ad73a6ee3c0fd27de5210a3d87c8252",
+        "3aea9ee3f0157e198aa5937726f58558434c445f487d2f7406bdde2ca3b4dd0d"
+      ],
+      "test": "ADMISSION WRITE-ANY-ROUTE"
+    },
+    {
+      "table": "INVOCATION",
+      "id": "EVERY-EFFECT-CLASS",
+      "label": "a render that invokes a capability of any effect class is read as an attempt, a provider call and a registry admission",
+      "pins": [
+        "d8f38085fd07c0e2ebae9d53d4a7f42b318aeac1379c9375f409d19ab685d04f",
+        "13f827149c71fdfd19dbac4a8f7b67a4655a828f80de992b970ae09d30305039",
+        "409c0f9e7045e91d51aca81c789e3b359a3666eaa6861526eed093f4b3f427d0",
+        "39ff82715118022c59e04ee8af797bdb4deed4ff8e41167538caaba8c708dd46"
+      ],
+      "test": "INVOCATION EVERY-EFFECT-CLASS"
+    },
+    {
+      "table": "INVOCATION",
+      "id": "OTHER-ROUTES",
+      "label": "an inspect, an invoke of an unregistered capability, an evidence load and an invoke deferred to the next immediate, each started by a render, are read",
+      "pins": [
+        "b66252c574424523d7b0d6c746631aacc66adab7892227712d045bb6820a64d4",
+        "fc85956ec778f5a89c2f5b559baa29860dadaf2061c1ca4bfb51cc937c551b62",
+        "09b3dc3c77b67181ddabd639527f99bff635a0196268ff8e4a8bac64722b6cc6",
+        "c24862c20fd5025403536c268bfcf5a29fa45c56b1fbe7278839dccce11181e1"
+      ],
+      "test": "INVOCATION OTHER-ROUTES"
+    },
+    {
+      "table": "INVOCATION",
+      "id": "R-DEFERRED-EFFECT",
+      "label": "residual: an invocation, an admission or a host effect a render schedules past the judge's settle window reads quiet",
+      "pins": [
+        "6e0151e70dc99ff3075fac5110764031468b66dcee9af4b85c64b1f4d05e4ad5",
+        "864c05e4aacd019a78c49f2e06cf6fa0b313a617ff408e4424157c56ab5c948b",
+        "aeeea238bf9eddfeb97afc35157e4eee02c1ab995d161913bd8deb6ce3536a1f"
+      ],
+      "test": "INVOCATION R-DEFERRED-EFFECT"
+    },
+    {
+      "table": "EFFECT",
+      "id": "EVERY-DIALOG-ACTION",
+      "label": "a render that performs the host effect of any dialog action is read",
+      "pins": [
+        "80d9be5dac3aa36d3cc3b787dca7c5017654829ed4aea5c9bb7263088fcbe9c3",
+        "3681e57335373c2bf933955e0c9b3943b3ebbf359e503b5e03266541f0c89633",
+        "54bfda61de67ddf29371b90287d8dfcfb483284973fc0be195aac79baacb8dcd",
+        "61acb19a62342164d38bcbd373bc2b29701c35a6d28b1c65443cff3b0238b4b3",
+        "eb3fe77dd02234d061f485d90082172e637b8b9a32f95148b4a5f47b7fbefc66",
+        "660afce262aabfce09ffcb254f4ce0221d8ba85392fa0553b792c0f19276009d"
+      ],
+      "test": "EFFECT EVERY-DIALOG-ACTION"
+    },
+    {
+      "table": "EFFECT",
+      "id": "EVIDENCE-ABORTS",
+      "label": "a render that aborts one evidence load or every load is read",
+      "pins": [
+        "ba01651e187efdf2f024e873c27535dbb5558779da013d8971802a6dcd3c9040",
+        "c01d0f96d99d525ef88539709f0fc572fe80316f3035456cb4b56b2216b0d90a"
+      ],
+      "test": "EFFECT EVIDENCE-ABORTS"
+    },
+    {
+      "table": "EFFECT",
+      "id": "R-SIDE-CHANNEL",
+      "label": "residual: an effect through a channel the world does not hold reads quiet",
+      "pins": [
+        "104c3a02e56550d1490f36c361bd0cd579271261d98c768772d1a7607694a0ee"
+      ],
+      "test": "EFFECT R-SIDE-CHANNEL"
+    },
+    {
+      "table": "IDENTITY",
+      "id": "DRIFT-FOUND",
+      "label": "renders that carry a frame counter, reorder their keys or carry a random token are read as not byte-identical",
+      "pins": [
+        "a42d0caf4baa55b42563d58a3ec3a4c018025b59b64495890df802c9bf802b63",
+        "dee3e6835e69969675472aba1efc9af37f4c9c63ed0d561fe57310982b1b6ea0",
+        "5621407e24107ec697cb2f3fdfe50b196457bb2e5f5ca3f601c208e173997163"
+      ],
+      "test": "IDENTITY DRIFT-FOUND"
+    },
+    {
+      "table": "IDENTITY",
+      "id": "HIDDEN-DRIFT",
+      "label": "renders whose drift JSON does not encode - a Map, a Set, a WeakMap, a symbol-keyed or non-enumerable counter, an undefined field that comes and goes, a -0, a NaN, a bigint counter, a swapped class - are read as not byte-identical",
+      "pins": [
+        "d703cb5123d5b1f87e331b1387bee46a9139c2f17244fe135a3d9556750afd56",
+        "c22e84258084119da4ef99e21f48a5d28981fba9158e331bcc71e9b016b16a67",
+        "0af615c89542c90e72da2a814d09e98a3f1215ad27da119a143e2700ba02f287",
+        "e894f5389ed20127e801e20696b451836dd98e4c569561f44678cd4e1b100253",
+        "03d6de90f1878791fffc0215cab5818da44bde83efa6c4e3703b825b6c50fe90",
+        "c3901efadf177c754cd557c07bcd4126b650a295fd7471ab550fd711531b3e47",
+        "020649454983d542a50b7cb8f755c4fe1490e73b314b53182c5da281ede11852",
+        "1b7f61b37cb154a23948e73dae4e5d7e245b59fa79faf7e7042d34d7462eb056",
+        "d05de1fdf9b9072348d045201f035150340b7b220fd0ab4b9516f15907b72856",
+        "5ec3b45c3f8c802ffbc756cdfe628615af08daedec1be9437f2a8bdaf9fe9be1"
+      ],
+      "test": "IDENTITY HIDDEN-DRIFT"
+    },
+    {
+      "table": "IDENTITY",
+      "id": "R-LATE-DRIFT",
+      "label": "residual: drift that first appears after N renders reads quiet",
+      "pins": [
+        "6ad7d1d9cc0ebdb4ecc8c05fb60b7a25741a1102e61a15eae0457734a66ecbfb"
+      ],
+      "test": "IDENTITY R-LATE-DRIFT"
+    },
+    {
+      "table": "IDENTITY",
+      "id": "R-OPAQUE-STATE",
+      "label": "residual: drift held where neither encoding reads - behind a getter neither invokes (a prototype accessor, a non-enumerable own accessor), in a closure's captured state, in a #private field a method moves - reads quiet",
+      "pins": [
+        "38917c98bbbda68a2744d0a68c02a0fa8ec93602dbe55af6a4416677614fbd12",
+        "676feb39919525f9855ef77280dc6a3ef24041fbd171cf0fdd0d60f42e459190",
+        "a5f659faaf1f2265197a22b146ba56970d04b0fcc3c64c4d21d4a0f289f96fc5",
+        "948ca4e44f66334b393cb31ab5f50078e1f68e8f6e4fe8d5dc9ef2dbc37a97b2"
+      ],
+      "test": "IDENTITY R-OPAQUE-STATE"
+    },
+    {
+      "table": "QUIET",
+      "id": "READ-ONLY-RENDERS",
+      "label": "a constant render, a window read and a render that calls every read member read quiet",
+      "pins": [
+        "3e5852774a99e84a7ad241168756e1b6e3860027bb704446cf1335cd57ae84a8",
+        "10744a81db06cc492021870310b99b79a037d59fe29a933bf57c6898a1b3dbb0",
+        "05f24c4ce4e8c07a744fdd1234da977a7daafb353b94c7c7477a6cc760cf4ead"
+      ],
+      "test": "QUIET READ-ONLY-RENDERS"
+    },
+    {
+      "table": "READERS",
+      "id": "READ-ONLY-PICKS",
+      "label": "a typed reader that picks read members only, alone, partial or intersected, reads no writer",
+      "pins": [
+        "b665e0e67f3ac33dff9d77c5f4609a547fb50b891f5bc322027c28ae726c18f8",
+        "6daab52d5203da359723688c0f9717fb80875a93584f906417b395be94ca69a5",
+        "33b8d26fb11c1e1fa28f8c16c88c17a512e76fcfc0bdbbcc6f41061cc9863814"
+      ],
+      "test": "READERS READ-ONLY-PICKS"
+    },
+    {
+      "table": "READERS",
+      "id": "WRITER-PICKS",
+      "label": "a typed reader that keeps an admission member is read as a writer, through Partial, an interface or a qualified name",
+      "pins": [
+        "1710788189694cefaef41646153fdb9ad2ade4479c30232143c071a5411032e3",
+        "e54869aff5d4f16e56ab01dbb1c076500b3593c5439f3d43e361b6fb4c6f4f51",
+        "7af2c356e30667d286634857e155561e9ab31d6756243bf26519f1e87a18af08",
+        "38c814d3e094054c49b39619fd26d7ae4360a3fbab0f1a107f27d38b928aaea2"
+      ],
+      "test": "READERS WRITER-PICKS"
+    },
+    {
+      "table": "READERS",
+      "id": "OMIT-AND-UNRESOLVED",
+      "label": "an Omit keeps every admission member it does not name, and keys that are not literals fail closed",
+      "pins": [
+        "5f521a6c10f00d35a91c5d051e8d31bb5842ad0be356e25c2c6720e39f7f2125",
+        "86b195d170eb3837579937003d82bb8398ea3b3a5d7e323a90ed1bdd8c00efc2",
+        "889df0355d148c2c10a160868a6082e86f99f32ee1e043c786cdf9ee1a2cfd62"
+      ],
+      "test": "READERS OMIT-AND-UNRESOLVED"
+    },
+    {
+      "table": "READERS",
+      "id": "INDEXED-ACCESS",
+      "label": "an indexed access into the class keeps the members it names (an admission member read as a writer, a read member as a reader, a non-literal key closed), and a member's statement or result type (Parameters, ReturnType) keeps none",
+      "pins": [
+        "4fab7edffdf0b828f59b45172fad3b5d74ec7ff5dcabba1bd699ac3ea7c093ff",
+        "f87b0b7b5384f2d1760bb756e16ba463d76cbc243d47956c8fbe9a99eb57202b",
+        "1c8f4f249b75ba314f8c90952ddd92e25b4b0d0e43f452c58e17de5a86b6b0e7",
+        "26d7aeafb0f172ae46247fe4eff88711ad49d035d5780c173ee11a19aeece568",
+        "02b9130d1aec586384966c6840a8bf5ee0473adee6bec4cd0197926196ca0a63"
+      ],
+      "test": "READERS INDEXED-ACCESS"
+    },
+    {
+      "table": "READERS",
+      "id": "HERITAGE-AND-WRAPPED",
+      "label": "a Pick in a heritage clause, and a Pick over the class through parentheses, an import type or an intersection, are read",
+      "pins": [
+        "fbbb88fea5fd802a798e8b568ffe55a6c0c0882b1887594cb790fd9b069c4e4d",
+        "e20434050ea13cd3fdcc5696a223beb730c54bf0f3f48c433f1111aed8df4ad8",
+        "5db566ea3a398d0258ca4101f52449e79a99047ea6d6acd15bbd6639579e1964",
+        "992e229f4c1cbbb53c73417b96beb701a14a5b9202314e1add39bc48489a9962",
+        "41d25346ddfa62db0c3b9ee9f0741059139f1a3e3bf8d5ccf83d60b45a461e1b"
+      ],
+      "test": "READERS HERITAGE-AND-WRAPPED"
+    },
+    {
+      "table": "READERS",
+      "id": "R-FULL-TYPE",
+      "label": "residual: a parameter typed as the whole projection, or a typeof query over a value that holds it, is not a typed reader to this scan",
+      "pins": [
+        "6a956187eb3044ac438ad4cabfbeb422707463aecde41e38d7cb22bcb1ec38d0",
+        "1fca231662b928df94d498d2bb2a416478ca1e4aa4564050b4c4fd91cb083bf9"
+      ],
+      "test": "READERS R-FULL-TYPE"
+    },
+    {
+      "table": "READERS",
+      "id": "R-ALIASED-CLASS",
+      "label": "residual: a Pick over an alias of the projection class, over its instance type, or through an alias of the utility is not read",
+      "pins": [
+        "42ee1c5058ff1737c9bbc3cb982b8f515c8ba4f04c888ae954744b5dbd1503db",
+        "110ab4eb5c5598bcc36e3e51152b6f7bdbe6c740bc25a32524ae228136e0084a",
+        "67b64612bed4bdd07a9bd600011c63699d6fdd1b3393a5f3cd66cd353bd4d73d"
+      ],
+      "test": "READERS R-ALIASED-CLASS"
+    },
+    {
+      "table": "ABSENCE",
+      "id": "MENTION-FOUND",
+      "label": "the abbreviation as a word, inside an identifier or before a digit, and the slug in any case or separator, are mentions",
+      "pins": [
+        "ebb4909c42031c59538cc70fe5ef6910aad2c612a18c745891c632fb6d4533f0",
+        "543b7c4cee3e9bda7fed435cd7de4db9cf4914cd7862fd143e4415d5a38cf240",
+        "1d84aac367cb48835ea8a2a3c797b56f0cb33bca32a353011df45d72c484bbfb",
+        "15bb827d5354b9029e033253ebd6e2ab7b36e2aa374c2f908cfe40bc0b267dc7",
+        "bb44fe70dba5d56f2f1e0adc10c48a9cadeb6bcf33d86506b7cdf52adf3c068c",
+        "e1f76ca41d1aa81876691c45440334b45c4c6bf331520f420c6696053c278489"
+      ],
+      "test": "ABSENCE MENTION-FOUND"
+    },
+    {
+      "table": "ABSENCE",
+      "id": "NOT-MENTIONS",
+      "label": "words that only contain the letters, and the slug's words incomplete or out of order, are not mentions",
+      "pins": [
+        "304202b35e060a88d69a6c473134b8c7f12f29283d0c6eb84c2587e04d9e69d6",
+        "695f885a08b4b5f42cb58dc122a9bec6693bd54e78e10fc784412dbd6321505b",
+        "b1de617fe47a4448ac3f48d0e99204c4b3b3a26741a687c5ca30f01aebdbea42"
+      ],
+      "test": "ABSENCE NOT-MENTIONS"
+    },
+    {
+      "table": "ABSENCE",
+      "id": "R-PARAPHRASE",
+      "label": "residual: a paraphrase of the program and the abbreviation spelled with separators are not mentions",
+      "pins": [
+        "ad59b98f4dff6a6f07df8a68c3a2c6d3223f8202f224af5c1bf3a3e0024c19a6",
+        "4d2d3321c642116cced298f20ac24a4216c899d77b34ae56e4d4231fa8838449"
+      ],
+      "test": "ABSENCE R-PARAPHRASE"
+    },
+    {
+      "table": "REACH",
+      "id": "IMPORT-FORMS",
+      "label": "a module that names the class through a namespace import, an aliased import, a re-export chain or a plain import reaches the projection",
+      "pins": [
+        "28defc3300085ad5b47d0edce5bc7f3aadb662ebc77a6008e11240352c20dcd6",
+        "30c1032477e0852774132a431f986f4469b1912073fe584da9ff2abe773dc8d6",
+        "460c4312c5c7c06700556f9de64f9abdb84247fc92a94e92d590de9626215510",
+        "52d187dae42c60e3345b8d38311e1a901a24fbf53580b77629c3dbd1d6a55ccf"
+      ],
+      "test": "REACH IMPORT-FORMS"
+    },
+    {
+      "table": "REACH",
+      "id": "RENDER-MODELS",
+      "label": "a module that never names the class but holds it through what carries it - a render model's member call, a pass-through, an optional chain, a call's result, a container (an array, a keyed map), a function or a getter that yields it, the instance four wrappers deep and a typed reader three deep (the depth bound's inside) - reaches the projection",
+      "pins": [
+        "013e6f4b3279f27f15376bd1fc37042dab5d61ee1905f1ccb5d6f8e7cc1be0cc",
+        "13e0fd8513d2a95a7270da3eded225b584d63fb2ea42163b6809ed5bd50c1e86",
+        "b501faf57cb1453045c2628fb8d32ba124e70453016310141d2ec5ee865b430e",
+        "8f65aab16485612eac5a324b34d596fda1001ea75cce756ea2469b9532cef57a",
+        "200b73ed23af159ec844a4d290388961f30c10603496850d8d4d41fd3c4ca612",
+        "33c17d997cdd5516b203eedca21559fe5c5a44d30a390466984e4ca465a8a90d",
+        "26a3e51e5fd5ccb0dc4c31284f0fabc6a2730e27331dfdfb3686683d69062ac6",
+        "6147d1c9826e61d6f8cc086c8a801ba1fb817148651a45b6300bdd5ece09edae",
+        "d1044f1f7fd632aca8c5b2495e8d59655a2055b3e9032a5be99150508efcdcaf",
+        "8692f6ec0864c0469fe74c0dcf935c3d6d4c24d326592a6c015dcf52a74c16c6"
+      ],
+      "test": "REACH RENDER-MODELS"
+    },
+    {
+      "table": "REACH",
+      "id": "ACCESS-FORMS",
+      "label": "a destructured member (a binding or an assignment pattern), an element access, a typeof query, an indexed access and a member's statement or result type (Parameters, ReturnType) each reach the projection",
+      "pins": [
+        "db0794464c2f7fffe4108768c63d34b3d866e4caa719c1e9c983c027efdcba93",
+        "54bf0f41d3310ed68ba1c028724ada5c5133978c53d67faa5d4362f1c74e76aa",
+        "be899ca1235882cb39e0713b624b1c51ae5ac60362b3670dd4da04925d18c1fa",
+        "bed02dddea21daada0afa7088371ddf4d9a700222d35ce2f59e054f13c23cc4c",
+        "5c62769188e45905330b3cd1425a66a793466b40c7a395df434bfeabbf7c6838",
+        "b4876aa9b5c10f37e05a4e1797fd90a8a94983d2890b7decd630f602b378998a"
+      ],
+      "test": "REACH ACCESS-FORMS"
+    },
+    {
+      "table": "REACH",
+      "id": "KEY-FORMS",
+      "label": "an element access or a destructuring keyed by what the checker types as a literal - a const identifier, a for-of variable over an as-const tuple, a parenthesized, as-cast or template literal, an enum member, an optional access on a possibly-undefined holder, a computed binding (literal or const), a string binding, an assignment pattern's computed or string key, a conditional key, a keyof key - reads its member, a literal union member by member",
+      "pins": [
+        "420002be8c6b73956d9ff36ab888821d7eff870e65ba3e3bfacd135d369f2d7b",
+        "5677dc48171129fc806317b518ff3a7be158511b954dee6dee7c43dbeb1748f5",
+        "b9c81ee040726cc521f0c2c5f405010611f2abc19bb4090f2ed1532c18e88830",
+        "b86b2d9539ed4eef3ab4eb6606b508d97f820292e8e58b720d40a80246c8f2c1",
+        "99065157b6f691f52b4525839418061af2a2cf852cc0c6a84f337a0903ce8a7a",
+        "22ec6a7992f8fadc44126d2e7cc711d8ee1f6f42b6adbef5ba2b6f79b4a25ff5",
+        "9b401146dd4e780de8c338730d147b2eb8db96faa80a5dd6309db845ebe190e6",
+        "c331ebabeb46075528fa08234fc38c67065e033a38089dee002531c8ec3216d6",
+        "45c76c85835380d03941a329a0268ccf8b8d4af0a7bd7e81f6b66f6124ed1c51",
+        "9caca3fbea34dc429deb2f2b9ca4db4d5da3d91906b473bd14ed1aff2e82ea50",
+        "e1bd9797e41a2114ab84b2c9b7823f0153866a5f07c73df1e7bddcfa4495345c",
+        "954d3658f7e4615c7589712c1ffbd49d659a1283e418c27867a123bd4b044e58",
+        "4c47490be02c6869013361b577091f45bce86ff1868249a9ea3a940e0ac38a40",
+        "d5782e4345dff23485a9225b8108720b2ea8e3118fbae46f9e44e5337a17767d",
+        "1b40242615d00182b4e8d23d58b555d43bbfd598eda24534e004761632b4a9a6"
+      ],
+      "test": "REACH KEY-FORMS"
+    },
+    {
+      "table": "REACH",
+      "id": "KEY-HOLDERS",
+      "label": "a literal key over each holder shape - a render model's projection, a nested binding or assignment pattern through it, an intersection, a generic holder, a for-of binding over a container, a parameter binding - and in a type position (an indexed access through an aliased class and key, a typeof query indexed by a typeof key) reads its member",
+      "pins": [
+        "a4015d98e2cf3fb7cb661301457f66092df8ab66b3bc91685543b52facaa7f0e",
+        "e2a4dcbe7becf0a3504ec1aee82c71745229249394b3a5aa42198ccdd21a36f3",
+        "baef9c27f68dfa07ac76e69787e3cb331ecfb4af07345da1d94de3777432ea12",
+        "f65f6ea53e650350b05253281316653f7380c86fbac57434bd55b639cb0a81b0",
+        "9a354388a26e5d4ffef0d28976ab18c52e60581298eeb288e802b9467d92be70",
+        "2f14b51574084bcfca21fbe949c72b25c3043f736633729af1612947a8ff3bae",
+        "aafb53261165ebc05d9011dd6381e80bdc7521af851f9b07aaf8c3607fb56573",
+        "ea9c9a43e9147ed438fe208bff5cae92bfb5a677aa491aafb14db5bde6cd5655",
+        "373c0563df840566397f3ba121bfe5232502b10229c802a787a9e07c450e9386"
+      ],
+      "test": "REACH KEY-HOLDERS"
+    },
+    {
+      "table": "REACH",
+      "id": "UNRESOLVED-KEYS",
+      "label": "a key that resolves to no literal member set over a value that exposes the class's members - a type parameter, a string parameter, a widened let, a string key over a union holder or a typed reader, a symbol, a concatenation, a for-in variable, a mapped type's key - fails closed as <unresolved-key>",
+      "pins": [
+        "ca266954ca695dd8a2fbd3950bfd0540a6325db50b9ad839cbf4b652781cd685",
+        "a950f42553915f1ead490c61d54e7e59567328603dfa4a9fdaa1314628ffc14b",
+        "657a60f1892645302410d7003f59bce6200732cc9f44050c7a9fe1c1cebd574b",
+        "356be6c2a39bbe196fd0144d803fb27d983dbd71432c0bc9e9911837c9c182a5",
+        "36399d338d14c177aefd638f899cb90ded7001453317d3e688802453e3c2394c",
+        "1dae81203503156f1b25c1bfc6a93a75e0e98c68beece81752c5af36072bd44f",
+        "5bce60cc20b2daae20cc4396be259765468f0a6fc112e0e78729c2371bffd7c9",
+        "da1361cdd28c3bb6b07e1415d8e6edf98000661eb77a0903c80bd1591ae5c364",
+        "d9079c5157d8a44b32b6ee00946a7f57b3c494af260f2e04577817a7c1368599"
+      ],
+      "test": "REACH UNRESOLVED-KEYS"
+    },
+    {
+      "table": "REACH",
+      "id": "R-ERASED-ACCESS",
+      "label": "residual: a module that reaches the projection only through an erased or structural type - a cast from unknown, a structural interface of its own, Reflect, an any - reads as reaching nothing (no node of it exposes the projection, so readForms reads nothing there either; the erasure is refused in the module that erased it: ERASING-FLOWS, LIBRARY-FLOWS), and a typed holder's member reached through Reflect, a cast through unknown, a cast to any, a prototype lookup or an Object property call reads as the holder alone to projectionReach, while readForms refuses the erasing step itself (ERASING-FLOWS, LIBRARY-FLOWS); and an arguments object read by a function whose own parameters hold no projection while its base member hands one (a method stand-in that declares no parameter, reading arguments[0]) reads quiet: the element is an any, and readForms refuses the arguments object only in a function whose own parameters hold the projection - an overload set's implementation through every declaration of its set (wb-021.7, R-OVERLOADS) - (cut #7, refusal #6 F8)",
+      "pins": [
+        "7c8f4b98f150562aa4a21652bd1a328d547fa9d96a8eec2093b36645725f2552",
+        "38ee071f31135fb6b5f4b0e1e8c63eb039a84fcdb709ca6bb49e1a77a86bbd77",
+        "d85903355575985c70f455fddf1103b95ef1d230f2c17009cc3676b05b12d98b",
+        "90dbad16e8483c6844193798ce1938d7857c64ccfbe25c567f1397cf5f5e48be",
+        "14b654e1bf21cdca9221d78d08391dadd97865580c6b9f8b10cf39ef9d0c761c",
+        "7aa69c141b3115160cc38ad9c7aae309c02801ffd0773604f570fca5d18939ee",
+        "0d6565fc5ea41e84db3d964d1544b3a38e303f6a085bd8e102cf2740fc84c9d7",
+        "b5785453f928afb6c1d8b7904b91c80bf81b6e43e95487808e3d76998ce3ac47",
+        "253590628fa10e1b59335c86fe68adb283c71aba0859eef203a5390115b0cb8c",
+        "eeab425a0c8003d4c5db8cab1eb2d86a921ebf6f0178b70b649abcef9b19d4d3"
+      ],
+      "test": "REACH R-ERASED-ACCESS"
+    },
+    {
+      "table": "REACH",
+      "id": "R-DEEP-CARRIER",
+      "label": "residual: a module that only relays a value whose carrier nests past the depth bound (the instance five wrappers deep, a typed reader four deep; CARRIER_DEPTH 3) or an object type whose property holds the projection reads as reaching nothing to projectionReach; readForms follows such a holder through at most CARRIER_DEPTH + 1 held-path steps, each ending at a carrier the reach scan's test reads (RELAYS judges the five-deep relay), and judges no flow past that (a relay of the instance nine wrappers deep into unknown reads no form)",
+      "pins": [
+        "cf56819079b461938e5e682127d83f0d4e3baa30d7ec26f6a0a8b07f9ec7b55f",
+        "e84cfd935a724de36ae4ce59b7aabbe0f9d9834f4aa9444fc7cc073c9e86d932",
+        "f6be84d0324f9fd37166d9820347344bd38896436a9d5812fa6a1cacc1be0682",
+        "0819841f2419593b49ee76992f4148e799e43f30e1089f88957c11982daa5c15"
+      ],
+      "test": "REACH R-DEEP-CARRIER"
+    },
+    {
+      "table": "REACH",
+      "id": "RESOLVABLE-FORMS",
+      "label": "quiet: a node that exposes the projection in each resolvable form - a member, an element, a callee, an argument to a typed src parameter and to a container's own element, an initializer, an assignment, an object property, a return, a satisfies, an array element and spread, a wrapper (parentheses, a non-null assertion, a conditional branch, ??), a test (a condition, a comparison, typeof, !, switch), an iteration, an await, a statement, and on the type side an annotation, a union, array and readonly part, keyof, a constraint, a heritage clause, an indexed access and a library generic's type argument - is read and refused nowhere",
+      "pins": [
+        "95fbb8511ca5b68335eba1290b4849d602e9262b4c9c0b9ab34cb273d647b5c3",
+        "cc7f891c9a89733a504e833b7490d50b89f1b79b9330c2bca100f90c65b64baf",
+        "e9ca3f9f3d7e427908eab7d8815a1ef1e8fa86e2e154f8060e657bd6bdd523a7",
+        "453e39bbf61a63d6a114a073ea2b3d189846f7a912abb7803f815d018db20d4a",
+        "3295963abe94d2955f53938c12ae5b7605a438c37af9884344dc11e70b2bbb41",
+        "eb619472b3133a6f72029d28c82e9e195300d4561d3c6b9ed2eb05eefc76da10",
+        "e230d4028ae69f66f6e959a41424641ed6929c99ba8b239969d68fe7003b8211",
+        "08345c0519c81eca4197bd77eed3d04bee6cde4fd6f13f3edca0ccaf5be3855a"
+      ],
+      "test": "REACH RESOLVABLE-FORMS"
+    },
+    {
+      "table": "REACH",
+      "id": "GENERIC-ACCESSORS",
+      "label": "a value that exposes the projection handed to a generic over an unconstrained type parameter - a module's own generic accessor (in a render module and through a non-render reader's deps), a generic destructuring accessor, a cross-module generic utility, an explicit type argument, a src generic class - is refused at the call",
+      "pins": [
+        "89dfb81b15018a9b967cc40245dc35c4e77c366330ca71679bdd3cb49b7a0cc1",
+        "1777d98a80ee85f76147b3520c5fcb54c7c86efeb49b17999e27dfec154edd8f",
+        "1f4e5e91667a6293d0c0a3e02720e1552a61ae70b1751f56dfd876f88ca7197c",
+        "081d30faea95bc90a42e524ea412374e0b73f58ef5d011cbbc9aa7608c8af151",
+        "63e3b737baed18d08b29af22e812033479026250eab3b982d156cd5867e58057",
+        "8bc99751245a8624635fca579196e2c579efaef84e5852605d4e7d45a8dd0280"
+      ],
+      "test": "REACH GENERIC-ACCESSORS"
+    },
+    {
+      "table": "REACH",
+      "id": "GENERIC-ALIASES",
+      "label": "the projection as a type argument of a generic declared in src - a generic indexed-access alias, an infer-conditional alias, a src generic interface - and a conditional type over it are refused",
+      "pins": [
+        "1863b6bd0d2135abdba4a15a253824493e6c8aadfee447868d3740ef3eaff40d",
+        "c1400e8bc1279f51a9393002338a33b012307c5ff0deaf6d0c96cb79182e746a",
+        "fa0bbda13bd40741ab2fced4762f1dcac2e6166f814939e33a9ebe7f03aa6716",
+        "40fb4270b0657fddad20db2263c5244cdcf17b2e032f9377165d4c88843d22a9"
+      ],
+      "test": "REACH GENERIC-ALIASES"
+    },
+    {
+      "table": "REACH",
+      "id": "CLASS-MODULE",
+      "label": "the class's own module is read outside the class's instance members: a module function, a public static member and a static block (static by its kind) that admit through the projection are read and a static block's erasing cast is refused, an instance member's decorator and computed name (they run when the class is defined) are read, and the class's instance members' own code (judged by REPROJECTION and MEMBERS) is not",
+      "pins": [
+        "3bd44e14adc44f40121aee86ce8167d76aa1e6fa1a6387ca4f92d3a14ada5366",
+        "bfebc3f56f7f903c5223d94d63e49f8ba5493be6f59728998c4ac9f640889a42",
+        "a7c01eb1e637e16f0ae29af42fe5305e4d2774e25432bbb85b4447d2c5cf7c01",
+        "d72a715d2000a5d37a393545394e7a27ad6ca1684e7edb95dd7567fcb60d0cdf",
+        "ac64280636c369747c1c34e7870a3118cb6d007992445c8b8da8abd7d7ab2c00",
+        "6ed1229fbd792d20501041b5949086b929dbec5d65272b74ae8476f818013330",
+        "e36dcd71b4227253e060327e9a400d99c937d81f6007fd9e0e2720c07283a8bf"
+      ],
+      "test": "REACH CLASS-MODULE"
+    },
+    {
+      "table": "REACH",
+      "id": "ERASING-FLOWS",
+      "label": "a value that exposes the projection flowing into a type that hides it - a structural seam of the module's own, a cast to any or through unknown, an unknown variable, assignment, field or default, a return into unknown, an overload whose implementation takes unknown - is refused",
+      "pins": [
+        "7a4a967b9f91bb8e0a95a64a1cd3d0217a35951b93fed32ae4da21c4c7613c00",
+        "ff2dd8f3b1a1e51e48b4cc414c720f9862ddd4607d6ef9c5d9999a0709080922",
+        "f012111869eecf67336fee1206193e56238831ec932f39921240e23e80dd6a73",
+        "90806bd262239b27a200c879b0bd8e19b6b5500ef829071f7becb0f6f9728448",
+        "b601a54945f97890311ee1e018cb4922f9921a1ab4fbfae30cccbfbad06b693e",
+        "6ce1480d531fdf9aa83c1de098c2e9f6b8c8f7b20f134d163656d2d7dd46aae4",
+        "bec3541da7fb7055574e9a8c928c1fcd3e92e4a5a4cd554791d02f57d9d79890",
+        "0a535d828b49878178932a163558d09fce78d2e4f1073156359a69b7c6eddc11",
+        "db0e77372e24c2593df60d3c08ce4928d476b723e07cda7dd8427203a26cc5ea"
+      ],
+      "test": "REACH ERASING-FLOWS"
+    },
+    {
+      "table": "REACH",
+      "id": "LIBRARY-FLOWS",
+      "label": "a value that exposes the projection handed to a library parameter other than a container's own element type - Reflect.get, Object.getPrototypeOf, Object.defineProperty, Object.values, JSON.stringify, Promise.resolve, a call's or a bind's this argument - is refused",
+      "pins": [
+        "15d99a5f0fb838958bcbb2390bd87257e88d2e5a1677b8318cc6d7aa9727421c",
+        "f31329eb12668c0fe69474e1c1fdd9e070a8518a6fbf15ed4d1ec9a15d46e5f7",
+        "4b96e9157129ec1eed4697749ece9faee5375cefdd1ebaa9ff2be64ea89a3e2b",
+        "cc18c05dd30fa874bc04f125ea8a50497a5cecc47e197f23212193336168fd25",
+        "c89c69ac8f701806459fe410b5675535a9dad2dc8d018e9c18c9d257bcf65115",
+        "f624ea5cc51ec7b0fd04b6f7b746175dbf5656eb1ad13698d997c31d39fc72ac",
+        "e2344d530de0345ab6bd33afd2a667531b8f7dc2bc808fe882fed742558472ba",
+        "320d2e52f70a3dda38abc1195e3a213a142bde932d4a98a00276034072c454a2"
+      ],
+      "test": "REACH LIBRARY-FLOWS"
+    },
+    {
+      "table": "REACH",
+      "id": "RELAYS",
+      "label": "a callback or a holder that hands the projection on into a type that hides it - a callback whose own parameter is a structural seam or a generic, an annotated arrow, a promise's then, an object holding the projection (built first, written inline, in an array, a class instance, a getter, a record, a map), a carrier nested past the reach scan's bound (five deep) and a function returning a holder - is refused",
+      "pins": [
+        "ec96f674a1963e27de96175a08c4e7f859ab0893442dca66e92235f3dc633080",
+        "cdee217b6c69603b9ebacb5ba6b01b4062d6232074b9629e218e17477d44a531",
+        "fb92c1a4bd18e17d3784fc55ef08bdf7647c57b0003f8314f7cdc3cbacfc50d1",
+        "1b171056ddf85eb21abf1ce81c5517db94e472c6b9b19ad91ad3cfeb153fa896",
+        "ea54505b4927d57066c065875599b8925278c3fad1bc606373495733e84bf4a8",
+        "83a1f61c0ab85a1aa77a78626fd51afae4e4cb201d20b26ce9bba785b5b5af76",
+        "4d479351b3299488ef9a1648fc11d2d3643abeb17722f470f4b7da8a8c08109c",
+        "5a83075e703d7e816fd5c9eb52f852b71ef1b1fd686acb7fc21c5a31decd7fd9",
+        "1b61fd8aa696a057111c3989bd2af38ba4a5c9dbe03cbd4f7d05504d1bbfc870",
+        "d89a2e2c4da27ad92f9f04cb4cdb1d11e94a8d682bcff1517f5cd8b5fa4946c5",
+        "b7fbf7e7e61d7fa1ba068537860332e92e62482bbd485fb31a4b9af0d77870c3",
+        "68b2fa897e67ae94d3768f239d2f8e3718ece4fba4f1c38508cd7c74b91e3d9a",
+        "2fbcde41382377661e0759effd3494014889c0eb5ccf292c50b1c942c870348a"
+      ],
+      "test": "REACH RELAYS"
+    },
+    {
+      "table": "REACH",
+      "id": "DISPATCH",
+      "label": "a call through a src signature with no body of its own - an interface method or a function type (a value and a holder) - is refused, and a member declared to stand in for a base or interface member is read in exactly the roster the stand-in readings implement (cut #8, ruling R-B67): a class element the class declares itself, by its kind's STAND_IN reading against its own class's heritage clauses (an override, an implementation), a constructor parameter property as a field is (wb-021.7, R-PARAMETER-PROPERTIES), an object literal's own method, getter, setter or shorthand property under the contextual type of the flow it is written at, against the member of its name in each part of that type, and of the declared target of that flow, that declares one (a union part by part - an undefined or an object part beside the type, an argument's union parameter, and an async function's return, whose contextual type is the awaited type united with a PromiseLike of it - and a type parameter through its constraint, a src callee's generic parameter included where the literal is the argument itself, as writtenAt reads it, of a call the checker resolves to a src declaration with a body (argumentTarget's declared parameter), whose instantiation the checker's contextual type takes from the literal itself: wb-021.7 cut #2, refusal #1 U1 and U2, narrowed to that position at cut #3, refusal #2 U1, ruling R-B155, and to a declaration that declares no explicit this parameter at cut #4, refusal #3 U1, ruling R-B199; at cut #5, riding the landed carrier wb-021.10's argumentTarget, which skips a src declaration's own this parameter and reads a tagged template's substitution as its call's argument, it is read for an explicit-this callee and a tag only in the pages R-INFERRED-LITERAL pins - a literal's method at the argument itself of a function, of a function whose type parameter a union constrains, of a class's method, at a parameter after another, of a function expression and of a static method, and at a tag's substitution, each declaring an explicit this parameter, refused as each twin without one is - and any other member, position, callee or tag form under an explicit-this callee or a tag is NOT CLAIMED; the twin of each R-INFERRED-INSTANTIATION page under a parameter typed without a type parameter - a property's value, its getter, a shorthand, an array's and a tuple's element, two levels down, a method's and a constructor's nested argument, and a function-typed parameter's and an interface method's argument and an interface method's nested argument - is read against its contextual type, that position's declared member, and refused, and so is a setter inside a src callee's generic-parameter argument whose literal's own getter types the property as the projection, the literal's own type handing it: cut #3; a property assignment's value and a spread are read against the contextual type alone, and the twin of each page cut #4 adds to R-INFERRED-INSTANTIATION - an arrow's, a function expression's and an identifier's assigned value and a spread, each under a parameter typed without a type parameter, the direct call of the function a .call relay names, and an overload set's plain visible signature over an implementation that takes unknown - is read against its contextual type and refused (property; the spread fails closed, spread): cut #4), and a field, a getter or a callback typed by a src overload set read through the set's implementation (wb-021.7, R-OVERLOADS) - one whose own parameter hides a path that member hands it is refused at its declaration, while an override and a literal member that keep the projection read quiet, under a union contextual type too; a call through a class's own method is judged by that method's declaration alone; a stand-in outside that roster which the readings meet at a flow, a class or a literal is no dispatch reading and fails closed with the typed row the FAIL_CLOSED roster names - a field, a getter or a callback typed by an overload set with no single implementation (overload), a class instance or a class's static side flowing into a type its own class does not declare (structural-stand-in), a member the implementing class inherits (inherited-implementation), an object literal not written where it flows (context-less-literal), a spread (spread), what a callback or a stand-in hands back (callback-return, stand-in-return), a generator's written-type return (generator-yield; an async function's is read against the awaited type, wb-021.7, ASYNC-RETURNS) and a value of any other type (unlisted-stand-in) - except the named residuals' quiet pages (a class instance held inside another value, R-STRUCTURAL-STAND-IN; an object literal or a callback held as an array's or a tuple's element or as a library generic's type argument, R-HELD-VALUE; a value bound as a function's this into a type it is - by a function's own call or apply, by bind resolved to its second overload, by Reflect.apply resolved to its first, or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written - or into any by Reflect.apply's second overload or by those members applied or called themselves with no type argument written (wb-py8n, landing 770 F6), and a member call's receiver, R-THIS-BINDING (final cut #4 also excepted the values its hole pinned, which the checker types by the function's this parameter's type - a value written after spreads, and one handed to those members with type arguments written - and wb-97ah reads each at its effective position and refuses it); a branch a conditional, a ?? or a || narrows, R-NARROWED-BRANCH; wb-vgri, landing 672 F5-F7, respin 1, respin 2 and final cut #4; wb-97ah; a member a base names only through an index signature, R-INDEX-STAND-IN; a member an extending interface redeclares with a type that hides the projection, R-INTERFACE-REDECLARATION; a literal's member matched against the instantiation a call infers from the literal itself, R-INFERRED-INSTANTIATION), and any other stand-in shape is outside this claim",
+      "pins": [
+        "e6e228e2172b47ae074f1753129e664d10fbba6cfc4cd7d4175e566c20b8ebc0",
+        "dc4dcaa78955b75d923a9b63ba6cf987aedc9671782f8ca10c952418fabcb688",
+        "f5e70d4d173f50117861b2673c48666e6ae6a57c7f954e1bde3c98ec9c88ac5a",
+        "ccf3165bf17d2804d635fecb6cf714c7466e067268ea6b9b0261a47d052e158a",
+        "69e99ba78ffa2a194179405ac29b1646cff454f09fced8364d79380378b6ad22",
+        "a19f4ace6cd4e3d8574697c8ba503e84af1fbb6ef22e1c292cc8281417fc2fc8",
+        "305a0c13c429170faacc282d4d2aa6755812f015244430bb5414134c536f42af",
+        "f71da6a07b1fe7df456eca91cbdeb4257b9249d7417dca766e73e10fd78b28f2",
+        "241b45e577dc983360ab0f33815206f2e0042446005dd0c7798efd5f4650302e",
+        "7d7af08753ad1aa2afb2e731507093a0670cdf8a7186cfa9eba5028f5033d421",
+        "f79b9140d9dcb4ecdb793197999b7670c80dc6662d9d27ffd206897d3cda1762",
+        "88b4afa727701f867332fb230b99c00d7a67c403641e41fa2a08980a27c4431d",
+        "27741aea65d80143f054aefad61e0e553255bc9fd98ae5c48770d51d79304399",
+        "8f32ebc4bde2d017b17043169b16c9dbb4a6faef9a0be8538dce7f084fff9b18",
+        "90915ba9f3aa9567bb53eea92ddd655b55cfa01fbe01585f2f885956723704d7",
+        "f2dc1682305287eeb590337137bfb50432029614faa6e4ca3926d6ec81669a1c",
+        "fa738dfe777e5bfc24f92b79ae942c532e3314831a3b241a975d66da89ff8bd7",
+        "83e46bcb24f7b62ae8fabbe907e63ce98b0865987bfd86b1cfbf82a98488a1e8",
+        "42e03f82a3fe2eda4b7a47f3393d840fe131d71421c9eee44210d37b55fff992",
+        "14bb0fff35b82867ec4a26d325cb3a1d3ba7a5ec59321153aa442ad993dd1f40",
+        "886294a6986a67b40e9566299f5b23a223230e22563720f6a734eab188012e9d",
+        "37af1311a8d1aef36137442472ca491a5ebeb89f037aa5555cd840ab0a36ab1d",
+        "4575ead9f31b668dbc55654f1d684e7a2a0e257db06d2566671b3814990b3ff6",
+        "105b0e00372be3fbae1123c8369cfbf98f6f6319c12ad92053dd573b6e4d3ee2",
+        "1dc59db720b745c95b4095e8899cc06e47ff13904b3c52af0b0ce811d6dbc3bf",
+        "eb89c62c119fb5b0c3acc5bc3d96464a2547aae6444ce1cf68be3570d0be8d72",
+        "8a6fc0a8b36852d650f49b41dccec204ffe8381ac88beeaaba7b84ddc0741a6c",
+        "4ec8d98f42ee1ccfc2e188f8ad8c80f68f75348728efebf2e21033f4a2277973",
+        "2794c49496521d34da9462215293fcfae8db50d84be73beae4ca2c5692fd3855",
+        "4e2e0336ffee359a541044cf70018844849a80b6c0d93912ca4dfa7e71d4f4db",
+        "f4ca0d51203041839925ccb5d387d80088ce7619b02b34593e72b62dcd88bbfe",
+        "d5af980aa243849e373221642ee0cc76e379f377ad7e19eff5400925fe6d77d7",
+        "d6e750802b059921280202b26b30f625aaa87ee099af43c3e4b729e58e5760fd",
+        "114d3b37441c73301dac500a03c53f3d6a5dfa5b35c155eabc7a6afe63dafdb4",
+        "9a267e2a3bd5370b6c6c4333d768b20a42ffa9ae23bb94c4a0a6329412e386d3",
+        "dca5066e81be8409f811ade1ffa3336ce41da005e4e29e5fa760fe2a93cd8d3f",
+        "b49811b39f7f592b672ba35931dfbafefeb855c27b31988923b743def6aea54e",
+        "88c9abc1720fff3a5ccd354a04e357f77f86cf71d49be684b68593e2e54d4742",
+        "41fde82be81431c8a07fda4bf64c659c751a4bd5bee2e8915fbeb74bfc9d799f",
+        "63f72a81ee2d7e7bb9396d1fb48a3678bce98d9b0312573991bbd96237de3d01",
+        "433adca649dc2619dce5f9f5ec1acbc3deac32de88ea925f468bc3e45c496a39",
+        "3b57d21bf54017d4b95269ed72bee79e2b90ed14f9543f412a733f3913300307",
+        "6fc0d6eeadde2f31b6c62845831878c9283c8d25d0898394e6211ec6cca2f6be",
+        "6e1f08c0b817dae0d8b48799e3ba552064e2aa0a9f9165da3ad59787ad220888",
+        "0411afb3f88865ce99e8e5c8a9cc2952666511e806f9f363793d1a4cb0ef00d6",
+        "699188c709f6af5952f9ed86b033b586f49b18f4609c33aa072322c23882adf3",
+        "33d1b6326f8cbf1a2192c8ecc22e3a3e80ede60fbb447d47cfe8f4ae2c3a1cac",
+        "9589478b5c26b3d85f3f0bb9a0f3c51f9963f64bd763c6f834bc67734d3331be",
+        "6ec256ff584c366f9ebe3d24eeeb2527b60204d9139143f534790ca416999a91",
+        "b965dbdecd7f4b11325e4bc7081bc69920e830ef8b7ac6f5ad9cc7822971e670",
+        "86be366549435ef343e833851ff276a1f0dd7b92b31de98d28c3a43dff603153"
+      ],
+      "test": "REACH DISPATCH"
+    },
+    {
+      "table": "REACH",
+      "id": "UNLISTED-FORMS",
+      "label": "a node that exposes the projection in a parent no resolvable form names - an apparent member (constructor, a callable carrier's call), an undeclared element key, the arguments object, an object spread, a template with no tag (a tagged template's substitution is read as an argument in the cells TAGGED-TEMPLATE-ARGUMENTS names: wb-021.10), a yield, a throw, an export default, an in test - is refused",
+      "pins": [
+        "c04599c3e167353029d9fda159f3198551c7c9495d8798486b6a9e2125e0564e",
+        "e03455b038cda46c1aa99b7f8d2361b6541983ef2fb4b635668b3cd7a6f447a9",
+        "0bb5cc04f5e9660f005f70ae87e459d23326d49b8c7100cbd9dd0496562a6cfc",
+        "c283ccc2b5f52f621136bac7db8e62ae9dd38a537537a8715143ac134f1c7260",
+        "b3c09621feabe6a1bcbb13afde958c153dfe81165cdd5c0aa05b9c0865c3d405",
+        "8be7df7bc3be37b4cb1386f8c786195557a60bced5a1a919d386ae7dfccdf303",
+        "2a4836c15940fd7e18baee55d12cec714f011b32014421b2e947fc35cf2e9492",
+        "6dd7a67c764732ad9b632259ef40bfe1e3f5a3ac72b705e93655f41824f6514c",
+        "ef280acfe67f7f380674ac250cb4104f64549674d98de155cddac87a3f3f17eb",
+        "dc4e666090a829864292c6f46c835392691aa3be251e5cf8aec684b21ef7a33b"
+      ],
+      "test": "REACH UNLISTED-FORMS"
+    },
+    {
+      "table": "REACH",
+      "id": "CLASS-ELEMENT-KINDS",
+      "label": "every class element is read by its kind, the pinned typescript's ClassElement union (CLASS_ELEMENT_KINDS): in a planted class module an instance element of each kind - an index signature, a field, the constructor, a getter, a setter, a semicolon, a method - reads nothing, a static one of each kind that can be static - an index signature, a field, a method, a getter, a setter and a static block, static by its kind - reads its own member reference, and an element of a kind outside the kinds a scan is given is read by both scans and refused (unlisted-class-element)",
+      "pins": [
+        "3691fa409614126fa3c62407feb0e6ceb3b627ed9fb566ffcc923713caad8350",
+        "78919a7aca125132b582c270ac4b2e85ea4b4ad696d9a292a2a8ecad0593e7e0",
+        "8dcf7541a5b716d34758bfccbb8ce395f4f32b5b545b3b575fbda5ca2d1f5b15",
+        "eee01263a9af9a4b239ca19765953b3ffedbe874d0415f3fbf62f80bbedc1320"
+      ],
+      "test": "REACH CLASS-ELEMENT-KINDS"
+    },
+    {
+      "table": "REACH",
+      "id": "STAND-IN-KINDS",
+      "label": "a class element the class declares itself stands in for a base member of its own class's heritage clauses by its kind (STAND_IN; a member the class inherits fails closed instead, INHERITED-IMPLEMENTATIONS, and what it hands back, where its base member's type holds a type handing the projection, fails closed unless it is that type, STAND-IN-RETURNS, cut #8): a getter returning a function whose parameter hides the projection, a static member overriding the extended class's static member with such a parameter, a member named by a computed key (a constant one, and one the checker resolves to no name, judged against every base member) and an object literal's getter doing so are refused, while a getter and a static override that keep the projection, and a class whose index signature, static block, constructor (its parameter property naming no base member) and semicolon stand in for no named member, read quiet; a constructor's parameter property that names a base member is read as a field is (R-PARAMETER-PROPERTIES, wb-021.7; cut #7 failed it closed)",
+      "pins": [
+        "3fe0dfd6b9ec97dae3a0894fc735dff4fe1ddbc52e2beef283051020dd013f82",
+        "acdcd5bf56f023a29b74d80a418489919f929880d5e5bd98160ae63cf3f4d5fa",
+        "19ffa324b92758cb0d0062b6bab28d518d029224fda37203ea8a0318d5b1026f",
+        "05484d284f491c22927f66ac792718086d025b6d179c7d8a54d5ffb4035964a0",
+        "f13ae47c04f8dd724ce53ac15d11532fd110e1c1a6562b0f8f8cb591b5313ab0",
+        "3263ff571aff78a484e72f8aada325d59a59f6c8d53ba036a2c132729c83e841",
+        "5ecf9c7a86e15f51869c1a553649841d89a379e9dfd104ed2eb7976c051c796b",
+        "a7a2d26f1e48d6e627ad3da06f3d1dfe1ce8c148601d76ccd7111398ee1368f3"
+      ],
+      "test": "REACH STAND-IN-KINDS"
+    },
+    {
+      "table": "REACH",
+      "id": "STAND-IN-RECEIVERS",
+      "label": "a stand-in receives what its base member hands it position by position, read through the checker (cut #6): a field through its own type, declared or inferred, and a getter through the type it returns - every call signature of each union part, each parameter as instantiated - and a method by its own declared parameters, a this parameter skipped; a rest parameter, the stand-in's or the base's, is read as its element at and past its own position: a field initialized by a bare, a parenthesized or a cast arrow, by a function's name or by a call's result, an ambient annotated field, a static field override by name (a function declared with one signature; a field, a getter or a static override typed by a src overload set's visible signatures is read through the set's implementation, R-OVERLOADS, wb-021.7), a field typed by an overload set or a union and a getter returning a union one of whose signatures hides the projection, a field's and a method's rest parameter that hides it past its position, a method's and a field's parameter that hides it where the base's rest parameter hands it, and a method with a this parameter that hides it are refused; a field and a getter typed any (no call signature) while the base hands the projection fail closed (unresolved-stand-in); a field that keeps the projection (a library generic's instantiation included), a method with a this parameter that keeps it, rests of holders that keep it (a method's, a field's and a base's), a method and a field that never receive it, and an any-typed field the base hands no projection read quiet",
+      "pins": [
+        "ef8338075621b4957da460e726e3cf51f64f07c77e27e61bbd02a50033dc4f53",
+        "d3ef0a266bb33ebd944d222224c651b43fe8c5b52fb4be6c2a4b3550b4ee76b3",
+        "e0c0c80f856fd6496d917b66ef0fa65911df20ea4b790d37b1177ed80ae12b34",
+        "0e519c6b44517591e2048cdf2b79ff1aaad374b1b93ab976f610a54ac4ca8a9b",
+        "361f2cef4743e67b92617c9c615ca7ce66b156789e83cab5180773537af38149",
+        "8c5d1e38870983d609127ad4dbc8c2daa39bae882b2ff732b1e19ed3c573c3d8",
+        "dd341594b328a0f67b7b92c8278ddda6972ec0371e3b66d3349a7ad5c6fe4527",
+        "73045306ee485c1049282eae1f4761597e76df7cc1b0d12e2990f6f78d04ea83",
+        "d526b918739fae1a7ed081fa323d859fd9d44b6661153fcab2409abbccb65e47",
+        "c1ec2d325f7bba9d8d8a174e0a277862cb3f09eaccc665d9cffe881a91f9dc52",
+        "0c68230c7d25a302b42b27f34ba85bb8d02657de998c7da921fcf3136da86b48",
+        "cf596af66df831c5f33671d78f853fa62bc4f93cd5062d5e9f78af98b198a2e2",
+        "845d54180726fdbadd925386d900ecd3ce7a9e93b3d18aef84a624e6bdcf020e",
+        "4f95126dfa97100ab1d37a5ddf7c96db841eb3137989f0d047e9707f9c82727c",
+        "e9d9227b2d959da8b29ebfcb95f01a2c11a4f1d5340453f3dcb9f9814ca323f9",
+        "14c61e4753f1aeb2cdf0d2c9f5eec3e4595357ddf668fac9ad4e6625bab11922",
+        "fcbc412bbdb6ef8ae140b4fc25c90a300faaabd80f2e17727e0ab5351cbe8d2e",
+        "5fdd7ecc5ca6870325e9bbebb9404951d0b7789ec6315e1f29dff6c8b09813ce",
+        "8d90c25eee270ee7a1996ba99ae50fe3a6597c0c1afefc7157c7836f196df48a",
+        "4218d8bf6601879a680d5a40eef1ed6e2f374916872f203b435a6a093ad58eca",
+        "7e7be5b2c6286d84bdeb5319241d3d8a4f5d008f548b2dbdc54779f98d92203b",
+        "8bbcaf5243e2117dcba35bd071471271fabe6176fe7bdf8f343acf84457e7786",
+        "cd418244c9ee018f0117dd55ed2470bb1c5e277e960d29be3f261e1d018a18a1"
+      ],
+      "test": "REACH STAND-IN-RECEIVERS"
+    },
+    {
+      "table": "REACH",
+      "id": "CALLBACK-RECEIVERS",
+      "label": "a callback flowing into a type that hands it the projection, at a flow the flow reading reads (an argument, an annotated initializer or default, an assignment, an object literal's property, a return under the written type of a function that is no generator - an async function's against the written promise's awaited type, ASYNC-RETURNS, wb-021.7 - a cast; a generator's written-type return fails closed instead, GENERATOR-YIELDS, cut #8), receives it as a stand-in does (cut #6): every call signature of each union part, by position, a this parameter receiving nothing - a callback typed by a union or an overload set one of whose signatures hides the projection, and one whose rest parameter hides it past its position (a map's key), are refused, as a plain hiding callback is; a callback typed by a union whose parts keep it, and one with a this parameter that keeps it, read quiet; what a callback hands back, where its target's return holds a type handing the projection, fails closed unless it is that type (CALLBACK-RETURNS, cut #8)",
+      "pins": [
+        "a4c11df24ae2de37a1d0668e3cbac08e3db3c18d835cd0699fd69d3b58118741",
+        "6c029e25ce2aa01935fed323c0bb20c39d280a673b4e0a00e8a6a9ad231a0e44",
+        "9a726a14448bd112888c1eba9ffe71f007b8c3c85ea910b05d0f796125cc7f7b",
+        "c594f96d299d2928d3c87479d371525c1e21f08f5b6a3014a21f1b5756856364",
+        "a8882c8759f59d4bfc01dee1d854fb955ac80f85539c44432b6df0dda30ab88c",
+        "83eedccf2355a4c2c0124f89f5ed0e736c22a4bdb694d00409f384169fb35733"
+      ],
+      "test": "REACH CALLBACK-RECEIVERS"
+    },
+    {
+      "table": "REACH",
+      "id": "R-NARROWED-BRANCH",
+      "label": "residual: a callback or a holder that does not itself expose the projection, chosen by a conditional or a ?? operand, is judged by that expression's type, which subtype reduction narrows to the branch that keeps the projection - a conditional or a ?? choosing a callback that hides it reads quiet to the forms judge (the hiding callback's own flow is refused: CALLBACK-RECEIVERS); so does a field or a getter stand-in whose function is so chosen (cut #7): a field initialized by a conditional or a ?? and a getter whose inferred return is a conditional, choosing a function that hides the projection, read quiet; and so does a class instance whose class does not declare the type it flows into, chosen against a value of that type (wb-vgri, landing 672 F6): a ?? at a return, at an annotated initializer and at an argument, a conditional at a return, and a || at an assignment and at a return each read quiet where the instance's member hides the projection, a keeping instance chosen by a ?? at a return reads quiet too, and so does an object literal not written where it flows chosen against a value of that type by a ??, a || or a conditional at a return (respin 1, refusal #1 F2); a choice with no branch of the target type makes no such narrowing - a conditional between two such instances, and a && whose right operand is the instance (its type keeps the instance's own beside the left operand's falsy part) - so the instance is read there and refused (structural-stand-in), and so is the literal: a conditional between two such literals and a && whose right operand is the literal are refused (context-less-literal)",
+      "pins": [
+        "470582956f35e3d88c978c869b9a92c9e00f640a6e15a36328fff7201ba8942e",
+        "24b21c0158572fd119c143e482b6913ec3491f88d08badf483b18538f3f1cc4d",
+        "67815ad2221b22aedebfd9a5f1815cdf3e1651441b1ae15451f36094e4d43ccc",
+        "96ae1449bbf1e288e26a61fbd0add55c24543c0b25bd04e01292ac76a620f328",
+        "ffa9228ab8b014b80f799136a3d816ae9a78d32512eb203e20f2eb666baecf79",
+        "5f6dadab34a3d021f8c5d35d5b4d3d5b551e4ea3ac52dc8783e57d4084481333",
+        "a4badbee5ed32ea96d9e91ad0d669442debb2c3cf60a027d1647929e5626b5d6",
+        "52d279353b67a3ede3f902532e20d7f390529086fadc8875f093d3fba152b90b",
+        "81c8bd2b6cd6d1d19fc16bd4e591cb0223bbbda9a4979d2848a05c10aacf2031",
+        "3fec3bb85cb327d8290bf6317e911c2730a1f5348ff83e8195ee15fd702b869c",
+        "19ddbe1234fa236e7c898ffb8b289dfbfea5483173e0e0bf1ad10c6c904d111c",
+        "7baef05dbd27a87acccc3405fbbb6f1dcda36971863296f5f859ae3fb826cd29",
+        "95cc28150094c6038640ba2aeb46d7fd15e4123b469a635853df27dcf660663c",
+        "8cfcaa6c5c896c3012de39d630345dd65c1f7b2aa14e194ec534d6e2c7dd46fb",
+        "c079dc8da7d23830b0471c16917cb45b176802441f904f5c0c6ba977dffecb91",
+        "06ba1ff5da508e11bff222b3f3ebc597aa6e833a0b2aa9435618ecf2079a9f27",
+        "908117fa99c0d5918bee65d686fe0aefaf0d537d740621831053a3b1990ca539",
+        "de7bed31becf1df9fa19f33c8f417a7110ab778aea443c522f3783a8cfdcb68f",
+        "28dba326fa764f5093b613dfc31f63bc7a58c1eda3433c42f75b12175f619dbf"
+      ],
+      "test": "REACH R-NARROWED-BRANCH"
+    },
+    {
+      "table": "REACH",
+      "id": "R-OVERLOADS",
+      "label": "read (wb-021.7; cut #7 named this a residual, and the row keeps its id): the body behind a src overload set's visible signatures (a function or a method declared with more than one signature - a function declaration or a class's method declaration, ambient and abstract ones included, as isOverloadSignature reads them; an interface's method signatures are no such set, and a field typed by them is read through its visible signatures: wb-021.7 cut #2, refusal #1 F6) is read through the set's implementation - the one declaration of the set with a body, by its own declared parameters and its declared return, as declared (a type parameter through its constraint) - wherever a stand-in or a callback is typed by such a set: a field or a getter stand-in whose type's call signatures are the set's (a field by an overloaded function's name, a bound, an imported or a destructured one, a static or another instance's overloaded method, a static override by one, a getter whose inferred return is one; a constructor parameter property typed by one, R-PARAMETER-PROPERTIES) and such a set flowing as a callback into a type that hands it the projection (an argument, a library container's callback included, an object literal's property, an annotated initializer, a getter's or a function's return under its written type, an async function's return: ASYNC-RETURNS; a value typed by the set's own type is read through the same implementation where it flows, and the set flowing into its own type is judged against the visible signatures that hand it) are refused under the reading's own form (heritage, argument, property, initializer, return) where the implementation hides a path the target hands it (an unknown parameter, a rest of unknowns, an unconstrained type parameter) and fail closed with a stand-in-return row where it hands back a type that proves nothing the target's return declares (an unknown, an object), while one that keeps the projection (its own parameter, a union with it, a type parameter constrained to it) reads quiet; the arguments object of an implementation is read through every declaration of its set (a set of two or of three declarations, the visible signature that hands it the projection first or second: wb-021.7 cut #2, refusal #1 U3), so one that declares fewer parameters than the visible signature that hands it the projection and reads its arguments object is refused (arguments), a function or a method alike; a set with no single implementation (an ambient or an abstract set) is never read and fails closed with an overload row where the projection is handed; a call is read through the implementation (argument), a method stand-in declared with overloads by each of its declarations' own parameters (heritage) and a plain function's name through its one signature; such a set standing in, or flowing as a callback, where nothing hands it the projection reads quiet",
+      "pins": [
+        "aaa5235cb7fcc3d7448f000b69cbfb7031a75f1f583da95282eb2690084a0538",
+        "a847b57e10cc25c3e6b195ac7b287ff84b68f77de56b4a37b2cec33a0aa54472",
+        "d7b3cc694a485e15f3bc7cee6e836208433aa26d604d2e44a2038389e55dbf62",
+        "697f35738c6a7c4f2887aa12b25d8d550ed445519f6d28fc8b6014da0b81b3c2",
+        "b6f7c300372647ecbc09f2cbd8371eb7a631dcdce0aade875018226ef6991d80",
+        "4b1d9c823e25bcb2b612890d4a631b1ac1caffedd759e54b925a9c948d2c19c2",
+        "1d9517e73fa8dfab148aeafa42a95424f6e5c6c8e71f2bbb671274f6b2f5e7b0",
+        "0acc506401e7f9bff0fea36a2a169f8c0b6a9a229d37619fcd113b05ee972b3c",
+        "eb111ca601cfd21c9739a1a1316b6c4d6911de86d9a254f7c8952770ce0ce6d1",
+        "ef21ec88430e3d5cf41571a4553bccf485164844923c4364cb9ff03c2cafa4f4",
+        "97105bb13fe532cac0959da182f037138f0935e49d72ef431fe4506965cc90ec",
+        "f235bb03fac1d7f8b2a3b8f9425038eefff06376c5afcebea3b4ed706abb2c17",
+        "8ff763ba4a116307d87c5cc2e58bc888e1ba478412dfb724b02c65f5edd53e20",
+        "cee4ddded7e19533f54f9a060febdb46cdd80090a00b099480b71c6d1e5c6ab6",
+        "d9630cee3df7166322eefd09e055bebc3932f4e144b75984c553d059a846e85c",
+        "73d6ca5d20f8cfa99bc0e24237f06e786d58e2fd1925d2a6b89c482ed444a8b8",
+        "c2897f82b2bb92863a42e544957523618f5756457b738d18172e1450b186cbd9",
+        "89bac7735758f912307ab934f1785413908168cc17a64134882c31162eaba5ff",
+        "cd3ebf2a4c9b5ddabe886bdc44997bce537b2ef1773b27fd4c96a64e13d8e813",
+        "a3b1f92ada845a729b09e8328f3a3597e61ad852860fe37ae3a10664578c78c1",
+        "a2cfb58bd6ee527970e16c7f8085847d7456fdd5ab53f613139233152c2afff0",
+        "a839fad0899a736eed1bb9906df22a319de043c14483b99de1a327bdc0d0e24d",
+        "1032f143aaa5a5dda0e62d4ad43da7bd24867c9fd173346ee57066d6c41279bf",
+        "356f636f22ff49c7db1543c8f708e56bf2de6deee9908aa377742ef503028e30",
+        "750daedfc384eb99e5c58463c3bce9381e59e6e5e0f202aacd86b80399f07a0f",
+        "83962a69ff71aa6e6e5fd7be7dc4212df598d6d16582d88eb9fce4cad5a1fe44",
+        "107299a262e359d25c6f80c003e8472e635e003b96668d14ef8c3ca4a6d748d6",
+        "39632ff5c9e2fe267c93ac5c739bc1610d12272ab2df9191fb5564aa993c724d",
+        "f3b5a364125691688a43218abce810f7b678be5d01183757e3aec76ef20cc545",
+        "1e02fcfeb3def0676c34e307725919980d94aaadcc3e3fbcfce2cbb3b7b4fcba",
+        "5ad5bd5ab93394f1491bd8de12cd2d19c57f5221f26bdf72b09e62bb9d944bbc",
+        "3ce1100f7ee812d18d3e580a2754a656dae0393247d068989217ffb30f6d4037",
+        "5ed6f157c3d0bfd41e5ea8e9fa4453d4cd674edb9dc0ceaa21063d8e96a3f76d",
+        "a7eec6c8c0b1d0159514fe45887c0ce3a3d507c1352d063731f494dba9090c2a",
+        "3d18df14e1878deb059aaa8bee14905c47de928d1eaf4a7b2af48dfde1fe0379",
+        "2c74a76a4c7db053deac1fad953b26bc014420533c25526f8a267a49cebe1b92",
+        "8c6222ff7a29ad76a60a42335c945c2f6ff2a80b093d8cd9c2075eb6a6d988f3"
+      ],
+      "test": "REACH R-OVERLOADS"
+    },
+    {
+      "table": "REACH",
+      "id": "R-PARAMETER-PROPERTIES",
+      "label": "read (wb-021.7; cut #7 named this a residual, and the row keeps its id): a constructor parameter property declares the member that stands in for a member of its name on the class's heritage (the extended class's instance side, an implemented interface), and it is read as a field is (STAND_IN's field reading) - through its own type, declared or inferred from its default: the parameters every call signature of that type takes, through the signatures that run (an overload set's implementation, R-OVERLOADS) - so in each form planted here (public, readonly, protected, override, optional, a class expression's) one whose type hides a path the base member hands it (an unknown parameter, a held path, a function its default infers, an overload set whose implementation hides it) is refused at the parameter under heritage, as the same member declared as a field is (heritage), one typed any fails closed (unresolved-stand-in) and one that hands back a type the base's does not declare fails closed (stand-in-return), while one that keeps the projection reads quiet; a parameter property standing in for no member of its name, or for one that hands no projection, reads quiet (one a base names only through an index signature: R-INDEX-STAND-IN)",
+      "pins": [
+        "9df96a269b0673cf688d054fce785743866e4b59a6628bf3ca7211b762497229",
+        "d189afff54e8b73e5b27e2fdc755afe97e2c0b3b34ad55b820ae1518ace91ccb",
+        "830b006ccc79fcde7cbcba82ef561d62c0ec2c4b768dda0e9f93817aabe6c50e",
+        "f2fcb2e0a578e7fec1911ce75fe211e2ba9f25899403c95e6e7cfee6eba8cfae",
+        "7b16aee8143fd79320dbfcb77d0297d5c9438fd20ff0d0a66916fca7db5c22f5",
+        "e20d32e60d98c698244396f2058b45c7db78c135a1ca0b0631efc0f535f9b269",
+        "90380dc6082ad4e380e390eaad30ae864fe4a85c97ac103ceff0b69c5cfb15ba",
+        "757617bcb9d77ab7590aac6e6499a08fa6586bd3dbc1f9a52ff605c6e43c1114",
+        "f4b97a46ba56e3dda4779cf934e61303e20cb5329594edbd377d8c144d6d6333",
+        "b49c9e9e55bde2ac41035866fb59d7779831655ef7154dd6fade2b189130397a",
+        "2f204b3bddd6840d16951173a8f8df3a037d82fff079ba334dc02e2f9446801a",
+        "03e84e40efc46d793cf1902116c66fc36a0992eb2f1f61cd50719189b8d709c5",
+        "06f1c23126ae72b57a46b94f06989439566b2d71c117c491d22150a05e5154eb",
+        "20a5d4aa2d36b2c69de7463bf45e913e02e95428dbb4760baa52cb5bd989e0fd",
+        "335b86733e6cd4d4eb4fdf538c949e0f96b06b1694ed080744e43a99fabfb89e",
+        "9f6a54b29a33b9fbd39dd8f52ac9e277c99f026109b1e5bd15faae4d574dac55"
+      ],
+      "test": "REACH R-PARAMETER-PROPERTIES"
+    },
+    {
+      "table": "REACH",
+      "id": "R-STRUCTURAL-STAND-IN",
+      "label": "residual: a class instance, or a class's static side, flowing directly (an argument, an annotated initializer, an object literal's property, a return under the written type of a function that is no generator - an async function's against the written promise's awaited type, ASYNC-RETURNS, wb-021.7 - a cast; a generator's written-type return fails closed instead, GENERATOR-YIELDS, cut #8) into an object type (each part of a union or an intersection) - a class, an interface or a type literal - that its class does not declare (itself, or through its extends and implements clauses, transitively; a generic's instantiation only as that same instantiation, and a class's static side only as its own or its extends chain's static side, cut #8) stands in for that type's members structurally, and it is never read as a stand-in (cut #7, ruling R-B60): where a member of that type which the instance also has hands the projection it fails closed with a structural-stand-in row whether the instance's member hides the projection or keeps it, while a class that declares the type is read through its heritage and an object literal through its contextual type; such a flow into a type whose members hand no projection, and a class instance held inside another value (an array's element, a library generic's type argument: the array Array.of builds, the promise Promise.resolve settles; cut #8, refusal #7 F10) entering such a type, read quiet",
+      "pins": [
+        "d6790b1b6937593dbd36b2eb55ca1fefa81f924c99570cf324a6493fff701f6e",
+        "8477c72c0385ceda0e7c40e521afe961ab488b7ab585e5271b8e39680a0bad27",
+        "cb516918c6160df3eaf543f90d86137850af3464a4198bd865e64b040ae2ad10",
+        "a7dbea785d698d6bf07dd2a260c35aa0fcda3dedf19519eb0eafc9313b198df0",
+        "164f37a4e8109962b2f8645cdc7204c466afc55623d857640eaeff05e73220af",
+        "f0e3fb6b1bba89baa52a4678af9317dcd34be21c6ecca29e5df5a1bcffc1daab",
+        "ea8741240de3a8e014bcaf0e51ee71484e366bc81fe6dbf35104cb33d65657e3",
+        "0aa5227f901c82ef9e9cf153642574bcad87041ab165e260544078cbc146b88b",
+        "bc1639445600a8370fcfeea277588ec9b5aa179aef829f2566a837ce57311f32",
+        "c830f3d9ce181896ccf1f796dd2686a6f2594512f3795f875dd113c2bc285cf6",
+        "f32d76704c96bf81e41ad3bf4c2ad09d4e90f23538bfd1d3fbb9c5f2bc967409",
+        "1f2783ed6cec8799befe265c6945c072d4968737692c555d186d18b80046ddf5",
+        "42f54144c6cd8ea1ddae63b15e5972fe0c003cb060c725969fbc6bb7609d9a05",
+        "4ecfd5da7b39839eb60f1e6732c77210fcaadcc4ea14f6959dc7f5ff15f7b516",
+        "9306ece568a68a97ccfe9ec25211229922c1dd2e4c45646705d95c1f6c5f8951",
+        "34ebebe930b20cfdea2c398a9f6118afa087acae4694d4d9b5fd50125341af12",
+        "f60d7f30a23b3d6183556dbc762eec9b609d65901590336075dead6b3981bbc5",
+        "83a76e3dc6f139d5f360af95a1f8290b27696aa710b98ce52ebc3913ca4db49c",
+        "414f52f9a3a12d9ea734cb96f0c15992ea674ee332bff4a68631897435af9009",
+        "872787f0bda8fa0e509ee6a305c2c1f83b34b547341e7ec444ea076cc8c947d3",
+        "7b498dcbbedc83f3014edf02f2ec023320483be388d18638b94573df22c134e8",
+        "0a03e454502c6532b1e5cfef8ba118a47597d5b383a318ae519e32d51c5f7b60"
+      ],
+      "test": "REACH R-STRUCTURAL-STAND-IN"
+    },
+    {
+      "table": "REACH",
+      "id": "R-HELD-VALUE",
+      "label": "residual: a stand-in held inside another value is never judged at the element (wb-vgri, landing 672 F5) - the flow reading judges the flows the closed claim lists (an argument, an annotated initializer, a return under a written type, and the rest) by the holder's type there, an array's, a tuple's or a library generic's whose type argument the checker infers from the held value, never by the held element - so an object literal not written where it flows (refused where it flows itself: CONTEXT-LESS-LITERALS) and a callback that hides the projection (refused where it flows itself: CALLBACK-RECEIVERS, and the annotated initializer's twin below) read quiet held as an array's element at an annotated initializer, an argument and a return, as a tuple's element (a callback also in a tuple argument), as the argument of Array.of or Promise.resolve, as a Map's entry and as a Set's element, while an object literal's property is a flow the reading reads (the same literal held there is refused, context-less-literal) and a library generic given its type argument explicitly judges the argument against it (Promise.resolve<Sink> of the literal is refused, context-less-literal, and of the callback, argument); a class instance so held is R-STRUCTURAL-STAND-IN's held value",
+      "pins": [
+        "e71a83464b349c319b98dae5136be3560a2d7eb6e415863c0405c805f1ecbb59",
+        "f3333be87ed5a989b5a71aea72dfbb8c77838860e4197df9dade32306bd049d4",
+        "8dfa3d96ac7d107d627e4fe78bd7fad13a5a4290ba041ac4197ce35b2d8bf974",
+        "a5498c2e8e1c4b373e13bf2538c175fa0b9291139e4d27efcc0537e4c15bf0fa",
+        "07a6d6ddfee90051f7db9c30154a6503f186737b9b1b1202642cd21e3061e240",
+        "09e05b19be430adb513265a4260ac2987bc522aa41ba283786b30c4874557c10",
+        "efca9e17125573a29b3c59b7edef8fd95e116b74d2061e4a24827fbf4da50210",
+        "203333bdcf3ab4a57add0407cb17d4011cd7da8b476472f2aab92910b40b25b5",
+        "f11793686977977ca8c63309ce4cd7acdd8da2e5799c52c26fdd06e863cfaedc",
+        "c0c9bec8091e86c0b2683ea189d3b2d15a90ecd313e5b04e008bdb41e43e0b81",
+        "ef68ce7eb6b73db5404783fef321ddeb731aa81d856b92d51ead69740fdbb653",
+        "8f18fadd182625114bfef92c9853b4fc1fdcf11719aef46d837440718c4558bd",
+        "e41a123bc4249bfb65f4652074c20d091155143d20af77562fdb9ac69092b942",
+        "cc80c511dceccbf10a637d62abeb310768ea0dfd3dd3ea9debe43b97ab62c221",
+        "4b6bb2dcfad41ccae3b7e72197143791140da0096b17fe488a2cd2a88e42f437",
+        "2387a89e1f85b8566bc62a0c209a11f4db8141e7f6400056428361e806403e47",
+        "b7e6ed9cc4b4692488f7a8eae117ddc50c161b40a7a285feef700db3b1916e74",
+        "65217e78c6841d7cee9018042825f60fe8161766fa606e0f1fc558111ecc2267",
+        "25e2838e95c4709a1653d3d1a3a84439faf41678b6453325d146c953259332c1",
+        "240845907cb887a726d3dd0f7e5d5e6ac51c7aad9930f60c87d8d53d2aa255f2",
+        "12d3e76f7585e1d45d1ec8d35fce50c2ace8230c187d55af5d007873a3b6eb02"
+      ],
+      "test": "REACH R-HELD-VALUE"
+    },
+    {
+      "table": "REACH",
+      "id": "R-THIS-BINDING",
+      "label": "residual: a stand-in bound as a function's this (wb-vgri, landing 672 F7; respin 1: refusal #1 U1 and F1; respin 2: refusal #2 U1 and F3, the enumerate-the-resolvable cut ruling R-B165 binds; final cut #4: refusal #3 U1, the fail-closed core ruling R-B207 binds; wb-97ah: refusal #3's CURE route (b), the reader coverage R-B207 deferred to that bead - each claim of this row is narrowed to the pages it pins) - a value that neither exposes the projection nor holds a path to it (a class instance or a class's static side whose class does not declare the type, an object literal, a callback), bound where a function's or a method's this parameter is typed by a type a member of which hands the projection - is judged, as the this argument of a function's own call, apply or bind or of Reflect.apply, at its effective position among the call's arguments (wb-97ah: each spread written before it of a value the checker types as a tuple counts that tuple's elements, and each argument written before it that is no spread counts one), against the type the checker resolves for that library parameter; the this parameter is read only where that type is it. A function's own call and apply (as in use.call), bind resolved to its second overload and Reflect.apply resolved to its first type that parameter by a type parameter inferred from the value (the checker took the value's own type at every value measured), so with no type argument written the value flows into a type it is and reads quiet whatever its member does - pinned: a hiding instance bound by call, by apply, by a method's call, by bind given an argument (a function's and a method's, called, and a function's held at an annotated initializer) and by Reflect.apply, a keeping instance bound by call and by bind given an argument, a class's static side, an object literal not written where it flows and a hiding callback each bound by call, and a call given the instance's own class as its type argument; Reflect.apply resolved to its second overload (an argument list the first refuses) types it any, which hands nothing, and reads quiet too. A member call binds its receiver as this, which no flow reads: a function held as a class instance's field or as an object literal's property and called through it, and a method whose this parameter its own class does not declare, read quiet. Where that parameter's type is the this parameter's - bind resolved to its first overload, whose this argument the checker types as the function's this parameter, or a type argument written as the this parameter's type - the value is read there as at any flow into that type (final cut #4 read it there only with no spread written before it; wb-97ah: at its effective position, below) - pinned with no spread written before it: bind given its this argument alone (a function's, a method's and a class's static side; a keeping instance, final cut #4) and a call (a function's and, final cut #4, a method's), an apply (final cut #4), a bind given an argument and a Reflect.apply given the this parameter's type as their type argument refuse the instance, the keeping instance or the static side (structural-stand-in), and bind given its this argument alone refuses an object literal not written where it flows (context-less-literal) and a hiding callback (argument). Which of bind's overloads resolves is the checker's (respin 2; TypeScript's lib.es5.d.ts declares bind<T>(this: T, thisArg: ThisParameterType<T>) first and bind<T, A extends any[], B extends any[], R>(this: (this: T, ...args: [...A, ...B]) => R, thisArg: T, ...args: A) second), measured page by page with its this argument written first: the first where it stands alone or is followed only by spreads of a value the checker types as the empty tuple itself, and the second where an argument or a spread of any other type measured follows it - pinned refused (the first overload): a spread of the literal [] (refusal #2's twin), of a value typed [] (bound to a function, through an optional call, followed by a spread of the literal [], held at an annotated initializer and bound to a method; a keeping instance; a class's static side) and of a value typed readonly [], of [] as [], [] as readonly [] and [] as const, and of a rest parameter typed [] refuse the instance, the keeping instance or the static side (structural-stand-in), and a spread of a value typed [] refuses an object literal not written where it flows (context-less-literal) and a hiding callback (argument); pinned quiet (the second overload with no type argument written, a hole: the function's this parameter is never read there, so each value pinned here, which the first overload refuses at the twins above, reads quiet): an argument (above), a spread of a value typed [number], and a spread of a never[] value (a hiding instance bound to a function, through an element access, through an optional call, through a variable typed by the function's type, to a generic function whose this parameter is constrained to the type, held at an annotated initializer and bound to a method; a keeping instance; a class's static side, bound to a function and to a method; an object literal not written where it flows; a hiding callback), of two never[] values, of a never[] value followed by [] as [], of a readonly never[] value, of a never[] rest parameter, of [] as never[], of Array<never>(), of an empty number[] value, of an unknown[] value, of a value typed any, of a value typed never, of the arguments object, and of a rest parameter whose type is a type parameter constrained to [] (a hiding instance and a class's static side). Into any (respin 2, refusal #2 F3; narrowed at final cut #4; restated at wb-py8n, landing 770 F6): the untyped Function interface's bind, call and apply, read off Function.prototype itself, declare their this argument and their arguments any (thisArg: any, argArray: any[]), and handed the function and the value with no type argument written each value pinned here reads quiet - pinned typed any (where that member is itself applied or called, the call the checker instantiates types the value any, which hands nothing): Function.prototype.bind by apply (the instance in its argument array), Function.prototype.call bound to the function by bind and called with the instance, and Reflect.apply given Function.prototype.bind, the function and the instance in its argument array; pinned typed by its own type (where that member is handed the function and the value by call, that call infers its rest parameter from the value, so the value flows into a type it is, as at a function's own call): Function.prototype.bind handed them by call (a hiding instance, called and not, followed by an argument, and bound to a method; a keeping instance; a class's static side; an object literal not written where it flows; a hiding callback), and Function.prototype.call and Function.prototype.apply each handed them by call. Final cut #4's hole is closed (wb-97ah: refusal #3 U1's members and the further members the final cut #4 seat and the landing-770 gate measured quiet): where spreads are written before the value, or type arguments are written where Function.prototype's bind, call and apply are handed it by call, the checker types the value by the function's this parameter's type, and the value, read at its effective position and - where those members are handed it by call - against the leading element of the rest parameter that call is instantiated with (a tuple's own leading element, also before a variable tail; an array's element type), is read there as at any flow into that type - pinned refused: bind resolved to its first overload given two spreads of the literal [] before its this argument (a hiding instance bound to a function and to a method, a keeping instance and a class's static side, structural-stand-in; an object literal not written where it flows, context-less-literal; a hiding callback, argument), given three (a hiding instance), given two spreads of a value typed [] (a hiding and a keeping instance) and given two of a value typed readonly [], of [] as [] and of [] as const (a hiding instance); a call given the this parameter's type as its type argument after one spread of the literal [] (a hiding instance bound to a function and to a method, a keeping instance and a class's static side, structural-stand-in; an object literal not written where it flows, context-less-literal; a hiding callback, argument), after two (a function's and a method's) and after three (a function's), an apply and a bind given an argument so typed after one spread of the literal [] and after two, and a Reflect.apply so typed after one spread of [] as [] before the function and after two (a hiding instance, structural-stand-in); Function.prototype.bind, Function.prototype.call and Function.prototype.apply each handed the function and a hiding instance by call with the function's type, a tuple of the this parameter's type (for apply, followed by the empty tuple) and unknown written as type arguments (structural-stand-in), Function.prototype.bind so handed an object literal not written where it flows (context-less-literal) and a hiding callback (argument), Function.prototype.call so handed a class's static side and Function.prototype.apply so handed a keeping instance (structural-stand-in), Function.prototype.call so handed a hiding instance after one spread of a one-element tuple holding the function, Function.prototype.bind so handed one after a spread of the literal [] written between the function and the value (refused before wb-97ah too), and Function.prototype.call handed the function and a hiding instance by call with an array of the this parameter's type, or a tuple of it followed by a variable tail of the instance's class, written as its rest type argument (structural-stand-in); pinned quiet beside them: Function.prototype.call handed the function and a hiding instance by call with a tuple of the instance's own class followed by a variable tail of the this parameter's type written as its rest type argument (the leading element is read there, not the tail), and a call given no type argument after one spread of the literal [] (its type parameter inferred from the value, the value's own type) - and the twins that refused before wb-97ah still refuse: the no-spread twins above, and bind resolved to its first overload given one spread of the literal [] before a hiding instance (bound to a function and to a method) or one spread of [] as [] (bound to a function), structural-stand-in. Any other way of binding a value as this is outside this claim",
+      "pins": [
+        "fcb8e18f3d0aa82839983da7de7836ebe445f31cbbb8574378d0deaf2548be56",
+        "08e101bd552b423b7f07d5bf82455c940a1a9d6b286e199af20c0932747f80f8",
+        "e1c342447aa2596a4eca82a0cec388ddc4628cb4fee5739658929ca9d3339010",
+        "130845a36e62e215f21cebd7c199803783bde11972b89f22282c56ce929a6a65",
+        "803bc91af1faaede679e55e2d3e3edc3777411d6290eaa90d9451df64ad205c3",
+        "6973e3c3f1d6b2bed2b9755997245a74eb152e85333f836c4e5bf1730709f0c4",
+        "5f1848846808a9b0ca352f4309c26e57cf9fe97a73d6d6e4f30e361397e3d973",
+        "43911fe11cf809debc4f5ae4c2e9485729bdda22cf034d489cff0b3046f62849",
+        "f213f72f69c23c76e8944e86e7bc90a2e17691ffe735964f1dc0d3f2695a23d1",
+        "70244255935081963098feb82c8bf151bda15f6410c6aee3c6c2fb9b8ac81b55",
+        "35ae97ebce701dbe8e2e6287a81f86b84d516caba25e1196ed2285ae0ceb0fdf",
+        "91c8a89020f55cc6c0ffaf8f878dbf10e3242b1f25c423e31d5467b02efdeba1",
+        "fe4f7bb49961ddcaddb7adfea6565370575cfa1b013ff0a92d31ffb9a8d23aec",
+        "71a8d58fb0444e4f31fe695d19c2b988915fe405e46f620e8e0c8e753615f481",
+        "7041a6b290365551c0335d27690927bdcf2b3645b54d9151ef66e63bb022bc27",
+        "040cb356c655bc29c3c7759cfda397451418f4ac7e93fcc5471018f88b924a89",
+        "5f5f2bd3aa51853066971088d20b4f25bcb849df7fc9e23b3bea8460f2aa7d59",
+        "e2ea90b33cb9da65f12ba2a04c954a17efd1c2923baa3f101f90847a51a228a1",
+        "99a2a793df6b7bf7010d6d6bd14690fa6f4dc19a7dc635762e6009ee8f066928",
+        "1c97a16b3a365022e608bf65516d009f1b887f8569897e1824c7ec3656d7ed08",
+        "4c68a13971be9981af3ab4ab4188cacc128e99eadb3cf3b5ee1a49c1eccc1051",
+        "17fb559964247cca5ae6d750645d5fb6d9978bc14357adb4fb9df8ee58a55546",
+        "8502cf7742f7a9861e42398dfbbb37faf0c2caa188cefe7bfffc60da04b70f24",
+        "690f3b168d60a60fea6546dcff59f9b1656bba33fbb1c961d379d793ebe025d3",
+        "5960d44ea4e14b2437c1e44ea4e02564488063d6336275d467a0c4afb39f444d",
+        "b269fe314b1b675d7bdf436534574f1172ed921e3b064058939bf0a522f6dc1b",
+        "29cd40d02558433aef2b48f97e1742c59f56cff14b7fdeed1058d906603edc4f",
+        "ab58a7f67ef0e7229ec759c7cef098f248ee0263e8c6d04bd3e90f52e3f0baca",
+        "0a95fd7b5bd9c80090cf47574257d6409a9194c625e54cce37216599e913a255",
+        "991d0ad8284541c03a82222b993d0eb28166b2102c365760233e51634718ddcc",
+        "618ea83e92d3a40bfb94b48eacd7f8d5a2ea52096cab62645889f076f3cc62a4",
+        "c80cb2bb06536e97fb34190942afea267da2084d6088403a365030ef1c69ff64",
+        "1d2f6cde4e949561a4eb18d55c88fd591e50023a71b60dc87a0a8d6a167f3f99",
+        "b941e59e3a986904d85d87dd82a1d68caaa4d5d81afaf1e31153c78b630cba38",
+        "d8bf1c29807d10ad5c7718f2373eb970b266b282163b470ab9b1ac7aeddfb7f2",
+        "178c5b5eab4beb582d0eaf7dd4975d5f734310247dbdc5c72ac276383c161e31",
+        "b4615bb41043b0a1ac709ee758ec3a9c61e06457c7e0eb9699ca4bd068e658d4",
+        "12d8976a50a6345fcb2c897061c225c0cedd7bb30aac16f4acf833c26d9fb9e4",
+        "8e1706ec489b00c57b68d51f2f1a79d3425df1e15f86b3c391f9920675d4819f",
+        "472aceb53cbf12d3e6a781c39c389c010e5e48bccead6260f8ec82ff8394a2d2",
+        "8513582790ab3ab07ee10fe28d3d1537c495e4ecb260d129137860ac5ed728a4",
+        "f2f739c781ef41332f9c113d8c2ed80e1fa89b35509aa4003c6555b08014b179",
+        "4219d54131c0027fe5fe62549bc19b133f70f970c6e521bcf679838a069f9dd6",
+        "dc7d29ef7950f731e8e7d2a564f5432aa27fc96a0c77c2f020d2877794462bd9",
+        "77160518608dfb087ecca3d7d627adcbfdd9a9346c4bc0768ef1b3ac2b4acc8d",
+        "ba1ecbd5ae33234d8a1649f2daa937494be3a62c89a8fd1f5fa15e6a0fe31cde",
+        "98de4f90945c6ec9c661f48c35f026af62f4cee6a03de3635d439922c26e0d58",
+        "54f33d5bdd618b8ddf1775fe8650158011a8d429e058b6139abb4694d267ffd0",
+        "52c86084e176d42d2a0cd37099fea2f093481d1525ce397f621f190f53780924",
+        "2154ad4b4b567fc11514828cbe106bacd71398307d4aefb4a807800cd761d8be",
+        "de35fdf6b29a0ec8edd106dfc2c2c019023e4039aba78ee8fa3dc23be098b2b0",
+        "172d0baed6e079e17de0a9e1ac6a6b9f07fd196e51e81bc38665cb5bddd2e554",
+        "0a7e5d004cbb9802ce40cde988fc065492982d5d08e4c5882ec1a8bee5ecf88a",
+        "410642a5ec60267e8939689b58b9537f5685eff2f0bbddbd47e28ba8a4e65a64",
+        "89793761f768fe84fc946d36a023c6a9bbc466c495afa3a88dd0292d0a6974b9",
+        "080dd6bad49bf11918db1844536d941768156e74a691070817c692d0f17672a8",
+        "ac53de4684836c1c65e5d8c26e9b0cd0e588002cec1c40ecf3793fbe6c79d4a9",
+        "0225f1c9b106b907eeb18d0ec9438c36309b42c9cfdb13bcce6a1df135d6f3d5",
+        "f1d039b4003ba5cbbb4c1dcddbf96623761d4f8cbda26a292453e418dfacc31e",
+        "9c0cf1e551d8abf933aa9c9623007a6a928d38d4dd22cf7ee8bfa8c64adc2882",
+        "3beb17f7e2b9ee47b1e7e57f7723759a2bea514ffdbee3a6b05f657c1abee499",
+        "9df4dd854b4a0c484ad06b47d9e8ca286e300102ecf07e819c935e80c7d59551",
+        "3b45bdc903feb63d04c4545070c724700d4f650185e4073a089c8d369eee4f5f",
+        "593bbbf61148bd7415db5177ebd8b71557692b6fdd8461078d17ae04eb1f39bd",
+        "fbaf5339a6fcd138b3cdd6fe907aad674ab631711539c818c475fab5f6079938",
+        "a7e7b541152e515e478eb7903bea8adc034aa8e7719d8828220bab18ca9110c7",
+        "f6ac00ba994270a0f0874ca413c56bdd2697aa56ac7e1dd24d4ea84172c0b1f4",
+        "c88e8b39cd85af39343387b08fa4b11ebd9cf7abaa0efce18bef46dcdd178aac",
+        "83ce0a7166078b14f67c79af244eab6ab4430e4e1c28b05b0c5c489894f170f7",
+        "ea6e152a7a652adf967e91503bfcd3117731ad85669996e668c9ac97ef46ebae",
+        "a1b8f0c621b80300059c509ea23118460e5cd116478df54582ca18d16d32ce38",
+        "d990efc206f0820305038d74ca7601bad4ac685ef6b3da4f0ef27e6bdfcb675d",
+        "431474ed2d0abf34427e3f9a4ec367e0ea3d72b50ab5a3c95e378ae1224dca5e",
+        "755e717f8e4c578b2d22a3b539b66d6b0e03266b7c3cb60f4342d0ab11938b7a",
+        "f700aeb746f58a0a9dbf472c768ed989c350f61193a069b8b25b18084f8ecf2a",
+        "9e88f3bf0097b237488961cd3f5fd7809a9176270a23d3c713dda403e1bfeaa3",
+        "479c618d18d08b7e272eb91435bb7bf58cc586c9d8389a923b125f11e12697ad",
+        "b159122ee0469ec81c1173b23c308598627cf7a6884f8e61716076fd8a158dd1",
+        "08b52b0ba0100ae791473f54e7628726d0bf59b7aec67d306eb2f3dfc1cfc29e",
+        "f18a4552214f43ec93c140b503b0d1fd3481ac4a7ab3efe0b92c1aa939abf418",
+        "fd62f250004afc95d8328f3696e87ef94f3f879f8e9161a97699eec9e3c29afc",
+        "00e1e00aeeb97eea83644c766f5ca8ef3ea0952e35fb5034cbd1911759d5750a",
+        "89aca15e9320933544fd4881cfc53fcc5fd2d636344e909d01e85ed2c225ae71",
+        "eafc5306a887e6c626bbc5637cb9072e79035d5a5467cced28cd14e891d3dd70",
+        "76913d3204c487bd9f724a9ade7cb43723bc790b942749a2997d72d9050bb62e",
+        "8673b0b0ab9cf8cf3dc81eeb23ae968b0b5e2e5fc99830408275cf825d8dc295",
+        "5b750165b3b8de65db7bf7a166f1b3936f994e989a59e837fe4abcbf9a6afd1d",
+        "1a04c5c5ae7f4db22bade309c2f7d71f0ede5c1e969d7c1d28787d8b4f2023f0",
+        "fca398ee4ae1accbd1eb9874dee26186a72fc59804c50b4856de1f035fec97e8",
+        "1fcdcd01c6f2ecc8fd51648c59ac05f760e29a446075f12262855cd9c37f5436",
+        "0bb7f2cc6ccd4be2270cabef66d46480185f1ec723805430e78fee5a2ceb3703",
+        "3c4812eaf312640f4b33894dcf5ea11b9ac32a307e4f142c3d7e688ef3a4baa0",
+        "f74240c9f5c328c553585d69e50c1ffb81f672d448e9dac0a4a83006d55684d2",
+        "d04635584b0a01a1d4dcd101d334076061a37f4229e02401440e27af3cc72cbf",
+        "0b16bddfa4f33f452e9d4027b0a427bfb897ea7ab8dba0a18de2a8c6a2aac9a8",
+        "146b049e158dd9132aa29ee6b897df7c4adcc1d4a9e225911d68f41971d72c3e",
+        "1114b54eb412ecc19aa86dda2887d46a46a6360cc769c0b5a77ba6472e09fe76",
+        "c23cab0ce85e1f5ddeed1578e6ae76a625e0ceb4dd689421ae27a63fd92e29cd",
+        "2a01e2b765f3094e9188eae0195cc29b21cfff6b7c0552f11c98e609bea3578b",
+        "36741610bb437833f50fbc01da47eb048bafd4d78092550e89c4f9552ecb0a7e",
+        "ca480989ef31674ff3cfffa4d8ef9b4dee20bb9286181194ce85337561902aba",
+        "3cd064c279bf9d3ac4b6a5b5942e4b05fde1ee83fb4a6c98a505569eb9ce8682",
+        "2dd97a62ba931471775e40d35942237b47a925b55ae2db87c0729f9fb25bfcd4",
+        "b68983898c46cf4ad186e4938a4ddafffb2d007300c9a386824cab053f4c1f55",
+        "74f4a30affc8ecb89a4d1438bb2075bb3941c61116254f0737312f145d856123",
+        "44fd3fafc217f453f4a8a09666125b05fabc1708a068ba20f417e39e0113896b",
+        "965355ac0a05bd1d671c67430efc6ae31979c1c64d5f4217a87e3c42f08acbea",
+        "75b83d2da1c7411a699139b217a43921a741f465862a166ac91272e81b85da59",
+        "a92a5d4d879908f3cf422c00275ab8c52067c2670775e86461f9d0913b6a91cd",
+        "0a6e7710c211bee84b0cc78ba19a095a910924839a2e81874b476fbea5a0dcbb",
+        "5f19ddcf13ac1049938e6ef2f107b37b15b22b594ae2246081646c68302e7d17",
+        "a268e585e36a0c56882e2964ad99cfc8cff35a41dddd79c4871264974a653ba0",
+        "f6092ff039e6cbb5e0a4969ce67b54187f678f774010c97c156b86d6e3dc2212",
+        "755a47b825b7842a573c5cf228a9e6b6eada077b5317587c5a96b5d330647df4",
+        "7e72f93ec24d2258bd54afe2a27ec989f8d76342c33094cf74657767f5e5a413",
+        "1f9509b682cb98c3adafba2234aadbf0b1d016c6312cd511687d1c5e96d6c849",
+        "80663d74adb5de352b7e5ab003547f0f87bcf759e15b71049fc2767cd7aa436c",
+        "3051bbddcd37eaba3942ddb6d337ad07f169b92f5dcc936d4f11651d907b9570",
+        "6db23d0333aaee319ea2d165ad8d4fe044e69a487f7a927f6723cbfe8faad7e6",
+        "69fe4879694c6c00574ee70e33f79967755c0ec19829daf5b37f2e6ed97ec96d",
+        "820fdc06978078be7c7718ffa7db42feac8fc6545183f309c717f67c22bb4fd3",
+        "8b16aaac173f7a61be1be27c58b9e2783f7c17ca4967113a5547c17f21233773",
+        "61a9cfdcf121b147f97a78cdd2c35c457be0601472413f0c86a0f7fcbf4411f0",
+        "934a22ff077981cc760574f3957042de4f8bea8fdbee54e10449e5a936cd7b9d",
+        "71cd6de4aab73ad6e8cde4ee6b55f612096fd95dbe99e23b567aeaee1c042bef"
+      ],
+      "test": "REACH R-THIS-BINDING"
+    },
+    {
+      "table": "REACH",
+      "id": "ASYNC-RETURNS",
+      "label": "read (wb-021.7): a value an async function that is no generator returns (an arrow's body, a return statement of a function declaration, a function expression, a method or an object literal's method) under a written type (an alias of one included) is judged against that promise's awaited type, as its awaited value (a promise's, a then chain's or a thenable's settled value, each part of a union awaited), exactly as the same return of a function that is not async is judged against its written type: a class instance whose class does not declare the type fails closed (structural-stand-in), a hiding callback (one that exposes the projection through its own return included, its sync twin's reading: wb-021.7 cut #2, refusal #1 U4) or an overload set whose implementation hides the projection, awaited or not, and an exposing value returned into a promise of unknown are refused (return), an object literal written there is read by its own members - a property assignment through the checker's contextual type of its value, and a method, a getter, a setter and a shorthand property each against the member of its name in each part of the literal's contextual type, the awaited type united with a PromiseLike of it (a union's own members are only those every part declares: wb-021.7 cut #2, refusal #1 U1) - exactly as its sync twin's members are (property), and a value of an unconstrained type parameter is refused as its sync twin is (return), while a keeping instance, awaited or not, a literal whose own members keep the projection, a value of a type parameter constrained to the type, an exposing value it keeps, an undefined and a return under a type that hands nothing read quiet; a generator's return or yield, an async generator's included, is no async function's return here: GENERATOR-YIELDS reads it, never awaited (failing closed under a written type that holds a handing type), so a thenable an async generator returns under a written type that hands nothing is read as it is (its resolver's call refused as a call through a signature with no body: argument)",
+      "pins": [
+        "45de2de7441817f05d33fa7303c964c64b4e1bab39a3d42728731375a35e0137",
+        "ab339adb35910c28100dc6b402c949abb9a5fd19793113b5d375a9e805897c1e",
+        "802d543daaef331d1d79e8f31460060ff32f4a4af8d89a112bee480c9ee31ede",
+        "04fb58ac376238775a49b7ccddf19c70e7320b8b9312a297a1c6f204d59df958",
+        "54b46fbe040cd55c35607f57ee9b85dd9b80dfa23e34987dc7723dc2444939f4",
+        "c7e03fff295afb1514f5f3aa1a9b4078aef2c3ee10be6256a4ad2716559579f5",
+        "211746acf58543ba137e30a71035865a01c94ccd94d3f0436227317937fe9587",
+        "ebf5b1d13e1d0da861f8f655525eb113c0c7bbde78df81020798670ff9aade8b",
+        "818cbeae4b4ab4fdfa3562834e48a68dfe8eddcebeaef5edc8a7d9f2f8e662d8",
+        "8e84a6c5333fd9e18fb844e8f048757696129e1a635a76f2e2e55e6450edcdcc",
+        "629870e25fa93c449c419bdc1ca60d0742f5073a8b9c091e2150efa69f2e3dfb",
+        "42ec16fef53eb8fa7440d27a55c96d6bdc2a1885508241108c539e2100aa3195",
+        "fbfc721d3d82782c0b4796b96a27781105493cce62c8b9d5a9b4c48708ce36b3",
+        "29ddb812dd63b420fbe1e1da308c63465dec7f809bcc62687732ce2182b4ee97",
+        "d5e601db561e3b6bfd71c6f53e16c0d124ad24bbfd58e29aaf0b08769a2329cb",
+        "b6fe0c32f0007e82fd2922486dd8b78c881c6134a4ddb58d6823a3b9c3a3fde9",
+        "fbbfff0e17bfc49a32deeee9cef71fcb4d96dfc038df933d7ccda7cf04c31150",
+        "da723bf83c82d3778ec5d9e90a8eaba6cd91c912c1728e0e09979fc02381d394",
+        "2e3fe5ed7d6e62c33e2acaf7d23bd5f141e7c10af961e38d81d14ea45f807749",
+        "cc0da6e7fb51009106d501a383d13814bd0cdf6976444a6e8a51489fe82d93de",
+        "0216a46c012cf499578661f5f4aed7330ecd7adbb2ab56e409927f03f0324829",
+        "01e81a643343817343e45ad82818a89ab91f9ce8c60f1ecf9228a67c4494818e",
+        "99b1cd46b13d2a020237eaef1d5d5856fbc734ddfa19ed795089db77d29c9966",
+        "1d59542b3ea7e35d69b432ef79987690a1af9021fd0a7253fe75eacaa53a9518",
+        "8e7eb1f2941b2de1926028e5ed2ad72c506cbc4753593233b817e190d4bbcd23",
+        "80a286b540a34411983fd70a90c7cd495992d0365c6446dedb4807dd330ec176",
+        "f90fed47b355f824e361cef5586aeb6c48c3d111db6f9f681bc9275fa81358b2",
+        "08b52b3e2ced743ffc9b1fc02ebe96ea1c24c1d08af19e4f42d2b9d54120a997",
+        "8133baeaf5e9e7b2a0ebb422d5eecd6512e345a4f08ee413ffacd6369be8d828",
+        "1932caaf4fd59856eb080e8ae84cfaadb756279e2697515a0bd0fc0c6efbe05b",
+        "e0e6d4e5be03a7a8db0c36131acb7472654e72036bc964e6a673dfe4fe8cc1fc",
+        "f7971bdb5cc1f7a5b85e5ee9f3d469b682f30787adf4c06d46aaf15d2d902577",
+        "e3c2b67ffb118b1a8d53c5d781d1940caafa7957103d8a8c4a3b6ef5d45b58b5",
+        "ec313628fcc1a31c99bcd7eb244f18f98fed32427394fb210379ec4b1d10aa3b",
+        "2ba81b29d95d16ba9a876ee16e8a4533496442c833dd46e8e20e28266708aebe",
+        "5d7083875eecba2deb44efe3e01852c832ff65ad0fc4f4e7dbe16014b3c947f4",
+        "438cc419d11a68a933258e2213feb84e368c3a3148462eff6479c08126cae374",
+        "45fb52b1202864e7844c7344fa65e8b086aeaf2606bb13b34ed119926945e081",
+        "d802d8c8ea9d1f337c0d62b391c91fd20e57e8b940dec9a94c4e8a3b36d3a8a0",
+        "2bec9b015997a6a4fa53d75322d492d5387015b5b058b87ef0b7248c8271b358",
+        "f0fc1076a9fe48ce6969166bd7516364267d6be89adc2d4ad9b41056c6021750",
+        "442aff7c14c410ecb40f3956eff22a1719ced63f40f830a7153be313943aa854",
+        "9b505c79452b3c6164734e7d40ef5697f965f36cdf6cc818b3d78ffde1b7bdb3",
+        "ede1b2b31ef67423c8db4ef105c15f15aa4e8f3b6aa98033c1d183905cdef920",
+        "4a349f67db80b0e8b531f31b44e9a6487acfd257848731968ddb15576b6b6a55"
+      ],
+      "test": "REACH ASYNC-RETURNS"
+    },
+    {
+      "table": "REACH",
+      "id": "GENERATOR-YIELDS",
+      "label": "a value a generator yields, delegates or returns (a function declaration's, an async generator's, a method's) under a written type that holds a type handing the projection is never read: it converts into the yielded or the returned type while the flow reading reads the written generator, so it fails closed with a generator-yield row at each yield and return whatever the value (cut #8, ruling R-B67; refusal #7 F9); a generator whose written type hands nothing reads quiet",
+      "pins": [
+        "14c829a9b8a90b27b83b78679acd1a435298facc448c58486cad30aee4010e82",
+        "37b3057d065b7b5fac1f065cab15ae180f651cf98c64f7814e108afa0322513e",
+        "c46124f9aff8168320214b5f788e6c3fcdc63a1214116206e5518097a7b0fccf",
+        "a43d84b0348b4a67be95546bda984dfa855fa353118f42ed271f116405961e47",
+        "75686e13d6a914b53857f6049e6cea626ed80ce2058eb2c9983c13899573fc00",
+        "9c458cc2a68045b4f46046fc74e2cb78e152bad0a297559ed13b506876937deb"
+      ],
+      "test": "REACH GENERATOR-YIELDS"
+    },
+    {
+      "table": "REACH",
+      "id": "INHERITED-IMPLEMENTATIONS",
+      "label": "a class whose implements clause names a type with a member that hands the projection, where the member that runs is one the class inherits rather than declares - an ancestor's method, field, getter or constructor parameter property, through one extends clause or a chain of them, in a class declaration or a class expression, or one a declare field of the class only re-types - is never read (the stand-in reading reads the class's own elements only): it fails closed at the class with an inherited-implementation row whether the inherited member hides the projection or keeps it, and whether or not a value of the class flows into the type (cut #8, ruling R-B67; refusal #7 U2(a)), while the hiding member declared in the implementing class is read (heritage), the keeping one reads quiet, a subclass with no implements clause of its own of a class that declares the type reads quiet, and an implemented type whose members hand no projection reads quiet",
+      "pins": [
+        "295ebc362caff5c79612d773da41cd88189d69310f8bbc109577693f4ac99b6f",
+        "ddd237632f323403749cd25077aee9acd5a060b0244a2f1ef770fc7a4ecba59a",
+        "8247c23ea56deeb38c0d1694a9fcbbe2f18c22fd6e482c8b1a7c8f48b2516b70",
+        "473c22b6e29ebeaec011385746914bcc0d85242a281e0cc07f3dc9c9df1587b5",
+        "bb86bd6ea8384894123928d7bf03b64b488e6aeea05a804568df24e1494423d1",
+        "7288754924339d52625f7abcb80d36fd6e0b4ef0cc4f2300df48e8783755f442",
+        "1d65f3a1962c15ab80cc8bcac2c9d4d67e287457fde26f06aba3107b94a85ee6",
+        "d2a903eddc1f9b2685cbc5459125b23c310bf9348f2a20f7a11aa613b1e7bc7b",
+        "9093fd35bbc5e55b81660513684c3ad4adb4ad8228e0be115d83cce7bcdbb410",
+        "7c83982367d6393b349d9524f4a11a21b948c10dfae2c5f3278eb1c5673cd3d4",
+        "37b1125400ab992356ea2e141f4e500ee48efd8962534860d73cd5960035a465",
+        "1fdbec85642e40e6f31ae998439b932b267f309d6fed7086bd51f178cd07dd08",
+        "971e07a683acb854af535c99fd9447a80e876dcfbc4ad6181b2f1e349c2f4123",
+        "ac93991d0c9a67592bb572677999f33f26bb45be085001a3d3002ad1b73488f3"
+      ],
+      "test": "REACH INHERITED-IMPLEMENTATIONS"
+    },
+    {
+      "table": "REACH",
+      "id": "CONTEXT-LESS-LITERALS",
+      "label": "an object literal not written where it flows - created elsewhere (a variable's initializer, a function's inferred return, a property of another literal) and flowing later into a type with a member that hands the projection, which the literal also has (an annotated initializer, an argument, a return under its written type) - is never read (the literal reading reads a literal under the contextual type of the flow it is written at, through parentheses, a satisfies, a non-null, a conditional's branches and a ??, || or && operand): it fails closed with a context-less-literal row whether its member hides the projection or keeps it (cut #8, ruling R-B67; refusal #7 U2(b)), while the literal written at the flow is read (property), the keeping one reads quiet, through a conditional's branches included, and a late flow into a type whose members hand no projection reads quiet",
+      "pins": [
+        "4c5d7689e85d837fe02324c0c0e0b4dd8575ad663529fe991b1ccc7d586f0fcb",
+        "80011fe662300bc4a7a04fbc618784e9d764225033036c34cc85d962eceac457",
+        "3560357020503fa176cc7733a8f24f42e6e9c181c08f9999561c7885bcb2a23d",
+        "f39333283b994ad9073fae7087d6b8bc761e8c5293838ec93a67dd5a97c53061",
+        "1d974b18e8382ad924f68158ef6bb177c1c605b059eecedddba9d56b5e0e0760",
+        "e375d415edc180e75814bc4498af481a413d7e4f1978865d67615717e0d53caa",
+        "0d6a517891a7747f9d9221c2a15a8bdfe38b31d971f955ebd9733d050bf351bf",
+        "06b376d460853eddb0bd193e70267d2be4deaa0c0490999b49efd74dc8369113",
+        "4fcc1d9875accca222fb23336cbe2adc8e81a4212d4f14642b1c2e2e9c0b2240",
+        "a26f655a677cb7580028a1566df59e4ee58170afa9d492f4e5115d3e88827f17",
+        "e03c9b7085fa6d8972cba3b757c9bf4d346ee4bc915e7629b2f8a7f8125728b3",
+        "3d775c8e6fea50f62bf6fbec990ccb15bf0affe67c6c77ce8a6d6ee0ad52d140"
+      ],
+      "test": "REACH CONTEXT-LESS-LITERALS"
+    },
+    {
+      "table": "REACH",
+      "id": "SPREADS",
+      "label": "a spread in an object literal whose contextual type has a member that hands the projection, where the spread value supplies that member (a class instance, another literal; at an annotated initializer, an argument or a return), is never read (the literal reading reads the literal's own members only): it fails closed with a spread row whether the supplied member hides the projection or keeps it (cut #8, ruling R-B67; refusal #7 U2(c)), while the instance itself flowing into the type is a structural stand-in, and a spread that supplies only members handing no projection reads quiet",
+      "pins": [
+        "4e59dcae5d0f33c2f54dc71644a522b15cc99d90e494974489eac84bfaee522f",
+        "c6c85f2a416a1999c63b2a2cbcda321d151fc953a9d164b98cc7f8abf8b35f10",
+        "80bc073fc9a1440510420d2d44787be39cc41747f050d3581881a61d11aadf05",
+        "9ce7f84afefacb92ebeb33b82dcc4b4c9cf033157f36057f5307615118f41eeb",
+        "f481a9f47aff0192339aca8769fec6ad0d78927c4df1f903b4cd1ab30f24f14c",
+        "6f5c5ccd80c14a81a2008cdac8d8e8bbc20303d5c73ce4447bde747fb9bed7fe",
+        "1760e9a8bc4c166d3a335a7fb0b28d04fda2af11a820d66193efd2a44d513a63"
+      ],
+      "test": "REACH SPREADS"
+    },
+    {
+      "table": "REACH",
+      "id": "CALLBACK-RETURNS",
+      "label": "a callback flowing into a type whose call signature returns a type that holds a type handing the projection, where the callback's own return is not that type or a type declaring it (an instance of a class that does not declare it, an object literal's type, a hiding function, an async function's inferred promise; with no written return type, at an annotated initializer or an argument; a written return of a type that proves nothing - an any (wb-021.7), a void (wb-021.7 cut #2, refusal #1 F5: a value typed void may be a function's result of any type), or a generic's unconstrained type parameter: a part of what is handed back - a union part by part, a type parameter through its constraint - proves the target's type only as a value that holds no object, null, undefined or a primitive, or as an object or an intersection whose object parts are each that type or declare it (wb-021.7; an intersection with an object part that neither is that type nor declares it proves nothing, cut #2, refusal #1 U5)), hands back a value no reading reads: it fails closed with a callback-return row whether that value hides the projection or keeps it (cut #8, ruling R-B67; refusal #7 F8), while a return written under the target's type is read by its flow (structural-stand-in), and a callback returning an instance of a class that declares the type (an undefined part beside it included, a type parameter constrained to the type, an intersection with it), or flowing into a type whose return hands nothing (a number), reads quiet",
+      "pins": [
+        "90d556113f235f357fb3cecf2bc35795f548c9ff5eab40e7b7f3c8b3ba1ad6f5",
+        "5a1dc51f177896923630cc8ef31a3be16d6fc99b3c3a3b7e84a8feadc83fcfdf",
+        "f6824d7a5498fbdd1eba7866b30094bfbfe1c5bcda4c80837812a844e1698be9",
+        "0f107592b3c2cf2fee36a3d2886bae2faee73cf88b7c92e48f886c18fd6a2e3b",
+        "e49d33d2448d0d6831bcf05e4ffe03a0bb3e13d0525992e6b3694f73847e45a5",
+        "0cbde2a69b0526d3e551a0b37066c14cb432a214a2f23fffffda8c4419b458a3",
+        "6583e50ee923aa59d8fc2167c1b43a7f53a9b093c18cff4515b24e6fb1e8c217",
+        "28963f0a1be3ccb10c07d03251683bf839820eb074a21184daeb72c1d5ad1e6c",
+        "34ae481702507e0244bf815c1d6b1a8f65ce03f77325bab0ac95aa446231007f",
+        "118ee92ef6abd91db389a7d2e3949e6e8e5d7d5b27c10c695fc0e243a7a5087c",
+        "9a86fb655000565c740390731688643be94e7306ec0fc50153cc2fc51851733f",
+        "e2878fc3dbd57cf9e7a5fd67b505989b7221cfe669c893fd43375f36b89475c6",
+        "a66ef2d303880c4d26b9bade12fa352bf4240be29b64984b30d1f096a19ec0ad",
+        "c80a8dbe988b7e4870b870c597c6e4945cc713b0f2742fd37eb75c7830ca0ad4",
+        "e56b3bff399324cdb63825a49f3e69fdd433658ee305903a5c3c22096878737c",
+        "475d30ef6aa200cd816f03e4e0268e1ffeab31e67454b5fb49d373048316e1cc"
+      ],
+      "test": "REACH CALLBACK-RETURNS"
+    },
+    {
+      "table": "REACH",
+      "id": "STAND-IN-RETURNS",
+      "label": "a stand-in that hands back what its base member's type returns - a method's return (an async method's and an override's included), the result of a field's or a getter's call signature, or, for a property that is no callback, the field's value or the getter's result - in a type that holds a type handing the projection, where what it hands back is not that type or a type declaring it (an inferred return or value; an intersection with an object part that neither is that type nor declares it, as a field's call-signature result and as a field's value alike, wb-021.7 cut #2, refusal #1 U5; wb-021.7: a written return or an annotated field of a type that proves nothing, an any, as CALLBACK-RETURNS reads it; a constructor parameter property's value and an overload set's implementation's return alike, R-PARAMETER-PROPERTIES and R-OVERLOADS), is never read: it fails closed with a stand-in-return row, a class's and an object literal's member alike, whether that value hides the projection or keeps it (cut #8, ruling R-B67), while a return written under the base's type is read by its flow (structural-stand-in), and a written return or an annotated field of the base's type holding an instance of a class that declares it reads quiet",
+      "pins": [
+        "5b2495a9d48d374e6eba09536fc9667cfddbe3b4e949f3ac3a84f5acdcf9bd1e",
+        "fc7078f9ecf4da855726243fe590d15172dd482d3515da860d38846abfd87663",
+        "c2ac0f084e70c9dc6beb238b853e01fd766c057da941a1a1f2ddeddacec1a197",
+        "8efcef6ed4fb184475d0467273456b3cff102e634749ea89ff4db248ab8cc597",
+        "06e1875fb3341fab763747b6878e1f441b1feca6459596f5869d7d42b60a9ae7",
+        "86c2258c697ae484c3ba1fa8fe252891e0e6528a77502ab12e311d338fe70e29",
+        "377b48f715c7bbf28b2202db083058329fe51743ba57e5934430cd71690a71b8",
+        "5b06a288afb173675ab844dd54c58a33c2f0978c195175a34ec907301895dfa5",
+        "2f15738732ddb621047a595a756b07e304c278d0a03337464667d6bcf22035a1",
+        "bc837ea7c42f528fa6a47702754d339bb2561ee7d24d8ef4c9cfef17175b8ec6",
+        "648430751d52d6ad779edd9ddd80c5b97bab7c4d1dad93815be56278a66c6cbb",
+        "c6182b9b46849b8a95004d28b6129299532e2d8e3bd3ef3069d1cc814080a039",
+        "f3a25f6b0541733728cd17388f5976406f08610c29ecf400d182399fdae1c552"
+      ],
+      "test": "REACH STAND-IN-RETURNS"
+    },
+    {
+      "table": "REACH",
+      "id": "UNLISTED-STAND-INS",
+      "label": "the fail-closed core's pinned exclusion (cut #8, ruling R-B67): a value of a type other than a class instance's, a class's static side's or an object literal's - a mapped type such as a frozen instance's, a type literal, an interface or an intersection that does not declare the target, another instantiation of a generic - flowing into a type with a member that hands the projection, which the value also has and its own type does not declare, and an erased value (a cast through unknown, an any) flowing into such a type, are refused with an unlisted-stand-in row whether the member hides the projection or keeps it, so a stand-in whose type the readings do not list is never read as unreachable; a value of the type itself, or of an interface that extends it, reads quiet",
+      "pins": [
+        "c2edadf0a097b5f1d7651a58f2338b43947e7a9fdb115d6a1889b76bf9bb3d7e",
+        "eba224fabb8d89ddf8b92919b36cde6026d61bb9839c1626f4f12e23bf9571ff",
+        "e9eebc901ad72279f9f668023e5a284af36c5cf0d77b89528af382512093264a",
+        "723873bcafc767b860be19bf10f0a57ced6301a4ec2ab9534868e46d637a163a",
+        "fcabbedd90ab2fa79ea58de4afdf9e2027fe6caa2d1a6f21b31c7268964b1768",
+        "adc49725876eb13868a828744fa70ba8a262678ef611fc5f9894c128012ef27c",
+        "dc7393c0364e38baa5c3ef851fed4f560206fa7aa13efb676876a726a85a01e3",
+        "a1ab8f2d0e2e1833f8456a05d34c035e26c1ddfd12c2c06100a0bd3499fee8fd",
+        "4d4c0b47da51aaa32860e9173cb0ee7662a30aebf78f7d41df140540b86eaaca",
+        "83e62560a56248b75558ba37ce42ea161b1078402f17a5967f9e7cbdc8fc6a31"
+      ],
+      "test": "REACH UNLISTED-STAND-INS"
+    },
+    {
+      "table": "REACH",
+      "id": "THIS-PARAMETER-ARGUMENTS",
+      "label": "an argument of a call - not itself a spread, and with no spread written before it among the call's arguments - whose callee resolves to a src declaration that declares an explicit this parameter (a declaration with a body, or the implementation that runs behind an overload set's visible signatures) is read against the declared parameter the checker binds it to: the this parameter receives no argument, and argumentTarget skips it as ownAt skips it for a stand-in (wb-021.10) - read and pinned only in the cells below (restated as cells at respin 3, refusal #3 U3 and U4: ruling R-B386), each a callee form (the callee's declaration, the type its this parameter is written with and the spelling of the call's callee expression), an argument position and a value (its kind and the spelling of its expression) with its reading, every other callee form, position and value NOT CLAIMED (a position or a value no cell names with a callee form is NOT CLAIMED for that form). Each paired page reads as its twin, the same callee declared with no this parameter, reads. Each cell's this parameter is written void, except where a cell names another type, and its callee is spelled by the name its declaration binds (a function declaration's own name, an overload set's shared name, and, for the function expression, the const's name), a class's method as a property access on a new expression of its class, its static method as a property access on the class's name and an object literal's method as a property access on the const that holds the literal, except where a cell names another spelling of its callee; and each value is spelled, except where a cell names another spelling of it: a value that exposes the projection, or that its parameter keeps, as the name of the parameter that holds it; a class instance as a new expression of its class; a callback as an arrow function written at the argument; an object literal not written where it flows as the name of the const that holds it; an object literal written at the argument as itself; and each argument beside the judged one as its page writes it (null! before the hidden value, a number literal before the second of two). Every other type of the this parameter and every other spelling of a callee or of a value (among them a call's result, a conditional, a cast, a non-null or a satisfies expression, a comma expression, an alias, a let or a var binding, a property or an element access on a receiver no cell names, parentheses no cell names, and an optional call) is NOT CLAIMED for every cell that does not name it, and each page's other text (its names and the types it writes, the judged parameter's own type included) is as the page writes it. Through a function declaration: a value that exposes the projection as the only argument, into a parameter that keeps it (argument), and as the second of two, after null!, into one that hides it, refused (argument); and, as the only argument, a class instance flowing into a type its class does not declare, refused (structural-stand-in), and one whose class declares that type, quiet; a callback whose own parameter hides what the parameter's type hands it, refused (argument); an object literal not written where it flows, refused (context-less-literal); and an object literal written at the argument, read under its contextual type, its hiding member refused (property). Such a class instance, refused (structural-stand-in): as the only argument through a function expression bound to a const, a class's method (its this parameter written as its class) and static method (written as typeof its class), an object literal's method, an overload set's implementation (behind a visible signature that declares no this parameter), a generic function's parameter (typed by a type parameter, read through its constraint), an optional parameter, an async function and a function declaration whose this parameter is written unknown; through a function declaration as the second of two, after a number literal; and through a function declaration at and past a rest parameter's position (both of two). Through a function declaration, as the only argument (respin 3): its callee spelled as its own name in parentheses, such a class instance, refused (structural-stand-in); and a class instance spelled as the name of a const its new expression initializes, refused (structural-stand-in), and one whose class declares that type, so spelled, quiet. An overload set whose visible signature declares a this parameter while its implementation declares none is read through the implementation: such a class instance as the only argument, refused (structural-stand-in). A tagged template's substitution under a tag that declares one is read the same way in the cells TAGGED-TEMPLATE-ARGUMENTS names (such a class instance as the only substitution and as the first of two); a call through a src signature with no body of its own is outside this row (DISPATCH reads it), and so are a spread argument and an argument written after one (the written-index mapping, NOT CLAIMED: bead wb-97ah)",
+      "pins": [
+        "61ff9a53f2b7450bb944b364a041c5e9d34c8f0215397518c19fca09a2f1cb40",
+        "2d729913d9cfa2dc78bd3b4a7353e030d279361e16ca80b706df760b8dedb6eb",
+        "e659094c96a088c67c3cd3951381517103ef3a6ea3e843cba805a00997684339",
+        "af418ffe4649c4238c3a46be374bcb7a7393380e8aa84507dedc5c4dd1f67c7e",
+        "2646eae6b4acedf6b95afd304a1202d5f4b489b1c7224013e4685d94084850dc",
+        "ef9e0abae94eca4429f73194ca323cb373c2fecd8b7f9dd20840e0300ef02ce8",
+        "b175f862294bfbfcd3af941d0c711d3f96ce7a8aaa609d99da7c4685bdada295",
+        "fe35da16c60c9817960770d3606417a53faa532d28dc0b07aee942713a6943eb",
+        "9f13bcbae6d5b38044c09dbdd16e2d11d3bfcd459388c426567bde7c62d4cba4",
+        "08a6971af09612d3f3c8641bcc527d1a06ff8db931df3f2d691c84888b4a4fef",
+        "cc969f44966606f9c2d546a445d377e1bf84964486f697a3769931e28e811d99",
+        "91bd35e6ba32b50c6505c40cedf05a639da6b205fdef24ca0ed63b3181bad85f",
+        "9109746867bf7f0127c7c16c411486d86542097665dbae7d50cbf63898ce2c50",
+        "9b18b1c097622bbd0bee5060d77c80dc73205a1a763bfaeeeed50968e3bdaa8f",
+        "47d77916e7267ac91a54354139a8d43b4b13b532333f0ad69399d2f09110f3c9",
+        "a4059525076a80ecbbc0d0ac1d4ab2e2a23a4f0133faf3b72b2622420b2b34c1",
+        "4c7d16810e2dcef3bb52f00c76902273096577a57118d4c8003441f1537d9ed0",
+        "04a64dfff83bdd038980dc702b458d6b7c626b5c1ce9c7223be982c954c8e3a6",
+        "cd19159e5570e1b6092b2032bdd3f061293872ff66f06513a1422926a5ece545",
+        "9d0abfef4acb84f1dcfd7e438450c8e8fba709dd061bfcea4190d9de595c745c",
+        "7207fdefd304a11b2fa4de29c991497f367f3093943a99f7b953a90c4c1fdc99",
+        "49181d07d8701ec0958531a823efde33723aba842e5dcccb4e4b977eae362752",
+        "bcdfaf9d9fc70e6a760807a8ff44c1a963487e40b1d6751fe0ed1aa8b5eb6280",
+        "08bd5da5707102cb50d41e9c6f0a56cd7cced8f6dd2b94a1e55dd1975608e8d7",
+        "9b51f3991b5e6fbb8b165dbf1e9e2c8ba537534485c0f37baf49143bfbfa4c9a",
+        "62843c8b1c770c260e9c6332717853250fe711a5d3d484170b67fada4ca549a7",
+        "ded39f07c4f62ba4644429b2a25fd3710325bb6a9014c8a4c8051d6c6060fa13",
+        "f636c42bed23268c158cdf75858f2a439a988423833feb1fd22f17e0b945fd72",
+        "5d6b25b0451ab8571dc39bf22a1bce9f0edfe593b5dfb9049fbd1086d6e3d2b3",
+        "284fc4c79495bf99d96de03eddef60619068ab81c95596fa196384f807566fd4",
+        "aea5fe8cb729e952dffe97ee86ed30fa73589210ec17c4878d6c3e81cfc393e2",
+        "94a15f8f092d2d14d58ca4bfa8d926e527c67cd9309613831403848fa5e09367",
+        "5a26945cc6421ff34801abf63df0416876170cb2a874cd79210935bc3f2b0cc5",
+        "bcb5da6f65fc2025ad8fa31e48a95953d0a02701832c52b976b34c816bd9249e",
+        "3e18f5e42b743d3189dfa4c4d989d68384cdecf7a64793196be059e9af382f37",
+        "25b8f8934718c287dce62caa94f81ffe5f8871af9694be28b3818f1dca6f7e50",
+        "b27fcd2dda946addcbd8ca5b14631e6f4e036ab997f3f38ae2b1f8b1979169b0",
+        "29a6685f633106d40aa29195e5a0e7df465fa716b36943bac5b23cd287726241",
+        "3cb29af76953dfb943d60db6869a584e2814f84dcbba3c12fc3ab446f9e957fa",
+        "fb88a436f87c51ec23925f734e7249378c05cf88b229972d712bdac55d3ab66b",
+        "91475ef9fadb65c143e89d468ba2724525c46ea51a8e895ff45245edc8cb2606",
+        "f9baa66eb961fefb13c2ec063f0199f0133529eedf59666503f7fd283917bbd5",
+        "977260053c5d821860829906647b948eab5fd1f5fb3743647f40083e42aee551"
+      ],
+      "test": "REACH THIS-PARAMETER-ARGUMENTS"
+    },
+    {
+      "table": "REACH",
+      "id": "TAGGED-TEMPLATE-ARGUMENTS",
+      "label": "a tagged template's substitution is an argument of the call its tag makes, and the flow reading reads it as a written argument (wb-021.10), the tagged template the site the row names, at its index among the template's substitutions plus one, the template strings array taking the first - read and pinned only in the cells below, each a tag form (the tag's declaration and the spelling of its tag expression), a substitution position and a value (its kind and the spelling of its expression) with its reading, every other tag form, position and value NOT CLAIMED (a position or a value no cell names with a tag form is NOT CLAIMED for that form; respin 3, the enumerate-the-resolvable cut ruling R-B386 binds: each cell claims its pages as they are written). Each cell's tag is spelled by the name its declaration binds (a function declaration's own name; the const's name for the const arrow function, the function expression and the declared tag that exposes the projection), String.raw and Object.assign (with the type arguments its cell names) as so written, an object literal's method as a property access on the const that holds the literal and the map's set as a property access on the const that holds the map, except where a cell names another spelling of its tag; and each value is spelled, except where a cell names another spelling of it: a value that exposes the projection, or that its parameter keeps, as the name of the parameter that holds it; a class instance as a new expression of its class; a callback as an arrow function written at the substitution; an object literal not written where it flows as the name of the const that holds it; an object literal written at the substitution as itself; and each substitution beside the judged ones as a number literal. Every other spelling of a tag or of a value (among them a call's result, a conditional, a cast, a non-null or a satisfies expression, a comma expression, an alias, a let or a var binding, a property or an element access on a holder no cell names, an element access on a namespace import, and parentheses no cell names) is NOT CLAIMED for every cell that does not name it, and each page's other text (its template's literal parts, its names and the types it writes, the judged parameter's own type included) is as the page writes it. Each paired page reads as its twin, the same tag, so spelled, called with its strings argument (a template strings array; for String.raw and the raw object, { raw: [] }) and the same values written as arguments, reads (the map's set and Object.assign's exposing value apart, named below). Under a src function declaration whose strings parameter is written TemplateStringsArray: as the only substitution, a value that exposes the projection into a parameter that keeps it (argument) and, refused (argument), into one that hides it; a class instance flowing into a type its class does not declare, refused (structural-stand-in), also parenthesized, and one whose class declares that type, quiet; a callback whose own parameter hides what the parameter's type hands it, refused (argument); an object literal not written where it flows, refused (context-less-literal); and an object literal written at the substitution, read under its contextual type, its hiding member refused (property); as the first of two substitutions, such a class instance, refused (structural-stand-in), a value its parameter keeps (argument) and a hiding callback, refused (argument); and such a class instance as the second of two, as the second and as the third of three, and at and past a rest parameter's position (both of two), refused (structural-stand-in). Under an object literal's method and under a function declaration that declares an explicit this parameter written void (skipped, as THIS-PARAMETER-ARGUMENTS reads it), each with its strings parameter written TemplateStringsArray, and under a src function declaration with it written { readonly raw: readonly string[] }: such a class instance as the only substitution and as the first of two, refused (structural-stand-in). Under a src function declaration whose strings parameter is written readonly string[]: such a class instance as the only substitution, as the first of two and as the second of two after a parameter typed unknown, which the strings array is assignable to, refused (structural-stand-in); and, as the only substitution, a hiding callback, refused (argument), and a value its parameter keeps (argument). Under a const arrow function and a function expression bound to a const, each with its strings parameter written TemplateStringsArray: such a class instance as the only substitution, refused (structural-stand-in). Under String.raw, whose rest parameter types its substitutions any, as the only substitution: a value that exposes the projection, refused (argument), and a class instance, quiet. Under Object.assign given the type arguments TemplateStringsArray and a sink type (the interface Sink for a class instance, the callback type (projection: ObservationProjection) => void for a callback), its only substitution read against its instantiated second parameter, the sink type: such a class instance, refused (structural-stand-in), a hiding callback, refused (argument), and a class instance whose class declares the sink type, quiet; and, the sink type written ObservationProjection, a value that exposes the projection, flowing into Object.assign's own type parameter, refused (argument) as its twin refuses it, where the type argument written on the tag fails closed (unlisted-type TaggedTemplateExpression) and the twin's is read (lib-generic), and each page's return into unknown is refused (return). Under the set of a Map<TemplateStringsArray, ObservationProjection>, as the only substitution: a value that exposes the projection, kept by the map's own element type (argument), where the tag itself, which exposes the projection, fails closed (unlisted TaggedTemplateExpression) and the twin's callee is read (callee). Under a src function declaration whose strings parameter is written TemplateStringsArray, its tag spelled four further ways (respin 3, refusal #3 U1) - as a property access and as an element access with a string literal key on a const object literal that holds the declaration in a shorthand property, as a property access on a namespace import of a src module that exports the declaration, and as its own name in parentheses: such a class instance as the only substitution and as the second of two, refused (structural-stand-in). Under such a declaration, its tag spelled by its own name, a class instance spelled as the name of a const its new expression initializes (respin 3, refusal #3 U2): as the only substitution and as the second of two, refused (structural-stand-in), and one whose class declares that type, so spelled, as the only substitution, quiet. The tag is no argument: a tag that exposes the projection still fails closed (unlisted TaggedTemplateExpression), and a template with no tag makes no call, so a class instance in its substitution is read by no flow (a substitution there that exposes the projection is refused, UNLISTED-FORMS)",
+      "pins": [
+        "10637e8637633a7741e2ee97389efbcbc5fe8c3a7bfe0ed955e567cea46debd8",
+        "ce3e5153188da8a81bcd32b7ab3b002a5496362dd4a21915713585a04bf37e4f",
+        "d360de49be7e1838b8b8d562e3c3f40f49550821945d39a2ee2020a483265091",
+        "34f135b762be9b51c5aa08dd7f6a90f6cb5e8411e2c25da6d00e9c9720bcec6f",
+        "5408b29fe674737a40c67ae84a06c362ca7ba7020d3858b8d962ef52f29e8d81",
+        "6db9944bfc849b9d4a428ad638404309969a6b8e68db54e58664f88d4f26201c",
+        "e63b1dc3caca69c7abec254a81661d63f463b261f119644cd7b3ae9d54596a87",
+        "a681001200b04f0670deba1265693806327decc46a09304602982f4a86410894",
+        "76783cca3acb831dd3e901a1e0367ce3e61d6e97311ad29460dbf78ec4834417",
+        "60fa79ccab9e9f310e0cf1fb43047f842a466fd42d0ab597aac1b0157cdb424e",
+        "18d2cc9f40dcd962bda6b2ca106672fb189a367f6d866f493ab78f54dc3bd0fe",
+        "d47c8c23ac181a6c4dbc4028d11541773caba8b451da70ea27eb01f9c248fadb",
+        "3d24368b355b8e8aa42a43ff517100719cd52216458385b4f22028f738fd81c5",
+        "8b4d13668c8361805d89f4daf8ddf75a0ffd503e9cb8b276beac0783782e3beb",
+        "298a06128e386194411098e5dfa91b0f93537e0c2ff796c3ba3314b1cf0ebc56",
+        "6030c2a083474f87455f7cd9c4c9d7da0744ce442c969ac1db1c3aa39afd38a5",
+        "faae369cd881bd84d6c06c2e91bc7a3004c1392c3b0ac24d6723686a3adde713",
+        "c51e68e7eba608466c218810083a3395f24ef19e8b52de6aa86b881a6673bcbf",
+        "5d7f5c2c3215dd4577867f03d116a597fb8e0daba8ee0a1f564f2c3f4cb1650e",
+        "062b4cfbe82cb11c9b76381ab5643d03a9df41e9eab3ac9f2d8b85ff4d7ab23a",
+        "fc891be410ef4b1f4d0891a7994e5d07f447c13243509f91d484f8b5cce665e7",
+        "71cacdadfed55024b20918a1202c70f9de5ab49e588df1db1f76981f86d29b03",
+        "9249c28f1e9e4c78d8718529e7d04ef91e36a26dde93afe3f2790d09076ccd1d",
+        "1ee5bb52843665ca492da897fc1cbd53df43020bcba464ddb3e079222c2f7246",
+        "a9bfc3c827a892fb84b162f60754d48ceba55a3409d8f78073911e3106f3ac83",
+        "1dcdbb4be2433a2939f4b722edaf14253b30b1abf8fcde2a3b2a7c5185de55a1",
+        "05b517eb39a5488cb7d99814b665c01153381cb5b9aa01ce99ddcf06fc110c75",
+        "4e6ba69dd676f3d25d39d267437fa905430a4d391c55315ddc6bb5142cb439cd",
+        "cd22ac3310d962c43f5ac96a0554618482d5de6754c9999168d9f9832f47e3d4",
+        "fa5d19a63a03ad074da883939db12ff20b6a65f5cea30033aba570f58e34892f",
+        "747652d383a499b9891174def668a5f57edbcd217d3e5defcf1b7565b78bface",
+        "26f63d8b0ca1f4aceb5cace2450eba485e71fbd86ed525ae5f751853d2c33b69",
+        "6e04801f20246c2e44165cc1ae3e530b2ae48737301c878fc0833f151312ca7a",
+        "4fc9ce6ec0588f2e02430763cfa121cdef5da6059fc7832e27451813994ce5b9",
+        "5e440d35d1edd1b9f11b7f92bd91948eafc88da5bc37a5ebc8057209067f0a24",
+        "3e0e883ab5f4b2be4c3c98fd8d9eb3673081291737ca1c8892669b1f35f9e231",
+        "7d70e904ae733f6f5d2fb611a3ee15e4ce802136e6f06527be54e645d506a478",
+        "9070f1656b91903f70dad13f02a1fe4f8a322eb09146912f2bef8fb083e24ce6",
+        "e0eef94a81928a2c39d20f5fdfd152f46c425e7cd04a2e94da44f2d99c9c4a43",
+        "f3a67bdf3831daad3b5ec5ece848de1cfd3f68157ce9b14da7fe7f9058487601",
+        "e869d5af2ec1eded6418fe41762e4e51bc643f51ba28b385a2d97f309021bf73",
+        "41bbcefc435b14a0481c8451c817ac85fa25ffab5ae9fb46310abc02ac4b908b",
+        "cea5cbcf2580a97507987ff9b60d8773547c8b4a70801b2c68c281fd859a1813",
+        "2ef899e104fd5898eb73bf204d034353a84ad65c299cf16ec75f9c5e6c6d4344",
+        "1c03e9e2c71f5b55bccca9900c0636c8ae8fb15515c495d14383a32f57094b7e",
+        "73982b5564b60f08b781927af5ed0bd5da582b57aea85d2db7cee67f2a66c1f5",
+        "150b2bfb511598d910d6343a231a9ed0f1256687aca94f6bc2c16a6dd1e7a2c0",
+        "15245a9f4ca55b1540b4a823b93b463be8d510858114b1f5685bec2c0ec26db6",
+        "5307692c3923d68694b0186e25532232dd1815b18f65b2c9d7ef763db3b4c553",
+        "4f494f82a80a1fc80ba8478e5272f5978c4664a8c206034233383d12e7280e2a",
+        "ca497664903711574252fe37941590f74c7e29a1bbb5962c30d53e2069c96399",
+        "1c42eaa1edbe72ab8800a171ab73fe37d7634277671cf60e5392dbd29b6f51a0",
+        "ddb5d7cc38c08af864da9eb41588d6cb752b115127cf30a51b220b45c1fba855",
+        "9dacb7aeec4814c18cecbf340e96d626827904394af5ac32a7f0c507f9924690",
+        "dd9e25b5c988abaa43b6c726b42f157cac918c04ff7fa788820dc6be47ea5352",
+        "0c97015bd295a33162f12ba5618dc11a90599e7328292815947b788c6b24fe68",
+        "0dd29d183d8139a33d9b687e6702e6a7cb681272ed38ac8e5000d739d8cf7be0",
+        "00297b29f23c51a72883f5ea1a93a692ea2e978e7e01ae5d5efc0c1e621a1196",
+        "c9b21484a189789fc9d5dcc6268c3ec0a3da8e834c90376c057e0452dcd63d54",
+        "b026b8636c2dc2dec7f9976b1816dc07737bd60aa6f126805b1f45792875f635",
+        "10fe2d5fff5992d4a760adc92b2a2caf2d11f2d64ada21e0f7e4d7a241729ed9",
+        "5c6f6307c512565d799ce76b129b01c7cae3eac45bd12e4c2b682223fd802cac",
+        "c049df1d1ee3f9aba42934886e1ab09b70f9a1b0bdf96498f49d14733a3a3dc1",
+        "8cbd4d4b8dc005ddd50681cb15c7c3fb2c7dbc6e7388e08965ea05ff226da670",
+        "2393fd12f3d5ca27523ef9b06a09d81ba32e61615da6e9631a6936d7736dd6ba",
+        "556ac032240f725a7e02cd9aa63966f041c0f2e48c371b3f2dcec2b49944ae48",
+        "3a2dfceecfb387b2cdc793802f48de082b47007fe7b8e3533eacac6c5447b935",
+        "77089cf6178e64db2cdd79041bbb60e3f04f3696a8471bb5a53b874f262c5701",
+        "3e9a161ad5ca5d0238d5bfb0f63b9301815e527ef93bc9f7aac912cf47e1b107",
+        "7ab8159c03441fbf25b79f61b41cf8e1f2327c18313d656f07ddfd32b5051893",
+        "ac97def85316ccabf074be842e44dc2a6a04501053ea8c3fcf3b1047888a78ce",
+        "192f18e04501fd99ee9f57c71c3814c5f4c76eb45f532d297ad8e56ad9d6166d",
+        "02a7531dc903a79e36e9e9fbf712413c967ad429d392f4758deeb125980e8301",
+        "914a80b3ef820811627352b27a061e2c610a7547abffdad0d0152954bf9c7145",
+        "4117fdc11b3cddfabfc285cca0662bb9449c690aef39986ff6ba8703abadec8a",
+        "02f596b4c166b1891d8dd61b33f4bdf22d1e58b411ea55a8b528ed48fd47a94e",
+        "5a1e934c3b22f8096fc43e48c381101fca9ff352074ccbd8edd50ee163d180f5",
+        "181315108afb457332ee7c9f8da40ba8c478ccd16e57bf668fbccc234d91b15e",
+        "d9ee187ebfa52f49fea85eb810048245d70cc76fb6194f19eb23f3d0aa11cc88",
+        "5d08c22ab7c5c5544269af3961c503a693ae6ef371e67419893aac225874492f",
+        "7158e8b982d219444d570c7e72db156bfea2ed0173042e07784fb6f8ebc38b92",
+        "e4462a3ab17e88302f8b384cf1cb329faf05634b44722fdf4721cf9f5405d807",
+        "4621703d8e62c6e232bb7900781af7d0b1282c5441cf8b57600f0c3dab9e76b6",
+        "a66b98d20fd5861d41892faf5ca330eba9b2f2b341a79951eaf0695f61d48456",
+        "17249647c15277a650227a236b41590cf2a6d9418b10a6536b433e698ef9fd15",
+        "3fdc0d53984ea047c4acb0adaa39647baa834b3de6bf54048788c3ad145c3d53",
+        "abae36e281644024f86d21800dcdde50d9e46c7ac1822411728da340aac0f25b",
+        "e397349ff12da96b7e211f251285232e4552d2cc7af8826687c45acb889ef5e4",
+        "8698d78116aa91e5b0a5b7c003ff80fde30c0f336ebb38461c50af9273211297",
+        "6f82e1715cd100c47461c87faa264b0fda4413cd6c98eb2c7efd767cd03a2747",
+        "2403931fc8b4df5a30466adaa0d605d5f3b0cc86309bd40970f41c8f82f3aef7",
+        "7da92605ad078a0cc537ebb98c542d35efe4a9e8864598ec41169aca1867b6a2",
+        "1e0902e21727f92ba09fd93c3ad5ba2454b7eb5e57fbee58c060dfff5a5c3063",
+        "a106e723bfb2c383c0a5813c5ec120c6ae0067760d20ce03f6ddfbb5d27c7b6c"
+      ],
+      "test": "REACH TAGGED-TEMPLATE-ARGUMENTS"
+    },
+    {
+      "table": "REACH",
+      "id": "R-INFERRED-LITERAL",
+      "label": "read (wb-021.7 cut #5, the re-cut over the landed carrier: wb-021.10 pinned these pages quiet as a residual and named bead wb-021.7 the home of a reading through the constraint): an object literal written as the argument itself of a call to a src generic declaration with a body, or as the substitution of a tagged template under such a tag, at a parameter typed by a type parameter the call infers from that literal, is read against the member of its name in each part of the declared target of the flow it is written at (literalBases: the parameter argumentTarget reads, the type parameter through its constraint), so each pinned page's hiding member (a method that takes the projection as unknown) is refused (property), whether or not the callee declares an explicit this parameter (wb-021.7 refusal #3's this1-this5 shapes - a function, a function whose type parameter a union constrains, a class's method, a parameter after another, a function expression and a static method - and refusal #4's LTT1 shape, a tag, each pinned with a this parameter and without), as the same literal at a parameter typed by the constraint's type itself, and under a type argument written as that type, is (property), and a keeping literal reads quiet",
+      "pins": [
+        "cea4f4cf34e8e4f8fb706f5c4cc2d379c05ef49cc266b3aef52101c0addb22d4",
+        "f5d9217222c2206af43a87248b7793f8e76c4466004310d3280b022a0fa2f6ee",
+        "fa08bf863ba911a1b2dda742708130d82fc026950a2ac3e40fc4ec4362ab3cdf",
+        "3eed22f485f83eb7fc9038f52a6a05134f162289e79645e974d94a07f7659c7e",
+        "19d3fde0e0db7c70bc03627db1c9b850f86cf9273e77bd7061761d8c82013adb",
+        "e4f8817d0c8f4e693295d37c7ec4160629f4227d4df5ae66d80efc9b25fde025",
+        "4861bf61d483947c1affa85e35ab8606804927b7a7748a16892be5374a07e7c2",
+        "8f26415dfd891951e8fe91b3d39164f1369895756c11fec0e51dc14785befa85",
+        "fdb617a34c9c6d1a3b547d99bf86047dd3c09c4399a407a72762cfd03239729f",
+        "0437c25feaa6dcaafe10838827e311aeb648eabdbfa402c7b9a2edbb8b0242d6",
+        "591ab2763eb42b420fcd3f646ecac73231747fe3aa9f061ebf1f45c32eaab6e9",
+        "8204d9a7af20b51ca0a8e80b2b95eda35ee0dbfb12383bb1e1cdcc0d843675e4",
+        "3c59e0b6ea481668e2930bbc113492f320584605407b695210c53d38fe37166f",
+        "080b06758df5e48e9449d0d850b6c412ab08c32f6ed5bed799dfa1214a5e5253",
+        "93f6f8f0ca39a5871aad34328eef3378513e66c32b906d8b8e38d6372d7a60f4",
+        "787ef7dac39fb281e648fd95b16e98f0b0709e086ab4c2c626b04c70941077d0",
+        "44a735be905020f9c55f162ef44d5289e7573fff6c7f04e0154b4cf928ed9986",
+        "bdcfbbe73885b9b7d7cd6955a5ed0e32fedd9667e923f0522189a500c939e2ce",
+        "829f566445ef4b0e22dfae04e0830efd510eb21647125c2b2c7cefe05683deb8",
+        "2c6d32e0569381d97932a9dccbe7777840abec2a0406843d0900d1b963d6be03"
+      ],
+      "test": "REACH R-INFERRED-LITERAL"
+    },
+    {
+      "table": "REACH",
+      "id": "R-INDEX-STAND-IN",
+      "label": "residual (wb-021.7, found at its cut #1; a residual-list addition under ruling R-B67 (4); its further shapes pinned at cut #2, refusal #1 F3): the stand-in readings match a base member by its name (STAND-IN-KINDS), so a member whose name a base types only through an index signature - an implemented interface's string index signature, which the class's own index signature repeats, a number index signature (a numeric member), a template-pattern index signature, an extended class's index signature, an implemented interface's that extends a Record, and an object literal's contextual type that types it only through an index signature (an interface's, a Record) - is matched to no base member: a field, a method, a getter and a constructor parameter property standing in for it, and an object literal's method, read quiet whether they hide the projection or keep it (each page plants one that hides it), while an object literal's property there is read by its flow (property)",
+      "pins": [
+        "8e6716d7055aacb9f77ad63533cd3521d87c9374745de87d4795c8f6ad0a8153",
+        "776332ace7438bfa339fda994039c7c8c0b2cd802ae3bb68f9fd8e0c3b987863",
+        "5f85d8f6eecb3b0ba5a02b029e460dfd14769c55a9c4cc849da99891c1354f5b",
+        "09e196d155146945ed4644a53989e5557d9c165d9f4890d5bb12273fc63a7128",
+        "d9ec89e4ca5fe8ad96f6c08a0b252210d51e92565dc05c4d52aecce32d3b231c",
+        "3aacf53ff7df2691b355b35ea52e7fe5b61c409b39e7e34b07795f37fe281c9e",
+        "498697f100a65f8910440b32d82c2e166bab0b15a7ea740ea3cd69dabef330ec",
+        "afb152d023e79cc3790c4e772d79f6aa8233fafae4d0d90251399cfcda5917be",
+        "f70ee1a7fba493e23d6d935446efaec2c6576f080a296966e4ca8c42d8df846b",
+        "c64d5878a1dcb0cfecc9a1785129379104a58ddb5dad57345a92a42ca6c5b5b7",
+        "ea94fea08dd145fe5eba9d3e57f03f07fef1cbc331373b4eb94b7ec0cf4dc36b"
+      ],
+      "test": "REACH R-INDEX-STAND-IN"
+    },
+    {
+      "table": "REACH",
+      "id": "R-INTERFACE-REDECLARATION",
+      "label": "residual (wb-021.7 cut #2, refusal #1 F4: a residual-list addition, pre-existing in the landed core): an interface that extends a type whose member hands the projection and redeclares that member with a type that hides it (legal by parameter contravariance) is read as declaring the extended type (declaresGoal), and no reading judges an interface's member as a stand-in, so a class implementing the redeclaring interface is judged against the redeclared member, which hands nothing: its instance reads quiet handed back under the redeclaring type into a callback typed by the extended type, held by a field stand-in so typed, and flowing into the extended type directly, whether its member hides the projection or keeps it (each page plants one that hides it)",
+      "pins": [
+        "9eb51b191ef43fe66d39b23cbbd435c24c339c31580bc243e409ed1181d4b1b4",
+        "3fe67a489659ad53786b1ce1b72bfeedf25e6715c5b963d7c19849ed92f8a77d",
+        "3f34b0a83b851018a7ec1c6a2d531438228fa508415627099b080bec6925e341"
+      ],
+      "test": "REACH R-INTERFACE-REDECLARATION"
+    },
+    {
+      "table": "REACH",
+      "id": "R-INFERRED-INSTANTIATION",
+      "label": "residual (wb-021.7 cut #3, refusal #2 U1, ruling R-B155: the class it froze, named; pre-existing in the landed core and at cuts #1 and #2): an object literal's method, getter and shorthand property are read against the parts of the literal's contextual type and of its flow's declared target (literalBases), and where the contextual type is the instantiation a call infers from the literal itself while no declared target is read, the member is matched against the literal's own type, which hands nothing - a literal written inside the argument of a src callee's generic parameter (a property's value under a type parameter constrained to the type or to a union, its getter, a shorthand, an array's element, a tuple's element, two levels down, a generic method's and a generic constructor's nested argument: flowOf reads a property's value through that contextual type and an element not at all) and a literal passed, as the argument or inside it, to a generic signature with no body (a function-typed parameter, an interface method: argumentTarget trusts no parameter of one) - so each reads quiet with no row where the call's result flows into no written type, whether its member hides the projection or keeps it, while its twin under the type alone is refused (DISPATCH; each page plants one that hides it); wb-021.7 cut #4 (refusal #3 F3 and F4, and two members measured at the cut; pre-existing in the landed core) adds the members the narrowed position leaves to the contextual type alone - at the argument itself of a src callee's generic parameter, a property assignment's value (an arrow, a function expression, an identifier: flowOf reads it through the contextual type) and a spread (judgeSpread reads the contextual type), a literal relayed through Function.prototype.call to a src function, generic or not (the library signature's own type parameter takes the literal's type), and a literal passed to an overload set whose visible signature is generic while its implementation's parameter, which argumentTarget reads, declares none of the literal's members (an unknown) - each matched against the literal's own type and quiet, its twin refused (DISPATCH); the family's pages declare no explicit this parameter, and a literal so placed under a callee or a signature that declares one is NOT CLAIMED by this census (cut #4 failed a call to one closed, THIS-PARAMETERS; wb-021.7 cut #5 withdraws that row over the landed carrier wb-021.10)",
+      "pins": [
+        "6a6c42340cae0469099aab0b15d2421a0f86f19879e48a546b163c06c84225a8",
+        "cc2d077758d98ce430c75d97a643006350eb7f256f1718b861aef6d8b173560e",
+        "d9d7a67d62d512caf3b7c38f456e2962f8e97b7dfe4d3d9d63703ec8e2a548d4",
+        "04824e3c7bd56f548e62e22365c18d94e32add5ac7eda4677d34ae01db51cfc1",
+        "38c6fca963684cf8d284e03dab709f1841d84445fa65a2ff35c288d233a90e4f",
+        "dd35335ce0622c860bf878dfe6b5f0e4263c94136eda80b4c435e87f096a45bb",
+        "de2a3b64da439f3359c60be79eb81625082bede96af2c147fdafa5bb41fbcc3e",
+        "acf40d170130fb3283cf72ebd5c65fbe223aaef007f5cfad457a5101ef79c2f5",
+        "48644209a1114fb0bff0068118ca072ad70b10dd32002eb43c20067f4839f4b5",
+        "ead6d84a5f43d500d462ba50315193b1ec8d9b59496772e1f892bfb48c28a32b",
+        "ad9e13c09853d97525c122683c6831201197fe93878df8ca2d049ab71bc6443b",
+        "c52f7ce273ea3d8c375ed77eacdfa5af1b8211bdaeaaa99c9ff4b264669e9df7",
+        "ddecdfebcb7592b36b4043253e0f7fb5796462e6076f7c923791c797d39df464",
+        "77cfe7380554f5ea4289933d8cb1b101e76ff61aa64bd5daac5bf6936d0cbef2",
+        "bc2c86f25184439805ff0c9b08dd0ad739b1ad727cad28130bfe9d8282f3e061",
+        "24e775a49232b2481862d2cf7cca007f911f93a03c9007d66644e377ae75e8a6",
+        "c9a9df4771dccab4126b183565cedc3d0102a75935d2d31d21eeaf08cb6c8865",
+        "a5c834e7dbfcf5b70bf601193aca16cfc6a8d8e983549cb58e54409089f26422",
+        "a781a1081c8a0aab9ca5c868df6f4ba203e2d920aae6540f0a4c82d60ee6e850"
+      ],
+      "test": "REACH R-INFERRED-INSTANTIATION"
+    },
+    {
+      "table": "NAMES",
+      "id": "CLASS-NAME-FORMS",
+      "label": "a public member of the class is read under any name form - a string or numeric literal, a computed literal, template or constant, a symbol",
+      "pins": [
+        "8faf7900e77cb68b37888ff9db0430acc129a5b462a883a6d1c08f48c96c9d56",
+        "41e11396b6b96c7adb597b4e22d58b6adcc824ea8399ed9d94a6dd079783b0ad",
+        "17f7171e857bcc2f433ed1c69e304bd4ac7404fa96f25c5636882b2622b08546",
+        "2188b99d1c005bbc9f3a0446919db43abc156e5b59aa8563371daffb888b1dca",
+        "905310ea6db19689dfaa22f3622ccc89f9c62cdf52d857b6ce9fee84d753e6bf",
+        "0070c541332db929601bfc3bcbe0c46b0bb381c2eda2a6ef597aeed4ad88496f"
+      ],
+      "test": "NAMES CLASS-NAME-FORMS"
+    },
+    {
+      "table": "NAMES",
+      "id": "CLASS-MEMBER-KINDS",
+      "label": "every public instance member kind is read - an arrow property, a field, an accessor pair, a parameter property, a merged, an inherited and an augmented member - private, protected, #private and static members are not, and an index signature fails closed",
+      "pins": [
+        "5de516171ddc84040e96a27fab13c00fc9a228b6eb3fda349865237119e100bc",
+        "bbfbdec9714bcf3f3de25105e03e4a56b0f1d3f408832768f3843fddfe621d8d",
+        "62967cdd6d39a248ec8f5d756458bf5aac79db1cb52117af61a19ef407849410",
+        "a0e3f9354cdf2c8aaf8d2e95185de1629cce9eae59f61e8ef04a4554eb032371",
+        "8f8695b7259b9fbe0f3fa471e405475a4863601173e6c5737a69403bbf94bbfd",
+        "37e1bc1e149878e5803bdad7cea246f3d0b3249cd7ed0305e0b5c76943562f7f",
+        "aa8c9d143cb7d4f90c68d793d230338ab68c5d72a567128f55f1b64d05402be4",
+        "b8a86f86280f4408bba92fb94ad91575b8e736b8e87360579b653f821190fad3",
+        "5b7780e2b6eca7bea964b85e116d3d7093c24094b0dddf3b08e352ab3210106f"
+      ],
+      "test": "NAMES CLASS-MEMBER-KINDS"
+    },
+    {
+      "table": "NAMES",
+      "id": "CLASS-MEMBER-SHAPES",
+      "label": "a public member is read in each declaration shape planted here - a declared field, an optional method, an overloaded method, an abstract member a base declares, a setter alone, a getter alone, an auto-accessor, an override, a readonly field, a computed accessor",
+      "pins": [
+        "9d4c8246c9d250d37ea87e2451a5dedbf8a77c2404e255798917ee58a5c9f121",
+        "d66cc74d54b3bf2fe96bf1dc5b58e317b856605404e71e378e4d8bd128927014",
+        "3348e31e3bf8f3034a2fa0ee628eb355265d78480a85df54856d7d3ab051835a",
+        "a799c9de9429425e8f817a1c1e8f327f3432af5af07c6ab903906f6f90abb4ba",
+        "1f9ad87a9cefe38b0b4bf806d9e9db9b9749ed4fa95043d6b444261d95268718",
+        "6f9e4ee3d584c08a11abf55f3a94ea175a8703fc96829dff4806fc5631e07acf",
+        "a463a27fe4cd1359cc2b7bccf6a4ccf34ab3854de1dd7b51e9608440291bac20",
+        "63fef60c847b9246a84c4531d20de2a6d953bf10043e7148708d2661f9813364",
+        "918e5158b2c5fb3c5b900b7be2ffe74922eb194f6e0b85a80ce7476eab770f14",
+        "6b6da5a2bc641af553026dfcd56e07f4c78e0e52dad826733920a725bab52e6a"
+      ],
+      "test": "NAMES CLASS-MEMBER-SHAPES"
+    },
+    {
+      "table": "NAMES",
+      "id": "INTERFACE-FORMS",
+      "label": "every member of the actions interface is read under any name form, inherited and merged members included, and a call, construct or index signature fails closed",
+      "pins": [
+        "9e71bdbe8178cfb2dcdaf3c03ce4c3c690d30baa0b352dcde1035ddc1def1112",
+        "436c441036d37573ee5bb9d69c3a7ad753d4a1d84b28e2ae82be1caa741484e0",
+        "20ae5bd8f38ffb63f31b2c1fa4671aa445a9fc90aea23729c60de64af1e2ec84",
+        "371584d3491210096d51b6f0b04d1b6571876053e445a08ae17577c29703ec1b",
+        "38ab49ad48eb3160ebd05dc31728d9b64fb24a06b7d564486301549a20be549d",
+        "3b5b7010476fc7ca738ecaeec0b3016a69d133e507b536b50c3a2b0db696a8a0",
+        "17404ed48b47224662632a0b534579290b60dee3156ce9e9bf5cb279991af195",
+        "c8644c95cf8e7d413de3311a54ce1fc35993b640e59086d8d92044971138de93",
+        "58bbc5c33395afdf022989e933483647850b31d3bd53d4fcfb11df10ba5b31d4",
+        "83b16fc046b1df1959afd7c858e93768ba17b11e6caa3972130c7042c1355017"
+      ],
+      "test": "NAMES INTERFACE-FORMS"
+    },
+    {
+      "table": "NAMES",
+      "id": "INTERFACE-HERITAGE",
+      "label": "an actions member is read through each heritage and signature shape planted here - a generic base, an Omit base, a type-alias base, a getter signature, a readonly property",
+      "pins": [
+        "36a2eec6d25af615cc24b2b8be7a6d16a1f59661857f0acced66a106a37cf9a5",
+        "be40e6501f36ee23e682c66221b0734371f591d395a3ddeb1047b6d038dbc3ca",
+        "7b047b2f7b4978cbbeaabf3aa5b36732852b08cc5b34f165bdb79ce3c27e344a",
+        "7f3a734b83a1b49da95bda216a82a57b5b5c31dbcaa59d4f562a9da94b952d34",
+        "5127ec2c361b2ac7cd5dad790206e7ad62d6e310055b1d0a2a4cfbcb4068c5a6"
+      ],
+      "test": "NAMES INTERFACE-HERITAGE"
+    },
+    {
+      "table": "NAMES",
+      "id": "R-RUNTIME-MEMBER",
+      "label": "residual: a member patched onto the class's prototype at run time is not read - the readers read the declared class and interface",
+      "pins": [
+        "a6c596be664c217696038e37a2b9568d6e7a70ce921a4517cf549201eda81a7b"
+      ],
+      "test": "NAMES R-RUNTIME-MEMBER"
+    }
+  ],
+  "nonRender": {
+    "src/index.ts": {
+      "value": [
+        "ingest",
+        "markStale",
+        "query",
+        "refresh"
+      ],
+      "type": [],
+      "reason": "the extension entry: it builds the session projection, admits observations in tool handlers and in its workflow-lifecycle emitter, reads it in a tool handler (workflow_compare) and hands the dialog seam its deps"
+    },
+    "src/workbench/beads-observer.ts": {
+      "value": [],
+      "type": [
+        "relate"
+      ],
+      "reason": "the Beads adapter: it references the class only in the statement type relate accepts (Parameters<ObservationProjection['relate']>[0]), never in a value position; the host admits what it states"
+    },
+    "src/workbench/claude-control-observer.ts": {
+      "value": [
+        "query",
+        "relate"
+      ],
+      "type": [],
+      "reason": "the Claude control observer: on an SDK init it reads the session node and states the session's ownership"
+    },
+    "src/workbench/claude-topology.ts": {
+      "value": [],
+      "type": [
+        "relate"
+      ],
+      "reason": "the Claude topology adapter: it references the class only in the statement type relate accepts (Parameters<ObservationProjection['relate']>[0]), never in a value position; the host admits what it states"
+    },
+    "src/workbench/collective-event.ts": {
+      "value": [
+        "ingest"
+      ],
+      "type": [
+        "ingest",
+        "relate"
+      ],
+      "reason": "the MechanicalWorkflows collective-event boundary (wb-4ap.15): ingestCollectiveEvent admits an accepted collective.event.v1 envelope through its sink's ingest - a typed writer, Pick<ObservationProjection, \"ingest\">, the one READER WALK names - and returns the hypothesis statements its caller applies with relate, whose type and ingest's result type it spells; no src module imports it",
+      "writers": [
+        "ingest"
+      ]
+    },
+    "src/workbench/control-tool.ts": {
+      "value": [
+        "ingest",
+        "query"
+      ],
+      "type": [],
+      "reason": "the control tool's receipt recorder: on a control call it reads the target node and records the receipt phase as an event of it"
+    },
+    "src/workbench/control.ts": {
+      "value": [
+        "query",
+        "relations"
+      ],
+      "type": [],
+      "reason": "decideControl: the decision a control request runs, reading the target node and its relations"
+    },
+    "src/workbench/detached-control.ts": {
+      "value": [],
+      "type": [],
+      "reason": "the detached control seam: it holds the projection in its deps type and references no member the reach scan reads; its wiring check probes the deps' projection for its query and relations methods by reflection (method: Reflect.get over unknown) and type-tests the input and its deps (plain over unknown) - four erasing flows readForms refuses, named site by site",
+      "refused": [
+        "argument: method(input.deps.projection, \"query\")",
+        "argument: method(input.deps.projection, \"relations\")",
+        "argument: plain(input)",
+        "argument: plain(input.deps)"
+      ]
+    },
+    "src/workbench/detached-observer.ts": {
+      "value": [
+        "markStale",
+        "refresh",
+        "relate"
+      ],
+      "type": [
+        "refresh",
+        "relate"
+      ],
+      "reason": "the detached-run observer: applyDetachedReading admits a detached run's reading, whose statement and verdict types it spells from relate and refresh"
+    },
+    "src/workbench/evidence-wiring.ts": {
+      "value": [
+        "query"
+      ],
+      "type": [],
+      "reason": "the evidence producer wiring: its query reader runs inside a loader, on the explicit load-evidence action the host performs, never on a redraw"
+    },
+    "src/workbench/forge-observer.ts": {
+      "value": [],
+      "type": [
+        "relate"
+      ],
+      "reason": "the Forge adapter: it references the class only in the statement type relate accepts (Parameters<ObservationProjection['relate']>[0]), never in a value position; the host admits what it states"
+    },
+    "src/workbench/forge-operation-observer.ts": {
+      "value": [
+        "markStale",
+        "refresh",
+        "relate"
+      ],
+      "type": [],
+      "reason": "the Forge operation observer: as an operation starts and settles it admits its snapshots, its relation and its staleness"
+    },
+    "src/workbench/furnace-observer.ts": {
+      "value": [],
+      "type": [
+        "relate"
+      ],
+      "reason": "the Furnace adapter: it references the class only in the statement type relate accepts (Parameters<ObservationProjection['relate']>[0]), never in a value position; the host admits what it states"
+    },
+    "src/workbench/hyperunix-observer.ts": {
+      "value": [],
+      "type": [
+        "relate"
+      ],
+      "reason": "the HyperUnix adapter: it references the class only in the statement type relate accepts (Parameters<ObservationProjection['relate']>[0]), never in a value position; the host admits what it states"
+    },
+    "src/workbench/reactivefiber-observer.ts": {
+      "value": [],
+      "type": [
+        "relate"
+      ],
+      "reason": "the ReactiveFiber adapter: it references the class only in the statement type relate accepts (Parameters<ObservationProjection['relate']>[0]), never in a value position; the host admits what it states"
+    }
+  },
+  "tests": [
+    "SURFACES GRAPH-VIEW",
+    "SURFACES TIMELINE",
+    "SURFACES OBSERVE",
+    "SURFACES TOPOLOGY",
+    "SURFACES ATTENTION",
+    "SURFACES LATENCY",
+    "SURFACES TELEMETRY",
+    "SURFACES INSPECTOR",
+    "SURFACES DIALOG",
+    "SURFACES REPROJECTION",
+    "ADMISSION EVERY-ADMISSION-MEMBER",
+    "ADMISSION WRITE-ANY-ROUTE",
+    "INVOCATION EVERY-EFFECT-CLASS",
+    "INVOCATION OTHER-ROUTES",
+    "INVOCATION R-DEFERRED-EFFECT",
+    "EFFECT EVERY-DIALOG-ACTION",
+    "EFFECT EVIDENCE-ABORTS",
+    "EFFECT R-SIDE-CHANNEL",
+    "IDENTITY DRIFT-FOUND",
+    "IDENTITY HIDDEN-DRIFT",
+    "IDENTITY R-LATE-DRIFT",
+    "IDENTITY R-OPAQUE-STATE",
+    "QUIET READ-ONLY-RENDERS",
+    "READERS READ-ONLY-PICKS",
+    "READERS WRITER-PICKS",
+    "READERS OMIT-AND-UNRESOLVED",
+    "READERS INDEXED-ACCESS",
+    "READERS HERITAGE-AND-WRAPPED",
+    "READERS R-FULL-TYPE",
+    "READERS R-ALIASED-CLASS",
+    "ABSENCE MENTION-FOUND",
+    "ABSENCE NOT-MENTIONS",
+    "ABSENCE R-PARAPHRASE",
+    "REACH IMPORT-FORMS",
+    "REACH RENDER-MODELS",
+    "REACH ACCESS-FORMS",
+    "REACH KEY-FORMS",
+    "REACH KEY-HOLDERS",
+    "REACH UNRESOLVED-KEYS",
+    "REACH R-ERASED-ACCESS",
+    "REACH R-DEEP-CARRIER",
+    "REACH RESOLVABLE-FORMS",
+    "REACH GENERIC-ACCESSORS",
+    "REACH GENERIC-ALIASES",
+    "REACH CLASS-MODULE",
+    "REACH ERASING-FLOWS",
+    "REACH LIBRARY-FLOWS",
+    "REACH RELAYS",
+    "REACH DISPATCH",
+    "REACH UNLISTED-FORMS",
+    "REACH CLASS-ELEMENT-KINDS",
+    "REACH STAND-IN-KINDS",
+    "REACH STAND-IN-RECEIVERS",
+    "REACH CALLBACK-RECEIVERS",
+    "REACH R-NARROWED-BRANCH",
+    "REACH R-OVERLOADS",
+    "REACH R-PARAMETER-PROPERTIES",
+    "REACH R-STRUCTURAL-STAND-IN",
+    "REACH R-HELD-VALUE",
+    "REACH R-THIS-BINDING",
+    "REACH ASYNC-RETURNS",
+    "REACH GENERATOR-YIELDS",
+    "REACH INHERITED-IMPLEMENTATIONS",
+    "REACH CONTEXT-LESS-LITERALS",
+    "REACH SPREADS",
+    "REACH CALLBACK-RETURNS",
+    "REACH STAND-IN-RETURNS",
+    "REACH UNLISTED-STAND-INS",
+    "REACH THIS-PARAMETER-ARGUMENTS",
+    "REACH TAGGED-TEMPLATE-ARGUMENTS",
+    "REACH R-INFERRED-LITERAL",
+    "REACH R-INDEX-STAND-IN",
+    "REACH R-INTERFACE-REDECLARATION",
+    "REACH R-INFERRED-INSTANTIATION",
+    "NAMES CLASS-NAME-FORMS",
+    "NAMES CLASS-MEMBER-KINDS",
+    "NAMES CLASS-MEMBER-SHAPES",
+    "NAMES INTERFACE-FORMS",
+    "NAMES INTERFACE-HERITAGE",
+    "NAMES R-RUNTIME-MEMBER",
+    "live: no typed reader (a Pick, an Omit or an indexed access over the class) in any src module keeps an admission member but the writers the named non-render readers' entries name (the collective-event boundary's sink keeps ingest); the walk is every src module and reaches graph-view's reader",
+    "live (armed): every src module that reaches the projection - it names the class, references a member or holds a declaration that carries it, as the checker resolves names, or makes a use the forms judge refuses - is a SURFACES module or a named non-render reader",
+    "live (armed): each named non-render reader references exactly the members its entry names and makes exactly the refused uses its entry names, site by site, and none is in the runtime import closure of the SURFACES modules",
+    "live: the SURFACES modules, the class's own module outside its instance members included, reference read members of the projection only, in the forms the reach scan reads (every key through its type, an unresolved key failing closed), and make no use the forms judge refuses",
+    "live: the resolvable forms are exactly the forms the RESOLVABLE-FORMS row's quiet cases stand in, every src module's nodes that expose the projection stand in them or are refused, and src's refused uses are exactly the named non-render readers' rows",
+    "live: the class-element kinds the scans resolve are exactly the pinned typescript's ClassElement kinds, as its declaration file declares them (every interface extending ClassElement, with its SyntaxKind), the CLASS-ELEMENT-KINDS cases plant every one of them, and every element of the class's own declaration in src is of a listed kind",
+    "live: the projection's public instance members, as the checker reads the class (the member kinds, declaration shapes and name forms NAMES plants), are exactly the read and admission members, each planted or re-projected",
+    "live: the invocation plants invoke every effect class the registry's descriptor declares",
+    "live: the effect plants perform every WorkflowDialogActions member, as the checker reads the interface (the name forms, heritage and signature shapes NAMES plants; signatures fail closed)",
+    "live: no src module spells the program, by path or text; the walk is every src module",
+    "anchor: every table quote stands once in its section of the bead's export row (the title or the owner filing, each pinned byte for byte), the quotes with every junction between them pinned compose the judged statement contiguously after the requirement id, the quotes tile the acceptance, and the row holds no other requirement field (description, design, acceptance criteria) (.beads/issues.jsonl, wb-021.5)",
+    "anchor: the fail-closed shapes, each with the REACH row that plants it, and the shapes wb-021.7 reads instead, each with the row that pins its reading, are exactly the kind:row pairs the cut #8 delivery record in the bead's export row enumerates, each set in its order (.beads/issues.jsonl, wb-021.5; wb-vgri; wb-021.7 cut #5)",
+    "anchor: the into-any pages - R-THIS-BINDING's cases whose planted module text writes, anywhere in it, Function.prototype.<m>.<n>( or Reflect.apply(Function.prototype.<m> in that dotted spelling (each name whole - no identifier character right before Function or Reflect, and none and no backslash right after m - with m and n each bind, call or apply, so another member or a longer name is none, and the open parenthesis right after the member's name, so no type argument written) - are INTO_ANY's thirteen in row order; the pinned typescript's checker types each page's bound value as INTO_ANY states (any at its three, its own type at its ten); each label claim below counts a frozen phrase's copies as copies reads them, claimed at the spellings and in the surroundings the row sweeps (the phrase's words, its leading 'or' or 'and' not read, held to the runtime - whitespace is each character its String.prototype.trim removes and a letter's two cases are as it pairs them: the phrase as frozen, in capitals or in small letters, each with up to two letters in their other case, or with every letter in alternating case; each space alone, or every space, as any run of one or two whitespace characters; every space as a run of the runtime's whitespace in code point order, from its first character to all of it; and one phrase's every space as that order repeated to each length up to the longer label's; each spelling read after 'a planted text; ' and before '; and on', and, but for the one phrase's longer runs, at a text's start before a space and the phrase as frozen; the phrase as frozen, in capitals, in small letters or with a sentence-initial capital, with one space doubled, with every space a tab, a line break or a no-break space, or with its leading conjunction dropped or written 'or' or 'and', each read besides with each printable ASCII or whitespace character right before it and, apart, right after it there, and after a planted text longer than the longer label; the phrase as frozen with each punctuation code point the runtime holds (\\p{P}) right before it and, apart, right after it there; one phrase after each number of x's up to the longer label's length; and each withdrawn wording as frozen appended to a planted label with any one of those characters right before it and that same character again right after it; between paired marks (wb-xtah), each spelling spellingsOf writes between each of the named pairs (U+0028 and U+0029, U+005B and U+005D, U+007B and U+007D, U+2018 and U+2019, U+201C and U+201D, U+00AB and U+00BB, U+2039 and U+203A, U+300C and U+300D, U+300E and U+300F, U+201E and U+201D, U+201E and U+201C, U+201A and U+2018, U+00BB and U+00AB, U+203A and U+2039), the opening one right before it and the closing one right after it, there and after the planted text longer than the longer label, the one phrase between each named pair after each number of x's up to the longer label's length, each phrase's words (its leading 'or' or 'and' not written) between each opening mark the runtime holds (\\p{Pi} or \\p{Ps}) and each closing mark it holds (\\p{Pf} or \\p{Pe}) and between each named pair there, and each withdrawn wording appended to a planted label, R-THIS-BINDING's as frozen and DISPATCH's as frozen and with its leading 'or' not written, between each of those pairs; where a copy stands, as copyAt finds it, read for each spelling spellingsOf writes with each printable ASCII or whitespace character right before it or, apart, right after it there, and after the planted text longer than the longer label, for the phrase as frozen with each punctuation code point the runtime holds right before it or, apart, right after it there, for each run of one or two and each letter pair there, for the one phrase after each number of x's, and for each copy between paired marks but the appended withdrawn wordings, and by count alone anywhere else), and a copy in any other spelling or surroundings (one with two different characters planted there, one right before it and one right after it, that form none of those pairs, or a spelling other than a phrase's words between an opening and a closing mark that form no named pair) and where a copy read by count alone stands, with the order and the lists it would give, are NOT CLAIMED: R-THIS-BINDING's label holds its into-any clause's opening, declaration fact, any list's opening and own list's opening, each exactly once and in that order, and names each page, by INTO_ANY's words, in the list of its typing (the own list ending at its first full stop followed by whitespace, as a scan reading whitespace as the runtime's String.prototype.trim does finds it, at the ends the row sweeps, each with every whitespace character the runtime trims, in turn, right after the full stop: any one code point (one at or above U+10000 with U+0020 and with the one the sweep pairs it with only), or any one to three printable ASCII characters, standing alone and read from its text's start, before the full stop with the small letter b after the whitespace, or after the whitespace with the small letter a before the full stop; a run of one or two of those characters, or those characters in code point order to each length up to the longer label's, between a full stop after the small letter a and the small letter b; and, read from the own list's opening in a planted label, the planted abbreviations and initialisms before the full stop (etc., e.g., i.e., cf., vs., U.S. and A.B.) and initialisms and initials after the whitespace (A.B, X. and E.g.), the planted honorifics before the full stop (No., Mr., Mrs., Ms., Dr., St. and Prof.) and each dash the runtime holds (\\p{Pd}) after the whitespace, and the planted 'After it:' and 'after it:' after a run of one or two of those characters; an end read with any other context, whitespace, run or offset is NOT CLAIMED) and never in the other; DISPATCH's label holds the by-call phrase ending at its turn into any and the into-any phrase running from that turn, each exactly once; and neither label holds its withdrawn wording (wb-py8n, landing 770 F6; wb-ldqu, the spelling-robust readings, held to the runtime at cut #2, claimed at the swept ends and spellings at cut #3, at every whitespace character and the swept surroundings at cut #4, and narrowed to its pins at cut #5, the fail-closed core; wb-xtah, the copies between paired marks)",
+    "rule 16: every judged row, the non-render readers and their refused uses, the residual families, the member sets, the reach scan's depth bound and marker, the resolvable forms, the class-element kinds with their syntax and stand-in readings, the fail-closed shapes with the rows that plant them, the requirement fields and src's forms are frozen at their measured shape",
+    "roster: the judged rows, the non-render readers, the registered tests and the residual families equal test/fixtures/apo-rerender-roster.json, in order and both ways"
+  ],
+  "residuals": {
+    "R-DEFERRED-EFFECT": [
+      "INVOCATION R-DEFERRED-EFFECT"
+    ],
+    "R-SIDE-CHANNEL": [
+      "EFFECT R-SIDE-CHANNEL"
+    ],
+    "R-LATE-DRIFT": [
+      "IDENTITY R-LATE-DRIFT"
+    ],
+    "R-OPAQUE-STATE": [
+      "IDENTITY R-OPAQUE-STATE"
+    ],
+    "R-FULL-TYPE": [
+      "READERS R-FULL-TYPE"
+    ],
+    "R-ALIASED-CLASS": [
+      "READERS R-ALIASED-CLASS"
+    ],
+    "R-PARAPHRASE": [
+      "ABSENCE R-PARAPHRASE"
+    ],
+    "R-ERASED-ACCESS": [
+      "REACH R-ERASED-ACCESS"
+    ],
+    "R-DEEP-CARRIER": [
+      "REACH R-DEEP-CARRIER"
+    ],
+    "R-RUNTIME-MEMBER": [
+      "NAMES R-RUNTIME-MEMBER"
+    ],
+    "R-NARROWED-BRANCH": [
+      "REACH R-NARROWED-BRANCH"
+    ],
+    "R-STRUCTURAL-STAND-IN": [
+      "REACH R-STRUCTURAL-STAND-IN"
+    ],
+    "R-HELD-VALUE": [
+      "REACH R-HELD-VALUE"
+    ],
+    "R-THIS-BINDING": [
+      "REACH R-THIS-BINDING"
+    ],
+    "R-INDEX-STAND-IN": [
+      "REACH R-INDEX-STAND-IN"
+    ],
+    "R-INTERFACE-REDECLARATION": [
+      "REACH R-INTERFACE-REDECLARATION"
+    ],
+    "R-INFERRED-INSTANTIATION": [
+      "REACH R-INFERRED-INSTANTIATION"
+    ]
+  }
+}

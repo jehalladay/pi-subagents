@@ -45,13 +45,14 @@
  *   as CLAIM_KEY) carries PLANE_SCOPED_CLAUSE instead, as exact rendered text (required text is never folded, so a
  *   look-alike or an invisible inside the clause is refused). Neither reading consults W10_COMMITTED, so a later re-cut of
  *   the committed row cannot carry the claim back.
- * - EVIDENCE COMPOSITION (J7): the rendered Evidence cell, split into sentences at each ". ", is exactly its six committed
+ * - EVIDENCE COMPOSITION (J7): the rendered Evidence cell, split into sentences at each ". ", is exactly its seven committed
  *   sentences in order: the lead (evidenceLead(): its carrier slot renders the R2 carrier, its receipt slot the stamped
  *   receipt, its retired release is the retirement-clause carve-out below), the Tests sentence, the legacy receipt clause
  *   and the bead sentence (each pinned whole), then the stamped sentence (judged by its slice), then the descriptor-contract
  *   sentence (wb-973.16, pinned whole: the two input arms, the render flags, the frozen legacy argv, the operator-set root
  *   and the two hosted-agent locators, each with the gate receipt id of the landing that delivered it; the legacy receipt
- *   clause is never edited). A sentence outside that list, anywhere in the cell, is refused, and so is a missing one.
+ *   clause is never edited), then the TSX-era receipt sentence (wb-693.7, pinned whole and bound to its receipt by the
+ *   TSX-ERA RECEIPT ROW reading below). A sentence outside that list, anywhere in the cell, is refused, and so is a missing one.
  * - STAMPED SENTENCE (bounded clause, 6hb.7: slice equality, never includes-anywhere): the rendered Evidence cell splits into
  *   sentences at each ". "; exactly one reads as beginning with STAMP_KEY, and it EQUALS stampSentence() with its slots
  *   filled from the receipt it names and from the carrier: receipts/<bead>.md exists; its newest rendered
@@ -113,14 +114,136 @@
  * with the row's cmd slot moves the run of record with it (each decoy row's rewritten pin; landed receipt lines are
  * append-only under owner ruling R539, whose numstat check at the gate, never this guard, refuses that edit); a later
  * "Run of record:" declaration on a line whose first cmd_* id is the record is prose to this guard (RR5 trailing).
- * Spawns nothing; writes nothing; reads two docs files and the receipts directory and imports the carrier.
+ * TSX-ERA RECEIPT ROW (wb-693.7, RF-TSX-AND-EMBEDDING-R9: "one gated run of the R8 tier shall produce a recorded TSX-era
+ * receipt: a success row ... and a runtime-absent row ..., landing as a NEW TRACEABILITY row with the feature-matrix W10 row
+ * re-graded"; TRACEABILITY.md is frozen, so the receipt is receipts/wb-693.7.md under standing rule 13): exactly one rendered
+ * Evidence sentence reads as beginning with TSX_KEY, and it EQUALS tsxSentence() with the slots TSX_SHAPE reads back (its two
+ * engine slots, the pinned Deno and tsx_runtime distribution_version, read one release: a split is named on its own beside
+ * the slice check, wb-ojur, so the equality is falsified apart from it), bound
+ * to the receipt it names: receipts/<bead>.md exists; the newest entry carrying RF-TSX-RECEIPT {json} lines (the lines the
+ * R8 tier, test/workbench-native-rf-tsx-preview.test.ts, writes to stdout) carries exactly one success row and one
+ * runtime-absent row and no other row; the success row's cli_version, tsx_worker_spawns (a count of at least 1) and
+ * distribution_version equal the sentence's slots, and its contract_fingerprint has the tier's fingerprint shape; the
+ * runtime-absent row reads category "unavailable" with RF_COMPONENT_RUNTIME_ABSENT in its message; and the sentence's cmd_*
+ * id is that entry's run of record (its heading's one exact clause, first on every "Run of record:" line: the RUN OF RECORD
+ * reading above, applied to the TSX entry). The TSX ROWS falsify the binding one site at a time; T-ANCHOR holds their sites
+ * to what the live receipt renders and to the field names the R8 tier's receipt() calls print, both ways, so a site removed
+ * from every literal of this file still reds; TSX-SHAPE freezes each row's site, label and pins (standing rule 16). Every
+ * refused TSX and TS pin is refused with exactly its findings, each whole and in order (wb-m14y, the wb-ojur gate's F2 S5: a
+ * cause shortened in every literal of this file stayed green under a containment reading): the judge's own output anchors
+ * every cause.
+ * TSX residuals (named, each pinned by an accepted residual pin): an older entry's RF-TSX-RECEIPT lines are never judged
+ * (T10, the newest-entry reading); the tier's unprinted assertions (ephemeral, render_id, storage_write_count) are judged by
+ * the tier itself, so the receipt's prose restating them is never read (T11).
+ * TSX STRUCTURE (wb-ojur, the wb-693.7 gate's F1: 11 of 23 judge mutants survived because no pin falsified the judge's
+ * structural arms): T7 gains a stray and a doubled heading clause, T9 an engine split, a reworded slice and a look-alike copy
+ * of the sentence, and TS1-TS7 refuse the arms no field, record or page site draws: the Evidence cell unreadable, the receipt
+ * missing, raw HTML in it, no RF-TSX-RECEIPT line, a line that is not one JSON object, a row outside the R9 pair, a pair row
+ * twice. TS6 also refuses nine near names (TSX_NEAR_NAMES; wb-m14y, the wb-ojur gate's F2 J-g3: a prefix match accepted a
+ * foreign "success-..." row silently; then this bead's gate's F1 G4: a start-trimmed match accepted a foreign " success" row;
+ * then its second gate's F1 G7 and G7b: an NFKC-normalized and a format-stripped match each accepted a look-alike row), each
+ * one a comparison weaker than exact membership in the R9 pair would accept: an R9 name with text after it (a prefix match)
+ * or before it (a suffix match), a proper prefix and a proper suffix of an R9 name (the two reverse matches), an R9 name in
+ * another case (a case-folded match), one with trailing white space (a trimmed match), one with leading white space (a
+ * start-trimmed match), one whose first letter is a fullwidth compatibility character (a normalized match) and one with a
+ * zero width space inside (a format-stripped match). T-ARMS anchors the TS rows outside the tables, in the judge's own code:
+ * it requires every finding of every refused pin to read as exactly one arm or, matching no arm, as one of the findings the W10
+ * view of that pin's own variant page gives (the shared W10 view; wb-m14y refusal #5 U3: a finding of the W10 view of another
+ * page is not one), every arm to be drawn, the TS rows to be exactly the arms no T row draws, in the judge's order, and the
+ * reading to hold no unread entry; TS-SHAPE freezes the TS rows (standing rule 16).
+ * T-ARMS READING (wb-m14y, the wb-ojur gate's F1: five in-place mutants, IP-E1 to IP-E5, each added one unpinned diagnosis in a
+ * form the landed reading did not read; this bead's cuts #1 to #4 widened that reading in this file, and ruling R-B193 moved
+ * its coverage to the child wb-5mco): T-ARMS judges the reading that readJudgeArms(), from test/helpers/w10-tsx-judge-arms.ts
+ * (this bead's cut #4 reader, which wb-5mco moved there and wb-37o9 landed, landing 897), gives this file's source.
+ * What it reads, refuses and leaves residual is claimed by its census, test/workbench-w10-tsx-judge-arms-census.test.ts
+ * (wb-5mco, landing 932): the READ, REFUSED and RESIDUAL lists of that census's header, each item with the T-ARMS-FORMS probes
+ * that falsify it, and T-ARMS-LIVE, its reading of this file as judgeTsxRow's 26 arms and no unread entry. This guard claims
+ * none of that reading; its claim is T-ARMS's four requirements over it (above), held by armsJudgment() and
+ * failedRequirements(), which T-ARMS and T-ARMS-FORWARD both judge by. armsJudgment() judges the reading it is handed over the
+ * pin runs it is handed; refusedRuns() gives one run per refused pin of the TSX and TS rows, in table order, each carrying the
+ * findings judgeTsxRow gives that pin's variant on the live receipt and the findings the W10 view of that variant page gives,
+ * and T-ARMS holds its runs to exactly those pins.
+ * T-ARMS-READER pins the provenance of every reading armsJudgment() judges (wb-m14y refusal #5 U1: a renamed inline copy of the
+ * reader, read with in place of the import, kept cut #5's name-level pins green). Read with the TypeScript checker over this
+ * file's source alone, every reference to armsJudgment() is the callee of a call whose first argument is itself a call of a
+ * name the checker binds to this file's import of readJudgeArms: one such call in T-ARMS and six in T-ARMS-FORWARD. That
+ * import, this file's only import naming readJudgeArms, imports it under its own name from ./helpers/w10-tsx-judge-arms.js,
+ * and the census's own import of it is the same. By name, of the declarations declaredNames() reads in this file, the one with a
+ * READER_NAMES name is that import; READER_NAMES is readJudgeArms and bindingChecker (the two function declarations the reader
+ * module makes, read from it) and judgeArms (the reader trunk carries here before this cut). declaredNames() reads each
+ * declaration of each DECLARATION_KINDS kind (variable, parameter, binding element, function, function expression, class, class
+ * expression, enum, namespace, import-equals, default import, namespace import, named import, interface, type alias, type
+ * parameter) whose name is an identifier, and T-ARMS-READER-NAMES is its negative control (refusal #5 U2: the leg had none): each
+ * NAME_PLANTS plant, a declaration of one kind under a READER_NAMES name written into this file's source at its end or directly
+ * before the last statement of armsJudgment()'s body, is read back as that kind and name. The plants cover every kind, in the
+ * forms the table lists: a variable of a const, a let and a var statement, of a for-of head and of a catch clause; a parameter of
+ * an arrow function, a function declaration and a method; a binding element of an object pattern, an array pattern and a
+ * parameter's object pattern; a function declaration with a body and one without; an enum and a const enum; a namespace and the
+ * inner name of a dotted namespace; a type parameter of an arrow function and of an infer type; one form of each other kind.
+ * T-ARMS-READER-NAMES also holds the kind list to the one this header states. A declaration form or place other than those the
+ * plants write is NOT CLAIMED by this census. T-ARMS-READER-CONTROLS gives a negative control to each of readerImports(),
+ * judgmentReadings(), topLevelFunctions() and headerKinds(), the readers T-ARMS-READER and T-ARMS-READER-NAMES compose besides
+ * declaredNames(): an edit of the source the reader reads, with what it reads from the edited source. readerImports() reads an
+ * aliased, a second and a renamed import of the reader; judgmentReadings() reads a copy of the reader, a local alias of it and
+ * a local shadow of its name at T-ARMS's call, a reference to armsJudgment() that is no call (an alias, a shorthand property and
+ * an export specifier), a second declaration of armsJudgment(), armsJudgment() handed on as the second and as the third
+ * argument of a call whose first argument is a call of the import (a reference inside a call that is not its callee; wb-m14y
+ * refusal #6 U1), the import's call as the second and as the third argument of an armsJudgment() call whose first argument
+ * is a copy's call, and the import's name as an armsJudgment() call's first argument in six forms that are no call (a property
+ * access and an element access, each plain and optional, an as assertion and an angle-bracket assertion);
+ * topLevelFunctions() reads a function added to the reader module; and headerKinds() reads a kind taken out of this header's
+ * list. Each condition under which judgmentReadings() reads a reference as the import's reading has a control that misses
+ * it: the reference is the callee of a call (RC13: armsJudgment() handed on after the import's call), that call's first
+ * argument is a call (RC15: the import's name there in six forms that are no call), and that argument's callee is a name the
+ * checker binds to the import (RC4 to RC6: the copy, the alias and the shadow; RC14: a copy's call first and the import's
+ * call after it). How judgmentReadings() reads a form neither this file nor a control holds (an argument position after the
+ * third, for one) is NOT CLAIMED by this census.
+ * T-ARMS-FORWARD pins each requirement on a judgment of its own: armsJudgment() over refusedRuns() and the reading of an
+ * edited copy of this file's source, or over the live reading and edited runs. With one statement written directly before the
+ * last statement of judgeTsxRow's body, a pushed string (the census's AF1 form) reads as the live arms and one more after
+ * them, which no refused pin draws and the TS rows do not draw, so it fails the TS-row and drawn requirements; a pushed spread
+ * of a method call (its AU7 form) reads as the live arms and one unread entry, so it fails the unread requirement; and a second
+ * push of T9 dropped's finding reads as one more arm and that finding as two arms, so it fails the one-arm requirement. With
+ * T9 dropped's arm taken out of the judge (the conditional expression whose first branch is that finding replaced by its second
+ * branch), the reading is the live arms but that one, and T9 dropped's finding reads as no arm while the W10 view of its page
+ * does not give it, so it fails the one-arm requirement (refusal #5 U3, the zero-arm leg). Over the live reading, with TS1
+ * unreadable's run also carrying, after its own findings, the two findings the W10 view gives an empty page (the refusal's
+ * W-ZERO, the census's AR2 form), those two read as no arm and the W10 view of TS1's own page does not give them, so it fails
+ * the one-arm requirement. FORWARD (lander obligations, bounded to what this guard proves): a change to the judge that adds an
+ * arm to the live reading owes a refused pin whose finding reads as it (T-ARMS reds until one does), and one that adds an
+ * unread entry, or makes a refused pin's finding read as two arms, or as no arm without the W10 view of its page giving it,
+ * reds T-ARMS; which changes to the judge do any of these is the census's reading, NOT CLAIMED here.
+ * T-ROSTER holds the T rows to the TSX receipt's claim of record ("rows T0 to T11"), so a T row removed from every literal of
+ * this file, a residual row included, still reds (the gate's F2: its X-CT6-T10 and X-CT6-T11 coordinated hollows). It reads
+ * the claim as the receipt RENDERS (rosterClaims()): T-ROSTER-RENDERED pins four receipt variants whose raw and rendered
+ * claims disagree (wb-m14y, the wb-ojur gate's F3 A5: a raw reading stayed green) - the claim inside a complete comment or
+ * struck through reads as no claim; written with escaped parentheses or an emphasized last row it reads as the claim.
+ * NOT CLAIMED (pin grain): T-ARMS anchors arms, not pins, so a pin removed from every literal of this file stays green while
+ * another pin draws each arm it draws: T1, T2 and T3 changed (beside emptied or zeroed), T7 removed or T7 doubled (one of the
+ * two), T8 swapped (beside T7 swapped), T9 doubled or T9 lookalike (one of the two), T4 unknown, which draws none, and any one
+ * of TS6's ten pins; every row keeps at least one pin. Likewise a T-ROSTER-RENDERED variant, a T-ARMS-READER-CONTROLS control,
+ * or a NAME_PLANTS plant whose kind keeps another plant, removed from every literal of this file, stays green: those tables are
+ * anchored by their own literals and counts only. The F, G, K, H, J, W, X and RECORD rows keep
+ * their containment reading (each cause a part of a finding).
+ * NOT CLAIMED (reading): the reader's reading - which forms it reads, refuses or leaves residual, and whether the TypeScript
+ * checker's binding it follows is the run-time one - is the census's claim and is not claimed here; nor is T-ARMS's judgment of
+ * any source but this file's and T-ARMS-FORWARD's four edited copies, or over any runs but refusedRuns()' and T-ARMS-FORWARD's
+ * one edited set.
+ * NOT CLAIMED (provenance): which file the module specifier ./helpers/w10-tsx-judge-arms.js resolves to (the vitest and
+ * TypeScript configuration, outside this file) is NOT CLAIMED by this census; a reader copy elsewhere in this file, under a
+ * name outside READER_NAMES, that no armsJudgment() call's reading comes from is NOT CLAIMED by this census either.
+ * Spawns nothing; writes nothing; reads two docs files, the receipts directory, the R8 tier file, this file's own source
+ * (T-ARMS, T-ARMS-READER, T-ARMS-READER-NAMES, T-ARMS-READER-CONTROLS, T-ARMS-FORWARD), the census's (T-ARMS-READER) and the
+ * reader module's (T-ARMS-READER, T-ARMS-READER-CONTROLS), and imports the T-ARMS reader and the carrier.
  */
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { Lexer, type Token, type Tokens, type TokensList } from "marked";
+import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { readReceiptsListing, renderReceiptsIndex } from "../qa/workbench/receipts-index.mjs";
 import { REACTIVE_FIBER_CONTRACT_SOURCE } from "../src/workbench/providers/reactivefiber.js";
+import { type ArmsReading, quotedPattern, readJudgeArms, SELF, SHARED_VIEW } from "./helpers/w10-tsx-judge-arms.js";
 
 const ROOT = process.cwd();
 const MATRIX = "docs/workbench/feature-matrix.md";
@@ -144,6 +267,18 @@ const RECORD_CLAUSE_ALL = /\(receipt of record (cmd_[0-9a-f]{12})\)/g;
 const RECORD_KEY = "receipt of record";
 /** The folded key a rendered line of the entry reads as beginning with when it states the entry's run of record. */
 const RUN_KEY = "run of record:";
+/** TSX-ERA RECEIPT ROW (wb-693.7): the folded key the TSX-era receipt sentence reads as beginning with. */
+const TSX_KEY = "tsx-era receipt row";
+/** The mark each R8 tier receipt line opens with (the tier's receipt(), written to stdout). */
+const TSX_MARK = "RF-TSX-RECEIPT {";
+/** The R8 tier file whose receipt() calls name the fields each TSX receipt row prints (T-ANCHOR's second source). */
+const TSX_TIER = "test/workbench-native-rf-tsx-preview.test.ts";
+/** The two receipt rows R9 names, in the tier's order. */
+const TSX_ROW_NAMES = ["success", "runtime-absent"] as const;
+/** The tier's shape for tsx_runtime.contract_fingerprint (R9 acceptance, success row). */
+const TSX_FINGERPRINT = /^sha256:[0-9a-f]{64}$|^unknown$/;
+/** The producer code R9's runtime-absent row carries in its message. */
+const RUNTIME_ABSENT_CODE = "RF_COMPONENT_RUNTIME_ABSENT";
 /** The withdrawn universal negative (R5 AC1, wb-2j3.4) in both spellings it was published in: the row's and the descriptor's. */
 const WITHDRAWN_CLAIMS = ["zero durable writes", "no durable write"] as const;
 /** The plane-scoped clause the claim row's rendered Feature cell carries in place of the withdrawn claim (wb-2j3.4 STATEMENT). */
@@ -197,9 +332,39 @@ const W10_COMMITTED = {
   bead: "Bead wb-x32 (open).",
   contract:
     "Descriptor contract re-stated (wb-973.16, receipts/wb-973.16.md): the exclusive oneOf of the legacy {model, task} arm and the {view, taskId, model?} arm, rendering only --no-commit --no-input --json with the legacy argv frozen byte for byte (wb-973.1, wb-973.3; landing gate cmd_448b9c90d4bd), the operator-set swarm RF workspace root (wb-973.4, landing gate cmd_b1a13ceb80b6; wb-973.5, land-prep gate cmd_9af5362d3e08) and the RF_WORKSPACE and SWARM_RF_WORKSPACE hosted-agent locators (wb-973.6, wb-973.7; landing gate cmd_acbe436ec5c2).",
+  tsx: "TSX-era receipt row (R9, 2026-10-26): receipts/wb-693.7.md, gated forge run rf-preview-tsx cmd_130f00c9f3ea against the operator-provisioned installed rf serving kind tsx with the pinned Deno 2.9.7 first on PATH, 2 of 2 rows passed: the success row (RF-TSX-RECEIPT cli_version 0.1.845, tsx_worker_spawns 1, tsx_runtime distribution_version 2.9.7) and the runtime-absent row (category unavailable, RF_COMPONENT_RUNTIME_ABSENT under a no-deno PATH); the R2 carrier keeps its stamped release (a re-pin moves only through the gated rf-preview route).",
 } as const;
 /** The rendered beginning of the committed descriptor-contract sentence (wb-973.16), where its falsifiers author their edits. */
 const CONTRACT_MARKER = "Descriptor contract re-stated (wb-973.16, ";
+/** The rendered beginning of the committed TSX-era receipt sentence (wb-693.7), where its falsifiers author their edits. */
+const TSX_MARKER = "TSX-era receipt row (R9, ";
+
+interface TsxSlots {
+  date: string;
+  receipt: string;
+  cmd: string;
+  engine: string;
+  cliVersion: string;
+  spawns: string;
+}
+
+/** The committed TSX-era receipt sentence as the page renders it (code span markup dropped), slots filled; the pinned Deno
+ * release the success row's tsx_runtime reports stands in both engine slots. */
+function tsxSentence(slots: TsxSlots): string {
+  return `TSX-era receipt row (R9, ${slots.date}): receipts/${slots.receipt}.md, gated forge run rf-preview-tsx ${slots.cmd} against the operator-provisioned installed rf serving kind tsx with the pinned Deno ${slots.engine} first on PATH, 2 of 2 rows passed: the success row (RF-TSX-RECEIPT cli_version ${slots.cliVersion}, tsx_worker_spawns ${slots.spawns}, tsx_runtime distribution_version ${slots.engine}) and the runtime-absent row (category unavailable, RF_COMPONENT_RUNTIME_ABSENT under a no-deno PATH); the R2 carrier keeps its stamped release (a re-pin moves only through the gated rf-preview route).`;
+}
+
+/** tsxSentence() read back: date, receipt, cmd, the two engine slots, cli_version, spawn count. */
+const TSX_SHAPE = new RegExp(
+  `^TSX-era receipt row \\(R9, ([0-9]{4}-[0-9]{2}-[0-9]{2})\\): receipts/(${BEAD})\\.md, gated forge run rf-preview-tsx (cmd_[0-9a-f]{12}) against the operator-provisioned installed rf serving kind tsx with the pinned Deno (${RELEASE}) first on PATH, 2 of 2 rows passed: the success row \\(RF-TSX-RECEIPT cli_version (${RELEASE}), tsx_worker_spawns ([0-9]+), tsx_runtime distribution_version (${RELEASE})\\) and the runtime-absent row \\(category unavailable, RF_COMPONENT_RUNTIME_ABSENT under a no-deno PATH\\); the R2 carrier keeps its stamped release \\(a re-pin moves only through the gated rf-preview route\\)\\.$`,
+);
+
+function readTsxShape(sentence: string): { slots: TsxSlots; engines: string[] } | undefined {
+  const match = TSX_SHAPE.exec(sentence);
+  if (match === null) return undefined;
+  const [, date = "", receipt = "", cmd = "", engine = "", cliVersion = "", spawns = "", distribution = ""] = match;
+  return { slots: { date, receipt, cmd, engine, cliVersion, spawns }, engines: [engine, distribution] };
+}
 
 interface LeadSlots {
   carrier: string;
@@ -553,7 +718,7 @@ function claimCellFindings(row: ClaimRow): string[] {
   return findings;
 }
 
-/** Why the rendered Evidence cell is not its six committed sentences in order (the stamped one is judged by its slice). */
+/** Why the rendered Evidence cell is not its seven committed sentences in order (the stamped one is judged by its slice). */
 function evidenceFindings(evidence: string, carrier: string): string[] {
   const committed: ReadonlyArray<readonly [string, (sentence: string) => boolean]> = [
     ["lead sentence", (sentence) => readLeadShape(sentence) !== undefined],
@@ -562,6 +727,7 @@ function evidenceFindings(evidence: string, carrier: string): string[] {
     ["bead sentence", (sentence) => sentence === W10_COMMITTED.bead],
     ["stamped receipt sentence", (sentence) => readsAsPrefix(foldKey(sentence), STAMP_KEY)],
     ["descriptor contract sentence", (sentence) => sentence === W10_COMMITTED.contract],
+    ["TSX-era receipt sentence", (sentence) => sentence === W10_COMMITTED.tsx],
   ];
   const findings: string[] = [];
   const read = new Map<string, string>();
@@ -788,6 +954,417 @@ function stampedParts(page: string): { sentence: string; slots: StampSlots; rele
   const shape = stamped.length === 1 && sentence !== undefined ? readStampShape(sentence) : undefined;
   return sentence === undefined || shape === undefined ? undefined : { sentence, ...shape };
 }
+
+/** The sentences of a rendered cell that read as a TSX-era receipt sentence. */
+function tsxSentences(evidence: string): string[] {
+  return evidence.split(/(?<=\.) /).filter((sentence) => readsAsPrefix(foldKey(sentence), TSX_KEY));
+}
+
+interface TsxEntry {
+  /** Every RF-TSX-RECEIPT line of the entry, parsed (undefined when the line is not one JSON object). */
+  lines: ReadonlyArray<Record<string, unknown> | undefined>;
+  record: Pick<ReceiptStamp, "records" | "strayRecord" | "runLines">;
+}
+
+/** One RF-TSX-RECEIPT {json} object, or undefined when it is not one JSON object. */
+function tsxObject(json: string | undefined): Record<string, unknown> | undefined {
+  if (json === undefined) return undefined;
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(json);
+  } catch {
+    return undefined;
+  }
+  return parsed !== null && typeof parsed === "object" && !Array.isArray(parsed) ? (parsed as Record<string, unknown>) : undefined;
+}
+
+/** The newest entry of a receipt file that renders RF-TSX-RECEIPT lines (entries run between top-level level-1/2 headings). */
+function tsxReceiptView(markdown: string, label: string): { findings: string[]; newest?: TsxEntry } {
+  const tokens = new Lexer({ gfm: true }).lex(markdown);
+  const findings = htmlRefusals(tokens, label, () => false);
+  const entries: Token[][] = [];
+  for (const token of tokens) {
+    if (entries.length === 0 || (isHeading(token) && token.depth <= 2)) entries.push([]);
+    entries[entries.length - 1]?.push(token);
+  }
+  let newest: TsxEntry | undefined;
+  for (const entry of entries) {
+    const text = rendered(entry, "\n");
+    const lines: Array<Record<string, unknown> | undefined> = [];
+    for (let cursor = text.indexOf(TSX_MARK); cursor >= 0; cursor = text.indexOf(TSX_MARK, cursor + TSX_MARK.length)) lines.push(tsxObject(balancedObject(text, cursor + TSX_MARK.length - 1)));
+    if (lines.length > 0) newest = { lines, record: recordReading(entry, text) };
+  }
+  return { findings, newest };
+}
+
+/** Why one row's fields do not carry what R9 requires and the sentence states. */
+function tsxRowFindings(receipt: string, name: (typeof TSX_ROW_NAMES)[number], row: Record<string, unknown>, slots: TsxSlots): string[] {
+  const where = `receipts/${receipt}.md: ${name} row`;
+  const findings: string[] = [];
+  if (name === "success") {
+    const cli = row.cli_version;
+    if (typeof cli !== "string" || cli === "") findings.push(`${where} cli_version ${JSON.stringify(cli)} is not a non-empty string`);
+    if (cli !== slots.cliVersion) findings.push(`${where} cli_version ${JSON.stringify(cli)}, not the sentence's ${slots.cliVersion}`);
+    const spawns = row.tsx_worker_spawns;
+    if (typeof spawns !== "number" || !Number.isSafeInteger(spawns) || spawns < 1) findings.push(`${where} tsx_worker_spawns ${JSON.stringify(spawns)} is not a count of at least 1`);
+    if (spawns !== Number(slots.spawns)) findings.push(`${where} tsx_worker_spawns ${JSON.stringify(spawns)}, not the sentence's ${slots.spawns}`);
+    const distribution = row.distribution_version;
+    if (typeof distribution !== "string" || distribution === "") findings.push(`${where} distribution_version ${JSON.stringify(distribution)} is not a non-empty string`);
+    if (distribution !== slots.engine) findings.push(`${where} distribution_version ${JSON.stringify(distribution)}, not the sentence's ${slots.engine}`);
+    const fingerprint = row.contract_fingerprint;
+    if (typeof fingerprint !== "string" || !TSX_FINGERPRINT.test(fingerprint)) findings.push(`${where} contract_fingerprint ${JSON.stringify(fingerprint)} does not have the tier's fingerprint shape`);
+  } else {
+    if (row.category !== "unavailable") findings.push(`${where} category ${JSON.stringify(row.category)}, not "unavailable"`);
+    if (typeof row.message !== "string" || !row.message.includes(RUNTIME_ABSENT_CODE)) findings.push(`${where} message ${JSON.stringify(row.message)} does not contain ${RUNTIME_ABSENT_CODE}`);
+  }
+  return findings;
+}
+
+/** RUN OF RECORD on the TSX entry: why the sentence's cmd slot is not that entry's run of record. */
+function tsxRecordFindings(receipt: string, cmd: string, record: TsxEntry["record"]): string[] {
+  const entry = `receipts/${receipt}.md: the entry carrying the newest RF-TSX-RECEIPT lines`;
+  const [named] = record.records;
+  if (record.records.length !== 1 || named === undefined) {
+    return [`${entry} names ${record.records.length} runs of record in its heading; exactly one "(receipt of record cmd_*)" clause binds the TSX-era run`];
+  }
+  if (record.strayRecord) return [`${entry} has a heading that reads as naming a receipt of record outside its one "(receipt of record ${named})" clause`];
+  const findings: string[] = [];
+  if (record.runLines.length === 0) findings.push(`${entry} renders no "Run of record:" line confirming its run of record ${named}`);
+  for (const first of record.runLines) {
+    if (first !== named) findings.push(`${entry} names its run of record ${named} in its heading but ${first ?? "no cmd_* id"} first in a "Run of record:" line`);
+  }
+  if (cmd !== named) findings.push(`the TSX-era receipt sentence names ${cmd}, which is not ${named}, the run of record of the receipt entry carrying the newest RF-TSX-RECEIPT lines`);
+  return findings;
+}
+
+/** TSX-ERA RECEIPT ROW: every reason the live page's TSX-era receipt sentence does not bind to its receipt; empty when it holds. */
+function judgeTsxRow(page: string, readReceipt: ReadReceipt): string[] {
+  const view = w10View(page);
+  if (view.evidence === undefined) return [...view.findings, "the W10 claim row's Evidence cell cannot be read, so no TSX-era receipt sentence is judged"];
+  const sentences = tsxSentences(view.evidence);
+  const sentence = sentences[0];
+  if (sentences.length !== 1 || sentence === undefined) {
+    return [sentences.length === 0 ? "the rendered Evidence cell carries no TSX-era receipt sentence" : `${sentences.length} rendered sentences read as a TSX-era receipt sentence, not exactly one`];
+  }
+  const shape = readTsxShape(sentence);
+  if (shape === undefined) return [`the TSX-era receipt sentence is not the committed TSX-era slice: ${JSON.stringify(sentence)}`];
+  const { receipt, cmd } = shape.slots;
+  const text = readReceipt(receipt);
+  if (text === undefined) return [`the TSX-era receipt sentence cites receipts/${receipt}.md but that receipt file does not exist`];
+  const read = tsxReceiptView(text, `receipts/${receipt}.md`);
+  const findings = [...read.findings];
+  if (read.newest === undefined) return [...findings, `receipts/${receipt}.md renders no RF-TSX-RECEIPT line`];
+  const rows = new Map<string, Array<Record<string, unknown>>>();
+  for (const line of read.newest.lines) {
+    if (line === undefined) {
+      findings.push(`receipts/${receipt}.md: an RF-TSX-RECEIPT line of its newest TSX entry is not one JSON object`);
+      continue;
+    }
+    const name = String(line.row);
+    if (!(TSX_ROW_NAMES as readonly string[]).includes(name)) findings.push(`receipts/${receipt}.md: its newest TSX entry renders an RF-TSX-RECEIPT row named ${JSON.stringify(line.row)}, outside the R9 pair`);
+    else rows.set(name, [...(rows.get(name) ?? []), line]);
+  }
+  for (const name of TSX_ROW_NAMES) {
+    const found = rows.get(name) ?? [];
+    const row = found[0];
+    if (found.length !== 1 || row === undefined) findings.push(`receipts/${receipt}.md: its newest TSX entry renders ${found.length} ${name} rows, not exactly one`);
+    else findings.push(...tsxRowFindings(receipt, name, row, shape.slots));
+  }
+  findings.push(...tsxRecordFindings(receipt, cmd, read.newest.record));
+  // Two arms (wb-ojur): an engine split is named on its own, so the equality is falsified apart from the slice check.
+  if (shape.engines[0] !== shape.engines[1]) findings.push(`the TSX-era receipt sentence's two engine slots read ${shape.engines.join(" and ")}, not one pinned Deno release`);
+  if (sentence !== tsxSentence(shape.slots)) findings.push(`the TSX-era receipt sentence does not equal its slice (engine slots read ${shape.engines.join(", ")})`);
+  return findings;
+}
+
+/** T-ANCHOR's second source: the field names each receipt() call of the R8 tier prints, by row, read with the TypeScript parser. */
+function tierReceiptFields(source: string): string[] {
+  const file = ts.createSourceFile(TSX_TIER, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const fields: string[] = [];
+  const walk = (node: ts.Node): void => {
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "receipt") {
+      const [row, object] = node.arguments;
+      if (row !== undefined && ts.isStringLiteral(row) && object !== undefined && ts.isObjectLiteralExpression(object)) {
+        for (const property of object.properties) {
+          if ((ts.isPropertyAssignment(property) || ts.isShorthandPropertyAssignment(property)) && ts.isIdentifier(property.name)) fields.push(`${row.text}:${property.name.text}`);
+        }
+      }
+    }
+    ts.forEachChild(node, walk);
+  };
+  walk(file);
+  return fields;
+}
+
+/** T-ANCHOR's first source: the `<row>:<field>` names the newest TSX entry of a receipt renders (its row key excluded). */
+function receiptTsxFields(markdown: string): string[] {
+  const newest = tsxReceiptView(markdown, "receipt").newest;
+  return (newest?.lines ?? []).flatMap((line) => (line === undefined ? [] : Object.keys(line).filter((key) => key !== "row").map((key) => `${String(line.row)}:${key}`)));
+}
+
+/** T-ROSTER's source: the TSX receipt's claim of record naming this guard's rows (wb-693.7: "... rows T0 to T<n>)"). */
+const TSX_ROSTER_CLAUSE_ALL = new RegExp(`${quotedPattern(SELF)} pins it whole and binds it to this entry \\(TSX-ERA RECEIPT ROW, rows T0 to T([0-9]+)\\)`, "g");
+/** T-ROSTER's reading: the last row each claim of record in `receipt` names, read as the receipt RENDERS (T-ROSTER-RENDERED). */
+const rosterClaims = (receipt: string): number[] => [...rendered(new Lexer({ gfm: true }).lex(receipt), "\n").matchAll(TSX_ROSTER_CLAUSE_ALL)].map((match) => Number(match[1]));
+/** T-ARMS's reader module, as this file and the reader's census both import it (each relative to test/). */
+const ARMS_READER = "./helpers/w10-tsx-judge-arms.js";
+/** The census of T-ARMS's reader (wb-5mco, landed at landing 932): its header's READ, REFUSED and RESIDUAL lists are what
+ * readJudgeArms() reads, refuses and leaves residual, and this guard claims none of them (the header's T-ARMS READING). */
+const ARMS_CENSUS = "test/workbench-w10-tsx-judge-arms-census.test.ts";
+/** The names a reader of this file's own would carry: the landed reader's two functions and the trunk reader's (T-ARMS-READER). */
+const READER_NAMES: readonly string[] = ["readJudgeArms", "bindingChecker", "judgeArms"];
+/** T-ARMS's reader module as a path from the repository root: T-ARMS-READER reads the function declarations it makes. */
+const ARMS_HELPER = "test/helpers/w10-tsx-judge-arms.ts";
+
+/** Each named import in `source` that imports or binds the name readJudgeArms, as `<module> <imported> as <local>`. */
+function readerImports(source: string): string[] {
+  const file = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  return file.statements.flatMap((statement) => {
+    if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier)) return [];
+    const from = statement.moduleSpecifier.text;
+    const bindings = statement.importClause?.namedBindings;
+    if (bindings === undefined || !ts.isNamedImports(bindings)) return [];
+    return bindings.elements
+      .map((element) => [(element.propertyName ?? element.name).text, element.name.text] as const)
+      .filter(([imported, local]) => imported === "readJudgeArms" || local === "readJudgeArms")
+      .map(([imported, local]) => `${from} ${imported} as ${local}`);
+  });
+}
+
+/** The declaration kinds declaredNames() reads (T-ARMS-READER), each one TypeScript syntax kind with the name a node of it declares:
+ * VariableDeclaration, Parameter, BindingElement, FunctionDeclaration, FunctionExpression, ClassDeclaration, ClassExpression,
+ * EnumDeclaration, ModuleDeclaration, ImportEqualsDeclaration, ImportClause (a default import), NamespaceImport, ImportSpecifier
+ * (its local name), InterfaceDeclaration, TypeAliasDeclaration and TypeParameter. T-ARMS-READER-NAMES plants every kind, in the
+ * forms NAME_PLANTS lists. */
+const DECLARATION_KINDS: readonly (readonly [kind: string, nameOf: (node: ts.Node) => ts.Node | undefined])[] = [
+  ["variable", (node) => (ts.isVariableDeclaration(node) ? node.name : undefined)],
+  ["parameter", (node) => (ts.isParameter(node) ? node.name : undefined)],
+  ["binding element", (node) => (ts.isBindingElement(node) ? node.name : undefined)],
+  ["function", (node) => (ts.isFunctionDeclaration(node) ? node.name : undefined)],
+  ["function expression", (node) => (ts.isFunctionExpression(node) ? node.name : undefined)],
+  ["class", (node) => (ts.isClassDeclaration(node) ? node.name : undefined)],
+  ["class expression", (node) => (ts.isClassExpression(node) ? node.name : undefined)],
+  ["enum", (node) => (ts.isEnumDeclaration(node) ? node.name : undefined)],
+  ["namespace", (node) => (ts.isModuleDeclaration(node) ? node.name : undefined)],
+  ["import-equals", (node) => (ts.isImportEqualsDeclaration(node) ? node.name : undefined)],
+  ["default import", (node) => (ts.isImportClause(node) ? node.name : undefined)],
+  ["namespace import", (node) => (ts.isNamespaceImport(node) ? node.name : undefined)],
+  ["named import", (node) => (ts.isImportSpecifier(node) ? node.name : undefined)],
+  ["interface", (node) => (ts.isInterfaceDeclaration(node) ? node.name : undefined)],
+  ["type alias", (node) => (ts.isTypeAliasDeclaration(node) ? node.name : undefined)],
+  ["type parameter", (node) => (ts.isTypeParameterDeclaration(node) ? node.name : undefined)],
+];
+
+/** Each declaration `source` makes of a DECLARATION_KINDS kind whose name is an identifier, the walk visiting every node of the
+ * file, as `<kind> <name>`, in document order (T-ARMS-READER; T-ARMS-READER-NAMES is its negative control, in the forms
+ * NAME_PLANTS writes). */
+function declaredNames(source: string): string[] {
+  const file = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const names: string[] = [];
+  const walk = (node: ts.Node): void => {
+    for (const [kind, nameOf] of DECLARATION_KINDS) {
+      const name = nameOf(node);
+      if (name !== undefined && ts.isIdentifier(name)) names.push(`${kind} ${name.text}`);
+    }
+    ts.forEachChild(node, walk);
+  };
+  walk(file);
+  return names;
+}
+
+/** Whether a declaredNames() entry names a READER_NAMES name. */
+const readerNamed = (entry: string): boolean => READER_NAMES.includes(entry.slice(entry.lastIndexOf(" ") + 1));
+
+/** The DECLARATION_KINDS kinds the header of `source` states ("each DECLARATION_KINDS kind (...)"), read from its leading comment
+ * with each comment line's leader and every white-space run read as one space (T-ARMS-READER-NAMES). */
+function headerKinds(source: string): string[] {
+  const header = (source.split("*/")[0] ?? "").replace(/\n \*/g, " ").replace(/\s+/g, " ");
+  return /each DECLARATION_KINDS kind \(([^)]*)\)/.exec(header)?.[1]?.split(", ") ?? [];
+}
+
+/** The names of the top-level function declarations `source` makes, in order (T-ARMS-READER reads the reader module's). */
+function topLevelFunctions(source: string): string[] {
+  const file = ts.createSourceFile(ARMS_HELPER, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  return file.statements.flatMap((statement) => (ts.isFunctionDeclaration(statement) && statement.name !== undefined ? [statement.name.text] : []));
+}
+
+/** The TypeScript checker over `file` alone (no lib, no module resolution), asked only which declaration a name is bound to
+ * (T-ARMS-READER). */
+function fileChecker(file: ts.SourceFile): ts.TypeChecker {
+  const host: ts.CompilerHost = {
+    getSourceFile: (name) => (name === file.fileName ? file : undefined),
+    getDefaultLibFileName: () => "lib.d.ts",
+    writeFile: () => undefined,
+    getCurrentDirectory: () => "",
+    getCanonicalFileName: (name) => name,
+    useCaseSensitiveFileNames: () => true,
+    getNewLine: () => "\n",
+    fileExists: (name) => name === file.fileName,
+    readFile: () => undefined,
+  };
+  return ts.createProgram({ rootNames: [file.fileName], options: { noLib: true, noResolve: true, types: [] }, host }).getTypeChecker();
+}
+
+/** The symbol `checker` binds a name to: for a shorthand property its value's, for the local side of an export specifier the local
+ * binding it exports, else the symbol at the name. */
+function boundSymbol(checker: ts.TypeChecker, name: ts.Identifier): ts.Symbol | undefined {
+  const parent = name.parent;
+  if (ts.isShorthandPropertyAssignment(parent) && parent.name === name) return checker.getShorthandAssignmentValueSymbol(parent);
+  if (ts.isExportSpecifier(parent) && (parent.propertyName ?? parent.name) === name) return checker.getExportSpecifierLocalTargetSymbol(parent);
+  return checker.getSymbolAtLocation(name);
+}
+
+/** Every reference `source` makes to its one top-level function declaration armsJudgment() (a name the checker binds to it, a
+ * shorthand property's value and an export specifier's local name included), read with fileChecker() over that source, as
+ * `<case>: <reading>`, in document order: <case> is the title of the it() case around the reference up to its first " ("
+ * ("module" outside every case); <reading> is IMPORT_READING when the reference is the callee of a call whose first argument is
+ * a call of a name the checker binds to the source's import of readJudgeArms (under that name or as its imported name) from
+ * ARMS_READER, and the reference's parent node's text otherwise (T-ARMS-READER). */
+function judgmentReadings(source: string): string[] {
+  const file = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const checker = fileChecker(file);
+  const declared = file.statements.filter((statement): statement is ts.FunctionDeclaration => ts.isFunctionDeclaration(statement) && statement.name?.text === "armsJudgment");
+  const name = declared.length === 1 ? declared[0]?.name : undefined;
+  const target = name === undefined ? undefined : checker.getSymbolAtLocation(name);
+  if (name === undefined || target === undefined) return [`${declared.length} top-level declarations of armsJudgment()`];
+  const imported = (node: ts.Expression | undefined): boolean => {
+    if (node === undefined || !ts.isCallExpression(node) || !ts.isIdentifier(node.expression)) return false;
+    const declarations = boundSymbol(checker, node.expression)?.declarations ?? [];
+    const [only] = declarations;
+    if (declarations.length !== 1 || only === undefined || !ts.isImportSpecifier(only)) return false;
+    const from = only.parent.parent.parent.moduleSpecifier;
+    return (only.propertyName ?? only.name).text === "readJudgeArms" && ts.isStringLiteral(from) && from.text === ARMS_READER;
+  };
+  const caseOf = (node: ts.Node): string => {
+    for (let at = node.parent; at !== undefined; at = at.parent) {
+      if (!ts.isCallExpression(at) || !ts.isIdentifier(at.expression) || at.expression.text !== "it") continue;
+      const [title] = at.arguments;
+      if (title !== undefined && ts.isStringLiteral(title)) return title.text.split(" (")[0] ?? title.text;
+    }
+    return "module";
+  };
+  const readings: string[] = [];
+  const walk = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) && node !== name && boundSymbol(checker, node) === target) {
+      const parent = node.parent;
+      const reads = ts.isCallExpression(parent) && parent.expression === node && imported(parent.arguments[0]);
+      readings.push(`${caseOf(node)}: ${reads ? IMPORT_READING : parent.getText(file).replace(/\s+/g, " ").slice(0, 120)}`);
+    }
+    ts.forEachChild(node, walk);
+  };
+  walk(file);
+  return readings;
+}
+
+/** T-ARMS-READER-NAMES's plants (wb-m14y refusal #5 U2: declaredNames() had no negative control; the refusal's W-DN witnesses'
+ * forms among them): every DECLARATION_KINDS kind, in its order, in one or more forms, each a declaration of that kind named by
+ * a READER_NAMES name, written into this file's source at its end (module) or directly before the last statement of
+ * armsJudgment()'s body (judgment). */
+const NAME_PLANTS: readonly (readonly [kind: string, name: string, where: "module" | "judgment", code: string])[] = [
+  ["variable", "judgeArms", "judgment", "const judgeArms = readJudgeArms;"],
+  ["variable", "judgeArms", "judgment", "let judgeArms: ArmsReading | undefined;"],
+  ["variable", "judgeArms", "judgment", "var judgeArms = readJudgeArms;"],
+  ["variable", "judgeArms", "judgment", "for (const judgeArms of [readJudgeArms]) void judgeArms;"],
+  ["variable", "judgeArms", "judgment", "try {\n    void readJudgeArms;\n  } catch (judgeArms) {\n    void judgeArms;\n  }"],
+  ["parameter", "judgeArms", "judgment", "const probeArrow = (text: string, judgeArms = readJudgeArms): ArmsReading => judgeArms(text);"],
+  ["parameter", "judgeArms", "judgment", "function probeFunction(judgeArms: typeof readJudgeArms, text: string): ArmsReading {\n    return judgeArms(text);\n  }"],
+  ["parameter", "judgeArms", "judgment", "const probeHost = {\n    read(judgeArms: typeof readJudgeArms, text: string): ArmsReading {\n      return judgeArms(text);\n    },\n  };"],
+  ["binding element", "judgeArms", "judgment", "const { readJudgeArms: judgeArms } = { readJudgeArms };"],
+  ["binding element", "judgeArms", "judgment", "const [judgeArms] = [readJudgeArms];"],
+  ["binding element", "judgeArms", "judgment", "const probePattern = ({ judgeArms }: { judgeArms: typeof readJudgeArms }): typeof readJudgeArms => judgeArms;"],
+  ["function", "judgeArms", "judgment", "function judgeArms(text: string): ArmsReading {\n    return readJudgeArms(text);\n  }"],
+  ["function", "judgeArms", "module", "declare function judgeArms(text: string): ArmsReading;"],
+  ["function expression", "judgeArms", "judgment", "const probeExpression = function judgeArms(text: string): ArmsReading {\n    return readJudgeArms(text);\n  };"],
+  ["class", "judgeArms", "judgment", "class judgeArms {\n    read(text: string): ArmsReading {\n      return readJudgeArms(text);\n    }\n  }"],
+  ["class expression", "judgeArms", "judgment", "const ProbeClass = class judgeArms {\n    read(text: string): ArmsReading {\n      return readJudgeArms(text);\n    }\n  };"],
+  ["enum", "judgeArms", "judgment", "enum judgeArms {\n    Reader = 0,\n  }"],
+  ["enum", "judgeArms", "judgment", "const enum judgeArms {\n    Reader = 0,\n  }"],
+  ["namespace", "bindingChecker", "module", "namespace bindingChecker {\n  export const reader = readJudgeArms;\n}"],
+  ["namespace", "bindingChecker", "module", "namespace probe.bindingChecker {\n  export const reader = readJudgeArms;\n}"],
+  ["import-equals", "bindingChecker", "module", "import bindingChecker = require(\"./helpers/w10-tsx-judge-arms.js\");"],
+  ["default import", "bindingChecker", "module", "import bindingChecker from \"./helpers/w10-tsx-judge-arms.js\";"],
+  ["namespace import", "bindingChecker", "module", "import * as bindingChecker from \"./helpers/w10-tsx-judge-arms.js\";"],
+  ["named import", "bindingChecker", "module", "import { readJudgeArms as bindingChecker } from \"./helpers/w10-tsx-judge-arms.js\";"],
+  ["interface", "readJudgeArms", "judgment", "interface readJudgeArms {\n    read(text: string): ArmsReading;\n  }"],
+  ["type alias", "readJudgeArms", "judgment", "type readJudgeArms = ArmsReading;"],
+  ["type parameter", "readJudgeArms", "judgment", "const probeGeneric = <readJudgeArms,>(value: readJudgeArms): readJudgeArms => value;"],
+  ["type parameter", "readJudgeArms", "judgment", "type probeInfer<T> = T extends Array<infer readJudgeArms> ? readJudgeArms : never;"],
+];
+
+/** judgmentReadings()'s reading of a call of armsJudgment() whose first argument is a call of the readJudgeArms import. */
+const IMPORT_READING = "a call of the readJudgeArms import";
+/** judgmentReadings() of the live file: T-ARMS's one call and T-ARMS-FORWARD's six (T-ARMS-READER). */
+const LIVE_JUDGMENT_READINGS: readonly string[] = [`T-ARMS: ${IMPORT_READING}`, ...Array.from({ length: 6 }, () => `T-ARMS-FORWARD: ${IMPORT_READING}`)];
+/** The readers T-ARMS-READER-CONTROLS gives a negative control. */
+type ControlReader = "readerImports" | "judgmentReadings" | "topLevelFunctions" | "headerKinds";
+/** RC15's first arguments: the import's name in six forms that are no call - a property access and an element access, each
+ * plain and optional, an as assertion and an angle-bracket assertion (T-ARMS-READER-CONTROLS). */
+const NON_CALL_FIRSTS: readonly string[] = [
+  "readJudgeArms.prototype",
+  "readJudgeArms?.prototype",
+  'readJudgeArms["prototype"]',
+  'readJudgeArms?.["prototype"]',
+  "readJudgeArms as never",
+  "<never>readJudgeArms",
+];
+/** T-ARMS-READER-CONTROLS's plants (wb-m14y refusal #5, the no-negative-control class of its U2; refusal #6 U1, the same class
+ * for judgmentReadings()'s callee condition: RC13 to RC15): each an edit of the source its reader reads - this file's for
+ * readerImports(), judgmentReadings() and headerKinds(), the reader module's for topLevelFunctions() - with what that reader
+ * reads from the edited source. */
+const READER_CONTROLS: readonly (readonly [id: string, reader: ControlReader, edit: (source: string) => string, reads: readonly string[]])[] = [
+  ["RC1 aliased import", "readerImports", (source) => source.replace("quotedPattern, readJudgeArms, SELF", "quotedPattern, readJudgeArms as readArms, SELF"), [`${ARMS_READER} readJudgeArms as readArms`]],
+  ["RC2 second import", "readerImports", (source) => `${source}\nimport { readJudgeArms } from "./w10-copy.js";\n`, [`${ARMS_READER} readJudgeArms as readJudgeArms`, "./w10-copy.js readJudgeArms as readJudgeArms"]],
+  ["RC3 renamed import", "readerImports", (source) => `${source}\nimport { readGuardArms as readJudgeArms } from "./w10-copy.js";\n`, [`${ARMS_READER} readJudgeArms as readJudgeArms`, "./w10-copy.js readGuardArms as readJudgeArms"]],
+  ["RC4 copy at T-ARMS's call", "judgmentReadings", (source) => withTArmsCall(source, "readGuardArms(readText(SELF))"), ["T-ARMS: armsJudgment(readGuardArms(readText(SELF)), runs)", ...LIVE_JUDGMENT_READINGS.slice(1)]],
+  ["RC5 alias at T-ARMS's call", "judgmentReadings", (source) => `${withTArmsCall(source, "read(readText(SELF))")}\nconst read = readJudgeArms;\n`, ["T-ARMS: armsJudgment(read(readText(SELF)), runs)", ...LIVE_JUDGMENT_READINGS.slice(1)]],
+  [
+    "RC6 shadow at T-ARMS's call",
+    "judgmentReadings",
+    (source) => withTArmsCall(source, "readJudgeArms(readText(SELF))", "const readJudgeArms = (text: string): ArmsReading => ({ arms: [], unread: [text] });\n      "),
+    ["T-ARMS: armsJudgment(readJudgeArms(readText(SELF)), runs)", ...LIVE_JUDGMENT_READINGS.slice(1)],
+  ],
+  ["RC7 alias of armsJudgment()", "judgmentReadings", (source) => `${source}\nconst judge = armsJudgment;\n`, [...LIVE_JUDGMENT_READINGS, "module: judge = armsJudgment"]],
+  ["RC8 shorthand property", "judgmentReadings", (source) => `${source}\nconst handed = { armsJudgment };\n`, [...LIVE_JUDGMENT_READINGS, "module: armsJudgment"]],
+  ["RC9 export specifier", "judgmentReadings", (source) => `${source}\nexport { armsJudgment };\n`, [...LIVE_JUDGMENT_READINGS, "module: armsJudgment"]],
+  ["RC10 second declaration", "judgmentReadings", (source) => `${source}\nfunction armsJudgment(): void {}\n`, ["2 top-level declarations of armsJudgment()"]],
+  ["RC11 function added to the reader module", "topLevelFunctions", (source) => `${source}\nfunction judgeArms(): void {}\n`, ["bindingChecker", "readJudgeArms", "judgeArms"]],
+  [
+    "RC12 kind taken out of the header",
+    "headerKinds",
+    (source) => `${source.slice(0, source.indexOf("*/")).replace(" enum, namespace,", " namespace,")}${source.slice(source.indexOf("*/"))}`,
+    ["variable", "parameter", "binding element", "function", "function expression", "class", "class expression", "namespace", "import-equals", "default import", "namespace import", "named import", "interface", "type alias", "type parameter"],
+  ],
+  [
+    "RC13 armsJudgment() handed on after the import's call",
+    "judgmentReadings",
+    (source) => `${source}\nhandOn(readJudgeArms(readText(SELF)), armsJudgment);\nhandOn(readJudgeArms(readText(SELF)), refusedRuns(), armsJudgment);\n`,
+    [...LIVE_JUDGMENT_READINGS, "module: handOn(readJudgeArms(readText(SELF)), armsJudgment)", "module: handOn(readJudgeArms(readText(SELF)), refusedRuns(), armsJudgment)"],
+  ],
+  [
+    "RC14 the import's call after a copy's",
+    "judgmentReadings",
+    (source) => `${source}\narmsJudgment(readGuardArms(readText(SELF)), readJudgeArms(readText(SELF)));\narmsJudgment(readGuardArms(readText(SELF)), refusedRuns(), readJudgeArms(readText(SELF)));\n`,
+    [
+      ...LIVE_JUDGMENT_READINGS,
+      "module: armsJudgment(readGuardArms(readText(SELF)), readJudgeArms(readText(SELF)))",
+      "module: armsJudgment(readGuardArms(readText(SELF)), refusedRuns(), readJudgeArms(readText(SELF)))",
+    ],
+  ],
+  [
+    "RC15 the import's name, no call, first",
+    "judgmentReadings",
+    (source) => `${source}\n${NON_CALL_FIRSTS.map((first) => `armsJudgment(${first}, refusedRuns());`).join("\n")}\n`,
+    [
+      ...LIVE_JUDGMENT_READINGS,
+      "module: armsJudgment(readJudgeArms.prototype, refusedRuns())",
+      "module: armsJudgment(readJudgeArms?.prototype, refusedRuns())",
+      'module: armsJudgment(readJudgeArms["prototype"], refusedRuns())',
+      'module: armsJudgment(readJudgeArms?.["prototype"], refusedRuns())',
+      "module: armsJudgment(readJudgeArms as never, refusedRuns())",
+      "module: armsJudgment(<never>readJudgeArms, refusedRuns())",
+    ],
+  ],
+];
 
 /** Why the rendered receipts index fails to list `name`.md as rendered text; empty when it does. */
 function indexFindings(markdown: string, name: string): string[] {
@@ -1967,6 +2544,601 @@ const RECORD_ROWS: readonly RecordRow[] = [
 /** A RECORD pin as the frozen-shape literal reads it. */
 const pinShape = (pin: RecordPin): string => (pin.reading === "refused" ? `${pin.op} refused: ${pin.causes.join(" | ")}` : `${pin.op} ${pin.reading}`);
 
+/** The ops a TSX pin re-authors its site with (tsxEdit() writes each one). */
+type TsxOp =
+  | "changed"
+  | "emptied"
+  | "zeroed"
+  | "malformed"
+  | "unknown"
+  | "renamed"
+  | "swapped"
+  | "removed"
+  | "dropped"
+  | "doubled"
+  | "older"
+  | "prose"
+  | "stray"
+  | "split"
+  | "reworded"
+  | "lookalike"
+  | "unreadable"
+  | "absent"
+  | "html"
+  | "unmarked"
+  | "foreign"
+  | "extended"
+  | "prefixed"
+  | "truncated"
+  | "inner"
+  | "cased"
+  | "padded"
+  | "indented"
+  | "normalized"
+  | "formatted"
+  | "duplicated";
+/** A TSX pin: refused with exactly its findings, each whole and in order, or accepted: neutral by design (a value R9's shape admits) or a named residual. */
+type TsxPin = { op: TsxOp; reading: "refused"; causes: readonly [string, ...string[]] } | { op: TsxOp; reading: "neutral" | "residual" };
+/** One site the TSX-era binding reads (a field of a receipt row, a record site of the TSX entry, the page sentence) or a named residual. */
+interface TsxRow {
+  id: string;
+  site: string;
+  label: string;
+  pins: readonly TsxPin[];
+}
+
+/** TS6's near names (wb-m14y, the wb-ojur gate's F2 J-g3, the wb-m14y gate's F1 G4 and its second gate's F1 G7 and G7b): nine
+ * RF-TSX-RECEIPT row names, each one a comparison weaker than exact membership in the R9 pair would accept: an R9 name with
+ * text after it (a prefix match) or before it (a suffix match), a proper prefix and a proper suffix of an R9 name (the two
+ * reverse matches), an R9 name in another case (a case-folded match), one with trailing white space (a trimmed match), one
+ * with leading white space (a start-trimmed match), one whose first letter is a compatibility character NFKC folds to it (a
+ * normalized match: FULLWIDTH LATIN SMALL LETTER S) and one with a format character inside (a format-stripped match: ZERO
+ * WIDTH SPACE); those two are built with String.fromCodePoint. */
+const TSX_NEAR_NAMES = {
+  extended: "success-retry",
+  prefixed: "pre-success",
+  truncated: "runtime",
+  inner: "absent",
+  cased: "Success",
+  padded: "success ",
+  indented: " success",
+  normalized: `${at(0xff53)}uccess`,
+  formatted: `succ${at(0x200b)}ess`,
+} as const;
+/** `text` with every code point outside printable ASCII written as \u{<hex>}, so a frozen-shape literal names a look-alike or an
+ * invisible without typing it raw. */
+const visible = (text: string): string => text.replace(/[^\x20-\x7e]/gu, (char) => `\\u{${(char.codePointAt(0) ?? 0).toString(16)}}`);
+
+/** TSX ROWS (wb-693.7), one per refused site of the binding in T-ANCHOR's order, then the named residuals. */
+const TSX_ROWS: readonly TsxRow[] = [
+  {
+    id: "T1",
+    site: "success:cli_version",
+    label: "the success row's captured cli_version",
+    pins: [
+      { op: "changed", reading: "refused", causes: ["receipts/wb-693.7.md: success row cli_version \"0.1.846\", not the sentence's 0.1.845"] },
+      { op: "emptied", reading: "refused", causes: ["receipts/wb-693.7.md: success row cli_version \"\" is not a non-empty string", "receipts/wb-693.7.md: success row cli_version \"\", not the sentence's 0.1.845"] },
+    ],
+  },
+  {
+    id: "T2",
+    site: "success:tsx_worker_spawns",
+    label: "the success row's TSX worker spawn count",
+    pins: [
+      { op: "zeroed", reading: "refused", causes: ["receipts/wb-693.7.md: success row tsx_worker_spawns 0 is not a count of at least 1", "receipts/wb-693.7.md: success row tsx_worker_spawns 0, not the sentence's 1"] },
+      { op: "changed", reading: "refused", causes: ["receipts/wb-693.7.md: success row tsx_worker_spawns 2, not the sentence's 1"] },
+    ],
+  },
+  {
+    id: "T3",
+    site: "success:distribution_version",
+    label: "the success row's tsx_runtime distribution_version",
+    pins: [
+      { op: "changed", reading: "refused", causes: ["receipts/wb-693.7.md: success row distribution_version \"2.9.8\", not the sentence's 2.9.7"] },
+      { op: "emptied", reading: "refused", causes: ["receipts/wb-693.7.md: success row distribution_version \"\" is not a non-empty string", "receipts/wb-693.7.md: success row distribution_version \"\", not the sentence's 2.9.7"] },
+    ],
+  },
+  {
+    id: "T4",
+    site: "success:contract_fingerprint",
+    label: "the success row's tsx_runtime contract_fingerprint",
+    pins: [
+      { op: "malformed", reading: "refused", causes: ["receipts/wb-693.7.md: success row contract_fingerprint \"sha256:000000000000000000000000000000000000000000000000000000000000000\" does not have the tier's fingerprint shape"] },
+      { op: "unknown", reading: "neutral" },
+    ],
+  },
+  {
+    id: "T5",
+    site: "runtime-absent:category",
+    label: "the runtime-absent row's refusal category",
+    pins: [
+      { op: "changed", reading: "refused", causes: ["receipts/wb-693.7.md: runtime-absent row category \"transport\", not \"unavailable\""] },
+    ],
+  },
+  {
+    id: "T6",
+    site: "runtime-absent:message",
+    label: "the runtime-absent row's refusal message",
+    pins: [
+      { op: "renamed", reading: "refused", causes: ["receipts/wb-693.7.md: runtime-absent row message \"RF render refused: RF_RENDER_FAILED\" does not contain RF_COMPONENT_RUNTIME_ABSENT"] },
+    ],
+  },
+  {
+    id: "T7",
+    site: "record:heading",
+    label: "the TSX entry heading's one (receipt of record cmd_*) clause",
+    pins: [
+      { op: "swapped", reading: "refused", causes: ["receipts/wb-693.7.md: the entry carrying the newest RF-TSX-RECEIPT lines names its run of record cmd_5a28029cd55c in its heading but cmd_130f00c9f3ea first in a \"Run of record:\" line", "the TSX-era receipt sentence names cmd_130f00c9f3ea, which is not cmd_5a28029cd55c, the run of record of the receipt entry carrying the newest RF-TSX-RECEIPT lines"] },
+      { op: "removed", reading: "refused", causes: ["receipts/wb-693.7.md: the entry carrying the newest RF-TSX-RECEIPT lines names 0 runs of record in its heading; exactly one \"(receipt of record cmd_*)\" clause binds the TSX-era run"] },
+      { op: "stray", reading: "refused", causes: ["receipts/wb-693.7.md: the entry carrying the newest RF-TSX-RECEIPT lines has a heading that reads as naming a receipt of record outside its one \"(receipt of record cmd_130f00c9f3ea)\" clause"] },
+      { op: "doubled", reading: "refused", causes: ["receipts/wb-693.7.md: the entry carrying the newest RF-TSX-RECEIPT lines names 2 runs of record in its heading; exactly one \"(receipt of record cmd_*)\" clause binds the TSX-era run"] },
+    ],
+  },
+  {
+    id: "T8",
+    site: "record:run-line",
+    label: "the TSX entry's Run of record line",
+    pins: [
+      { op: "removed", reading: "refused", causes: ["receipts/wb-693.7.md: the entry carrying the newest RF-TSX-RECEIPT lines renders no \"Run of record:\" line confirming its run of record cmd_130f00c9f3ea"] },
+      { op: "swapped", reading: "refused", causes: ["receipts/wb-693.7.md: the entry carrying the newest RF-TSX-RECEIPT lines names its run of record cmd_130f00c9f3ea in its heading but cmd_5a28029cd55c first in a \"Run of record:\" line"] },
+    ],
+  },
+  {
+    id: "T9",
+    site: "page:sentence",
+    label: "the W10 claim row's TSX-era receipt sentence",
+    pins: [
+      { op: "dropped", reading: "refused", causes: ["the rendered Evidence cell carries no TSX-era receipt sentence"] },
+      { op: "doubled", reading: "refused", causes: ["2 rendered sentences read as a TSX-era receipt sentence, not exactly one"] },
+      { op: "split", reading: "refused", causes: ["the TSX-era receipt sentence's two engine slots read 2.9.7 and 2.9.8, not one pinned Deno release", "the TSX-era receipt sentence does not equal its slice (engine slots read 2.9.7, 2.9.8)"] },
+      { op: "reworded", reading: "refused", causes: ["the TSX-era receipt sentence is not the committed TSX-era slice: \"TSX-era receipt row (R9, 2026-10-26): receipts/wb-693.7.md, gated forge run rf-preview-tsx cmd_130f00c9f3ea against the operator-provisioned installed rf serving kind tsx with the pinned Deno 2.9.7 first on PATH, 1 of 2 rows passed: the success row (RF-TSX-RECEIPT cli_version 0.1.845, tsx_worker_spawns 1, tsx_runtime distribution_version 2.9.7) and the runtime-absent row (category unavailable, RF_COMPONENT_RUNTIME_ABSENT under a no-deno PATH); the R2 carrier keeps its stamped release (a re-pin moves only through the gated rf-preview route).\""] },
+      { op: "lookalike", reading: "refused", causes: ["2 rendered sentences read as a TSX-era receipt sentence, not exactly one"] },
+    ],
+  },
+  {
+    id: "T10",
+    site: "residual:older-entry",
+    label: "an older receipt entry's RF-TSX-RECEIPT lines (the newest-entry reading)",
+    pins: [
+      { op: "older", reading: "residual" },
+    ],
+  },
+  {
+    id: "T11",
+    site: "residual:prose",
+    label: "the receipt's prose restating the tier's unprinted assertions",
+    pins: [
+      { op: "prose", reading: "residual" },
+    ],
+  },
+];
+
+/** TSX STRUCTURE ROWS (wb-ojur, the wb-693.7 gate's F1): one per diagnosis arm of the TSX-era judge that no field, record or
+ * page site above draws, in T-ARMS's order (the order a source-order walk of judgeTsxRow reaches the arms). */
+const TSX_STRUCTURE_ROWS: readonly TsxRow[] = [
+  {
+    id: "TS1",
+    site: "page:evidence-cell",
+    label: "the W10 claim row's Evidence cell the sentence is read from",
+    pins: [
+      { op: "unreadable", reading: "refused", causes: ["the W10 section holds 0 tables, not exactly its one committed table", "the W10 claim row is not inside the W10 section", "the W10 claim row's Evidence cell cannot be read, so no TSX-era receipt sentence is judged"] },
+    ],
+  },
+  {
+    id: "TS2",
+    site: "receipt:file",
+    label: "the receipt file the sentence names",
+    pins: [
+      { op: "absent", reading: "refused", causes: ["the TSX-era receipt sentence cites receipts/wb-693.7.md but that receipt file does not exist"] },
+    ],
+  },
+  {
+    id: "TS3",
+    site: "receipt:html",
+    label: "raw HTML anywhere in the TSX receipt",
+    pins: [
+      { op: "html", reading: "refused", causes: ["receipts/wb-693.7.md holds raw HTML \"<div hidden>\\n- `RF-TSX-RECEIPT {\\\"row\\\":\\\"success\\\",\\\"cli_version\" that can hide rendered text (only complete comments are admitted here)"] },
+    ],
+  },
+  {
+    id: "TS4",
+    site: "entry:marks",
+    label: "the RF-TSX-RECEIPT lines the receipt renders",
+    pins: [
+      { op: "unmarked", reading: "refused", causes: ["receipts/wb-693.7.md renders no RF-TSX-RECEIPT line"] },
+    ],
+  },
+  {
+    id: "TS5",
+    site: "entry:line-json",
+    label: "one RF-TSX-RECEIPT line's JSON object",
+    pins: [
+      { op: "malformed", reading: "refused", causes: ["receipts/wb-693.7.md: an RF-TSX-RECEIPT line of its newest TSX entry is not one JSON object"] },
+    ],
+  },
+  {
+    id: "TS6",
+    site: "entry:row-name",
+    label: "an RF-TSX-RECEIPT row named outside the R9 pair, and one name per weaker comparison (TSX_NEAR_NAMES)",
+    pins: [
+      { op: "foreign", reading: "refused", causes: ["receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"partial\", outside the R9 pair"] },
+      { op: "extended", reading: "refused", causes: ["receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"success-retry\", outside the R9 pair"] },
+      { op: "prefixed", reading: "refused", causes: ["receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"pre-success\", outside the R9 pair"] },
+      { op: "truncated", reading: "refused", causes: ["receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"runtime\", outside the R9 pair"] },
+      { op: "inner", reading: "refused", causes: ["receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"absent\", outside the R9 pair"] },
+      { op: "cased", reading: "refused", causes: ["receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"Success\", outside the R9 pair"] },
+      { op: "padded", reading: "refused", causes: ["receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"success \", outside the R9 pair"] },
+      { op: "indented", reading: "refused", causes: ["receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \" success\", outside the R9 pair"] },
+      { op: "normalized", reading: "refused", causes: [`receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named ${JSON.stringify(TSX_NEAR_NAMES.normalized)}, outside the R9 pair`] },
+      { op: "formatted", reading: "refused", causes: [`receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named ${JSON.stringify(TSX_NEAR_NAMES.formatted)}, outside the R9 pair`] },
+    ],
+  },
+  {
+    id: "TS7",
+    site: "entry:row-count",
+    label: "the R9 pair's one line per row",
+    pins: [
+      { op: "duplicated", reading: "refused", causes: ["receipts/wb-693.7.md: its newest TSX entry renders 2 success rows, not exactly one"] },
+    ],
+  },
+];
+
+/** A TSX pin as the frozen-shape literal reads it. */
+const tsxPinShape = (pin: TsxPin): string => (pin.reading === "refused" ? `${pin.op} refused: ${pin.causes.join(" | ")}` : `${pin.op} ${pin.reading}`);
+
+/** The TSX receipt with its one raw claim of record rewritten (a fail-closed raw anchor, as every receipt edit). */
+function rosterClaimEdit(receipt: string, write: (claim: string) => string): string {
+  const claims = [...receipt.matchAll(TSX_ROSTER_CLAUSE_ALL)].map((match) => match[0]);
+  const [claim] = claims;
+  if (claims.length !== 1 || claim === undefined) throw new Error("mutant authoring: the TSX receipt writes no one raw claim of record");
+  return replaceOnce(receipt, claim, write(claim));
+}
+
+/** T-ROSTER-RENDERED (wb-m14y, the wb-ojur gate's F3 A5): receipt variants whose raw and rendered claims of record disagree,
+ * each with the rows T-ROSTER must read from it. */
+const ROSTER_VARIANTS: readonly (readonly [string, (receipt: string) => string, readonly number[]])[] = [
+  ["TR1 commented: the claim of record inside a complete HTML comment renders nothing", (receipt) => rosterClaimEdit(receipt, (claim) => `<!-- ${claim} -->`), []],
+  ["TR2 struck: the claim of record struck through is not asserted", (receipt) => rosterClaimEdit(receipt, (claim) => `~~${claim}~~`), []],
+  ["TR3 escaped: the claim with its parentheses written as backslash escapes renders as the claim", (receipt) => rosterClaimEdit(receipt, (claim) => claim.replace("(", "\\(").replace(")", "\\)")), [11]],
+  ["TR4 emphasized: the claim with its last row emphasized renders as the claim", (receipt) => rosterClaimEdit(receipt, (claim) => claim.replace(/T([0-9]+)\)$/, "*T$1*)")), [11]],
+];
+
+/** The receipt slot and run of record the committed TSX-era sentence names. */
+const TSX_SLOTS: TsxSlots | undefined = readTsxShape(W10_COMMITTED.tsx)?.slots;
+
+/** `text` with its one raw occurrence of `from` replaced by `to` (receipt edits keep fail-closed raw anchors). */
+function replaceOnce(text: string, from: string, to: string): string {
+  const found = text.indexOf(from);
+  if (found < 0 || text.indexOf(from, found + 1) >= 0) throw new Error(`mutant authoring: no one raw ${JSON.stringify(from)}`);
+  return `${text.slice(0, found)}${to}${text.slice(found + from.length)}`;
+}
+
+/** The receipt with one field of one RF-TSX-RECEIPT row re-authored (its JSON object rewritten in the tier's compact form). */
+function tsxField(row: (typeof TSX_ROW_NAMES)[number], key: string, value: unknown): (receipt: string) => string {
+  return (receipt) => {
+    const open = receipt.indexOf(`${TSX_MARK}"row":${JSON.stringify(row)}`);
+    const json = open < 0 ? undefined : balancedObject(receipt, open + TSX_MARK.length - 1);
+    const parsed = tsxObject(json);
+    if (json === undefined || parsed === undefined || JSON.stringify(parsed) !== json || !(key in parsed)) throw new Error(`mutant authoring: no compact ${row} row with ${key}`);
+    return replaceOnce(receipt, json, JSON.stringify({ ...parsed, [key]: value }));
+  };
+}
+
+/** The first cmd_* id the live TSX entry renders other than its run of record (the swap decoy). */
+function tsxDecoy(receipt: string, record: string): string {
+  const decoy = (receipt.match(CMD_ID_ALL) ?? []).find((id) => id !== record);
+  if (decoy === undefined) throw new Error("mutant authoring: the TSX receipt renders no cmd_* id beside its run of record");
+  return decoy;
+}
+
+/** The one raw "Run of record:" line of the receipt, newline included. */
+function runLineOf(receipt: string): readonly [number, number] {
+  const start = receipt.indexOf("\n- Run of record:");
+  const stop = start < 0 ? -1 : receipt.indexOf("\n", start + 1);
+  if (start < 0 || stop < 0 || receipt.indexOf("\n- Run of record:", start + 1) >= 0) throw new Error("mutant authoring: no one raw Run of record line");
+  return [start + 1, stop + 1];
+}
+
+/** The receipt with `added(line)` as its own line right after the one raw line carrying `row`'s RF-TSX-RECEIPT mark. */
+function afterTsxLine(row: (typeof TSX_ROW_NAMES)[number], added: (line: string) => string): (receipt: string) => string {
+  return (receipt) => {
+    const mark = `${TSX_MARK}"row":${JSON.stringify(row)}`;
+    const found = receipt.indexOf(mark);
+    const end = found < 0 ? -1 : receipt.indexOf("\n", found);
+    if (found < 0 || end < 0 || receipt.indexOf(mark, found + 1) >= 0) throw new Error(`mutant authoring: no one raw ${row} RF-TSX-RECEIPT line`);
+    const start = receipt.lastIndexOf("\n", found) + 1;
+    return `${receipt.slice(0, end + 1)}${added(receipt.slice(start, end))}\n${receipt.slice(end + 1)}`;
+  };
+}
+
+/** The edit one TSX pin makes: to the page, to the TSX receipt, or both; `absent` reads the named receipt as missing. */
+function tsxEdit(row: TsxRow, op: TsxOp): { page?: (source: string) => string; receipt?: (receipt: string) => string; absent?: true } {
+  const record = TSX_SLOTS?.cmd ?? "";
+  const clause = `(receipt of record ${record})`;
+  switch (`${row.site}/${op}`) {
+    case "success:cli_version/changed":
+      return { receipt: tsxField("success", "cli_version", "0.1.846") };
+    case "success:cli_version/emptied":
+      return { receipt: tsxField("success", "cli_version", "") };
+    case "success:tsx_worker_spawns/zeroed":
+      return { receipt: tsxField("success", "tsx_worker_spawns", 0) };
+    case "success:tsx_worker_spawns/changed":
+      return { receipt: tsxField("success", "tsx_worker_spawns", 2) };
+    case "success:distribution_version/changed":
+      return { receipt: tsxField("success", "distribution_version", "2.9.8") };
+    case "success:distribution_version/emptied":
+      return { receipt: tsxField("success", "distribution_version", "") };
+    case "success:contract_fingerprint/malformed":
+      return { receipt: tsxField("success", "contract_fingerprint", `sha256:${"0".repeat(63)}`) };
+    case "success:contract_fingerprint/unknown":
+      return { receipt: tsxField("success", "contract_fingerprint", "unknown") };
+    case "runtime-absent:category/changed":
+      return { receipt: tsxField("runtime-absent", "category", "transport") };
+    case "runtime-absent:message/renamed":
+      return { receipt: tsxField("runtime-absent", "message", "RF render refused: RF_RENDER_FAILED") };
+    case "record:heading/swapped":
+      return { receipt: (receipt) => replaceOnce(receipt, clause, `(receipt of record ${tsxDecoy(receipt, record)})`) };
+    case "record:heading/removed":
+      return { receipt: (receipt) => replaceOnce(receipt, ` ${clause}`, "") };
+    case "record:heading/stray":
+      return { receipt: (receipt) => replaceOnce(receipt, clause, `${clause} (Receipt Of Record ${record})`) };
+    case "record:heading/doubled":
+      return { receipt: (receipt) => replaceOnce(receipt, clause, `${clause} ${clause}`) };
+    case "record:run-line/removed":
+      return {
+        receipt: (receipt) => {
+          const [start, end] = runLineOf(receipt);
+          return `${receipt.slice(0, start)}${receipt.slice(end)}`;
+        },
+      };
+    case "record:run-line/swapped":
+      return {
+        receipt: (receipt) => {
+          const [start, end] = runLineOf(receipt);
+          return `${receipt.slice(0, start)}${replaceOnce(receipt.slice(start, end), record, tsxDecoy(receipt, record))}${receipt.slice(end)}`;
+        },
+      };
+    case "page:sentence/dropped":
+      return {
+        page: (source) =>
+          editClaim(source, (site) => {
+            const { span } = sentenceOf(evidenceOf(site), TSX_MARKER);
+            return [[span[0] - 1, span[1], ""]];
+          }),
+      };
+    case "page:sentence/doubled":
+      return {
+        page: (source) =>
+          editClaim(source, (site) => {
+            const { span } = sentenceOf(evidenceOf(site), TSX_MARKER);
+            return [[span[1], span[1], ` ${site.page.text.slice(span[0], span[1])}`]];
+          }),
+      };
+    case "page:sentence/split":
+      return { page: (source) => inEvidence(source, "tsx_runtime distribution_version 2.9.7", "tsx_runtime distribution_version 2.9.8") };
+    case "page:sentence/reworded":
+      return { page: (source) => inEvidence(source, "2 of 2 rows passed", "1 of 2 rows passed") };
+    case "page:sentence/lookalike":
+      return {
+        page: (source) =>
+          editClaim(source, (site) => {
+            const { span } = sentenceOf(evidenceOf(site), TSX_MARKER);
+            return [[span[1], span[1], ` ${replaceOnce(site.page.text.slice(span[0], span[1]), "TSX-era", `TSX-${at(0x435)}ra`)}`]];
+          }),
+      };
+    case "page:evidence-cell/unreadable":
+      return { page: (source) => afterW10Heading(source, "## Retracted claims\n\n") };
+    case "receipt:file/absent":
+      return { absent: true };
+    case "receipt:html/html":
+      return {
+        receipt: (receipt) => {
+          if (!receipt.endsWith("\n")) throw new Error("mutant authoring: the TSX receipt does not end with a newline");
+          return `${receipt}\n<div hidden>\n- \`${TSX_MARK}"row":"success","cli_version":"9.9.9"}\`\n</div>\n`;
+        },
+      };
+    case "entry:marks/unmarked":
+      return {
+        receipt: (receipt) => {
+          if (!receipt.includes(TSX_MARK)) throw new Error("mutant authoring: the TSX receipt renders no RF-TSX-RECEIPT mark");
+          return receipt.replaceAll(TSX_MARK, "RF-TSX-ROW {");
+        },
+      };
+    case "entry:line-json/malformed":
+      return { receipt: afterTsxLine("runtime-absent", () => `- \`${TSX_MARK}"row":"success","cli_version":}\``) };
+    case "entry:row-name/foreign":
+      return { receipt: afterTsxLine("runtime-absent", () => `- \`${TSX_MARK}"row":"partial","category":"unavailable"}\``) };
+    case "entry:row-name/extended":
+    case "entry:row-name/prefixed":
+    case "entry:row-name/truncated":
+    case "entry:row-name/inner":
+    case "entry:row-name/cased":
+    case "entry:row-name/padded":
+    case "entry:row-name/indented":
+    case "entry:row-name/normalized":
+    case "entry:row-name/formatted": {
+      const name = Object.entries(TSX_NEAR_NAMES).find(([near]) => near === op)?.[1];
+      if (name === undefined) throw new Error(`mutant authoring: no TS6 near name for ${op}`);
+      return { receipt: afterTsxLine("runtime-absent", () => `- \`${TSX_MARK}"row":${JSON.stringify(name)},"category":"unavailable"}\``) };
+    }
+    case "entry:row-count/duplicated":
+      return { receipt: afterTsxLine("success", (line) => line) };
+    case "residual:older-entry/older":
+      return {
+        receipt: (receipt) => {
+          const heading = receipt.indexOf("\n## ");
+          if (heading < 0) throw new Error("mutant authoring: the TSX receipt has no entry heading");
+          const stale = `\n## 2026-10-25 an older TSX entry (receipt of record cmd_${"0".repeat(12)})\n\n- Run of record: forge cmd_${"0".repeat(12)}.\n- \`${TSX_MARK}"row":"success","cli_version":"0.0.1","tsx_worker_spawns":9,"distribution_version":"0.0.1","contract_fingerprint":"bad"}\`\n- \`${TSX_MARK}"row":"runtime-absent","category":"transport","message":"none"}\`\n`;
+          return `${receipt.slice(0, heading)}${stale}${receipt.slice(heading)}`;
+        },
+      };
+    case "residual:prose/prose":
+      return { receipt: (receipt) => replaceOnce(receipt, "work.storage_write_count 0", "work.storage_write_count 1") };
+    default:
+      throw new Error(`mutant authoring: no TSX edit for ${row.site}/${op}`);
+  }
+}
+
+/** One TSX pin's edit applied to the live page and receipt: the variant page, whether it edits anything, and the judge's findings. */
+function tsxPinRun(row: TsxRow, pin: TsxPin): { variant: string; edited: boolean; findings: string[] } {
+  const edit = tsxEdit(row, pin.op);
+  const source = readText(MATRIX);
+  const variant = edit.page === undefined ? source : edit.page(source);
+  const named = TSX_SLOTS?.receipt ?? "";
+  const reader: ReadReceipt = edit.absent === true ? (name) => (name === named ? undefined : liveReceipt(name)) : edit.receipt === undefined ? liveReceipt : readerWith(edit.receipt);
+  return { variant, edited: variant !== source || reader(named) !== liveReceipt(named), findings: judgeTsxRow(variant, reader) };
+}
+
+/** A TSX pin judged on the live page and receipt: refused with exactly its named findings, each WHOLE and in order (wb-m14y, the
+ * wb-ojur gate's F2 S5: the judge's own output anchors every cause, so a cause shortened in every literal of this file reds);
+ * or accepted. */
+function expectTsxPin(row: TsxRow, pin: TsxPin, label: string): void {
+  const { edited, findings } = tsxPinRun(row, pin);
+  expect(edited, `${label} edits neither the page nor the receipt`).toBe(true);
+  expect(findings, label).toEqual(pin.reading === "refused" ? pin.causes : []);
+}
+
+/** One refused pin of this file run on the live page and receipt (tsxPinRun()), as T-ARMS judges it: its row and op, the findings
+ * judgeTsxRow gives its variant, and the findings the W10 view of that variant page gives (`shared`, the shared W10 view). */
+interface RefusedRun {
+  row: string;
+  op: string;
+  findings: readonly string[];
+  shared: readonly string[];
+}
+
+/** One run per refused pin of this file, the TSX rows' and then the TS rows', each in table order (T-ARMS, T-ARMS-FORWARD). */
+function refusedRuns(): RefusedRun[] {
+  return [...TSX_ROWS, ...TSX_STRUCTURE_ROWS].flatMap((row) =>
+    row.pins.flatMap((pin) => {
+      if (pin.reading !== "refused") return [];
+      const { variant, findings } = tsxPinRun(row, pin);
+      return [{ row: row.id, op: pin.op, findings, shared: w10View(variant).findings }];
+    }),
+  );
+}
+
+/** T-ARMS's judgment of a reading of the judge's source (readJudgeArms()) over refused pins' runs: T-ARMS judges this file's
+ * source over refusedRuns(), T-ARMS-FORWARD four edited copies of it over refusedRuns() and the live source over one edited set
+ * of runs. */
+interface ArmsJudgment {
+  /** The pattern source of every arm the reading reads, in the judge's order. */
+  arms: readonly string[];
+  /** The reading's unread entries. */
+  unread: readonly string[];
+  /** Each refused pin's finding that reads as other than exactly one arm or, matching none, a finding of its run's shared view. */
+  misread: readonly string[];
+  /** The arms each TS row draws, in row order. */
+  tsDrawn: readonly (readonly string[])[];
+  /** The arms no T row draws, one per row, in the judge's order: what the TS rows must draw. */
+  tsOwed: readonly (readonly string[])[];
+  /** The arms no refused pin draws. */
+  undrawn: readonly string[];
+}
+
+/** T-ARMS's judgment (ArmsJudgment) of `reading` over `runs`: each run's findings read against the reading's arms, each run counted
+ * for the TSX or TS row whose id it carries. */
+function armsJudgment(reading: ArmsReading, runs: readonly RefusedRun[]): ArmsJudgment {
+  const arms = reading.arms.map((arm) => arm.pattern);
+  const misread: string[] = [];
+  const drawnBy = (rows: readonly TsxRow[]): string[][] =>
+    rows.map((row) => {
+      const drawn = new Set<number>();
+      for (const run of runs.filter((each) => each.row === row.id)) {
+        for (const finding of run.findings) {
+          const matched = arms.flatMap((arm, index) => (arm.test(finding) ? [index] : []));
+          if (!(matched.length === 1 || (matched.length === 0 && run.shared.includes(finding)))) misread.push(`${run.row} ${run.op} reads as ${matched.length} arms: ${finding}`);
+          for (const index of matched) drawn.add(index);
+        }
+      }
+      return [...drawn].sort((a, b) => a - b).map((index) => arms[index]?.source ?? "");
+    });
+  const fromT = new Set(drawnBy(TSX_ROWS).flat());
+  const tsDrawn = drawnBy(TSX_STRUCTURE_ROWS);
+  const drawn = new Set([...fromT, ...tsDrawn.flat()]);
+  return {
+    arms: arms.map((arm) => arm.source),
+    unread: reading.unread,
+    misread,
+    tsDrawn,
+    tsOwed: arms.filter((arm) => !fromT.has(arm.source)).map((arm) => [arm.source]),
+    undrawn: arms.filter((arm) => !drawn.has(arm.source)).map((arm) => arm.source),
+  };
+}
+
+/** The T-ARMS requirements `judgment` fails, in this order: "unread" (the reading holds an unread entry), "one-arm" (a refused
+ * pin's finding reads as other than exactly one arm or, matching none, a finding of its run's shared view), "ts-rows" (the TS
+ * rows draw other than exactly the arms no T row draws, one per row, in the judge's order) and "drawn" (an arm no refused pin
+ * draws). */
+function failedRequirements(judgment: ArmsJudgment): string[] {
+  const failed: string[] = [];
+  if (judgment.unread.length > 0) failed.push("unread");
+  if (judgment.misread.length > 0) failed.push("one-arm");
+  if (JSON.stringify(judgment.tsDrawn) !== JSON.stringify(judgment.tsOwed)) failed.push("ts-rows");
+  if (judgment.undrawn.length > 0) failed.push("drawn");
+  return failed;
+}
+
+/** `source` with `code` written directly before the last statement of the body of its top-level function declaration `name`. */
+function beforeLastStatement(source: string, name: string, code: string): string {
+  const file = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const declared = file.statements.find((statement): statement is ts.FunctionDeclaration => ts.isFunctionDeclaration(statement) && statement.name?.text === name);
+  const last = declared?.body?.statements.at(-1);
+  if (last === undefined) throw new Error(`mutant authoring: no top-level ${name} with a body`);
+  const at = last.getStart(file);
+  return `${source.slice(0, at)}${code}\n  ${source.slice(at)}`;
+}
+
+/** `source` with `code` written directly before the last statement of judgeTsxRow's body (T-ARMS-FORWARD). */
+function beforeJudgeReturn(source: string, code: string): string {
+  return beforeLastStatement(source, "judgeTsxRow", code);
+}
+
+/** `source` with the one conditional expression in judgeTsxRow's body whose first branch is the string literal `text` replaced by
+ * its second branch (T-ARMS-FORWARD: the arm that draws `text` taken out of the judge). */
+function withoutFirstBranch(source: string, text: string): string {
+  const file = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const judge = file.statements.find((statement): statement is ts.FunctionDeclaration => ts.isFunctionDeclaration(statement) && statement.name?.text === "judgeTsxRow");
+  const found: ts.ConditionalExpression[] = [];
+  const walk = (node: ts.Node): void => {
+    if (ts.isConditionalExpression(node) && ts.isStringLiteral(node.whenTrue) && node.whenTrue.text === text) found.push(node);
+    ts.forEachChild(node, walk);
+  };
+  if (judge?.body !== undefined) walk(judge.body);
+  const [only] = found;
+  if (found.length !== 1 || only === undefined) throw new Error(`mutant authoring: ${found.length} conditionals in judgeTsxRow's body branch first to ${JSON.stringify(text)}`);
+  return `${source.slice(0, only.getStart(file))}${only.whenFalse.getText(file)}${source.slice(only.getEnd())}`;
+}
+
+/** `source` with its T-ARMS case's one armsJudgment() call edited: its first argument written as `reading`, and `before` written
+ * directly before the statement holding the call (T-ARMS-READER-CONTROLS; the call is located through the syntax tree). */
+function withTArmsCall(source: string, reading: string, before = ""): string {
+  const file = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const calls: ts.CallExpression[] = [];
+  const walk = (node: ts.Node, inCase: boolean): void => {
+    let within = inCase;
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "it") {
+      const [title] = node.arguments;
+      within = title !== undefined && ts.isStringLiteral(title) && title.text.startsWith("T-ARMS (");
+    }
+    if (within && ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "armsJudgment") calls.push(node);
+    ts.forEachChild(node, (child) => walk(child, within));
+  };
+  walk(file, false);
+  const [call] = calls;
+  const argument = call?.arguments[0];
+  if (calls.length !== 1 || call === undefined || argument === undefined) throw new Error(`mutant authoring: ${calls.length} armsJudgment() calls in T-ARMS`);
+  let statement: ts.Node = call;
+  while (statement.parent !== undefined && !ts.isBlock(statement.parent)) statement = statement.parent;
+  const at = statement.getStart(file);
+  return `${source.slice(0, at)}${before}${source.slice(at, argument.getStart(file))}${reading}${source.slice(argument.getEnd())}`;
+}
+
+/** `source` with `code`, a NAME_PLANTS plant, written where the plant says (T-ARMS-READER-NAMES). */
+function plantName(source: string, where: "module" | "judgment", code: string): string {
+  return where === "module" ? `${source}\n${code}\n` : beforeLastStatement(source, "armsJudgment", code);
+}
+
 /** The F rows' page edits (the F tests below author through the same helpers), each with its diagnosis, for C1. */
 const F_PAGE: readonly (readonly [string, (source: string) => string, readonly string[], ((receipt: string) => string)?])[] = [
   ["F1", (source) => editRow(source, () => [ROW_AT_9DF9A03]), ["the rendered Evidence cell carries no stamped receipt sentence", "names rf@0.1.583 outside the retirement clause"]],
@@ -2041,12 +3213,13 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
     expect(readLeadShape(evidenceLead(slots))).toEqual(slots);
   });
 
-  it("L6: the live Evidence cell is its six committed sentences, its lead naming the R2 carrier and the stamped receipt (EVIDENCE COMPOSITION)", () => {
+  it("L6: the live Evidence cell is its seven committed sentences, its lead naming the R2 carrier and the stamped receipt (EVIDENCE COMPOSITION)", () => {
     const evidence = w10View(page()).evidence ?? "";
     const sentences = evidence.split(/(?<=\.) /);
-    expect(sentences).toHaveLength(6);
+    expect(sentences).toHaveLength(7);
     expect(sentences.slice(1, 4)).toEqual([W10_COMMITTED.tests, W10_COMMITTED.legacy, W10_COMMITTED.bead]);
     expect(sentences[5]).toBe(W10_COMMITTED.contract);
+    expect(sentences[6]).toBe(W10_COMMITTED.tsx);
     const lead = readLeadShape(sentences[0] ?? "");
     expect(lead?.carrier).toBe(carrier);
     expect(lead?.receipt).toBe(stampedParts(page())?.slots.receipt);
@@ -2478,6 +3651,300 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
           "coded neutral",
           "trailing residual",
         ],
+      ]);
+    });
+  });
+
+  describe("TSX-ERA RECEIPT ROW (wb-693.7, RF-TSX-AND-EMBEDDING-R9): the TSX-era receipt sentence binds to its receipt's run of record and to the R8 tier's two receipt rows", () => {
+    it("T0: the live TSX-era receipt sentence is its committed slice and binds to the receipt it names", () => {
+      expect(tsxSentences(w10View(page()).evidence ?? "")).toEqual([W10_COMMITTED.tsx]);
+      const shape = readTsxShape(W10_COMMITTED.tsx);
+      expect(shape?.slots).toEqual({ date: "2026-10-26", receipt: "wb-693.7", cmd: "cmd_130f00c9f3ea", engine: "2.9.7", cliVersion: "0.1.845", spawns: "1" });
+      expect(shape?.engines).toEqual(["2.9.7", "2.9.7"]);
+      expect(shape === undefined ? "" : tsxSentence(shape.slots)).toBe(W10_COMMITTED.tsx);
+      expect(judgeTsxRow(page(), liveReceipt)).toEqual([]);
+      expect(judgeW10Claim(page(), liveReceipt, carrier)).toEqual([]);
+    });
+
+    it("T-SLICE: the TSX shape reads back exactly the slots tsxSentence() writes, and a sentence whose engine slots differ reads back both", () => {
+      const slots: TsxSlots = { date: "2099-01-02", receipt: "wb-abc.1", cmd: "cmd_0123456789ab", engine: "9.8.7", cliVersion: "1.2.3", spawns: "4" };
+      expect(readTsxShape(tsxSentence(slots))).toEqual({ slots, engines: ["9.8.7", "9.8.7"] });
+      expect(readTsxShape(tsxSentence(slots).replace("distribution_version 9.8.7", "distribution_version 9.8.6"))?.engines).toEqual(["9.8.7", "9.8.6"]);
+    });
+
+    it("T1-T11: every TSX pin is refused with exactly its findings, each whole and in order, or accepted (neutral by design or a named residual)", () => {
+      let ran = 0;
+      for (const row of TSX_ROWS) {
+        for (const pin of row.pins) {
+          expectTsxPin(row, pin, `${row.id} ${pin.op}`);
+          ran++;
+        }
+      }
+      expect(ran).toBe(23);
+    });
+
+    it("TS1-TS7 (wb-ojur; TS6's near names wb-m14y): every structure pin is refused with exactly its findings, each whole and in order", () => {
+      let ran = 0;
+      for (const row of TSX_STRUCTURE_ROWS) {
+        for (const pin of row.pins) {
+          expectTsxPin(row, pin, `${row.id} ${pin.op}`);
+          ran++;
+        }
+      }
+      expect(ran).toBe(16);
+    });
+
+    it("T-ARMS (outside anchor, the judge's own arms, read by the census's readJudgeArms()): over a run of every refused pin, the reading holds no unread entry, every arm it reads is drawn by a refused pin, each finding reads as exactly one arm or, matching none, as a finding the W10 view of its pin's own page gives, and the TS rows are exactly the arms no T row draws, in the judge's order", () => {
+      const runs = refusedRuns();
+      expect(
+        runs.map((run) => `${run.row} ${run.op}`),
+        "a run for every refused pin, in table order",
+      ).toEqual([...TSX_ROWS, ...TSX_STRUCTURE_ROWS].flatMap((row) => row.pins.flatMap((pin) => (pin.reading === "refused" ? [`${row.id} ${pin.op}`] : []))));
+      expect(runs).toHaveLength(36);
+      const judgment = armsJudgment(readJudgeArms(readText(SELF)), runs);
+      expect(judgment.arms.length).toBeGreaterThan(0);
+      expect(judgment.unread, "the reading holds no unread entry").toEqual([]);
+      expect(judgment.misread, "each finding reads as exactly one arm or, matching none, as a finding the W10 view of its pin's own page gives").toEqual([]);
+      expect(judgment.tsDrawn, "the TS rows are exactly the arms no T row draws, in the judge's order").toEqual(judgment.tsOwed);
+      expect(judgment.undrawn, "every arm is drawn by a refused pin").toEqual([]);
+      expect(failedRequirements(judgment)).toEqual([]);
+    }, 60_000);
+
+    it("T-ARMS-FORWARD (wb-m14y, the wb-ojur gate's F1 forward obligation; refusal #5 U3, the zero-arm leg): T-ARMS's judgment fails each requirement on a judgment of its own - with one statement written before judgeTsxRow's last, a pushed string reads as an arm no pin draws, a pushed spread of a method call as an unread entry, and a second push of T9 dropped's finding as that finding read as two arms; with T9 dropped's arm taken out of the judge, that finding reads as no arm; and with TS1 unreadable's run also carrying the W10 view's findings for an empty page, those read as no arm", () => {
+      const source = readText(SELF);
+      const runs = refusedRuns();
+      const live = armsJudgment(readJudgeArms(source), runs);
+      expect(failedRequirements(live)).toEqual([]);
+      const arm = "^probe T-ARMS-FORWARD$";
+      const pushed = armsJudgment(readJudgeArms(beforeJudgeReturn(source, 'findings.push("probe T-ARMS-FORWARD");')), runs);
+      expect(failedRequirements(pushed), "a pushed string").toEqual(["ts-rows", "drawn"]);
+      expect([pushed.arms, pushed.unread, pushed.misread, pushed.tsDrawn, pushed.tsOwed, pushed.undrawn]).toEqual([[...live.arms, arm], [], [], live.tsDrawn, [...live.tsOwed, [arm]], [arm]]);
+      const spread = armsJudgment(readJudgeArms(beforeJudgeReturn(source, 'findings.push(...["probe T-ARMS-FORWARD"].map((text) => text));')), runs);
+      expect(failedRequirements(spread), "a pushed spread of a method call").toEqual(["unread"]);
+      expect([spread.arms, spread.unread.map((entry) => entry.slice(0, entry.indexOf(" (line "))), spread.misread, spread.undrawn]).toEqual([live.arms, ["a diagnosis list in a form T-ARMS does not trace"], [], []]);
+      const dropped = TSX_ROWS.find((row) => row.id === "T9")?.pins.find((pin) => pin.op === "dropped");
+      const finding = dropped?.reading === "refused" ? dropped.causes[0] : "";
+      expect(finding).toBe("the rendered Evidence cell carries no TSX-era receipt sentence");
+      const twice = armsJudgment(readJudgeArms(beforeJudgeReturn(source, `findings.push(${JSON.stringify(finding)});`)), runs);
+      expect(failedRequirements(twice), "a second push of T9 dropped's finding").toEqual(["one-arm"]);
+      expect([twice.arms.length - live.arms.length, twice.unread, twice.misread, twice.undrawn]).toEqual([1, [], [`T9 dropped reads as 2 arms: ${finding}`], []]);
+      const unarmed = armsJudgment(readJudgeArms(withoutFirstBranch(source, finding)), runs);
+      expect(failedRequirements(unarmed), "T9 dropped's arm taken out of the judge").toEqual(["one-arm"]);
+      expect([unarmed.arms, unarmed.unread, unarmed.misread, unarmed.tsDrawn, unarmed.tsOwed, unarmed.undrawn]).toEqual([
+        live.arms.filter((each) => each !== `^${quotedPattern(finding)}$`),
+        [],
+        [`T9 dropped reads as 0 arms: ${finding}`],
+        live.tsDrawn,
+        live.tsOwed,
+        [],
+      ]);
+      expect(live.arms.length - unarmed.arms.length).toBe(1);
+      const blank = w10View("").findings;
+      expect(blank).toEqual(["0 headings on the page read as a W10 heading, not exactly one", "0 table rows on the page read as the W10 claim row, not exactly one"]);
+      const viewed = armsJudgment(
+        readJudgeArms(source),
+        runs.map((run) => (run.row === "TS1" ? { ...run, findings: [...run.findings, ...blank] } : run)),
+      );
+      expect(failedRequirements(viewed), "TS1 unreadable's run carrying the W10 view's findings for an empty page").toEqual(["one-arm"]);
+      expect([viewed.arms, viewed.unread, viewed.misread, viewed.tsDrawn, viewed.tsOwed, viewed.undrawn]).toEqual([
+        live.arms,
+        [],
+        blank.map((text) => `TS1 unreadable reads as 0 arms: ${text}`),
+        live.tsDrawn,
+        live.tsOwed,
+        [],
+      ]);
+    }, 120_000);
+
+    it("T-ARMS-READER (outside anchor, the census's own import and the checker's binding): every reading armsJudgment() judges is made by this file's import of readJudgeArms - each reference to armsJudgment() is the callee of a call whose first argument is a call of a name the TypeScript checker binds to that import (one in T-ARMS, six in T-ARMS-FORWARD), which imports readJudgeArms under its own name from the module the census imports it from; and by name, of the declarations declaredNames() reads in this file, the one with a READER_NAMES name is that import", () => {
+      const own = readerImports(readText(SELF));
+      expect(own, "this file's one import of the reader").toEqual([`${ARMS_READER} readJudgeArms as readJudgeArms`]);
+      expect(readerImports(readText(ARMS_CENSUS)), "the census imports the same reader").toEqual(own);
+      expect(judgmentReadings(readText(SELF)), "every judgment judges a reading the import makes").toEqual(LIVE_JUDGMENT_READINGS);
+      expect(LIVE_JUDGMENT_READINGS).toEqual([
+        "T-ARMS: a call of the readJudgeArms import",
+        ...Array.from({ length: 6 }, () => "T-ARMS-FORWARD: a call of the readJudgeArms import"),
+      ]);
+      expect(declaredNames(readText(SELF)).filter(readerNamed), "the one declaration with a reader name").toEqual(["named import readJudgeArms"]);
+      const helper = topLevelFunctions(readText(ARMS_HELPER));
+      expect(helper, "the function declarations the reader module makes").toEqual(["bindingChecker", "readJudgeArms"]);
+      expect(helper.filter((name) => !READER_NAMES.includes(name)), "each a reader name").toEqual([]);
+    }, 60_000);
+
+    it("T-ARMS-READER-CONTROLS (wb-m14y refusals #5 and #6, the negative controls of readerImports(), judgmentReadings(), topLevelFunctions() and headerKinds(); standing rule 16 frozen shape): each reader reads its planted edit - readerImports() an aliased, a second and a renamed import of the reader; judgmentReadings() a copy, an alias and a shadow of the reader at T-ARMS's call, an alias, a shorthand property and an export specifier of armsJudgment(), a second declaration of it, armsJudgment() handed on as the second and the third argument of a call whose first argument is the import's call, the import's call as the second and the third argument of an armsJudgment() call whose first is a copy's, and the import's name in six forms that are no call as an armsJudgment() call's first argument; topLevelFunctions() a function added to the reader module; headerKinds() a kind taken out of this header's list", () => {
+      const readers: Readonly<Record<ControlReader, (source: string) => string[]>> = { readerImports, judgmentReadings, topLevelFunctions, headerKinds };
+      const own = readText(SELF);
+      const sources: Readonly<Record<ControlReader, string>> = { readerImports: own, judgmentReadings: own, topLevelFunctions: readText(ARMS_HELPER), headerKinds: own };
+      let ran = 0;
+      for (const [id, reader, edit, reads] of READER_CONTROLS) {
+        const source = sources[reader];
+        const edited = edit(source);
+        expect(edited, `${id} edits the source ${reader}() reads`).not.toBe(source);
+        expect(readers[reader](edited), id).toEqual(reads);
+        ran++;
+      }
+      expect(ran).toBe(15);
+      expect(READER_CONTROLS.map(([id, reader, , reads]) => `${id} ${reader}: ${reads.join(" | ")}`)).toEqual([
+        "RC1 aliased import readerImports: ./helpers/w10-tsx-judge-arms.js readJudgeArms as readArms",
+        "RC2 second import readerImports: ./helpers/w10-tsx-judge-arms.js readJudgeArms as readJudgeArms | ./w10-copy.js readJudgeArms as readJudgeArms",
+        "RC3 renamed import readerImports: ./helpers/w10-tsx-judge-arms.js readJudgeArms as readJudgeArms | ./w10-copy.js readGuardArms as readJudgeArms",
+        "RC4 copy at T-ARMS's call judgmentReadings: T-ARMS: armsJudgment(readGuardArms(readText(SELF)), runs) | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import",
+        "RC5 alias at T-ARMS's call judgmentReadings: T-ARMS: armsJudgment(read(readText(SELF)), runs) | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import",
+        "RC6 shadow at T-ARMS's call judgmentReadings: T-ARMS: armsJudgment(readJudgeArms(readText(SELF)), runs) | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import",
+        "RC7 alias of armsJudgment() judgmentReadings: T-ARMS: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | module: judge = armsJudgment",
+        "RC8 shorthand property judgmentReadings: T-ARMS: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | module: armsJudgment",
+        "RC9 export specifier judgmentReadings: T-ARMS: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | module: armsJudgment",
+        "RC10 second declaration judgmentReadings: 2 top-level declarations of armsJudgment()",
+        "RC11 function added to the reader module topLevelFunctions: bindingChecker | readJudgeArms | judgeArms",
+        "RC12 kind taken out of the header headerKinds: variable | parameter | binding element | function | function expression | class | class expression | namespace | import-equals | default import | namespace import | named import | interface | type alias | type parameter",
+        "RC13 armsJudgment() handed on after the import's call judgmentReadings: T-ARMS: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | module: handOn(readJudgeArms(readText(SELF)), armsJudgment) | module: handOn(readJudgeArms(readText(SELF)), refusedRuns(), armsJudgment)",
+        "RC14 the import's call after a copy's judgmentReadings: T-ARMS: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | module: armsJudgment(readGuardArms(readText(SELF)), readJudgeArms(readText(SELF))) | module: armsJudgment(readGuardArms(readText(SELF)), refusedRuns(), readJudgeArms(readText(SELF)))",
+        'RC15 the import\'s name, no call, first judgmentReadings: T-ARMS: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | T-ARMS-FORWARD: a call of the readJudgeArms import | module: armsJudgment(readJudgeArms.prototype, refusedRuns()) | module: armsJudgment(readJudgeArms?.prototype, refusedRuns()) | module: armsJudgment(readJudgeArms["prototype"], refusedRuns()) | module: armsJudgment(readJudgeArms?.["prototype"], refusedRuns()) | module: armsJudgment(readJudgeArms as never, refusedRuns()) | module: armsJudgment(<never>readJudgeArms, refusedRuns())',
+      ]);
+    }, 60_000);
+
+    it("T-ARMS-READER-NAMES (wb-m14y refusal #5 U2, the negative control of T-ARMS-READER's names; standing rule 16 frozen shape): declaredNames() reads each NAME_PLANTS plant - a declaration of a DECLARATION_KINDS kind named readJudgeArms, bindingChecker or judgeArms written into this file's source, every kind planted in the table's forms - back as exactly that kind and name, and the header states exactly that kind list", () => {
+      const source = readText(SELF);
+      const live = declaredNames(source).filter(readerNamed);
+      const unread = NAME_PLANTS.flatMap(([kind, name, where, code]) => {
+        const read = declaredNames(plantName(source, where, code)).filter(readerNamed);
+        return JSON.stringify(read) === JSON.stringify([...live, `${kind} ${name}`]) ? [] : [`${kind} ${name} reads as ${JSON.stringify(read)}`];
+      });
+      expect(unread, "each plant read back as its kind and name, after the live file's own").toEqual([]);
+      expect(live, "the live file's one declaration with a reader name").toEqual(["named import readJudgeArms"]);
+      expect(NAME_PLANTS).toHaveLength(28);
+      expect([...new Set(NAME_PLANTS.map(([kind]) => kind))], "every kind planted, in DECLARATION_KINDS's order").toEqual(DECLARATION_KINDS.map(([kind]) => kind));
+      expect(headerKinds(readText(SELF)), "the kind list the header states").toEqual(DECLARATION_KINDS.map(([kind]) => kind));
+      expect(NAME_PLANTS.map(([kind, name, where, code]) => `${kind} ${name} @${where}: ${code}`)).toEqual([
+        "variable judgeArms @judgment: const judgeArms = readJudgeArms;",
+        "variable judgeArms @judgment: let judgeArms: ArmsReading | undefined;",
+        "variable judgeArms @judgment: var judgeArms = readJudgeArms;",
+        "variable judgeArms @judgment: for (const judgeArms of [readJudgeArms]) void judgeArms;",
+        "variable judgeArms @judgment: try {\n    void readJudgeArms;\n  } catch (judgeArms) {\n    void judgeArms;\n  }",
+        "parameter judgeArms @judgment: const probeArrow = (text: string, judgeArms = readJudgeArms): ArmsReading => judgeArms(text);",
+        "parameter judgeArms @judgment: function probeFunction(judgeArms: typeof readJudgeArms, text: string): ArmsReading {\n    return judgeArms(text);\n  }",
+        "parameter judgeArms @judgment: const probeHost = {\n    read(judgeArms: typeof readJudgeArms, text: string): ArmsReading {\n      return judgeArms(text);\n    },\n  };",
+        "binding element judgeArms @judgment: const { readJudgeArms: judgeArms } = { readJudgeArms };",
+        "binding element judgeArms @judgment: const [judgeArms] = [readJudgeArms];",
+        "binding element judgeArms @judgment: const probePattern = ({ judgeArms }: { judgeArms: typeof readJudgeArms }): typeof readJudgeArms => judgeArms;",
+        "function judgeArms @judgment: function judgeArms(text: string): ArmsReading {\n    return readJudgeArms(text);\n  }",
+        "function judgeArms @module: declare function judgeArms(text: string): ArmsReading;",
+        "function expression judgeArms @judgment: const probeExpression = function judgeArms(text: string): ArmsReading {\n    return readJudgeArms(text);\n  };",
+        "class judgeArms @judgment: class judgeArms {\n    read(text: string): ArmsReading {\n      return readJudgeArms(text);\n    }\n  }",
+        "class expression judgeArms @judgment: const ProbeClass = class judgeArms {\n    read(text: string): ArmsReading {\n      return readJudgeArms(text);\n    }\n  };",
+        "enum judgeArms @judgment: enum judgeArms {\n    Reader = 0,\n  }",
+        "enum judgeArms @judgment: const enum judgeArms {\n    Reader = 0,\n  }",
+        "namespace bindingChecker @module: namespace bindingChecker {\n  export const reader = readJudgeArms;\n}",
+        "namespace bindingChecker @module: namespace probe.bindingChecker {\n  export const reader = readJudgeArms;\n}",
+        "import-equals bindingChecker @module: import bindingChecker = require(\"./helpers/w10-tsx-judge-arms.js\");",
+        "default import bindingChecker @module: import bindingChecker from \"./helpers/w10-tsx-judge-arms.js\";",
+        "namespace import bindingChecker @module: import * as bindingChecker from \"./helpers/w10-tsx-judge-arms.js\";",
+        "named import bindingChecker @module: import { readJudgeArms as bindingChecker } from \"./helpers/w10-tsx-judge-arms.js\";",
+        "interface readJudgeArms @judgment: interface readJudgeArms {\n    read(text: string): ArmsReading;\n  }",
+        "type alias readJudgeArms @judgment: type readJudgeArms = ArmsReading;",
+        "type parameter readJudgeArms @judgment: const probeGeneric = <readJudgeArms,>(value: readJudgeArms): readJudgeArms => value;",
+        "type parameter readJudgeArms @judgment: type probeInfer<T> = T extends Array<infer readJudgeArms> ? readJudgeArms : never;",
+      ]);
+    }, 120_000);
+
+    it("T-ROSTER (outside anchor, the receipt's claim of record): the T rows are exactly T1 to the last row the TSX receipt names, so a row removed from every literal of this file still reds", () => {
+      const receipt = liveReceipt(TSX_SLOTS?.receipt ?? "") ?? "";
+      const named = rosterClaims(receipt);
+      expect(named, "the TSX receipt names this guard's rows exactly once").toHaveLength(1);
+      const last = named[0] ?? 0;
+      expect(last).toBeGreaterThan(0);
+      expect(TSX_ROWS.map((row) => row.id)).toEqual(Array.from({ length: last }, (_, index) => `T${index + 1}`));
+    });
+
+    it("T-ROSTER-RENDERED (wb-m14y, the wb-ojur gate's F3 A5): T-ROSTER reads the claim of record as the receipt renders - a claim hidden from the rendered page reads as no claim, and one written differently that renders the same reads as the claim", () => {
+      const receipt = liveReceipt(TSX_SLOTS?.receipt ?? "") ?? "";
+      expect(rosterClaims(receipt)).toEqual([TSX_ROWS.length]);
+      let ran = 0;
+      for (const [name, edit, rows] of ROSTER_VARIANTS) {
+        const variant = edit(receipt);
+        expect(variant, name).not.toBe(receipt);
+        expect(rosterClaims(variant), name).toEqual(rows);
+        ran++;
+      }
+      expect(ran).toBe(4);
+    });
+
+    it("T-ANCHOR (outside anchor): the refused TSX sites are exactly the fields the live receipt renders and the R8 tier prints, the TSX entry's record sites and the live page's one TSX-era sentence", () => {
+      const receipt = liveReceipt(TSX_SLOTS?.receipt ?? "") ?? "";
+      const fromReceipt = receiptTsxFields(receipt);
+      const fromTier = tierReceiptFields(readText(TSX_TIER));
+      expect(fromTier.length).toBeGreaterThan(0);
+      expect(fromReceipt).toEqual(fromTier);
+      const record = tsxReceiptView(receipt, "receipt").newest?.record;
+      const recordSites = [...(record?.records ?? []).map(() => "record:heading"), ...(record?.runLines ?? []).map(() => "record:run-line")];
+      const pageSites = tsxSentences(w10View(page()).evidence ?? "").map(() => "page:sentence");
+      expect(TSX_ROWS.filter((row) => !row.site.startsWith("residual:")).map((row) => row.site)).toEqual([...fromTier, ...recordSites, ...pageSites]);
+    });
+
+    it("U3 (EACH-LIVENESS) and TSX-SHAPE (standing rule 16 frozen shape): the TSX table holds exactly its named rows, each with its frozen site, label and pins", () => {
+      expect(TSX_ROWS).toHaveLength(11);
+      expect(TSX_ROWS.map((row) => row.id)).toEqual(["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11"]);
+      expect(TSX_ROWS.filter((row) => row.pins.length === 0).map((row) => row.id), "every TSX row keeps at least one pin").toEqual([]);
+      expect(TSX_ROWS.map((row) => `${row.id} ${row.site} | ${row.label}: ${row.pins.map(tsxPinShape).join("; ")}`)).toEqual([
+        "T1 success:cli_version | the success row's captured cli_version: changed refused: receipts/wb-693.7.md: success row cli_version \"0.1.846\", not the sentence's 0.1.845; emptied refused: receipts/wb-693.7.md: success row cli_version \"\" is not a non-empty string | receipts/wb-693.7.md: success row cli_version \"\", not the sentence's 0.1.845",
+        "T2 success:tsx_worker_spawns | the success row's TSX worker spawn count: zeroed refused: receipts/wb-693.7.md: success row tsx_worker_spawns 0 is not a count of at least 1 | receipts/wb-693.7.md: success row tsx_worker_spawns 0, not the sentence's 1; changed refused: receipts/wb-693.7.md: success row tsx_worker_spawns 2, not the sentence's 1",
+        "T3 success:distribution_version | the success row's tsx_runtime distribution_version: changed refused: receipts/wb-693.7.md: success row distribution_version \"2.9.8\", not the sentence's 2.9.7; emptied refused: receipts/wb-693.7.md: success row distribution_version \"\" is not a non-empty string | receipts/wb-693.7.md: success row distribution_version \"\", not the sentence's 2.9.7",
+        "T4 success:contract_fingerprint | the success row's tsx_runtime contract_fingerprint: malformed refused: receipts/wb-693.7.md: success row contract_fingerprint \"sha256:000000000000000000000000000000000000000000000000000000000000000\" does not have the tier's fingerprint shape; unknown neutral",
+        "T5 runtime-absent:category | the runtime-absent row's refusal category: changed refused: receipts/wb-693.7.md: runtime-absent row category \"transport\", not \"unavailable\"",
+        "T6 runtime-absent:message | the runtime-absent row's refusal message: renamed refused: receipts/wb-693.7.md: runtime-absent row message \"RF render refused: RF_RENDER_FAILED\" does not contain RF_COMPONENT_RUNTIME_ABSENT",
+        "T7 record:heading | the TSX entry heading's one (receipt of record cmd_*) clause: swapped refused: receipts/wb-693.7.md: the entry carrying the newest RF-TSX-RECEIPT lines names its run of record cmd_5a28029cd55c in its heading but cmd_130f00c9f3ea first in a \"Run of record:\" line | the TSX-era receipt sentence names cmd_130f00c9f3ea, which is not cmd_5a28029cd55c, the run of record of the receipt entry carrying the newest RF-TSX-RECEIPT lines; removed refused: receipts/wb-693.7.md: the entry carrying the newest RF-TSX-RECEIPT lines names 0 runs of record in its heading; exactly one \"(receipt of record cmd_*)\" clause binds the TSX-era run; stray refused: receipts/wb-693.7.md: the entry carrying the newest RF-TSX-RECEIPT lines has a heading that reads as naming a receipt of record outside its one \"(receipt of record cmd_130f00c9f3ea)\" clause; doubled refused: receipts/wb-693.7.md: the entry carrying the newest RF-TSX-RECEIPT lines names 2 runs of record in its heading; exactly one \"(receipt of record cmd_*)\" clause binds the TSX-era run",
+        "T8 record:run-line | the TSX entry's Run of record line: removed refused: receipts/wb-693.7.md: the entry carrying the newest RF-TSX-RECEIPT lines renders no \"Run of record:\" line confirming its run of record cmd_130f00c9f3ea; swapped refused: receipts/wb-693.7.md: the entry carrying the newest RF-TSX-RECEIPT lines names its run of record cmd_130f00c9f3ea in its heading but cmd_5a28029cd55c first in a \"Run of record:\" line",
+        "T9 page:sentence | the W10 claim row's TSX-era receipt sentence: dropped refused: the rendered Evidence cell carries no TSX-era receipt sentence; doubled refused: 2 rendered sentences read as a TSX-era receipt sentence, not exactly one; split refused: the TSX-era receipt sentence's two engine slots read 2.9.7 and 2.9.8, not one pinned Deno release | the TSX-era receipt sentence does not equal its slice (engine slots read 2.9.7, 2.9.8); reworded refused: the TSX-era receipt sentence is not the committed TSX-era slice: \"TSX-era receipt row (R9, 2026-10-26): receipts/wb-693.7.md, gated forge run rf-preview-tsx cmd_130f00c9f3ea against the operator-provisioned installed rf serving kind tsx with the pinned Deno 2.9.7 first on PATH, 1 of 2 rows passed: the success row (RF-TSX-RECEIPT cli_version 0.1.845, tsx_worker_spawns 1, tsx_runtime distribution_version 2.9.7) and the runtime-absent row (category unavailable, RF_COMPONENT_RUNTIME_ABSENT under a no-deno PATH); the R2 carrier keeps its stamped release (a re-pin moves only through the gated rf-preview route).\"; lookalike refused: 2 rendered sentences read as a TSX-era receipt sentence, not exactly one",
+        "T10 residual:older-entry | an older receipt entry's RF-TSX-RECEIPT lines (the newest-entry reading): older residual",
+        "T11 residual:prose | the receipt's prose restating the tier's unprinted assertions: prose residual",
+      ]);
+      expect([TSX_KEY, TSX_MARK, TSX_MARKER, TSX_TIER, RUNTIME_ABSENT_CODE, String(TSX_FINGERPRINT), ...TSX_ROW_NAMES]).toEqual([
+        "tsx-era receipt row",
+        "RF-TSX-RECEIPT {",
+        "TSX-era receipt row (R9, ",
+        "test/workbench-native-rf-tsx-preview.test.ts",
+        "RF_COMPONENT_RUNTIME_ABSENT",
+        "/^sha256:[0-9a-f]{64}$|^unknown$/",
+        "success",
+        "runtime-absent",
+      ]);
+    });
+
+    it("U3 (EACH-LIVENESS) and TS-SHAPE (standing rule 16 frozen shape): the structure table holds exactly its named rows, each with its frozen site, label and pins, and the T-ARMS and T-ROSTER constants are their frozen literal", () => {
+      expect(TSX_STRUCTURE_ROWS).toHaveLength(7);
+      expect(TSX_STRUCTURE_ROWS.map((row) => row.id)).toEqual(["TS1", "TS2", "TS3", "TS4", "TS5", "TS6", "TS7"]);
+      expect(TSX_STRUCTURE_ROWS.filter((row) => row.pins.length === 0).map((row) => row.id), "every structure row keeps at least one pin").toEqual([]);
+      expect(TSX_STRUCTURE_ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual(["TS1:1", "TS2:1", "TS3:1", "TS4:1", "TS5:1", "TS6:10", "TS7:1"]);
+      expect(TSX_STRUCTURE_ROWS.map((row) => visible(`${row.id} ${row.site} | ${row.label}: ${row.pins.map(tsxPinShape).join("; ")}`))).toEqual([
+        "TS1 page:evidence-cell | the W10 claim row's Evidence cell the sentence is read from: unreadable refused: the W10 section holds 0 tables, not exactly its one committed table | the W10 claim row is not inside the W10 section | the W10 claim row's Evidence cell cannot be read, so no TSX-era receipt sentence is judged",
+        "TS2 receipt:file | the receipt file the sentence names: absent refused: the TSX-era receipt sentence cites receipts/wb-693.7.md but that receipt file does not exist",
+        "TS3 receipt:html | raw HTML anywhere in the TSX receipt: html refused: receipts/wb-693.7.md holds raw HTML \"<div hidden>\\n- `RF-TSX-RECEIPT {\\\"row\\\":\\\"success\\\",\\\"cli_version\" that can hide rendered text (only complete comments are admitted here)",
+        "TS4 entry:marks | the RF-TSX-RECEIPT lines the receipt renders: unmarked refused: receipts/wb-693.7.md renders no RF-TSX-RECEIPT line",
+        "TS5 entry:line-json | one RF-TSX-RECEIPT line's JSON object: malformed refused: receipts/wb-693.7.md: an RF-TSX-RECEIPT line of its newest TSX entry is not one JSON object",
+        "TS6 entry:row-name | an RF-TSX-RECEIPT row named outside the R9 pair, and one name per weaker comparison (TSX_NEAR_NAMES): foreign refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"partial\", outside the R9 pair; extended refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"success-retry\", outside the R9 pair; prefixed refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"pre-success\", outside the R9 pair; truncated refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"runtime\", outside the R9 pair; inner refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"absent\", outside the R9 pair; cased refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"Success\", outside the R9 pair; padded refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"success \", outside the R9 pair; indented refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \" success\", outside the R9 pair; normalized refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"\\u{ff53}uccess\", outside the R9 pair; formatted refused: receipts/wb-693.7.md: its newest TSX entry renders an RF-TSX-RECEIPT row named \"succ\\u{200b}ess\", outside the R9 pair",
+        "TS7 entry:row-count | the R9 pair's one line per row: duplicated refused: receipts/wb-693.7.md: its newest TSX entry renders 2 success rows, not exactly one",
+      ]);
+      expect([SELF, SHARED_VIEW, ARMS_READER, ARMS_CENSUS, ARMS_HELPER, ...READER_NAMES, TSX_ROSTER_CLAUSE_ALL.source, visible(JSON.stringify(TSX_NEAR_NAMES))]).toEqual([
+        "test/workbench-w10-stamped-claim-guard.test.ts",
+        "w10View",
+        "./helpers/w10-tsx-judge-arms.js",
+        "test/workbench-w10-tsx-judge-arms-census.test.ts",
+        "test/helpers/w10-tsx-judge-arms.ts",
+        "readJudgeArms",
+        "bindingChecker",
+        "judgeArms",
+        "test\\/workbench-w10-stamped-claim-guard\\.test\\.ts pins it whole and binds it to this entry \\(TSX-ERA RECEIPT ROW, rows T0 to T([0-9]+)\\)",
+        '{"extended":"success-retry","prefixed":"pre-success","truncated":"runtime","inner":"absent","cased":"Success","padded":"success ","indented":" success","normalized":"\\u{ff53}uccess","formatted":"succ\\u{200b}ess"}',
+      ]);
+    });
+
+    it("U3 (EACH-LIVENESS) and ROSTER-SHAPE (standing rule 16 frozen shape): the T-ROSTER-RENDERED table holds exactly its named rows, each with its frozen variant and reading", () => {
+      expect(ROSTER_VARIANTS).toHaveLength(4);
+      expect(ROSTER_VARIANTS.map(([name, , rows]) => `${name}: ${rows.join(",") || "none"}`)).toEqual([
+        "TR1 commented: the claim of record inside a complete HTML comment renders nothing: none",
+        "TR2 struck: the claim of record struck through is not asserted: none",
+        "TR3 escaped: the claim with its parentheses written as backslash escapes renders as the claim: 11",
+        "TR4 emphasized: the claim with its last row emphasized renders as the claim: 11",
       ]);
     });
   });

@@ -290,7 +290,10 @@
               "quiet": "quiet",
               "exactSpelling": "inventory:named",
               "proseSpelling": "derivation:named",
-              "unspelledState": "derivation:named"
+              "unspelledState": "derivation:named",
+              "exactSpellingUnplanted": "inventory:unnamed",
+              "proseSpellingUnplanted": "derivation:unnamed",
+              "unspelledStateSettled": "derivation:unnamed"
             }
           }
         },
@@ -532,7 +535,7 @@
     "records: every registered test ran once in run mode in roster order, every pin reached its end, and no title spells a judged family"
   ],
   "reached": [
-    "A1:13",
+    "A1:18",
     "A2:2",
     "A3:2",
     "A4:2",

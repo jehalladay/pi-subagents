@@ -299,6 +299,16 @@
               "rf-workspace",
               "rf-bundle",
               "rf-cli"
+            ],
+            "rootVerdicts": [
+              [
+                "authorized",
+                "authorization"
+              ],
+              [
+                "authorization",
+                "authorized"
+              ]
             ]
           }
         },
@@ -308,6 +318,13 @@
             "floorMet": true,
             "scopedFloorMet": true,
             "anchorRead": true,
+            "anchors": [
+              "src/workbench/reactivefiber-observer.ts: context-preview",
+              "src/workbench/providers/reactivefiber.ts: REACTIVE_FIBER_CONTRACT_SOURCE"
+            ],
+            "scopeOnDisk": true,
+            "scopeReadInFull": true,
+            "scopeSized": true,
             "hits": [],
             "templateFloorMet": true
           }
@@ -456,6 +473,13 @@
             "floorMet": true,
             "scopedFloorMet": true,
             "anchorRead": true,
+            "anchors": [
+              "src/workbench/reactivefiber-observer.ts: context-preview",
+              "src/workbench/providers/reactivefiber.ts: REACTIVE_FIBER_CONTRACT_SOURCE"
+            ],
+            "scopeOnDisk": true,
+            "scopeReadInFull": true,
+            "scopeSized": true,
             "hits": []
           }
         }
@@ -550,6 +574,20 @@
           }
         },
         {
+          "id": "MA13",
+          "witness": {
+            "digest": "c1f6326023ecba75",
+            "hit": true
+          }
+        },
+        {
+          "id": "MA14",
+          "witness": {
+            "digest": "f37be59c664ff8e3",
+            "hit": true
+          }
+        },
+        {
           "id": "QA1",
           "witness": {
             "digest": "a0fa707738d3d88b",
@@ -574,6 +612,34 @@
           "id": "QA4",
           "witness": {
             "digest": "9367654195002c1c",
+            "hit": false
+          }
+        },
+        {
+          "id": "QA5",
+          "witness": {
+            "digest": "3d9cb8020ffcf2de",
+            "hit": false
+          }
+        },
+        {
+          "id": "QA6",
+          "witness": {
+            "digest": "0f6d608768c04de6",
+            "hit": false
+          }
+        },
+        {
+          "id": "QA7",
+          "witness": {
+            "digest": "4a047a464c5b57ab",
+            "hit": false
+          }
+        },
+        {
+          "id": "QA8",
+          "witness": {
+            "digest": "b68a3c2a5cfd0ca3",
             "hit": false
           }
         },
@@ -682,6 +748,34 @@
             "digest": "13e10655c2927eb8",
             "hit": false
           }
+        },
+        {
+          "id": "QC6",
+          "witness": {
+            "digest": "488edd799f2a40af",
+            "hit": false
+          }
+        },
+        {
+          "id": "QC7",
+          "witness": {
+            "digest": "1abac0c633033586",
+            "hit": false
+          }
+        },
+        {
+          "id": "QC8",
+          "witness": {
+            "digest": "357c45e6282fc649",
+            "hit": false
+          }
+        },
+        {
+          "id": "QC9",
+          "witness": {
+            "digest": "4de7fb8e2ededc5d",
+            "hit": false
+          }
         }
       ]
     },
@@ -693,6 +787,14 @@
           "id": "KP1",
           "witness": {
             "names": 18,
+            "spellings": [
+              "bare",
+              "quoted",
+              "singleQuoted",
+              "computed",
+              "computedSingle",
+              "computedTemplate"
+            ],
             "missed": []
           }
         },
@@ -700,6 +802,14 @@
           "id": "KP2",
           "witness": {
             "suffixes": 5,
+            "spellings": [
+              "bare",
+              "quoted",
+              "singleQuoted",
+              "computed",
+              "computedSingle",
+              "computedTemplate"
+            ],
             "missed": []
           }
         },
@@ -742,7 +852,7 @@
     },
     {
       "id": "PC",
-      "label": "the live legs' instruments each report a planted violation: A3's state capture, A4's key-bearing projection and the A5 and C5 src scans",
+      "label": "the live legs' instruments each report a planted violation: A3's state capture, A4's key-bearing projection and two-root judgment, and the A5 and C5 src scans over a planted file, over each live rf-scope file and over each rf-scope file read short through the tree alone or through the tree and the disk reader together and over an rf-scope control file whose bytes are not UTF-8, the size anchor's wiring reads as this file's text states, and the size check's two named residuals stay pinned quiet",
       "pins": [
         {
           "id": "PC1",
@@ -795,6 +905,13 @@
             "floorMet": true,
             "scopedFloorMet": true,
             "anchorRead": true,
+            "anchors": [
+              "src/workbench/reactivefiber-observer.ts: context-preview",
+              "src/workbench/providers/reactivefiber.ts: REACTIVE_FIBER_CONTRACT_SOURCE"
+            ],
+            "scopeOnDisk": true,
+            "scopeReadInFull": true,
+            "scopeSized": true,
             "hits": [
               "src/workbench/rf-federated-census-plant.ts: template link.locator",
               "src/workbench/rf-federated-census-plant.ts: key link.path",
@@ -812,10 +929,220 @@
             "floorMet": true,
             "scopedFloorMet": true,
             "anchorRead": true,
+            "anchors": [
+              "src/workbench/reactivefiber-observer.ts: context-preview",
+              "src/workbench/providers/reactivefiber.ts: REACTIVE_FIBER_CONTRACT_SOURCE"
+            ],
+            "scopeOnDisk": true,
+            "scopeReadInFull": true,
+            "scopeSized": true,
             "hits": [
               "src/workbench/rf-federated-census-plant.ts: point.workspaceId | point.revision",
               "src/workbench/rf-federated-census-plant.ts: point.workspaceId + point.epoch",
               "src/workbench/rf-federated-census-plant.ts: point.epoch * 1000000 + point.revision"
+            ]
+          }
+        },
+        {
+          "id": "PC5",
+          "witness": {
+            "controlSameKeys": true,
+            "plantedSameKeys": false,
+            "plantedLeaked": []
+          }
+        },
+        {
+          "id": "PC6",
+          "witness": {
+            "reported": [
+              "template link.locator",
+              "key link.path",
+              "map link.alias",
+              "plus workspace.root",
+              "computed link.url",
+              "pair link.href",
+              "index link.uri"
+            ],
+            "missed": [],
+            "untargeted": [],
+            "anchorReports": [
+              7,
+              7
+            ]
+          }
+        },
+        {
+          "id": "PC7",
+          "witness": {
+            "reported": [
+              "point.workspaceId | point.revision",
+              "point.workspaceId + point.epoch",
+              "point.epoch * 1000000 + point.revision"
+            ],
+            "missed": [],
+            "untargeted": [],
+            "anchorReports": [
+              3,
+              3
+            ]
+          }
+        },
+        {
+          "id": "PC8",
+          "witness": {
+            "readings": [
+              {
+                "unread": [
+                  "own"
+                ],
+                "unsized": [],
+                "anchorsUnread": [],
+                "offDisk": []
+              }
+            ],
+            "missed": [],
+            "untargeted": [],
+            "anchorsReadShort": [
+              true,
+              true
+            ]
+          }
+        },
+        {
+          "id": "PC9",
+          "witness": {
+            "readings": [
+              {
+                "unread": [],
+                "unsized": [
+                  "own"
+                ],
+                "anchorsUnread": [],
+                "offDisk": []
+              }
+            ],
+            "missed": [],
+            "untargeted": [],
+            "anchorsReadShort": [
+              true,
+              true
+            ]
+          }
+        },
+        {
+          "id": "PC10",
+          "witness": {
+            "bytes": 71,
+            "decodedBytes": 73,
+            "reading": {
+              "unread": [],
+              "unsized": [
+                "control"
+              ],
+              "anchorsUnread": [],
+              "offDisk": [],
+              "hits": []
+            }
+          }
+        },
+        {
+          "id": "PC11",
+          "witness": {
+            "sizeOnDiskBody": "{ try { return statSync(path).size; } catch { return undefined; } }",
+            "readRfScopeDefaults": {
+              "readDisk": "diskText",
+              "readSize": "sizeOnDisk"
+            },
+            "readRfScopeReaders": [],
+            "scanCalls": [
+              [
+                "matcher",
+                "tree"
+              ]
+            ],
+            "bindings": [
+              "readFileSync: import node:fs",
+              "statSync: import node:fs"
+            ],
+            "sizeOnDiskText": "function sizeOnDisk(path: string): number | undefined { try { return statSync(path).size; } catch { return undefined; } }",
+            "readRfScopeText": "function readRfScope( matcher: (source: string) => string[], tree: SrcTree, readDisk: (path: string) => string | undefined = diskText, readSize: (path: string) => number | undefined = sizeOnDisk, ): ScopeReading { const scoped = tree.files.filter(inRfScope); const texts = scoped.map(file => tree.read(file)); const floorMet = tree.files.length >= SRC_FLOOR; const scopedFloorMet = scoped.length >= RF_SCOPE_FLOOR; const anchorsUnread = ANCHORS.filter(anchor => { const index = scoped.indexOf(anchor.file); return index === -1 || !(texts[index] ?? \"\").includes(anchor.token) || !tree.read(anchor.file).includes(anchor.token); }).map(anchor => relative(REPO, anchor.file)); const offDisk = scoped .filter(file => readDisk(file) === undefined && !(tree.planted ?? []).includes(file)) .map(file => relative(REPO, file)); const unread = scoped .filter((file, index) => { const disk = readDisk(file); return disk !== undefined && !(texts[index] ?? \"\").startsWith(disk); }) .map(file => relative(REPO, file)); const unsized = scoped .filter(file => { const disk = readDisk(file); return disk !== undefined && Buffer.byteLength(disk, \"utf8\") !== readSize(file); }) .map(file => relative(REPO, file)); const hits = scoped.flatMap((file, index) => matcher(texts[index] ?? \"\").map(hit => `${relative(REPO, file)}: ${hit}`)); return { scoped, floorMet, scopedFloorMet, anchorsUnread, offDisk, unread, unsized, hits }; }",
+            "scanRfScopeText": "function scanRfScope(matcher: (source: string) => string[], tree: SrcTree = liveTree()): ScopeScan { const { scoped, floorMet, scopedFloorMet, anchorsUnread, offDisk, unread, unsized, hits } = readRfScope(matcher, tree); expect(floorMet, `src: ${tree.files.length} files walked, floor ${SRC_FLOOR}`).toBe(true); expect(scopedFloorMet, `rf scope: ${scoped.length} files, floor ${RF_SCOPE_FLOOR}`).toBe(true); expect(anchorsUnread, \"token anchors the scan did not read with their token\").toEqual([]); expect(offDisk, \"rf-scope files with no text on disk beside the walk\").toEqual([]); expect(unread, \"rf-scope files the scan did not read in full from disk\").toEqual([]); expect(unsized, \"rf-scope files whose text on disk does not hold the size statSync reports\").toEqual([]); const anchors = ANCHORS.map(anchor => `${relative(REPO, anchor.file)}: ${anchor.token}`); const witness = { floorMet, scopedFloorMet, anchorRead: anchorsUnread.length === 0, anchors, scopeOnDisk: offDisk.length === 0, scopeReadInFull: unread.length === 0, scopeSized: unsized.length === 0, hits: [...hits], }; return { witness, hits, scoped }; }"
+          }
+        },
+        {
+          "id": "PC12",
+          "witness": {
+            "locatorHits": {
+              "refusedAt": "rf-scope files whose text on disk does not hold the size statSync reports",
+              "named": [
+                "control"
+              ]
+            },
+            "revisionJoinHits": {
+              "refusedAt": "rf-scope files whose text on disk does not hold the size statSync reports",
+              "named": [
+                "control"
+              ]
+            }
+          }
+        },
+        {
+          "id": "QP1",
+          "witness": {
+            "readings": [
+              {
+                "unread": [],
+                "unsized": [],
+                "anchorsUnread": [],
+                "offDisk": []
+              }
+            ],
+            "counterparts": [
+              {
+                "unread": [],
+                "unsized": [
+                  "own"
+                ],
+                "anchorsUnread": [],
+                "offDisk": []
+              }
+            ],
+            "loud": [],
+            "unseen": [],
+            "untargeted": [],
+            "anchorsQuiet": [
+              true,
+              true
+            ]
+          }
+        },
+        {
+          "id": "QP2",
+          "witness": {
+            "readings": [
+              {
+                "unread": [],
+                "unsized": [],
+                "anchorsUnread": [],
+                "offDisk": []
+              }
+            ],
+            "counterparts": [
+              {
+                "unread": [
+                  "own"
+                ],
+                "unsized": [],
+                "anchorsUnread": [],
+                "offDisk": []
+              }
+            ],
+            "loud": [],
+            "unseen": [],
+            "untargeted": [],
+            "anchorsQuiet": [
+              true,
+              true
             ]
           }
         }

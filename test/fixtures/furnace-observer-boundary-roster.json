@@ -1,0 +1,5450 @@
+{
+  "bead": "wb-dqf.1",
+  "constants": {
+    "record": "FurnaceObserverBoundaryV0",
+    "siblingRecord": "FurnaceAttemptCapabilityV0",
+    "mention": {
+      "source": "observer(?:s|['\\u2019]s|s['\\u2019])?[^\\p{L}\\p{N}]*boundar(?:y|ies)",
+      "flags": "giu"
+    },
+    "script": "\\.(?:[cm]?[jt]sx?)$",
+    "dash": "\\u2014",
+    "recordedStatus": "a proposed source-owned reference, not shipped",
+    "acceptance": "Acceptance on landing: a hermetic fixture feeds a boundary record through the Furnace observer and asserts only the exposed fields/counters are projected, non-exposed fields are withheld as typed absence (never invented), and client decisions honour the stated visibility policy; a docs-07 Furnace-provider sentence names the boundary and joins the wb-6hb.11-style census.",
+    "filingSha256": "fb66562ab5acae93",
+    "ownerLeads": [
+      "Gating artifact: ",
+      "Today the external Furnace reader is ",
+      "Gate: ",
+      "Acceptance on landing: "
+    ],
+    "armed": "Pi's Furnace observer shall consume it as an admitted observer strictly within the boundary \\u2014 reading only the attempt state/log fields and resource counters it exposes, under its stated visibility policy for admitted client decisions",
+    "tracker": ".beads/",
+    "holders": [
+      "test/workbench-furnace-observer-boundary-census.test.ts",
+      "test/fixtures/furnace-observer-boundary-roster.json"
+    ],
+    "observer": "src/workbench/furnace-observer.ts",
+    "control": "src/workbench/furnace-control.ts",
+    "identity": "src/workbench/identity.ts",
+    "schemaLiteral": "workflow-script/v1",
+    "docs09": "docs/workbench/09-observation-and-provenance.md",
+    "docs09Section": "## Experimental projection implementation",
+    "docs09Title": "09 \u2014 Observation, telemetry, provenance and derived graph",
+    "restated": [
+      "blockquoteCopy",
+      "listItemCopy",
+      "tableCellCopy",
+      "headingCopy",
+      "codeCopy",
+      "nestedCopy",
+      "subjectCopy",
+      "pollCopy",
+      "verbsQuoteCopy",
+      "verbsSubjectCopy",
+      "entityCopy",
+      "fullWidthCopy",
+      "formCharacterCopy",
+      "listedOnly",
+      "shyCopy",
+      "zwnjCopy",
+      "zwjCopy",
+      "wordJoinerCopy",
+      "zeroWidthSpaceCopy",
+      "frakturCopy",
+      "doubleStruckCopy",
+      "shyListCopy",
+      "shyTableCopy",
+      "shyHeadingCopy",
+      "shyVerbsCopy",
+      "shyNumericCopy",
+      "shyRawCopy",
+      "graphemeJoinerCopy",
+      "variationSelectorCopy",
+      "emojiSelectorCopy",
+      "hangulFillerCopy",
+      "khmerVowelCopy",
+      "overrideCopy",
+      "overrideReferenceCopy",
+      "windows1252QuoteCopy",
+      "windows1252ListCopy",
+      "windows1252TableCopy",
+      "windows1252HeadingCopy",
+      "windows1252ParagraphCopy",
+      "windows1252HexCopy",
+      "windows1252WideCopy",
+      "windows1252PaddedCopy",
+      "windows1252UpperHexCopy",
+      "rsquoRawCopy",
+      "rsquoDecimalCopy",
+      "rsquoHexCopy",
+      "rsquoNamedCopy",
+      "rsquoWideRawCopy",
+      "rsquoWideDecimalCopy",
+      "c1PossessiveRawCopy",
+      "c1ReferenceCopy",
+      "c1RawCopy",
+      "c0ReferenceCopy",
+      "tableLetterCopy",
+      "tableTrademarkCopy",
+      "paragraphCopy",
+      "deepHeadingCopy",
+      "indentedCodeCopy",
+      "tableSplitCopy",
+      "orderedItemCopy",
+      "taskItemCopy",
+      "itemParagraphCopy",
+      "itemHeadingCopy",
+      "itemLevelTwoHeadingCopy",
+      "itemCodeCopy",
+      "itemNestedListCopy",
+      "itemDeepListCopy",
+      "itemNestedQuoteCopy",
+      "quoteHeadingCopy",
+      "quoteCodeCopy",
+      "quoteListListCopy",
+      "quoteNestedQuoteCopy",
+      "itemQuoteHeadingCopy",
+      "itemQuoteCodeCopy",
+      "itemQuoteQuoteCopy",
+      "quoteQuoteHeadingCopy",
+      "quoteQuoteCodeCopy",
+      "quoteQuoteQuoteCopy",
+      "quoteListQuoteCopy",
+      "itemListQuoteCopy",
+      "imageAltCopy",
+      "htmlInHoleCopy",
+      "readingCopy",
+      "readsCopy",
+      "pollingCopy",
+      "attachesCopy",
+      "readinessCopy",
+      "reattachmentCopy",
+      "upperCaseCopy",
+      "separatorRunCopy",
+      "asciiPossessiveCopy",
+      "fullWidthApostropheCopy",
+      "mathLetterCopy",
+      "aposPossessiveCopy",
+      "codeAmpCopy",
+      "codeLtCopy",
+      "codeGtCopy",
+      "codeQuotCopy",
+      "codeNbspCopy",
+      "codeUpperNamedCopy",
+      "frameReferenceCopy",
+      "bidiMarkCopy",
+      "delReferenceCopy",
+      "verticalTabCopy",
+      "copyrightCopy",
+      "nonBreakingSpaceCopy",
+      "codeSpanReferenceCopy",
+      "codeBlockReferenceCopy",
+      "ampExposedCopy",
+      "numericCodeSpanCopy",
+      "numericCodeBlockCopy",
+      "numericAmpCopy",
+      "numericLongCopy",
+      "numericLongHexCopy",
+      "secondSentenceCopy",
+      "verbsFrameReferenceCopy",
+      "quoteQuoteListCopy",
+      "quoteQuoteOrderedListCopy",
+      "quoteQuoteTaskListCopy",
+      "quoteQuoteListPossessiveCopy",
+      "quoteQuoteListVerbsCopy",
+      "quoteQuoteQuoteListCopy",
+      "itemQuoteListCopy",
+      "quoteItemQuoteListCopy",
+      "quoteQuoteListQuoteCopy",
+      "quoteQuoteListListCopy",
+      "quoteQuoteListReferenceCopy",
+      "quoteQuoteListControlCopy"
+    ],
+    "numericReferences": {
+      "0x80": "0x20ac",
+      "0x82": "0x201a",
+      "0x83": "0x192",
+      "0x84": "0x201e",
+      "0x85": "0x2026",
+      "0x86": "0x2020",
+      "0x87": "0x2021",
+      "0x88": "0x2c6",
+      "0x89": "0x2030",
+      "0x8a": "0x160",
+      "0x8b": "0x2039",
+      "0x8c": "0x152",
+      "0x8e": "0x17d",
+      "0x91": "0x2018",
+      "0x92": "0x2019",
+      "0x93": "0x201c",
+      "0x94": "0x201d",
+      "0x95": "0x2022",
+      "0x96": "0x2013",
+      "0x97": "0x2014",
+      "0x98": "0x2dc",
+      "0x99": "0x2122",
+      "0x9a": "0x161",
+      "0x9b": "0x203a",
+      "0x9c": "0x153",
+      "0x9e": "0x17e",
+      "0x9f": "0x178"
+    },
+    "sdk": "@furnace/sdk",
+    "tarball": "vendor/furnace-sdk-0.1.0.tgz",
+    "lockKey": "node_modules/@furnace/sdk",
+    "filingPin": "b21beb0f89ad49500069403c4815d58f2825b414",
+    "floors": {
+      "piFiles": 900,
+      "piScripts": 650,
+      "piBinaries": 3,
+      "piBytes": 25000000,
+      "sdkEntries": 100,
+      "pinFiles": 700,
+      "pinBytes": 13000000
+    },
+    "sdkPlants": {
+      "declaration": {
+        "path": "package/dist/src/zz-plant-declaration.d.ts",
+        "text": "export interface FurnaceObserverBoundaryV0 {\n  readonly exposedFields: readonly string[];\n}\n"
+      },
+      "runtimeExport": {
+        "path": "package/dist/src/zz-plant-runtime.js",
+        "text": "export const OBSERVER_BOUNDARY_V0 = Object.freeze({ version: 0 });\n"
+      },
+      "schemaId": {
+        "path": "package/contract/registry/zz-boundary.json",
+        "text": "{ \"$id\": \"furnace.observer-boundary.v0\" }\n"
+      },
+      "registryKey": {
+        "path": "package/contract/zz-manifest.json",
+        "text": "{ \"records\": { \"observerBoundaryV0\": { \"shipped\": true } } }\n"
+      },
+      "docsHeading": {
+        "path": "package/zz-README.md",
+        "text": "## Observer boundary (V0)\n\nThe record an admitted observer reads.\n"
+      },
+      "escapedString": {
+        "path": "package/dist/src/zz-escaped.js",
+        "text": "export const NAME = \"\\u004fbserverBoundaryV0\";\n"
+      },
+      "escapedJson": {
+        "path": "package/contract/zz-escaped.json",
+        "text": "{ \"$id\": \"furnace.\\u006fbserver-boundary.v0\" }\n"
+      }
+    },
+    "piPlants": {
+      "src/workbench/zz-boundary-escaped.ts": "export const RECORD_NAME = \"\\u0046urnaceObserver\\u0042oundaryV0\";\n",
+      "src/workbench/zz-boundary-split.ts": "export const SPELLED = \"Furnace\" + \"Obs\" + \"erverBoundaryV0\";\n",
+      "docs/workbench/zz-boundary.md": "# Plant\n\nThe Furnace observer boundary record is consumed here.\n",
+      "test/fixtures/zz-boundary.json": "{ \"record\": \"furnace_observer_boundary_v0\" }\n",
+      "qa/zz-boundary.mjs": "// reads FurnaceObserverBoundaryV0\nexport {};\n",
+      "test/fixtures/zz-boundary-escaped.json": "{ \"record\": \"Furnace\\u004fbserver\\u0042oundaryV0\" }\n",
+      "docs/workbench/zz-boundary-entity.md": "The Furnace &#79;bserver&#32;Boundary record.\n",
+      "docs/workbench/zz-observer-boundary.md": "# Plant\n\nThis page's text names nothing.\n",
+      "config/zz-boundary.yml": "record: \"Furnace\\u004fbserverBoundaryV0\"\n",
+      "config/zz-boundary.toml": "record = \"Furnace\\U0000004fbserverBoundaryV0\"\n",
+      "src/workbench/zz-boundary-identifier.ts": "export const Furnace\\u004fbserverBoundaryV0 = 0;\n",
+      "docs/workbench/zz-boundary-windows1252.md": "The Furnace observer&#146;s boundary record.\n",
+      "docs/workbench/zz-boundary-c1.md": "The Furnace observer&#136;boundary record.\n",
+      "docs/workbench/zz-boundary-kind.html": "<p>The Furnace observer&#32;boundary record.</p>\n",
+      "docs/workbench/zz-boundary-kind.htm": "<p>The Furnace observer&#32;boundary record.</p>\n",
+      "docs/workbench/zz-boundary-kind.xml": "<record>The Furnace observer&#32;boundary record.</record>\n",
+      "docs/workbench/zz-boundary-kind.svg": "<svg><text>The Furnace observer&#32;boundary record.</text></svg>\n",
+      "docs/workbench/zz-boundary-amp.md": "The Furnace observer&amp;boundary record.\n",
+      "docs/workbench/zz-boundary-lt.md": "The Furnace observer&lt;boundary record.\n",
+      "docs/workbench/zz-boundary-gt.md": "The Furnace observer&gt;boundary record.\n",
+      "docs/workbench/zz-boundary-quot.md": "The Furnace observer&quot;boundary record.\n",
+      "docs/workbench/zz-boundary-apos.md": "The Furnace observer&apos;s boundary record.\n",
+      "docs/workbench/zz-boundary-nbsp.md": "The Furnace observer&nbsp;boundary record.\n",
+      "docs/workbench/zz-boundary-long-decimal.md": "The Furnace observer&#00000146;s boundary record.\n",
+      "docs/workbench/zz-boundary-long-hex.md": "The Furnace observer&#x0000092;s boundary record.\n",
+      "docs/workbench/zz-boundary-long-decimal-c1.md": "The Furnace observer&#00000136;boundary record.\n",
+      "docs/workbench/zz-boundary-long-hex-c1.md": "The Furnace observer&#x0000088;boundary record.\n",
+      "config/zz-boundary.yaml": "record: \"Furnace\\x4fbserverBoundaryV0\"\n",
+      "src/workbench/zz-boundary-template.ts": "export const HEAD = `\\u004fbserverBoundaryV0 ${0}`;\n",
+      "src/workbench/zz-boundary-template-tail.ts": "export const TAIL = `${0} \\u004fbserverBoundaryV0`;\n",
+      "src/workbench/zz-boundary-backtick.ts": "export const TICK = `\\u004fbserverBoundaryV0`;\n",
+      "src/workbench/zz-boundary-private.ts": "export class ZzPlant {\n  #\\u004fbserverBoundaryV0 = 0;\n}\n",
+      "src/workbench/zz-boundary-paren.ts": "export const PAREN = \"Furnace\" + \"Obs\" + (\"erver\" + \"BoundaryV0\");\n",
+      "src/workbench/zz-boundary-backtick-split.ts": "export const TICKS = `Obs` + `erverBoundaryV0`;\n",
+      "test/fixtures/zz-boundary-array.json": "{ \"records\": [\"Furnace\\u004fbserverBoundaryV0\"] }\n",
+      "config/zz-boundary-two.yaml": "record: \"\\x46urnace\\x4fbserverBoundaryV0\"\n",
+      "config/zz-boundary-upper.yaml": "record: \"Furnace\\x4FbserverBoundaryV0\"\n",
+      "config/zz-boundary-upper.yml": "record: \"Furnace\\u004FbserverBoundaryV0\"\n",
+      "config/zz-boundary-upper.toml": "record = \"Furnace\\U0000004FbserverBoundaryV0\"\n",
+      "config/zz-boundary-x-space.yaml": "record: \"The Furnace observer\\x20boundary record.\"\n",
+      "config/zz-boundary-x-tab.yaml": "record: \"The Furnace observer\\x09boundary record.\"\n",
+      "config/zz-boundary-x-lf.yaml": "record: \"The Furnace observer\\x0aboundary record.\"\n",
+      "config/zz-boundary-x-lf-upper.yaml": "record: \"The Furnace observer\\x0Aboundary record.\"\n",
+      "config/zz-boundary-u-tab.yml": "record: \"The Furnace observer\\u0009boundary record.\"\n",
+      "config/zz-boundary-u-lf.yml": "record: \"The Furnace observer\\u000aboundary record.\"\n",
+      "config/zz-boundary-u-lf-upper.yml": "record: \"The Furnace observer\\u000Aboundary record.\"\n",
+      "config/zz-boundary-long-tab.toml": "record = \"The Furnace observer\\U00000009boundary record.\"\n",
+      "config/zz-boundary-long-lf.toml": "record = \"The Furnace observer\\U0000000aboundary record.\"\n",
+      "config/zz-boundary-long-lf-upper.toml": "record = \"The Furnace observer\\U0000000Aboundary record.\"\n",
+      "config/zz-boundary-long-max.toml": "record = \"The Furnace observer\\U0010FFFFboundary record.\"\n",
+      "config/zz-boundary-single.yaml": "record: 'Furnace\\x4fbserverBoundaryV0'\n",
+      "config/zz-boundary-literal.toml": "record = 'Furnace\\U0000004fbserverBoundaryV0'\n",
+      "src/workbench/zz-boundary-kind-assertion.ts": "export const C = <string>\"\\u004fbserverBoundaryV0\";\n",
+      "src/workbench/zz-boundary-kind-assertion.mts": "export const C = <string>\"\\u004fbserverBoundaryV0\";\n",
+      "src/workbench/zz-boundary-kind-assertion.cts": "export const C = <string>\"\\u004fbserverBoundaryV0\";\n",
+      "src/workbench/zz-boundary-kind-jsx.tsx": "export const A = <a>http://example.invalid</a>; export const B = \"\\u004fbserverBoundaryV0\";\n",
+      "src/workbench/zz-boundary-kind-jsx.jsx": "export const A = <a>http://example.invalid</a>; export const B = \"\\u004fbserverBoundaryV0\";\n",
+      "qa/zz-boundary-kind-jsx.js": "export const A = <a>http://example.invalid</a>; export const B = \"\\u004fbserverBoundaryV0\";\n",
+      "qa/zz-boundary-kind-jsx.mjs": "export const A = <a>http://example.invalid</a>; export const B = \"\\u004fbserverBoundaryV0\";\n",
+      "qa/zz-boundary-kind-jsx.cjs": "export const A = <a>http://example.invalid</a>; export const B = \"\\u004fbserverBoundaryV0\";\n",
+      "test/fixtures/zz-boundary-unparseable.json": "{ record: FurnaceObserverBoundaryV0 }\n",
+      "src/workbench/zz-boundary-kind-instantiation.tsx": "export const A = <a>http://example.invalid</a>; export const x = a<b>/ 1; export const s = \"\\u004fbserverBoundaryV0\"; / 1 /;\n",
+      "src/workbench/zz-boundary-kind-instantiation.jsx": "export const A = <a>http://example.invalid</a>; export const x = a<b>/ 1; export const s = \"\\u004fbserverBoundaryV0\"; / 1 /;\n",
+      "src/workbench/zz-boundary-kind-assertion.tsx.js.ts": "export const C = <string>\"\\u004fbserverBoundaryV0\";\n",
+      "qa/zz-boundary-kind-regex.js": "export const x = a<b>/ 1 / / \"\\u004fbserverBoundaryV0\" / 1;\n",
+      "qa/zz-boundary-kind-regex.mjs": "export const x = a<b>/ 1 / / \"\\u004fbserverBoundaryV0\" / 1;\n",
+      "qa/zz-boundary-kind-regex.cjs": "export const x = a<b>/ 1 / / \"\\u004fbserverBoundaryV0\" / 1;\n",
+      "qa/zz-boundary-kind-template.js": "`${0}\\x4fbserverBoundaryV0`;\n",
+      "qa/zz-boundary-kind-template.mjs": "`${0}\\x4fbserverBoundaryV0`;\n",
+      "qa/zz-boundary-kind-template.cjs": "`${0}\\x4fbserverBoundaryV0`;\n",
+      "config/zz-boundary-x-digits.yaml": "record: \"The Furnace observer\\x20\\x21\\x22\\x23\\x24\\x25\\x26\\x27\\x28\\x29\\x2a\\x2b\\x2c\\x2d\\x2e\\x2f\\x2A\\x2B\\x2C\\x2D\\x2E\\x2Fboundary record.\"\n",
+      "config/zz-boundary-u-digits.yml": "record: \"The Furnace observer\\u0020\\u0021\\u0022\\u0023\\u0024\\u0025\\u0026\\u0027\\u0028\\u0029\\u002a\\u002b\\u002c\\u002d\\u002e\\u002f\\u002A\\u002B\\u002C\\u002D\\u002E\\u002Fboundary record.\"\n",
+      "config/zz-boundary-long-digits.toml": "record = \"The Furnace observer\\U00000020\\U00000021\\U00000022\\U00000023\\U00000024\\U00000025\\U00000026\\U00000027\\U00000028\\U00000029\\U0000002a\\U0000002b\\U0000002c\\U0000002d\\U0000002e\\U0000002f\\U0000002A\\U0000002B\\U0000002C\\U0000002D\\U0000002E\\U0000002Fboundary record.\"\n",
+      "docs/workbench/zz-boundary-hex-digits.md": "The Furnace observer&#x20;&#x21;&#x22;&#x23;&#x24;&#x25;&#x26;&#x27;&#x28;&#x29;&#x2a;&#x2b;&#x2c;&#x2d;&#x2e;&#x2f;&#x2A;&#x2B;&#x2C;&#x2D;&#x2E;&#x2F;boundary record.\n",
+      "src/workbench/zz-boundary-paren-trail.ts": "export const n = (\"\\u004fbserver\" + \"Boundary\") + part;\n",
+      "src/workbench/zz-boundary-paren-lead.ts": "export const n = part + (\"\\u004fbserver\" + \"Boundary\");\n",
+      "src/workbench/zz-boundary-identifier-braced.ts": "export const Furnace\\u{4f}bserverBoundaryV0 = 0;\n",
+      "src/workbench/zz-boundary-identifier-private.ts": "export class Plant {\n  #Furnace\\u004fbserverBoundaryV0 = 0;\n}\n",
+      "src/workbench/zz-boundary-identifier-read.ts": "export const n = (): number => Furnace\\u004fbserverBoundaryV0;\n",
+      "src/workbench/zz-boundary-template-head.ts": "export const n = (a: string): string => `Furnace\\u004fbserverBoundaryV0${a}`;\n",
+      "src/workbench/zz-boundary-template-one-tail.ts": "export const n = (a: string): string => `x${a}Furnace\\u004fbserverBoundaryV0`;\n",
+      "src/workbench/zz-boundary-template-two-head.ts": "export const n = (a: string, b: string): string => `Furnace\\u004fbserverBoundaryV0${a}x${b}y`;\n",
+      "src/workbench/zz-boundary-template-middle.ts": "export const n = (a: string, b: string): string => `x${a}Furnace\\u004fbserverBoundaryV0${b}y`;\n",
+      "src/workbench/zz-boundary-template-second.ts": "export const n = (a: string, b: string): string => `x${a}y${b}Furnace\\u004fbserverBoundaryV0`;\n",
+      "src/workbench/zz-boundary-template-three-head.ts": "export const n = (a: string, b: string, c: string): string => `Furnace\\u004fbserverBoundaryV0${a}x${b}y${c}z`;\n",
+      "src/workbench/zz-boundary-template-three-first.ts": "export const n = (a: string, b: string, c: string): string => `x${a}Furnace\\u004fbserverBoundaryV0${b}y${c}z`;\n",
+      "src/workbench/zz-boundary-template-three-middle.ts": "export const n = (a: string, b: string, c: string): string => `x${a}y${b}Furnace\\u004fbserverBoundaryV0${c}z`;\n",
+      "src/workbench/zz-boundary-template-three-last.ts": "export const n = (a: string, b: string, c: string): string => `x${a}y${b}z${c}Furnace\\u004fbserverBoundaryV0`;\n",
+      "src/workbench/zz-boundary-template-tagged.ts": "const tag = (parts: TemplateStringsArray): string => parts.join('');\nexport const n = (a: string): string => tag`x${a}Furnace\\u004fbserverBoundaryV0`;\n",
+      "docs/workbench/zz-observer-boundary/zz-plant.md": "# Plant\n\nThis page's text names nothing.\n",
+      "zz-observer-boundary/docs/workbench/zz-plant.md": "# Plant\n\nThis page's text names nothing.\n",
+      "docs/zz-observer-boundary/workbench/zz-plant.md": "# Plant\n\nThis page's text names nothing.\n",
+      "docs/workbench/zz-observer/boundary.md": "# Plant\n\nThis page's text names nothing.\n",
+      "docs/workbench/zz-observer.boundary": "This file's text names nothing.\n",
+      "docs/workbench/zz-ObserverBoundary.md": "# Plant\n\nThis page's text names nothing.\n",
+      "src/workbench/zz-observer-boundary.ts": "export const plant = 0;\n",
+      "test/fixtures/zz-observer-boundary.json": "{ \"plant\": 0 }\n",
+      "config/zz-observer-boundary.yml": "plant: 0\n",
+      "config/zz-observer-boundary.toml": "plant = 0\n",
+      "media/zz-observer-boundary.bin": "\u0000binary bytes\n",
+      "zz-observer-boundary.md": "# Plant\n\nThis page's text names nothing.\n",
+      "docs/workbench/zz-observers-boundaries.md": "# Plant\n\nThis page's text names nothing.\n",
+      "docs/workbench/zz-observer_boundary.md": "# Plant\n\nThis page's text names nothing.\n",
+      "src/workbench/zz-boundary-identifier-function.ts": "export function Furnace\\u004fbserverBoundaryV0(): number {\n  return 0;\n}\n",
+      "src/workbench/zz-boundary-identifier-return.ts": "export function n(): number {\n  return Furnace\\u004fbserverBoundaryV0;\n}\n",
+      "src/workbench/zz-boundary-template-array.ts": "export const n = (a: string): string[] => [`x${a}Furnace\\u004fbserverBoundaryV0`];\n",
+      "src/workbench/zz-boundary-template-call.ts": "export const n = (a: string): string => String(`x${a}Furnace\\u004fbserverBoundaryV0`);\n",
+      "src/workbench/zz-boundary-template-tagged-head.ts": "const tag = (parts: TemplateStringsArray): string => parts.join('');\nexport const n = (a: string): string => tag`Furnace\\u004fbserverBoundaryV0${a}x`;\n",
+      "src/workbench/zz-boundary-template-tagged-raw.ts": "export const n = (a: string): string => String.raw`x${a}Furnace\\u004fbserverBoundaryV0`;\n",
+      "src/workbench/zz-boundary-string-type.ts": "export type N = \"Furnace\\u004fbserverBoundaryV0\";\n"
+    },
+    "pinPlant": "docs/workbench/zz-pin-plant.md",
+    "augmentationPlant": {
+      "path": "src/workbench/zz-observer-augmentation.ts",
+      "text": "declare module \"./furnace-observer.js\" {\n  interface FurnaceObserverClient {\n    runs: { get(runId: string): { events(call?: { timeoutMs?: number }): AsyncIterable<unknown> } };\n  }\n}\nexport {};\n"
+    },
+    "heritagePlant": {
+      "path": "src/workbench/zz-observer-heritage.ts",
+      "text": "interface ZzGateStream {\n  events: { stream(runId: string, call?: { timeoutMs?: number }): AsyncIterable<unknown> };\n}\ndeclare module \"./furnace-observer.js\" {\n  interface FurnaceObserverClient extends ZzGateStream {}\n}\nexport {};\n"
+    },
+    "classPlant": {
+      "path": "src/workbench/zz-observer-class.ts",
+      "text": "declare module \"./furnace-observer.js\" {\n  class FurnaceObserverClient {\n    events?: { list(runId: string, request?: { limit?: number }, call?: { timeoutMs?: number }): Promise<unknown> };\n  }\n}\n\nexport {};\n"
+    },
+    "classExtendsPlant": {
+      "path": "src/workbench/zz-observer-class-extends.ts",
+      "text": "declare class ZzGateEventsBase {\n  events?: { list(runId: string, request?: { limit?: number }, call?: { timeoutMs?: number }): Promise<unknown> };\n}\ndeclare module \"./furnace-observer.js\" {\n  class FurnaceObserverClient extends ZzGateEventsBase {}\n}\n\nexport {};\n"
+    },
+    "kindsPlant": {
+      "path": "src/workbench/zz-observer-kinds.ts",
+      "text": "declare module \"./furnace-observer.js\" {\n  namespace FurnaceObserverClient {}\n  enum FurnaceObserverClient {}\n  type FurnaceObserverClient = unknown;\n  function FurnaceObserverClient(): void;\n  const FurnaceObserverClient: unknown;\n}\nexport {};\n"
+    },
+    "aliasPlant": {
+      "path": "src/workbench/zz-observer-alias.ts",
+      "text": "declare module \"#furnace-observer-alias\" {\n  interface FurnaceObserverClient {\n    events: { stream(runId: string, call?: { timeoutMs?: number }): AsyncIterable<unknown> };\n  }\n}\nexport {};\n"
+    },
+    "globalPlant": {
+      "path": "src/workbench/zz-observer-global.ts",
+      "text": "declare global {\n  interface Object {\n    zzGateEvents?: { list(runId: string, request?: { limit?: number }, call?: { timeoutMs?: number }): Promise<unknown> };\n  }\n}\n\nexport {};\n"
+    },
+    "anchors": [
+      "src/workbench/identity.ts",
+      "docs/workbench/09-observation-and-provenance.md",
+      "src/workbench/furnace-observer.ts"
+    ],
+    "readers": [
+      "sdkRelease",
+      "sdkVerdict",
+      "tarball",
+      "vendoredPath",
+      "piListing",
+      "piEntries",
+      "piVerdict",
+      "pinVerdict",
+      "augmentations",
+      "observer",
+      "observerText",
+      "textOf",
+      "exportRow",
+      "ownerFiling",
+      "docs09Furnace",
+      "verdictOf",
+      "mentions",
+      "git"
+    ],
+    "residuals": {
+      "R-TRACKER": "Q1",
+      "R-HOLDER": "Q2",
+      "R-BINARY": "Q3",
+      "R-PARAPHRASE": "Q4",
+      "R-WORD-ORDER": "Q5",
+      "R-INTERIOR": "Q6",
+      "R-COMPUTED": "Q7",
+      "R-OTHER-MODULE": "Q8",
+      "R-COMPUTED-ACCESS": "Q9",
+      "R-DOCS-UNCOUNTED": "Q10",
+      "R-DOCS-ELSEWHERE": "Q11",
+      "R-ALIASED-MODULE": "Q12",
+      "R-TYPE-TEMPLATE": "Q13"
+    }
+  },
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+    "the outside anchors: the bead's export row binds the rows, the quotes, the record, the armed clause, the status and the acceptance; docs/09 binds the reads and the verbs; the filing pin and the sibling row bind their readings",
+    "T1",
+    "T2",
+    "T3",
+    "W1",
+    "W2",
+    "W3",
+    "Z1",
+    "Z2",
+    "Z3",
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7",
+    "Q8",
+    "Q9",
+    "Q10",
+    "Q11",
+    "Q12",
+    "Q13",
+    "the registered tests, the reached pins and the claims equal the roster, in order and both ways"
+  ],
+  "rows": [
+    {
+      "id": "T",
+      "label": "When Furnace ships FurnaceObserverBoundaryV0 (proposed, not shipped)",
+      "pins": [
+        {
+          "id": "T1",
+          "quote": "When Furnace ships",
+          "claims": {
+            "When": [
+              "fired",
+              "sdkMentions"
+            ],
+            "Furnace": [
+              "package",
+              "version",
+              "observerTypesDeclared",
+              "typesPlant"
+            ],
+            "ships": [
+              "entriesAtFloor",
+              "skippedEntries",
+              "binaryEntries",
+              "sdkPlant"
+            ]
+          },
+          "witness": {
+            "fired": false,
+            "sdkMentions": {},
+            "package": "@furnace/sdk",
+            "version": "0.1.0",
+            "observerTypesDeclared": true,
+            "typesPlant": [
+              "NotInTheRelease"
+            ],
+            "entriesAtFloor": true,
+            "skippedEntries": [],
+            "binaryEntries": [],
+            "sdkPlant": {
+              "package/dist/src/zz-plant-declaration.d.ts": [
+                "raw"
+              ]
+            }
+          }
+        },
+        {
+          "id": "T2",
+          "quote": "FurnaceObserverBoundaryV0",
+          "claims": {
+            "FurnaceObserverBoundaryV0": [
+              "record",
+              "releaseForms"
+            ]
+          },
+          "witness": {
+            "record": "FurnaceObserverBoundaryV0",
+            "releaseForms": {
+              "declaration": [
+                "raw"
+              ],
+              "runtimeExport": [
+                "raw"
+              ],
+              "schemaId": [
+                "cooked",
+                "raw"
+              ],
+              "registryKey": [
+                "cooked",
+                "raw"
+              ],
+              "docsHeading": [
+                "decoded",
+                "raw"
+              ],
+              "escapedString": [
+                "cooked"
+              ],
+              "escapedJson": [
+                "cooked"
+              ]
+            }
+          }
+        },
+        {
+          "id": "T3",
+          "quote": "(proposed, not shipped)",
+          "claims": {
+            "proposed": [
+              "recordedStatus"
+            ],
+            "not shipped": [
+              "spec",
+              "lockResolved",
+              "lockVersion",
+              "lockIntegrityMatches",
+              "tarballName",
+              "tarballVersion",
+              "tarballSha256"
+            ]
+          },
+          "witness": {
+            "recordedStatus": "a proposed source-owned reference, not shipped",
+            "spec": "file:vendor/furnace-sdk-0.1.0.tgz",
+            "lockResolved": "file:vendor/furnace-sdk-0.1.0.tgz",
+            "lockVersion": "0.1.0",
+            "lockIntegrityMatches": true,
+            "tarballName": "@furnace/sdk",
+            "tarballVersion": "0.1.0",
+            "tarballSha256": "aaa57dcfb1c205ec"
+          }
+        }
+      ]
+    },
+    {
+      "id": "W",
+      "label": "never widening today's bounded read-only polling",
+      "pins": [
+        {
+          "id": "W1",
+          "quote": "never widening",
+          "claims": {
+            "never": [
+              "widenedPlant",
+              "augmentationPlant",
+              "heritagePlant",
+              "nonInterfacePlant",
+              "docsPlants"
+            ],
+            "widening": [
+              "interfaceName",
+              "interfaceDeclarations",
+              "interfaceExtends",
+              "otherDeclarations",
+              "clientParameterTypes",
+              "augmentations",
+              "readPaths",
+              "docsBinding",
+              "docsReads",
+              "pairs"
+            ]
+          },
+          "witness": {
+            "interfaceName": "FurnaceObserverClient",
+            "interfaceDeclarations": 1,
+            "interfaceExtends": [],
+            "otherDeclarations": [],
+            "clientParameterTypes": [
+              "FurnaceObserverClient"
+            ],
+            "augmentations": [],
+            "readPaths": [
+              "attempts.list",
+              "logs.read",
+              "runs.get.status"
+            ],
+            "docsBinding": {
+              "binds": true,
+              "why": "",
+              "html": false,
+              "undecoded": [],
+              "controls": [],
+              "subjects": {
+                "Furnace read": [
+                  "paragraph"
+                ],
+                "poll": [
+                  "paragraph"
+                ],
+                "attach": [
+                  "paragraph"
+                ]
+              },
+              "readsClauses": [
+                "status/attempt/log-reference"
+              ],
+              "verbsClauses": [
+                "create, resume or stop"
+              ],
+              "blocks": [
+                {
+                  "kind": "paragraph",
+                  "text": "src/workbench/observation.ts stores a bounded, non-authoritative read projection. Native keys include provider, type, scope and identifier. Caller workspace/principal scope is separately bound by the host. Duplicate events and lower source sequences do not regress state. Gaps and disconnects mark observations stale; reconnect alone does not establish current state. Only a real read-current snapshot restores confirmation.",
+                  "markdown": "`src/workbench/observation.ts` stores a bounded, non-authoritative read projection. Native keys include provider, type, scope and identifier. Caller workspace/principal scope is separately bound by the host. Duplicate events and lower source sequences do not regress state. Gaps and disconnects mark observations stale; reconnect alone does not establish current state. Only a real read-current snapshot restores confirmation."
+                },
+                {
+                  "kind": "paragraph",
+                  "text": "Query indexes cover native references, invocation, typed relations, source basis, status kind, evidence, version and intervals. Event queries expose metadata and references without raw producer payloads. Source-qualified cursor retention loss is explicitly partial-gap. The benchmark in TRACEABILITY.md measures this model, not terminal viewport costs or live producer reconnect. Native reader adapters and entrypoint wiring need their own live evidence before observer release.",
+                  "markdown": "Query indexes cover native references, invocation, typed relations, source basis, status kind, evidence, version and intervals. Event queries expose metadata and references without raw producer payloads. Source-qualified cursor retention loss is explicitly partial-gap. The benchmark in `TRACEABILITY.md` measures this model, not terminal viewport costs or live producer reconnect. Native reader adapters and entrypoint wiring need their own live evidence before observer release."
+                },
+                {
+                  "kind": "paragraph",
+                  "text": "The external Furnace reader uses explicit bounded status/attempt/log-reference polling. The installed SDK's Run.events() follows one Attempt's output, not a Run lifecycle cursor stream, so that surface is not misrepresented as lifecycle reconnect. Read snapshots identify their sequential, non-atomic coherence. A closed or failed observer marks last-known state stale; stale readings cannot refresh confirmed projection state. Pi attachment is read-only and does not create, resume or stop a Run.",
+                  "markdown": "The external Furnace reader uses explicit bounded status/attempt/log-reference polling. The installed SDK's `Run.events()` follows one Attempt's output, not a Run lifecycle cursor stream, so that surface is not misrepresented as lifecycle reconnect. Read snapshots identify their sequential, non-atomic coherence. A closed or failed observer marks last-known state stale; stale readings cannot refresh confirmed projection state. Pi attachment is read-only and does not create, resume or stop a Run."
+                }
+              ]
+            },
+            "docsReads": [
+              "status",
+              "attempt",
+              "log-reference"
+            ],
+            "pairs": [
+              [
+                "status",
+                "runs.get.status"
+              ],
+              [
+                "attempt",
+                "attempts.list"
+              ],
+              [
+                "log-reference",
+                "logs.read"
+              ]
+            ],
+            "widenedPlant": [
+              "runs.get.events"
+            ],
+            "augmentationPlant": [
+              "runs.get.events"
+            ],
+            "heritagePlant": {
+              "augmentation": [
+                "<extends ZzGateStream>"
+              ],
+              "own": [
+                "<extends ZzGateStream>"
+              ]
+            },
+            "nonInterfacePlant": {
+              "augmentation": [
+                "<class FurnaceObserverClient>"
+              ],
+              "heritage": [
+                "<class FurnaceObserverClient>"
+              ],
+              "kinds": [
+                "<enum FurnaceObserverClient>",
+                "<function FurnaceObserverClient>",
+                "<namespace FurnaceObserverClient>",
+                "<type FurnaceObserverClient>",
+                "<variable FurnaceObserverClient>"
+              ],
+              "own": [
+                "<class FurnaceObserverClient>"
+              ]
+            },
+            "docsPlants": {
+              "hiddenCopy": {
+                "binds": true,
+                "why": "",
+                "html": true,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create or resume"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "decoyHeading": {
+                "binds": false,
+                "why": "the heading \"Experimental projection implementation\" occurs 2 times in the rendered view; a pinned section needs it exactly once",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [],
+                  "poll": [],
+                  "attach": []
+                },
+                "readsClauses": [],
+                "verbsClauses": [],
+                "reads": [],
+                "verbs": []
+              },
+              "appendix": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [],
+                  "poll": [],
+                  "attach": []
+                },
+                "readsClauses": [],
+                "verbsClauses": [],
+                "reads": [],
+                "verbs": []
+              },
+              "fenced": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "code"
+                  ],
+                  "poll": [
+                    "code"
+                  ],
+                  "attach": [
+                    "code"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "widened": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [
+                  "status",
+                  "attempt",
+                  "log-reference",
+                  "event-stream"
+                ],
+                "verbs": [
+                  "create",
+                  "resume",
+                  "stop"
+                ]
+              },
+              "narrowed": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create or resume"
+                ],
+                "reads": [
+                  "status",
+                  "attempt",
+                  "log-reference"
+                ],
+                "verbs": [
+                  "create",
+                  "resume"
+                ]
+              },
+              "blockquoteCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "listItemCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "tableCellCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "table"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "table"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "headingCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "heading"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "heading"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "codeCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "code"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "code"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "nestedCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "subjectCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "pollCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "verbsQuoteCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph",
+                    "blockquote"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop",
+                  "create or resume"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "verbsSubjectCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph",
+                    "list item"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "entityCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "fullWidthCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "formCharacterCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "listedOnly": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "list item"
+                  ],
+                  "poll": [
+                    "list item"
+                  ],
+                  "attach": [
+                    "list item"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "shyCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [
+                  "&shy;"
+                ],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "zwnjCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [
+                  "&zwnj;"
+                ],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "zwjCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [
+                  "&zwj;"
+                ],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "wordJoinerCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [
+                  "&NoBreak;"
+                ],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "zeroWidthSpaceCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [
+                  "&ZeroWidthSpace;"
+                ],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "frakturCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [
+                  "&afr;",
+                  "&pfr;"
+                ],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "doubleStruckCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [
+                  "&aopf;",
+                  "&popf;"
+                ],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "shyListCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [
+                  "&shy;"
+                ],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "shyTableCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [
+                  "&shy;"
+                ],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "shyHeadingCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [
+                  "&shy;"
+                ],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "shyVerbsCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [
+                  "&shy;"
+                ],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "shyNumericCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "shyRawCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "graphemeJoinerCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "variationSelectorCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "emojiSelectorCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "hangulFillerCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "khmerVowelCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "overrideCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [
+                  "U+202C",
+                  "U+202E"
+                ],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "overrideReferenceCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [
+                  "U+202C",
+                  "U+202E"
+                ],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "windows1252QuoteCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [
+                  "U+0092"
+                ],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "windows1252ListCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [
+                  "U+0092"
+                ],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "windows1252TableCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [
+                  "U+0092"
+                ],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "table"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "windows1252HeadingCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [
+                  "U+0092"
+                ],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "heading"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "windows1252ParagraphCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [
+                  "U+0092"
+                ],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "windows1252HexCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [
+                  "U+0092"
+                ],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "windows1252WideCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [
+                  "U+0092"
+                ],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "windows1252PaddedCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [
+                  "U+0092"
+                ],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "windows1252UpperHexCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [
+                  "U+0092"
+                ],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "rsquoRawCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "rsquoDecimalCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "rsquoHexCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "rsquoNamedCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [
+                  "&rsquo;"
+                ],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "rsquoWideRawCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "rsquoWideDecimalCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "c1PossessiveRawCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [
+                  "U+0092"
+                ],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "c1ReferenceCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [
+                  "U+008D"
+                ],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "c1RawCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [
+                  "U+0081"
+                ],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "c0ReferenceCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [
+                  "U+0001"
+                ],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "tableLetterCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [
+                  "U+0088"
+                ],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "tableTrademarkCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [
+                  "U+0099"
+                ],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "paragraphCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "deepHeadingCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "heading"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "heading"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "indentedCodeCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "code"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "code"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "tableSplitCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "table"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "orderedItemCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "taskItemCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "itemParagraphCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "itemHeadingCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "itemLevelTwoHeadingCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "itemCodeCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "itemNestedListCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "itemDeepListCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "itemNestedQuoteCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteHeadingCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteCodeCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteListListCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteNestedQuoteCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "itemQuoteHeadingCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "itemQuoteCodeCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "itemQuoteQuoteCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteQuoteHeadingCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteQuoteCodeCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteQuoteQuoteCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteListQuoteCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "itemListQuoteCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "imageAltCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "htmlInHoleCopy": {
+                "binds": true,
+                "why": "",
+                "html": true,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "readingCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "readsCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "pollingCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "attachesCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph",
+                    "blockquote"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "readinessCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "reattachmentCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph",
+                    "blockquote"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "upperCaseCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "separatorRunCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "asciiPossessiveCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "fullWidthApostropheCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "mathLetterCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "aposPossessiveCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "codeAmpCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "code"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "codeLtCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "code"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "codeGtCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "code"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "codeQuotCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "code"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "codeNbspCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "code"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "codeUpperNamedCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "code"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "frameReferenceCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "bidiMarkCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [
+                  "U+200E"
+                ],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "delReferenceCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [
+                  "U+007F"
+                ],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "verticalTabCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [
+                  "U+000B"
+                ],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "whitespaceControlsCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [
+                  "status",
+                  "attempt",
+                  "log-reference"
+                ],
+                "verbs": [
+                  "create",
+                  "resume",
+                  "stop"
+                ]
+              },
+              "copyrightCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [
+                  "&copy;"
+                ],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "nonBreakingSpaceCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [
+                  "&NonBreakingSpace;"
+                ],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "codeSpanReferenceCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [
+                  "&shy;"
+                ],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "codeBlockReferenceCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [
+                  "&shy;"
+                ],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "ampExposedCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [
+                  "&shy;"
+                ],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "numericCodeSpanCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "numericCodeBlockCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "code"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "numericAmpCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "numericLongCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "numericLongHexCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "secondSentenceCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "verbsFrameReferenceCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteQuoteListCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteQuoteOrderedListCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteQuoteTaskListCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteQuoteListPossessiveCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteQuoteListVerbsCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph",
+                    "blockquote"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop",
+                  "create or resume"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteQuoteQuoteListCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "itemQuoteListCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteItemQuoteListCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteQuoteListQuoteCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteQuoteListListCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteQuoteListReferenceCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [
+                  "&shy;"
+                ],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteQuoteListControlCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [
+                  "U+0001"
+                ],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              }
+            }
+          }
+        },
+        {
+          "id": "W2",
+          "quote": "today's bounded",
+          "claims": {
+            "today's": [
+              "calls"
+            ],
+            "bounded": [
+              "pollBounds",
+              "unboundedPlant"
+            ]
+          },
+          "witness": {
+            "calls": [
+              {
+                "path": "runs.get.status",
+                "timeoutMs": "limits.callTimeoutMs",
+                "limit": null
+              },
+              {
+                "path": "attempts.list",
+                "timeoutMs": "limits.callTimeoutMs",
+                "limit": "limits.attemptLimit"
+              },
+              {
+                "path": "logs.read",
+                "timeoutMs": "limits.callTimeoutMs",
+                "limit": "limits.logBytes"
+              }
+            ],
+            "pollBounds": [
+              "limits.maxElapsedMs",
+              "limits.maxPolls"
+            ],
+            "unboundedPlant": {
+              "calls": [
+                "runs.get.status"
+              ],
+              "pollBounds": [
+                "limits.maxPolls"
+              ]
+            }
+          }
+        },
+        {
+          "id": "W3",
+          "quote": "read-only polling",
+          "claims": {
+            "read-only": [
+              "clientChains",
+              "unchainedClientUses",
+              "sdkRuntimeImports",
+              "runtimeImportPlant",
+              "closeReads",
+              "excludedVerbs",
+              "excludedVerbCalls",
+              "controlPlant"
+            ],
+            "polling": [
+              "ownership"
+            ]
+          },
+          "witness": {
+            "clientChains": [
+              "attempts.list",
+              "logs.read",
+              "runs.get.status"
+            ],
+            "unchainedClientUses": 0,
+            "sdkRuntimeImports": [],
+            "runtimeImportPlant": [
+              "export FurnaceClient",
+              "furnaceRuntime = require"
+            ],
+            "closeReads": [],
+            "excludedVerbs": [
+              "create",
+              "resume",
+              "stop"
+            ],
+            "excludedVerbCalls": [],
+            "controlPlant": {
+              "clientChains": [
+                "attempts.list",
+                "logs.read",
+                "runs.get.status",
+                "runs.get.stop"
+              ],
+              "closeReads": [
+                "runs.get.stop"
+              ],
+              "excludedVerbCalls": [
+                "stop"
+              ]
+            },
+            "ownership": [
+              "external"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Z",
+      "label": "until then zero Pi mentions of the record",
+      "pins": [
+        {
+          "id": "Z1",
+          "quote": "until then",
+          "claims": {
+            "until then": [
+              "triggerFired",
+              "filingPin",
+              "filedAtPin",
+              "absentBeforePin",
+              "pinFilesAtFloor",
+              "pinBytesAtFloor",
+              "pinLiveness",
+              "pinMentions",
+              "pinPlant"
+            ]
+          },
+          "witness": {
+            "triggerFired": false,
+            "filingPin": "b21beb0f89ad",
+            "filedAtPin": true,
+            "absentBeforePin": true,
+            "pinFilesAtFloor": true,
+            "pinBytesAtFloor": true,
+            "pinLiveness": {
+              "identitySchemaLiteral": true,
+              "docs09Polling": true,
+              "observerClient": true
+            },
+            "pinMentions": {},
+            "pinPlant": {
+              "docs/workbench/zz-pin-plant.md": [
+                "decoded",
+                "raw"
+              ]
+            }
+          }
+        },
+        {
+          "id": "Z2",
+          "quote": "zero Pi mentions",
+          "claims": {
+            "zero": [
+              "piMentions"
+            ],
+            "Pi": [
+              "scope",
+              "filesAtFloor",
+              "scriptsAtFloor",
+              "binariesAtFloor",
+              "bytesAtFloor",
+              "liveness"
+            ],
+            "mentions": [
+              "piPlants",
+              "decodings"
+            ]
+          },
+          "witness": {
+            "piMentions": {},
+            "scope": "listed files minus the tracker export and the holders",
+            "filesAtFloor": true,
+            "scriptsAtFloor": true,
+            "binariesAtFloor": true,
+            "bytesAtFloor": true,
+            "liveness": {
+              "identitySchemaLiteral": true,
+              "docs09Polling": true,
+              "observerClient": true
+            },
+            "piPlants": {
+              "src/workbench/zz-boundary-escaped.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-split.ts": [
+                "folded"
+              ],
+              "docs/workbench/zz-boundary.md": [
+                "decoded",
+                "raw"
+              ],
+              "test/fixtures/zz-boundary.json": [
+                "cooked",
+                "raw"
+              ],
+              "qa/zz-boundary.mjs": [
+                "raw"
+              ],
+              "test/fixtures/zz-boundary-escaped.json": [
+                "cooked"
+              ],
+              "docs/workbench/zz-boundary-entity.md": [
+                "decoded"
+              ],
+              "docs/workbench/zz-observer-boundary.md": [
+                "path"
+              ],
+              "config/zz-boundary.yml": [
+                "decoded"
+              ],
+              "config/zz-boundary.toml": [
+                "decoded"
+              ],
+              "src/workbench/zz-boundary-identifier.ts": [
+                "cooked"
+              ],
+              "docs/workbench/zz-boundary-windows1252.md": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-c1.md": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-kind.html": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-kind.htm": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-kind.xml": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-kind.svg": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-amp.md": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-lt.md": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-gt.md": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-quot.md": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-apos.md": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-nbsp.md": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-long-decimal.md": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-long-hex.md": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-long-decimal-c1.md": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-long-hex-c1.md": [
+                "decoded"
+              ],
+              "config/zz-boundary.yaml": [
+                "decoded"
+              ],
+              "src/workbench/zz-boundary-template.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-tail.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-backtick.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-private.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-paren.ts": [
+                "folded"
+              ],
+              "src/workbench/zz-boundary-backtick-split.ts": [
+                "folded"
+              ],
+              "test/fixtures/zz-boundary-array.json": [
+                "cooked"
+              ],
+              "config/zz-boundary-two.yaml": [
+                "decoded"
+              ],
+              "config/zz-boundary-upper.yaml": [
+                "decoded"
+              ],
+              "config/zz-boundary-upper.yml": [
+                "decoded"
+              ],
+              "config/zz-boundary-upper.toml": [
+                "decoded"
+              ],
+              "config/zz-boundary-x-space.yaml": [
+                "decoded"
+              ],
+              "config/zz-boundary-x-tab.yaml": [
+                "decoded"
+              ],
+              "config/zz-boundary-x-lf.yaml": [
+                "decoded"
+              ],
+              "config/zz-boundary-x-lf-upper.yaml": [
+                "decoded"
+              ],
+              "config/zz-boundary-u-tab.yml": [
+                "decoded"
+              ],
+              "config/zz-boundary-u-lf.yml": [
+                "decoded"
+              ],
+              "config/zz-boundary-u-lf-upper.yml": [
+                "decoded"
+              ],
+              "config/zz-boundary-long-tab.toml": [
+                "decoded"
+              ],
+              "config/zz-boundary-long-lf.toml": [
+                "decoded"
+              ],
+              "config/zz-boundary-long-lf-upper.toml": [
+                "decoded"
+              ],
+              "config/zz-boundary-long-max.toml": [
+                "decoded"
+              ],
+              "config/zz-boundary-single.yaml": [
+                "decoded"
+              ],
+              "config/zz-boundary-literal.toml": [
+                "decoded"
+              ],
+              "src/workbench/zz-boundary-kind-assertion.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-kind-assertion.mts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-kind-assertion.cts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-kind-jsx.tsx": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-kind-jsx.jsx": [
+                "cooked"
+              ],
+              "qa/zz-boundary-kind-jsx.js": [
+                "cooked"
+              ],
+              "qa/zz-boundary-kind-jsx.mjs": [
+                "cooked"
+              ],
+              "qa/zz-boundary-kind-jsx.cjs": [
+                "cooked"
+              ],
+              "test/fixtures/zz-boundary-unparseable.json": [
+                "raw"
+              ],
+              "src/workbench/zz-boundary-kind-instantiation.tsx": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-kind-instantiation.jsx": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-kind-assertion.tsx.js.ts": [
+                "cooked"
+              ],
+              "qa/zz-boundary-kind-regex.js": [
+                "cooked"
+              ],
+              "qa/zz-boundary-kind-regex.mjs": [
+                "cooked"
+              ],
+              "qa/zz-boundary-kind-regex.cjs": [
+                "cooked"
+              ],
+              "qa/zz-boundary-kind-template.js": [
+                "cooked"
+              ],
+              "qa/zz-boundary-kind-template.mjs": [
+                "cooked"
+              ],
+              "qa/zz-boundary-kind-template.cjs": [
+                "cooked"
+              ],
+              "config/zz-boundary-x-digits.yaml": [
+                "decoded"
+              ],
+              "config/zz-boundary-u-digits.yml": [
+                "decoded"
+              ],
+              "config/zz-boundary-long-digits.toml": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-hex-digits.md": [
+                "decoded"
+              ],
+              "src/workbench/zz-boundary-paren-trail.ts": [
+                "folded"
+              ],
+              "src/workbench/zz-boundary-paren-lead.ts": [
+                "folded"
+              ],
+              "src/workbench/zz-boundary-identifier-braced.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-identifier-private.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-identifier-read.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-head.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-one-tail.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-two-head.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-middle.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-second.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-three-head.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-three-first.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-three-middle.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-three-last.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-tagged.ts": [
+                "cooked"
+              ],
+              "docs/workbench/zz-observer-boundary/zz-plant.md": [
+                "path"
+              ],
+              "zz-observer-boundary/docs/workbench/zz-plant.md": [
+                "path"
+              ],
+              "docs/zz-observer-boundary/workbench/zz-plant.md": [
+                "path"
+              ],
+              "docs/workbench/zz-observer/boundary.md": [
+                "path"
+              ],
+              "docs/workbench/zz-observer.boundary": [
+                "path"
+              ],
+              "docs/workbench/zz-ObserverBoundary.md": [
+                "path"
+              ],
+              "src/workbench/zz-observer-boundary.ts": [
+                "path"
+              ],
+              "test/fixtures/zz-observer-boundary.json": [
+                "path"
+              ],
+              "config/zz-observer-boundary.yml": [
+                "path"
+              ],
+              "config/zz-observer-boundary.toml": [
+                "path"
+              ],
+              "media/zz-observer-boundary.bin": [
+                "path"
+              ],
+              "zz-observer-boundary.md": [
+                "path"
+              ],
+              "docs/workbench/zz-observers-boundaries.md": [
+                "path"
+              ],
+              "docs/workbench/zz-observer_boundary.md": [
+                "path"
+              ],
+              "src/workbench/zz-boundary-identifier-function.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-identifier-return.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-array.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-call.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-tagged-head.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-tagged-raw.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-string-type.ts": [
+                "cooked"
+              ]
+            },
+            "decodings": {
+              "markup": {
+                "&#0;&#xD800;&#x110000;&#128;&#129;&#146;&#x92;&#159;&#160;": [
+                  "\ufffd\ufffd\ufffd\u20ac\u0081\u2019\u2019\u0178\u00a0",
+                  "\u0000\ud800&#x110000;\u0080\u0081\u0092\u0092\u009f\u00a0"
+                ],
+                "&#136;&#146;&#x92;&#x110000;": [
+                  "\u02c6\u2019\u2019\ufffd",
+                  "\u0088\u0092\u0092&#x110000;"
+                ],
+                "&constructor;&toString;&hasOwnProperty;&AMP;": [
+                  "&constructor;&toString;&hasOwnProperty;&",
+                  "&constructor;&toString;&hasOwnProperty;&"
+                ],
+                "&AMP;&LT;&GT;&QUOT;&APOS;&NBSP;|&Amp;&lT;&gT;&QuOt;&aPoS;&nBsP;": [
+                  "&<>\"'\u00a0|&<>\"'\u00a0",
+                  "&<>\"'\u00a0|&<>\"'\u00a0"
+                ],
+                "&#xDC00;&#xDFFF;&#x10FFFF;": [
+                  "\ufffd\ufffd\udbff\udfff",
+                  "\udc00\udfff\udbff\udfff"
+                ],
+                "&#xa;&#xaf;&#XAF;": [
+                  "\n\u00af\u00af",
+                  "\n\u00af\u00af"
+                ],
+                "&#x0000000;&#x1111111;&#x2222222;&#x3333333;&#x4444444;&#x5555555;&#x6666666;&#x7777777;&#x8888888;&#x9999999;&#xaaaaaaa;&#xbbbbbbb;&#xccccccc;&#xddddddd;&#xeeeeeee;&#xfffffff;&#xAAAAAAA;&#xBBBBBBB;&#xCCCCCCC;&#xDDDDDDD;&#xEEEEEEE;&#xFFFFFFF;": [
+                  "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+                  "\u0000&#x1111111;&#x2222222;&#x3333333;&#x4444444;&#x5555555;&#x6666666;&#x7777777;&#x8888888;&#x9999999;&#xaaaaaaa;&#xbbbbbbb;&#xccccccc;&#xddddddd;&#xeeeeeee;&#xfffffff;&#xAAAAAAA;&#xBBBBBBB;&#xCCCCCCC;&#xDDDDDDD;&#xEEEEEEE;&#xFFFFFFF;"
+                ],
+                "&#00000000;&#11111111;&#22222222;&#33333333;&#44444444;&#55555555;&#66666666;&#77777777;&#88888888;&#99999999;": [
+                  "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+                  "\u0000&#11111111;&#22222222;&#33333333;&#44444444;&#55555555;&#66666666;&#77777777;&#88888888;&#99999999;"
+                ],
+                "&#x0;&#x1;&#x2;&#x3;&#x4;&#x5;&#x6;&#x7;&#x8;&#x9;&#xa;&#xb;&#xc;&#xd;&#xe;&#xf;&#xA;&#xB;&#xC;&#xD;&#xE;&#xF;": [
+                  "\ufffd\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\n\u000b\f\r\u000e\u000f\n\u000b\f\r\u000e\u000f",
+                  "\u0000\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\n\u000b\f\r\u000e\u000f\n\u000b\f\r\u000e\u000f"
+                ],
+                "&#x00;&#x11;&#x22;&#x33;&#x44;&#x55;&#x66;&#x77;&#x88;&#x99;&#xaa;&#xbb;&#xcc;&#xdd;&#xee;&#xff;&#xAA;&#xBB;&#xCC;&#xDD;&#xEE;&#xFF;": [
+                  "\ufffd\u0011\"3DUfw\u02c6\u2122\u00aa\u00bb\u00cc\u00dd\u00ee\u00ff\u00aa\u00bb\u00cc\u00dd\u00ee\u00ff",
+                  "\u0000\u0011\"3DUfw\u0088\u0099\u00aa\u00bb\u00cc\u00dd\u00ee\u00ff\u00aa\u00bb\u00cc\u00dd\u00ee\u00ff"
+                ],
+                "&#x000;&#x111;&#x222;&#x333;&#x444;&#x555;&#x666;&#x777;&#x888;&#x999;&#xaaa;&#xbbb;&#xccc;&#xddd;&#xeee;&#xfff;&#xAAA;&#xBBB;&#xCCC;&#xDDD;&#xEEE;&#xFFF;": [
+                  "\ufffd\u0111\u0222\u0333\u0444\u0555\u0666\u0777\u0888\u0999\u0aaa\u0bbb\u0ccc\u0ddd\u0eee\u0fff\u0aaa\u0bbb\u0ccc\u0ddd\u0eee\u0fff",
+                  "\u0000\u0111\u0222\u0333\u0444\u0555\u0666\u0777\u0888\u0999\u0aaa\u0bbb\u0ccc\u0ddd\u0eee\u0fff\u0aaa\u0bbb\u0ccc\u0ddd\u0eee\u0fff"
+                ],
+                "&#x0000;&#x1111;&#x2222;&#x3333;&#x4444;&#x5555;&#x6666;&#x7777;&#x8888;&#x9999;&#xaaaa;&#xbbbb;&#xcccc;&#xdddd;&#xeeee;&#xffff;&#xAAAA;&#xBBBB;&#xCCCC;&#xDDDD;&#xEEEE;&#xFFFF;": [
+                  "\ufffd\u1111\u2222\u3333\u4444\u5555\u6666\u7777\u8888\u9999\uaaaa\ubbbb\ucccc\ufffd\ueeee\uffff\uaaaa\ubbbb\ucccc\ufffd\ueeee\uffff",
+                  "\u0000\u1111\u2222\u3333\u4444\u5555\u6666\u7777\u8888\u9999\uaaaa\ubbbb\ucccc\udddd\ueeee\uffff\uaaaa\ubbbb\ucccc\udddd\ueeee\uffff"
+                ],
+                "&#x00000;&#x11111;&#x22222;&#x33333;&#x44444;&#x55555;&#x66666;&#x77777;&#x88888;&#x99999;&#xaaaaa;&#xbbbbb;&#xccccc;&#xddddd;&#xeeeee;&#xfffff;&#xAAAAA;&#xBBBBB;&#xCCCCC;&#xDDDDD;&#xEEEEE;&#xFFFFF;": [
+                  "\ufffd\ud804\udd11\ud848\ude22\ud88c\udf33\ud8d1\udc44\ud915\udd55\ud959\ude66\ud99d\udf77\ud9e2\udc88\uda26\udd99\uda6a\udeaa\udaae\udfbb\udaf3\udccc\udb37\udddd\udb7b\udeee\udbbf\udfff\uda6a\udeaa\udaae\udfbb\udaf3\udccc\udb37\udddd\udb7b\udeee\udbbf\udfff",
+                  "\u0000\ud804\udd11\ud848\ude22\ud88c\udf33\ud8d1\udc44\ud915\udd55\ud959\ude66\ud99d\udf77\ud9e2\udc88\uda26\udd99\uda6a\udeaa\udaae\udfbb\udaf3\udccc\udb37\udddd\udb7b\udeee\udbbf\udfff\uda6a\udeaa\udaae\udfbb\udaf3\udccc\udb37\udddd\udb7b\udeee\udbbf\udfff"
+                ],
+                "&#x000000;&#x111111;&#x222222;&#x333333;&#x444444;&#x555555;&#x666666;&#x777777;&#x888888;&#x999999;&#xaaaaaa;&#xbbbbbb;&#xcccccc;&#xdddddd;&#xeeeeee;&#xffffff;&#xAAAAAA;&#xBBBBBB;&#xCCCCCC;&#xDDDDDD;&#xEEEEEE;&#xFFFFFF;": [
+                  "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+                  "\u0000&#x111111;&#x222222;&#x333333;&#x444444;&#x555555;&#x666666;&#x777777;&#x888888;&#x999999;&#xaaaaaa;&#xbbbbbb;&#xcccccc;&#xdddddd;&#xeeeeee;&#xffffff;&#xAAAAAA;&#xBBBBBB;&#xCCCCCC;&#xDDDDDD;&#xEEEEEE;&#xFFFFFF;"
+                ],
+                "&#0;&#1;&#2;&#3;&#4;&#5;&#6;&#7;&#8;&#9;": [
+                  "\ufffd\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t",
+                  "\u0000\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t"
+                ],
+                "&#00;&#11;&#22;&#33;&#44;&#55;&#66;&#77;&#88;&#99;": [
+                  "\ufffd\u000b\u0016!,7BMXc",
+                  "\u0000\u000b\u0016!,7BMXc"
+                ],
+                "&#000;&#111;&#222;&#333;&#444;&#555;&#666;&#777;&#888;&#999;": [
+                  "\ufffdo\u00de\u014d\u01bc\u022b\u029a\u0309\u0378\u03e7",
+                  "\u0000o\u00de\u014d\u01bc\u022b\u029a\u0309\u0378\u03e7"
+                ],
+                "&#0000;&#1111;&#2222;&#3333;&#4444;&#5555;&#6666;&#7777;&#8888;&#9999;": [
+                  "\ufffd\u0457\u08ae\u0d05\u115c\u15b3\u1a0a\u1e61\u22b8\u270f",
+                  "\u0000\u0457\u08ae\u0d05\u115c\u15b3\u1a0a\u1e61\u22b8\u270f"
+                ],
+                "&#00000;&#11111;&#22222;&#33333;&#44444;&#55555;&#66666;&#77777;&#88888;&#99999;": [
+                  "\ufffd\u2b67\u56ce\u8235\uad9c\ufffd\ud801\udc6a\ud80b\udfd1\ud816\udf38\ud821\ude9f",
+                  "\u0000\u2b67\u56ce\u8235\uad9c\ud903\ud801\udc6a\ud80b\udfd1\ud816\udf38\ud821\ude9f"
+                ],
+                "&#000000;&#111111;&#222222;&#333333;&#444444;&#555555;&#666666;&#777777;&#888888;&#999999;": [
+                  "\ufffd\ud82c\ude07\ud899\udc0e\ud905\ude15\ud972\udc1c\ud9de\ude23\uda4b\udc2a\udab7\ude31\udb24\udc38\udb90\ude3f",
+                  "\u0000\ud82c\ude07\ud899\udc0e\ud905\ude15\ud972\udc1c\ud9de\ude23\uda4b\udc2a\udab7\ude31\udb24\udc38\udb90\ude3f"
+                ],
+                "&#0000000;&#1111111;&#2222222;&#3333333;&#4444444;&#5555555;&#6666666;&#7777777;&#8888888;&#9999999;": [
+                  "\ufffd\udbfd\udc47\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+                  "\u0000\udbfd\udc47&#2222222;&#3333333;&#4444444;&#5555555;&#6666666;&#7777777;&#8888888;&#9999999;"
+                ],
+                "&#X0;&#X1;&#X2;&#X3;&#X4;&#X5;&#X6;&#X7;&#X8;&#X9;&#Xa;&#Xb;&#Xc;&#Xd;&#Xe;&#Xf;&#XA;&#XB;&#XC;&#XD;&#XE;&#XF;": [
+                  "\ufffd\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\n\u000b\f\r\u000e\u000f\n\u000b\f\r\u000e\u000f",
+                  "\u0000\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\n\u000b\f\r\u000e\u000f\n\u000b\f\r\u000e\u000f"
+                ],
+                "&#X00;&#X11;&#X22;&#X33;&#X44;&#X55;&#X66;&#X77;&#X88;&#X99;&#Xaa;&#Xbb;&#Xcc;&#Xdd;&#Xee;&#Xff;&#XAA;&#XBB;&#XCC;&#XDD;&#XEE;&#XFF;": [
+                  "\ufffd\u0011\"3DUfw\u02c6\u2122\u00aa\u00bb\u00cc\u00dd\u00ee\u00ff\u00aa\u00bb\u00cc\u00dd\u00ee\u00ff",
+                  "\u0000\u0011\"3DUfw\u0088\u0099\u00aa\u00bb\u00cc\u00dd\u00ee\u00ff\u00aa\u00bb\u00cc\u00dd\u00ee\u00ff"
+                ],
+                "&#X000;&#X111;&#X222;&#X333;&#X444;&#X555;&#X666;&#X777;&#X888;&#X999;&#Xaaa;&#Xbbb;&#Xccc;&#Xddd;&#Xeee;&#Xfff;&#XAAA;&#XBBB;&#XCCC;&#XDDD;&#XEEE;&#XFFF;": [
+                  "\ufffd\u0111\u0222\u0333\u0444\u0555\u0666\u0777\u0888\u0999\u0aaa\u0bbb\u0ccc\u0ddd\u0eee\u0fff\u0aaa\u0bbb\u0ccc\u0ddd\u0eee\u0fff",
+                  "\u0000\u0111\u0222\u0333\u0444\u0555\u0666\u0777\u0888\u0999\u0aaa\u0bbb\u0ccc\u0ddd\u0eee\u0fff\u0aaa\u0bbb\u0ccc\u0ddd\u0eee\u0fff"
+                ],
+                "&#X0000;&#X1111;&#X2222;&#X3333;&#X4444;&#X5555;&#X6666;&#X7777;&#X8888;&#X9999;&#Xaaaa;&#Xbbbb;&#Xcccc;&#Xdddd;&#Xeeee;&#Xffff;&#XAAAA;&#XBBBB;&#XCCCC;&#XDDDD;&#XEEEE;&#XFFFF;": [
+                  "\ufffd\u1111\u2222\u3333\u4444\u5555\u6666\u7777\u8888\u9999\uaaaa\ubbbb\ucccc\ufffd\ueeee\uffff\uaaaa\ubbbb\ucccc\ufffd\ueeee\uffff",
+                  "\u0000\u1111\u2222\u3333\u4444\u5555\u6666\u7777\u8888\u9999\uaaaa\ubbbb\ucccc\udddd\ueeee\uffff\uaaaa\ubbbb\ucccc\udddd\ueeee\uffff"
+                ],
+                "&#X00000;&#X11111;&#X22222;&#X33333;&#X44444;&#X55555;&#X66666;&#X77777;&#X88888;&#X99999;&#Xaaaaa;&#Xbbbbb;&#Xccccc;&#Xddddd;&#Xeeeee;&#Xfffff;&#XAAAAA;&#XBBBBB;&#XCCCCC;&#XDDDDD;&#XEEEEE;&#XFFFFF;": [
+                  "\ufffd\ud804\udd11\ud848\ude22\ud88c\udf33\ud8d1\udc44\ud915\udd55\ud959\ude66\ud99d\udf77\ud9e2\udc88\uda26\udd99\uda6a\udeaa\udaae\udfbb\udaf3\udccc\udb37\udddd\udb7b\udeee\udbbf\udfff\uda6a\udeaa\udaae\udfbb\udaf3\udccc\udb37\udddd\udb7b\udeee\udbbf\udfff",
+                  "\u0000\ud804\udd11\ud848\ude22\ud88c\udf33\ud8d1\udc44\ud915\udd55\ud959\ude66\ud99d\udf77\ud9e2\udc88\uda26\udd99\uda6a\udeaa\udaae\udfbb\udaf3\udccc\udb37\udddd\udb7b\udeee\udbbf\udfff\uda6a\udeaa\udaae\udfbb\udaf3\udccc\udb37\udddd\udb7b\udeee\udbbf\udfff"
+                ],
+                "&#X000000;&#X111111;&#X222222;&#X333333;&#X444444;&#X555555;&#X666666;&#X777777;&#X888888;&#X999999;&#Xaaaaaa;&#Xbbbbbb;&#Xcccccc;&#Xdddddd;&#Xeeeeee;&#Xffffff;&#XAAAAAA;&#XBBBBBB;&#XCCCCCC;&#XDDDDDD;&#XEEEEEE;&#XFFFFFF;": [
+                  "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+                  "\u0000&#X111111;&#X222222;&#X333333;&#X444444;&#X555555;&#X666666;&#X777777;&#X888888;&#X999999;&#Xaaaaaa;&#Xbbbbbb;&#Xcccccc;&#Xdddddd;&#Xeeeeee;&#Xffffff;&#XAAAAAA;&#XBBBBBB;&#XCCCCCC;&#XDDDDDD;&#XEEEEEE;&#XFFFFFF;"
+                ],
+                "&#X0000000;&#X1111111;&#X2222222;&#X3333333;&#X4444444;&#X5555555;&#X6666666;&#X7777777;&#X8888888;&#X9999999;&#Xaaaaaaa;&#Xbbbbbbb;&#Xccccccc;&#Xddddddd;&#Xeeeeeee;&#Xfffffff;&#XAAAAAAA;&#XBBBBBBB;&#XCCCCCCC;&#XDDDDDDD;&#XEEEEEEE;&#XFFFFFFF;": [
+                  "\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+                  "\u0000&#X1111111;&#X2222222;&#X3333333;&#X4444444;&#X5555555;&#X6666666;&#X7777777;&#X8888888;&#X9999999;&#Xaaaaaaa;&#Xbbbbbbb;&#Xccccccc;&#Xddddddd;&#Xeeeeeee;&#Xfffffff;&#XAAAAAAA;&#XBBBBBBB;&#XCCCCCCC;&#XDDDDDDD;&#XEEEEEEE;&#XFFFFFFF;"
+                ],
+                "&#x0000041;&#x1000041;&#x2000041;&#x3000041;&#x4000041;&#x5000041;&#x6000041;&#x7000041;&#x8000041;&#x9000041;&#xa000041;&#xb000041;&#xc000041;&#xd000041;&#xe000041;&#xf000041;&#xA000041;&#xB000041;&#xC000041;&#xD000041;&#xE000041;&#xF000041;": [
+                  "A\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+                  "A&#x1000041;&#x2000041;&#x3000041;&#x4000041;&#x5000041;&#x6000041;&#x7000041;&#x8000041;&#x9000041;&#xa000041;&#xb000041;&#xc000041;&#xd000041;&#xe000041;&#xf000041;&#xA000041;&#xB000041;&#xC000041;&#xD000041;&#xE000041;&#xF000041;"
+                ],
+                "&#X0000041;&#X1000041;&#X2000041;&#X3000041;&#X4000041;&#X5000041;&#X6000041;&#X7000041;&#X8000041;&#X9000041;&#Xa000041;&#Xb000041;&#Xc000041;&#Xd000041;&#Xe000041;&#Xf000041;&#XA000041;&#XB000041;&#XC000041;&#XD000041;&#XE000041;&#XF000041;": [
+                  "A\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+                  "A&#X1000041;&#X2000041;&#X3000041;&#X4000041;&#X5000041;&#X6000041;&#X7000041;&#X8000041;&#X9000041;&#Xa000041;&#Xb000041;&#Xc000041;&#Xd000041;&#Xe000041;&#Xf000041;&#XA000041;&#XB000041;&#XC000041;&#XD000041;&#XE000041;&#XF000041;"
+                ],
+                "&#00000065;&#10000065;&#20000065;&#30000065;&#40000065;&#50000065;&#60000065;&#70000065;&#80000065;&#90000065;": [
+                  "A\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd",
+                  "A&#10000065;&#20000065;&#30000065;&#40000065;&#50000065;&#60000065;&#70000065;&#80000065;&#90000065;"
+                ]
+              },
+              "escapes": {
+                "\\x09\\x0a\\x0f\\x0A\\x0F|\\u0009\\u000a\\u000f\\u000A\\u000F|\\U00000009\\U0000000a\\U0000000f\\U0000000A\\U0000000F|\\U0010FFFF\\U00110000": "\t\n\u000f\n\u000f|\t\n\u000f\n\u000f|\t\n\u000f\n\u000f|\udbff\udfff\\U00110000",
+                "\\x00\\x11\\x22\\x33\\x44\\x55\\x66\\x77\\x88\\x99\\xaa\\xbb\\xcc\\xdd\\xee\\xff\\xAA\\xBB\\xCC\\xDD\\xEE\\xFF": "\u0000\u0011\"3DUfw\u0088\u0099\u00aa\u00bb\u00cc\u00dd\u00ee\u00ff\u00aa\u00bb\u00cc\u00dd\u00ee\u00ff",
+                "\\u0000\\u1111\\u2222\\u3333\\u4444\\u5555\\u6666\\u7777\\u8888\\u9999\\uaaaa\\ubbbb\\ucccc\\udddd\\ueeee\\uffff\\uAAAA\\uBBBB\\uCCCC\\uDDDD\\uEEEE\\uFFFF": "\u0000\u1111\u2222\u3333\u4444\u5555\u6666\u7777\u8888\u9999\uaaaa\ubbbb\ucccc\udddd\ueeee\uffff\uaaaa\ubbbb\ucccc\udddd\ueeee\uffff",
+                "\\U00000000\\U00011111\\U00022222\\U00033333\\U00044444\\U00055555\\U00066666\\U00077777\\U00088888\\U00099999\\U000aaaaa\\U000bbbbb\\U000ccccc\\U000ddddd\\U000eeeee\\U000fffff\\U000AAAAA\\U000BBBBB\\U000CCCCC\\U000DDDDD\\U000EEEEE\\U000FFFFF\\U00100000": "\u0000\ud804\udd11\ud848\ude22\ud88c\udf33\ud8d1\udc44\ud915\udd55\ud959\ude66\ud99d\udf77\ud9e2\udc88\uda26\udd99\uda6a\udeaa\udaae\udfbb\udaf3\udccc\udb37\udddd\udb7b\udeee\udbbf\udfff\uda6a\udeaa\udaae\udfbb\udaf3\udccc\udb37\udddd\udb7b\udeee\udbbf\udfff\udbc0\udc00"
+              }
+            }
+          }
+        },
+        {
+          "id": "Z3",
+          "quote": "of the record",
+          "claims": {
+            "of the record": [
+              "recordWords",
+              "spellingForms",
+              "piIdentifiersQuiet",
+              "siblingQuiet"
+            ]
+          },
+          "witness": {
+            "recordWords": [
+              "Furnace",
+              "Observer",
+              "Boundary",
+              "V0"
+            ],
+            "spellingForms": {
+              "camel": true,
+              "snake": true,
+              "kebab": true,
+              "dotted": true,
+              "spaced": true,
+              "upper": true,
+              "family": true,
+              "laterVersion": true,
+              "stem": true,
+              "possessive": true,
+              "plural": true,
+              "markup": true,
+              "lineBreak": true,
+              "formJoined": true
+            },
+            "piIdentifiersQuiet": true,
+            "siblingQuiet": [
+              "FurnaceAttemptCapabilityV0"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the residuals: each named family pinned by its quiet row",
+      "pins": [
+        {
+          "id": "Q1",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-TRACKER",
+            "exportSpellsRecord": true,
+            "exportListed": false,
+            "trackerExcluded": true
+          }
+        },
+        {
+          "id": "Q2",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-HOLDER",
+            "holders": [
+              "test/workbench-furnace-observer-boundary-census.test.ts",
+              "test/fixtures/furnace-observer-boundary-roster.json"
+            ],
+            "holdersSpellRecord": [
+              true,
+              true
+            ],
+            "holdersListed": []
+          }
+        },
+        {
+          "id": "Q3",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-BINARY",
+            "plantBinary": true,
+            "plantForms": [],
+            "realBinariesAtFloor": true
+          }
+        },
+        {
+          "id": "Q4",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-PARAPHRASE",
+            "constructedQuiet": [
+              true,
+              true
+            ],
+            "realParaphrasesQuiet": true
+          }
+        },
+        {
+          "id": "Q5",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-WORD-ORDER",
+            "quiet": [
+              true,
+              true
+            ]
+          }
+        },
+        {
+          "id": "Q6",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-INTERIOR",
+            "quiet": {
+              "formCharacter": true,
+              "confusable": true,
+              "entityOutsideMarkup": true,
+              "markup": true,
+              "escapeOutsideDecodedKinds": true,
+              "namedReference": true,
+              "overrideReversed": true,
+              "numericWithoutSemicolon": true,
+              "namedWithoutSemicolon": true
+            }
+          }
+        },
+        {
+          "id": "Q7",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-COMPUTED",
+            "plants": {
+              "substitution": "export const n = `Observer${part}Boundary`;\n",
+              "runtimeJoin": "export const n = [\"Obs\", \"erver\", \"Boundary\"].join(\"\");\n",
+              "charCode": "export const n = String.fromCharCode(79) + \"bserverBoundary\";\n",
+              "trailingComputed": "export const n = \"\\u004fbserver\" + \"Boundary\" + part;\n",
+              "leadingComputed": "export const n = part + \"\\u004fbserver\" + \"Boundary\";\n",
+              "middleComputed": "export const n = \"\\u004fbserver\" + part + \"Boundary\";\n"
+            },
+            "quiet": {
+              "substitution": true,
+              "runtimeJoin": true,
+              "charCode": true,
+              "trailingComputed": true,
+              "leadingComputed": true,
+              "middleComputed": true
+            }
+          }
+        },
+        {
+          "id": "Q8",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-OTHER-MODULE",
+            "judgedModule": "src/workbench/furnace-observer.ts",
+            "otherModuleCallsExcludedVerbs": true,
+            "globalPlant": {
+              "reads": [],
+              "declares": [],
+              "globalObjects": [
+                "src/workbench/zz-observer-global.ts: Object"
+              ]
+            },
+            "listedGlobalObjects": []
+          }
+        },
+        {
+          "id": "Q9",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-COMPUTED-ACCESS",
+            "reads": 3,
+            "unchained": 0
+          }
+        },
+        {
+          "id": "Q10",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-DOCS-UNCOUNTED",
+            "plants": {
+              "paraphrase": "> Pi's Furnace observer also follows each Run's event stream.",
+              "confusable": "> The external Furn\u0430ce reader uses explicit bounded status/attempt/log-reference/event-stream p\u043elling.",
+              "quoteNestedTable": "> | Reader |\n> | --- |\n> | The external Furnace reader uses explicit bounded status/attempt/log-reference/event-stream polling. |",
+              "itemNestedTable": "- note\n\n  | Reader |\n  | --- |\n  | The external Furnace reader uses explicit bounded status/attempt/log-reference/event-stream polling. |",
+              "linkTitle": "[see](https://example.invalid \"The external Furnace reader uses explicit bounded status/attempt/log-reference/event-stream polling.\")",
+              "apostropheLetter": "> The Furnace\u02bcs reader also follows each Run's event stream.",
+              "apostropheQuote": "> The Furnace\u2018s reader also follows each Run's event stream.",
+              "privateUse": "> The external Furn\ue000ace reader uses explicit bounded status/attempt/log-reference/event-stream po\ue000lling.",
+              "unassigned": "> The external Furn\u0378ace reader uses explicit bounded status/attempt/log-reference/event-stream po\u0378lling.",
+              "apostropheGrave": "> The Furnace`s reader also follows each Run's event stream.",
+              "apostropheAcute": "> The Furnace\u00b4s reader also follows each Run's event stream.",
+              "apostrophePrime": "> The Furnace\u2032s reader also follows each Run's event stream.",
+              "apostropheTurnedComma": "> The Furnace\u02bbs reader also follows each Run's event stream.",
+              "apostropheFullWidthGrave": "> The Furnace\uff40s reader also follows each Run's event stream.",
+              "apostropheArmenian": "> The Furnace\u055as reader also follows each Run's event stream.",
+              "quoteQuoteTable": "> > | Reader |\n> > | --- |\n> > | The external Furnace reader uses explicit bounded status/attempt/log-reference/event-stream polling. |",
+              "itemItemTable": "- a\n  - b\n\n    | Reader |\n    | --- |\n    | The external Furnace reader uses explicit bounded status/attempt/log-reference/event-stream polling. |",
+              "tableReference": "> | Reader |\n> | --- |\n> | Pi&shy;docs. |",
+              "tableControl": "> | Reader |\n> | --- |\n> | Pi&#1;docs. |",
+              "imageTitle": "![x](https://example.invalid/x.png \"The external Furnace reader uses explicit bounded status/attempt/log-reference/event-stream polling.\")",
+              "definitionTitle": "[ref]: https://example.invalid \"The external Furnace reader uses explicit bounded status/attempt/log-reference/event-stream polling.\""
+            },
+            "quiet": {
+              "paraphrase": true,
+              "confusable": true,
+              "quoteNestedTable": true,
+              "itemNestedTable": true,
+              "linkTitle": true,
+              "apostropheLetter": true,
+              "apostropheQuote": true,
+              "privateUse": true,
+              "unassigned": true,
+              "apostropheGrave": true,
+              "apostropheAcute": true,
+              "apostrophePrime": true,
+              "apostropheTurnedComma": true,
+              "apostropheFullWidthGrave": true,
+              "apostropheArmenian": true,
+              "quoteQuoteTable": true,
+              "itemItemTable": true,
+              "tableReference": true,
+              "tableControl": true,
+              "imageTitle": true,
+              "definitionTitle": true
+            },
+            "blockPinReds": {
+              "paraphrase": true,
+              "confusable": true,
+              "quoteNestedTable": true,
+              "itemNestedTable": true,
+              "linkTitle": true,
+              "apostropheLetter": true,
+              "apostropheQuote": true,
+              "privateUse": true,
+              "unassigned": true,
+              "apostropheGrave": true,
+              "apostropheAcute": true,
+              "apostrophePrime": true,
+              "apostropheTurnedComma": true,
+              "apostropheFullWidthGrave": true,
+              "apostropheArmenian": true,
+              "quoteQuoteTable": true,
+              "itemItemTable": true,
+              "tableReference": true,
+              "tableControl": true,
+              "imageTitle": true,
+              "definitionTitle": true
+            }
+          }
+        },
+        {
+          "id": "Q11",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-DOCS-ELSEWHERE",
+            "quiet": {
+              "otherSection": true,
+              "nextHeading": true
+            },
+            "readerAdapters": [
+              "Furnace: native Run status/event stream and possible descendant references."
+            ]
+          }
+        },
+        {
+          "id": "Q12",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-ALIASED-MODULE",
+            "plantReads": [],
+            "plantDeclares": [
+              "src/workbench/zz-observer-alias.ts: #furnace-observer-alias"
+            ],
+            "listedDeclarations": []
+          }
+        },
+        {
+          "id": "Q13",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-TYPE-TEMPLATE",
+            "readings": {
+              "typeTemplate": {
+                "text": "export type N = `x${string}Furnace\\u004fbserverBoundaryV0`;\n",
+                "forms": []
+              },
+              "valueTemplate": {
+                "text": "export const n = (a: string): string => `x${a}Furnace\\u004fbserverBoundaryV0`;\n",
+                "forms": [
+                  "cooked"
+                ]
+              },
+              "typeHead": {
+                "text": "export type N = `Furnace\\u004fbserverBoundaryV0${string}`;\n",
+                "forms": []
+              },
+              "typeMiddle": {
+                "text": "export type N = `x${string}Furnace\\u004fbserverBoundaryV0${string}y`;\n",
+                "forms": []
+              },
+              "typeParameter": {
+                "text": "export const n = (a: `x${string}Furnace\\u004fbserverBoundaryV0`): string => a;\n",
+                "forms": []
+              },
+              "typeNoSubstitution": {
+                "text": "export type N = `Furnace\\u004fbserverBoundaryV0`;\n",
+                "forms": [
+                  "cooked"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

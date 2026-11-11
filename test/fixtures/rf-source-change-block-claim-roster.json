@@ -4261,6 +4261,16 @@
        "intrawordStrike": 1,
        "intrawordHtml": 1,
        "intrawordLink": 1,
+       "intrawordHtmlQuoted": 1,
+       "intrawordHtmlSingleQuoted": 1,
+       "intrawordHtmlQuotedLt": 1,
+       "intrawordTagName": 1,
+       "intrawordClosingTagName": 1,
+       "intrawordProcessing": 1,
+       "intrawordDeclaration": 1,
+       "intrawordCdata": 1,
+       "intrawordEmptyComment": 1,
+       "intrawordEmptyCommentDash": 1,
        "zeroWidthReference": 1,
        "softHyphenReference": 1,
        "zeroWidthRaw": 1,
@@ -4285,12 +4295,21 @@
        "R-VOCABULARY": 0,
        "R-ENCODED": 0,
        "R-ENCODED-NAMED": 0,
-       "R-SPACED": 0
+       "R-SPACED": 0,
+       "R-HIDDEN-CONTENT": 0,
+       "R-SPLIT-MARKUP": 0,
+       "R-SHORTCUT-LINK": 0
       },
       "denial": 1,
       "foreign": {
        "letter": 1,
        "symbol": 1
+      },
+      "finding": {
+       "Each changed sou<span title=\"x>y\">rce</span> implies a changed block.": 1,
+       "sou<?pi?>rce": 1,
+       "sou<!x y>rce": 1,
+       "sou<![CDATA[]]>rce": 1
       }
      }
     }
@@ -4347,6 +4366,6 @@
   "C3:8",
   "C4:16",
   "D1:5",
-  "D2:7"
+  "D2:8"
  ]
 }

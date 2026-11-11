@@ -11,8 +11,8 @@
  * - G1 site census: every string token and identifier of every .ts file under src/, read through the TypeScript parser, is
  *   held to three markers (MARKERS), and every file that holds a site must be bound in GP_COST_BINDINGS. The table is
  *   empty, so today no file may hold one. The binary marker reads a word's command name: its last path segment under
- *   either separator, less an @<version> suffix and a .cmd or .exe launcher extension. The same reader finds the real rf and
- *   git spawns in src, so a silent gp reading is not a blind instrument.
+ *   either separator, less an @<version> suffix and a .cmd, .exe, .bat or .ps1 launcher extension (follow-up wb-vkdl, F5).
+ *   The same reader finds the real rf and git spawns in src, so a silent gp reading is not a blind instrument.
  * - G2 cost bindings: a binding names a registered case for each acceptance clause (a)-(d) of the bead (CLAUSES). An unbound
  *   site, a stale binding, an empty clause, an absent file or title, and a case or suite held by a HOLDS member (skip, todo,
  *   only, skipIf, runIf, fails; each falsified by its own binding row) each refuse. THE JUDGE LEG (follow-up wb-mqm6, PREP
@@ -24,22 +24,33 @@
  *   cite an evaluation receipt under docs/workbench/receipts/ that states every figure of FIGURES, or be such a receipt.
  *   Each line is read as written and as its reader sees it (readerText: marked's inline lexer, with emphasis, code span and
  *   link text kept and HTML dropped); a family claims the line when the subject and its pattern meet in one reading.
- * Anchor (standing rule 16, the CT5/CT6 kill; wb-mqm6 F1, F2, F4): the append-only receipt docs/workbench/receipts/
- * wb-1xvp.5.md. RECEIPT_HEADINGS pins its entry headings in order, so an entry inserted or removed anywhere is red. Its last
- * entry lists every clause, marker, claim family, figure, residual, hold, quiet row, claim-quiet row, binding case, judge
- * case and evidence case, and a digest of each fixture-bearing table's row content (TABLE_DIGESTS); the anchor row holds
- * this file to that listing line for line, so a member removed from every literal here, or a row's content swapped for
- * another passing row, is red against the receipt.
+ * Anchor (standing rule 16, the CT5/CT6 kill; wb-mqm6 F1, F2, F4; follow-up wb-vkdl, F1 and F2): the append-only receipt
+ * docs/workbench/receipts/wb-1xvp.5.md, read as written and as marked's block lexer reads it (the receipts-shape view).
+ * As written, its column-0 '## ' lines are RECEIPT_HEADINGS in order. As read, the headings the lexer finds
+ * (headingOutline: ATX or setext, at any level, indented up to three spaces, inside a block quote or a list item) are
+ * its title and RECEIPT_HEADINGS alone, and the lexer finds no HTML token in it, block or inline (htmlIn), so no heading
+ * or anchor line can hide in an HTML comment or element or be spelled as one. An entry heading inserted or removed
+ * anywhere is therefore red. Its last entry lists every clause, marker, claim family, figure, residual, hold, quiet row,
+ * claim-quiet row, binding case, judge case, evidence case and anchor form, and a digest of each fixture-bearing table's
+ * row content and of the case set (TABLE_DIGESTS); the anchor row holds this file to that listing line for line in both
+ * views, as the anchor lines written under the last entry heading and as the items the lexer reads in the last entry's
+ * lists (renderedListing), so a member removed from every literal here, or a row's content swapped for another passing
+ * row, is red against the receipt. Each reader is pinned on the heading, markup and listing forms it must and must not
+ * read (ANCHOR_FORMS).
+ * Each-liveness (wb-mqm6 F7; follow-up wb-vkdl): every case records its key at its last line, and the closing tally, the
+ * file's last case, reads vitest's own task tree: every case is set to run, the case count is the fixed cases plus every
+ * table row plus the tally, and every fixed case and every row of each it.each table reached its last line, in order.
  * Comments are prose, never sites: a doc comment that names GraphPolicyCLI is no call (the QUIET comment row).
  * Residuals, named, each pinned by a quiet row and by a paired control read through the same reader (RESIDUALS, readProbe):
- * R-RUNTIME, R-SCOPE, R-REPORT, R-LINE, R-FIGURES, R-LOCATOR, R-MARKUP. A residual's reading is data, so a hollowed reader
- * reds its control and a swapped input reds the residuals digest.
+ * R-RUNTIME, R-SCOPE, R-REPORT, R-LINE, R-FIGURES, R-LOCATOR, R-MARKUP, R-PHRASING, R-REQUIREMENT, R-LAUNCHER. A residual's
+ * reading is data, so a hollowed reader reds its control and a swapped input reds the residuals digest. R-REQUIREMENT names
+ * an over-read: its quiet row holds the claims the bottleneck family reads in requirement and question lines.
  */
 import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
-import { Lexer, type Token } from "marked";
+import { Lexer, type Token, type Tokens } from "marked";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
 
@@ -73,16 +84,17 @@ interface Site {
 /** The words of a string token, split on white space, shell operators, quotes and "=", so "cd x && gp rpc" yields gp. */
 const wordsOf = (text: string): string[] => text.split(/[\s;&|()<>`'"=]+/).filter((word) => word.length > 0);
 /**
- * A word's command name: its last path segment under either separator, less an @<version> suffix (npx gp@0.1.0) and a .cmd
- * or .exe launcher extension (gp.cmd, gp.exe). Every other extension stays, so gp.js names a module, never the binary.
+ * A word's command name: its last path segment under either separator, less an @<version> suffix (npx gp@0.1.0) and a .cmd,
+ * .exe, .bat or .ps1 launcher extension (gp.cmd, gp.exe, gp.bat, npm's PowerShell shim gp.ps1). Every other extension stays,
+ * so gp.js names a module, never the binary (R-LAUNCHER names the launchers that therefore read no site).
  */
 const commandName = (word: string): string =>
-  (word.split(/[\\/]/).pop() ?? "").replace(/@[^@]*$/, "").replace(/\.(?:cmd|exe)$/i, "");
+  (word.split(/[\\/]/).pop() ?? "").replace(/@[^@]*$/, "").replace(/\.(?:cmd|exe|bat|ps1)$/i, "");
 /** The binary marker: a word whose command name is the binary. */
 const namesBinary = (text: string, binary: string): boolean => wordsOf(text).some((word) => commandName(word) === binary);
-/** The producer's names in string text: the graph-policy-cli package, a graphpolicy.* envelope schema, GraphDataIR. */
+/** The producer's names in string text: the graph-policy-cli package, a graphpolicy.* envelope schema, GraphDataIR; graph and policy joined, hyphenated, snake-cased or spaced. */
 const NAMESPACE = /graph[-_ ]?policy|graphdatair/i;
-/** The same names as code identifiers: a client class, a binding, a type. */
+/** The same names as code identifiers, camel or snake case: a client class, a binding, a type. */
 const IDENTIFIER = /graph_?policy|graphdatair/i;
 
 const stringText = (node: ts.Node): string | undefined =>
@@ -139,7 +151,7 @@ const MARKERS: readonly Marker[] = [
   {
     id: "binary",
     matches:
-      "a word of a string token whose command name is gp: the bare name, a path ending in gp under either separator, a gp.cmd or gp.exe launcher, gp with an @ version suffix as npx spells it, an argv word, or a word of a shell line",
+      "a word of a string token whose command name is gp: the bare name, a path ending in gp under either separator, a gp.cmd, gp.exe, gp.bat or gp.ps1 launcher, gp with an @ version suffix as npx spells it, an argv word, an option value after =, or a word of a shell line",
     fixtures: [
       { id: "spawn", source: 'spawn("gp", ["rpc", "--stdio"], { stdio: ["pipe", "pipe", "pipe"] });', sites: ["binary:gp"] },
       { id: "path", source: 'execFileSync("/usr/local/bin/gp", ["--version"]);', sites: ["binary:/usr/local/bin/gp"] },
@@ -150,26 +162,33 @@ const MARKERS: readonly Marker[] = [
       { id: "windows-path", source: String.raw`execFileSync("C:\\tools\\gp", ["--version"]);`, sites: [String.raw`binary:C:\tools\gp`] },
       { id: "cmd-shim", source: 'spawn("gp.cmd", ["rpc", "--stdio"], { shell: true });', sites: ["binary:gp.cmd"] },
       { id: "exe", source: 'execFileSync("gp.exe", ["--version"]);', sites: ["binary:gp.exe"] },
+      { id: "bat", source: 'execFileSync("gp.bat", ["--version"]);', sites: ["binary:gp.bat"] },
+      { id: "ps1", source: 'spawn("pwsh", ["-File", "node_modules/.bin/gp.ps1"]);', sites: ["binary:node_modules/.bin/gp.ps1"] },
       { id: "npx-version", source: 'spawn("npx", ["gp@0.1.0", "graph", "check"]);', sites: ["binary:gp@0.1.0"] },
+      { id: "option-value", source: 'spawn("npx", ["--yes", "--bin=gp"]);', sites: ["binary:--bin=gp"] },
     ],
   },
   {
     id: "namespace",
-    matches: "a string token naming the producer: the graph-policy-cli package, a graphpolicy envelope schema such as graphpolicy.rpc.v1, or GraphDataIR",
+    matches:
+      "a string token naming the producer: the graph-policy-cli package, a graphpolicy envelope schema such as graphpolicy.rpc.v1, or GraphDataIR, with graph and policy joined, hyphenated, snake-cased or spaced",
     fixtures: [
       { id: "package", source: 'import { evaluate } from "graph-policy-cli";', sites: ["namespace:graph-policy-cli"] },
       { id: "schema", source: 'if (envelope.schema === "graphpolicy.rpc.v1") admit(envelope);', sites: ["namespace:graphpolicy.rpc.v1"] },
       { id: "dynamic-import", source: 'const sdk = await import("@graphpolicy/sdk");', sites: ["namespace:@graphpolicy/sdk"] },
       { id: "observation", source: 'const observation = { format: "GraphDataIR", nodes, edges };', sites: ["namespace:GraphDataIR"] },
+      { id: "snake", source: 'const schema = "graph_policy.rpc.v1";', sites: ["namespace:graph_policy.rpc.v1"] },
+      { id: "spaced", source: 'log("graph policy decision admitted");', sites: ["namespace:graph policy decision admitted"] },
     ],
   },
   {
     id: "identifier",
-    matches: "an identifier naming GraphPolicy or GraphDataIR, such as a client class, a binding or a type",
+    matches: "an identifier naming GraphPolicy, in camel or snake case, or GraphDataIR, such as a client class, a binding or a type",
     fixtures: [
       { id: "client", source: "const client = new GraphPolicyClient(session);", sites: ["identifier:GraphPolicyClient"] },
       { id: "binding", source: "const graphPolicy = load();", sites: ["identifier:graphPolicy"] },
       { id: "type", source: "function observe(document: GraphDataIR): void {}", sites: ["identifier:GraphDataIR"] },
+      { id: "snake-binding", source: "const graph_policy_client = connect();", sites: ["identifier:graph_policy_client"] },
     ],
   },
 ];
@@ -193,7 +212,7 @@ const QUIET: readonly QuietFixture[] = [
   },
   {
     id: "other-extensions",
-    why: "a module gp.js and a gpx.exe launcher name no gp binary, since only an @ version and a .cmd or .exe extension are dropped",
+    why: "a module gp.js and a gpx.exe launcher name no gp binary, since only an @ version and a .cmd, .exe, .bat or .ps1 extension are dropped",
     source: 'import { load } from "./gp.js";\nspawn("gpx.exe", []);',
     sites: [],
   },
@@ -521,6 +540,12 @@ const JUDGE_CASES: readonly JudgeCase[] = [
     findings: EVERY_CASE_UNJUDGED,
   },
   {
+    id: "a judge imported from a module that only extends the helper's name is no leg",
+    bindings: { [SITE_FILE]: FULL_BINDING },
+    census: [[LEG_FILE, LEG_SOURCE.replace("./helpers/census.js", "./helpers/census-extra.js")]],
+    findings: EVERY_CASE_UNJUDGED,
+  },
+  {
     id: "a leg that names another test file leaves every bound case unjudged",
     bindings: { [SITE_FILE]: FULL_BINDING },
     census: [[LEG_FILE, LEG_SOURCE.replace(`const FILE = "${PROOF_FILE}";`, 'const FILE = "test/workbench-other.test.ts";')]],
@@ -706,6 +731,9 @@ const DOCS_FILES = ["README.md", "CHANGELOG.md", ...filesUnder("docs").filter((f
 const DOCS_CLAIMS = DOCS_FILES.flatMap((file) => claimsIn(file, read(file)));
 
 const EVALUATION = "- gp decision latency over 400 recorded calls: p50 3.1 ms, p95 7.9 ms, p99 12.4 ms; inference 2.2 ms; instrumentation overhead 0.4 ms.";
+/** An evaluation whose p50 number sits `gap` non-digit characters after its label, either side of figureOf's forty-character bound. */
+const figureAt = (gap: number): string =>
+  `- gp decision latency: p50${" ".repeat(gap)}3.1 ms, p95 7.9 ms, p99 12.4 ms; inference 2.2 ms; instrumentation overhead 0.4 ms.\n`;
 /** An evaluation receipt, and one receipt per figure that states every other figure but that one. */
 const evidenceFiles = new Map([
   ["docs/workbench/receipts/wb-eval.md", `# wb-eval: an evaluation\n\n## 2026-11-01 receipt\n\n${EVALUATION}\n`],
@@ -714,6 +742,8 @@ const evidenceFiles = new Map([
   ["docs/workbench/receipts/wb-no-p99.md", "- p50 3.1 ms, p95 7.9 ms; inference 2.2 ms; instrumentation overhead 0.4 ms.\n"],
   ["docs/workbench/receipts/wb-no-inference.md", "- p50 3.1 ms, p95 7.9 ms, p99 12.4 ms; instrumentation overhead 0.4 ms.\n"],
   ["docs/workbench/receipts/wb-no-overhead.md", "- p50 3.1 ms, p95 7.9 ms, p99 12.4 ms; inference 2.2 ms.\n"],
+  ["docs/workbench/receipts/wb-near.1.md", figureAt(40)],
+  ["docs/workbench/receipts/wb-far.1.md", figureAt(41)],
 ]);
 interface EvidenceCase {
   readonly id: string;
@@ -731,6 +761,9 @@ const EVIDENCE_CASES: readonly EvidenceCase[] = [
   { id: "a receipt without the p99 figure is no evaluation receipt", file: "docs/workbench/x.md", text: "gp p95 7.9 ms (receipts/wb-no-p99.md).", findings: 1 },
   { id: "a receipt without the inference figure is no evaluation receipt", file: "docs/workbench/x.md", text: "gp p95 7.9 ms (receipts/wb-no-inference.md).", findings: 1 },
   { id: "a receipt without the instrumentation overhead figure is no evaluation receipt", file: "docs/workbench/x.md", text: "gp p95 7.9 ms (receipts/wb-no-overhead.md).", findings: 1 },
+  { id: "an evaluation outside docs/workbench/receipts/ is not its own evidence", file: "docs/workbench/x.md", text: EVALUATION, findings: 1 },
+  { id: "a figure forty non-digit characters after its label is stated", file: "docs/workbench/x.md", text: "gp adds no bottleneck (receipts/wb-near.1.md).", findings: 0 },
+  { id: "a figure forty-one non-digit characters after its label is not stated", file: "docs/workbench/x.md", text: "gp adds no bottleneck (receipts/wb-far.1.md).", findings: 1 },
 ];
 
 // ---- residuals, frozen shape and anchor -----------------------------------------------------------------------------
@@ -867,7 +900,168 @@ const RESIDUALS: readonly Residual[] = [
     control: { reader: "claims", text: "gp adds no **bottleneck**." },
     controlReads: ["bottleneck"],
   },
+  {
+    id: "R-PHRASING",
+    blindSpot:
+      "a bottleneck denial phrased outside the bottleneck family's grammar, such as bottleneck-free, hardly a bottleneck, far from a bottleneck or does not constitute a bottleneck, or split across a line break, reads no claim",
+    probe: {
+      reader: "claims",
+      text: [
+        "gp is bottleneck-free.",
+        "gp isn't really a bottleneck.",
+        "gp is hardly a bottleneck.",
+        "gp never creates a bottleneck.",
+        "gp does not bottleneck the dispatch loop.",
+        "gp won't bottleneck the dispatch loop.",
+        "gp adds zero bottlenecks.",
+        "gp adds no new decision-loop latency bottleneck.",
+        "gp is not, in practice, a bottleneck.",
+        "gp is not a very significant bottleneck.",
+        "gp will not become any bottleneck.",
+        "gp is far from a bottleneck.",
+        "gp adds no bottle-neck.",
+        "gp does not constitute a bottleneck.",
+        "Bottlenecks from gp: none.",
+        "gp adds no",
+        "bottleneck.",
+        "gp is not a",
+        "bottleneck.",
+      ].join("\n"),
+    },
+    quiet: [],
+    control: { reader: "claims", text: "gp adds no bottleneck." },
+    controlReads: ["bottleneck"],
+  },
+  {
+    id: "R-REQUIREMENT",
+    blindSpot:
+      "a requirement, a question or an open doubt spelled in the bottleneck family's grammar beside the subject, such as must not be a bottleneck, is it not a bottleneck? or whether it is not a bottleneck, reads as a denial, so a docs line that restates the program directive in that form cites an evaluation receipt or is reworded",
+    probe: {
+      reader: "claims",
+      text: [
+        "gp must not be a bottleneck.",
+        "GraphPolicyCLI inference must not be a new bottleneck.",
+        "The program requires that gp never be a bottleneck.",
+        "Is gp not a bottleneck? The evaluation decides.",
+        "Whether gp is not a bottleneck is unmeasured.",
+      ].join("\n"),
+    },
+    quiet: ["bottleneck", "bottleneck", "bottleneck", "bottleneck", "bottleneck"],
+    control: { reader: "claims", text: "A gp call must not create a bottleneck in the dispatch loop." },
+    controlReads: [],
+  },
+  {
+    id: "R-LAUNCHER",
+    blindSpot:
+      "a launcher spelled with another extension, such as gp.com, gp.sh or gp.vbs, names no gp binary, since only an @ version and a .cmd, .exe, .bat or .ps1 extension are dropped",
+    probe: { reader: "sites", source: 'spawn("gp.com", []);\nspawn("gp.sh", []);\nspawn("gp.vbs", []);' },
+    quiet: [],
+    control: { reader: "sites", source: 'spawn("gp.bat", []);' },
+    controlReads: ["binary:gp.bat"],
+  },
 ];
+
+// ---- the anchor readers and their forms (wb-vkdl F1, F2) -------------------------------------------------------------
+
+const isHeading = (token: Token): token is Tokens.Heading => token.type === "heading";
+const isList = (token: Token): token is Tokens.List => token.type === "list";
+const isTable = (token: Token): token is Tokens.Table => token.type === "table";
+/** Every token marked's lexer reads in a markdown text, block and inline, depth first: list items and table cells included. */
+function tokensOf(markdown: string): Token[] {
+  const found: Token[] = [];
+  const walk = (tokens: readonly Token[]): void => {
+    for (const token of tokens) {
+      found.push(token);
+      if (isList(token)) walk(token.items);
+      else if (isTable(token)) walk([...token.header, ...token.rows.flat()].flatMap((cell) => cell.tokens));
+      else if ("tokens" in token && token.tokens !== undefined) walk(token.tokens);
+    }
+  };
+  walk(new Lexer({ gfm: true }).lex(markdown));
+  return found;
+}
+/** Every heading the lexer reads, as its hashes and text: ATX or setext, at any level, indented, in a block quote or a list item. */
+const headingOutline = (markdown: string): string[] => tokensOf(markdown).filter(isHeading).map((token) => `${"#".repeat(token.depth)} ${token.text}`);
+/** The raw text of every HTML token the lexer reads, block or inline: a comment, a tag or an element, wherever it sits. */
+const htmlIn = (markdown: string): string[] =>
+  tokensOf(markdown)
+    .filter((token) => token.type === "html")
+    .map((token) => token.raw);
+/** The anchor lines of the last entry as rendered: each item of a top-level list after the last top-level heading, as `- <its text>`. */
+function renderedListing(markdown: string): string[] {
+  const blocks = new Lexer({ gfm: true }).lex(markdown);
+  let last = -1;
+  blocks.forEach((token, index) => {
+    if (isHeading(token)) last = index;
+  });
+  return blocks
+    .slice(last + 1)
+    .filter(isList)
+    .flatMap((list) => list.items.map((item) => `- ${item.text.trimEnd()}`))
+    .filter((line) => ANCHOR_LINE.test(line));
+}
+type AnchorReader = "outline" | "html" | "listing";
+const readAnchor = (reader: AnchorReader, text: string): string[] =>
+  reader === "outline" ? headingOutline(text) : reader === "html" ? htmlIn(text) : renderedListing(text);
+interface AnchorForm {
+  readonly id: string;
+  readonly reader: AnchorReader;
+  /** What the form shows a reader: the text of its anchor line in the receipt. */
+  readonly why: string;
+  readonly text: string;
+  readonly reads: readonly string[];
+}
+/** The forms each anchor reader must and must not read (the heading, markup and listing views of the receipt). */
+const ANCHOR_FORMS: readonly AnchorForm[] = [
+  { id: "atx", reader: "outline", why: "an ATX heading is a heading", text: "## 2026-10-25 receipt: x", reads: ["## 2026-10-25 receipt: x"] },
+  { id: "setext", reader: "outline", why: "a line underlined with hyphens is a level-2 heading", text: "2026-10-25 receipt: x\n---", reads: ["## 2026-10-25 receipt: x"] },
+  { id: "setext-level-1", reader: "outline", why: "a line underlined with equals signs is a level-1 heading", text: "Appendix\n===", reads: ["# Appendix"] },
+  { id: "indented", reader: "outline", why: "an ATX heading indented up to three spaces is a heading", text: "   ## 2026-10-25 receipt: x", reads: ["## 2026-10-25 receipt: x"] },
+  { id: "tab", reader: "outline", why: "an ATX heading whose hashes a tab follows is a heading", text: "##\t2026-10-25 receipt: x", reads: ["## 2026-10-25 receipt: x"] },
+  { id: "deeper", reader: "outline", why: "a level-3 heading is a heading", text: "### 2026-10-25 receipt: x", reads: ["### 2026-10-25 receipt: x"] },
+  { id: "closed", reader: "outline", why: "a closing run of hashes is no part of the heading text", text: "## 2026-10-25 receipt: x ##", reads: ["## 2026-10-25 receipt: x"] },
+  { id: "quoted", reader: "outline", why: "a heading inside a block quote is a heading", text: "> ## 2026-10-25 receipt: x", reads: ["## 2026-10-25 receipt: x"] },
+  { id: "list-item", reader: "outline", why: "a heading inside a list item is a heading", text: "- ## 2026-10-25 receipt: x", reads: ["## 2026-10-25 receipt: x"] },
+  { id: "fenced", reader: "outline", why: "a heading line inside a code fence is code", text: "```\n## 2026-10-25 receipt: x\n```", reads: [] },
+  { id: "indented-code", reader: "outline", why: "a heading line indented four spaces is code", text: "    ## 2026-10-25 receipt: x", reads: [] },
+  { id: "escaped", reader: "outline", why: "an escaped hash opens no heading", text: "\\## 2026-10-25 receipt: x", reads: [] },
+  { id: "no-space", reader: "outline", why: "hashes with no space or tab after them open no heading", text: "##2026-10-25 receipt: x", reads: [] },
+  { id: "commented", reader: "outline", why: "a heading line inside an HTML comment is markup, which the html reader reads", text: "<!--\n## 2026-10-25 receipt: x\n-->", reads: [] },
+  { id: "comment", reader: "html", why: "an HTML comment is markup", text: "<!--\n- Clause a: one.\n-->", reads: ["<!--\n- Clause a: one.\n-->"] },
+  { id: "element", reader: "html", why: "an HTML heading element is markup", text: "<h2>2026-10-25 receipt: x</h2>", reads: ["<h2>2026-10-25 receipt: x</h2>"] },
+  { id: "inline", reader: "html", why: "an inline tag is markup", text: "A note <span hidden>x</span> inline.", reads: ["<span hidden>", "</span>"] },
+  { id: "in-item", reader: "html", why: "a comment inside a list item is markup", text: "- Clause a: one <!-- x --> two.", reads: ["<!-- x -->"] },
+  { id: "in-cell", reader: "html", why: "a tag inside a table cell is markup", text: "| a |\n| - |\n| <b>x</b> |", reads: ["<b>", "</b>"] },
+  { id: "code-span", reader: "html", why: "a tag inside a code span and a less-than sign in prose are no markup", text: "The tag `<h2>` and 1 < 2.", reads: [] },
+  { id: "listing", reader: "listing", why: "the anchor lines are the items of the last entry's lists", text: "## a\n\n- Clause a: one.\n- Clause b: two.", reads: ["- Clause a: one.", "- Clause b: two."] },
+  { id: "last-entry", reader: "listing", why: "only the last entry's items are read", text: "## a\n\n- Clause a: one.\n\n## b\n\n- Clause b: two.", reads: ["- Clause b: two."] },
+  { id: "loose", reader: "listing", why: "an item of a loose list is read without the line break before the next item", text: "## a\n\n- Clause a: one.\n\n- Clause b: two.\n\n- A note.", reads: ["- Clause a: one.", "- Clause b: two."] },
+  { id: "fenced-listing", reader: "listing", why: "an anchor line inside a code fence is no item", text: "## a\n\n```\n- Clause a: one.\n```", reads: [] },
+  { id: "quoted-listing", reader: "listing", why: "an anchor line inside a block quote is no item of the entry's lists", text: "## a\n\n> - Clause a: one.", reads: [] },
+  { id: "nested-listing", reader: "listing", why: "an anchor line nested under another item is no item of its own", text: "## a\n\n- Anchor listing.\n  - Clause a: one.", reads: [] },
+];
+
+// ---- each-liveness: the case set the closing tally holds (wb-mqm6 F7, wb-vkdl) ------------------------------------------
+
+/** The key each fixed case records at its last line, in registration order (the tally is the file's last case). */
+const FIXED_CASES = ["G1", "G1 control", "G1 positivity", "G2 judge leg", "G2 judge leg control", "G3", "G3 control", "frozen shape", "anchor"] as const;
+/** Each it.each table, by the key its cases record under, with the key each of its rows records. */
+const EACH_TABLES: readonly (readonly [string, readonly string[]])[] = [
+  ["markers", MARKER_ROWS.map((row) => `${row.marker}/${row.id}`)],
+  ["quiet", QUIET.map((row) => row.id)],
+  ["binding cases", BINDING_CASES.map((row) => row.id)],
+  ["judge cases", JUDGE_CASES.map((row) => row.id)],
+  ["claims", CLAIM_ROWS.map((row) => `${row.family}/${row.id}`)],
+  ["claim quiet", CLAIM_QUIET.map((row) => row.id)],
+  ["evidence cases", EVIDENCE_CASES.map((row) => row.id)],
+  ["residuals", RESIDUALS.map((row) => row.id)],
+  ["anchor forms", ANCHOR_FORMS.map((row) => row.id)],
+];
+/** What this run's cases did: each case records its key at its last line, so a case cut short, sliced off or never run is missing. */
+const REACHED = new Map<string, string[]>();
+const reached = (table: string, key: string): void => {
+  REACHED.set(table, [...(REACHED.get(table) ?? []), key]);
+};
 
 /** The digest of each fixture-bearing table's row content (F2): a row swapped for another passing row is red against the receipt. */
 const TABLE_DIGESTS: readonly (readonly [string, string])[] = [
@@ -879,12 +1073,15 @@ const TABLE_DIGESTS: readonly (readonly [string, string])[] = [
   ["judge-leg", digestOf({ leg: LEG_SOURCE, cases: JUDGE_CASES })],
   ["evidence", digestOf({ files: [...evidenceFiles], cases: EVIDENCE_CASES })],
   ["residuals", digestOf(RESIDUALS)],
+  ["anchor-forms", digestOf(ANCHOR_FORMS)],
+  ["cases", digestOf({ fixed: FIXED_CASES, tables: EACH_TABLES.map(([table]) => table) })],
 ];
 
-/** The receipt's entry headings in order (wb-mqm6 F4): an entry inserted or removed anywhere is red, and the last carries the listing. */
+/** The receipt's entry headings in order (wb-mqm6 F4, wb-vkdl F1): an entry inserted or removed anywhere is red in either view, and the last carries the listing. */
 const RECEIPT_HEADINGS = [
   "## 2026-10-22 receipt: the gp decision-cost guard pins today's absence and refuses an unbound gp site (base 0b2a80f)",
   "## 2026-10-23 receipt: the follow-up wb-mqm6 anchors every table and its row content outside the guard",
+  "## 2026-10-25 receipt: the follow-up wb-vkdl reads this file's headings, markup and listing as a reader sees them",
 ] as const;
 /** The listing the receipt's last entry must equal, line for line: one plain-text line per member, then the table digests. */
 const LISTING: readonly string[] = [
@@ -899,11 +1096,12 @@ const LISTING: readonly string[] = [
   ...BINDING_CASES.map((row, index) => `- Binding case ${index + 1}: ${row.id}.`),
   ...JUDGE_CASES.map((row, index) => `- Judge case ${index + 1}: ${row.id}.`),
   ...EVIDENCE_CASES.map((row, index) => `- Evidence case ${index + 1}: ${row.id}.`),
+  ...ANCHOR_FORMS.map((row) => `- Anchor form ${row.id}: ${row.why}.`),
   ...TABLE_DIGESTS.map(([table, digest]) => `- Digest ${table}: ${digest}.`),
 ];
 /** One anchor line of a receipt entry: `- <kind> <id>: <text>.`, plain text with no inline markup. */
 const ANCHOR_LINE =
-  /^- (Clause|Marker|Claim family|Claim quiet|Figure|Residual|Hold|Quiet|Binding case|Judge case|Evidence case|Digest) ([A-Za-z0-9-]+): (.+)\.$/;
+  /^- (Clause|Marker|Claim family|Claim quiet|Figure|Residual|Hold|Quiet|Binding case|Judge case|Evidence case|Anchor form|Digest) ([A-Za-z0-9-]+): (.+)\.$/;
 /** The anchor lines of the entry under one heading, up to the next entry heading. */
 function entryListing(markdown: string, heading: string): string[] {
   const lines = markdown.split("\n");
@@ -918,16 +1116,19 @@ describe("wb-1xvp.5 G1: a gp site in src lands only bound to its cost evidence",
     expect(SRC_FILES.length).toBeGreaterThan(0);
     expect(GP_COST_BINDINGS).toStrictEqual({});
     expect(bindingFindings(srcSites(), GP_COST_BINDINGS, readIfPresent)).toEqual([]);
+    reached("cases", "G1");
   });
 
   it("G1 control: the same reader finds the real CLI spawns in src (rf in providers/reactivefiber.ts, git in index.ts), so a silent gp reading is not a blind one", () => {
     const filesOf = (binary: string): string[] => [...new Set(srcSites(binary).filter((site) => site.marker === "binary").map((site) => site.file))];
     expect(filesOf("rf")).toContain("src/workbench/providers/reactivefiber.ts");
     expect(filesOf("git")).toContain("src/index.ts");
+    reached("cases", "G1 control");
   });
 
   it.each(MARKER_ROWS)("G1 marker $marker, fixture $id: the snippet reads its sites", (row) => {
     expect(siteKeys(sitesIn(SITE_FILE, row.source))).toEqual(row.sites);
+    reached("markers", `${row.marker}/${row.id}`);
   });
 
   it("G1: every fixture of a marker reads at least one site, and only sites of that marker", () => {
@@ -938,10 +1139,12 @@ describe("wb-1xvp.5 G1: a gp site in src lands only bound to its cost evidence",
         expect(found.filter((site) => site.marker !== marker.id), `${marker.id}/${fixture.id}`).toEqual([]);
       }
     }
+    reached("cases", "G1 positivity");
   });
 
   it.each(QUIET)("G1 quiet $id: the snippet reads no site", (row) => {
     expect(siteKeys(sitesIn(SITE_FILE, row.source))).toEqual(row.sites);
+    reached("quiet", row.id);
   });
 });
 
@@ -952,10 +1155,12 @@ describe("wb-1xvp.5 G2: a binding names a registered case for each clause", () =
     row.findings.forEach((expected, index) => {
       expect(findings[index]).toContain(expected);
     });
+    reached("binding cases", row.id);
   });
 
   it("G2 judge leg: every bound case is named by a census-tier leg that imports judge from test/helpers/census.ts, and the table is empty, so none is owed today", () => {
     expect(judgeLegFindings(GP_COST_BINDINGS, censusTier(GP_COST_BINDINGS))).toEqual([]);
+    reached("cases", "G2 judge leg");
   });
 
   it("G2 judge leg control: a binding reads every census-tier file of the tree, an empty table reads none, and the reader finds a real leg importing judge", () => {
@@ -964,6 +1169,7 @@ describe("wb-1xvp.5 G2: a binding names a registered case for each clause", () =
     expect(tier.size).toBeGreaterThan(0);
     expect(censusTier({}).size).toBe(0);
     expect([...tier].some(([file, source]) => importsJudge(file, source))).toBe(true);
+    reached("cases", "G2 judge leg control");
   });
 
   it.each(JUDGE_CASES)("G2 judge leg: $id", (row) => {
@@ -972,6 +1178,7 @@ describe("wb-1xvp.5 G2: a binding names a registered case for each clause", () =
     row.findings.forEach((expected, index) => {
       expect(findings[index]).toContain(expected);
     });
+    reached("judge cases", row.id);
   });
 });
 
@@ -980,6 +1187,7 @@ describe("wb-1xvp.5 G3: no docs line claims gp decision cost without an evaluati
     expect(DOCS_FILES).toEqual(expect.arrayContaining(["README.md", "CHANGELOG.md", "docs/workbench/07-native-integrations.md", RECEIPT]));
     expect(claimFindings(DOCS_CLAIMS, readIfPresent)).toEqual([]);
     expect(isEvaluationReceipt(read(RECEIPT))).toBe(false);
+    reached("cases", "G3");
   });
 
   it("G3 control: the claim families read real docs (the docs/10 navigation p95 figure is a percentile line, and it names no gp)", () => {
@@ -989,14 +1197,17 @@ describe("wb-1xvp.5 G3: no docs line claims gp decision cost without an evaluati
       .filter((line) => percentile.test(line));
     expect(lines.length).toBeGreaterThan(0);
     expect(lines.filter((line) => SUBJECT.test(line))).toEqual([]);
+    reached("cases", "G3 control");
   });
 
   it.each(CLAIM_ROWS)("G3 family $family, fixture $id: the line reads one claim of its family", (row) => {
     expect(claimsIn("docs/workbench/x.md", row.line).map((claim) => claim.family)).toEqual([row.family]);
+    reached("claims", `${row.family}/${row.id}`);
   });
 
   it.each(CLAIM_QUIET)("G3 quiet $id: the line reads no claim", (row) => {
     expect(claimsIn("docs/workbench/x.md", row.line)).toEqual([]);
+    reached("claim quiet", row.id);
   });
 
   it.each(EVIDENCE_CASES)("G3 evidence: $id", (row) => {
@@ -1004,6 +1215,7 @@ describe("wb-1xvp.5 G3: no docs line claims gp decision cost without an evaluati
     const claims = claimsIn(row.file, row.text);
     expect(claims.length).toBeGreaterThan(0);
     expect(claimFindings(claims, (file) => files.get(file))).toHaveLength(row.findings);
+    reached("evidence cases", row.id);
   });
 });
 
@@ -1021,6 +1233,9 @@ describe("wb-1xvp.5 shape: frozen tables, the receipt anchor and the named resid
       `binding cases: ${BINDING_CASES.length}`,
       `judge cases: ${JUDGE_CASES.length}`,
       `evidence cases: ${EVIDENCE_CASES.length}`,
+      `anchor forms: ${ANCHOR_FORMS.map((row) => `${row.reader}/${row.id}`).join(",")}`,
+      `fixed cases: ${FIXED_CASES.join(",")}`,
+      `each tables: ${EACH_TABLES.map(([table, keys]) => `${table} ${keys.length}`).join(",")}`,
       `receipt entries: ${RECEIPT_HEADINGS.length}`,
       ...TABLE_DIGESTS.map(([table, digest]) => `digest ${table}: ${digest}`),
     ]).toEqual([
@@ -1028,9 +1243,9 @@ describe("wb-1xvp.5 shape: frozen tables, the receipt anchor and the named resid
       "clause b: 188",
       "clause c: 158",
       "clause d: 121",
-      "marker binary: spawn,path,argv-word,shell-line,shell-operator,constant,windows-path,cmd-shim,exe,npx-version",
-      "marker namespace: package,schema,dynamic-import,observation",
-      "marker identifier: client,binding,type",
+      "marker binary: spawn,path,argv-word,shell-line,shell-operator,constant,windows-path,cmd-shim,exe,bat,ps1,npx-version,option-value",
+      "marker namespace: package,schema,dynamic-import,observation,snake,spaced",
+      "marker identifier: client,binding,type,snake-binding",
       "family bottleneck: denied,not-a,isnt-a,not-the,never-the,bold,code,no-longer,measurable,significant,become,hyphen,snake-subject,cannot,nor,without,becomes,an,plural,html,nested,link",
       "family percentile: figure,colon",
       "family negligible: negligible,low-overhead",
@@ -1046,34 +1261,82 @@ describe("wb-1xvp.5 shape: frozen tables, the receipt anchor and the named resid
       "residual R-FIGURES",
       "residual R-LOCATOR",
       "residual R-MARKUP",
+      "residual R-PHRASING",
+      "residual R-REQUIREMENT",
+      "residual R-LAUNCHER",
       "holds: skip,todo,only,skipIf,runIf,fails",
       "quiet: general-purpose,other-binaries,word-parts,comment,other-extensions",
       "claim quiet: no-subject,no-claim,directive,requirement,must-not,affirmed",
       "binding cases: 13",
-      "judge cases: 11",
-      "evidence cases: 9",
-      "receipt entries: 2",
-      "digest markers: cfc55906d15a592b",
-      "digest quiet: f392056f43631231",
+      "judge cases: 12",
+      "evidence cases: 12",
+      "anchor forms: outline/atx,outline/setext,outline/setext-level-1,outline/indented,outline/tab,outline/deeper,outline/closed,outline/quoted,outline/list-item,outline/fenced,outline/indented-code,outline/escaped,outline/no-space,outline/commented,html/comment,html/element,html/inline,html/in-item,html/in-cell,html/code-span,listing/listing,listing/last-entry,listing/loose,listing/fenced-listing,listing/quoted-listing,listing/nested-listing",
+      "fixed cases: G1,G1 control,G1 positivity,G2 judge leg,G2 judge leg control,G3,G3 control,frozen shape,anchor",
+      "each tables: markers 23,quiet 5,binding cases 13,judge cases 12,claims 26,claim quiet 6,evidence cases 12,residuals 10,anchor forms 26",
+      "receipt entries: 3",
+      "digest markers: bf92133bc7692fa5",
+      "digest quiet: 732a250aaadc1d38",
       "digest claim-families: 1961edbb21232d43",
       "digest claim-quiet: 028f12f1bc249cb3",
       "digest bindings: cf1cbc40e31a2ff3",
-      "digest judge-leg: d99b1576692f9ffc",
-      "digest evidence: 7c95de466e169be5",
-      "digest residuals: c92d453bebe0aa85",
+      "digest judge-leg: dbf9e32a755d1561",
+      "digest evidence: 60c6bdaf4d5cc010",
+      "digest residuals: db318dd8533075ed",
+      "digest anchor-forms: ea39792e4a930690",
+      "digest cases: 7c322f40f66b408d",
     ]);
+    reached("cases", "frozen shape");
   });
 
-  it("anchor (standing rule 16, CT5/CT6; wb-mqm6 F4): the receipt's entry headings are RECEIPT_HEADINGS, and its last entry lists the tables and digests line for line", () => {
+  it("anchor (standing rule 16, CT5/CT6; wb-mqm6 F4; wb-vkdl F1, F2): the receipt's entry headings are RECEIPT_HEADINGS as written and as read, it holds no markup, and its last entry lists the tables and digests line for line in both views", () => {
     const markdown = read(RECEIPT);
-    expect(markdown.split("\n")[0]).toMatch(/^# wb-1xvp\.5: \[RF-GRAPH-POLICY-MACHINE-CONTROL-R4\] /);
+    const title = markdown.split("\n")[0];
+    expect(title).toMatch(/^# wb-1xvp\.5: \[RF-GRAPH-POLICY-MACHINE-CONTROL-R4\] /);
     expect(markdown.split("\n").filter((line) => line.startsWith("## "))).toEqual([...RECEIPT_HEADINGS]);
+    expect(headingOutline(markdown), "every heading the lexer reads").toEqual([title, ...RECEIPT_HEADINGS]);
+    expect(htmlIn(markdown), "every HTML token the lexer reads").toEqual([]);
     expect(entryListing(markdown, RECEIPT_HEADINGS[RECEIPT_HEADINGS.length - 1])).toEqual(LISTING);
+    expect(renderedListing(markdown), "the last entry's list items").toEqual(LISTING);
+    reached("cases", "anchor");
   });
 
   it.each(RESIDUALS)("residual $id is named, its quiet row holds, and its paired control reads what the blind spot hides", (residual) => {
     expect(readProbe(residual.probe)).toEqual(residual.quiet);
     expect(readProbe(residual.control)).toEqual(residual.controlReads);
     expect(residual.controlReads).not.toEqual(residual.quiet);
+    reached("residuals", residual.id);
+  });
+
+  it.each(ANCHOR_FORMS)("anchor form $id: the $reader reader reads what a reader of the rendered receipt sees", (row) => {
+    expect(readAnchor(row.reader, row.text)).toEqual(row.reads);
+    reached("anchor forms", row.id);
+  });
+});
+
+/** One node of vitest's task tree, as far as the tally reads it. */
+interface TaskNode {
+  readonly type: string;
+  readonly name: string;
+  readonly mode?: string;
+  readonly tasks?: readonly TaskNode[];
+}
+/** Every case vitest registered in this file, in registration order, with its run mode, read from the runner's own task tree. */
+const registeredCases = (tasks: readonly TaskNode[]): { readonly name: string; readonly mode: string | undefined }[] =>
+  tasks.flatMap((child) => (child.type === "test" ? [{ name: child.name, mode: child.mode }] : child.type === "suite" ? registeredCases(child.tasks ?? []) : []));
+const TALLY_TITLE =
+  "closing tally (wb-mqm6 F7, wb-vkdl): every case is set to run, the case count is the fixed cases plus every table row plus this tally, every case reached its last line in order, and this tally is the file's last case";
+
+describe("wb-1xvp.5 each-liveness: the closing tally", () => {
+  it(TALLY_TITLE, ({ task }) => {
+    const cases = registeredCases(task.file.tasks);
+    expect(
+      cases.filter((entry) => entry.mode !== "run").map((entry) => entry.name),
+      "cases of this file not set to run",
+    ).toEqual([]);
+    expect(cases.map((entry) => entry.name)[cases.length - 1], "the file's last case").toBe(TALLY_TITLE);
+    expect(cases, "the file's case count").toHaveLength(FIXED_CASES.length + EACH_TABLES.reduce((count, [, keys]) => count + keys.length, 0) + 1);
+    expect(Object.fromEntries(REACHED), "the key every case recorded at its last line").toEqual(
+      Object.fromEntries([["cases", [...FIXED_CASES]], ...EACH_TABLES.map(([table, keys]) => [table, [...keys]] as const)]),
+    );
   });
 });

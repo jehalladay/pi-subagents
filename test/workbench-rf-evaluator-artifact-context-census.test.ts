@@ -33,8 +33,14 @@
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label):
  *  A, acceptance (a). A1 the invoke-reference roster and its classes (every `invoke` member reference of src, called or not,
- *    by property access or string-literal element access, each form with a positive control, over a walk covering every src file
- *    git lists, a narrowed walk read as not covering), and the observer's 0 src callers. A2 capability_invoke over the
+ *    by property access, string-literal element access, a destructuring key (a binding pattern, or an assignment pattern on the
+ *    left of "=" or in a for-of or for-in head, at any depth: through object property values, array elements, array rest
+ *    elements and defaults; keyed by a name, a string literal or a computed string literal) or a call handing the literal
+ *    "invoke" as its second or later argument (Reflect.get, Object.getOwnPropertyDescriptor; conservative: any such call reads
+ *    as a reference), each literal read through the wrappers that keep its value (parentheses, as, satisfies, a type assertion
+ *    and a non-null assertion), each form with a positive control and the non-reference shapes with quiet controls, the roster
+ *    holding every control's input digest, over a walk covering every src file git lists, a narrowed walk read as not
+ *    covering), and the observer's 0 src callers. A2 capability_invoke over the
  *    native registration and a stand-in rf: the reply is Pi's frame (kind, contract, workspaceRoot, isError) plus the envelope
  *    the stand-in printed, verbatim, at value.source; the frame carries no planted string and is identical with or without the
  *    artifacts. A3 workflow_reconcile evidence: the snapshot quotes the envelope verbatim, the receipt names producer
@@ -57,21 +63,67 @@
  *    exercised by a constructed descriptor that names rf that way alone), the native id set is pinned whole (a new native
  *    capability of any producer reds here until it is classified), and no descriptor spells the receipt vocabulary. C3 no src
  *    file spells it (floor, anchor and a walk covering every src file git lists). C4 src launches the rf binary from one site, the
- *    preview's spawn: every string literal naming rf is found (conservative: an rf-led prose literal reads as a site too), with
- *    positive and quiet controls.
- *  M, the matcher rows C2 and C3 read: M1-M14 the spellings they must catch (words joined directly or by whitespace, "_", ".",
- *    "-", ":" or "/"; a JS source escape is read as the character it spells first); Q1-Q4 the pinned quiet rows of the residuals.
+ *    preview's spawn: every literal part (a string, a no-substitution template, and each head, middle and tail span of a
+ *    template, a template part read both cooked and raw so a String.raw path counts) is found that names the binary as its
+ *    leading word: rf, or a path whose final segment (after the last "/" or "\") is rf, optionally as rf.exe or rf.cmd, ended by
+ *    whitespace, a quote, a backquote, a closing brace, a shell operator (; & | ) < >) or the part's end, either bare or inside
+ *    one pair of single or double quotes that may hold whitespace (a quoted word in any case); that holds such a path anywhere,
+ *    its final segment ended the same way, in any case (a path holding whitespace, quoted, escaped or not, closing a quote an
+ *    earlier span opened, closing a command substitution or a parameter expansion, or after another word); or that is one token
+ *    (a bare name or a path, never prose) naming it in any case (conservative: an rf-led prose part, or a prose part naming an rf
+ *    path, reads as a site too, and so does a word the shell continues past a backquote or a closing brace), with positive and
+ *    quiet controls whose input digests the roster holds.
+ *  M, the matcher rows C2 and C3 read: M1-M20 the spellings they must catch (words joined directly or by whitespace, "_", ".",
+ *    "-", ":" or "/"; every JS string escape is read as what it spells first, left to right: a unicode escape (four hex digits,
+ *    or braced with any number of hex digits up to U+10FFFF), a hex or a legacy octal escape as its character, a
+ *    single-character escape such as backslash-t as its control character, an identity escape such as backslash-underscore as
+ *    the character escaped, and a line continuation as nothing); Q1-Q4 the pinned quiet rows of the residuals.
+ *  S, the scan residual rows: Q5-Q11 the pinned quiet rows of the named residuals of A1's invoke scan and C4's launch scan.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the judged set (every row's id, label and
- * pins, every pin's witness, the vocabularies and the producer fixture facts) is held to the out-of-file roster
+ * pins, every pin's witness, the input digest of every A1, C2 and C4 control, the vocabularies and the producer fixture facts)
+ * is held to the out-of-file roster
  * test/fixtures/rf-evaluator-artifact-context-roster.json, so a pin deleted, relabelled, swapped for another passing case or
  * removed from every literal here at once still reds against it, and every witness is measured by its own case.
  * RESIDUALS (named, each with a pinned quiet row): R-INTERRUPTED a vocabulary spelling split by a zero-width code point (Q1) or
  * carrying a homoglyph letter (Q2) is not caught by C3; R-COMPOSED a token assembled at runtime from parts is invisible to any
- * text scan (Q3), and C2 is the runtime backstop for served descriptor text only; R-SPLIT a separator inside one word of a term
- * (sub_processes_spawned, Q4) is not caught: a matcher admitting a separator between any two letters reads the landed observer
- * text "view_contract s(atisfied)" in src as view_contracts (measured at the wb-e9j2 cut), so the split stays a named residual.
+ * text scan: a receipt term (Q3; C2 is the runtime backstop for served descriptor text only), an invoke key (Q6, A1's scan) or
+ * the rf binary's name (Q9, C4's scan); R-SPLIT a separator inside one word of a term (sub_processes_spawned, Q4) is not caught:
+ * a matcher admitting a separator between any two letters reads the landed observer text "view_contract s(atisfied)" in src as
+ * view_contracts (measured at the wb-e9j2 cut), so the split stays a named residual. R-KEYED an invoke member reached through a
+ * key A1 does not read at the access: held in a variable or a parameter (Q5), or computed by an expression that is not a
+ * literal, such as a comma, a conditional or a call (Q10): reading every "invoke" literal as a key would read the twenty landed
+ * capability-mode literals of eight src files (the supportedModes values, the mode unions, the mode tests,
+ * dispatch("invoke", ...)) as sites. R-EMBEDDED rf launched by its bare name after another word of a literal part, a shell line
+ * such as "cd /w && rf context render" or "npx rf ..." (Q7; an rf path after another word is read by its final segment):
+ * reading rf as any delimited word reads the two landed rf-word messages of src/workbench/reactivefiber-observer.ts ("source
+ * must be the strict eight-key rf envelope", "source.diagnostics holds a malformed rf diagnostic") as sites. R-CASE a
+ * case-variant bare rf leading an unquoted command line such as "RF context render" (Q8): a case-blind reading of a part's
+ * leading token reads the sixteen landed "RF ..." messages of src/workbench/providers/reactivefiber.ts and
+ * src/workbench/reactivefiber-observer.ts as sites, so only a one-token part, a quoted leading word and a path's final segment
+ * are read in any case. R-SHELL a program word the shell assembles where a literal scan reads no rf word: rf glued after a group
+ * opener ("(rf ...)") or a backquote ("`rf`") or after a parameter expansion's default operator ("${RF_BIN:-rf}"), or spelled in
+ * quoted or escaped pieces (r'f', "r"f, r\f) or in ANSI-C quotes ($'rf') (Q11): reading those is shell parsing, beyond a scan
+ * of literal words; an rf path inside such a word, its final segment ended by one of C4's word ends (a closing backquote or
+ * brace included: "`/opt/bin/rf`", "${RF_BIN:-/opt/bin/rf}"), is still read by its final segment. A launch whose command line
+ * spells the receipt vocabulary ("rf graph test") is still caught by C3 under any of these residuals. (R-KEYED, R-EMBEDDED and
+ * R-CASE measured at the wb-ofz4 cut; their narrowed forms and R-SHELL at the wb-sfo7 cut, whose added C4 and A1 readings read
+ * no landed src part beyond the preview's spawn; R-SHELL's backquote and parameter-expansion members at the wb-0hkv cut, whose
+ * added word ends read none either.)
  * FOLLOW-UP wb-e9j2 (the wb-a9l2.6 gate's PREP F1 (i)-(v) and F2): A6; A3's whole frame; C2's three readings and id set; C4; the
  * git-covering walks of A1, C3 and C4; A1's every-reference invoke scan; the ":" and "/" separators, the escape reading, M10-M14, Q4.
+ * FOLLOW-UP wb-ofz4 (the wb-e9j2 gate's F1-F3, landing 353): C4's final-path-segment, template-span, extension and one-token case
+ * readings with their controls (F1); A1's destructuring and reflective reads, its quiet control, R-KEYED (F2); the full JS
+ * string-escape reading, M15-M18 and row M's label stating it (F3); row S, the quiet rows of the scan residuals.
+ * FOLLOW-UP wb-sfo7 (the wb-ofz4 gate's F1-F6, landing 454): C4 reads a path's final segment anywhere in a part, whitespace
+ * included, in any case (F1), a quoted leading word, a word ended by a quote or a shell operator, and a template part's raw
+ * text (F2), each C4 reading pinned by a control only it reads; A1 reads a literal through its value-keeping wrappers (F3) and
+ * climbs an array rest element (F4); a braced unicode escape takes any number of hex digits, M19 and M20 (F5); the roster holds
+ * the input digest of every A1, C2 and C4 control (F6); the quiet rows Q10 (R-KEYED's expression keys) and Q11 (R-SHELL).
+ * FOLLOW-UP wb-0hkv (the wb-sfo7 gate's F1, landing 562): C4's word ends read a backquote and a closing brace (WORD_END), so a
+ * path closing a command substitution ("`/opt/bin/rf`") or a parameter expansion ("${RF_BIN:-/opt/bin/rf}") is a site; each of
+ * RF_LEAD, RF_QUOTED and RF_SEGMENT is pinned with each new end by a control only it reads, and the conservative read of a word
+ * the shell continues past one by two more; boundary quiet controls sit beside them inside backquotes and braces; R-SHELL names
+ * its backquote and parameter-expansion-default members and Q11 pins them quiet.
  * SCOPE: a workflow script authors its own prompts; A4 pins that what it receives is the producer-labelled reading, and what it
  * then writes is the script's. result.view_contract (the served --view outcome the observer notes, wb-973.2) is a landed reader
  * of a served context.render field, not an H2 evaluator artifact, and stays with its own pins. The vocabularies are producer
@@ -186,14 +238,35 @@ const ARTIFACT_PHRASES = ["shadow test", "federation receipt", "conformance verd
 const VOCABULARY = [...RECEIPT_FIELDS, ...CHECK_IDS, ...ARTIFACT_PHRASES];
 /** Row C's matcher: each term's words in any case, joined directly or by any run of whitespace, "_", ".", "-", ":" or "/". */
 const VOCAB_FAMILY = new RegExp(VOCABULARY.map(term => term.split(/[\s_.]+/).join(String.raw`[\s_.:/-]*`)).join("|"), "i");
-/** A JS source escape: a backslash-u with four hex digits or a braced code point, or a backslash-x with two hex digits. */
-const SOURCE_ESCAPE = /\\u\{([0-9a-fA-F]{1,6})\}|\\u([0-9a-fA-F]{4})|\\x([0-9a-fA-F]{2})/g;
-/** A text with each source escape read as the character it spells (a code point beyond Unicode stays as written). */
+/** The line separator and paragraph separator, the line terminators a line continuation may end in beside CR and LF. */
+const LS_PS = String.fromCodePoint(0x2028, 0x2029);
+/**
+ * A JS string escape, read left to right so an escaped backslash never escapes the character after it: a backslash-u with four
+ * hex digits or a braced code point (any number of hex digits, as JS reads it), a backslash-x with two hex digits, a line
+ * continuation (a backslash before a line terminator), a legacy octal escape, or a backslash before any other character (a
+ * single-character or an identity escape).
+ */
+const SOURCE_ESCAPE = new RegExp(
+  String.raw`\\(?:u\{([0-9a-fA-F]+)\}|u([0-9a-fA-F]{4})|x([0-9a-fA-F]{2})|(\r\n|[\r\n${LS_PS}])|([0-3][0-7]{0,2}|[4-7][0-7]?)|([\s\S]))`,
+  "g",
+);
+/** The single-character escapes that spell a control character, built from their code points. */
+const CONTROL_ESCAPES: ReadonlyMap<string, string> = new Map([
+  ["b", String.fromCodePoint(0x08)], ["f", String.fromCodePoint(0x0c)], ["n", String.fromCodePoint(0x0a)],
+  ["r", String.fromCodePoint(0x0d)], ["t", String.fromCodePoint(0x09)], ["v", String.fromCodePoint(0x0b)],
+]);
+/** A text with each JS string escape read as what it spells (a line continuation as nothing; a code point beyond Unicode stays as written). */
 function unescaped(text: string): string {
-  return text.replace(SOURCE_ESCAPE, (whole: string, braced: string | undefined, four: string | undefined, two: string | undefined): string => {
-    const code = Number.parseInt(braced ?? four ?? two ?? "", 16);
-    return code <= 0x10ffff ? String.fromCodePoint(code) : whole;
-  });
+  return text.replace(
+    SOURCE_ESCAPE,
+    (whole: string, braced: string | undefined, four: string | undefined, two: string | undefined, terminator: string | undefined, octal: string | undefined, other: string | undefined): string => {
+      if (terminator !== undefined) return "";
+      if (octal !== undefined) return String.fromCodePoint(Number.parseInt(octal, 8));
+      if (other !== undefined) return CONTROL_ESCAPES.get(other) ?? other;
+      const code = Number.parseInt(braced ?? four ?? two ?? "", 16);
+      return code <= 0x10ffff ? String.fromCodePoint(code) : whole;
+    },
+  );
 }
 /** Whether a text spells the receipt vocabulary: VOCAB_FAMILY over the text with its source escapes read (rows C2, C3 and M). */
 function spelled(text: string): boolean {
@@ -254,8 +327,13 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "M",
-    label: "the C2 and C3 matcher catches each receipt vocabulary term in any case, its words joined directly or by any run of whitespace, '_', '.', '-', ':' or '/', also behind a JS source escape, and its named residuals stay pinned quiet",
-    pins: ["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "M10", "M11", "M12", "M13", "M14", "Q1", "Q2", "Q3", "Q4"],
+    label: "the C2 and C3 matcher catches each receipt vocabulary term in any case, its words joined directly or by any run of whitespace, '_', '.', '-', ':' or '/', also behind any JS string escape (a unicode, hex, legacy octal, single-character or identity escape, or a line continuation), and its named residuals stay pinned quiet",
+    pins: ["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "M10", "M11", "M12", "M13", "M14", "M15", "M16", "M17", "M18", "M19", "M20", "Q1", "Q2", "Q3", "Q4"],
+  },
+  {
+    id: "S",
+    label: "the A1 invoke scan and the C4 launch scan leave each named residual pinned quiet: an invoke key held in a variable or computed by a non-literal expression (R-KEYED), rf by its bare name after another word of a literal (R-EMBEDDED), a case-variant bare rf leading an unquoted command line (R-CASE), a program word the shell assembles from glued, quoted or escaped pieces (R-SHELL), and an invoke key or the rf binary's name assembled at runtime (R-COMPOSED)",
+    pins: ["Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11"],
   },
 ];
 
@@ -379,6 +457,8 @@ function replacing(value: Json, from: string, to: string): Json {
   return value;
 }
 const sha256 = (text: string): string => createHash("sha256").update(text).digest("hex");
+/** A control input's digest as the roster holds it (the M and S row form): the first 16 hex digits of its sha256. */
+const digestOf = (text: string): string => sha256(text).slice(0, 16);
 
 /** The receipt a variant plants: the producer's printed receipt or one of its two invalid fixtures; none for the twin. */
 function receiptOf(variant: Variant): JsonObject | undefined {
@@ -613,19 +693,55 @@ function nativeDescriptors(): Promise<NativeDescriptors> {
   return nativeMemo;
 }
 
+/** An expression without the wrappers that keep its value: parentheses, as, satisfies, a type assertion and a non-null assertion. */
+function unwrapped(node: ts.Expression): ts.Expression {
+  let inner = node;
+  while (ts.isParenthesizedExpression(inner) || ts.isAsExpression(inner) || ts.isSatisfiesExpression(inner) || ts.isTypeAssertionExpression(inner) || ts.isNonNullExpression(inner)) {
+    inner = inner.expression;
+  }
+  return inner;
+}
+/** Whether an expression is the literal "invoke", read through the wrappers that keep its value. */
+function isInvokeLiteral(node: ts.Expression): boolean {
+  const inner = unwrapped(node);
+  return ts.isStringLiteralLike(inner) && inner.text === "invoke";
+}
+/** A property key's text when it is written as a name, a string literal or a computed string literal, wrapped or not (else undefined). */
+function keyText(name: ts.PropertyName | ts.BindingName): string | undefined {
+  if (ts.isIdentifier(name) || ts.isStringLiteralLike(name)) return name.text;
+  if (!ts.isComputedPropertyName(name)) return undefined;
+  const key = unwrapped(name.expression);
+  return ts.isStringLiteralLike(key) ? key.text : undefined;
+}
 /**
- * Every reference to an `invoke` member in a TS text, by property access or by string-literal element access, called or not. A
- * call is tagged by its literal first argument (else "computed"); a reference that is not called (a bind, an alias) is tagged
- * "reference".
+ * Whether an object or array literal is a destructuring assignment target: the left of "=", a for-of or for-in head, or nested in
+ * one through an object property value, an array element or an array rest element.
+ */
+function assignmentTarget(node: ts.Node): boolean {
+  const parent = node.parent;
+  if (ts.isArrayLiteralExpression(parent) || ts.isSpreadElement(parent)) return assignmentTarget(parent);
+  if (ts.isPropertyAssignment(parent) && parent.initializer === node) return assignmentTarget(parent.parent);
+  if (ts.isBinaryExpression(parent)) return parent.left === node && parent.operatorToken.kind === ts.SyntaxKind.EqualsToken;
+  return (ts.isForOfStatement(parent) || ts.isForInStatement(parent)) && parent.initializer === node;
+}
+/**
+ * Every reference to an `invoke` member in a TS text, called or not: a property access, a string-literal element access, a
+ * destructuring key (a binding element of an object binding pattern, or a property of an object assignment pattern) or a call
+ * handing the literal "invoke" as its second or later argument (a reflective read; conservative: any such call reads as one), each
+ * literal read through the wrappers that keep its value. A reference that is called is tagged by the call's literal first
+ * argument (else "computed"); one that is not called (a bind, an alias, a destructured binding) is tagged "reference".
  */
 function invokeReferences(label: string, text: string): string[] {
   const source = ts.createSourceFile(label, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const sites: string[] = [];
   const visit = (node: ts.Node): void => {
     const member =
-      (ts.isPropertyAccessExpression(node) && node.name.text === "invoke") ||
-      (ts.isElementAccessExpression(node) && ts.isStringLiteralLike(node.argumentExpression) && node.argumentExpression.text === "invoke");
-    if (member) {
+      (ts.isPropertyAccessExpression(node) && node.name.text === "invoke") || (ts.isElementAccessExpression(node) && isInvokeLiteral(node.argumentExpression));
+    const destructured =
+      (ts.isBindingElement(node) && ts.isObjectBindingPattern(node.parent) && keyText(node.propertyName ?? node.name) === "invoke") ||
+      ((ts.isShorthandPropertyAssignment(node) || ts.isPropertyAssignment(node)) && keyText(node.name) === "invoke" && assignmentTarget(node.parent));
+    const reflective = ts.isCallExpression(node) && node.arguments.slice(1).some(argument => isInvokeLiteral(argument));
+    if (member || destructured || reflective) {
       const call = ts.isCallExpression(node.parent) && node.parent.expression === node ? node.parent : undefined;
       const first = call?.arguments[0];
       const tag = call === undefined ? "reference" : first !== undefined && ts.isStringLiteralLike(first) ? first.text : "computed";
@@ -658,15 +774,43 @@ function walkCoversGit(files: readonly string[], tsOnly: boolean): boolean {
   const listed = listedSrc().filter(path => !tsOnly || path.endsWith(".ts"));
   return listed.length > 0 && listed.every(path => walked.has(path));
 }
-/** A literal naming the rf binary: exactly "rf", or an "rf ..." command line (conservative: an "rf ..." prose literal reads the same). */
-const RF_BINARY = /^rf(?:\s|$)/;
-/** Every string literal of a TS text that names the rf binary, tagged by the callee it is handed to (else its holder's kind). */
+/** A backquote, built from its code point: a C4 word end (WORD_END), and the template delimiter the controls spell. */
+const TICK = String.fromCodePoint(0x60);
+/**
+ * Row C4's readings of a literal part, each with a control only it reads. RF_LEAD: its leading word is rf, optionally as rf.exe
+ * or rf.cmd (the command-line form; conservative: an "rf ..." prose part reads the same). RF_QUOTED: that word inside one pair of
+ * single or double quotes, in any case. RF_SEGMENT: a path whose final segment (after the last "/" or "\") is rf, rf.exe or
+ * rf.cmd, anywhere in the part and in any case (a leading path; a path holding whitespace, quoted, escaped or not; one closing a
+ * quote an earlier span opened; one after another word; one closing a command substitution or a parameter expansion). Each ends
+ * at one of C4's word ends (WORD_END) and at no other character: whitespace, a quote (' or "), a backquote, a closing brace, a
+ * shell operator (; & | ) < >) or the part's end (conservative, as for a quote and ")": a backquote or a closing brace reads as
+ * an end wherever it stands, so a word the shell continues past one, such as ${RF_HOME:-/opt/rf}/bin/tool or /opt/bin/rf`date`,
+ * reads as a site too). RF_TOKEN: a one-token part that is the bare name, in any case.
+ */
+const WORD_END = String.raw`(?=[\s'";&|)<>}${TICK}]|$)`;
+const RF_LEAD = new RegExp(String.raw`^rf(?:\.(?:exe|cmd))?${WORD_END}`);
+const RF_QUOTED = new RegExp(String.raw`^(['"])rf(?:\.(?:exe|cmd))?\1${WORD_END}`, "i");
+const RF_SEGMENT = new RegExp(String.raw`[\\/]rf(?:\.(?:exe|cmd))?${WORD_END}`, "i");
+const RF_TOKEN = /^rf(?:\.(?:exe|cmd))?$/i;
+/** Whether a literal part's text names the rf binary by any row C4 reading. */
+function namesRf(text: string): boolean {
+  return RF_LEAD.test(text) || RF_QUOTED.test(text) || RF_SEGMENT.test(text) || RF_TOKEN.test(text);
+}
+/** A string literal, a no-substitution template, or a template's head, middle or tail span. */
+type LiteralPart = ts.StringLiteral | ts.NoSubstitutionTemplateLiteral | ts.TemplateHead | ts.TemplateMiddle | ts.TemplateTail;
+function literalPart(node: ts.Node): node is LiteralPart {
+  return ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node);
+}
+/**
+ * Every literal part of a TS text that names the rf binary, a template part read both cooked and raw (a String.raw template hands
+ * its raw text on), tagged by the callee its literal is handed to (else its holder's kind).
+ */
 function rfLaunchSites(file: string, text: string): string[] {
   const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const sites: string[] = [];
   const visit = (node: ts.Node): void => {
-    if ((ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node) || ts.isTemplateHead(node)) && RF_BINARY.test(node.text)) {
-      let holder: ts.Node = ts.isTemplateHead(node) ? node.parent : node;
+    if (literalPart(node) && (namesRf(node.text) || (!ts.isStringLiteral(node) && node.rawText !== undefined && namesRf(node.rawText)))) {
+      let holder: ts.Node = ts.isTemplateHead(node) ? node.parent : ts.isTemplateMiddle(node) || ts.isTemplateTail(node) ? node.parent.parent : node;
       while (ts.isParenthesizedExpression(holder.parent) || ts.isAsExpression(holder.parent)) holder = holder.parent;
       const parent = holder.parent;
       sites.push(`${file}:${ts.isCallExpression(parent) || ts.isNewExpression(parent) ? parent.expression.getText(source) : ts.SyntaxKind[parent.kind]}`);
@@ -702,7 +846,6 @@ const PLANTED_DESCRIPTORS: readonly DescriptorFacts[] = [
   { id: "overlay.sdk", permissions: [], contract: "@reactivefiber/sdk@1.0.0:Rf.evaluate" },
   { id: "forge.gate.run", permissions: ["forge:inspect"], contract: "@forge/sdk@0.1.0:ServerConnection.request(gate.run)" },
 ];
-const TICK = String.fromCodePoint(0x60);
 /** The src modules other than the observer's own that name reactivefiberTopology (an import, a call or a re-export). */
 function observerCallers(files: readonly string[]): string[] {
   return files
@@ -724,9 +867,11 @@ interface Spelling {
   readonly text: string;
   readonly hit: boolean;
 }
-/** A backslash, built from its code point so no escape sequence is typed here (M12-M14 spell source escapes). */
+/** A backslash, built from its code point so no escape sequence is typed here (M12-M18 spell source escapes). */
 const BACKSLASH = String.fromCodePoint(0x5c);
-/** M1-M14 must hit; Q1 and Q2 are R-INTERRUPTED, Q3 is R-COMPOSED (a runtime composition's source text), Q4 is R-SPLIT. */
+/** A line feed, built from its code point (M16 spells a line continuation inside a word). */
+const LINE_FEED = String.fromCodePoint(0x0a);
+/** M1-M20 must hit; Q1 and Q2 are R-INTERRUPTED, Q3 is R-COMPOSED (a runtime composition's source text), Q4 is R-SPLIT. */
 const SPELLINGS: readonly Spelling[] = [
   { pin: "M1", text: "validation_digest", hit: true },
   { pin: "M2", text: "validationDigest", hit: true },
@@ -742,11 +887,102 @@ const SPELLINGS: readonly Spelling[] = [
   { pin: "M12", text: `"validation${BACKSLASH}u005fdigest"`, hit: true },
   { pin: "M13", text: `"validation${BACKSLASH}u{5f}digest"`, hit: true },
   { pin: "M14", text: `"budget${BACKSLASH}x5fgate"`, hit: true },
+  { pin: "M15", text: `"validation${BACKSLASH}_digest"`, hit: true },
+  { pin: "M16", text: `"valida${BACKSLASH}${LINE_FEED}tion_digest"`, hit: true },
+  { pin: "M17", text: `"validation${BACKSLASH}tdigest"`, hit: true },
+  { pin: "M18", text: `"validation${BACKSLASH}137digest"`, hit: true },
+  { pin: "M19", text: `"validation${BACKSLASH}u{000005f}digest"`, hit: true },
+  { pin: "M20", text: `"validation${BACKSLASH}u{0000000000000000000000000000005f}digest"`, hit: true },
   { pin: "Q1", text: `validation${String.fromCodePoint(0x200b)}_digest`, hit: false },
   { pin: "Q2", text: `v${String.fromCodePoint(0x0430)}lidation_digest`, hit: false },
   { pin: "Q3", text: '["validation", "digest"].join("_")', hit: false },
   { pin: "Q4", text: "export const sub_processes_spawned = 0;", hit: false },
 ];
+
+/** Row S: a pinned quiet row for each named residual of A1's invoke scan and C4's launch scan; each probe stays unread, by design. */
+interface ScanResidual {
+  readonly pin: string;
+  readonly residual: string;
+  readonly scan: "invoke" | "launch";
+  readonly text: string;
+}
+const SCAN_RESIDUALS: readonly ScanResidual[] = [
+  { pin: "Q5", residual: "R-KEYED", scan: "invoke", text: 'const key = "invoke"; registry[key]("probe.id", input); Reflect.get(registry, key);' },
+  { pin: "Q6", residual: "R-COMPOSED", scan: "invoke", text: 'registry["inv" + "oke"]("probe.id", input);' },
+  { pin: "Q7", residual: "R-EMBEDDED", scan: "launch", text: 'execSync("cd /w && rf context render --json"); execSync("npx rf context render --json");' },
+  { pin: "Q8", residual: "R-CASE", scan: "launch", text: 'execSync("RF context render --json");' },
+  { pin: "Q9", residual: "R-COMPOSED", scan: "launch", text: 'spawn("r" + "f", argv);' },
+  {
+    pin: "Q10",
+    residual: "R-KEYED",
+    scan: "invoke",
+    text: 'registry[(0, "invoke")]("probe.id", input); registry[ready ? "invoke" : "inspect"]("probe.id", input); Reflect.get(registry, String("invoke"));',
+  },
+  {
+    pin: "Q11",
+    residual: "R-SHELL",
+    scan: "launch",
+    text: `execSync("(rf context render --json)"); execSync("r'f' context render --json"); execSync('"r"f context render --json'); execSync("r${BACKSLASH}${BACKSLASH}f context render --json"); execSync("${"$"}'rf' context render --json"); execSync("${TICK}rf${TICK} --version"); execSync("${"$"}{RF_BIN:-rf} context render --json");`,
+  },
+];
+
+/**
+ * Row A1's controls. INVOKE_CONTROLS holds one probe per reference form, each read as one reference (the expected tags are in
+ * the case); INVOKE_QUIET the landed non-reference shapes; INVOKE_BOUNDARY_QUIET the shapes beside the wb-sfo7 readings that stay
+ * non-references (a wrapped literal off an access, a spread outside a pattern, the literal as a first argument).
+ */
+const INVOKE_CONTROLS: readonly string[] = [
+  'registry.invoke("probe.id", input, context);', "const call = registry.invoke.bind(registry);",
+  'registry["invoke"]("probe.id", input, context);', "registry.invoke(id, input);",
+  'const { invoke } = registry; invoke("probe.id", input);', "const { invoke: run } = registry;", 'const { "invoke": run } = registry;',
+  'const { ["invoke"]: run } = registry;', "({ invoke } = registry);", "({ invoke: run } = registry);", "[{ invoke }] = registries;",
+  "({ inner: { invoke } } = holder);", 'for ({ invoke } of registries) invoke("probe.id", input);',
+  'Reflect.get(registry, "invoke").call(registry, "probe.id", input);', 'Object.getOwnPropertyDescriptor(Object.getPrototypeOf(registry), "invoke");',
+  'registry[("invoke")]("probe.id", input);', 'registry["invoke" as const]("probe.id", input);', 'registry["invoke" satisfies string]("probe.id", input);',
+  'registry[<const>"invoke"]("probe.id", input);', 'registry["invoke"!]("probe.id", input);', 'Reflect.get(registry, ("invoke"));',
+  'Object.getOwnPropertyDescriptor(registry, "invoke" as const);', 'const { [("invoke")]: run } = registry;', '({ ["invoke" as const]: run } = registry);',
+  "[...[{ invoke }]] = registries;", "[...{ invoke }] = registries;",
+];
+const INVOKE_QUIET =
+  'this.dispatch("invoke", id, input, context); capabilityInputPath("invoke", id); const provider = { invoke: run, inspect }; registry.register({ descriptor, async invoke(value, context) { return value; } });';
+const INVOKE_BOUNDARY_QUIET = 'const mode = ("invoke" as const); run(...[{ invoke }]); const copy = [...[{ invoke }]]; registry.dispatch(("invoke"), id);';
+/**
+ * Row C4's controls. LAUNCH_CONTROLS and LAUNCH_QUIET are the landed bare-name controls; PATH_CONTROLS holds one probe per path,
+ * quoting, word-end, case and raw-text reading, each read as one site (the eight before the last are the wb-0hkv backquote and
+ * closing-brace word ends: the gate's two path shapes, RF_LEAD and RF_QUOTED with each closer, and the two conservative reads;
+ * the last, one call per remaining shell operator, as four); PATH_QUIET the landed path shapes that are no site;
+ * LAUNCH_BOUNDARY_QUIET the shapes beside the wb-sfo7 and wb-0hkv readings that stay no site, each with no word end after rf
+ * (another final segment or extension, an rf directory, a quoted other word, a word that continues past rf, a shell function
+ * named rf; the last four inside backquotes or braces).
+ */
+const LAUNCH_CONTROLS: readonly string[] = [
+  'spawn("rf", ["--workspace", "/w", "graph", "test", "--json"]);',
+  'execSync("rf graph test --candidate c --json");',
+  `run(${TICK}rf graph test --candidate ${"$"}{candidate}${TICK});`,
+  'const binary = ("rf" as string);',
+];
+const LAUNCH_QUIET = 'spawn("rf-graph", []); const id = "rfo_planted"; const word = "rfc"; const flag = " rf";';
+const PATH_CONTROLS: readonly string[] = [
+  'spawn("/usr/local/bin/rf", ["context", "render"]);', `spawn(${TICK}${"$"}{dir}/rf${TICK}, argv);`,
+  `execSync(${TICK}${"$"}{dir}/rf graph test --candidate ${"$"}{candidate}${TICK});`, `execFile("C:${BACKSLASH}${BACKSLASH}tools${BACKSLASH}${BACKSLASH}rf", argv);`,
+  'spawn("rf.exe", argv);', 'spawn("rf.cmd", argv);', 'spawn("/opt/bin/RF", argv);',
+  `spawn("C:${BACKSLASH}${BACKSLASH}Program Files${BACKSLASH}${BACKSLASH}Tools${BACKSLASH}${BACKSLASH}rf.exe", argv);`, 'spawn("/Volumes/Tool Kit/bin/rf", argv);',
+  `spawn("C:${BACKSLASH}${BACKSLASH}PROGRAM FILES${BACKSLASH}${BACKSLASH}TOOLS${BACKSLASH}${BACKSLASH}RF.EXE", argv);`,
+  `execSync("'/opt/bin/rf' context render --json");`, `execSync('"/opt/bin/rf" context render --json');`,
+  `execSync(${TICK}"${"$"}{dir}/rf" context render --json${TICK});`, `execSync('"/Volumes/Tool Kit/bin/rf" context render --json');`,
+  `execSync("'rf' context render --json");`, `execSync("'RF' context render --json");`,
+  `execSync("/Volumes/Tool${BACKSLASH}${BACKSLASH} Kit/bin/rf context render --json");`, 'execSync("cd /w && /opt/bin/rf context render --json");',
+  'execSync("rf&&echo done");', 'execSync("/opt/bin/rf;echo done");', `execSync(${TICK}'${"$"}{prefix}rf' context render${TICK});`,
+  `spawn(String.raw${TICK}C:${BACKSLASH}Program Files${BACKSLASH}Tools${BACKSLASH}rf.exe${TICK}, argv);`,
+  'spawn("Rf.exe", argv);', 'execSync("rf.cmd context render --json");', `execSync("'rf.exe' context render --json");`,
+  `execSync("${TICK}/opt/bin/rf${TICK}");`, `execSync("${"$"}{RF_BIN:-/opt/bin/rf} context render --json");`,
+  `execSync(${TICK}${BACKSLASH}${TICK}${"$"}{prefix}rf${BACKSLASH}${TICK} --version${TICK});`, `execSync(${TICK}${BACKSLASH}${"$"}{RF_BIN:-${"$"}{prefix}rf} context render${TICK});`,
+  `execSync(${TICK}${BACKSLASH}${TICK}${"$"}{prefix}'rf'${BACKSLASH}${TICK} --version${TICK});`, `execSync(${TICK}${BACKSLASH}${"$"}{RF_BIN:-${"$"}{prefix}'rf'} context render${TICK});`,
+  `execSync("${"$"}{RF_HOME:-/opt/rf}/bin/tool --json");`, `execSync("/opt/bin/rf${TICK}date${TICK} --json");`,
+  'execSync("rf|jq .result"); execSync("rf<request.json"); execSync("/opt/bin/rf>out.json"); execSync("(cd /w && /opt/bin/rf)");',
+];
+const PATH_QUIET = 'spawn("/usr/local/bin/rf-graph", argv); spawn("./surf", argv); const lib = "/opt/rf/lib"; const message = "RF preview cancelled.";';
+const LAUNCH_BOUNDARY_QUIET = `execSync("'rfc' context render"); spawn("/opt/bin/rf.bat", argv); const doc = "see /docs/rfc"; const path = "C:${BACKSLASH}${BACKSLASH}Program Files${BACKSLASH}${BACKSLASH}rf${BACKSLASH}${BACKSLASH}lib"; execSync("'/opt/rf/bin/tool' --json"); const note = "rf-graph|jq"; execSync("'rf'x context render"); execSync("rf() { :; }"); execSync("${TICK}/opt/bin/rfc${TICK} --json"); execSync("${"$"}{RF_BIN:-/opt/bin/rf.bat} --json"); execSync("${TICK}/opt/rf/bin/tool${TICK} --json"); const home = "${"$"}{RF_HOME:-/opt/rf/lib}";`;
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
@@ -756,22 +992,31 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const walkCovers = walkCoversGit(files, true);
     const narrowedWalkCaught = !walkCoversGit(files.slice(1), true);
     const sites = invokeSites(files);
-    const controls = [
-      'registry.invoke("probe.id", input, context);', "const call = registry.invoke.bind(registry);",
-      'registry["invoke"]("probe.id", input, context);', "registry.invoke(id, input);",
-    ].map(text => invokeReferences("probe.ts", text));
+    const controls = INVOKE_CONTROLS.map(text => invokeReferences("probe.ts", text));
+    const quiet = invokeReferences("probe.ts", INVOKE_QUIET);
+    const boundaryQuiet = invokeReferences("probe.ts", INVOKE_BOUNDARY_QUIET);
     const unclassified = sites.map(site => site.slice(0, site.lastIndexOf(":"))).filter(file => SITE_CLASSES[file] === undefined);
     const callers = observerCallers(files);
     const observerDefined = textOf(join(REPO, OBSERVER_MODULE)).includes("export function reactivefiberTopology(");
     expect(srcFloorMet, `src modules walked: ${files.length}`).toBe(true);
     expect(walkCovers, "the A1 walk must read every src module git lists").toBe(true);
     expect(narrowedWalkCaught, "a walk missing one listed module must read as unequal").toBe(true);
-    expect(controls).toEqual([["probe.ts:probe.id"], ["probe.ts:reference"], ["probe.ts:probe.id"], ["probe.ts:computed"]]);
+    expect(controls).toEqual([
+      ["probe.ts:probe.id"], ["probe.ts:reference"], ["probe.ts:probe.id"], ["probe.ts:computed"],
+      ...Array.from({ length: 11 }, () => ["probe.ts:reference"]),
+      ...Array.from({ length: 5 }, () => ["probe.ts:probe.id"]),
+      ...Array.from({ length: 6 }, () => ["probe.ts:reference"]),
+    ]);
+    expect(quiet, "a capability-mode argument, a provider's own invoke and a method definition are not references").toEqual([]);
+    expect(boundaryQuiet, "a wrapped literal off an access, a spread outside a pattern and a first-argument literal are not references").toEqual([]);
     expect(unclassified, "a new registry invoke site needs a class and, when it reaches an agent, a behavioral pin here").toEqual([]);
     expect(callers, "a src caller of the rf observer makes workflow_observe an rf composer: re-measure row A").toEqual([]);
     expect(observerDefined).toBe(true);
     const classes = Object.fromEntries((["agent", "script", "fixed", "registry"] as const).map(name => [name, Object.keys(SITE_CLASSES).filter(file => SITE_CLASSES[file] === name).sort()]));
-    return { srcFloorMet, walkCoversGit: walkCovers, narrowedWalkCaught, sites, controls, classes, observerCallers: callers, observerDefined };
+    return {
+      srcFloorMet, walkCoversGit: walkCovers, narrowedWalkCaught, sites, controls, quiet, classes, observerCallers: callers, observerDefined,
+      boundaryQuiet, controlDigests: INVOKE_CONTROLS.map(digestOf), quietDigest: digestOf(INVOKE_QUIET), boundaryQuietDigest: digestOf(INVOKE_BOUNDARY_QUIET),
+    };
   },
   A2: async () => {
     const twin = await readings("absent");
@@ -1001,7 +1246,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     expect(controls, "each rf reading finds the planted descriptor that names rf its way").toStrictEqual({
       id: ["rf.overlay.evaluate"], permission: ["overlay.evaluate"], contractSource: ["overlay.score", "overlay.check", "overlay.sdk"],
     });
-    return { nativeIds: [...ids].sort(), rfIds, rfBy, rfModes, descriptorFloorMet, hits, controls };
+    return { nativeIds: [...ids].sort(), rfIds, rfBy, rfModes, descriptorFloorMet, hits, controls, controlDigests: PLANTED_DESCRIPTORS.map(item => digestOf(JSON.stringify(item))) };
   },
   C3: async () => {
     const base = join(REPO, "src");
@@ -1022,18 +1267,31 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const files = filesBelow(join(REPO, "src")).filter(file => file.endsWith(".ts"));
     const walkCovers = walkCoversGit(files, true);
     const sites = files.flatMap(file => rfLaunchSites(relative(REPO, file), textOf(file))).sort();
-    const controls = [
-      rfLaunchSites("probe.ts", 'spawn("rf", ["--workspace", "/w", "graph", "test", "--json"]);'),
-      rfLaunchSites("probe.ts", 'execSync("rf graph test --candidate c --json");'),
-      rfLaunchSites("probe.ts", `run(${TICK}rf graph test --candidate ${"$"}{candidate}${TICK});`),
-      rfLaunchSites("probe.ts", 'const binary = ("rf" as string);'),
-    ];
-    const quiet = rfLaunchSites("probe.ts", 'spawn("rf-graph", []); const id = "rfo_planted"; const word = "rfc"; const flag = " rf";');
+    const controls = LAUNCH_CONTROLS.map(text => rfLaunchSites("probe.ts", text));
+    const quiet = rfLaunchSites("probe.ts", LAUNCH_QUIET);
+    const pathControls = PATH_CONTROLS.map(text => rfLaunchSites("probe.ts", text));
+    const pathQuiet = rfLaunchSites("probe.ts", PATH_QUIET);
+    const boundaryQuiet = rfLaunchSites("probe.ts", LAUNCH_BOUNDARY_QUIET);
     expect(walkCovers, "the C4 walk must read every src module git lists").toBe(true);
     expect(sites, "a second literal naming rf is a second path to rf (or an rf-led prose string): classify it and re-measure rows A-C").toEqual(["src/workbench/providers/reactivefiber.ts:spawn"]);
     expect(controls.map(found => found.length)).toEqual([1, 1, 1, 1]);
     expect(quiet).toEqual([]);
-    return { walkCoversGit: walkCovers, sites, controls, quiet };
+    expect(pathControls, "a path-qualified, template-span, extension, one-token case, whitespace-bearing, quoted, quote-, operator-, backquote- or brace-ended or raw spelling of the binary is a site").toEqual([
+      ["probe.ts:spawn"], ["probe.ts:spawn"], ["probe.ts:execSync"], ["probe.ts:execFile"], ["probe.ts:spawn"], ["probe.ts:spawn"], ["probe.ts:spawn"],
+      ["probe.ts:spawn"], ["probe.ts:spawn"], ["probe.ts:spawn"],
+      ...Array.from({ length: 11 }, () => ["probe.ts:execSync"]),
+      ["probe.ts:TaggedTemplateExpression"],
+      ["probe.ts:spawn"], ["probe.ts:execSync"], ["probe.ts:execSync"],
+      ...Array.from({ length: 8 }, () => ["probe.ts:execSync"]),
+      ["probe.ts:execSync", "probe.ts:execSync", "probe.ts:execSync", "probe.ts:execSync"],
+    ]);
+    expect(pathQuiet, "another final segment, an rf directory with no word end after rf and a case-variant prose line are not sites").toEqual([]);
+    expect(boundaryQuiet, "a quoted other word, another extension, an rf directory, a word continuing past rf and a shell function named rf, each with no word end after rf, are not sites, inside backquotes or braces too").toEqual([]);
+    return {
+      walkCoversGit: walkCovers, sites, controls, quiet, pathControls, pathQuiet, boundaryQuiet,
+      controlDigests: LAUNCH_CONTROLS.map(digestOf), quietDigest: digestOf(LAUNCH_QUIET), pathControlDigests: PATH_CONTROLS.map(digestOf),
+      pathQuietDigest: digestOf(PATH_QUIET), boundaryQuietDigest: digestOf(LAUNCH_BOUNDARY_QUIET),
+    };
   },
   ...Object.fromEntries(
     SPELLINGS.map(spelling => [
@@ -1045,11 +1303,21 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       },
     ]),
   ),
+  ...Object.fromEntries(
+    SCAN_RESIDUALS.map(row => [
+      row.pin,
+      async () => {
+        const sites = row.scan === "invoke" ? invokeReferences("probe.ts", row.text) : rfLaunchSites("probe.ts", row.text);
+        expect(sites, `${row.residual} stays a named residual of the ${row.scan} scan: re-measure row S once the scan reads it`).toEqual([]);
+        return { residual: row.residual, scan: row.scan, digest: sha256(row.text).slice(0, 16), sites };
+      },
+    ]),
+  ),
 };
 
 describe("wb-a9l2.6 rf evaluator artifact context census (RF-HARNESS2-FEDERATED-PEER-R6)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:6", "B:4", "C:4", "M:18"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:6", "B:4", "C:4", "M:24", "S:7"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );

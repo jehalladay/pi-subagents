@@ -35,12 +35,29 @@
  *    digest, version, evidence refs) unchanged and equal to the roster's (an alias- or locator-keyed ref splits it); A4 the
  *    shipped rf reader (reactivefiberTopology) keys one envelope read under two locators identically and writes neither locator
  *    into a key-bearing field (KEY_BEARING_FIELDS: the source ref's four parts, the evidence refs, both revisions, the payload
- *    reference, the definition digest and the stream position, cursor and sequence); A5 no rf-scope src file (inRfScope) keys an
- *    rf resource by a locator-named expression in any of seven forms: an rf-tagged template interpolation, a key-like property
- *    (a KEY_NAMES name or a camelCase name ending in a KEY_SUFFIXES suffix, quoted or bare), a Map or Set key (the first argument
- *    of a COLLECTION_METHODS call), a "+" join to a quoted rf tag, a computed property key, the key of an array-literal pair a
- *    Map, WeakMap or Object.fromEntries is built from, or an element access other than by a quoted property name (SRC_FLOOR,
- *    RF_SCOPE_FLOOR, RF_TEMPLATE_FLOOR and the anchor make an emptied or misdirected walk red).
+ *    reference, the definition digest and the stream position, cursor and sequence), and the two reads are of two distinct
+ *    roots: the reader itself authorizes each read's own reading under its own locator and refuses it under the other as
+ *    'authorization' (rootVerdicts, the reader's verdict per root), so reading one root twice reds; A5 no rf-scope src file
+ *    (inRfScope) keys an rf resource by a locator-named expression in any of seven forms: an rf-tagged template interpolation,
+ *    a key-like property (a KEY_NAMES name or a camelCase name ending in a KEY_SUFFIXES suffix, bare, quoted, or quoted inside
+ *    a computed key), a Map or Set key (the first argument of a COLLECTION_METHODS call), a "+" join to a quoted rf tag, a
+ *    computed property key, the key of an array-literal pair a Map, WeakMap or Object.fromEntries is built from, or an element
+ *    access other than by a quoted property name (a single- or double-quoted literal, or a template literal with no
+ *    interpolation). SRC_FLOOR, RF_SCOPE_FLOOR, RF_TEMPLATE_FLOOR and two token anchors (ANCHORS: the observer's context-preview
+ *    and the provider's REACTIVE_FIBER_CONTRACT_SOURCE, each an rf-scope file whose matched text and whose read through the tree
+ *    must carry its token) make an emptied or misdirected walk red; every rf-scope file but an in-memory plant has its own text
+ *    on disk beside the walk (scopeOnDisk), and every rf-scope file is read in full: the text each scan matches must open with
+ *    that disk text (scopeReadInFull), and that disk text must hold the whole file, its UTF-8 byte length equal to the size
+ *    statSync reports for the file (scopeSized; wb-obyu F1: a size read apart from both text readers, as far as rows PC10, PC11
+ *    and PC12 pin it - PC10 holds readRfScope's own size check, and PC12 the scan's own call, to a control file whose UTF-8
+ *    decode is longer than its size, and PC11 holds sizeOnDisk's body and the whole declaration text of sizeOnDisk (its
+ *    signature with its body), of readRfScope and of scanRfScope to the roster - so a coordinated truncation of the tree's
+ *    reader and the disk reader, at their bodies, at the readFileSync they share or at the scan's own call, reds, and so does one
+ *    whose size side is stepped in sizeOnDisk's own signature, by a parameter default that re-points the path its body stats
+ *    (wb-4kl7)). Not claimed, each a named residual with a pinned quiet row
+ *    (RESIDUALS): the size check's two sides stepped in step with both text readers from outside every text PC11 reads, node:fs
+ *    or Buffer patched or shadowed (R-SIZE-STEP, QP1), or a coordinated rewrite of both readers that keeps each file's byte
+ *    length (R-SAME-LENGTH, QP2; the size anchor holds a file's length, not its content).
  *  B, acceptance (b). B1 the sameWorkspace pair differs in backend_instance_id alone and shares its alias, locator and raw
  *    revision; B2 identityKey separates it, every key in OTHER_KEYS merges it; B3 Pi's real projection holds it as two nodes in
  *    every identity-bearing index (the node index and a ref query, the version index, the evidence index), where the raw counter
@@ -53,12 +70,13 @@
  *    key (opaque revisions may carry the separator) each merge a planted pair; C3 Pi's real projection admits a new epoch's
  *    lower revision under the reference rule and refuses it as out-of-order when the counter rides as a sequence; C4 the
  *    projection's own key is a tuple, never a concatenation; C5 no rf-scope src file joins a revision-named operand to another,
- *    by adjacent interpolations or by "+", either operand optionally scaled by "*" or "<<" and parenthesized (A5's floors and
- *    anchor).
- *  MA and MC, the matchers rows A5 and C5 read: MA1-MA12 and MC1-MC8 the spellings each must catch; QA1-QA4, QS1 and QC1-QC5 the
+ *    by adjacent interpolations or by "+", either operand optionally scaled by "*" or "<<" and parenthesized (A5's floors,
+ *    anchor and read-in-full check).
+ *  MA and MC, the matchers rows A5 and C5 read: MA1-MA14 and MC1-MC8 the spellings each must catch; QA1-QA8, QS1 and QC1-QC9 the
  *    pinned quiet rows of their named residuals.
  *  MV, the matchers' vocabularies one member at a time, each driven from the roster's copy of its list: KP1 every KEY_NAMES name
- *    and KP2 every KEY_SUFFIXES suffix alone makes a key-like property, MK1 every COLLECTION_METHODS method alone a Map or Set key,
+ *    and KP2 every KEY_SUFFIXES suffix alone makes a key-like property in each KEY_SPELLINGS spelling (bare, double- or
+ *    single-quoted, and quoted inside a computed key), MK1 every COLLECTION_METHODS method alone a Map or Set key,
  *    LW1 every LOCATOR_WORDS word alone is caught in each of A5's seven forms (LOCATOR_FORMS), RW1 every REVISION_WORDS word alone
  *    in each of C5's three forms (REVISION_FORMS).
  *  PC, a positive control on each live leg's instrument, driven through the very function the live leg calls: PC1 A3's state
@@ -66,12 +84,61 @@
  *    evidence refs) as exactly that field; PC2 A4's key-bearing projection (keyBearing, locatorIn) sees a locator planted into
  *    each KEY_BEARING_FIELDS field of the shipped reader's real snapshot, and none in the unplanted one; PC3 and PC4 the A5 and C5
  *    scan (scanRfScope) reports exactly the hits of an rf-scope file planted in memory beside the live tree, one spelling per
- *    form, each attributed to the planted path.
+ *    form, each attributed to the planted path; PC5 A4's two-root judgment (judgeReads) reads the two real reads as keyed
+ *    differently once each carries a key derived from its own reading's root and no literal locator (the root's sha256 as the
+ *    source revision); PC6 and PC7 the A5 and C5 scan reports exactly the PC3 and PC4 plant appended in memory to the live
+ *    text of each rf-scope file in turn, attributed to that file, so a scan that reads or matches only some rf-scope files reds,
+ *    and the control plants into every rf-scope file of the walk and every anchor, bound twice (untargeted, the files and
+ *    anchors it never planted into, and anchorReports, the plant hits it saw per anchor), so a control that plants into only
+ *    some files reds; PC8 the scans' read-in-full check (readRfScope, the reading A5's and C5's instrument judges) reports each
+ *    rf-scope file read one character short through the tree in turn as exactly that file, its anchors still read, every
+ *    file still on disk and none unsized, so a check that compares nothing, or an empty or partial disk text, reds, its
+ *    coverage bound twice like PC6's and PC7's (untargeted, and anchorsReadShort, the verdict per anchor); PC9 the scans' size
+ *    check (readRfScope's size anchor) reports each rf-scope file read one character short through the tree and the disk
+ *    reader together in turn as exactly that file, unsized and not unread (its matched text opens with the equally short disk
+ *    text, so only the size anchor can see the cut), its anchors still read and every file still on disk, so a size check that
+ *    compares nothing, or that compares against a text the reading holds (the disk text it is handed or the text the scan
+ *    matched), reds (PC9, or PC8's none-unsized clause), its coverage bound twice like PC8's; PC10 readRfScope's own size
+ *    check tells a file's size from a UTF-8 decode's byte length: an rf-scope control file whose bytes are not UTF-8 (one 0xff
+ *    byte, which a UTF-8 decode reads as the three-byte replacement character), written into a tracked scratch directory and
+ *    read beside the live tree through readRfScope with its own defaults, is reported as exactly that file unsized and nothing
+ *    else (not unread, every anchor read, every file on disk, no hit), its size as sizeOnDisk reads it and the UTF-8 byte length
+ *    of its text on disk held to the roster's counts, so a size anchor that takes the control's size as the UTF-8 byte length
+ *    of a UTF-8 decode of it (diskText's or textOf's text, or readFileSync's in the utf8 encoding), in sizeOnDisk, as
+ *    readRfScope's default or in readRfScope's comparison, reds (PC10; wb-obyu cut #2, the gate's U1) - PC10 never calls the
+ *    scan, so one handed to readRfScope at the scan's own call is PC12's and PC11's - and one that takes such a text's UTF-16
+ *    length reds A5 and C5 on the live tree (the observer carries non-ASCII characters); PC11 the size check's wiring, read
+ *    parse-aware from this file's own text (the TypeScript parser, not a regular expression), so a re-derivation the control
+ *    file of PC10 and PC12 cannot see (one keyed to the src tree's paths, say) reds too wherever it edits a text PC11 reads:
+ *    sizeOnDisk's body is the statSync read alone; readRfScope's body names no text reader and no size reader (diskText,
+ *    textOf, readFileSync, statSync, sizeOnDisk, liveTree, TextDecoder) but through its parameters, whose defaults are diskText
+ *    and sizeOnDisk; every call spelled readRfScope(...) in scanRfScope's body hands it the matcher and the tree alone; the
+ *    whole declaration of sizeOnDisk, of readRfScope and of scanRfScope (signature and body, every whitespace run collapsed to
+ *    one space, the docstring outside it) is the roster's text, sizeOnDisk's held in this file too, so any other edit of any of
+ *    the three - a parameter added to sizeOnDisk's signature whose default re-points the path its body stats (to a copy of the
+ *    file cut in step with both text readers, say; wb-4kl7, the wb-obyu gate's F1), an aliased, parenthesized or .call callee
+ *    at the scan's own call, a disk reader or size anchor handed there, a size check discarded or filtered there, a comparison
+ *    stepped in readRfScope - reds, whatever paths it is keyed to; and readFileSync and statSync are bound in this file only as
+ *    node:fs's own imports, unaliased (an assignment to a member of node:fs or of Buffer binds neither name: R-SIZE-STEP); PC12
+ *    the scan itself refuses PC10's control: scanRfScope - rows A5's and C5's own instrument, through its own readRfScope call
+ *    and that call's defaults - over the live tree plus the control file (written into its own tracked scratch directory), once
+ *    with each live leg's matcher (locatorHits, revisionJoinHits), refuses at its size check, every check before it passing, and
+ *    that check names exactly the control, so a scan whose own call takes the control's size from a UTF-8 decode of it, cuts
+ *    both text readers there or discards its size check reds (PC12; wb-obyu cut #3, the gate's U1 on cut #2), while one keyed
+ *    to the src tree's paths leaves the control alone and is PC11's; QP1 and QP2 the pinned quiet rows of the size check's two
+ *    residuals: each rf-scope file in turn cut by the residual (QP1 read one character short through the tree, the disk reader
+ *    and the size anchor together; QP2 its last character rewritten as another character of the same UTF-8 byte length through
+ *    the tree and the disk reader together) reads quiet - not unread, not unsized, its anchors read and every file on disk -
+ *    while the same cut with one reader left whole (the size anchor for QP1, the disk reader for QP2) reports exactly that file
+ *    (unsized for QP1, unread for QP2), so either row reds when the reading sees its residual or never reads the cut, its
+ *    coverage bound twice (untargeted, and anchorsQuiet, the verdict per anchor).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id,
  * label and pins, every pin's witness, IDENTITY_FIELDS, GATING_ARTIFACTS and the five matcher vocabularies, word for word - is
  * held to the out-of-file roster test/fixtures/rf-federated-identity-roster.json, whose producer excerpts are held to the pin by
  * hash. A pin deleted, relabelled, swapped for another passing case, or removed from every literal here at once still reds
- * against the roster.
+ * against the roster. The last case holds REACHED, the pins that reached their witness compare in run order, to the roster's
+ * pins in row order, so a pin whose test is not registered, is skipped or never reaches its compare reds. Not claimed: an edit
+ * of this file and the roster together, or a case replaced by an echo of its own roster witness.
  * RESIDUALS (named, each with a pinned quiet row): R-INDIRECT a locator under a neutral name (QA1); R-CALL-BUILT an rf ref built
  * by a call such as Array.join (QA2); R-OUTSIDE-SCOPE a key built in a src file outside inRfScope is never scanned (QS1);
  * R-HOST-WORD a locator under the word host, which LOCATOR_WORDS leaves out because the rf reader names its own context object
@@ -79,21 +146,50 @@
  * R-CALLBACK-KEY a collection keyed by a value a callback returns, spelled neither as a pair literal nor as a key method's
  * argument (QA4); R-CALL-JOIN counters joined by a call, Array.join (QC1) or String.prototype.concat (QC4); R-SYNONYM a counter
  * under a name outside REVISION_WORDS (QC2); R-PROSE two interpolations separated by whitespace read as display text, not a key
- * (QC3); R-ARITH-PACKED counters packed without "+", by a bitwise or (QC5). The matchers are lexical (regular expressions over
- * the src text, no parse): a spelling outside every form and residual named here is not claimed.
+ * (QC3); R-ARITH-PACKED counters packed without "+", by a bitwise or (QC5); R-REFLECTIVE-KEY a locator handed to a reflective
+ * write as its property key, Reflect.set (QA5) or Object.defineProperty (QA6); R-MID-TAG an rf tag that does not open its
+ * template literal (QA7); R-SUFFIX-OUTSIDE a camelCase name whose suffix KEY_SUFFIXES leaves out, such as Keys (QA8);
+ * R-CALL-OPERAND a "+" operand that is a call, epoch.toString() (QC6); R-EXPRESSION-SCALE an operand scaled by an expression,
+ * not by an operand or a numeral, such as 2 ** 20 (QC7); R-TEMPLATE-PLUS two template literals joined by "+" (QC8); R-WIDE-GAP
+ * two interpolations a whitespace-free gap of more than eight characters joins (QC9); R-SIZE-STEP the size check's two sides
+ * brought back into step with both text readers' cut from outside every text PC11 reads (sizeOnDisk's signature is inside
+ * them since wb-4kl7: a default there that re-points the path its body stats reds PC11): node:fs itself patched under the
+ * census to cut the size statSync reports - by a setup module, by a module this file imports (a side-effect import included)
+ * or from this file's own module scope (a default import of node:fs whose statSync is reassigned, the builtin ESM exports
+ * synced) - or Buffer shadowed or patched to widen the byte length the check measures by the same count (a module-scope
+ * Buffer binding or proxy, or an assignment to Buffer.byteLength), each leaving every binding, body and declaration text PC11
+ * reads unchanged (QP1, which steps the size side; widening the measured side by the same count is the same comparison);
+ * R-SAME-LENGTH a coordinated rewrite of both text readers that keeps each file's byte length, so a plant whose spelling both
+ * readers rewrite at its own byte length is not seen (QP2). The matchers are lexical (regular expressions over the src text, no
+ * parse): a spelling outside every form and residual named here is not claimed.
  * SCOPE: the excerpts are producer facts at 6a251bf73af5; Pi vendors no rf source, so a producer-side change is seen only when an
  * rf pin-bump re-reads them. The live legs are A4 (the shipped rf reader), A3, B3, B4, C3 and C4 (Pi's real projection) and A5
  * and C5 (the src tree), and row PC holds the positive controls of their instruments; A2, B2, C1 and C2 hold the reference rule
  * itself. wb-ldbz (the wb-o4h0.2 gate's follow-up, F1-F4) added rows MV and PC, pins MA9-MA12, QA3, QA4, MC7, MC8 and QC5, A4's
- * digest and stream-position fields, A3's state witness and the five roster vocabularies.
+ * digest and stream-position fields, A3's state witness and the five roster vocabularies. wb-jnpc (the wb-ldbz gate's follow-up,
+ * F1-F5) added A4's root witness, the scans' read-in-full check, pins MA13, MA14, QA5-QA8, QC6-QC9 and PC5-PC7, the KP1 and KP2
+ * spellings and the REACHED tally. wb-xr81 (the wb-jnpc gate's follow-up, F1 and F2) added the second token anchor, the
+ * scopeOnDisk check, the anchors' witness, PC6 and PC7's untargeted and anchorReports bindings and pin PC8. wb-obyu (the wb-xr81
+ * gate's follow-up, F1) added the size anchor (scopeSized, statSync's size beside both text readers), the readings' unsized
+ * binding and pin PC9; its cut #2 (the wb-obyu gate's refusal U1) added pins PC10 and PC11, the size anchor readRfScope takes
+ * as a parameter, and the quiet rows QP1 and QP2 of the residuals R-SIZE-STEP and R-SAME-LENGTH; its cut #3 (refusal #2's U1
+ * on cut #2, in the enumerate-the-resolvable form standing rule 19(c) binds) added pin PC12 and PC11's two declaration texts,
+ * named R-SIZE-STEP's in-file and Buffer members, and restated A5's, PC10's and PC11's clauses to what PC10, PC11 and PC12 pin.
+ * wb-4kl7 (the wb-obyu gate's follow-up, F1) widened PC11 to sizeOnDisk's whole declaration text (its signature with its body),
+ * held in this file and to the roster, so a parameter default in sizeOnDisk's signature that re-points the path its body stats
+ * reds PC11 (the gate's GP7-SIG-RENAME+TRUNC-SRC-200+PROV-LOC and its PROV-REV twin, which read the census before it green).
  *
- * Display paths added: none. Test-only: nothing is spawned or written; src and this roster are only read.
+ * Display paths added: none. Test-only: nothing is spawned; the files written are rows PC10's and PC12's controls, each into its
+ * own tracked scratch directory (test/helpers/scratch.ts) its case removes; src, this file (row PC11) and this roster are only
+ * read.
  */
 import { createHash } from "node:crypto";
-import { type Dirent, readdirSync, readFileSync } from "node:fs";
+import { type Dirent, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
+import ts from "typescript";
 import { describe, expect, it } from "vitest";
+import { CapabilityError } from "../src/workbench/capability-registry.js";
 import {
   type NativeRef,
   type NativeSnapshot,
@@ -105,6 +201,9 @@ import {
 import { REACTIVEFIBER_RENDER_PREVIEW_CONTRACT } from "../src/workbench/providers/reactivefiber.js";
 import { type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
 import { fullShapeRf } from "./helpers/rf-render-fixture.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 type Json = null | boolean | number | string | Json[] | { [key: string]: Json };
 
@@ -155,12 +254,12 @@ const ROWS: readonly Row[] = [
   {
     id: "MA",
     label: "row A5's locator matcher catches every locator-named rf ref interpolation, key-like property, Map or Set key, rf-tag join, computed key, Map pair and element access, and its named residuals stay pinned quiet",
-    pins: ["MA1", "MA2", "MA3", "MA4", "MA5", "MA6", "MA7", "MA8", "MA9", "MA10", "MA11", "MA12", "QA1", "QA2", "QA3", "QA4", "QS1"],
+    pins: ["MA1", "MA2", "MA3", "MA4", "MA5", "MA6", "MA7", "MA8", "MA9", "MA10", "MA11", "MA12", "MA13", "MA14", "QA1", "QA2", "QA3", "QA4", "QA5", "QA6", "QA7", "QA8", "QS1"],
   },
   {
     id: "MC",
     label: "row C5's revision-join matcher catches every revision-named interpolation pair, plus-join and scaled plus-join, and its named residuals stay pinned quiet",
-    pins: ["MC1", "MC2", "MC3", "MC4", "MC5", "MC6", "MC7", "MC8", "QC1", "QC2", "QC3", "QC4", "QC5"],
+    pins: ["MC1", "MC2", "MC3", "MC4", "MC5", "MC6", "MC7", "MC8", "QC1", "QC2", "QC3", "QC4", "QC5", "QC6", "QC7", "QC8", "QC9"],
   },
   {
     id: "MV",
@@ -169,8 +268,8 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "PC",
-    label: "the live legs' instruments each report a planted violation: A3's state capture, A4's key-bearing projection and the A5 and C5 src scans",
-    pins: ["PC1", "PC2", "PC3", "PC4"],
+    label: "the live legs' instruments each report a planted violation: A3's state capture, A4's key-bearing projection and two-root judgment, and the A5 and C5 src scans over a planted file, over each live rf-scope file and over each rf-scope file read short through the tree alone or through the tree and the disk reader together and over an rf-scope control file whose bytes are not UTF-8, the size anchor's wiring reads as this file's text states, and the size check's two named residuals stay pinned quiet",
+    pins: ["PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11", "PC12", "QP1", "QP2"],
   },
 ];
 
@@ -472,6 +571,18 @@ const RF_SCOPE_FLOOR = 2;
 const RF_TEMPLATE_FLOOR = 6;
 const ANCHOR_FILE = join(SRC, "workbench", "reactivefiber-observer.ts");
 const ANCHOR_TOKEN = "context-preview";
+/** A token anchor: an rf-scope file a scan must read, held by a token the file carries. */
+interface Anchor {
+  readonly file: string;
+  readonly token: string;
+}
+/** The scans' token anchors, one per rf-scope file at base (wb-xr81 F1): the observer, and the provider with its exported
+ * contract-source carrier, so a tree that reads one rf-scope file in full and another short reds even with the disk reading
+ * hollowed. */
+const ANCHORS: readonly Anchor[] = [
+  { file: ANCHOR_FILE, token: ANCHOR_TOKEN },
+  { file: join(SRC, "workbench", "providers", "reactivefiber.ts"), token: "REACTIVE_FIBER_CONTRACT_SOURCE" },
+];
 /** The rf adapter files: a src script whose name names the rf provider or federation, or carries an "rf" name token. */
 const RF_NAME = /reactivefiber|federat/;
 const SCRIPT = /\.[cm]?[jt]s$/;
@@ -496,6 +607,15 @@ const KEY_NAMES: readonly string[] = ["id", "scope", "key", "ref", "identity", "
 const KEY_SUFFIXES: readonly string[] = ["Id", "Key", "Ref", "Refs", "Digest"];
 /** Row A5's Map and Set methods whose first argument is a key (row MK1). */
 const COLLECTION_METHODS: readonly string[] = ["set", "get", "has", "delete", "add"];
+/** Rows KP1 and KP2's spellings of a key-like property name: bare, double- or single-quoted, and quoted inside a computed key. */
+const KEY_SPELLINGS: Readonly<Record<string, (name: string) => string>> = {
+  bare: name => name,
+  quoted: name => `"${name}"`,
+  singleQuoted: name => `'${name}'`,
+  computed: name => `["${name}"]`,
+  computedSingle: name => `['${name}']`,
+  computedTemplate: name => `[${TICK}${name}${TICK}]`,
+};
 /** An expression's identifier words, camelCase and snake_case split, lowercased. */
 const words = (expression: string): string[] =>
   expression.replace(/([a-z0-9])([A-Z])/g, "$1 $2").toLowerCase().split(/[^a-z0-9]+/).filter(word => word.length > 0);
@@ -543,8 +663,10 @@ function rfTemplates(source: string): string[][] {
     return expressions;
   });
 }
-/** A key-like property, quoted or bare: a KEY_NAMES name, or any camelCase name ending in a KEY_SUFFIXES suffix. */
-const KEY_PROPERTY = new RegExp(String.raw`\b(?:${KEY_NAMES.join("|")}|[a-z][A-Za-z0-9]*(?:${KEY_SUFFIXES.join("|")}))['"]?\s*:\s*([^,;}\n]*)`, "g");
+/** A key-like property name: a KEY_NAMES name, or any camelCase name ending in a KEY_SUFFIXES suffix. */
+const KEY_NAME = `(?:${KEY_NAMES.join("|")}|[a-z][A-Za-z0-9]*(?:${KEY_SUFFIXES.join("|")}))`;
+/** A key-like property: its name bare or quoted, or quoted inside a computed key (["id"]: ...), and the value it is given. */
+const KEY_PROPERTY = new RegExp(String.raw`(?:\b${KEY_NAME}['"]?|\[\s*(?:'${KEY_NAME}'|"${KEY_NAME}"|${TICK}${KEY_NAME}${TICK})\s*\])\s*:\s*([^,;}\n]*)`, "g");
 /** A Map or Set key: the first argument of a COLLECTION_METHODS call. */
 const MAP_KEY = new RegExp(String.raw`\.(?:${COLLECTION_METHODS.join("|")})\(\s*([^,)\n]+)`, "g");
 /** An rf-tagged ref built by "+": a quoted rf tag and the operand appended to it. */
@@ -553,8 +675,9 @@ const RF_TAG_PLUS = /(['"])rf-[a-z0-9-]+:[^'"\n]*\1\s*\+\s*([^;,)\n]+)/g;
 const COMPUTED_KEY = /[{,]\s*\[\s*([^[\]\n]+?)\s*\]\s*:/g;
 /** An element access: a bracketed expression right after an identifier, a call, an index or "?.". */
 const INDEX_KEY = /(?:[\w$)\]]|\?\.)\[\s*([^[\]\n]+?)\s*\]/g;
-/** A quoted literal in an element access names a property, not a key value. */
-const QUOTED = /^(['"`])[^'"`]*\1$/;
+/** A quoted literal in an element access names a property, not a key value: a single- or double-quoted literal, or a template
+ * literal with no interpolation (an interpolating template is an expression, read like any other). */
+const QUOTED = /^(?:(['"])[^'"`]*\1|`(?:[^'"`$]|\$(?!\{))*`)$/;
 /** The collections built from [key, value] pairs: a Map or WeakMap constructor and Object.fromEntries. */
 const PAIR_OPENER = /\bnew\s+(?:Map|WeakMap)\s*(?:<[^()]*>)?\s*\(|\bObject\.fromEntries\s*\(/g;
 /** The key of an array-literal pair: its first element, up to the first comma. */
@@ -613,6 +736,13 @@ function revisionJoinHits(source: string): string[] {
   return [...templated, ...joined];
 }
 const sameHits = (got: readonly string[], want: readonly string[]): boolean => JSON.stringify(got) === JSON.stringify(want);
+/** Rows KP1 and KP2's reading: each name, in each KEY_SPELLINGS spelling, makes exactly one key-like property hit. */
+const keySpellingMisses = (names: readonly string[]): string[] =>
+  names.flatMap(name =>
+    Object.entries(KEY_SPELLINGS)
+      .filter(([, spell]) => !sameHits(locatorHits(`const ref = { ${spell(name)}: link.locator };`), ["key link.locator"]))
+      .map(([spelling]) => `${name}/${spelling}`),
+  );
 /** Row A5's forms, each spelled around one expression; the hit it must read is `<form> <expression>` (rows LW1 and PC3). */
 const LOCATOR_FORMS: Readonly<Record<string, (expression: string) => string>> = {
   template: expression => `${TICK}rf-link:${interpolate(expression)}${TICK}`,
@@ -683,6 +813,8 @@ function textOf(path: string): string {
 interface SrcTree {
   readonly files: readonly string[];
   readonly read: (path: string) => string;
+  /** The files the tree holds only in memory (rows PC3 and PC4's plant): the only scoped files with no text on disk. */
+  readonly planted?: readonly string[];
 }
 const liveTree = (): SrcTree => ({ files: filesBelow(SRC), read: textOf });
 /** Rows PC3 and PC4's plant: an rf-scope file that exists only in memory, read beside the live tree; nothing is written. */
@@ -690,25 +822,426 @@ const PLANT_FILE = join(SRC, "workbench", "rf-federated-census-plant.ts");
 function plantedTree(source: string): SrcTree {
   const live = liveTree();
   expect(live.files, `${relative(REPO, PLANT_FILE)} exists on disk, so the plant would shadow it`).not.toContain(PLANT_FILE);
-  return { files: [...live.files, PLANT_FILE], read: path => (path === PLANT_FILE ? source : live.read(path)) };
+  return { files: [...live.files, PLANT_FILE], read: path => (path === PLANT_FILE ? source : live.read(path)), planted: [PLANT_FILE] };
 }
 interface ScopeScan {
   readonly witness: { [key: string]: Json };
   readonly hits: readonly string[];
   readonly scoped: readonly string[];
 }
-/** Rows A5 and C5's instrument: walks the tree, holds the floors and the anchor, and returns every matcher hit in the rf scope.
- * The callers judge the hits (none on the live tree, exactly the planted ones on a planted tree), so one walk serves both. */
-function scanRfScope(matcher: (source: string) => string[], tree: SrcTree = liveTree()): ScopeScan {
+/** A file's text as the filesystem holds it, read directly and never through a tree (the scans' read-in-full anchor), or
+ * undefined when no such file exists (rows PC3 and PC4's in-memory plant). */
+function diskText(path: string): string | undefined {
+  try {
+    return readFileSync(path, "utf8");
+  } catch {
+    return undefined;
+  }
+}
+/** A file's size in bytes as the filesystem reports it (statSync), read apart from both text readers: the scans' size anchor
+ * (wb-obyu F1), which a coordinated truncation of the tree's reader and diskText does not shorten, and not the UTF-8 byte length
+ * of a UTF-8 decode of the file - row PC11 holds this body to the statSync read alone and this declaration's text (signature
+ * and body) to the roster (wb-4kl7), and row PC10's control (bytes that are not UTF-8) tells the two apart; undefined when no
+ * such file exists. */
+function sizeOnDisk(path: string): number | undefined {
+  try {
+    return statSync(path).size;
+  } catch {
+    return undefined;
+  }
+}
+/** One reading of the rf scope before any judgment (rows A5 and C5's instrument judges it - row PC12 drives that instrument
+ * itself beside a control file - rows PC8, PC9, QP1 and QP2 drive it under cut reads and row PC10 beside the control file):
+ * the scoped files, the floors, the anchors not read (outside the scope, or whose matched text or read through the tree lacks
+ * the token), the scoped files with no text on disk other than the tree's in-memory plants, the scoped files whose matched
+ * text does not open with their own text on disk, the scoped files whose text on disk does not hold their size as the size
+ * anchor reports it (its UTF-8 byte length differs), and every matcher hit. */
+interface ScopeReading {
+  readonly scoped: readonly string[];
+  readonly floorMet: boolean;
+  readonly scopedFloorMet: boolean;
+  readonly anchorsUnread: readonly string[];
+  readonly offDisk: readonly string[];
+  readonly unread: readonly string[];
+  readonly unsized: readonly string[];
+  readonly hits: readonly string[];
+}
+/** The disk reader is diskText and the size anchor sizeOnDisk; rows PC9, QP1 and QP2 hand readRfScope a cut disk reader, to cut
+ * a file in both text readers at once, and row QP1 a size anchor cut in step with them (R-SIZE-STEP). Row PC11 holds this
+ * declaration's text (signature and body) to the roster. */
+function readRfScope(
+  matcher: (source: string) => string[],
+  tree: SrcTree,
+  readDisk: (path: string) => string | undefined = diskText,
+  readSize: (path: string) => number | undefined = sizeOnDisk,
+): ScopeReading {
   const scoped = tree.files.filter(inRfScope);
+  const texts = scoped.map(file => tree.read(file));
   const floorMet = tree.files.length >= SRC_FLOOR;
   const scopedFloorMet = scoped.length >= RF_SCOPE_FLOOR;
-  const anchorRead = scoped.includes(ANCHOR_FILE) && tree.read(ANCHOR_FILE).includes(ANCHOR_TOKEN);
-  const hits = scoped.flatMap(file => matcher(tree.read(file)).map(hit => `${relative(REPO, file)}: ${hit}`));
+  const anchorsUnread = ANCHORS.filter(anchor => {
+    const index = scoped.indexOf(anchor.file);
+    return index === -1 || !(texts[index] ?? "").includes(anchor.token) || !tree.read(anchor.file).includes(anchor.token);
+  }).map(anchor => relative(REPO, anchor.file));
+  const offDisk = scoped
+    .filter(file => readDisk(file) === undefined && !(tree.planted ?? []).includes(file))
+    .map(file => relative(REPO, file));
+  const unread = scoped
+    .filter((file, index) => {
+      const disk = readDisk(file);
+      return disk !== undefined && !(texts[index] ?? "").startsWith(disk);
+    })
+    .map(file => relative(REPO, file));
+  const unsized = scoped
+    .filter(file => {
+      const disk = readDisk(file);
+      return disk !== undefined && Buffer.byteLength(disk, "utf8") !== readSize(file);
+    })
+    .map(file => relative(REPO, file));
+  const hits = scoped.flatMap((file, index) => matcher(texts[index] ?? "").map(hit => `${relative(REPO, file)}: ${hit}`));
+  return { scoped, floorMet, scopedFloorMet, anchorsUnread, offDisk, unread, unsized, hits };
+}
+/** Rows A5 and C5's instrument: walks the tree, holds the floors and the anchors, reads each rf-scope file once and holds that
+ * read to the file's own text on disk (every file but an in-memory plant has one, and the matched text must open with it, so
+ * an emptied or cut-short read reds, while an in-memory plant may follow it) and that disk text to the file's size as statSync
+ * reports it (so a read cut short in both readers reds too), and returns every matcher hit in the rf scope.
+ * The callers judge the hits (none on the live tree, exactly the planted ones on a planted tree), so one walk serves both.
+ * Its one readRfScope call takes readRfScope's own defaults (diskText and sizeOnDisk): row PC12 drives this very call beside a
+ * control file, and row PC11 holds this declaration's text (signature and body) to the roster. */
+function scanRfScope(matcher: (source: string) => string[], tree: SrcTree = liveTree()): ScopeScan {
+  const { scoped, floorMet, scopedFloorMet, anchorsUnread, offDisk, unread, unsized, hits } = readRfScope(matcher, tree);
   expect(floorMet, `src: ${tree.files.length} files walked, floor ${SRC_FLOOR}`).toBe(true);
   expect(scopedFloorMet, `rf scope: ${scoped.length} files, floor ${RF_SCOPE_FLOOR}`).toBe(true);
-  expect(anchorRead, `the anchor ${relative(REPO, ANCHOR_FILE)} was not read with ${ANCHOR_TOKEN}`).toBe(true);
-  return { witness: { floorMet, scopedFloorMet, anchorRead, hits }, hits, scoped };
+  expect(anchorsUnread, "token anchors the scan did not read with their token").toEqual([]);
+  expect(offDisk, "rf-scope files with no text on disk beside the walk").toEqual([]);
+  expect(unread, "rf-scope files the scan did not read in full from disk").toEqual([]);
+  expect(unsized, "rf-scope files whose text on disk does not hold the size statSync reports").toEqual([]);
+  const anchors = ANCHORS.map(anchor => `${relative(REPO, anchor.file)}: ${anchor.token}`);
+  const witness = {
+    floorMet,
+    scopedFloorMet,
+    anchorRead: anchorsUnread.length === 0,
+    anchors,
+    scopeOnDisk: offDisk.length === 0,
+    scopeReadInFull: unread.length === 0,
+    scopeSized: unsized.length === 0,
+    hits: [...hits],
+  };
+  return { witness, hits, scoped };
+}
+interface AppendedScan {
+  readonly reported: readonly string[];
+  readonly missed: readonly string[];
+  readonly untargeted: readonly string[];
+  readonly anchorReports: readonly (number | null)[];
+}
+/** The rf-scope files of a walk and the anchors a per-file control never visited (wb-xr81 F2), so a control that visits only
+ * some of them reds. */
+const untargetedOf = (scoped: readonly string[], targets: readonly string[]): string[] =>
+  [...new Set([...scoped, ...ANCHORS.map(anchor => anchor.file)])].filter(file => !targets.includes(file)).map(file => relative(REPO, file));
+/** Rows PC6 and PC7's control: each rf-scope file of the live tree in turn carries the plant appended to its own live text (in
+ * memory; nothing is written), and the scan must report exactly the plant's hits, attributed to that file. Returns the distinct
+ * hits reported across the files (each one's own path removed, in report order), the files where the scan did not report
+ * exactly the plant's hits, the walked files and anchors it never planted into, and per anchor (ANCHORS order) the count of
+ * plant hits the scan that planted into that anchor attributed to it (null when none did), so a scan that reads or matches
+ * only some rf-scope files reds, and so does a control that plants into only some of them. */
+function appendedScan(matcher: (source: string) => string[], plant: string, plantHits: readonly string[]): AppendedScan {
+  const live = liveTree();
+  const scoped = live.files.filter(inRfScope);
+  expect(scoped.length, `rf scope: ${scoped.length} files, floor ${RF_SCOPE_FLOOR}`).toBeGreaterThanOrEqual(RF_SCOPE_FLOOR);
+  const reported: string[] = [];
+  const targets: string[] = [];
+  const attributed = new Map<string, number>();
+  const missed = scoped
+    .filter(target => {
+      targets.push(target);
+      const tree: SrcTree = { files: live.files, read: path => (path === target ? `${live.read(path)}\n${plant}\n` : live.read(path)) };
+      const prefix = `${relative(REPO, target)}: `;
+      const { hits } = scanRfScope(matcher, tree);
+      attributed.set(target, hits.filter(hit => hit.startsWith(prefix)).length);
+      for (const hit of hits) {
+        const bare = hit.startsWith(prefix) ? hit.slice(prefix.length) : hit;
+        if (!reported.includes(bare)) reported.push(bare);
+      }
+      return !sameHits(hits, plantHits.map(hit => `${prefix}${hit}`));
+    })
+    .map(file => relative(REPO, file));
+  const anchorReports = ANCHORS.map(anchor => attributed.get(anchor.file) ?? null);
+  return { reported, missed, untargeted: untargetedOf(scoped, targets), anchorReports };
+}
+interface ShortReadScan {
+  readonly readings: readonly Json[];
+  readonly missed: readonly string[];
+  readonly untargeted: readonly string[];
+  readonly anchorsReadShort: readonly (boolean | null)[];
+}
+/** Which readers rows PC8 and PC9 read each rf-scope file short through: the tree alone (PC8), or the tree and the disk reader
+ * together (PC9, the coordinated truncation of wb-obyu F1). */
+type ShortReaders = "tree" | "tree and disk";
+/** Rows PC8's and PC9's control: each rf-scope file of the live tree in turn is read one character short (in memory; nothing is
+ * written) through the tree alone or through the tree and the disk reader together, and the scans' reading (readRfScope, which
+ * rows A5 and C5's instrument judges) must report exactly that file through the one check the cut reaches: as not read in full
+ * and still sized when the tree alone reads it short (its matched text no longer opens with its disk text, which still holds
+ * its size), and as unsized and still read in full when both read it short (its matched text opens with the equally short disk
+ * text, so only the size anchor sees the cut), every anchor still read with its token and every file still on disk. Returns the
+ * distinct readings (each one's own path written "own"), the files the reading did not report exactly, the walked files and
+ * anchors never read short, and per anchor (ANCHORS order) whether the reading reported exactly that anchor when it was read
+ * short (null when it never was), so a read-in-full or size check that compares nothing, or an empty or partial disk text,
+ * reds, and so does a control that reads only some files short. */
+function shortReadScan(readers: ShortReaders): ShortReadScan {
+  const live = liveTree();
+  const scoped = live.files.filter(inRfScope);
+  expect(scoped.length, `rf scope: ${scoped.length} files, floor ${RF_SCOPE_FLOOR}`).toBeGreaterThanOrEqual(RF_SCOPE_FLOOR);
+  const readings: Json[] = [];
+  const targets: string[] = [];
+  const exact = new Map<string, boolean>();
+  const missed = scoped
+    .filter(target => {
+      targets.push(target);
+      const own = relative(REPO, target);
+      const tree: SrcTree = { files: live.files, read: path => (path === target ? live.read(path).slice(0, -1) : live.read(path)) };
+      const readDisk = (path: string): string | undefined => (readers === "tree and disk" && path === target ? diskText(path)?.slice(0, -1) : diskText(path));
+      const reading = readRfScope(locatorHits, tree, readDisk);
+      const owned = (files: readonly string[]): string[] => files.map(file => (file === own ? "own" : file));
+      const summary: Json = {
+        unread: owned(reading.unread),
+        unsized: owned(reading.unsized),
+        anchorsUnread: [...reading.anchorsUnread],
+        offDisk: [...reading.offDisk],
+      };
+      if (!readings.some(entry => JSON.stringify(entry) === JSON.stringify(summary))) readings.push(summary);
+      const [reported, quiet] = readers === "tree" ? [reading.unread, reading.unsized] : [reading.unsized, reading.unread];
+      exact.set(target, sameHits(reported, [own]));
+      return !(sameHits(reported, [own]) && quiet.length === 0 && reading.anchorsUnread.length === 0 && reading.offDisk.length === 0);
+    })
+    .map(file => relative(REPO, file));
+  const anchorsReadShort = ANCHORS.map(anchor => exact.get(anchor.file) ?? null);
+  return { readings, missed, untargeted: untargetedOf(scoped, targets), anchorsReadShort };
+}
+/** Row PC10's control (wb-obyu cut #2, the gate's U1): the bytes of an rf-scope file that are not UTF-8 - an ASCII line, one 0xff
+ * byte and a newline. A UTF-8 decode reads the 0xff byte as the replacement character U+FFFD, three bytes in UTF-8, so the UTF-8
+ * byte length of any UTF-8 text read of the file is two bytes more than the size statSync reports for it; the roster pins both
+ * counts. */
+const SIZE_CONTROL_BYTES = Buffer.concat([Buffer.from("// wb-obyu PC10 size control: the byte on the next line is not UTF-8\n", "utf8"), Buffer.from([0xff]), Buffer.from("\n", "utf8")]);
+/** Row PC10's control file name: an rf-scope name (inRfScope), so the scans' reading takes the file in beside the live tree. */
+const SIZE_CONTROL_NAME = "rf-federated-size-control.ts";
+interface SizeControl {
+  readonly bytes: number | null;
+  readonly decodedBytes: number;
+  readonly reading: Json;
+}
+/** Row PC10's control: writes SIZE_CONTROL_BYTES under SIZE_CONTROL_NAME into a tracked scratch directory, reads the rf scope of
+ * the live tree plus that file through readRfScope with its own disk reader and size anchor (the very reading A5's and C5's
+ * instrument judges), and removes the directory. Returns the control's size as sizeOnDisk reads it, the UTF-8 byte length of its
+ * text on disk, and the reading (the control's path written "control"), which must report the control unsized and nothing
+ * else: its matched text opens with its text on disk (both are the same UTF-8 decode), so only a size anchor that is not that
+ * decode's byte length can see it. */
+function sizeControlScan(): SizeControl {
+  const directory = makeScratch("rf-federated-size-control-");
+  try {
+    const control = join(directory, SIZE_CONTROL_NAME);
+    writeFileSync(control, SIZE_CONTROL_BYTES);
+    const live = liveTree();
+    const reading = readRfScope(locatorHits, { files: [...live.files, control], read: live.read });
+    const own = relative(REPO, control);
+    const named = (files: readonly string[]): string[] => files.map(file => (file === own ? "control" : file));
+    return {
+      bytes: sizeOnDisk(control) ?? null,
+      decodedBytes: Buffer.byteLength(diskText(control) ?? "", "utf8"),
+      reading: {
+        unread: named(reading.unread),
+        unsized: named(reading.unsized),
+        anchorsUnread: [...reading.anchorsUnread],
+        offDisk: named(reading.offDisk),
+        hits: [...reading.hits],
+      },
+    };
+  } finally {
+    removeScratch(directory);
+  }
+}
+/** Where rows A5's and C5's own instrument refused row PC12's control, for one matcher: the label of the first check scanRfScope
+ * failed (null when it refused nothing) and the files that check named (the control's path written "control"; null when the
+ * failure carried no list). */
+type ScanRefusal = { readonly refusedAt: string | null; readonly named: Json };
+/** Row PC12's control (wb-obyu cut #3, the gate's U1 on cut #2): row PC10's control bytes (SIZE_CONTROL_BYTES), written under
+ * SIZE_CONTROL_NAME into its own tracked scratch directory and walked beside the live tree by scanRfScope itself - rows A5's
+ * and C5's own instrument, through its own readRfScope call and that call's defaults - once with each matcher the live legs
+ * hand it (locatorHits for A5, revisionJoinHits for C5), and the directory removed. Returns, per matcher, the check the scan
+ * refused at and what it named, which must be the size check naming exactly the control: every check before it passes (the
+ * control is in scope, on disk and read in full, its matched text and its disk text being the same UTF-8 decode), so only a
+ * size anchor that is not the UTF-8 byte length of that decode, as the scan's own call takes it, refuses it. */
+function scanControlRefusals(): Json {
+  const directory = makeScratch("rf-federated-scan-control-");
+  try {
+    const control = join(directory, SIZE_CONTROL_NAME);
+    writeFileSync(control, SIZE_CONTROL_BYTES);
+    const live = liveTree();
+    const tree: SrcTree = { files: [...live.files, control], read: live.read };
+    const own = relative(REPO, control);
+    const refusal = (matcher: (source: string) => string[]): ScanRefusal => {
+      try {
+        scanRfScope(matcher, tree);
+        return { refusedAt: null, named: null };
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        const at = message.indexOf(": expected ");
+        const actual: unknown = error instanceof Error && "actual" in error ? error.actual : undefined;
+        const named: Json = Array.isArray(actual) ? actual.map((file: unknown) => (file === own ? "control" : String(file))) : null;
+        return { refusedAt: at === -1 ? message : message.slice(0, at), named };
+      }
+    };
+    return { locatorHits: { ...refusal(locatorHits) }, revisionJoinHits: { ...refusal(revisionJoinHits) } };
+  } finally {
+    removeScratch(directory);
+  }
+}
+/** Rows QP1's and QP2's residual cuts, each a coordinated hollow of an rf-scope file the scans' reading does not see (RESIDUALS):
+ * "size step" (R-SIZE-STEP) reads the file one character short through the tree, the disk reader and the size anchor together,
+ * the size cut by that character's UTF-8 byte length, as a hollow of statSync in step with both text readers would; "same length"
+ * (R-SAME-LENGTH) has the tree and the disk reader both read the file's last character as another character of the same UTF-8
+ * byte length (each rf-scope file ends with a newline, read as a space), a coordinated rewrite that keeps the file's byte
+ * length. */
+type QuietCut = "size step" | "same length";
+interface QuietCutScan {
+  readonly readings: readonly Json[];
+  readonly counterparts: readonly Json[];
+  readonly loud: readonly string[];
+  readonly unseen: readonly string[];
+  readonly untargeted: readonly string[];
+  readonly anchorsQuiet: readonly (boolean | null)[];
+}
+/** Rows QP1's and QP2's control: each rf-scope file of the live tree in turn is read under the residual's cut (in memory; nothing
+ * is written), and the scans' reading (readRfScope) must report nothing for it - not unread, not unsized, every anchor read
+ * with its token and every file on disk - while the same cut with one reader left whole (the size anchor for R-SIZE-STEP, so
+ * the file is reported unsized as in row PC9; the disk reader for R-SAME-LENGTH, so it is reported unread) reports exactly that
+ * file and nothing else, so the row reds when the reading sees the residual and when the cut it applies is one the reading
+ * never sees. Returns the distinct cut readings and counterpart readings (each one's own path written "own"), the files whose
+ * cut reading reported anything, the files whose counterpart reading did not report exactly that file, the walked files and
+ * anchors never cut, and per anchor (ANCHORS order) whether its cut reading was quiet (null when it never was cut). */
+function quietCutScan(cut: QuietCut): QuietCutScan {
+  const live = liveTree();
+  const scoped = live.files.filter(inRfScope);
+  expect(scoped.length, `rf scope: ${scoped.length} files, floor ${RF_SCOPE_FLOOR}`).toBeGreaterThanOrEqual(RF_SCOPE_FLOOR);
+  const rewrite = (text: string): string => (cut === "size step" ? text.slice(0, -1) : `${text.slice(0, -1)}${text.endsWith(" ") ? "\n" : " "}`);
+  const readings: Json[] = [];
+  const counterparts: Json[] = [];
+  const targets: string[] = [];
+  const loud: string[] = [];
+  const unseen: string[] = [];
+  const quietAt = new Map<string, boolean>();
+  const distinct = (list: Json[], entry: Json): void => {
+    if (!list.some(seen => JSON.stringify(seen) === JSON.stringify(entry))) list.push(entry);
+  };
+  for (const target of scoped) {
+    targets.push(target);
+    const own = relative(REPO, target);
+    const owned = (files: readonly string[]): string[] => files.map(file => (file === own ? "own" : file));
+    const summary = (reading: ScopeReading): Json => ({
+      unread: owned(reading.unread),
+      unsized: owned(reading.unsized),
+      anchorsUnread: [...reading.anchorsUnread],
+      offDisk: [...reading.offDisk],
+    });
+    const tree: SrcTree = { files: live.files, read: path => (path === target ? rewrite(live.read(path)) : live.read(path)) };
+    const cutDisk = (path: string): string | undefined => {
+      const text = diskText(path);
+      return path === target && text !== undefined ? rewrite(text) : text;
+    };
+    const steppedSize = (path: string): number | undefined => {
+      const size = sizeOnDisk(path);
+      const text = diskText(path);
+      return path === target && size !== undefined && text !== undefined ? size - Buffer.byteLength(text, "utf8") + Buffer.byteLength(rewrite(text), "utf8") : size;
+    };
+    const reading = readRfScope(locatorHits, tree, cutDisk, cut === "size step" ? steppedSize : sizeOnDisk);
+    const counterpart = cut === "size step" ? readRfScope(locatorHits, tree, cutDisk) : readRfScope(locatorHits, tree);
+    distinct(readings, summary(reading));
+    distinct(counterparts, summary(counterpart));
+    const quiet = reading.unread.length === 0 && reading.unsized.length === 0 && reading.anchorsUnread.length === 0 && reading.offDisk.length === 0;
+    quietAt.set(target, quiet);
+    if (!quiet) loud.push(own);
+    const [reported, other] = cut === "size step" ? [counterpart.unsized, counterpart.unread] : [counterpart.unread, counterpart.unsized];
+    if (!(sameHits(reported, [own]) && other.length === 0 && counterpart.anchorsUnread.length === 0 && counterpart.offDisk.length === 0)) unseen.push(own);
+  }
+  const anchorsQuiet = ANCHORS.map(anchor => quietAt.get(anchor.file) ?? null);
+  return { readings, counterparts, loud, unseen, untargeted: untargetedOf(scoped, targets), anchorsQuiet };
+}
+/** This file, which row PC11 reads parse-aware. */
+const SELF = fileURLToPath(import.meta.url);
+/** The names readRfScope's body must not reference (row PC11): the text readers, the size anchor and every reader a size could be
+ * re-derived through; it reads the tree, the disk and the size only through its parameters. */
+const SIZE_READERS: readonly string[] = ["diskText", "textOf", "readFileSync", "statSync", "sizeOnDisk", "liveTree", "TextDecoder"];
+/** The node:fs bindings row PC11 holds to node:fs's own imports. */
+const FS_READS: readonly string[] = ["readFileSync", "statSync"];
+/** Row PC11's reading of the size check's wiring (sizeAnchorWiring); sizeOnDisk's declaration text is held here and to the
+ * roster, readRfScope's and scanRfScope's to the roster alone. */
+type SizeAnchorWiring = {
+  readonly sizeOnDiskBody: string | null;
+  readonly readRfScopeDefaults: { [key: string]: Json };
+  readonly readRfScopeReaders: string[];
+  readonly scanCalls: Json[];
+  readonly bindings: string[];
+  readonly sizeOnDiskText: string | null;
+  readonly readRfScopeText: string | null;
+  readonly scanRfScopeText: string | null;
+};
+/** Row PC11's instrument: parses this file with the TypeScript parser and reads the size check's wiring - sizeOnDisk's body
+ * (whitespace collapsed), readRfScope's parameter defaults and the SIZE_READERS names its body references, the argument lists of
+ * every call spelled readRfScope(...) in scanRfScope's body, every binding of a FS_READS name in the file (an import specifier as
+ * "<name>: import <module>", with " as <local>" when aliased; any other declaration by its kind), and the whole declaration text
+ * of sizeOnDisk, of readRfScope and of scanRfScope (signature and body, every whitespace run collapsed to one space, the
+ * docstring outside it), so that any other edit of any of the three declarations - a parameter default in sizeOnDisk's
+ * signature that re-points the path its body stats (wb-4kl7), an aliased, parenthesized or .call callee at the scan's own
+ * call, a disk reader or size anchor handed there, a size check discarded or filtered there, a comparison stepped in
+ * readRfScope - changes what it reads (wb-obyu cut #3, the gate's U1 on cut #2). */
+function sizeAnchorWiring(): SizeAnchorWiring {
+  const source = ts.createSourceFile(SELF, readFileSync(SELF, "utf8"), ts.ScriptTarget.Latest, true);
+  const functions = new Map<string, ts.FunctionDeclaration>();
+  for (const statement of source.statements) {
+    if (ts.isFunctionDeclaration(statement) && statement.name !== undefined) functions.set(statement.name.text, statement);
+  }
+  const flat = (node: ts.Node | undefined): string | null => (node === undefined ? null : node.getText(source).replace(/\s+/g, " "));
+  const walk = (node: ts.Node | undefined, visit: (child: ts.Node) => void): void => {
+    if (node === undefined) return;
+    visit(node);
+    node.forEachChild(child => walk(child, visit));
+  };
+  const read = functions.get("readRfScope");
+  const readers = new Set<string>();
+  walk(read?.body, node => {
+    if (ts.isIdentifier(node) && SIZE_READERS.includes(node.text)) readers.add(node.text);
+  });
+  const defaults: { [key: string]: Json } = {};
+  for (const parameter of read?.parameters ?? []) {
+    if (parameter.initializer !== undefined) defaults[parameter.name.getText(source)] = flat(parameter.initializer);
+  }
+  const scanCalls: Json[] = [];
+  walk(functions.get("scanRfScope")?.body, node => {
+    if (ts.isCallExpression(node) && node.expression.getText(source) === "readRfScope") scanCalls.push(node.arguments.map(argument => argument.getText(source)));
+  });
+  const bindings: string[] = [];
+  walk(source, node => {
+    if (ts.isImportSpecifier(node)) {
+      const imported = (node.propertyName ?? node.name).getText(source);
+      const local = node.name.text;
+      if (FS_READS.includes(imported) || FS_READS.includes(local)) {
+        const module = ts.isStringLiteral(node.parent.parent.parent.moduleSpecifier) ? node.parent.parent.parent.moduleSpecifier.text : "?";
+        bindings.push(`${imported}: import ${module}${local === imported ? "" : ` as ${local}`}`);
+      }
+    } else if ((ts.isVariableDeclaration(node) || ts.isFunctionDeclaration(node) || ts.isParameter(node)) && node.name !== undefined && ts.isIdentifier(node.name) && FS_READS.includes(node.name.text)) {
+      bindings.push(`${node.name.text}: ${ts.SyntaxKind[node.kind]}`);
+    }
+  });
+  return {
+    sizeOnDiskBody: flat(functions.get("sizeOnDisk")?.body),
+    readRfScopeDefaults: defaults,
+    readRfScopeReaders: [...readers].sort(),
+    scanCalls,
+    bindings: bindings.sort(),
+    sizeOnDiskText: flat(functions.get("sizeOnDisk")),
+    readRfScopeText: flat(functions.get("readRfScope")),
+    scanRfScopeText: flat(functions.get("scanRfScope")),
+  };
 }
 
 const RF_HOST: ReactiveFiberTopologyContext = {
@@ -777,15 +1310,45 @@ function plantLocator(snapshot: NativeSnapshot, field: KeyBearingField, locator:
 }
 /** Row A4's judgment of one snapshot: the locator appears in a key-bearing field. */
 const locatorIn = (snapshot: NativeSnapshot, locator: string): boolean => JSON.stringify(keyBearing(snapshot)).includes(locator);
-/** The shipped rf reader's one snapshot of the full-shape envelope, read under an authorized root (rows A4 and PC2). */
-function readUnder(root: string): NativeSnapshot {
-  const topology = reactivefiberTopology(
-    { contract: REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, workspaceRoot: root, source: fullShapeRf(root) },
-    { ...RF_HOST, authorizedRfRoot: root },
-  );
-  const [snapshot] = topology.snapshots;
+/** What the shipped rf reader is handed for one read: the provider output, the full-shape envelope under one root. */
+type RfReading = { readonly contract: string; readonly workspaceRoot: string; readonly source: Json };
+/** One read of the shipped rf reader: the reading it was handed and the one snapshot it read from it. */
+interface RootRead {
+  readonly reading: RfReading;
+  readonly snapshot: NativeSnapshot;
+}
+/** The shipped rf reader's one snapshot of the full-shape envelope, read under an authorized root (rows A4, PC2 and PC5), kept
+ * with the very reading it was handed, so row A4 can ask the reader which root that reading is authorized under. */
+function readUnder(root: string): RootRead {
+  const reading: RfReading = { contract: REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, workspaceRoot: root, source: fullShapeRf(root) };
+  const [snapshot] = reactivefiberTopology(reading, { ...RF_HOST, authorizedRfRoot: root }).snapshots;
   if (snapshot === undefined) throw new Error(`no snapshot read under ${root}`);
-  return snapshot;
+  return { reading, snapshot };
+}
+/** The shipped reader's verdict on one reading under each of LOCATORS as the authorized root: "authorized", or the category of
+ * its refusal (it refuses a reading whose root is not the authorized one as 'authorization'). Row A4's root witness: a reading
+ * is authorized under exactly the root it names. */
+function rootVerdicts(reading: RfReading): string[] {
+  return LOCATORS.map(root => {
+    try {
+      reactivefiberTopology(reading, { ...RF_HOST, authorizedRfRoot: root });
+      return "authorized";
+    } catch (error) {
+      if (error instanceof CapabilityError) return error.category;
+      throw error;
+    }
+  });
+}
+/** Row A4's judgment of the reads of one envelope, one per locator: whether their key-bearing projections agree, and the
+ * locators written into them (row PC5 drives it with planted reads). */
+function judgeReads(snapshots: readonly NativeSnapshot[]): { readonly sameKeys: boolean; readonly leaked: string[] } {
+  const keys = snapshots.map(snapshot => JSON.stringify(keyBearing(snapshot)));
+  const sameKeys = keys.length === LOCATORS.length && new Set(keys).size === 1;
+  const leaked = LOCATORS.filter((root, index) => {
+    const snapshot = snapshots[index];
+    return snapshot !== undefined && locatorIn(snapshot, root);
+  });
+  return { sameKeys, leaked };
 }
 
 interface Spelling {
@@ -794,8 +1357,9 @@ interface Spelling {
   readonly source: string;
   readonly hit: boolean;
 }
-/** MA1-MA12 and MC1-MC8 must hit. Quiet rows: QA1 R-INDIRECT, QA2 R-CALL-BUILT, QA3 R-HOST-WORD, QA4 R-CALLBACK-KEY, QC1 and QC4
- * R-CALL-JOIN, QC2 R-SYNONYM, QC3 R-PROSE, QC5 R-ARITH-PACKED. */
+/** MA1-MA14 and MC1-MC8 must hit. Quiet rows: QA1 R-INDIRECT, QA2 R-CALL-BUILT, QA3 R-HOST-WORD, QA4 R-CALLBACK-KEY, QA5 and QA6
+ * R-REFLECTIVE-KEY, QA7 R-MID-TAG, QA8 R-SUFFIX-OUTSIDE, QC1 and QC4 R-CALL-JOIN, QC2 R-SYNONYM, QC3 R-PROSE, QC5 R-ARITH-PACKED,
+ * QC6 R-CALL-OPERAND, QC7 R-EXPRESSION-SCALE, QC8 R-TEMPLATE-PLUS, QC9 R-WIDE-GAP. */
 const SPELLINGS: readonly Spelling[] = [
   { pin: "MA1", matcher: locatorHits, source: `${TICK}rf-workspace:${interpolate("workspace.root")}${TICK}`, hit: true },
   { pin: "MA2", matcher: locatorHits, source: `${TICK}rf-link:${interpolate("link.locator")}${TICK}`, hit: true },
@@ -814,10 +1378,16 @@ const SPELLINGS: readonly Spelling[] = [
     hit: true,
   },
   { pin: "MA12", matcher: locatorHits, source: "byLocator[link.locator] = record;", hit: true },
+  { pin: "MA13", matcher: locatorHits, source: `byLocator[${TICK}${interpolate("link.locator")}${TICK}] = record;`, hit: true },
+  { pin: "MA14", matcher: locatorHits, source: 'const ref = { ["id"]: link.locator };', hit: true },
   { pin: "QA1", matcher: locatorHits, source: `${TICK}rf-workspace:${interpolate("where")}${TICK}`, hit: false },
   { pin: "QA2", matcher: locatorHits, source: 'const ref = ["rf-workspace", workspace.root].join(":");', hit: false },
   { pin: "QA3", matcher: locatorHits, source: `${TICK}rf-link:${interpolate("link.host")}${TICK}`, hit: false },
   { pin: "QA4", matcher: locatorHits, source: "const seen = new Set(links.map(link => link.locator));", hit: false },
+  { pin: "QA5", matcher: locatorHits, source: "Reflect.set(index, link.locator, record);", hit: false },
+  { pin: "QA6", matcher: locatorHits, source: "Object.defineProperty(index, link.locator, { value: record });", hit: false },
+  { pin: "QA7", matcher: locatorHits, source: `const ref = ${TICK}prefix/rf-link:${interpolate("link.locator")}${TICK};`, hit: false },
+  { pin: "QA8", matcher: locatorHits, source: "const ref = { sourceKeys: link.locator };", hit: false },
   { pin: "MC1", matcher: revisionJoinHits, source: `${TICK}${interpolate("epoch")}${interpolate("revision")}${TICK}`, hit: true },
   { pin: "MC2", matcher: revisionJoinHits, source: `${TICK}${interpolate("ref.source_epoch")}:${interpolate("ref.source_revision")}${TICK}`, hit: true },
   { pin: "MC3", matcher: revisionJoinHits, source: `${TICK}${interpolate("stream")}/${interpolate("sequence")}${TICK}`, hit: true },
@@ -831,7 +1401,14 @@ const SPELLINGS: readonly Spelling[] = [
   { pin: "QC3", matcher: revisionJoinHits, source: `${TICK}${interpolate("epoch")} ${interpolate("revision")}${TICK}`, hit: false },
   { pin: "QC4", matcher: revisionJoinHits, source: 'const key = String(epoch).concat(":", revision);', hit: false },
   { pin: "QC5", matcher: revisionJoinHits, source: "const key = (epoch << 20) | revision;", hit: false },
+  { pin: "QC6", matcher: revisionJoinHits, source: "const key = epoch.toString() + revision;", hit: false },
+  { pin: "QC7", matcher: revisionJoinHits, source: "const key = point.epoch * 2 ** 20 + point.revision;", hit: false },
+  { pin: "QC8", matcher: revisionJoinHits, source: `const key = ${TICK}${interpolate("epoch")}${TICK} + ${TICK}${interpolate("revision")}${TICK};`, hit: false },
+  { pin: "QC9", matcher: revisionJoinHits, source: `const key = ${TICK}${interpolate("epoch")}-separator${interpolate("revision")}${TICK};`, hit: false },
 ];
+
+/** The pins that reached their witness compare, in run order; the last case holds them to the roster's pins (wb-jnpc F5). */
+const REACHED: string[] = [];
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Json>> = {
@@ -881,20 +1458,21 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     };
   },
   A4: () => {
-    const snapshots = LOCATORS.map(root => readUnder(root));
+    const reads = LOCATORS.map(root => readUnder(root));
+    const snapshots = reads.map(read => read.snapshot);
     const keys = snapshots.map(keyBearing);
-    const leaked = LOCATORS.filter((root, index) => {
-      const snapshot = snapshots[index];
-      return snapshot !== undefined && locatorIn(snapshot, root);
-    });
+    const { sameKeys, leaked } = judgeReads(snapshots);
+    const verdicts = reads.map(read => rootVerdicts(read.reading));
     const projection = new ObservationProjection();
     const outcomes = snapshots.map(snapshot => projection.refresh(snapshot));
-    const sameKeys = keys.length === LOCATORS.length && JSON.stringify(keys[0]) === JSON.stringify(keys[1]);
+    expect(verdicts, "the two reads were not each authorized under its own locator alone").toStrictEqual(
+      LOCATORS.map(own => LOCATORS.map(root => (root === own ? "authorized" : "authorization"))),
+    );
     expect(keys[0], "one envelope read under two locators keyed differently").toStrictEqual(keys[1]);
     expect(leaked, "a locator written into a key-bearing field").toEqual([]);
     expect(projection.stats().nodes).toBe(1);
     const evidenceTags = (snapshots[0]?.evidenceRefs ?? []).map(ref => ref.slice(0, ref.indexOf(":")));
-    return { sameKeys, leaked, outcomes, nodes: projection.stats().nodes, evidenceTags };
+    return { sameKeys, leaked, outcomes, nodes: projection.stats().nodes, evidenceTags, rootVerdicts: verdicts };
   },
   A5: () => {
     const { witness, hits, scoped } = scanRfScope(locatorHits);
@@ -1050,14 +1628,14 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     return witness;
   },
   KP1: () => {
-    const missed = ROSTER.keyNames.filter(name => !sameHits(locatorHits(`const ref = { ${name}: link.locator };`), ["key link.locator"]));
-    expect(missed, "a key-like property name row A5 does not read").toEqual([]);
-    return { names: ROSTER.keyNames.length, missed };
+    const missed = keySpellingMisses(ROSTER.keyNames);
+    expect(missed, "a key-like property name row A5 does not read in some spelling").toEqual([]);
+    return { names: ROSTER.keyNames.length, spellings: Object.keys(KEY_SPELLINGS), missed };
   },
   KP2: () => {
-    const missed = ROSTER.keySuffixes.filter(suffix => !sameHits(locatorHits(`const ref = { source${suffix}: link.locator };`), ["key link.locator"]));
-    expect(missed, "a key-like property suffix row A5 does not read").toEqual([]);
-    return { suffixes: ROSTER.keySuffixes.length, missed };
+    const missed = keySpellingMisses(ROSTER.keySuffixes.map(suffix => `source${suffix}`));
+    expect(missed, "a key-like property suffix row A5 does not read in some spelling").toEqual([]);
+    return { suffixes: ROSTER.keySuffixes.length, spellings: Object.keys(KEY_SPELLINGS), missed };
   },
   MK1: () => {
     const missed = ROSTER.collectionMethods.filter(method => !sameHits(locatorHits(`index.${method}(link.locator);`), ["map link.locator"]));
@@ -1102,7 +1680,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
   },
   PC2: () => {
     const [root] = LOCATORS;
-    const snapshot = readUnder(root);
+    const { snapshot } = readUnder(root);
     const clean = !locatorIn(snapshot, root);
     const unseen = KEY_BEARING_FIELDS.filter(field => !locatorIn(plantLocator(snapshot, field, root), root));
     expect(clean, "the unplanted snapshot already carries the locator").toBe(true);
@@ -1121,6 +1699,95 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect(hits, "row C5's scan did not report the planted revision joins").toStrictEqual(REVISION_PLANT_HITS.map(hit => `${plant}: ${hit}`));
     return witness;
   },
+  PC5: () => {
+    const reads = LOCATORS.map(root => readUnder(root));
+    /** The reader plant row A4 must catch, written into a copy of each real read: a key derived from the read's own root (its
+     * sha256 as the source revision) that carries no literal locator. */
+    const planted = reads.map(read => ({ ...read.snapshot, sourceRevision: sha256(read.reading.workspaceRoot) }));
+    const control = judgeReads(reads.map(read => read.snapshot));
+    const judged = judgeReads(planted);
+    expect(control.sameKeys, "the unplanted reads already keyed differently").toBe(true);
+    expect(judged, "row A4's judgment missed a key derived from each read's root").toStrictEqual({ sameKeys: false, leaked: [] });
+    return { controlSameKeys: control.sameKeys, plantedSameKeys: judged.sameKeys, plantedLeaked: judged.leaked };
+  },
+  PC6: () => {
+    const { reported, missed, untargeted, anchorReports } = appendedScan(locatorHits, LOCATOR_PLANT, LOCATOR_PLANT_HITS);
+    expect(missed, "row A5's scan missed a plant appended to the live text of an rf-scope file").toEqual([]);
+    expect(untargeted, "rf-scope files or anchors row PC6 never planted into").toEqual([]);
+    expect(anchorReports, "an anchor row PC6 did not see the whole plant in").toEqual(ANCHORS.map(() => LOCATOR_PLANT_HITS.length));
+    return { reported: [...reported], missed: [...missed], untargeted: [...untargeted], anchorReports: [...anchorReports] };
+  },
+  PC7: () => {
+    const { reported, missed, untargeted, anchorReports } = appendedScan(revisionJoinHits, REVISION_PLANT, REVISION_PLANT_HITS);
+    expect(missed, "row C5's scan missed a plant appended to the live text of an rf-scope file").toEqual([]);
+    expect(untargeted, "rf-scope files or anchors row PC7 never planted into").toEqual([]);
+    expect(anchorReports, "an anchor row PC7 did not see the whole plant in").toEqual(ANCHORS.map(() => REVISION_PLANT_HITS.length));
+    return { reported: [...reported], missed: [...missed], untargeted: [...untargeted], anchorReports: [...anchorReports] };
+  },
+  PC8: () => {
+    const { readings, missed, untargeted, anchorsReadShort } = shortReadScan("tree");
+    expect(missed, "the scans' read-in-full check missed an rf-scope file read one character short").toEqual([]);
+    expect(untargeted, "rf-scope files or anchors row PC8 never read short").toEqual([]);
+    expect(anchorsReadShort, "an anchor row PC8 never saw reported as read short").toEqual(ANCHORS.map(() => true));
+    return { readings: [...readings], missed: [...missed], untargeted: [...untargeted], anchorsReadShort: [...anchorsReadShort] };
+  },
+  PC9: () => {
+    const { readings, missed, untargeted, anchorsReadShort } = shortReadScan("tree and disk");
+    expect(missed, "the scans' size check missed an rf-scope file both readers read one character short").toEqual([]);
+    expect(untargeted, "rf-scope files or anchors row PC9 never read short").toEqual([]);
+    expect(anchorsReadShort, "an anchor row PC9 never saw reported as read short by both readers").toEqual(ANCHORS.map(() => true));
+    return { readings: [...readings], missed: [...missed], untargeted: [...untargeted], anchorsReadShort: [...anchorsReadShort] };
+  },
+  PC10: () => {
+    const { bytes, decodedBytes, reading } = sizeControlScan();
+    expect(reading, "the scans' size check did not report exactly the control whose bytes are not UTF-8").toStrictEqual({
+      unread: [],
+      unsized: ["control"],
+      anchorsUnread: [],
+      offDisk: [],
+      hits: [],
+    });
+    return { bytes, decodedBytes, reading };
+  },
+  PC11: () => {
+    const { readRfScopeText, scanRfScopeText, ...wiring } = sizeAnchorWiring();
+    expect(wiring, "the size anchor's wiring differs from the statSync read the header states").toStrictEqual({
+      sizeOnDiskBody: "{ try { return statSync(path).size; } catch { return undefined; } }",
+      readRfScopeDefaults: { readDisk: "diskText", readSize: "sizeOnDisk" },
+      readRfScopeReaders: [],
+      scanCalls: [["matcher", "tree"]],
+      bindings: ["readFileSync: import node:fs", "statSync: import node:fs"],
+      sizeOnDiskText: "function sizeOnDisk(path: string): number | undefined { try { return statSync(path).size; } catch { return undefined; } }",
+    });
+    const heads = [readRfScopeText?.startsWith("function readRfScope(") ?? false, scanRfScopeText?.startsWith("function scanRfScope(") ?? false];
+    expect(heads, "row PC11 did not read the two declarations whose text the roster holds").toEqual([true, true]);
+    return { ...wiring, readRfScopeText, scanRfScopeText };
+  },
+  PC12: () => {
+    const refusals = scanControlRefusals();
+    const refused: Json = { refusedAt: "rf-scope files whose text on disk does not hold the size statSync reports", named: ["control"] };
+    expect(refusals, "the scan itself did not refuse the control whose bytes are not UTF-8 at its size check, naming the control alone").toStrictEqual({
+      locatorHits: refused,
+      revisionJoinHits: refused,
+    });
+    return refusals;
+  },
+  QP1: () => {
+    const { readings, counterparts, loud, unseen, untargeted, anchorsQuiet } = quietCutScan("size step");
+    expect(loud, "the scans' reading saw a file read short through both text readers and the size anchor together (R-SIZE-STEP)").toEqual([]);
+    expect(unseen, "the size check missed a file read short through both text readers with the size anchor whole").toEqual([]);
+    expect(untargeted, "rf-scope files or anchors row QP1 never cut").toEqual([]);
+    expect(anchorsQuiet, "an anchor row QP1 never read quiet under its cut").toEqual(ANCHORS.map(() => true));
+    return { readings: [...readings], counterparts: [...counterparts], loud: [...loud], unseen: [...unseen], untargeted: [...untargeted], anchorsQuiet: [...anchorsQuiet] };
+  },
+  QP2: () => {
+    const { readings, counterparts, loud, unseen, untargeted, anchorsQuiet } = quietCutScan("same length");
+    expect(loud, "the scans' reading saw a file whose last character both text readers rewrote at its own byte length (R-SAME-LENGTH)").toEqual([]);
+    expect(unseen, "the read-in-full check missed a file whose last character the tree alone rewrote at its own byte length").toEqual([]);
+    expect(untargeted, "rf-scope files or anchors row QP2 never cut").toEqual([]);
+    expect(anchorsQuiet, "an anchor row QP2 never read quiet under its cut").toEqual(ANCHORS.map(() => true));
+    return { readings: [...readings], counterparts: [...counterparts], loud: [...loud], unseen: [...unseen], untargeted: [...untargeted], anchorsQuiet: [...anchorsQuiet] };
+  },
   ...Object.fromEntries(
     SPELLINGS.map(spelling => [
       spelling.pin,
@@ -1135,7 +1802,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
 
 describe("wb-o4h0.2 federated identity census (RF-FEDERATED-WORKSPACES-R3, absent-today leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:4", "C:5", "MA:17", "MC:13", "MV:5", "PC:4"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:4", "C:5", "MA:23", "MC:17", "MV:5", "PC:14"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
@@ -1168,8 +1835,15 @@ describe("wb-o4h0.2 federated identity census (RF-FEDERATED-WORKSPACES-R3, absen
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
           const witness = impl === undefined ? null : impl();
           expect(witness).toStrictEqual(rosterWitness(pin));
+          REACHED.push(pin);
         });
       }
     });
   }
+
+  it("every judged pin reached its witness compare, in the roster's row order", () => {
+    expect(REACHED, "a pin whose test is not registered, is skipped or never reached its witness compare").toEqual(
+      ROSTER.rows.flatMap(row => row.pins.map(pin => pin.id)),
+    );
+  });
 });
