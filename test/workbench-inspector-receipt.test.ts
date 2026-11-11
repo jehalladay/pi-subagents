@@ -10,9 +10,23 @@
  *    terminal, whose bytes the screen model replays;
  *  - the judge, over one good journey and one mutant per finding rule and per unrealised reason;
  *  - the receipt builder, with the injected shared helper (sanitizeWorkbenchText) and without one.
- * The live pty run happens only when the runner is invoked as a CLI; nothing here reaches a pty, the SDK or the network. The
- * entry-point rows (gate refusal #1 F4) spawn a staged copy of the runner with no dist/ beside it, which stops at its honest
- * preflight before any pty, SDK or network; the F3 row pins that no opt-in copies the raw pty capture out of scratch.
+ * The live pty run happens only when the runner is invoked as a CLI; nothing here reaches a real pty, the SDK or the network.
+ * The CLI-entry rows (gate refusal #1 F3/F4, refusal #2 U1) pin exactly six readings of a staged copy of the runner:
+ *  - two entry-point scenarios with no dist/ beside it (run as the entry point it exits 2 at its honest preflight; imported
+ *    by a `node -e` entry point that passes its path as argv[1] it runs nothing);
+ *  - three closed censuses of its source text: none of the tokens KEEP_CAPTURE, capture.raw, captureRetained or
+ *    copyFileSync; the capture file name inspector.capture.txt once and the identifiers capturePath and work only at their
+ *    listed lines; process.env and process.argv only at their listed lines;
+ *  - one stand-in run (stand-in dist/, pi, script(1) and stty on PATH) whose stand-in script writes a marker into the
+ *    capture path and ends before pi starts: exit 2 within 60 s, 'pi TUI did not start' with the ended pty session in its
+ *    diagnostics, the capture removed, the out dir holding exactly inspector-receipt.json, the marker in no file under that
+ *    run's witness root (the staged runner, the out dir, the run's TMPDIR, cwd and HOME) nor on stdout, and stderr empty
+ *    (so no scratch leak report).
+ * A copy made on a journey stage past the boot wait (the stand-in session ends first, so no later stage runs) is NOT
+ * CLAIMED by this census. A copy to a path outside that witness root is NOT CLAIMED by this census. A re-encoded copy (the
+ * marker text absent from it) is NOT CLAIMED by this census. A copy that reaches the capture without the file name,
+ * capturePath or work (for example through the screen model's read buffer) and is gated by an input read through another
+ * spelling than process.env or process.argv is NOT CLAIMED by this census.
  *
  * Spec lines pinned (docs/workbench/15 VC-5, docs/workbench/10, bead acceptance):
  *  - "Four views: overview/tree, graph, timeline, evidence; hierarchical aggregation; key navigation; responsive 80x24."
@@ -23,8 +37,8 @@
  *  - "exit 2 honestly when the pty session or the four views cannot be driven, never a fake pass"; "every captured frame sanitized"
  */
 import { spawnSync } from "node:child_process";
-import { copyFileSync, mkdirSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { chmodSync, copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { basename, delimiter, dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { type OverlayHandle, type OverlayOptions, type Terminal, TuiAltScreen } from "@earendil-works/pi-tui";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
@@ -892,8 +906,8 @@ describe("buildInspectorReceipt and exitCodeFor", () => {
 });
 
 /* ------------------------------------------------------------------------- *
- * The CLI entry: only the process's own entry module runs the journey, and the
- * raw pty capture never leaves scratch.
+ * The CLI entry: two entry-point scenarios, three closed censuses of the
+ * runner source, and one stand-in run whose capture holds a marker.
  * ------------------------------------------------------------------------- */
 
 installScratchLeakGuard();
@@ -901,7 +915,54 @@ installScratchLeakGuard();
 /** The runner and the two qa modules it imports, staged with no dist/ beside them, so a run stops at the honest preflight. */
 const STAGED_RUNNER_FILES = ["live-inspector-receipt.mjs", "scratch.mjs", "git-stamp.mjs"];
 
-describe("the runner's CLI entry (gate refusal #1 F3/F4): the journey starts only at the process entry point, and no raw capture leaves scratch", () => {
+/** The runner's source text, as the closed source censuses read it. */
+const RUNNER_SOURCE_URL = new URL("../qa/workbench/live-inspector-receipt.mjs", import.meta.url);
+
+/** The trimmed lines of `source` that match `pattern`, in file order. */
+function linesMatching(source: string, pattern: RegExp): string[] {
+  return source
+    .split("\n")
+    .filter(line => pattern.test(line))
+    .map(line => line.trim());
+}
+
+/** Every regular file under `dir`, recursively. */
+function filesUnder(dir: string): string[] {
+  return readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
+    const path = join(dir, entry.name);
+    if (entry.isDirectory()) return filesUnder(path);
+    return entry.isFile() ? [path] : [];
+  });
+}
+
+/** The text the stand-in script writes into the capture path: raw pty bytes no file outside scratch may hold after the run. */
+const CAPTURE_MARKER = "RAW-PTY-CAPTURE-MARKER-6ze15-cut3";
+
+/** Stand-ins the stand-in run puts on PATH: pi and stty answer --version; script(1) writes the marker into its capture path. */
+const STAND_IN_BIN: Readonly<Record<string, string>> = {
+  pi: '#!/bin/sh\nif [ "$1" = "--version" ]; then echo "0.0.0-stand-in"; fi\nexit 0\n',
+  stty: "#!/bin/sh\nexit 0\n",
+  // Invoked as script -qefc <inner command> <capture path>: write the marker into the capture, log where and how much, end.
+  script: [
+    "#!/bin/sh",
+    'if [ "$1" = "--version" ]; then echo "script from util-linux (stand-in)"; exit 0; fi',
+    'printf \'%s line one\\n%s line two\\n\' "$WITNESS_MARKER" "$WITNESS_MARKER" > "$3"',
+    'printf \'%s %s\\n\' "$3" "$(wc -c < "$3")" >> "$WITNESS_LOG"',
+    "exit 0",
+    "",
+  ].join("\n"),
+};
+
+/** A stand-in dist/: the shared helper as the identity, and a one-turn credential probe that completes on a named model. */
+const STAND_IN_DIST: Readonly<Record<string, string>> = {
+  "index.js": "export const standIn = true;\n",
+  "workbench/redaction.js": "export function sanitizeWorkbenchText(text) { return String(text); }\n",
+  "workbench/claude-host.js": "export function createClaudeWorkflowHost(options) { return { options }; }\n",
+  "workflow/runtime.js":
+    'export async function runWorkflow({ host }) { host.options.onMessage({ message: { model: "stand-in-model" } }); return { status: "completed" }; }\n',
+};
+
+describe("the runner's CLI entry (gate refusals #1 F3/F4 and #2 U1): two entry-point scenarios, three closed censuses of the runner source and one stand-in run whose capture holds a marker", () => {
   let root = "";
   let entry = "";
   beforeAll(() => {
@@ -926,9 +987,89 @@ describe("the runner's CLI entry (gate refusal #1 F3/F4): the journey starts onl
     expect({ status: run.status, stdout: run.stdout }).toEqual({ status: 0, stdout: "imported\n" });
   });
 
-  it("copies no raw pty capture out of scratch: no keep-capture opt-in and no file copy anywhere in the runner", () => {
-    const source = readFileSync(new URL("../qa/workbench/live-inspector-receipt.mjs", import.meta.url), "utf8");
+  it("the runner source holds none of the tokens KEEP_CAPTURE, capture.raw, captureRetained or copyFileSync", () => {
+    const source = readFileSync(RUNNER_SOURCE_URL, "utf8");
     expect(source).not.toMatch(/KEEP_CAPTURE|capture\.raw|captureRetained/u);
     expect(source).not.toMatch(/\bcopyFileSync\b/u);
+  });
+
+  it("the runner source names the capture file inspector.capture.txt once, and capturePath and work only at their listed lines", () => {
+    const source = readFileSync(RUNNER_SOURCE_URL, "utf8");
+    expect(source.match(/inspector\.capture\.txt/gu)).toEqual(["inspector.capture.txt"]);
+    expect(linesMatching(source, /\bcapturePath\b/u)).toEqual([
+      'const capturePath = join(work, "inspector.capture.txt");',
+      'fd = openSync(capturePath, "r");',
+      ["const commands = { pty: `script -qefc \"$", '{inner}" $', "{capturePath}`, piArgs: `-e $", "{distEntry}`, prompt, keys: keyLog };"].join(""),
+      'const child = spawn("script", ["-qefc", inner, capturePath], {',
+      "captureRef: capturePath,",
+    ]);
+    expect(linesMatching(source, /\bwork\b/u)).toEqual([
+      'const work = makeScratch("6ze15-pty-");',
+      "scratch.push(work);",
+      'const capturePath = join(work, "inspector.capture.txt");',
+      'const ttyFile = join(work, "pty.name");',
+    ]);
+  });
+
+  it("the runner source names process.env and process.argv only at their listed lines", () => {
+    const source = readFileSync(RUNNER_SOURCE_URL, "utf8");
+    expect(linesMatching(source, /process\.env/u)).toEqual(['model: process.env.INSPECTOR_RECEIPT_MODEL || "claude-sonnet-4-5",', 'env: { ...process.env, TERM: "xterm-256color" },']);
+    expect(linesMatching(source, /process\.argv/u)).toEqual([
+      "const outDir = process.argv[2] ? resolve(process.argv[2]) : undefined;",
+      'if (typeof process === "undefined" || !process.argv?.[1]) return false;',
+      'return import.meta.url.endsWith(process.argv[1].split("/").pop() ?? "\\u0000");',
+    ]);
+  });
+
+  it("a stand-in run (stand-in dist/, pi, script(1) and stty; the stand-in script writes a marker into the capture path and ends before pi starts): exit 2 within 60 s, 'pi TUI did not start' with the ended pty session in its diagnostics, the capture removed, the out dir holding exactly inspector-receipt.json, the marker in no file under the run's witness root nor on stdout, and stderr empty", { timeout: 180_000 }, () => {
+    const witness = makeScratch("6ze15-witness-");
+    try {
+      const qaDir = join(witness, "runner", "qa", "workbench");
+      mkdirSync(qaDir, { recursive: true });
+      for (const file of STAGED_RUNNER_FILES) copyFileSync(fileURLToPath(new URL(`../qa/workbench/${file}`, import.meta.url)), join(qaDir, file));
+      for (const [file, text] of Object.entries(STAND_IN_DIST)) {
+        mkdirSync(dirname(join(witness, "runner", "dist", file)), { recursive: true });
+        writeFileSync(join(witness, "runner", "dist", file), text);
+      }
+      // The staged root marks its stand-in dist/*.js as ES modules, so no enclosing package.json makes node warn on stderr.
+      writeFileSync(join(witness, "runner", "package.json"), '{ "type": "module" }\n');
+      const bin = join(witness, "bin");
+      mkdirSync(bin);
+      for (const [name, text] of Object.entries(STAND_IN_BIN)) {
+        writeFileSync(join(bin, name), text);
+        chmodSync(join(bin, name), 0o755);
+      }
+      const [tmp, cwd, home] = ["tmp", "cwd", "home"].map(name => join(witness, name));
+      for (const dir of [tmp, cwd, home]) mkdirSync(dir);
+      const out = join(witness, "out");
+      const log = join(witness, "stand-in-script.log");
+      const run = spawnSync(process.execPath, [join(qaDir, "live-inspector-receipt.mjs"), out], {
+        cwd,
+        encoding: "utf8",
+        // The boot wait ends with the pty session: a run that instead runs out the runner's 90 s boot bound is killed here.
+        timeout: 60_000,
+        env: { ...process.env, PATH: `${bin}${delimiter}${process.env.PATH ?? ""}`, TMPDIR: tmp, HOME: home, WITNESS_LOG: log, WITNESS_MARKER: CAPTURE_MARKER },
+      });
+      expect(run.status).toBe(2);
+      const receipt = JSON.parse(run.stdout.trim());
+      expect(receipt).toMatchObject({ contract: INSPECTOR_RECEIPT_CONTRACT, unavailability: "pi TUI did not start", journey: {}, realised: false, pass: false });
+      expect(receipt.diagnostics[0]).toBe("the pty session ended (exit 0) before pi finished startup; stderr: ");
+      // The stand-in wrote the capture inside the run's own pty scratch under its TMPDIR, and the run removed it.
+      const written = readFileSync(log, "utf8").trim().split("\n");
+      expect(written).toHaveLength(1);
+      const [capture, size] = written[0].split(" ");
+      expect(basename(capture)).toBe("inspector.capture.txt");
+      expect(basename(dirname(capture)).startsWith("6ze15-pty-")).toBe(true);
+      expect(dirname(dirname(capture))).toBe(tmp);
+      expect(Number(size)).toBe(2 * CAPTURE_MARKER.length + " line one\n line two\n".length);
+      expect(existsSync(capture)).toBe(false);
+      expect(readdirSync(out)).toEqual(["inspector-receipt.json"]);
+      expect(filesUnder(witness).filter(file => readFileSync(file, "utf8").includes(CAPTURE_MARKER))).toEqual([]);
+      expect(run.stdout.includes(CAPTURE_MARKER)).toBe(false);
+      // Nothing reached stderr: no scratch leak report (the runner's own removal ran before the exit audit) and no capture text.
+      expect(run.stderr).toBe("");
+    } finally {
+      removeScratch(witness);
+    }
   });
 });

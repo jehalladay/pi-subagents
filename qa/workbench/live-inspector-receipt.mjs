@@ -891,8 +891,9 @@ async function main() {
   }
 
   function finish(receipt) {
-    // The raw pty capture is removed with the scratch, unread by anything but the screen model: every screen string the receipt
-    // carries passed the shared helper (gate refusal #1 F3: no opt-in copies the unsanitized capture out of scratch).
+    // Dropping this run's scratch dirs here removes the raw pty capture with them. The CLI-entry stand-in run row of
+    // test/workbench-inspector-receipt.test.ts pins that end state (capture gone, no scratch leak report on stderr) for one run
+    // whose pty session ends before pi starts; no other path is claimed.
     removeScratch(...scratch);
     if (outDir !== undefined) {
       mkdirSync(outDir, { recursive: true });
@@ -963,7 +964,7 @@ async function main() {
   mkdirSync(join(workspace, ".pi", "workflows"), { recursive: true });
   writeFileSync(join(workspace, ".pi", "subagents.json"), `${JSON.stringify(settings, null, 2)}\n`);
   writeFileSync(join(workspace, ".pi", "workflows", `${SAVED_WORKFLOW_NAME}.js`), savedWorkflowSource());
-  // The pty capture lives in scratch: the receipt carries its sanitized readings, never the raw bytes.
+  // script(1) writes the raw pty capture into this scratch dir; the screen model replays it from there (pump).
   const work = makeScratch("6ze15-pty-");
   scratch.push(work);
   const capturePath = join(work, "inspector.capture.txt");
@@ -1034,7 +1035,14 @@ async function main() {
   });
   const stderrChunks = [];
   child.stderr.on("data", chunk => stderrChunks.push(String(chunk)));
-  const exited = new Promise(resolveExit => child.on("exit", code => resolveExit(code)));
+  /** How the pty session ended (its exit code, or the signal that ended it), once it has. */
+  let ptyEnded;
+  const exited = new Promise(resolveExit =>
+    child.on("exit", (code, signal) => {
+      ptyEnded = code ?? signal ?? "unknown";
+      resolveExit(code);
+    }),
+  );
   const send = text => {
     keyLog.push(KEY_NAMES.get(text) ?? (text === `${prompt}\r` ? "prompt+Enter" : text === "/quit\r" ? "/quit+Enter" : `${text.length} chars`));
     try {
@@ -1061,9 +1069,11 @@ async function main() {
     }
   }
 
-  const booted = await waitFor((_, lines) => lines.filter(line => line.trim() !== "").length >= 3 && !dense(lines).includes("Startupisstillinprogress"), 90_000);
-  if (booted.at === undefined) {
-    diagnostics.push(`pi never finished startup; stderr: ${stderrChunks.join("").slice(0, 300)}`);
+  // A pty session that has ended draws nothing more, so the boot wait stops there instead of running out its 90 s bound.
+  const booted = await waitFor((_, lines) => ptyEnded !== undefined || (lines.filter(line => line.trim() !== "").length >= 3 && !dense(lines).includes("Startupisstillinprogress")), 90_000);
+  if (booted.at === undefined || ptyEnded !== undefined) {
+    const stderrText = stderrChunks.join("").slice(0, 300);
+    diagnostics.push(ptyEnded === undefined ? `pi never finished startup; stderr: ${stderrText}` : `the pty session ended (exit ${ptyEnded}) before pi finished startup; stderr: ${stderrText}`);
     await quit();
     unavailable("pi TUI did not start", { pi: piVersion, preflight });
   }
