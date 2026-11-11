@@ -182,6 +182,39 @@ describe("workflow_execute wiring: the saved source must be the pinned one", () 
   });
 });
 
+/**
+ * EAT-R337 criterion 1 (wb-djk5; DX triage 2026-11-11, claim C118): "a function-kind request in detached hostMode with
+ * execute-only grants is refused unsupported-definition-kind without demanding workbench:detach". No host mode launches a
+ * function or furnace-formula definition, so the shell judges the kind before the detach conjunction: the operator is never
+ * asked for a grant that cannot make the request launch. The second case replays the probe's two readings (probe-execute-refusal
+ * cases C and D: the same function request with workbench:execute alone, then with workbench:detach added). The conjunction still
+ * binds every kind a host launches: F6 above pins a script request in detached hostMode with workbench:execute alone as
+ * missing-detach-grant.
+ */
+describe("EAT-R337 criterion 1 (claim C118): a definition kind no host launches is refused before the detach conjunction is judged", () => {
+  it.each(["function", "furnace-formula"])(
+    "a %s definition in detached hostMode with workbench:execute alone refuses as unsupported-definition-kind, its reply text names no workbench:detach, and nothing is resolved or launched",
+    async kind => {
+      const resolveSource = vi.fn(() => SOURCE);
+      const h = harness({ rights: [EXECUTE_GRANT], resolveSource });
+      const { text, reply } = await h.run(embedded({ definitionRef: definition({ kind }), hostMode: "detached" }));
+      expect(reply).toMatchObject({ ok: false, invoked: false, status: "refused" });
+      expect(reply.error?.code).toBe("unsupported-definition-kind");
+      expect(text).not.toContain(DETACH_GRANT);
+      expect([resolveSource.mock.calls.length, h.launchEmbedded.mock.calls.length, h.launchDetached.mock.calls.length]).toEqual([0, 0, 0]);
+    },
+  );
+
+  it("cases C and D: adding workbench:detach to the same detached function request leaves its refusal unchanged, and so does asking for hostMode embedded", async () => {
+    const refusal = async (rights: readonly string[], hostMode: string) =>
+      (await harness({ rights }).run(embedded({ definitionRef: definition({ kind: "function" }), hostMode }))).reply.error;
+    const caseC = await refusal([EXECUTE_GRANT], "detached");
+    expect(caseC?.code).toBe("unsupported-definition-kind");
+    expect(await refusal([EXECUTE_GRANT, DETACH_GRANT], "detached")).toEqual(caseC);
+    expect(await refusal([EXECUTE_GRANT], "embedded")).toEqual(caseC);
+  });
+});
+
 describe("workflow_execute wiring: the envelope", () => {
   it("F3: exactly one dialect reaches the model; the pure module's contract string is absent from the text", async () => {
     const h = harness();

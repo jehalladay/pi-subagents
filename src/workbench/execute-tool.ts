@@ -212,10 +212,12 @@ export function createWorkflowExecuteTool(deps: WorkflowExecuteDeps) {
         outcome = refusal.outcome;
       };
       outcome = { status: "refused", reason: "launch refused" };
-      if (admission.hostMode === "detached" && !rights.includes(DETACH_GRANT)) {
-        refuse("missing-detach-grant", `detached hostMode requires both ${EXECUTE_GRANT} and ${DETACH_GRANT}; execute alone never reaches a detached launch`);
-      } else if (admission.definition.kind !== "script") {
+      // A kind no host mode launches is refused before the detach conjunction is judged, so the operator is never asked for a
+      // grant that cannot make the request launch (EAT-R337 criterion 1, claim C118).
+      if (admission.definition.kind !== "script") {
         refuse("unsupported-definition-kind", "only script definitions launch in this host");
+      } else if (admission.hostMode === "detached" && !rights.includes(DETACH_GRANT)) {
+        refuse("missing-detach-grant", `detached hostMode requires both ${EXECUTE_GRANT} and ${DETACH_GRANT}; execute alone never reaches a detached launch`);
       } else {
         let source: WorkflowSource | undefined;
         try {
