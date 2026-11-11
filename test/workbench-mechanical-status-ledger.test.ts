@@ -23,6 +23,8 @@
  *
  * PINNED READER SET (one claim per line; each line names its cases before the colon; an input no case holds is NOT CLAIMED):
  *  - SL-LIVE: the committed ledger, judged with the committed export, the committed receipts and docsSection, gives no finding.
+ *  - SL-NOTES-REPLACE: the committed ledger, judged with the committed export in which the notes of wb-1zn2, wb-w8fk, wb-4bxo, wb-9a1o, wb-p3i2 and wb-pxvv (the six beads R-B761 names) are empty, the committed receipts and docsSection, gives no finding, and those six planted records hold empty notes (R-B761, wb-n40d).
+ *  - SL-NOTES-RECEIPT: the rows whose evidence names the wb-n40d receipt are exactly EAT-R089..EAT-R093, EAT-R148..EAT-R151, EAT-R155..EAT-R159, EAT-R163 and EAT-R173..EAT-R177, in table order; each holds that one evidence item, under that receipt's 2026-11-10 section, with the anchor '<row id> in the notes of <row bead>'; and the beads of those rows, in table order, are the six SL-NOTES-REPLACE empties (R-B761, wb-n40d).
  *  - SL-SHAPE: per row its id, class, group, bead, tested-form count, evidence count and the sha256 (first 12 hex) of its JSON, and per control the same, equal the frozen list of this cut (rule 16).
  *  - SL-COUNTS: the committed ledger holds 200 rows, 75 already-implemented/tested, 31 partial/inert and 94 blocked, and its summary names B-detached-grants, B-replay and B-hx-evidence, in table order, as the complete plan groups.
  *  - SL-SCHEMA-NOT-OBJECT, SL-SCHEMA-NAME, SL-SCHEMA-PIN, SL-SCHEMA-PINS-ABSENT, SL-SCHEMA-ROWS, SL-SCHEMA-CONTROLS, SL-SCHEMA-ROW, SL-SCHEMA-CONTROL: a ledger that is an array, null or a string; another schema string; a pins.pi.commit or pins.mw.commit of 39 or 41 hex, with an upper-case letter, or that is an array holding the 40-hex pin (each row carrying the same value); a ledger without pins; rows or controls that are not arrays; and a row or a control that is not an object are refused (L-SCHEMA), each with exactly the findings its case lists.
@@ -30,7 +32,7 @@
  *  - SL-CLASS: a class outside the three is refused (L-CLASS).
  *  - SL-PIN: a row pin.pi or pin.mw that is another 40-hex commit, and a row without pin, are refused (L-PIN).
  *  - SL-BEAD-FABRICATED, SL-BEAD-NOT-STRING, SL-BEAD-NONE, SL-BEAD-OTHER-GROUP: a bead id the export does not hold and a bead that is a number are refused by L-BEAD and L-GROUP (EAT-R202 AC3); the bead none is quiet; a bead the export holds that is not the row's group's bead is refused by L-GROUP alone.
- *  - SL-GROUP-UNMAPPED, SL-GROUP-EXPORT-ABSENT, SL-GROUP-EXPORT-TITLE: a row group label outside the 27 mapped labels is refused (EAT-R202 AC3); an export without the B-hx-evidence bead wb-f3wd is refused by L-GROUP and by L-BEAD for EAT-R057; an export title of wb-f3wd with text, a space, a tab or a line break before [MWI-hx-evidence], one whose tag is in lower case, lacks its closing bracket or runs longer ([MWI-hx-evidencex]), and an empty one are refused (L-GROUP).
+ *  - SL-GROUP-UNMAPPED, SL-GROUP-EXPORT-ABSENT, SL-GROUP-EXPORT-TITLE: a row group label outside the 27 mapped labels is refused (EAT-R202 AC3); an export without the B-hx-evidence bead wb-f3wd is refused by L-GROUP and by L-BEAD for EAT-R057; an export title of wb-f3wd with text, a space, a tab, a line break or a byte-order mark before [MWI-hx-evidence], one whose tag is in lower case, lacks its closing bracket or runs longer ([MWI-hx-evidencex]), and an empty one are refused (L-GROUP); the members of a space, a tab, a line break and a byte-order mark are planted each alone before the tag: the 17 space separators (Zs: U+0020, U+00A0, U+1680, U+2000..U+200A, U+202F, U+205F and U+3000), the tab U+0009, the line breaks U+000A, U+000B, U+000C, U+000D, U+0085, U+2028 and U+2029 and the pair U+000D U+000A, and the byte-order mark U+FEFF; one more case judges every member again and reads that table against the engine over every code point: its spaces are every Zs code point, its tab and line breaks every other White_Space code point and its byte-order mark the one code point String.prototype.trimStart strips outside White_Space, each once, so its single members are every White_Space code point and every code point trimStart strips.
  *  - SL-TESTED-NONE, SL-TESTED-NOT-TESTED, SL-TESTED-NOT-ARRAY, SL-TESTED-FORM, SL-TESTED-SUITE-EMPTY: a tested row with no tested form, a blocked row naming a form, testedForms that is not an array, and a form that is a string, null, has a white-space file, a number file, no title or a suite that is a string or holds an empty string or a number are refused (L-TESTED); a form whose suite is the empty array is quiet. No case text is read here.
  *  - SL-PARTIAL-NONE, SL-PARTIAL-TEXT, SL-PARTIAL-SOURCE, SL-PARTIAL-CARRIED: a partial/inert row without partialBecause or with a string there, with a reason text that is white space or a number, whose source anchor its receipt section does not hold or whose source is absent, and a tested row carrying partialBecause are refused (L-PARTIAL).
  *  - SL-BLOCKED-NONE, SL-BLOCKED-KIND, SL-BLOCKED-DETAIL, SL-BLOCKED-CARRIED: a blocked row without blockedBy or with a string there, with a kind outside the four, with a detail that is empty, white space or a number, and a tested row carrying blockedBy are refused (L-BLOCKED).
@@ -61,10 +63,15 @@
  * what an anchor proves; the requirement titles, the blocked details and the partial reasons as statements of fact; the pins
  * as the current tips of their refs (the receipt names the measurement); the re-pin record of EAT-R201 and the joint P00/M00
  * rulings of EAT-R203..EAT-R209, which this bead does not carry; Beads state outside the export files; that SL-LIVE stays
- * green over a later export (a bead anchor held only by the notes of a bead the export holds open or deferred is read again
- * from each later export, so a notes replace that drops it reds SL-LIVE once that export lands; the landing-order registry
- * names this file's reads, R-B761); any letter case folding beyond toLowerCase and any look-alike spelling of the type name
- * or of byte.
+ * green over a later export (each bead anchor is read again from each later export, so an edit of a bead's description or
+ * notes that drops one reds SL-LIVE once that export lands: at the base export of wb-n40d's cut, e31e1e9, 36 bead anchors
+ * are held only by the notes of nine closed beads (wb-12x1 24, wb-5ik5 3, wb-0gbh 2, wb-ocie 2, and wb-201v, wb-9v02,
+ * wb-r5q2, wb-j5y5 and wb-cbt4 1 each) and none by the notes of a bead that export holds open or deferred, and
+ * SL-NOTES-REPLACE empties only the notes of the six beads R-B761 names; the landing-order registry names this file's reads,
+ * R-B761); that an export title of wb-f3wd is refused with one code point before [MWI-hx-evidence]
+ * that is neither printable text nor a member SL-GROUP-EXPORT-TITLE plants (a format character such as U+200B, whose name
+ * holds SPACE, or a control character outside White_Space), or with a run of two or more members other than the pair
+ * U+000D U+000A; any letter case folding beyond toLowerCase and any look-alike spelling of the type name or of byte.
  */
 
 import { createHash } from "node:crypto";
@@ -154,9 +161,67 @@ const digest = (value: unknown): string => createHash("sha256").update(JSON.stri
 const shapeOf = (owner: Obj): string =>
   [owner.id, owner.class, owner.group ?? "-", owner.bead ?? "-", list(owner.testedForms).length, list(owner.evidence ?? []).length, digest(owner)].join(":");
 
+/** R-B761 (wb-n40d): the six beads whose notes alone held a ledger anchor at the base export of wb-n40d's cut, in table order of their rows. */
+const NOTES_REPLACED: readonly string[] = ["wb-1zn2", "wb-w8fk", "wb-4bxo", "wb-9a1o", "wb-p3i2", "wb-pxvv"];
+/** R-B761 (wb-n40d): the rows whose one evidence item is the wb-n40d receipt's record of the notes line that held their id. */
+const NOTES_RECEIPTED: readonly string[] = [
+  "EAT-R089",
+  "EAT-R090",
+  "EAT-R091",
+  "EAT-R092",
+  "EAT-R093",
+  "EAT-R148",
+  "EAT-R149",
+  "EAT-R150",
+  "EAT-R151",
+  "EAT-R155",
+  "EAT-R156",
+  "EAT-R157",
+  "EAT-R158",
+  "EAT-R159",
+  "EAT-R163",
+  "EAT-R173",
+  "EAT-R174",
+  "EAT-R175",
+  "EAT-R176",
+  "EAT-R177",
+];
+/** The wb-n40d receipt section those rows cite. */
+const NOTES_RECEIPT_SECTION = {
+  heading: "2026-11-10 receipt: the notes lines that held 20 status-ledger anchors on six open or deferred beads, read at two exports and now cited by those rows (machine seat ws-11, run g10-work-s322, base e31e1e9)",
+  depth: 2,
+  parents: ["wb-n40d: R694 follow-up from wb-9b7e landing 1087: F8 R-B761 RIDER, still not cured: 20 bead anchors that SL-LIVE (test/workbench-mechanical-status-ledger.test.ts) pins through the export sit only in the notes of six beads the export holds not closed (wb-1zn2, wb-w8fk, wb-4bxo, wb-9a1o, wb-p3i2, wb-pxvv),..."],
+};
+/** The committed export records with the notes of the six beads R-B761 names replaced by the empty string. */
+const notesReplaced = (): ReadonlyMap<string, BeadText> =>
+  withBeads(
+    Object.fromEntries(
+      NOTES_REPLACED.map(id => {
+        const record = beads().get(id);
+        if (record === undefined) throw new Error(`the committed export holds no ${id}`);
+        return [id, { ...record, notes: "" }] as const;
+      }),
+    ),
+  );
+
 describe("wb-hhxs EAT-R202: the committed status ledger, judged with the committed export and receipts", () => {
   it("SL-LIVE the committed ledger, judged with the committed export, the committed receipts and docsSection, gives no finding", { timeout: BUDGET }, () => {
     expect(ledgerFindings(readLedger(REPO), context())).toEqual([]);
+  });
+
+  it("SL-NOTES-REPLACE the committed ledger, judged with the committed export whose six R-B761 beads hold empty notes, gives no finding", { timeout: BUDGET }, () => {
+    const planted = notesReplaced();
+    expect(NOTES_REPLACED.map(id => planted.get(id)?.notes)).toEqual(NOTES_REPLACED.map(() => ""));
+    expect(ledgerFindings(readLedger(REPO), context({ beads: planted }))).toEqual([]);
+  });
+
+  it("SL-NOTES-RECEIPT the rows citing the wb-n40d receipt are the 20 R-B761 rows, each with that one evidence item, and their beads are the six R-B761 beads", () => {
+    const citing = rowsOf(committed()).filter(row => list(row.evidence).some(item => obj(item).receipt === "wb-n40d"));
+    expect(citing.map(row => row.id)).toEqual(NOTES_RECEIPTED);
+    expect(citing.map(row => row.evidence)).toEqual(
+      citing.map(row => [{ receipt: "wb-n40d", section: NOTES_RECEIPT_SECTION, anchor: `${String(row.id)} in the notes of ${String(row.bead)}` }]),
+    );
+    expect([...new Set(citing.map(row => row.bead))]).toEqual(NOTES_REPLACED);
   });
 
   it("SL-SHAPE the rows and the control hold the frozen shape of this cut (rule 16)", () => {
@@ -287,6 +352,31 @@ describe("wb-hhxs EAT-R202: L-SCHEMA, L-IDS, L-CLASS and L-PIN over planted ledg
   });
 });
 
+/** SL-GROUP-EXPORT-TITLE: the tag the group table names for B-hx-evidence, spelled here, never read from the judge. */
+const TITLE_TAG = "[MWI-hx-evidence]";
+/** SL-GROUP-EXPORT-TITLE: the 17 space separators (Zs) and the line breaks the PINNED line names, as code points. */
+const TITLE_SPACES: readonly number[] = [0x0020, 0x00a0, 0x1680, 0x2000, 0x2001, 0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x2007, 0x2008, 0x2009, 0x200a, 0x202f, 0x205f, 0x3000];
+const TITLE_LINE_BREAKS: readonly number[] = [0x000a, 0x000b, 0x000c, 0x000d, 0x0085, 0x2028, 0x2029];
+const codePointName = (point: number): string => `U+${point.toString(16).toUpperCase().padStart(4, "0")}`;
+/** One planted case row: its name (the item and the code points it plants) and the title with those code points before the tag. */
+const titlePlant = (item: string, points: readonly number[]): [string, string] => [`${item} ${points.map(codePointName).join(" ")} before the tag`, `${String.fromCodePoint(...points)}${TITLE_TAG} planted`];
+/** SL-GROUP-EXPORT-TITLE: every member of a space, a tab, a line break and a byte-order mark, each planted alone; the line break U+000D U+000A as a pair. */
+const TITLE_MEMBER_PLANTS: [string, string][] = [
+  ...TITLE_SPACES.map(point => titlePlant("a space", [point])),
+  titlePlant("a tab", [0x0009]),
+  ...TITLE_LINE_BREAKS.map(point => titlePlant("a line break", [point])),
+  titlePlant("a line break", [0x000d, 0x000a]),
+  titlePlant("a byte-order mark", [0xfeff]),
+];
+/** Every code point, read from the engine, whose one-code-point string `test` holds, by name in code point order. */
+const enginePoints = (test: (text: string) => boolean): string[] => {
+  const found: string[] = [];
+  for (let point = 0; point <= 0x10ffff; point++) {
+    if (test(String.fromCodePoint(point))) found.push(codePointName(point));
+  }
+  return found;
+};
+
 describe("wb-hhxs EAT-R202 AC3: L-BEAD and L-GROUP over planted ledgers and export records", () => {
   it("SL-BEAD-FABRICATED a bead id the export does not hold is refused by L-BEAD and L-GROUP", { timeout: BUDGET }, () => {
     expect(plant(ledger => (rowOf(ledger, "EAT-R005").bead = "wb-zz99"))).toEqual([
@@ -331,10 +421,41 @@ describe("wb-hhxs EAT-R202 AC3: L-BEAD and L-GROUP over planted ledgers and expo
     ["the tag in lower case", "[mwi-hx-evidence] planted"],
     ["the tag without its closing bracket", "[MWI-hx-evidence planted"],
     ["no text (an empty title)", ""],
+    ...TITLE_MEMBER_PLANTS,
   ])("SL-GROUP-EXPORT-TITLE an export title of wb-f3wd with %s is refused", { timeout: BUDGET }, (_name, title) => {
     const record = beads().get("wb-f3wd");
     if (record === undefined) throw new Error("the committed export holds no wb-f3wd");
     expect(plant(() => undefined, { beads: withBeads({ "wb-f3wd": { ...record, title } }) })).toEqual(["L-GROUP: the export title of wb-f3wd does not start with [MWI-hx-evidence]"]);
+  });
+
+  it("SL-GROUP-EXPORT-TITLE every member row judged again, and the member table read against the engine over every code point: its spaces every Zs code point, its tab and line breaks every other White_Space code point, its byte-order mark the one code point trimStart strips outside White_Space, its one pair U+000D U+000A", { timeout: BUDGET }, () => {
+    const record = beads().get("wb-f3wd");
+    if (record === undefined) throw new Error("the committed export holds no wb-f3wd");
+    const refusal = ["L-GROUP: the export title of wb-f3wd does not start with [MWI-hx-evidence]"];
+    const rows = TITLE_MEMBER_PLANTS.map(([name, title]) => ({
+      name,
+      item: name.slice(0, name.indexOf(" U+")),
+      points: [...title.slice(0, title.indexOf(TITLE_TAG))].map(char => codePointName(char.codePointAt(0) ?? -1)).join(" "),
+      findings: plant(() => undefined, { beads: withBeads({ "wb-f3wd": { ...record, title } }) }),
+    }));
+    const singles = (item: string): string[] => rows.filter(row => row.item === item && !row.points.includes(" ")).map(row => row.points);
+    const space = (text: string): boolean => /^\p{Zs}$/u.test(text);
+    const whiteSpace = (text: string): boolean => /^\p{White_Space}$/u.test(text);
+    expect({
+      findings: Object.fromEntries(rows.map(row => [row.name, row.findings])),
+      items: [...new Set(rows.map(row => row.item))],
+      spaces: singles("a space"),
+      tabAndLineBreaks: [...singles("a tab"), ...singles("a line break")].sort(),
+      byteOrderMark: singles("a byte-order mark"),
+      pairs: rows.filter(row => row.points.includes(" ")).map(row => `${row.item} ${row.points}`),
+    }).toEqual({
+      findings: Object.fromEntries(rows.map(row => [row.name, refusal])),
+      items: ["a space", "a tab", "a line break", "a byte-order mark"],
+      spaces: enginePoints(space),
+      tabAndLineBreaks: enginePoints(text => whiteSpace(text) && !space(text)),
+      byteOrderMark: enginePoints(text => text.trimStart() === "" && !whiteSpace(text)),
+      pairs: ["a line break U+000D U+000A"],
+    });
   });
 });
 
@@ -979,11 +1100,11 @@ const FROZEN_SHAPE: readonly string[] = [
   "EAT-R086:already-implemented/tested:B-release:wb-j5y5:30:1:4aceffa93079",
   "EAT-R087:already-implemented/tested:B-release:wb-j5y5:10:1:139a1b462307",
   "EAT-R088:blocked:mw-tracks:wb-1zn2:0:1:d920458a22de",
-  "EAT-R089:blocked:mw-tracks:wb-1zn2:0:1:76fa22fb8bba",
-  "EAT-R090:blocked:mw-tracks:wb-1zn2:0:1:ff6da3fbac89",
-  "EAT-R091:blocked:mw-tracks:wb-1zn2:0:1:408e5b0240f8",
-  "EAT-R092:blocked:mw-tracks:wb-1zn2:0:1:0738571ab673",
-  "EAT-R093:blocked:mw-tracks:wb-1zn2:0:1:e7aadb00ebd3",
+  "EAT-R089:blocked:mw-tracks:wb-1zn2:0:1:bf327549f6be",
+  "EAT-R090:blocked:mw-tracks:wb-1zn2:0:1:6f41e1b98622",
+  "EAT-R091:blocked:mw-tracks:wb-1zn2:0:1:b4c09c935d71",
+  "EAT-R092:blocked:mw-tracks:wb-1zn2:0:1:df213bee532e",
+  "EAT-R093:blocked:mw-tracks:wb-1zn2:0:1:ca4c7d8595df",
   "EAT-R094:already-implemented/tested:B-docs:wb-12x1:1:1:e1640ba3abba",
   "EAT-R095:already-implemented/tested:B-docs:wb-12x1:1:1:ca1bed34890c",
   "EAT-R096:already-implemented/tested:B-docs:wb-12x1:1:1:ee12bdf98926",
@@ -1038,22 +1159,22 @@ const FROZEN_SHAPE: readonly string[] = [
   "EAT-R145:partial/inert:B-preserve:wb-5ik5:0:2:6c8404dbb6c6",
   "EAT-R146:already-implemented/tested:B-preserve:wb-5ik5:6:1:89e83e6b932f",
   "EAT-R147:blocked:B-docs:wb-12x1:0:1:2d1471becd9a",
-  "EAT-R148:blocked:B-contract-choice:wb-w8fk:0:1:b2e7463a4b79",
-  "EAT-R149:blocked:B-contract-choice:wb-w8fk:0:1:19e2ba6840d4",
-  "EAT-R150:blocked:B-contract-choice:wb-w8fk:0:1:2b8ae5f86534",
-  "EAT-R151:blocked:B-contract-choice:wb-w8fk:0:1:dcd4cf65d5ad",
+  "EAT-R148:blocked:B-contract-choice:wb-w8fk:0:1:a68a563fa2a2",
+  "EAT-R149:blocked:B-contract-choice:wb-w8fk:0:1:d1c5426c8dc0",
+  "EAT-R150:blocked:B-contract-choice:wb-w8fk:0:1:5932f77266c8",
+  "EAT-R151:blocked:B-contract-choice:wb-w8fk:0:1:01d2e36d89cf",
   "EAT-R152:blocked:B-descriptor:wb-ocie:0:1:deeb58fb28f7",
   "EAT-R153:blocked:B-descriptor:wb-ocie:0:1:4d5343dee572",
   "EAT-R154:partial/inert:B-authority:wb-201v:0:1:349357241f0e",
-  "EAT-R155:blocked:B-dispatch:wb-4bxo:0:1:f520a38c76b1",
-  "EAT-R156:blocked:B-outcomes:wb-9a1o:0:1:6a7adb62ec3a",
-  "EAT-R157:blocked:B-outcomes:wb-9a1o:0:1:8a985f25d6d0",
-  "EAT-R158:blocked:B-outcomes:wb-9a1o:0:1:813c82dc928a",
-  "EAT-R159:blocked:B-git-census:wb-p3i2:0:1:2f86a8297f43",
+  "EAT-R155:blocked:B-dispatch:wb-4bxo:0:1:c15145dabc3d",
+  "EAT-R156:blocked:B-outcomes:wb-9a1o:0:1:decc2a2768e4",
+  "EAT-R157:blocked:B-outcomes:wb-9a1o:0:1:5cb96dcebb95",
+  "EAT-R158:blocked:B-outcomes:wb-9a1o:0:1:6aa827f90304",
+  "EAT-R159:blocked:B-git-census:wb-p3i2:0:1:b034190079c4",
   "EAT-R160:blocked:B-cancel-repro:wb-9v02:0:2:d23c77f9ee33",
   "EAT-R161:already-implemented/tested:B-replay:wb-413a:10:1:4d573db0bf79",
   "EAT-R162:already-implemented/tested:B-replay:wb-413a:21:1:ee5f2e0ec963",
-  "EAT-R163:blocked:B-hx-admit:wb-pxvv:0:1:e1b77b7af95e",
+  "EAT-R163:blocked:B-hx-admit:wb-pxvv:0:1:62b1893770ea",
   "EAT-R164:partial/inert:B-telemetry:wb-r5q2:0:2:964b7cc7d88f",
   "EAT-R165:blocked:B-release:wb-j5y5:0:1:db96b8de7d66",
   "EAT-R166:blocked:B-release:wb-j5y5:0:1:3912162a845f",
@@ -1063,11 +1184,11 @@ const FROZEN_SHAPE: readonly string[] = [
   "EAT-R170:blocked:B-release:wb-j5y5:0:1:3add679415f2",
   "EAT-R171:blocked:B-release:wb-j5y5:0:1:e3477e41ce80",
   "EAT-R172:blocked:master-recon:wb-cbt4:0:1:f2205e650193",
-  "EAT-R173:blocked:mw-tracks:wb-1zn2:0:1:47e9aacdcc7d",
-  "EAT-R174:blocked:mw-tracks:wb-1zn2:0:1:2e6d4a95543a",
-  "EAT-R175:blocked:mw-tracks:wb-1zn2:0:1:ea737f75b9d9",
-  "EAT-R176:blocked:mw-tracks:wb-1zn2:0:1:963c10167d50",
-  "EAT-R177:blocked:mw-tracks:wb-1zn2:0:1:0cc0a2de75c1",
+  "EAT-R173:blocked:mw-tracks:wb-1zn2:0:1:d59daca3ae46",
+  "EAT-R174:blocked:mw-tracks:wb-1zn2:0:1:2dc2468208e6",
+  "EAT-R175:blocked:mw-tracks:wb-1zn2:0:1:29ec9153755a",
+  "EAT-R176:blocked:mw-tracks:wb-1zn2:0:1:f307b4e4bfc2",
+  "EAT-R177:blocked:mw-tracks:wb-1zn2:0:1:65074aea7c1d",
   "EAT-R178:blocked:B-docs:wb-12x1:0:1:ebd92c37ae80",
   "EAT-R179:blocked:B-docs:wb-12x1:0:1:dd006bb92444",
   "EAT-R180:blocked:B-docs:wb-12x1:0:1:4b4707ac86d8",
