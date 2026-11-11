@@ -115,7 +115,7 @@ const ADVERSE = "test/workbench-claude-adverse-faults.test.ts";
 const MALFORMED_SUITE = ["N2/N3 malformed native output is never a success"];
 const USAGE_SUITE = ["N5 usage is reported only when the SDK supplied it"];
 const LOOKUP = "test/workbench-claude-resume-lookup.test.ts";
-const LOOKUP_SUITE = ["W04 (wb-dc0) resume reads the SDK's persisted session store before any resumed query"];
+const LOOKUP_SUITE = ["W04 (wb-dc0) resume lookup cases R7 and R8 over this file's fixture hosts"];
 const SECURITY = "test/workbench-security-pi-tools.test.ts";
 const GRANT_SUITE_NAME = "claude:transcript grant on the inspector transcript path";
 const GRANT_SUITE = [GRANT_SUITE_NAME];
@@ -214,14 +214,15 @@ const ROWS: readonly W04Row[] = [
         id: "R7",
         file: LOOKUP,
         suite: LOOKUP_SUITE,
-        title: "the lookup asks for the recorded session id in the host's workspace directory, once, before the resumed query, which resumes that session",
+        title:
+          "on each of the two hosts in HOSTS (cwd test/, this file's own directory, and cwd /, the root directory; neither is the process cwd), the resume of agent wf-agent-0 makes one lookup, of its recorded session sdk-w04-recorded with options { dir: that cwd }, after the first query and before the second; both queries run in that cwd and the second resumes sdk-w04-recorded",
       },
       {
         id: "R8",
         file: LOOKUP,
         suite: LOOKUP_SUITE,
         title:
-          "every store answer that is not a record of the recorded session (no record, another id, the empty id, the recorded id extended, cut short, upper-cased or space-padded) refuses the resume as unavailable and issues no second query",
+          "on a fresh host at test/, each of the 17 store answers in NOT_THE_RECORDED_SESSION (no record, or a record of sdk-w04-other, of the empty id, or of sdk-w04-recorded with -2 or x appended, with x in front, cut short by one, two or three characters, upper-cased, capitalized, with every character in its fullwidth form, with one leading space, one trailing space, one space on each side, two leading spaces or one leading tab) refuses the resume of sdk-w04-recorded as unavailable after one lookup of that id and issues no second query",
       },
     ],
   },
