@@ -26,9 +26,16 @@
  *   and whose body rows' Feature cells are the four rows' features, in order. Red under: a feature label shortened (CT2),
  *   a row deleted with its frozen-shape elements (CT5) or from every literal (CT6, row member), the matrix's usage Feature
  *   cell reworded (K5); not measured: a matrix W04 row added, removed or reordered.
+ * - W04-HTML (rendered-text docs truth; the peer form of test/workbench-subsystem-matrix.census.ts): the matrix's W04
+ *   section, bound through the shared helper's docsSection (the one binding sectionTables also reads), carries no HTML,
+ *   comments included. W04-ROWS and W04-QUOTES read each cell's SOURCE text, so an HTML comment inside the section could
+ *   keep a citation in the source that the rendered matrix no longer shows; W04-HTML refuses that section. Red under:
+ *   the gate's L2-M1b (the visible R6 quote moved into an HTML comment), L2-M1c (the whole S1 group moved into an HTML
+ *   comment) and an HTML tag wrapped around one Evidence quote (H-TAG).
  * - W04-QUOTES (anchor outside this file's literals): in each row's Evidence cell every group of the form
  *   `test/<file>.test.ts ['<suite>'] (<text>)` (one space before the parenthesis, which holds no parenthesis) yields its
- *   single-quoted strings, and the yield of every group whose file is not NOT_DEFAULT_TIER equals the row's quote-bearing
+ *   single-quoted strings (read from the cell's source text, which W04-HTML keeps free of HTML), and the yield of every
+ *   group whose file is not NOT_DEFAULT_TIER equals the row's quote-bearing
  *   pins (file, suite quote, quote), in order; each quote names its pin's title (the title itself, the title after an
  *   "L<n>: " label, or for a quote with one " ... " elision a title opening with the part before it and closing with the
  *   part after it, the two parts not overlapping), and each suite quote is its pin's innermost describe. Red under: a quoted pin swapped for an
@@ -66,7 +73,9 @@
  * that this file neither re-runs nor reads); the matrix's Status and Caveats cells and every Evidence mention that is
  * not a quoted case of a default-tier file (the src line citations, test/workbench-inspector.test.ts A11,
  * test/workbench-evidence-loader.test.ts, the TRACEABILITY and docs/13 quotes); Evidence quotes written outside the
- * group form W04-QUOTES reads; what each pinned case asserts (an edit
+ * group form W04-QUOTES reads; HTML elsewhere in the matrix, outside the bound W04 section; markdown that hides text
+ * without HTML (a link destination or title, an image source - the bound section carries none at the cut's base);
+ * what each pinned case asserts (an edit
  * that keeps a case registered, passing and asserting while changing what it checks stays green here); any tier but the
  * default test tier; and every mode the shared helper names as its own residual (the NAMED RESIDUALS in
  * test/helpers/census.ts), which bounds each judge() reading here. No display path is added.
@@ -75,7 +84,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, judge, type PinVerdict, sectionTables } from "./helpers/census.js";
+import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, sectionTables } from "./helpers/census.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const REPORT = join(ROOT, DEFAULT_TIER_REPORT);
@@ -269,7 +278,7 @@ const FILES: readonly string[] = [...new Set(ALL_PINS.map(pin => pin.file))];
 const PINS: readonly CasePin[] = CASES.map(pin => ({ file: pin.file, title: pin.title, suite: pin.suite, tier: DEFAULT_GATE_TIER }));
 
 const TITLE =
-  "wb-dc0 W04 acceptance census: 35 pins (34 distinct default-tier cases in 7 test files) for the feature matrix's four W04 rows W04-SCHEMA, W04-USAGE, W04-RESUME and W04-TRANSCRIPT, each collected once, passed and asserting in the gate's own test report";
+  "wb-dc0 W04 acceptance census: 35 pins (34 distinct default-tier cases in 7 test files) for the four W04 rows W04-SCHEMA, W04-USAGE, W04-RESUME and W04-TRANSCRIPT of the feature matrix's HTML-free W04 section, each pin collected once, passed and asserting in the gate's own test report";
 
 interface ReportCase {
   readonly title?: string;
@@ -347,6 +356,11 @@ describe(TITLE, () => {
       header: MATRIX_HEADER,
       features: ROWS.map(row => row.feature),
     });
+  });
+
+  it("W04-HTML the matrix's bound W04 section carries no HTML, so no cell this census reads holds text an HTML comment or tag hides from the rendered matrix", () => {
+    const section = docsSection(readFileSync(join(ROOT, MATRIX), "utf8"), W04_HEADING, 2, [MATRIX_TITLE]);
+    expect({ ok: section.ok, why: section.why, hasHtml: section.hasHtml }).toStrictEqual({ ok: true, why: "", hasHtml: false });
   });
 
   it("W04-QUOTES each row's Evidence cell quotes exactly the row's quote-bearing pins of default-tier files, in order, and each quote names its pin", () => {
