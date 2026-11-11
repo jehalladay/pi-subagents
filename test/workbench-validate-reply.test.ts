@@ -1,15 +1,17 @@
+import { createHash } from "node:crypto";
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { CapabilityRegistry } from "../src/workbench/capability-registry.js";
-import { inspectWorkflowSource, validateWorkflowSource, type WorkflowSource, type WorkflowValidation } from "../src/workbench/designer.js";
+import { type DesignerDiagnostic, inspectWorkflowSource, validateWorkflowSource, type WorkflowSource, type WorkflowValidation } from "../src/workbench/designer.js";
 import {
   buildWorkflowValidateReply,
   VALIDATE_REPLY_CONTRACT_VERSION,
   VALIDATE_REPLY_DEFAULT_MAX_BYTES,
   VALIDATE_REPLY_MAX_BYTES,
   VALIDATE_REPLY_MIN_BYTES,
+  VALIDATE_REPLY_TRUNCATION_MARKER,
   type WorkflowValidateReply,
   type WorkflowValidateRequest,
 } from "../src/workbench/validate-reply.js";
@@ -355,5 +357,151 @@ describe("W16 workflow_validate reply: byte cap", () => {
     const found = source("return 1;");
     const result = build(found, {}, [], { maxBytes: VALIDATE_REPLY_MIN_BYTES });
     expect(Buffer.byteLength(result.text)).toBeLessThanOrEqual(VALIDATE_REPLY_MIN_BYTES);
+  });
+});
+
+/**
+ * wb-69g.12: the owner-ruled tightening of the wb-69g.6 gate (F3). That gate left five mutants of
+ * src/workbench/validate-reply.ts alive against the blocks above, and each case below is the falsifier one of them
+ * lacked: M6 (fitToCap's early return at 2 x the cap; no case put an untruncated reply in (cap, 2 x cap]), M11 (warnings
+ * always empty; the landed core's only warning codes are reclassified as uncertain, so no case carried a genuine
+ * warning), M12 (the digest pattern accepting upper-case hex; the malformed-digest table accepts either refusal code),
+ * M16 (errors "offered" reporting the returned count; no case truncated errors: the errors-dropped-last case offers one)
+ * and M18 (the verdict flipping to valid once truncation drops every uncertain item; the "dropped every uncertain item"
+ * case still returns 20 of its 2000). Genuine warnings and a forced core status reach the builder only through its
+ * validate seam, wrapped around the real core.
+ */
+describe("W16 workflow_validate reply: wb-69g.6 gate survivor falsifiers (wb-69g.12)", () => {
+  /** The byte-cap block's manyBranches shape: each line adds one dynamic branch (uncertain) and one conditional agent call. */
+  const branches = (count: number): string => Array.from({ length: count }, (_, index) => `if (args.v${index}) await agent("p${index}");`).join("\n");
+  const seam = (extra: readonly DesignerDiagnostic[], status?: WorkflowValidation["status"]) =>
+    (found: WorkflowSource, options: { registry?: CapabilityRegistry; grants?: readonly string[] }): WorkflowValidation => {
+      const core = validateWorkflowSource(found, options);
+      return { ...core, ...(status !== undefined ? { status } : {}), diagnostics: [...core.diagnostics, ...extra] };
+    };
+  const completed = (text: string) => {
+    const reply = parse(text);
+    if (reply.status === "refused") throw new Error("unexpected refusal");
+    return reply;
+  };
+
+  it("M6 cap interval: a reply exactly at its cap renders complete (offered equals returned), and a cap one byte under its size truncates it to fit", () => {
+    const found = source(branches(15));
+    const full = build(found, {}, DESIGN, { maxBytes: VALIDATE_REPLY_MAX_BYTES });
+    expect(full.truncated).toBe(false);
+    const size = full.bytes;
+    expect(size).toBeGreaterThan(VALIDATE_REPLY_MIN_BYTES + 1);
+    expect(size).toBeLessThan(VALIDATE_REPLY_DEFAULT_MAX_BYTES);
+    // Strictly between the minimum cap and the default cap: the default-cap reply is the complete reply.
+    expect(build(found).text).toBe(full.text);
+    const exact = build(found, {}, DESIGN, { maxBytes: size });
+    expect(exact.text).toBe(full.text);
+    expect([exact.bytes, exact.truncated]).toStrictEqual([size, false]);
+    const whole = completed(exact.text);
+    expect(whole.truncation).toBeUndefined();
+    for (const key of ["errors", "warnings", "uncertain", "possibleCalls"] as const) expect(whole.counts[key].returned).toBe(whole.counts[key].offered);
+    expect(whole.counts.possibleCalls.offered).toBe(15);
+    // size - 1 lies in (cap, 2 x cap]: the reply must come back truncated and within its cap.
+    const short = build(found, {}, DESIGN, { maxBytes: size - 1 });
+    expect(short.bytes).toBeLessThanOrEqual(size - 1);
+    expect(short.truncated).toBe(true);
+    const cut = completed(short.text);
+    expect(cut.truncation).toStrictEqual({ truncated: true, marker: VALIDATE_REPLY_TRUNCATION_MARKER, maxBytes: size - 1 });
+    expect(cut.counts.possibleCalls.offered).toBe(15);
+    expect(cut.counts.possibleCalls.returned).toBeLessThan(15);
+  });
+
+  it("M11 reachable warnings path: a genuine core warning lands in warnings alone, counted 1/1, and leaves a valid verdict valid", () => {
+    const found = source("return 1;");
+    const warning: DesignerDiagnostic = { code: "SAMPLE_WARNING", message: "a genuine core warning", severity: "warning", dimension: "meta" };
+    const reply = completed(buildWorkflowValidateReply({ request: request(found), source: found, grants: DESIGN, validate: seam([warning]) }).text);
+    expect(reply.warnings).toStrictEqual([{ scope: "diagnostic", code: "SAMPLE_WARNING", message: "a genuine core warning", dimension: "meta" }]);
+    expect(reply.errors).toStrictEqual([]);
+    expect(reply.uncertain).toStrictEqual([]);
+    expect([reply.counts.errors.offered, reply.counts.warnings.offered, reply.counts.warnings.returned, reply.counts.uncertain.offered]).toStrictEqual([0, 1, 1, 0]);
+    expect([reply.coreStatus, reply.status]).toStrictEqual(["valid", "valid"]);
+  });
+
+  it("M11 reachable warnings path beside an uncertainty code: the genuine warning stays in warnings and BINDINGS_UNCHECKED stays in uncertain", () => {
+    const found = source('await node("forge.gate.status", {root:"."});');
+    const warning: DesignerDiagnostic = { code: "SAMPLE_WARNING", message: "a genuine core warning", severity: "warning" };
+    const reply = completed(buildWorkflowValidateReply({ request: request(found), source: found, grants: DESIGN, validate: seam([warning]) }).text);
+    expect(reply.warnings.map(item => item.code)).toStrictEqual(["SAMPLE_WARNING"]);
+    expect(reply.uncertain.map(item => item.code)).toStrictEqual(["BINDINGS_UNCHECKED"]);
+    expect(reply.errors).toStrictEqual([]);
+    expect(reply.status).toBe("uncertain");
+  });
+
+  it.each([
+    ["not a string", undefined],
+    ["wrong algorithm", `md5:${"a".repeat(32)}`],
+    ["uppercase hex", `sha256:${"A".repeat(64)}`],
+    ["injected text", "Bearer abc\u001b[31m sha256:zz"],
+  ])("M12 digest assertion pinned: a malformed digest (%s) is refused as DIGEST_MALFORMED exactly, never as DIGEST_MISMATCH", (_label, digest) => {
+    const found = source("return 1;");
+    const reply = parse(buildWorkflowValidateReply({ request: { sourceRef: found.sourceRef, digest: digest as string }, source: found, grants: DESIGN, validate: forbiddenValidate }).text);
+    if (reply.status !== "refused") throw new Error("expected refusal");
+    expect([reply.refusal.code, reply.refusal.category]).toStrictEqual(["DIGEST_MALFORMED", "validation"]);
+  });
+
+  it("M12 digest assertion pinned: the resolved digest written in upper case is malformed, and the accepted identity carries the exact sha256 of the source bytes", () => {
+    const found = source("return 1;");
+    const exact = `sha256:${createHash("sha256").update(found.source, "utf8").digest("hex")}`;
+    const upper = `sha256:${exact.slice("sha256:".length).toUpperCase()}`;
+    expect(upper).not.toBe(exact);
+    const refused = parse(buildWorkflowValidateReply({ request: request(found, { digest: upper }), source: found, grants: DESIGN, validate: forbiddenValidate }).text);
+    if (refused.status !== "refused") throw new Error("expected refusal");
+    expect(refused.refusal.code).toBe("DIGEST_MALFORMED");
+    const accepted = completed(build(found).text);
+    expect(accepted.source.artifactDigest).toBe(exact);
+    expect(accepted.source.digestChecked).toBe(true);
+  });
+
+  it("M16 errors truncation: an over-cap errors array keeps a non-empty prefix, shows the visible marker and counts every offered error", () => {
+    const calls = 120;
+    const found = source(Array.from({ length: calls }, () => 'await node("forge.gate.status", {root:2});').join("\n"));
+    const grants = [...DESIGN, "forge:inspect", "discover:forge.gate.status"];
+    const registry = FIXTURE_REGISTRY();
+    const offered = validateWorkflowSource(found, { registry, grants }).diagnostics.filter(item => item.severity === "error").length;
+    expect(offered).toBe(calls);
+    const result = build(found, {}, grants, { registry, maxBytes: VALIDATE_REPLY_MIN_BYTES });
+    expect(result.bytes).toBeLessThanOrEqual(VALIDATE_REPLY_MIN_BYTES);
+    expect(result.truncated).toBe(true);
+    expect(result.text).toContain(VALIDATE_REPLY_TRUNCATION_MARKER);
+    const reply = completed(result.text);
+    expect(reply.status).toBe("invalid");
+    expect(reply.truncation).toStrictEqual({ truncated: true, marker: VALIDATE_REPLY_TRUNCATION_MARKER, maxBytes: VALIDATE_REPLY_MIN_BYTES });
+    expect(reply.counts.errors.offered).toBe(offered);
+    expect(reply.counts.errors.returned).toBe(reply.errors.length);
+    expect(reply.errors.length).toBeGreaterThan(0);
+    expect(reply.errors.length).toBeLessThan(offered);
+    expect(reply.errors.every(item => item.code === "NODE_INPUT_SCHEMA")).toBe(true);
+    // Errors are dropped last: every possible call went first.
+    expect([reply.counts.possibleCalls.offered, reply.counts.possibleCalls.returned]).toStrictEqual([calls, 0]);
+  });
+
+  it("M18 verdict at zero returned: truncation that drops every uncertain item (offered > 0, returned 0) leaves the verdict uncertain, never an invented pass", () => {
+    const found = source(branches(4));
+    const offered = validateWorkflowSource(found).projection.unknown.length;
+    expect(offered).toBe(4);
+    const filler = Array.from({ length: 30 }, (_, index): DesignerDiagnostic => ({ code: "SAMPLE_WARNING", message: `warning ${index} ${"w".repeat(400)}`, severity: "warning" }));
+    const result = buildWorkflowValidateReply({ request: request(found), source: found, grants: DESIGN, maxBytes: VALIDATE_REPLY_MIN_BYTES, validate: seam(filler) });
+    expect(result.bytes).toBeLessThanOrEqual(VALIDATE_REPLY_MIN_BYTES);
+    const reply = completed(result.text);
+    expect(reply.coreStatus).toBe("valid");
+    expect(reply.errors).toStrictEqual([]);
+    expect(reply.uncertain).toStrictEqual([]);
+    expect([reply.counts.errors.offered, reply.counts.uncertain.offered, reply.counts.uncertain.returned]).toStrictEqual([0, offered, 0]);
+    expect(reply.truncation?.marker).toBe(VALIDATE_REPLY_TRUNCATION_MARKER);
+    expect(reply.status).toBe("uncertain");
+  });
+
+  it.each(["uncertain", "invalid", "valid"] as const)("M18 measured empty state: zero errors, warnings and uncertain items render as empty arrays with 0/0 counts, and the verdict is the core's own (%s)", coreStatus => {
+    const found = source("return 1;");
+    const reply = completed(buildWorkflowValidateReply({ request: request(found), source: found, grants: DESIGN, validate: seam([], coreStatus) }).text);
+    expect([reply.errors, reply.warnings, reply.uncertain]).toStrictEqual([[], [], []]);
+    for (const key of ["errors", "warnings", "uncertain"] as const) expect([reply.counts[key].offered, reply.counts[key].returned]).toStrictEqual([0, 0]);
+    expect(reply.truncation).toBeUndefined();
+    expect([reply.coreStatus, reply.status]).toStrictEqual([coreStatus, coreStatus]);
   });
 });
