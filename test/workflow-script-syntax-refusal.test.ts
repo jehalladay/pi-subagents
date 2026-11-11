@@ -1,7 +1,8 @@
 /**
- * wb-9btr first cut ([DX P03] of the pi-system-dx-triage-2026-11-11 program, which lives on origin/master at 0a5ac3a3 and not
- * in this trunk's tree; its requirement rows are in that program's req-r-lx shard): EAT-R323 (a syntactically invalid definition
- * is refused at launch) and EAT-R322 criteria 2 and 3. The criterion lines these cases pin, quoted:
+ * wb-9btr ([DX P03] of the pi-system-dx-triage-2026-11-11 program, which lives on origin/master at 0a5ac3a3 and not in this
+ * trunk's tree; its requirement rows are in that program's req-r-lx shard): EAT-R323 (a syntactically invalid definition is
+ * refused at launch) and EAT-R322 criteria 2 and 3. Cut #2 cures refusal #1's U1, U2 and U3 (docs/workbench/receipts/wb-9btr.md).
+ * The criterion lines these cases pin, quoted:
  *   EAT-R323 (1) "workflow_execute refuses the broken definition synchronously with typed code `definition-syntax-invalid`
  *                carrying the line (no ok:true, no background run created)."
  *   EAT-R323 (2) "SubagentWorkflow refuses the same definition synchronously (parity with its meta-error path),
@@ -12,16 +13,39 @@
  *                no-registry message names `workbench.workflowAgentBackend: "claude"`."
  *   EAT-R322 (3) "workflow_validate's SCRIPT_SYNTAX diagnostic carries the same line/column."
  *
- * Claims, each over exactly the cases it names; R0 is the census that holds this header, the case titles and the src comments to
- * the rows of ROWS:
+ * Claims, each over exactly the cases it names; R0 is the census that holds this header, the registered cases and the src comments
+ * to the rows of ROWS:
  * workflow_execute refuses each SYNTAX_CASES shape, saved as a meta-valid script definition, in both hostModes with error code definition-syntax-invalid and the shape's line and column, launching nothing; the registered tool refuses the line-6 shape the same way and persists or notifies nothing (R323-E1, R323-E2).
  * SubagentWorkflow refuses each SYNTAX_CASES shape before scheduling: the reply names the shape's line and column and carries no task id, and no run script or notification follows (R323-W1).
  * The SubagentWorkflow reply, the workflow_execute reason and the describer show the R323-D1 fixture only in the shared sanitizer's display form: its ESC sequence, right-to-left override and zero-width space do not survive, and its Bearer-shaped fake value reads [REDACTED] (R323-D1).
  * The launch check compiles a body with the worker's own wrapper line, prelude, filename and lineOffset, locates each SYNTAX_CASES shape at its line and column, agrees with the worker on the two shapes run through it, and never runs the body (R323-S1, R323-S2, R323-S3).
- * workflow_validate's SCRIPT_SYNTAX diagnostic carries each SYNTAX_CASES shape's line and column, and for the line-6 shape the registered workflow_validate and workflow_execute name the same location (R322-V1, R322-V2).
+ * For each SYNTAX_CASES shape, the designer's SCRIPT_SYNTAX diagnostic and the workflow_validate reply item that buildWorkflowValidateReply makes from it carry the shape's line and column, and for the line-6 shape the registered workflow_validate and workflow_execute name the same location (R322-V1, R322-V2).
  * A ReferenceError on require, process, fetch or setTimeout, a dynamic import and an import statement end with the no-Node-APIs hint; a ReferenceError on undefinedThing, a TypeError and a thrown Error quoting "require is not defined" do not; and node() on a host without a capability registry names workbench.workflowAgentBackend: "claude" (R322-H1, R322-H2, R322-H3).
  *
+ * THE CENSUS, R0: registered last, at file scope, outside the describe that holds the twelve pinned cases. R0 reads the cases from
+ * vitest's collected task tree (task.file.tasks), never from this file's text. It finds itself by task identity as the last
+ * registered test, and every other registered test must be exactly one pinned case (by its title's leading case id), in run mode,
+ * not inverted, and run (pass or fail) before R0. A pinned case given a skip option, skipped at run time through its test context,
+ * wrapped in a comment, deleted (a title spelled inside a string registers nothing), inverted with the fails option, or held in a
+ * describe that is skipped (by its skip option or by skipIf(true)) therefore reds R0. R0 also holds the frozen shape of ROWS (rule
+ * 16), the header's claim lines to the row sentences, each sentence to its pins, and the src comments of the seven touched modules
+ * to exactly the pinned set (the anchor outside this file's literals). The file-end judge (afterAll) reds unless R0 ran to its last
+ * statement, so R0 skipped at collection or at run time, inverted with a hollow body, returning early or deleted reds the file
+ * whenever another case of it runs. Run this file whole: R0 judges the run of every case, so a run filtered by name reds R0 or the
+ * file-end judge by design.
+ * SYNTAX_CASES (rule 16 frozen shape and each-liveness): R0 holds the table's six shapes (each id with its line:column and pastEnd) to
+ * a frozen literal and to the receipt's SYNTAX_CASES line (docs/workbench/receipts/wb-9btr.md, the anchor outside this file), and
+ * holds REACHED: R323-S1, R323-E1, R323-W1 and R322-V2 each record every shape, in table order, and R323-S3 its two, after the last
+ * assertion each makes for that shape.
+ * THE RUN PIN, test/workflow-script-syntax-refusal.census.ts (census tier): it reads the gate's own test report and reds unless the
+ * report records this file once, passed, with exactly its 13 titles under their describe paths, each passed. That covers the one
+ * mode no case here can see: every registration of this file skipped at collection, when vitest runs no case and no hook of it. R0
+ * holds the run pin's bytes (sha256), so the run pin is never edited or deleted alone.
+ *
  * Scope sentences (no residual, no follow-up):
+ * What a case asserts is NOT CLAIMED by the census: a case hollowed while it still registers, runs and passes stays green there (the delivery note's mutant battery measures the bodies).
+ * A retry option on a case is NOT CLAIMED by this census.
+ * The run pin reads only the default test tier's report in the complete gate's census step; a targeted run of this file, and an edit that takes the run pin out of the census tier together with a skip of every registration here, are NOT CLAIMED by this file.
  * EAT-R322 criterion 1 (a workflow.js location on every runtime error text) is NOT CLAIMED by this file.
  * The other launch paths (workflow_detached's launch action, the --subagents-workflow-file flag, a nested workflow() child, a resume) are NOT CLAIMED by this file.
  * EAT-R321, EAT-R324, EAT-R325, EAT-R326 and EAT-R327 are NOT CLAIMED by this file.
@@ -31,7 +55,7 @@ import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { ExtensionContext } from "@earendil-works/pi-coding-agent";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterAll, afterEach, describe, expect, it, type RunnerTask, vi } from "vitest";
 import subagentsExtension from "../src/index.js";
 import { sessionTaskDir } from "../src/output-file.js";
 import { validateWorkflowSource, type WorkflowSource } from "../src/workbench/designer.js";
@@ -39,6 +63,7 @@ import { EXECUTE_GRANT } from "../src/workbench/execute.js";
 import { createWorkflowExecuteTool, DETACH_GRANT, type WorkflowExecuteDeps } from "../src/workbench/execute-tool.js";
 import { WORKFLOW_SCRIPT_SCHEMA_VERSION } from "../src/workbench/identity.js";
 import type { NativeRef } from "../src/workbench/observation.js";
+import { buildWorkflowValidateReply, VALIDATE_REPLY_GRANT } from "../src/workbench/validate-reply.js";
 import { describeWorkflowSyntaxFault, extractMeta, NO_NODE_API_HINT, workflowSyntaxFault } from "../src/workflow/meta.js";
 import { runWorkflow, type WorkflowHost } from "../src/workflow/runtime.js";
 import { WORKER_SOURCE, workflowProgramText } from "../src/workflow/worker-source.js";
@@ -78,7 +103,7 @@ const ROWS: readonly CensusRow[] = [
   },
   {
     id: "EAT-R322(3)",
-    sentence: "workflow_validate's SCRIPT_SYNTAX diagnostic carries each SYNTAX_CASES shape's line and column, and for the line-6 shape the registered workflow_validate and workflow_execute name the same location (R322-V1, R322-V2).",
+    sentence: "For each SYNTAX_CASES shape, the designer's SCRIPT_SYNTAX diagnostic and the workflow_validate reply item that buildWorkflowValidateReply makes from it carry the shape's line and column, and for the line-6 shape the registered workflow_validate and workflow_execute name the same location (R322-V1, R322-V2).",
     pins: ["R322-V1", "R322-V2"],
   },
   {
@@ -134,6 +159,46 @@ const SYNTAX_CASES: readonly SyntaxCase[] = [
   { id: "tab-indented line 3", source: script("const ok = 1;", `${TAB}${TAB}const x = (1;`), message: "Unexpected token ';'", line: 3, column: 15 },
   { id: "block left open", source: script("if (args) {", "return 1;"), message: "Unexpected token ')'", line: 4, column: 2, pastEnd: true },
 ];
+/** The cases whose claim covers every SYNTAX_CASES shape (R323-S3 runs two of the shapes through the worker). */
+const EACH_SHAPE_CASES: readonly string[] = ["R323-S1", "R323-E1", "R323-W1", "R322-V2"];
+/** Each-liveness over SYNTAX_CASES: `${caseId}:${shape id}`, pushed by a case after its last assertion for that shape; R0 holds it. */
+const REACHED: string[] = [];
+const reachedBy = (caseId: string): string[] => REACHED.filter(entry => entry.startsWith(`${caseId}:`)).map(entry => entry.slice(caseId.length + 1));
+/** A shape as R0 freezes it and the receipt lists it: id@line:column, with +pastEnd for the end-of-script shape. */
+const shapeOf = (c: SyntaxCase): string => `${c.id}@${c.line}:${c.column}${c.pastEnd ? "+pastEnd" : ""}`;
+/** SYNTAX_CASES's anchor outside this file: the receipt's one SYNTAX_CASES line, each shape spelled `<id>` <line>:<column>, then pastEnd where it applies. */
+const RECEIPT = "docs/workbench/receipts/wb-9btr.md";
+function receiptShapes(): string[] {
+  const lines = readFileSync(join(ROOT, RECEIPT), "utf8").split("\n").filter(line => line.startsWith("- SYNTAX_CASES "));
+  if (lines.length !== 1) return [`${RECEIPT} holds ${lines.length} SYNTAX_CASES lines, not one`];
+  return [...lines[0].matchAll(/`([^`]+)` (\d+):(\d+)( pastEnd)?/g)].map(match => `${match[1]}@${match[2]}:${match[3]}${match[4] ? "+pastEnd" : ""}`);
+}
+/** The census-tier run pin, this file's anchor for a skip of every registration here at once; R0 holds its bytes. */
+const RUN_PIN = "test/workflow-script-syntax-refusal.census.ts";
+const RUN_PIN_SHA256 = "38b643e5de31313f0cdba1806e05835585c92a2b4aed6d862d2a8b3c35a76232";
+/** R0's last statement records it here, and the file-end judge holds it. */
+const CENSUS_END: string[] = [];
+
+/** A test as vitest's collected task tree holds it; self marks R0. */
+interface Registered {
+  readonly name: string;
+  readonly mode: string;
+  readonly fails: boolean;
+  readonly state: string | undefined;
+  readonly self: boolean;
+}
+/** Every test of a collected task tree, in registration order (the walk of test/workbench-h2-identity-reuse-census.test.ts). */
+function registered(tasks: readonly RunnerTask[], self: RunnerTask): Registered[] {
+  const walked: Registered[] = [];
+  for (const child of tasks) {
+    if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === self });
+    else if (child.type === "suite") walked.push(...registered(child.tasks, self));
+  }
+  return walked;
+}
+/** In run mode, not inverted, and run (pass or fail) before R0 reads it. */
+const ranInRunMode = (entry: Registered): boolean => entry.mode === "run" && !entry.fails && (entry.state === "pass" || entry.state === "fail");
+const modeLine = (entry: Registered): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${entry.state ?? "no result"}`;
 
 /** A stub host for runWorkflow: no agent is ever wanted by these scripts, and none offers node(). */
 function stubHost(): WorkflowHost {
@@ -240,18 +305,6 @@ function executeHarness(source: string) {
 }
 
 describe("wb-9btr EAT-R323 + EAT-R322 (2)(3): a script that does not compile is refused at launch, located, and hinted", () => {
-  it("R0 census over ROWS: the header claims exactly the row sentences, each row pins its cases, and this file and src cite exactly that set", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`), "frozen shape (rule 16)").toEqual(["EAT-R323(1):2", "EAT-R323(2):1", "display:1", "EAT-R323(3):3", "EAT-R322(3):2", "EAT-R322(2):3"]);
-    const claimLines = HEADER.split("\n").map(line => line.replace(/^ \* /, "")).filter(line => /\((?:R32[23]-[A-Z]\d, )*R32[23]-[A-Z]\d\)\.$/.test(line));
-    expect(claimLines, "the header's claim lines are exactly the row sentences, in order").toEqual(ROWS.map(row => row.sentence));
-    for (const row of ROWS) expect(/\(([^()]+)\)\.$/.exec(row.sentence)?.[1].split(", "), `${row.id}'s sentence cites exactly its pins`).toEqual([...row.pins]);
-    const pinned = ROWS.flatMap(row => row.pins).sort();
-    const titles = SELF.split("\n").flatMap(line => /^ {2}it\("(R32[23]-[A-Z]\d) /.exec(line)?.[1] ?? []);
-    expect([...titles].sort(), "each pinned case is exactly one case title of this file").toEqual(pinned);
-    const cited = new Set(CITING_SRC.flatMap(path => readFileSync(join(ROOT, path), "utf8").match(CASE_ID) ?? []));
-    expect([...cited].sort(), "the src comments cite exactly the pinned cases, so a case taken out of every literal here still reds").toEqual(pinned);
-  });
-
   it("R323-S1 the check locates each probed syntax mistake at the author's line and column and names it in the workflow.js:<line>:<column> form", () => {
     for (const c of SYNTAX_CASES) {
       const fault = workflowSyntaxFault(body(c.source));
@@ -261,6 +314,7 @@ describe("wb-9btr EAT-R323 + EAT-R322 (2)(3): a script that does not compile is 
       expect(described.startsWith(`workflow.js:${c.line}:${c.column}`), c.id).toBe(true);
       expect(described.endsWith(`: ${c.message}`), c.id).toBe(true);
       expect(described.includes("past the last line"), c.id).toBe(c.pastEnd === true);
+      REACHED.push(`R323-S1:${c.id}`);
     }
     expect(workflowSyntaxFault(body(VALID)), "a script that compiles has no fault").toBeUndefined();
     expect(workflowSyntaxFault(body(script("const ok = 1;", "return ok;"))), "a second compiling script has no fault").toBeUndefined();
@@ -287,6 +341,7 @@ describe("wb-9btr EAT-R323 + EAT-R322 (2)(3): a script that does not compile is 
       const run = await runWorkflow({ script: c.source, host: stubHost() });
       expect(run.status, c.id).toBe("failed");
       expect(run.error, `${c.id}: the worker refuses with the message the check reports`).toBe(workflowSyntaxFault(body(c.source))?.message);
+      REACHED.push(`R323-S3:${c.id}`);
     }
     const compiled = await runWorkflow({ script: VALID, args: { n: 1 }, host: stubHost() });
     expect(compiled.status).toBe("completed");
@@ -304,6 +359,7 @@ describe("wb-9btr EAT-R323 + EAT-R322 (2)(3): a script that does not compile is 
       }
       expect(shape.launchEmbedded, c.id).not.toHaveBeenCalled();
       expect(shape.launchDetached, c.id).not.toHaveBeenCalled();
+      REACHED.push(`R323-E1:${c.id}`);
     }
     const broken = executeHarness(BROKEN);
     for (const hostMode of ["embedded", "detached"]) {
@@ -343,6 +399,7 @@ describe("wb-9btr EAT-R323 + EAT-R322 (2)(3): a script that does not compile is 
       const shape = await h.call("SubagentWorkflow", { script: c.source });
       expect(shape.details?.taskId, c.id).toBeUndefined();
       expect(shape.text, c.id).toContain(`workflow.js:${c.line}:${c.column}`);
+      REACHED.push(`R323-W1:${c.id}`);
     }
     const refused = await h.call("SubagentWorkflow", { script: BROKEN });
     expect(refused.details?.taskId, "launchedInBackground:false").toBeUndefined();
@@ -382,12 +439,17 @@ describe("wb-9btr EAT-R323 + EAT-R322 (2)(3): a script that does not compile is 
     expect({ line: refused.error?.line, column: refused.error?.column }).toEqual({ line: syntax?.line, column: syntax?.column });
   }, 90_000);
 
-  it("R322-V2 the designer's SCRIPT_SYNTAX diagnostic carries the check's line, column and message for every syntax case", () => {
+  it("R322-V2 for every syntax case, the designer's SCRIPT_SYNTAX diagnostic carries the check's line, column and message, and the workflow_validate reply item buildWorkflowValidateReply makes from it carries the line and column", () => {
     for (const c of SYNTAX_CASES) {
       const artifactDigest = `sha256:${createHash("sha256").update(c.source, "utf8").digest("hex")}`;
       const saved: WorkflowSource = { definition: { kind: "script", id: "/ws/case.js", schemaVersion: WORKFLOW_SCRIPT_SCHEMA_VERSION, artifactDigest }, sourceRef: "/ws/case.js", source: c.source };
       const diagnostic = validateWorkflowSource(saved).diagnostics.find(item => item.code === "SCRIPT_SYNTAX");
       expect(diagnostic, c.id).toMatchObject({ line: c.line, column: c.column, message: c.message });
+      const { reply } = buildWorkflowValidateReply({ request: { sourceRef: saved.sourceRef, digest: artifactDigest }, source: saved, grants: [VALIDATE_REPLY_GRANT] });
+      expect(reply.status, `${c.id}: the reply`).toBe("invalid");
+      const errors = reply.status === "refused" ? [] : reply.errors;
+      expect(errors.find(item => item.code === "SCRIPT_SYNTAX"), `${c.id}: the reply item`).toMatchObject({ scope: "diagnostic", line: c.line, column: c.column });
+      REACHED.push(`R322-V2:${c.id}`);
     }
   });
 
@@ -427,4 +489,35 @@ describe("wb-9btr EAT-R323 + EAT-R322 (2)(3): a script that does not compile is 
     expect(run.error).toContain("This workflow host has no capability registry.");
     expect(run.error).toContain('workbench.workflowAgentBackend: "claude"');
   });
+});
+
+// R0 sits at file scope, registered last and outside the describe, so a skip that reaches every pinned case still leaves R0 to read it.
+it("R0 census over ROWS, registered last at file scope: the header claims exactly the row sentences, each row pins its cases, the src comments cite exactly that set, every other test vitest registered here is one pinned case that ran before R0 in run mode and not inverted, SYNTAX_CASES holds the six shapes the receipt lists and every each-shape case reached them, and the run pin's bytes are held", ({ task }) => {
+  expect(ROWS.map(row => `${row.id}:${row.pins.length}`), "frozen shape (rule 16)").toEqual(["EAT-R323(1):2", "EAT-R323(2):1", "display:1", "EAT-R323(3):3", "EAT-R322(3):2", "EAT-R322(2):3"]);
+  const claimLines = HEADER.split("\n").map(line => line.replace(/^ \* /, "")).filter(line => /\((?:R32[23]-[A-Z]\d, )*R32[23]-[A-Z]\d\)\.$/.test(line));
+  expect(claimLines, "the header's claim lines are exactly the row sentences, in order").toEqual(ROWS.map(row => row.sentence));
+  for (const row of ROWS) expect(/\(([^()]+)\)\.$/.exec(row.sentence)?.[1].split(", "), `${row.id}'s sentence cites exactly its pins`).toEqual([...row.pins]);
+  const pinned = ROWS.flatMap(row => row.pins).sort();
+  const cited = new Set(CITING_SRC.flatMap(path => readFileSync(join(ROOT, path), "utf8").match(CASE_ID) ?? []));
+  expect([...cited].sort(), "the src comments cite exactly the pinned cases, so a case taken out of every literal here still reds").toEqual(pinned);
+  // The registered cases, read from vitest's collected task tree, never from this file's text (refusal #1, U1).
+  const walked = registered(task.file.tasks, task);
+  expect(walked.findIndex(entry => entry.self), "R0 finds itself by task identity, registered last").toBe(walked.length - 1);
+  const others = walked.filter(entry => !entry.self);
+  expect(others.map(entry => /^(R32[23]-[A-Z]\d) /.exec(entry.name)?.[1] ?? `not a pinned case: ${entry.name}`).sort(), "every other registered test is one pinned case, and each pinned case is registered exactly once").toEqual(pinned);
+  expect(others.filter(entry => !ranInRunMode(entry)).map(modeLine), "every pinned case is in run mode, not inverted, and ran before R0").toEqual([]);
+  // SYNTAX_CASES: the frozen shape and the receipt's line (refusal #1, U2), then each-liveness over the table.
+  const shapes = SYNTAX_CASES.map(shapeOf);
+  expect(shapes, "SYNTAX_CASES's frozen shape (rule 16): six shapes, each id with its line:column, the last past the end").toEqual(["missing paren on line 6@6:17", "TS annotation on line 4@4:7", "import statement on line 2@2:1", "Date redeclared over the prelude@2:7", "tab-indented line 3@3:15", "block left open@4:2+pastEnd"]);
+  expect(receiptShapes(), "the receipt's SYNTAX_CASES line lists exactly these shapes, the table's anchor outside this file").toEqual(shapes);
+  const ids = SYNTAX_CASES.map(c => c.id);
+  expect(Object.fromEntries(EACH_SHAPE_CASES.map(id => [id, reachedBy(id)])), "each case claiming every SYNTAX_CASES shape reached every one, in table order, after its last assertion for it").toEqual(Object.fromEntries(EACH_SHAPE_CASES.map(id => [id, ids])));
+  expect(reachedBy("R323-S3"), "R323-S3 reached the two shapes it runs through the worker").toEqual(["missing paren on line 6", "Date redeclared over the prelude"]);
+  expect(createHash("sha256").update(readFileSync(join(ROOT, RUN_PIN))).digest("hex"), "the run pin's bytes, so it is never edited or deleted alone").toBe(RUN_PIN_SHA256);
+  CENSUS_END.push("R0");
+});
+
+// The file-end judge: R0 ran to its last statement.
+afterAll(() => {
+  expect(CENSUS_END, "R0 ran to its last statement (a red R0 reds here too; R0 skipped at collection or at run time, inverted with a hollow body, returning early or deleted reds only here)").toEqual(["R0"]);
 });
