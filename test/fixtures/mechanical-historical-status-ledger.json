@@ -4059,8 +4059,15 @@
    "testedForms": [],
    "evidence": [
     {
-     "bead": "wb-1zn2",
-     "anchor": "EAT-R089"
+     "receipt": "wb-n40d",
+     "section": {
+      "heading": "2026-11-10 receipt: the notes lines that held 20 status-ledger anchors on six open or deferred beads, read at two exports and now cited by those rows (machine seat ws-11, run g10-work-s322, base e31e1e9)",
+      "depth": 2,
+      "parents": [
+       "wb-n40d: R694 follow-up from wb-9b7e landing 1087: F8 R-B761 RIDER, still not cured: 20 bead anchors that SL-LIVE (test/workbench-mechanical-status-ledger.test.ts) pins through the export sit only in the notes of six beads the export holds not closed (wb-1zn2, wb-w8fk, wb-4bxo, wb-9a1o, wb-p3i2, wb-pxvv),..."
+      ]
+     },
+     "anchor": "EAT-R089 in the notes of wb-1zn2"
     }
    ],
    "blockedBy": {
@@ -4082,8 +4089,15 @@
    "testedForms": [],
    "evidence": [
     {
-     "bead": "wb-1zn2",
-     "anchor": "EAT-R090"
+     "receipt": "wb-n40d",
+     "section": {
+      "heading": "2026-11-10 receipt: the notes lines that held 20 status-ledger anchors on six open or deferred beads, read at two exports and now cited by those rows (machine seat ws-11, run g10-work-s322, base e31e1e9)",
+      "depth": 2,
+      "parents": [
+       "wb-n40d: R694 follow-up from wb-9b7e landing 1087: F8 R-B761 RIDER, still not cured: 20 bead anchors that SL-LIVE (test/workbench-mechanical-status-ledger.test.ts) pins through the export sit only in the notes of six beads the export holds not closed (wb-1zn2, wb-w8fk, wb-4bxo, wb-9a1o, wb-p3i2, wb-pxvv),..."
+      ]
+     },
+     "anchor": "EAT-R090 in the notes of wb-1zn2"
     }
    ],
    "blockedBy": {
@@ -4105,8 +4119,15 @@
    "testedForms": [],
    "evidence": [
     {
-     "bead": "wb-1zn2",
-     "anchor": "EAT-R091"
+     "receipt": "wb-n40d",
+     "section": {
+      "heading": "2026-11-10 receipt: the notes lines that held 20 status-ledger anchors on six open or deferred beads, read at two exports and now cited by those rows (machine seat ws-11, run g10-work-s322, base e31e1e9)",
+      "depth": 2,
+      "parents": [
+       "wb-n40d: R694 follow-up from wb-9b7e landing 1087: F8 R-B761 RIDER, still not cured: 20 bead anchors that SL-LIVE (test/workbench-mechanical-status-ledger.test.ts) pins through the export sit only in the notes of six beads the export holds not closed (wb-1zn2, wb-w8fk, wb-4bxo, wb-9a1o, wb-p3i2, wb-pxvv),..."
+      ]
+     },
+     "anchor": "EAT-R091 in the notes of wb-1zn2"
     }
    ],
    "blockedBy": {
@@ -4128,8 +4149,15 @@
    "testedForms": [],
    "evidence": [
     {
-     "bead": "wb-1zn2",
-     "anchor": "EAT-R092"
+     "receipt": "wb-n40d",
+     "section": {
+      "heading": "2026-11-10 receipt: the notes lines that held 20 status-ledger anchors on six open or deferred beads, read at two exports and now cited by those rows (machine seat ws-11, run g10-work-s322, base e31e1e9)",
+      "depth": 2,
+      "parents": [
+       "wb-n40d: R694 follow-up from wb-9b7e landing 1087: F8 R-B761 RIDER, still not cured: 20 bead anchors that SL-LIVE (test/workbench-mechanical-status-ledger.test.ts) pins through the export sit only in the notes of six beads the export holds not closed (wb-1zn2, wb-w8fk, wb-4bxo, wb-9a1o, wb-p3i2, wb-pxvv),..."
+      ]
+     },
+     "anchor": "EAT-R092 in the notes of wb-1zn2"
     }
    ],
    "blockedBy": {
@@ -4151,8 +4179,15 @@
    "testedForms": [],
    "evidence": [
     {
-     "bead": "wb-1zn2",
-     "anchor": "EAT-R093"
+     "receipt": "wb-n40d",
+     "section": {
+      "heading": "2026-11-10 receipt: the notes lines that held 20 status-ledger anchors on six open or deferred beads, read at two exports and now cited by those rows (machine seat ws-11, run g10-work-s322, base e31e1e9)",
+      "depth": 2,
+      "parents": [
+       "wb-n40d: R694 follow-up from wb-9b7e landing 1087: F8 R-B761 RIDER, still not cured: 20 bead anchors that SL-LIVE (test/workbench-mechanical-status-ledger.test.ts) pins through the export sit only in the notes of six beads the export holds not closed (wb-1zn2, wb-w8fk, wb-4bxo, wb-9a1o, wb-p3i2, wb-pxvv),..."
+      ]
+     },
+     "anchor": "EAT-R093 in the notes of wb-1zn2"
     }
    ],
    "blockedBy": {
@@ -6108,8 +6143,15 @@
    "testedForms": [],
    "evidence": [
     {
-     "bead": "wb-w8fk",
-     "anchor": "EAT-R148"
+     "receipt": "wb-n40d",
+     "section": {
+      "heading": "2026-11-10 receipt: the notes lines that held 20 status-ledger anchors on six open or deferred beads, read at two exports and now cited by those rows (machine seat ws-11, run g10-work-s322, base e31e1e9)",
+      "depth": 2,
+      "parents": [
+       "wb-n40d: R694 follow-up from wb-9b7e landing 1087: F8 R-B761 RIDER, still not cured: 20 bead anchors that SL-LIVE (test/workbench-mechanical-status-ledger.test.ts) pins through the export sit only in the notes of six beads the export holds not closed (wb-1zn2, wb-w8fk, wb-4bxo, wb-9a1o, wb-p3i2, wb-pxvv),..."
+      ]
+     },
+     "anchor": "EAT-R148 in the notes of wb-w8fk"
     }
    ],
    "blockedBy": {
@@ -6131,8 +6173,15 @@
    "testedForms": [],
    "evidence": [
     {
-     "bead": "wb-w8fk",
-     "anchor": "EAT-R149"
+     "receipt": "wb-n40d",
+     "section": {
+      "heading": "2026-11-10 receipt: the notes lines that held 20 status-ledger anchors on six open or deferred beads, read at two exports and now cited by those rows (machine seat ws-11, run g10-work-s322, base e31e1e9)",
+      "depth": 2,
+      "parents": [
+       "wb-n40d: R694 follow-up from wb-9b7e landing 1087: F8 R-B761 RIDER, still not cured: 20 bead anchors that SL-LIVE (test/workbench-mechanical-status-ledger.test.ts) pins through the export sit only in the notes of six beads the export holds not closed (wb-1zn2, wb-w8fk, wb-4bxo, wb-9a1o, wb-p3i2, wb-pxvv),..."
+      ]
+     },
+     "anchor": "EAT-R149 in the notes of wb-w8fk"
     }
    ],
    "blockedBy": {
@@ -6154,8 +6203,15 @@
    "testedForms": [],
    "evidence": [
     {
-     "bead": "wb-w8fk",
-     "anchor": "EAT-R150"
+     "receipt": "wb-n40d",
+     "section": {
+      "heading": "2026-11-10 receipt: the notes lines that held 20 status-ledger anchors on six open or deferred beads, read at two exports and now cited by those rows (machine seat ws-11, run g10-work-s322, base e31e1e9)",
+      "depth": 2,
+      "parents": [
+       "wb-n40d: R694 follow-up from wb-9b7e landing 1087: F8 R-B761 RIDER, still not cured: 20 bead anchors that SL-LIVE (test/workbench-mechanical-status-ledger.test.ts) pins through the export sit only in the notes of six beads the export holds not closed (wb-1zn2, wb-w8fk, wb-4bxo, wb-9a1o, wb-p3i2, wb-pxvv),..."
+      ]
+     },
+     "anchor": "EAT-R150 in the notes of wb-w8fk"
     }
    ],
    "blockedBy": {
@@ -6177,8 +6233,15 @@
    "testedForms": [],
    "evidence": [
     {
-     "bead": "wb-w8fk",
-     "anchor": "EAT-R151"
+     "receipt": "wb-n40d",
+     "section": {
+      "heading": "2026-11-10 receipt: the notes lines that held 20 status-ledger anchors on six open or deferred beads, read at two exports and now cited by those rows (machine seat ws-11, run g10-work-s322, base e31e1e9)",
+      "depth": 2,
+      "parents": [
+       "wb-n40d: R694 follow-up from wb-9b7e landing 1087: F8 R-B761 RIDER, still not cured: 20 bead anchors that SL-LIVE (test/workbench-mechanical-status-ledger.test.ts) pins through the export sit only in the notes of six beads the export holds not closed (wb-1zn2, wb-w8fk, wb-4bxo, wb-9a1o, wb-p3i2, wb-pxvv),..."
+      ]
+     },
+     "anchor": "EAT-R151 in the notes of wb-w8fk"
     }
    ],
    "blockedBy": {
@@ -6279,8 +6342,15 @@
    "testedForms": [],
    "evidence": [
     {
-     "bead": "wb-4bxo",
-     "anchor": "EAT-R155"
+     "receipt": "wb-n40d",
+     "section": {
+      "heading": "2026-11-10 receipt: the notes lines that held 20 status-ledger anchors on six open or deferred beads, read at two exports and now cited by those rows (machine seat ws-11, run g10-work-s322, base e31e1e9)",
+      "depth": 2,
+      "parents": [
+       "wb-n40d: R694 follow-up from wb-9b7e landing 1087: F8 R-B761 RIDER, still not cured: 20 bead anchors that SL-LIVE (test/workbench-mechanical-status-ledger.test.ts) pins through the export sit only in the notes of six beads the export holds not closed (wb-1zn2, wb-w8fk, wb-4bxo, wb-9a1o, wb-p3i2, wb-pxvv),..."
+      ]
+     },
+     "anchor": "EAT-R155 in the notes of wb-4bxo"
     }
    ],
    "blockedBy": {
@@ -6302,8 +6372,15 @@
    "testedForms": [],
    "evidence": [
     {
-     "bead": "wb-9a1o",
-     "anchor": "EAT-R156"
+     "receipt": "wb-n40d",
+     "section": {
+      "heading": "2026-11-10 receipt: the notes lines that held 20 status-ledger anchors on six open or deferred beads, read at two exports and now cited by those rows (machine seat ws-11, run g10-work-s322, base e31e1e9)",
+      "depth": 2,
+      "parents": [
+       "wb-n40d: R694 follow-up from wb-9b7e landing 1087: F8 R-B761 RIDER, still not cured: 20 bead anchors that SL-LIVE (test/workbench-mechanical-status-ledger.test.ts) pins through the export sit only in the notes of six beads the export holds not closed (wb-1zn2, wb-w8fk, wb-4bxo, wb-9a1o, wb-p3i2, wb-pxvv),..."
+      ]
+     },
+     "anchor": "EAT-R156 in the notes of wb-9a1o"
     }
    ],
    "blockedBy": {
@@ -6325,8 +6402,15 @@
    "testedForms": [],
    "evidence": [
     {
-     "bead": "wb-9a1o",
-     "anchor": "EAT-R157"
+     "receipt": "wb-n40d",
+     "section": {
+      "heading": "2026-11-10 receipt: the notes lines that held 20 status-ledger anchors on six open or deferred beads, read at two exports and now cited by those rows (machine seat ws-11, run g10-work-s322, base e31e1e9)",
+      "depth": 2,
+      "parents": [
+       "wb-n40d: R694 follow-up from wb-9b7e landing 1087: F8 R-B761 RIDER, still not cured: 20 bead anchors that SL-LIVE (test/workbench-mechanical-status-ledger.test.ts) pins through the export sit only in the notes of six beads the export holds not closed (wb-1zn2, wb-w8fk, wb-4bxo, wb-9a1o, wb-p3i2, wb-pxvv),..."
+      ]
+     },
+     "anchor": "EAT-R157 in the notes of wb-9a1o"
     }
    ],
    "blockedBy": {
@@ -6348,8 +6432,15 @@
    "testedForms": [],
    "evidence": [
     {
-     "bead": "wb-9a1o",
-     "anchor": "EAT-R158"
+     "receipt": "wb-n40d",
+     "section": {
+      "heading": "2026-11-10 receipt: the notes lines that held 20 status-ledger anchors on six open or deferred beads, read at two exports and now cited by those rows (machine seat ws-11, run g10-work-s322, base e31e1e9)",
+      "depth": 2,
+      "parents": [
+       "wb-n40d: R694 follow-up from wb-9b7e landing 1087: F8 R-B761 RIDER, still not cured: 20 bead anchors that SL-LIVE (test/workbench-mechanical-status-ledger.test.ts) pins through the export sit only in the notes of six beads the export holds not closed (wb-1zn2, wb-w8fk, wb-4bxo, wb-9a1o, wb-p3i2, wb-pxvv),..."
+      ]
+     },
+     "anchor": "EAT-R158 in the notes of wb-9a1o"
     }
    ],
    "blockedBy": {
@@ -6371,8 +6462,15 @@
    "testedForms": [],
    "evidence": [
     {
-     "bead": "wb-p3i2",
-     "anchor": "EAT-R159"
+     "receipt": "wb-n40d",
+     "section": {
+      "heading": "2026-11-10 receipt: the notes lines that held 20 status-ledger anchors on six open or deferred beads, read at two exports and now cited by those rows (machine seat ws-11, run g10-work-s322, base e31e1e9)",
+      "depth": 2,
+      "parents": [
+       "wb-n40d: R694 follow-up from wb-9b7e landing 1087: F8 R-B761 RIDER, still not cured: 20 bead anchors that SL-LIVE (test/workbench-mechanical-status-ledger.test.ts) pins through the export sit only in the notes of six beads the export holds not closed (wb-1zn2, wb-w8fk, wb-4bxo, wb-9a1o, wb-p3i2, wb-pxvv),..."
+      ]
+     },
+     "anchor": "EAT-R159 in the notes of wb-p3i2"
     }
    ],
    "blockedBy": {
@@ -6699,8 +6797,15 @@
    "testedForms": [],
    "evidence": [
     {
-     "bead": "wb-pxvv",
-     "anchor": "EAT-R163"
+     "receipt": "wb-n40d",
+     "section": {
+      "heading": "2026-11-10 receipt: the notes lines that held 20 status-ledger anchors on six open or deferred beads, read at two exports and now cited by those rows (machine seat ws-11, run g10-work-s322, base e31e1e9)",
+      "depth": 2,
+      "parents": [
+       "wb-n40d: R694 follow-up from wb-9b7e landing 1087: F8 R-B761 RIDER, still not cured: 20 bead anchors that SL-LIVE (test/workbench-mechanical-status-ledger.test.ts) pins through the export sit only in the notes of six beads the export holds not closed (wb-1zn2, wb-w8fk, wb-4bxo, wb-9a1o, wb-p3i2, wb-pxvv),..."
+      ]
+     },
+     "anchor": "EAT-R163 in the notes of wb-pxvv"
     }
    ],
    "blockedBy": {
@@ -7015,8 +7120,15 @@
    "testedForms": [],
    "evidence": [
     {
-     "bead": "wb-1zn2",
-     "anchor": "EAT-R173"
+     "receipt": "wb-n40d",
+     "section": {
+      "heading": "2026-11-10 receipt: the notes lines that held 20 status-ledger anchors on six open or deferred beads, read at two exports and now cited by those rows (machine seat ws-11, run g10-work-s322, base e31e1e9)",
+      "depth": 2,
+      "parents": [
+       "wb-n40d: R694 follow-up from wb-9b7e landing 1087: F8 R-B761 RIDER, still not cured: 20 bead anchors that SL-LIVE (test/workbench-mechanical-status-ledger.test.ts) pins through the export sit only in the notes of six beads the export holds not closed (wb-1zn2, wb-w8fk, wb-4bxo, wb-9a1o, wb-p3i2, wb-pxvv),..."
+      ]
+     },
+     "anchor": "EAT-R173 in the notes of wb-1zn2"
     }
    ],
    "blockedBy": {
@@ -7038,8 +7150,15 @@
    "testedForms": [],
    "evidence": [
     {
-     "bead": "wb-1zn2",
-     "anchor": "EAT-R174"
+     "receipt": "wb-n40d",
+     "section": {
+      "heading": "2026-11-10 receipt: the notes lines that held 20 status-ledger anchors on six open or deferred beads, read at two exports and now cited by those rows (machine seat ws-11, run g10-work-s322, base e31e1e9)",
+      "depth": 2,
+      "parents": [
+       "wb-n40d: R694 follow-up from wb-9b7e landing 1087: F8 R-B761 RIDER, still not cured: 20 bead anchors that SL-LIVE (test/workbench-mechanical-status-ledger.test.ts) pins through the export sit only in the notes of six beads the export holds not closed (wb-1zn2, wb-w8fk, wb-4bxo, wb-9a1o, wb-p3i2, wb-pxvv),..."
+      ]
+     },
+     "anchor": "EAT-R174 in the notes of wb-1zn2"
     }
    ],
    "blockedBy": {
@@ -7061,8 +7180,15 @@
    "testedForms": [],
    "evidence": [
     {
-     "bead": "wb-1zn2",
-     "anchor": "EAT-R175"
+     "receipt": "wb-n40d",
+     "section": {
+      "heading": "2026-11-10 receipt: the notes lines that held 20 status-ledger anchors on six open or deferred beads, read at two exports and now cited by those rows (machine seat ws-11, run g10-work-s322, base e31e1e9)",
+      "depth": 2,
+      "parents": [
+       "wb-n40d: R694 follow-up from wb-9b7e landing 1087: F8 R-B761 RIDER, still not cured: 20 bead anchors that SL-LIVE (test/workbench-mechanical-status-ledger.test.ts) pins through the export sit only in the notes of six beads the export holds not closed (wb-1zn2, wb-w8fk, wb-4bxo, wb-9a1o, wb-p3i2, wb-pxvv),..."
+      ]
+     },
+     "anchor": "EAT-R175 in the notes of wb-1zn2"
     }
    ],
    "blockedBy": {
@@ -7084,8 +7210,15 @@
    "testedForms": [],
    "evidence": [
     {
-     "bead": "wb-1zn2",
-     "anchor": "EAT-R176"
+     "receipt": "wb-n40d",
+     "section": {
+      "heading": "2026-11-10 receipt: the notes lines that held 20 status-ledger anchors on six open or deferred beads, read at two exports and now cited by those rows (machine seat ws-11, run g10-work-s322, base e31e1e9)",
+      "depth": 2,
+      "parents": [
+       "wb-n40d: R694 follow-up from wb-9b7e landing 1087: F8 R-B761 RIDER, still not cured: 20 bead anchors that SL-LIVE (test/workbench-mechanical-status-ledger.test.ts) pins through the export sit only in the notes of six beads the export holds not closed (wb-1zn2, wb-w8fk, wb-4bxo, wb-9a1o, wb-p3i2, wb-pxvv),..."
+      ]
+     },
+     "anchor": "EAT-R176 in the notes of wb-1zn2"
     }
    ],
    "blockedBy": {
@@ -7107,8 +7240,15 @@
    "testedForms": [],
    "evidence": [
     {
-     "bead": "wb-1zn2",
-     "anchor": "EAT-R177"
+     "receipt": "wb-n40d",
+     "section": {
+      "heading": "2026-11-10 receipt: the notes lines that held 20 status-ledger anchors on six open or deferred beads, read at two exports and now cited by those rows (machine seat ws-11, run g10-work-s322, base e31e1e9)",
+      "depth": 2,
+      "parents": [
+       "wb-n40d: R694 follow-up from wb-9b7e landing 1087: F8 R-B761 RIDER, still not cured: 20 bead anchors that SL-LIVE (test/workbench-mechanical-status-ledger.test.ts) pins through the export sit only in the notes of six beads the export holds not closed (wb-1zn2, wb-w8fk, wb-4bxo, wb-9a1o, wb-p3i2, wb-pxvv),..."
+      ]
+     },
+     "anchor": "EAT-R177 in the notes of wb-1zn2"
     }
    ],
    "blockedBy": {
