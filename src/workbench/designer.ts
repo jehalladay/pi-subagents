@@ -2,10 +2,9 @@
 import { createHash } from "node:crypto";
 import { readFileSync, realpathSync, statSync } from "node:fs";
 import { isAbsolute, relative, resolve, sep } from "node:path";
-import { Script } from "node:vm";
 import { Check } from "typebox/value";
 import ts from "typescript";
-import { decodeWorkflowLiteral, extractMeta, type WorkflowMeta } from "../workflow/meta.js";
+import { decodeWorkflowLiteral, extractMeta, type WorkflowMeta, workflowSyntaxFault } from "../workflow/meta.js";
 import { MAX_SCRIPT_LENGTH, type WorkflowScriptRef } from "../workflow/runtime.js";
 import { listSavedWorkflows, resolveWorkflowSource } from "../workflow/saved.js";
 import type { CapabilityRegistry, JsonValue } from "./capability-registry.js";
@@ -13,7 +12,8 @@ import { canonicalJson, type DefinitionRef, type InvocationSnapshot, identityDig
 import { sanitizeWorkbenchText } from "./redaction.js";
 
 export interface WorkflowSource { readonly definition: DefinitionRef; readonly sourceRef: string; readonly source: string }
-export interface DesignerDiagnostic { code: string; message: string; severity: "error" | "warning"; dimension?: string }
+/** line and column (1-based) locate a SCRIPT_SYNTAX error where the launch tools' compile check does (wb-9btr, EAT-R322 criterion 3). */
+export interface DesignerDiagnostic { code: string; message: string; severity: "error" | "warning"; dimension?: string; line?: number; column?: number }
 export interface SourceLocation { sourceRef: string; offset: number; end: number; line: number; column: number }
 export interface PossibleCall { primitive: "agent" | "node" | "workflow"; location: SourceLocation; provenance: "declared"; capabilityId?: string; input?: JsonValue; conditional: boolean }
 export interface StaticProjection { kind: "possible-calls"; calls: PossibleCall[]; edges: readonly never[]; unknown: { reason: string; location: SourceLocation }[] }
@@ -101,8 +101,13 @@ export function validateWorkflowSource(source: WorkflowSource, options: { regist
     } catch (cause) { error("META_NOT_LITERAL", cause instanceof Error ? cause.message : String(cause)); }
   }
   const body = metaDeclarations.length === 1 ? source.source.slice(0, metaDeclarations[0].statement.getStart(ast)).concat(source.source.slice(metaDeclarations[0].statement.getStart(ast)).replace("export", "      ")) : source.source;
-  try { new Script(`(async () => {\n${body}\n})`, { filename: source.sourceRef }); }
-  catch (cause) { syntax = "invalid"; error("SCRIPT_SYNTAX", cause instanceof Error ? cause.message : String(cause)); }
+  // The launch tools' compile check (wb-9btr, EAT-R322 criterion 3): the worker's own program, compiled and never run, so
+  // validation and launch name the same message, line and column (test/workflow-script-syntax-refusal.test.ts R322-V2).
+  const fault = workflowSyntaxFault(body);
+  if (fault !== undefined) {
+    syntax = "invalid";
+    diagnostics.push({ code: "SCRIPT_SYNTAX", message: sanitizeWorkbenchText(fault.message, undefined, "text"), severity: "error", ...(fault.line !== undefined ? { line: fault.line } : {}), ...(fault.column !== undefined ? { column: fault.column } : {}) });
+  }
   const location = (node: ts.Node): SourceLocation => { const offset = node.getStart(ast); const point = ast.getLineAndCharacterOfPosition(offset); return {sourceRef:source.sourceRef,offset,end:node.end,line:point.line+1,column:point.character+1}; };
   // Conservative lexical binding index: a local name is not assumed to be the host primitive.
   const bindings = new Map<ts.Node, Set<string>>();

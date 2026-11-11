@@ -66,6 +66,17 @@ const DETERMINISM_PRELUDE =
   " };" +
   "})();";
 
+/**
+ * The program the worker compiles for a top-level script body, as host text: the wrapper line carrying the prelude, the
+ * body, then the closing line. main() inside WORKER_SOURCE builds the same string from the same pieces and compiles it as
+ * `workflow.js` at `lineOffset: -1`. The launch tools compile this text and never run it, so a script that cannot compile
+ * is refused before anything is scheduled (wb-9btr, EAT-R323), at the line and column the worker would report;
+ * test/workflow-script-syntax-refusal.test.ts R323-S3 holds the two constructions to the same pieces and verdicts.
+ */
+export function workflowProgramText(body: string): string {
+  return `(async () => {${DETERMINISM_PRELUDE}\n${body}\n})()`;
+}
+
 export const WORKER_SOURCE = `"use strict";
 
 const { parentPort, workerData } = require("node:worker_threads");

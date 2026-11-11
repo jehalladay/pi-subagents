@@ -31,9 +31,16 @@
  * Review assertion for a detached launch: the local detached host admits only a reviewed script. Here the review is
  * the operator's own: a digest-pinned definition that matches the saved source bytes inside the workspace, launched
  * under the execute+detach conjunction the operator granted. A model-supplied policy never stands in for that.
+ *
+ * Compile check (wb-9btr, EAT-R323): a script definition whose saved source does not compile is refused here, in both
+ * hostModes and before either launcher runs, as definition-syntax-invalid with the line and column the worker would
+ * report. The check compiles the worker's program and never runs it. A source whose meta does not extract is left to
+ * the launch path, exactly as before. test/workflow-script-syntax-refusal.test.ts R323-E1 (both hostModes, neither
+ * launcher runs) and R323-E2 (the registered tool, nothing persisted or notified) pin it.
  */
 import { defineTool, type ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { Type } from "typebox";
+import { describeWorkflowSyntaxFault, extractMeta, type WorkflowSyntaxFault, workflowSyntaxFault } from "../workflow/meta.js";
 import type { JsonValue } from "./capability-registry.js";
 import type { WorkflowSource } from "./designer.js";
 import {
@@ -69,6 +76,7 @@ export type ExecuteLaunchRefusal =
   | "source-unavailable"
   | "definition-digest-mismatch"
   | "definition-schema-mismatch"
+  | "definition-syntax-invalid"
   | "launch-failed";
 export type ExecuteErrorCode = ExecuteRefusalPolicy | ExecuteLaunchRefusal;
 
@@ -118,7 +126,8 @@ export interface WorkflowExecuteEnvelope {
   readonly nativeRefsOmitted?: { readonly count: number; readonly reason: string };
   readonly policy?: JsonValue;
   readonly provenance?: { readonly grant: typeof EXECUTE_GRANT; readonly admissionPolicy: typeof EXECUTE_ADMISSION_POLICY; readonly principalRole: "local-operator"; readonly workspace: string };
-  readonly error?: { readonly code: ExecuteErrorCode; readonly message: string };
+  /** line and column (1-based) ride only a definition-syntax-invalid refusal: where the saved source stops compiling. */
+  readonly error?: { readonly code: ExecuteErrorCode; readonly message: string; readonly line?: number; readonly column?: number };
   readonly truncated?: { readonly reason: "byte-cap"; readonly maxBytes: number };
   readonly truncation?: string;
 }
@@ -135,12 +144,29 @@ function refusedLaunch(code: ExecuteLaunchRefusal, reason: string): { outcome: L
   return { outcome: { status: "refused", reason }, code };
 }
 
+/** Where a script source stops compiling; undefined when it compiles, or when its meta does not extract (the launch path reports that). */
+function syntaxFaultOf(source: string): WorkflowSyntaxFault | undefined {
+  let body: string;
+  try {
+    body = extractMeta(source).body;
+  } catch {
+    return undefined;
+  }
+  return workflowSyntaxFault(body);
+}
+
 /**
  * Folds the pure module's reply into the tool-reply/v1 envelope. A refused admission maps its policy to the error
  * code; a refused launch carries the host-boundary code the shell decided. Trimmed identity text drops the native
  * references (one-liner); the byte-cap marker is tool-reply's own shape and the builder's note rides beside it.
  */
-function envelope(built: WorkflowExecuteReply, launchCode: ExecuteLaunchRefusal | undefined, maxBytes: number, workspace: string): WorkflowExecuteEnvelope {
+function envelope(
+  built: WorkflowExecuteReply,
+  launchCode: ExecuteLaunchRefusal | undefined,
+  maxBytes: number,
+  workspace: string,
+  location: { readonly line?: number; readonly column?: number } = {},
+): WorkflowExecuteEnvelope {
   const refused = built.status === "refused";
   const note = built.truncation;
   const identityTrimmed = note !== undefined && IDENTITY_TRIM_NOTES.some(fragment => note.includes(fragment));
@@ -164,7 +190,7 @@ function envelope(built: WorkflowExecuteReply, launchCode: ExecuteLaunchRefusal 
       : {}),
     ...(built.policy !== undefined ? { policy: built.policy } : {}),
     ...(built.definition !== undefined ? { provenance: { grant: EXECUTE_GRANT, admissionPolicy: EXECUTE_ADMISSION_POLICY, principalRole: "local-operator", workspace } } : {}),
-    ...(refused && code !== undefined ? { error: { code, message: reason ?? "launch refused" } } : {}),
+    ...(refused && code !== undefined ? { error: { code, message: reason ?? "launch refused", ...location } } : {}),
     ...(built.truncated ? { truncated: { reason: "byte-cap", maxBytes } } : {}),
     ...(note !== undefined ? { truncation: note } : {}),
   };
@@ -205,6 +231,7 @@ export function createWorkflowExecuteTool(deps: WorkflowExecuteDeps) {
       }
       const { admission } = decision;
       let launchCode: ExecuteLaunchRefusal | undefined;
+      let location: { line?: number; column?: number } = {};
       let outcome: LaunchOutcome;
       const refuse = (code: ExecuteLaunchRefusal, reason: string): void => {
         const refusal = refusedLaunch(code, reason);
@@ -229,28 +256,35 @@ export function createWorkflowExecuteTool(deps: WorkflowExecuteDeps) {
           } else if (source.definition.schemaVersion !== admission.definition.schemaVersion) {
             refuse("definition-schema-mismatch", "definition schemaVersion does not match the saved source");
           } else {
-            const launch: ExecuteLaunch = Object.freeze({
-              invocationId: admission.invocationId,
-              toolCallId,
-              source,
-              input: params.input as JsonValue,
-              hostMode: admission.hostMode,
-              ...(admission.policy !== undefined ? { policy: admission.policy } : {}),
-              principal: Object.freeze({ id: deps.localPrincipal(ctx), role: "local-operator" as const }),
-              scope: Object.freeze({ workspace: scope.workspace, principal: scope.principal, sessionId: deps.sessionIdOf(ctx) }),
-              grant: admission.grant,
-              admissionPolicy: admission.admissionPolicy,
-            });
-            try {
-              const nativeRefs = admission.hostMode === "detached" ? await deps.launchDetached(ctx, launch) : await deps.launchEmbedded(ctx, launch);
-              outcome = { status: "launched", nativeRefs };
-            } catch (error) {
-              refuse("launch-failed", message(error));
+            // Compiled, never run, before either launcher (EAT-R323): nothing is scheduled for a source that cannot compile.
+            const fault = syntaxFaultOf(source.source);
+            if (fault !== undefined) {
+              refuse("definition-syntax-invalid", `the saved source does not compile, so nothing was launched: ${describeWorkflowSyntaxFault(fault)}`);
+              location = { ...(fault.line !== undefined ? { line: fault.line } : {}), ...(fault.column !== undefined ? { column: fault.column } : {}) };
+            } else {
+              const launch: ExecuteLaunch = Object.freeze({
+                invocationId: admission.invocationId,
+                toolCallId,
+                source,
+                input: params.input as JsonValue,
+                hostMode: admission.hostMode,
+                ...(admission.policy !== undefined ? { policy: admission.policy } : {}),
+                principal: Object.freeze({ id: deps.localPrincipal(ctx), role: "local-operator" as const }),
+                scope: Object.freeze({ workspace: scope.workspace, principal: scope.principal, sessionId: deps.sessionIdOf(ctx) }),
+                grant: admission.grant,
+                admissionPolicy: admission.admissionPolicy,
+              });
+              try {
+                const nativeRefs = admission.hostMode === "detached" ? await deps.launchDetached(ctx, launch) : await deps.launchEmbedded(ctx, launch);
+                outcome = { status: "launched", nativeRefs };
+              } catch (error) {
+                refuse("launch-failed", message(error));
+              }
             }
           }
         }
       }
-      return textResult(sanitizeWorkbenchJsonText(envelope(buildWorkflowExecuteReply(decision, outcome, maxBytes), launchCode, maxBytes, scope.workspace), maxBytes));
+      return textResult(sanitizeWorkbenchJsonText(envelope(buildWorkflowExecuteReply(decision, outcome, maxBytes), launchCode, maxBytes, scope.workspace, location), maxBytes));
     },
   });
 }

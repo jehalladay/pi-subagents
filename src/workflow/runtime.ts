@@ -22,7 +22,7 @@ import { sanitizeWorkbenchText } from "../workbench/redaction.js";
 import { dispatchPools, type HostAdmission, type HostAdmissionLease, type HostAdmissionWait } from "./admission.js";
 import { type JournalKeyInput, journalKey, nodeJournalKey, type WorkflowJournalEntry } from "./journal.js";
 import { type CompiledSchema, compileJsonSchema } from "./json-schema.js";
-import { extractMeta, type WorkflowMeta } from "./meta.js";
+import { extractMeta, NO_NODE_API_HINT, type WorkflowMeta } from "./meta.js";
 import type { WorkflowAgentEntry, WorkflowEntry, WorkflowNodeEntry } from "./progress.js";
 import {
   type AcknowledgeRow,
@@ -48,6 +48,31 @@ import { WORKER_SOURCE } from "./worker-source.js";
 
 /** Matches the `script` field's `maxLength` in the tool schema. */
 export const MAX_SCRIPT_LENGTH = 524_288;
+
+/** Node globals a workflow script reaches for that its realm never has (wb-9btr, EAT-R322 criterion 2). */
+const NODE_API_GLOBALS: ReadonlySet<string> = new Set([
+  "require", "module", "exports", "process", "Buffer", "global", "__dirname", "__filename",
+  "fetch", "setTimeout", "setInterval", "setImmediate", "clearTimeout", "clearInterval", "clearImmediate", "queueMicrotask",
+]);
+/** The refusal of node() on a host that has no capability registry, naming the setting that supplies one (EAT-R322 criterion 2; R322-H3). */
+const NO_REGISTRY =
+  'This workflow host has no capability registry. node() needs the Workbench backend: set workbench.workflowAgentBackend: "claude" in .pi/subagents.json and restart Pi.';
+
+/**
+ * An error frame's text with {@link NO_NODE_API_HINT} appended when its stack shows the script reached for a Node API: a
+ * ReferenceError on a Node global, a dynamic import(), or an import statement the worker could not compile. The stack's
+ * first line names a runtime error's class; a compile error carries Node's arrow above its class line.
+ * test/workflow-script-syntax-refusal.test.ts R322-H1 pins the hint and R322-H2 its quiet row.
+ */
+function withNodeApiHint(detail: string, stack: unknown): string {
+  if (typeof stack !== "string") return detail;
+  const first = stack.split("\n", 1)[0] ?? "";
+  const reference = /^ReferenceError: ([A-Za-z_$][\w$]*) is not defined$/.exec(first);
+  const reached = (reference !== null && NODE_API_GLOBALS.has(reference[1]))
+    || first.startsWith("TypeError [ERR_VM_DYNAMIC_IMPORT_CALLBACK_MISSING]:")
+    || /\nSyntaxError: Cannot use (?:import statement|'import\.meta') outside a module(?:\n|$)/.test(stack);
+  return reached ? `${detail} ${NO_NODE_API_HINT}` : detail;
+}
 
 /** Agents one run may schedule, in total. */
 export const WORKFLOW_AGENT_CAP = 1000;
@@ -1551,7 +1576,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       }
       const callNode = host.callNode?.bind(host);
       if (!callNode) {
-        respond(callId, false, undefined, "This workflow host has no capability registry.", true, { name: "CapabilityError", category: "unavailable", message: "This workflow host has no capability registry." });
+        respond(callId, false, undefined, NO_REGISTRY, true, { name: "CapabilityError", category: "unavailable", message: NO_REGISTRY });
         return;
       }
       if (nodeCount >= nodeCap) {
@@ -2048,7 +2073,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
           // Same stance as every frame: a crafted non-string message must not
           // flow into the run result, and a capabilityError is carried only in
           // its declared shape (wb-zin).
-          const detail = typeof message.message === "string" ? message.message : "Workflow worker reported a malformed error frame.";
+          const detail = typeof message.message === "string" ? withNodeApiHint(message.message, message.stack) : "Workflow worker reported a malformed error frame.";
           const diagnostic = message.capabilityError;
           const capabilityError = diagnostic && typeof diagnostic === "object" && diagnostic.name === "CapabilityError" && typeof diagnostic.category === "string" && typeof diagnostic.message === "string" ? diagnostic : undefined;
           finish({ status: "failed", error: detail, ...(capabilityError ? { capabilityError } : {}) });
