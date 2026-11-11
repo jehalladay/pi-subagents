@@ -767,14 +767,14 @@
      "suite": [
       "EAT-R015 a runtime skip issued while the host's beforeDispatch is parked (wb-9v02)"
      ],
-     "title": "R015-SPAWN fresh spawn: the seam validates, and the skip is lost: one SDK start, settled done, the script got the answer"
+     "title": "R015-SPAWN fresh spawn: the seam validates, and the skip is honored at the barrier: no SDK start, settled skipped, the script got null"
     },
     {
      "file": "test/workbench-mwi-cancel-repro.test.ts",
      "suite": [
       "EAT-R015 a runtime skip issued while the host's beforeDispatch is parked (wb-9v02)"
      ],
-     "title": "R015-RESUME resume startup: the seam validates, and the skip is lost the same way on the resumed row"
+     "title": "R015-RESUME resume startup: the seam validates, and the skip is honored the same way on the resumed row"
     }
    ],
    "evidence": [
@@ -808,14 +808,14 @@
      "suite": [
       "EAT-R016 a per-agent retry issued while the host's beforeDispatch is parked (wb-9v02)"
      ],
-     "title": "R016-SPAWN fresh spawn: the original attempt still starts its SDK query, then one replacement runs as attempt 2"
+     "title": "R016-SPAWN fresh spawn: the original attempt starts no SDK query, then one replacement runs as attempt 2"
     },
     {
      "file": "test/workbench-mwi-cancel-repro.test.ts",
      "suite": [
       "EAT-R016 a per-agent retry issued while the host's beforeDispatch is parked (wb-9v02)"
      ],
-     "title": "R016-RESUME resume startup: the resumed row's original attempt still starts its SDK query, then one replacement runs as attempt 2 and the script receives its answer"
+     "title": "R016-RESUME resume startup: the resumed row's original attempt starts no SDK query, then one replacement runs as attempt 2 and the script receives its answer"
     }
    ],
    "evidence": [
