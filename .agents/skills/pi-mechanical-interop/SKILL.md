@@ -5,7 +5,7 @@ description: Use when designing, implementing, auditing, or operating Pi Workben
 
 # Pi Workbench ↔ MechanicalWorkflows integration
 
-**Next design program (2026-11-10, planned; not shipped):** [mechanical-interop-integrity-2026-11-10](../../../../docs/programs/mechanical-interop-integrity-2026-11-10/README.md), with exact input/authority, invocation-lifetime lease, registered host, native evidence, recovery and adversarial verification. Treat the November 9 program below as established design lineage; re-pin code before implementation.
+**Next design program (2026-11-10, planned; not shipped):** [mechanical-interop-integrity-2026-11-10](../../../docs/programs/mechanical-interop-integrity-2026-11-10/README.md), with exact input/authority, invocation-lifetime lease, registered host, native evidence, recovery and adversarial verification. Treat the November 9 program below as established design lineage; re-pin code before implementation.
 
 
 **Start with the current local Pi design program:** `docs/programs/mechanical-native-interoperability-2026-11-09/README.md`, then `01-AUDIT-AND-PROTOCOL.md`, `02-IMPLEMENTATION-PACKAGES.md` and the **mandatory** `03-VERIFICATION-AND-RELEASE.md`. Read `AGENTS.md`, current W11, program Beads, and the paired Mechanical program. The November 4/6 EAT/triage corpus is historical requirements provenance, not current runtime status. Re-pin both default branches, active machine branches, and installed SDKs before changes.
