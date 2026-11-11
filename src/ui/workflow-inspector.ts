@@ -79,16 +79,26 @@ const toneGlyph = (freshness: ObservedNode['freshness'], statusTone: ObservedNod
   }
 };
 const tone = (node: ObservedNode, ascii: boolean): string => toneGlyph(node.freshness,node.presentation.statusTone,ascii);
-const selected = (model: InspectorModel, state: InspectorState): {node: ObservedNode | undefined; index: number; total: number} => {
-  const row=model.projection.window({scope:model.scope,invocationId:model.invocationId,offset:state.index,limit:1});
-  return {node:row.nodes[0],index:state.index,total:row.total};
-};
 /** The node the layout draws as current: the selected key when it still resolves, otherwise the row index. */
 function focusedNode(model: InspectorModel, state: InspectorState): ObservedNode | undefined {
   const at=state.selected ? model.projection.indexOf({scope:model.scope,invocationId:model.invocationId,key:state.selected}) : undefined;
   const total=model.projection.window({scope:model.scope,invocationId:model.invocationId,offset:0,limit:1}).total;
   const index=Math.min(Math.max(0,at??state.index),Math.max(0,total-1));
   return model.projection.window({scope:model.scope,invocationId:model.invocationId,offset:index,limit:1}).nodes[0];
+}
+/** Whether the selected key has left the projection (an evicted or dropped row). The pointer is then drawn on the row at the
+ * stored index, a different operation, so a row action keyed on the old selection must not land on it (EAT-R354). */
+const selectionGone = (model: InspectorModel, state: InspectorState): boolean =>
+  state.selected!==null && model.projection.indexOf({scope:model.scope,invocationId:model.invocationId,key:state.selected})===undefined;
+/** Selects the row the pointer is drawn on, explicitly and without acting on it: a later key acts on that selection. */
+function reselectDrawn(model: InspectorModel, state: InspectorState): InspectorState {
+  const total=model.projection.window({scope:model.scope,invocationId:model.invocationId,offset:0,limit:1}).total;
+  return {...state,selected:focusedNode(model,state)?.key??null,index:Math.min(Math.max(0,state.index),Math.max(0,total-1)),evidenceIndex:0};
+}
+/** The Claude session a `transcript` action refers to: the session of the node the pointer is drawn on, for the host to open. */
+export function inspectorTranscriptTarget(model: InspectorModel, state: InspectorState): string | undefined {
+  const node=focusedNode(model,state);
+  return node?.nativeRef.provider==='claude-agent-sdk' && node.nativeRef.type==='session' ? node.nativeRef.id : undefined;
 }
 /** The evidence reference a `load-evidence` action refers to: the focused node's selected reference, for the host to request. */
 export function inspectorEvidenceTarget(model: InspectorModel, state: InspectorState): {scope: ObservationScope; nativeRef: NativeRef; evidenceRef: string} | undefined {
@@ -275,17 +285,20 @@ export function reduceInspectorKey(data:string,state:InspectorState,model:Inspec
     return {state:{...state,view:'details',previousView:state.view}};
   }
   if(matchesKey(data,'s')) return {state:{...state,view:'details',previousView:state.view}};
+  // c and Enter act on the node the pointer is drawn on, resolved by its key, never on the row at a stale numeric index. A
+  // selected key the projection no longer holds acts on nothing: the drawn row is selected first, explicitly (EAT-R354).
   if(matchesKey(data,'c')) {
-    const node=selected(model,state).node;
-    return node?.nativeRef.provider==='claude-agent-sdk' && node.nativeRef.type==='session'
-      ? {state,action:'transcript'} : undefined;
+    if(selectionGone(model,state)) return {state:reselectDrawn(model,state)};
+    return inspectorTranscriptTarget(model,state)!==undefined ? {state,action:'transcript'} : undefined;
   }
   if(model.evidence && state.view==='details' && matchesKey(data,'enter')){
+    if(selectionGone(model,state)) return {state:reselectDrawn(model,state)};
     // The host performs the load; the reducer only names the request.
     return inspectorEvidenceTarget(model,state) ? {state,action:'load-evidence'} : {state};
   }
   if(matchesKey(data,'enter') || matchesKey(data,'right')){
-    const key=selected(model,state).node?.key;
+    if(selectionGone(model,state)) return {state:reselectDrawn(model,state)};
+    const key=focusedNode(model,state)?.key;
     if(!key) return {state};
     return {state:{...state,selected:key,collapsed:state.collapsed.includes(key)
       ? state.collapsed.filter(item=>item!==key) : [...state.collapsed,key]}};
