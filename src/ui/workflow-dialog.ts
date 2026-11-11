@@ -1261,8 +1261,8 @@ export class WorkflowDialog implements Component {
     const source = this.snapshot();
     const hasLegacyRows = source.progress.some(entry => entry.type === "workflow_agent");
     const rich = source.observation?.projection.window({scope:source.observation.scope,invocationId:source.observation.invocationId,offset:0,limit:1}).total;
-    // While the rich inspector's filter editor is open it owns every key, so a printable g reaches the filter text before the
-    // g toggle below can take it (EAT-R355). Escape or Enter ends editing in the reducer, and the toggle applies again. The
+    // While the rich inspector is drawn with its filter editor open, a typed g goes to the reducer's editor, not to the g
+    // toggle below (EAT-R355). Escape or Enter ends editing in the reducer, and the toggle applies again. The
     // legacy-to-inspector switch needs no such guard: it fires only while the legacy dialog is drawn, never the editor.
     const editingFilter = this.inspectorState.editingFilter && source.observation !== undefined && Boolean(rich) && (this.preferRich || !hasLegacyRows);
     if ((matchesKey(data,"g") || matchesKey(data,"tab")) && source.observation && rich && hasLegacyRows && !this.preferRich) {

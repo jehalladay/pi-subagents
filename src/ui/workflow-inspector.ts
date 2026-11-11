@@ -87,10 +87,10 @@ function focusedNode(model: InspectorModel, state: InspectorState): ObservedNode
   return model.projection.window({scope:model.scope,invocationId:model.invocationId,offset:index,limit:1}).nodes[0];
 }
 /** Whether the selected key has left the projection (an evicted or dropped row). The pointer is then drawn on the row at the
- * stored index, a different operation, so a row action keyed on the old selection must not land on it (EAT-R354). */
+ * stored index, a different row, so c, Enter, right and the details view's Enter act on nothing until it is selected (EAT-R354). */
 const selectionGone = (model: InspectorModel, state: InspectorState): boolean =>
   state.selected!==null && model.projection.indexOf({scope:model.scope,invocationId:model.invocationId,key:state.selected})===undefined;
-/** Selects the row the pointer is drawn on, explicitly and without acting on it: a later key acts on that selection. */
+/** Selects the row the pointer is drawn on, explicitly and without acting on it: the next c, Enter, right or details-view Enter acts on it. */
 function reselectDrawn(model: InspectorModel, state: InspectorState): InspectorState {
   const total=model.projection.window({scope:model.scope,invocationId:model.invocationId,offset:0,limit:1}).total;
   return {...state,selected:focusedNode(model,state)?.key??null,index:Math.min(Math.max(0,state.index),Math.max(0,total-1)),evidenceIndex:0};
@@ -285,8 +285,8 @@ export function reduceInspectorKey(data:string,state:InspectorState,model:Inspec
     return {state:{...state,view:'details',previousView:state.view}};
   }
   if(matchesKey(data,'s')) return {state:{...state,view:'details',previousView:state.view}};
-  // c and Enter act on the node the pointer is drawn on, resolved by its key, never on the row at a stale numeric index. A
-  // selected key the projection no longer holds acts on nothing: the drawn row is selected first, explicitly (EAT-R354).
+  // c, Enter and right act on the node the pointer is drawn on, resolved by its key, never on the row at a stale numeric index.
+  // On a selected key the projection no longer holds they act on nothing: the drawn row is selected first (EAT-R354).
   if(matchesKey(data,'c')) {
     if(selectionGone(model,state)) return {state:reselectDrawn(model,state)};
     return inspectorTranscriptTarget(model,state)!==undefined ? {state,action:'transcript'} : undefined;
