@@ -1,103 +1,183 @@
 /**
- * wb-pxvv (MWI B-hx-admit, slice PI-5; MNI packet P12), the hx-admit census over the scope guards of
- * src/workbench/scope-admission.ts and the committed named-query record qa/workbench/receipts/wb-pxvv-hx-named-query-probe.json
- * (made by qa/workbench/hx-named-query-probe.mjs, judged by qa/workbench/hx-named-query-judge.mjs). Requirements, vendored
+ * wb-pxvv (MWI B-hx-admit, slice PI-5; MNI packet P12), the hx-admit census: the readings of judgeScopeEvidence,
+ * scopeBlockerOf and dispatchAdmittedWriter (src/workbench/scope-admission.ts) over the answers and requests this file builds,
+ * and the fields and readings of the committed named-query record qa/workbench/receipts/wb-pxvv-hx-named-query-probe.json
+ * (written by qa/workbench/hx-named-query-probe.mjs, judged by qa/workbench/hx-named-query-judge.mjs). Requirements, vendored
  * verbatim with their SHA-256 in test/fixtures/mwi-hx-admit-requirements-roster.json: EAT-R058, EAT-R059 and EAT-R062 of
  * mechanical-workflows-interop-2026-11-04 (triage/requirements/ATOMIC-REQUIREMENTS.md at pi-subagents master 0b25e14e) and
  * EAT-R163 of the 2026-11-06 delta (triage/requirements/ATOMIC-REQUIREMENTS-DELTA.md at b8cd53aa).
  *
- * PINNED READER SET (one claim per line; the cases before the colon are its pins, and its words state only the inputs and
- * readings those cases hold):
- *  - R058-MEASURED-PARTIAL, R058-MEASURED-UNKNOWN: each measured answer of the two committed probe records, read as scope
- *    evidence through evidenceOf, is needs_evidence with exactly its listed gaps, and dispatchAdmittedWriter refuses it at
- *    stage scope with zero writer calls: wb-f3wd's three find-verb legs (filesystem-live and filesystem-live-best-effort,
- *    results with coverage incomplete and exit codes 3 and 0; revision-pinned, a process failure with no coverage and exit
- *    code 4) and this bead's two named-query legs (coverage unknown).
- *  - R058-FALSE-KNOWN-EMPTY: the measured filesystem-live-best-effort answer restated empty (answer count 0) adds
- *    known-empty-unlicensed to its gaps, as does an otherwise capable empty answer whose absence is not licensed; neither
- *    calls the writer.
- *  - R058-POSITIVE-CONTROL: an answer meeting every condition, and a capable empty answer with complete coverage and licensed
- *    absence, are admitted, and dispatchAdmittedWriter calls the writer exactly once with a frozen admission whose
- *    invocation id is the request's and whose label is native-task-scope.
- *  - M-EMPTY-AS-COMPLETE: an otherwise capable empty answer whose coverage is incomplete, unknown or null is needs_evidence
- *    with coverage-not-complete and known-empty-unlicensed.
- *  - R058-EACH-CONDITION: an otherwise capable answer that misses one condition is needs_evidence with exactly that
- *    condition's gap, and dispatchAdmittedWriter refuses it at stage scope with zero writer calls: answered false
- *    (answer-missing); an exit code that is not 0, held as every integer from -300 to 300 but 0, plus and minus 2^16, 2^31,
- *    2^32 and 2^53 - 1, plus and minus 0.4, 0.5, 1e-300 and Infinity, NaN, and null (exit-nonzero); terminal not reached
- *    (terminal-unreached); coverage incomplete, unknown or null (coverage-not-complete); absence not licensed
- *    (absence-unlicensed); a workspace, task digest, resolved revision or query digest that is null or the empty string
- *    (root-unbound, task-scope-absent, revision-unbound, query-digest-absent). Exit codes 0 and -0 are admitted.
+ * FORM (cut 3, the respin of refusal #2, authored in rule 19(c)'s enumerate-the-resolvable form): each line of the PINNED
+ * READER SET claims exactly the inputs its cases build, named in the line or by the constant or builder of this file that
+ * holds them, and exactly the readings its cases assert. The modes the census knows it does not pin are the NOT CLAIMED scope
+ * sentences and the named RESIDUAL with its pinned quiet row, below.
+ *
+ * THE INPUTS (constants and builders of this file):
+ *  - EXPECTATIONS: MEASURED, the measured task's expectation (workspace WORKSPACE, which is <workspace>; wb-f3wd's task
+ *    digest; the committed definition's semantic digest; wb-f3wd's base revision), and SYNTHETIC (workspace ws-alpha/beta,
+ *    task digest sha256: then 0123456789abcdef four times, query digest sha256/hxq-normalized-v1: then fedcba9876543210 four
+ *    times, base revision 0123456789abcdef0123456789abcdef01234567).
+ *  - capableEvidence(e): answered, exit code 0, terminal reached, coverage complete, absence licensed, not empty, and e's
+ *    workspace, task digest, query digest and base revision as its four identities.
+ *  - sweptEvidence(e, mask), mask 0 to 1023: bit d set misses dimension d (0 answered, 1 exit code, 2 terminal, 3 coverage,
+ *    4 absence licence, 5 the answer is empty, 6 workspace, 7 task digest, 8 resolved revision, 9 query digest); a missed exit
+ *    code is MISSED_EXITS[mask mod 6] (3, -1, null, 0.5, NaN, 256), a missed coverage MISSED_COVERAGE[mask mod 3] (incomplete,
+ *    unknown, null) and a missed identity null for an even mask and the empty string for an odd one; every dimension not
+ *    missed reads as in capableEvidence(e).
+ *  - variantsOf(v): the variant corpus of an identity value v, each member a string other than v and unique within its
+ *    family, in the fifteen families of VARIANT_FAMILIES: case-whole (v upper-cased, v lower-cased), case-one (one cased character's case swapped, at each
+ *    position), prefix (each proper prefix), suffix (each proper suffix), extension (0 or x after v, 0 or x before it, v
+ *    twice), padding (each of the 33 PADS before v, after it and on both sides: tab, line feed, vertical tab, form feed,
+ *    carriage return, space, U+0085, U+00A0, U+00AD, U+1680, U+180E, U+2000 to U+200A, U+200B, U+200C, U+200D, U+2028,
+ *    U+2029, U+202F, U+205F, U+2060, U+3000, U+FEFF, and carriage return with line feed), path-form (/, //, a backslash or /.
+ *    after v, / or ./ before it), substitution (each character replaced by x, or by y for an x, and by its successor in its
+ *    class: 0-9, a-z and A-Z each wrapping around, any other character to _, and _ to -), deletion (each character removed),
+ *    insertion (x at each position), transposition (each two adjacent unequal characters swapped), full-width (each printable
+ *    ASCII character as its full-width form, all at once and one at a time), combining-mark (U+0301 after each character),
+ *    encoded (percent-encoded, JSON-quoted, single-quoted, backtick-quoted, HTML-escaped) and prefixed (git:, sha256: or
+ *    refs/heads/ before v). VARIANT_COUNTS holds each identity's corpus size under both expectations.
+ *  - the measured answers: the five observations of the two committed probe records (wb-f3wd's three find-verb legs, this
+ *    bead's two named-query legs) read as scope evidence through evidenceOf (the residual R-EVIDENCE-ADAPTER).
+ *  - nativeRequest(e, evidence, gate): mode native-task-scope, invocation inv-hx-admit-1, the gate (witness supported unless
+ *    a line names another) and e with the evidence; a git-census request carries mode git-census, its invocation id and
+ *    authorized.
+ *
+ * PINNED READER SET (one claim per line; the cases before the colon are its pins):
+ *  - R058-MEASURED-PARTIAL, R058-MEASURED-UNKNOWN: against MEASURED, each measured answer is needs_evidence with exactly its
+ *    gaps of GAPS_OF_FIND or GAPS_OF_NAMED, and dispatchAdmittedWriter refuses its native request at stage scope with that
+ *    verdict, with zero writer calls: wb-f3wd's legs filesystem-live and filesystem-live-best-effort (results with coverage
+ *    incomplete and exit codes 3 and 0) and revision-pinned (a process failure with no coverage and exit code 4), and the two
+ *    named-query legs (coverage unknown).
+ *  - R058-FALSE-KNOWN-EMPTY: against MEASURED, the measured filesystem-live-best-effort answer restated empty (answer count 0)
+ *    is needs_evidence with its six listed gaps, known-empty-unlicensed among them, and capableEvidence(MEASURED) restated
+ *    empty with absence not licensed is needs_evidence [absence-unlicensed, known-empty-unlicensed]; dispatchAdmittedWriter
+ *    refuses each at stage scope with that verdict, with zero writer calls.
+ *  - R058-POSITIVE-CONTROL: for each expectation e, capableEvidence(e), and capableEvidence(e) restated empty, are admitted,
+ *    and dispatchAdmittedWriter of each one's native request calls the writer exactly once, with a frozen admission equal to
+ *    { invocationId: inv-hx-admit-1, label: native-task-scope }, and returns { dispatched: true } with that admission and the
+ *    writer's value.
+ *  - M-EMPTY-AS-COMPLETE: for each e, capableEvidence(e) restated empty with coverage incomplete, unknown or null is
+ *    needs_evidence [coverage-not-complete, known-empty-unlicensed].
+ *  - R058-EACH-CONDITION: for each e, capableEvidence(e) with one condition missed in each form listed here is needs_evidence
+ *    with exactly that condition's gap, and dispatchAdmittedWriter refuses its native request at stage scope with that
+ *    verdict, with zero writer calls: answered false (answer-missing); each exit code of EXIT_CODES_NOT_ZERO - every integer
+ *    from -300 to 300 but 0, plus and minus 2^16, 2^31, 2^32 and 2^53 - 1, plus and minus 0.4, 0.5, 1e-300 and Infinity, NaN,
+ *    and null (exit-nonzero); terminal not reached (terminal-unreached); coverage incomplete, unknown or null
+ *    (coverage-not-complete); absence not licensed (absence-unlicensed); the workspace, task digest, resolved revision or
+ *    query digest null or the empty string (root-unbound, task-scope-absent, revision-unbound, query-digest-absent).
+ *    capableEvidence(e) with exit code 0 or -0 is admitted.
  *  - R058-GAP-ORDER: SCOPE_GAPS is the literal list answer-missing, exit-nonzero, terminal-unreached, coverage-not-complete,
- *    absence-unlicensed, known-empty-unlicensed, root-unbound, task-scope-absent, revision-unbound, query-digest-absent; over
- *    all 1024 combinations of the nine conditions met or missed and the answer empty or not, an answer is admitted exactly
- *    when no gap applies and is otherwise needs_evidence with exactly the gaps that apply, in that order
- *    (known-empty-unlicensed applies to an empty answer whose coverage is not complete or whose absence is not licensed); an
- *    answer that misses every condition and is empty reports all ten.
- *  - R059-TASK-MISMATCH, R059-QUERY-MISMATCH, R059-REVISION-MISMATCH: an otherwise admitted answer stating another task
- *    digest, query digest or resolved revision is refused with that mismatch, and the writer is called zero times.
- *  - R059-BEFORE-WRITER: a stated identity that differs refuses with that mismatch whatever gaps the answer also has: the
- *    workspace (root), task digest (task), query digest (query) or resolved revision (revision) stated as another string or
- *    as a single space, over the 1024 combinations of R058-GAP-ORDER and on each measured named-query answer, is refused
- *    with that mismatch by judgeScopeEvidence, and on the measured answers by dispatchAdmittedWriter at stage scope,
- *    returned before the writer, which is called zero times.
- *  - M-WORKSPACE-NAME-ONLY: the task, query and revision mismatches each refuse with the workspace equal; a workspace alone
- *    differing refuses as root.
- *  - R059-CHECK-ORDER: SCOPE_MISMATCHES is the literal list root, task, query, revision; each of the 15 non-empty sets of
- *    those identities stated as other strings, on a capable answer and on an empty answer that misses every other
- *    condition, is refused with the set's first member in that order.
- *  - R062-NATIVE-BLOCKED: a scope gate whose witness is unsupported or missing refuses the native request at stage gate with
- *    the blocker scoped to native-task-scope on HX-TASK-SCOPE-PROBE, git-census not blocked, with zero writer calls; a
- *    supported witness has no blocker.
- *  - R062-GIT-CENSUS-PASSES: an authorized git-census request is dispatched once, labelled git-census, while the same gate
- *    blocks the native request; an unauthorized one is refused at stage authority.
- *  - M-DISABLE-ALL: the blocker of the committed record's gate names git-census as not blocked and the git-census request
- *    still dispatches.
- *  - R062-ONE-FROZEN-ADMISSION: a native request whose gate and evidence admit and an authorized git-census request, each
- *    with a writer that returns a value and one that returns a resolved promise, call the writer exactly once with a frozen
- *    admission that is exactly the request's invocation id and its mode's label, and the outcome is dispatched with that
- *    same admission object and the writer's resolved value.
- *  - R062-WRITER-ERROR-PROPAGATES: under each of those two dispatched requests, a writer that throws, and one that returns a
- *    rejected promise, with an Error, a string, a plain object or undefined makes dispatchAdmittedWriter reject with that
- *    same value after one writer call.
- *  - R062-REFUSAL-ORDER: a native request whose invocation id or one of its four expected identities is the empty string is
- *    refused at stage request (malformed-request) under each gate witness (supported, unsupported, missing) with each scope
- *    evidence (capable, the measured strict named-query answer, a task mismatch, an empty answer that misses every
- *    condition), and so is a git-census request whose invocation id is the empty string, authorized or not; a native
- *    request under an unsupported or missing witness is refused at stage gate with each of those evidences; none of these
- *    calls the writer.
- *  - R163-RECORD-PINS: the committed named-query record pins the installed hx (version 0.1.0, binary SHA-256, which is not
- *    wb-f3wd's recorded binary, origin path, HXS 1.0, protocol hxs/1.0, capability count, no task-named capability, the SDK
- *    @hyperunix/sdk 0.1.0 as installed and as reported), the task (wb-f3wd's id, kind, root, base revision and digest), the
- *    named-query definition (name hx-admit-task-scope, verb run, the task parameter, its doc equal to the task digest,
- *    formed under git:<base revision>, the saved definition keeping no view, and its semantic digest), the four commands
- *    that made it token for token, each leg's query and argv token for token (only the best-effort leg carries
- *    --best-effort), its diagnostics, its exit code, its answer view and its query digest equal to the semantic digest, and
- *    the find-verb legs re-measured in the same run at the same binary SHA-256 with their verdict and exit codes; the binary
- *    SHA-256, capability count, semantic digest, leg exit codes, find-verb verdict and find-verb exit codes equal the
- *    receipt's Measured record table.
- *  - R163-NAMED-QUERY-VERDICT: the record's verdict, capable set, reasons and blocker equal judgeNamedQueryRoute over its
- *    observations, which equals the landed wb-f3wd judgeTaskScope over them.
- *  - R163-GATE-INDEPENDENT: gateOfRecord reads the named-query route only: the committed record reads unsupported whatever
- *    its find-verb section states, a planted capable named-query leg reads supported whatever the find-verb section states,
- *    and each maps through dispatchAdmittedWriter to the blocker or to one dispatch.
- *  - M-FIND-RECITED: a record whose legs are wb-f3wd's find-verb legs (as committed, relabelled to the named-query ids, or
- *    only their exit codes kept) has findings and its gate witness reads missing; so does a record whose verdict is restated.
- *  - R163-RECORD-TIED: the record's probe and judge SHA-256 equal those files', its utc is a 2026-11-11 instant,
- *    recordFindings of it is empty, and it keeps no host path: no key or string value of it contains the repository root,
- *    the home directory or /tmp/, and none, split at white space, quotes, backticks, =, commas, semicolons, |, parentheses,
- *    square and curly brackets and angle brackets, holds a token that starts with / or with file:, is ~ or starts with ~/,
- *    starts with a drive letter, a colon and a slash or backslash, or carries :/ before a character other than /.
- *  - R163-RECORD-FINDINGS: FINDINGS is the literal list of the ten findings, and recordFindings reports, in that order,
- *    exactly the findings of each planted record: a non-object (null, an array, a string, a number) reads
- *    record-not-object; another schema, another route, an unpinned binary SHA-256 (null, eight hex digits, upper case), a
- *    definition with another name or verb, another leg set (a leg dropped, the legs reversed), a leg whose operation is
- *    another verb or whose argv lacks run or the query name, a leg whose argv carries find, a leg whose query digest is
- *    another digest or whose digest source is absent, and a restated verdict, capable set, reasons or blocker each read
- *    their one finding; a named-query leg relabelled with a find-verb leg id reads leg-set-other and find-leg-recited, a leg
- *    whose operation is find reads find-leg-recited and verb-not-run, and an empty object reads schema-other, route-other,
- *    binary-unpinned, definition-missing, leg-set-other and verdict-not-judged; gateOfRecord of every planted record, a
- *    capable record with another schema among them, reads missing.
+ *    absence-unlicensed, known-empty-unlicensed, root-unbound, task-scope-absent, revision-unbound, query-digest-absent; for
+ *    each e, each of the 1024 answers sweptEvidence(e, mask) is admitted when sweptGaps(mask) is empty and is otherwise
+ *    needs_evidence with exactly sweptGaps(mask), in that order - the gap of each missed dimension but dimension 5, and
+ *    known-empty-unlicensed when bit 5 is set with bit 3 or bit 4; sweptEvidence(e, 1023) reports all ten.
+ *  - R059-TASK-MISMATCH, R059-QUERY-MISMATCH, R059-REVISION-MISMATCH: capableEvidence(MEASURED) stating the task digest
+ *    sha256: then 9 sixty-four times, the query digest sha256/hxq-normalized-v1: then 8 sixty-four times, or the resolved
+ *    revision 7 forty times is refused with task, query or revision, and dispatchAdmittedWriter refuses its native request at
+ *    stage scope with that verdict, with zero writer calls.
+ *  - R059-IDENTITY-VARIANTS (refusal #2's U1 to U4): for each expectation e and each identity - the workspace (root), the task
+ *    digest (task), the query digest (query) and the resolved revision against the base revision (revision) - each member of
+ *    variantsOf of e's value, stated as that identity, is refused with that identity's mismatch by judgeScopeEvidence on
+ *    capableEvidence(e), on sweptEvidence(e, 1023) and, for MEASURED, on each of the five measured answers;
+ *    dispatchAdmittedWriter refuses each on capableEvidence(e) at stage scope with that verdict, with zero writer calls; and
+ *    the value itself, rebuilt as a new string, leaves capableEvidence(e) admitted. VARIANT_FAMILIES and VARIANT_COUNTS are
+ *    held as literals, and every family yields at least one member for each of the eight values.
+ *  - R059-BEFORE-WRITER: for each identity, each of its two planted values of IDENTITIES (<other-workspace> or the plant of
+ *    R059-TASK-MISMATCH, R059-QUERY-MISMATCH or R059-REVISION-MISMATCH, and a single space) and the first member of each
+ *    family of variantsOf of MEASURED's value, stated on each of the 1024 answers
+ *    sweptEvidence(MEASURED, mask) and on each measured named-query answer, is refused with that identity's mismatch by
+ *    judgeScopeEvidence; on the measured named-query answers dispatchAdmittedWriter refuses each at stage scope with that
+ *    verdict and returns before the writer, which is called zero times.
+ *  - M-WORKSPACE-NAME-ONLY: on capableEvidence(MEASURED), the task, query and revision plants of R059-TASK-MISMATCH,
+ *    R059-QUERY-MISMATCH and R059-REVISION-MISMATCH each refuse with the workspace equal to MEASURED's, and the workspace
+ *    stated as <other-workspace> alone refuses as root.
+ *  - R059-CHECK-ORDER: SCOPE_MISMATCHES is the literal list root, task, query, revision; each of the 15 non-empty sets of the
+ *    four identities, each member stated as its first planted value of IDENTITIES, on capableEvidence(MEASURED) and on
+ *    sweptEvidence(MEASURED, 1023) with all four identities null, is refused with the set's first member in that order.
+ *  - R062-NATIVE-BLOCKED: scopeBlockerOf of the gates with witness unsupported and missing is { gate: HX-TASK-SCOPE-PROBE,
+ *    scope: native-task-scope, witness, notBlocked: [git-census] } and of the gate with witness supported null; the native
+ *    request of capableEvidence(MEASURED) under witness unsupported or missing is refused at stage gate with that blocker,
+ *    with zero writer calls.
+ *  - R062-GIT-CENSUS-PASSES: the authorized git-census request inv-hx-admit-1 is dispatched once with the admission
+ *    { invocationId: inv-hx-admit-1, label: git-census }, while the native request of capableEvidence(MEASURED) under witness
+ *    unsupported is not dispatched; that git-census request unauthorized is refused at stage authority
+ *    (git-census-unauthorized), with zero writer calls.
+ *  - M-DISABLE-ALL: the blocker of the witness gateOfRecord reads for the committed record names git-census as not blocked,
+ *    and the authorized git-census request inv-hx-admit-1 is dispatched with one writer call.
+ *  - R062-ONE-FROZEN-ADMISSION: the native request inv-native-7 (capableEvidence(MEASURED), witness supported) and the
+ *    authorized git-census request inv-census-8, each with a writer returning written-now and with one returning a promise
+ *    of written-later, call the writer exactly once with a frozen admission strictly equal to the request's
+ *    { invocationId, label } (labels native-task-scope and git-census), and the outcome has exactly the keys dispatched
+ *    (true), admission (that same object) and value (the writer's value, resolved).
+ *  - R062-WRITER-ERROR-PROPAGATES: under each of those two requests, a writer that throws and one that returns a rejected
+ *    promise, each with an Error, a string, a plain object and undefined, make dispatchAdmittedWriter reject with that same
+ *    value after exactly one writer call.
+ *  - R062-REFUSAL-ORDER: the native request whose invocation id, or one of whose four expected identities, is the empty string
+ *    is refused at stage request (malformed-request) under each witness (supported, unsupported, missing) with each of four
+ *    evidences (capableEvidence(MEASURED), the measured named-query-strict answer, capableEvidence(MEASURED) stating the task
+ *    plant of R059-TASK-MISMATCH, sweptEvidence(MEASURED, 1023)), and so is the git-census request whose invocation id is the
+ *    empty string, authorized or not; the native request under witness unsupported or missing is refused at stage gate with
+ *    each of those four evidences; none of these calls the writer.
+ *  - R163-RECORD-PINS: the committed named-query record reads schema workbench.hx-named-query-probe/v1, bead wb-pxvv,
+ *    requirement EAT-R163, gate HX-TASK-SCOPE-PROBE and route named-query; producer hx, version 0.1.0, a binary SHA-256 of 64
+ *    lower-case hex digits equal to the receipt's Measured record row and other than wb-f3wd's record's, origin path, HXS
+ *    1.0, protocol hxs/1.0, a capability count equal to the receipt's row, no task-named capability and the sdk
+ *    @hyperunix/sdk, version 0.1.0, reported 0.1.0; a task equal to wb-f3wd's record's task (id, kind, root, base revision
+ *    and digest); a definition named hx-admit-task-scope with verb run, the one parameter task (string, default the task id),
+ *    the task digest as its doc, formed under git:<base revision>, saved view null, the four commands of r163Commands token
+ *    for token and a semantic digest of the form sha256/hxq-normalized-v1:<64 hex digits> equal to the receipt's row; the legs
+ *    named-query-strict and named-query-best-effort in that order, each with its query (operation run, name
+ *    hx-admit-task-scope, kind hx.fs/regular-file, root ., view git:<base revision>, its best-effort flag) and its argv token
+ *    for token (only the best-effort leg carries --best-effort), the diagnostics [HX-COVERAGE-INCOMPLETE, severity error or
+ *    warning, no reason], a query digest equal to the semantic digest, an exit code equal to the receipt's row and the view
+ *    hx.view/workspace-head; and a findVerb section whose binary SHA-256 equals the producer's, whose legs are wb-f3wd's three
+ *    leg ids in order and whose verdict and exit codes equal the receipt's rows.
+ *  - R163-NAMED-QUERY-VERDICT: the committed record's verdict, capable set, reasons and blocker equal judgeNamedQueryRoute
+ *    over its task and observations, which equals the landed wb-f3wd judgeTaskScope over them: verdict
+ *    task-scope-unsupported, each leg's reasons as listed in the case, and the blocker on HX-TASK-SCOPE-PROBE scoped to
+ *    native-task-scope with witness unsupported and git-census not blocked.
+ *  - R163-GATE-INDEPENDENT (refusal #2's U6): gateOfRecord reads { named-query, unsupported } for the committed record and
+ *    { named-query, supported } for the capable plant (capableLeg in place of the strict leg, rejudged); called on each of the
+ *    two through a recording proxy, it reads exactly the keys blocker, capable, definition, observations, producer, reasons,
+ *    route, schema, task and verdict of the record, with no in-check, no key listing and no property-descriptor read, so it
+ *    reads no findVerb key; each of the two with its findVerb section replaced by each member of FIND_VERB_VARIANTS (binary
+ *    SHA-256 0 sixty-four times, null, wb-f3wd's binary or removed; verdict task-scope-supported, task-scope-unsupported or
+ *    removed; legs empty, reversed or with every exit code 0; an empty object, null, an array, a string) or with the section
+ *    removed reads its same witness; and each witness maps through dispatchAdmittedWriter (capableEvidence(MEASURED)) to the
+ *    record's blocker or to one dispatch. Every record this file hands gateOfRecord that is an object and not an array is
+ *    read through the recording proxy - in this line's key check or through witnessOf, which fails its case when the
+ *    record's findVerb key is read or its keys are listed.
+ *  - M-FIND-RECITED: the committed record rejudged with wb-f3wd's find-verb observations as committed, with the first two of
+ *    them relabelled to the named-query leg ids, and with its own named-query legs keeping wb-f3wd's exit codes with query
+ *    digest null and digest source absent, reads its listed findings and witness missing; the committed record with its
+ *    verdict restated as task-scope-supported reads [verdict-not-judged] and witness missing.
+ *  - R163-RECORD-TIED (refusal #2's U5): the committed record's probe section is PROBE_SCRIPT and JUDGE_SCRIPT with the
+ *    SHA-256 of each file; its utc reads true under isInstantOn(utc, 2026-11-11) - a string that starts with 2026-11-11T and
+ *    that new Date(utc).toISOString() returns unchanged - whose readings of INSTANT_PLANTS are held as listed; recordFindings
+ *    of it is empty; and no key or string value of it contains the repository root, the home directory or /tmp/, and none,
+ *    split at white space, quotes, backticks, =, commas, semicolons, |, parentheses, square and curly brackets and angle
+ *    brackets, holds a token that starts with / or with file:, is ~ or starts with ~/, starts with a drive letter, a colon and
+ *    a slash or backslash, or carries :/ before a character other than / (hostPathsIn, which reads each of its ten planted
+ *    host-path strings as a value and the first as a key).
+ *  - R163-RECORD-FINDINGS: FINDINGS is the literal list of the ten findings; recordFindings of the capable plant is empty and
+ *    of each record of RECORD_PLANTS reads exactly its listed findings, in FINDINGS order, and witnessOf of each reads
+ *    missing. RECORD_PLANTS: null, an array, a string and a number (record-not-object); the committed record with schema
+ *    workbench.hx-task-scope-probe/v1 (schema-other); route find (route-other); binary SHA-256 null, eight hex digits or upper
+ *    case (binary-unpinned); definition name hx-admit-other or verb find (definition-missing); a leg dropped or the legs
+ *    reversed, rejudged (leg-set-other); the strict leg relabelled filesystem-live, rejudged (leg-set-other,
+ *    find-leg-recited); the strict leg's operation find (find-leg-recited, verb-not-run); its argv with find appended
+ *    (find-leg-recited); its operation exec, or its argv without run or without the query name (verb-not-run); its query
+ *    digest sha256/hxq-normalized-v1: then 8 sixty-four times (digest-not-definition); its digest source absent, rejudged
+ *    (digest-not-definition); its verdict restated as task-scope-supported, its capable set as [named-query-strict], the
+ *    strict leg's reasons as [] or its blocker as null (verdict-not-judged); an empty object (schema-other, route-other,
+ *    binary-unpinned, definition-missing, leg-set-other, verdict-not-judged); the capable plant with schema
+ *    workbench.hx-task-scope-probe/v1 (schema-other); and the corpus plants - the committed record's schema, route,
+ *    definition name and definition verb, and the strict leg's operation, its argv's run token, its argv's query-name token
+ *    and its query digest, each replaced by each member of variantsOf of its committed value (schema-other, route-other,
+ *    definition-missing, definition-missing, verb-not-run, verb-not-run, verb-not-run, digest-not-definition; no member is
+ *    find, which the case asserts), and the producer's binary SHA-256 replaced by each of the ten binaryForms of the case
+ *    (null, the empty string, its first 63 digits, its digits with 0 appended, its upper case, its first letter upper-cased,
+ *    g in place of its first digit, a leading space, a trailing space, sha256: before it) (binary-unpinned).
  * Shape and anchor rows: FROZEN-SHAPE (standing rule 16), CASES-REGISTERED, ANCHOR-ROSTER, ANCHOR-RECEIPT-PINS,
  * ANCHOR-RECEIPT-RESIDUALS and ANCHOR-MEASURED.
  *
@@ -107,13 +187,21 @@
  * find and run, hx builds other than the recorded binary and a version-wide statement are NOT CLAIMED by this census; a fresh
  * probe run, and observationOfRun and digestText on any answer other than the ones the committed record keeps, are NOT
  * CLAIMED by this census (the record is tied to the probe and the judge by SHA-256 alone); an input of another type than
- * the interfaces declare is NOT CLAIMED by this census.
+ * the interfaces declare is NOT CLAIMED by this census; an expectation other than the two of EXPECTATIONS, an identity stated
+ * as a string outside its value's variantsOf corpus and its planted values, an exit code or a coverage outside the forms the
+ * lines above list, a find-verb section outside FIND_VERB_VARIANTS, a record outside RECORD_PLANTS and the plants the lines
+ * above name, and a utc outside INSTANT_PLANTS are NOT CLAIMED by this census; the doc comments of the judge and the probe,
+ * which keep cut 1's bytes under the record's SHA-256 tie, are NOT CLAIMED by this census beyond the readings its lines
+ * state.
  *
  * RESIDUAL (named family, pinned quiet row): R-EVIDENCE-ADAPTER - the measured answers reach judgeScopeEvidence through this
- * census's evidenceOf, not through a host reader (no host reader of a live HX answer exists until P04);
- * QUIET-EVIDENCE-ADAPTER pins that the adapter reads exactly the record's own fields and infers nothing (no measured answer
- * states a task scope, a resolved revision or, on the find verb, a query digest, and the adapter states none), so an adapter
- * that starts supplying them reds.
+ * census's evidenceOf, not through a host reader (no host reader of a live HX answer exists until P04), and evidenceOf states
+ * the workspace as the census constant WORKSPACE rather than reading it from the answer; QUIET-EVIDENCE-ADAPTER pins
+ * evidenceOf's reading of each of the five measured answers as its literal row of ADAPTER_READINGS (no task digest, no
+ * resolved revision, the named-query legs' runtime query digest and no query digest on the find verb, the workspace
+ * WORKSPACE), that each measured answer holds each field of ADAPTER_FIELDS, and that WORKSPACE equals the landed
+ * WORKSPACE_TOKEN and the argv token after --workspace of each measured answer, so an adapter that starts supplying a task
+ * digest or a revision, or states another workspace, reds.
  */
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
@@ -136,7 +224,7 @@ import {
   recordFindings,
   VERB,
 } from "../qa/workbench/hx-named-query-judge.mjs";
-import { LEGS as FIND_LEGS, PROBE_RECORD as FIND_RECORD, judgeTaskScope, type Observation } from "../qa/workbench/hx-task-scope-judge.mjs";
+import { LEGS as FIND_LEGS, PROBE_RECORD as FIND_RECORD, judgeTaskScope, type Observation, WORKSPACE_TOKEN } from "../qa/workbench/hx-task-scope-judge.mjs";
 import {
   dispatchAdmittedWriter,
   GIT_CENSUS_MODE,
@@ -160,11 +248,11 @@ const REPO = fileURLToPath(new URL("../", import.meta.url));
 const ROSTER = "test/fixtures/mwi-hx-admit-requirements-roster.json";
 const RECEIPT = "docs/workbench/receipts/wb-pxvv.md";
 const RECEIPT_ENTRY =
-  "2026-11-11 receipt: the hx-admit scope guards and the named-query route probe, cut 2 (machine seat ws-16, run g10-work-s338, base ce180d8)";
+  "2026-11-11 receipt: the hx-admit scope guards and the named-query route probe, cut 3 (machine seat ws-08, run g10-work-s337, base ce180d8)";
 const RECEIPT_TABLES = {
-  pins: { heading: "Judged pins, wb-pxvv cut 2", header: ["Row", "Pin"] },
-  residuals: { heading: "Residuals, wb-pxvv cut 2", header: ["Residual", "Quiet row"] },
-  measured: { heading: "Measured record, wb-pxvv cut 2", header: ["Field", "Value"] },
+  pins: { heading: "Judged pins, wb-pxvv cut 3", header: ["Row", "Pin"] },
+  residuals: { heading: "Residuals, wb-pxvv cut 3", header: ["Residual", "Quiet row"] },
+  measured: { heading: "Measured record, wb-pxvv cut 3", header: ["Field", "Value"] },
 } as const;
 
 interface Row {
@@ -193,7 +281,15 @@ const ROWS: readonly Row[] = [
     id: "EAT-R059",
     label: "Pi MUST refuse HX evidence from another query or revision.",
     mutant: "Compare only the workspace name.",
-    pins: ["R059-TASK-MISMATCH", "R059-QUERY-MISMATCH", "R059-REVISION-MISMATCH", "R059-BEFORE-WRITER", "M-WORKSPACE-NAME-ONLY", "R059-CHECK-ORDER"],
+    pins: [
+      "R059-TASK-MISMATCH",
+      "R059-QUERY-MISMATCH",
+      "R059-REVISION-MISMATCH",
+      "R059-IDENTITY-VARIANTS",
+      "R059-BEFORE-WRITER",
+      "M-WORKSPACE-NAME-ONLY",
+      "R059-CHECK-ORDER",
+    ],
   },
   {
     id: "EAT-R062",
@@ -321,11 +417,11 @@ const measured = (name: string): string => {
   return value;
 };
 
-// ---- scope evidence: the measured answers of the two committed probe records, read as the host would hold them ----
+// ---- scope evidence: the measured answers of the two committed probe records, read as scope evidence ----
 const WORKSPACE = "<workspace>";
-/** The record fields evidenceOf reads (R-EVIDENCE-ADAPTER): the producer's own statements and nothing derived. */
+/** The record fields evidenceOf reads (R-EVIDENCE-ADAPTER); it states the workspace as WORKSPACE, not from the answer. */
 const ADAPTER_FIELDS = ["outcome", "exitCode", "terminalReached", "completeness", "licensesAbsence", "answerCount", "scope", "digestSource", "queryDigest", "revision"];
-/** One measured answer read as scope evidence: only what the producer stated, nothing inferred (R-EVIDENCE-ADAPTER). */
+/** One measured answer read as scope evidence (R-EVIDENCE-ADAPTER; QUIET-EVIDENCE-ADAPTER pins its five readings). */
 const evidenceOf = (observation: Observation, task: Task): ScopeEvidence => ({
   answered: observation.outcome === "result",
   exitCode: observation.exitCode,
@@ -339,7 +435,7 @@ const evidenceOf = (observation: Observation, task: Task): ScopeEvidence => ({
   resolvedRevision: observation.revision === null ? null : observation.revision.resolvedCommit,
 });
 const expectationOf = (task: Task, queryDigest: string): ScopeExpectation => ({ workspace: WORKSPACE, taskDigest: task.digest, queryDigest, baseRevision: task.baseRevision });
-/** Evidence meeting every condition for `expected` (the positive control every mismatch plant starts from). */
+/** capableEvidence(e) of the header's INPUTS: every condition met and e's four identities stated. */
 const capableEvidence = (expected: ScopeExpectation): ScopeEvidence => ({
   answered: true,
   exitCode: 0,
@@ -374,6 +470,8 @@ const nativeRequest = (expected: ScopeExpectation, evidence: ScopeEvidence, gate
   gate,
   scope: { expected, evidence },
 });
+/** The scope-stage refusal dispatchAdmittedWriter returns for `verdict`. */
+const scopeRefusal = (verdict: unknown): unknown => ({ dispatched: false, refusal: { stage: "scope", verdict } });
 
 // ---- the conditions of an admitted answer, swept (R058-EACH-CONDITION, R058-GAP-ORDER, R059-BEFORE-WRITER, R059-CHECK-ORDER) ----
 /** The ten gaps in the order this census expects them reported, held against SCOPE_GAPS (R058-GAP-ORDER). */
@@ -412,13 +510,20 @@ const EXIT_CODES_NOT_ZERO: readonly (number | null)[] = [
   null,
 ];
 type IdentityField = "workspace" | "taskDigest" | "queryDigest" | "resolvedRevision";
-/** The four identities in the census's own check order: the evidence field, the mismatch it refuses with, two other stated values. */
+/** The four identities in the census's own check order: the evidence field, the mismatch it refuses with, its two planted values. */
 const IDENTITIES: readonly (readonly [IdentityField, ScopeMismatch, readonly [string, string]])[] = [
   ["workspace", "root", ["<other-workspace>", " "]],
   ["taskDigest", "task", [`sha256:${"9".repeat(64)}`, " "]],
   ["queryDigest", "query", [`sha256/hxq-normalized-v1:${"8".repeat(64)}`, " "]],
   ["resolvedRevision", "revision", ["7".repeat(40), " "]],
 ];
+/** The expectation field each identity is judged against (the resolved revision against the base revision). */
+const EXPECTED_FIELD: Readonly<Record<IdentityField, keyof ScopeExpectation>> = {
+  workspace: "workspace",
+  taskDigest: "taskDigest",
+  queryDigest: "queryDigest",
+  resolvedRevision: "baseRevision",
+};
 /** The gap each identity left unstated reports. */
 const UNSTATED_GAPS: readonly (readonly [IdentityField, ScopeGap])[] = [
   ["workspace", "root-unbound"],
@@ -474,13 +579,142 @@ const sweptGaps = (mask: number): ScopeGap[] => {
   return GAP_ORDER.filter((gap) => applies[gap]);
 };
 const MALFORMED = { dispatched: false, refusal: { stage: "request", reason: "malformed-request" } } as const;
-/** A git-census request; only `authorized: true` dispatches. */
+/** A git-census request with its authorized flag and invocation id. */
 const censusRequest = (authorized: boolean, invocationId: string = INVOCATION): WriterRequest => ({ mode: GIT_CENSUS_MODE, invocationId, authorized });
+
+// ---- the identity variant corpus (R059-IDENTITY-VARIANTS, R059-BEFORE-WRITER, R163-RECORD-FINDINGS) ----
+/** The families of variantsOf, in the order it yields them. */
+const VARIANT_FAMILIES = [
+  "case-whole",
+  "case-one",
+  "prefix",
+  "suffix",
+  "extension",
+  "padding",
+  "path-form",
+  "substitution",
+  "deletion",
+  "insertion",
+  "transposition",
+  "full-width",
+  "combining-mark",
+  "encoded",
+  "prefixed",
+] as const;
+type VariantFamily = (typeof VARIANT_FAMILIES)[number];
+/** VARIANT_COUNTS: the corpus size of each identity value under each expectation (R059-IDENTITY-VARIANTS). */
+const VARIANT_COUNTS: readonly string[] = [
+  "MEASURED.workspace:225",
+  "MEASURED.taskDigest:775",
+  "MEASURED.queryDigest:952",
+  "MEASURED.resolvedRevision:492",
+  "SYNTHETIC.workspace:244",
+  "SYNTHETIC.taskDigest:783",
+  "SYNTHETIC.queryDigest:957",
+  "SYNTHETIC.resolvedRevision:488",
+];
+/** The code points padding places around a value, built by number (never written raw): ASCII and Unicode spaces and invisibles. */
+const PAD_CODE_POINTS: readonly number[] = [
+  0x09,
+  0x0a,
+  0x0b,
+  0x0c,
+  0x0d,
+  0x20,
+  0x85,
+  0xa0,
+  0xad,
+  0x1680,
+  0x180e,
+  ...Array.from({ length: 11 }, (_, index) => 0x2000 + index),
+  0x200b,
+  0x200c,
+  0x200d,
+  0x2028,
+  0x2029,
+  0x202f,
+  0x205f,
+  0x2060,
+  0x3000,
+  0xfeff,
+];
+/** The 33 pads: each code point of PAD_CODE_POINTS alone, and carriage return with line feed. */
+const PADS: readonly string[] = [...PAD_CODE_POINTS.map((point) => String.fromCodePoint(point)), "\r\n"];
+const COMBINING_ACUTE = String.fromCodePoint(0x301);
+/** A character's successor in its class (0-9, a-z, A-Z, each wrapping around); any other character reads _, and _ reads -. */
+const successor = (character: string): string => {
+  const point = character.codePointAt(0) ?? 0;
+  if (character >= "0" && character <= "9") return character === "9" ? "0" : String.fromCodePoint(point + 1);
+  if (character >= "a" && character <= "z") return character === "z" ? "a" : String.fromCodePoint(point + 1);
+  if (character >= "A" && character <= "Z") return character === "Z" ? "A" : String.fromCodePoint(point + 1);
+  return character === "_" ? "-" : "_";
+};
+/** A printable ASCII character's full-width form; any other character unchanged. */
+const fullWidth = (character: string): string => {
+  const point = character.codePointAt(0) ?? 0;
+  return point >= 0x21 && point <= 0x7e ? String.fromCodePoint(point + 0xfee0) : character;
+};
+const htmlEscaped = (value: string): string => value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+/** The variant corpus of an identity value: [family, variant] pairs, each variant a string other than `value`, unique within its family. */
+const variantsOf = (value: string): (readonly [VariantFamily, string])[] => {
+  const characters = Array.from(value);
+  const replaced = (index: number, replacement: string): string => [...characters.slice(0, index), replacement, ...characters.slice(index + 1)].join("");
+  const byFamily: Readonly<Record<VariantFamily, readonly string[]>> = {
+    "case-whole": [value.toUpperCase(), value.toLowerCase()],
+    "case-one": characters.flatMap((character, index) =>
+      character.toUpperCase() === character.toLowerCase() ? [] : [replaced(index, character === character.toUpperCase() ? character.toLowerCase() : character.toUpperCase())],
+    ),
+    prefix: characters.slice(1).map((_, index) => characters.slice(0, index + 1).join("")),
+    suffix: characters.slice(1).map((_, index) => characters.slice(index + 1).join("")),
+    extension: [`${value}0`, `${value}x`, `0${value}`, `x${value}`, `${value}${value}`],
+    padding: PADS.flatMap((pad) => [`${pad}${value}`, `${value}${pad}`, `${pad}${value}${pad}`]),
+    "path-form": [`${value}/`, `${value}//`, `${value}\\`, `${value}/.`, `/${value}`, `./${value}`],
+    substitution: characters.flatMap((character, index) => [replaced(index, character === "x" ? "y" : "x"), replaced(index, successor(character))]),
+    deletion: characters.map((_, index) => replaced(index, "")),
+    insertion: Array.from({ length: characters.length + 1 }, (_, index) => [...characters.slice(0, index), "x", ...characters.slice(index)].join("")),
+    transposition: characters
+      .slice(1)
+      .flatMap((character, index) =>
+        character === characters[index] ? [] : [[...characters.slice(0, index), character, characters[index] ?? "", ...characters.slice(index + 2)].join("")],
+      ),
+    "full-width": [characters.map(fullWidth).join(""), ...characters.flatMap((character, index) => (fullWidth(character) === character ? [] : [replaced(index, fullWidth(character))]))],
+    "combining-mark": characters.map((character, index) => replaced(index, `${character}${COMBINING_ACUTE}`)),
+    encoded: [encodeURIComponent(value), JSON.stringify(value), `'${value}'`, `\`${value}\``, htmlEscaped(value)],
+    prefixed: [`git:${value}`, `sha256:${value}`, `refs/heads/${value}`],
+  };
+  const corpus: (readonly [VariantFamily, string])[] = [];
+  for (const family of VARIANT_FAMILIES) {
+    const seen = new Set<string>();
+    for (const variant of byFamily[family]) {
+      if (variant === value || seen.has(variant)) continue;
+      seen.add(variant);
+      corpus.push([family, variant]);
+    }
+  }
+  return corpus;
+};
 
 // ---- the named-query route ----
 const nqTask = (): Task => nqRecord().task;
 const nqExpectation = (): ScopeExpectation => expectationOf(nqTask(), nqRecord().definition.semanticDigest);
-/** A capable named-query leg planted from the committed strict leg: every condition the landed judge names met. */
+/** SYNTHETIC of the header's EXPECTATIONS. */
+const SYNTHETIC_EXPECTATION: ScopeExpectation = {
+  workspace: "ws-alpha/beta",
+  taskDigest: `sha256:${"0123456789abcdef".repeat(4)}`,
+  queryDigest: `sha256/hxq-normalized-v1:${"fedcba9876543210".repeat(4)}`,
+  baseRevision: "0123456789abcdef0123456789abcdef01234567",
+};
+/** The header's EXPECTATIONS: MEASURED (the measured task's) and SYNTHETIC. */
+const expectations = (): readonly (readonly [string, ScopeExpectation])[] => [
+  ["MEASURED", nqExpectation()],
+  ["SYNTHETIC", SYNTHETIC_EXPECTATION],
+];
+/** The five measured answers as scope evidence: wb-f3wd's three find-verb legs and this bead's two named-query legs. */
+const measuredAnswers = (): readonly (readonly [string, ScopeEvidence])[] => [
+  ...findRecord().observations.map((observation) => [observation.id, evidenceOf(observation, findRecord().task)] as const),
+  ...nqRecord().observations.map((observation) => [observation.id, evidenceOf(observation, nqTask())] as const),
+];
+/** The capable plant's strict leg: the committed strict leg with scope task, exit code 0, coverage complete, absence licensed and the base revision resolved. */
 const capableLeg = (source: NamedQueryRecord): Observation => {
   const strict = source.observations[0];
   if (strict === undefined) throw new Error("the record has no named-query leg");
@@ -508,7 +742,69 @@ const legPlant = (
   ...source,
   observations: source.observations.map((observation, at) => (at === index ? { ...observation, ...patch, query: { ...observation.query, ...query } } : observation)),
 });
-const witnessOf = (source: unknown): GateWitness => gateOfRecord(source).witness;
+interface ReadLog {
+  readonly keys: string[];
+  readonly inChecks: string[];
+  listings: number;
+  readonly descriptors: string[];
+}
+/** `record` behind a proxy that logs each key read, in-check, key listing and property-descriptor read (R163-GATE-INDEPENDENT). */
+const recording = (record: object): { readonly proxy: object; readonly log: ReadLog } => {
+  const log: ReadLog = { keys: [], inChecks: [], listings: 0, descriptors: [] };
+  const proxy = new Proxy(record, {
+    get: (target, key, receiver) => {
+      log.keys.push(String(key));
+      return Reflect.get(target, key, receiver);
+    },
+    has: (target, key) => {
+      log.inChecks.push(String(key));
+      return Reflect.has(target, key);
+    },
+    ownKeys: (target) => {
+      log.listings += 1;
+      return Reflect.ownKeys(target);
+    },
+    getOwnPropertyDescriptor: (target, key) => {
+      log.descriptors.push(String(key));
+      return Reflect.getOwnPropertyDescriptor(target, key);
+    },
+  });
+  return { proxy, log };
+};
+/** gateOfRecord's witness for `source`, read through the recording proxy when `source` is an object: a read of its findVerb key or a listing of its keys fails the case. */
+const witnessOf = (source: unknown): GateWitness => {
+  if (source === null || typeof source !== "object" || Array.isArray(source)) return gateOfRecord(source).witness;
+  const { proxy, log } = recording(source);
+  const witness = gateOfRecord(proxy).witness;
+  if (log.keys.includes("findVerb") || log.inChecks.length > 0 || log.listings > 0 || log.descriptors.length > 0) {
+    throw new Error(`gateOfRecord read the record's findVerb key or listed its keys: ${JSON.stringify(log)}`);
+  }
+  return witness;
+};
+/** The record keys gateOfRecord reads (R163-GATE-INDEPENDENT), sorted. */
+const GATE_KEYS = ["blocker", "capable", "definition", "observations", "producer", "reasons", "route", "schema", "task", "verdict"];
+/** `record` without its `key` property. */
+const without = (record: object, key: string): Readonly<Record<string, unknown>> => Object.fromEntries(Object.entries(record).filter(([name]) => name !== key));
+/** FIND_VERB_VARIANTS: the find-verb sections R163-GATE-INDEPENDENT puts in place of `source`'s. */
+const findVerbVariants = (source: NamedQueryRecord): readonly (readonly [string, unknown])[] => {
+  const section = source.findVerb;
+  return [
+    ["binary 0 sixty-four times", { ...section, binarySha256: "0".repeat(64) }],
+    ["binary null", { ...section, binarySha256: null }],
+    ["binary wb-f3wd's", { ...section, binarySha256: findRecord().producer.binarySha256 }],
+    ["binary removed", without(section, "binarySha256")],
+    ["verdict task-scope-supported", { ...section, verdict: "task-scope-supported" }],
+    ["verdict task-scope-unsupported", { ...section, verdict: "task-scope-unsupported" }],
+    ["verdict removed", without(section, "verdict")],
+    ["legs empty", { ...section, legs: [] }],
+    ["legs reversed", { ...section, legs: [...section.legs].reverse() }],
+    ["every leg exit code 0", { ...section, legs: section.legs.map((leg) => ({ ...leg, exitCode: 0 })) }],
+    ["an empty object", {}],
+    ["null", null],
+    ["an array", []],
+    ["a string", "task-scope-supported"],
+  ];
+};
 /** Every object key and string value of `value`, depth first. */
 const stringsOf = (value: unknown): string[] => {
   if (typeof value === "string") return [value];
@@ -523,6 +819,37 @@ const HOST_PATH_TOKENS: readonly RegExp[] = [/^\//, /^file:/i, /^~(?:\/|$)/, /^[
 /** The strings of `value` that hold a host path: one of `roots`, or a token of a host-path form. */
 const hostPathsIn = (value: unknown, roots: readonly string[]): string[] =>
   stringsOf(value).filter((text) => roots.some((root) => text.includes(root)) || text.split(TOKEN_SPLIT).some((token) => HOST_PATH_TOKENS.some((form) => form.test(token))));
+/** isInstantOn(utc, day) of R163-RECORD-TIED: a string that starts with `${day}T` and that new Date(utc).toISOString() returns unchanged. */
+const isInstantOn = (utc: unknown, day: string): boolean => {
+  if (typeof utc !== "string" || !utc.startsWith(`${day}T`)) return false;
+  const time = Date.parse(utc);
+  return Number.isFinite(time) && new Date(time).toISOString() === utc;
+};
+/** INSTANT_PLANTS: utc values and their isInstantOn(utc, 2026-11-11) readings. */
+const INSTANT_PLANTS: readonly (readonly [unknown, boolean])[] = [
+  ["2026-11-11T00:00:00.000Z", true],
+  ["2026-11-11T23:59:59.999Z", true],
+  ["2026-11-11T99:99:99.999Z", false],
+  ["2026-11-11T24:00:00.000Z", false],
+  ["2026-11-11T23:60:00.000Z", false],
+  ["2026-11-11T23:59:60.000Z", false],
+  ["2026-11-11T07:41:37.214+00:00", false],
+  ["2026-11-11T07:41:37Z", false],
+  ["2026-11-11T07:41:37.2140Z", false],
+  ["2026-11-11T7:41:37.214Z", false],
+  ["2026-11-11T07:41:37.214z", false],
+  ["2026-11-11 07:41:37.214Z", false],
+  ["2026-11-12T00:00:00.000Z", false],
+  [1794382897214, false],
+  [null, false],
+];
+/** The four commands of the committed definition, for `task` (R163-RECORD-PINS). */
+const r163Commands = (task: Task): readonly (readonly string[])[] => [
+  ["hx", "init", WORKSPACE],
+  ["hx", "--hxs", `--view=git:${task.baseRevision}`, "find", "--kind", "hx.fs/regular-file", "--plan", "."],
+  ["hx", "query", "save", "hx-admit-task-scope", "--param=task:string=hx-task-scope-probe", `--doc=${task.digest}`],
+  ["hx", "--hxs", "query", "show", "hx-admit-task-scope"],
+];
 
 const GAPS_OF_FIND: Readonly<Record<string, readonly ScopeGap[]>> = {
   "filesystem-live": ["exit-nonzero", "coverage-not-complete", "absence-unlicensed", "task-scope-absent", "revision-unbound", "query-digest-absent"],
@@ -542,6 +869,69 @@ const GAPS_OF_NAMED: Readonly<Record<string, readonly ScopeGap[]>> = {
   "named-query-strict": ["exit-nonzero", "coverage-not-complete", "absence-unlicensed", "task-scope-absent", "revision-unbound"],
   "named-query-best-effort": ["coverage-not-complete", "absence-unlicensed", "task-scope-absent", "revision-unbound"],
 };
+/** QUIET-EVIDENCE-ADAPTER's literal readings of the five measured answers. */
+const ADAPTER_READINGS: Readonly<Record<string, ScopeEvidence>> = {
+  "filesystem-live": {
+    answered: true,
+    exitCode: 3,
+    terminalReached: true,
+    coverage: "incomplete",
+    absenceLicensed: false,
+    knownEmpty: false,
+    workspace: "<workspace>",
+    taskDigest: null,
+    queryDigest: null,
+    resolvedRevision: null,
+  },
+  "filesystem-live-best-effort": {
+    answered: true,
+    exitCode: 0,
+    terminalReached: true,
+    coverage: "incomplete",
+    absenceLicensed: false,
+    knownEmpty: false,
+    workspace: "<workspace>",
+    taskDigest: null,
+    queryDigest: null,
+    resolvedRevision: null,
+  },
+  "revision-pinned": {
+    answered: false,
+    exitCode: 4,
+    terminalReached: false,
+    coverage: null,
+    absenceLicensed: false,
+    knownEmpty: false,
+    workspace: "<workspace>",
+    taskDigest: null,
+    queryDigest: null,
+    resolvedRevision: null,
+  },
+  "named-query-strict": {
+    answered: true,
+    exitCode: 3,
+    terminalReached: true,
+    coverage: "unknown",
+    absenceLicensed: false,
+    knownEmpty: false,
+    workspace: "<workspace>",
+    taskDigest: null,
+    queryDigest: "sha256/hxq-normalized-v1:82613cb1319b7d5d696a7687b6b98ae8a8711e82ea5b9bc803fe80935823ab13",
+    resolvedRevision: null,
+  },
+  "named-query-best-effort": {
+    answered: true,
+    exitCode: 0,
+    terminalReached: true,
+    coverage: "unknown",
+    absenceLicensed: false,
+    knownEmpty: false,
+    workspace: "<workspace>",
+    taskDigest: null,
+    queryDigest: "sha256/hxq-normalized-v1:82613cb1319b7d5d696a7687b6b98ae8a8711e82ea5b9bc803fe80935823ab13",
+    resolvedRevision: null,
+  },
+};
 
 const CASES: Readonly<Record<string, () => void | Promise<void>>> = {
   "R058-MEASURED-PARTIAL": async () => {
@@ -552,13 +942,13 @@ const CASES: Readonly<Record<string, () => void | Promise<void>>> = {
       ["filesystem-live-best-effort", "result", "incomplete", 0],
       ["revision-pinned", "process-failure", null, 4],
     ]);
-    const expected = expectationOf(source.task, nqRecord().definition.semanticDigest);
+    const expected = nqExpectation();
     for (const observation of source.observations) {
       const evidence = evidenceOf(observation, source.task);
       expect(judgeScopeEvidence(expected, evidence)).toEqual({ outcome: "needs_evidence", gaps: GAPS_OF_FIND[observation.id] });
       const counted = countingWriter();
       const outcome = await dispatchAdmittedWriter(nativeRequest(expected, evidence), counted.writer);
-      expect(outcome).toEqual({ dispatched: false, refusal: { stage: "scope", verdict: { outcome: "needs_evidence", gaps: GAPS_OF_FIND[observation.id] } } });
+      expect(outcome).toEqual(scopeRefusal({ outcome: "needs_evidence", gaps: GAPS_OF_FIND[observation.id] }));
       expect(counted.calls).toHaveLength(0);
     }
   },
@@ -574,7 +964,7 @@ const CASES: Readonly<Record<string, () => void | Promise<void>>> = {
       const counted = countingWriter();
       const outcome = await dispatchAdmittedWriter(nativeRequest(nqExpectation(), evidence), counted.writer);
       expect(outcome.dispatched).toBe(false);
-      expect(outcome).toEqual({ dispatched: false, refusal: { stage: "scope", verdict: { outcome: "needs_evidence", gaps: GAPS_OF_NAMED[observation.id] } } });
+      expect(outcome).toEqual(scopeRefusal({ outcome: "needs_evidence", gaps: GAPS_OF_NAMED[observation.id] }));
       expect(counted.calls).toHaveLength(0);
     }
   },
@@ -583,67 +973,70 @@ const CASES: Readonly<Record<string, () => void | Promise<void>>> = {
     const bestEffort = source.observations.find((observation) => observation.id === "filesystem-live-best-effort");
     if (bestEffort === undefined) throw new Error("no best-effort leg");
     const evidence = evidenceOf({ ...bestEffort, answerCount: 0 }, source.task);
-    const expected = expectationOf(source.task, nqRecord().definition.semanticDigest);
-    expect(judgeScopeEvidence(expected, evidence)).toEqual({
-      outcome: "needs_evidence",
-      gaps: ["coverage-not-complete", "absence-unlicensed", "known-empty-unlicensed", "task-scope-absent", "revision-unbound", "query-digest-absent"],
-    });
+    const expected = nqExpectation();
+    const restated = { outcome: "needs_evidence", gaps: ["coverage-not-complete", "absence-unlicensed", "known-empty-unlicensed", "task-scope-absent", "revision-unbound", "query-digest-absent"] };
+    expect(judgeScopeEvidence(expected, evidence)).toEqual(restated);
     const capableButEmpty = { ...capableEvidence(expected), knownEmpty: true, absenceLicensed: false };
-    expect(judgeScopeEvidence(expected, capableButEmpty)).toEqual({ outcome: "needs_evidence", gaps: ["absence-unlicensed", "known-empty-unlicensed"] });
+    const unlicensed = { outcome: "needs_evidence", gaps: ["absence-unlicensed", "known-empty-unlicensed"] };
+    expect(judgeScopeEvidence(expected, capableButEmpty)).toEqual(unlicensed);
     const counted = countingWriter();
-    await dispatchAdmittedWriter(nativeRequest(expected, evidence), counted.writer);
-    await dispatchAdmittedWriter(nativeRequest(expected, capableButEmpty), counted.writer);
+    expect(await dispatchAdmittedWriter(nativeRequest(expected, evidence), counted.writer)).toEqual(scopeRefusal(restated));
+    expect(await dispatchAdmittedWriter(nativeRequest(expected, capableButEmpty), counted.writer)).toEqual(scopeRefusal(unlicensed));
     expect(counted.calls).toHaveLength(0);
   },
   "R058-POSITIVE-CONTROL": async () => {
-    const expected = nqExpectation();
-    for (const evidence of [capableEvidence(expected), { ...capableEvidence(expected), knownEmpty: true }]) {
-      expect(judgeScopeEvidence(expected, evidence)).toEqual({ outcome: "admitted" });
-      const counted = countingWriter();
-      const outcome = await dispatchAdmittedWriter(nativeRequest(expected, evidence), counted.writer);
-      expect(counted.calls).toHaveLength(1);
-      expect(counted.calls[0]).toEqual({ invocationId: INVOCATION, label: NATIVE_SCOPE_MODE });
-      expect(Object.isFrozen(counted.calls[0])).toBe(true);
-      expect(outcome).toEqual({ dispatched: true, admission: counted.calls[0], value: "written" });
+    for (const [label, expected] of expectations()) {
+      for (const evidence of [capableEvidence(expected), { ...capableEvidence(expected), knownEmpty: true }]) {
+        expect(judgeScopeEvidence(expected, evidence), label).toEqual({ outcome: "admitted" });
+        const counted = countingWriter();
+        const outcome = await dispatchAdmittedWriter(nativeRequest(expected, evidence), counted.writer);
+        expect(counted.calls, label).toHaveLength(1);
+        expect(counted.calls[0], label).toEqual({ invocationId: INVOCATION, label: NATIVE_SCOPE_MODE });
+        expect(Object.isFrozen(counted.calls[0]), label).toBe(true);
+        expect(outcome, label).toEqual({ dispatched: true, admission: counted.calls[0], value: "written" });
+      }
     }
   },
   "M-EMPTY-AS-COMPLETE": () => {
-    const expected = nqExpectation();
-    for (const coverage of ["incomplete", "unknown", null] as const) {
-      const verdict = judgeScopeEvidence(expected, { ...capableEvidence(expected), knownEmpty: true, coverage });
-      expect(verdict).toEqual({ outcome: "needs_evidence", gaps: ["coverage-not-complete", "known-empty-unlicensed"] });
+    for (const [label, expected] of expectations()) {
+      for (const coverage of ["incomplete", "unknown", null] as const) {
+        const verdict = judgeScopeEvidence(expected, { ...capableEvidence(expected), knownEmpty: true, coverage });
+        expect(verdict, `${label} ${String(coverage)}`).toEqual({ outcome: "needs_evidence", gaps: ["coverage-not-complete", "known-empty-unlicensed"] });
+      }
     }
   },
   "R058-EACH-CONDITION": async () => {
-    const expected = nqExpectation();
-    const capable = capableEvidence(expected);
-    const plants: (readonly [string, ScopeEvidence, ScopeGap])[] = [
-      ["answered false", { ...capable, answered: false }, "answer-missing"],
-      ...EXIT_CODES_NOT_ZERO.map((exitCode) => [`exit ${String(exitCode)}`, { ...capable, exitCode }, "exit-nonzero"] as const),
-      ["terminal not reached", { ...capable, terminalReached: false }, "terminal-unreached"],
-      ...(["incomplete", "unknown", null] as const).map((coverage) => [`coverage ${String(coverage)}`, { ...capable, coverage }, "coverage-not-complete"] as const),
-      ["absence not licensed", { ...capable, absenceLicensed: false }, "absence-unlicensed"],
-      ...UNSTATED_GAPS.flatMap(([name, gap]) => [null, ""].map((value) => [`${name} ${JSON.stringify(value)}`, stating(capable, name, value), gap] as const)),
-    ];
     expect(EXIT_CODES_NOT_ZERO).toHaveLength(600 + 8 + 6 + 2 + 1 + 1);
-    expect(plants).toHaveLength(1 + EXIT_CODES_NOT_ZERO.length + 1 + 3 + 1 + 8);
-    const counted = countingWriter();
-    for (const [name, evidence, gap] of plants) {
-      const verdict = { outcome: "needs_evidence", gaps: [gap] };
-      expect(judgeScopeEvidence(expected, evidence), name).toEqual(verdict);
-      expect(await dispatchAdmittedWriter(nativeRequest(expected, evidence), counted.writer), name).toEqual({ dispatched: false, refusal: { stage: "scope", verdict } });
+    for (const [label, expected] of expectations()) {
+      const capable = capableEvidence(expected);
+      const plants: (readonly [string, ScopeEvidence, ScopeGap])[] = [
+        ["answered false", { ...capable, answered: false }, "answer-missing"],
+        ...EXIT_CODES_NOT_ZERO.map((exitCode) => [`exit ${String(exitCode)}`, { ...capable, exitCode }, "exit-nonzero"] as const),
+        ["terminal not reached", { ...capable, terminalReached: false }, "terminal-unreached"],
+        ...(["incomplete", "unknown", null] as const).map((coverage) => [`coverage ${String(coverage)}`, { ...capable, coverage }, "coverage-not-complete"] as const),
+        ["absence not licensed", { ...capable, absenceLicensed: false }, "absence-unlicensed"],
+        ...UNSTATED_GAPS.flatMap(([name, gap]) => [null, ""].map((value) => [`${name} ${JSON.stringify(value)}`, stating(capable, name, value), gap] as const)),
+      ];
+      expect(plants).toHaveLength(1 + EXIT_CODES_NOT_ZERO.length + 1 + 3 + 1 + 8);
+      const counted = countingWriter();
+      for (const [name, evidence, gap] of plants) {
+        const verdict = { outcome: "needs_evidence", gaps: [gap] };
+        expect(judgeScopeEvidence(expected, evidence), `${label} ${name}`).toEqual(verdict);
+        expect(await dispatchAdmittedWriter(nativeRequest(expected, evidence), counted.writer), `${label} ${name}`).toEqual(scopeRefusal(verdict));
+      }
+      expect(counted.calls).toHaveLength(0);
+      for (const exitCode of [0, -0]) expect(judgeScopeEvidence(expected, { ...capable, exitCode }), label).toEqual({ outcome: "admitted" });
     }
-    expect(counted.calls).toHaveLength(0);
-    for (const exitCode of [0, -0]) expect(judgeScopeEvidence(expected, { ...capable, exitCode })).toEqual({ outcome: "admitted" });
   },
   "R058-GAP-ORDER": () => {
     expect(SCOPE_GAPS).toEqual(GAP_ORDER);
-    const expected = nqExpectation();
-    for (let mask = 0; mask < SWEEP; mask += 1) {
-      const gaps = sweptGaps(mask);
-      expect(judgeScopeEvidence(expected, sweptEvidence(expected, mask)), `mask ${mask}`).toEqual(gaps.length === 0 ? { outcome: "admitted" } : { outcome: "needs_evidence", gaps });
+    for (const [label, expected] of expectations()) {
+      for (let mask = 0; mask < SWEEP; mask += 1) {
+        const gaps = sweptGaps(mask);
+        expect(judgeScopeEvidence(expected, sweptEvidence(expected, mask)), `${label} mask ${mask}`).toEqual(gaps.length === 0 ? { outcome: "admitted" } : { outcome: "needs_evidence", gaps });
+      }
+      expect(judgeScopeEvidence(expected, sweptEvidence(expected, SWEEP - 1))).toEqual({ outcome: "needs_evidence", gaps: [...SCOPE_GAPS] });
     }
-    expect(judgeScopeEvidence(expected, sweptEvidence(expected, SWEEP - 1))).toEqual({ outcome: "needs_evidence", gaps: [...SCOPE_GAPS] });
     expect(sweptGaps(SWEEP - 1)).toHaveLength(10);
   },
   "R059-TASK-MISMATCH": async () => {
@@ -651,10 +1044,7 @@ const CASES: Readonly<Record<string, () => void | Promise<void>>> = {
     const evidence = { ...capableEvidence(expected), taskDigest: `sha256:${"9".repeat(64)}` };
     expect(judgeScopeEvidence(expected, evidence)).toEqual({ outcome: "refused", mismatch: "task" });
     const counted = countingWriter();
-    expect(await dispatchAdmittedWriter(nativeRequest(expected, evidence), counted.writer)).toEqual({
-      dispatched: false,
-      refusal: { stage: "scope", verdict: { outcome: "refused", mismatch: "task" } },
-    });
+    expect(await dispatchAdmittedWriter(nativeRequest(expected, evidence), counted.writer)).toEqual(scopeRefusal({ outcome: "refused", mismatch: "task" }));
     expect(counted.calls).toHaveLength(0);
   },
   "R059-QUERY-MISMATCH": async () => {
@@ -662,7 +1052,7 @@ const CASES: Readonly<Record<string, () => void | Promise<void>>> = {
     const evidence = { ...capableEvidence(expected), queryDigest: `sha256/hxq-normalized-v1:${"8".repeat(64)}` };
     expect(judgeScopeEvidence(expected, evidence)).toEqual({ outcome: "refused", mismatch: "query" });
     const counted = countingWriter();
-    await dispatchAdmittedWriter(nativeRequest(expected, evidence), counted.writer);
+    expect(await dispatchAdmittedWriter(nativeRequest(expected, evidence), counted.writer)).toEqual(scopeRefusal({ outcome: "refused", mismatch: "query" }));
     expect(counted.calls).toHaveLength(0);
   },
   "R059-REVISION-MISMATCH": async () => {
@@ -670,8 +1060,95 @@ const CASES: Readonly<Record<string, () => void | Promise<void>>> = {
     const evidence = { ...capableEvidence(expected), resolvedRevision: "7".repeat(40) };
     expect(judgeScopeEvidence(expected, evidence)).toEqual({ outcome: "refused", mismatch: "revision" });
     const counted = countingWriter();
-    await dispatchAdmittedWriter(nativeRequest(expected, evidence), counted.writer);
+    expect(await dispatchAdmittedWriter(nativeRequest(expected, evidence), counted.writer)).toEqual(scopeRefusal({ outcome: "refused", mismatch: "revision" }));
     expect(counted.calls).toHaveLength(0);
+  },
+  "R059-IDENTITY-VARIANTS": async () => {
+    expect(VARIANT_FAMILIES).toEqual([
+      "case-whole",
+      "case-one",
+      "prefix",
+      "suffix",
+      "extension",
+      "padding",
+      "path-form",
+      "substitution",
+      "deletion",
+      "insertion",
+      "transposition",
+      "full-width",
+      "combining-mark",
+      "encoded",
+      "prefixed",
+    ]);
+    expect(PAD_CODE_POINTS.map((point) => point.toString(16))).toEqual([
+      "9",
+      "a",
+      "b",
+      "c",
+      "d",
+      "20",
+      "85",
+      "a0",
+      "ad",
+      "1680",
+      "180e",
+      "2000",
+      "2001",
+      "2002",
+      "2003",
+      "2004",
+      "2005",
+      "2006",
+      "2007",
+      "2008",
+      "2009",
+      "200a",
+      "200b",
+      "200c",
+      "200d",
+      "2028",
+      "2029",
+      "202f",
+      "205f",
+      "2060",
+      "3000",
+      "feff",
+    ]);
+    expect(PADS).toHaveLength(33);
+    expect(PADS[32]).toBe("\r\n");
+    expect(new Set(PADS).size).toBe(33);
+    const counts: string[] = [];
+    const failures: string[] = [];
+    for (const [label, expected] of expectations()) {
+      const bases: readonly (readonly [string, ScopeEvidence])[] = [
+        ["capableEvidence", capableEvidence(expected)],
+        ["sweptEvidence 1023", sweptEvidence(expected, SWEEP - 1)],
+        ...(label === "MEASURED" ? measuredAnswers() : []),
+      ];
+      for (const [name, mismatch] of IDENTITIES) {
+        const value = expected[EXPECTED_FIELD[name]];
+        const corpus = variantsOf(value);
+        counts.push(`${label}.${name}:${corpus.length}`);
+        expect([...new Set(corpus.map(([family]) => family))], `${label} ${name} families`).toEqual([...VARIANT_FAMILIES]);
+        const refused = { outcome: "refused", mismatch };
+        const counted = countingWriter();
+        for (const [family, variant] of corpus) {
+          if (variant === value) failures.push(`${label} ${name} ${family}: the variant equals the value`);
+          for (const [baseName, base] of bases) {
+            const verdict = judgeScopeEvidence(expected, stating(base, name, variant));
+            if (JSON.stringify(verdict) !== JSON.stringify(refused)) failures.push(`${label} ${name} ${family} ${JSON.stringify(variant)} on ${baseName}: ${JSON.stringify(verdict)}`);
+          }
+          const outcome = await dispatchAdmittedWriter(nativeRequest(expected, stating(capableEvidence(expected), name, variant)), counted.writer);
+          if (JSON.stringify(outcome) !== JSON.stringify(scopeRefusal(refused))) failures.push(`${label} ${name} ${family} ${JSON.stringify(variant)} dispatched: ${JSON.stringify(outcome)}`);
+        }
+        expect(counted.calls, `${label} ${name}`).toHaveLength(0);
+        const rebuilt = Array.from(value).join("");
+        expect(judgeScopeEvidence(expected, stating(capableEvidence(expected), name, rebuilt)), `${label} ${name} rebuilt`).toEqual({ outcome: "admitted" });
+      }
+    }
+    expect(failures).toEqual([]);
+    expect(counts).toEqual(VARIANT_COUNTS);
   },
   "R059-BEFORE-WRITER": async () => {
     const expected = nqExpectation();
@@ -687,28 +1164,36 @@ const CASES: Readonly<Record<string, () => void | Promise<void>>> = {
     order.push("returned");
     expect(outcome.dispatched).toBe(false);
     expect(order).toEqual(["returned"]);
-    for (const [name, mismatch, others] of IDENTITIES) {
-      for (const other of others) {
+    const failures: string[] = [];
+    let judged = 0;
+    for (const [name, mismatch, planted] of IDENTITIES) {
+      const corpus = variantsOf(expected[EXPECTED_FIELD[name]]);
+      const representatives = [...planted, ...VARIANT_FAMILIES.map((family) => corpus.find(([of]) => of === family)?.[1] ?? "")];
+      expect(representatives, name).toHaveLength(2 + VARIANT_FAMILIES.length);
+      expect(representatives.includes(""), name).toBe(false);
+      const refused = { outcome: "refused", mismatch };
+      for (const other of representatives) {
         for (let mask = 0; mask < SWEEP; mask += 1) {
-          expect(judgeScopeEvidence(expected, stating(sweptEvidence(expected, mask), name, other)), `${mismatch} ${JSON.stringify(other)} mask ${mask}`).toEqual({
-            outcome: "refused",
-            mismatch,
-          });
+          const verdict = judgeScopeEvidence(expected, stating(sweptEvidence(expected, mask), name, other));
+          judged += 1;
+          if (JSON.stringify(verdict) !== JSON.stringify(refused)) failures.push(`${mismatch} ${JSON.stringify(other)} mask ${mask}: ${JSON.stringify(verdict)}`);
         }
         for (const observation of nqRecord().observations) {
           const evidence = stating(evidenceOf(observation, nqTask()), name, other);
-          expect(judgeScopeEvidence(expected, evidence)).toEqual({ outcome: "refused", mismatch });
+          expect(judgeScopeEvidence(expected, evidence)).toEqual(refused);
           const steps: string[] = [];
-          const refused = await dispatchAdmittedWriter(nativeRequest(expected, evidence), () => {
+          const answered = await dispatchAdmittedWriter(nativeRequest(expected, evidence), () => {
             steps.push("writer");
             return "written";
           });
           steps.push("returned");
-          expect(refused).toEqual({ dispatched: false, refusal: { stage: "scope", verdict: { outcome: "refused", mismatch } } });
+          expect(answered).toEqual(scopeRefusal(refused));
           expect(steps).toEqual(["returned"]);
         }
       }
     }
+    expect(failures).toEqual([]);
+    expect(judged).toBe(IDENTITIES.length * (2 + VARIANT_FAMILIES.length) * SWEEP);
   },
   "M-WORKSPACE-NAME-ONLY": () => {
     const expected = nqExpectation();
@@ -790,6 +1275,7 @@ const CASES: Readonly<Record<string, () => void | Promise<void>>> = {
         const [admission] = calls;
         expect(admission).toStrictEqual({ invocationId, label });
         expect(Object.isFrozen(admission)).toBe(true);
+        expect(outcome.dispatched).toBe(true);
         if (!outcome.dispatched) throw new Error(`${label} was not dispatched`);
         expect(outcome.admission).toBe(admission);
         expect(outcome.value).toBe(later ? "written-later" : "written-now");
@@ -803,20 +1289,22 @@ const CASES: Readonly<Record<string, () => void | Promise<void>>> = {
     const thrown: readonly unknown[] = [new Error("writer failed"), "writer failed", { writer: "failed" }, undefined];
     for (const request of requests) {
       for (const value of thrown) {
-        let calls = 0;
+        let throwing = 0;
         await expect(
           dispatchAdmittedWriter(request, (): string => {
-            calls += 1;
+            throwing += 1;
             throw value;
           }),
         ).rejects.toBe(value);
+        expect(throwing).toBe(1);
+        let rejecting = 0;
         await expect(
           dispatchAdmittedWriter(request, (): Promise<string> => {
-            calls += 1;
+            rejecting += 1;
             return Promise.reject(value);
           }),
         ).rejects.toBe(value);
-        expect(calls).toBe(2);
+        expect(rejecting).toBe(1);
       }
     }
   },
@@ -883,6 +1371,7 @@ const CASES: Readonly<Record<string, () => void | Promise<void>>> = {
     expect(source.producer.capabilities.taskNamed).toEqual([]);
     expect(source.producer.sdk).toEqual({ name: "@hyperunix/sdk", version: "0.1.0", reported: "0.1.0" });
     const task = source.task;
+    expect(task).toEqual(findRecord().task);
     expect([task.id, task.kind, task.root, task.baseRevision]).toEqual(["hx-task-scope-probe", "hx.fs/regular-file", ".", findRecord().task.baseRevision]);
     expect(task.digest).toBe(findRecord().task.digest);
     const definition = source.definition;
@@ -896,12 +1385,7 @@ const CASES: Readonly<Record<string, () => void | Promise<void>>> = {
       ["hx", "query", "save", QUERY_NAME],
       ["hx", "--hxs", "query", "show"],
     ]);
-    expect(definition.commands).toEqual([
-      ["hx", "init", WORKSPACE],
-      ["hx", "--hxs", `--view=git:${task.baseRevision}`, "find", "--kind", "hx.fs/regular-file", "--plan", "."],
-      ["hx", "query", "save", "hx-admit-task-scope", "--param=task:string=hx-task-scope-probe", `--doc=${task.digest}`],
-      ["hx", "--hxs", "query", "show", "hx-admit-task-scope"],
-    ]);
+    expect(definition.commands).toEqual(r163Commands(task));
     expect(definition.semanticDigest).toMatch(/^sha256\/hxq-normalized-v1:[0-9a-f]{64}$/);
     expect(definition.semanticDigest).toBe(measured("definition.semanticDigest"));
     expect(source.observations.map((observation) => observation.id)).toEqual(LEGS.map((leg) => leg.id));
@@ -951,13 +1435,44 @@ const CASES: Readonly<Record<string, () => void | Promise<void>>> = {
   },
   "R163-GATE-INDEPENDENT": async () => {
     const source = nqRecord();
-    expect(gateOfRecord(source)).toEqual({ route: ROUTE, witness: "unsupported" });
+    expect(witnessOf(source)).toBe("unsupported");
     const findSaysSupported = { ...source, findVerb: { ...source.findVerb, verdict: "task-scope-supported" } };
     expect(witnessOf(findSaysSupported)).toBe("unsupported");
     const capable = rejudged(source, [capableLeg(source), ...source.observations.slice(1)]);
     expect(capable.verdict).toBe("task-scope-supported");
     for (const verdict of ["task-scope-unsupported", "task-scope-supported"]) {
       expect(witnessOf({ ...capable, findVerb: { ...capable.findVerb, verdict } })).toBe("supported");
+    }
+    const records: readonly (readonly [string, NamedQueryRecord, GateWitness])[] = [
+      ["the committed record", source, "unsupported"],
+      ["the capable plant", capable, "supported"],
+    ];
+    const variants = findVerbVariants(source);
+    expect(variants.map(([name]) => name)).toEqual([
+      "binary 0 sixty-four times",
+      "binary null",
+      "binary wb-f3wd's",
+      "binary removed",
+      "verdict task-scope-supported",
+      "verdict task-scope-unsupported",
+      "verdict removed",
+      "legs empty",
+      "legs reversed",
+      "every leg exit code 0",
+      "an empty object",
+      "null",
+      "an array",
+      "a string",
+    ]);
+    for (const [name, record, witness] of records) {
+      const { proxy, log } = recording(record);
+      expect(gateOfRecord(proxy), name).toEqual({ route: ROUTE, witness });
+      expect([...new Set(log.keys)].sort(), name).toEqual(GATE_KEYS);
+      expect([log.inChecks, log.listings, log.descriptors], name).toEqual([[], 0, []]);
+      for (const [variantName, section] of variants) {
+        expect(witnessOf({ ...record, findVerb: section }), `${name}, findVerb ${variantName}`).toBe(witness);
+      }
+      expect(witnessOf(without(record, "findVerb")), `${name}, findVerb removed`).toBe(witness);
     }
     const expected = nqExpectation();
     const blocked = countingWriter();
@@ -995,6 +1510,10 @@ const CASES: Readonly<Record<string, () => void | Promise<void>>> = {
       judgeSha256: sha256(readFileSync(join(REPO, JUDGE_SCRIPT))),
     });
     expect(source.utc).toMatch(/^2026-11-11T\d{2}:\d{2}:\d{2}\.\d{3}Z$/);
+    expect(isInstantOn(source.utc, "2026-11-11")).toBe(true);
+    expect(new Date(source.utc).toISOString()).toBe(source.utc);
+    expect(INSTANT_PLANTS.map(([utc]) => isInstantOn(utc, "2026-11-11"))).toEqual(INSTANT_PLANTS.map(([, instant]) => instant));
+    expect(INSTANT_PLANTS.filter(([, instant]) => instant)).toHaveLength(2);
     expect(recordFindings(source)).toEqual([]);
     expect(JSON.stringify(source)).not.toContain(REPO.replace(/\/$/, ""));
     expect(JSON.stringify(source)).not.toMatch(/\/tmp\//);
@@ -1024,7 +1543,8 @@ const CASES: Readonly<Record<string, () => void | Promise<void>>> = {
     if (strict === undefined) throw new Error("no strict leg");
     const capable = rejudged(source, [capableLeg(source), ...source.observations.slice(1)]);
     expect(recordFindings(capable)).toEqual([]);
-    const plants: readonly (readonly [string, unknown, readonly string[]])[] = [
+    // RECORD_PLANTS of the header: the 27 fixed plants listed here, then the corpus plants and the binaryForms plants pushed after them.
+    const plants: (readonly [string, unknown, readonly string[]])[] = [
       ["null", null, ["record-not-object"]],
       ["an array", [source], ["record-not-object"]],
       ["a string", JSON.stringify(source), ["record-not-object"]],
@@ -1053,6 +1573,50 @@ const CASES: Readonly<Record<string, () => void | Promise<void>>> = {
       ["an empty object", {}, ["schema-other", "route-other", "binary-unpinned", "definition-missing", "leg-set-other", "verdict-not-judged"]],
       ["a capable record with another schema", { ...capable, schema: "workbench.hx-task-scope-probe/v1" }, ["schema-other"]],
     ];
+    expect(plants).toHaveLength(27);
+    const corpora: readonly (readonly [string, string, (variant: string) => unknown, readonly string[]])[] = [
+      ["schema", source.schema, (variant) => ({ ...source, schema: variant }), ["schema-other"]],
+      ["route", source.route, (variant) => ({ ...source, route: variant }), ["route-other"]],
+      ["definition name", source.definition.name, (variant) => ({ ...source, definition: { ...source.definition, name: variant } }), ["definition-missing"]],
+      ["definition verb", source.definition.verb, (variant) => ({ ...source, definition: { ...source.definition, verb: variant } }), ["definition-missing"]],
+      ["strict leg operation", strict.query.operation, (variant) => legPlant(source, 0, {}, { operation: variant }), ["verb-not-run"]],
+      ["strict leg argv run token", VERB, (variant) => legPlant(source, 0, { argv: strict.argv.map((token) => (token === VERB ? variant : token)) }), ["verb-not-run"]],
+      ["strict leg argv query-name token", QUERY_NAME, (variant) => legPlant(source, 0, { argv: strict.argv.map((token) => (token === QUERY_NAME ? variant : token)) }), ["verb-not-run"]],
+      ["strict leg query digest", strict.queryDigest ?? "", (variant) => legPlant(source, 0, { queryDigest: variant }), ["digest-not-definition"]],
+    ];
+    expect(corpora.map(([, value]) => value)).toEqual([
+      "workbench.hx-named-query-probe/v1",
+      "named-query",
+      "hx-admit-task-scope",
+      "run",
+      "run",
+      "run",
+      "hx-admit-task-scope",
+      source.definition.semanticDigest,
+    ]);
+    for (const [name, value, plant, findings] of corpora) {
+      const corpus = variantsOf(value);
+      expect(corpus.length, name).toBeGreaterThan(0);
+      expect(corpus.some(([, variant]) => variant === "find"), name).toBe(false);
+      for (const [family, variant] of corpus) plants.push([`${name} ${family} ${JSON.stringify(variant)}`, plant(variant), findings]);
+    }
+    const binary = source.producer.binarySha256 ?? "";
+    const firstLetter = binary.search(/[a-f]/);
+    const binaryForms: readonly (string | null)[] = [
+      null,
+      "",
+      binary.slice(0, 63),
+      `${binary}0`,
+      binary.toUpperCase(),
+      `${binary.slice(0, firstLetter)}${binary.charAt(firstLetter).toUpperCase()}${binary.slice(firstLetter + 1)}`,
+      `g${binary.slice(1)}`,
+      ` ${binary}`,
+      `${binary} `,
+      `sha256:${binary}`,
+    ];
+    expect(firstLetter).toBeGreaterThanOrEqual(0);
+    expect(new Set(binaryForms).size).toBe(10);
+    for (const form of binaryForms) plants.push([`binary ${JSON.stringify(form)}`, { ...source, producer: { ...source.producer, binarySha256: form } }, ["binary-unpinned"]]);
     for (const [name, plant, findings] of plants) {
       const reported = recordFindings(plant);
       expect(reported, name).toEqual(findings);
@@ -1061,6 +1625,10 @@ const CASES: Readonly<Record<string, () => void | Promise<void>>> = {
     }
   },
   "QUIET-EVIDENCE-ADAPTER": () => {
+    expect(WORKSPACE).toBe(WORKSPACE_TOKEN);
+    const answers = measuredAnswers();
+    expect(answers.map(([id]) => id)).toEqual(Object.keys(ADAPTER_READINGS));
+    for (const [id, evidence] of answers) expect(evidence, id).toEqual(ADAPTER_READINGS[id]);
     const records: readonly (readonly [readonly Observation[], Task])[] = [
       [findRecord().observations, findRecord().task],
       [nqRecord().observations, nqRecord().task],
@@ -1071,13 +1639,16 @@ const CASES: Readonly<Record<string, () => void | Promise<void>>> = {
         const evidence = evidenceOf(observation, task);
         expect([evidence.taskDigest, evidence.resolvedRevision]).toEqual([null, null]);
         expect(evidence.queryDigest).toBe(observation.digestSource === "runtime" ? observation.queryDigest : null);
+        const at = observation.argv.indexOf("--workspace");
+        expect(at, observation.id).toBeGreaterThanOrEqual(0);
+        expect(observation.argv[at + 1], observation.id).toBe(WORKSPACE);
       }
     }
     expect(findRecord().observations.map((observation) => evidenceOf(observation, findRecord().task).queryDigest)).toEqual([null, null, null]);
   },
 };
 
-describe("wb-pxvv hx-admit census: the scope-admission guards and the committed named-query record (EAT-R058, EAT-R059, EAT-R062, EAT-R163; gate HX-TASK-SCOPE-PROBE)", () => {
+describe("wb-pxvv hx-admit census: the readings of src/workbench/scope-admission.ts over this file's answers and requests, and of the committed named-query record (EAT-R058, EAT-R059, EAT-R062, EAT-R163; gate HX-TASK-SCOPE-PROBE)", () => {
   for (const row of ROWS) {
     for (const pin of row.pins) {
       it(`${pin} [${row.id}]`, async () => {
@@ -1087,13 +1658,13 @@ describe("wb-pxvv hx-admit census: the scope-admission guards and the committed 
       });
     }
   }
-  it("QUIET-EVIDENCE-ADAPTER [R-EVIDENCE-ADAPTER] the census adapter reads the records' own fields and states no task scope or revision they lack", async () => {
+  it("QUIET-EVIDENCE-ADAPTER [R-EVIDENCE-ADAPTER] the census adapter's readings of the five measured answers: no task digest, no revision, the census workspace constant", async () => {
     const run = CASES["QUIET-EVIDENCE-ADAPTER"];
     if (run === undefined) throw new Error("no quiet case");
     await run();
   });
   it("FROZEN-SHAPE (rule 16) the judged rows and their pin counts", () => {
-    expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual(["EAT-R058:7", "EAT-R059:6", "EAT-R062:6", "EAT-R163:6"]);
+    expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual(["EAT-R058:7", "EAT-R059:7", "EAT-R062:6", "EAT-R163:6"]);
   });
   it("CASES-REGISTERED every pin has exactly one case and every case is a pin or a quiet row", () => {
     const pins = ROWS.flatMap((row) => [...row.pins]);

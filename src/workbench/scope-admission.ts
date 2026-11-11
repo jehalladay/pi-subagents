@@ -2,34 +2,31 @@
  * scope-admission.ts: the Pi-side HX scope admission guards of the hx-admit packet (wb-pxvv, MWI B-hx-admit, slice PI-5; MNI
  * packet P12), for requirements EAT-R058, EAT-R059 and EAT-R062 of mechanical-workflows-interop-2026-11-04
  * (triage/requirements/ATOMIC-REQUIREMENTS.md at pi-subagents master 0b25e14e), vendored with their SHA-256 in
- * test/fixtures/mwi-hx-admit-requirements-roster.json. test/workbench-hx-admit-census.test.ts names the case that pins each
- * form stated in this comment and in the doc comments below (the case ids in parentheses), and its header carries the NOT
- * CLAIMED sentences.
+ * test/fixtures/mwi-hx-admit-requirements-roster.json.
  *
- * - judgeScopeEvidence (EAT-R058, EAT-R059): an identity is stated when it is a string other than the empty string. A stated
- *   workspace, task digest, query digest or resolved revision that differs from the expectation's is refused with that
- *   mismatch (root, task, query or revision; the first in SCOPE_MISMATCHES order when several differ), whatever gaps the
- *   answer also has (R059-BEFORE-WRITER, R059-CHECK-ORDER). Without such a mismatch an answer is admitted only when answered
- *   is true, exitCode is 0, terminalReached is true, coverage is complete, absenceLicensed is true and its workspace, task
- *   digest, resolved revision and query digest are stated; otherwise it is needs_evidence with the gap of every condition it
- *   misses, in SCOPE_GAPS order (R058-EACH-CONDITION, R058-GAP-ORDER). An empty answer (knownEmpty true) adds
- *   known-empty-unlicensed unless its coverage is complete and its absence licensed (R058-FALSE-KNOWN-EMPTY,
- *   M-EMPTY-AS-COMPLETE, R058-POSITIVE-CONTROL).
- * - scopeBlockerOf (EAT-R062): a gate whose witness is supported has no blocker; an unsupported or missing witness is a
- *   blocker on HX-TASK-SCOPE-PROBE scoped to native-task-scope that names git-census as not blocked (R062-NATIVE-BLOCKED).
- * - dispatchAdmittedWriter (EAT-R062): its doc comment below states the order of its guards and what the writer receives.
+ * What these guards are held to return is the PINNED READER SET of test/workbench-hx-admit-census.test.ts: one line per
+ * claim, each over the inputs its cases build. The comments of this module name the census lines that hold each export and
+ * restate no reading of their own.
+ *
+ * - judgeScopeEvidence (EAT-R058, EAT-R059): R058-MEASURED-PARTIAL, R058-MEASURED-UNKNOWN, R058-FALSE-KNOWN-EMPTY,
+ *   R058-POSITIVE-CONTROL, M-EMPTY-AS-COMPLETE, R058-EACH-CONDITION, R058-GAP-ORDER, R059-TASK-MISMATCH,
+ *   R059-QUERY-MISMATCH, R059-REVISION-MISMATCH, R059-IDENTITY-VARIANTS, R059-BEFORE-WRITER, M-WORKSPACE-NAME-ONLY and
+ *   R059-CHECK-ORDER.
+ * - scopeBlockerOf (EAT-R062): R062-NATIVE-BLOCKED.
+ * - dispatchAdmittedWriter (EAT-R058, EAT-R059, EAT-R062): the R058 and R059 lines on stage scope, and R062-NATIVE-BLOCKED,
+ *   R062-GIT-CENSUS-PASSES, M-DISABLE-ALL, R062-ONE-FROZEN-ADMISSION, R062-WRITER-ERROR-PROPAGATES and R062-REFUSAL-ORDER.
  *
  * Display paths: none.
  */
 
-/** The program's real-infra gate a scope gate witness is read for (R062-NATIVE-BLOCKED, R163-GATE-INDEPENDENT). */
+/** The gate name a scope blocker carries (R062-NATIVE-BLOCKED). */
 export const SCOPE_PROBE_GATE = "HX-TASK-SCOPE-PROBE";
-/** The mode a scope gate that is not supported blocks (R062-NATIVE-BLOCKED). */
+/** The native mode: a blocker's scope and a native admission's label (R062-NATIVE-BLOCKED, R062-ONE-FROZEN-ADMISSION). */
 export const NATIVE_SCOPE_MODE = "native-task-scope";
-/** The independently authorized mode, the Git tracked-file census: a git-census request reads no scope gate (R062-GIT-CENSUS-PASSES, M-DISABLE-ALL). */
+/** The Git tracked-file census mode: a blocker's notBlocked member and a git-census admission's label (R062-GIT-CENSUS-PASSES, M-DISABLE-ALL). */
 export const GIT_CENSUS_MODE = "git-census";
 
-/** Every gap judgeScopeEvidence reports, in the order it reports them (R058-GAP-ORDER). */
+/** The gap names, as the literal R058-GAP-ORDER holds. */
 export const SCOPE_GAPS = Object.freeze([
   "answer-missing",
   "exit-nonzero",
@@ -43,18 +40,18 @@ export const SCOPE_GAPS = Object.freeze([
   "query-digest-absent",
 ] as const);
 export type ScopeGap = (typeof SCOPE_GAPS)[number];
-/** The mismatches judgeScopeEvidence refuses with, in the order it checks them (R059-CHECK-ORDER). */
+/** The mismatch names, as the literal R059-CHECK-ORDER holds. */
 export const SCOPE_MISMATCHES = Object.freeze(["root", "task", "query", "revision"] as const);
 export type ScopeMismatch = (typeof SCOPE_MISMATCHES)[number];
 
-/** What the invocation's task asks: the workspace, the task and query digests and the base revision. */
+/** The workspace, task digest, query digest and base revision an answer is judged against. */
 export interface ScopeExpectation {
   readonly workspace: string;
   readonly taskDigest: string;
   readonly queryDigest: string;
   readonly baseRevision: string;
 }
-/** One terminal HX answer as the host reads it; an identity the producer did not state is null. */
+/** One HX answer as scope evidence; null marks an identity the answer does not state. */
 export interface ScopeEvidence {
   readonly answered: boolean;
   readonly exitCode: number | null;
@@ -73,7 +70,7 @@ export type ScopeVerdict =
   | { readonly outcome: "refused"; readonly mismatch: ScopeMismatch };
 
 export type ScopeGateWitness = "supported" | "unsupported" | "missing";
-/** The scope gate's reading: the witness the host holds for the HX-TASK-SCOPE-PROBE route. */
+/** A scope gate reading: its witness (R062-NATIVE-BLOCKED). */
 export interface ScopeGate {
   readonly witness: ScopeGateWitness;
 }
@@ -92,11 +89,11 @@ export interface NativeWriterRequest {
 export interface GitCensusWriterRequest {
   readonly mode: typeof GIT_CENSUS_MODE;
   readonly invocationId: string;
-  /** The host's authority decision for this request: only true dispatches (R062-GIT-CENSUS-PASSES). */
+  /** The host's authority decision for this request (R062-GIT-CENSUS-PASSES, R062-REFUSAL-ORDER). */
   readonly authorized: boolean;
 }
 export type WriterRequest = NativeWriterRequest | GitCensusWriterRequest;
-/** The frozen admission the writer receives, once per dispatch (R062-ONE-FROZEN-ADMISSION). */
+/** The admission a writer receives (R062-ONE-FROZEN-ADMISSION). */
 export interface WriterAdmission {
   readonly invocationId: string;
   readonly label: typeof NATIVE_SCOPE_MODE | typeof GIT_CENSUS_MODE;
@@ -119,7 +116,7 @@ function stated(value: unknown): string | null {
   return typeof value === "string" && value !== "" ? value : null;
 }
 
-/** Whether `evidence` is the HX scope answer `expected` asks for, and complete enough to dispatch a native writer on. */
+/** Judges `evidence` against `expected`: the R058 and R059 lines of the census. */
 export function judgeScopeEvidence(expected: ScopeExpectation, evidence: ScopeEvidence): ScopeVerdict {
   const answer = facts(evidence) ?? {};
   const identities: readonly (readonly [ScopeMismatch, string | null, string])[] = [
@@ -151,7 +148,7 @@ export function judgeScopeEvidence(expected: ScopeExpectation, evidence: ScopeEv
   return gaps.length === 0 ? Object.freeze({ outcome: "admitted" }) : Object.freeze({ outcome: "needs_evidence", gaps: Object.freeze(gaps) });
 }
 
-/** The blocker a scope gate puts on the native profile, or null when its witness is supported. */
+/** The blocker of `gate`, or null: R062-NATIVE-BLOCKED. */
 export function scopeBlockerOf(gate: ScopeGate): ScopeBlocker | null {
   const witness = facts(gate)?.witness;
   if (witness === "supported") return null;
@@ -178,14 +175,8 @@ function refusedWith<T>(refusal: WriterRefusal): WriterOutcome<T> {
 }
 
 /**
- * Calls `writer` exactly once, with one frozen admission { invocationId, label }, when every guard `request` asks for admits,
- * and returns { dispatched: true, admission, value } with that same admission and the writer's resolved value
- * (R062-ONE-FROZEN-ADMISSION, R058-POSITIVE-CONTROL, R062-GIT-CENSUS-PASSES). Otherwise it returns the first refusal without
- * calling the writer (R062-REFUSAL-ORDER): stage request (malformed-request) first, for an invocation id or, on a native
- * request, an expected identity that is the empty string; then, on a git-census request, stage authority unless authorized
- * is true; on a native request, stage gate when scopeBlockerOf reads a blocker, then stage scope with any verdict of
- * judgeScopeEvidence other than admitted. A writer's throw or rejection propagates unchanged: the call rejects with the
- * same value (R062-WRITER-ERROR-PROPAGATES).
+ * The writer gate: the R062 lines of the census, R058-POSITIVE-CONTROL and the R058 and R059 lines on stage scope state what
+ * it returns, and whether it calls `writer`, for the requests they build.
  */
 export async function dispatchAdmittedWriter<T>(request: WriterRequest, writer: (admission: WriterAdmission) => T | Promise<T>): Promise<WriterOutcome<T>> {
   if (!wellFormed(request) || typeof writer !== "function") return refusedWith({ stage: "request", reason: "malformed-request" });
