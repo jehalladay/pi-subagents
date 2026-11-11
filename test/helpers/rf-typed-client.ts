@@ -7,6 +7,10 @@
  *
  * The RF package family: a text whose fold (NFKC, lower case, every character outside a-z and 0-9 removed) contains
  * RF_PACKAGE_FOLD. So a package of the RF npm scope, "reactivefiber" and "Reactive_Fiber" fold into it, and "react", "fiber" or "rf" do not.
+ * The readers fold a text with its percent-escapes decoded (percentDecoded): Node's ESM resolver decodes the escapes of a relative,
+ * absolute or file: URL specifier before it opens the file, so one escaped letter spells the same package. Decoding never hides a
+ * fold the written text holds: the fold drops the percent sign, an escape that decodes to ASCII leaves a digit in the written fold,
+ * and no other escape run that decodes is written in the hex letters alone that reactivefiber or nodemodules can hold in a row.
  */
 import ts from "typescript";
 
@@ -16,13 +20,25 @@ export const RF_PACKAGE_FOLD = "reactivefiber";
 export const foldName = (text: string): string => text.normalize("NFKC").toLowerCase().replace(/[^a-z0-9]/g, "");
 /** True when the text's fold contains RF_PACKAGE_FOLD. */
 export const isRfPackageText = (text: string): boolean => foldName(text).includes(RF_PACKAGE_FOLD);
+/** The text with every maximal run of percent-escapes decoded as UTF-8 (decodeURIComponent); a run that is no UTF-8 is kept as written. */
+export function percentDecoded(text: string): string {
+  return text.replace(/(?:%[0-9A-Fa-f]{2})+/g, run => {
+    try {
+      return decodeURIComponent(run);
+    } catch {
+      return run;
+    }
+  });
+}
+/** True when the text, its percent-escapes decoded, is an RF package text. */
+export const isRfDecodedText = (text: string): boolean => isRfPackageText(percentDecoded(text));
 
 /** The test file that registers row R3's own cases. */
 export const RF_TYPED_CLIENT_FILE = "test/workbench-rf-typed-client-evidence.test.ts";
 /** The describe of each R3 half whose cases that file registers, in row order; the census's R3 report anchor reads these. */
-export const RF_STATED_SURFACE_SUITE = "Pi's three statements of its RF surface name the CLI JSON envelope and no typed TS client (docs/07 row R3, wb-x32)";
-export const RF_SRC_LOAD_SUITE = "the specifiers moduleLoads reads in its fifteen load forms from the tracked src script modules name no RF package (docs/07 row R3, wb-x32)";
-export const RF_MANIFEST_SUITE = "no key or string value of package.json or of either lockfile is an RF package text (docs/07 row R3, wb-x32)";
+export const RF_STATED_SURFACE_SUITE = "Pi's three statements of its RF surface, the docs/18 risk row, the vendor/README.md ReactiveFiberCLI sentences and the provider's leading comment, read as pinned in plain source text (docs/07 row R3, wb-x32)";
+export const RF_SRC_LOAD_SUITE = "no specifier moduleLoads reads in its fifteen load forms from the tracked src script modules has an RF package text once its percent-escapes are decoded (docs/07 row R3, wb-x32)";
+export const RF_MANIFEST_SUITE = "no key or string value of package.json or of either lockfile is an RF package text once its percent-escapes are decoded (docs/07 row R3, wb-x32)";
 export const RF_TYPED_CLIENT_SUITES: readonly { readonly half: string; readonly suite: string }[] = [
   { half: "stated-cli-surface", suite: RF_STATED_SURFACE_SUITE },
   { half: "src-load-forms", suite: RF_SRC_LOAD_SUITE },
@@ -69,15 +85,20 @@ export interface ModuleLoad {
   readonly specifier: string;
 }
 
+/** The fold of the node_modules path segment: a segment whose fold equals it is read as one (Node's URL parser drops a tab or line break inside it). */
+const NODE_MODULES_FOLD = "nodemodules";
+
 /**
- * The text a specifier names a package by: a bare specifier (one not starting ./ or ../) whole; a relative specifier, and every
- * reference path, only past its last node_modules path segment; otherwise none, the specifier naming one of Pi's own files.
+ * The text a specifier names a package by, read with its percent-escapes decoded: a bare specifier (one not starting ./ or ../), a
+ * URL and an absolute path whole; a relative specifier, and every reference path, only past its first path segment whose fold is
+ * NODE_MODULES_FOLD (backslashes read as separators); otherwise none, the specifier naming one of Pi's own paths.
  */
 export function packageTextOf(specifier: string, form: LoadForm): string | undefined {
-  const path = specifier.replaceAll("\\", "/");
-  if (form !== "reference-path" && !path.startsWith("./") && !path.startsWith("../")) return specifier;
+  const decoded = percentDecoded(specifier);
+  const path = decoded.replaceAll("\\", "/");
+  if (form !== "reference-path" && !path.startsWith("./") && !path.startsWith("../")) return decoded;
   const segments = path.split("/");
-  const at = segments.lastIndexOf("node_modules");
+  const at = segments.findIndex(segment => foldName(segment) === NODE_MODULES_FOLD);
   return at < 0 ? undefined : segments.slice(at + 1).join("/");
 }
 
@@ -213,18 +234,29 @@ export function jsonStringTokens(text: string): string[] {
 }
 
 /**
- * The RF package texts of a manifest, each named by the manifest and its place: every key and string value jsonTexts reads, then
- * every RF string token of the raw text that reading does not hold (a duplicate key JSON.parse drops, or that key's value).
+ * The RF package texts of a manifest, each read with its percent-escapes decoded (isRfDecodedText) and named by the manifest and its
+ * place as written: every key and string value jsonTexts reads, then every RF string token of the raw text that reading does not
+ * hold (a duplicate key JSON.parse drops, or that key's value).
  */
 export function rfManifestHits(manifest: string, text: string): string[] {
-  const read = jsonTexts(text).filter(entry => isRfPackageText(entry.text));
+  const read = jsonTexts(text).filter(entry => isRfDecodedText(entry.text));
   const hits = read.map(entry => `${manifest}: ${entry.where}: ${entry.text}`);
   const unmatched = read.map(entry => entry.text);
   for (const token of jsonStringTokens(text)) {
-    if (!isRfPackageText(token)) continue;
+    if (!isRfDecodedText(token)) continue;
     const at = unmatched.indexOf(token);
     if (at >= 0) unmatched.splice(at, 1);
     else hits.push(`${manifest}: a string JSON.parse drops (a shadowed duplicate key or its value): ${token}`);
   }
   return hits;
+}
+
+/**
+ * True when a paragraph's source (marked's paragraph text, white space collapsed) opens with exactly these sentences as plain text,
+ * joined by single spaces: inline markup inside any of them (strikethrough, an image's alt text, emphasis, a link, a code span, an
+ * escape or a character reference) makes the source differ from the sentence, whatever its rendered text reads.
+ */
+export function opensWithPlainSentences(source: string, sentences: readonly string[]): boolean {
+  const plain = sentences.join(" ");
+  return source === plain || source.startsWith(`${plain} `);
 }

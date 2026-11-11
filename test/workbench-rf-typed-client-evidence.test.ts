@@ -7,57 +7,86 @@
  * halves below are this file's, one describe each (test/helpers/rf-typed-client.ts names them; the census's R3 report anchor
  * holds each half to exactly the cases a report collects under its describe).
  *
+ * TERMS (test/helpers/rf-typed-client.ts): an RF package text is a text whose fold (NFKC, lower case, every character outside a-z
+ * and 0-9 removed) holds reactivefiber. Every text is folded with its percent-escapes decoded (percentDecoded: every maximal run of
+ * escapes decoded as UTF-8, a run that is no UTF-8 kept as written); decoding hides no fold the written text holds. A specifier's
+ * package text (packageTextOf) is a bare specifier, a URL or an absolute path whole, and a relative specifier or a reference path
+ * only past its first path segment that folds to nodemodules; a relative specifier with no such segment names one of Pi's own paths
+ * and has none.
+ *
  * PINNED READER SET (case id: assertion target; result observed at base ce180d82, rf-typed-client readers of this cut):
- *  stated-cli-surface, Pi's three statements of its RF surface:
+ *  stated-cli-surface, Pi's three statements of its RF surface, read as pinned in plain source text:
  *   S1: docs/workbench/18 § Key risks and mitigations (rendered view, under the page title): one table, headed Risk, Impact and
- *       Mitigation and test, holding exactly one row whose first cell reads "No RF typed render SDK in pinned revision", and that
- *       row reads "weak integration" and "explicit unavailable block, provider-owned SDK improvement"; no HTML in the section.
- *       Observed: the row as quoted.
- *   S2: vendor/README.md § Native SDK artifacts (rendered view): exactly one paragraph names ReactiveFiberCLI, and its first two
- *       sentences read "ReactiveFiberCLI currently uses its installed CLI JSON envelope." and "No unverified TypeScript client or
- *       invented SDK method is substituted."; no HTML in the section. Observed: as quoted.
+ *       Mitigation and test, holding exactly one row whose first cell's source reads "No RF typed render SDK in pinned revision", and
+ *       that row's cells read "weak integration" and "explicit unavailable block, provider-owned SDK improvement" (sectionTables keeps
+ *       a cell's source markup); no HTML in the section. Observed: the row as quoted.
+ *   S2: vendor/README.md § Native SDK artifacts (rendered view): exactly one paragraph's rendered text holds ReactiveFiberCLI; its
+ *       rendered text opens with the sentences "ReactiveFiberCLI currently uses its installed CLI JSON envelope." and "No unverified
+ *       TypeScript client or invented SDK method is substituted.", and its source opens with the same two as plain text
+ *       (opensWithPlainSentences: no strikethrough, image alt text or other inline markup inside either); no HTML in the section.
+ *       Observed: as quoted.
  *   S3: src/workbench/providers/reactivefiber.ts: exactly one comment leads the module, and it is PROVIDER_COMMENT, which names the
  *       installed CLI JSON contract and "(no TS SDK published)". Observed: as quoted.
- *   S4: thirteen in-memory edits (STATEMENT_EDITS): each statement reworded to name a client, deleted or duplicated, the docs/18 row
- *       and the README paragraph also hidden in an HTML comment, the provider comment also joined by a second leading comment;
- *       each reads exactly one finding, naming its statement's file; the three live texts read none.
- *  src-load-forms, the specifiers moduleLoads reads in its fifteen LOAD_FORMS from the tracked src script modules:
+ *   S4: nineteen in-memory edits (STATEMENT_EDITS): each statement reworded to name a client, deleted or duplicated, the docs/18 row
+ *       and the README paragraph also hidden in an HTML comment, the docs/18 row's first cell and each README sentence also struck
+ *       through or carried only as an image's alt text, the provider comment also joined by a second leading comment; each reads
+ *       exactly one finding, naming its statement's file; the three live texts read none.
+ *  src-load-forms, no specifier moduleLoads reads in its fifteen LOAD_FORMS from the tracked src script modules has an RF package
+ *  text once its percent-escapes are decoded:
  *   L1: SRC_SCRIPT_MODULE admits exactly the eight script extensions (.ts .tsx .mts .cts .js .jsx .mjs .cjs); every tracked src
- *       module it admits (git ls-files) is read by moduleLoads and holds no RF package specifier, over at least 120 modules and 180
- *       specifiers, with @furnace/sdk read in src/workbench/native-modules.ts, node:child_process in the provider and the
- *       import.meta.resolve of @forge/sdk in src/workbench/hosts/local-detached.ts. Observed: 124 modules, 185 specifiers (171
- *       import, 7 dynamic-import, 7 import-meta-resolve), no RF package specifier.
- *   L2: the forty-two LOAD_PLANTS (every LOAD_FORMS form at least once; the gate's three realized plants among them: a triple-slash
- *       types reference, a string-named ambient module declaration with a typed render export, module.require in a .cts module;
- *       require.resolve, globalThis.require, import.meta.resolve, a reference path into node_modules (with backslash separators
- *       too), a JSDoc import type in a .js module and in the first of two JSDoc comments, a .jsx, a .tsx and a .js module with the
- *       load inside JSX, a relative specifier through node_modules, and the argument, callee and member-object wrappers) each read
- *       exactly one RF load, naming the module, the form and the specifier.
+ *       module it admits (git ls-files) is read by moduleLoads and no specifier read has an RF package text once decoded, over
+ *       at least 120 modules and 180 specifiers, with @furnace/sdk read in src/workbench/native-modules.ts, node:child_process in the
+ *       provider and the import.meta.resolve of @forge/sdk in src/workbench/hosts/local-detached.ts. Observed: 124 modules, 185
+ *       specifiers (171 import, 7 dynamic-import, 7 import-meta-resolve), no RF package text.
+ *   L2: the fifty-eight LOAD_PLANTS (every LOAD_FORMS form at least once; refusal #1's three realized plants among them: a
+ *       triple-slash types reference, a string-named ambient module declaration with a typed render export, module.require in a .cts
+ *       module; require.resolve, globalThis.require, import.meta.resolve, a reference path into node_modules (with backslash
+ *       separators too), a JSDoc import type in a .js module and in the first of two JSDoc comments, a .jsx, a .tsx and a .js module
+ *       with the load inside JSX, a relative specifier through node_modules, and the argument, callee and member-object wrappers;
+ *       refusal #2's two realized plants, a relative specifier through node_modules in a .mjs module and a file: URL dynamic import,
+ *       each with one letter of the RF scope percent-encoded, and their family: export * from and import.meta.resolve of the encoded
+ *       relative path, a file: URL with two encoded letters, an absolute path, an encoded node_modules segment, an encoded at sign, an
+ *       encoded letter beside a query escape that does not decode, an inner node_modules segment that a dot segment or an encoded dot
+ *       segment leaves, a tab inside the node_modules segment, an encoded bare specifier, an encoded reference path, an escape that
+ *       does not decode written in the scope's own letters, and a percent-encoded data: URL) each read exactly one RF load, naming
+ *       the module, the form and the specifier as written.
  *   L3: the near misses (relative paths to Pi's own files, a segment that only contains node_modules, react, fiber and reactive)
  *       read quiet, and so do the pinned quiet rows of the named residuals: R-COMPUTED (a specifier computed at run time),
  *       R-LOADER (a load through a loader function value: a createRequire loader, require held under another name),
  *       R-INDIRECT-CALLEE (require reached through another expression: a comma expression, require.call), R-EVALUATED (a load in
  *       text evaluated at run time: eval, new Function), R-COMMENT (an import written in a line or block comment, or in a JSDoc
- *       comment the parser attaches to no node), R-PRAGMA (a JSX import source pragma) and R-OTHER-NAME (an RF client published under
- *       a name whose fold holds no reactivefiber, such as @rf/sdk); each row's whole reading is pinned.
- *  manifest-texts, every key and string value of package.json, package-lock.json and vendor/dependency-lock.json:
+ *       comment the parser attaches to no node), R-PRAGMA (a JSX import source pragma), R-DATA-URL (a data: URL module whose base64
+ *       payload loads the package, the specifier holding no RF package text once decoded), R-PATH-ALIAS (a relative path under
+ *       no node_modules segment, read as one of Pi's own paths, so a copy of the package or a link to it reached that way reads
+ *       quiet) and R-OTHER-NAME (an RF client under a name or at a URL whose fold holds no reactivefiber, such as @rf/sdk); each row's
+ *       whole reading is pinned.
+ *  manifest-texts, no key or string value of package.json, package-lock.json and vendor/dependency-lock.json is an RF package text
+ *  once its percent-escapes are decoded:
  *   M1: jsonTexts reads every key and every string value at any depth and jsonStringTokens every string token of the raw text; for
- *       each manifest the two readings are the same size (no string JSON.parse drops) and no text is an RF package text, over at
- *       least 100 package.json texts and 6000 texts per lockfile, with the @forge/sdk dependency key, the pi extension path and the
- *       node_modules/@furnace/sdk install path read. Observed: 120 package.json texts, 6946 texts in each lockfile, no RF package text.
- *   M2: the twenty-four MANIFEST_PLANTS (the gate's overrides alias among them, with overrides keys at depth, yarn resolutions, the
+ *       each manifest the two readings are the same size (no string JSON.parse drops) and no text is an RF package text once
+ *       decoded, over at least 100 package.json texts and 6000 texts per lockfile, with the @forge/sdk dependency key, the pi
+ *       extension path and the node_modules/@furnace/sdk install path read. Observed: 120 package.json texts, 6946 texts in each
+ *       lockfile, no RF package text.
+ *   M2: the twenty-nine MANIFEST_PLANTS (refusal #1's overrides alias among them, with overrides keys at depth, yarn resolutions, the
  *       imports map, peerDependenciesMeta, pnpm overrides, a script, a deep array entry, a JSON-escaped key and a shadowed duplicate
- *       key, plain and JSON-escaped) and the eight LOCK_PLANTS (a legacy dependencies tree among them), the latter in both lockfiles, each read exactly one
- *       RF text, naming the manifest and the place.
+ *       key, plain and JSON-escaped; refusal #2's realized plant, a tarball URL with one letter of the RF scope percent-encoded, and
+ *       its family: a git URL, a key, a percent-escape spelled with a JSON escape and a shadowed duplicate key, each with an encoded
+ *       letter) and the ten LOCK_PLANTS (a legacy dependencies tree among them, and a resolved URL and an install path with an encoded
+ *       letter), the latter in both lockfiles, each read exactly one RF text, naming the manifest and the place.
  *   M3: the near misses (react, fiber and reactive; a react-fiber spelling; the three vendored SDK names; reactive and fiber as two
- *       texts) read quiet, and so does the pinned quiet row of the named residual R-OTHER-NAME; each row's whole reading is pinned.
+ *       texts) read quiet, and so does the pinned quiet row of the named residual R-OTHER-NAME (a name and a URL that hold no RF
+ *       package text); each row's whole reading is pinned.
  *
  * NOT CLAIMED by these cases: Pi prose outside the three statements (another docs page, README.md, a src comment other than the
- * provider's leading one, a capability description) is NOT CLAIMED; a module outside src (test, qa, examples) is NOT CLAIMED; an
- * untracked src file and a src file of another extension are NOT CLAIMED; a load form outside LOAD_FORMS is NOT CLAIMED beyond the
- * named residuals' pinned quiet rows; TypeScript and bundler configuration (tsconfig paths, types or jsxImportSource) is NOT
- * CLAIMED; a manifest other than the three (a nested package.json, .npmrc, yarn.lock, pnpm-lock.yaml) is NOT CLAIMED; an install
- * outside the lockfiles (an untracked node_modules entry) is NOT CLAIMED.
+ * provider's leading one, a capability description, a third sentence of the README paragraph, another README paragraph whose rendered
+ * text does not hold ReactiveFiberCLI as written) is NOT CLAIMED; a module
+ * outside src (test, qa, examples) is NOT CLAIMED; an untracked src file and a src file of another extension are NOT CLAIMED; a load
+ * form outside LOAD_FORMS is NOT CLAIMED beyond the named residuals' pinned quiet rows; which module Node finally loads is NOT
+ * CLAIMED: the cases read specifier texts with their escapes decoded, so a load whose specifier holds no RF package text so read is NOT
+ * CLAIMED beyond the named residuals' pinned quiet rows; TypeScript and bundler configuration (tsconfig paths, types or
+ * jsxImportSource) is NOT CLAIMED; a manifest other than the three (a nested package.json, .npmrc, yarn.lock, pnpm-lock.yaml) is NOT
+ * CLAIMED; which package npm finally installs is NOT CLAIMED beyond the manifest texts read; an install outside the lockfiles (an
+ * untracked node_modules entry) is NOT CLAIMED.
  *
  * Display paths added: none. Test-only: no src or docs change.
  */
@@ -75,6 +104,7 @@ import {
   LOCKFILES,
   type LoadForm,
   moduleLoads,
+  opensWithPlainSentences,
   PACKAGE_MANIFEST,
   RF_MANIFEST_SUITE,
   RF_SRC_LOAD_SUITE,
@@ -120,15 +150,18 @@ function riskRowFindings(markdown: string): string[] {
   return [];
 }
 
-/** vendor/README.md's ReactiveFiberCLI paragraph, read in the rendered section: every disagreement, named. */
+/** vendor/README.md's ReactiveFiberCLI paragraph, read in the rendered section and in its source: every disagreement, named. */
 function readmeFindings(markdown: string): string[] {
   const section = docsSection(markdown, README_SECTION, 1, []);
   if (!section.ok) return [`${README} § ${README_SECTION}: ${section.why}`];
   if (section.hasHtml) return [`${README} § ${README_SECTION}: the section carries HTML, which can hide what its source says`];
-  const paragraphs = section.blocks.flatMap(block => (block.kind === "paragraph" && block.text.includes("ReactiveFiberCLI") ? [block.text] : []));
+  const paragraphs = section.blocks.flatMap(block => (block.kind === "paragraph" && block.text.includes("ReactiveFiberCLI") ? [{ text: block.text, source: block.markdown }] : []));
   if (paragraphs.length !== 1) return [`${README} § ${README_SECTION}: ${paragraphs.length} paragraphs name ReactiveFiberCLI, not one`];
-  const opening = sentencesOf(paragraphs[0] ?? "").slice(0, README_SENTENCES.length);
+  const [paragraph = { text: "", source: "" }] = paragraphs;
+  const opening = sentencesOf(paragraph.text).slice(0, README_SENTENCES.length);
   if (JSON.stringify(opening) !== JSON.stringify(README_SENTENCES)) return [`${README} § ${README_SECTION}: the ReactiveFiberCLI paragraph opens ${JSON.stringify(opening)}`];
+  // The rendered text flattens struck text and an image's alt text into the paragraph, so the source must carry both sentences plainly.
+  if (!opensWithPlainSentences(paragraph.source, README_SENTENCES)) return [`${README} § ${README_SECTION}: the ReactiveFiberCLI paragraph's source does not open with its two sentences as plain text`];
   return [];
 }
 
@@ -150,12 +183,13 @@ describe(RF_STATED_SURFACE_SUITE, () => {
     expect(tables.grids[0]?.filter(row => row[0] === RISK_ROW[0])).toEqual([RISK_ROW]);
   });
 
-  it("S2: vendor/README.md § Native SDK artifacts renders exactly one ReactiveFiberCLI paragraph, opening 'currently uses its installed CLI JSON envelope' then 'No unverified TypeScript client or invented SDK method is substituted', with no HTML in the section", () => {
+  it("S2: vendor/README.md § Native SDK artifacts renders exactly one paragraph holding ReactiveFiberCLI, whose rendered text opens 'currently uses its installed CLI JSON envelope' then 'No unverified TypeScript client or invented SDK method is substituted' and whose source opens with both as plain text, with no HTML in the section", () => {
     const markdown = readRepo(README);
     expect(readmeFindings(markdown)).toEqual([]);
     const section = docsSection(markdown, README_SECTION, 1, []);
     const paragraph = section.blocks.find(block => block.kind === "paragraph" && block.text.includes("ReactiveFiberCLI"));
     expect(paragraph?.kind === "paragraph" ? sentencesOf(paragraph.text).slice(0, 2) : []).toEqual(README_SENTENCES);
+    expect(paragraph?.kind === "paragraph" && opensWithPlainSentences(paragraph.markdown, README_SENTENCES)).toBe(true);
   });
 
   it("S3: the provider module's one leading comment states the installed CLI JSON contract and no TS SDK published", () => {
@@ -164,11 +198,13 @@ describe(RF_STATED_SURFACE_SUITE, () => {
     expect(text.split("\n", 1)[0]).toBe(PROVIDER_COMMENT);
   });
 
-  it("S4: each statement reworded to name a client, deleted or duplicated, the docs/18 row and the README paragraph also hidden in an HTML comment and the provider comment also joined by a second leading comment, reads exactly one finding naming its statement, and the live texts read none", () => {
+  it("S4: each statement reworded to name a client, deleted or duplicated, the docs/18 row and the README paragraph also hidden in an HTML comment, the docs/18 row's first cell and each README sentence also struck through or carried only as an image's alt text, and the provider comment also joined by a second leading comment, reads exactly one finding naming its statement, and the live texts read none", () => {
     const page = readRepo(RISK_PAGE);
     const readme = readRepo(README);
     const provider = readRepo(PROVIDER);
     const rowLine = `| ${RISK_ROW.join(" | ")} |`;
+    const rowWithFirstCell = (cell: string): string => `| ${[cell, ...RISK_ROW.slice(1)].join(" | ")} |`;
+    const [firstSentence = "", secondSentence = ""] = README_SENTENCES;
     expect(page.split(rowLine)).toHaveLength(2);
     expect(readme.split(README_SENTENCES[1] ?? "")).toHaveLength(2);
     expect(readme.match(new RegExp(README_PARAGRAPH.source, "gm"))).toHaveLength(1);
@@ -179,10 +215,16 @@ describe(RF_STATED_SURFACE_SUITE, () => {
       ["the risk row deleted", RISK_PAGE, () => riskRowFindings(page.replace(`${rowLine}\n`, "")), `0 rows read "${RISK_ROW[0]}"`],
       ["the risk row duplicated", RISK_PAGE, () => riskRowFindings(page.replace(rowLine, `${rowLine}\n${rowLine}`)), `2 rows read "${RISK_ROW[0]}"`],
       ["the risk row hidden in an HTML comment", RISK_PAGE, () => riskRowFindings(page.replace(rowLine, `<!-- ${rowLine} -->`)), "carries HTML"],
+      ["the risk row's first cell struck through", RISK_PAGE, () => riskRowFindings(page.replace(rowLine, rowWithFirstCell(`~~${RISK_ROW[0]}~~`))), `0 rows read "${RISK_ROW[0]}"`],
+      ["the risk row's first cell carried only as an image's alt text", RISK_PAGE, () => riskRowFindings(page.replace(rowLine, rowWithFirstCell(`![${RISK_ROW[0]}](no-sdk.png)`))), `0 rows read "${RISK_ROW[0]}"`],
       ["the README sentence reworded to name a client", README, () => readmeFindings(readme.replace(README_SENTENCES[1] ?? "", "A verified TypeScript client is substituted.")), "the ReactiveFiberCLI paragraph opens"],
       ["the README paragraph deleted", README, () => readmeFindings(readme.replace(README_PARAGRAPH, "")), "0 paragraphs name ReactiveFiberCLI"],
       ["the README paragraph duplicated", README, () => readmeFindings(readme.replace(README_PARAGRAPH, match => `${match}${match}`)), "2 paragraphs name ReactiveFiberCLI"],
       ["the README paragraph hidden in an HTML comment", README, () => readmeFindings(readme.replace(README_SENTENCES[0] ?? "", `<!-- ${README_SENTENCES[0]} -->`)), "carries HTML"],
+      ["the README's first sentence struck through", README, () => readmeFindings(readme.replace(firstSentence, `~~${firstSentence}~~`)), "source does not open with its two sentences as plain text"],
+      ["the README's first sentence carried only as an image's alt text", README, () => readmeFindings(readme.replace(firstSentence, `![${firstSentence}](cli.png)`)), "source does not open with its two sentences as plain text"],
+      ["the README's second sentence struck through", README, () => readmeFindings(readme.replace(secondSentence, `~~${secondSentence}~~`)), "source does not open with its two sentences as plain text"],
+      ["the README's second sentence carried only as an image's alt text", README, () => readmeFindings(readme.replace(secondSentence, `![${secondSentence}](no-client.png)`)), "source does not open with its two sentences as plain text"],
       ["the provider comment reworded to name a client", PROVIDER, () => providerCommentFindings(provider.replace("(no TS SDK published)", "(typed TS client)")), "the leading comment reads"],
       ["the provider comment deleted", PROVIDER, () => providerCommentFindings(provider.replace(`${PROVIDER_COMMENT}\n`, "")), "0 comments lead the module"],
       ["the provider comment duplicated", PROVIDER, () => providerCommentFindings(`${PROVIDER_COMMENT}\n${provider}`), "2 comments lead the module"],
@@ -194,10 +236,16 @@ describe(RF_STATED_SURFACE_SUITE, () => {
       "the risk row deleted",
       "the risk row duplicated",
       "the risk row hidden in an HTML comment",
+      "the risk row's first cell struck through",
+      "the risk row's first cell carried only as an image's alt text",
       "the README sentence reworded to name a client",
       "the README paragraph deleted",
       "the README paragraph duplicated",
       "the README paragraph hidden in an HTML comment",
+      "the README's first sentence struck through",
+      "the README's first sentence carried only as an image's alt text",
+      "the README's second sentence struck through",
+      "the README's second sentence carried only as an image's alt text",
       "the provider comment reworded to name a client",
       "the provider comment deleted",
       "the provider comment duplicated",
@@ -229,12 +277,18 @@ function trackedSrcModules(): { readonly module: string; readonly text: string }
 const RF_SCOPE = "@reactive\u002dfiber";
 /** The planted RF client package. */
 const RF_SDK = `${RF_SCOPE}/sdk`;
+/** The RF scope with one letter percent-encoded (the e of fiber as %65), as refusal #2's plants spell it, and with two (both e's of reactive and fiber). */
+const RF_SCOPE_PCT = RF_SCOPE.replace("fiber", "fib%65r");
+const RF_SCOPE_PCT2 = RF_SCOPE_PCT.replace("reactive", "r%65active");
+/** A data: URL module whose payload re-exports the planted package from its install path, base64-encoded (R-DATA-URL). */
+const DATA_BASE64 = Buffer.from(`export * from "file:///opt/pi/node_modules/${RF_SDK}/index.js";\n`).toString("base64");
 /** Planted module paths, one per script kind the plants need. */
 const TS = "src/workbench/zz-planted.ts";
 const CTS = "src/workbench/zz-planted.cts";
 const DTS = "src/workbench/zz-planted.d.ts";
 const JS = "src/workbench/zz-planted.js";
 const JSX = "src/workbench/zz-planted.jsx";
+const MJS = "src/workbench/zz-planted.mjs";
 const TSX = "src/workbench/zz-planted.tsx";
 /** One module per planted spelling: [name, module, text, the form read, the specifier read]; every LOAD_FORMS form appears. */
 const LOAD_PLANTS: readonly [string, string, string, LoadForm, string][] = [
@@ -280,6 +334,22 @@ const LOAD_PLANTS: readonly [string, string, string, LoadForm, string][] = [
   ["an argument in nested wrappers", TS, `export const load = () => import((("${RF_SDK}" as string)!));\n`, "dynamic-import", RF_SDK],
   ["a callee in parentheses", TS, `export const sdk = (require)("${RF_SDK}");\n`, "require", RF_SDK],
   ["a callee with a non-null assertion", TS, `export const sdk = module.require!("${RF_SDK}");\n`, "member-require", RF_SDK],
+  ["a relative specifier through node_modules with a percent-encoded letter in a .mjs module", MJS, `import { render } from "../../node_modules/${RF_SCOPE_PCT}/sdk/index.js";\nexport { render };\n`, "import", `../../node_modules/${RF_SCOPE_PCT}/sdk/index.js`],
+  ["a file: URL dynamic import with a percent-encoded letter", TS, `export const load = () => import("file:///opt/pi/node_modules/${RF_SCOPE_PCT}/sdk/index.js");\n`, "dynamic-import", `file:///opt/pi/node_modules/${RF_SCOPE_PCT}/sdk/index.js`],
+  ["export star from the percent-encoded relative path", TS, `export * from "../../node_modules/${RF_SCOPE_PCT}/sdk/index.js";\n`, "export", `../../node_modules/${RF_SCOPE_PCT}/sdk/index.js`],
+  ["import.meta.resolve of the percent-encoded relative path", TS, `export const where = import.meta.resolve("../../node_modules/${RF_SCOPE_PCT}/sdk/index.js");\n`, "import-meta-resolve", `../../node_modules/${RF_SCOPE_PCT}/sdk/index.js`],
+  ["a file: URL with two percent-encoded letters", TS, `export const load = () => import("file:///opt/pi/node_modules/${RF_SCOPE_PCT2}/sdk/index.js");\n`, "dynamic-import", `file:///opt/pi/node_modules/${RF_SCOPE_PCT2}/sdk/index.js`],
+  ["an absolute path with a percent-encoded letter", MJS, `export const load = () => import("/opt/pi/node_modules/${RF_SCOPE_PCT}/sdk/index.js");\n`, "dynamic-import", `/opt/pi/node_modules/${RF_SCOPE_PCT}/sdk/index.js`],
+  ["a percent-encoded node_modules segment", TS, `import { render } from "../../node_%6dodules/${RF_SDK}/index.js";\nexport { render };\n`, "import", `../../node_%6dodules/${RF_SDK}/index.js`],
+  ["a percent-encoded at sign", TS, `import { render } from "../../node_modules/%40${RF_SCOPE.slice(1)}/sdk/index.js";\nexport { render };\n`, "import", `../../node_modules/%40${RF_SCOPE.slice(1)}/sdk/index.js`],
+  ["a percent-encoded letter beside a query escape that does not decode", TS, `export const load = () => import("../../node_modules/${RF_SCOPE_PCT}/sdk/index.js?%ZZ");\n`, "dynamic-import", `../../node_modules/${RF_SCOPE_PCT}/sdk/index.js?%ZZ`],
+  ["an inner node_modules segment that a dot segment leaves", TS, `export const load = () => import("../../node_modules/${RF_SDK}/node_modules/../index.js");\n`, "dynamic-import", `../../node_modules/${RF_SDK}/node_modules/../index.js`],
+  ["an inner node_modules segment that a percent-encoded dot segment leaves", TS, `export const load = () => import("../../node_modules/${RF_SDK}/node_modules/%2e%2e/index.js");\n`, "dynamic-import", `../../node_modules/${RF_SDK}/node_modules/%2e%2e/index.js`],
+  ["a tab written inside the node_modules segment", TS, `export const load = () => import("../../node_mod\\tules/${RF_SDK}/index.js");\n`, "dynamic-import", `../../node_mod\tules/${RF_SDK}/index.js`],
+  ["a percent-encoded bare specifier", TS, `export const load = () => import("${RF_SCOPE_PCT}/sdk");\n`, "dynamic-import", `${RF_SCOPE_PCT}/sdk`],
+  ["a reference path with a percent-encoded letter", TS, `/// <reference path="../../node_modules/${RF_SCOPE_PCT}/sdk/index.d.ts" />\nexport {};\n`, "reference-path", `../../node_modules/${RF_SCOPE_PCT}/sdk/index.d.ts`],
+  ["an escape that does not decode, written in the scope's own letters", TS, `export const load = () => import("../../node_modules/${RF_SCOPE.replace("rea", "r%ea")}/sdk/index.js");\n`, "dynamic-import", `../../node_modules/${RF_SCOPE.replace("rea", "r%ea")}/sdk/index.js`],
+  ["a percent-encoded data: URL module naming the package", TS, `export const load = () => import("data:text/javascript,export%20*%20from%20'file:///opt/pi/node_modules/${RF_SCOPE_PCT}/sdk/index.js'");\n`, "dynamic-import", `data:text/javascript,export%20*%20from%20'file:///opt/pi/node_modules/${RF_SCOPE_PCT}/sdk/index.js'`],
 ];
 /** Near misses and the named residuals' pinned quiet rows: [name, module, text], modules whose RF package load moduleLoads does not read. */
 const LOAD_QUIET: readonly [string, string, string][] = [
@@ -294,11 +364,13 @@ const LOAD_QUIET: readonly [string, string, string][] = [
   ["R-EVALUATED: a load in text evaluated at run time", TS, `export const sdk = eval('require("${RF_SDK}")');\nexport const make = new Function('return import("${RF_SDK}")');\n`],
   ["R-COMMENT: an import written in a comment no JSDoc reading takes", TS, `// import("${RF_SDK}")\n/* require("${RF_SDK}") */\nexport const list = [/** @type {import("${RF_SDK}").Render} */ 1];\n`],
   ["R-PRAGMA: a JSX import source pragma", TSX, `/** @jsxImportSource ${RF_SDK} */\nexport const view = <div />;\n`],
-  ["R-OTHER-NAME: an RF client under another name", TS, 'import { render } from "@rf/sdk";\nexport { render };\n'],
+  ["R-DATA-URL: a data: URL module whose base64 payload loads the package", TS, `export const load = () => import("data:text/javascript;base64,${DATA_BASE64}");\n`],
+  ["R-PATH-ALIAS: a relative path to a copy of or a link to the package under no node_modules segment", TS, 'import { render } from "../../vendor/reactive_fiber/sdk/index.js";\nexport { render };\n'],
+  ["R-OTHER-NAME: an RF client under another name or URL", TS, 'import { render } from "@rf/sdk";\nexport { render };\nexport const load = () => import("https://example.com/client-1.0.0.js");\n'],
 ];
 
 describe(RF_SRC_LOAD_SUITE, () => {
-  it("L1: the specifiers moduleLoads reads in its fifteen load forms from every tracked src module of the eight script extensions name no RF package, over a reading of every module at its floor", () => {
+  it("L1: no specifier moduleLoads reads in its fifteen load forms from every tracked src module of the eight script extensions has an RF package text once its percent-escapes are decoded, over a reading of every module at its floor", () => {
     const admitted = ["a.ts", "a.tsx", "a.mts", "a.cts", "a.js", "a.jsx", "a.mjs", "a.cjs", "a.d.ts"];
     const refused = ["a.json", "a.md", "a.d.json", "a.ts.map", "a.vue", "a.tsx.snap"];
     expect(admitted.filter(path => SRC_SCRIPT_MODULE.test(path))).toEqual(admitted);
@@ -314,7 +386,7 @@ describe(RF_SRC_LOAD_SUITE, () => {
     expect(rfLoads(loads)).toEqual([]);
   }, 60_000);
 
-  it("L2: each of the forty-two LOAD_PLANTS, every load form among them, reads exactly one RF load, naming the module, the form and the specifier", () => {
+  it("L2: each of the fifty-eight LOAD_PLANTS, every load form and the percent-encoded, dot-segment and tab spellings among them, reads exactly one RF load, naming the module, the form and the specifier as written", () => {
     expect(LOAD_PLANTS.map(([name]) => name)).toEqual([
       "import",
       "import type",
@@ -358,12 +430,28 @@ describe(RF_SRC_LOAD_SUITE, () => {
       "an argument in nested wrappers",
       "a callee in parentheses",
       "a callee with a non-null assertion",
+      "a relative specifier through node_modules with a percent-encoded letter in a .mjs module",
+      "a file: URL dynamic import with a percent-encoded letter",
+      "export star from the percent-encoded relative path",
+      "import.meta.resolve of the percent-encoded relative path",
+      "a file: URL with two percent-encoded letters",
+      "an absolute path with a percent-encoded letter",
+      "a percent-encoded node_modules segment",
+      "a percent-encoded at sign",
+      "a percent-encoded letter beside a query escape that does not decode",
+      "an inner node_modules segment that a dot segment leaves",
+      "an inner node_modules segment that a percent-encoded dot segment leaves",
+      "a tab written inside the node_modules segment",
+      "a percent-encoded bare specifier",
+      "a reference path with a percent-encoded letter",
+      "an escape that does not decode, written in the scope's own letters",
+      "a percent-encoded data: URL module naming the package",
     ]);
     expect(LOAD_FORMS.filter(form => !LOAD_PLANTS.some(([, , , planted]) => planted === form))).toEqual([]);
     for (const [name, module, text, form, specifier] of LOAD_PLANTS) expect(rfLoads(moduleLoads(module, text)), name).toEqual([{ module, form, specifier }]);
   });
 
-  it("L3: relative paths to Pi's own files and near-miss names read quiet, and the named residuals R-COMPUTED, R-LOADER, R-INDIRECT-CALLEE, R-EVALUATED, R-COMMENT, R-PRAGMA and R-OTHER-NAME read their pinned quiet values", () => {
+  it("L3: relative paths to Pi's own files and near-miss names read quiet, and the named residuals R-COMPUTED, R-LOADER, R-INDIRECT-CALLEE, R-EVALUATED, R-COMMENT, R-PRAGMA, R-DATA-URL, R-PATH-ALIAS and R-OTHER-NAME read their pinned quiet values", () => {
     expect(LOAD_QUIET.map(([name]) => name.split(":")[0])).toEqual([
       "a relative specifier naming the provider module",
       "a parent-relative specifier naming the provider module",
@@ -376,6 +464,8 @@ describe(RF_SRC_LOAD_SUITE, () => {
       "R-EVALUATED",
       "R-COMMENT",
       "R-PRAGMA",
+      "R-DATA-URL",
+      "R-PATH-ALIAS",
       "R-OTHER-NAME",
     ]);
     for (const [name, module, text] of LOAD_QUIET) expect(rfLoads(moduleLoads(module, text)), name).toEqual([]);
@@ -391,7 +481,9 @@ describe(RF_SRC_LOAD_SUITE, () => {
       [],
       [],
       [],
-      ["import:@rf/sdk"],
+      [`dynamic-import:data:text/javascript;base64,${DATA_BASE64}`],
+      [],
+      ["import:@rf/sdk", "dynamic-import:https://example.com/client-1.0.0.js"],
     ]);
   });
 });
@@ -426,6 +518,11 @@ const MANIFEST_PLANTS: readonly [string, string, string][] = [
   ["a key spelled with a JSON escape", '{"dependencies": {"@reactive\\u002dfiber/sdk": "1.0.0"}}', `${at("dependencies", RF_SDK)} key: ${RF_SDK}`],
   ["a shadowed duplicate key", `{"dependencies": {"${RF_SDK}": "1.0.0"}, "dependencies": {"react": "19.0.0"}}`, `a string JSON.parse drops (a shadowed duplicate key or its value): ${RF_SDK}`],
   ["a shadowed duplicate key spelled with a JSON escape", '{"dependencies": {"@reactive\\u002dfiber/sdk": "1.0.0"}, "dependencies": {"react": "19.0.0"}}', `a string JSON.parse drops (a shadowed duplicate key or its value): ${RF_SDK}`],
+  ["a tarball URL with a percent-encoded letter", JSON.stringify({ devDependencies: { client: `https://registry.npmjs.org/${RF_SCOPE_PCT}/sdk/-/sdk-1.0.0.tgz` } }), `${at("devDependencies", "client")} value: https://registry.npmjs.org/${RF_SCOPE_PCT}/sdk/-/sdk-1.0.0.tgz`],
+  ["a git URL with a percent-encoded letter", JSON.stringify({ dependencies: { client: `git+https://github.com/${RF_SCOPE_PCT.slice(1)}/sdk.git` } }), `${at("dependencies", "client")} value: git+https://github.com/${RF_SCOPE_PCT.slice(1)}/sdk.git`],
+  ["a key with a percent-encoded letter", JSON.stringify({ overrides: { [`${RF_SCOPE_PCT}/sdk`]: "1.0.0" } }), `${at("overrides", `${RF_SCOPE_PCT}/sdk`)} key: ${RF_SCOPE_PCT}/sdk`],
+  ["a percent-escape spelled with a JSON escape", `{"devDependencies": {"client": "https://registry.npmjs.org/${RF_SCOPE.replace("fiber", "fib\\u002565r")}/sdk/-/sdk-1.0.0.tgz"}}`, `${at("devDependencies", "client")} value: https://registry.npmjs.org/${RF_SCOPE_PCT}/sdk/-/sdk-1.0.0.tgz`],
+  ["a shadowed duplicate key with a percent-encoded letter", `{"dependencies": {"${RF_SCOPE_PCT}/sdk": "1.0.0"}, "dependencies": {"react": "19.0.0"}}`, `a string JSON.parse drops (a shadowed duplicate key or its value): ${RF_SCOPE_PCT}/sdk`],
 ];
 /** A lockfile text with one planted RF text, and the place the reader must name for it: [name, text, place]. */
 const LOCK_PLANTS: readonly [string, string, string][] = [
@@ -437,6 +534,8 @@ const LOCK_PLANTS: readonly [string, string, string][] = [
   ["a file spec", JSON.stringify({ lockfileVersion: 3, packages: { "": { dependencies: { client: "file:vendor/reactive-fiber-sdk-0.1.0.tgz" } } } }), `${at("packages", "", "dependencies", "client")} value: file:vendor/reactive-fiber-sdk-0.1.0.tgz`],
   ["an entry's peerDependenciesMeta key", JSON.stringify({ lockfileVersion: 3, packages: { "node_modules/a": { peerDependenciesMeta: { [RF_SDK]: { optional: true } } } } }), `${at("packages", "node_modules/a", "peerDependenciesMeta", RF_SDK)} key: ${RF_SDK}`],
   ["a legacy dependencies tree entry", JSON.stringify({ lockfileVersion: 2, packages: {}, dependencies: { [RF_SDK]: { version: "1.0.0" } } }), `${at("dependencies", RF_SDK)} key: ${RF_SDK}`],
+  ["a resolved URL with a percent-encoded letter", JSON.stringify({ lockfileVersion: 3, packages: { "node_modules/client": { resolved: `https://registry.npmjs.org/${RF_SCOPE_PCT}/sdk/-/sdk-1.0.0.tgz` } } }), `${at("packages", "node_modules/client", "resolved")} value: https://registry.npmjs.org/${RF_SCOPE_PCT}/sdk/-/sdk-1.0.0.tgz`],
+  ["an install path with a percent-encoded letter", JSON.stringify({ lockfileVersion: 3, packages: { [`node_modules/${RF_SCOPE_PCT}/sdk`]: { version: "1.0.0" } } }), `${at("packages", `node_modules/${RF_SCOPE_PCT}/sdk`)} key: node_modules/${RF_SCOPE_PCT}/sdk`],
 ];
 /** Near misses and the named residual's pinned quiet row: [name, text], manifests whose RF package the readers do not read. */
 const MANIFEST_QUIET: readonly [string, string][] = [
@@ -444,11 +543,11 @@ const MANIFEST_QUIET: readonly [string, string][] = [
   ["a react-fiber spelling", JSON.stringify({ devDependencies: { "react-fiber-reconciler": "1.0.0" } })],
   ["the three vendored SDK names", JSON.stringify({ dependencies: { "@forge/sdk": "file:vendor/forge-sdk-0.1.0.tgz", "@furnace/sdk": "file:vendor/furnace-sdk-0.1.0.tgz", "@hyperunix/sdk": "file:vendor/hyperunix-sdk-0.1.0.tgz" } })],
   ["reactive and fiber as two texts", JSON.stringify({ keywords: ["reactive", "fiber"] })],
-  ["R-OTHER-NAME: an RF client under another name", JSON.stringify({ dependencies: { "@rf/sdk": "1.0.0" }, packages: { "node_modules/@rf/sdk": { name: "@rf/sdk" } } })],
+  ["R-OTHER-NAME: an RF client under another name or URL", JSON.stringify({ dependencies: { "@rf/sdk": "1.0.0", client: "https://example.com/client-1.0.0.tgz" }, packages: { "node_modules/@rf/sdk": { name: "@rf/sdk" } } })],
 ];
 
 describe(RF_MANIFEST_SUITE, () => {
-  it("M1: no key or string value of package.json or of either lockfile, at any depth, is an RF package text, and no string of their raw text is one JSON.parse drops, over a reading of each manifest at its floor", () => {
+  it("M1: no key or string value of package.json or of either lockfile, at any depth, is an RF package text once its percent-escapes are decoded, and no string of their raw text is one JSON.parse drops, over a reading of each manifest at its floor", () => {
     const manifestText = readRepo(PACKAGE_MANIFEST);
     const manifest = jsonTexts(manifestText);
     expect(manifest.length).toBeGreaterThanOrEqual(100);
@@ -467,7 +566,7 @@ describe(RF_MANIFEST_SUITE, () => {
     }
   });
 
-  it("M2: each of the twenty-four MANIFEST_PLANTS and, in both lockfiles, each of the eight LOCK_PLANTS reads exactly one RF text, naming the manifest and the place", () => {
+  it("M2: each of the twenty-nine MANIFEST_PLANTS and, in both lockfiles, each of the ten LOCK_PLANTS, the percent-encoded texts among them, reads exactly one RF text, naming the manifest and the place", () => {
     expect(MANIFEST_PLANTS.map(([name]) => name)).toEqual([
       "a dependencies name",
       "a devDependencies name",
@@ -493,6 +592,11 @@ describe(RF_MANIFEST_SUITE, () => {
       "a key spelled with a JSON escape",
       "a shadowed duplicate key",
       "a shadowed duplicate key spelled with a JSON escape",
+      "a tarball URL with a percent-encoded letter",
+      "a git URL with a percent-encoded letter",
+      "a key with a percent-encoded letter",
+      "a percent-escape spelled with a JSON escape",
+      "a shadowed duplicate key with a percent-encoded letter",
     ]);
     for (const [name, text, place] of MANIFEST_PLANTS) expect(rfManifestHits(PACKAGE_MANIFEST, text), name).toEqual([`${PACKAGE_MANIFEST}: ${place}`]);
     expect(LOCK_PLANTS.map(([name]) => name)).toEqual([
@@ -504,6 +608,8 @@ describe(RF_MANIFEST_SUITE, () => {
       "a file spec",
       "an entry's peerDependenciesMeta key",
       "a legacy dependencies tree entry",
+      "a resolved URL with a percent-encoded letter",
+      "an install path with a percent-encoded letter",
     ]);
     for (const [name, text, place] of LOCK_PLANTS) {
       for (const lockfile of LOCKFILES) expect(rfManifestHits(lockfile, text), `${name} in ${lockfile}`).toEqual([`${lockfile}: ${place}`]);
@@ -518,7 +624,7 @@ describe(RF_MANIFEST_SUITE, () => {
       ["devDependencies", "react-fiber-reconciler", "1.0.0"],
       ["dependencies", "@forge/sdk", "file:vendor/forge-sdk-0.1.0.tgz", "@furnace/sdk", "file:vendor/furnace-sdk-0.1.0.tgz", "@hyperunix/sdk", "file:vendor/hyperunix-sdk-0.1.0.tgz"],
       ["keywords", "reactive", "fiber"],
-      ["dependencies", "@rf/sdk", "1.0.0", "packages", "node_modules/@rf/sdk", "name", "@rf/sdk"],
+      ["dependencies", "@rf/sdk", "1.0.0", "client", "https://example.com/client-1.0.0.tgz", "packages", "node_modules/@rf/sdk", "name", "@rf/sdk"],
     ]);
   });
 });
