@@ -21,41 +21,52 @@
  * - W04-SHAPE (frozen shape): ROWS holds W04-SCHEMA:6, W04-USAGE:6, W04-RESUME:8 and W04-TRANSCRIPT:15, each row's pin
  *   ids frozen in order. Red under: a pin of a multi-pin row deleted (CT1), a pin of a second row deleted (CT1b), a row
  *   deleted (CT4).
- * - W04-ROWS (anchor outside this file's literals): the matrix's W04 section, read through the shared helper's
- *   sectionTables in the rendered binding, holds exactly one table whose header is Feature, Status, Evidence, Caveats
- *   and whose body rows' Feature cells are the four rows' features, in order. Red under: a feature label shortened (CT2),
+ * - W04-ROWS (anchor outside this file's literals): the matrix's W04 section, read through bindW04 (the one binding
+ *   W04-ROWS, W04-QUOTES and W04-HTML read: the W04 heading at level 2 under the matrix title) and the shared helper's
+ *   sectionTables, holds exactly one table whose header is Feature, Status, Evidence, Caveats and whose body rows'
+ *   Feature cells are the four rows' features, in order. Red under: a feature label shortened (CT2),
  *   a row deleted with its frozen-shape elements (CT5) or from every literal (CT6, row member), the matrix's usage Feature
  *   cell reworded (K5); not measured: a matrix W04 row added, removed or reordered.
  * - W04-HTML (rendered-text docs truth; the peer form of test/workbench-subsystem-matrix.census.ts): the matrix's W04
- *   section, bound through the shared helper's docsSection (the one binding sectionTables also reads), carries no HTML,
- *   comments included. W04-ROWS and W04-QUOTES read each cell's SOURCE text, so an HTML comment inside the section could
- *   keep a citation in the source that the rendered matrix no longer shows; W04-HTML refuses that section. Red under:
- *   the gate's L2-M1b (the visible R6 quote moved into an HTML comment), L2-M1c (the whole S1 group moved into an HTML
- *   comment) and an HTML tag wrapped around one Evidence quote (H-TAG).
+ *   section, read through bindW04 and the shared helper's docsSection, carries no HTML, comments included. W04-ROWS and
+ *   W04-QUOTES read each cell's SOURCE text, so an HTML comment inside the section could keep a citation in the source
+ *   that the rendered matrix no longer shows; W04-HTML refuses that section. The same reading (htmlReading) over a
+ *   synthetic matrix, never the live one, reads a plain W04 Evidence cell as HTML-free and the same cell wrapped in an
+ *   HTML comment as holding HTML. Red under: the gate's L2-M1b (the visible R6 quote moved into an HTML comment),
+ *   L2-M1c (the whole S1 group moved into an HTML comment), an HTML tag wrapped around one Evidence quote (H-TAG), the
+ *   HTML flag dropped from htmlReading (B01) and htmlReading bound to the W05 heading (B02).
  * - W04-QUOTES (anchor outside this file's literals): in each row's Evidence cell every group of the form
  *   `test/<file>.test.ts ['<suite>'] (<text>)` (one space before the parenthesis, which holds no parenthesis) yields its
  *   single-quoted strings (read from the cell's source text, which W04-HTML keeps free of HTML), and the yield of every
  *   group whose file is not NOT_DEFAULT_TIER equals the row's quote-bearing
  *   pins (file, suite quote, quote), in order; each quote names its pin's title (the title itself, the title after an
  *   "L<n>: " label, or for a quote with one " ... " elision a title opening with the part before it and closing with the
- *   part after it, the two parts not overlapping), and each suite quote is its pin's innermost describe. Red under: a quoted pin swapped for an
+ *   part after it, with at least one character between the two parts), and each suite quote is its pin's innermost
+ *   describe. Red under: a quoted pin swapped for an
  *   unrelated passing case of its file (CT3), a quoted pin removed from every literal (CT6, quoted-pin member), a quote
  *   deleted from the matrix (K4); not measured: a quote added to the matrix in the group form.
  * - W04-PARSE: over a synthetic Evidence cell (never the live matrix) the group reader yields exactly the quotes of its
  *   test-file groups, in order: a src parenthetical, a qa probe's quote, a TRACEABILITY quote, an unquoted mention and a
  *   parenthetical holding a parenthesis yield nothing, and a live file's group still yields (W04-QUOTES sets it aside).
  *   Red under: the reader hollowed to no quotes (H1), the suite quote dropped from the reader (H2).
- * - W04-NAMES: the quote rule accepts a title itself, the title after an "L<n>: " label and a title around one " ... "
- *   elision whose two parts do not overlap (the parts joined by one space included), and refuses a longer unelided
- *   title, another label form, a missing label colon, a title whose two parts would overlap, a title opening elsewhere
- *   and a quote with two elisions. Red under: the rule hollowed to accept every title (H3), the overlap guard dropped
- *   (H4).
+ * - W04-NAMES: over its listed examples (never the live matrix), the quote rule accepts a title itself, the title after
+ *   an "L<n>: " label and a title opening with the part before one " ... " elision and closing with the part after it
+ *   with at least one character between the two parts (one space included), and it refuses each listed counter-example:
+ *   a longer unelided title, another label letter, a missing label colon, a label without a number, a label not at the
+ *   start of the title, two parts that would overlap, two parts with nothing between them, a title opening elsewhere, a
+ *   title closing elsewhere and a quote with two elisions. Red under: the rule hollowed to accept every title (H3), the
+ *   overlap guard dropped (H4), the guard weakened to accept two parts with nothing between them (K-NAMES-GAP), the
+ *   closing check dropped (K-NAMES-CLOSE), the label number made optional (K-NAMES-DIGITS), the label's start anchor
+ *   dropped (K-NAMES-ANCHOR).
  * - W04-SUITES (anchor outside this file's literals): for each FULL_SUITES entry the report holds one file entry whose
- *   path ends with the file's, and the cases it lists under exactly that describe path are that suite's pins, in order,
- *   each with status passed. Red under: a suite pin removed from every literal (CT6, suite-pin member), a case added to a
- *   fully pinned suite (K1), a pinned case skipped (K3); not measured: a suite case removed, reordered or renamed.
- * - W04-ANCHORED: every pin carries a matrix quote or sits in a FULL_SUITES suite, every FULL_SUITES suite holds a pin,
- *   and pin ids are unique. Red under: the usage row deleted with its suite left declared (CT4, CT5); not measured: a pin
+ *   path ends with the file's, and the cases that entry lists at or under the suite's describe path (the suite's own cases
+ *   and the cases of every describe nested in it, at any depth) are that suite's pins, in order, each with its describe
+ *   path, its title and status passed. Red under: a suite pin removed from every literal (CT6, suite-pin member), a case
+ *   added directly in a fully pinned suite (K1, the gate's RM2), a case added inside a describe nested in a fully pinned
+ *   suite (the gate's RM1) or two describes deep (RM1-DEEP), a pinned case skipped (K3); not measured: a suite case
+ *   removed, reordered or renamed.
+ * - W04-ANCHORED: every pin carries a matrix quote or sits at or under a FULL_SUITES suite's describe path, every
+ *   FULL_SUITES suite holds a pin, and pin ids are unique. Red under: the usage row deleted with its suite left declared (CT4, CT5); not measured: a pin
  *   added with neither anchor, a duplicated pin id.
  * - W04-JUDGE: judge() (test/helpers/census.ts) reads each pin under its describe path collected once, passed in the
  *   test tier's report and asserting (the helper's three legs). Red under: a pinned case renamed (K2), a pinned case
@@ -74,7 +85,7 @@
  * not a quoted case of a default-tier file (the src line citations, test/workbench-inspector.test.ts A11,
  * test/workbench-evidence-loader.test.ts, the TRACEABILITY and docs/13 quotes); Evidence quotes written outside the
  * group form W04-QUOTES reads; HTML elsewhere in the matrix, outside the bound W04 section; markdown that hides text
- * without HTML (a link destination or title, an image source - the bound section carries none at the cut's base);
+ * without HTML (a link destination or title, an image source or an image's alt text);
  * what each pinned case asserts (an edit
  * that keeps a case registered, passing and asserting while changing what it checks stays green here); any tier but the
  * default test tier; and every mode the shared helper names as its own residual (the NAMED RESIDUALS in
@@ -205,7 +216,13 @@ const ROWS: readonly W04Row[] = [
         suite: LOOKUP_SUITE,
         title: "the lookup asks for the recorded session id in the host's workspace directory, once, before the resumed query, which resumes that session",
       },
-      { id: "R8", file: LOOKUP, suite: LOOKUP_SUITE, title: "a stored record of another session refuses the resume as unavailable and issues no second query" },
+      {
+        id: "R8",
+        file: LOOKUP,
+        suite: LOOKUP_SUITE,
+        title:
+          "every store answer that is not a record of the recorded session (no record, another id, the empty id, the recorded id extended, cut short, upper-cased or space-padded) refuses the resume as unavailable and issues no second query",
+      },
     ],
   },
   {
@@ -261,7 +278,10 @@ const ROWS: readonly W04Row[] = [
   },
 ];
 
-/** The suites pinned whole: the report's cases under each describe path must be exactly its pins (W04-SUITES). */
+/**
+ * The suites pinned whole: every case the report lists at or under each describe path (the suite's own cases and the cases
+ * of every describe nested in it) must be one of its pins, and every pin of the suite must be listed (W04-SUITES).
+ */
 const FULL_SUITES: readonly { readonly file: string; readonly suite: readonly string[] }[] = [
   { file: ADVERSE, suite: MALFORMED_SUITE },
   { file: ADVERSE, suite: USAGE_SUITE },
@@ -298,14 +318,36 @@ function reportFiles(): readonly ReportFile[] {
 }
 /** The report's records of one file: every file entry whose path ends with the file's. */
 const recordsOf = (files: readonly ReportFile[], file: string): readonly ReportFile[] => files.filter(entry => (entry.name ?? "").endsWith(`/${file}`));
-const samePath = (left: readonly string[], right: readonly string[]): boolean => JSON.stringify(left) === JSON.stringify(right);
+/** Whether a describe path lies at or under a suite's path: the suite's own titles first, any nested describe titles after. */
+const underSuite = (path: readonly string[], suite: readonly string[]): boolean => path.length >= suite.length && suite.every((title, index) => path[index] === title);
 
-/** The W04 table's body rows, through the shared helper's rendered binding of the section. */
+/** A shared-helper section reader: sectionTables and docsSection both take (markdown, heading, depth, parents). */
+type SectionReader<T> = (markdown: string, heading: string, depth: number, parents: readonly string[]) => T;
+/** The one binding W04-ROWS, W04-QUOTES and W04-HTML read: the W04 heading at level 2 under the matrix title, over the live matrix unless a synthetic text is given. */
+const bindW04 = <T>(read: SectionReader<T>, markdown: string = readFileSync(join(ROOT, MATRIX), "utf8")): T => read(markdown, W04_HEADING, 2, [MATRIX_TITLE]);
+
+/** The W04 table's body rows, through bindW04 and the shared helper's sectionTables. */
 function w04Table(): { readonly ok: boolean; readonly why: string; readonly tables: number; readonly header: readonly string[]; readonly body: readonly (readonly string[])[] } {
-  const bound = sectionTables(readFileSync(join(ROOT, MATRIX), "utf8"), W04_HEADING, 2, [MATRIX_TITLE]);
+  const bound = bindW04(sectionTables);
   const [grid] = bound.grids;
   return { ok: bound.ok, why: bound.why, tables: bound.grids.length, header: grid?.[0] ?? [], body: grid?.slice(1) ?? [] };
 }
+
+interface HtmlReading {
+  readonly ok: boolean;
+  readonly why: string;
+  readonly hasHtml: boolean;
+}
+/** What W04-HTML reads of a matrix text: the W04 binding's verdict and whether the bound section holds HTML. */
+function htmlReading(markdown?: string): HtmlReading {
+  const section = bindW04(docsSection, markdown);
+  return { ok: section.ok, why: section.why, hasHtml: section.hasHtml };
+}
+const HTML_FREE: HtmlReading = { ok: true, why: "", hasHtml: false };
+/** A synthetic matrix (never the live one) whose W04 section holds one table row with `evidence` as its Evidence cell. */
+const syntheticMatrix = (evidence: string): string =>
+  [`# ${MATRIX_TITLE}`, "", `## ${W04_HEADING}`, "", `| ${MATRIX_HEADER.join(" | ")} |`, "| --- | --- | --- | --- |", `| a feature | partial | ${evidence} | none |`, "", "## W05: a later section", ""].join("\n");
+const SYNTHETIC_EVIDENCE = "test/workbench-a.test.ts ('a visible quote')";
 
 interface Quote {
   readonly file: string;
@@ -322,7 +364,7 @@ function evidenceQuotes(cell: string): readonly Quote[] {
   );
 }
 const LABEL = /^L\d+: /;
-/** Whether a matrix quote names a case title: itself, after an "L<n>: " label, or around one " ... " elision whose two parts do not overlap. */
+/** Whether a matrix quote names a case title: itself, after an "L<n>: " label, or around one " ... " elision with at least one character between its two parts. */
 function names(quote: string, title: string): boolean {
   if (title === quote) return true;
   if (LABEL.test(title) && title.replace(LABEL, "") === quote) return true;
@@ -358,12 +400,15 @@ describe(TITLE, () => {
     });
   });
 
-  it("W04-HTML the matrix's bound W04 section carries no HTML, so no cell this census reads holds text an HTML comment or tag hides from the rendered matrix", () => {
-    const section = docsSection(readFileSync(join(ROOT, MATRIX), "utf8"), W04_HEADING, 2, [MATRIX_TITLE]);
-    expect({ ok: section.ok, why: section.why, hasHtml: section.hasHtml }).toStrictEqual({ ok: true, why: "", hasHtml: false });
+  it("W04-HTML the matrix's bound W04 section carries no HTML, so no cell this census reads holds text an HTML comment or tag hides from the rendered matrix, and the same reading flags a synthetic W04 Evidence cell wrapped in an HTML comment", () => {
+    expect({
+      live: htmlReading(),
+      syntheticPlain: htmlReading(syntheticMatrix(SYNTHETIC_EVIDENCE)),
+      syntheticComment: htmlReading(syntheticMatrix(`<!-- ${SYNTHETIC_EVIDENCE} -->`)),
+    }).toStrictEqual({ live: HTML_FREE, syntheticPlain: HTML_FREE, syntheticComment: { ...HTML_FREE, hasHtml: true } });
   });
 
-  it("W04-QUOTES each row's Evidence cell quotes exactly the row's quote-bearing pins of default-tier files, in order, and each quote names its pin", () => {
+  it("W04-QUOTES the group-form quotes of each row's Evidence cell, outside NOT_DEFAULT_TIER, are exactly the row's quote-bearing pins, in order, and each quote names its pin", () => {
     const table = w04Table();
     const evidence = MATRIX_HEADER.indexOf("Evidence");
     const read = ROWS.map((row, index) => ({
@@ -398,7 +443,7 @@ describe(TITLE, () => {
     ]);
   });
 
-  it("W04-NAMES the quote rule accepts a title itself, the title after an L<n>: label and one elision's title with unoverlapped parts, and nothing else", () => {
+  it("W04-NAMES the quote rule accepts each listed form (a title itself, the title after an L<n>: label, one elision's title with a gap between its parts) and refuses each listed counter-example", () => {
     const accepted: readonly (readonly [string, string])[] = [
       ["refuses the read", "refuses the read"],
       ["refuses the read", "L4: refuses the read"],
@@ -409,8 +454,12 @@ describe(TITLE, () => {
       ["refuses the read", "refuses the read again"],
       ["refuses the read", "X4: refuses the read"],
       ["refuses the read", "L4 refuses the read"],
+      ["refuses the read", "L: refuses the read"],
+      ["refuses the read", "refuses L4: the read"],
       ["abc ... cde", "abcde"],
+      ["abc ... def", "abcdef"],
       ["opens ... closes", "reopens the stream and closes"],
+      ["opens ... closes", "opens the stream and ends"],
       ["opens ... and ... closes", "opens a and b closes"],
     ];
     expect({ accepted: accepted.map(([quote, title]) => names(quote, title)), refused: refused.map(([quote, title]) => names(quote, title)) }).toStrictEqual({
@@ -419,26 +468,31 @@ describe(TITLE, () => {
     });
   });
 
-  it("W04-SUITES each fully pinned suite's cases in the report are exactly its pins, in order, each passed", { timeout: JUDGE_TIMEOUT }, () => {
+  it("W04-SUITES each fully pinned suite's cases in the report, at any describe depth under it, are exactly its pins, in order, each passed", { timeout: JUDGE_TIMEOUT }, () => {
     const files = reportFiles();
     const read = FULL_SUITES.map(({ file, suite }) => {
       const records = recordsOf(files, file);
-      const cases = (records[0]?.assertionResults ?? []).filter(entry => samePath(entry.ancestorTitles ?? [], suite));
-      return { file, suite, recorded: records.length, titles: cases.map(entry => entry.title ?? "<untitled>"), statuses: cases.map(entry => entry.status ?? "<no status>") };
+      const cases = (records[0]?.assertionResults ?? []).filter(entry => underSuite(entry.ancestorTitles ?? [], suite));
+      return {
+        file,
+        suite,
+        recorded: records.length,
+        cases: cases.map(entry => ({ path: entry.ancestorTitles ?? [], title: entry.title ?? "<untitled>", status: entry.status ?? "<no status>" })),
+      };
     });
     expect(read).toStrictEqual(
       FULL_SUITES.map(({ file, suite }) => {
-        const pinned = CASES.filter(pin => pin.file === file && samePath(pin.suite, suite));
-        return { file, suite, recorded: 1, titles: pinned.map(pin => pin.title), statuses: pinned.map(() => "passed") };
+        const pinned = CASES.filter(pin => pin.file === file && underSuite(pin.suite, suite));
+        return { file, suite, recorded: 1, cases: pinned.map(pin => ({ path: pin.suite, title: pin.title, status: "passed" })) };
       }),
     );
   });
 
-  it("W04-ANCHORED every pin carries a matrix quote or sits in a fully pinned suite, every fully pinned suite holds a pin, and pin ids are unique", () => {
-    const inFullSuite = (pin: W04Pin): boolean => FULL_SUITES.some(({ file, suite }) => pin.file === file && samePath(pin.suite, suite));
+  it("W04-ANCHORED every pin carries a matrix quote or sits at or under a fully pinned suite's describe path, every fully pinned suite holds a pin, and pin ids are unique", () => {
+    const inFullSuite = (pin: W04Pin): boolean => FULL_SUITES.some(({ file, suite }) => pin.file === file && underSuite(pin.suite, suite));
     expect({
       unanchored: ALL_PINS.filter(pin => pin.quote === undefined && !inFullSuite(pin)).map(pin => pin.id),
-      emptySuites: FULL_SUITES.filter(({ file, suite }) => !ALL_PINS.some(pin => pin.file === file && samePath(pin.suite, suite))).map(({ suite }) => suite.join(" > ")),
+      emptySuites: FULL_SUITES.filter(({ file, suite }) => !ALL_PINS.some(pin => pin.file === file && underSuite(pin.suite, suite))).map(({ suite }) => suite.join(" > ")),
       duplicateIds: ALL_PINS.map(pin => pin.id).filter((id, index, ids) => ids.indexOf(id) !== index),
     }).toStrictEqual({ unanchored: [], emptySuites: [], duplicateIds: [] });
   });
