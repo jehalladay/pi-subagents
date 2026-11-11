@@ -1,0 +1,70 @@
+defects: 224 positives: 43
+
+DEFECT COVERAGE: Counter({'COMPILED': 132, 'DEFERRED': 79, 'UNCOVERED': 13})
+by grade x state: Counter({('ESTABLISHED', 'COMPILED'): 120, ('ESTABLISHED', 'DEFERRED'): 66, ('SUPPORTED', 'DEFERRED'): 13, ('ESTABLISHED', 'UNCOVERED'): 11, ('SUPPORTED', 'COMPILED'): 11, ('SUPPORTED', 'UNCOVERED'): 2, ('PLAUSIBLE', 'COMPILED'): 1})
+
+UNCOVERED defects (no requirement, no deferral, no mention):
+   C004 ESTABLISHED agents gap | An agent file's `model:` goes through two different resolvers depending on how the agent is started. The Agent tool uses the fuzzy resolver; a direct 
+   C020 ESTABLISHED agents DX | An agent whose `name:` contains a space, which the loader deliberately allows, cannot be spawned once it sets `memory:`, and the failure appears only 
+   C023 ESTABLISHED agents DX | Shutting the session down while an agent is in flight raises unhandled promise rejections ('This extension ctx is stale…') from the manager's error-pa
+   C025 SUPPORTED agents QoL | Hard-coded model pins lag the registry. The create wizard's haiku/sonnet/opus choices write claude-haiku-4-5, claude-sonnet-4-6 and claude-opus-4-6, a
+   C059 ESTABLISHED execute gap | workflow_catalog hands out definition references that workflow_execute then refuses. (a) Saved workflows in the user's agent dir (`<agentDir>/workflow
+   C060 ESTABLISHED execute gap | The same digest-pinned definition behaves differently by hostMode and nothing says so before launch. On the detached host a nested workflow() is fatal
+   C066 ESTABLISHED execute UX | For the operator, a workflow launched through workflow_execute does not look like a workflow in the transcript. The tool defines no renderCall or rend
+   C070 SUPPORTED execute DX | No test in the gate drives a real embedded launch through the booted workflow_execute tool. The tool suite stubs the source resolver and both launcher
+   C071 ESTABLISHED execute QoL | The `--subagents-workflow-file` flag cannot pass arguments to the script: one flag is registered, the script sees `args` as undefined, and the path ne
+   C123 ESTABLISHED interop gap | The coordination boundary calls the producer export synchronously on the host's event loop with no deadline and no abort signal, and the latencyMs bud
+   C124 ESTABLISHED interop gap | The three seams disagree on 'unknown permission data'. For one host grant read holding an entry outside the capabilityGrants grammar, workflow_execute
+   C125 ESTABLISHED interop DX | A FIFO at descriptorPath makes the descriptor boundary wait forever and then keeps the host process from exiting. The same module refuses a FIFO at ar
+   C177 ESTABLISHED observe gap | An operation started with forge_gate_run can never be read back by the agent: its reply says completion 'not-asserted', the host observes the terminal
+
+MENTIONED-ONLY (named in a block but not compiled/deferred):
+
+DEFERRED only via the r-lx coverage note ('left to sibling clusters') — check a sibling actually took it:
+   C022 ESTABLISHED agents gap | The mention clone is not held to the agent the user typed, and its turn is billed nowhere visible. Whatever subagent_typ
+
+DEFERRED only via prose (no table row):
+   C002 ESTABLISHED agents gap
+   C003 ESTABLISHED agents gap
+   C005 ESTABLISHED agents DX
+   C014 ESTABLISHED agents missing-req
+   C021 ESTABLISHED agents gap
+   C050 ESTABLISHED execute gap
+   C051 ESTABLISHED execute missing-req
+   C052 ESTABLISHED execute gap
+   C054 ESTABLISHED execute missing-req
+   C062 ESTABLISHED execute gap
+   C068 ESTABLISHED execute missing-req
+   C116 ESTABLISHED interop DX
+   C178 ESTABLISHED observe missing-req
+   C193 ESTABLISHED observe friction
+
+per-family defect coverage:
+   agents {'COMPILED': 16, 'DEFERRED': 6, 'UNCOVERED': 4}
+   detached {'COMPILED': 7, 'DEFERRED': 8}
+   execute {'DEFERRED': 6, 'COMPILED': 11, 'UNCOVERED': 5}
+   furnace {'COMPILED': 8, 'DEFERRED': 9}
+   inspector {'COMPILED': 9, 'DEFERRED': 8}
+   interop {'COMPILED': 13, 'DEFERRED': 1, 'UNCOVERED': 3}
+   journal {'COMPILED': 9, 'DEFERRED': 10}
+   node-rpc {'COMPILED': 9, 'DEFERRED': 10}
+   observe {'UNCOVERED': 1, 'DEFERRED': 2, 'COMPILED': 14}
+   packaging {'COMPILED': 9, 'DEFERRED': 4}
+   providers {'COMPILED': 15, 'DEFERRED': 10}
+   scheduling {'COMPILED': 12, 'DEFERRED': 5}
+
+STUB axis claims:
+   C049 SUPPORTED detached COMPILED ['EAT-R387'] ['r-ops:DEFERRED_FOR_RANGE_CAPACITY', 'r-platform:cross-family-prose'] | nativeRuntimeIdentity is a hard-coded 'unsupported' literal in every receipt and snapshot while the landed exe
+   C055 ESTABLISHED execute COMPILED ['EAT-R387'] ['r-lx:coverage-note(left to sibling clusters / residue)', 'r-platform:cross-family-prose'] | The `policy` parameter of workflow_execute is validated, bounded and echoed back in the reply, but nothing app
+   C063 ESTABLISHED execute COMPILED ['EAT-R387'] ['r-lx:coverage-note(left to sibling clusters / residue)', 'r-platform:cross-family-prose'] | workflow_execute advertises three definition kinds but launches one. The schema and the pure admission accept 
+   C069 SUPPORTED execute COMPILED ['EAT-R387'] ['r-platform:cross-family-prose'] | The host admission budget — the three shared pools (sdk-queries, child-processes, forge-operations) with a que
+   C078 ESTABLISHED furnace COMPILED ['EAT-R387'] ['r-ops:DEFERRED_FOR_RANGE_CAPACITY', 'r-platform:cross-family-prose'] | Descriptor-only control verbs: the adapter table FURNACE_CONTROL_VERBS (src/workbench/furnace-control.ts:69-78
+   C102 ESTABLISHED inspector COMPILED ['EAT-R387'] ['r-ops:DEFERRED_FOR_RANGE_CAPACITY', 'r-platform:cross-family-prose'] | Two controls of the rich inspector are bound in code and do nothing. Zoom-in is `matchesKey(data,'+') || match
+   C119 ESTABLISHED interop COMPILED ['EAT-R387'] ['r-lx:coverage-note(left to sibling clusters / residue)', 'r-platform:cross-family-prose'] | The whole interop surface is test-only at the pin. None of its seven modules is reachable from the composition
+   C126 ESTABLISHED interop COMPILED ['EAT-R387'] ['r-platform:cross-family-prose'] | The descriptor boundary admits a producer descriptor only while the descriptor declares itself non-invocable. 
+   C169 SUPPORTED node-rpc COMPILED ['EAT-R387'] ['r-ops:DEFERRED_FOR_RANGE_CAPACITY', 'r-platform:cross-family-prose'] | 'observe' is a descriptor-only capability mode: CAPABILITY_MODES and CapabilityDescriptor.supportedModes accep
+   C182 ESTABLISHED observe COMPILED ['EAT-R387'] ['r-lx:coverage-note(left to sibling clusters / residue)', 'r-platform:cross-family-prose'] | Three reply blocks of workflow_observe are placeholders for what docs/workbench/11 promises ('event window, ag
+   C184 ESTABLISHED observe COMPILED ['EAT-R387'] ['r-lx:coverage-note(left to sibling clusters / residue)', 'r-platform:cross-family-prose'] | workflow_compare cannot produce a comparison through the registered tool: on two runs of one saved script with
+   C185 SUPPORTED observe COMPILED ['EAT-R387'] ['r-lx:coverage-note(left to sibling clusters / residue)', 'r-platform:cross-family-prose'] | Two landed, tested read models of this family are reachable from nothing: src/workbench/latency.ts (latency de
+
+POSITIVES: compiled 35 mentioned 4 neither ['C032', 'C075', 'C155', 'C197']

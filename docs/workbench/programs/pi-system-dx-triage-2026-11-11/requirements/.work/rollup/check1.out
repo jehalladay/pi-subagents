@@ -1,0 +1,15 @@
+A. ids: 80 unique: 80 min 311 max 390
+   missing in 311..390: [] outside range: []
+   map ids == req ids: True
+    req-r-lx.md 311 .. 340 n= 30 monotone: True contiguous: True
+    req-r-ops.md 341 .. 365 n= 25 monotone: True contiguous: True
+    req-r-platform.md 366 .. 390 n= 25 monotone: True contiguous: True
+
+B. field completeness
+   types: {'BEHAVIORAL': 59, 'REPRESENTATION': 12, 'INSTRUMENTATION': 2, 'NORMATIVE_DESIGN': 3, 'NEGATIVE_REGRESSION': 4}
+   authorities: {'EMPIRICAL_REPAIR': 64, 'NORMATIVE_DECISION': 8, 'LINGUISTIC_INTEGRITY': 7, 'RISK_CONTROL': 1}
+   tiers: {'V3': 20, 'V3.': 21, 'V2.': 2, 'V1 today': 1, 'V1': 1, 'V1.': 1, 'V5': 16, 'V6': 12, 'V2': 5, 'V0': 1}
+   criteria count distribution: Counter({3: 57, 2: 19, 4: 4})
+
+C. laundering check
+   issues: 0

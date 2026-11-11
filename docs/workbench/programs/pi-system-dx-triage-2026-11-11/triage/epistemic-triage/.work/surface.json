@@ -1,0 +1,3488 @@
+{
+ "meta": {
+  "generatedAt": "2026-11-11",
+  "generator": "epistemic-triage/.work/build-surface.py (prep-surface investigator)",
+  "pin": {
+   "path": "/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/Pi/PiSubagents/scratch/pi-system-triage-1111/pin-ce180d82",
+   "headSha": "ce180d82f9385a315ff26bd8e7f9202cac19f5b3",
+   "package": "@tintinweb/pi-subagents",
+   "version": "0.20.0",
+   "engines": "node >=24",
+   "srcFiles": 124,
+   "srcByDir": {
+    "src": 35,
+    "src/ui": 11,
+    "src/workbench": 62,
+    "src/workflow": 16
+   }
+  },
+  "toolchainObserved": {
+   "node": "v24.20.0",
+   "npm": "11.19.0",
+   "hx": "0.1.0 (/home/jehallad/.local/bin/hx)",
+   "rf": "ok:true, 89 leaves, dist_version 0.1.883",
+   "forge": "0.2.1 (rev e3d480952064, built 2026-11-10)",
+   "furnace": "0.1.0 (855f8265bf43), protocol 1",
+   "bd": "/home/jehallad/.local/bin/bd",
+   "pi": "/home/jehallad/.local/bin/pi"
+  },
+  "hxEvidence": [
+   "hx --workspace $PIN children src --best-effort -> 38 results, HX-COVERAGE-INCOMPLETE warning (other:No_change_exclusion)",
+   "hx --workspace $PIN descendants src --best-effort -> regular-file census by dir: src 35, src/ui 11, src/workbench 62, src/workflow 16",
+   "hx --workspace $PIN exports <file> --best-effort over tool-replies.ts (23 bindings), settings.ts (11), every src/ui/*.ts, hosts/furnace-hosted.ts, mechanical-descriptor.ts, function-authority.ts (hx.js provider; coverage partial HX-COV-004: 'hx.js certifies its own ECMAScript and TypeScript units')",
+   "hx observer list -> hx.js 0.1.0 language-session admitted"
+  ],
+  "readOnlyDiscipline": "no writes into the pin except node/tsc caches from `npm run typecheck`; all outputs under epistemic-triage/.work and probes/prep-surface",
+  "gradingNote": "This file is a MAP (registration census, verbatim promise labels, probe entrypoints), not a findings ledger. Items marked ESTABLISHED were reproduced here with the quoted command; everything else is SUPPORTED by the cited file:line."
+ },
+ "registeredTools": {
+  "count": 16,
+  "upstreamAlways": [
+   "Agent",
+   "get_subagent_result",
+   "steer_subagent"
+  ],
+  "gatedOnWorkflowsEnabled": [
+   "SubagentWorkflow"
+  ],
+  "gatedOnWorkbenchClaudeBackend": [
+   "workbench_catalog",
+   "workflow_inspect",
+   "workflow_validate",
+   "workflow_catalog",
+   "workflow_compare",
+   "forge_gate_run",
+   "furnace_observe",
+   "workflow_detached",
+   "workflow_observe",
+   "workflow_reconcile",
+   "workflow_execute",
+   "workflow_control"
+  ],
+  "tools": [
+   {
+    "name": "Agent",
+    "registeredAt": "src/index.ts:1730 (defineTool) / :2450 pi.registerTool(withUsageReporting(agentTool))",
+    "gate": "always",
+    "schema": {
+     "required": [
+      "prompt",
+      "description",
+      "subagent_type"
+     ],
+     "optional": [
+      "name",
+      "model",
+      "thinking",
+      "max_turns",
+      "run_in_background (default true)",
+      "resume",
+      "isolated",
+      "inherit_context",
+      "isolation ('off'|'worktree'; present only when worktreeIsolation setting on — src/invocation-config.ts:53)",
+      "schedule (present only when schedulingEnabled — src/index.ts:1588-1599)"
+     ]
+    },
+    "replyDialect": "text + details:AgentDetails (status running|background|completed|steered|stopped|error|aborted|queued); custom renderCall/renderResult (src/index.ts:1799-1900); background completion arrives as <task-notification> XML (src/index.ts:205-233)",
+    "docs": "README.md:403 ### `Agent`"
+   },
+   {
+    "name": "SubagentWorkflow",
+    "registeredAt": "src/index.ts:3298 (defineTool) / :3484 `if (isWorkflowsEnabled()) pi.registerTool(workflowTool)`; collision handling src/workflow/collisions.ts + setActiveTools undo (src/index.ts:3499-3543)",
+    "gate": "settings.workflowsEnabled (src/index.ts:1343)",
+    "schema": {
+     "required": [],
+     "optional": [
+      "script (maxLength 524288)",
+      "scriptPath",
+      "name (saved workflow)",
+      "args (any JSON)",
+      "resumeFromRunId (^wf_[a-z0-9-]{6,}$)",
+      "title (ignored)",
+      "description (ignored)"
+     ]
+    },
+    "replyDialect": "text + details.taskId; renders a workflow card (src/ui/workflow-card.ts renderWorkflowCard); model-facing description built by src/workflow/tool-description.ts (toolDescriptionMode setting)",
+    "docs": "README.md:403 ### `SubagentWorkflow`; docs/workflows.md"
+   },
+   {
+    "name": "get_subagent_result",
+    "registeredAt": "src/index.ts:3634 registerToolReportingUsage(defineTool({name: SUBAGENT_TOOL_NAMES.GET_RESULT ...}))",
+    "gate": "always",
+    "schema": {
+     "required": [
+      "agent_id (id or @handle)"
+     ],
+     "optional": [
+      "wait",
+      "verbose"
+     ]
+    },
+    "replyDialect": "text (status-framed result; verbose appends the conversation)",
+    "docs": "README.md ### `get_subagent_result`"
+   },
+   {
+    "name": "steer_subagent",
+    "registeredAt": "src/index.ts:3723",
+    "gate": "always",
+    "schema": {
+     "required": [
+      "agent_id",
+      "message"
+     ]
+    },
+    "replyDialect": "text",
+    "docs": "README.md ### `steer_subagent`"
+   },
+   {
+    "name": "workbench_catalog",
+    "registeredAt": "src/index.ts:2705",
+    "gate": "registerWorkbenchTools: src/index.ts:2683 `if (workbenchToolsRegistered || sourceSettings(ctx)?.workflowAgentBackend !== \"claude\") return;` then loadWorkbenchNative() (src/index.ts:2691); a native-load failure notifies 'Workbench tools not registered: native modules failed to load (...)' and leaves the upstream surface (src/index.ts:2693-2702)",
+    "schema": {
+     "optional": [
+      "filter",
+      "limit (1..TOOL_REPLY_MAX_LIMIT)",
+      "cursor"
+     ]
+    },
+    "replyDialect": "textResult(sanitizeWorkbenchJsonText(JSON)) — one JSON text block; contractVersion field; bounded (limit/cursor/maxBytes, byte-cap marker); never isError for refusals (refusals are typed fields in the JSON) (workbench.tool-reply/v1, src/workbench/tool-replies.ts:155 buildWorkflowCatalogReply)",
+    "grants": "discover:<capabilityId> per row"
+   },
+   {
+    "name": "workflow_inspect",
+    "registeredAt": "src/index.ts:2719",
+    "gate": "registerWorkbenchTools: src/index.ts:2683 `if (workbenchToolsRegistered || sourceSettings(ctx)?.workflowAgentBackend !== \"claude\") return;` then loadWorkbenchNative() (src/index.ts:2691); a native-load failure notifies 'Workbench tools not registered: native modules failed to load (...)' and leaves the upstream surface (src/index.ts:2693-2702)",
+    "schema": {
+     "required": [
+      "target (1..200)"
+     ],
+     "optional": [
+      "view (INSPECT_VIEWS: definition|schema|operations — src/workbench/tool-replies.ts:41)"
+     ]
+    },
+    "replyDialect": "textResult(sanitizeWorkbenchJsonText(JSON)) — one JSON text block; contractVersion field; bounded (limit/cursor/maxBytes, byte-cap marker); never isError for refusals (refusals are typed fields in the JSON) (workbench.tool-reply/v1, buildWorkflowInspectReply src/workbench/tool-replies.ts:250)",
+    "grants": "inspect:<capabilityId>"
+   },
+   {
+    "name": "workflow_validate",
+    "registeredAt": "src/index.ts:2785",
+    "gate": "registerWorkbenchTools: src/index.ts:2683 `if (workbenchToolsRegistered || sourceSettings(ctx)?.workflowAgentBackend !== \"claude\") return;` then loadWorkbenchNative() (src/index.ts:2691); a native-load failure notifies 'Workbench tools not registered: native modules failed to load (...)' and leaves the upstream surface (src/index.ts:2693-2702)",
+    "schema": {
+     "optional": [
+      "name",
+      "scriptPath",
+      "sourceRef",
+      "digest (sha256:<64hex>)",
+      "mode ('static' only)",
+      "inputs (unknown)",
+      "bindings (unknown)"
+     ]
+    },
+    "replyDialect": "textResult(sanitizeWorkbenchJsonText(JSON)) — one JSON text block; contractVersion field; bounded (limit/cursor/maxBytes, byte-cap marker); never isError for refusals (refusals are typed fields in the JSON) (workbench.validate-reply/v1, src/workbench/validate-reply.ts)",
+    "grants": "workbench:design"
+   },
+   {
+    "name": "workflow_catalog",
+    "registeredAt": "src/index.ts:2823",
+    "gate": "registerWorkbenchTools: src/index.ts:2683 `if (workbenchToolsRegistered || sourceSettings(ctx)?.workflowAgentBackend !== \"claude\") return;` then loadWorkbenchNative() (src/index.ts:2691); a native-load failure notifies 'Workbench tools not registered: native modules failed to load (...)' and leaves the upstream surface (src/index.ts:2693-2702)",
+    "schema": {
+     "optional": [
+      "filter",
+      "limit (1..20)",
+      "cursor (<=2048)"
+     ]
+    },
+    "replyDialect": "textResult(sanitizeWorkbenchJsonText(JSON)) — one JSON text block; contractVersion field; bounded (limit/cursor/maxBytes, byte-cap marker); never isError for refusals (refusals are typed fields in the JSON)",
+    "grants": "workbench:design"
+   },
+   {
+    "name": "workflow_compare",
+    "registeredAt": "src/index.ts:2837",
+    "gate": "registerWorkbenchTools: src/index.ts:2683 `if (workbenchToolsRegistered || sourceSettings(ctx)?.workflowAgentBackend !== \"claude\") return;` then loadWorkbenchNative() (src/index.ts:2691); a native-load failure notifies 'Workbench tools not registered: native modules failed to load (...)' and leaves the upstream surface (src/index.ts:2693-2702)",
+    "schema": {
+     "required": [
+      "referenceTask",
+      "candidateTask"
+     ]
+    },
+    "replyDialect": "textResult(sanitizeWorkbenchJsonText(JSON)) — one JSON text block; contractVersion field; bounded (limit/cursor/maxBytes, byte-cap marker); never isError for refusals (refusals are typed fields in the JSON) (src/workbench/designer.ts)",
+    "grants": "workbench:design + workbench:observe"
+   },
+   {
+    "name": "forge_gate_run",
+    "registeredAt": "src/index.ts:2860",
+    "gate": "registerWorkbenchTools: src/index.ts:2683 `if (workbenchToolsRegistered || sourceSettings(ctx)?.workflowAgentBackend !== \"claude\") return;` then loadWorkbenchNative() (src/index.ts:2691); a native-load failure notifies 'Workbench tools not registered: native modules failed to load (...)' and leaves the upstream surface (src/index.ts:2693-2702)",
+    "schema": {
+     "required": [
+      "target (absolute package path, 1..1024)"
+     ]
+    },
+    "replyDialect": "JSON text with server-named operation id (workbench.forge-gate-run/v1); operation observed into projection by src/workbench/forge-operation-observer.ts; cancel via workflow_control control:forge.cancel",
+    "grants": "forge:run"
+   },
+   {
+    "name": "furnace_observe",
+    "registeredAt": "src/index.ts:2887",
+    "gate": "registerWorkbenchTools: src/index.ts:2683 `if (workbenchToolsRegistered || sourceSettings(ctx)?.workflowAgentBackend !== \"claude\") return;` then loadWorkbenchNative() (src/index.ts:2691); a native-load failure notifies 'Workbench tools not registered: native modules failed to load (...)' and leaves the upstream surface (src/index.ts:2693-2702)",
+    "schema": {
+     "required": [
+      "runId (1..128)"
+     ]
+    },
+    "replyDialect": "JSON text snapshot of an external Furnace Run (providers/furnace.ts furnace.run.inspect/v1 + furnace-observer.ts)",
+    "grants": "furnace:inspect"
+   },
+   {
+    "name": "workflow_detached",
+    "registeredAt": "src/index.ts:2911",
+    "gate": "registerWorkbenchTools: src/index.ts:2683 `if (workbenchToolsRegistered || sourceSettings(ctx)?.workflowAgentBackend !== \"claude\") return;` then loadWorkbenchNative() (src/index.ts:2691); a native-load failure notifies 'Workbench tools not registered: native modules failed to load (...)' and leaves the upstream surface (src/index.ts:2693-2702)",
+    "schema": {
+     "required": [
+      "action (launch|inspect)",
+      "invocationId (1..100)"
+     ],
+     "optional": [
+      "scriptPath",
+      "trustedScript",
+      "backend (deterministic|claude)"
+     ]
+    },
+    "replyDialect": "JSON text (workbench.local-detached/v1 DetachedReceipt/DetachedSnapshot, src/workbench/hosts/local-detached.ts)",
+    "grants": "local-host grants (workbench:detach family)"
+   },
+   {
+    "name": "workflow_observe",
+    "registeredAt": "src/index.ts:2932",
+    "gate": "registerWorkbenchTools: src/index.ts:2683 `if (workbenchToolsRegistered || sourceSettings(ctx)?.workflowAgentBackend !== \"claude\") return;` then loadWorkbenchNative() (src/index.ts:2691); a native-load failure notifies 'Workbench tools not registered: native modules failed to load (...)' and leaves the upstream surface (src/index.ts:2693-2702)",
+    "schema": {
+     "required": [
+      "taskId"
+     ],
+     "optional": [
+      "limit",
+      "cursor",
+      "maxBytes",
+      "selectors{tone,kind,relations,events{limit,after},identityRefusals{limit}}"
+     ]
+    },
+    "replyDialect": "textResult(sanitizeWorkbenchJsonText(JSON)) — one JSON text block; contractVersion field; bounded (limit/cursor/maxBytes, byte-cap marker); never isError for refusals (refusals are typed fields in the JSON) (workbench.observe/v1, src/workbench/observe-query.ts)",
+    "grants": "workbench:observe"
+   },
+   {
+    "name": "workflow_reconcile",
+    "registeredAt": "src/workbench/reconcile-tool.ts:62 (factory createWorkflowReconcileTool) / src/index.ts:2997",
+    "gate": "registerWorkbenchTools: src/index.ts:2683 `if (workbenchToolsRegistered || sourceSettings(ctx)?.workflowAgentBackend !== \"claude\") return;` then loadWorkbenchNative() (src/index.ts:2691); a native-load failure notifies 'Workbench tools not registered: native modules failed to load (...)' and leaves the upstream surface (src/index.ts:2693-2702)",
+    "schema": {
+     "required": [
+      "taskId (^wf_...)",
+      "action (inspect|evidence|acknowledge|override)"
+     ],
+     "optional": [
+      "position",
+      "evidence{capabilityId,input}",
+      "determination",
+      "receiptIds (rcp_<32hex>, max 8)",
+      "noEvidenceReason",
+      "resolvedValue",
+      "reason",
+      "acknowledgementId (ack_<32hex>)",
+      "confirmed",
+      "confirmPosition",
+      "confirmCapabilityId",
+      "acceptDuplicateRisk"
+     ]
+    },
+    "replyDialect": "textResult(sanitizeWorkbenchJsonText(JSON)) — one JSON text block; contractVersion field; bounded (limit/cursor/maxBytes, byte-cap marker); never isError for refusals (refusals are typed fields in the JSON) (workbench.reconcile/v1, src/workbench/reconcile-decision.ts)",
+    "grants": "workbench grants checked in reconcile-tool"
+   },
+   {
+    "name": "workflow_execute",
+    "registeredAt": "src/workbench/execute-tool.ts:176 (factory createWorkflowExecuteTool) / src/index.ts:3009",
+    "gate": "registerWorkbenchTools: src/index.ts:2683 `if (workbenchToolsRegistered || sourceSettings(ctx)?.workflowAgentBackend !== \"claude\") return;` then loadWorkbenchNative() (src/index.ts:2691); a native-load failure notifies 'Workbench tools not registered: native modules failed to load (...)' and leaves the upstream surface (src/index.ts:2693-2702)",
+    "schema": {
+     "required": [
+      "definitionRef{kind: script|function|furnace-formula, id, schemaVersion, artifactDigest}",
+      "input (unknown)",
+      "hostMode (string 1..32; embedded|detached)"
+     ],
+     "optional": [
+      "policy (unknown)"
+     ]
+    },
+    "replyDialect": "textResult(sanitizeWorkbenchJsonText(JSON)) — one JSON text block; contractVersion field; bounded (limit/cursor/maxBytes, byte-cap marker); never isError for refusals (refusals are typed fields in the JSON) (workbench.execute/v1, src/workbench/execute.ts); refusal codes incl. unsupported-definition-kind (src/workbench/execute-tool.ts:218 'only script definitions launch in this host'), missing-detach-grant (:216)",
+    "grants": "workbench:execute (+ workbench:detach for hostMode detached)"
+   },
+   {
+    "name": "workflow_control",
+    "registeredAt": "src/workbench/control-tool.ts:138 (factory createWorkflowControlTool) / src/index.ts:3063",
+    "gate": "registerWorkbenchTools: src/index.ts:2683 `if (workbenchToolsRegistered || sourceSettings(ctx)?.workflowAgentBackend !== \"claude\") return;` then loadWorkbenchNative() (src/index.ts:2691); a native-load failure notifies 'Workbench tools not registered: native modules failed to load (...)' and leaves the upstream surface (src/index.ts:2693-2702)",
+    "schema": {
+     "required": [
+      "target{provider,type,id,scope?}",
+      "action (string 1..32)"
+     ],
+     "optional": [
+      "confirmed"
+     ]
+    },
+    "replyDialect": "textResult(sanitizeWorkbenchJsonText(JSON)) — one JSON text block; contractVersion field; bounded (limit/cursor/maxBytes, byte-cap marker); never isError for refusals (refusals are typed fields in the JSON) (workbench.control-reply/v1 over workbench.control/v1 receipts: requested -> acknowledged -> result)",
+    "grants": "exact control:<provider>.<verb> + confirmed owner + operator confirmation for DESTRUCTIVE_CONTROL_ACTIONS (src/workbench/control.ts:30-39: furnace[stop], claude-agent-sdk[interrupt], forge[cancel], local-detached[cancel,shutdown])"
+   }
+  ],
+  "subagentFacing": [
+   {
+    "name": "Agent (nested)",
+    "file": "src/nested-tools.ts:162",
+    "note": "nested spawn for subagents up to maxSubagentDepth; excludes SUBAGENT_TOOL_NAMES from inheritance (src/agent-runner.ts:48)"
+   },
+   {
+    "name": "get_subagent_result (nested)",
+    "file": "src/nested-tools.ts:367"
+   },
+   {
+    "name": "steer_subagent (nested)",
+    "file": "src/nested-tools.ts:394"
+   },
+   {
+    "name": "StructuredOutput",
+    "file": "src/structured-output.ts:37/:65",
+    "note": "synthetic tool behind agent(prompt,{schema}); deliberately not in SUBAGENT_TOOL_NAMES (src/structured-output.ts:32)"
+   }
+  ],
+  "claudeSdkSideMcpTools": {
+   "names": [
+    "capability_discover",
+    "capability_contract",
+    "capability_invoke"
+   ],
+   "file": "src/workbench/claude-capability-tools.ts:12",
+   "transport": "in-process SDK McpServer handed to @anthropic-ai/claude-agent-sdk query() by src/workbench/claude-host.ts",
+   "note": "finite role exposure, NOT authorization; exact grants applied per call"
+  },
+  "beadsNotes": "the Beads ledger at pin: 1376 rows (closed 1266, open 87, in_progress 19, blocked 3, deferred 1) — .beads/issues.jsonl"
+ },
+ "compositionRoot": {
+  "file": "src/index.ts",
+  "bytes": 255586,
+  "lineMap": {
+   "textResult helper": 116,
+   "task-notification XML": "205-233",
+   "WORKFLOW_FILE_FLAG": 327,
+   "registerFlag": 525,
+   "settings getters isReportUsageEnabled..isWorkflowsEnabled": "552-1343",
+   "session_start hook": 930,
+   "input hook (@mentions)": 1011,
+   "session_before_switch": 1232,
+   "session_shutdown": 1239,
+   "tool_execution_start": 1508,
+   "scheduleParam": "1588-1599",
+   "Agent tool defineTool": 1730,
+   "Agent renderCall/renderResult": "1799-1900",
+   "registerToolReportingUsage + Agent registration": "2443-2450",
+   "claudeUserConfigDir(process.env)": 2606,
+   "registerWorkbenchTools gate + native load": "2682-2702",
+   "workbench_catalog": 2705,
+   "workflow_inspect": 2719,
+   "workflow_validate": 2785,
+   "workflow_catalog": 2823,
+   "workflow_compare": 2837,
+   "forge_gate_run": 2860,
+   "furnace_observe": 2887,
+   "workflow_detached": 2911,
+   "workflow_observe": 2932,
+   "workflow_reconcile factory": 2997,
+   "workflow_execute factory": 3009,
+   "workflow_control factory": 3063,
+   "SubagentWorkflow defineTool": 3298,
+   "SubagentWorkflow registration (workflowsEnabled)": 3484,
+   "setActiveTools undo on collision": "3499-3543",
+   "get_subagent_result": 3634,
+   "steer_subagent": 3723,
+   "showAgentsMenu": 3802,
+   "showAllAgentsList": 3870,
+   "conversation viewer wiring": "3972-3977",
+   "settings menu items": "4440-4600",
+   "/agents registerCommand": 4871,
+   "workflowMenuDeps": 4880
+  }
+ },
+ "commands": {
+  "slashCommands": [
+   {
+    "name": "/agents",
+    "registeredAt": "src/index.ts:4871 pi.registerCommand(\"agents\")",
+    "menu": [
+     "Running agents (N) — shown only when agents exist (src/index.ts:3810-3815)",
+     "Agent types (N)",
+     "Scheduled jobs (N) — only when scheduler.isActive()",
+     "Workflows (N) — only when isWorkflowsEnabled() (src/index.ts:3830-3832)",
+     "Create new agent",
+     "Settings"
+    ],
+    "settingsMenuLabels": [
+     "Max concurrency",
+     "Max foreground concurrency",
+     "Default max turns",
+     "Grace turns",
+     "Nested depth",
+     "Join mode (smart|async|group)",
+     "Background by default",
+     "Scheduling",
+     "Workflows",
+     "Fleet view",
+     "Remember agents",
+     "Agent mentions",
+     "Scope models",
+     "Strict agent files",
+     "Disable defaults",
+     "Fallback agent",
+     "Tool description",
+     "Output transcript",
+     "Worktree isolation",
+     "Report usage to session",
+     "Show cost",
+     "Show model",
+     "Viewer markdown",
+     "Widget"
+    ]
+   }
+  ],
+  "cliFlags": [
+   {
+    "flag": "--subagents-workflow-file=<path>",
+    "registeredAt": "src/index.ts:525 pi.registerFlag(WORKFLOW_FILE_FLAG) ; const at src/index.ts:327",
+    "docs": "README.md ### CLI flags"
+   }
+  ],
+  "lifecycleHooks": [
+   "pi.on(\"session_start\") src/index.ts:930",
+   "pi.on(\"input\") :1011 (@handle mentions)",
+   "pi.on(\"session_before_switch\") :1232",
+   "pi.on(\"session_shutdown\") :1239",
+   "pi.on(\"tool_execution_start\") :1508"
+  ],
+  "eventBus": {
+   "emitted": [
+    "subagents:created",
+    "subagents:started",
+    "subagents:completed",
+    "subagents:failed",
+    "subagents:steered",
+    "subagents:compacted",
+    "subagents:record",
+    "subagents:ready",
+    "subagents:scheduler_ready"
+   ],
+   "rpcChannels": [
+    "subagents:rpc:ping",
+    "subagents:rpc:spawn",
+    "subagents:rpc:stop",
+    "subagents:rpc:consume"
+   ],
+   "protocolVersion": "PROTOCOL_VERSION = 2 (src/cross-extension-rpc.ts:33)",
+   "docs": "docs/rpc.md; README.md ## Cross-Extension RPC (:749), ## Events (:725)"
+  }
+ },
+ "settings": {
+  "files": [
+   "<agentDir>/settings.json (global; agentDir = $PI_CODING_AGENT_DIR or ~/.pi/agent — src/agent-dir.ts)",
+   "<cwd>/.pi/settings.json (project) — src/settings.ts:90"
+  ],
+  "keys": {
+   "SubagentsSettings (src/settings.ts:28)": [
+    "workbench",
+    "maxConcurrent",
+    "maxConcurrentForeground",
+    "defaultMaxTurns",
+    "graceTurns",
+    "defaultJoinMode",
+    "backgroundByDefault",
+    "schedulingEnabled",
+    "scopeModels",
+    "strictAgentFiles",
+    "disableDefaultAgents",
+    "toolDescriptionMode",
+    "fleetView",
+    "agentMentions",
+    "rememberAgents",
+    "widgetMode",
+    "outputTranscript",
+    "worktreeIsolation",
+    "workflowsEnabled",
+    "maxSubagentDepth",
+    "fallbackSubagent",
+    "reportUsage",
+    "showCost",
+    "showModel",
+    "viewerMarkdown"
+   ],
+   "WorkbenchSettings (src/settings.ts:12-27; validated :390-396, unknown keys refused, 'no implicit fallback')": [
+    "workflowAgentBackend: pi|claude (required)",
+    "model",
+    "permissionMode: dontAsk|default",
+    "settingSources: user|project|local[]",
+    "tools[]",
+    "capabilityGrants[] (absent = deny all native capabilities)",
+    "reactivefiberWorkspaceRoot (absolute; wb-973.4)",
+    "roles{<name>:{prompt,tools?,capabilities?,model?,effort?}}"
+   ]
+  },
+  "grantVocabularyObservedInSrc": [
+   "workbench:observe",
+   "workbench:design",
+   "workbench:execute",
+   "workbench:detach",
+   "workbench:coordinate",
+   "forge:inspect",
+   "forge:run",
+   "furnace:inspect",
+   "hyperunix:read",
+   "reactivefiber:render",
+   "claude:transcript",
+   "claude:invoke",
+   "claude:tool:<toolName> (wb-wupg)",
+   "discover:<capabilityId>",
+   "inspect:<capabilityId>",
+   "invoke:<capabilityId>",
+   "control:<provider>.<verb> (e.g. control:forge.cancel)"
+  ],
+  "capabilityIds": [
+   "hyperunix.find (hyperunix.find/v1)",
+   "forge.gate.status (forge.gate.status/v1)",
+   "furnace.run.inspect (furnace.run.inspect/v1)",
+   "reactivefiber.render.preview (reactivefiber.render.preview/v1)"
+  ]
+ },
+ "envVars": {
+  "read": [
+   {
+    "name": "PI_CODING_AGENT_DIR",
+    "where": "src/agent-dir.ts:51 (AGENT_DIR_ENV)"
+   },
+   {
+    "name": "PI_CODING_AGENT_SESSION_DIR",
+    "where": "src/agent-runner.ts:957"
+   },
+   {
+    "name": "XDG_RUNTIME_DIR",
+    "where": "src/workbench/hosts/local-detached.ts:225 (socket base; then /run/user/<uid>, then tmpdir)"
+   },
+   {
+    "name": "CLAUDE_CONFIG_DIR",
+    "where": "src/index.ts:2606 claudeUserConfigDir(process.env,...)"
+   },
+   {
+    "name": "RF_WORKSPACE / SWARM_RF_WORKSPACE",
+    "where": "src/workbench/process-env.ts RF_CHILD_ENV_ALLOWLIST (:91) — passed through to the rf child, not read by the extension"
+   }
+  ],
+  "allowlists": {
+   "DETACHED_HOST_ENV_ALLOWLIST": "src/workbench/process-env.ts:33 (PATH HOME TMPDIR TMP TEMP LANG LC_ALL LC_CTYPE TERM TZ PWD USER LOGNAME SHELL NODE_ENV CI XDG_* HTTP(S)_PROXY NO_PROXY NODE_EXTRA_CA_CERTS SSL_CERT_FILE SSL_CERT_DIR CLAUDE_CONFIG_DIR)",
+   "RF_CHILD_ENV_ALLOWLIST": "src/workbench/process-env.ts:91 (+ RF_WORKSPACE, SWARM_RF_WORKSPACE)"
+  },
+  "note": "No PI_SUBAGENTS_* / WORKBENCH_* env knobs exist in src (grep process.env + string census, 2026-11-11); all configuration is settings.json. Detection surface: grep -rn 'process.env' src and string census of uppercase names."
+ },
+ "agentTypes": {
+  "defaults": [
+   {
+    "name": "general-purpose",
+    "file": "src/default-agents.ts:15"
+   },
+   {
+    "name": "Explore",
+    "file": "src/default-agents.ts:31"
+   },
+   {
+    "name": "Plan",
+    "file": "src/default-agents.ts:76"
+   }
+  ],
+  "customLocations": [
+   "<cwd>/.pi/agents/*.md (project, authoritative; /agents writes here) — src/custom-agents.ts:29",
+   "<cwd>/.agents/agents/*.md (shared cross-tool, read-only) — :30",
+   "$PI_CODING_AGENT_DIR/agents/*.md (global, default ~/.pi/agent/agents) — :31"
+  ],
+  "shippedInRepo": [
+   ".pi/agents/auditor.md"
+  ],
+  "claudeBackendRoles": "workbench.roles (src/settings.ts:25); Claude backend refuses agent types not configured as roles (feature-matrix W03 row 1)",
+  "skillsLocations": [
+   "<cwd>/.pi/skills",
+   "<cwd>/.agents/skills",
+   "~/.agents/skills",
+   "global pi skill dirs — src/skill-loader.ts:6-8,:52"
+  ],
+  "memory": "src/memory.ts per-agent memory directories (README ## Persistent Agent Memory :835)"
+ },
+ "tui": {
+  "inspector": {
+   "file": "src/ui/workflow-inspector.ts",
+   "views": "InspectorView = overview|graph|timeline|details (:14)",
+   "actions": "InspectorAction = close|transcript|load-evidence (:57)",
+   "reducer": "reduceInspectorKey (:252) keys: enter j k h l up down left right tab s q f e c / + - = backspace escape ctrl+c",
+   "layout": "layoutInspector (:1028), PANE_MIN_WIDTH_LEFT/THREE, PANE_MAX_WIDTH (:979-981)",
+   "evidence": "inspectorEvidenceTarget (:94)"
+  },
+  "dialog": {
+   "file": "src/ui/workflow-dialog.ts",
+   "levels": "WorkflowDialogLevel = phases|agent|node (:255)",
+   "filters": "WORKFLOW_DIALOG_FILTERS cycles all + display states (:261)",
+   "keys": "handleWorkflowDialogKey (:1090): x stop, p pause/resume, s skip, r retry, c conversation, e, f filter, j/k/up/down, left/right, enter, escape, q (README.md ## Commands key table :484+)",
+   "glyphTiers": "UNICODE_DIALOG_GLYPHS (:149) / ASCII_DIALOG_GLYPHS (:172)",
+   "copy": "WORKFLOW_DIALOG_COPY (:230): waitingForSlot, availableOnceStarted, notAvailableYet, noTranscript, stoppedEarly, skippedByUser, noToolCallsYet, noToolCalls, noAgents",
+   "spinner": "WORKFLOW_DIALOG_SPINNER_MS (:114)",
+   "plainText": "plainWorkflowDialogLines (:1189)"
+  },
+  "menu": {
+   "file": "src/ui/workflow-menu.ts",
+   "entry": "/agents -> Workflows (showWorkflowsMenu :362), fleet rows (openWorkflowFromFleet :354), showWorkflowDialog (:199); deps built once at src/index.ts:4880 workflowMenuDeps (projection, relationPage, timelineColumns, attention, evidence store)"
+  },
+  "card": {
+   "file": "src/ui/workflow-card.ts",
+   "notes": "inline transcript card; UNICODE_GLYPHS (:91) / ASCII_GLYPHS (:111); WORKFLOW_TICK_MS (:57); REPLAYED_ANNOTATION (:271); plainWorkflowCardLines (:475); safeWorkflowTerminalText (:150)"
+  },
+  "fleetList": {
+   "file": "src/ui/fleet-list.ts",
+   "notes": "FleetList (:99) below editor; setting fleetView; FleetWorkflow rows (:54)"
+  },
+  "agentWidget": {
+   "file": "src/ui/agent-widget.ts",
+   "notes": "AgentWidget (:254) above editor; widgetMode setting; formatters formatTokens/formatCost/formatTurns/formatDuration; ERROR_STATUSES (:24); SPINNER (:21)"
+  },
+  "conversationViewer": {
+   "file": "src/ui/conversation-viewer.ts",
+   "notes": "ConversationViewer (:140) live overlay; RESULT_MAX_CHARS (:35); VIEWPORT_HEIGHT_PCT (:22); steering composer on Enter; viewerMarkdown setting; keys from src/ui/viewer-keys.ts createViewerKeys (:30)"
+  },
+  "scheduleMenu": {
+   "file": "src/ui/schedule-menu.ts",
+   "notes": "showSchedulesMenu (:74) — /agents -> Scheduled jobs"
+  },
+  "agentMention": {
+   "file": "src/ui/agent-mention.ts",
+   "notes": "createMentionProvider (:117) — @handle autocomplete; grammar in src/mention.ts; clone start in src/mention-clone.ts"
+  },
+  "selectItem": "src/ui/select-item.ts",
+  "agentsMenuFlows": [
+   "showAgentsMenu src/index.ts:3802",
+   "showRunningAgents",
+   "showAllAgentsList :3870 (• project, ◦ global, ✕ disabled; Eject / Disable-Enable via src/agent-file-toggle.ts)",
+   "showCreateWizard",
+   "showSettings"
+  ],
+  "docs": "docs/workbench/10-terminal-inspector.md; README.md ## UI (:112), ## Commands (:484)"
+ },
+ "qaScripts": {
+  "dir": "qa/workbench",
+  "count": 75,
+  "forgeGate": {
+   "file": "forge.toml",
+   "gate": [
+    "lint",
+    "typing",
+    "build",
+    "test",
+    "census",
+    "workbench-shell",
+    "package-smoke"
+   ],
+   "namedCommands": [
+    "test",
+    "workbench-shell",
+    "typecheck",
+    "native-read",
+    "rf-preview",
+    "furnace-observe",
+    "furnace-hosted-retry-fault",
+    "furnace-hosted-live",
+    "furnace-vc4-live",
+    "claude-live",
+    "claude-adverse-live",
+    "package-smoke",
+    "release-checklist",
+    "install-smoke",
+    "install-minimal",
+    "e2e",
+    "designer-client",
+    "designer-unit",
+    "inspector-client",
+    "inspector-bench",
+    "tool-reply-bench",
+    "observation-recovery-bench",
+    "inspector-grouped-bench",
+    "topology-slice-grouped-bench",
+    "reducer-selector-bench",
+    "inspector-cap-saturation-bench",
+    "line-diff-bench",
+    "inspector-evidence-retained-bench",
+    "local-detached-shell",
+    "local-detached-faults",
+    "local-detached-shared-child",
+    "local-detached-unit",
+    "inspector-smoke",
+    "attention-grouped-bench",
+    "inspector-retained-memory-bench",
+    "furnace-active-observe",
+    "headless-host-census",
+    "status-ledger",
+    "timeline-grouped-bench",
+    "rf-preview-tsx",
+    "forge-control-live",
+    "furnace-control-live",
+    "detached-control-live",
+    "claude-control-live",
+    "census"
+   ],
+   "commandCount": 45
+  },
+  "vitestTierConfigs": [
+   "vitest.census.config.ts",
+   "vitest.claude-control-live.config.ts",
+   "vitest.claude-live.config.ts",
+   "vitest.detached-control-live.config.ts",
+   "vitest.forge-control-live.config.ts",
+   "vitest.furnace-active.config.ts",
+   "vitest.furnace-control-live.config.ts",
+   "vitest.furnace-hosted.config.ts",
+   "vitest.furnace.config.ts",
+   "vitest.native.config.ts",
+   "vitest.rf-tsx.config.ts",
+   "vitest.rf.config.ts",
+   "vitest.config.ts"
+  ],
+  "groups": {
+   "shell-smoke": [
+    "qa/workbench/local-detached.sh",
+    "qa/workbench/package-smoke.mjs",
+    "qa/workbench/package-smoke.sh",
+    "qa/workbench/run-native-tests.sh",
+    "qa/workbench/smoke.mjs",
+    "qa/workbench/smoke.sh"
+   ],
+   "install": [
+    "qa/workbench/install-minimal-lib.mjs",
+    "qa/workbench/install-minimal.mjs",
+    "qa/workbench/install-smoke.mjs",
+    "qa/workbench/installed-consumer.mjs",
+    "qa/workbench/installed-minimal.mjs",
+    "qa/workbench/package-boundary.mjs"
+   ],
+   "live-receipts (credentialed / native)": [
+    "qa/workbench/detached-control-live-receipt.mjs",
+    "qa/workbench/furnace-hosted-retry-fault-receipt.mjs",
+    "qa/workbench/furnace-hosted-retry-fault.mjs",
+    "qa/workbench/live-adverse-receipt.mjs",
+    "qa/workbench/live-adverse.mjs",
+    "qa/workbench/live-claude.mjs",
+    "qa/workbench/live-furnace-vc4-launch.mjs",
+    "qa/workbench/live-furnace-vc4-receipt.mjs",
+    "qa/workbench/live-furnace-vc4.mjs",
+    "qa/workbench/live-operator-receipt.mjs",
+    "qa/workbench/live-resume.mjs",
+    "qa/workbench/live-served-model-receipt.mjs",
+    "qa/workbench/live-served-model-stamp.mjs",
+    "qa/workbench/live-served-model.mjs",
+    "qa/workbench/native-forge.mjs"
+   ],
+   "detached-host": [
+    "qa/workbench/local-detached-client.mjs",
+    "qa/workbench/local-detached-faults-receipt.mjs",
+    "qa/workbench/local-detached-faults.mjs",
+    "qa/workbench/local-detached-shared-child-receipt.mjs",
+    "qa/workbench/local-detached-shared-child.mjs"
+   ],
+   "benches": [
+    "qa/workbench/attention-grouped-bench.mjs",
+    "qa/workbench/bench-revision.mjs",
+    "qa/workbench/cap-saturation.mjs",
+    "qa/workbench/grouped-fixture.mjs",
+    "qa/workbench/inspector-bench.mjs",
+    "qa/workbench/inspector-cap-saturation-bench.mjs",
+    "qa/workbench/inspector-evidence-retained-bench.mjs",
+    "qa/workbench/inspector-grouped-bench.mjs",
+    "qa/workbench/inspector-retained-memory-bench.mjs",
+    "qa/workbench/line-diff-bench.mjs",
+    "qa/workbench/mwi-multiworkflow-load-bench.mjs",
+    "qa/workbench/mwi-multiworkflow-load.mjs",
+    "qa/workbench/observation-recovery-bench.mjs",
+    "qa/workbench/reducer-selector-bench.mjs",
+    "qa/workbench/retained-memory.mjs",
+    "qa/workbench/timeline-grouped-bench.mjs",
+    "qa/workbench/timeline-grouped-core.mjs",
+    "qa/workbench/tool-reply-bench.mjs",
+    "qa/workbench/topology-slice-grouped-bench.mjs"
+   ],
+   "probes": [
+    "qa/workbench/forge-gate-status-probe.mjs",
+    "qa/workbench/forge-transport-probe.mjs",
+    "qa/workbench/hx-task-scope-judge.mjs",
+    "qa/workbench/hx-task-scope-probe.mjs"
+   ],
+   "census/ledger": [
+    "qa/workbench/boot-import-census.mjs",
+    "qa/workbench/commit-message-scan.mjs",
+    "qa/workbench/dependency-census.mjs",
+    "qa/workbench/git-stamp.mjs",
+    "qa/workbench/headless-census-child.mjs",
+    "qa/workbench/headless-census-receipt.mjs",
+    "qa/workbench/headless-host-census.mjs",
+    "qa/workbench/mwi-cost-figures.mjs",
+    "qa/workbench/mwi-release.mjs",
+    "qa/workbench/pre-push-commit-message-scan.mjs",
+    "qa/workbench/receipts-index.mjs",
+    "qa/workbench/release-checklist-receipt.mjs",
+    "qa/workbench/status-ledger.mjs",
+    "qa/workbench/tracker-export.mjs"
+   ],
+   "clients": [
+    "qa/workbench/designer-client.mjs",
+    "qa/workbench/inspector-smoke.mjs",
+    "qa/workbench/local-detached-client.mjs",
+    "qa/workbench/scratch.mjs"
+   ],
+   "receiptsJson": [
+    "qa/workbench/receipts/wb-a2g.3-operator-receipt.json",
+    "qa/workbench/receipts/wb-f3wd-hx-task-scope-probe.json",
+    "qa/workbench/receipts/wb-muip-forge-transport-probe.json"
+   ]
+  },
+  "testSuite": {
+   "testFiles": 584,
+   "censusFiles": 34,
+   "e2e": [
+    "test/e2e/isolated-provider.e2e.test.ts",
+    "test/e2e/mention-clone-tool-reachability.e2e.test.ts",
+    "test/e2e/tool-veto-reachability.e2e.test.ts",
+    "test/e2e/usage-reaches-session-stats.e2e.test.ts",
+    "test/e2e/workflow.e2e.test.ts"
+   ],
+   "perf": [
+    "test/perf/ab.mjs",
+    "test/perf/formatters.bench.ts",
+    "test/perf/no-fs-on-render.perf.test.ts",
+    "test/perf/render-invariants.perf.test.ts",
+    "test/perf/spawn-invariants.perf.test.ts",
+    "test/perf/spawn.bench.ts",
+    "test/perf/viewer.bench.ts",
+    "test/perf/widget.bench.ts"
+   ],
+   "helpersCount": 78,
+   "workbenchPrefixedTests": 467
+  },
+  "baselineAtPin": {
+   "typecheck": "ESTABLISHED: `npm run typecheck` rc=0 at ce180d82 (10.6s wall; log probes/prep-surface/typecheck.log)",
+   "node": "v24.20.0 (engines.node >=24)",
+   "npm": "11.19.0",
+   "nodeModulesPresent": true
+  }
+ },
+ "skillsAndDocs": {
+  "shipped": [
+   {
+    "path": ".agents/skills/beads/SKILL.md",
+    "lines": 184,
+    "frontmatterName": "beads",
+    "headings": [
+     "Orientation (run this first)",
+     "The core loop",
+     "What belongs in Beads",
+     "Working with the graph",
+     "Machine-readable output",
+     "Status vocabulary",
+     "Wisps and molecules",
+     "Safety",
+     "Rules",
+     "Complete command reference"
+    ]
+   },
+   {
+    "path": ".agents/skills/pi-mechanical-interop/SKILL.md",
+    "lines": 35,
+    "frontmatterName": "pi-mechanical-interop",
+    "headings": [
+     "Actual current state",
+     "Effective engineering loop",
+     "Routing"
+    ],
+    "pointsTo": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/README.md + 4 guides, AGENTS.md, feature-matrix W11"
+   },
+   {
+    "path": ".agents/skills/beads/agents/openai.yaml"
+   }
+  ],
+  "projectAgents": [
+   ".pi/agents/auditor.md"
+  ],
+  "codexConfig": [
+   ".codex/config.toml",
+   ".codex/hooks.json"
+  ],
+  "npmBundle": {
+   "packageJsonPi": {
+    "extensions": [
+     "./src/index.ts"
+    ]
+   },
+   "bundledDependencies": [
+    "@forge/sdk",
+    "@furnace/sdk",
+    "@hyperunix/sdk"
+   ],
+   "vendorTarballs": [
+    "vendor/forge-sdk-0.1.0.tgz",
+    "vendor/furnace-sdk-0.1.0.tgz",
+    "vendor/hyperunix-sdk-0.1.0.tgz"
+   ],
+   "npmignore": ".npmignore"
+  },
+  "docsDiscoverableFromInstall": [
+   "README.md (105 KB; H2: Features, Install, Quick Start, UI, Default Agent Types, Custom Agents, Tools, Commands, Graceful Max Turns, Concurrency, Join Strategies, Model Scope, Persistent Settings, Events, Cross-Extension RPC, Persistent Agent Memory, Worktree Isolation, Skill Preloading, Tool Denylist, Architecture, License)",
+   "docs/workflows.md (37 KB)",
+   "docs/rpc.md (19 KB)",
+   "docs/workbench/*.md (00-20 + README, IMPLEMENTATION_GUIDE, TRACEABILITY, feature-matrix) + 72 receipts + programs/mechanical-workflows-interop-2026-11-04/",
+   "examples/workflows/*.js (5 + lib/count-child.js), examples/agent-tool-description.md",
+   "CHANGELOG.md (197 KB)",
+   "AGENTS.md (17 KB)",
+   "CONTRIBUTING.md, SECURITY.md"
+  ]
+ },
+ "promiseSet": {
+  "featureMatrix": {
+   "file": "docs/workbench/feature-matrix.md",
+   "measurementDateLine": "This matrix implements that requirement. Measurement date: 2026-10-15. Trunk: branch `workbench/implementation-program` (HEAD at this ledger export: 1e4102f). Three features that landed on 2026-10-15 after the first measurement pass (wb-zmd at e830ac2, wb-0kg.1 at ee8bde0, wb-h8f.1 at 1e4102f) were re-measured at 1e4102f. A second same-day reconcile pass at 1b735c8 re-measured wb-6ze.9 (landed e6c",
+   "statusLegendVerbatim": [
+    "- landed-gated: the feature's code AND tests exist on trunk (branch workbench/implementation-program) and a TRACEABILITY.md section or bead close receipt names a passing gate for it.",
+    "- partial: some slices landed-gated, others open/in-progress (both halves named in the row).",
+    "- in-progress: beads in_progress but nothing landed for the feature yet.",
+    "- planned: beads open only.",
+    "- not-started: no bead and no code."
+   ],
+   "sections": [
+    {
+     "id": "W01",
+     "title": "Baseline tests, upstream snapshots, Forge packaging",
+     "line": 21,
+     "rows": [
+      {
+       "line": 25,
+       "feature": "Recorded pre-implementation baseline (fork SHA pinned; upstream suite, typecheck and lint receipts)",
+       "status": "landed-gated",
+       "evidence": "docs/workbench/TRACEABILITY.md section '## Baseline receipt': fork 38034a043e63a65ec5a81544c7a81d0e6b76ebe3, npm test 106 files / 2139 passed / 7 skipped, typecheck and lint exit 0, forge build --require-complete PASS cmd_65b034a22fb5. Bead wb-wh7 (W01) closed 2026-10-15T01:25:33Z, close_reason 'Baseline captured, complete Forge gate green after explicit npm commands'. docs/workbench/00 '## 2026-1",
+       "caveats": "TRACEABILITY states the baseline 'does not establish any Workbench behavior'. The first forge build exited 69 FORGE_TOOLCHAIN_MISSING (default pnpm shim); the gate passed only after an explicit npm-backed declaration. bd init auto-committed c0f775e against the never-commit rule (disclosed tool behavior). Fork-divergence census (W22 wb-cax.15) is in_progress: at 250c0af it measured 17 divergent pre",
+       "vcRefs": []
+      },
+      {
+       "line": 26,
+       "feature": "Golden workflow fixtures protected (Claude Code-authored scripts and shipped example workflows run unchanged)",
+       "status": "landed-gated",
+       "evidence": "test/workflow-examples.test.ts ('shipped example workflows' run to completion against a stub host; fixtures examples/workflows/compose.js, fan-out-audit.js, gated-fix.js, review-panel.js, structured-findings.js, lib/count-child.js), test/workflow-claude-code-compat.test.ts ('a Claude Code script, unchanged', 'the other Claude Code globals'), test/workflow-runtime.test.ts. TRACEABILITY rows WB-003 ",
+       "caveats": "Fixtures run only against the upstream stub host; dual-backend golden equivalence under the Claude SDK host (W22-H wb-cax.7) is in_progress with a delivery on machine/flywheel/wb-cax.7 only (unmerged; its notes pin the Claude-backend gated-fix.js refusal 'This workflow host cannot run gate commands.'), so identical behavior of unchanged scripts under the claude backend is not proven on trunk. WB-0",
+       "vcRefs": []
+      },
+      {
+       "line": 27,
+       "feature": "Forge-controlled build/test/release gate with compiled-client and package-content smoke (no GitHub CI)",
+       "status": "landed-gated",
+       "evidence": "forge.toml [build] gate = lint, typing, build, test, workbench-shell (qa/workbench/smoke.sh) and package-smoke (qa/workbench/package-smoke.sh). TRACEABILITY WB-019 status gate-pass; '## Audited candidate checkpoint' (six-step no-replay gate PASS cmd_a227a5a2114e), '## Second audited embedded/local-host checkpoint' (cmd_8b82057e039a; clean pushed checkpoint 41eb061 gate cmd_ac084bb98d2f), '## Packa",
+       "caveats": "Live tiers (claude-live, native-read, furnace-observe, furnace-active-observe, rf-preview, install-smoke, e2e) are declared in forge.toml but excluded from the default gate (vitest.config.ts exclude list), so a green default gate is never native evidence. Several complete gates ran over a dirty overlay; only 43ad58b (cmd_f8b07a961042) and 41eb061 (cmd_ac084bb98d2f) have clean-source receipts. Mini",
+       "vcRefs": []
+      }
+     ]
+    },
+    {
+     "id": "W02",
+     "title": "Claude SDK host replacing workflow spawn path",
+     "line": 29,
+     "rows": [
+      {
+       "line": 33,
+       "feature": "Workflow agent() executed by @anthropic-ai/claude-agent-sdk query() under workbench.workflowAgentBackend 'claude' (Pi AgentManager never called)",
+       "status": "landed-gated",
+       "evidence": "src/workbench/claude-host.ts (createClaudeWorkflowHost, 314 lines; SDK options built at :176-190), src/settings.ts:373-430 (explicit backend validation). test/workbench-host-contract.test.ts ('L3: unchanged script uses Claude SDK query, not Pi AgentManager; session and usage are reported'), test/workbench-pi-client.test.ts (L2 registered Pi tool launch), test/workbench-pi-streaming.test.ts (AgentM",
+       "caveats": "Bead wb-7qs is not closed and VC-1 stays experimental per docs/15 until terminal-operator and live adverse acceptance pass. Live receipts used the deployed local gateway; '## Actual Pi terminal journey' records assistant message.model openai.gpt-6.1-sol while claude-opus-5-5 was requested, so live proofs establish the real SDK runtime/session/tool interface, not Anthropic model inference. Worktree",
+       "vcRefs": [
+        "VC-1"
+       ]
+      },
+      {
+       "line": 34,
+       "feature": "Live bounded streaming observations in the Pi card and inspector (native session id, sampled assistant preview, tool started/completed/refused evidence, terminal state)",
+       "status": "landed-gated",
+       "evidence": "src/workbench/claude-transcript.ts createClaudeObserver (64 samples per call, 16 tools, bodies never retained), src/workbench/claude-host.ts onMessage/onSettled hooks. test/workbench-pi-streaming.test.ts ('W02 Pi native streaming observations': live owned stream with bounded summaries and no leaked bodies; invalid-model/permission failures; shutdown abort), test/workbench-claude-observer.test.ts (",
+       "caveats": "The terminal-journey receipt lives in /tmp/pi-live-41eb061-Smt3W6, is a one-off candidate receipt (not a test or gate) and is explicitly 'not retroactive evidence for later role-tool changes'. Per-token events are not retained by design; the transcript stays in the native SDK store. Externally observed Claude sessions have no control channel (docs/04).",
+       "vcRefs": []
+      },
+      {
+       "line": 35,
+       "feature": "Explicit backend selection with the upstream Pi workflow path and non-workflow Agent features preserved (native SDKs load only behind validated settings)",
+       "status": "landed-gated",
+       "evidence": "src/settings.ts:373-381 (workflowAgentBackend pi\\",
+       "caveats": "claude, 'no implicit fallback'), src/index.ts:2476 and :2740-2753 (Claude host built only for the claude backend), src/workbench/native-modules.ts (loadWorkbenchNative; bead wb-cax.10 closed). test/workbench-host-contract.test.ts ('Workbench backend is explicit and invalid config is rejected, not silently Pi'), test/workflow-tool.test.ts, test/workflow-claude-code-compat.test.ts, test/workbench-bo",
+       "vcRefs": []
+      },
+      {
+       "line": 36,
+       "feature": "Explicit cancellation of owned Claude sessions (operator abort/Ctrl-C, one AbortController per agent, requested vs acknowledged vs terminal kept distinct)",
+       "status": "partial",
+       "evidence": "Landed: src/workbench/claude-host.ts (controllers map :98, pre-dispatch abort re-check and per-agent controller :153-166, abortAgent :275). test/workbench-claude-cancel-faults.test.ts F1-F10 with test/helpers/claude-sdk-stream.ts (bead wb-a2g.2 closed: relay gate cmd_22521c7b7fd5, complete gate cmd_4b1582f2b68f, mutation proofs cmd_ec45803db5f5 / cmd_69f7887eb9a7 / cmd_4f2197125e42 / cmd_199497c85",
+       "caveats": "TRACEABILITY WB-010 remains experimental with an empty live column. The live adverse tier is held for a credentialed claude-live seat and has no forge.toml command. runWorkflow reports killed without waiting for child acknowledgement (recorded as a measurement, not an invariant). The ~2 s abort-to-ack interval is attributed by the owner ruling recorded in merge 3192a06 to the SDK's ProcessTranspor",
+       "vcRefs": [
+        "VC-1"
+       ]
+      },
+      {
+       "line": 37,
+       "feature": "Explicit native failure handling (invalid model, permission denial, SDK error after partial text never become success; no silent fallback to the Pi path)",
+       "status": "partial",
+       "evidence": "Landed: src/workbench/claude-host.ts (:131 inaccessible cwd, :146-147 unavailable role, :150-151 unsupported model, :227 error-subtype result, :229 success without session id, :235-239 structured_output missing or mismatched, :257 redacted stream failure). test/workbench-host-contract.test.ts ('error result after partial assistant never becomes success', 'missing result after stream exhaustion fai",
+       "caveats": "wb-a2g.9's gap analysis at 4ca6bd5 had measured zero trunk tests for inaccessible cwd, missing/mismatched structured_output, success without session id, absent modelUsage, non-abort throw redaction and unknown message discriminants; the N1-N8 tier landed at b4ca4aa is that offline negative matrix (per-case coverage was not re-measured for this matrix). Absent-credentials degradation belongs to wb-",
+       "vcRefs": []
+      },
+      {
+       "line": 38,
+       "feature": "Operator terminal-journey acceptance for VC-1 (live card during execution, Ctrl-C cancellation, structured output inspected in a real Pi TUI)",
+       "status": "planned",
+       "evidence": "Bead wb-a2g.3 open (pty-driven receipt qa/workbench/live-operator-receipt.mjs plus assessor test/workbench-operator-receipt.test.ts, neither on trunk; dispatch HELD for a credentialed claude-live seat); wb-a2g.4 closed as duplicate with no work. TRACEABILITY '## Actual Pi terminal journey' records one manual tmux run (Pi v1.2.0, run wf_a9f7f6808d55 at candidate 41eb061, captures in /tmp/pi-live-41",
+       "caveats": "The manual tmux journey is not reproducible from the repo (no script, no gate, receipts outside the tree), exercised neither cancellation nor an active-run view close, and the outer Pi model request returned unauthorized credentials, so model-directed Pi orchestration was not proven. A standard machine seat can only produce an exit-2 unavailability receipt, which is not the acceptance this bead ex",
+       "vcRefs": [
+        "VC-1"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "W03",
+     "title": "Role/tool/model config and permissions",
+     "line": 40,
+     "rows": [
+      {
+       "line": 44,
+       "feature": "Claude-native role configuration (workbench.roles) with precedence request > role > defaults, model/effort validation, and refusal of unconfigured agent types (never Pi's agent registry)",
+       "status": "landed-gated",
+       "evidence": "src/workbench/claude-host.ts:140-151 and :167-169, :187 (role prompt/tools/capabilities/model/effort; request model wins; unavailable role refused), src/settings.ts:403-420 (roles schema: prompt required; optional tools, capabilities up to 32, model, effort). test/workbench-host-contract.test.ts ('inherited prototype names never satisfy a role allowlist', 'forwards provider-native model identifier",
+       "caveats": "The W03 bead wb-f5y is still open and was never claimed; the work landed under W02 (wb-7qs) and wb-2sz, so the ledger lags the tree. Only fixture SDK queries exercise role resolution; no live role run is recorded. Model alias validation is a pass-through to the SDK (no local alias table), deliberately per the 'restrictive local regex' test.",
+       "vcRefs": []
+      },
+      {
+       "line": 45,
+       "feature": "Curated per-role provider tools (capability_discover / capability_contract / capability_invoke) over the SDK in-process MCP server with independent exact grants",
+       "status": "landed-gated",
+       "evidence": "src/workbench/claude-capability-tools.ts (createCuratedTools, CLAUDE_CAPABILITY_TOOL_NAMES), src/workbench/claude-host.ts:170-183 (mcpServers.workbench plus allowedTools mcp__workbench__*). test/workbench-claude-capability-tools.test.ts (20 real MCP client roundtrip cases: role membership AND exact invoke grant AND producer permission; discovery, contract and inspect independently granted; contrac",
+       "caveats": "Fixture providers only: 'live-model curated invocation remains open' (commit f55e448 body and TRACEABILITY). TRACEABILITY table row WB-034 still reads planned despite the landed section. Measured asymmetry: capability_invoke always requires invoke:<id> while the registry requires it only for permission-free descriptors; the cross-surface parity falsifier wb-6hb.4 is in_progress on a machine branch",
+       "vcRefs": []
+      },
+      {
+       "line": 46,
+       "feature": "Least-privilege Claude session defaults (permissionMode dontAsk, permissionPrompts none, empty tool allowlist unless configured; settingSources and tools validated)",
+       "status": "partial",
+       "evidence": "Landed: src/workbench/claude-host.ts:101-103 and :179-182 (defaults and option wiring), src/settings.ts:388-396 (permissionMode dontAsk\\",
+       "caveats": "default, settingSources user/project/local, tools array). test/workbench-host-contract.test.ts ('explicit Claude role supplies prompt/tools/model with request model taking precedence', 'Workbench backend is explicit and invalid config is rejected'), test/workbench-claude-role-tools.test.ts ('adds only curated role MCP tools to actual SDK options without provider auto-grants'), test/workbench-pi-st",
+       "vcRefs": []
+      }
+     ]
+    },
+    {
+     "id": "W04",
+     "title": "Structured output, usage, transcript, resume",
+     "line": 48,
+     "rows": [
+      {
+       "line": 52,
+       "feature": "Schema-constrained agent results via SDK outputFormat json_schema plus host-side schema check (object values returned to the script)",
+       "status": "landed-gated",
+       "evidence": "src/workbench/claude-host.ts:188 (outputFormat), :235-240 (missing structured_output or schema mismatch refused; value serialized). test/workbench-host-contract.test.ts ('L3: parallel schema agents return object values from native SDK structured_output'), test/workbench-pi-streaming.test.ts ('returns parallel structured values under distinct native session identities through registered Pi tool'). ",
+       "caveats": "Negative paths (structured_output undefined with a declared schema; schema.check failure) had no trunk test per wb-a2g.9's gap analysis at 4ca6bd5; wb-a2g.9's offline adverse-faults tier landed late on 2026-10-15 (test/workbench-claude-adverse-faults.test.ts at merge b4ca4aa), and per-case coverage of these negatives was not re-measured for this matrix. Live schema proofs were served by the deploy",
+       "vcRefs": []
+      },
+      {
+       "line": 53,
+       "feature": "Token usage reported only as the SDK reports it (per-turn delta on resume; no invented zeros)",
+       "status": "landed-gated",
+       "evidence": "src/workbench/claude-host.ts:83-93 usage() over result.modelUsage and :217 cumulative handling. test/workbench-host-contract.test.ts ('L3: unchanged script uses Claude SDK query ... session and usage are reported', 'cumulative SDK usage on resume counts only the new turn'). TRACEABILITY WB-009 live-sdk ('Real SDK events; session UUIDs'); docs/13 rule 'If the installed SDK lacks a field, omit it; n",
+       "caveats": "wb-a2g.9's gap analysis recorded that no trunk test asserted tokens stay absent when modelUsage is missing (test/workbench-pi-client.test.ts supplies modelUsage:{} but asserts nothing about tokens); its adverse-faults tier landed late on 2026-10-15 at merge b4ca4aa (per-case coverage not re-measured here). Usage is not surfaced beyond the agent row; the operations telemetry report (wb-cax.13) is i",
+       "vcRefs": []
+      },
+      {
+       "line": 54,
+       "feature": "Native Claude session resume for agent({resume}) with explicit refusal of unknown, lost or mismatched sessions (never fresh-context masquerading as resume)",
+       "status": "landed-gated",
+       "evidence": "src/workbench/claude-host.ts:279-293 (getSessionInfo precheck, refusal on missing or mismatched session, pending-lookup abort), :189 (resume option), :231 (session-id mismatch refused). test/workbench-host-contract.test.ts ('SDK resume returning a different session ID refuses fresh-context continuation', 'cumulative SDK usage on resume counts only the new turn', 'resumed role preserves the same sy",
+       "caveats": "The live resume probe is a manual script (no forge.toml tier, no cmd_ receipt) and resumes within one process; resuming a workflow script after process loss is W12/W18, not this feature. Bead wb-dc0 remains open ('Still need Pi TUI session viewer and privacy proof').",
+       "vcRefs": []
+      },
+      {
+       "line": 55,
+       "feature": "Claude transcript viewer in the Pi inspector (bounded readClaudeTranscript rows) gated by the exact claude:transcript capability grant",
+       "status": "partial",
+       "evidence": "Landed: src/workbench/claude-transcript.ts readClaudeTranscript (text parts only, 500-char rows, limit clamped to [1,100]), src/index.ts:4449-4455 (grant check and read). test/workbench-security-pi-tools.test.ts 'claude:transcript grant on the inspector transcript path' ('refuses the transcript read with a typed permission message when the grant is absent', 'reads and renders the transcript unchan",
+       "caveats": "TRACEABILITY table row WB-031 still reads planned with no evidence although the viewer path is tested. The adapter has no test that tool_use inputs, tool_result bodies or thinking are excluded (the privacy proof wb-dc0 names as its residual). Transcript access reads the SDK's local session store only.",
+       "vcRefs": []
+      }
+     ]
+    },
+    {
+     "id": "W05",
+     "title": "node() language/RPC and error semantics",
+     "line": 57,
+     "rows": [
+      {
+       "line": 61,
+       "feature": "node(capabilityId, input, {label, phase}) script global dispatched over the worker RPC to the host capability registry (JSON-only boundary; no LLM call)",
+       "status": "landed-gated",
+       "evidence": "src/workflow/worker-source.ts:400 (scope.node realm bridge) and :597-635 (nodeIn: option allowlist label/phase, JSON validation, typed validation diagnostic), src/workflow/runtime.ts:1264-1285 (handleNode: payload validation, host.callNode, cap), runtime.ts:270-277 (WorkflowHost.callNode / describeNodeEffect), src/workbench/claude-host.ts:296-303 (callNode to registry.invoke with host-bound grants",
+       "caveats": "Bead wb-mwz is not closed ('Native evidence mapping in progress; no full WP closure'). Node options are limited to label and phase; docs/05's proposed deadlineMs, logicalKey and resultProjection are not implemented (deadlines are host policy). Only read-only capabilities are registered in production: docs/00 'Do not claim effectful node safety beyond the current read-only registered capability'.",
+       "vcRefs": [
+        "VC-2"
+       ]
+      },
+      {
+       "line": 62,
+       "feature": "Typed CapabilityError taxonomy preserved across the worker RPC (validation / authorization / unavailable / transport / uncertain-effect; fatal denials survive parallel())",
+       "status": "landed-gated",
+       "evidence": "src/workbench/capability-registry.ts:39-57 (CapabilityErrorCategory, CapabilityError), src/workflow/worker-source.ts:121 and :178 (realm CapabilityError reconstruction), src/workflow/runtime.ts:1272-1281 (typed RPC diagnostics). test/workbench-registry-auth.test.ts ('preserves category and instanceof CapabilityError in a real worker RPC', 'reports typed terminal diagnostics and local validation is",
+       "caveats": "docs/05's eight-way taxonomy is collapsed to five categories: producer domain failure is a returned JSON value rather than an error, cancelled waits report as transport, and stale is an observation-freshness label, not an error category. node:vm is explicitly not a hostile-script security boundary (docs/05, docs/12).",
+       "vcRefs": []
+      },
+      {
+       "line": 63,
+       "feature": "node() results never served from the settled-agent journal; a node ends downstream agent replay (W12 refinement: journaled reads replay stale under a vouching host basis, non-read effects stop the resume)",
+       "status": "landed-gated",
+       "evidence": "test/workbench-node-contract.test.ts ('node calls are never served from the settled-agent journal', 'a node between identical agents invalidates downstream journal replay'), test/workflow-effect-replay.test.ts (suites 'node journal entries', 'read effect replay', 'non-read effects on resume', 'Claude host effect policy', 'node read replay is scoped by the recording host's basis'), src/workflow/run",
+       "caveats": "Standing defect wb-tu1 (in_progress, nothing landed): a resume runs live a journaled node whose effectClass is absent instead of stopping as uncertain (fail-open); the fix and the wb-cax.3 classifier mirror update are pending. Replay/reconcile is journal-backed host behavior; no registered provider performs native logical-identity reconciliation. This slice is owned by W12; W05 inherits its guaran",
+       "vcRefs": []
+      },
+      {
+       "line": 64,
+       "feature": "Node operations projected as their own rows in the Pi inline card and inspector (never counted as agents; capability, label, partial domain result, native identity, freshness and evidence)",
+       "status": "landed-gated",
+       "evidence": "src/workflow/progress.ts (node progress entries), src/ui/workflow-card.ts, src/ui/workflow-dialog.ts. test/workbench-ui-contract.test.ts ('does not count an SDK node as an agent', 'shows capability, label and partial domain result on the compact card', 'shows the native operation in keyboard-navigable inspector with source basis'), test/workbench-native-details.test.ts ('WB-017 native inspector': ",
+       "caveats": "WB-017 remains experimental; the full four-view and scale inspector is W15 (VC-5) and open. Replayed node rows gained cached/stale annotations only with W12 part A (wb-g8f).",
+       "vcRefs": [
+        "VC-5"
+       ]
+      },
+      {
+       "line": 65,
+       "feature": "Node call quotas at the runtime boundary (per-workflow cap of 1000 node calls, oversized input refused before any provider call, bounded concurrent invocations)",
+       "status": "landed-gated",
+       "evidence": "src/workflow/runtime.ts:704 (nodeCap = 1000) and :1280-1281 (typed validation refusal), src/workbench/capability-registry.ts:58-62 (CAPABILITY_MAX_BYTES 256 KiB, CAPABILITY_MAX_DEPTH 64, CAPABILITY_DEADLINE_MS 30000, CAPABILITY_MAX_IN_FLIGHT 32). test/workbench-node-limits.test.ts ('refuses oversized input before native provider is called', 'does not allow unbounded concurrent node invocations'), ",
+       "caveats": "docs/05 asks for agent slots and SDK node slots to be counted separately and warns against CPU-count caps for remote calls; what landed is a total-count cap plus one registry-wide in-flight constant (see W06), with no per-capability table and no backpressure measurement. Whether any existing suite queues at 32 is UNDETERMINED.",
+       "vcRefs": []
+      }
+     ]
+    },
+    {
+     "id": "W06",
+     "title": "Provider registry and permissions",
+     "line": 67,
+     "rows": [
+      {
+       "line": 71,
+       "feature": "Host-side CapabilityRegistry with validated descriptors (recursive JSON-schema keyword validation, collision refusal, strict own-descriptor cloning, bounded redacted provider diagnostics)",
+       "status": "landed-gated",
+       "evidence": "src/workbench/capability-registry.ts (register :226, discover :259, invoke :286, inspect :290, validatedCapabilityJson :153). test/workbench-registry-schema.test.ts ('rejects malformed or unsupported schema ... without provider effects', 'rejects malformed output contract before provider execution', 'provider diagnostic redaction', 'strict JSON snapshot serialization'), test/workbench-node-contrac",
+       "caveats": "Bead wb-4ax is not closed and its notes record only focused reds/greens (/tmp JSON) rather than a WP gate; coverage comes from the whole-tree gates. Provider hot-change protection for a running pinned execution (docs/06 conformance item 5) is pinned via immutable invocation receipts (identity/W14), not a registry-level test. Contract-literal single-carrier census (wb-cax.8) is in_progress.",
+       "vcRefs": []
+      },
+      {
+       "line": 72,
+       "feature": "Independent exact-grant authorization for discover / inspect / invoke (every producer permission plus invoke:<id> for permission-free descriptors; crafted unauthorized or impersonating RPC denied; operator-authority prefixes reserved)",
+       "status": "landed-gated",
+       "evidence": "src/workbench/capability-registry.ts dispatch decisions (:286-347) and reserved prefixes discover/inspect/observe/control/reconcile at register. test/workbench-registry-auth.test.ts ('W06 capability boundary': 'invocation permission alone never exposes catalog metadata', 'discovery alone exposes detached metadata but cannot invoke or inspect', 'permission-free providers still require an explicit i",
+       "caveats": "docs/06: host principal/workspace are 'audit metadata until the entrypoint's scope checks and deployment identity supply actual authority' and the policy 'is not a complete cross-tenant or expired-token authorization service'. Cross-surface parity (script node(), detached host, curated capability_invoke) is only being pinned now (wb-6hb.4 in_progress, machine branch). Expired control-credential de",
+       "vcRefs": []
+      },
+      {
+       "line": 73,
+       "feature": "Explicit finite workbench.capabilityGrants configuration (namespace:permission identifiers, or one exact Claude tool right spelled claude:tool: and the tool's name (wb-wupg), no wildcards; selecting the Claude backend manufactures no grants; unknown data denies)",
+       "status": "landed-gated",
+       "evidence": "src/settings.ts:413-416 (grammar, at most 64 entries) and :446 (deduplicated), src/index.ts (grants(ctx) at :2508-2510 reads them from settings for every registered tool). test/workbench-grants-settings.test.ts ('retains the operator's finite grant list', 'does not manufacture grants when only the Claude executor is selected', it.each malformed grants refused, 'refuses an unbounded non-list grant'",
+       "caveats": "Grants are one flat process-wide list in settings; there is no per-role or per-workflow grant scoping beyond the role capabilities exposure list, and no runtime revocation surface other than editing settings (mid-view revocation is honored by the W15 evidence loaders).",
+       "vcRefs": []
+      },
+      {
+       "line": 74,
+       "feature": "Execution limits and effect honesty: JSON depth/byte caps, wait deadline, no generic auto-retry, uncertain-effect on lost answers or cancellation of effectful calls",
+       "status": "landed-gated",
+       "evidence": "src/workbench/capability-registry.ts:58-60 constants and invoke/inspect dispatch. test/workbench-registry-auth.test.ts ('rejects oversized nesting and pollution before executing providers', 'bounds an unresponsive read/external provider without retry', 'classifies effectful cancellation as uncertain and aborts only the provider wait', 'validates before invoking with an already cancelled wait, not ",
+       "caveats": "Uncertainty is recorded, not resolved: the only reconciliation is the W12 operator acknowledge/override journey, and no registered provider implements native logical-identity reconciliation. Limits are fixture-tested; no live provider timeout is measured.",
+       "vcRefs": []
+      },
+      {
+       "line": 75,
+       "feature": "Bounded in-flight admission in CapabilityRegistry (registry-wide maxInFlight = 32, FIFO wait bounded by the existing deadline and caller signal, typed unavailable refusal distinct from the transport deadline, counts-only telemetry snapshot)",
+       "status": "landed-gated",
+       "evidence": "src/workbench/capability-registry.ts:62 CAPABILITY_MAX_IN_FLIGHT, :68 CapabilityLimits.maxInFlight, :282 admission(), :337 admission-exhausted refusal. test/workbench-registry-admission.test.ts (A1-A8 plus 'admission refusal through the worker RPC'). Bead wb-cax.18 (W22-M/W06) closed 2026-10-15T11:40:51Z, close_reason: landed at merge 10a078c, owner isolated gate status=success cmd_d81196497350, m",
+       "caveats": "No TRACEABILITY section names this increment yet; the receipt lives in the bead close reason and commit 10a078c. The default of 32 is an owner ruling and 'no existing suite queues' was left UNDETERMINED. Inspect and invoke share one bound with no per-capability table. The telemetry consumer (wb-cax.13 operations report) is in_progress, so the counters are not surfaced to the operator.",
+       "vcRefs": []
+      }
+     ]
+    },
+    {
+     "id": "W07",
+     "title": "HyperUnix provider",
+     "line": 77,
+     "rows": [
+      {
+       "line": 81,
+       "feature": "node() typed HX query capability (hyperunix.find/v1) with coverage classification and binary custody",
+       "status": "landed-gated",
+       "evidence": "src/workbench/providers/hyperunix.ts registers hyperunix.find v1 (effectClass read, contractSource @hyperunix/sdk@0.1.0). Tests: test/workbench-ecosystem-native.test.ts, test/workbench-native-ecosystem.test.ts, test/workbench-provider-lifecycle.test.ts, test/workbench-node-limits.test.ts. TRACEABILITY section 'Native ecosystem receipts at 2026-10-15': provider custody red cmd_0509b89efbc7 / green ",
+       "caveats": "W-package bead wb-lri stays open: 'Full source basis/observer acceptance remains open' (W07 acceptance = real query coverage AND source basis). Live-binary tests are excluded from the portable default Forge gate (TRACEABILITY 'Open gaps'), so native receipts are separate tiers, not the default gate.",
+       "vcRefs": []
+      },
+      {
+       "line": 82,
+       "feature": "HyperUnix reader adapter projecting NativeSnapshots from measured hyperunix.find/v1 output (partial/unlicensed never success)",
+       "status": "landed-gated",
+       "evidence": "src/workbench/hyperunix-observer.ts; test/workbench-hyperunix-observer.test.ts. Closed bead wb-6ze.7 (titled W13-D/VC-5) close receipt: merge 4ca6bd5 on workbench/implementation-program; isolated merged-tree gate forge build --require-complete --no-replay PASS cmd_77aa3c690f72; worker gate cmd_ce41c5c18705 (162 files, 2887 passed).",
+       "caveats": "Ledgered as W13-D (adapter area), included here as the HX-facing observation surface - dedupe against the W13 mapper. Tool wiring excluded from that bead; runtime-licensed complete coverage is the only absence proof.",
+       "vcRefs": [
+        "VC-5"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "W08",
+     "title": "Forge provider",
+     "line": 84,
+     "rows": [
+      {
+       "line": 88,
+       "feature": "node() Forge gate-status read capability (forge.gate.status/v1) preserving verdict axes, source basis and authoritative_current",
+       "status": "landed-gated",
+       "evidence": "src/workbench/providers/forge.ts registers forge.gate.status v1. Tests: test/workbench-forge-contract.test.ts, test/workbench-forge-validation.test.ts, test/workbench-native-client.test.ts, test/workbench-provider-envelope-audit.test.ts; live probe qa/workbench/native-forge.mjs. TRACEABILITY 'Open gaps': native tier 'forge run native-read' cmd_3f893144b661 reached the real app-server; rows WB-013/",
+       "caveats": "Bead wb-5uh open: 'Remaining immutable source digest and current verification proof; W08 remains open.' Portable default gate excludes live-binary tests; historical reads carry authoritative_current=false (never current verification); transport success never equals PASS.",
+       "vcRefs": []
+      },
+      {
+       "line": 89,
+       "feature": "Forge gate-status reader adapter (NativeSnapshots + grouping edges; historical last_result stays unknown/partial, failed gate stays failed)",
+       "status": "landed-gated",
+       "evidence": "src/workbench/forge-observer.ts; test/workbench-forge-observer.test.ts. Closed bead wb-6hb.2 (titled W13/VC-2) close receipt: relay gate PASS cmd_e486eef99aac with 15/15 mutation sweep; owner independent isolated-worktree complete gate PASS (receipt file /tmp/pi-land-6hb2-gate.json, machine-local).",
+       "caveats": "Ledgered as W13/VC-2 - dedupe against the W13 mapper. Tool wiring excluded from that bead; owner gate receipt path is machine-local and was not re-verified here.",
+       "vcRefs": [
+        "VC-2"
+       ]
+      },
+      {
+       "line": 90,
+       "feature": "Forge operation evidence reader for inspector details (re-read through registered forge.gate.status under live grants; failed/partial never 'verified')",
+       "status": "landed-gated",
+       "evidence": "src/workbench/forge-evidence.ts; test/workbench-forge-evidence.test.ts. Closed bead wb-6ze.11 (titled W15-E/VC-5) landed at commit b44f1ce (verified present): owner isolated gate cmd_8c4b0a452392; machine gates cmd_4dfd790172dc, cmd_34371ac5f449. Duplicate bead wb-6ze.14 closed-withdrawn in its favor.",
+       "caveats": "Ledgered as W15-E (inspector evidence row) - dedupe against the W15 mapper. Disclosed riders: split-keyword redaction gap rides wb-952 (in_progress); raw bidi characters and two loose assertions ride wb-era (in_progress).",
+       "vcRefs": [
+        "VC-5"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "W09",
+     "title": "Furnace invoke/inspect/observe provider",
+     "line": 92,
+     "rows": [
+      {
+       "line": 96,
+       "feature": "Read-only attach/inspect of externally started Furnace Runs (furnace.run.inspect/v1); observer close never stops the Run",
+       "status": "landed-gated",
+       "evidence": "src/workbench/providers/furnace.ts (furnace.run.inspect v1, effectClass read) and src/workbench/furnace-observer.ts. Tests: test/workbench-furnace-observer.test.ts, test/workbench-external-furnace.test.ts, test/workbench-pi-furnace-observer.test.ts, test/workbench-pi-furnace-real-client.test.ts, test/workbench-furnace-real-active.test.ts. TRACEABILITY 'External active Furnace and Pi reader receipt",
+       "caveats": "Native lifecycle cursor unavailable in the installed SDK - bounded polling only; status/attempt/log snapshots sequential and non-atomic. W19 hardening added foreign-workspace Run refusal (red cmd_91349509691f, green cmd_80373ba3643b). This is read-only acceptance, not full W09.",
+       "vcRefs": []
+      },
+      {
+       "line": 97,
+       "feature": "Furnace Run->Attempt observed topology (native-confirmed ownership edges + source intervals) feeding the inspector",
+       "status": "landed-gated",
+       "evidence": "projectionTopology in src/workbench/furnace-observer.ts; test/workbench-furnace-topology.test.ts. Closed bead wb-752.1 (VC-4/W13) landed at commit e797a84 (verified present): relay gate PASS cmd_e8d3b26b8ffc; independent merged-tree complete gate PASS (151 files, 2520 passed; receipt /tmp/pi-land-752-gate2.json, machine-local).",
+       "caveats": "Ledgered VC-4/W13 - dedupe with those mappers. Intervals withheld unless provable; no invented Work nodes or causation edges. Full VC-4 live acceptance receipt still open (wb-752.3 in_progress); VC-4 epic wb-752 open.",
+       "vcRefs": [
+        "VC-4"
+       ]
+      },
+      {
+       "line": 98,
+       "feature": "Bounded Furnace Attempt-log evidence reader (run/attempt/stream identity checks, foreign-run unauthorized, truncation-honest)",
+       "status": "landed-gated",
+       "evidence": "src/workbench/furnace-evidence.ts; test/workbench-furnace-evidence.test.ts. Closed bead wb-6ze.8 (W15-E/VC-5) landed merge 7ccbb36: isolated merged-tree gate cmd_06581a164d43; machine complete gate cmd_299b86893f65; worker gate cmd_d882a870b5d0; 66/66 targeted mutants killed (carried claim, disclosed).",
+       "caveats": "Ledgered W15-E - dedupe with the W15 mapper. Open defect wb-8zn (in_progress): the content.bytes field actually reports the producer's returned LINE count; the lineCount rename exists only on machine branch commit 216e7f5, not on trunk.",
+       "vcRefs": [
+        "VC-5"
+       ]
+      },
+      {
+       "line": 99,
+       "feature": "Furnace invocation (run start with uncertain-effect on ambiguous timeout) and native control actions (pause/stop/resume/retry)",
+       "status": "partial",
+       "evidence": "Landed-gated half: native control actions run pause / run stop / run resume / attempt stop via the Furnace control adapter src/workbench/furnace-control.ts + test/workbench-furnace-control.test.ts, landed on trunk at merge cd5aab7 (bead wb-69g.3 closed 2026-10-15T11:54:45Z; owner isolated gate cmd_2f581221d224, machine complete gate cmd_bc14baf38541; per-verb argv citations against the vendored @f",
+       "caveats": "No invoke/start surface landed, so the bead's ambiguous-start-timeout -> uncertain-effect + reconcile-hint semantics are unexercised. Pi registration and live-Furnace execution are excluded from the landed adapter slice, so operators cannot issue these control actions through workbench tools yet. TRACEABILITY 'W17...Furnace executor verdict' section verified park-not-retry semantics read-only agai",
+       "vcRefs": []
+      }
+     ]
+    },
+    {
+     "id": "W10",
+     "title": "ReactiveFiber provider/interop",
+     "line": 101,
+     "rows": [
+      {
+       "line": 105,
+       "feature": "node() RF noncommitted context preview capability (reactivefiber.render.preview/v1; input {model, task} or {view, taskId, model?}, never both) with graph provenance; no authoritative or journal write, disposable cache-plane writes possible per the pinned producer trace",
+       "status": "landed-gated",
+       "evidence": "src/workbench/providers/reactivefiber.ts (reactivefiber.render.preview v1; contractSource from the single carrier REACTIVE_FIBER_CONTRACT_SOURCE = rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit, re-pinned 2026-10-26 from receipts/wb-jwc.4.md; the earlier rf@0.1.583 literal is retired). Tests: test/workbench-native-rf-preview.test.ts, test/workbench-provider-envelope-audit.test.ts, tes",
+       "caveats": "Bead wb-x32 open: 'Full interop contract remains open.' Preview deliberately yields null render/transaction IDs (no durable render); W10 acceptance is 'real render or honest blocker' - the landed slice is the noncommitted preview via the CLI envelope, not a committed render or production TS SDK interop.",
+       "vcRefs": []
+      },
+      {
+       "line": 106,
+       "feature": "ReactiveFiber reader adapter projecting NativeSnapshots from reactivefiber.render.preview/v1 envelopes into the observation projection",
+       "status": "landed-gated",
+       "evidence": "Bead wb-6ze.9 (W13-E/VC-5) closed 2026-10-15: landed at merge e6c22a2 (machine/flywheel/wb-6ze.9 c5bc991 onto 10a67e7); owner isolated gate cmd_90e6d16e89a4, machine complete gate cmd_2969c04433db. On trunk: src/workbench/reactivefiber-observer.ts, test/workbench-reactivefiber-observer.test.ts.",
+       "caveats": "Bound reading at landing (batch-8 reading A): the adapter itself issues no rf verb ever; it projects only the envelope the registered reactivefiber.render.preview provider already returned, the preview is the --no-commit form so observation never mints render history, and provider execution stays on the invoke plane under its own grants. Five raw bidi points in the test fold into wb-era set v3.",
+       "vcRefs": [
+        "VC-5"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "W11",
+     "title": "MechanicalWorkflows binding host",
+     "line": 108,
+     "rows": [
+      {
+       "line": 112,
+       "feature": "Hosted develop() with real scope-limited service bindings (HX->RF->Claude SDK->Forge composition; four domain outcome variants preserved)",
+       "status": "planned",
+       "evidence": "Beads wb-04s (W11) status=blocked and wb-w12 (VC-3 epic) status=blocked; no other W11 beads at the 2026-10-15 export. No binding host exists (re-measured 2026-11-06 at trunk 814dcdd by wb-j5y5, EAT-R082): no module under src/workbench/hosts/ names MechanicalWorkflows, and test/workbench-mwi-release.test.ts holds this statement to that directory. The src/ files that match the word mechanical at tha",
+       "caveats": "Bead status is 'blocked' (status vocabulary lacks it; 'planned' chosen as the weaker fit - beads only, no code, nothing in progress). Blocked on task-scoped pinned native HX discovery and live service bindings; entrypoint remains descriptor-only; the separate rig's Git tracked-file census is not HX pinned complete task scope; mutable dist exports must not be treated as the packed release; fixture ",
+       "vcRefs": [
+        "VC-3"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "W12",
+     "title": "Workflow task/journal split and side-effect policy",
+     "line": 114,
+     "rows": [
+      {
+       "line": 118,
+       "feature": "No-blind-replay core: journaled non-read effects refuse resume with typed uncertain-effect; reads replay only under matching basis/class/key marked stale; settled-agent prefix replay under explicit replayBasis",
+       "status": "landed-gated",
+       "evidence": "src/workflow/journal.ts, src/workflow/runtime.ts, src/workbench/claude-host.ts. Tests: test/workflow-effect-replay.test.ts, test/workflow-journal.test.ts. TRACEABILITY section 'W12 side-effect replay policy': red 14/18 then green 18/18, 164 focused + 404 adjacent tests, lint bbfed12c8323, typing c4d853663cd2 (step receipts only; the section names no complete-gate cmd id, and the feature commit ad3",
+       "caveats": "wb-5x0 held in_progress only by open dependency edges wb-mwz (W05) / wb-7qs (W02), not by missing W12 work. Known fail-open defect in this policy is wb-tu1 (separate row). Migration classifier for old journals landed separately as wb-cax.3 (closed, src/workflow/journal-compat.ts, gate cmd_72d7b16237cb) under W22.",
+       "vcRefs": []
+      },
+      {
+       "line": 119,
+       "feature": "Operator reconcile journey (acknowledge/override of journaled effects via workflow_reconcile) plus replayed/reconciled node provenance across header, card, dialog and notifications",
+       "status": "landed-gated",
+       "evidence": "Closed bead wb-g8f close receipt: part A 0ef5aeb; B.1 250c0af; B.2 ceb738a gate cmd_1aede7b05ce9; B.3 b289411 gate cmd_f803a8138f94; B.4 bbdbaaa gate cmd_b747ea3ee087; B.5 24e6015 gate cmd_fa322bba8db9 (all six commits verified present on branch workbench/implementation-program). Code: src/workflow/reconcile.ts, src/workbench/reconcile-decision.ts, src/workbench/reconcile-tool.ts. Tests: test/work",
+       "caveats": "B.5 tool-description case is a disclosed post-hoc drift pin (written against the applied change). Two first-attempt gate failures disclosed and re-gated before push (import order cmd_8d268249650c, typing cmd_2d3efb1292b0). reconcile: authority is grant-reserved - provider manifests carrying the prefix are refused.",
+       "vcRefs": []
+      },
+      {
+       "line": 120,
+       "feature": "Detached-host journals carry node effect metadata (describeNodeEffect/replayBasis); runtime replay admission requires recorded read class, current vouching and matching host basis",
+       "status": "landed-gated",
+       "evidence": "Closed bead wb-6hb.1 close receipt: relay gate PASS cmd_c117e32ae536, red re-verified at base blobs (9 failed), owner independent isolated-worktree complete gate (receipt /tmp/pi-land-6hb1-gate.json, machine-local). Code: src/workbench/hosts/local-detached.ts, src/workflow/runtime.ts admission. Test: test/workbench-local-detached-effects.test.ts.",
+       "caveats": "Pre-change basis-less read entries conservatively run live (disclosed in the close reason). Owner gate receipt path is machine-local and was not re-verified here.",
+       "vcRefs": []
+      },
+      {
+       "line": 121,
+       "feature": "Fail-closed resume for journaled nodes with ABSENT effectClass (stop at position as uncertain effect instead of running live)",
+       "status": "in-progress",
+       "evidence": "Bug bead wb-tu1 (priority 2) is in_progress in the ledger with nothing landed on trunk: no commit has touched src/workflow/runtime.ts or src/workflow/journal-compat.ts since 06f7071. A delivery exists on machine/flywheel/wb-tu1 @ 0fd665b (base b4ca4aa; runtime.ts, task.ts and five test files) and per the preamble column note is not landed. Unblocked note: wb-cax.3 landed at 06f7071 ('Dispatchable ",
+       "caveats": "Current trunk behavior is fail-open: a journaled entry with no effectClass re-runs live on resume, contradicting the shipped tool description ('a journaled non-read node stops a resume'). The bead is claimed with a machine-branch delivery awaiting the gate lane; nothing on trunk. Red test prescribed in test/workflow-effect-replay.test.ts.",
+       "vcRefs": []
+      }
+     ]
+    },
+    {
+     "id": "W13",
+     "title": "Event collector and native observation adapters",
+     "line": 123,
+     "rows": [
+      {
+       "line": 127,
+       "feature": "Bounded observation ingestion (provider-qualified dedup, out-of-order refusal, stale marking, cursor-gap honesty, disconnect->stale->reconnect recovery)",
+       "status": "landed-gated",
+       "evidence": "src/workbench/observation.ts; tests test/workbench-observation.test.ts, test/workbench-observation-shell.test.ts, test/workbench-observation-recovery-receipt.test.ts (+ qa/workbench/observation-recovery-bench.mjs); TRACEABILITY 'Bounded projection measurements' (Forge projection tier cmd_f23fb2f4e0e0; dedup/sequence-regression/cursor-gap tests; evicted cursor -> partial-gap); bead wb-6ze.5 closed ",
+       "caveats": "WB-036 traceability status is 'fixture'; no native lifecycle cursor stream in installed SDKs so readers use bounded polling; the external Furnace receipt (cmd_119b38150276) explicitly makes 'no live event reconnect claim'; area bead wb-79k still in_progress",
+       "vcRefs": []
+      },
+      {
+       "line": 128,
+       "feature": "Native reader/observer adapters: Claude session topology, Forge gate-status, HyperUnix find, Furnace Run/Attempt",
+       "status": "landed-gated",
+       "evidence": "Closed beads with the gate receipts their close reasons record: wb-6ze.3 (src/workbench/claude-topology.ts + test/workbench-claude-topology.test.ts, landing 6199ad5; relay gate cmd_562ac0013895), wb-6hb.2 (src/workbench/forge-observer.ts + test/workbench-forge-observer.test.ts, landing a650133; relay gate cmd_e486eef99aac with 15/15 mutation sweep), wb-6ze.7 (src/workbench/hyperunix-observer.ts + ",
+       "caveats": "Claude/Forge/HX reader beads exclude tool wiring by scope; Furnace status/attempt/log snapshots are sequential and non-atomic (polling, not cursor stream); historical Forge gate reads stay authoritative_current=false, never current verification; most related WB rows are 'fixture'/'experimental'",
+       "vcRefs": []
+      },
+      {
+       "line": 129,
+       "feature": "Remaining reader adapters: Beads work-readiness, local-detached host",
+       "status": "in-progress",
+       "evidence": "Beads wb-752.6 (W13-F Beads readiness reader, in_progress) and wb-0kg.5 (W13-G local-detached reader, in_progress); grep shows no dedicated adapter modules in src/workbench/ for these (DetachedSnapshot only in src/workbench/hosts/local-detached.ts). The ReactiveFiber reader (wb-6ze.9) left this set at the second reconcile pass: landed at e6c22a2, see its own row.",
+       "caveats": "Nothing landed for these two adapter slices yet; the detached host exists but its W13 projection adapter does not",
+       "vcRefs": []
+      }
+     ]
+    },
+    {
+     "id": "W14",
+     "title": "Incremental projection and typed relationship indexes",
+     "line": 131,
+     "rows": [
+      {
+       "line": 135,
+       "feature": "Incremental scoped projection with typed relation indexes and no-full-event-fold queries",
+       "status": "landed-gated",
+       "evidence": "src/workbench/observation.ts; tests test/workbench-observation-perf.test.ts, test/workbench-projection-invalidation.test.ts, test/workbench-task-incremental.test.ts; TRACEABILITY 'Bounded projection measurements': Forge tier cmd_f23fb2f4e0e0 over 100k events/1000 nodes (exact query p95 0.00270 ms, max 1 node examined, 535-byte reply); incremental task counters red cmd_29a9e7b2c580 -> green cmd_511",
+       "caveats": "Benchmark exercises the read model, not terminal layout; heap-growth figure is explicitly not a retained-size proof; area bead wb-eyg in_progress ('real entry integration ongoing')",
+       "vcRefs": []
+      },
+      {
+       "line": 136,
+       "feature": "Incremental ancestor aggregates (counts, interval envelope, incomplete-trace labels)",
+       "status": "landed-gated",
+       "evidence": "Bead wb-6ze.2 closed ('Landed on workbench/implementation-program as merge a67bc36'); close-reason gate receipts: relay gate cmd_3b47cb2d8b4b PASS and Sr. Engineer independent isolated-worktree complete gate on the merge PASS cmd_5eb54b7fe4fb (lint, typing, build, test, workbench-shell, package-smoke). Feature commit dee5a43 touched src/workbench/observation.ts (+256) and added test/workbench-obse",
+       "caveats": "criticalPath is deliberately the literal 'unestablished' (no number); inspector wiring excluded from the bead's scope; full viewport benchmark tracked separately",
+       "vcRefs": []
+      },
+      {
+       "line": 137,
+       "feature": "Attention and bottleneck selector over the projection",
+       "status": "landed-gated",
+       "evidence": "Bead wb-6ze.4 closed; landing merge a4cd2cf carries gate cmd_6fd6cc3571c4 (close reason also records the Sr. Engineer isolated complete gate cmd_22b69112cde6); src/workbench/attention.ts + test/workbench-attention.test.ts",
+       "caveats": "Critical path reported only as partial-estimated or incomplete-trace with reasons; the inspector overview attention panel that renders it (wb-6ze.21) is still in_progress, reported-truncation adoption in attention/timeline selectors (wb-6ze.29) is open, and the dialog/host wiring that would supply the workbench.attention/v1 AttentionReport to the inspector overview (wb-6ze.36) is open - per wb-6ze",
+       "vcRefs": []
+      },
+      {
+       "line": 138,
+       "feature": "Relation-page truncation reporting (relationsPage) and consumer adoption",
+       "status": "in-progress",
+       "evidence": "Beads wb-6ze.27 (in_progress) and wb-6ze.29 (open), wb-6ze.30 (open, topology-slice adoption); grep: 'relationsPage' absent from src/workbench/observation.ts and from every suite under test/ (no test names it)",
+       "caveats": "Nothing landed; until it lands, consumers cannot distinguish a full relation page from an exact result (the 45-edge/40-cap honesty scenario in the bead text)",
+       "vcRefs": []
+      }
+     ]
+    },
+    {
+     "id": "W15",
+     "title": "Rich TUI tree/timeline/graph/details",
+     "line": 140,
+     "rows": [
+      {
+       "line": 144,
+       "feature": "Inspector scale benchmark (>=1000 nodes / 100k events, <=20 ms navigation)",
+       "status": "landed-gated",
+       "evidence": "qa/workbench/inspector-bench.mjs and qa/workbench/inspector-grouped-bench.mjs + test/workbench-grouped-fixture.test.ts; TRACEABILITY 'Additional compiled-client evidence': benchmark cmd_9572ac580306 (p95 0.389 ms, max 17.69 ms, 1000 nodes/100k updates) and recheck cmd_4ff4ffabcbe0 (p95 0.358 ms) in 'Second audited embedded/local-host checkpoint'; grouped-10k fixture receipt bead wb-9x5.1 closed (l",
+       "caveats": "Bench-only limits: the 1000-node fixture is edge-free with at most 40 rendered rows; not live native topology; the first landing attempt 14e78f1 (gate FAIL cmd_b614a8d82ebd) remains reverted and do-not-base, so no receipt from its body is cited; deeper grouped-10k receipts (retained memory wb-9x5.3, churn wb-9x5.4, cap saturation wb-9x5.6, lane model wb-9x5.7 in_progress; tool-reply size wb-9x5.5,",
+       "vcRefs": []
+      },
+      {
+       "line": 145,
+       "feature": "Four-view terminal inspector (overview tree, graph, timeline, details) with keyboard navigation and native detail rows",
+       "status": "partial",
+       "evidence": "Landed half: src/ui/workflow-inspector.ts + src/ui/workflow-dialog.ts; tests test/workbench-inspector.test.ts, test/workbench-inspector-window.test.ts, test/workbench-native-details.test.ts, test/workbench-ui-contract.test.ts; bead wb-6ze.1 closed (overview nested tree + graph fan-out collapse; relay gate cmd_a93f656522fe per close_reason); TRACEABILITY 'Selectable native detail evidence', compile",
+       "caveats": "WB-027 'experimental', WB-028 ASCII/80x24 'fixture'; the terminal journey was command-bridge driven (outer Pi model credentials unauthorized) and does not establish live adverse cancellation or native linked topology; area bead wb-g1g in_progress",
+       "vcRefs": [
+        "VC-5"
+       ]
+      },
+      {
+       "line": 146,
+       "feature": "Timeline lane model (workbench.timeline/v1)",
+       "status": "partial",
+       "evidence": "Landed half: bead wb-6ze.6 closed (merge d180dbb, whose body is a bare title; close-reason gate receipts: isolated merged-tree gate cmd_e66fae7a609f, machine complete gate cmd_33431167536a, worker gate cmd_160644e75dcd); feature commit a937f53 added src/workbench/timeline.ts (431 lines, TIMELINE_CONTRACT + buildTimelineLanes) and test/workbench-timeline.test.ts (819 lines). Open half: wb-6ze.26 (i",
+       "caveats": "Inspector wiring excluded by the bead; the current timeline view draws source intervals, not the new lane model; lanes derive only from producer-supplied intervals (open intervals stay open, no ordering inferred from timestamps alone)",
+       "vcRefs": []
+      },
+      {
+       "line": 147,
+       "feature": "Evidence loading: docs/20 loader contract, producer readers (claude transcript, forge operation, furnace attempt log), store + dialog wiring",
+       "status": "partial",
+       "evidence": "Landed: wb-g1g.1 closed (src/workbench/evidence-loader.ts + evidence-producers.ts; red cmd_8c67d85100cf -> green cmd_970fa79177ca; close-reason gates for merge 0fc3c86: owner isolated gate on the merged tree cmd_ee89033cc1d8, machine complete gates cmd_a8b4e1ffdff4 original + cmd_32c4364eeab4 respin; test/workbench-evidence-loader.test.ts), wb-6ze.8 closed (src/workbench/furnace-evidence.ts + test",
+       "caveats": "wb-6ze.12 and wb-6ze.14 are closed only as withdrawn duplicates (no work) - do not read them as landed slices; loaders remain limited to verified session/read APIs; WB-031 (open Claude conversations from inspector) is still 'planned' in the requirements table; 'full native evidence loaders' listed open at the second audited checkpoint. Standing findings on this exact landed surface: wb-v53 (in_pro",
+       "vcRefs": []
+      },
+      {
+       "line": 148,
+       "feature": "Details-view linked native topology slice",
+       "status": "partial",
+       "evidence": "Landed half: wb-g1g.2 closed (merge 314ff29; src/workbench/topology-slice.ts + test/workbench-topology-slice.test.ts; owner gate cmd_879f309d9ded, machine gate cmd_87383785df8f). Open half: details-view render wb-6ze.16 (in_progress), dialog/host wiring wb-6ze.24 (open), reported-truncation adoption wb-6ze.30 (open)",
+       "caveats": "The pure slice selector is landed but not yet rendered in the details view or wired through the dialog. A CONFIRMED medium defect stands on trunk (wb-ghc, closed only as a pointer - its close reason says 'nothing is fixed here'): selectLinkedTopology silently undercounts the remainder and mislabels the trace 'observed' whenever the projection's own relation-page cap (ObservationLimits.maxQuery, 40",
+       "vcRefs": []
+      }
+     ]
+    },
+    {
+     "id": "W16",
+     "title": "Pi catalog/inspect/observe/control tools",
+     "line": 150,
+     "rows": [
+      {
+       "line": 154,
+       "feature": "workflow_observe Pi tool (bounded redacted projection query under workbench:observe grant with session/workspace/principal ACL)",
+       "status": "partial",
+       "evidence": "Landed: registered tool at src/index.ts:2606 (grant check, task-ID validation, limit 1..40, sanitized compact JSON); tests test/workbench-security-pi-tools.test.ts and test/workbench-schema-version.test.ts (reads a real embedded receipt through workflow_observe); WB-018 row 'experimental'. Open: richer pure workflow_observe reply builder with cursor pagination/selectors/freshness summary is wb-752",
+       "caveats": "Current reply shape is inline in index.ts, not the planned pure builder; wb-69g notes: 'explicit observe ACL planned with immutable invocation receipt. No complete control/compare suite claim'; area bead wb-69g in_progress",
+       "vcRefs": []
+      },
+      {
+       "line": 155,
+       "feature": "Capability catalog and inspect tools",
+       "status": "partial",
+       "evidence": "Landed: pure workflow_catalog/workflow_inspect reply builders in src/workbench/tool-replies.ts + test/workbench-tool-replies.test.ts (bead wb-69g.2 closed, merge 0f3a067 whose body is a bare title; close-reason gate receipts: isolated merged-tree gate at ceb738a cmd_c26d68d503f8, machine complete gate cmd_b388ea888e01; exact discover:/inspect: grant ACL and cursor pagination); and a registered wor",
+       "caveats": "Pi tool registration was explicitly excluded from wb-69g.2's scope; operators get a capability listing today but not the paginated inspect surface. Disclosed cast cleanup accepted at that landing: wb-1q8 (in_progress, P3) tracks tool-replies.ts:147 re-typing a sanitized reply row with 'as unknown as CatalogRow' (the wb-69g.2 close reason itself filed the cleanup bead).",
+       "vcRefs": []
+      },
+      {
+       "line": 156,
+       "feature": "workflow_control: decision core, provider control adapters, host wiring",
+       "status": "partial",
+       "evidence": "Landed: provider-free decision core src/workbench/control.ts + test/workbench-control.test.ts (bead wb-69g.1 closed, merge 23404b4; close-reason receipt: relay gate PASS cmd_e8eea836aecd; the owner complete-gate receipt is machine-local /tmp/pi-land-69g1-gate.json and the worker-carried 48/48 mutant claim was not re-run by the gate seat); and the Furnace control adapter src/workbench/furnace-contr",
+       "caveats": "No workflow_control tool is registered and the landed decision core and Furnace adapter are unwired in src/index.ts (grep finds neither), so operators cannot issue control actions through workbench tools yet; the landed Furnace adapter deliberately excludes run adopt, work retry, run start, run unlock and attempt clear; wb-69g.4 blocked because SDK Query.interrupt() requires streaming input while ",
+       "vcRefs": []
+      },
+      {
+       "line": 157,
+       "feature": "Bounded reply-builder slices for workflow_execute / workflow_validate / workflow_compare",
+       "status": "partial",
+       "evidence": "Landed: wb-69g.6 (W16-G validate reply builder) closed 2026-10-15 at merge e7bcadd; wb-69g.5 (W16-E execute admission + reply builder, src/workbench/execute.ts) closed; wb-syh (W16 workflow_execute Pi tool wiring, owner-reserved) landed: src/workbench/execute-tool.ts registers workflow_execute over the pure module through host seams only (grants, principal, workspace, session re-read on every call",
+       "caveats": "workflow_execute presents ONE dialect to the model: the workbench.tool-reply/v1 envelope with the ruled exception that `invoked` reports whether a launch happened; the pure module's workbench.execute/v1 contract string never reaches the model (test/workbench-execute-tool.test.ts). Completion is never asserted: the reply carries the invocation and native references and the producer's later answer i",
+       "vcRefs": []
+      }
+     ]
+    },
+    {
+     "id": "W17",
+     "title": "Source-aware designer, static projection and comparison",
+     "line": 159,
+     "rows": [
+      {
+       "line": 163,
+       "feature": "Read-only source validation and static projection (workflow_validate + workflow_catalog tools: source digests, AST possible-call projection, no execution/edit)",
+       "status": "landed-gated",
+       "evidence": "src/workbench/designer.ts; registered tools at src/index.ts:2505 (workflow_validate) and :2524 (workflow_catalog), both gated on workbench:design; tests test/workbench-designer.test.ts, test/workbench-pi-designer.test.ts, test/workbench-schema-version.test.ts; TRACEABILITY 'Source designer increment' (red cmd_491d5d54787f -> green cmd_7fcdf7518d74; compiled external client cmd_fdf5d9317a3b) and 'S",
+       "caveats": "WB-032 row 'experimental'; the separate W16-G pure validate reply builder landed at e7bcadd (src/workbench/validate-reply.ts) but is not yet wired to this tool surface - convergence rides wb-h8f.6; qa/workbench/designer-client.mjs is a client receipt, not a live design loop",
+       "vcRefs": []
+      },
+      {
+       "line": 164,
+       "feature": "Run comparison with cohort rigor (workflow_compare / compareWorkflowRuns: matched-basis cohorts, confound kinds, per-metric measured-or-unknown, SCHEMA_MISMATCH refusal)",
+       "status": "landed-gated",
+       "evidence": "src/workbench/designer.ts:217 (compareWorkflowRuns); registered workflow_compare tool at src/index.ts:2538 (requires workbench:design + workbench:observe); TRACEABILITY section 'W17 comparison cohorts and the Furnace executor verdict': red cmd_a3119e9e81fd (25 new cases) -> green cmd_a76bef766614 (64/64), lint cmd_e94f9458190c, typing cmd_3e6f230d5549, including a real-tool non-git-sandbox proof t",
+       "caveats": "The real tool supplies no native metrics (index.ts passes metrics: []), so measured verdicts over live runs remain open; claims are association-only, never causal; WB-038 (versioned digest-referenced comparison) still 'planned'; area bead wb-pno in_progress",
+       "vcRefs": []
+      },
+      {
+       "line": 165,
+       "feature": "Digest-pinned workflow patch proposal (bounded redacted diff with static validation of the candidate)",
+       "status": "landed-gated",
+       "evidence": "Bead wb-h8f.1 (VC-6/W17-A) closed 2026-10-15: landed at merge 1e4102f (machine/flywheel/wb-h8f.1 40fee32 onto ee8bde0); owner isolated complete gate cmd_d8d04346f60b, machine complete gate cmd_79278b2acc30 (165 files, 2955 passed) plus merged-tree supplementary evidence (targeted 13/13, biome, src tsc, status-ledger --strict). On trunk: src/workbench/patch-proposal.ts, test/workbench-patch-proposa",
+       "caveats": "Pure proposal module only: by design no automatic live implementation replacement, and Pi tool wiring is a separate slice (TRACEABILITY WB-039 still reads planned as of this export). Landing dispositions: three raw U+202E in the test fold into wb-era; displayText is the ninth display-sanitizer site under wb-952 (its load-bearing double redact is a bound constraint there); a dead uncertain-promotio",
+       "vcRefs": [
+        "VC-6"
+       ]
+      },
+      {
+       "line": 166,
+       "feature": "Evidence-linked improvement experiment (execute comparison with real native evidence, report gains/confounders)",
+       "status": "in-progress",
+       "evidence": "Area bead wb-pno in_progress with explicit open item 'native metric sourcing for measured verdicts over live runs'; TRACEABILITY 'Source designer increment' states 'Full live improvement experiments remain open'; supporting W16-H reply builder wb-69g.7 open; the measurement-only live acceptance for this exact journey is wb-h8f.2 (open: 'VC-6 residual: live Pi design/compare loop acceptance receipt",
+       "caveats": "Nothing landed for the live-experiment slice; the comparison core refuses to manufacture metrics or environment/cache identity, so this feature cannot be demonstrated until native metric sourcing exists",
+       "vcRefs": [
+        "VC-6"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "W18",
+     "title": "Detached host, optional Furnace ExecutorApp",
+     "line": 168,
+     "rows": [
+      {
+       "line": 172,
+       "feature": "Local same-machine detached host with Pi exit/reconnect",
+       "status": "landed-gated",
+       "evidence": "src/workbench/hosts/local-detached.ts; tests test/workbench-pi-detached.test.ts, test/workbench-local-detached.test.ts, test/workbench-local-detached-effects.test.ts on trunk; forge.toml commands [build.commands.local-detached-shell]/[build.commands.local-detached-unit]; qa/workbench/local-detached-client.mjs + local-detached.sh. TRACEABILITY sections 'Additional compiled-client evidence' (detache",
+       "caveats": "Same-machine private Unix DAC profile only: no remote-host authentication and no crash-durability claim (TRACEABILITY says 'not remote auth or host-crash durability'); parent bead wb-5w0 stays in_progress; in_progress defect wb-71q: socket under tmpdir() refuses every detached launch when TMPDIR exceeds ~34 bytes (103-byte sun_path limit); local-provider results in the lifecycle shell are fixture-",
+       "vcRefs": [
+        "VC-7"
+       ]
+      },
+      {
+       "line": 173,
+       "feature": "Native executable identity observation (immutable deployment refs groundwork)",
+       "status": "landed-gated",
+       "evidence": "Closed bead wb-0kg.2 (VC-7/W18-B, closed 2026-10-15T11:34Z) with gate receipts: owner isolated gate cmd_2fee27bddcd5, machine gate cmd_d357964c4b62 (167 files, 3022 passed); landed at merge a17ebb2. Files on trunk: src/workbench/executable-identity.ts, test/workbench-executable-identity.test.ts.",
+       "caveats": "Observation-only module that never executes a binary; digest claims only for absolute immutable paths, PATH-resolved stays mutable-path, SDK-default executable stays unsupported; the closed surface was exactly module+test, so wiring into the detached host (which previously hard-coded nativeRuntimeIdentity 'unsupported') and resolving the ELF behind the mise wrapper remain W18 owner items; read-rac",
+       "vcRefs": [
+        "VC-7"
+       ]
+      },
+      {
+       "line": 174,
+       "feature": "Furnace-hosted ExecutorApp adapter (per-Attempt embedded bridge)",
+       "status": "landed-gated",
+       "evidence": "Bead wb-zmd (W18-C) closed 2026-10-15: landed at merge e830ac2 (machine/flywheel/wb-zmd 944cdab onto b4ca4aa); owner isolated gate cmd_64aa75efea7b, machine complete gate cmd_de039e243188. On trunk: src/workbench/hosts/furnace-hosted.ts, test/workbench-furnace-hosted.test.ts, test/workbench-furnace-hosted-real.test.ts, vitest.furnace-hosted.config.ts, and a forge.toml additive furnace-hosted-live ",
+       "caveats": "TRACEABILITY row WB-042 still reads planned as of this export; the WB-042 correction is filed in receipts/wb-zby.1.md (TRACEABILITY frozen). The vendored @furnace/sdk was re-packaged by wb-zby (closed at 2022ddd) from a Furnace revision whose manifest and generated provenance digests agree, and the adapter and both test tiers drive the shipped SDK since (test/helpers/furnace-sdk-repaired.ts delete",
+       "vcRefs": []
+      },
+      {
+       "line": 175,
+       "feature": "Detached-host fault-injection conformance (effect-then-crash, Work-retry-while-uncertain, multi-reader cancellation ownership)",
+       "status": "partial",
+       "evidence": "Landed-gated half: wb-0kg.1 (VC-7/W18-A) closed 2026-10-15 at merge ee8bde0 (machine/flywheel/wb-0kg.1 2dfa1f9 onto e830ac2); owner isolated gate cmd_70855913bdeb, machine complete gate cmd_d1a0a893626a (165 files, 2969 passed); on trunk: qa/workbench/local-detached-faults-receipt.mjs, qa/workbench/local-detached-faults.mjs, test/workbench-detached-faults-receipt.test.ts, forge.toml additive local",
+       "caveats": "Open half: wb-0kg.7 (W18-E multi-reader cancellation ownership over the landed harness, in_progress); corrected 2026-10-17 (wb-zby.1): wb-0kg.4 (W18-D Furnace Work-retry-while-Run-establishment-uncertain) is closed with its fixture tier on trunk (test/workbench-furnace-hosted-retry-fault.test.ts, qa/workbench/furnace-hosted-retry-fault*.mjs, forge.toml furnace-hosted-retry-fault), so this cell's i",
+       "vcRefs": [
+        "VC-7"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "W19",
+     "title": "Security/prompt injection/privacy tests",
+     "line": 177,
+     "rows": [
+      {
+       "line": 181,
+       "feature": "Adversarial security suites and shared sanitizers (provider-data prompt injection, grant/identity forgery, credential leakage, path/symlink escape, VM boundary probes)",
+       "status": "partial",
+       "evidence": "Landed half: TRACEABILITY section 'W19 adversarial security pass': three new security suites, 15 green with 9 confirmed red findings at cmd_254839305a5f; fixes test-first (shared control/bidi/credential sanitizers in redaction over every registered tool output and UI label path; Furnace provider refuses foreign-workspace Run records) red cmd_91349509691f, green cmd_80373ba3643b, regression sweep 6",
+       "caveats": "The workflow VM is explicitly NOT claimed as a hostile-script security boundary; sandbox-RPC credential isolation (TRACEABILITY row WB-022) remains planned with no tests; area bead wb-gs2 stays in_progress because W19 is an ongoing acceptance list (docs/workbench/12). Open half, which keeps this row partial per the legend's weaker-status rule: two live defects stand against the shared sanitizer st",
+       "vcRefs": []
+      },
+      {
+       "line": 182,
+       "feature": "Display-surface sanitization residuals (dialog detail pane; inline card agent row)",
+       "status": "landed-gated",
+       "evidence": "Closed bead wb-dem (landed 40a031a; isolated-worktree complete gate PASS cmd_e5cadcd07651): dialog prompt lines, outcome/error body, model labels, thinking level and native session id pass through safeWorkflowTerminalText, red adversarial case in test/workbench-security-workflow.test.ts. Closed bead wb-gs2.1 (landed 0300cf9; isolated-worktree complete gate PASS cmd_b4d91bda9c76): agentStatSegments",
+       "caveats": "Sweep verifiers refuted all other candidate surfaces (group titles and thinking levels are sanitized or program-controlled); the sweep covered src/ui/workflow-dialog.ts and card helpers only. The same standing sanitizer defects apply to these display paths: wb-952 (in_progress, P1: split-credential reassembly through the safeWorkflowTerminalText redact-before-strip ordering in src/ui/workflow-card",
+       "vcRefs": []
+      },
+      {
+       "line": 183,
+       "feature": "VM-escape closures and the remaining ongoing adversarial program",
+       "status": "partial",
+       "evidence": "Landed half (receipts in TRACEABILITY 'W19 adversarial security pass' and wb-gs2 notes): VM host-closure constructor escape fixed with realm bridge factories (red cmd_fd4fd51ce28c, green cmd_8e3d695be01f); second escape via pipeline-stage this-binding found and fixed (red cmd_8c1bb984d29e); remaining tool outputs (furnace_observe, workflow_detached, workbench_catalog, workflow_compare) and dialog ",
+       "caveats": "VM still not claimed as a hostile-script boundary; the cmd_ receipts here are focused-suite runs recorded in bead notes/TRACEABILITY, not one dedicated complete-gate id per fix.",
+       "vcRefs": []
+      }
+     ]
+    },
+    {
+     "id": "W20",
+     "title": "SDK usage feedback to upstream products",
+     "line": 185,
+     "rows": [
+      {
+       "line": 189,
+       "feature": "Verified upstream feedback files delivered to Forge, Furnace, HyperUnix and ReactiveFiber",
+       "status": "partial",
+       "evidence": "TRACEABILITY section 'Tool feedback delivery receipts': operator-directed docs-only delivery on branch feedback/pi-workbench-20261015-delivery in each owning repo, every file passed the strict feedback lint, every commit ancestor-verified - Forge 6dd88e3f57 + d6355458bf; Furnace 230fbc064 + 2085b0190; HyperUnix c52116840a; ReactiveFiber 0e6e88345 + dispositions row 3a29b49. Bead wb-kqx (in_progres",
+       "caveats": "Delivery is the push, not a fix guarantee: owning repos' own gates were red or unexercised at delivery time (disclosed in the files); delivery was docs-only under an operator gate waiver; no in-repo test file exists for this process deliverable, so the strict landed-gated bar is not satisfiable and the area bead wb-kqx remains in_progress (ongoing per docs/workbench/15 upstream-feedback policy); s",
+       "vcRefs": []
+      }
+     ]
+    },
+    {
+     "id": "W21",
+     "title": "Scaled swarms / profiling",
+     "line": 191,
+     "rows": [
+      {
+       "line": 195,
+       "feature": "Deterministic grouped-10k swarm fixture + bounded grouped projection/inspector benchmark receipt (W21-A)",
+       "status": "landed-gated",
+       "evidence": "Closed bead wb-9x5.1 (closed 2026-10-15T09:38Z): landed at 4267c11 on workbench/implementation-program; isolated gate on the exact pushed tree forge build --require-complete --no-replay PASS cmd_a6e28589c20f. wb-9x5.2 closed as merged into it (unified fixture + two-pass receipt). Files on trunk: qa/workbench/grouped-fixture.mjs, qa/workbench/inspector-grouped-bench.mjs, test/workbench-grouped-fixt",
+       "caveats": "Two-pass honesty: pass A under DEFAULT projection limits (maxNodes 2000, never raised) reports FIFO truncation as retained-vs-offered counts; pass B uses bench-only elevated limits that never enter src/; production caps unchanged (runtime node cap 1000, projection maxNodes 2000, per parent bead wb-9x5 notes); not live native topology; a first landing attempt (14e78f1, gate FAIL cmd_b614a8d82ebd) i",
+       "vcRefs": []
+      },
+      {
+       "line": 196,
+       "feature": "Observation recovery and bounded-query size benchmark receipt (W21-B)",
+       "status": "landed-gated",
+       "evidence": "Closed bead wb-6ze.5 (labels w21; closed 2026-10-15T09:13Z): landed as merge 28fc9a9; relay gate cmd_a225a4320f70 PASS, bench runs cmd_3399332e8b57/cmd_4452aa1aedf5 realised, Sr. Engineer independent isolated-worktree complete gate PASS cmd_43545efc2cb0. Files on trunk: qa/workbench/observation-recovery-bench.mjs, test/workbench-observation-recovery-receipt.test.ts, forge.toml [build.commands.obse",
+       "caveats": "Measurement-only, src untouched; bench-only limits never enter src/; reconnect-alone falsifier pins that reconnect without a fresh sequenced snapshot cannot promote stale rows; receipt written only when W21_RECOVERY_RECEIPT is set.",
+       "vcRefs": []
+      },
+      {
+       "line": 197,
+       "feature": "Live-churn reducer/selector, retained-memory, cap-saturation and timeline lane-model receipts (W21-C/D/F)",
+       "status": "partial",
+       "evidence": "Landed half: wb-9x5.4 (W21-D reducer-update/UI selector time under churn with the no-full-fold falsifier) closed 2026-10-15 at merge 1b735c8 (owner isolated gate cmd_2ff29cd1a06b, machine complete gate cmd_b94a1b2aa249, live bench re-run at the tip exit 0 within budget); on trunk: qa/workbench/reducer-selector-bench.mjs, test/workbench-reducer-selector-bench.test.ts, forge.toml additive command. O",
+       "caveats": "Bench-only limits, production caps unchanged. Disclosed bound on the landed bench: the 4Hz redraw-cadence cap never binds on the 1s fixture ticks, so the cadence block measures the bench's fixture-time sampler and docs/14's 'redraw <=4Hz live' stays unmeasured until the W21 honesty follow-up lands (receipt label, sub-250ms guard case, per-read-method guards, positivity check). Reducer p50 grows 1.",
+       "vcRefs": []
+      },
+      {
+       "line": 198,
+       "feature": "Remaining profiling receipts: Pi tool reply-size (W21-E), terminal bytes-per-update line-diff (W21-G), graph-view build (W21-H), and overall 10k+ acceptance",
+       "status": "planned",
+       "evidence": "Open beads: wb-9x5.5 (W21-E bounded Pi tool reply size/build-latency over grouped-10k), wb-9x5.8 (W21-G bytes-per-update line diff vs full-frame repaint), wb-9x5.10 (W21-H buildGraphView receipt), and parent wb-9x5 (W21: Scaled swarms / profiling) itself open. No code or tests exist for these. Parent wb-9x5's notes pin that the measured 100k-event/1000-node read-model receipt (TRACEABILITY 'Bounde",
+       "caveats": "Parent wb-9x5 notes: 'Do not raise caps blindly without bounded sharding/aggregation benchmark.'",
+       "vcRefs": []
+      }
+     ]
+    },
+    {
+     "id": "W22",
+     "title": "Packaging/docs/install/compat migration",
+     "line": 200,
+     "rows": [
+      {
+       "line": 204,
+       "feature": "Reproducible offline Forge gate with complete no-replay receipts",
+       "status": "landed-gated",
+       "evidence": "forge.toml declares the gate and command tiers (workbench-shell, typecheck, package-smoke, install-smoke, e2e, benches, live tiers); TRACEABILITY row WB-019 status gate-pass; TRACEABILITY 'Audited candidate checkpoint': complete no-replay gate PASS cmd_a227a5a2114e (all six declared steps), pushed checkpoint 43ad58b clean-source gate PASS cmd_f8b07a961042; 'Second audited embedded/local-host check",
+       "caveats": "Live tiers (claude-live, native-read, furnace-observe, rf-preview) are separate forge commands outside the default portable gate because they spend live resources; several receipts measured a stable dirty overlay rather than an isolated clean release tree (disclosed per receipt); the status-ledger checker is likewise a separate command tier, not a default-gate step (the default gate list is unchan",
+       "vcRefs": []
+      },
+      {
+       "line": 205,
+       "feature": "Offline vendored native-SDK pins and clean external npm install (W22-C / WB-049)",
+       "status": "landed-gated",
+       "evidence": "Closed bead wb-x7m.2 - landed as merge 517ed23; relay gate cmd_d5cca012360b PASS and owner isolated-worktree complete gate PASS cmd_856025ea4118; test/workbench-vendor-pins.test.ts (11 read-only cases: vendor/README.md SHA-256 table == tarball bytes, package-lock file:vendor entries inBundle+integrity, bundledDependencies coverage, no orphan tarball). vendor/ holds forge-sdk-0.1.0.tgz, furnace-sdk",
+       "caveats": "No publication occurred (install evidence is a local clean consumer); minimal-permissions clean external install run (wb-cax.2, W22-D, release checklist item 10) still in_progress with its forge command outside the default gate and not yet on trunk; dependency/SDK version census with drift guard (wb-cax.20) in_progress. A standing finding from wb-zmd (closed; landed at e830ac2) scoped what the pin",
+       "vcRefs": []
+      },
+      {
+       "line": 206,
+       "feature": "Native SDKs load lazily behind validated feature config (upstream Pi works with Workbench disabled)",
+       "status": "landed-gated",
+       "evidence": "Closed bead wb-cax.10 (OWNER-RESERVED; closed 2026-10-15T11:32Z) - landed 65c9823 + fix b67b2ed, owner isolated gate success cmd_cf177be34d2c; TRACEABILITY section 'W22 residual: native SDKs load behind the validated feature config (wb-cax.10)'. Files on trunk: src/workbench/native-modules.ts (single dynamic-import seam, frozen namespace of live-binding getters, failed load retried), tests test/wo",
+       "caveats": "Load failure leaves the upstream surface intact and retries next session (never a stub); the registered-surface census falsifier that pins per-mode tool parity (wb-cax.4, W22-F) is still in_progress; sequential imports chosen to avoid a vitest mocker race (disclosed gate lesson).",
+       "vcRefs": []
+      },
+      {
+       "line": 207,
+       "feature": "Journal compatibility classifier for migration acceptance (W22-E)",
+       "status": "landed-gated",
+       "evidence": "Closed bead wb-cax.3 (closed 2026-10-15T11:39Z) - landed by the owner at merge 06f7071; owner isolated gate success cmd_72d7b16237cb; machine envelope of record cmd_52d2856ba019 (run 4). Files on trunk: src/workflow/journal-compat.ts, test/workflow-journal-compat.test.ts (per-line classes legacy-agent/basis-scoped-agent/node-read/node-effectful/unsupported with line-number census, docs/16 'journal",
+       "caveats": "The classifier mirrors the landed runtime as delivered; the runtime's fail-open admission of an unclassified node is the actual defect and is filed separately as wb-tu1 (in_progress; its fix must update the classifier mirror in the same commit).",
+       "vcRefs": []
+      },
+      {
+       "line": 208,
+       "feature": "Bounded in-flight admission in CapabilityRegistry.invoke (W22-M / docs-17 runtime requirement)",
+       "status": "landed-gated",
+       "evidence": "Closed bead wb-cax.18 (closed 2026-10-15T11:40Z) - landed at merge 10a078c; owner isolated gate success cmd_d81196497350; machine envelope cmd_a97bebfffdcf. Surface exactly M src/workbench/capability-registry.ts + A test/workbench-registry-admission.test.ts (both on trunk; registry-wide maxInFlight 32 from an exported constant, FIFO wait bounded by deadline/signal, typed 'unavailable' admission re",
+       "caveats": "'No existing suite queues' stays UNDETERMINED as disclosed at landing; any change to the default bound of 32 is an owner ruling; sibling degradation-policy conformance work is separate: wb-cax.5 (in_progress, not landed), while wb-cax.17 closed late on 2026-10-15 with test/workbench-control-degradation.test.ts landed at merge 0fe38aa.",
+       "vcRefs": []
+      },
+      {
+       "line": 209,
+       "feature": "npm packed-artifact boundary falsifier + evidence-grade package-smoke receipt (W22-B)",
+       "status": "partial",
+       "evidence": "Landed-gated half: closed bead wb-x7m.1 - landed as merge 65452ec + gate-order fix 1fc74f0; relay gate PASS cmd_40d72fbb296c and owner independent isolated-worktree complete gate PASS cmd_4c01ecd77fc2 (152 files, 2561 passed); excludes tracked .agents/ and .codex/ from the artifact, adds qa/workbench/package-boundary.mjs and 41 boundary tests in test/workbench-package-boundary.test.ts (both on tru",
+       "caveats": "wb-x75's two low findings stand on trunk today: docs/ and qa/ are pinned only by absence of .npmignore lines, and package-boundary reports dirty:false instead of unknown when git fails; landing wb-x7m.1 also reordered the gate to build-before-test after a dist-dependent test surfaced.",
+       "vcRefs": []
+      },
+      {
+       "line": 210,
+       "feature": "Remaining release-checklist conformance (mode parity/surface census, degradation policy, license/fork-origin, divergence record, ops telemetry, dual-backend equivalence, hygiene)",
+       "status": "in-progress",
+       "evidence": "Parent wb-cax in_progress (W22 overall; its notes record the audited candidate PASS cmd_a227a5a2114e and clean consumer PASS cmd_a3b6cb72595d but keep 'full release/install native binary identity and optional provider packaging' open). Ledger split re-derived at publication over the W22 set (wb-cax and its 20 children plus wb-x7m.1/.2, wb-era, wb-g5o, wb-x75: 26 ids, as of the 2026-10-15 export at",
+       "caveats": "This remains the bulk of W22's open surface. Per the preamble column note, in_progress with a machine-branch delivery is still not landed. The bead split moved during 2026-10-15 relative to earlier drafts of this matrix (wb-cax.17 closed and landed; wb-cax.5 and wb-cax.19 were claimed), so the counts here are the ledger-export values. Known disclosed defects stand meanwhile: tmp scratch leak drivi",
+       "vcRefs": []
+      }
+     ]
+    }
+   ],
+   "notClaimed": [
+    {
+     "line": 216,
+     "text": "W02: Operator terminal-journey acceptance for VC-1 (planned). Bead wb-a2g.3 open, dispatch held for a credentialed claude-live seat; the one manual tmux journey is not reproducible from the repo and exercised no cancellation."
+    },
+    {
+     "line": 217,
+     "text": "W11: Hosted develop() with real scope-limited service bindings (planned; bead status is blocked). Beads wb-04s and VC-3 epic wb-w12 blocked. No binding host exists (re-measured 2026-11-06 at trunk 600a253 by wb-j5y5; see the W11 row above, which records the measurement): no module under src/workbench/hosts/ names MechanicalWorkflows, and test/workbench-mwi-release.test.ts holds this line to that directory."
+    },
+    {
+     "line": 218,
+     "text": "W12: Fail-closed resume for journaled nodes with ABSENT effectClass (in-progress, not planned: bug bead wb-tu1 is claimed and nothing has landed on trunk (a machine-branch delivery at 0fd665b awaits the gate lane); trunk is currently fail-open at src/workflow/runtime.ts:1326)."
+    },
+    {
+     "line": 219,
+     "text": "W21: Remaining profiling receipts, W21-E Pi tool reply-size, W21-G terminal bytes-per-update line-diff, W21-H graph-view build, and the overall 10k+ acceptance (planned). Open beads wb-9x5.5, wb-9x5.8, wb-9x5.10 and parent wb-9x5; no code or tests exist for these."
+    }
+   ],
+   "statusCounts": {
+    "landed-gated": 54,
+    "partial": 19,
+    "planned": 3,
+    "in-progress": 5
+   },
+   "rowCount": 81
+  },
+  "verticalCuts": {
+   "file": "docs/workbench/15-implementation-program.md",
+   "items": [
+    {
+     "id": "VC-1",
+     "title": "Pi -> Claude SDK workflow",
+     "priority": "P0",
+     "line": 11,
+     "body": "- Keep Pi extension loaded, /agents and legacy workflow interaction working. - Forked WorkflowHost uses actual Claude Agent SDK for agent(), streaming/session refs; legacy script fixtures unchanged. - Terminal card displays live actual Claude execution. An explicit test asserts Pi AgentManager is not called for script agent(). - Ctrl-C/cancel and invalid model/permission failures behave explicitly. - Measured Ctrl-C behavior (wb-a2g.3 live operator receipt, contract v2, iteration 9, pi 1.2.0, rev e07474a, committed at `qa/workbench/receipts/wb-a2g.3-operator-receipt.json`): a Ctrl-C byte sent "
+    },
+    {
+     "id": "VC-2",
+     "title": "node() + real SDK operation",
+     "priority": "P0/P1",
+     "line": 21,
+     "body": "- Add sandboxed node() RPC and capability registry with read/invoke permissions. - One real HyperUnix query *or* Forge read/verification call; do not invent API. - Show native evidence in Pi terminal and structured Pi tool query. - Negative: forbidden SDK write, invalid schema, stale/partial evidence, lost-result ambiguity."
+    },
+    {
+     "id": "VC-3",
+     "title": "MechanicalWorkflows native composition",
+     "priority": "P1, contingent on live bindings",
+     "line": 27,
+     "body": "- Discover descriptor, pin package and host, construct real services, invoke develop() and preserve domain outcomes. - Demonstrate HX->RF->Claude SDK->Forge pipeline when those APIs actually deliver. Document blockers honestly. - An optional Furnace gate uses Furnace native Work/Attempt identity, not a second scheduler."
+    },
+    {
+     "id": "VC-4",
+     "title": "Externally launched Furnace observation",
+     "priority": "P1",
+     "line": 32,
+     "body": "- Attach by Run ID without invoking parent workflow. - Snapshot/events, freshness, unknown gaps, selected evidence; no change to Run on view close. - Derived tree/timeline shows observed rather than invented edges."
+    },
+    {
+     "id": "VC-5",
+     "title": "Rich terminal inspector",
+     "priority": "P1",
+     "line": 37,
+     "body": "- Four views: overview/tree, graph, timeline, evidence; hierarchical aggregation; key navigation; responsive 80x24. - Benchmark >=1000 nodes/100k events with measured <=20ms navigation target and no full-log redraw fold."
+    },
+    {
+     "id": "VC-6",
+     "title": "Pi design/compare loop",
+     "priority": "P1/P2",
+     "line": 41,
+     "body": "- Pi reads source and capability catalog; proposes patch; validates against pinned artifact; executes comparison with real native evidence; reports gains/confounders. - No automatic live implementation replacement."
+    },
+    {
+     "id": "VC-7",
+     "title": "Detached and Furnace-hosted execution",
+     "priority": "P2",
+     "line": 45,
+     "body": "- Remote host authentication, reattachment, native immutable deployment refs, crash/uncertain-operation conformance. - Pi exits without stopping execution. Furnace remains durable authority only when Furnace host chosen."
+    }
+   ]
+  },
+  "atomicRequirements": {
+   "file": "docs/workbench/02-atomic-requirements.md",
+   "sectionHeadings": [
+    {
+     "line": 1,
+     "heading": "# 02 — Atomic, falsifiable requirements"
+    },
+    {
+     "line": 58,
+     "heading": "## Nonfunctional invariants"
+    }
+   ],
+   "requirementCount": 50,
+   "byPriority": {
+    "P0": 20,
+    "P1": 20,
+    "P2": 10
+   },
+   "requirements": [
+    {
+     "id": "WB-001",
+     "priority": "P0",
+     "line": 7,
+     "text": "Pi remains the interactive command/tool/TUI host; a script workflow can be initiated from Pi."
+    },
+    {
+     "id": "WB-002",
+     "priority": "P0",
+     "line": 8,
+     "text": "Workflow agent() runs by @anthropic-ai/claude-agent-sdk; trace proves SDK messages and session identity; never silently uses Pi sessions."
+    },
+    {
+     "id": "WB-003",
+     "priority": "P0",
+     "line": 9,
+     "text": "Legacy script globals and meta parsing remain supported; baseline golden scripts execute without edits."
+    },
+    {
+     "id": "WB-004",
+     "priority": "P0",
+     "line": 10,
+     "text": "Existing non-workflow Pi agent features are not deleted merely to migrate workflow agent()."
+    },
+    {
+     "id": "WB-005",
+     "priority": "P0",
+     "line": 11,
+     "text": "Host-side node(id,input) is additive and executes without an LLM call for deterministic SDK nodes."
+    },
+    {
+     "id": "WB-006",
+     "priority": "P0",
+     "line": 12,
+     "text": "node() input/output enforce JSON transport boundary; malformed/non-serializable payloads fail before provider effects where possible."
+    },
+    {
+     "id": "WB-007",
+     "priority": "P0",
+     "line": 13,
+     "text": "Missing provider, unknown capability ID, schema mismatch and unavailable binding fail explicitly, not as null success."
+    },
+    {
+     "id": "WB-008",
+     "priority": "P0",
+     "line": 14,
+     "text": "Capability discoverability and capability invocation authorization are independent."
+    },
+    {
+     "id": "WB-009",
+     "priority": "P0",
+     "line": 15,
+     "text": "Claude session IDs, input/output, tool events, native SDK failure and token usage are translated without invented values."
+    },
+    {
+     "id": "WB-010",
+     "priority": "P0",
+     "line": 16,
+     "text": "Stopping the parent propagates cancellation only through established ownership and appropriate SDK API; stopping observation does not."
+    },
+    {
+     "id": "WB-011",
+     "priority": "P0",
+     "line": 17,
+     "text": "The existing workflow tool remains available in Pi without collision or competing shadow tool names."
+    },
+    {
+     "id": "WB-012",
+     "priority": "P0",
+     "line": 18,
+     "text": "Old workflow tests remain green under supported upstream mode and new executor-mode tests are added."
+    },
+    {
+     "id": "WB-013",
+     "priority": "P0",
+     "line": 19,
+     "text": "At least one real SDK node is proven end-to-end, plus explicit negative controls."
+    },
+    {
+     "id": "WB-014",
+     "priority": "P0",
+     "line": 20,
+     "text": "Workflow invocation carries definition, immutable implementation basis and logical invocation ID; native refs remain intact."
+    },
+    {
+     "id": "WB-015",
+     "priority": "P0",
+     "line": 21,
+     "text": "Workbench cannot turn absent/unknown/partial producer evidence into successful domain verdict."
+    },
+    {
+     "id": "WB-016",
+     "priority": "P0",
+     "line": 22,
+     "text": "Existing Pi inline workflow card and inspector remain operational through migration."
+    },
+    {
+     "id": "WB-017",
+     "priority": "P0",
+     "line": 23,
+     "text": "Operator can view node type, name, native ID, current observation freshness, and last error in a terminal detail view."
+    },
+    {
+     "id": "WB-018",
+     "priority": "P0",
+     "line": 24,
+     "text": "Pi can query bounded semantic observations without consuming raw event logs or terminal-rendered text."
+    },
+    {
+     "id": "WB-019",
+     "priority": "P0",
+     "line": 25,
+     "text": "Forge controls build/test/release verification; no GitHub CI added; no Library dependency."
+    },
+    {
+     "id": "WB-020",
+     "priority": "P0",
+     "line": 26,
+     "text": "Upstream MIT license and original copyright retained."
+    },
+    {
+     "id": "WB-021",
+     "priority": "P1",
+     "line": 27,
+     "text": "Claude SDK resume reattaches to correct session; invalid or lost session yields explicit failure, never fresh-context masquerading as resume."
+    },
+    {
+     "id": "WB-022",
+     "priority": "P1",
+     "line": 28,
+     "text": "Sandbox worker and privileged providers communicate only via validated RPC; hostile scripts cannot acquire host SDK credentials through intended API."
+    },
+    {
+     "id": "WB-023",
+     "priority": "P1",
+     "line": 29,
+     "text": "Provider nodes expose inspect/observe only where producer supports them, including event cursor or snapshot freshness."
+    },
+    {
+     "id": "WB-024",
+     "priority": "P1",
+     "line": 30,
+     "text": "Pi attaches to an externally started Furnace Run with no causal assumption that Pi owns it."
+    },
+    {
+     "id": "WB-025",
+     "priority": "P1",
+     "line": 31,
+     "text": "Workbench distinguishes Run/Work/Attempt, Forge operation and workspace basis, Claude session, HX coverage, RF provenance."
+    },
+    {
+     "id": "WB-026",
+     "priority": "P1",
+     "line": 32,
+     "text": "Interrupted effectful operation is reconciled through producer or marked uncertain; no automatic blind repeat."
+    },
+    {
+     "id": "WB-027",
+     "priority": "P1",
+     "line": 33,
+     "text": "Terminal inspector supports overview, tree/graph, timeline, detail and a keyboard-only navigation path."
+    },
+    {
+     "id": "WB-028",
+     "priority": "P1",
+     "line": 34,
+     "text": "Terminal inspector has plain ASCII tier, theme-aware color tier, and usable 80-column/24-row fallback."
+    },
+    {
+     "id": "WB-029",
+     "priority": "P1",
+     "line": 35,
+     "text": "Over 1000 nodes: render cost scales with visible slice and changed ancestors; no full historical-log fold per frame."
+    },
+    {
+     "id": "WB-030",
+     "priority": "P1",
+     "line": 36,
+     "text": "Layout, reducers, status classification and control capabilities are pure/testable without a real terminal."
+    },
+    {
+     "id": "WB-031",
+     "priority": "P1",
+     "line": 37,
+     "text": "Running and settled Claude conversations can be opened from inspector through Claude transcript adapter."
+    },
+    {
+     "id": "WB-032",
+     "priority": "P1",
+     "line": 38,
+     "text": "Pi can use observer tools to inspect definition, retrieve bounded event windows, source/evidence refs and compare two runs."
+    },
+    {
+     "id": "WB-033",
+     "priority": "P1",
+     "line": 39,
+     "text": "Hosted MechanicalWorkflows develop() executes actual exported function with explicitly bound native dependencies; fixture outputs cannot be presented as live."
+    },
+    {
+     "id": "WB-034",
+     "priority": "P1",
+     "line": 40,
+     "text": "Claude agent receives only curated, authorized provider tool surfaces; list/inspect never grant invoke."
+    },
+    {
+     "id": "WB-035",
+     "priority": "P1",
+     "line": 41,
+     "text": "Node events show result/effect distinction (transport, domain and authority-specific status)."
+    },
+    {
+     "id": "WB-036",
+     "priority": "P1",
+     "line": 42,
+     "text": "Event ingestion can reconnect/deduplicate; gaps and stale timestamps are visible."
+    },
+    {
+     "id": "WB-037",
+     "priority": "P1",
+     "line": 43,
+     "text": "Source-defined edges, observed edges and inferred links are distinguishable."
+    },
+    {
+     "id": "WB-038",
+     "priority": "P1",
+     "line": 44,
+     "text": "Versioned plan/execute/observe comparison uses immutable source and config digest references."
+    },
+    {
+     "id": "WB-039",
+     "priority": "P1",
+     "line": 45,
+     "text": "No automatic code-edit and live replacement of already pinned running execution."
+    },
+    {
+     "id": "WB-040",
+     "priority": "P1",
+     "line": 46,
+     "text": "Control actions have native preconditions, permission checks, prompts/confirmations and acknowledgements."
+    },
+    {
+     "id": "WB-041",
+     "priority": "P2",
+     "line": 47,
+     "text": "Optional detached workbench host permits Pi client disconnect/reconnect, without falsely claiming crash durability."
+    },
+    {
+     "id": "WB-042",
+     "priority": "P2",
+     "line": 48,
+     "text": "Optional Furnace host uses the verified per-Attempt extension-driver semantics (one kept host session per Run's sequential Attempts, each Attempt identified by its admission receipt; work_failure and resident-host indeterminate terminals park the Run for the operator ladder and are never auto-retrie"
+    },
+    {
+     "id": "WB-043",
+     "priority": "P2",
+     "line": 49,
+     "text": "Optional HX-based cross-product provenance queries, without mandating HX as event store."
+    },
+    {
+     "id": "WB-044",
+     "priority": "P2",
+     "line": 50,
+     "text": "RCP-assisted continuation only where explicitly supported and conformance-tested."
+    },
+    {
+     "id": "WB-045",
+     "priority": "P2",
+     "line": 51,
+     "text": "Hierarchical agent-swarm aggregation and profile comparisons handle 10k+ nodes subject to benchmarked limits."
+    },
+    {
+     "id": "WB-046",
+     "priority": "P2",
+     "line": 52,
+     "text": "Native capability-provider additions require no changes to interpreter core."
+    },
+    {
+     "id": "WB-047",
+     "priority": "P2",
+     "line": 53,
+     "text": "Workflow designer can generate tests, source diffs and evidence-linked performance recommendations."
+    },
+    {
+     "id": "WB-048",
+     "priority": "P2",
+     "line": 54,
+     "text": "Artifact/host compatibility detects mismatched digest and rejects or explicitly migrates."
+    },
+    {
+     "id": "WB-049",
+     "priority": "P2",
+     "line": 55,
+     "text": "Workbench release supports reproducible install and bounded per-provider optional dependencies."
+    },
+    {
+     "id": "WB-050",
+     "priority": "P2",
+     "line": 56,
+     "text": "Agent-driven workflow optimization demonstrates measurable improvement without introducing unverified claims."
+    }
+   ],
+   "nfrIds": [
+    "NFR-01",
+    "NFR-02",
+    "NFR-03",
+    "NFR-04",
+    "NFR-05",
+    "NFR-06",
+    "NFR-07",
+    "NFR-08"
+   ]
+  }
+ },
+ "stubCensus": {
+  "method": "grep -rnoiE 'unsupported-[a-z-]+|not implemented|unimplemented|TODO|FIXME|XXX|descriptor-only|placeholder|stub\\b' src (2026-11-11 at ce180d82)",
+  "unsupportedVocabulary": {
+   "unsupported-verb": [
+    "src/workbench/claude-control.ts:452",
+    "src/workbench/forge-control.ts:478",
+    "src/workbench/furnace-control.ts:334"
+   ],
+   "unsupported-target": [
+    "src/workbench/claude-control.ts:453"
+   ],
+   "unsupported-definition-kind": [
+    "src/workbench/execute-tool.ts:218 ('only script definitions launch in this host' — function and furnace-formula kinds accepted by schema but refused)",
+    "src/workbench/function-authority.ts:117 (comment)",
+    "src/workbench/source-admission.ts:46 (comment: 'until the dispatch bead composes this seam')"
+   ]
+  },
+  "descriptorOnlyCandidates": [
+   "src/workbench/hosts/local-detached.ts:104 nativeRuntimeIdentity: 'unsupported'",
+   "src/workbench/forge-evidence.ts:9 'EvidenceLoader/EvidenceStore wrapper ... deliberately not implemented here'",
+   "NATIVE_CONTROL_ACTIONS src/workbench/control.ts:30 — the only verbs: furnace[stop], claude-agent-sdk[interrupt], forge[cancel], local-detached[cancel,shutdown] (no pause/resume/retry)"
+  ],
+  "markerHitsPerFile": {
+   "src/workbench/hosts/local-detached.ts": 12,
+   "src/index.ts": 9,
+   "src/workflow/progress.ts": 4,
+   "src/workbench/claude-topology.ts": 4,
+   "src/workbench/claude-control.ts": 4,
+   "src/workbench/mechanical-descriptor.ts": 3,
+   "src/agent-file-toggle.ts": 3
+  },
+  "noTodoFixme": "grep TODO|FIXME|XXX in src returned only these marker classes; no literal TODO/FIXME lines were found (detection surface: case-insensitive grep over src/**/*.ts)"
+ },
+ "families": [
+  {
+   "id": "F01",
+   "name": "subagents-agent-manager (Agent tool, runner, nested tools, steer/get_result, @mentions, structured output, worktree isolation, memory, skills)",
+   "axesEmphasis": [
+    "LX",
+    "UX",
+    "QoL",
+    "friction"
+   ],
+   "sharedFiles": [
+    "src/index.ts (composition root; see compositionRoot line map)"
+   ],
+   "files": [
+    "src/abortable.ts",
+    "src/agent-color.ts",
+    "src/agent-file-toggle.ts",
+    "src/agent-manager.ts",
+    "src/agent-runner.ts",
+    "src/agent-types.ts",
+    "src/child-context.ts",
+    "src/context.ts",
+    "src/custom-agents.ts",
+    "src/default-agents.ts",
+    "src/group-join.ts",
+    "src/index.ts",
+    "src/invocation-config.ts",
+    "src/memory.ts",
+    "src/mention-clone.ts",
+    "src/mention.ts",
+    "src/nested-tools.ts",
+    "src/output-file.ts",
+    "src/prompts.ts",
+    "src/skill-loader.ts",
+    "src/status-note.ts",
+    "src/structured-output.ts",
+    "src/types.ts",
+    "src/ui/agent-mention.ts",
+    "src/usage.ts",
+    "src/worktree.ts",
+    "src/xml.ts"
+   ],
+   "tests": [
+    "test/agent-color-surfaces.test.ts",
+    "test/agent-color.test.ts",
+    "test/agent-dir.test.ts",
+    "test/agent-file-bom.test.ts",
+    "test/agent-file-toggle.test.ts",
+    "test/agent-manager-gc.test.ts",
+    "test/agent-manager.test.ts",
+    "test/agent-mention-provider.test.ts",
+    "test/agent-mention-wiring.test.ts",
+    "test/agent-model-display.test.ts",
+    "test/agent-runner-e2e.test.ts",
+    "test/agent-runner-settings.test.ts",
+    "test/agent-runner.test.ts",
+    "test/agent-startup-error.test.ts",
+    "test/agent-tool-error-rendering.test.ts",
+    "test/agent-types.test.ts",
+    "test/agent-widget.test.ts",
+    "test/e2e/isolated-provider.e2e.test.ts",
+    "test/e2e/mention-clone-tool-reachability.e2e.test.ts",
+    "test/e2e/tool-veto-reachability.e2e.test.ts",
+    "test/e2e/usage-reaches-session-stats.e2e.test.ts",
+    "test/foreground-concurrency-print-mode-e2e.test.ts",
+    "test/foreground-concurrency-wiring.test.ts",
+    "test/foreground-concurrency.test.ts",
+    "test/foreground-result-retrieval.test.ts",
+    "test/mention-clone.test.ts",
+    "test/mention-start-notification.test.ts",
+    "test/mention.test.ts",
+    "test/nested-delegation-e2e.test.ts",
+    "test/nested-tools.test.ts",
+    "test/output-file-compaction-e2e.test.ts",
+    "test/output-file-path.test.ts",
+    "test/output-file.test.ts",
+    "test/output-transcript-wiring.test.ts",
+    "test/perf/spawn-invariants.perf.test.ts",
+    "test/perf/spawn.bench.ts",
+    "test/structured-output.test.ts",
+    "test/subagents-nested-print-mode-e2e.test.ts",
+    "test/subagents-print-mode-e2e.test.ts",
+    "test/worktree-isolation-e2e.test.ts",
+    "test/worktree-preservation-failure-e2e.test.ts",
+    "test/worktree-preservation-settlement.test.ts",
+    "test/worktree-process-kill-preservation.test.ts",
+    "test/worktree.test.ts"
+   ],
+   "qaScripts": [],
+   "docs": [
+    "README.md (Tools/Agent, Custom Agents, Default Agent Types, Graceful Max Turns, Concurrency, Join Strategies, Worktree Isolation, Skill Preloading, Tool Denylist, Persistent Agent Memory)",
+    "examples/agent-tool-description.md"
+   ],
+   "promiseRefs": [
+    "W01 (upstream baseline protected)",
+    "WB-004",
+    "WB-011"
+   ],
+   "probeEntrypoints": [
+    "pi -e $PIN/src/index.ts (load extension) then Agent tool call; `/agents` menu",
+    "cd $PIN && ./node_modules/.bin/vitest run test/agent-manager.test.ts test/agent-runner.test.ts",
+    "read the model-facing schema text: src/index.ts:1740-1795 (Agent), :3640-3654 (get_subagent_result), :3730-3737 (steer_subagent)",
+    "token cost of replies: AgentDetails stats line src/index.ts:1831-1845; <task-notification> XML src/index.ts:205-233"
+   ],
+   "notes": "Upstream surface; always registered. Reply dialect: text+details, custom renderers.",
+   "counts": {
+    "files": 27,
+    "tests": 44,
+    "qa": 0
+   }
+  },
+  {
+   "id": "F02",
+   "name": "workflow-script-runtime (SubagentWorkflow tool, script language agent/parallel/node/log/phase/args/workflow, worker thread, progress, admission, node() worker RPC bridge, cross-extension RPC)",
+   "axesEmphasis": [
+    "LX",
+    "DX",
+    "friction",
+    "gap"
+   ],
+   "sharedFiles": [
+    "src/index.ts (composition root; see compositionRoot line map)"
+   ],
+   "files": [
+    "src/cross-extension-rpc.ts",
+    "src/workflow/admission.ts",
+    "src/workflow/collisions.ts",
+    "src/workflow/entry.ts",
+    "src/workflow/host.ts",
+    "src/workflow/json-schema.ts",
+    "src/workflow/meta.ts",
+    "src/workflow/progress.ts",
+    "src/workflow/runtime.ts",
+    "src/workflow/saved.ts",
+    "src/workflow/task.ts",
+    "src/workflow/telemetry.ts",
+    "src/workflow/tool-description.ts",
+    "src/workflow/worker-source.ts"
+   ],
+   "tests": [
+    "test/e2e/workflow.e2e.test.ts",
+    "test/rpc-lifecycle-gating.test.ts",
+    "test/rpc-result-consumption.test.ts",
+    "test/workbench-node-contract.test.ts",
+    "test/workbench-node-limits.test.ts",
+    "test/workflow-agent-rpc-hardening.test.ts",
+    "test/workflow-borrowed.test.ts",
+    "test/workflow-claude-code-compat.test.ts",
+    "test/workflow-command.test.ts",
+    "test/workflow-conformance.census.ts",
+    "test/workflow-dialog-open-agent.test.ts",
+    "test/workflow-dialog.test.ts",
+    "test/workflow-effect-replay.test.ts",
+    "test/workflow-effective-config.test.ts",
+    "test/workflow-examples-claude-backend.test.ts",
+    "test/workflow-examples.test.ts",
+    "test/workflow-gate-worktree.test.ts",
+    "test/workflow-interpreter-env.test.ts",
+    "test/workflow-isolated.test.ts",
+    "test/workflow-journal-compat.test.ts",
+    "test/workflow-journal-dispatch-wiring.test.ts",
+    "test/workflow-journal.test.ts",
+    "test/workflow-json-schema.test.ts",
+    "test/workflow-meta-ast.test.ts",
+    "test/workflow-meta.test.ts",
+    "test/workflow-progress-frame-hardening.test.ts",
+    "test/workflow-progress.test.ts",
+    "test/workflow-reconcile.test.ts",
+    "test/workflow-render.test.ts",
+    "test/workflow-runtime.test.ts",
+    "test/workflow-task.test.ts",
+    "test/workflow-tool-description.test.ts",
+    "test/workflow-tool.test.ts"
+   ],
+   "qaScripts": [
+    "qa/workbench/headless-census-child.mjs",
+    "qa/workbench/headless-census-receipt.mjs",
+    "qa/workbench/headless-host-census.mjs",
+    "qa/workbench/mwi-multiworkflow-load-bench.mjs",
+    "qa/workbench/mwi-multiworkflow-load.mjs"
+   ],
+   "docs": [
+    "docs/workflows.md",
+    "docs/rpc.md",
+    "docs/workbench/05-script-language-and-runtime.md",
+    "README.md ## Tools/SubagentWorkflow, ## Events, ## Cross-Extension RPC",
+    "examples/workflows/*.js"
+   ],
+   "promiseRefs": [
+    "W05 (node() language/RPC)",
+    "W12 rows 1-3",
+    "WB-001",
+    "WB-003",
+    "WB-005",
+    "WB-006",
+    "WB-011",
+    "WB-022",
+    "VC-2"
+   ],
+   "probeEntrypoints": [
+    "SubagentWorkflow with examples/workflows/compose.js via --subagents-workflow-file",
+    "cd $PIN && ./node_modules/.bin/vitest run test/workflow-examples.test.ts",
+    "./node_modules/.bin/vitest run --config vitest.census.config.ts test/workflow-conformance.census.ts",
+    "model-facing description: node -e \"import('./src/workflow/tool-description.ts')\" or read src/workflow/tool-description.ts:60-160 (token cost of the tool description per toolDescriptionMode)",
+    "RPC: docs/rpc.md honoured/stripped tables vs src/cross-extension-rpc.ts:97 registerRpcHandlers"
+   ],
+   "notes": "Gate: settings.workflowsEnabled. Script globals set at src/workflow/worker-source.ts (scope.agent/node/phase/log/workflow/console/prefix). Concurrency cap min(16, CPUs-2) per workflow (tool-description.ts:118).",
+   "counts": {
+    "files": 14,
+    "tests": 33,
+    "qa": 5
+   }
+  },
+  {
+   "id": "F03",
+   "name": "journal-replay-recovery-reconcile (journal, journal-compat, resumeFromRunId replay, workflow_reconcile tool, replay dependencies)",
+   "axesEmphasis": [
+    "LX",
+    "DX",
+    "gap",
+    "stub"
+   ],
+   "sharedFiles": [
+    "src/index.ts (composition root; see compositionRoot line map)"
+   ],
+   "files": [
+    "src/workbench/reconcile-decision.ts",
+    "src/workbench/reconcile-tool.ts",
+    "src/workbench/replay-dependencies.ts",
+    "src/workflow/journal-compat.ts",
+    "src/workflow/journal.ts",
+    "src/workflow/reconcile.ts"
+   ],
+   "tests": [
+    "test/workbench-docs08-replay-reconcile.census.ts",
+    "test/workbench-reconcile-decision.test.ts",
+    "test/workbench-replay-basis-dimensions.test.ts",
+    "test/workbench-replay-dependencies-wiring.test.ts",
+    "test/workbench-replay-dependency-fail-closed.test.ts",
+    "test/workbench-replay-dependency-readers.test.ts",
+    "test/workbench-replay-dependency-routed-forms.test.ts",
+    "test/workflow-journal-compat.test.ts",
+    "test/workflow-journal-dispatch-wiring.test.ts",
+    "test/workflow-journal.test.ts"
+   ],
+   "qaScripts": [
+    "qa/workbench/observation-recovery-bench.mjs",
+    "qa/workbench/observation-recovery-receipt.mjs"
+   ],
+   "docs": [
+    "docs/workbench/08-lifecycle-and-recovery.md",
+    "docs/workflows.md (resume section)"
+   ],
+   "promiseRefs": [
+    "W12 (task/journal split and side-effect policy; in-progress row: fail-closed resume for journaled nodes with ABSENT effectClass — bead wb-tu1)",
+    "WB-021",
+    "WB-026",
+    "WB-039",
+    "NFR-02"
+   ],
+   "probeEntrypoints": [
+    "SubagentWorkflow {resumeFromRunId} after a changed script; inspect journal files under the session dir",
+    "workflow_reconcile {taskId, action:'inspect'} on a run with an uncertain effect (requires backend claude)",
+    "cd $PIN && ./node_modules/.bin/vitest run --config vitest.census.config.ts test/workbench-docs08-replay-reconcile.census.ts"
+   ],
+   "notes": "Reconcile schema has 14 optional fields and three id regexes (rcp_/ack_/wf_) — LX schema-clarity probe target.",
+   "counts": {
+    "files": 6,
+    "tests": 10,
+    "qa": 2
+   }
+  },
+  {
+   "id": "F04",
+   "name": "execute-script-run (workflow_execute, admission, source admission, hostMode embedded|detached, definitionRef kinds)",
+   "axesEmphasis": [
+    "LX",
+    "stub",
+    "gap",
+    "missing-req"
+   ],
+   "sharedFiles": [
+    "src/index.ts (composition root; see compositionRoot line map)"
+   ],
+   "files": [
+    "src/workbench/execute-tool.ts",
+    "src/workbench/execute.ts",
+    "src/workbench/source-admission.ts"
+   ],
+   "tests": [
+    "test/workbench-execute-tool.test.ts",
+    "test/workbench-execute.test.ts"
+   ],
+   "qaScripts": [
+    "qa/workbench/install-smoke.mjs"
+   ],
+   "docs": [
+    "docs/workbench/11-designer-and-operator.md § First public Pi tools",
+    "docs/workbench/13-contracts-and-config.md"
+   ],
+   "promiseRefs": [
+    "W16 row 4 (partial: bounded reply-builder slices for execute/validate/compare)",
+    "WB-014",
+    "WB-038",
+    "WB-048"
+   ],
+   "probeEntrypoints": [
+    "workflow_execute {definitionRef:{kind:'function',...}} -> expect refusal unsupported-definition-kind (src/workbench/execute-tool.ts:218)",
+    "workflow_execute hostMode:'detached' without workbench:detach -> missing-detach-grant (:216)",
+    "cd $PIN && ./node_modules/.bin/vitest run test/workbench-execute*.test.ts"
+   ],
+   "notes": "Schema accepts kind script|function|furnace-formula (execute-tool.ts:182) but only script launches: ESTABLISHED-by-code-read stub candidate for the stub axis.",
+   "counts": {
+    "files": 3,
+    "tests": 2,
+    "qa": 1
+   }
+  },
+  {
+   "id": "F05",
+   "name": "observe-control-compare tools (observation projection, workflow_observe, workflow_control + 4 adapters, workflow_compare, workbench_catalog, workflow_inspect, workflow_catalog, workflow_validate, forge_gate_run; evidence loader; redaction; selectors)",
+   "axesEmphasis": [
+    "LX",
+    "UX",
+    "QoL",
+    "gap",
+    "stub"
+   ],
+   "sharedFiles": [
+    "src/index.ts (composition root; see compositionRoot line map)"
+   ],
+   "files": [
+    "src/workbench/attention.ts",
+    "src/workbench/claude-control-observer.ts",
+    "src/workbench/claude-control.ts",
+    "src/workbench/control-reply.ts",
+    "src/workbench/control-tool.ts",
+    "src/workbench/control.ts",
+    "src/workbench/designer.ts",
+    "src/workbench/detached-control.ts",
+    "src/workbench/evidence-loader.ts",
+    "src/workbench/evidence-producers.ts",
+    "src/workbench/evidence-wiring.ts",
+    "src/workbench/forge-control-retention.ts",
+    "src/workbench/forge-control.ts",
+    "src/workbench/forge-operation-observer.ts",
+    "src/workbench/furnace-control.ts",
+    "src/workbench/graph-view.ts",
+    "src/workbench/identity.ts",
+    "src/workbench/latency.ts",
+    "src/workbench/native-evidence.ts",
+    "src/workbench/observation.ts",
+    "src/workbench/observe-query.ts",
+    "src/workbench/patch-proposal.ts",
+    "src/workbench/redaction.ts",
+    "src/workbench/telemetry.ts",
+    "src/workbench/timeline.ts",
+    "src/workbench/tool-replies.ts",
+    "src/workbench/topology-slice.ts",
+    "src/workbench/validate-reply.ts"
+   ],
+   "tests": [
+    "test/workbench-acceptance-controls.test.ts",
+    "test/workbench-attention-grouped-bench.test.ts",
+    "test/workbench-attention-relations-page.test.ts",
+    "test/workbench-attention.test.ts",
+    "test/workbench-claude-control-live-receipt.test.ts",
+    "test/workbench-claude-control-live.test.ts",
+    "test/workbench-claude-control-observer.test.ts",
+    "test/workbench-claude-control-retention-reuse.test.ts",
+    "test/workbench-claude-control.test.ts",
+    "test/workbench-claude-host-control-retention.test.ts",
+    "test/workbench-claude-observer-control-hooks.test.ts",
+    "test/workbench-control-admission.test.ts",
+    "test/workbench-control-degradation.test.ts",
+    "test/workbench-control-provenance-depth.test.ts",
+    "test/workbench-control-provenance.test.ts",
+    "test/workbench-control-reply.test.ts",
+    "test/workbench-control-tool.test.ts",
+    "test/workbench-control.test.ts",
+    "test/workbench-designer.test.ts",
+    "test/workbench-detached-control-live-receipt.test.ts",
+    "test/workbench-detached-control-live.test.ts",
+    "test/workbench-detached-control.test.ts",
+    "test/workbench-docs09-readers-relationships.census.ts",
+    "test/workbench-docs12-authorization.census.ts",
+    "test/workbench-docs20-contract.census.ts",
+    "test/workbench-evidence-grant-wording.test.ts",
+    "test/workbench-evidence-line-split.test.ts",
+    "test/workbench-evidence-loader.test.ts",
+    "test/workbench-evidence-retained-bench.test.ts",
+    "test/workbench-evidence-wiring.test.ts",
+    "test/workbench-fo-controller-arbitration-census.test.ts",
+    "test/workbench-forge-control-live.test.ts",
+    "test/workbench-forge-control-retention.test.ts",
+    "test/workbench-forge-control.test.ts",
+    "test/workbench-forge-operation-observer.test.ts",
+    "test/workbench-forge-proposal-admission-census.test.ts",
+    "test/workbench-format-control-census.test.ts",
+    "test/workbench-furnace-control-live-receipt.test.ts",
+    "test/workbench-furnace-control-live.test.ts",
+    "test/workbench-furnace-control.test.ts",
+    "test/workbench-gp-control-loop-audit.test.ts",
+    "test/workbench-gp-reply-admission-census.test.ts",
+    "test/workbench-graph-view.test.ts",
+    "test/workbench-hx-admission-reason-census.test.ts",
+    "test/workbench-identity-shell.test.ts",
+    "test/workbench-identity-ui.test.ts",
+    "test/workbench-identity.test.ts",
+    "test/workbench-inspector-attention-wiring.test.ts",
+    "test/workbench-inspector-cap-remainder.test.ts",
+    "test/workbench-inspector-graph-wiring.test.ts",
+    "test/workbench-inspector-panes.test.ts",
+    "test/workbench-inspector-timeline-wiring.test.ts",
+    "test/workbench-inspector-timeline.test.ts",
+    "test/workbench-inspector-topology-wiring.test.ts",
+    "test/workbench-inspector-topology.test.ts",
+    "test/workbench-inspector-window.test.ts",
+    "test/workbench-inspector.test.ts",
+    "test/workbench-latency-truncated-ref.test.ts",
+    "test/workbench-latency.test.ts",
+    "test/workbench-mechanical-host-admission.test.ts",
+    "test/workbench-mechanical-source-admission.test.ts",
+    "test/workbench-observation-aggregates.test.ts",
+    "test/workbench-observation-class-census.test.ts",
+    "test/workbench-observation-identity-admission.test.ts",
+    "test/workbench-observation-members-census.test.ts",
+    "test/workbench-observation-perf.test.ts",
+    "test/workbench-observation-recovery-receipt.test.ts",
+    "test/workbench-observation-relations-page.test.ts",
+    "test/workbench-observation-shell.test.ts",
+    "test/workbench-observation.test.ts",
+    "test/workbench-observe-identity-refusals.test.ts",
+    "test/workbench-observe-query.test.ts",
+    "test/workbench-patch-proposal.test.ts",
+    "test/workbench-pi-claude-control.test.ts",
+    "test/workbench-redaction.test.ts",
+    "test/workbench-registry-admission.test.ts",
+    "test/workbench-telemetry.test.ts",
+    "test/workbench-timeline-grouped-bench.test.ts",
+    "test/workbench-timeline-relations-page.test.ts",
+    "test/workbench-timeline.test.ts",
+    "test/workbench-tool-exposure-census.census.ts",
+    "test/workbench-tool-replies.test.ts",
+    "test/workbench-tool-reply-bench.test.ts",
+    "test/workbench-topology-slice-grouped-bench.test.ts",
+    "test/workbench-topology-slice.test.ts",
+    "test/workbench-validate-reply.test.ts"
+   ],
+   "qaScripts": [
+    "qa/workbench/attention-grouped-bench.mjs",
+    "qa/workbench/designer-client.mjs",
+    "qa/workbench/forge-gate-status-probe.mjs",
+    "qa/workbench/forge-transport-probe.mjs",
+    "qa/workbench/observation-recovery-bench.mjs",
+    "qa/workbench/reducer-selector-bench.mjs",
+    "qa/workbench/timeline-grouped-bench.mjs",
+    "qa/workbench/timeline-grouped-core.mjs",
+    "qa/workbench/tool-reply-bench.mjs",
+    "qa/workbench/topology-slice-grouped-bench.mjs"
+   ],
+   "docs": [
+    "docs/workbench/09-observation-and-provenance.md",
+    "docs/workbench/11-designer-and-operator.md",
+    "docs/workbench/12-security.md",
+    "docs/workbench/20-evidence-loader-contract.md",
+    "docs/workbench/06-capability-registry.md"
+   ],
+   "promiseRefs": [
+    "W13",
+    "W14",
+    "W16 (all 4 rows partial)",
+    "W17",
+    "W19",
+    "WB-015",
+    "WB-017",
+    "WB-018",
+    "WB-023",
+    "WB-025",
+    "WB-032",
+    "WB-035",
+    "WB-036",
+    "WB-037",
+    "WB-038",
+    "WB-040",
+    "NFR-01",
+    "NFR-03",
+    "VC-4",
+    "VC-6"
+   ],
+   "probeEntrypoints": [
+    "Each tool's reply JSON: build via the pure builders (src/workbench/observe-query.ts, tool-replies.ts, validate-reply.ts, control-reply.ts) in a vitest or node -e script; measure bytes/tokens per reply (W21-E planned receipt)",
+    "workflow_control {target:{provider:'forge',type:'operation',id}, action:'pause'} -> unsupported-verb (src/workbench/forge-control.ts:478)",
+    "cd $PIN && node qa/workbench/tool-reply-bench.mjs",
+    "cd $PIN && node qa/workbench/forge-transport-probe.mjs (drives forge app-server for real)",
+    "./node_modules/.bin/vitest run --config vitest.forge-control-live.config.ts (live)"
+   ],
+   "notes": "Nine of the 12 workbench tools live here; all gated on workflowAgentBackend=claude + native load. Reply dialect is JSON-in-text with contract versions (workbench.*/v1).",
+   "counts": {
+    "files": 28,
+    "tests": 86,
+    "qa": 10
+   }
+  },
+  {
+   "id": "F06",
+   "name": "inspector-tui (/agents menu, workflow inspector 4 views, two-pane dialog, inline card, fleet list, agent widget, conversation viewer, schedule menu, mention autocomplete)",
+   "axesEmphasis": [
+    "UX",
+    "QoL",
+    "friction",
+    "DX"
+   ],
+   "sharedFiles": [
+    "src/index.ts (composition root; see compositionRoot line map)"
+   ],
+   "files": [
+    "src/agent-color.ts",
+    "src/ui/agent-mention.ts",
+    "src/ui/agent-widget.ts",
+    "src/ui/conversation-viewer.ts",
+    "src/ui/fleet-list.ts",
+    "src/ui/schedule-menu.ts",
+    "src/ui/select-item.ts",
+    "src/ui/viewer-keys.ts",
+    "src/ui/workflow-card.ts",
+    "src/ui/workflow-dialog.ts",
+    "src/ui/workflow-inspector.ts",
+    "src/ui/workflow-menu.ts"
+   ],
+   "tests": [
+    "test/fleet-list.test.ts",
+    "test/fleet-wiring.test.ts",
+    "test/perf/formatters.bench.ts",
+    "test/perf/no-fs-on-render.perf.test.ts",
+    "test/perf/render-invariants.perf.test.ts",
+    "test/perf/viewer.bench.ts",
+    "test/perf/widget.bench.ts",
+    "test/workbench-docs10-deception-defenses.census.ts",
+    "test/workbench-evidence-ui-census.census.ts",
+    "test/workbench-inspector-attention-wiring.test.ts",
+    "test/workbench-inspector-cap-remainder.test.ts",
+    "test/workbench-inspector-graph-wiring.test.ts",
+    "test/workbench-inspector-panes.test.ts",
+    "test/workbench-inspector-timeline-wiring.test.ts",
+    "test/workbench-inspector-timeline.test.ts",
+    "test/workbench-inspector-topology-wiring.test.ts",
+    "test/workbench-inspector-topology.test.ts",
+    "test/workbench-inspector-window.test.ts",
+    "test/workbench-inspector.test.ts",
+    "test/workbench-rendering-pipeline.census.ts",
+    "test/workbench-ui-contract.test.ts"
+   ],
+   "qaScripts": [
+    "qa/workbench/cap-saturation.mjs",
+    "qa/workbench/inspector-bench.mjs",
+    "qa/workbench/inspector-cap-saturation-bench.mjs",
+    "qa/workbench/inspector-evidence-retained-bench.mjs",
+    "qa/workbench/inspector-grouped-bench.mjs",
+    "qa/workbench/inspector-retained-memory-bench.mjs",
+    "qa/workbench/inspector-smoke.mjs",
+    "qa/workbench/line-diff-bench.mjs",
+    "qa/workbench/live-operator-receipt.mjs",
+    "qa/workbench/retained-memory.mjs"
+   ],
+   "docs": [
+    "docs/workbench/10-terminal-inspector.md",
+    "README.md ## UI (:112), ## Commands (:484)"
+   ],
+   "promiseRefs": [
+    "W15 (4 of 5 rows partial)",
+    "W21",
+    "WB-016",
+    "WB-017",
+    "WB-027",
+    "WB-028",
+    "WB-029",
+    "WB-030",
+    "WB-031",
+    "NFR-04",
+    "VC-5"
+   ],
+   "probeEntrypoints": [
+    "pi -e $PIN/src/index.ts, run a workflow, /agents -> Workflows -> inspector; test 80x24 ASCII tier",
+    "cd $PIN && node qa/workbench/inspector-smoke.mjs",
+    "cd $PIN && node qa/workbench/inspector-bench.mjs",
+    "./node_modules/.bin/vitest run test/workbench-inspector.test.ts",
+    "keys: reduceInspectorKey src/ui/workflow-inspector.ts:252; handleWorkflowDialogKey src/ui/workflow-dialog.ts:1090; README key table :484+"
+   ],
+   "notes": "Operator terminal-journey acceptance for VC-1 is 'planned' (feature-matrix W02 row 6, bead wb-a2g.3): no reproducible pty receipt on trunk.",
+   "counts": {
+    "files": 12,
+    "tests": 21,
+    "qa": 10
+   }
+  },
+  {
+   "id": "F07",
+   "name": "detached-host and furnace-hosted execution (workflow_detached, local-detached Unix-socket host, furnace-hosted ExecutorApp, executable identity, scrubbed env)",
+   "axesEmphasis": [
+    "DX",
+    "LX",
+    "gap",
+    "stub"
+   ],
+   "sharedFiles": [
+    "src/index.ts (composition root; see compositionRoot line map)"
+   ],
+   "files": [
+    "src/workbench/detached-control.ts",
+    "src/workbench/detached-observer.ts",
+    "src/workbench/executable-identity.ts",
+    "src/workbench/hosts/furnace-hosted.ts",
+    "src/workbench/hosts/local-detached.ts",
+    "src/workbench/process-env.ts"
+   ],
+   "tests": [
+    "test/workbench-child-crash-faults.census.ts",
+    "test/workbench-detached-child-environ.test.ts",
+    "test/workbench-detached-control-live-receipt.test.ts",
+    "test/workbench-detached-control-live.test.ts",
+    "test/workbench-detached-control.test.ts",
+    "test/workbench-detached-faults-receipt.test.ts",
+    "test/workbench-detached-grants.test.ts",
+    "test/workbench-detached-hostile-child.test.ts",
+    "test/workbench-detached-observer.test.ts",
+    "test/workbench-detached-shared-child-receipt.test.ts",
+    "test/workbench-detached-socket-base.test.ts",
+    "test/workbench-detached-timing-guard.test.ts",
+    "test/workbench-detached-timing.test.ts",
+    "test/workbench-executable-identity.test.ts",
+    "test/workbench-fault-injection-census.census.ts",
+    "test/workbench-furnace-hosted-real.test.ts",
+    "test/workbench-furnace-hosted-retry-fault-receipt.test.ts",
+    "test/workbench-furnace-hosted-retry-fault.test.ts",
+    "test/workbench-furnace-hosted-retry-live-receipt.test.ts",
+    "test/workbench-furnace-hosted.test.ts",
+    "test/workbench-local-detached-effects.test.ts",
+    "test/workbench-local-detached.test.ts",
+    "test/workbench-pi-detached.test.ts",
+    "test/workbench-process-env.test.ts"
+   ],
+   "qaScripts": [
+    "qa/workbench/detached-control-live-receipt.mjs",
+    "qa/workbench/furnace-hosted-retry-fault-receipt.mjs",
+    "qa/workbench/furnace-hosted-retry-fault.mjs",
+    "qa/workbench/live-resume.mjs",
+    "qa/workbench/local-detached-client.mjs",
+    "qa/workbench/local-detached-faults-receipt.mjs",
+    "qa/workbench/local-detached-faults.mjs",
+    "qa/workbench/local-detached-shared-child-receipt.mjs",
+    "qa/workbench/local-detached-shared-child.mjs",
+    "qa/workbench/local-detached.sh"
+   ],
+   "docs": [
+    "docs/workbench/18-decisions-and-risks.md",
+    "docs/workbench/08-lifecycle-and-recovery.md",
+    "docs/workbench/17-packaging-and-operations.md"
+   ],
+   "promiseRefs": [
+    "W18 (3 landed-gated, 1 partial: fault-injection conformance)",
+    "WB-041",
+    "WB-042",
+    "VC-7"
+   ],
+   "probeEntrypoints": [
+    "cd $PIN && bash qa/workbench/local-detached.sh",
+    "cd $PIN && node qa/workbench/local-detached-faults.mjs",
+    "./node_modules/.bin/vitest run test/workbench-local-detached.test.ts",
+    "./node_modules/.bin/vitest run --config vitest.furnace-hosted.config.ts (needs furnace on PATH: furnace 0.1.0 855f8265bf43 present)",
+    "workflow_detached {action:'inspect', invocationId} on a never-launched id -> refusal shape"
+   ],
+   "notes": "DetachedReceipt declares nativeRuntimeIdentity:'unsupported', security 'same-machine-os-dac-only', lifetime 'survives-client-disconnect-not-host-crash' (local-detached.ts:102-105).",
+   "counts": {
+    "files": 6,
+    "tests": 24,
+    "qa": 10
+   }
+  },
+  {
+   "id": "F08",
+   "name": "furnace-observe (furnace_observe tool, furnace.run.inspect provider, Run->Attempt topology observer, attempt-log evidence, furnace control adapter)",
+   "axesEmphasis": [
+    "LX",
+    "DX",
+    "gap",
+    "stub"
+   ],
+   "sharedFiles": [
+    "src/index.ts (composition root; see compositionRoot line map)"
+   ],
+   "files": [
+    "src/workbench/furnace-control.ts",
+    "src/workbench/furnace-evidence.ts",
+    "src/workbench/furnace-observer.ts",
+    "src/workbench/providers/furnace.ts"
+   ],
+   "tests": [
+    "test/workbench-external-furnace.test.ts",
+    "test/workbench-furnace-cac-citation-status-census.test.ts",
+    "test/workbench-furnace-cac-citation-status-readers-census.test.ts",
+    "test/workbench-furnace-control-live-receipt.test.ts",
+    "test/workbench-furnace-control-live.test.ts",
+    "test/workbench-furnace-control.test.ts",
+    "test/workbench-furnace-episode-lineage-census.test.ts",
+    "test/workbench-furnace-evidence.test.ts",
+    "test/workbench-furnace-hosted-real.test.ts",
+    "test/workbench-furnace-hosted-retry-fault-receipt.test.ts",
+    "test/workbench-furnace-hosted-retry-fault.test.ts",
+    "test/workbench-furnace-hosted-retry-live-receipt.test.ts",
+    "test/workbench-furnace-hosted.test.ts",
+    "test/workbench-furnace-nested-rendering-census.test.ts",
+    "test/workbench-furnace-observe-served-census.test.ts",
+    "test/workbench-furnace-observer-boundary-census.test.ts",
+    "test/workbench-furnace-observer.test.ts",
+    "test/workbench-furnace-real-active.test.ts",
+    "test/workbench-furnace-reply-tolerance.test.ts",
+    "test/workbench-furnace-revendor-readiness-census.test.ts",
+    "test/workbench-furnace-sdk-entry-reader-members-census.test.ts",
+    "test/workbench-furnace-sdk-entry-readers-census.test.ts",
+    "test/workbench-furnace-topology.test.ts",
+    "test/workbench-furnace-vc4-receipt.test.ts",
+    "test/workbench-furnace-world-model-authority-census.test.ts",
+    "test/workbench-furnace-world-model-preservation-census.test.ts",
+    "test/workbench-pi-furnace-observer.test.ts",
+    "test/workbench-pi-furnace-real-client.test.ts"
+   ],
+   "qaScripts": [
+    "qa/workbench/furnace-hosted-retry-fault-receipt.mjs",
+    "qa/workbench/furnace-hosted-retry-fault.mjs",
+    "qa/workbench/live-furnace-vc4-launch.mjs",
+    "qa/workbench/live-furnace-vc4-receipt.mjs",
+    "qa/workbench/live-furnace-vc4.mjs"
+   ],
+   "docs": [
+    "docs/workbench/07-native-integrations.md § Furnace provider",
+    "docs/workbench/20-evidence-loader-contract.md (furnace run row)"
+   ],
+   "promiseRefs": [
+    "W09 (3 landed-gated, 1 partial: Furnace invocation + native control actions pause/stop)",
+    "WB-024",
+    "WB-025",
+    "VC-4"
+   ],
+   "probeEntrypoints": [
+    "furnace --version; furnace run start on a fixture formula then furnace_observe {runId} via the extension",
+    "cd $PIN && ./node_modules/.bin/vitest run --config vitest.furnace.config.ts",
+    "cd $PIN && ./node_modules/.bin/vitest run --config vitest.furnace-active.config.ts",
+    "cd $PIN && node qa/workbench/live-furnace-vc4.mjs",
+    "workflow_control {provider:'furnace', action:'pause'} -> unsupported-verb (NATIVE_CONTROL_ACTIONS furnace=[stop], src/workbench/control.ts:31)"
+   ],
+   "notes": "SDK Run.events() follows one Attempt's output, NOT Run lifecycle (furnace-observer.ts header).",
+   "counts": {
+    "files": 4,
+    "tests": 28,
+    "qa": 5
+   }
+  },
+  {
+   "id": "F09",
+   "name": "providers hx/rf/forge + capability registry + native module seam + Claude host (hyperunix.find, reactivefiber.render.preview, forge.gate.status; observers; evidence readers; claude-host; curated capability_* tools)",
+   "axesEmphasis": [
+    "LX",
+    "DX",
+    "gap",
+    "stub",
+    "friction"
+   ],
+   "sharedFiles": [
+    "src/index.ts (composition root; see compositionRoot line map)"
+   ],
+   "files": [
+    "src/workbench/capability-registry.ts",
+    "src/workbench/claude-capability-tools.ts",
+    "src/workbench/claude-evidence.ts",
+    "src/workbench/claude-host.ts",
+    "src/workbench/claude-topology.ts",
+    "src/workbench/claude-transcript.ts",
+    "src/workbench/forge-evidence.ts",
+    "src/workbench/forge-observer.ts",
+    "src/workbench/hyperunix-observer.ts",
+    "src/workbench/native-modules.ts",
+    "src/workbench/providers/forge.ts",
+    "src/workbench/providers/furnace.ts",
+    "src/workbench/providers/hyperunix.ts",
+    "src/workbench/providers/reactivefiber.ts",
+    "src/workbench/reactivefiber-observer.ts"
+   ],
+   "tests": [
+    "test/workbench-capability-surface-parity.test.ts",
+    "test/workbench-claude-abort-ack-grace.test.ts",
+    "test/workbench-claude-adverse-faults.test.ts",
+    "test/workbench-claude-adverse-receipt.test.ts",
+    "test/workbench-claude-cancel-faults.test.ts",
+    "test/workbench-claude-capability-tools.test.ts",
+    "test/workbench-claude-control-live-receipt.test.ts",
+    "test/workbench-claude-control-live.test.ts",
+    "test/workbench-claude-control-observer.test.ts",
+    "test/workbench-claude-control-retention-reuse.test.ts",
+    "test/workbench-claude-control.test.ts",
+    "test/workbench-claude-evidence.test.ts",
+    "test/workbench-claude-host-control-retention.test.ts",
+    "test/workbench-claude-host-degradation.test.ts",
+    "test/workbench-claude-host-revocation-falsifiers.test.ts",
+    "test/workbench-claude-interrupt-faults.test.ts",
+    "test/workbench-claude-message-ref.test.ts",
+    "test/workbench-claude-observer-control-hooks.test.ts",
+    "test/workbench-claude-observer.test.ts",
+    "test/workbench-claude-pi-live.test.ts",
+    "test/workbench-claude-replay-dependencies.test.ts",
+    "test/workbench-claude-role-tools.test.ts",
+    "test/workbench-claude-served-model.test.ts",
+    "test/workbench-claude-tool-grants.test.ts",
+    "test/workbench-claude-topology.test.ts",
+    "test/workbench-claude-transcript-prebound.test.ts",
+    "test/workbench-claude-transcript-privacy.test.ts",
+    "test/workbench-docs04-tests-census.census.ts",
+    "test/workbench-docs06-conformance.census.ts",
+    "test/workbench-docs07-provider-rules.census.ts",
+    "test/workbench-ecosystem-native.test.ts",
+    "test/workbench-forge-evidence.test.ts",
+    "test/workbench-forge-observer.test.ts",
+    "test/workbench-host-contract.test.ts",
+    "test/workbench-hyperunix-consumed-fields.test.ts",
+    "test/workbench-hyperunix-custody-claims.census.ts",
+    "test/workbench-hyperunix-custody-claims.test.ts",
+    "test/workbench-hyperunix-custody-readers-census.test.ts",
+    "test/workbench-hyperunix-document-witness-census.test.ts",
+    "test/workbench-hyperunix-effect-class-census.test.ts",
+    "test/workbench-hyperunix-evidence-tier-standing.test.ts",
+    "test/workbench-hyperunix-graduation-vocabulary-census.test.ts",
+    "test/workbench-hyperunix-lineage-gate-census.test.ts",
+    "test/workbench-hyperunix-not-applicable-standing.test.ts",
+    "test/workbench-hyperunix-observer.test.ts",
+    "test/workbench-hyperunix-proof-status-standing.test.ts",
+    "test/workbench-hyperunix-result-corpus-census.test.ts",
+    "test/workbench-hyperunix-same-view-frames-census.test.ts",
+    "test/workbench-hyperunix-structural-explanation-census.test.ts",
+    "test/workbench-hyperunix-successor-gate-census.test.ts",
+    "test/workbench-hyperunix-successor-gate-readers-census.test.ts",
+    "test/workbench-hyperunix-successor-gate-run-pin.census.ts",
+    "test/workbench-native-client.test.ts",
+    "test/workbench-native-details.test.ts",
+    "test/workbench-native-ecosystem.test.ts",
+    "test/workbench-native-evidence.test.ts",
+    "test/workbench-native-load-notify.test.ts",
+    "test/workbench-native-modules-failure.test.ts",
+    "test/workbench-native-modules.test.ts",
+    "test/workbench-native-rf-preview.test.ts",
+    "test/workbench-native-rf-tsx-preview.test.ts",
+    "test/workbench-reactivefiber-observer.test.ts",
+    "test/workbench-reactivefiber-write-plane-disclosure.test.ts",
+    "test/workbench-registry-admission.test.ts",
+    "test/workbench-registry-auth.test.ts",
+    "test/workbench-registry-schema.test.ts",
+    "test/workbench-rf-assembly-handoff-census.test.ts",
+    "test/workbench-rf-binding-text-reader-census.test.ts",
+    "test/workbench-rf-binding-text-reader-subforms-census.test.ts",
+    "test/workbench-rf-census-run-pins.census.ts",
+    "test/workbench-rf-committing-render-posture-census.test.ts",
+    "test/workbench-rf-context-read-structure-census.test.ts",
+    "test/workbench-rf-context-show-instance-census.test.ts",
+    "test/workbench-rf-contract-carrier.test.ts",
+    "test/workbench-rf-definition-source-census.test.ts",
+    "test/workbench-rf-epistemic-status-census.test.ts",
+    "test/workbench-rf-evaluator-artifact-context-census.test.ts",
+    "test/workbench-rf-external-authority-echo-backstop-doc.test.ts",
+    "test/workbench-rf-external-authority-echo-census.test.ts",
+    "test/workbench-rf-external-authority-echo-run-pin.census.ts",
+    "test/workbench-rf-federated-cursor-census.test.ts",
+    "test/workbench-rf-federated-cut-claim-census.test.ts",
+    "test/workbench-rf-federated-identity-census.test.ts",
+    "test/workbench-rf-federated-source-kind-census.test.ts",
+    "test/workbench-rf-federation-effect-authority-census.test.ts",
+    "test/workbench-rf-federation-parity-premise.test.ts",
+    "test/workbench-rf-federation-pin-changed-census.test.ts",
+    "test/workbench-rf-federation-refusal-codes-census.test.ts",
+    "test/workbench-rf-federation-stamps-census.test.ts",
+    "test/workbench-rf-fiber-node-reuse-echo-census.test.ts",
+    "test/workbench-rf-graph-edge-edit-echo-census.test.ts",
+    "test/workbench-rf-graph-explain-truncation-census.test.ts",
+    "test/workbench-rf-graph-impact-census.test.ts",
+    "test/workbench-rf-graph-mutation-census.test.ts",
+    "test/workbench-rf-graph-policy-context-census.test.ts",
+    "test/workbench-rf-graph-policy-context-readers-census.test.ts",
+    "test/workbench-rf-historical-claim-census.test.ts",
+    "test/workbench-rf-identity-distinctness-census.test.ts",
+    "test/workbench-rf-inclusion-diagnosis.test.ts",
+    "test/workbench-rf-interop-publication-census.test.ts",
+    "test/workbench-rf-joint-view-boundary-census.test.ts",
+    "test/workbench-rf-observation-cache-key.test.ts",
+    "test/workbench-rf-operation-receipt-honesty-census.test.ts",
+    "test/workbench-rf-operation-receipt-reconcile-census.test.ts",
+    "test/workbench-rf-orphan-server-reclaim-census.test.ts",
+    "test/workbench-rf-owner-resource-census.test.ts",
+    "test/workbench-rf-plan-basis-echo-census.test.ts",
+    "test/workbench-rf-plan-prediction-census.test.ts",
+    "test/workbench-rf-proposed-surface-census.test.ts",
+    "test/workbench-rf-publish-emulation-census.test.ts",
+    "test/workbench-rf-read-status-upgrade-census.test.ts",
+    "test/workbench-rf-release-drift.test.ts",
+    "test/workbench-rf-render-id-authority-census.test.ts",
+    "test/workbench-rf-render-parity-census.test.ts",
+    "test/workbench-rf-replay-history-census.test.ts",
+    "test/workbench-rf-replay-outcome-echo-census.test.ts",
+    "test/workbench-rf-replay-refusal-echo-census.test.ts",
+    "test/workbench-rf-result-fixture.test.ts",
+    "test/workbench-rf-reuse-document-equality-census.test.ts",
+    "test/workbench-rf-sensitivity-echo-census.test.ts",
+    "test/workbench-rf-session-lifecycle-census.test.ts",
+    "test/workbench-rf-session-lifecycle-reach-census.test.ts",
+    "test/workbench-rf-shadow-test-validity-census.test.ts",
+    "test/workbench-rf-source-change-block-claim-census.test.ts",
+    "test/workbench-rf-speculation-boundary-census.test.ts",
+    "test/workbench-rf-speculative-context-census.test.ts",
+    "test/workbench-rf-speculative-normalized-view-census.test.ts",
+    "test/workbench-rf-stderr-receipt-capture-census.test.ts",
+    "test/workbench-rf-tsx-closed-vocabulary-census.test.ts",
+    "test/workbench-rf-tsx-cost-adequacy-census.test.ts",
+    "test/workbench-rf-tsx-deno-identity-census.test.ts",
+    "test/workbench-rf-tsx-deno-provisioning.test.ts",
+    "test/workbench-rf-tsx-registrar-readers-census.test.ts",
+    "test/workbench-rf-tsx-remote-hook-census.test.ts",
+    "test/workbench-rf-tsx-tier.test.ts",
+    "test/workbench-rf-tsx-worker-lifecycle-census.test.ts",
+    "test/workbench-rf-tsx-worker-lifecycle-run-pin.census.ts",
+    "test/workbench-rf-typed-status-echo-census.test.ts",
+    "test/workbench-rf-undetermined-premise-census.test.ts",
+    "test/workbench-rf-workspace-family-census.test.ts",
+    "test/workbench-rf-workspace-root.test.ts"
+   ],
+   "qaScripts": [
+    "qa/workbench/boot-import-census.mjs",
+    "qa/workbench/boot-import-hook.mjs",
+    "qa/workbench/dependency-census.mjs",
+    "qa/workbench/forge-gate-status-probe.mjs",
+    "qa/workbench/forge-transport-probe.mjs",
+    "qa/workbench/hx-task-scope-judge.mjs",
+    "qa/workbench/hx-task-scope-probe.mjs",
+    "qa/workbench/live-adverse-receipt.mjs",
+    "qa/workbench/live-adverse.mjs",
+    "qa/workbench/live-claude.mjs",
+    "qa/workbench/live-served-model-receipt.mjs",
+    "qa/workbench/live-served-model-stamp.mjs",
+    "qa/workbench/live-served-model.mjs",
+    "qa/workbench/native-forge.mjs"
+   ],
+   "docs": [
+    "docs/workbench/06-capability-registry.md",
+    "docs/workbench/07-native-integrations.md",
+    "docs/workbench/04-claude-agent-sdk-executor.md",
+    "vendor/README.md"
+   ],
+   "promiseRefs": [
+    "W02",
+    "W03",
+    "W04",
+    "W06",
+    "W07",
+    "W08",
+    "W10",
+    "W20 (partial: upstream feedback delivered)",
+    "WB-002",
+    "WB-007",
+    "WB-008",
+    "WB-009",
+    "WB-013",
+    "WB-034",
+    "WB-043",
+    "WB-046",
+    "VC-1",
+    "VC-2"
+   ],
+   "probeEntrypoints": [
+    "hx: `hx --workspace $PIN exports src/workbench/tool-replies.ts --best-effort` (ESTABLISHED 23 results, coverage partial HX-COV-004) and the SDK path `./node_modules/.bin/vitest run --config vitest.native.config.ts`; `node qa/workbench/hx-task-scope-probe.mjs`",
+    "rf: `rf --json --version` (ESTABLISHED ok:true, 89 leaves, dist 0.1.883) then the exact provider argv `rf --workspace $PIN context render --no-commit --no-input --json` (src/workbench/providers/reactivefiber.ts:115; pin has no .reactive-fiber -> expect RF_WORKSPACE_NOT_FOUND exit 3) and `./node_modules/.bin/vitest run --config vitest.rf.config.ts`; contract pinned to rf@0.1.845 (REACTIVE_FIBER_CONTRACT_SOURCE) vs installed 0.1.883 — version-drift probe",
+    "forge: `forge --version` (ESTABLISHED forge 0.2.1 e3d480952064); `node qa/workbench/forge-gate-status-probe.mjs`; `node qa/workbench/forge-transport-probe.mjs`; forge_gate_run tool on $PIN",
+    "claude: `./node_modules/.bin/vitest run --config vitest.claude-live.config.ts` (credentialed); role refusal: Agent type not in workbench.roles"
+   ],
+   "notes": "native-modules.ts:62-69 is the one dynamic-import seam (@furnace/sdk, claude-host, claude-transcript, local-detached, providers/*). Vendored SDK tarballs forge/furnace/hyperunix 0.1.0 (package.json file: deps, bundledDependencies).",
+   "counts": {
+    "files": 15,
+    "tests": 141,
+    "qa": 14
+   }
+  },
+  {
+   "id": "F10",
+   "name": "mechanical-interop surface (MechanicalWorkflows entrypoint descriptor, coordination export, collective.event.v1, function authority dispatch, beads readiness/observer, pi-mechanical-interop skill, MWI program docs)",
+   "axesEmphasis": [
+    "gap",
+    "stub",
+    "missing-req",
+    "LX"
+   ],
+   "sharedFiles": [
+    "src/index.ts (composition root; see compositionRoot line map)"
+   ],
+   "files": [
+    "src/workbench/beads-observer.ts",
+    "src/workbench/beads-program-readiness.ts",
+    "src/workbench/collective-event.ts",
+    "src/workbench/function-authority.ts",
+    "src/workbench/mechanical-coordination.ts",
+    "src/workbench/mechanical-descriptor.ts"
+   ],
+   "tests": [
+    "test/workbench-beads-claim-recheck-census.test.ts",
+    "test/workbench-beads-observer.test.ts",
+    "test/workbench-beads-program-readiness.test.ts",
+    "test/workbench-collective-event.test.ts",
+    "test/workbench-function-authority.test.ts",
+    "test/workbench-mechanical-coordination.test.ts",
+    "test/workbench-mechanical-cost-figures.test.ts",
+    "test/workbench-mechanical-descriptor.test.ts",
+    "test/workbench-mechanical-evidence-census.test.ts",
+    "test/workbench-mechanical-host-admission.test.ts",
+    "test/workbench-mechanical-source-admission.test.ts",
+    "test/workbench-mechanical-status-ledger.census.ts",
+    "test/workbench-mechanical-status-ledger.test.ts",
+    "test/workbench-mechanical-telemetry.test.ts",
+    "test/workbench-mwi-cancel-repro.census.ts",
+    "test/workbench-mwi-cancel-repro.test.ts",
+    "test/workbench-mwi-docs-remediation-census.test.ts",
+    "test/workbench-mwi-release.test.ts"
+   ],
+   "qaScripts": [
+    "qa/workbench/mwi-cost-figures.mjs",
+    "qa/workbench/mwi-multiworkflow-load-bench.mjs",
+    "qa/workbench/mwi-multiworkflow-load.mjs",
+    "qa/workbench/mwi-release.mjs",
+    "qa/workbench/status-ledger.mjs",
+    "qa/workbench/tracker-export.mjs"
+   ],
+   "docs": [
+    "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/*.md",
+    ".agents/skills/pi-mechanical-interop/SKILL.md",
+    "docs/workbench/feature-matrix.md W11"
+   ],
+   "promiseRefs": [
+    "W11 (planned/blocked: hosted develop() with real bindings; beads wb-04s, wb-w12 blocked)",
+    "WB-033",
+    "VC-3"
+   ],
+   "probeEntrypoints": [
+    "cd $PIN && node qa/workbench/status-ledger.mjs",
+    "cd $PIN && node qa/workbench/mwi-release.mjs",
+    "./node_modules/.bin/vitest run --config vitest.census.config.ts test/workbench-mechanical-status-ledger.census.ts",
+    "workflow_execute definitionRef.kind:'function' -> unsupported-definition-kind (the MWI dispatch seam not composed: source-admission.ts:46)"
+   ],
+   "notes": "Promise/implementation gap axis: W11 is the only 'planned' W-section with zero landed rows; skill says 'Read ... before changing integration code' (35 lines).",
+   "counts": {
+    "files": 6,
+    "tests": 18,
+    "qa": 6
+   }
+  },
+  {
+   "id": "F11",
+   "name": "packaging-docs-skills-install (npm package, vendored SDK tarballs, forge.toml gate, install/package smoke, README/docs/CHANGELOG/AGENTS.md, shipped skills, release checklist)",
+   "axesEmphasis": [
+    "DX",
+    "gap",
+    "missing-req",
+    "friction"
+   ],
+   "sharedFiles": [
+    "src/index.ts (composition root; see compositionRoot line map)"
+   ],
+   "files": [
+    ".agents/skills/beads/SKILL.md",
+    ".agents/skills/pi-mechanical-interop/SKILL.md",
+    ".codex/config.toml",
+    ".codex/hooks.json",
+    ".github/workflows/ci.yml",
+    ".gitignore",
+    ".npmignore",
+    ".pi/agents/auditor.md",
+    "biome.json",
+    "forge.toml",
+    "package-lock.json",
+    "package.json",
+    "tsconfig.json",
+    "tsconfig.test.json",
+    "vendor/README.md",
+    "vendor/dependency-lock.json",
+    "vendor/forge-sdk-0.1.0.tgz",
+    "vendor/furnace-sdk-0.1.0.tgz",
+    "vendor/hyperunix-sdk-0.1.0.tgz",
+    "vitest.census.config.ts",
+    "vitest.claude-control-live.config.ts",
+    "vitest.claude-live.config.ts",
+    "vitest.config.ts",
+    "vitest.detached-control-live.config.ts",
+    "vitest.forge-control-live.config.ts",
+    "vitest.furnace-active.config.ts",
+    "vitest.furnace-control-live.config.ts",
+    "vitest.furnace-hosted.config.ts",
+    "vitest.furnace.config.ts",
+    "vitest.native.config.ts",
+    "vitest.rf-tsx.config.ts",
+    "vitest.rf.config.ts"
+   ],
+   "tests": [
+    "test/workbench-acceptance-journeys.census.ts",
+    "test/workbench-census-gate.census.ts",
+    "test/workbench-compat-feature.census.ts",
+    "test/workbench-docs-cancel-path.test.ts",
+    "test/workbench-docs-shared-filesystem-census.test.ts",
+    "test/workbench-docs06-leg-readers-census.test.ts",
+    "test/workbench-docs12-section-source-census.test.ts",
+    "test/workbench-install-minimal.test.ts",
+    "test/workbench-package-boundary.test.ts",
+    "test/workbench-risk-register.census.ts",
+    "test/workbench-subsystem-matrix.census.ts",
+    "test/workbench-traceability-feedback-receipts.test.ts",
+    "test/workbench-traceability-freeze.test.ts",
+    "test/workbench-w21-survivor-pins.census.ts"
+   ],
+   "qaScripts": [
+    "qa/workbench/boot-import-census.mjs",
+    "qa/workbench/boot-import-hook.mjs",
+    "qa/workbench/commit-message-scan.mjs",
+    "qa/workbench/dependency-census.mjs",
+    "qa/workbench/git-stamp.mjs",
+    "qa/workbench/install-minimal-lib.mjs",
+    "qa/workbench/install-minimal.mjs",
+    "qa/workbench/install-smoke.mjs",
+    "qa/workbench/installed-consumer.mjs",
+    "qa/workbench/installed-minimal.mjs",
+    "qa/workbench/package-boundary.mjs",
+    "qa/workbench/package-smoke.mjs",
+    "qa/workbench/package-smoke.sh",
+    "qa/workbench/pre-push-commit-message-scan.mjs",
+    "qa/workbench/receipts-index.mjs",
+    "qa/workbench/release-checklist-receipt.mjs",
+    "qa/workbench/smoke.mjs",
+    "qa/workbench/smoke.sh"
+   ],
+   "docs": [
+    "README.md",
+    "CHANGELOG.md",
+    "AGENTS.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "docs/workbench/17-packaging-and-operations.md",
+    "docs/workbench/README.md",
+    "docs/workbench/IMPLEMENTATION_GUIDE.md",
+    "docs/workbench/TRACEABILITY.md",
+    "docs/workbench/feature-matrix.md",
+    "docs/workbench/00-current-state-and-source-map.md",
+    "vendor/README.md"
+   ],
+   "promiseRefs": [
+    "W01",
+    "W22 (5 landed, 1 partial, 1 in-progress)",
+    "WB-019",
+    "WB-020",
+    "WB-049",
+    "NFR-05..08"
+   ],
+   "probeEntrypoints": [
+    "cd $PIN && npm run typecheck (ESTABLISHED rc=0)",
+    "cd $PIN && npm run lint; npm run build; bash qa/workbench/smoke.sh; bash qa/workbench/package-smoke.sh",
+    "cd $PIN && node qa/workbench/install-smoke.mjs; node qa/workbench/install-minimal.mjs",
+    "forge gate-status in $PIN (forge 0.2.1 present) — compare forge.toml gate list vs README/AGENTS.md claims",
+    "discoverability: from an `npm pack` tarball alone, which docs/skills reach an installed agent? (.npmignore vs docs/, .agents/, examples/)",
+    "README install claim 'pi 1.1.0 or newer' vs peerDependencies >=1.1.0 and devDependencies 1.1.0",
+    "CI: .github/workflows/ci.yml exists (jobs: npm ci, lint, typecheck, typecheck:test, test on setup-node node-version 22) while feature-matrix W01 row 3 (line 27) says 'no GitHub CI' and package.json engines.node is >=24 — SUPPORTED pointer for the gap/DX axes; grade after running the ci.yml steps under node 22 vs 24"
+   ],
+   "notes": "package.json 'pi.extensions' = ./src/index.ts (source, not dist); build script = tsc to dist; engines node>=24.",
+   "counts": {
+    "files": 32,
+    "tests": 14,
+    "qa": 18
+   }
+  },
+  {
+   "id": "F12",
+   "name": "scheduling-memory-settings-models (SubagentScheduler + store, schedule param/menu, settings persistence + /agents Settings, enabled models/model resolver/model scope, usage accounting, agent dir/env detection)",
+   "axesEmphasis": [
+    "QoL",
+    "DX",
+    "UX",
+    "friction"
+   ],
+   "sharedFiles": [
+    "src/index.ts (composition root; see compositionRoot line map)"
+   ],
+   "files": [
+    "src/agent-dir.ts",
+    "src/enabled-models.ts",
+    "src/env.ts",
+    "src/memory.ts",
+    "src/model-resolver.ts",
+    "src/model-scope.ts",
+    "src/schedule-store.ts",
+    "src/schedule.ts",
+    "src/settings.ts",
+    "src/ui/schedule-menu.ts",
+    "src/usage.ts"
+   ],
+   "tests": [
+    "test/agent-dir.test.ts",
+    "test/enabled-models.test.ts",
+    "test/env.test.ts",
+    "test/memory-legacy-fallback.test.ts",
+    "test/memory.test.ts",
+    "test/model-resolver.test.ts",
+    "test/model-scope.test.ts",
+    "test/schedule-e2e.test.ts",
+    "test/schedule-menu.test.ts",
+    "test/schedule-params-wiring.test.ts",
+    "test/schedule-store.test.ts",
+    "test/schedule.test.ts",
+    "test/settings.test.ts",
+    "test/usage-reporting.test.ts",
+    "test/usage.test.ts",
+    "test/workbench-key-validations.census.ts"
+   ],
+   "qaScripts": [],
+   "docs": [
+    "README.md ## Persistent Settings (:614), ## Model Scope (:591), ## Persistent Agent Memory (:835)",
+    "docs/workbench/13-contracts-and-config.md"
+   ],
+   "promiseRefs": [
+    "WB-049 (reproducible install / optional deps)",
+    "W03 (workbench.roles config validation)"
+   ],
+   "probeEntrypoints": [
+    "Agent {schedule:'+1m'} with schedulingEnabled on/off (param disappears from schema when off: src/index.ts:1598)",
+    "/agents -> Settings: toggle each of the 24 items and read back <cwd>/.pi/settings.json",
+    "settings validation error text: src/settings.ts:390-396 (workbench must be an object with workflowAgentBackend: pi|claude)",
+    "./node_modules/.bin/vitest run test/settings*.test.ts test/schedule*.test.ts"
+   ],
+   "notes": "Settings are the ONLY configuration surface (no env knobs). WorkbenchSettings refuses unknown keys.",
+   "counts": {
+    "files": 11,
+    "tests": 16,
+    "qa": 0
+   }
+  }
+ ],
+ "familyCount": 12
+}

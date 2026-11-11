@@ -1,0 +1,38 @@
+[
+  {
+    "id": "wb-0kg.3",
+    "title": "VC-7 residual: live detached exit/reattach acceptance receipt (launch on the local detached profile, exit Pi while an exactly-once effect marker proves execution continued, relaunch and reattach by invocation ref as zero-control observer, post-host-loss inspection reports unknown with reconciliation guidance); measurement-only, src untouched",
+    "description": "Gap (measured at rig HEAD, branch workbench/implementation-program): docs/workbench/15-implementation-program.md section \"Implementation status at 2026-10-15\" records \"VC-7 has a same-machine private detached process profile\" and that it \"remains open for its broader native/live release acceptance\". VC-7 children cover fault-injection conformance (wb-0kg.1) and executable identity (wb-0kg.2); the operator journey itself (Pi exits without stopping execution, then reattach) has no bead. Scope (measurement-only, src untouched, no hot files): qa/workbench/detached-reattach-receipt.mjs (new) launches a saved workflow on the local detached profile, exits the Pi client process entirely, proves continued execution via an exactly-once effect marker written after client exit, relaunches and reattaches by invocation ref as a zero-control observer, then kills the host and asserts post-loss inspection reports unknown with producer reconciliation guidance; test/workbench-detached-receipt.test.ts (new) is the red-first assessor over the receipt shape. Exit 2 for honest environment unavailability. Same-machine OS discretionary access only; makes no remote-authentication or crash-durability claim.",
+    "acceptance_criteria": "QUOTES: docs/workbench/15-implementation-program.md#vertical-cuts (VC-7) requires \"Pi exits without stopping execution.\" -- journey proves it with an exactly-once effect marker written AFTER full Pi client exit, then a reattach by invocation ref. docs/workbench/08-lifecycle-and-recovery.md#optional-local-detached-profile: \"Closing or exiting Pi disconnects the client, not the execution host. Inspection after host loss reports unknown with producer reconciliation guidance; it does not replay a saved terminal verdict or rerun JavaScript.\" -- falsifier kills the host and asserts the post-loss inspection reports unknown with guidance, never a replayed verdict and never a rerun. Also per the same section the profile \"is same-machine OS discretionary-access control only, not remote authentication\": the receipt must label itself accordingly and claim nothing more. Receipt carries revision, tool versions, commands, timestamp, host, native references and actual output per docs/workbench/14-qa-and-benchmarks.md#truth-labels-and-release-gates; exit 2 on honest unavailability.",
+    "notes": "source=flywheel seat=g1 round=8 run=g1-r3. Blocked by wb-5w0 (W18 detached host) by design. Distinct from wb-0kg.1 (fault injection) and wb-0kg.2 (executable identity): this is the operator exit/reattach journey receipt. Zero control verbs while observing; honor wb-5w0 notes on cooperative cancellation.\n[flywheel relay of Sr. Engineer pre-bound constraints, verbatim] the exactly-once effect marker is a producer-visible artifact written by the detached node itself (not by the harness), checked by content and count after reattach; zero control verbs while observing (inspect only); a host that is gone reads as unknown with the reconcile hint, never terminal; distinct from wb-0kg.1 fault injection and wb-0kg.2 identity. Base on 40a031a or later (read BOUNDARY.md at task start).\n",
+    "spec_id": "docs/workbench/08-lifecycle-and-recovery.md#optional-local-detached-profile",
+    "status": "in_progress",
+    "priority": 2,
+    "issue_type": "task",
+    "assignee": "flywheel",
+    "owner": "jehallad@amazon.com",
+    "created_at": "2026-10-15T08:33:57Z",
+    "created_by": "James Halladay",
+    "updated_at": "2026-11-11T06:32:28Z",
+    "started_at": "2026-11-11T06:32:28Z",
+    "dependencies": [
+      {
+        "id": "wb-0kg",
+        "title": "VC-7: Detached and Furnace-hosted execution",
+        "description": "Remote host authentication, reattachment, native immutable deployment refs, crash/uncertain-operation conformance. Pi exits without stopping execution. Furnace remains durable authority only when Furnace host chosen. Spec: docs/workbench/08, docs/workbench/15.",
+        "status": "open",
+        "priority": 2,
+        "issue_type": "epic",
+        "owner": "jehallad@amazon.com",
+        "created_at": "2026-10-15T01:20:40Z",
+        "created_by": "James Halladay",
+        "updated_at": "2026-10-15T01:20:40Z",
+        "dependency_type": "parent-child"
+      }
+    ],
+    "parent": "wb-0kg",
+    "dependent_count": 0,
+    "dependency_count": 0,
+    "comment_count": 0
+  }
+]

@@ -1,0 +1,309 @@
+{
+ "refs": {
+  "probe:agents/RUN.sh": [
+   "EAT-R311",
+   "EAT-R312",
+   "EAT-R313",
+   "EAT-R314",
+   "EAT-R315",
+   "EAT-R316",
+   "EAT-R318",
+   "EAT-R319",
+   "EAT-R320"
+  ],
+  "pin:src/agent-manager.ts": [
+   "EAT-R312"
+  ],
+  "pin:src/nested-tools.ts": [
+   "EAT-R312"
+  ],
+  "probe:agents/host-skill-index-size.mjs": [
+   "EAT-R317"
+  ],
+  "probe:execute/vitest.probe.config.ts": [
+   "EAT-R321"
+  ],
+  "pin:docs/workflows.md": [
+   "EAT-R325",
+   "EAT-R326",
+   "EAT-R327",
+   "EAT-R334"
+  ],
+  "pin:src/index.ts": [
+   "EAT-R325",
+   "EAT-R387"
+  ],
+  "probe:observe/out/K-npm-pack-dry.js": [
+   "EAT-R327"
+  ],
+  "pin:test/workbench-pi-observe.test.ts": [
+   "EAT-R329"
+  ],
+  "probe:interop/probe-authority.mjs": [
+   "EAT-R337"
+  ],
+  "probe:interop/probe-coordination.mjs": [
+   "EAT-R337"
+  ],
+  "pin:test/workbench-function-authority.test.ts": [
+   "EAT-R337"
+  ],
+  "pin:docs/workbench/12-security.md": [
+   "EAT-R337"
+  ],
+  "probe:interop/probe-source-admission.mjs": [
+   "EAT-R338"
+  ],
+  "probe:interop/probe-collective.mjs": [
+   "EAT-R338"
+  ],
+  "probe:interop/npm-pack-dry-run.js": [
+   "EAT-R339"
+  ],
+  "probe:detached/probe-main.mjs": [
+   "EAT-R341",
+   "EAT-R342",
+   "EAT-R344",
+   "EAT-R345"
+  ],
+  "pin:test/workbench-detached-control-live.test.ts": [
+   "EAT-R343"
+  ],
+  "probe:furnace/control-harness.mjs": [
+   "EAT-R346",
+   "EAT-R347",
+   "EAT-R348"
+  ],
+  "pin:test/workbench-control-tool.test.ts": [
+   "EAT-R347"
+  ],
+  "probe:furnace/observe-harness.mjs": [
+   "EAT-R349"
+  ],
+  "probe:inspector/p01-overlay-clip.mjs": [
+   "EAT-R350"
+  ],
+  "probe:inspector/p18-card-liveness-real-extension.mjs": [
+   "EAT-R351"
+  ],
+  "probe:inspector/p08-production-shape.mjs": [
+   "EAT-R352"
+  ],
+  "probe:inspector/p06-node-only-no-controls.mjs": [
+   "EAT-R353"
+  ],
+  "probe:inspector/p05-selection-index-drift.mjs": [
+   "EAT-R354"
+  ],
+  "probe:inspector/p22-filter-g-key.mjs": [
+   "EAT-R355"
+  ],
+  "probe:inspector/p16-timeline-left-clip.mjs": [
+   "EAT-R356"
+  ],
+  "probe:journal/p01-restart.probe.ts": [
+   "EAT-R357"
+  ],
+  "probe:journal/p07b-typo-poison-nomock.probe.ts": [
+   "EAT-R358"
+  ],
+  "probe:journal/p06-override-spend.probe.ts": [
+   "EAT-R359"
+  ],
+  "probe:journal/p09-runtime.probe.ts": [
+   "EAT-R360",
+   "EAT-R361",
+   "EAT-R365"
+  ],
+  "pin:test/workflow-journal-compat.test.ts": [
+   "EAT-R360"
+  ],
+  "probe:node-rpc/probe8-resume-paused-run.out.txt": [
+   "EAT-R362"
+  ],
+  "probe:providers/h01-hx-native-find.mjs": [
+   "EAT-R366"
+  ],
+  "probe:providers/h02-registry.mjs": [
+   "EAT-R366",
+   "EAT-R367",
+   "EAT-R370"
+  ],
+  "probe:providers/vt/node-e2e.probe.test.ts": [
+   "EAT-R366",
+   "EAT-R368",
+   "EAT-R369"
+  ],
+  "probe:providers/vt/observe.probe.test.ts": [
+   "EAT-R366",
+   "EAT-R373",
+   "EAT-R374"
+  ],
+  "probe:providers/h08-hx-error-result.mjs": [
+   "EAT-R367"
+  ],
+  "probe:providers/hx-badkind.err": [
+   "EAT-R367"
+  ],
+  "probe:providers/h03-curated.mjs": [
+   "EAT-R367",
+   "EAT-R369",
+   "EAT-R370"
+  ],
+  "pin:test/workbench-registry-schema.test.ts": [
+   "EAT-R367"
+  ],
+  "probe:providers/h04-pi-catalog.mjs": [
+   "EAT-R368"
+  ],
+  "probe:providers/h03-run-grants.out": [
+   "EAT-R369"
+  ],
+  "pin:test/workbench-capability-surface-parity.test.ts": [
+   "EAT-R369"
+  ],
+  "probe:providers/nobin-which.out": [
+   "EAT-R370"
+  ],
+  "probe:providers/vt/rf-root-setting.probe.test.ts": [
+   "EAT-R371"
+  ],
+  "probe:providers/h02-run-rf-symlink.out": [
+   "EAT-R371"
+  ],
+  "probe:providers/h02-run-rf-slash.out": [
+   "EAT-R371"
+  ],
+  "probe:providers/h05-rf-deadline.mjs": [
+   "EAT-R372"
+  ],
+  "probe:providers/vt/observe-rf.probe.test.ts": [
+   "EAT-R373",
+   "EAT-R374"
+  ],
+  "pin:test/workbench-hyperunix-observer.test.ts": [
+   "EAT-R374"
+  ],
+  "pin:test/workbench-reactivefiber-observer.test.ts": [
+   "EAT-R374"
+  ],
+  "probe:providers/h06-missing-sdk-register.mjs": [
+   "EAT-R375"
+  ],
+  "probe:providers/h06-missing-sdk.mjs": [
+   "EAT-R375"
+  ],
+  "pin:test/helpers/boot-extension.ts": [
+   "EAT-R375"
+  ],
+  "pin:test/workbench-native-modules-failure.test.ts": [
+   "EAT-R375"
+  ],
+  "pin:test/workbench-native-load-notify.test.ts": [
+   "EAT-R375"
+  ],
+  "probe:packaging/npm-view-published.js": [
+   "EAT-R376"
+  ],
+  "pin:qa/workbench/installed-consumer.mjs": [
+   "EAT-R376",
+   "EAT-R378",
+   "EAT-R388"
+  ],
+  "pin:test/workbench-dependency-census.test.ts": [
+   "EAT-R377"
+  ],
+  "pin:qa/workbench/package-smoke.sh": [
+   "EAT-R378",
+   "EAT-R388"
+  ],
+  "pin:qa/workbench/install-smoke.mjs": [
+   "EAT-R378"
+  ],
+  "probe:scheduling/bounds.probe.ts": [
+   "EAT-R379",
+   "EAT-R383"
+  ],
+  "pin:test/schedule.test.ts": [
+   "EAT-R379"
+  ],
+  "pin:test/schedule-e2e.test.ts": [
+   "EAT-R379"
+  ],
+  "probe:scheduling/wiring.probe.ts": [
+   "EAT-R380",
+   "EAT-R383",
+   "EAT-R385",
+   "EAT-R386"
+  ],
+  "pin:test/schedule-params-wiring.test.ts": [
+   "EAT-R380"
+  ],
+  "probe:scheduling/store-nextrun.probe.ts": [
+   "EAT-R381",
+   "EAT-R382"
+  ],
+  "pin:test/schedule-store.test.ts": [
+   "EAT-R381",
+   "EAT-R382"
+  ],
+  "probe:scheduling/settings-memory-menu.probe.ts": [
+   "EAT-R384",
+   "EAT-R385",
+   "EAT-R386"
+  ],
+  "pin:test/settings.test.ts": [
+   "EAT-R384"
+  ],
+  "pin:src/settings.ts": [
+   "EAT-R386"
+  ],
+  "probe:interop/import-census.mjs": [
+   "EAT-R387"
+  ],
+  "pin:qa/workbench/status-ledger.mjs": [
+   "EAT-R387"
+  ],
+  "pin:qa/workbench/mwi-release.mjs": [
+   "EAT-R387"
+  ],
+  "pin:qa/workbench/install-minimal.mjs": [
+   "EAT-R388"
+  ],
+  "pin:test/workbench-package-boundary.test.ts": [
+   "EAT-R388"
+  ],
+  "pin:test/workbench-vendor-pins.test.ts": [
+   "EAT-R388"
+  ],
+  "probe:providers/vitest-rf-preview.log": [
+   "EAT-R390"
+  ],
+  "pin:qa/workbench/tool-reply-bench.mjs": [
+   "EAT-R390"
+  ]
+ },
+ "missing": [
+  [
+   "probe",
+   "interop/npm-pack-dry-run.js",
+   [
+    "EAT-R339"
+   ]
+  ],
+  [
+   "probe",
+   "observe/out/K-npm-pack-dry.js",
+   [
+    "EAT-R327"
+   ]
+  ],
+  [
+   "probe",
+   "packaging/npm-view-published.js",
+   [
+    "EAT-R376"
+   ]
+  ]
+ ]
+}

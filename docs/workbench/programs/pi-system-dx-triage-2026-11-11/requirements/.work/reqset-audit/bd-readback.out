@@ -1,0 +1,25 @@
+# live bd readback (bd --readonly --sandbox show <id> --json) 2026-11-11T07:02:32Z; id | status | title[0:90] | close_reason[0:80]
+wb-0kg.3 | in_progress | VC-7 residual: live detached exit/reattach acceptance receipt (launch on the local detache | 
+wb-2ukh | open | [MNI-2026-11-09 P03] Function authority + writer source admission integrated, no-await dis | 
+wb-4ax | closed | W06: Provider registry and permissions | W06 landed: provider registry in 43ad58b5 on origin/master; every provider regis
+wb-4bxo | open | [MWI-dispatch] Launch authorized embedded functions through the registered Pi tool | 
+wb-5uh | in_progress | W08: Forge provider | 
+wb-69g.12 | in_progress | VC-6/W16 tightening (owner-ruled, wb-69g.6 + wb-69g.5 gates): validate-reply falsifiers ki | 
+wb-6ze.15 | in_progress | VC-5 residual: live four-view terminal inspector acceptance receipt (pty-driven real Pi se | 
+wb-752.12 | closed | W13-Fw/VC-4: Beads work-readiness wiring in furnace_observe: each Attempt workId (deduped, | wb-752.12: Consolidated its unexpired scope and acceptance into wb-752.13; this 
+wb-752.13 | in_progress | VC-4 W13-Fw/W16-Bw2: bounded furnace_observe reply with native Beads work linkage | 
+wb-79k.1 | closed | W13/VC-2 HyperUnix observe-wiring (HELD: owner chain placement required before claim): the | wb-79k.1: Consolidated its unexpired scope and acceptance into wb-79k.3; this cl
+wb-79k.2 | closed | W13/VC-2 ReactiveFiber observe-wiring (HELD: owner chain placement required before claim): | wb-79k.1: Consolidated its unexpired scope and acceptance into wb-79k.3; this cl
+wb-79k.3 | open | W13 VC-2/VC-7: host-owned HX, RF-preview and detached observation projection wiring | 
+wb-9x5.10 | closed | W21-H: graph-view model build receipt over the grouped-10k fixture (buildGraphView p50/p95 | wb-9x5.10: Consolidated its unexpired scope and acceptance into wb-9x5.11; this 
+wb-9x5.11 | in_progress | W21 VC-5: grouped-10k graph build, four-view layout and timeline truncation-honesty receip | 
+wb-9x5.16 | closed | W21-F2 honesty bundle (owner-ruled, wb-9x5.7 gate R2): timeline bench receipt gains record | wb-9x5.10: Consolidated its unexpired scope and acceptance into wb-9x5.11; this 
+wb-cax | in_progress | W22: Packaging/docs/install/compat migration | 
+wb-f5y | in_progress | W03: Role/tool/model config and permissions | 
+wb-h8f.2 | open | VC-6 residual: live Pi design/compare loop acceptance receipt (catalog/source read -> dige | 
+wb-h8f.7 | open | W16-H/Hw VC-6: bounded workflow_compare builder and registered Pi adoption with honest pre | 
+wb-jwc.7 | closed | [RFCLI-FEEDBACK-OPERATIONAL-CONVERGENCE-R7] The committing rf invocation path shall captur | landing 1052: batch B1047-1053-1b53185-t1 merge 0ebfd9ce085b landed on trunk (la
+wb-lri | in_progress | W07: HyperUnix provider | 
+wb-x32 | in_progress | W10: ReactiveFiber provider/interop | 
+wb-y0n6 | in_progress | [MNI-2026-11-09 P02] Installed producer descriptor/package admission, external consumer (E | 
+wb-yiu4 | open | [MNI-2026-11-09 P10] Release proof, regressions, agent LX, W11 truth (EAT-R286..R294) | 

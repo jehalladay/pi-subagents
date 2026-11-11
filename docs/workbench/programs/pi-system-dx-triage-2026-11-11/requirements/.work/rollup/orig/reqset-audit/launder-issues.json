@@ -1,0 +1,32 @@
+[
+ [
+  "EAT-R321",
+  "-",
+  "map.claims ['C074'] not in rationale; rationale [] not in map"
+ ],
+ [
+  "EAT-R322",
+  "-",
+  "map.claims ['C073'] not in rationale; rationale [] not in map"
+ ],
+ [
+  "EAT-R326",
+  "C030",
+  "grade not stated in block (ledger ESTABLISHED)"
+ ],
+ [
+  "EAT-R328",
+  "-",
+  "map.claims ['C194'] not in rationale; rationale [] not in map"
+ ],
+ [
+  "EAT-R357",
+  "C145",
+  "grade not stated in block (ledger ESTABLISHED)"
+ ],
+ [
+  "EAT-R357",
+  "-",
+  "map.claims [] not in rationale; rationale ['C145'] not in map"
+ ]
+]

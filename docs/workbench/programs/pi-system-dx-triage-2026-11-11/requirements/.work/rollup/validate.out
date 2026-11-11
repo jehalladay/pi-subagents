@@ -1,0 +1,8 @@
+PASS: 98 canonical/map/prose/matrix ids; original R311..R390 statements byte-identical; new R471..R488 contiguous; reserved R391..R470 untouched.
+PASS: 267 unique claim dispositions; all map grades equal CLAIMS.jsonl; preservation controls separate; all acceptance NOT_RUN.
+PASS: 18 new full atomic rows (12 BEHAVIORAL + 5 VERIFICATION/EVIDENCE_ACQUISITION + 1 NEGATIVE_REGRESSION/RISK_CONTROL), >=2 Assert criteria each.
+PASS: F-02 live targets; F-03 filing extensions; F-05 pty gate authorities; R345 all 11 cells BLOCKED on G-RULING.
+PASS: 42 concrete new-row oracle paths and all F-14 retained test paths resolve.
+Defect dispositions: {'COMPILED': 147, 'DEFERRED_FOR_RANGE_CAPACITY': 77}
+Positive dispositions: {'RETAINED_POSITIVE': 8, 'COMPILED': 35}
+Total tabled uncompiled deferrals: 77 (F-01 six; F-13 ten; other prior-shard residual claims 61).

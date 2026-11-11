@@ -1,0 +1,1263 @@
+{
+ "featureMatrix": {
+  "file": "docs/workbench/feature-matrix.md",
+  "measurementDateLine": "This matrix implements that requirement. Measurement date: 2026-10-15. Trunk: branch `workbench/implementation-program` (HEAD at this ledger export: 1e4102f). Three features that landed on 2026-10-15 after the first measurement pass (wb-zmd at e830ac2, wb-0kg.1 at ee8bde0, wb-h8f.1 at 1e4102f) were re-measured at 1e4102f. A second same-day reconcile pass at 1b735c8 re-measured wb-6ze.9 (landed e6c",
+  "statusLegendVerbatim": [
+   "- landed-gated: the feature's code AND tests exist on trunk (branch workbench/implementation-program) and a TRACEABILITY.md section or bead close receipt names a passing gate for it.",
+   "- partial: some slices landed-gated, others open/in-progress (both halves named in the row).",
+   "- in-progress: beads in_progress but nothing landed for the feature yet.",
+   "- planned: beads open only.",
+   "- not-started: no bead and no code."
+  ],
+  "sections": [
+   {
+    "id": "W01",
+    "title": "Baseline tests, upstream snapshots, Forge packaging",
+    "line": 21,
+    "rows": [
+     {
+      "line": 25,
+      "feature": "Recorded pre-implementation baseline (fork SHA pinned; upstream suite, typecheck and lint receipts)",
+      "status": "landed-gated",
+      "evidence": "docs/workbench/TRACEABILITY.md section '## Baseline receipt': fork 38034a043e63a65ec5a81544c7a81d0e6b76ebe3, npm test 106 files / 2139 passed / 7 skipped, typecheck and lint exit 0, forge build --require-complete PASS cmd_65b034a22fb5. Bead wb-wh7 (W01) closed 2026-10-15T01:25:33Z, close_reason 'Baseline captured, complete Forge gate green after explicit npm commands'. docs/workbench/00 '## 2026-1",
+      "caveats": "TRACEABILITY states the baseline 'does not establish any Workbench behavior'. The first forge build exited 69 FORGE_TOOLCHAIN_MISSING (default pnpm shim); the gate passed only after an explicit npm-backed declaration. bd init auto-committed c0f775e against the never-commit rule (disclosed tool behavior). Fork-divergence census (W22 wb-cax.15) is in_progress: at 250c0af it measured 17 divergent pre",
+      "vcRefs": []
+     },
+     {
+      "line": 26,
+      "feature": "Golden workflow fixtures protected (Claude Code-authored scripts and shipped example workflows run unchanged)",
+      "status": "landed-gated",
+      "evidence": "test/workflow-examples.test.ts ('shipped example workflows' run to completion against a stub host; fixtures examples/workflows/compose.js, fan-out-audit.js, gated-fix.js, review-panel.js, structured-findings.js, lib/count-child.js), test/workflow-claude-code-compat.test.ts ('a Claude Code script, unchanged', 'the other Claude Code globals'), test/workflow-runtime.test.ts. TRACEABILITY rows WB-003 ",
+      "caveats": "Fixtures run only against the upstream stub host; dual-backend golden equivalence under the Claude SDK host (W22-H wb-cax.7) is in_progress with a delivery on machine/flywheel/wb-cax.7 only (unmerged; its notes pin the Claude-backend gated-fix.js refusal 'This workflow host cannot run gate commands.'), so identical behavior of unchanged scripts under the claude backend is not proven on trunk. WB-0",
+      "vcRefs": []
+     },
+     {
+      "line": 27,
+      "feature": "Forge-controlled build/test/release gate with compiled-client and package-content smoke (no GitHub CI)",
+      "status": "landed-gated",
+      "evidence": "forge.toml [build] gate = lint, typing, build, test, workbench-shell (qa/workbench/smoke.sh) and package-smoke (qa/workbench/package-smoke.sh). TRACEABILITY WB-019 status gate-pass; '## Audited candidate checkpoint' (six-step no-replay gate PASS cmd_a227a5a2114e), '## Second audited embedded/local-host checkpoint' (cmd_8b82057e039a; clean pushed checkpoint 41eb061 gate cmd_ac084bb98d2f), '## Packa",
+      "caveats": "Live tiers (claude-live, native-read, furnace-observe, furnace-active-observe, rf-preview, install-smoke, e2e) are declared in forge.toml but excluded from the default gate (vitest.config.ts exclude list), so a green default gate is never native evidence. Several complete gates ran over a dirty overlay; only 43ad58b (cmd_f8b07a961042) and 41eb061 (cmd_ac084bb98d2f) have clean-source receipts. Mini",
+      "vcRefs": []
+     }
+    ]
+   },
+   {
+    "id": "W02",
+    "title": "Claude SDK host replacing workflow spawn path",
+    "line": 29,
+    "rows": [
+     {
+      "line": 33,
+      "feature": "Workflow agent() executed by @anthropic-ai/claude-agent-sdk query() under workbench.workflowAgentBackend 'claude' (Pi AgentManager never called)",
+      "status": "landed-gated",
+      "evidence": "src/workbench/claude-host.ts (createClaudeWorkflowHost, 314 lines; SDK options built at :176-190), src/settings.ts:373-430 (explicit backend validation). test/workbench-host-contract.test.ts ('L3: unchanged script uses Claude SDK query, not Pi AgentManager; session and usage are reported'), test/workbench-pi-client.test.ts (L2 registered Pi tool launch), test/workbench-pi-streaming.test.ts (AgentM",
+      "caveats": "Bead wb-7qs is not closed and VC-1 stays experimental per docs/15 until terminal-operator and live adverse acceptance pass. Live receipts used the deployed local gateway; '## Actual Pi terminal journey' records assistant message.model openai.gpt-6.1-sol while claude-opus-5-5 was requested, so live proofs establish the real SDK runtime/session/tool interface, not Anthropic model inference. Worktree",
+      "vcRefs": [
+       "VC-1"
+      ]
+     },
+     {
+      "line": 34,
+      "feature": "Live bounded streaming observations in the Pi card and inspector (native session id, sampled assistant preview, tool started/completed/refused evidence, terminal state)",
+      "status": "landed-gated",
+      "evidence": "src/workbench/claude-transcript.ts createClaudeObserver (64 samples per call, 16 tools, bodies never retained), src/workbench/claude-host.ts onMessage/onSettled hooks. test/workbench-pi-streaming.test.ts ('W02 Pi native streaming observations': live owned stream with bounded summaries and no leaked bodies; invalid-model/permission failures; shutdown abort), test/workbench-claude-observer.test.ts (",
+      "caveats": "The terminal-journey receipt lives in /tmp/pi-live-41eb061-Smt3W6, is a one-off candidate receipt (not a test or gate) and is explicitly 'not retroactive evidence for later role-tool changes'. Per-token events are not retained by design; the transcript stays in the native SDK store. Externally observed Claude sessions have no control channel (docs/04).",
+      "vcRefs": []
+     },
+     {
+      "line": 35,
+      "feature": "Explicit backend selection with the upstream Pi workflow path and non-workflow Agent features preserved (native SDKs load only behind validated settings)",
+      "status": "landed-gated",
+      "evidence": "src/settings.ts:373-381 (workflowAgentBackend pi\\",
+      "caveats": "claude, 'no implicit fallback'), src/index.ts:2476 and :2740-2753 (Claude host built only for the claude backend), src/workbench/native-modules.ts (loadWorkbenchNative; bead wb-cax.10 closed). test/workbench-host-contract.test.ts ('Workbench backend is explicit and invalid config is rejected, not silently Pi'), test/workflow-tool.test.ts, test/workflow-claude-code-compat.test.ts, test/workbench-bo",
+      "vcRefs": []
+     },
+     {
+      "line": 36,
+      "feature": "Explicit cancellation of owned Claude sessions (operator abort/Ctrl-C, one AbortController per agent, requested vs acknowledged vs terminal kept distinct)",
+      "status": "partial",
+      "evidence": "Landed: src/workbench/claude-host.ts (controllers map :98, pre-dispatch abort re-check and per-agent controller :153-166, abortAgent :275). test/workbench-claude-cancel-faults.test.ts F1-F10 with test/helpers/claude-sdk-stream.ts (bead wb-a2g.2 closed: relay gate cmd_22521c7b7fd5, complete gate cmd_4b1582f2b68f, mutation proofs cmd_ec45803db5f5 / cmd_69f7887eb9a7 / cmd_4f2197125e42 / cmd_199497c85",
+      "caveats": "TRACEABILITY WB-010 remains experimental with an empty live column. The live adverse tier is held for a credentialed claude-live seat and has no forge.toml command. runWorkflow reports killed without waiting for child acknowledgement (recorded as a measurement, not an invariant). The ~2 s abort-to-ack interval is attributed by the owner ruling recorded in merge 3192a06 to the SDK's ProcessTranspor",
+      "vcRefs": [
+       "VC-1"
+      ]
+     },
+     {
+      "line": 37,
+      "feature": "Explicit native failure handling (invalid model, permission denial, SDK error after partial text never become success; no silent fallback to the Pi path)",
+      "status": "partial",
+      "evidence": "Landed: src/workbench/claude-host.ts (:131 inaccessible cwd, :146-147 unavailable role, :150-151 unsupported model, :227 error-subtype result, :229 success without session id, :235-239 structured_output missing or mismatched, :257 redacted stream failure). test/workbench-host-contract.test.ts ('error result after partial assistant never becomes success', 'missing result after stream exhaustion fai",
+      "caveats": "wb-a2g.9's gap analysis at 4ca6bd5 had measured zero trunk tests for inaccessible cwd, missing/mismatched structured_output, success without session id, absent modelUsage, non-abort throw redaction and unknown message discriminants; the N1-N8 tier landed at b4ca4aa is that offline negative matrix (per-case coverage was not re-measured for this matrix). Absent-credentials degradation belongs to wb-",
+      "vcRefs": []
+     },
+     {
+      "line": 38,
+      "feature": "Operator terminal-journey acceptance for VC-1 (live card during execution, Ctrl-C cancellation, structured output inspected in a real Pi TUI)",
+      "status": "planned",
+      "evidence": "Bead wb-a2g.3 open (pty-driven receipt qa/workbench/live-operator-receipt.mjs plus assessor test/workbench-operator-receipt.test.ts, neither on trunk; dispatch HELD for a credentialed claude-live seat); wb-a2g.4 closed as duplicate with no work. TRACEABILITY '## Actual Pi terminal journey' records one manual tmux run (Pi v1.2.0, run wf_a9f7f6808d55 at candidate 41eb061, captures in /tmp/pi-live-41",
+      "caveats": "The manual tmux journey is not reproducible from the repo (no script, no gate, receipts outside the tree), exercised neither cancellation nor an active-run view close, and the outer Pi model request returned unauthorized credentials, so model-directed Pi orchestration was not proven. A standard machine seat can only produce an exit-2 unavailability receipt, which is not the acceptance this bead ex",
+      "vcRefs": [
+       "VC-1"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "W03",
+    "title": "Role/tool/model config and permissions",
+    "line": 40,
+    "rows": [
+     {
+      "line": 44,
+      "feature": "Claude-native role configuration (workbench.roles) with precedence request > role > defaults, model/effort validation, and refusal of unconfigured agent types (never Pi's agent registry)",
+      "status": "landed-gated",
+      "evidence": "src/workbench/claude-host.ts:140-151 and :167-169, :187 (role prompt/tools/capabilities/model/effort; request model wins; unavailable role refused), src/settings.ts:403-420 (roles schema: prompt required; optional tools, capabilities up to 32, model, effort). test/workbench-host-contract.test.ts ('inherited prototype names never satisfy a role allowlist', 'forwards provider-native model identifier",
+      "caveats": "The W03 bead wb-f5y is still open and was never claimed; the work landed under W02 (wb-7qs) and wb-2sz, so the ledger lags the tree. Only fixture SDK queries exercise role resolution; no live role run is recorded. Model alias validation is a pass-through to the SDK (no local alias table), deliberately per the 'restrictive local regex' test.",
+      "vcRefs": []
+     },
+     {
+      "line": 45,
+      "feature": "Curated per-role provider tools (capability_discover / capability_contract / capability_invoke) over the SDK in-process MCP server with independent exact grants",
+      "status": "landed-gated",
+      "evidence": "src/workbench/claude-capability-tools.ts (createCuratedTools, CLAUDE_CAPABILITY_TOOL_NAMES), src/workbench/claude-host.ts:170-183 (mcpServers.workbench plus allowedTools mcp__workbench__*). test/workbench-claude-capability-tools.test.ts (20 real MCP client roundtrip cases: role membership AND exact invoke grant AND producer permission; discovery, contract and inspect independently granted; contrac",
+      "caveats": "Fixture providers only: 'live-model curated invocation remains open' (commit f55e448 body and TRACEABILITY). TRACEABILITY table row WB-034 still reads planned despite the landed section. Measured asymmetry: capability_invoke always requires invoke:<id> while the registry requires it only for permission-free descriptors; the cross-surface parity falsifier wb-6hb.4 is in_progress on a machine branch",
+      "vcRefs": []
+     },
+     {
+      "line": 46,
+      "feature": "Least-privilege Claude session defaults (permissionMode dontAsk, permissionPrompts none, empty tool allowlist unless configured; settingSources and tools validated)",
+      "status": "partial",
+      "evidence": "Landed: src/workbench/claude-host.ts:101-103 and :179-182 (defaults and option wiring), src/settings.ts:388-396 (permissionMode dontAsk\\",
+      "caveats": "default, settingSources user/project/local, tools array). test/workbench-host-contract.test.ts ('explicit Claude role supplies prompt/tools/model with request model taking precedence', 'Workbench backend is explicit and invalid config is rejected'), test/workbench-claude-role-tools.test.ts ('adds only curated role MCP tools to actual SDK options without provider auto-grants'), test/workbench-pi-st",
+      "vcRefs": []
+     }
+    ]
+   },
+   {
+    "id": "W04",
+    "title": "Structured output, usage, transcript, resume",
+    "line": 48,
+    "rows": [
+     {
+      "line": 52,
+      "feature": "Schema-constrained agent results via SDK outputFormat json_schema plus host-side schema check (object values returned to the script)",
+      "status": "landed-gated",
+      "evidence": "src/workbench/claude-host.ts:188 (outputFormat), :235-240 (missing structured_output or schema mismatch refused; value serialized). test/workbench-host-contract.test.ts ('L3: parallel schema agents return object values from native SDK structured_output'), test/workbench-pi-streaming.test.ts ('returns parallel structured values under distinct native session identities through registered Pi tool'). ",
+      "caveats": "Negative paths (structured_output undefined with a declared schema; schema.check failure) had no trunk test per wb-a2g.9's gap analysis at 4ca6bd5; wb-a2g.9's offline adverse-faults tier landed late on 2026-10-15 (test/workbench-claude-adverse-faults.test.ts at merge b4ca4aa), and per-case coverage of these negatives was not re-measured for this matrix. Live schema proofs were served by the deploy",
+      "vcRefs": []
+     },
+     {
+      "line": 53,
+      "feature": "Token usage reported only as the SDK reports it (per-turn delta on resume; no invented zeros)",
+      "status": "landed-gated",
+      "evidence": "src/workbench/claude-host.ts:83-93 usage() over result.modelUsage and :217 cumulative handling. test/workbench-host-contract.test.ts ('L3: unchanged script uses Claude SDK query ... session and usage are reported', 'cumulative SDK usage on resume counts only the new turn'). TRACEABILITY WB-009 live-sdk ('Real SDK events; session UUIDs'); docs/13 rule 'If the installed SDK lacks a field, omit it; n",
+      "caveats": "wb-a2g.9's gap analysis recorded that no trunk test asserted tokens stay absent when modelUsage is missing (test/workbench-pi-client.test.ts supplies modelUsage:{} but asserts nothing about tokens); its adverse-faults tier landed late on 2026-10-15 at merge b4ca4aa (per-case coverage not re-measured here). Usage is not surfaced beyond the agent row; the operations telemetry report (wb-cax.13) is i",
+      "vcRefs": []
+     },
+     {
+      "line": 54,
+      "feature": "Native Claude session resume for agent({resume}) with explicit refusal of unknown, lost or mismatched sessions (never fresh-context masquerading as resume)",
+      "status": "landed-gated",
+      "evidence": "src/workbench/claude-host.ts:279-293 (getSessionInfo precheck, refusal on missing or mismatched session, pending-lookup abort), :189 (resume option), :231 (session-id mismatch refused). test/workbench-host-contract.test.ts ('SDK resume returning a different session ID refuses fresh-context continuation', 'cumulative SDK usage on resume counts only the new turn', 'resumed role preserves the same sy",
+      "caveats": "The live resume probe is a manual script (no forge.toml tier, no cmd_ receipt) and resumes within one process; resuming a workflow script after process loss is W12/W18, not this feature. Bead wb-dc0 remains open ('Still need Pi TUI session viewer and privacy proof').",
+      "vcRefs": []
+     },
+     {
+      "line": 55,
+      "feature": "Claude transcript viewer in the Pi inspector (bounded readClaudeTranscript rows) gated by the exact claude:transcript capability grant",
+      "status": "partial",
+      "evidence": "Landed: src/workbench/claude-transcript.ts readClaudeTranscript (text parts only, 500-char rows, limit clamped to [1,100]), src/index.ts:4449-4455 (grant check and read). test/workbench-security-pi-tools.test.ts 'claude:transcript grant on the inspector transcript path' ('refuses the transcript read with a typed permission message when the grant is absent', 'reads and renders the transcript unchan",
+      "caveats": "TRACEABILITY table row WB-031 still reads planned with no evidence although the viewer path is tested. The adapter has no test that tool_use inputs, tool_result bodies or thinking are excluded (the privacy proof wb-dc0 names as its residual). Transcript access reads the SDK's local session store only.",
+      "vcRefs": []
+     }
+    ]
+   },
+   {
+    "id": "W05",
+    "title": "node() language/RPC and error semantics",
+    "line": 57,
+    "rows": [
+     {
+      "line": 61,
+      "feature": "node(capabilityId, input, {label, phase}) script global dispatched over the worker RPC to the host capability registry (JSON-only boundary; no LLM call)",
+      "status": "landed-gated",
+      "evidence": "src/workflow/worker-source.ts:400 (scope.node realm bridge) and :597-635 (nodeIn: option allowlist label/phase, JSON validation, typed validation diagnostic), src/workflow/runtime.ts:1264-1285 (handleNode: payload validation, host.callNode, cap), runtime.ts:270-277 (WorkflowHost.callNode / describeNodeEffect), src/workbench/claude-host.ts:296-303 (callNode to registry.invoke with host-bound grants",
+      "caveats": "Bead wb-mwz is not closed ('Native evidence mapping in progress; no full WP closure'). Node options are limited to label and phase; docs/05's proposed deadlineMs, logicalKey and resultProjection are not implemented (deadlines are host policy). Only read-only capabilities are registered in production: docs/00 'Do not claim effectful node safety beyond the current read-only registered capability'.",
+      "vcRefs": [
+       "VC-2"
+      ]
+     },
+     {
+      "line": 62,
+      "feature": "Typed CapabilityError taxonomy preserved across the worker RPC (validation / authorization / unavailable / transport / uncertain-effect; fatal denials survive parallel())",
+      "status": "landed-gated",
+      "evidence": "src/workbench/capability-registry.ts:39-57 (CapabilityErrorCategory, CapabilityError), src/workflow/worker-source.ts:121 and :178 (realm CapabilityError reconstruction), src/workflow/runtime.ts:1272-1281 (typed RPC diagnostics). test/workbench-registry-auth.test.ts ('preserves category and instanceof CapabilityError in a real worker RPC', 'reports typed terminal diagnostics and local validation is",
+      "caveats": "docs/05's eight-way taxonomy is collapsed to five categories: producer domain failure is a returned JSON value rather than an error, cancelled waits report as transport, and stale is an observation-freshness label, not an error category. node:vm is explicitly not a hostile-script security boundary (docs/05, docs/12).",
+      "vcRefs": []
+     },
+     {
+      "line": 63,
+      "feature": "node() results never served from the settled-agent journal; a node ends downstream agent replay (W12 refinement: journaled reads replay stale under a vouching host basis, non-read effects stop the resume)",
+      "status": "landed-gated",
+      "evidence": "test/workbench-node-contract.test.ts ('node calls are never served from the settled-agent journal', 'a node between identical agents invalidates downstream journal replay'), test/workflow-effect-replay.test.ts (suites 'node journal entries', 'read effect replay', 'non-read effects on resume', 'Claude host effect policy', 'node read replay is scoped by the recording host's basis'), src/workflow/run",
+      "caveats": "Standing defect wb-tu1 (in_progress, nothing landed): a resume runs live a journaled node whose effectClass is absent instead of stopping as uncertain (fail-open); the fix and the wb-cax.3 classifier mirror update are pending. Replay/reconcile is journal-backed host behavior; no registered provider performs native logical-identity reconciliation. This slice is owned by W12; W05 inherits its guaran",
+      "vcRefs": []
+     },
+     {
+      "line": 64,
+      "feature": "Node operations projected as their own rows in the Pi inline card and inspector (never counted as agents; capability, label, partial domain result, native identity, freshness and evidence)",
+      "status": "landed-gated",
+      "evidence": "src/workflow/progress.ts (node progress entries), src/ui/workflow-card.ts, src/ui/workflow-dialog.ts. test/workbench-ui-contract.test.ts ('does not count an SDK node as an agent', 'shows capability, label and partial domain result on the compact card', 'shows the native operation in keyboard-navigable inspector with source basis'), test/workbench-native-details.test.ts ('WB-017 native inspector': ",
+      "caveats": "WB-017 remains experimental; the full four-view and scale inspector is W15 (VC-5) and open. Replayed node rows gained cached/stale annotations only with W12 part A (wb-g8f).",
+      "vcRefs": [
+       "VC-5"
+      ]
+     },
+     {
+      "line": 65,
+      "feature": "Node call quotas at the runtime boundary (per-workflow cap of 1000 node calls, oversized input refused before any provider call, bounded concurrent invocations)",
+      "status": "landed-gated",
+      "evidence": "src/workflow/runtime.ts:704 (nodeCap = 1000) and :1280-1281 (typed validation refusal), src/workbench/capability-registry.ts:58-62 (CAPABILITY_MAX_BYTES 256 KiB, CAPABILITY_MAX_DEPTH 64, CAPABILITY_DEADLINE_MS 30000, CAPABILITY_MAX_IN_FLIGHT 32). test/workbench-node-limits.test.ts ('refuses oversized input before native provider is called', 'does not allow unbounded concurrent node invocations'), ",
+      "caveats": "docs/05 asks for agent slots and SDK node slots to be counted separately and warns against CPU-count caps for remote calls; what landed is a total-count cap plus one registry-wide in-flight constant (see W06), with no per-capability table and no backpressure measurement. Whether any existing suite queues at 32 is UNDETERMINED.",
+      "vcRefs": []
+     }
+    ]
+   },
+   {
+    "id": "W06",
+    "title": "Provider registry and permissions",
+    "line": 67,
+    "rows": [
+     {
+      "line": 71,
+      "feature": "Host-side CapabilityRegistry with validated descriptors (recursive JSON-schema keyword validation, collision refusal, strict own-descriptor cloning, bounded redacted provider diagnostics)",
+      "status": "landed-gated",
+      "evidence": "src/workbench/capability-registry.ts (register :226, discover :259, invoke :286, inspect :290, validatedCapabilityJson :153). test/workbench-registry-schema.test.ts ('rejects malformed or unsupported schema ... without provider effects', 'rejects malformed output contract before provider execution', 'provider diagnostic redaction', 'strict JSON snapshot serialization'), test/workbench-node-contrac",
+      "caveats": "Bead wb-4ax is not closed and its notes record only focused reds/greens (/tmp JSON) rather than a WP gate; coverage comes from the whole-tree gates. Provider hot-change protection for a running pinned execution (docs/06 conformance item 5) is pinned via immutable invocation receipts (identity/W14), not a registry-level test. Contract-literal single-carrier census (wb-cax.8) is in_progress.",
+      "vcRefs": []
+     },
+     {
+      "line": 72,
+      "feature": "Independent exact-grant authorization for discover / inspect / invoke (every producer permission plus invoke:<id> for permission-free descriptors; crafted unauthorized or impersonating RPC denied; operator-authority prefixes reserved)",
+      "status": "landed-gated",
+      "evidence": "src/workbench/capability-registry.ts dispatch decisions (:286-347) and reserved prefixes discover/inspect/observe/control/reconcile at register. test/workbench-registry-auth.test.ts ('W06 capability boundary': 'invocation permission alone never exposes catalog metadata', 'discovery alone exposes detached metadata but cannot invoke or inspect', 'permission-free providers still require an explicit i",
+      "caveats": "docs/06: host principal/workspace are 'audit metadata until the entrypoint's scope checks and deployment identity supply actual authority' and the policy 'is not a complete cross-tenant or expired-token authorization service'. Cross-surface parity (script node(), detached host, curated capability_invoke) is only being pinned now (wb-6hb.4 in_progress, machine branch). Expired control-credential de",
+      "vcRefs": []
+     },
+     {
+      "line": 73,
+      "feature": "Explicit finite workbench.capabilityGrants configuration (namespace:permission identifiers, or one exact Claude tool right spelled claude:tool: and the tool's name (wb-wupg), no wildcards; selecting the Claude backend manufactures no grants; unknown data denies)",
+      "status": "landed-gated",
+      "evidence": "src/settings.ts:413-416 (grammar, at most 64 entries) and :446 (deduplicated), src/index.ts (grants(ctx) at :2508-2510 reads them from settings for every registered tool). test/workbench-grants-settings.test.ts ('retains the operator's finite grant list', 'does not manufacture grants when only the Claude executor is selected', it.each malformed grants refused, 'refuses an unbounded non-list grant'",
+      "caveats": "Grants are one flat process-wide list in settings; there is no per-role or per-workflow grant scoping beyond the role capabilities exposure list, and no runtime revocation surface other than editing settings (mid-view revocation is honored by the W15 evidence loaders).",
+      "vcRefs": []
+     },
+     {
+      "line": 74,
+      "feature": "Execution limits and effect honesty: JSON depth/byte caps, wait deadline, no generic auto-retry, uncertain-effect on lost answers or cancellation of effectful calls",
+      "status": "landed-gated",
+      "evidence": "src/workbench/capability-registry.ts:58-60 constants and invoke/inspect dispatch. test/workbench-registry-auth.test.ts ('rejects oversized nesting and pollution before executing providers', 'bounds an unresponsive read/external provider without retry', 'classifies effectful cancellation as uncertain and aborts only the provider wait', 'validates before invoking with an already cancelled wait, not ",
+      "caveats": "Uncertainty is recorded, not resolved: the only reconciliation is the W12 operator acknowledge/override journey, and no registered provider implements native logical-identity reconciliation. Limits are fixture-tested; no live provider timeout is measured.",
+      "vcRefs": []
+     },
+     {
+      "line": 75,
+      "feature": "Bounded in-flight admission in CapabilityRegistry (registry-wide maxInFlight = 32, FIFO wait bounded by the existing deadline and caller signal, typed unavailable refusal distinct from the transport deadline, counts-only telemetry snapshot)",
+      "status": "landed-gated",
+      "evidence": "src/workbench/capability-registry.ts:62 CAPABILITY_MAX_IN_FLIGHT, :68 CapabilityLimits.maxInFlight, :282 admission(), :337 admission-exhausted refusal. test/workbench-registry-admission.test.ts (A1-A8 plus 'admission refusal through the worker RPC'). Bead wb-cax.18 (W22-M/W06) closed 2026-10-15T11:40:51Z, close_reason: landed at merge 10a078c, owner isolated gate status=success cmd_d81196497350, m",
+      "caveats": "No TRACEABILITY section names this increment yet; the receipt lives in the bead close reason and commit 10a078c. The default of 32 is an owner ruling and 'no existing suite queues' was left UNDETERMINED. Inspect and invoke share one bound with no per-capability table. The telemetry consumer (wb-cax.13 operations report) is in_progress, so the counters are not surfaced to the operator.",
+      "vcRefs": []
+     }
+    ]
+   },
+   {
+    "id": "W07",
+    "title": "HyperUnix provider",
+    "line": 77,
+    "rows": [
+     {
+      "line": 81,
+      "feature": "node() typed HX query capability (hyperunix.find/v1) with coverage classification and binary custody",
+      "status": "landed-gated",
+      "evidence": "src/workbench/providers/hyperunix.ts registers hyperunix.find v1 (effectClass read, contractSource @hyperunix/sdk@0.1.0). Tests: test/workbench-ecosystem-native.test.ts, test/workbench-native-ecosystem.test.ts, test/workbench-provider-lifecycle.test.ts, test/workbench-node-limits.test.ts. TRACEABILITY section 'Native ecosystem receipts at 2026-10-15': provider custody red cmd_0509b89efbc7 / green ",
+      "caveats": "W-package bead wb-lri stays open: 'Full source basis/observer acceptance remains open' (W07 acceptance = real query coverage AND source basis). Live-binary tests are excluded from the portable default Forge gate (TRACEABILITY 'Open gaps'), so native receipts are separate tiers, not the default gate.",
+      "vcRefs": []
+     },
+     {
+      "line": 82,
+      "feature": "HyperUnix reader adapter projecting NativeSnapshots from measured hyperunix.find/v1 output (partial/unlicensed never success)",
+      "status": "landed-gated",
+      "evidence": "src/workbench/hyperunix-observer.ts; test/workbench-hyperunix-observer.test.ts. Closed bead wb-6ze.7 (titled W13-D/VC-5) close receipt: merge 4ca6bd5 on workbench/implementation-program; isolated merged-tree gate forge build --require-complete --no-replay PASS cmd_77aa3c690f72; worker gate cmd_ce41c5c18705 (162 files, 2887 passed).",
+      "caveats": "Ledgered as W13-D (adapter area), included here as the HX-facing observation surface - dedupe against the W13 mapper. Tool wiring excluded from that bead; runtime-licensed complete coverage is the only absence proof.",
+      "vcRefs": [
+       "VC-5"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "W08",
+    "title": "Forge provider",
+    "line": 84,
+    "rows": [
+     {
+      "line": 88,
+      "feature": "node() Forge gate-status read capability (forge.gate.status/v1) preserving verdict axes, source basis and authoritative_current",
+      "status": "landed-gated",
+      "evidence": "src/workbench/providers/forge.ts registers forge.gate.status v1. Tests: test/workbench-forge-contract.test.ts, test/workbench-forge-validation.test.ts, test/workbench-native-client.test.ts, test/workbench-provider-envelope-audit.test.ts; live probe qa/workbench/native-forge.mjs. TRACEABILITY 'Open gaps': native tier 'forge run native-read' cmd_3f893144b661 reached the real app-server; rows WB-013/",
+      "caveats": "Bead wb-5uh open: 'Remaining immutable source digest and current verification proof; W08 remains open.' Portable default gate excludes live-binary tests; historical reads carry authoritative_current=false (never current verification); transport success never equals PASS.",
+      "vcRefs": []
+     },
+     {
+      "line": 89,
+      "feature": "Forge gate-status reader adapter (NativeSnapshots + grouping edges; historical last_result stays unknown/partial, failed gate stays failed)",
+      "status": "landed-gated",
+      "evidence": "src/workbench/forge-observer.ts; test/workbench-forge-observer.test.ts. Closed bead wb-6hb.2 (titled W13/VC-2) close receipt: relay gate PASS cmd_e486eef99aac with 15/15 mutation sweep; owner independent isolated-worktree complete gate PASS (receipt file /tmp/pi-land-6hb2-gate.json, machine-local).",
+      "caveats": "Ledgered as W13/VC-2 - dedupe against the W13 mapper. Tool wiring excluded from that bead; owner gate receipt path is machine-local and was not re-verified here.",
+      "vcRefs": [
+       "VC-2"
+      ]
+     },
+     {
+      "line": 90,
+      "feature": "Forge operation evidence reader for inspector details (re-read through registered forge.gate.status under live grants; failed/partial never 'verified')",
+      "status": "landed-gated",
+      "evidence": "src/workbench/forge-evidence.ts; test/workbench-forge-evidence.test.ts. Closed bead wb-6ze.11 (titled W15-E/VC-5) landed at commit b44f1ce (verified present): owner isolated gate cmd_8c4b0a452392; machine gates cmd_4dfd790172dc, cmd_34371ac5f449. Duplicate bead wb-6ze.14 closed-withdrawn in its favor.",
+      "caveats": "Ledgered as W15-E (inspector evidence row) - dedupe against the W15 mapper. Disclosed riders: split-keyword redaction gap rides wb-952 (in_progress); raw bidi characters and two loose assertions ride wb-era (in_progress).",
+      "vcRefs": [
+       "VC-5"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "W09",
+    "title": "Furnace invoke/inspect/observe provider",
+    "line": 92,
+    "rows": [
+     {
+      "line": 96,
+      "feature": "Read-only attach/inspect of externally started Furnace Runs (furnace.run.inspect/v1); observer close never stops the Run",
+      "status": "landed-gated",
+      "evidence": "src/workbench/providers/furnace.ts (furnace.run.inspect v1, effectClass read) and src/workbench/furnace-observer.ts. Tests: test/workbench-furnace-observer.test.ts, test/workbench-external-furnace.test.ts, test/workbench-pi-furnace-observer.test.ts, test/workbench-pi-furnace-real-client.test.ts, test/workbench-furnace-real-active.test.ts. TRACEABILITY 'External active Furnace and Pi reader receipt",
+      "caveats": "Native lifecycle cursor unavailable in the installed SDK - bounded polling only; status/attempt/log snapshots sequential and non-atomic. W19 hardening added foreign-workspace Run refusal (red cmd_91349509691f, green cmd_80373ba3643b). This is read-only acceptance, not full W09.",
+      "vcRefs": []
+     },
+     {
+      "line": 97,
+      "feature": "Furnace Run->Attempt observed topology (native-confirmed ownership edges + source intervals) feeding the inspector",
+      "status": "landed-gated",
+      "evidence": "projectionTopology in src/workbench/furnace-observer.ts; test/workbench-furnace-topology.test.ts. Closed bead wb-752.1 (VC-4/W13) landed at commit e797a84 (verified present): relay gate PASS cmd_e8d3b26b8ffc; independent merged-tree complete gate PASS (151 files, 2520 passed; receipt /tmp/pi-land-752-gate2.json, machine-local).",
+      "caveats": "Ledgered VC-4/W13 - dedupe with those mappers. Intervals withheld unless provable; no invented Work nodes or causation edges. Full VC-4 live acceptance receipt still open (wb-752.3 in_progress); VC-4 epic wb-752 open.",
+      "vcRefs": [
+       "VC-4"
+      ]
+     },
+     {
+      "line": 98,
+      "feature": "Bounded Furnace Attempt-log evidence reader (run/attempt/stream identity checks, foreign-run unauthorized, truncation-honest)",
+      "status": "landed-gated",
+      "evidence": "src/workbench/furnace-evidence.ts; test/workbench-furnace-evidence.test.ts. Closed bead wb-6ze.8 (W15-E/VC-5) landed merge 7ccbb36: isolated merged-tree gate cmd_06581a164d43; machine complete gate cmd_299b86893f65; worker gate cmd_d882a870b5d0; 66/66 targeted mutants killed (carried claim, disclosed).",
+      "caveats": "Ledgered W15-E - dedupe with the W15 mapper. Open defect wb-8zn (in_progress): the content.bytes field actually reports the producer's returned LINE count; the lineCount rename exists only on machine branch commit 216e7f5, not on trunk.",
+      "vcRefs": [
+       "VC-5"
+      ]
+     },
+     {
+      "line": 99,
+      "feature": "Furnace invocation (run start with uncertain-effect on ambiguous timeout) and native control actions (pause/stop/resume/retry)",
+      "status": "partial",
+      "evidence": "Landed-gated half: native control actions run pause / run stop / run resume / attempt stop via the Furnace control adapter src/workbench/furnace-control.ts + test/workbench-furnace-control.test.ts, landed on trunk at merge cd5aab7 (bead wb-69g.3 closed 2026-10-15T11:54:45Z; owner isolated gate cmd_2f581221d224, machine complete gate cmd_bc14baf38541; per-verb argv citations against the vendored @f",
+      "caveats": "No invoke/start surface landed, so the bead's ambiguous-start-timeout -> uncertain-effect + reconcile-hint semantics are unexercised. Pi registration and live-Furnace execution are excluded from the landed adapter slice, so operators cannot issue these control actions through workbench tools yet. TRACEABILITY 'W17...Furnace executor verdict' section verified park-not-retry semantics read-only agai",
+      "vcRefs": []
+     }
+    ]
+   },
+   {
+    "id": "W10",
+    "title": "ReactiveFiber provider/interop",
+    "line": 101,
+    "rows": [
+     {
+      "line": 105,
+      "feature": "node() RF noncommitted context preview capability (reactivefiber.render.preview/v1; input {model, task} or {view, taskId, model?}, never both) with graph provenance; no authoritative or journal write, disposable cache-plane writes possible per the pinned producer trace",
+      "status": "landed-gated",
+      "evidence": "src/workbench/providers/reactivefiber.ts (reactivefiber.render.preview v1; contractSource from the single carrier REACTIVE_FIBER_CONTRACT_SOURCE = rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit, re-pinned 2026-10-26 from receipts/wb-jwc.4.md; the earlier rf@0.1.583 literal is retired). Tests: test/workbench-native-rf-preview.test.ts, test/workbench-provider-envelope-audit.test.ts, tes",
+      "caveats": "Bead wb-x32 open: 'Full interop contract remains open.' Preview deliberately yields null render/transaction IDs (no durable render); W10 acceptance is 'real render or honest blocker' - the landed slice is the noncommitted preview via the CLI envelope, not a committed render or production TS SDK interop.",
+      "vcRefs": []
+     },
+     {
+      "line": 106,
+      "feature": "ReactiveFiber reader adapter projecting NativeSnapshots from reactivefiber.render.preview/v1 envelopes into the observation projection",
+      "status": "landed-gated",
+      "evidence": "Bead wb-6ze.9 (W13-E/VC-5) closed 2026-10-15: landed at merge e6c22a2 (machine/flywheel/wb-6ze.9 c5bc991 onto 10a67e7); owner isolated gate cmd_90e6d16e89a4, machine complete gate cmd_2969c04433db. On trunk: src/workbench/reactivefiber-observer.ts, test/workbench-reactivefiber-observer.test.ts.",
+      "caveats": "Bound reading at landing (batch-8 reading A): the adapter itself issues no rf verb ever; it projects only the envelope the registered reactivefiber.render.preview provider already returned, the preview is the --no-commit form so observation never mints render history, and provider execution stays on the invoke plane under its own grants. Five raw bidi points in the test fold into wb-era set v3.",
+      "vcRefs": [
+       "VC-5"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "W11",
+    "title": "MechanicalWorkflows binding host",
+    "line": 108,
+    "rows": [
+     {
+      "line": 112,
+      "feature": "Hosted develop() with real scope-limited service bindings (HX->RF->Claude SDK->Forge composition; four domain outcome variants preserved)",
+      "status": "planned",
+      "evidence": "Beads wb-04s (W11) status=blocked and wb-w12 (VC-3 epic) status=blocked; no other W11 beads at the 2026-10-15 export. No binding host exists (re-measured 2026-11-06 at trunk 814dcdd by wb-j5y5, EAT-R082): no module under src/workbench/hosts/ names MechanicalWorkflows, and test/workbench-mwi-release.test.ts holds this statement to that directory. The src/ files that match the word mechanical at tha",
+      "caveats": "Bead status is 'blocked' (status vocabulary lacks it; 'planned' chosen as the weaker fit - beads only, no code, nothing in progress). Blocked on task-scoped pinned native HX discovery and live service bindings; entrypoint remains descriptor-only; the separate rig's Git tracked-file census is not HX pinned complete task scope; mutable dist exports must not be treated as the packed release; fixture ",
+      "vcRefs": [
+       "VC-3"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "W12",
+    "title": "Workflow task/journal split and side-effect policy",
+    "line": 114,
+    "rows": [
+     {
+      "line": 118,
+      "feature": "No-blind-replay core: journaled non-read effects refuse resume with typed uncertain-effect; reads replay only under matching basis/class/key marked stale; settled-agent prefix replay under explicit replayBasis",
+      "status": "landed-gated",
+      "evidence": "src/workflow/journal.ts, src/workflow/runtime.ts, src/workbench/claude-host.ts. Tests: test/workflow-effect-replay.test.ts, test/workflow-journal.test.ts. TRACEABILITY section 'W12 side-effect replay policy': red 14/18 then green 18/18, 164 focused + 404 adjacent tests, lint bbfed12c8323, typing c4d853663cd2 (step receipts only; the section names no complete-gate cmd id, and the feature commit ad3",
+      "caveats": "wb-5x0 held in_progress only by open dependency edges wb-mwz (W05) / wb-7qs (W02), not by missing W12 work. Known fail-open defect in this policy is wb-tu1 (separate row). Migration classifier for old journals landed separately as wb-cax.3 (closed, src/workflow/journal-compat.ts, gate cmd_72d7b16237cb) under W22.",
+      "vcRefs": []
+     },
+     {
+      "line": 119,
+      "feature": "Operator reconcile journey (acknowledge/override of journaled effects via workflow_reconcile) plus replayed/reconciled node provenance across header, card, dialog and notifications",
+      "status": "landed-gated",
+      "evidence": "Closed bead wb-g8f close receipt: part A 0ef5aeb; B.1 250c0af; B.2 ceb738a gate cmd_1aede7b05ce9; B.3 b289411 gate cmd_f803a8138f94; B.4 bbdbaaa gate cmd_b747ea3ee087; B.5 24e6015 gate cmd_fa322bba8db9 (all six commits verified present on branch workbench/implementation-program). Code: src/workflow/reconcile.ts, src/workbench/reconcile-decision.ts, src/workbench/reconcile-tool.ts. Tests: test/work",
+      "caveats": "B.5 tool-description case is a disclosed post-hoc drift pin (written against the applied change). Two first-attempt gate failures disclosed and re-gated before push (import order cmd_8d268249650c, typing cmd_2d3efb1292b0). reconcile: authority is grant-reserved - provider manifests carrying the prefix are refused.",
+      "vcRefs": []
+     },
+     {
+      "line": 120,
+      "feature": "Detached-host journals carry node effect metadata (describeNodeEffect/replayBasis); runtime replay admission requires recorded read class, current vouching and matching host basis",
+      "status": "landed-gated",
+      "evidence": "Closed bead wb-6hb.1 close receipt: relay gate PASS cmd_c117e32ae536, red re-verified at base blobs (9 failed), owner independent isolated-worktree complete gate (receipt /tmp/pi-land-6hb1-gate.json, machine-local). Code: src/workbench/hosts/local-detached.ts, src/workflow/runtime.ts admission. Test: test/workbench-local-detached-effects.test.ts.",
+      "caveats": "Pre-change basis-less read entries conservatively run live (disclosed in the close reason). Owner gate receipt path is machine-local and was not re-verified here.",
+      "vcRefs": []
+     },
+     {
+      "line": 121,
+      "feature": "Fail-closed resume for journaled nodes with ABSENT effectClass (stop at position as uncertain effect instead of running live)",
+      "status": "in-progress",
+      "evidence": "Bug bead wb-tu1 (priority 2) is in_progress in the ledger with nothing landed on trunk: no commit has touched src/workflow/runtime.ts or src/workflow/journal-compat.ts since 06f7071. A delivery exists on machine/flywheel/wb-tu1 @ 0fd665b (base b4ca4aa; runtime.ts, task.ts and five test files) and per the preamble column note is not landed. Unblocked note: wb-cax.3 landed at 06f7071 ('Dispatchable ",
+      "caveats": "Current trunk behavior is fail-open: a journaled entry with no effectClass re-runs live on resume, contradicting the shipped tool description ('a journaled non-read node stops a resume'). The bead is claimed with a machine-branch delivery awaiting the gate lane; nothing on trunk. Red test prescribed in test/workflow-effect-replay.test.ts.",
+      "vcRefs": []
+     }
+    ]
+   },
+   {
+    "id": "W13",
+    "title": "Event collector and native observation adapters",
+    "line": 123,
+    "rows": [
+     {
+      "line": 127,
+      "feature": "Bounded observation ingestion (provider-qualified dedup, out-of-order refusal, stale marking, cursor-gap honesty, disconnect->stale->reconnect recovery)",
+      "status": "landed-gated",
+      "evidence": "src/workbench/observation.ts; tests test/workbench-observation.test.ts, test/workbench-observation-shell.test.ts, test/workbench-observation-recovery-receipt.test.ts (+ qa/workbench/observation-recovery-bench.mjs); TRACEABILITY 'Bounded projection measurements' (Forge projection tier cmd_f23fb2f4e0e0; dedup/sequence-regression/cursor-gap tests; evicted cursor -> partial-gap); bead wb-6ze.5 closed ",
+      "caveats": "WB-036 traceability status is 'fixture'; no native lifecycle cursor stream in installed SDKs so readers use bounded polling; the external Furnace receipt (cmd_119b38150276) explicitly makes 'no live event reconnect claim'; area bead wb-79k still in_progress",
+      "vcRefs": []
+     },
+     {
+      "line": 128,
+      "feature": "Native reader/observer adapters: Claude session topology, Forge gate-status, HyperUnix find, Furnace Run/Attempt",
+      "status": "landed-gated",
+      "evidence": "Closed beads with the gate receipts their close reasons record: wb-6ze.3 (src/workbench/claude-topology.ts + test/workbench-claude-topology.test.ts, landing 6199ad5; relay gate cmd_562ac0013895), wb-6hb.2 (src/workbench/forge-observer.ts + test/workbench-forge-observer.test.ts, landing a650133; relay gate cmd_e486eef99aac with 15/15 mutation sweep), wb-6ze.7 (src/workbench/hyperunix-observer.ts + ",
+      "caveats": "Claude/Forge/HX reader beads exclude tool wiring by scope; Furnace status/attempt/log snapshots are sequential and non-atomic (polling, not cursor stream); historical Forge gate reads stay authoritative_current=false, never current verification; most related WB rows are 'fixture'/'experimental'",
+      "vcRefs": []
+     },
+     {
+      "line": 129,
+      "feature": "Remaining reader adapters: Beads work-readiness, local-detached host",
+      "status": "in-progress",
+      "evidence": "Beads wb-752.6 (W13-F Beads readiness reader, in_progress) and wb-0kg.5 (W13-G local-detached reader, in_progress); grep shows no dedicated adapter modules in src/workbench/ for these (DetachedSnapshot only in src/workbench/hosts/local-detached.ts). The ReactiveFiber reader (wb-6ze.9) left this set at the second reconcile pass: landed at e6c22a2, see its own row.",
+      "caveats": "Nothing landed for these two adapter slices yet; the detached host exists but its W13 projection adapter does not",
+      "vcRefs": []
+     }
+    ]
+   },
+   {
+    "id": "W14",
+    "title": "Incremental projection and typed relationship indexes",
+    "line": 131,
+    "rows": [
+     {
+      "line": 135,
+      "feature": "Incremental scoped projection with typed relation indexes and no-full-event-fold queries",
+      "status": "landed-gated",
+      "evidence": "src/workbench/observation.ts; tests test/workbench-observation-perf.test.ts, test/workbench-projection-invalidation.test.ts, test/workbench-task-incremental.test.ts; TRACEABILITY 'Bounded projection measurements': Forge tier cmd_f23fb2f4e0e0 over 100k events/1000 nodes (exact query p95 0.00270 ms, max 1 node examined, 535-byte reply); incremental task counters red cmd_29a9e7b2c580 -> green cmd_511",
+      "caveats": "Benchmark exercises the read model, not terminal layout; heap-growth figure is explicitly not a retained-size proof; area bead wb-eyg in_progress ('real entry integration ongoing')",
+      "vcRefs": []
+     },
+     {
+      "line": 136,
+      "feature": "Incremental ancestor aggregates (counts, interval envelope, incomplete-trace labels)",
+      "status": "landed-gated",
+      "evidence": "Bead wb-6ze.2 closed ('Landed on workbench/implementation-program as merge a67bc36'); close-reason gate receipts: relay gate cmd_3b47cb2d8b4b PASS and Sr. Engineer independent isolated-worktree complete gate on the merge PASS cmd_5eb54b7fe4fb (lint, typing, build, test, workbench-shell, package-smoke). Feature commit dee5a43 touched src/workbench/observation.ts (+256) and added test/workbench-obse",
+      "caveats": "criticalPath is deliberately the literal 'unestablished' (no number); inspector wiring excluded from the bead's scope; full viewport benchmark tracked separately",
+      "vcRefs": []
+     },
+     {
+      "line": 137,
+      "feature": "Attention and bottleneck selector over the projection",
+      "status": "landed-gated",
+      "evidence": "Bead wb-6ze.4 closed; landing merge a4cd2cf carries gate cmd_6fd6cc3571c4 (close reason also records the Sr. Engineer isolated complete gate cmd_22b69112cde6); src/workbench/attention.ts + test/workbench-attention.test.ts",
+      "caveats": "Critical path reported only as partial-estimated or incomplete-trace with reasons; the inspector overview attention panel that renders it (wb-6ze.21) is still in_progress, reported-truncation adoption in attention/timeline selectors (wb-6ze.29) is open, and the dialog/host wiring that would supply the workbench.attention/v1 AttentionReport to the inspector overview (wb-6ze.36) is open - per wb-6ze",
+      "vcRefs": []
+     },
+     {
+      "line": 138,
+      "feature": "Relation-page truncation reporting (relationsPage) and consumer adoption",
+      "status": "in-progress",
+      "evidence": "Beads wb-6ze.27 (in_progress) and wb-6ze.29 (open), wb-6ze.30 (open, topology-slice adoption); grep: 'relationsPage' absent from src/workbench/observation.ts and from every suite under test/ (no test names it)",
+      "caveats": "Nothing landed; until it lands, consumers cannot distinguish a full relation page from an exact result (the 45-edge/40-cap honesty scenario in the bead text)",
+      "vcRefs": []
+     }
+    ]
+   },
+   {
+    "id": "W15",
+    "title": "Rich TUI tree/timeline/graph/details",
+    "line": 140,
+    "rows": [
+     {
+      "line": 144,
+      "feature": "Inspector scale benchmark (>=1000 nodes / 100k events, <=20 ms navigation)",
+      "status": "landed-gated",
+      "evidence": "qa/workbench/inspector-bench.mjs and qa/workbench/inspector-grouped-bench.mjs + test/workbench-grouped-fixture.test.ts; TRACEABILITY 'Additional compiled-client evidence': benchmark cmd_9572ac580306 (p95 0.389 ms, max 17.69 ms, 1000 nodes/100k updates) and recheck cmd_4ff4ffabcbe0 (p95 0.358 ms) in 'Second audited embedded/local-host checkpoint'; grouped-10k fixture receipt bead wb-9x5.1 closed (l",
+      "caveats": "Bench-only limits: the 1000-node fixture is edge-free with at most 40 rendered rows; not live native topology; the first landing attempt 14e78f1 (gate FAIL cmd_b614a8d82ebd) remains reverted and do-not-base, so no receipt from its body is cited; deeper grouped-10k receipts (retained memory wb-9x5.3, churn wb-9x5.4, cap saturation wb-9x5.6, lane model wb-9x5.7 in_progress; tool-reply size wb-9x5.5,",
+      "vcRefs": []
+     },
+     {
+      "line": 145,
+      "feature": "Four-view terminal inspector (overview tree, graph, timeline, details) with keyboard navigation and native detail rows",
+      "status": "partial",
+      "evidence": "Landed half: src/ui/workflow-inspector.ts + src/ui/workflow-dialog.ts; tests test/workbench-inspector.test.ts, test/workbench-inspector-window.test.ts, test/workbench-native-details.test.ts, test/workbench-ui-contract.test.ts; bead wb-6ze.1 closed (overview nested tree + graph fan-out collapse; relay gate cmd_a93f656522fe per close_reason); TRACEABILITY 'Selectable native detail evidence', compile",
+      "caveats": "WB-027 'experimental', WB-028 ASCII/80x24 'fixture'; the terminal journey was command-bridge driven (outer Pi model credentials unauthorized) and does not establish live adverse cancellation or native linked topology; area bead wb-g1g in_progress",
+      "vcRefs": [
+       "VC-5"
+      ]
+     },
+     {
+      "line": 146,
+      "feature": "Timeline lane model (workbench.timeline/v1)",
+      "status": "partial",
+      "evidence": "Landed half: bead wb-6ze.6 closed (merge d180dbb, whose body is a bare title; close-reason gate receipts: isolated merged-tree gate cmd_e66fae7a609f, machine complete gate cmd_33431167536a, worker gate cmd_160644e75dcd); feature commit a937f53 added src/workbench/timeline.ts (431 lines, TIMELINE_CONTRACT + buildTimelineLanes) and test/workbench-timeline.test.ts (819 lines). Open half: wb-6ze.26 (i",
+      "caveats": "Inspector wiring excluded by the bead; the current timeline view draws source intervals, not the new lane model; lanes derive only from producer-supplied intervals (open intervals stay open, no ordering inferred from timestamps alone)",
+      "vcRefs": []
+     },
+     {
+      "line": 147,
+      "feature": "Evidence loading: docs/20 loader contract, producer readers (claude transcript, forge operation, furnace attempt log), store + dialog wiring",
+      "status": "partial",
+      "evidence": "Landed: wb-g1g.1 closed (src/workbench/evidence-loader.ts + evidence-producers.ts; red cmd_8c67d85100cf -> green cmd_970fa79177ca; close-reason gates for merge 0fc3c86: owner isolated gate on the merged tree cmd_ee89033cc1d8, machine complete gates cmd_a8b4e1ffdff4 original + cmd_32c4364eeab4 respin; test/workbench-evidence-loader.test.ts), wb-6ze.8 closed (src/workbench/furnace-evidence.ts + test",
+      "caveats": "wb-6ze.12 and wb-6ze.14 are closed only as withdrawn duplicates (no work) - do not read them as landed slices; loaders remain limited to verified session/read APIs; WB-031 (open Claude conversations from inspector) is still 'planned' in the requirements table; 'full native evidence loaders' listed open at the second audited checkpoint. Standing findings on this exact landed surface: wb-v53 (in_pro",
+      "vcRefs": []
+     },
+     {
+      "line": 148,
+      "feature": "Details-view linked native topology slice",
+      "status": "partial",
+      "evidence": "Landed half: wb-g1g.2 closed (merge 314ff29; src/workbench/topology-slice.ts + test/workbench-topology-slice.test.ts; owner gate cmd_879f309d9ded, machine gate cmd_87383785df8f). Open half: details-view render wb-6ze.16 (in_progress), dialog/host wiring wb-6ze.24 (open), reported-truncation adoption wb-6ze.30 (open)",
+      "caveats": "The pure slice selector is landed but not yet rendered in the details view or wired through the dialog. A CONFIRMED medium defect stands on trunk (wb-ghc, closed only as a pointer - its close reason says 'nothing is fixed here'): selectLinkedTopology silently undercounts the remainder and mislabels the trace 'observed' whenever the projection's own relation-page cap (ObservationLimits.maxQuery, 40",
+      "vcRefs": []
+     }
+    ]
+   },
+   {
+    "id": "W16",
+    "title": "Pi catalog/inspect/observe/control tools",
+    "line": 150,
+    "rows": [
+     {
+      "line": 154,
+      "feature": "workflow_observe Pi tool (bounded redacted projection query under workbench:observe grant with session/workspace/principal ACL)",
+      "status": "partial",
+      "evidence": "Landed: registered tool at src/index.ts:2606 (grant check, task-ID validation, limit 1..40, sanitized compact JSON); tests test/workbench-security-pi-tools.test.ts and test/workbench-schema-version.test.ts (reads a real embedded receipt through workflow_observe); WB-018 row 'experimental'. Open: richer pure workflow_observe reply builder with cursor pagination/selectors/freshness summary is wb-752",
+      "caveats": "Current reply shape is inline in index.ts, not the planned pure builder; wb-69g notes: 'explicit observe ACL planned with immutable invocation receipt. No complete control/compare suite claim'; area bead wb-69g in_progress",
+      "vcRefs": []
+     },
+     {
+      "line": 155,
+      "feature": "Capability catalog and inspect tools",
+      "status": "partial",
+      "evidence": "Landed: pure workflow_catalog/workflow_inspect reply builders in src/workbench/tool-replies.ts + test/workbench-tool-replies.test.ts (bead wb-69g.2 closed, merge 0f3a067 whose body is a bare title; close-reason gate receipts: isolated merged-tree gate at ceb738a cmd_c26d68d503f8, machine complete gate cmd_b388ea888e01; exact discover:/inspect: grant ACL and cursor pagination); and a registered wor",
+      "caveats": "Pi tool registration was explicitly excluded from wb-69g.2's scope; operators get a capability listing today but not the paginated inspect surface. Disclosed cast cleanup accepted at that landing: wb-1q8 (in_progress, P3) tracks tool-replies.ts:147 re-typing a sanitized reply row with 'as unknown as CatalogRow' (the wb-69g.2 close reason itself filed the cleanup bead).",
+      "vcRefs": []
+     },
+     {
+      "line": 156,
+      "feature": "workflow_control: decision core, provider control adapters, host wiring",
+      "status": "partial",
+      "evidence": "Landed: provider-free decision core src/workbench/control.ts + test/workbench-control.test.ts (bead wb-69g.1 closed, merge 23404b4; close-reason receipt: relay gate PASS cmd_e8eea836aecd; the owner complete-gate receipt is machine-local /tmp/pi-land-69g1-gate.json and the worker-carried 48/48 mutant claim was not re-run by the gate seat); and the Furnace control adapter src/workbench/furnace-contr",
+      "caveats": "No workflow_control tool is registered and the landed decision core and Furnace adapter are unwired in src/index.ts (grep finds neither), so operators cannot issue control actions through workbench tools yet; the landed Furnace adapter deliberately excludes run adopt, work retry, run start, run unlock and attempt clear; wb-69g.4 blocked because SDK Query.interrupt() requires streaming input while ",
+      "vcRefs": []
+     },
+     {
+      "line": 157,
+      "feature": "Bounded reply-builder slices for workflow_execute / workflow_validate / workflow_compare",
+      "status": "partial",
+      "evidence": "Landed: wb-69g.6 (W16-G validate reply builder) closed 2026-10-15 at merge e7bcadd; wb-69g.5 (W16-E execute admission + reply builder, src/workbench/execute.ts) closed; wb-syh (W16 workflow_execute Pi tool wiring, owner-reserved) landed: src/workbench/execute-tool.ts registers workflow_execute over the pure module through host seams only (grants, principal, workspace, session re-read on every call",
+      "caveats": "workflow_execute presents ONE dialect to the model: the workbench.tool-reply/v1 envelope with the ruled exception that `invoked` reports whether a launch happened; the pure module's workbench.execute/v1 contract string never reaches the model (test/workbench-execute-tool.test.ts). Completion is never asserted: the reply carries the invocation and native references and the producer's later answer i",
+      "vcRefs": []
+     }
+    ]
+   },
+   {
+    "id": "W17",
+    "title": "Source-aware designer, static projection and comparison",
+    "line": 159,
+    "rows": [
+     {
+      "line": 163,
+      "feature": "Read-only source validation and static projection (workflow_validate + workflow_catalog tools: source digests, AST possible-call projection, no execution/edit)",
+      "status": "landed-gated",
+      "evidence": "src/workbench/designer.ts; registered tools at src/index.ts:2505 (workflow_validate) and :2524 (workflow_catalog), both gated on workbench:design; tests test/workbench-designer.test.ts, test/workbench-pi-designer.test.ts, test/workbench-schema-version.test.ts; TRACEABILITY 'Source designer increment' (red cmd_491d5d54787f -> green cmd_7fcdf7518d74; compiled external client cmd_fdf5d9317a3b) and 'S",
+      "caveats": "WB-032 row 'experimental'; the separate W16-G pure validate reply builder landed at e7bcadd (src/workbench/validate-reply.ts) but is not yet wired to this tool surface - convergence rides wb-h8f.6; qa/workbench/designer-client.mjs is a client receipt, not a live design loop",
+      "vcRefs": []
+     },
+     {
+      "line": 164,
+      "feature": "Run comparison with cohort rigor (workflow_compare / compareWorkflowRuns: matched-basis cohorts, confound kinds, per-metric measured-or-unknown, SCHEMA_MISMATCH refusal)",
+      "status": "landed-gated",
+      "evidence": "src/workbench/designer.ts:217 (compareWorkflowRuns); registered workflow_compare tool at src/index.ts:2538 (requires workbench:design + workbench:observe); TRACEABILITY section 'W17 comparison cohorts and the Furnace executor verdict': red cmd_a3119e9e81fd (25 new cases) -> green cmd_a76bef766614 (64/64), lint cmd_e94f9458190c, typing cmd_3e6f230d5549, including a real-tool non-git-sandbox proof t",
+      "caveats": "The real tool supplies no native metrics (index.ts passes metrics: []), so measured verdicts over live runs remain open; claims are association-only, never causal; WB-038 (versioned digest-referenced comparison) still 'planned'; area bead wb-pno in_progress",
+      "vcRefs": []
+     },
+     {
+      "line": 165,
+      "feature": "Digest-pinned workflow patch proposal (bounded redacted diff with static validation of the candidate)",
+      "status": "landed-gated",
+      "evidence": "Bead wb-h8f.1 (VC-6/W17-A) closed 2026-10-15: landed at merge 1e4102f (machine/flywheel/wb-h8f.1 40fee32 onto ee8bde0); owner isolated complete gate cmd_d8d04346f60b, machine complete gate cmd_79278b2acc30 (165 files, 2955 passed) plus merged-tree supplementary evidence (targeted 13/13, biome, src tsc, status-ledger --strict). On trunk: src/workbench/patch-proposal.ts, test/workbench-patch-proposa",
+      "caveats": "Pure proposal module only: by design no automatic live implementation replacement, and Pi tool wiring is a separate slice (TRACEABILITY WB-039 still reads planned as of this export). Landing dispositions: three raw U+202E in the test fold into wb-era; displayText is the ninth display-sanitizer site under wb-952 (its load-bearing double redact is a bound constraint there); a dead uncertain-promotio",
+      "vcRefs": [
+       "VC-6"
+      ]
+     },
+     {
+      "line": 166,
+      "feature": "Evidence-linked improvement experiment (execute comparison with real native evidence, report gains/confounders)",
+      "status": "in-progress",
+      "evidence": "Area bead wb-pno in_progress with explicit open item 'native metric sourcing for measured verdicts over live runs'; TRACEABILITY 'Source designer increment' states 'Full live improvement experiments remain open'; supporting W16-H reply builder wb-69g.7 open; the measurement-only live acceptance for this exact journey is wb-h8f.2 (open: 'VC-6 residual: live Pi design/compare loop acceptance receipt",
+      "caveats": "Nothing landed for the live-experiment slice; the comparison core refuses to manufacture metrics or environment/cache identity, so this feature cannot be demonstrated until native metric sourcing exists",
+      "vcRefs": [
+       "VC-6"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "W18",
+    "title": "Detached host, optional Furnace ExecutorApp",
+    "line": 168,
+    "rows": [
+     {
+      "line": 172,
+      "feature": "Local same-machine detached host with Pi exit/reconnect",
+      "status": "landed-gated",
+      "evidence": "src/workbench/hosts/local-detached.ts; tests test/workbench-pi-detached.test.ts, test/workbench-local-detached.test.ts, test/workbench-local-detached-effects.test.ts on trunk; forge.toml commands [build.commands.local-detached-shell]/[build.commands.local-detached-unit]; qa/workbench/local-detached-client.mjs + local-detached.sh. TRACEABILITY sections 'Additional compiled-client evidence' (detache",
+      "caveats": "Same-machine private Unix DAC profile only: no remote-host authentication and no crash-durability claim (TRACEABILITY says 'not remote auth or host-crash durability'); parent bead wb-5w0 stays in_progress; in_progress defect wb-71q: socket under tmpdir() refuses every detached launch when TMPDIR exceeds ~34 bytes (103-byte sun_path limit); local-provider results in the lifecycle shell are fixture-",
+      "vcRefs": [
+       "VC-7"
+      ]
+     },
+     {
+      "line": 173,
+      "feature": "Native executable identity observation (immutable deployment refs groundwork)",
+      "status": "landed-gated",
+      "evidence": "Closed bead wb-0kg.2 (VC-7/W18-B, closed 2026-10-15T11:34Z) with gate receipts: owner isolated gate cmd_2fee27bddcd5, machine gate cmd_d357964c4b62 (167 files, 3022 passed); landed at merge a17ebb2. Files on trunk: src/workbench/executable-identity.ts, test/workbench-executable-identity.test.ts.",
+      "caveats": "Observation-only module that never executes a binary; digest claims only for absolute immutable paths, PATH-resolved stays mutable-path, SDK-default executable stays unsupported; the closed surface was exactly module+test, so wiring into the detached host (which previously hard-coded nativeRuntimeIdentity 'unsupported') and resolving the ELF behind the mise wrapper remain W18 owner items; read-rac",
+      "vcRefs": [
+       "VC-7"
+      ]
+     },
+     {
+      "line": 174,
+      "feature": "Furnace-hosted ExecutorApp adapter (per-Attempt embedded bridge)",
+      "status": "landed-gated",
+      "evidence": "Bead wb-zmd (W18-C) closed 2026-10-15: landed at merge e830ac2 (machine/flywheel/wb-zmd 944cdab onto b4ca4aa); owner isolated gate cmd_64aa75efea7b, machine complete gate cmd_de039e243188. On trunk: src/workbench/hosts/furnace-hosted.ts, test/workbench-furnace-hosted.test.ts, test/workbench-furnace-hosted-real.test.ts, vitest.furnace-hosted.config.ts, and a forge.toml additive furnace-hosted-live ",
+      "caveats": "TRACEABILITY row WB-042 still reads planned as of this export; the WB-042 correction is filed in receipts/wb-zby.1.md (TRACEABILITY frozen). The vendored @furnace/sdk was re-packaged by wb-zby (closed at 2022ddd) from a Furnace revision whose manifest and generated provenance digests agree, and the adapter and both test tiers drive the shipped SDK since (test/helpers/furnace-sdk-repaired.ts delete",
+      "vcRefs": []
+     },
+     {
+      "line": 175,
+      "feature": "Detached-host fault-injection conformance (effect-then-crash, Work-retry-while-uncertain, multi-reader cancellation ownership)",
+      "status": "partial",
+      "evidence": "Landed-gated half: wb-0kg.1 (VC-7/W18-A) closed 2026-10-15 at merge ee8bde0 (machine/flywheel/wb-0kg.1 2dfa1f9 onto e830ac2); owner isolated gate cmd_70855913bdeb, machine complete gate cmd_d1a0a893626a (165 files, 2969 passed); on trunk: qa/workbench/local-detached-faults-receipt.mjs, qa/workbench/local-detached-faults.mjs, test/workbench-detached-faults-receipt.test.ts, forge.toml additive local",
+      "caveats": "Open half: wb-0kg.7 (W18-E multi-reader cancellation ownership over the landed harness, in_progress); corrected 2026-10-17 (wb-zby.1): wb-0kg.4 (W18-D Furnace Work-retry-while-Run-establishment-uncertain) is closed with its fixture tier on trunk (test/workbench-furnace-hosted-retry-fault.test.ts, qa/workbench/furnace-hosted-retry-fault*.mjs, forge.toml furnace-hosted-retry-fault), so this cell's i",
+      "vcRefs": [
+       "VC-7"
+      ]
+     }
+    ]
+   },
+   {
+    "id": "W19",
+    "title": "Security/prompt injection/privacy tests",
+    "line": 177,
+    "rows": [
+     {
+      "line": 181,
+      "feature": "Adversarial security suites and shared sanitizers (provider-data prompt injection, grant/identity forgery, credential leakage, path/symlink escape, VM boundary probes)",
+      "status": "partial",
+      "evidence": "Landed half: TRACEABILITY section 'W19 adversarial security pass': three new security suites, 15 green with 9 confirmed red findings at cmd_254839305a5f; fixes test-first (shared control/bidi/credential sanitizers in redaction over every registered tool output and UI label path; Furnace provider refuses foreign-workspace Run records) red cmd_91349509691f, green cmd_80373ba3643b, regression sweep 6",
+      "caveats": "The workflow VM is explicitly NOT claimed as a hostile-script security boundary; sandbox-RPC credential isolation (TRACEABILITY row WB-022) remains planned with no tests; area bead wb-gs2 stays in_progress because W19 is an ongoing acceptance list (docs/workbench/12). Open half, which keeps this row partial per the legend's weaker-status rule: two live defects stand against the shared sanitizer st",
+      "vcRefs": []
+     },
+     {
+      "line": 182,
+      "feature": "Display-surface sanitization residuals (dialog detail pane; inline card agent row)",
+      "status": "landed-gated",
+      "evidence": "Closed bead wb-dem (landed 40a031a; isolated-worktree complete gate PASS cmd_e5cadcd07651): dialog prompt lines, outcome/error body, model labels, thinking level and native session id pass through safeWorkflowTerminalText, red adversarial case in test/workbench-security-workflow.test.ts. Closed bead wb-gs2.1 (landed 0300cf9; isolated-worktree complete gate PASS cmd_b4d91bda9c76): agentStatSegments",
+      "caveats": "Sweep verifiers refuted all other candidate surfaces (group titles and thinking levels are sanitized or program-controlled); the sweep covered src/ui/workflow-dialog.ts and card helpers only. The same standing sanitizer defects apply to these display paths: wb-952 (in_progress, P1: split-credential reassembly through the safeWorkflowTerminalText redact-before-strip ordering in src/ui/workflow-card",
+      "vcRefs": []
+     },
+     {
+      "line": 183,
+      "feature": "VM-escape closures and the remaining ongoing adversarial program",
+      "status": "partial",
+      "evidence": "Landed half (receipts in TRACEABILITY 'W19 adversarial security pass' and wb-gs2 notes): VM host-closure constructor escape fixed with realm bridge factories (red cmd_fd4fd51ce28c, green cmd_8e3d695be01f); second escape via pipeline-stage this-binding found and fixed (red cmd_8c1bb984d29e); remaining tool outputs (furnace_observe, workflow_detached, workbench_catalog, workflow_compare) and dialog ",
+      "caveats": "VM still not claimed as a hostile-script boundary; the cmd_ receipts here are focused-suite runs recorded in bead notes/TRACEABILITY, not one dedicated complete-gate id per fix.",
+      "vcRefs": []
+     }
+    ]
+   },
+   {
+    "id": "W20",
+    "title": "SDK usage feedback to upstream products",
+    "line": 185,
+    "rows": [
+     {
+      "line": 189,
+      "feature": "Verified upstream feedback files delivered to Forge, Furnace, HyperUnix and ReactiveFiber",
+      "status": "partial",
+      "evidence": "TRACEABILITY section 'Tool feedback delivery receipts': operator-directed docs-only delivery on branch feedback/pi-workbench-20261015-delivery in each owning repo, every file passed the strict feedback lint, every commit ancestor-verified - Forge 6dd88e3f57 + d6355458bf; Furnace 230fbc064 + 2085b0190; HyperUnix c52116840a; ReactiveFiber 0e6e88345 + dispositions row 3a29b49. Bead wb-kqx (in_progres",
+      "caveats": "Delivery is the push, not a fix guarantee: owning repos' own gates were red or unexercised at delivery time (disclosed in the files); delivery was docs-only under an operator gate waiver; no in-repo test file exists for this process deliverable, so the strict landed-gated bar is not satisfiable and the area bead wb-kqx remains in_progress (ongoing per docs/workbench/15 upstream-feedback policy); s",
+      "vcRefs": []
+     }
+    ]
+   },
+   {
+    "id": "W21",
+    "title": "Scaled swarms / profiling",
+    "line": 191,
+    "rows": [
+     {
+      "line": 195,
+      "feature": "Deterministic grouped-10k swarm fixture + bounded grouped projection/inspector benchmark receipt (W21-A)",
+      "status": "landed-gated",
+      "evidence": "Closed bead wb-9x5.1 (closed 2026-10-15T09:38Z): landed at 4267c11 on workbench/implementation-program; isolated gate on the exact pushed tree forge build --require-complete --no-replay PASS cmd_a6e28589c20f. wb-9x5.2 closed as merged into it (unified fixture + two-pass receipt). Files on trunk: qa/workbench/grouped-fixture.mjs, qa/workbench/inspector-grouped-bench.mjs, test/workbench-grouped-fixt",
+      "caveats": "Two-pass honesty: pass A under DEFAULT projection limits (maxNodes 2000, never raised) reports FIFO truncation as retained-vs-offered counts; pass B uses bench-only elevated limits that never enter src/; production caps unchanged (runtime node cap 1000, projection maxNodes 2000, per parent bead wb-9x5 notes); not live native topology; a first landing attempt (14e78f1, gate FAIL cmd_b614a8d82ebd) i",
+      "vcRefs": []
+     },
+     {
+      "line": 196,
+      "feature": "Observation recovery and bounded-query size benchmark receipt (W21-B)",
+      "status": "landed-gated",
+      "evidence": "Closed bead wb-6ze.5 (labels w21; closed 2026-10-15T09:13Z): landed as merge 28fc9a9; relay gate cmd_a225a4320f70 PASS, bench runs cmd_3399332e8b57/cmd_4452aa1aedf5 realised, Sr. Engineer independent isolated-worktree complete gate PASS cmd_43545efc2cb0. Files on trunk: qa/workbench/observation-recovery-bench.mjs, test/workbench-observation-recovery-receipt.test.ts, forge.toml [build.commands.obse",
+      "caveats": "Measurement-only, src untouched; bench-only limits never enter src/; reconnect-alone falsifier pins that reconnect without a fresh sequenced snapshot cannot promote stale rows; receipt written only when W21_RECOVERY_RECEIPT is set.",
+      "vcRefs": []
+     },
+     {
+      "line": 197,
+      "feature": "Live-churn reducer/selector, retained-memory, cap-saturation and timeline lane-model receipts (W21-C/D/F)",
+      "status": "partial",
+      "evidence": "Landed half: wb-9x5.4 (W21-D reducer-update/UI selector time under churn with the no-full-fold falsifier) closed 2026-10-15 at merge 1b735c8 (owner isolated gate cmd_2ff29cd1a06b, machine complete gate cmd_b94a1b2aa249, live bench re-run at the tip exit 0 within budget); on trunk: qa/workbench/reducer-selector-bench.mjs, test/workbench-reducer-selector-bench.test.ts, forge.toml additive command. O",
+      "caveats": "Bench-only limits, production caps unchanged. Disclosed bound on the landed bench: the 4Hz redraw-cadence cap never binds on the 1s fixture ticks, so the cadence block measures the bench's fixture-time sampler and docs/14's 'redraw <=4Hz live' stays unmeasured until the W21 honesty follow-up lands (receipt label, sub-250ms guard case, per-read-method guards, positivity check). Reducer p50 grows 1.",
+      "vcRefs": []
+     },
+     {
+      "line": 198,
+      "feature": "Remaining profiling receipts: Pi tool reply-size (W21-E), terminal bytes-per-update line-diff (W21-G), graph-view build (W21-H), and overall 10k+ acceptance",
+      "status": "planned",
+      "evidence": "Open beads: wb-9x5.5 (W21-E bounded Pi tool reply size/build-latency over grouped-10k), wb-9x5.8 (W21-G bytes-per-update line diff vs full-frame repaint), wb-9x5.10 (W21-H buildGraphView receipt), and parent wb-9x5 (W21: Scaled swarms / profiling) itself open. No code or tests exist for these. Parent wb-9x5's notes pin that the measured 100k-event/1000-node read-model receipt (TRACEABILITY 'Bounde",
+      "caveats": "Parent wb-9x5 notes: 'Do not raise caps blindly without bounded sharding/aggregation benchmark.'",
+      "vcRefs": []
+     }
+    ]
+   },
+   {
+    "id": "W22",
+    "title": "Packaging/docs/install/compat migration",
+    "line": 200,
+    "rows": [
+     {
+      "line": 204,
+      "feature": "Reproducible offline Forge gate with complete no-replay receipts",
+      "status": "landed-gated",
+      "evidence": "forge.toml declares the gate and command tiers (workbench-shell, typecheck, package-smoke, install-smoke, e2e, benches, live tiers); TRACEABILITY row WB-019 status gate-pass; TRACEABILITY 'Audited candidate checkpoint': complete no-replay gate PASS cmd_a227a5a2114e (all six declared steps), pushed checkpoint 43ad58b clean-source gate PASS cmd_f8b07a961042; 'Second audited embedded/local-host check",
+      "caveats": "Live tiers (claude-live, native-read, furnace-observe, rf-preview) are separate forge commands outside the default portable gate because they spend live resources; several receipts measured a stable dirty overlay rather than an isolated clean release tree (disclosed per receipt); the status-ledger checker is likewise a separate command tier, not a default-gate step (the default gate list is unchan",
+      "vcRefs": []
+     },
+     {
+      "line": 205,
+      "feature": "Offline vendored native-SDK pins and clean external npm install (W22-C / WB-049)",
+      "status": "landed-gated",
+      "evidence": "Closed bead wb-x7m.2 - landed as merge 517ed23; relay gate cmd_d5cca012360b PASS and owner isolated-worktree complete gate PASS cmd_856025ea4118; test/workbench-vendor-pins.test.ts (11 read-only cases: vendor/README.md SHA-256 table == tarball bytes, package-lock file:vendor entries inBundle+integrity, bundledDependencies coverage, no orphan tarball). vendor/ holds forge-sdk-0.1.0.tgz, furnace-sdk",
+      "caveats": "No publication occurred (install evidence is a local clean consumer); minimal-permissions clean external install run (wb-cax.2, W22-D, release checklist item 10) still in_progress with its forge command outside the default gate and not yet on trunk; dependency/SDK version census with drift guard (wb-cax.20) in_progress. A standing finding from wb-zmd (closed; landed at e830ac2) scoped what the pin",
+      "vcRefs": []
+     },
+     {
+      "line": 206,
+      "feature": "Native SDKs load lazily behind validated feature config (upstream Pi works with Workbench disabled)",
+      "status": "landed-gated",
+      "evidence": "Closed bead wb-cax.10 (OWNER-RESERVED; closed 2026-10-15T11:32Z) - landed 65c9823 + fix b67b2ed, owner isolated gate success cmd_cf177be34d2c; TRACEABILITY section 'W22 residual: native SDKs load behind the validated feature config (wb-cax.10)'. Files on trunk: src/workbench/native-modules.ts (single dynamic-import seam, frozen namespace of live-binding getters, failed load retried), tests test/wo",
+      "caveats": "Load failure leaves the upstream surface intact and retries next session (never a stub); the registered-surface census falsifier that pins per-mode tool parity (wb-cax.4, W22-F) is still in_progress; sequential imports chosen to avoid a vitest mocker race (disclosed gate lesson).",
+      "vcRefs": []
+     },
+     {
+      "line": 207,
+      "feature": "Journal compatibility classifier for migration acceptance (W22-E)",
+      "status": "landed-gated",
+      "evidence": "Closed bead wb-cax.3 (closed 2026-10-15T11:39Z) - landed by the owner at merge 06f7071; owner isolated gate success cmd_72d7b16237cb; machine envelope of record cmd_52d2856ba019 (run 4). Files on trunk: src/workflow/journal-compat.ts, test/workflow-journal-compat.test.ts (per-line classes legacy-agent/basis-scoped-agent/node-read/node-effectful/unsupported with line-number census, docs/16 'journal",
+      "caveats": "The classifier mirrors the landed runtime as delivered; the runtime's fail-open admission of an unclassified node is the actual defect and is filed separately as wb-tu1 (in_progress; its fix must update the classifier mirror in the same commit).",
+      "vcRefs": []
+     },
+     {
+      "line": 208,
+      "feature": "Bounded in-flight admission in CapabilityRegistry.invoke (W22-M / docs-17 runtime requirement)",
+      "status": "landed-gated",
+      "evidence": "Closed bead wb-cax.18 (closed 2026-10-15T11:40Z) - landed at merge 10a078c; owner isolated gate success cmd_d81196497350; machine envelope cmd_a97bebfffdcf. Surface exactly M src/workbench/capability-registry.ts + A test/workbench-registry-admission.test.ts (both on trunk; registry-wide maxInFlight 32 from an exported constant, FIFO wait bounded by deadline/signal, typed 'unavailable' admission re",
+      "caveats": "'No existing suite queues' stays UNDETERMINED as disclosed at landing; any change to the default bound of 32 is an owner ruling; sibling degradation-policy conformance work is separate: wb-cax.5 (in_progress, not landed), while wb-cax.17 closed late on 2026-10-15 with test/workbench-control-degradation.test.ts landed at merge 0fe38aa.",
+      "vcRefs": []
+     },
+     {
+      "line": 209,
+      "feature": "npm packed-artifact boundary falsifier + evidence-grade package-smoke receipt (W22-B)",
+      "status": "partial",
+      "evidence": "Landed-gated half: closed bead wb-x7m.1 - landed as merge 65452ec + gate-order fix 1fc74f0; relay gate PASS cmd_40d72fbb296c and owner independent isolated-worktree complete gate PASS cmd_4c01ecd77fc2 (152 files, 2561 passed); excludes tracked .agents/ and .codex/ from the artifact, adds qa/workbench/package-boundary.mjs and 41 boundary tests in test/workbench-package-boundary.test.ts (both on tru",
+      "caveats": "wb-x75's two low findings stand on trunk today: docs/ and qa/ are pinned only by absence of .npmignore lines, and package-boundary reports dirty:false instead of unknown when git fails; landing wb-x7m.1 also reordered the gate to build-before-test after a dist-dependent test surfaced.",
+      "vcRefs": []
+     },
+     {
+      "line": 210,
+      "feature": "Remaining release-checklist conformance (mode parity/surface census, degradation policy, license/fork-origin, divergence record, ops telemetry, dual-backend equivalence, hygiene)",
+      "status": "in-progress",
+      "evidence": "Parent wb-cax in_progress (W22 overall; its notes record the audited candidate PASS cmd_a227a5a2114e and clean consumer PASS cmd_a3b6cb72595d but keep 'full release/install native binary identity and optional provider packaging' open). Ledger split re-derived at publication over the W22 set (wb-cax and its 20 children plus wb-x7m.1/.2, wb-era, wb-g5o, wb-x75: 26 ids, as of the 2026-10-15 export at",
+      "caveats": "This remains the bulk of W22's open surface. Per the preamble column note, in_progress with a machine-branch delivery is still not landed. The bead split moved during 2026-10-15 relative to earlier drafts of this matrix (wb-cax.17 closed and landed; wb-cax.5 and wb-cax.19 were claimed), so the counts here are the ledger-export values. Known disclosed defects stand meanwhile: tmp scratch leak drivi",
+      "vcRefs": []
+     }
+    ]
+   }
+  ],
+  "notClaimed": [
+   {
+    "line": 216,
+    "text": "W02: Operator terminal-journey acceptance for VC-1 (planned). Bead wb-a2g.3 open, dispatch held for a credentialed claude-live seat; the one manual tmux journey is not reproducible from the repo and exercised no cancellation."
+   },
+   {
+    "line": 217,
+    "text": "W11: Hosted develop() with real scope-limited service bindings (planned; bead status is blocked). Beads wb-04s and VC-3 epic wb-w12 blocked. No binding host exists (re-measured 2026-11-06 at trunk 600a253 by wb-j5y5; see the W11 row above, which records the measurement): no module under src/workbench/hosts/ names MechanicalWorkflows, and test/workbench-mwi-release.test.ts holds this line to that directory."
+   },
+   {
+    "line": 218,
+    "text": "W12: Fail-closed resume for journaled nodes with ABSENT effectClass (in-progress, not planned: bug bead wb-tu1 is claimed and nothing has landed on trunk (a machine-branch delivery at 0fd665b awaits the gate lane); trunk is currently fail-open at src/workflow/runtime.ts:1326)."
+   },
+   {
+    "line": 219,
+    "text": "W21: Remaining profiling receipts, W21-E Pi tool reply-size, W21-G terminal bytes-per-update line-diff, W21-H graph-view build, and the overall 10k+ acceptance (planned). Open beads wb-9x5.5, wb-9x5.8, wb-9x5.10 and parent wb-9x5; no code or tests exist for these."
+   }
+  ],
+  "statusCounts": {
+   "landed-gated": 54,
+   "partial": 19,
+   "planned": 3,
+   "in-progress": 5
+  },
+  "rowCount": 81
+ },
+ "verticalCuts": {
+  "file": "docs/workbench/15-implementation-program.md",
+  "items": [
+   {
+    "id": "VC-1",
+    "title": "Pi -> Claude SDK workflow",
+    "priority": "P0",
+    "line": 11,
+    "body": "- Keep Pi extension loaded, /agents and legacy workflow interaction working. - Forked WorkflowHost uses actual Claude Agent SDK for agent(), streaming/session refs; legacy script fixtures unchanged. - Terminal card displays live actual Claude execution. An explicit test asserts Pi AgentManager is not called for script agent(). - Ctrl-C/cancel and invalid model/permission failures behave explicitly. - Measured Ctrl-C behavior (wb-a2g.3 live operator receipt, contract v2, iteration 9, pi 1.2.0, rev e07474a, committed at `qa/workbench/receipts/wb-a2g.3-operator-receipt.json`): a Ctrl-C byte sent "
+   },
+   {
+    "id": "VC-2",
+    "title": "node() + real SDK operation",
+    "priority": "P0/P1",
+    "line": 21,
+    "body": "- Add sandboxed node() RPC and capability registry with read/invoke permissions. - One real HyperUnix query *or* Forge read/verification call; do not invent API. - Show native evidence in Pi terminal and structured Pi tool query. - Negative: forbidden SDK write, invalid schema, stale/partial evidence, lost-result ambiguity."
+   },
+   {
+    "id": "VC-3",
+    "title": "MechanicalWorkflows native composition",
+    "priority": "P1, contingent on live bindings",
+    "line": 27,
+    "body": "- Discover descriptor, pin package and host, construct real services, invoke develop() and preserve domain outcomes. - Demonstrate HX->RF->Claude SDK->Forge pipeline when those APIs actually deliver. Document blockers honestly. - An optional Furnace gate uses Furnace native Work/Attempt identity, not a second scheduler."
+   },
+   {
+    "id": "VC-4",
+    "title": "Externally launched Furnace observation",
+    "priority": "P1",
+    "line": 32,
+    "body": "- Attach by Run ID without invoking parent workflow. - Snapshot/events, freshness, unknown gaps, selected evidence; no change to Run on view close. - Derived tree/timeline shows observed rather than invented edges."
+   },
+   {
+    "id": "VC-5",
+    "title": "Rich terminal inspector",
+    "priority": "P1",
+    "line": 37,
+    "body": "- Four views: overview/tree, graph, timeline, evidence; hierarchical aggregation; key navigation; responsive 80x24. - Benchmark >=1000 nodes/100k events with measured <=20ms navigation target and no full-log redraw fold."
+   },
+   {
+    "id": "VC-6",
+    "title": "Pi design/compare loop",
+    "priority": "P1/P2",
+    "line": 41,
+    "body": "- Pi reads source and capability catalog; proposes patch; validates against pinned artifact; executes comparison with real native evidence; reports gains/confounders. - No automatic live implementation replacement."
+   },
+   {
+    "id": "VC-7",
+    "title": "Detached and Furnace-hosted execution",
+    "priority": "P2",
+    "line": 45,
+    "body": "- Remote host authentication, reattachment, native immutable deployment refs, crash/uncertain-operation conformance. - Pi exits without stopping execution. Furnace remains durable authority only when Furnace host chosen."
+   }
+  ]
+ },
+ "atomicRequirements": {
+  "file": "docs/workbench/02-atomic-requirements.md",
+  "sectionHeadings": [
+   {
+    "line": 1,
+    "heading": "# 02 \u2014 Atomic, falsifiable requirements"
+   },
+   {
+    "line": 58,
+    "heading": "## Nonfunctional invariants"
+   }
+  ],
+  "requirementCount": 50,
+  "byPriority": {
+   "P0": 20,
+   "P1": 20,
+   "P2": 10
+  },
+  "requirements": [
+   {
+    "id": "WB-001",
+    "priority": "P0",
+    "line": 7,
+    "text": "Pi remains the interactive command/tool/TUI host; a script workflow can be initiated from Pi."
+   },
+   {
+    "id": "WB-002",
+    "priority": "P0",
+    "line": 8,
+    "text": "Workflow agent() runs by @anthropic-ai/claude-agent-sdk; trace proves SDK messages and session identity; never silently uses Pi sessions."
+   },
+   {
+    "id": "WB-003",
+    "priority": "P0",
+    "line": 9,
+    "text": "Legacy script globals and meta parsing remain supported; baseline golden scripts execute without edits."
+   },
+   {
+    "id": "WB-004",
+    "priority": "P0",
+    "line": 10,
+    "text": "Existing non-workflow Pi agent features are not deleted merely to migrate workflow agent()."
+   },
+   {
+    "id": "WB-005",
+    "priority": "P0",
+    "line": 11,
+    "text": "Host-side node(id,input) is additive and executes without an LLM call for deterministic SDK nodes."
+   },
+   {
+    "id": "WB-006",
+    "priority": "P0",
+    "line": 12,
+    "text": "node() input/output enforce JSON transport boundary; malformed/non-serializable payloads fail before provider effects where possible."
+   },
+   {
+    "id": "WB-007",
+    "priority": "P0",
+    "line": 13,
+    "text": "Missing provider, unknown capability ID, schema mismatch and unavailable binding fail explicitly, not as null success."
+   },
+   {
+    "id": "WB-008",
+    "priority": "P0",
+    "line": 14,
+    "text": "Capability discoverability and capability invocation authorization are independent."
+   },
+   {
+    "id": "WB-009",
+    "priority": "P0",
+    "line": 15,
+    "text": "Claude session IDs, input/output, tool events, native SDK failure and token usage are translated without invented values."
+   },
+   {
+    "id": "WB-010",
+    "priority": "P0",
+    "line": 16,
+    "text": "Stopping the parent propagates cancellation only through established ownership and appropriate SDK API; stopping observation does not."
+   },
+   {
+    "id": "WB-011",
+    "priority": "P0",
+    "line": 17,
+    "text": "The existing workflow tool remains available in Pi without collision or competing shadow tool names."
+   },
+   {
+    "id": "WB-012",
+    "priority": "P0",
+    "line": 18,
+    "text": "Old workflow tests remain green under supported upstream mode and new executor-mode tests are added."
+   },
+   {
+    "id": "WB-013",
+    "priority": "P0",
+    "line": 19,
+    "text": "At least one real SDK node is proven end-to-end, plus explicit negative controls."
+   },
+   {
+    "id": "WB-014",
+    "priority": "P0",
+    "line": 20,
+    "text": "Workflow invocation carries definition, immutable implementation basis and logical invocation ID; native refs remain intact."
+   },
+   {
+    "id": "WB-015",
+    "priority": "P0",
+    "line": 21,
+    "text": "Workbench cannot turn absent/unknown/partial producer evidence into successful domain verdict."
+   },
+   {
+    "id": "WB-016",
+    "priority": "P0",
+    "line": 22,
+    "text": "Existing Pi inline workflow card and inspector remain operational through migration."
+   },
+   {
+    "id": "WB-017",
+    "priority": "P0",
+    "line": 23,
+    "text": "Operator can view node type, name, native ID, current observation freshness, and last error in a terminal detail view."
+   },
+   {
+    "id": "WB-018",
+    "priority": "P0",
+    "line": 24,
+    "text": "Pi can query bounded semantic observations without consuming raw event logs or terminal-rendered text."
+   },
+   {
+    "id": "WB-019",
+    "priority": "P0",
+    "line": 25,
+    "text": "Forge controls build/test/release verification; no GitHub CI added; no Library dependency."
+   },
+   {
+    "id": "WB-020",
+    "priority": "P0",
+    "line": 26,
+    "text": "Upstream MIT license and original copyright retained."
+   },
+   {
+    "id": "WB-021",
+    "priority": "P1",
+    "line": 27,
+    "text": "Claude SDK resume reattaches to correct session; invalid or lost session yields explicit failure, never fresh-context masquerading as resume."
+   },
+   {
+    "id": "WB-022",
+    "priority": "P1",
+    "line": 28,
+    "text": "Sandbox worker and privileged providers communicate only via validated RPC; hostile scripts cannot acquire host SDK credentials through intended API."
+   },
+   {
+    "id": "WB-023",
+    "priority": "P1",
+    "line": 29,
+    "text": "Provider nodes expose inspect/observe only where producer supports them, including event cursor or snapshot freshness."
+   },
+   {
+    "id": "WB-024",
+    "priority": "P1",
+    "line": 30,
+    "text": "Pi attaches to an externally started Furnace Run with no causal assumption that Pi owns it."
+   },
+   {
+    "id": "WB-025",
+    "priority": "P1",
+    "line": 31,
+    "text": "Workbench distinguishes Run/Work/Attempt, Forge operation and workspace basis, Claude session, HX coverage, RF provenance."
+   },
+   {
+    "id": "WB-026",
+    "priority": "P1",
+    "line": 32,
+    "text": "Interrupted effectful operation is reconciled through producer or marked uncertain; no automatic blind repeat."
+   },
+   {
+    "id": "WB-027",
+    "priority": "P1",
+    "line": 33,
+    "text": "Terminal inspector supports overview, tree/graph, timeline, detail and a keyboard-only navigation path."
+   },
+   {
+    "id": "WB-028",
+    "priority": "P1",
+    "line": 34,
+    "text": "Terminal inspector has plain ASCII tier, theme-aware color tier, and usable 80-column/24-row fallback."
+   },
+   {
+    "id": "WB-029",
+    "priority": "P1",
+    "line": 35,
+    "text": "Over 1000 nodes: render cost scales with visible slice and changed ancestors; no full historical-log fold per frame."
+   },
+   {
+    "id": "WB-030",
+    "priority": "P1",
+    "line": 36,
+    "text": "Layout, reducers, status classification and control capabilities are pure/testable without a real terminal."
+   },
+   {
+    "id": "WB-031",
+    "priority": "P1",
+    "line": 37,
+    "text": "Running and settled Claude conversations can be opened from inspector through Claude transcript adapter."
+   },
+   {
+    "id": "WB-032",
+    "priority": "P1",
+    "line": 38,
+    "text": "Pi can use observer tools to inspect definition, retrieve bounded event windows, source/evidence refs and compare two runs."
+   },
+   {
+    "id": "WB-033",
+    "priority": "P1",
+    "line": 39,
+    "text": "Hosted MechanicalWorkflows develop() executes actual exported function with explicitly bound native dependencies; fixture outputs cannot be presented as live."
+   },
+   {
+    "id": "WB-034",
+    "priority": "P1",
+    "line": 40,
+    "text": "Claude agent receives only curated, authorized provider tool surfaces; list/inspect never grant invoke."
+   },
+   {
+    "id": "WB-035",
+    "priority": "P1",
+    "line": 41,
+    "text": "Node events show result/effect distinction (transport, domain and authority-specific status)."
+   },
+   {
+    "id": "WB-036",
+    "priority": "P1",
+    "line": 42,
+    "text": "Event ingestion can reconnect/deduplicate; gaps and stale timestamps are visible."
+   },
+   {
+    "id": "WB-037",
+    "priority": "P1",
+    "line": 43,
+    "text": "Source-defined edges, observed edges and inferred links are distinguishable."
+   },
+   {
+    "id": "WB-038",
+    "priority": "P1",
+    "line": 44,
+    "text": "Versioned plan/execute/observe comparison uses immutable source and config digest references."
+   },
+   {
+    "id": "WB-039",
+    "priority": "P1",
+    "line": 45,
+    "text": "No automatic code-edit and live replacement of already pinned running execution."
+   },
+   {
+    "id": "WB-040",
+    "priority": "P1",
+    "line": 46,
+    "text": "Control actions have native preconditions, permission checks, prompts/confirmations and acknowledgements."
+   },
+   {
+    "id": "WB-041",
+    "priority": "P2",
+    "line": 47,
+    "text": "Optional detached workbench host permits Pi client disconnect/reconnect, without falsely claiming crash durability."
+   },
+   {
+    "id": "WB-042",
+    "priority": "P2",
+    "line": 48,
+    "text": "Optional Furnace host uses the verified per-Attempt extension-driver semantics (one kept host session per Run's sequential Attempts, each Attempt identified by its admission receipt; work_failure and resident-host indeterminate terminals park the Run for the operator ladder and are never auto-retrie"
+   },
+   {
+    "id": "WB-043",
+    "priority": "P2",
+    "line": 49,
+    "text": "Optional HX-based cross-product provenance queries, without mandating HX as event store."
+   },
+   {
+    "id": "WB-044",
+    "priority": "P2",
+    "line": 50,
+    "text": "RCP-assisted continuation only where explicitly supported and conformance-tested."
+   },
+   {
+    "id": "WB-045",
+    "priority": "P2",
+    "line": 51,
+    "text": "Hierarchical agent-swarm aggregation and profile comparisons handle 10k+ nodes subject to benchmarked limits."
+   },
+   {
+    "id": "WB-046",
+    "priority": "P2",
+    "line": 52,
+    "text": "Native capability-provider additions require no changes to interpreter core."
+   },
+   {
+    "id": "WB-047",
+    "priority": "P2",
+    "line": 53,
+    "text": "Workflow designer can generate tests, source diffs and evidence-linked performance recommendations."
+   },
+   {
+    "id": "WB-048",
+    "priority": "P2",
+    "line": 54,
+    "text": "Artifact/host compatibility detects mismatched digest and rejects or explicitly migrates."
+   },
+   {
+    "id": "WB-049",
+    "priority": "P2",
+    "line": 55,
+    "text": "Workbench release supports reproducible install and bounded per-provider optional dependencies."
+   },
+   {
+    "id": "WB-050",
+    "priority": "P2",
+    "line": 56,
+    "text": "Agent-driven workflow optimization demonstrates measurable improvement without introducing unverified claims."
+   }
+  ],
+  "nfrIds": [
+   "NFR-01",
+   "NFR-02",
+   "NFR-03",
+   "NFR-04",
+   "NFR-05",
+   "NFR-06",
+   "NFR-07",
+   "NFR-08"
+  ]
+ }
+}

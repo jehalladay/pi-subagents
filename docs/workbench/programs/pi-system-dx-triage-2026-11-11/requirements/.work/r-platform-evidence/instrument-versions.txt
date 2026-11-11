@@ -1,0 +1,9 @@
+date_utc=2026-11-11T05:48:44Z
+hx=0.1.0
+rf=0.1.883
+forge=forge 0.2.1 (rev e3d480952064, built 2026-11-10, code e547deba496f, fresh: installed from the build directory /home/jehallad/.local/share/agent-tools-update/ws/src/Forge; on origin/main@189960828951 (fetched 2026-11-11T05:44:57Z), 1788 behind last-fetched origin/main (via build directory))
+furnace=furnace 0.1.0 (855f8265bf43)
+node=v24.20.0
+npm=11.19.0
+pin_head=ce180d82f9385a315ff26bd8e7f9202cac19f5b3
+pin_status_lines=0

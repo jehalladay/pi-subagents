@@ -1,0 +1,36 @@
+# live bd readback (bd --readonly --sandbox show <id> --json), 2026-11-11T06:41:44Z; id | status | close_reason | title
+wb-79k.1 | closed | wb-79k.1: Consolidated its unexpired scope and acceptance into wb-79k.3; this closes only the redundant work c | W13/VC-2 HyperUnix observe-wiring (HELD: owner chain placement required before claim): the
+wb-79k.2 | closed | wb-79k.1: Consolidated its unexpired scope and acceptance into wb-79k.3; this closes only the redundant work c | W13/VC-2 ReactiveFiber observe-wiring (HELD: owner chain placement required before claim):
+wb-79k.3 | open |  | W13 VC-2/VC-7: host-owned HX, RF-preview and detached observation projection wiring
+wb-752.12 | closed | wb-752.12: Consolidated its unexpired scope and acceptance into wb-752.13; this closes only the redundant work | W13-Fw/VC-4: Beads work-readiness wiring in furnace_observe: each Attempt workId (deduped,
+wb-752.13 | in_progress |  | VC-4 W13-Fw/W16-Bw2: bounded furnace_observe reply with native Beads work linkage
+wb-h8f.2 | open |  | VC-6 residual: live Pi design/compare loop acceptance receipt (catalog/source read -> dige
+wb-h8f.7 | open |  | W16-H/Hw VC-6: bounded workflow_compare builder and registered Pi adoption with honest pre
+wb-69g.12 | in_progress |  | VC-6/W16 tightening (owner-ruled, wb-69g.6 + wb-69g.5 gates): validate-reply falsifiers ki
+wb-6ze.15 | in_progress |  | VC-5 residual: live four-view terminal inspector acceptance receipt (pty-driven real Pi se
+wb-9x5.10 | closed | wb-9x5.10: Consolidated its unexpired scope and acceptance into wb-9x5.11; this closes only the redundant work | W21-H: graph-view model build receipt over the grouped-10k fixture (buildGraphView p50/p95
+wb-9x5.11 | in_progress |  | W21 VC-5: grouped-10k graph build, four-view layout and timeline truncation-honesty receip
+wb-9x5.16 | closed | wb-9x5.10: Consolidated its unexpired scope and acceptance into wb-9x5.11; this closes only the redundant work | W21-F2 honesty bundle (owner-ruled, wb-9x5.7 gate R2): timeline bench receipt gains record
+wb-0kg.3 | in_progress |  | VC-7 residual: live detached exit/reattach acceptance receipt (launch on the local detache
+wb-cax | in_progress |  | W22: Packaging/docs/install/compat migration
+wb-4ax | closed | W06 landed: provider registry in 43ad58b5 on origin/master; every provider registers through it; frozen in_pro | W06: Provider registry and permissions
+wb-lri | in_progress |  | W07: HyperUnix provider
+wb-5uh | in_progress |  | W08: Forge provider
+wb-x32 | in_progress |  | W10: ReactiveFiber provider/interop
+wb-mwz | closed | W05 landed: node() worker RPC with JSON boundary validation, handleNode, typed CapabilityError taxonomy and th | W05: node() language/RPC and error semantics
+wb-69g | closed | W16 marker closed as a work container at orchestrator discretion under the owner graph audit of 2026-11-11 (re | W16: Pi catalog/inspect/observe/control tools
+wb-79k | closed | W13 landed and the marker blocks nothing: the bounded observation collector src/workbench/observation.ts with  | W13: Event collector and native observation adapters
+wb-kqx | in_progress |  | W20: SDK usage feedback to upstream products
+wb-yiu4 | open |  | [MNI-2026-11-09 P10] Release proof, regressions, agent LX, W11 truth (EAT-R286..R294)
+wb-669r | closed | wb-669r: Consolidated its unexpired scope and acceptance into wb-pxvv; this closes only the redundant work con | [MWI-rf-admit] Keep RF preview separate from committed context in Pi invocation
+wb-f5y | in_progress |  | W03: Role/tool/model config and permissions
+wb-s8a | closed | W09 marker closed per the owner graph audit 2026-11-11 (record ~/s3/artifacts/forge/pi-owner/2026-11-11-bead-g | W09: Furnace invoke/inspect/observe provider
+wb-5w0 | closed | W18 delivered on trunk origin/workbench/implementation-program (hosts src/workbench/hosts/local-detached.ts +  | W18: Detached host, optional Furnace ExecutorApp
+wb-pno | closed | W17 marker closed by owner: comparison interface/core landed on origin/master (designer.ts:181/196/217, R-B768 | W17: Source-aware designer, static projection and comparison
+wb-g1g | closed | W15 marker closed on landed evidence: the four-view inspector itself landed in owner commit 41eb061f46 (src/ui | W15: Rich TUI tree/timeline/graph/details
+wb-2ukh | open |  | [MNI-2026-11-09 P03] Function authority + writer source admission integrated, no-await dis
+wb-4bxo | open |  | [MWI-dispatch] Launch authorized embedded functions through the registered Pi tool
+wb-y0n6 | open |  | [MNI-2026-11-09 P02] Installed producer descriptor/package admission, external consumer (E
+wb-w8fk | in_progress |  | [MWI-contract-choice] Adopt the Pi side of one versioned cross-repository invocation contr
+
+[exited with code 0]

@@ -1,0 +1,67 @@
+## hx children docs/workbench/receipts
+72 results
+## README install line
+46:pi install npm:@tintinweb/pi-subagents
+## README node mention (C202 surface)
+rc=0
+## package.json
+{"name":"@tintinweb/pi-subagents","version":"0.20.0","engines":{"node":">=24"},"files":"ABSENT","scripts":["bench","bench:ab","build","check","lint","lint:fix","prepublishOnly","pretest","test","test:census","test:coverage","test:e2e","test:watch","typecheck","typecheck:test"],"repository":{"type":"git","url":"https://github.com/tintinweb/pi-subagents.git"},"pi":{"extensions":["./src/index.ts"],"video":"https://github.com/tintinweb/pi-subagents/raw/master/media/demo.mp4","image":"https://github.com/tintinweb/pi-subagents/raw/master/media/screenshot.png"}}
+## ci.yml node-version
+16:          node-version: 22
+51:          node-version: 22
+72:          node-version: 22
+## README workbench tool mentions
+workflow_execute=0 workflow_observe=0 workflow_control=0 workbench_catalog=0 forge_gate_run=0 furnace_observe=0 workflow_validate=0 workflow_catalog=0 workflow_compare=0 workflow_inspect=0 workflow_detached=0 workflow_reconcile=0 
+## README settings keys
+schedulingEnabled=0 defaultMaxTurns=0 defaultJoinMode=0 fleetView=0 maxConcurrent=6 workflowsEnabled=3 outputTranscript=3 toolDescriptionMode=1 fallbackSubagent=2 
+## env vars read in src
+      1 process.env.PI_CODING_AGENT_SESSION_DIR
+## .npmignore
+# Development files
+tsconfig.json
+tsconfig.test.json
+.vscode/
+.git/
+.gitignore
+
+# Documentation
+PLAN.md
+SUMMARY.md
+plan/
+media/
+
+# Internal contributor/agent instructions — not for distribution
+AGENTS.md
+CLAUDE.md
+.agents/
+.codex/
+
+# Build artifacts
+*.log
+npm-debug.log*
+.DS_Store
+.scratch
+
+# Tests (if any)
+test/
+tests/
+*.test.ts
+*.spec.ts
+vitest.config.ts
+
+.pi
+.claude
+.vscode
+.github/
+biome.json
+coverage/
+# Local Workbench producer state and development-only native fixture runners
+.beads/
+.forge/
+.furnace/
+.hyperunix/
+.reactive-fiber/
+vitest.*.config.ts
+new-feedback/
+# The quoted-evidence triage archives below docs/workbench/programs (master only; wb-cbt4, owner specification ruling M:60615 point 4)
+docs/workbench/programs/*/triage/

@@ -1,0 +1,79 @@
+{
+ "pin": "/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/Pi/PiSubagents/scratch/pi-system-triage-1111/pin-ce180d82",
+ "srcFiles": 124,
+ "importers": {
+  "src/workbench/mechanical-descriptor.ts": [
+   {
+    "from": "src/workbench/mechanical-coordination.ts",
+    "kind": "import",
+    "typeOnly": false,
+    "names": [
+     "MECHANICAL_DIGEST_PATTERN"
+    ]
+   }
+  ],
+  "src/workbench/mechanical-coordination.ts": [],
+  "src/workbench/function-authority.ts": [],
+  "src/workbench/source-admission.ts": [],
+  "src/workbench/collective-event.ts": [],
+  "src/workbench/beads-observer.ts": [],
+  "src/workbench/beads-program-readiness.ts": []
+ },
+ "reachability": {
+  "root": "src/index.ts",
+  "reachableAnyEdge": 107,
+  "reachableValueEdge": 106,
+  "unreachableAnyEdge": [
+   "src/workbench/beads-observer.ts",
+   "src/workbench/beads-program-readiness.ts",
+   "src/workbench/claude-topology.ts",
+   "src/workbench/collective-event.ts",
+   "src/workbench/detached-observer.ts",
+   "src/workbench/executable-identity.ts",
+   "src/workbench/function-authority.ts",
+   "src/workbench/hosts/furnace-hosted.ts",
+   "src/workbench/hyperunix-observer.ts",
+   "src/workbench/latency.ts",
+   "src/workbench/mechanical-coordination.ts",
+   "src/workbench/mechanical-descriptor.ts",
+   "src/workbench/patch-proposal.ts",
+   "src/workbench/reactivefiber-observer.ts",
+   "src/workbench/source-admission.ts",
+   "src/workbench/telemetry.ts",
+   "src/workflow/journal-compat.ts"
+  ],
+  "typeOnlyReachable": [
+   "src/types.ts"
+  ],
+  "targets": {
+   "src/workbench/mechanical-descriptor.ts": {
+    "anyEdge": false,
+    "valueEdge": false
+   },
+   "src/workbench/mechanical-coordination.ts": {
+    "anyEdge": false,
+    "valueEdge": false
+   },
+   "src/workbench/function-authority.ts": {
+    "anyEdge": false,
+    "valueEdge": false
+   },
+   "src/workbench/source-admission.ts": {
+    "anyEdge": false,
+    "valueEdge": false
+   },
+   "src/workbench/collective-event.ts": {
+    "anyEdge": false,
+    "valueEdge": false
+   },
+   "src/workbench/beads-observer.ts": {
+    "anyEdge": false,
+    "valueEdge": false
+   },
+   "src/workbench/beads-program-readiness.ts": {
+    "anyEdge": false,
+    "valueEdge": false
+   }
+  }
+ }
+}

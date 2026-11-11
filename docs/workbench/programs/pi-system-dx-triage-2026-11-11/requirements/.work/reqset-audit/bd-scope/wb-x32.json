@@ -1,0 +1,37 @@
+[
+  {
+    "id": "wb-x32",
+    "title": "W10: ReactiveFiber provider/interop",
+    "description": "RF render/context capability via actual public APIs; present CLI/Python interop honestly if no production TS SDK at pinned revision; fixture text never reported as real render. Acceptance: real render or honest blocker. Spec: docs/workbench/07.",
+    "notes": "RF real noncommitted preview passed cmd_994da817d4cd in isolated initialized fixture; output/provenance retained, null render/transaction IDs. Bounded malformed/output/termination tests added. Full interop contract remains open.\nOWNER RULING G-A (program-triage-2026-10-17 release-claims audit, 2026-10-17): (i) `bundle_revision_id` OWNS `NativeSnapshot.sourceVersion` for RF snapshots — the projection keys its byVersion cohort on sourceVersion (observation.ts:590) and ADR-SCG-002 requires two renders over one topology but different component revisions to occupy DIFFERENT cohorts, which the CLI version cannot express; the producer release travels as a distinct bounded evidence ref `rf-cli:\u003ccli_version\u003e` plus a snapshot note (the PMO dossier GAP-A names that form acceptable), and NTSX-R4's `rf@\u003cversion\u003e` spelling becomes that ref's payload, never sourceVersion. The merged cli_version bead and SCG-R8 file with this ruled state in their descriptions, not the conflict. (ii) src/workbench/native-evidence.ts is NOT HOT: the HOT marker was wb-6ze.9's 07:35Z parent-slice scope reservation, that bead is CLOSED, the BOUNDARY owner hot set reads EMPTY today, and the file's last commit predates several landings; PMO-R1's extractNativeMetadata arm and SCG-R8's sourceBasis arm may land under ORDINARY contact discipline (coordination vs queued wb-6ze.20 / wb-cax.8 cuts per gates G-C and G-F), not HOT refusal. GARULETOKEN\n",
+    "status": "in_progress",
+    "priority": 1,
+    "issue_type": "task",
+    "assignee": "flywheel",
+    "owner": "jehallad@amazon.com",
+    "created_at": "2026-10-15T01:20:43Z",
+    "created_by": "James Halladay",
+    "updated_at": "2026-11-11T05:17:54Z",
+    "started_at": "2026-11-11T05:17:54Z",
+    "dependencies": [
+      {
+        "id": "wb-w12",
+        "title": "VC-3: MechanicalWorkflows native composition",
+        "description": "Discover descriptor, pin package and host, construct real services, invoke develop() and preserve domain outcomes (verified_candidate/verification_failed/needs_evidence/indeterminate). Demonstrate HX-\u003eRF-\u003eClaude SDK-\u003eForge pipeline when those APIs actually deliver; document blockers honestly. Optional Furnace gate uses native Work/Attempt identity, not a second scheduler. Contingent on live bindings. Spec: docs/workbench/07, docs/workbench/15.",
+        "notes": "VC-3 contingent on native live bindings. Core function exists, but HX discovery revision/task-completeness authority and Pi services binding absent. Narrow RF/Claude/Forge rig evidence not full composition.",
+        "status": "open",
+        "priority": 1,
+        "issue_type": "epic",
+        "owner": "jehallad@amazon.com",
+        "created_at": "2026-10-15T01:20:38Z",
+        "created_by": "James Halladay",
+        "updated_at": "2026-11-11T05:37:27Z",
+        "dependency_type": "parent-child"
+      }
+    ],
+    "parent": "wb-w12",
+    "dependent_count": 0,
+    "dependency_count": 0,
+    "comment_count": 0
+  }
+]

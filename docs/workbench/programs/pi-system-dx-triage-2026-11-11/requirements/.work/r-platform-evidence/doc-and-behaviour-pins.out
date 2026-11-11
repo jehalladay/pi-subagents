@@ -1,0 +1,33 @@
+# tests that read shipped docs (grep -rl --include='*.ts' <doc> test), pin ce180d82, 2026-11-11T06:10:47Z
+README.md 135
+docs/workflows.md 10
+feature-matrix.md 15
+17-packaging-and-operations.md 13
+19-worked-examples.md 7
+06-capability-registry.md 8
+07-native-integrations.md 26
+13-contracts-and-config.md 14
+CHANGELOG.md 14
+AGENTS.md 24
+SKILL.md 28
+# tests pinning current behaviour named by claims
+105:  it("self-heals from a corrupt JSON file — load silently empties, next save rewrites", () => {
+    expect(loadSettings(projectDir)).toEqual({ workflowsEnabled: false });
+    writeProject({ workflowsEnabled: "on" } as any);
+    // Dropped, not coerced — a truthy string must not switch the feature on.
+    expect(loadSettings(projectDir)).toEqual({});
+  });
+
+  it("sanitize drops non-boolean schedulingEnabled silently", async () => {
+    writeProject({ schedulingEnabled: "yes" } as any);
+    expect(loadSettings(projectDir)).toEqual({});
+    writeProject({ schedulingEnabled: 1 } as any);
+    expect(loadSettings(projectDir)).toEqual({});
+  });
+
+1138:    where: "SKILL:L14",
+1150:    where: "SKILL:L16",
+1162:    where: "SKILL:L16",
+1841:    "EAT-R141|M048|C0437|REFUTED|ADD_TEMPORAL_QUALIFIER|SKILL:L14|edit|stands+absent|ac9e407c1b707907|e7ae05bc607962bb",
+1842:    "EAT-R142|M049|C0443|SUPPORTED / overclaims|NARROW_SCOPE|SKILL:L16|edit|stands+absent|76dab28c081a1ee6|fdafa9cc21231eda",
+433:  it("pins the measured narrowing: the tool alone requires invoke:<id> even when producer permissions are held", () => {
