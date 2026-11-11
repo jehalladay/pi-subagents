@@ -38,7 +38,7 @@ import { getMaxSubagentDepth, setMaxSubagentDepth } from "./nested-tools.js";
 import { createOutputFilePath, ensureOutputFile, getOutputTranscriptDefault, sessionTaskDir, setOutputTranscriptDefault, streamToOutputFile, writeInitialEntry } from "./output-file.js";
 import { SubagentScheduler } from "./schedule.js";
 import { resolveStorePath, ScheduleStore } from "./schedule-store.js";
-import { applyAndEmitLoaded, loadSettings, type SubagentsSettings, saveAndEmitChanged, type ToolDescriptionMode, type WorkbenchSettings } from "./settings.js";
+import { applyAndEmitLoaded, isCleanAbsolutePath, loadSettings, type SubagentsSettings, saveAndEmitChanged, type ToolDescriptionMode, type WorkbenchSettings } from "./settings.js";
 import { getForegroundOutcomeNote, getStatusNote, partialOutputSuffix } from "./status-note.js";
 import { type AgentConfig, type AgentInvocation, type AgentMentionMode, type AgentRecord, type JoinMode, type NotificationDetails, type SubagentType, type ViewerMarkdownMode, type WidgetMode } from "./types.js";
 import { createMentionProvider, mentionRoster, type TypeInfo } from "./ui/agent-mention.js";
@@ -2504,21 +2504,40 @@ Terse command-style prompts produce shallow, generic work.
    * the terminal; the observer's control hooks settle from here, and session_shutdown disposes it.
    */
   const claudeControlRetention = createClaudeControlRetention({ projection, tasks: workflowTasks, now: () => new Date().toISOString() });
-  const registries = new Map<string, CapabilityRegistry>();
+  /** Each scope's registry, beside the RF root it was built with (wb-v30k, EAT-R371). */
+  const registries = new Map<string, { readonly registry: CapabilityRegistry; readonly rfRoot: string | undefined }>();
   let workbenchToolsRegistered = false;
+  /**
+   * wb-v30k (EAT-R371): the RF root registryFor binds for a configured setting, resolved by realpath(3) (realpathSync.native
+   * reads a symlink before a later '..' segment, where fs.realpathSync applies path.resolve first). Claimed only for the
+   * settings pinned in test/workbench-rf-workspace-binding.test.ts: its B1 spellings bind their realpath, and its B4 settings
+   * (a realpath that fails with ENOENT, ENOTDIR, ELOOP or ENAMETOOLONG, or one carrying 0x01 or DEL) bind as written; no other
+   * form is claimed.
+   */
+  function canonicalRfRoot(configured: string): string {
+    try {
+      const real = realpathSync.native(configured);
+      return isCleanAbsolutePath(real) ? real : configured;
+    } catch {
+      return configured;
+    }
+  }
   function registryFor(cwd: string): CapabilityRegistry {
     const scope = realpathSync(cwd);
-    let registry = registries.get(scope);
-    if (!registry) {
-      registry = new CapabilityRegistry();
-      // Only reached behind the validated feature config, after the native
-      // modules loaded (wb-cax.10); the registration order is the one the
-      // identity capture has always digested.
-      // wb-973.4: the swarm's RF workspace (validated setting) replaces the scope for the RF capability only; absent keeps the scope.
-      const reactivefiberWorkspaceRoot = loadSettings(cwd).workbench?.reactivefiberWorkspaceRoot;
-      workbenchNative().registerNativeProviders(registry, scope, reactivefiberWorkspaceRoot === undefined ? undefined : { reactivefiberWorkspaceRoot });
-      registries.set(scope, registry);
-    }
+    // wb-973.4: the swarm's RF workspace (validated setting) replaces the scope for the RF capability only; absent keeps the scope.
+    // wb-v30k (EAT-R371): the setting is read again on each call and bound by canonicalRfRoot, and a scope's registry is rebuilt
+    // when the RF root it was built with differs. Claimed only for the changes pinned in test/workbench-rf-workspace-binding.test.ts
+    // B2a-B2c (setting text rewrites, and a symlink setting retargeted under unchanged text); no other change is claimed.
+    const configured = loadSettings(cwd).workbench?.reactivefiberWorkspaceRoot;
+    const reactivefiberWorkspaceRoot = configured === undefined ? undefined : canonicalRfRoot(configured);
+    const bound = registries.get(scope);
+    if (bound !== undefined && bound.rfRoot === reactivefiberWorkspaceRoot) return bound.registry;
+    const registry = new CapabilityRegistry();
+    // Only reached behind the validated feature config, after the native
+    // modules loaded (wb-cax.10); the registration order is the one the
+    // identity capture has always digested.
+    workbenchNative().registerNativeProviders(registry, scope, reactivefiberWorkspaceRoot === undefined ? undefined : { reactivefiberWorkspaceRoot });
+    registries.set(scope, { registry, rfRoot: reactivefiberWorkspaceRoot });
     return registry;
   }
   // The local OS user and Pi session identify a local operator, not remote
