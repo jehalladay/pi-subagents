@@ -1,0 +1,25 @@
+[package]
+name = "development-rig"
+type = "code"
+version = "0.1.0"
+language = "typescript"
+description = "CLI fixture host and later real SDK composition root"
+
+[toolchain]
+manager = "mise"
+config_path = ".mise.toml"
+
+[build]
+backend = "typescript"
+timeout = 600
+gate = ["typing", "test"]
+tiers = ["typing", "test"]
+
+[build.commands]
+# npm workspaces are the declared toolchain; Forge must not infer pnpm.
+package = { command = "npm pack --ignore-scripts", inputs = ["src/**", "package.json", "tsconfig.json", "forge.toml"] }
+typing = { command = "npm run build", inputs = ["src/**/*.ts", "test/**/*.ts", "tsconfig.json", "package.json", "forge.toml"] }
+test = { command = "npm test", inputs = ["src/**", "test/**", "tsconfig.json", "package.json", "forge.toml"] }
+
+[dependencies]
+"library:workflows-development" = { version = "0.1.0" }

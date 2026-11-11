@@ -1,0 +1,15 @@
+{
+  "schema": "mw.qa-real-infra-gates.v0",
+  "gates": [
+    {
+      "name": "installed MicroPolicy SDK round-trip (APO-021 INTEGRATION)",
+      "requirement": "APO-021",
+      "evidence": "pending"
+    },
+    {
+      "name": "scratch native receipts for Furnace/Beads/Reactive (APO-022, de56.4)",
+      "requirement": "APO-022",
+      "evidence": "pending"
+    }
+  ]
+}

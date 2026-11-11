@@ -1,0 +1,16 @@
+{"exports":["HOST_API_VERSION","HostAdmissionError","HostBindingError","WRITE_GRANT","admitHostBinding","dispatchWriteAtFinalBoundary","invokeDevelopmentHost","validateHostBinding"],"HOST_API_VERSION":"mechanical.pi-host/v1","WRITE_GRANT":"mechanical:develop-write"}
+{"label":"positive-control","result":{"admitted":true,"outcome":"verified_candidate"},"callbacks":[{"cb":"discover","own":["task","workspaceId","baseRevision"],"sameObject":true,"notes":"absent"},{"cb":"implement","task":"probe"}]}
+{"label":"descriptor-missing-implementation","result":{"admitted":false,"errorClass":"TypeError","name":"TypeError","code":null,"message":"Cannot read properties of undefined (reading 'package')"},"callbacks":[]}
+{"label":"descriptor-missing-bindings","result":{"admitted":false,"errorClass":"TypeError","name":"TypeError","code":null,"message":"Cannot read properties of undefined (reading 'length')"},"callbacks":[]}
+{"label":"descriptor-missing-inputSchema","result":{"admitted":false,"errorClass":"HostAdmissionError","name":"HostAdmissionError","code":"ENTRYPOINT_CONTRACT_INVALID","message":"ENTRYPOINT_CONTRACT_INVALID: unsupported descriptor, schema or entrypoint"},"callbacks":[]}
+{"label":"descriptor-implementation-null","result":{"admitted":false,"errorClass":"TypeError","name":"TypeError","code":null,"message":"Cannot read properties of null (reading 'package')"},"callbacks":[]}
+{"label":"artifact-path-nonexistent","result":{"admitted":false,"errorClass":"Error","name":"Error","code":"ENOENT","message":"ENOENT: no such file or directory, lstat '/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/Pi/PiSubagents/scratch/mii-triage-1110/epistemic-triage/.work/lens-"},"callbacks":[]}
+{"label":"input-extra-enumerable-notes","result":{"admitted":false,"errorClass":"HostAdmissionError","name":"HostAdmissionError","code":"ENTRYPOINT_INPUT_INVALID","message":"ENTRYPOINT_INPUT_INVALID: only nonempty task, workspaceId and baseRevision are accepted"},"callbacks":[]}
+{"label":"input-task-and-notes-only (pi-01 D counterexample literal)","result":{"admitted":false,"errorClass":"HostAdmissionError","name":"HostAdmissionError","code":"ENTRYPOINT_INPUT_INVALID","message":"ENTRYPOINT_INPUT_INVALID: only nonempty task, workspaceId and baseRevision are accepted"},"callbacks":[]}
+{"label":"input-nonenumerable-notes-getter","result":{"admitted":true,"outcome":"verified_candidate"},"callbacks":[{"cb":"discover","own":["task","workspaceId","baseRevision","notes"],"sameObject":true,"notes":"present"},{"cb":"implement","task":"probe"}]}
+{"label":"input-enumerable-task-accessor-toctou","result":{"admitted":true,"outcome":"verified_candidate"},"callbacks":[{"cb":"discover","own":["workspaceId","baseRevision","task"],"sameObject":true,"notes":"absent"},{"cb":"implement","task":"DIFFERENT task after admission (read 4)"}]}
+{"label":"task-accessor-reads","reads":4}
+{"label":"binding-arbitrary-allowedEffects-and-nonexistent-workspace","accepted":true,"allowedEffects":["rm -rf /","publish-everything","anything goes"]}
+{"label":"grant-absent-at-admission-present-now","result":"writer-ran"}
+{"label":"grant-admitted-then-revoked","refused":"WRITE_GRANT_REVOKED"}
+{"label":"grant-present-both","result":"writer-ran"}

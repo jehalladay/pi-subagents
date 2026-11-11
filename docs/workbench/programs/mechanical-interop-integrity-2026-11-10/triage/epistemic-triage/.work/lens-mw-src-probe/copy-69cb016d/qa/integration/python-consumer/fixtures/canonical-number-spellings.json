@@ -1,0 +1,27 @@
+{
+  "schema": "mw.canonical-number-spellings.v1",
+  "note": "Each row holds a JSON number text and the spelling the TypeScript canonicalJson (ECMAScript Number toString) gives it. Python mw_canonical and TypeScript canonicalJson must agree on every row byte for byte. The TypeScript spelling is the reference.",
+  "rows": [
+    { "input": "1e-7", "canonical": "1e-7" },
+    { "input": "-1e-7", "canonical": "-1e-7" },
+    { "input": "2.5e-7", "canonical": "2.5e-7" },
+    { "input": "1e-6", "canonical": "0.000001" },
+    { "input": "1.5e-5", "canonical": "0.000015" },
+    { "input": "5e-324", "canonical": "5e-324" },
+    { "input": "0.30000000000000004", "canonical": "0.30000000000000004" },
+    { "input": "-0.1", "canonical": "-0.1" },
+    { "input": "-2.302585092994046", "canonical": "-2.302585092994046" },
+    { "input": "5.0", "canonical": "5" },
+    { "input": "-0.0", "canonical": "0" },
+    { "input": "-0", "canonical": "0" },
+    { "input": "0", "canonical": "0" },
+    { "input": "123456.789e3", "canonical": "123456789" },
+    { "input": "1e16", "canonical": "10000000000000000" },
+    { "input": "1e20", "canonical": "100000000000000000000" },
+    { "input": "1.2345678901234568e+20", "canonical": "123456789012345680000" },
+    { "input": "123456789012345680000", "canonical": "123456789012345680000" },
+    { "input": "1e21", "canonical": "1e+21" },
+    { "input": "1.5e300", "canonical": "1.5e+300" },
+    { "input": "1.7976931348623157e308", "canonical": "1.7976931348623157e+308" }
+  ]
+}

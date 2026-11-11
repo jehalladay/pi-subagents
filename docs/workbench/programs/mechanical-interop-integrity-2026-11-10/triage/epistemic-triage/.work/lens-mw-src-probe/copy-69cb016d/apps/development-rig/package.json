@@ -1,0 +1,35 @@
+{
+  "name": "@mechanical/development-rig",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Local fixture and opt-in live development rig",
+  "type": "module",
+  "engines": {
+    "node": ">=22.18.0 <25"
+  },
+  "bin": {
+    "mechanical-development-rig": "./dist/cli.js"
+  },
+  "exports": {
+    "./host": {
+      "types": "./dist/host.d.ts",
+      "import": "./dist/host.js",
+      "default": "./dist/host.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --test test/*.test.ts",
+    "fixture": "node dist/cli.js --fixture"
+  },
+  "dependencies": {
+    "@mechanical/workflows-coordination": "0.1.0",
+    "@mechanical/workflows-development": "0.1.0"
+  },
+  "license": "MIT"
+}

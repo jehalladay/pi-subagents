@@ -1,0 +1,1394 @@
+######## C136
+[lens-pi-src.jsonl|pi-src] rel=QUALIFIES status=NON-EPISTEMIC
+  EV: An existing release validator constrains the surfaces these rows change. pins/pi-0fb90672/qa/workbench/mwi-release.mjs:432 `export const HOSTS_DIR = "src/workbench/hosts/";` and :985
+  rule `w11-absence-stale`: 'W11 states that no binding host exists while <modules> names MechanicalWorkflows'; :1017-1019 `traceability-changed` (TRACEABILITY must equal the cut base);
+  :1023-1025 `shared-index-added` for any added docs/**/index.md; :1028-1032 `receipt-not-per-bead` ('a receipt is one per-bead file, docs/workbench/receipts/<bead-id>.md') and `receipt
+  DET: Read of the validator's rule sites and of the test header; the validator was not run.
+  NOTE: Whether the validator is run against MII cuts is a process fact this lens cannot read from the pin (it is written for the November 4 program's `mwi-release` blocks). If it is: the
+  first cut that adds a host module naming Mechanical under src/workbench/hosts/ must rewrite the W11 absence sentence in that same cut (so W11 moves at P04/P05, not at P10
+  DRIFT: The artifact names W11 and the skill as P10 work and tells every packet to update status 'in the SAME implementation cut', but does not name this validator. pi
+
+[lens-negative-ev.jsonl|negative-ev] rel=DEPENDS_ON status=ESTABLISHED
+  EV: [{'pin': 'pi@0fb90672', 'path': 'git log -1 --format=%p 0fb90672; git merge-base --is-ancestor', 'probe': "Parents 95dcdfce (master) and ce180d82 (tip of workbench/implementation-
+  program, 'ledger: close wb-n40d (landing 1088 ...)'). The trunk tip is an ancestor of the pin; the pin and the master-only doc commits (4b219f24, the two program deposits) are not ancestors
+  of trunk."}, {'pin': 'local Pi repository, 2026-11-11', 'path': 'refs/remotes/origin/HEAD -> origin/master', 'probe': 'origin/master is 3fc0ead1, whose first-parent chain is 91d8fa8
+  DET: Ancestry and tree diff in the local Pi object store on 2026-11-11. Power: exact for committed history; silent on unpushed work.
+  NOTE: Status is for C002 (the revision is on the default branch) with a scope the corpus does not state. The absence that matters to implementers: the MII and MNI program directories do not
+  exist on the branch where beads land, so 'inspecting current main/master and active branches' (pi-05 L38) and 'update docs/skills ... in the SAME implementation cut'
+  DRIFT: Scope note for every Pi baseline row: the code facts are those of the gated trunk tip, while the program documents, the rewritten skill, README.md and AGENTS.md
+
+######## C137
+[lens-lineage.jsonl|lineage] rel=CONFLICTS_WITH status=C137 NON-EPISTEMIC (definition) with its embedded mapping premise SUPPORTED as corrected above; C139/C141/C143 PROPOSAL whose packet names collide with live MNI labels (P01, P02, P04-P09 denote different work in the two programs)
+  EV: pins/pi-0fb90672/docs/programs/mechanical-native-interoperability-2026-11-09/02-IMPLEMENTATION-PACKAGES.md headings: P00 re-pin/adopt ABI, P01 safety foundations, P02
+  descriptor+installed package, P03 authority+source admission, P04 registered workflow_execute(function) branch, P05 observation, P06 controls/journal/reconcile, P07 first live journey, P08
+  adversarial matrix, P09 crash/load, P10 release, P11 detached/Furnace, P12 HX/RF+coordination. MII pi-03 headings: P00 re-pin/ratify, P01 canonical input, P02 durable lease, P03 authority
+  rechec
+  DET: Side-by-side heading extraction of the two packet documents; bead-store read of the epic description; literal grep of the skill for P07/P08-P10.
+  NOTE: Three P-number schemes now coexist on master (MNI beads+skill, MII docs, MW companion in MII numbering). Remediation SURFACE_DISAGREEMENT + ADD_MISSING_PREMISE: publish one MII-label
+  -> MNI-label -> bead-id map (the EAT-R309 reconciliation duty) before any bead is filed; the skill's line 40 must be renumbered or qualified.
+  DRIFT: none
+
+[lens-lineage.jsonl|lineage] rel=SUPPORTS status=C019/C073/C134/C214 ESTABLISHED at 69cb016d; C020 ESTABLISHED (L2 receipt, fixture callbacks, not Pi); C077 ESTABLISHED (the receipt's own scope says no Pi registration)
+  EV: pins/mw-69cb016d/apps/development-rig/package.json exports {'./host': {types ./dist/host.d.ts, import ./dist/host.js}, './package.json'}; `git log -S'"./host"' -- apps/development-
+  rig/package.json` -> 24ef8984 2026-11-09 'export the independently installed host facade ./host ... external installed-consumer test ... (MechanicalWorkflows-loexn.5)'; `git show
+  62a10b59:apps/development-rig/package.json | grep host` -> none (MNI baseline lacked it; MNI C239 REFUTED there). pins/mw-69cb016d/qa/integration/pi-native-
+  interoperability-2026-11-09/m05/ins
+  DET: Package export read at the MW pin, pickaxe log for the export, receipt file read; bead-store read for the stale premise.
+  NOTE: MII's text is current; the bead store is stale. Bead generation for MII P04 must append-amend wb-y0n6/wb-1zn2 (never --notes replace) rather than inherit the 'subpath does not exist'
+  premise.
+  DRIFT: MOVED since MNI's baseline: host export (24ef8984) and the MW-INSTALLED-HOST L2 receipt (928b4920/loexn.9) landed between 62a10b59 and 69cb016d; the live Pi bea
+
+[lens-joint.jsonl|joint] rel=SUPPORTS status=NON-EPISTEMIC
+  EV: Dependency direction, stated twice and true in code: pi-README.md:30 "never couple Mechanical core to Pi, never require Library for execution,"; mw-README.md:29 "No Pi import inside
+  @mechanical/workflows-development; no Forge↔Furnace dependency; no Library runtime requirement; no requirement for HX task completeness or committed RF rendering in first Git/plain profile.
+  Planning packet IDs are not Beads IDs."; code witness in the C134 row | Planning labels are not Beads ids, both sides: pi-README.md:30 "packet IDs in this program are *planning l
+  DET:
+  NOTE: FAILED ATTACK, preserved: the hypothesis that the two programs also disagree on their standing rules did not survive. The coherent core, recorded so the disagreement rows are not read
+  as total incoherence: both programs agree on dependency direction, on packet ids being planning labels, on the no-nested-develop rule, on first-release profile exclus
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+######## C138
+[lens-pi-src.jsonl|pi-src] rel=CONTRADICTS status=REFUTED
+  EV: pins/pi-0fb90672/.github/workflows/ci.yml:1-10 `name: CI` / `on:` / `push:` `branches: [master]` / `pull_request:` `branches: [master]` with jobs build and compat-floor-pi running npm
+  ci, lint, typecheck and test. The repository's own earlier remediation already corrected this sentence: pins/pi-0fb90672/test/workbench-mwi-docs-remediation-census.test.ts:1121-1130 row M047
+  (EAT-R140, claim C0422, 'NON-EPISTEMIC / overclaims') existing: 'No GitHub CI; use Forge for the primary gate' -> repair: 'Do not add or rely on GitHub CI for this program (Pi
+  DET: find .github -type f in the Pi pin (FUNDING.yml, workflows/ci.yml); `ls pins/mw-69cb016d/.github` -> no such directory.
+  NOTE: Incidental: that workflow pins node-version 22 (:16) while package.json:4-6 requires node >=24, so it is not evidence about the supported runtime either.
+  DRIFT: Refuted on the empirical reading only ('the Pi repository has no GitHub CI'). As a rule ('do not add or rely on it') the sentence is non-epistemic and consisten
+
+[lens-joint.jsonl|joint] rel=CONTRADICTS status=REFUTED
+  EV: One sentence on both sides: pi-README.md:30 "No GitHub CI. Use focused local tests, complete Forge gate where available, exact source pins and machine-readable producer receipts."; mw-
+  README.md:29 "No GitHub CI, no Fabricated PASS, no unverified test claims."; mw-05-OPERATIONS-AND-HANDOFF.md:38 "push carefully to the default branch once source is reconciled. No GitHub
+  CI." | Repo states diverge: MW has no .github directory at 69cb016d (os.path check asserted by this generator); Pi at 0fb90672 has .github/workflows/ci.yml running npm ci, lint, t
+  DET: Directory existence check on the two pinned worktrees and a read of Pi's ci.yml. Power: complete for committed GitHub workflow definitions at the pins.
+  NOTE: Graded on the descriptive reading that C138 states, the Pi repository has no GitHub CI: refuted at the pin, one-sidedly, by the committed workflow, which runs lint, typecheck and the
+  test script on push and pull request, on a Node major that the package engines field excludes. The joint lens adds that the identical sentence is true as a repository
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+[lens-negative-ev.jsonl|negative-ev] rel=CONTRADICTS status=REFUTED
+  EV: [{'pin': 'pi@0fb90672', 'path': '.github/workflows/ci.yml', 'lines': '1-72', 'observation': 'A CI workflow is configured on push and pull_request to master; its jobs run npm ci, lint,
+  typecheck and test under node-version: 22 (lines 16, 51, 72). package.json engines require node >=24.'}, {'pin': 'mw@69cb016d', 'path': '.github', 'probe': 'No such directory.'}, {'pin':
+  'pi@0fb90672', 'path': 'test/workbench-mwi-docs-remediation-census.test.ts', 'lines': '1130', 'quote': "Do not add or rely on GitHub CI for this program (Pi's pre-existing `.githu
+  DET: Listing of .github/ in both pinned trees. Power: complete for 'a workflow is configured'; silent on whether GitHub Actions runs it for this fork.
+  NOTE: Refuted reading: the empirical one, for Pi (C138's strong reading; C035 facet v). It holds for Mechanical. The rule reading (do not add or rely on GitHub CI, C034) is NON-EPISTEMIC and
+  unaffected. The deposit was pushed to master, the branch that workflow triggers on, under a Node version below the package's engines floor; whether a run happened an
+  DRIFT: Regression of wording this repository already narrowed (row M047 / EAT-R140).
+
+######## C139
+[lens-lineage.jsonl|lineage] rel=CONFLICTS_WITH status=C137 NON-EPISTEMIC (definition) with its embedded mapping premise SUPPORTED as corrected above; C139/C141/C143 PROPOSAL whose packet names collide with live MNI labels (P01, P02, P04-P09 denote different work in the two programs)
+  EV: pins/pi-0fb90672/docs/programs/mechanical-native-interoperability-2026-11-09/02-IMPLEMENTATION-PACKAGES.md headings: P00 re-pin/adopt ABI, P01 safety foundations, P02
+  descriptor+installed package, P03 authority+source admission, P04 registered workflow_execute(function) branch, P05 observation, P06 controls/journal/reconcile, P07 first live journey, P08
+  adversarial matrix, P09 crash/load, P10 release, P11 detached/Furnace, P12 HX/RF+coordination. MII pi-03 headings: P00 re-pin/ratify, P01 canonical input, P02 durable lease, P03 authority
+  rechec
+  DET: Side-by-side heading extraction of the two packet documents; bead-store read of the epic description; literal grep of the skill for P07/P08-P10.
+  NOTE: Three P-number schemes now coexist on master (MNI beads+skill, MII docs, MW companion in MII numbering). Remediation SURFACE_DISAGREEMENT + ADD_MISSING_PREMISE: publish one MII-label
+  -> MNI-label -> bead-id map (the EAT-R309 reconciliation duty) before any bead is filed; the skill's line 40 must be renumbered or qualified.
+  DRIFT: none
+
+[lens-lineage.jsonl|lineage] rel=CONFLICTS_WITH status=C139/C141 PROPOSAL (NON-EPISTEMIC) whose sequencing contradicts the live DAG - the MII parallelism is a bead-graph edit, not a description; C187-C204 NORMATIVE with no lineage to the in-flight A/B/C rows
+  EV: MII pi-03 dependency graph: 'P06 observation contract [parallel]' hangs off P00 only and the P06 heading reads '(P0; parallel with P04)'. Live beads at 0fb90672 (.beads/issues.jsonl):
+  wb-9a1o [MWI-outcomes] blocked by wb-4bxo; wb-upad [MWI-observe] blocked by wb-4bxo, wb-9a1o, wb-mwsy; wb-4bxo blocked by wb-y0n6, wb-2ukh (+ closed wb-ocie, wb-201v, wb-3121). wb-xr1z (MNI
+  P08, EAT-R265..R279: A01-A14 + B01-B14 through registered tools) status in_progress, notes 'STOP (predecessor-first, no cut) - ws-10 run g10-work-s281, written 2026-11-09T22:44
+  DET: Bead store dependency read; ASCII graph read; grep of pi-04/mw-04 for A0|B0|Q0 ids (0 hits in MII; MNI ids absent from MII).
+  NOTE: Three unmapped falsifier vocabularies and a label 'P08' that means the adversarial matrix in the live bead and native acceptance in MII. Remediation: one joint falsifier id map (G/P
+  <-> A/B/C <-> Q) and explicit edge changes if P06 is to run before the launcher; release the stale wb-xr1z claim before reusing it.
+  DRIFT: none; wb-xr1z's in_progress is a stale claim lock (no cut), not active implementation.
+
+[lens-joint.jsonl|joint] rel=CONTRADICTS status=REFUTED
+  EV: Pi draws Mechanical edges only into P04 and P08: pi-03-IMPLEMENTATION-PACKETS.md:8 "+-> P02 durable lease/fencing ----------+--> P04 composed admission --> P05 registered function
+  launcher"; pi-03-IMPLEMENTATION-PACKETS.md:10 "+-> P06 observation contract [parallel] -+-------------+---------------------+--> P07 journal/control/reconcile"; pi-03-IMPLEMENTATION-
+  PACKETS.md:51 "### P06 — Producer-qualified observation bridge (P0; parallel with P04)"; pi-03-IMPLEMENTATION-PACKETS.md:57 "### P07 — Durable invocation journal, controls and reconciliati
+  DET: Two absences carry this row. (a) No effect-intent, reconciliation or progress surface is importable from the rig: read of the two-key exports map in the rig package.json and of every
+  export statement
+  NOTE: PREMISE GRADED: that the Pi dependency graph and packet headings state the complete set of Mechanical prerequisites: none for P02, P06 and P07, and for P05 only what it inherits
+  through P04. Pi's own packet text and the pinned code contradict it. P07 must 'integrate Mechanical effect-intent lookup', and no effect-intent or reconciliation function i
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+[lens-contradict.jsonl|contradict] rel=CONFLICTS_WITH status=C142/C163 UNSUPPORTED (prerequisite sets conflict across repos and the labels are ambiguous); C139/C141 NON-EPISTEMIC
+  EV: pi-03 L39: '### P04 — Reviewed installed host consumer (P0; MW H01/H02)' and L11: 'Mechanical H01/H02/H03 host, native proof, services ----> P08 joined native journey' | mw-05 L27: '|
+  H03 exact executable manifest | Pi P04 installed host |', L28: '| H04 closed binding and allowedEffects | Pi P03/P04 composed admission |', L30: '| H06 composed host entrypoint | Pi P04/P05
+  authority transitivity |' | mw-03 L63: '### H08 — Registered Pi joint native acceptance (P0; H05–H07 + Pi P05–P07)' and L11 'H05 + H06 + H07 + Pi registered dispatcher ----> H0
+  DET: Reconstructed both dependency graphs as edge lists from pi-03 L5-14 + pi-05 L29-34 and mw-03 L5-14 + mw-05 L21-32; compared the Mechanical prerequisites each side assigns to Pi P04 and
+  to the joined j
+  NOTE: Both repos cannot schedule against each other's graph. Remediation: SURFACE_DISAGREEMENT then one ratified joint DAG in P00/H00.
+  DRIFT: DAG conflict: Pi says P04 needs 'MW H01/H02' (under pi-05 numbering: binding + callbacks; under mw-03 numbering: Forge certificate + effect law); MW says P04 ne
+
+######## C140
+[lens-lineage.jsonl|lineage] rel=CONFLICTS_WITH status=C137 NON-EPISTEMIC (definition) with its embedded mapping premise SUPPORTED as corrected above; C139/C141/C143 PROPOSAL whose packet names collide with live MNI labels (P01, P02, P04-P09 denote different work in the two programs)
+  EV: pins/pi-0fb90672/docs/programs/mechanical-native-interoperability-2026-11-09/02-IMPLEMENTATION-PACKAGES.md headings: P00 re-pin/adopt ABI, P01 safety foundations, P02
+  descriptor+installed package, P03 authority+source admission, P04 registered workflow_execute(function) branch, P05 observation, P06 controls/journal/reconcile, P07 first live journey, P08
+  adversarial matrix, P09 crash/load, P10 release, P11 detached/Furnace, P12 HX/RF+coordination. MII pi-03 headings: P00 re-pin/ratify, P01 canonical input, P02 durable lease, P03 authority
+  rechec
+  DET: Side-by-side heading extraction of the two packet documents; bead-store read of the epic description; literal grep of the skill for P07/P08-P10.
+  NOTE: Three P-number schemes now coexist on master (MNI beads+skill, MII docs, MW companion in MII numbering). Remediation SURFACE_DISAGREEMENT + ADD_MISSING_PREMISE: publish one MII-label
+  -> MNI-label -> bead-id map (the EAT-R309 reconciliation duty) before any bead is filed; the skill's line 40 must be renumbered or qualified.
+  DRIFT: none
+
+######## C141
+[lens-lineage.jsonl|lineage] rel=CONFLICTS_WITH status=C137 NON-EPISTEMIC (definition) with its embedded mapping premise SUPPORTED as corrected above; C139/C141/C143 PROPOSAL whose packet names collide with live MNI labels (P01, P02, P04-P09 denote different work in the two programs)
+  EV: pins/pi-0fb90672/docs/programs/mechanical-native-interoperability-2026-11-09/02-IMPLEMENTATION-PACKAGES.md headings: P00 re-pin/adopt ABI, P01 safety foundations, P02
+  descriptor+installed package, P03 authority+source admission, P04 registered workflow_execute(function) branch, P05 observation, P06 controls/journal/reconcile, P07 first live journey, P08
+  adversarial matrix, P09 crash/load, P10 release, P11 detached/Furnace, P12 HX/RF+coordination. MII pi-03 headings: P00 re-pin/ratify, P01 canonical input, P02 durable lease, P03 authority
+  rechec
+  DET: Side-by-side heading extraction of the two packet documents; bead-store read of the epic description; literal grep of the skill for P07/P08-P10.
+  NOTE: Three P-number schemes now coexist on master (MNI beads+skill, MII docs, MW companion in MII numbering). Remediation SURFACE_DISAGREEMENT + ADD_MISSING_PREMISE: publish one MII-label
+  -> MNI-label -> bead-id map (the EAT-R309 reconciliation duty) before any bead is filed; the skill's line 40 must be renumbered or qualified.
+  DRIFT: none
+
+[lens-lineage.jsonl|lineage] rel=CONFLICTS_WITH status=C139/C141 PROPOSAL (NON-EPISTEMIC) whose sequencing contradicts the live DAG - the MII parallelism is a bead-graph edit, not a description; C187-C204 NORMATIVE with no lineage to the in-flight A/B/C rows
+  EV: MII pi-03 dependency graph: 'P06 observation contract [parallel]' hangs off P00 only and the P06 heading reads '(P0; parallel with P04)'. Live beads at 0fb90672 (.beads/issues.jsonl):
+  wb-9a1o [MWI-outcomes] blocked by wb-4bxo; wb-upad [MWI-observe] blocked by wb-4bxo, wb-9a1o, wb-mwsy; wb-4bxo blocked by wb-y0n6, wb-2ukh (+ closed wb-ocie, wb-201v, wb-3121). wb-xr1z (MNI
+  P08, EAT-R265..R279: A01-A14 + B01-B14 through registered tools) status in_progress, notes 'STOP (predecessor-first, no cut) - ws-10 run g10-work-s281, written 2026-11-09T22:44
+  DET: Bead store dependency read; ASCII graph read; grep of pi-04/mw-04 for A0|B0|Q0 ids (0 hits in MII; MNI ids absent from MII).
+  NOTE: Three unmapped falsifier vocabularies and a label 'P08' that means the adversarial matrix in the live bead and native acceptance in MII. Remediation: one joint falsifier id map (G/P
+  <-> A/B/C <-> Q) and explicit edge changes if P06 is to run before the launcher; release the stale wb-xr1z claim before reusing it.
+  DRIFT: none; wb-xr1z's in_progress is a stale claim lock (no cut), not active implementation.
+
+[lens-joint.jsonl|joint] rel=CONTRADICTS status=REFUTED
+  EV: Pi draws Mechanical edges only into P04 and P08: pi-03-IMPLEMENTATION-PACKETS.md:8 "+-> P02 durable lease/fencing ----------+--> P04 composed admission --> P05 registered function
+  launcher"; pi-03-IMPLEMENTATION-PACKETS.md:10 "+-> P06 observation contract [parallel] -+-------------+---------------------+--> P07 journal/control/reconcile"; pi-03-IMPLEMENTATION-
+  PACKETS.md:51 "### P06 — Producer-qualified observation bridge (P0; parallel with P04)"; pi-03-IMPLEMENTATION-PACKETS.md:57 "### P07 — Durable invocation journal, controls and reconciliati
+  DET: Two absences carry this row. (a) No effect-intent, reconciliation or progress surface is importable from the rig: read of the two-key exports map in the rig package.json and of every
+  export statement
+  NOTE: PREMISE GRADED: that the Pi dependency graph and packet headings state the complete set of Mechanical prerequisites: none for P02, P06 and P07, and for P05 only what it inherits
+  through P04. Pi's own packet text and the pinned code contradict it. P07 must 'integrate Mechanical effect-intent lookup', and no effect-intent or reconciliation function i
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+[lens-contradict.jsonl|contradict] rel=CONFLICTS_WITH status=C142/C163 UNSUPPORTED (prerequisite sets conflict across repos and the labels are ambiguous); C139/C141 NON-EPISTEMIC
+  EV: pi-03 L39: '### P04 — Reviewed installed host consumer (P0; MW H01/H02)' and L11: 'Mechanical H01/H02/H03 host, native proof, services ----> P08 joined native journey' | mw-05 L27: '|
+  H03 exact executable manifest | Pi P04 installed host |', L28: '| H04 closed binding and allowedEffects | Pi P03/P04 composed admission |', L30: '| H06 composed host entrypoint | Pi P04/P05
+  authority transitivity |' | mw-03 L63: '### H08 — Registered Pi joint native acceptance (P0; H05–H07 + Pi P05–P07)' and L11 'H05 + H06 + H07 + Pi registered dispatcher ----> H0
+  DET: Reconstructed both dependency graphs as edge lists from pi-03 L5-14 + pi-05 L29-34 and mw-03 L5-14 + mw-05 L21-32; compared the Mechanical prerequisites each side assigns to Pi P04 and
+  to the joined j
+  NOTE: Both repos cannot schedule against each other's graph. Remediation: SURFACE_DISAGREEMENT then one ratified joint DAG in P00/H00.
+  DRIFT: DAG conflict: Pi says P04 needs 'MW H01/H02' (under pi-05 numbering: binding + callbacks; under mw-03 numbering: Forge certificate + effect law); MW says P04 ne
+
+######## C142
+[lens-lineage.jsonl|lineage] rel=SUPPORTS status=C221 ESTABLISHED; C142/C163 embedded label premise CONTESTED between the two numberings (pi-03's 'MW H01/H02' is coherent only under pi-05's numbering, and wrong under MW's own, where H01/H02 are the Forge certificate and effect semantics)
+  EV: docs/mw-03-IMPLEMENTATION-PACKETS.md headings (companion at MW origin/main 6476372f): H00 pin/reconcile/ABI, H01 native Forge certificate, H02 durable effect/non-occurrence, H03 verified
+  installed executable, H04 descriptor and closed binding validator, H05 compose four services, H06 authorized composed host, H07 progress/recovery protocol, H08 'Registered Pi joint native
+  acceptance (P0; H05-H07 + Pi P05-P07)', H09 adversarial, H10 crash/load, H11 docs/release, H12 optional. docs/pi-05-OPERATIONS-AND-HANDOFF.md H01 binding+manifest, H02 four ca
+  DET: Heading extraction from both companion documents; row read of the mw-05 table; directory listing of the MW program folder.
+  NOTE: Same defect class as the MNI 'conflicting Pi-vs-MW DAGs' lesson, now at the label level. Remediation ADD_MISSING_PREMISE: a joint 11-10 identifier map (Pi P, Pi H, MW H, MNI P, bead
+  ids) in both repos, in the form MW's 04-IDENTIFIER-MAPPING.md already validates.
+  DRIFT: companion read at origin/main 6476372f (deposit commit); MW env pin 69cb016d predates it.
+
+[lens-mw-src.jsonl|mw-src] rel=CONFLICTS_WITH status=NON-EPISTEMIC
+  EV: Paths the companion packets name that do not exist at the pin (PROBE/out/static-scans.txt S9): apps/development-rig/src/effect-abort.ts (mw-03:29; the module is post-dispatch-abort.ts),
+  the directory 'tests/' in 'tests/effect-intent.test.ts', 'tests/entrypoint-*.test.ts', 'tests/host-facade.test.ts' (mw-03:29,41,52; the directory is test/), and 'progress' (progress-
+  stages.ts). mw-README:20 says installed-host.ts 'packs/imports exact tarball'; it copies and installs a caller-supplied tarball and never packs (installed-host.ts:19-35). All Mechani
+  DET: git cat-file -e for each cited path at 69cb016d.
+  NOTE: Low severity, but a bead written from mw-03 H02/H04/H06 verbatim would point agents at nonexistent files. Not a defect of the Pi artifact; recorded because Pi's dependency rows inherit
+  it.
+  DRIFT: The producer packets that Pi's P07/P08 depend on carry phantom file names; the Pi corpus's own Mechanical path references are sound.
+
+[lens-mw-src.jsonl|mw-src] rel=ASSUMES status=NON-EPISTEMIC
+  EV: See the C163 row: the labels 'Mechanical H01/H02/H03' in pi-03:11 have three incompatible definitions (pi-05:30-34, mw-03:16-81, mw-README:26), the positional gloss 'host, native proof,
+  services' matches none of them, and the companion's own joined node (mw-03:63, H08) depends on H05-H07 plus Pi P05-P07.
+  DET: Complete read of every H-label definition site in the twelve program files.
+  NOTE: PREMISE-SPLIT: 'H01/H02/H03 resolve to definite Mechanical packets' => CONTESTED (primary documents disagree; no implementation exists at the pin to arbitrate). In mw-03 terms P08
+  needs H01 through H07.
+  DRIFT: The dependency edge is drawn to labels that do not denote one set of producer work.
+
+[lens-joint.jsonl|joint] rel=CONTRADICTS status=REFUTED
+  EV: Pi uses Mechanical H-labels as packet dependencies: pi-03-IMPLEMENTATION-PACKETS.md:11 "Mechanical H01/H02/H03 host, native proof, services"; pi-03-IMPLEMENTATION-PACKETS.md:39 "### P04
+  — Reviewed installed host consumer (P0; MW H01/H02)" | Pi's own meaning of the labels: pi-05-OPERATIONS-AND-HANDOFF.md:30 "H01: @mechanical/development-rig/host accepts validated
+  mechanical.pi-host/v1 binding and exact immutable package/runtime manifest; reject malformed descriptors with typed errors."; pi-05-OPERATIONS-AND-HANDOFF.md:32 "H03: strict verificatio
+  DET: Search the six Mechanical documents for the heading of every H01..H12 packet and the six Pi documents for the H01..H05 handoff definitions; the complete lists are quoted in this and the
+  following row.
+  NOTE: PREMISE GRADED: that 'MW H01/H02' (P04) and 'Mechanical H01/H02/H03' (P08) name definite Mechanical packets with the content Pi intends. They do not. Read in the Mechanical program's
+  own numbering, P04 would wait on the strict Forge certificate and the negative-effect law, which P04 does not consume, and would not wait on the installed-runtime clos
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+[lens-contradict.jsonl|contradict] rel=CONFLICTS_WITH status=C221 ESTABLISHED (three incompatible numberings are observed); C142/C163 UNSUPPORTED as written (the referent of 'MW H01/H02' is undecidable)
+  EV: pi-05 L30-34: 'H01: @mechanical/development-rig/host accepts validated mechanical.pi-host/v1 binding ...; H02: production four callbacks ...; H03: strict verification evidence ...; H04:
+  effect-intent and reconciliation ...; H05: shared tests, installed host V2, registered Pi tool V3 ...' | mw-README L26: 'H01 strict native Forge eligibility ...; H02 durable effect and non-
+  occurrence law; H03 compose trusted host binding and exact service callbacks; H04 pin executable runtime closure; H05 process cancellation/journal/producer identity; H06 real
+  DET: Token census of H-labels per document (grep -oE '\bH[0-9]{2}\b' per file) and side-by-side reading of each label's gloss in pi-05, mw-README, mw-03, mw-05.
+  NOTE: Confirms the MNI lesson 'conflicting Pi-vs-MW DAGs'. Even inside the MW program the README's priority list and the 03 packet list disagree (README H06 'real joint Pi handoff' is mw-03
+  H08). Remediation: one shared label table (ADD_MISSING_PREMISE) and rewrite pi-03/pi-05 cross-references to it.
+  DRIFT: label drift: the same token H0n names three different work items across pi-05, mw-README and mw-03/mw-05 (mw-README is shifted by one from mw-03 from H03 onward
+
+[lens-contradict.jsonl|contradict] rel=CONFLICTS_WITH status=C142/C163 UNSUPPORTED (prerequisite sets conflict across repos and the labels are ambiguous); C139/C141 NON-EPISTEMIC
+  EV: pi-03 L39: '### P04 — Reviewed installed host consumer (P0; MW H01/H02)' and L11: 'Mechanical H01/H02/H03 host, native proof, services ----> P08 joined native journey' | mw-05 L27: '|
+  H03 exact executable manifest | Pi P04 installed host |', L28: '| H04 closed binding and allowedEffects | Pi P03/P04 composed admission |', L30: '| H06 composed host entrypoint | Pi P04/P05
+  authority transitivity |' | mw-03 L63: '### H08 — Registered Pi joint native acceptance (P0; H05–H07 + Pi P05–P07)' and L11 'H05 + H06 + H07 + Pi registered dispatcher ----> H0
+  DET: Reconstructed both dependency graphs as edge lists from pi-03 L5-14 + pi-05 L29-34 and mw-03 L5-14 + mw-05 L21-32; compared the Mechanical prerequisites each side assigns to Pi P04 and
+  to the joined j
+  NOTE: Both repos cannot schedule against each other's graph. Remediation: SURFACE_DISAGREEMENT then one ratified joint DAG in P00/H00.
+  DRIFT: DAG conflict: Pi says P04 needs 'MW H01/H02' (under pi-05 numbering: binding + callbacks; under mw-03 numbering: Forge certificate + effect law); MW says P04 ne
+
+######## C143
+[lens-lineage.jsonl|lineage] rel=CONFLICTS_WITH status=C017 SUPPORTED as an enumeration but not exhaustive (the 'do not reclassify as missing' rule is violated by MII's own omission); C179 NON-EPISTEMIC with its embedded premise 'no separate reviewed coordination id/grant exists yet' REFUTED at 0fb90672
+  EV: pins/pi-0fb90672/src/workbench/mechanical-coordination.ts (added 3658beb9 2026-11-08 wb-0gbh, narrowed 9ac06511/31759c81, 1cfbb4d7 2026-11-09 wb-ub94; both beads closed, children of
+  wb-1a3t): MECHANICAL_COORDINATION_GRANT = "workbench:coordinate" (:136), MECHANICAL_COORDINATION_AUTHORITY = "observation-only" (:138), reviewed descriptor coordination-reconcile.v1 pinned
+  by SHA-256 (:149-162), invokeMechanicalCoordination (:376); `grep -rn mechanical-coordination src/` finds no importer (component exists, wired into no registered tool); test/workb
+  DET: `git diff --name-status 8e2fedeb 0fb90672 -- src/` (the one added file), importer grep over src/, literal grep of the MII corpus for coordination|wb-0gbh|workbench:coordinate (0 hits
+  outside P12's gen
+  NOTE: A from-scratch MII P12 bead would duplicate wb-0gbh/wb-ub94, which MNI EAT-R301 forbids. Remediation ADD_MISSING_PREMISE: P12 and the README baseline must name the landed observation-
+  only boundary and its remaining installed/registered leg.
+  DRIFT: none since 0fb90672; the component was absent at MNI's 8e2fedeb and present at its doc commit b085c34e (MNI drift note K024/M022).
+
+[lens-lineage.jsonl|lineage] rel=CONFLICTS_WITH status=C137 NON-EPISTEMIC (definition) with its embedded mapping premise SUPPORTED as corrected above; C139/C141/C143 PROPOSAL whose packet names collide with live MNI labels (P01, P02, P04-P09 denote different work in the two programs)
+  EV: pins/pi-0fb90672/docs/programs/mechanical-native-interoperability-2026-11-09/02-IMPLEMENTATION-PACKAGES.md headings: P00 re-pin/adopt ABI, P01 safety foundations, P02
+  descriptor+installed package, P03 authority+source admission, P04 registered workflow_execute(function) branch, P05 observation, P06 controls/journal/reconcile, P07 first live journey, P08
+  adversarial matrix, P09 crash/load, P10 release, P11 detached/Furnace, P12 HX/RF+coordination. MII pi-03 headings: P00 re-pin/ratify, P01 canonical input, P02 durable lease, P03 authority
+  rechec
+  DET: Side-by-side heading extraction of the two packet documents; bead-store read of the epic description; literal grep of the skill for P07/P08-P10.
+  NOTE: Three P-number schemes now coexist on master (MNI beads+skill, MII docs, MW companion in MII numbering). Remediation SURFACE_DISAGREEMENT + ADD_MISSING_PREMISE: publish one MII-label
+  -> MNI-label -> bead-id map (the EAT-R309 reconciliation duty) before any bead is filed; the skill's line 40 must be renumbered or qualified.
+  DRIFT: none
+
+######## C144
+[lens-lineage.jsonl|lineage] rel=SAME_ORIGIN_AS status=ESTABLISHED
+  EV: Blob identity 8e2fedeb (MNI env pin) vs 0fb90672 (MII env pin), `git rev-parse <rev>:<path>` in pins/pi-0fb90672: src/worktree.ts 6ec6d6c9, src/workbench/claude-host.ts baee92de,
+  src/index.ts 2c923cf1, src/workbench/hosts/local-detached.ts 66a6a23e, src/workbench/execute.ts 9aaf8fb9, execute-tool.ts d873e378, identity.ts a306fa1b, source-admission.ts 7ebfdcd6,
+  function-authority.ts 69d3194f, mechanical-descriptor.ts 17de55ce, observation.ts 3e1d43ee - all SAME. `git diff --stat 8e2fedeb 0fb90672 -- src/` = one line: A src/workbench/mechanical-c
+  DET: Per-path git blob-id equality between the two environment pins plus `git diff --stat` over src/; a changed blob or an extra src path would have shown. Same-origin caveat: the MNI grades
+  are an earlier
+  NOTE: Nothing MOVED in the descriptor/authority/source-admission/worktree/abort/detached-grant states MNI graded: every MII baseline observation about those files inherits the MNI verdict
+  byte-for-byte. The only src movement since MNI's baseline is the coordination boundary (see the separate row).
+  DRIFT: none in the cited src blobs between 8e2fedeb and 0fb90672; the deposit commits 91d8fa8c/3fc0ead1 touch only docs/programs/ and the skill; fetched trunk origin/w
+
+[lens-pi-src.jsonl|pi-src] rel=SUPPORTS status=ESTABLISHED
+  EV: In pins/pi-0fb90672/: `git rev-parse HEAD` = 0fb9067262532289104417d2b7f2f25704563a75; `git log -1 --format=%cI\ %s` = '2026-11-11T00:23:06Z continuity-18: merge
+  workbench/implementation-program (landings 1087-1088) into master'; parents 95dcdfce (master) and ce180d82 (workbench/implementation-program, equal to origin/workbench/implementation-program
+  as fetched); `git branch -a --contains HEAD` lists remotes/origin/master with origin/HEAD -> origin/master. `git diff --stat ce180d82 0fb90672 -- src test qa package.json forge.toml` is
+  empty. The
+  DET: git plumbing in the pin worktree with --no-optional-locks; `git --no-optional-locks status --porcelain` is empty; ls of the named files.
+  NOTE: 'Default branch: master' holds. For implementation the relevant fact is that the branch the feature matrix calls trunk (feature-matrix.md:5 'Trunk: branch `workbench/implementation-
+  program`') does not contain the program documents, the November 9 program, or master's versions of AGENTS.md, README.md and the skill that pi-03 P10 and pi-05 tell beads
+  DRIFT: The inspected revision is a master merge whose CODE equals the trunk branch tip; the two trees differ only in documents (`git diff --name-only ce180d82 0fb90672
+
+[lens-negative-ev.jsonl|negative-ev] rel=CONFLICTS_WITH status=ESTABLISHED
+  EV: [{'pin': 'pi@0fb90672', 'path': 'src/workbench/mechanical-coordination.ts', 'lines': '136-156,376', 'observation': 'A fourth Mechanical-facing boundary (419 lines, bead wb-0gbh):
+  invokeMechanicalCoordination (line 376) for the reviewed entry mechanical.coordination.reconcile.v1 (lines 149-150), under its own grant workbench:coordinate (line 136) and authority
+  observation-only (line 138), with reviewed digests of the producer descriptor and schemas (line 156). No importer in src.'}, {'pin': 'pi@3fc0ead1 (document pin)', 'path': 'docs/programs/me
+  DET: File-name and token survey of src for 'mechanical' (ten files match) set against the modules the corpus names. Power: complete for file names.
+  NOTE: Status is for the observation that this boundary exists and is unwired; no listed row changes status. It is one more 'called nowhere' module, and the corpus that says 'do not
+  reclassify those as missing' does not list it. P12's rule (a separate reviewed id and grant for pure coordination operations, never development-write) is already realized for
+  DRIFT:
+
+######## C145
+[lens-pi-src.jsonl|pi-src] rel=SUPPORTS status=ESTABLISHED
+  EV: pins/pi-0fb90672/src/workbench/function-authority.ts:135 `export const FUNCTION_ACTION_BLOCKER = "MW-CONTRACT";`; :145 `export const FUNCTION_ACTION_CONTRACT: FunctionActionContract =
+  Object.freeze({ state: "unadopted", blockedOn: FUNCTION_ACTION_BLOCKER });`; :105-107 'No action spelling is adopted: FUNCTION_ACTION_CONTRACT is unadopted, so every function dispatch
+  refuses, and one that passes the earlier rules refuses as function-action-unadopted.'; :339-341 the refusal. History: `git log -S` on that declaration returns one commit, 029dabca (2
+  DET: grep -c 'export default' src/workbench/function-authority.ts = 0; grep over src/ for importers of FUNCTION_ACTION_CONTRACT = 0 (tests only); the two regexes were evaluated in node
+  against the proposed
+  NOTE: Nothing in production supplies any contract to the boundary, adopted or not, because nothing in production calls the boundary.
+  DRIFT: Wording: 'exported default FUNCTION_ACTION_CONTRACT' - it is a named export (there is no ES default export); read as 'the default contract value' the claim hold
+
+[lens-mw-src.jsonl|mw-src] rel=SUPPORTS status=SUPPORTED
+  EV: Producer-side statements that the joint contract is not ratified: host-binding.ts:2-6 and :13; contracts/README.md:22 ('The grant spelling and the contract version stay a proposal: the
+  written joint ratification with Pi (P-contract) is a recorded condition that this cut does not fabricate'); qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-
+  consumer-l2-receipt.json known_gaps: 'no Pi P-descriptor/P-contract coordination was performed (M05 coordinates it)'. Token census (PROBE/out/static-scans.txt S10): 'MW-CONTRACT' has 0 oc
+  DET: Fixed-string grep over all .ts/.json/.md of the MW pin and over Pi src/docs at 0fb90672; V0 read of the cited passages. The Pi-side value of FUNCTION_ACTION_CONTRACT itself was not read
+  by this lens.
+  NOTE: Independent producer-side corroboration of the Pi-side observations (their primary reading belongs to the Pi-source lens): both repositories record the contract as unadopted. The same
+  naming gap sits under the A2 adoption gate ('ONLY after MW-CONTRACT ratification', pi-02 A2): P00 needs one named, located ratification record that both tokens resolv
+  DRIFT: The ratification gate has no shared name: Pi blocks on 'MW-CONTRACT', the producer waits on 'P-contract'. Neither repository defines what artifact discharges it
+
+[lens-joint.jsonl|joint] rel=SUPPORTS status=ESTABLISHED
+  EV: Mechanical witnesses: pins/mw-69cb016d/apps/development-rig/src/host-binding.ts:14 `export const WRITE_GRANT = "mechanical:develop-write" as const;`; pins/mw-69cb016d/apps/development-
+  rig/src/host-binding.ts:11 `export const EVIDENCE_PROFILES = ["git-census-v1", "hx-task-scope-v1"] as const;`; pins/mw-69cb016d/apps/development-rig/src/host-binding.ts:12 `export const
+  CONTEXT_PROFILES = ["plain-v1", "rf-committed-v1"] as const;` | Pi has none in source or tests: 0 files under src, test of pins/pi-0fb90672 contain any of: mechanical:develop-write
+  DET: Text search of Pi src/ and test/ at 0fb90672 for 'mechanical:develop-write', 'git-census-v1' and 'plain-v1': 0 files (asserted). Power: complete for the literal spellings in Pi source
+  and tests; progr
+  NOTE: Per identifier and per repository: the grant spelling and both profile identifiers are witnessed in Mechanical code and absent from Pi code. That is consistent with both programs
+  calling the grant a candidate and the route unbuilt, and it means every Pi statement about the profile pair is, at the pin, a statement about a Mechanical constant. The sp
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+[lens-negative-ev.jsonl|negative-ev] rel=SUPPORTS status=ESTABLISHED
+  EV: [{'pin': 'pi@0fb90672', 'path': 'git grep mechanical:develop-write', 'probe': 'src 0, test 0, qa 0; docs 18, .beads 2.'}, {'pin': 'pi@0fb90672', 'path': 'test/workbench-function-
+  authority.test.ts:249; test/workbench-claude-tool-grants.test.ts:118', 'observation': "Pi's tests adopt only the fixture grant fixture-fn:develop-write."}, {'pin': 'mw@69cb016d', 'path':
+  'apps/development-rig/src/host-binding.ts', 'lines': '14', 'quote': 'export const WRITE_GRANT = "mechanical:develop-write" as const;'}]
+  DET: Literal search over the whole tracked tree of the Pi pin. Power: complete for the literal spelling.
+  NOTE: Pi's adoption seam has never been exercised with the candidate spelling; the first test that does so is P00 or P03 work.
+  DRIFT:
+
+######## C146
+[lens-lineage.jsonl|lineage] rel=SPECIALIZES status=NON-EPISTEMIC (normative decisions); embedded premise 'both 11-10 programs assign lease authority to Pi' SUPPORTED; C025 ESTABLISHED (no cross-process lease evidence at either pin: WriterLeases is an in-memory Map, source-admission.ts unchanged)
+  EV: MNI docs/workbench/programs/mechanical-native-interoperability-2026-11-09/requirements/ATOMIC-REQUIREMENTS.md: EAT-R207 'Assign canonical writer-lease ownership' (P00 ruling; Rationale:
+  CONTRADICTIONS K008 Pi source-admission vs Mechanical host; Conditions: 'Pi's in-process WriterLeases exists but is not currently a cross-process guarantee'); EAT-R232 'one writer per
+  canonical root' (Conditions: 'P00/M00 must choose lease owner before cross-process use'); EAT-R269 (A12; 'lease owner ... unresolved P00/M00 decision (K008/M027)'). MII README L27
+  DET: Requirement text read for the K008 condition; grep of both 11-10 programs for lease/fence ownership sentences; bead store read of wb-w8fk and wb-1zn2 dependencies.
+  NOTE: The successor pair settles MNI's CONTESTED K008 (lease owner) consistently in prose, but EAT-R207 acceptance 1 wants the ruling inside the adopted ABI via the P00 ruling bead, and
+  MII's P00 deliverable list omits it while P02 presupposes it. Remediation ADD_MISSING_PREMISE: carry the lease-owner ruling (and its wb-1zn2 external gate) in P00.
+  DRIFT: none
+
+[lens-lineage.jsonl|lineage] rel=DEPENDS_ON status=NON-EPISTEMIC; embedded premise 'the joint ratification is still owed' ESTABLISHED (unadopted on both sides); MII P00 inherits wb-w8fk's block on the owner-managed tracker without saying so
+  EV: Bead store at 0fb90672: wb-w8fk [MWI-contract-choice] open, deps blocks<-wb-1zn2; wb-1zn2 [MWI-external-gates] status deferred, 'ORCHESTRATOR PARK (rule 21 clause 1, owner GO 2026-11-06)
+  ... NOT Pi work; no Pi lane implements MW core ... never picked, never cut', gates MW-CONTRACT/MW-HOST/MW-CANCEL/MW-NATIVE/MW-FURNACE/MW-COORDINATION; wb-y0n6 and wb-2ukh blocked by wb-w8fk.
+  pins/pi-0fb90672/src/workbench/function-authority.ts:135 FUNCTION_ACTION_BLOCKER = "MW-CONTRACT", :145 FUNCTION_ACTION_CONTRACT unadopted (unchanged since 8e2fedeb). MW com
+  DET: Bead store dependency and notes read; constant read; MW README read.
+  NOTE: A bead machine cannot claim MII P00 as written: the MNI carrier is blocked on a deferred owner-managed tracker. Remediation ADD_MISSING_PREMISE: name wb-w8fk/wb-1zn2 and the owner
+  ruling path in P00.
+  DRIFT: none
+
+[lens-joint.jsonl|joint] rel=CONFLICTS_WITH status=NON-EPISTEMIC
+  EV: Pi's list: pi-03-IMPLEMENTATION-PACKETS.md:18 "**Implement:** signed-off literal descriptor ID/version, exact action grant mechanical:develop-write, canonical input rule, first host
+  mode, profile set, versioned test vectors; record both source SHAs, installed Node/SDK identity." with exit pi-03-IMPLEMENTATION-PACKETS.md:19 "**Done:** two repos reference identical
+  compatibility matrix; unknown versions fail closed." | Mechanical's list: mw-03-IMPLEMENTATION-PACKETS.md:18 "ratify mechanical.pi-host/v1, reviewed ID, mechanical:develop-write, canon
+  DET: Token counts over the two corpora, asserted by this generator: 'allowedEffects' 0 in the Pi files and 5 in the Mechanical files; 'compatibility matrix' 1 in Pi and 0 in Mechanical;
+  'hostMode' and 'hos
+  NOTE: Both first packets are proposals; the defect is that they would ratify different things and declare themselves done against different artifacts. Only Pi lists a first host mode and the
+  installed Node/SDK identity. Only Mechanical lists the authorized effect vocabulary (the closed set behind intent.allowedEffects, which Pi never mentions and whose n
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+[lens-joint.jsonl|joint] rel=DEPENDS_ON status=UNDETERMINED
+  EV: Pi assigns the SDK pin to Mechanical: pi-05-OPERATIONS-AND-HANDOFF.md:31 "H02: production four callbacks composed from native Git census/plain task, Claude Agent SDK and Forge gate;
+  provider SDK/runtime identity pinned; no nested developLive within implement callback." | Mechanical says the rig owns the SDKs and, elsewhere, that the host supplies provider factories:
+  mw-05-OPERATIONS-AND-HANDOFF.md:10 "- apps/development-rig owns host facade, native Git census/plain context, Claude Agent SDK, Forge SDK, artifact verification, durable intent/reco
+  DET: Read of the four Mechanical package manifests at 69cb016d for either SDK name: absent from all four (asserted). Read of the two dynamic-import sites: both use a bare package specifier
+  held in a variab
+  NOTE: Which Claude Agent SDK and which Forge SDK execute in the joined first release cannot be settled from either program or from the pins. A bare specifier resolves upward from the
+  importing file's location, so if the rig is installed inside Pi's module tree the producer runs Pi's pinned copies (Claude Agent SDK 0.3.300 and Pi's vendored Forge SDK), an
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+[lens-joint.jsonl|joint] rel=DEPENDS_ON status=UNSUPPORTED
+  EV: Pi's inputDigest is a domain-separated hash, not a hash of the canonical bytes: pins/pi-0fb90672/src/workbench/execute.ts:203 `inputDigest: identityDigest("workflow-execute-input",
+  JSON.parse(inputText)),`; pins/pi-0fb90672/src/workbench/identity.ts:153 `workbench.identity/v1\u0000${domain}\u0000${canonicalJson(value)}` | Mechanical is to compare against it:
+  mw-02-HOST-AND-EFFECT-CONTRACT.md:12 "H0 decode closed model request, compare with host-prepared canonical input digest, descriptor ID, schema and artifact." | The joint tests speak of byte
+  DET: Text search of the Mechanical rig source and packages for 'workbench.identity': 0 files (asserted). Read of host-binding.ts for a canonicalizer: one, canonicalHostBindingBytes, typed
+  for a binding. Po
+  NOTE: PREMISE GRADED: that agreeing on canonical JSON bytes, which is what P00's red test names (H00's falsifier speaks only of 'diverging Pi/Mechanical vectors'), is enough for Mechanical's
+  H0 to compare the 'host-prepared canonical input digest'. It is not shown anywhere. At the pin Pi's inputDigest is SHA-256 over a Pi-private prefix (the literal work
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+######## C147
+[lens-lineage.jsonl|lineage] rel=SUPPORTS status=C056/C216/C217 ESTABLISHED; C001/C147 ESTABLISHED (both registers agree nothing joined is shipped); C180 NORMATIVE
+  EV: pins/pi-0fb90672/docs/workbench/feature-matrix.md W11 section: status 'planned'; evidence cell cites 'Beads wb-04s (W11) status=blocked and wb-w12 (VC-3 epic) status=blocked; no other
+  W11 beads at the 2026-10-15 export' and 'HX->RF->Claude SDK->Forge composition'; `git diff --stat 8e2fedeb 0fb90672 -- docs/workbench/feature-matrix.md` empty (unchanged since MNI's
+  baseline; last re-measured 2026-11-07 wb-r5q2). Bead store: wb-04s blocked (updated 2026-10-15), wb-w12 blocked (updated 2026-10-15); W11 names neither epic wb-1a3t's live children nor
+  DET: Section extraction and diff of the feature matrix; bead store read; JSON read of the ledger fixture; grep of the MII corpus for status-ledger (0 hits).
+  NOTE: MII restates in prose what the landed EAT-R202 ledger records row by row (and the ledger's pins are the trunk, not master). Remediation ADD_SOURCE: cite the ledger as the status
+  register for EAT-R001..R200 and say whether MII's EAT-R391+ rows join it.
+  DRIFT: none
+
+[lens-pi-src.jsonl|pi-src] rel=SUPPORTS status=ESTABLISHED
+  EV: pins/pi-0fb90672/src/workbench/execute-tool.ts:217-218 `} else if (admission.definition.kind !== "script") {` / `refuse("unsupported-definition-kind", "only script definitions launch in
+  this host");`. The launch itself sits only in the following else branch (:219-251), so no non-script request reaches deps.resolveSource or a launcher. Ordering: :215-216 a detached request
+  without workbench:detach refuses `missing-detach-grant` BEFORE the kind test, and decideExecute refusals (:202-205) precede both. Pinned by pins/pi-0fb90672/test/workbench-exe
+  DET: Complete read of execute-tool.ts (256 lines): the only launcher calls are at :245; the only path to them is the kind === script branch.
+  NOTE: The refusal reaches the model as envelope.error.code with status 'refused', ok false, invoked false (execute-tool.ts:148-167). P05 must flip these two pinned test rows for the one
+  allowlisted function id; they currently assert the opposite of the target.
+  DRIFT: Scope: 'its non-script branch returns unsupported-definition-kind' holds for requests that pass decideExecute and, in detached mode, hold workbench:detach; a fu
+
+[lens-negative-ev.jsonl|negative-ev] rel=ENTAILS status=ESTABLISHED
+  EV: [{'pin': 'pi@0fb90672', 'path': 'epistemic-triage/.work/negev-scratch/import_closure.py -> import-closure-pi.json', 'probe': '124 tracked src modules; 107 reachable from src/index.ts
+  (package.json pi.extensions); 17 unreachable, among them function-authority.ts (no importer), source-admission.ts (no importer), mechanical-descriptor.ts (imported only by mechanical-
+  coordination.ts, for one constant) and mechanical-coordination.ts (no importer). No unresolved relative specifier.'}, {'pin': 'pi@0fb90672', 'path': 'src/index.ts:3967; src/ui/workflow
+  DET: Static import graph over every tracked src module (static import, re-export, dynamic import, require; comments stripped), entry = the extension entry. Type-only imports count as edges,
+  so 'unreachable
+  NOTE: 'src/index.ts wires script launchers only' is exact for the workflow_execute wiring. Read over the whole file it is false: index.ts also registers forge_gate_run (starts a native Forge
+  gate, line 2861), workflow_detached (a second detached script launcher, line 2912) and the Agent and workflow tools. Keep the sentence scoped to workflow_execute.
+  DRIFT: The code at the pin equals the gated trunk tip ce180d82 (git diff ce180d82 0fb90672 -- src test qa is empty). Across the 1207 ref tips of the local repository n
+
+######## C148
+[lens-lineage.jsonl|lineage] rel=DEPENDS_ON status=NON-EPISTEMIC; embedded premise 'the joint ratification is still owed' ESTABLISHED (unadopted on both sides); MII P00 inherits wb-w8fk's block on the owner-managed tracker without saying so
+  EV: Bead store at 0fb90672: wb-w8fk [MWI-contract-choice] open, deps blocks<-wb-1zn2; wb-1zn2 [MWI-external-gates] status deferred, 'ORCHESTRATOR PARK (rule 21 clause 1, owner GO 2026-11-06)
+  ... NOT Pi work; no Pi lane implements MW core ... never picked, never cut', gates MW-CONTRACT/MW-HOST/MW-CANCEL/MW-NATIVE/MW-FURNACE/MW-COORDINATION; wb-y0n6 and wb-2ukh blocked by wb-w8fk.
+  pins/pi-0fb90672/src/workbench/function-authority.ts:135 FUNCTION_ACTION_BLOCKER = "MW-CONTRACT", :145 FUNCTION_ACTION_CONTRACT unadopted (unchanged since 8e2fedeb). MW com
+  DET: Bead store dependency and notes read; constant read; MW README read.
+  NOTE: A bead machine cannot claim MII P00 as written: the MNI carrier is blocked on a deferred owner-managed tracker. Remediation ADD_MISSING_PREMISE: name wb-w8fk/wb-1zn2 and the owner
+  ruling path in P00.
+  DRIFT: none
+
+[lens-joint.jsonl|joint] rel=CONFLICTS_WITH status=NON-EPISTEMIC
+  EV: Pi's list: pi-03-IMPLEMENTATION-PACKETS.md:18 "**Implement:** signed-off literal descriptor ID/version, exact action grant mechanical:develop-write, canonical input rule, first host
+  mode, profile set, versioned test vectors; record both source SHAs, installed Node/SDK identity." with exit pi-03-IMPLEMENTATION-PACKETS.md:19 "**Done:** two repos reference identical
+  compatibility matrix; unknown versions fail closed." | Mechanical's list: mw-03-IMPLEMENTATION-PACKETS.md:18 "ratify mechanical.pi-host/v1, reviewed ID, mechanical:develop-write, canon
+  DET: Token counts over the two corpora, asserted by this generator: 'allowedEffects' 0 in the Pi files and 5 in the Mechanical files; 'compatibility matrix' 1 in Pi and 0 in Mechanical;
+  'hostMode' and 'hos
+  NOTE: Both first packets are proposals; the defect is that they would ratify different things and declare themselves done against different artifacts. Only Pi lists a first host mode and the
+  installed Node/SDK identity. Only Mechanical lists the authorized effect vocabulary (the closed set behind intent.allowedEffects, which Pi never mentions and whose n
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+######## C149
+[lens-lineage.jsonl|lineage] rel=SPECIALIZES status=C038/C039/C100 ESTABLISHED (as a latent shape; no function launch occurs at the pin, C041); C040/C149-C153 NON-EPISTEMIC; MII P01 is new relative to EAT-R201..R310
+  EV: `grep -n -i 'withoutBeadsNotes|params.input|inputDigest|canonical input|beads note' pins/pi-0fb90672/docs/workbench/programs/mechanical-native-
+  interoperability-2026-11-09/requirements/ATOMIC-REQUIREMENTS.md` -> one unrelated hit (EAT-R217 descriptor refs); same greps over the MNI CLAIMS.jsonl -> 0 hits; the only prior requirement
+  on note stripping is EAT-R154 (audit-11-06; status ledger class partial/inert, bead wb-201v closed). Direct read at 0fb90672: src/workbench/execute.ts:185 `const judged = (value) => (kind
+  === "function" ? withoutBeadsN
+  DET: Literal grep over the MNI requirement set and claim ledger for the D3 vocabulary; direct source read of the two files MII cites.
+  NOTE: D3/P01 has no MNI carrier and must be a new bead; it must not be filed onto wb-7wkb (MNI 'P01', closed) despite the shared label. Attack hypothesis 'phantom receipt/ requirement'
+  fails: MII does not claim MNI covered it.
+  DRIFT: none
+
+[lens-pi-src.jsonl|pi-src] rel=QUALIFIES status=ESTABLISHED
+  EV: The script and function admissions share one function and one handler: pins/pi-0fb90672/src/workbench/execute.ts:160 decideExecute is kind-generic except :185;
+  pins/pi-0fb90672/src/workbench/execute-tool.ts:191-254 is one execute handler. Two default-tier rows pin the admission's shape: pins/pi-0fb90672/test/workbench-execute.test.ts:144 `it("input
+  is identified by a stable digest, never retained: same input, same digest; any change moves it"` with :149 `expect(JSON.stringify(admitted(decideExecute(request({ input: { secret:
+  "needle-9f3" } }),
+  DET:
+  NOTE: Established is the premise that script execution runs through these files. For P01 to honour 'do NOT alter script execution semantics' the canonical payload has to travel outside
+  ExecuteAdmission, or only on function admissions with these two rows deliberately re-pinned; the requirement should name the carrier. [Status scope: the status is for the
+  DRIFT: The artifact's P01 'normalized immutable function request returned by admission' (pi-03 L23) does not mention that the admission is pinned to retain no input by
+
+######## C150
+[lens-lineage.jsonl|lineage] rel=SAME_ORIGIN_AS status=ESTABLISHED
+  EV: Blob identity 8e2fedeb (MNI env pin) vs 0fb90672 (MII env pin), `git rev-parse <rev>:<path>` in pins/pi-0fb90672: src/worktree.ts 6ec6d6c9, src/workbench/claude-host.ts baee92de,
+  src/index.ts 2c923cf1, src/workbench/hosts/local-detached.ts 66a6a23e, src/workbench/execute.ts 9aaf8fb9, execute-tool.ts d873e378, identity.ts a306fa1b, source-admission.ts 7ebfdcd6,
+  function-authority.ts 69d3194f, mechanical-descriptor.ts 17de55ce, observation.ts 3e1d43ee - all SAME. `git diff --stat 8e2fedeb 0fb90672 -- src/` = one line: A src/workbench/mechanical-c
+  DET: Per-path git blob-id equality between the two environment pins plus `git diff --stat` over src/; a changed blob or an extra src path would have shown. Same-origin caveat: the MNI grades
+  are an earlier
+  NOTE: Nothing MOVED in the descriptor/authority/source-admission/worktree/abort/detached-grant states MNI graded: every MII baseline observation about those files inherits the MNI verdict
+  byte-for-byte. The only src movement since MNI's baseline is the coordination boundary (see the separate row).
+  DRIFT: none in the cited src blobs between 8e2fedeb and 0fb90672; the deposit commits 91d8fa8c/3fc0ead1 touch only docs/programs/ and the skill; fetched trunk origin/w
+
+[lens-lineage.jsonl|lineage] rel=SPECIALIZES status=C038/C039/C100 ESTABLISHED (as a latent shape; no function launch occurs at the pin, C041); C040/C149-C153 NON-EPISTEMIC; MII P01 is new relative to EAT-R201..R310
+  EV: `grep -n -i 'withoutBeadsNotes|params.input|inputDigest|canonical input|beads note' pins/pi-0fb90672/docs/workbench/programs/mechanical-native-
+  interoperability-2026-11-09/requirements/ATOMIC-REQUIREMENTS.md` -> one unrelated hit (EAT-R217 descriptor refs); same greps over the MNI CLAIMS.jsonl -> 0 hits; the only prior requirement
+  on note stripping is EAT-R154 (audit-11-06; status ledger class partial/inert, bead wb-201v closed). Direct read at 0fb90672: src/workbench/execute.ts:185 `const judged = (value) => (kind
+  === "function" ? withoutBeadsN
+  DET: Literal grep over the MNI requirement set and claim ledger for the D3 vocabulary; direct source read of the two files MII cites.
+  NOTE: D3/P01 has no MNI carrier and must be a new bead; it must not be filed onto wb-7wkb (MNI 'P01', closed) despite the shared label. Attack hypothesis 'phantom receipt/ requirement'
+  fails: MII does not claim MNI covered it.
+  DRIFT: none
+
+[lens-pi-src.jsonl|pi-src] rel=SUPPORTS status=ESTABLISHED
+  EV: pins/pi-0fb90672/src/workbench/execute.ts:185 `const judged = (value: unknown): unknown => (kind === "function" ? withoutBeadsNotes(value) : value);`; :193 `const inputText =
+  boundedJson(judged(input.value), INPUT_BYTES);`; :203 `inputDigest: identityDigest("workflow-execute-input", JSON.parse(inputText)),`; the policy takes the same path (:188).
+  pins/pi-0fb90672/src/workbench/identity.ts:176-211 withoutBeadsNotes: :202 `if (key === BEADS_NOTE_FIELD) continue;` runs before any descriptor read, so a note getter is never invoked; it
+  returns a new
+  DET:
+  NOTE: This lens's reading, not test-verified here: every form for which withoutBeadsNotes returns the original is one canonicalJson refuses (identity.ts:104 depth, :108 cycle, :110-112
+  prototype, :117-122 arrays, :129-130 hidden or symbol keys, :133 prototype keys, :137 accessors), so a returned-as-is form ends as malformed-request rather than as a diges
+  DRIFT: Claimed by the module only at the EAT-R154 rows (execute.ts:38-41 'other request forms are NOT CLAIMED'). The key test is by NAME at every depth: any own member
+
+######## C151
+[lens-lineage.jsonl|lineage] rel=SPECIALIZES status=C038/C039/C100 ESTABLISHED (as a latent shape; no function launch occurs at the pin, C041); C040/C149-C153 NON-EPISTEMIC; MII P01 is new relative to EAT-R201..R310
+  EV: `grep -n -i 'withoutBeadsNotes|params.input|inputDigest|canonical input|beads note' pins/pi-0fb90672/docs/workbench/programs/mechanical-native-
+  interoperability-2026-11-09/requirements/ATOMIC-REQUIREMENTS.md` -> one unrelated hit (EAT-R217 descriptor refs); same greps over the MNI CLAIMS.jsonl -> 0 hits; the only prior requirement
+  on note stripping is EAT-R154 (audit-11-06; status ledger class partial/inert, bead wb-201v closed). Direct read at 0fb90672: src/workbench/execute.ts:185 `const judged = (value) => (kind
+  === "function" ? withoutBeadsN
+  DET: Literal grep over the MNI requirement set and claim ledger for the D3 vocabulary; direct source read of the two files MII cites.
+  NOTE: D3/P01 has no MNI carrier and must be a new bead; it must not be filed onto wb-7wkb (MNI 'P01', closed) despite the shared label. Attack hypothesis 'phantom receipt/ requirement'
+  fails: MII does not claim MNI covered it.
+  DRIFT: none
+
+[lens-pi-src.jsonl|pi-src] rel=QUALIFIES status=ESTABLISHED
+  EV: The script and function admissions share one function and one handler: pins/pi-0fb90672/src/workbench/execute.ts:160 decideExecute is kind-generic except :185;
+  pins/pi-0fb90672/src/workbench/execute-tool.ts:191-254 is one execute handler. Two default-tier rows pin the admission's shape: pins/pi-0fb90672/test/workbench-execute.test.ts:144 `it("input
+  is identified by a stable digest, never retained: same input, same digest; any change moves it"` with :149 `expect(JSON.stringify(admitted(decideExecute(request({ input: { secret:
+  "needle-9f3" } }),
+  DET:
+  NOTE: Established is the premise that script execution runs through these files. For P01 to honour 'do NOT alter script execution semantics' the canonical payload has to travel outside
+  ExecuteAdmission, or only on function admissions with these two rows deliberately re-pinned; the requirement should name the carrier. [Status scope: the status is for the
+  DRIFT: The artifact's P01 'normalized immutable function request returned by admission' (pi-03 L23) does not mention that the admission is pinned to retain no input by
+
+######## C152
+[lens-lineage.jsonl|lineage] rel=SPECIALIZES status=C038/C039/C100 ESTABLISHED (as a latent shape; no function launch occurs at the pin, C041); C040/C149-C153 NON-EPISTEMIC; MII P01 is new relative to EAT-R201..R310
+  EV: `grep -n -i 'withoutBeadsNotes|params.input|inputDigest|canonical input|beads note' pins/pi-0fb90672/docs/workbench/programs/mechanical-native-
+  interoperability-2026-11-09/requirements/ATOMIC-REQUIREMENTS.md` -> one unrelated hit (EAT-R217 descriptor refs); same greps over the MNI CLAIMS.jsonl -> 0 hits; the only prior requirement
+  on note stripping is EAT-R154 (audit-11-06; status ledger class partial/inert, bead wb-201v closed). Direct read at 0fb90672: src/workbench/execute.ts:185 `const judged = (value) => (kind
+  === "function" ? withoutBeadsN
+  DET: Literal grep over the MNI requirement set and claim ledger for the D3 vocabulary; direct source read of the two files MII cites.
+  NOTE: D3/P01 has no MNI carrier and must be a new bead; it must not be filed onto wb-7wkb (MNI 'P01', closed) despite the shared label. Attack hypothesis 'phantom receipt/ requirement'
+  fails: MII does not claim MNI covered it.
+  DRIFT: none
+
+[lens-pi-src.jsonl|pi-src] rel=QUALIFIES status=UNSUPPORTED
+  EV: Rows already pinned green at seam level at the pin. Poisoned note getter and note-only identity: pins/pi-0fb90672/test/workbench-function-authority.test.ts:2302 `it("in each host mode, a
+  note member holding a getter, in the caller policy or beside the task fields of the caller input, is never invoked, and the request for mechanical.development.develop.v1 is decided as that
+  request c...` and the EAT-R154 describe at :2004. Alias and distinct roots: pins/pi-0fb90672/test/workbench-mechanical-source-admission.test.ts:87-88 'R024-ALIAS: while inv-a
+  DET: Read of the three suite headers and the cited rows; no test was executed by this lens.
+  NOTE: Unsupported is the premise that these tests are red at the pin. For test-first work the red has to be stated through the registered tool (or the new composed boundary): 'raw-vs-
+  canonical divergence', 'a test launcher receives canonical bytes only', 'launch resolves while writer sleeps', cross-process exclusion, restart, stale generation and timeout
+  DRIFT: The artifact lists these as 'Red tests' (pi-03 L24, L30, L36) and as falsifiers G08, P13, P14, P16, P17 without saying at which level they are red. At the seam
+
+[lens-mw-src.jsonl|mw-src] rel=ASSUMES status=NON-EPISTEMIC
+  EV: Same executed probe as the C080 row (PROBE/out/host-probe.jsonl): at the producer boundary an own enumerable `notes` member is refused ENTRYPOINT_INPUT_INVALID with zero callbacks; a
+  non-enumerable getter and an enumerable accessor both pass and reach the callbacks on the caller's own object.
+  DET: Execution against the built ./host of the scratch copy; producer boundary only.
+  NOTE: PREMISE-SPLIT: 'without Pi-side canonicalization a note-bearing or accessor-bearing input can reach the Mechanical callback' => ESTABLISHED only for non-enumerable and accessor
+  carriers, REFUTED for own enumerable note members (both executed). Place the note-difference and poisoned-getter assertions at Pi's dispatch boundary and add an accessor cas
+  DRIFT: The test obligations do not say at which boundary the assertion is made. At the producer boundary the plain-note case is already refused, so a test placed there
+
+[lens-contradict.jsonl|contradict] rel=CONFLICTS_WITH status=NON-EPISTEMIC; design fork left open (refuse-inconsistent vs inject) and I2's 'not tool JSON' is violated by the caller-supplied-then-validated basis path -> SPLIT_CLAIM
+  EV: pi-01 L18 (I2): 'Principal, session, permissions, authorized roots, lease token, source basis, chosen evidence/context profiles and effect budget come from trusted host state, not tool
+  JSON, Beads notes or annotations.' | pi-02 L5: 'input {task, workspaceId, baseRevision} only if those inputs are host-constrained to authorized values ... The host may expose a narrower
+  task-only request and inject workspace/basis.' | pi-02 L11: 'Bind workspaceId and baseRevision to host-measured workspace; refuse inconsistent caller values rather than overriding
+  DET: Traced where workspaceId/baseRevision originate in each sentence (caller JSON vs host measurement) and whether they enter the digested/dispatched payload; checked the producer request
+  shape at the MW
+  NOTE: Pick one: (a) host injects workspace/basis into the canonical payload and the model request is task-only (I2 holds, digest excludes caller basis), or (b) caller supplies them and I2 is
+  narrowed to 'authority over basis comes from host measurement; caller values are compared, never trusted'.
+  DRIFT: modality/scope: I2 states an absolute source-of-truth rule; 02 §1-2 lets the basis bytes originate in the model request (validated), which also makes them part
+
+######## C153
+[lens-lineage.jsonl|lineage] rel=SPECIALIZES status=C038/C039/C100 ESTABLISHED (as a latent shape; no function launch occurs at the pin, C041); C040/C149-C153 NON-EPISTEMIC; MII P01 is new relative to EAT-R201..R310
+  EV: `grep -n -i 'withoutBeadsNotes|params.input|inputDigest|canonical input|beads note' pins/pi-0fb90672/docs/workbench/programs/mechanical-native-
+  interoperability-2026-11-09/requirements/ATOMIC-REQUIREMENTS.md` -> one unrelated hit (EAT-R217 descriptor refs); same greps over the MNI CLAIMS.jsonl -> 0 hits; the only prior requirement
+  on note stripping is EAT-R154 (audit-11-06; status ledger class partial/inert, bead wb-201v closed). Direct read at 0fb90672: src/workbench/execute.ts:185 `const judged = (value) => (kind
+  === "function" ? withoutBeadsN
+  DET: Literal grep over the MNI requirement set and claim ledger for the D3 vocabulary; direct source read of the two files MII cites.
+  NOTE: D3/P01 has no MNI carrier and must be a new bead; it must not be filed onto wb-7wkb (MNI 'P01', closed) despite the shared label. Attack hypothesis 'phantom receipt/ requirement'
+  fails: MII does not claim MNI covered it.
+  DRIFT: none
+
+[lens-pi-src.jsonl|pi-src] rel=CONTRADICTS status=CONTESTED
+  EV: Three different input digests exist at the pin and the admission's is the one that is dropped. (1) pins/pi-0fb90672/src/workbench/execute.ts:203 domain `workflow-execute-input` over the
+  judged canonical input; pins/pi-0fb90672/src/workbench/execute-tool.ts:76-87 ExecuteLaunch has no inputDigest member and the envelope (:150-170) never emits one, and grep -rn inputDigest
+  over src/ shows no reader of admission.inputDigest. (2) pins/pi-0fb90672/src/index.ts:3174 `task.inputDigest = identityDigest("workflow-input", task.args === undefined ? { suppl
+  DET: grep -rn 'inputDigest' over src/ (all sites listed above plus designer.ts, patch-proposal.ts, reconcile-decision.ts and workflow/reconcile.ts, none of which reads the admission).
+  NOTE: Requirement gap: I3/P01 must name ONE digest (domain string, exact basis, where it is stored and shown) and say what happens to the other two for function invocations; otherwise
+  'callback input hashes to stored inputDigest' can be satisfied against the wrong value. [Status scope: the status is for the embedded empirical premise; C153 (PROPOSAL), C0
+  DRIFT: pi-03 L25 'hashes to stored inputDigest' and the claim row's premise 'an inputDigest field is already stored by the existing invocation record' are true only of
+
+[lens-joint.jsonl|joint] rel=DEPENDS_ON status=UNSUPPORTED
+  EV: Pi's inputDigest is a domain-separated hash, not a hash of the canonical bytes: pins/pi-0fb90672/src/workbench/execute.ts:203 `inputDigest: identityDigest("workflow-execute-input",
+  JSON.parse(inputText)),`; pins/pi-0fb90672/src/workbench/identity.ts:153 `workbench.identity/v1\u0000${domain}\u0000${canonicalJson(value)}` | Mechanical is to compare against it:
+  mw-02-HOST-AND-EFFECT-CONTRACT.md:12 "H0 decode closed model request, compare with host-prepared canonical input digest, descriptor ID, schema and artifact." | The joint tests speak of byte
+  DET: Text search of the Mechanical rig source and packages for 'workbench.identity': 0 files (asserted). Read of host-binding.ts for a canonicalizer: one, canonicalHostBindingBytes, typed
+  for a binding. Po
+  NOTE: PREMISE GRADED: that agreeing on canonical JSON bytes, which is what P00's red test names (H00's falsifier speaks only of 'diverging Pi/Mechanical vectors'), is enough for Mechanical's
+  H0 to compare the 'host-prepared canonical input digest'. It is not shown anywhere. At the pin Pi's inputDigest is SHA-256 over a Pi-private prefix (the literal work
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+######## C154
+[lens-lineage.jsonl|lineage] rel=SPECIALIZES status=NON-EPISTEMIC (normative decisions); embedded premise 'both 11-10 programs assign lease authority to Pi' SUPPORTED; C025 ESTABLISHED (no cross-process lease evidence at either pin: WriterLeases is an in-memory Map, source-admission.ts unchanged)
+  EV: MNI docs/workbench/programs/mechanical-native-interoperability-2026-11-09/requirements/ATOMIC-REQUIREMENTS.md: EAT-R207 'Assign canonical writer-lease ownership' (P00 ruling; Rationale:
+  CONTRADICTIONS K008 Pi source-admission vs Mechanical host; Conditions: 'Pi's in-process WriterLeases exists but is not currently a cross-process guarantee'); EAT-R232 'one writer per
+  canonical root' (Conditions: 'P00/M00 must choose lease owner before cross-process use'); EAT-R269 (A12; 'lease owner ... unresolved P00/M00 decision (K008/M027)'). MII README L27
+  DET: Requirement text read for the K008 condition; grep of both 11-10 programs for lease/fence ownership sentences; bead store read of wb-w8fk and wb-1zn2 dependencies.
+  NOTE: The successor pair settles MNI's CONTESTED K008 (lease owner) consistently in prose, but EAT-R207 acceptance 1 wants the ruling inside the adopted ABI via the P00 ruling bead, and
+  MII's P00 deliverable list omits it while P02 presupposes it. Remediation ADD_MISSING_PREMISE: carry the lease-owner ruling (and its wb-1zn2 external gate) in P00.
+  DRIFT: none
+
+[lens-lineage.jsonl|lineage] rel=CONFLICTS_WITH status=NON-EPISTEMIC; flagged as a reconciliation condition: compatible only if the MII adapter persists into the existing journal/task store, otherwise it conflicts with EAT-R239/EAT-R250
+  EV: MNI docs/workbench/programs/mechanical-native-interoperability-2026-11-09/requirements/ATOMIC-REQUIREMENTS.md EAT-R239 'Function state MUST live in the existing Workbench
+  task/observation store; the function path MUST NOT introduce a parallel hidden task table' and EAT-R250 'journal a durable local intent record ... reusing the existing workflow journal
+  rather than a new store'. Existing journal at 0fb90672: pins/pi-0fb90672/src/workflow/journal.ts (on-disk per-run append-only JSONL, appendFileSync :254; nativeRefs member :285);
+  workflowTasks s
+  DET: Literal grep of the MII corpus for journal.ts|workflowTasks|existing journal (0 hits); requirement text read.
+  NOTE: Remediation ADD_MISSING_PREMISE: MII P02/P07 must state whether the durable lease/journal reuses src/workflow/journal.ts and the task store, or record an explicit supersession of
+  EAT-R239/R250 with reasons.
+  DRIFT: none
+
+[lens-pi-src.jsonl|pi-src] rel=CONTRADICTS status=UNSUPPORTED
+  EV: grep -rn 'WriterLeases\|admitSourceWrite\|source-admission' over pins/pi-0fb90672/src/ returns only the defining file src/workbench/source-admission.ts; the sole user is
+  pins/pi-0fb90672/test/workbench-mechanical-source-admission.test.ts. Neither script launcher (src/index.ts:2621-2643, 2665-2680) takes a writer lease or calls source admission.
+  DET: grep over src/ for the module name and each exported symbol; complete read of both launchers.
+  NOTE: What IS established for this row's other premise: the pure checks are separable. confineWorkspace (:338) and measureSourceIdentity (:368) are exported on their own, WriterLeases (:430)
+  and WriteBoundaryAuthority (:397) are separate classes, and only admitSourceWrite (:478) couples them to the release-in-finally lifetime. 'Remove lease release from
+  DRIFT: pi-03 L29 'Keep existing script helper behavior unless requalified' (P02) presupposes a script path that uses this lease helper; the companion claim row C155 st
+
+[lens-negative-ev.jsonl|negative-ev] rel=CONTRADICTS status=REFUTED
+  EV: [{'pin': 'pi@0fb90672', 'path': 'src/index.ts', 'probe': 'The script launch sites (embedded 2621-2647, detached 2665-2680, workflow_detached 2911-2929, the workflow tool near 3452) call
+  neither admitSourceWrite nor WriterLeases; no src module does.'}, {'pin': 'pi@3fc0ead1 (document pin)', 'path': 'docs/programs/mechanical-interop-integrity-2026-11-10/03-IMPLEMENTATION-
+  PACKETS.md', 'lines': '29', 'quote': 'remove lease release from launch-return lifetime for function workflows. Keep existing script helper behavior unless requalified.'}, {'pin':
+  DET: Same call-site search as NE-10. Power: complete for src at the pin.
+  NOTE: Refuted facet only: that scripts or any registered path use this lease helper today (stated in the scope of row C155 and presupposed by the two quoted sentences). The storage and
+  release facets are NE-10. Consequences: 'existing script helper behavior' has no referent in source-admission.ts, so P02 has to name what it preserves (candidates: src/wor
+  DRIFT:
+
+######## C155
+[lens-lineage.jsonl|lineage] rel=SAME_ORIGIN_AS status=ESTABLISHED
+  EV: Blob identity 8e2fedeb (MNI env pin) vs 0fb90672 (MII env pin), `git rev-parse <rev>:<path>` in pins/pi-0fb90672: src/worktree.ts 6ec6d6c9, src/workbench/claude-host.ts baee92de,
+  src/index.ts 2c923cf1, src/workbench/hosts/local-detached.ts 66a6a23e, src/workbench/execute.ts 9aaf8fb9, execute-tool.ts d873e378, identity.ts a306fa1b, source-admission.ts 7ebfdcd6,
+  function-authority.ts 69d3194f, mechanical-descriptor.ts 17de55ce, observation.ts 3e1d43ee - all SAME. `git diff --stat 8e2fedeb 0fb90672 -- src/` = one line: A src/workbench/mechanical-c
+  DET: Per-path git blob-id equality between the two environment pins plus `git diff --stat` over src/; a changed blob or an extra src path would have shown. Same-origin caveat: the MNI grades
+  are an earlier
+  NOTE: Nothing MOVED in the descriptor/authority/source-admission/worktree/abort/detached-grant states MNI graded: every MII baseline observation about those files inherits the MNI verdict
+  byte-for-byte. The only src movement since MNI's baseline is the coordination boundary (see the separate row).
+  DRIFT: none in the cited src blobs between 8e2fedeb and 0fb90672; the deposit commits 91d8fa8c/3fc0ead1 touch only docs/programs/ and the skill; fetched trunk origin/w
+
+[lens-pi-src.jsonl|pi-src] rel=SUPPORTS status=SUPPORTED
+  EV: Both existing launchers resolve at launch, not at completion. pins/pi-0fb90672/src/index.ts:2640-2642 `// Background, like SubagentWorkflow: the reference comes back now and completion
+  is read through workflow_observe.` / `void runWorkflowTask(ctx, task).then(() => notifyWorkflowFinished(task));` / `return [{ provider: "pi-workflow", type: "task", id: runId, ...`;
+  :2669-2679 the detached launcher awaits only the host's receipt and returns two native references. The deps contract says so: pins/pi-0fb90672/src/workbench/execute-tool.ts:98-101 're
+  DET:
+  NOTE: If a function launcher with the existing launch-returns-references shape were passed as admitSourceWrite's dispatch, the lease would be released when the references come back. That is
+  a derivation from two code facts, not an observed defect.
+  DRIFT: C044 and C081 are hypotheses about a function launcher that does not exist; what is established is the structural premise for the two script launchers plus the
+
+[lens-negative-ev.jsonl|negative-ev] rel=CONTRADICTS status=REFUTED
+  EV: [{'pin': 'pi@0fb90672', 'path': 'src/index.ts', 'probe': 'The script launch sites (embedded 2621-2647, detached 2665-2680, workflow_detached 2911-2929, the workflow tool near 3452) call
+  neither admitSourceWrite nor WriterLeases; no src module does.'}, {'pin': 'pi@3fc0ead1 (document pin)', 'path': 'docs/programs/mechanical-interop-integrity-2026-11-10/03-IMPLEMENTATION-
+  PACKETS.md', 'lines': '29', 'quote': 'remove lease release from launch-return lifetime for function workflows. Keep existing script helper behavior unless requalified.'}, {'pin':
+  DET: Same call-site search as NE-10. Power: complete for src at the pin.
+  NOTE: Refuted facet only: that scripts or any registered path use this lease helper today (stated in the scope of row C155 and presupposed by the two quoted sentences). The storage and
+  release facets are NE-10. Consequences: 'existing script helper behavior' has no referent in source-admission.ts, so P02 has to name what it preserves (candidates: src/wor
+  DRIFT:
+
+######## C156
+[lens-lineage.jsonl|lineage] rel=SPECIALIZES status=NON-EPISTEMIC (normative decisions); embedded premise 'both 11-10 programs assign lease authority to Pi' SUPPORTED; C025 ESTABLISHED (no cross-process lease evidence at either pin: WriterLeases is an in-memory Map, source-admission.ts unchanged)
+  EV: MNI docs/workbench/programs/mechanical-native-interoperability-2026-11-09/requirements/ATOMIC-REQUIREMENTS.md: EAT-R207 'Assign canonical writer-lease ownership' (P00 ruling; Rationale:
+  CONTRADICTIONS K008 Pi source-admission vs Mechanical host; Conditions: 'Pi's in-process WriterLeases exists but is not currently a cross-process guarantee'); EAT-R232 'one writer per
+  canonical root' (Conditions: 'P00/M00 must choose lease owner before cross-process use'); EAT-R269 (A12; 'lease owner ... unresolved P00/M00 decision (K008/M027)'). MII README L27
+  DET: Requirement text read for the K008 condition; grep of both 11-10 programs for lease/fence ownership sentences; bead store read of wb-w8fk and wb-1zn2 dependencies.
+  NOTE: The successor pair settles MNI's CONTESTED K008 (lease owner) consistently in prose, but EAT-R207 acceptance 1 wants the ruling inside the adopted ABI via the P00 ruling bead, and
+  MII's P00 deliverable list omits it while P02 presupposes it. Remediation ADD_MISSING_PREMISE: carry the lease-owner ruling (and its wb-1zn2 external gate) in P00.
+  DRIFT: none
+
+[lens-joint.jsonl|joint] rel=CONFLICTS_WITH status=NON-EPISTEMIC
+  EV: Where both programs agree: lease authority is Pi's (mw-05-OPERATIONS-AND-HANDOFF.md:11 "- Pi owns registered tools, global permissions, invocation lifetime, lease authority, observation
+  scope, UI/TUI and scheduling."), the first release is one machine with cross-process exclusion (pi-02-PROTOCOL-AND-RUNTIME.md:28 "- First release: a documented, durable single-machine
+  lock/journal and cross-process exclusivity, not the existing process-local WriterLeases alone. For distributed fleet use a coordinator with monotonic fencing generations; tests mus
+  DET: Case-insensitive counts over the six Mechanical files, asserted by this generator: 'single-machine', 'cross-process', 'same-machine', 'embedded', 'attached', 'distributed', 'cross-PID'
+  and 'hostMode'
+  NOTE: The lease models do not contradict each other on process-local versus distributed: both programs put the first release on one machine with exclusion across processes, and both defer a
+  multi-host coordinator. The conflicts are at the interface. (1) Modality: Pi asks the provider to reject a stale fence 'where possible'; Mechanical makes acceptance o
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+[lens-negative-ev.jsonl|negative-ev] rel=CONTRADICTS status=REFUTED
+  EV: [{'pin': 'pi@0fb90672', 'path': 'src/index.ts', 'probe': 'The script launch sites (embedded 2621-2647, detached 2665-2680, workflow_detached 2911-2929, the workflow tool near 3452) call
+  neither admitSourceWrite nor WriterLeases; no src module does.'}, {'pin': 'pi@3fc0ead1 (document pin)', 'path': 'docs/programs/mechanical-interop-integrity-2026-11-10/03-IMPLEMENTATION-
+  PACKETS.md', 'lines': '29', 'quote': 'remove lease release from launch-return lifetime for function workflows. Keep existing script helper behavior unless requalified.'}, {'pin':
+  DET: Same call-site search as NE-10. Power: complete for src at the pin.
+  NOTE: Refuted facet only: that scripts or any registered path use this lease helper today (stated in the scope of row C155 and presupposed by the two quoted sentences). The storage and
+  release facets are NE-10. Consequences: 'existing script helper behavior' has no referent in source-admission.ts, so P02 has to name what it preserves (candidates: src/wor
+  DRIFT:
+
+######## C157
+[lens-lineage.jsonl|lineage] rel=SPECIALIZES status=C024 ESTABLISHED (scoped to a JOINED invocation: the trial is Pi-only, no Mechanical producer); C054/C075 ESTABLISHED; C204/C176 NORMATIVE/PROPOSAL that should extend wb-7wkb's harness rather than start one
+  EV: pins/pi-0fb90672/test/worktree-process-kill-preservation.test.ts (added 17dbc50c wb-7wkb 2026-11-09, extended c13cf116, 9389a0a3 wb-7u0r, 83dde194 wb-okve; 12 cases): a child Node
+  process runs the real cleanupWorktree parked at each of five git steps and is killed; separate verifier processes read before/after snapshots and the exact tracked/untracked bytes.
+  docs/workbench/receipts/wb-7wkb.md: EAT-R215 'new process-kill trial'; 'Not claimed: a kill inside a running git process; power loss; a kill of a Pi session or of an AgentManager run'; EAT-
+  DET: Test file and receipt read; commit attribution via `git log --name-only`; grep of the MII corpus.
+  NOTE: Unacknowledged extension: MII P09 should reuse the wb-7wkb kill/verifier harness and inherit its 'not claimed' list; MII's absence claims about crash proof stay correct only because
+  they are scoped to the joined route.
+  DRIFT: MOVED vs MNI baseline: Pi-only process-kill preservation evidence now exists for the parked-step forms (EAT-R215); EAT-R216 remains BLOCKED.
+
+[lens-pi-src.jsonl|pi-src] rel=QUALIFIES status=UNSUPPORTED
+  EV: Rows already pinned green at seam level at the pin. Poisoned note getter and note-only identity: pins/pi-0fb90672/test/workbench-function-authority.test.ts:2302 `it("in each host mode, a
+  note member holding a getter, in the caller policy or beside the task fields of the caller input, is never invoked, and the request for mechanical.development.develop.v1 is decided as that
+  request c...` and the EAT-R154 describe at :2004. Alias and distinct roots: pins/pi-0fb90672/test/workbench-mechanical-source-admission.test.ts:87-88 'R024-ALIAS: while inv-a
+  DET: Read of the three suite headers and the cited rows; no test was executed by this lens.
+  NOTE: Unsupported is the premise that these tests are red at the pin. For test-first work the red has to be stated through the registered tool (or the new composed boundary): 'raw-vs-
+  canonical divergence', 'a test launcher receives canonical bytes only', 'launch resolves while writer sleeps', cross-process exclusion, restart, stale generation and timeout
+  DRIFT: The artifact lists these as 'Red tests' (pi-03 L24, L30, L36) and as falsifiers G08, P13, P14, P16, P17 without saying at which level they are red. At the seam
+
+######## C159
+[lens-lineage.jsonl|lineage] rel=SAME_ORIGIN_AS status=ESTABLISHED
+  EV: Blob identity 8e2fedeb (MNI env pin) vs 0fb90672 (MII env pin), `git rev-parse <rev>:<path>` in pins/pi-0fb90672: src/worktree.ts 6ec6d6c9, src/workbench/claude-host.ts baee92de,
+  src/index.ts 2c923cf1, src/workbench/hosts/local-detached.ts 66a6a23e, src/workbench/execute.ts 9aaf8fb9, execute-tool.ts d873e378, identity.ts a306fa1b, source-admission.ts 7ebfdcd6,
+  function-authority.ts 69d3194f, mechanical-descriptor.ts 17de55ce, observation.ts 3e1d43ee - all SAME. `git diff --stat 8e2fedeb 0fb90672 -- src/` = one line: A src/workbench/mechanical-c
+  DET: Per-path git blob-id equality between the two environment pins plus `git diff --stat` over src/; a changed blob or an extra src path would have shown. Same-origin caveat: the MNI grades
+  are an earlier
+  NOTE: Nothing MOVED in the descriptor/authority/source-admission/worktree/abort/detached-grant states MNI graded: every MII baseline observation about those files inherits the MNI verdict
+  byte-for-byte. The only src movement since MNI's baseline is the coordination boundary (see the separate row).
+  DRIFT: none in the cited src blobs between 8e2fedeb and 0fb90672; the deposit commits 91d8fa8c/3fc0ead1 touch only docs/programs/ and the skill; fetched trunk origin/w
+
+[lens-pi-src.jsonl|pi-src] rel=SUPPORTS status=ESTABLISHED
+  EV: pins/pi-0fb90672/src/workbench/function-authority.ts:135 `export const FUNCTION_ACTION_BLOCKER = "MW-CONTRACT";`; :145 `export const FUNCTION_ACTION_CONTRACT: FunctionActionContract =
+  Object.freeze({ state: "unadopted", blockedOn: FUNCTION_ACTION_BLOCKER });`; :105-107 'No action spelling is adopted: FUNCTION_ACTION_CONTRACT is unadopted, so every function dispatch
+  refuses, and one that passes the earlier rules refuses as function-action-unadopted.'; :339-341 the refusal. History: `git log -S` on that declaration returns one commit, 029dabca (2
+  DET: grep -c 'export default' src/workbench/function-authority.ts = 0; grep over src/ for importers of FUNCTION_ACTION_CONTRACT = 0 (tests only); the two regexes were evaluated in node
+  against the proposed
+  NOTE: Nothing in production supplies any contract to the boundary, adopted or not, because nothing in production calls the boundary.
+  DRIFT: Wording: 'exported default FUNCTION_ACTION_CONTRACT' - it is a named export (there is no ES default export); read as 'the default contract value' the claim hold
+
+[lens-negative-ev.jsonl|negative-ev] rel=SUPPORTS status=ESTABLISHED
+  EV: [{'pin': 'pi@0fb90672', 'path': 'src/workbench/function-authority.ts', 'lines': '145', 'quote': 'export const FUNCTION_ACTION_CONTRACT: FunctionActionContract = Object.freeze({ state:
+  "unadopted", blockedOn: FUNCTION_ACTION_BLOCKER });'}, {'pin': 'pi@0fb90672', 'path': 'git log -S (pickaxe) on the declaration', 'probe': 'Introduced unadopted at 029dabca (2026-11-06) and
+  unchanged since.'}, {'pin': 'pi@0fb90672', 'path': 'src (124 modules)', 'probe': 'adoptFunctionActions has no call site outside its definition (line 271); the ADOPTED set (line
+  DET: Symbol search over all 124 src modules plus the import closure from the extension entry. Power: an adopted contract object can come only from adoptFunctionActions, which no production
+  module calls, so
+  NOTE: Read with NE-08: the constant is true and is read by nothing.
+  DRIFT: 'remains' holds over the constant's whole history. 'exported default' is a named export, not an ES default export.
+
+######## C160
+[lens-pi-src.jsonl|pi-src] rel=QUALIFIES status=CONTESTED
+  EV: The retained source seam cannot dispatch without an operator attestation: pins/pi-0fb90672/src/workbench/source-admission.ts:22-23 rule 6 'host.attestation is an object host.authority
+  minted (attestation-absent), whose workspace is that canonical root (attestation-other-workspace) and whose sourceIdentity is that identity's digest (attestation-stale)'; :469-475
+  boundaryOf; :486-487 before the lease and :502-503 again after the wait. grep -rn 'new WriteBoundaryAuthority' over src/ = 0, so no production channel mints one.
+  DET:
+  NOTE: If admitSourceWrite is composed as it stands, every function admission refuses attestation-absent until something mints an attestation for the measured identity. The requirement set
+  has to say who attests (which operator action, through which host channel) or that the rule is dropped for this route. [Status scope: the status is for the embedded emp
+  DRIFT: pi-03 L35 (P03) lists 'operator attestation and authorized root' among the axes; pi-02 A0-A6 (L16-L22) has no attestation step and pi-02 section 7 has no attest
+
+[lens-joint.jsonl|joint] rel=CONTRADICTS status=REFUTED
+  EV: Pi places installation and the last check before the handoff: pi-02-PROTOCOL-AND-RUNTIME.md:20 "A4 acquire durable one-writer ownership keyed by canonical root; persist generation and
+  invocation. Admission wait / installation may be asynchronous; grant and source checks are repeated *after* them."; pi-02-PROTOCOL-AND-RUNTIME.md:21 "A5 verify exact installed runtime
+  manifest and native provider availability; perform a final combined authority/source/fencing check just before the first possible side effect. Do not perform long async work between
+  DET:
+  NOTE: PREMISE GRADED: that the final-boundary recheck (D9, which the Pi README assigns to Pi alone) can be completed on the Pi side, with Pi's A5 check as the last check before the first
+  possible effect. Under the companion's admission order, and in the host as it exists at the pin, long asynchronous work happens after Pi's handoff: the callee validates
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+######## C161
+[lens-pi-src.jsonl|pi-src] rel=QUALIFIES status=UNSUPPORTED
+  EV: Rows already pinned green at seam level at the pin. Poisoned note getter and note-only identity: pins/pi-0fb90672/test/workbench-function-authority.test.ts:2302 `it("in each host mode, a
+  note member holding a getter, in the caller policy or beside the task fields of the caller input, is never invoked, and the request for mechanical.development.develop.v1 is decided as that
+  request c...` and the EAT-R154 describe at :2004. Alias and distinct roots: pins/pi-0fb90672/test/workbench-mechanical-source-admission.test.ts:87-88 'R024-ALIAS: while inv-a
+  DET: Read of the three suite headers and the cited rows; no test was executed by this lens.
+  NOTE: Unsupported is the premise that these tests are red at the pin. For test-first work the red has to be stated through the registered tool (or the new composed boundary): 'raw-vs-
+  canonical divergence', 'a test launcher receives canonical bytes only', 'launch resolves while writer sleeps', cross-process exclusion, restart, stale generation and timeout
+  DRIFT: The artifact lists these as 'Red tests' (pi-03 L24, L30, L36) and as falsifiers G08, P13, P14, P16, P17 without saying at which level they are red. At the seam
+
+######## C162
+[lens-joint.jsonl|joint] rel=CONTRADICTS status=REFUTED
+  EV: Pi places installation and the last check before the handoff: pi-02-PROTOCOL-AND-RUNTIME.md:20 "A4 acquire durable one-writer ownership keyed by canonical root; persist generation and
+  invocation. Admission wait / installation may be asynchronous; grant and source checks are repeated *after* them."; pi-02-PROTOCOL-AND-RUNTIME.md:21 "A5 verify exact installed runtime
+  manifest and native provider availability; perform a final combined authority/source/fencing check just before the first possible side effect. Do not perform long async work between
+  DET:
+  NOTE: PREMISE GRADED: that the final-boundary recheck (D9, which the Pi README assigns to Pi alone) can be completed on the Pi side, with Pi's A5 check as the last check before the first
+  possible effect. Under the companion's admission order, and in the host as it exists at the pin, long asynchronous work happens after Pi's handoff: the callee validates
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+[lens-contradict.jsonl|contradict] rel=CONTRADICTS status=C162 NON-EPISTEMIC but over-claims relative to C113/C114; as an acceptance predicate it is unfalsifiable as written -> DOWNGRADE_MODALITY/NARROW_SCOPE
+  EV: pi-03 L37: '**Done:** first effect cannot occur with any stale mutable authority axis.' | pi-02 L24: 'Git, permission store, lease store, runtime import and external SDK are not one ACID
+  transaction. Use explicit fencing + final-boundary revalidation + durable intent; document the remaining window and have the provider reject a stale fence where possible. Never describe
+  independent helper calls as globally atomic.' | mw-02 L19: 'Do not claim these steps form a single ACID transaction. Explicitly document the remaining asynchronous dispatch wind
+  DET: Read the P03 exit criterion against the two atomicity caveats; checked that no bounding clause (window, topology, tested cases) qualifies the universal 'any stale axis'.
+  NOTE: Rewrite P03 Done as 'no first effect occurs with a stale axis in the enumerated red tests (L36); the residual window is documented and the provider rejects a stale fence'. Same shape
+  risk for P02 Done L31 'no duplicate concurrent writer on supported host topology' (bounded, acceptable) versus pi-04 L57 veto (unbounded).
+  DRIFT: quantifier strengthening: a residual non-atomic window is conceded in 02 and then excluded by 'cannot ... any' in 03
+
+######## C163
+[lens-lineage.jsonl|lineage] rel=SUPPORTS status=C221 ESTABLISHED; C142/C163 embedded label premise CONTESTED between the two numberings (pi-03's 'MW H01/H02' is coherent only under pi-05's numbering, and wrong under MW's own, where H01/H02 are the Forge certificate and effect semantics)
+  EV: docs/mw-03-IMPLEMENTATION-PACKETS.md headings (companion at MW origin/main 6476372f): H00 pin/reconcile/ABI, H01 native Forge certificate, H02 durable effect/non-occurrence, H03 verified
+  installed executable, H04 descriptor and closed binding validator, H05 compose four services, H06 authorized composed host, H07 progress/recovery protocol, H08 'Registered Pi joint native
+  acceptance (P0; H05-H07 + Pi P05-P07)', H09 adversarial, H10 crash/load, H11 docs/release, H12 optional. docs/pi-05-OPERATIONS-AND-HANDOFF.md H01 binding+manifest, H02 four ca
+  DET: Heading extraction from both companion documents; row read of the mw-05 table; directory listing of the MW program folder.
+  NOTE: Same defect class as the MNI 'conflicting Pi-vs-MW DAGs' lesson, now at the label level. Remediation ADD_MISSING_PREMISE: a joint 11-10 identifier map (Pi P, Pi H, MW H, MNI P, bead
+  ids) in both repos, in the form MW's 04-IDENTIFIER-MAPPING.md already validates.
+  DRIFT: companion read at origin/main 6476372f (deposit commit); MW env pin 69cb016d predates it.
+
+[lens-mw-src.jsonl|mw-src] rel=CONFLICTS_WITH status=CONTESTED
+  EV: Three incompatible meanings of the producer labels H01-H06 in the paired corpus. pi-05:30-34: H01 host accepts binding + runtime manifest + typed descriptor errors, H02 production four
+  callbacks, H03 strict verification evidence, H04 effect intent/reconciliation, H05 shared tests V2-V5. mw-03:16-81 (and mw-05's dependency table, mw-04:2): H00 ABI, H01 strict Forge
+  certificate, H02 effect/non-occurrence, H03 installed runtime closure, H04 descriptor/binding validator, H05 native four services, H06 composed host, H07 progress/recovery, H08 joined
+  DET: Complete read of every H-label definition site in the twelve program files (grep 'H0[0-9]' over docs/pi-*.md and docs/mw-*.md); the companion files are byte-identical to MW
+  6476372f:docs/programs/pi-h
+  NOTE: Applies to the label-resolution premise of this inference. Code check: none of the candidate meanings has an implementation at the pin, so the code cannot arbitrate. Beads must be
+  keyed by function and owner, never by H-number; P04 as written (installed host consumer) needs mw-03 H03+H04+H06, P08 needs mw-03 H01-H07.
+  DRIFT: The premise that 'H01/H02/H03' resolve to definite producer packets fails: the same token names different work in pi-05, mw-03 and mw-README, and the companion
+
+[lens-joint.jsonl|joint] rel=CONTRADICTS status=REFUTED
+  EV: Pi uses Mechanical H-labels as packet dependencies: pi-03-IMPLEMENTATION-PACKETS.md:11 "Mechanical H01/H02/H03 host, native proof, services"; pi-03-IMPLEMENTATION-PACKETS.md:39 "### P04
+  — Reviewed installed host consumer (P0; MW H01/H02)" | Pi's own meaning of the labels: pi-05-OPERATIONS-AND-HANDOFF.md:30 "H01: @mechanical/development-rig/host accepts validated
+  mechanical.pi-host/v1 binding and exact immutable package/runtime manifest; reject malformed descriptors with typed errors."; pi-05-OPERATIONS-AND-HANDOFF.md:32 "H03: strict verificatio
+  DET: Search the six Mechanical documents for the heading of every H01..H12 packet and the six Pi documents for the H01..H05 handoff definitions; the complete lists are quoted in this and the
+  following row.
+  NOTE: PREMISE GRADED: that 'MW H01/H02' (P04) and 'Mechanical H01/H02/H03' (P08) name definite Mechanical packets with the content Pi intends. They do not. Read in the Mechanical program's
+  own numbering, P04 would wait on the strict Forge certificate and the negative-effect law, which P04 does not consume, and would not wait on the installed-runtime clos
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+[lens-contradict.jsonl|contradict] rel=CONFLICTS_WITH status=C221 ESTABLISHED (three incompatible numberings are observed); C142/C163 UNSUPPORTED as written (the referent of 'MW H01/H02' is undecidable)
+  EV: pi-05 L30-34: 'H01: @mechanical/development-rig/host accepts validated mechanical.pi-host/v1 binding ...; H02: production four callbacks ...; H03: strict verification evidence ...; H04:
+  effect-intent and reconciliation ...; H05: shared tests, installed host V2, registered Pi tool V3 ...' | mw-README L26: 'H01 strict native Forge eligibility ...; H02 durable effect and non-
+  occurrence law; H03 compose trusted host binding and exact service callbacks; H04 pin executable runtime closure; H05 process cancellation/journal/producer identity; H06 real
+  DET: Token census of H-labels per document (grep -oE '\bH[0-9]{2}\b' per file) and side-by-side reading of each label's gloss in pi-05, mw-README, mw-03, mw-05.
+  NOTE: Confirms the MNI lesson 'conflicting Pi-vs-MW DAGs'. Even inside the MW program the README's priority list and the 03 packet list disagree (README H06 'real joint Pi handoff' is mw-03
+  H08). Remediation: one shared label table (ADD_MISSING_PREMISE) and rewrite pi-03/pi-05 cross-references to it.
+  DRIFT: label drift: the same token H0n names three different work items across pi-05, mw-README and mw-03/mw-05 (mw-README is shifted by one from mw-03 from H03 onward
+
+[lens-contradict.jsonl|contradict] rel=CONFLICTS_WITH status=C142/C163 UNSUPPORTED (prerequisite sets conflict across repos and the labels are ambiguous); C139/C141 NON-EPISTEMIC
+  EV: pi-03 L39: '### P04 — Reviewed installed host consumer (P0; MW H01/H02)' and L11: 'Mechanical H01/H02/H03 host, native proof, services ----> P08 joined native journey' | mw-05 L27: '|
+  H03 exact executable manifest | Pi P04 installed host |', L28: '| H04 closed binding and allowedEffects | Pi P03/P04 composed admission |', L30: '| H06 composed host entrypoint | Pi P04/P05
+  authority transitivity |' | mw-03 L63: '### H08 — Registered Pi joint native acceptance (P0; H05–H07 + Pi P05–P07)' and L11 'H05 + H06 + H07 + Pi registered dispatcher ----> H0
+  DET: Reconstructed both dependency graphs as edge lists from pi-03 L5-14 + pi-05 L29-34 and mw-03 L5-14 + mw-05 L21-32; compared the Mechanical prerequisites each side assigns to Pi P04 and
+  to the joined j
+  NOTE: Both repos cannot schedule against each other's graph. Remediation: SURFACE_DISAGREEMENT then one ratified joint DAG in P00/H00.
+  DRIFT: DAG conflict: Pi says P04 needs 'MW H01/H02' (under pi-05 numbering: binding + callbacks; under mw-03 numbering: Forge certificate + effect law); MW says P04 ne
+
+######## C164
+[lens-pi-src.jsonl|pi-src] rel=SUPPORTS status=ESTABLISHED
+  EV: pins/pi-0fb90672/src/workbench/native-modules.ts:2 'native-modules.ts — the one dynamic-import seam for the native SDKs (wb-cax.10).'; :6-10 'Every module that reaches a native SDK at
+  run time (@furnace/sdk, @forge/sdk, @hyperunix/sdk, the Claude Agent SDK) is imported here and only here ... the tripwire is test/workbench-boot-isolation.test.ts'; :62-69 the eight imports.
+  pins/pi-0fb90672/package.json:35-43 dependencies list no @mechanical package; vendored SDKs are `file:vendor/*.tgz` with bundledDependencies.
+  DET: grep -rn '@mechanical\|development-rig' over src/ and package.json: one hit (the allowlist string, mechanical-descriptor.ts:131).
+  NOTE: A Mechanical import added anywhere but native-modules.ts would trip the boot-isolation tripwire; an existing precedent for 'exact pinned tarballs' is the vendor/ + lockfile-integrity
+  check in identity.ts:233-276.
+  DRIFT: 'Native loader seam' has two candidate referents at the pin: this dynamic-import seam, and the host-supplied MechanicalExportLoader of mechanical-descriptor.ts:
+
+[lens-negative-ev.jsonl|negative-ev] rel=SUPPORTS status=ESTABLISHED
+  EV: [{'pin': 'mw@69cb016d', 'path': 'apps/development-rig/package.json', 'lines': '13-19', 'observation': 'The exports map holds ./host and ./package.json only.'}, {'pin': 'mw@69cb016d',
+  'path': 'apps/development-rig/src/host.ts', 'lines': '52', 'quote': 'export async function invokeDevelopmentHost(options: DevelopmentHostOptions, input: unknown): Promise<DevelopmentOutcome>
+  {'}, {'pin': 'mw@69cb016d', 'path': 'apps/development-rig/src/host.ts', 'lines': '13,32-43', 'observation': "DevelopmentHostOptions has artifactPath, artifactDigest, descriptor
+  DET: Full reading of host.ts (71 lines) and the exports map, and a call-site search over the rig's src. Power: complete for the installed surface, which is all Pi may import.
+  NOTE: For C133 the status is for the observation in its scope, not for the proposal. Three absences on the only subpath Pi may consume: the invocation does not require the mechanical.pi-
+  host/v1 binding, and it carries neither a cancellation nor a progress channel. pi-02 section 8 lists that channel among what Mechanical 'receives'; it has no carrier at t
+  DRIFT:
+
+######## C165
+[lens-pi-src.jsonl|pi-src] rel=CONTRADICTS status=CONTESTED
+  EV: Pi side: pins/pi-0fb90672/src/workbench/mechanical-descriptor.ts:131-132 the only reviewed entry is package `"@mechanical/workflows-development"`, export `"develop"`; :258-259 `if
+  (implementation.package !== entry.package) return refused("package", "not-allowlisted");` / `if (implementation.export !== entry.export) return refused("export", "not-allowlisted");`; :108
+  `export const MECHANICAL_DESCRIPTOR_STATUS = "descriptor-only";` enforced at :265 `if (status !== MECHANICAL_DESCRIPTOR_STATUS) return refused("status", "status-unsupported");`; :11
+  DET: Complete read of mechanical-descriptor.ts (381 lines); cat of the MW descriptor; grep -n '^export' over the MW host.ts. The MW half is offered for the mw-src lens to confirm.
+  NOTE: Consequence for requirements: the existing loader cannot serve P04 unchanged. A loader that returns the host namespace is refused export-missing; a loader that imports the library
+  tarball and returns `develop` has Pi supply the four callbacks itself, which section 8 rules out ('Pi consumes only @mechanical/development-rig/host', Pi does not 'reimpl
+  DRIFT: The artifact has A0 resolve 'the saved reviewed definition and descriptor with Pi allowlist' (pi-02 L16) and P04/section 8 'import @mechanical/development-rig/h
+
+[lens-mw-src.jsonl|mw-src] rel=ASSUMES status=NON-EPISTEMIC
+  EV: What the producer binding and host pin is the core library tarball only: host-binding.ts:22-27 fixes artifact.package '@mechanical/workflows-development' / export 'develop' with one
+  sha256; installed-host.ts verifies and installs that one tarball. The code that performs admission (and, after H05/H06, would run the writer and the gate) lives in @mechanical/development-
+  rig, which declares its two siblings by version, not digest (apps/development-rig/package.json:30-33) and is itself pinned by nothing on the producer side; an external consumer mus
+  DET: V0 read of the binding type, the installer and the manifests; import census of the rig.
+  NOTE: PREMISE-SPLIT: 'the artifact digest in the reviewed definition/binding identifies the code that executes effects' => UNSUPPORTED at mw-69cb016d (it identifies the pure library; the
+  host and future native services sit in an unpinned sibling). P04's 'exact descriptor/installed package/runtime manifest checks' has to name all three packages; measured
+  DRIFT: I1's 'tarball digest' and pi-02's singular artifactDigest read as one artifact identity. At the pin there are three tarballs, and the one named in the binding i
+
+[lens-mw-src.jsonl|mw-src] rel=CONTRADICTS status=NON-EPISTEMIC
+  EV: grep -i 'schedul' over apps/development-rig/src, packages/development/src and packages/coordination/src returns eight lines, all disclaimers or abstract statements: 'No Furnace
+  scheduling ... implemented here' (furnace-gate.ts:3), 'no scheduler, registry or generic DAG' (packages/development/src/review.ts:1), 'No RPC, scheduling or durability is implemented here'
+  (workspace-materialize.ts:6), and comments in elastic-landing.ts, runtime-plan.ts, step-fixture.ts about what 'no scheduler' could do (PROBE/out/static-scans.txt S6). AGENTS.md:5 lists
+  DET: Case-insensitive substring grep over every .ts of the three source trees; all hits read.
+  NOTE: PREMISE-SPLIT: facet (a) './host is an exported subpath' => ESTABLISHED; facet (b) 'Mechanical owns a scheduler a Pi host could duplicate' => REFUTED (zero implementations in the
+  searched trees). The intended rule is 'do not build a scheduler for Mechanical functions; Pi's existing scheduling applies' and should be worded so.
+  DRIFT: 'Don't construct a second Mechanical scheduler' presupposes a first one. Mechanical has none and disclaims one.
+
+[lens-joint.jsonl|joint] rel=CONTRADICTS status=REFUTED
+  EV: Singular artifact in both contracts: pi-01-AUDIT-AND-INVARIANTS.md:17 "**I1 Immutable bytes:** The exact reviewed definition ID, schema, descriptor digest, tarball digest, runtime file
+  manifest digest and validated input bytes identify execution."; pi-02-PROTOCOL-AND-RUNTIME.md:5 "**Model-facing workflow_execute:** definitionRef {kind:"function",
+  id:"mechanical.development.develop.v1", schemaVersion:<exact reviewed version>, artifactDigest:<sha256>}"; mw-02-HOST-AND-EFFECT-CONTRACT.md:6 "- Serialized mechanical.pi-host/v1 binding
+  carries review
+  DET:
+  NOTE: PREMISE GRADED: that one tarball digest, the one in definitionRef.artifactDigest and in the binding's artifact member, pins the Mechanical code that executes. At the pin it pins only
+  the library that the host installs at call time. The package Pi itself imports, the rig host that performs Mechanical's whole admission, is a second tarball with the c
+  DRIFT: The M05 receipt was produced at Mechanical c8be64da, an ancestor of 69cb016d; the rig manifest's dependency list and installed-host.ts are unchanged through ori
+
+[lens-joint.jsonl|joint] rel=DEPENDS_ON status=UNDETERMINED
+  EV: Pi's reviewed entry names the library export: pins/pi-0fb90672/src/workbench/mechanical-descriptor.ts:132 `export: "develop",`; pins/pi-0fb90672/src/workbench/mechanical-descriptor.ts:18
+  ` * its members are judged as steps 4 to 6 state, and the loader is handed the reviewed allowlist entry, never a member the` | The function Pi will call is a different, not yet named export
+  of a different package: mw-02-HOST-AND-EFFECT-CONTRACT.md:5 "Add a *new explicit composed call* (name to ratify, e.g. invokeAuthorizedDevelopmentHost) rather than silently r
+  DET: Token counts asserted by this generator: neither 'invokeDevelopmentHost' nor 'invokeAuthorizedDevelopmentHost' occurs in the six Pi files.
+  NOTE: PREMISE GRADED: that P04's instruction to reject disallowed exports has a defined allowed export to check against. The observations C088 and C104 are unaffected and true: one reviewed
+  entry exists, for package @mechanical/workflows-development and export develop, shared by Pi's allowlist and Mechanical's binding. What the two programs leave undeter
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+[lens-contradict.jsonl|contradict] rel=CONFLICTS_WITH status=The universal 'no route to an effect without complete trust composition' is UNSUPPORTED while the legacy export stays on the same shipped subpath; SUPPORTED only if scoped to 'through the Pi-facing composed call' (NARROW_SCOPE)
+  EV: mw-03 L53: 'Old invokeDevelopmentHost may remain as low-level legacy fixture API, not secure invocation claim.' and L55: '**Done:** no route to an effect without complete trust
+  composition, yet no Pi imports in Mechanical core.' | mw-01 L22: 'Keep legacy pure installed fixture API as descriptor-only/low-trust where needed.' | mw-02 L5: 'Retain the shipped
+  @mechanical/development-rig/host stable subpath and the existing pure develop() API.' | pin mw-69cb016d apps/development-rig/src/host.ts:32-43,52 invokeDevelopmentHost(options{artifactPath,
+  ar
+  DET: Read the H06 exit criterion against the retained legacy export and the pinned signature of invokeDevelopmentHost; checked whether any text scopes 'route' to the composed call.
+  NOTE: Pi's safety then rests on pi-03 P04 'reject disallowed exports' (Pi-side allowlist of export names), which the MW Done criterion should name instead of claiming closure on its own.
+  DRIFT: quantifier: an exported, effect-capable legacy entry contradicts an unqualified 'no route'
+
+[lens-negative-ev.jsonl|negative-ev] rel=ASSUMES status=UNSUPPORTED
+  EV: [{'pin': 'mw@69cb016d', 'path': 'packages/development/src/review.ts', 'lines': '1', 'quote': '/** A bounded application review policy; no scheduler, registry or generic DAG. */'},
+  {'pin': 'mw@69cb016d', 'path': 'apps/development-rig/src; packages/coordination', 'probe': "The word scheduler does not occur in the rig's src. The hits under packages/coordination are
+  negations ('no ... scheduler is introduced') and a standing test, test/no-universal-provider-abi.test.ts, that forbids exporting a Scheduler name."}, {'pin': 'companion program', 'path'
+  DET: Word search over apps/, packages/ and contracts/ at the pin. Power: complete for the literal word.
+  NOTE: Embedded premise (b) only: 'don't construct a second Mechanical scheduler' (P04) presupposes a first, and the develop path has none and says so. Reword to 'construct no scheduler'. Low
+  severity; a red test for 'no second scheduler' would have nothing to compare against.
+  DRIFT:
+
+######## C166
+[lens-mw-src.jsonl|mw-src] rel=ASSUMES status=NON-EPISTEMIC
+  EV: Runtime closure of the shipped entry: dist/host.js -> installed-host.js -> entrypoint-host.js, plus host-binding.js; external specifiers are node builtins only; that is 4 of the 60 dist
+  modules (PROBE/out/host-closure.txt). From a tarball-installed consumer every other module is closed: './host-services', './dist/host-services.js', './dist/effect-intent.js', './dist/effect-
+  reconciliation.js', './dist/live-development.js' all fail ERR_PACKAGE_PATH_NOT_EXPORTED (PROBE/out/installed-consumer-surface-probe.jsonl). host-services.ts exports (createDe
+  DET: Static closure walk of the built dist plus import attempts from an installed external consumer (execution on a scratch copy of the pin (PROBE/copy-69cb016d = git archive of 69cb016d,
+  built with the lo
+  NOTE: PREMISE-SPLIT: 'the surfaces P04-P08 need (native services, strict projection, effect intent/reconciliation, progress, cancellation) are reachable through the only subpath Pi may
+  import' => REFUTED at mw-69cb016d (executed). Every one of them is a producer change (mw-03 H01-H07) that must also widen what ./host exports; pi-03's P04 'Done: actual MW
+  DRIFT: pi-02 §8 ('Pi consumes only @mechanical/development-rig/host ... Mechanical receives trusted host binding + constrained four service callbacks and a cancellatio
+
+[lens-mw-src.jsonl|mw-src] rel=CONFLICTS_WITH status=NON-EPISTEMIC
+  EV: pi-04:7 defines V2 as 'actual independent npm-packed Mechanical host installed in fresh consumer; digest+runtime-file checks'. The producer's L2 at the pin checks tarball and descriptor
+  digests, package name and install-root containment (installed-host.ts:19-51) and nothing per installed file. Executed: while the host installs, appending one line to <tmp>/mw-installed-
+  host-*/node_modules/@mechanical/workflows-development/dist/index.js (tarball bytes unchanged) is not detected: the host admits, returns verified_candidate and the appended code ru
+  DET: execution on a scratch copy of the pin (PROBE/copy-69cb016d = git archive of 69cb016d, built with the lock-pinned tsc 5.9.3; node v22.23.2 runner, node v24.20.0 fixture/consumer, linux
+  x86_64; temp an
+  NOTE: PREMISE-SPLIT: 'installed JS mutated after extraction is currently admitted by the producer host' (G09 / D4) => ESTABLISHED at mw-69cb016d (executed red in a scratch probe, not a
+  committed test). V2 therefore depends on mw-03 H03, which pi-03 does not name for P04 (it names 'MW H01/H02').
+  DRIFT: The baseline phrase 'L2 external installed-host fixtures' and P04's 'pass V2' are not the same bar: existing L2 has no runtime-file check, so no existing fixtur
+
+[lens-mw-src.jsonl|mw-src] rel=SPECIALIZES status=NON-EPISTEMIC
+  EV: P04's red list against what the producer host already refuses at the pin (PROBE/out/m05-observations-node22runner.json, PROBE/out/host-suite-node22.tap, PROBE/out/host-probe.jsonl,
+  PROBE/out/host-node18-probe.jsonl): corrupt descriptor -> HOST_DESCRIPTOR_DIGEST_MISMATCH (green); corrupt tarball -> ENTRYPOINT_ARTIFACT_MISMATCH (green); alternate export ->
+  ENTRYPOINT_CONTRACT_INVALID (green); path/symlink escapes -> ENTRYPOINT_ARTIFACT_PATH_INVALID / ENTRYPOINT_ARTIFACT_INVALID (green); unexpected function -> 'module exports no develop' and
+  'deve
+  DET: execution on a scratch copy of the pin (PROBE/copy-69cb016d = git archive of 69cb016d, built with the lock-pinned tsc 5.9.3; node v22.23.2 runner, node v24.20.0 fixture/consumer, linux
+  x86_64; temp an
+  NOTE: For compilation: state per item which layer must be red (Pi adapter vs producer host). 'Done: independently packed fixture and negative controls pass V2' is already met by the producer
+  for the digest half and unmet for the runtime-file half. The companion's Q15 has the same shape: of 'implementation, bindings, inputSchema' the inputSchema arm alrea
+  DRIFT: Seven listed red tests; at the producer layer four are already green, two are red and one (missing SDK) does not apply to the fixture host. As Pi-side tests all
+
+[lens-joint.jsonl|joint] rel=DEPENDS_ON status=UNDETERMINED
+  EV: Pi assigns the SDK pin to Mechanical: pi-05-OPERATIONS-AND-HANDOFF.md:31 "H02: production four callbacks composed from native Git census/plain task, Claude Agent SDK and Forge gate;
+  provider SDK/runtime identity pinned; no nested developLive within implement callback." | Mechanical says the rig owns the SDKs and, elsewhere, that the host supplies provider factories:
+  mw-05-OPERATIONS-AND-HANDOFF.md:10 "- apps/development-rig owns host facade, native Git census/plain context, Claude Agent SDK, Forge SDK, artifact verification, durable intent/reco
+  DET: Read of the four Mechanical package manifests at 69cb016d for either SDK name: absent from all four (asserted). Read of the two dynamic-import sites: both use a bare package specifier
+  held in a variab
+  NOTE: Which Claude Agent SDK and which Forge SDK execute in the joined first release cannot be settled from either program or from the pins. A bare specifier resolves upward from the
+  importing file's location, so if the rig is installed inside Pi's module tree the producer runs Pi's pinned copies (Claude Agent SDK 0.3.300 and Pi's vendored Forge SDK), an
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+[lens-contradict.jsonl|contradict] rel=CONFLICTS_WITH status=NON-EPISTEMIC severity labels; inconsistent (Pi: non-weakenable invariant and P0 packet; MW: P1 with a 'P0 dependency' hedge)
+  EV: pi-01 L16-17: '## B. Invariants — none may be weakened ... **I1 Immutable bytes:** The exact reviewed definition ID, schema, descriptor digest, tarball digest, runtime file manifest
+  digest and validated input bytes identify execution.' | pi-04 L24: 'G09 | installed JS mutation after tarball extraction | refuse before trusted import' | pi-03 L39,42: 'P04 — Reviewed
+  installed host consumer (P0; ...)' red test 'installed JS mutation' | mw-01 L23: '**MW-I05 / D4 — P1 executable closure:** ... Build a verifiable installed file/dependency manifest' |
+  DET: Cross-tabulated severity labels attached to the runtime-manifest work in pi-01/pi-03/pi-04 against mw-01/mw-03 and the README.
+  NOTE: mw-03's '(P1/P0 dependency)' is an acknowledgement, not a resolution. Remediation: rate H03/D4 P0 for the first release or drop 'runtime file manifest digest' from I1's identity set
+  (which pi-01 forbids).
+  DRIFT: severity drift across the boundary: a Pi P0 exit criterion (P04 Done, G09) depends on Mechanical work Mechanical rates P1
+
+[lens-negative-ev.jsonl|negative-ev] rel=ASSUMES status=UNSUPPORTED
+  EV: [{'pin': 'mw@69cb016d', 'path': 'apps/development-rig/src/host.ts', 'lines': '13-18', 'observation': 'The export list holds no effect-intent, reconciliation or service-composition
+  symbol.'}, {'pin': 'mw@69cb016d', 'path': 'apps/development-rig/src/host-services.ts', 'lines': '30-103', 'observation': "createDevelopmentServices (30), developThroughHost (53),
+  projectForgeVerification (70) and describeProducerReceipt (103) have no caller in the rig's src and are not re-exported by host.ts; one test file uses them."}, {'pin': 'companion program
+  (mw-
+  DET: Export list of the one consumable subpath and a call-site search over apps/development-rig/src for each symbol. Power: complete for what an installed consumer can reach and for
+  production callers in t
+  NOTE: Embedded premises only: that Pi can today integrate a Mechanical effect-intent lookup (P07) and that a producer host runs the four callbacks composed from native services (P04 Done,
+  H02). At the pin the lookup is module-internal and the four-callback adapter is test-only, while the native path in live-development.ts is a separate flow. Each is a Me
+  DRIFT:
+
+######## C167
+[lens-lineage.jsonl|lineage] rel=SAME_ORIGIN_AS status=ESTABLISHED
+  EV: Blob identity 8e2fedeb (MNI env pin) vs 0fb90672 (MII env pin), `git rev-parse <rev>:<path>` in pins/pi-0fb90672: src/worktree.ts 6ec6d6c9, src/workbench/claude-host.ts baee92de,
+  src/index.ts 2c923cf1, src/workbench/hosts/local-detached.ts 66a6a23e, src/workbench/execute.ts 9aaf8fb9, execute-tool.ts d873e378, identity.ts a306fa1b, source-admission.ts 7ebfdcd6,
+  function-authority.ts 69d3194f, mechanical-descriptor.ts 17de55ce, observation.ts 3e1d43ee - all SAME. `git diff --stat 8e2fedeb 0fb90672 -- src/` = one line: A src/workbench/mechanical-c
+  DET: Per-path git blob-id equality between the two environment pins plus `git diff --stat` over src/; a changed blob or an extra src path would have shown. Same-origin caveat: the MNI grades
+  are an earlier
+  NOTE: Nothing MOVED in the descriptor/authority/source-admission/worktree/abort/detached-grant states MNI graded: every MII baseline observation about those files inherits the MNI verdict
+  byte-for-byte. The only src movement since MNI's baseline is the coordination boundary (see the separate row).
+  DRIFT: none in the cited src blobs between 8e2fedeb and 0fb90672; the deposit commits 91d8fa8c/3fc0ead1 touch only docs/programs/ and the skill; fetched trunk origin/w
+
+[lens-negative-ev.jsonl|negative-ev] rel=ENTAILS status=ESTABLISHED
+  EV: [{'pin': 'pi@0fb90672', 'path': 'epistemic-triage/.work/negev-scratch/import_closure.py -> import-closure-pi.json', 'probe': '124 tracked src modules; 107 reachable from src/index.ts
+  (package.json pi.extensions); 17 unreachable, among them function-authority.ts (no importer), source-admission.ts (no importer), mechanical-descriptor.ts (imported only by mechanical-
+  coordination.ts, for one constant) and mechanical-coordination.ts (no importer). No unresolved relative specifier.'}, {'pin': 'pi@0fb90672', 'path': 'src/index.ts:3967; src/ui/workflow
+  DET: Static import graph over every tracked src module (static import, re-export, dynamic import, require; comments stripped), entry = the extension entry. Type-only imports count as edges,
+  so 'unreachable
+  NOTE: 'src/index.ts wires script launchers only' is exact for the workflow_execute wiring. Read over the whole file it is false: index.ts also registers forge_gate_run (starts a native Forge
+  gate, line 2861), workflow_detached (a second detached script launcher, line 2912) and the Agent and workflow tools. Keep the sentence scoped to workflow_execute.
+  DRIFT: The code at the pin equals the gated trunk tip ce180d82 (git diff ce180d82 0fb90672 -- src test qa is empty). Across the 1207 ref tips of the local repository n
+
+######## C168
+[lens-lineage.jsonl|lineage] rel=CONFLICTS_WITH status=NON-EPISTEMIC; flagged as a reconciliation condition: compatible only if the MII adapter persists into the existing journal/task store, otherwise it conflicts with EAT-R239/EAT-R250
+  EV: MNI docs/workbench/programs/mechanical-native-interoperability-2026-11-09/requirements/ATOMIC-REQUIREMENTS.md EAT-R239 'Function state MUST live in the existing Workbench
+  task/observation store; the function path MUST NOT introduce a parallel hidden task table' and EAT-R250 'journal a durable local intent record ... reusing the existing workflow journal
+  rather than a new store'. Existing journal at 0fb90672: pins/pi-0fb90672/src/workflow/journal.ts (on-disk per-run append-only JSONL, appendFileSync :254; nativeRefs member :285);
+  workflowTasks s
+  DET: Literal grep of the MII corpus for journal.ts|workflowTasks|existing journal (0 hits); requirement text read.
+  NOTE: Remediation ADD_MISSING_PREMISE: MII P02/P07 must state whether the durable lease/journal reuses src/workflow/journal.ts and the task store, or record an explicit supersession of
+  EAT-R239/R250 with reasons.
+  DRIFT: none
+
+[lens-lineage.jsonl|lineage] rel=CONFLICTS_WITH status=C017/C054 SUPPORTED with a caveat (the Claude-host 'primitive' carries a witnessed pending cancellation defect); C168/C174 PROPOSAL missing MNI's EAT-R253 ordering gate; C207/C224 NORMATIVE
+  EV: pins/pi-0fb90672/test/workbench-mwi-cancel-repro.test.ts:1353-1359 describe('EAT-R015 a runtime skip issued while the host's beforeDispatch is parked (wb-9v02)') / it('R015-SPAWN fresh
+  spawn: the seam validates, and the skip is lost: one SDK start, settled done...') expecting kind 'observed-violation' (breach literal 'sdk-started-after-skip' :472);
+  docs/workbench/receipts/wb-9v02.md: 12 dated entries, each 'Status: pending, unchanged ... this cut carries no fix ... the witnessed violations authorize a separate repair proposal for slice
+  PI-4'. M
+  DET: Literal grep of the repro's verdict literal and the receipt's status lines; blob identity of the two host files; regex over the bead store; grep of the MII corpus.
+  NOTE: A known open defect that MNI made a precondition of effectful dispatch disappears from the successor program and has no live carrier bead. Remediation ADD_MISSING_PREMISE in pi-01
+  section A and pi-03 P05/P07: cite wb-9v02/EAT-R253 and keep the dispatch-disabled-until-repaired gate.
+  DRIFT: none: the violation is witnessed at 8e2fedeb and still at 0fb90672.
+
+[lens-pi-src.jsonl|pi-src] rel=SUPPORTS status=ESTABLISHED
+  EV: Script tests exist: `ls test | wc -l` = 622 entries, 46 of them named workflow-*, workbench-execute*, workbench-pi-* or subagents-print-mode*, among them pins/pi-0fb90672/test/workbench-
+  execute.test.ts (789 lines), test/workbench-execute-tool.test.ts (224), test/workbench-pi-observe.test.ts, test/workbench-pi-detached.test.ts, test/workbench-pi-reconcile.test.ts. The three
+  paths P05 must preserve are distinct code: the script branch (pins/pi-0fb90672/src/workbench/execute-tool.ts:219-251), the detached provider grant selection (pins/pi-0fb90672
+  DET:
+  NOTE: [Status scope: the status is for the embedded empirical premise; C168 (PROPOSAL) is a rule or proposal row and stays NON-EPISTEMIC as such.]
+  DRIFT: Existence only: no test was run by this lens and none of these rows says anything about pass status. pi 0fb90672 -> 3fc0ead1 (document pin = origin/master as fe
+
+######## C169
+[lens-pi-src.jsonl|pi-src] rel=SUPPORTS status=ESTABLISHED
+  EV: pins/pi-0fb90672/src/workbench/execute.ts:279 `if (launchStatus === "launched" && reportedRefs.length === 0) return fail("A launched reply requires at least one native reference.");`.
+  The shell builds the reply outside its try block (pins/pi-0fb90672/src/workbench/execute-tool.ts:245-246 sets `outcome = { status: "launched", nativeRefs };`, :253 calls
+  buildWorkflowExecuteReply), so a launcher that resolved to an empty list makes the tool call throw.
+  DET:
+  NOTE: Established is the conflict between the illustration and the pinned reply builder. An envelope with status launched and an empty nativeRefs list IS reachable today, but only through
+  identity trimming, and then it carries nativeRefsOmitted with a count and a reason (execute-tool.ts:146-147, 162-164). If a function launch can truthfully have no nativ
+  DRIFT: pi-05 L11-L20 illustrates `"status":"launched"` with `"nativeRefs":[]` and says 'Empty nativeRefs is valid only when truthful'; pi-03 L48 (P05) expects 'invocat
+
+[lens-joint.jsonl|joint] rel=CONTRADICTS status=REFUTED
+  EV: Pi draws Mechanical edges only into P04 and P08: pi-03-IMPLEMENTATION-PACKETS.md:8 "+-> P02 durable lease/fencing ----------+--> P04 composed admission --> P05 registered function
+  launcher"; pi-03-IMPLEMENTATION-PACKETS.md:10 "+-> P06 observation contract [parallel] -+-------------+---------------------+--> P07 journal/control/reconcile"; pi-03-IMPLEMENTATION-
+  PACKETS.md:51 "### P06 — Producer-qualified observation bridge (P0; parallel with P04)"; pi-03-IMPLEMENTATION-PACKETS.md:57 "### P07 — Durable invocation journal, controls and reconciliati
+  DET: Two absences carry this row. (a) No effect-intent, reconciliation or progress surface is importable from the rig: read of the two-key exports map in the rig package.json and of every
+  export statement
+  NOTE: PREMISE GRADED: that the Pi dependency graph and packet headings state the complete set of Mechanical prerequisites: none for P02, P06 and P07, and for P05 only what it inherits
+  through P04. Pi's own packet text and the pinned code contradict it. P07 must 'integrate Mechanical effect-intent lookup', and no effect-intent or reconciliation function i
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+######## C170
+[lens-lineage.jsonl|lineage] rel=SAME_ORIGIN_AS status=ESTABLISHED
+  EV: Blob identity 8e2fedeb (MNI env pin) vs 0fb90672 (MII env pin), `git rev-parse <rev>:<path>` in pins/pi-0fb90672: src/worktree.ts 6ec6d6c9, src/workbench/claude-host.ts baee92de,
+  src/index.ts 2c923cf1, src/workbench/hosts/local-detached.ts 66a6a23e, src/workbench/execute.ts 9aaf8fb9, execute-tool.ts d873e378, identity.ts a306fa1b, source-admission.ts 7ebfdcd6,
+  function-authority.ts 69d3194f, mechanical-descriptor.ts 17de55ce, observation.ts 3e1d43ee - all SAME. `git diff --stat 8e2fedeb 0fb90672 -- src/` = one line: A src/workbench/mechanical-c
+  DET: Per-path git blob-id equality between the two environment pins plus `git diff --stat` over src/; a changed blob or an extra src path would have shown. Same-origin caveat: the MNI grades
+  are an earlier
+  NOTE: Nothing MOVED in the descriptor/authority/source-admission/worktree/abort/detached-grant states MNI graded: every MII baseline observation about those files inherits the MNI verdict
+  byte-for-byte. The only src movement since MNI's baseline is the coordination boundary (see the separate row).
+  DRIFT: none in the cited src blobs between 8e2fedeb and 0fb90672; the deposit commits 91d8fa8c/3fc0ead1 touch only docs/programs/ and the skill; fetched trunk origin/w
+
+[lens-pi-src.jsonl|pi-src] rel=SUPPORTS status=ESTABLISHED
+  EV: pins/pi-0fb90672/src/workbench/observation.ts:1 '/** Bounded, read-only native observation cache. Producers retain all execution authority. */'; :2 `export interface NativeRef {
+  provider: string; type: string; id: string; scope?: string }`; :3 `export interface ObservationScope { workspace: string; principal: string }`; :129 `const MAX_DEFAULT =
+  {maxEvents:20_000,maxNodes:2_000,maxEdges:4_000,maxPayloadBytes:4_096,maxQuery:100};`; :130 keyOf includes workspace and principal; :638-655 ingest (duplicate, out-of-order, gap marks
+  stale). Reply buil
+  DET:
+  NOTE: Freshness (current/stale/unknown), event-gap anomaly and dropped-for-bytes counters already exist, so pi-02 section 6's 'freshness, source-cursor gap and dropped-event count' extends
+  existing fields rather than inventing them. Nothing here observes a Mechanical invocation. [Status scope: the status is for the embedded empirical premise; C127 (PROPO
+  DRIFT: The projection is in memory: observation.ts has no import at all, so nothing is persisted and a restart loses it. ObservationScope carries no session; the tool
+
+######## C171
+[lens-lineage.jsonl|lineage] rel=CONFLICTS_WITH status=C139/C141 PROPOSAL (NON-EPISTEMIC) whose sequencing contradicts the live DAG - the MII parallelism is a bead-graph edit, not a description; C187-C204 NORMATIVE with no lineage to the in-flight A/B/C rows
+  EV: MII pi-03 dependency graph: 'P06 observation contract [parallel]' hangs off P00 only and the P06 heading reads '(P0; parallel with P04)'. Live beads at 0fb90672 (.beads/issues.jsonl):
+  wb-9a1o [MWI-outcomes] blocked by wb-4bxo; wb-upad [MWI-observe] blocked by wb-4bxo, wb-9a1o, wb-mwsy; wb-4bxo blocked by wb-y0n6, wb-2ukh (+ closed wb-ocie, wb-201v, wb-3121). wb-xr1z (MNI
+  P08, EAT-R265..R279: A01-A14 + B01-B14 through registered tools) status in_progress, notes 'STOP (predecessor-first, no cut) - ws-10 run g10-work-s281, written 2026-11-09T22:44
+  DET: Bead store dependency read; ASCII graph read; grep of pi-04/mw-04 for A0|B0|Q0 ids (0 hits in MII; MNI ids absent from MII).
+  NOTE: Three unmapped falsifier vocabularies and a label 'P08' that means the adversarial matrix in the live bead and native acceptance in MII. Remediation: one joint falsifier id map (G/P
+  <-> A/B/C <-> Q) and explicit edge changes if P06 is to run before the launcher; release the stale wb-xr1z claim before reusing it.
+  DRIFT: none; wb-xr1z's in_progress is a stale claim lock (no cut), not active implementation.
+
+[lens-mw-src.jsonl|mw-src] rel=CONFLICTS_WITH status=NON-EPISTEMIC
+  EV: None of the proposed assurance or effect vocabulary exists in producer code, tests or contracts at the pin: 0 occurrences each of strict-native, legacy-weak, legacy-observed, candidate-
+  bound-native, VerificationCertificate, effect-intent/v2, invokeAuthorizedDevelopmentHost and the new HOST_* codes (PROBE/out/static-scans.txt S4). What exists: GateBinding {commit:
+  native|run_record|descriptor, gateDefinition: native|descriptor, environment: established|descriptor} (live-gate.ts:33-40); EffectDisposition uncertain|settled (effect-intent.ts:12); r
+  DET: Fixed-string grep for each proposed token over MW apps/ packages/ contracts/ scripts/ qa/ (*.ts, *.json); V0 read of the existing enumerations; read of the two proposal passages.
+  NOTE: PREMISE-SPLIT: 'Mechanical has a strict-vs-legacy-weak certificate distinction at 69cb016d' => REFUTED (0 witnesses in the searched trees). The ABI handshake (pi-02:48) cannot use 'the
+  same versioned fixture vectors' until one vocabulary is chosen; four disposition vocabularies (plus the binding-source annotations) already coexist in the producer.
+  DRIFT: C171's embedded premise that 'strict/weak' corresponds to a certificate distinction Mechanical has at 69cb016d is false: there is no certificate type and no str
+
+[lens-joint.jsonl|joint] rel=CONTRADICTS status=REFUTED
+  EV: Pi packet: pi-03-IMPLEMENTATION-PACKETS.md:53 "**Implement:** native refs + Pi invocation correlation; typed stages and raw Mechanical four domain results; strict/weak/unknown gate
+  assurance; bounds/drop/freshness semantics. No results invented when provider missing." | Mechanical code at the pin has no assurance level and no certificate: 0 files under
+  apps/development-rig/src, apps/development-rig/test, packages of pins/mw-69cb016d contain any of: VerificationCertificate, forge-certificate, strict-native, legacy-observed, legacy-weak,
+  candidat
+  DET: Text search of MW apps/development-rig/src, apps/development-rig/test and packages/ at 69cb016d for VerificationCertificate, forge-certificate, strict-native, legacy-observed, legacy-
+  weak and candidat
+  NOTE: PREMISE GRADED: the embedded premise recorded for C171, that Pi's strict/weak assurance corresponds to a strict-versus-legacy-weak certificate distinction existing in Mechanical at
+  69cb016d. No such distinction exists in the pinned code: there is no certificate type and no assurance level, only per-axis binding sources (commit: native, run_record o
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+[lens-contradict.jsonl|contradict] rel=CONFLICTS_WITH status=NON-EPISTEMIC (proposals) with SURFACE_DISAGREEMENT required before any 'same versioned fixture vectors' claim can be met
+  EV: pi-02 L36: 'Add observed assurance: strict-native, legacy-weak, unknown; effect: no-effect, dispatched-uncertain, occurred, settled.' and L48: 'ABI handshake: ... evidence profile,
+  runtime manifest, disposition ... Both test the same versioned fixture vectors. Old v1 descriptors ... remain descriptor-only or legacy-weak' | pi-03 L53: 'strict/weak/unknown gate
+  assurance' | mw-01 L35: 'Native assurance: descriptor / legacy-observed / candidate-bound-native / strict-native' and L36: 'Effects: no-dispatch, dispatched-uncertain, occurred, settled' |
+  DET: grep -noE over both doc sets for the assurance and effect tokens; tabulated the value sets per document.
+  NOTE: pi-02 L48 requires both repos to 'test the same versioned fixture vectors' while the enumerations differ; P00/H00 must ratify one spelling per axis.
+  DRIFT: vocabulary drift inside a contract the docs call jointly versioned: 3-valued vs 4-valued assurance (Pi lacks descriptor and candidate-bound-native, MW lacks unk
+
+[lens-negative-ev.jsonl|negative-ev] rel=ASSUMES status=UNSUPPORTED
+  EV: [{'pin': 'pi@0fb90672 + mw@69cb016d', 'path': 'git grep over code (Pi src, test, qa; Mechanical apps, packages, contracts, scripts, qa)', 'probe': '0 occurrences of strict-native,
+  legacy-weak, legacy-observed, candidate-bound-native or VerificationCertificate.'}, {'pin': 'mw@69cb016d', 'path': 'apps/development-rig/src/live-gate.ts', 'lines': '52', 'quote': 'const
+  DESCRIPTOR_BINDING: GateBinding = { commit: "descriptor", gateDefinition: "descriptor", environment: "descriptor" };'}, {'pin': 'mw@69cb016d', 'path': 'apps/development-rig/src/live-g
+  DET: Literal search over the code of both pins and reading the binding annotation in live-gate.ts. Power: complete for the spellings.
+  NOTE: Embedded premise only: that Mechanical at the snapshot has a strict versus legacy-weak certificate distinction under those names. What exists is a three-axis binding annotation and no
+  certificate type; the assurance words are proposals with no code witness at either pin. P06 cannot test 'strict/weak/unknown' against a producer vocabulary until P00
+  DRIFT: The two programs spell the tiers differently: three values with legacy-weak in the Pi corpus, four with legacy-observed and candidate-bound-native in the compan
+
+######## C172
+[lens-mw-src.jsonl|mw-src] rel=ASSUMES status=NON-EPISTEMIC
+  EV: mw@69cb016d:packages/development/src/develop.ts:67-69 returns verification_failed only for verdict 'failed'; :70-74 returns indeterminate for 'partial' or 'unknown'; live-gate.ts:210-223
+  produces a failed observation only for a pinned native FAIL and indeterminate otherwise. Executed: 'four-arm witness' passes (PROBE/out/host-suite-node22.tap).
+  DET: V0 read + execution of the pin's host-services test on the scratch copy.
+  NOTE: PREMISE-SPLIT: 'verification_failed and indeterminate are distinct producer statuses that a bridge could collapse' => ESTABLISHED at mw-69cb016d.
+  DRIFT:
+
+[lens-joint.jsonl|joint] rel=CONFLICTS_WITH status=NON-EPISTEMIC
+  EV: Pi's rule and shape: pi-02-PROTOCOL-AND-RUNTIME.md:39 "Native refs use provider/type/id/scope; never fake names for absent IDs."; pi-04-ADVERSARIAL-VERIFICATION.md:65 "Null stays null;
+  never fabricate native IDs."; pins/pi-0fb90672/src/workbench/observation.ts:2 `export interface NativeRef { provider: string; type: string; id: string; scope?: string }` | Mechanical's rule
+  and shapes: mw-02-HOST-AND-EFFECT-CONTRACT.md:72 "Missing identity = null/uncertain, never synthetic."; pins/mw-69cb016d/apps/development-rig/src/effect-reconciliation.ts:53 `
+  DET:
+  NOTE: Two rules that read alike and differ in one word. Pi: an absent id is null and nothing stands in for it. Mechanical: a missing identity is 'null/uncertain', and its receipt helper for
+  the Pi function host already writes the literal string uncertain into the session-id and operation-id slots when the producer answered without an id. A bridge that co
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+######## C173
+[lens-lineage.jsonl|lineage] rel=SAME_ORIGIN_AS status=ESTABLISHED
+  EV: Blob identity 8e2fedeb (MNI env pin) vs 0fb90672 (MII env pin), `git rev-parse <rev>:<path>` in pins/pi-0fb90672: src/worktree.ts 6ec6d6c9, src/workbench/claude-host.ts baee92de,
+  src/index.ts 2c923cf1, src/workbench/hosts/local-detached.ts 66a6a23e, src/workbench/execute.ts 9aaf8fb9, execute-tool.ts d873e378, identity.ts a306fa1b, source-admission.ts 7ebfdcd6,
+  function-authority.ts 69d3194f, mechanical-descriptor.ts 17de55ce, observation.ts 3e1d43ee - all SAME. `git diff --stat 8e2fedeb 0fb90672 -- src/` = one line: A src/workbench/mechanical-c
+  DET: Per-path git blob-id equality between the two environment pins plus `git diff --stat` over src/; a changed blob or an extra src path would have shown. Same-origin caveat: the MNI grades
+  are an earlier
+  NOTE: Nothing MOVED in the descriptor/authority/source-admission/worktree/abort/detached-grant states MNI graded: every MII baseline observation about those files inherits the MNI verdict
+  byte-for-byte. The only src movement since MNI's baseline is the coordination boundary (see the separate row).
+  DRIFT: none in the cited src blobs between 8e2fedeb and 0fb90672; the deposit commits 91d8fa8c/3fc0ead1 touch only docs/programs/ and the skill; fetched trunk origin/w
+
+[lens-pi-src.jsonl|pi-src] rel=SUPPORTS status=SUPPORTED
+  EV: Pi half only: the two adapters exist (pins/pi-0fb90672/src/workbench/control-tool.ts:138; pins/pi-0fb90672/src/workbench/reconcile-tool.ts:62) over a per-run journal
+  (pins/pi-0fb90672/src/workflow/journal.ts:252-254 appendJournal).
+  DET:
+  NOTE:
+  DRIFT: The Mechanical half of the claim (an effect-intent store and reader to integrate) is outside this lens. On the Pi side 'host journal and lease state' do not exi
+
+[lens-mw-src.jsonl|mw-src] rel=CONTRADICTS status=UNSUPPORTED
+  EV: mw@69cb016d:apps/development-rig/src/effect-intent.ts:143-159 exports fileEffectIntentStore(path) (one file at a caller-chosen path) and readEffectIntent(path); EffectIntentRecord
+  (effect-intent.ts:23-37) carries intentId and invocationIdentitySha256 but no Pi invocation id; effect-reconciliation.ts:86 reconcileUncertainEffect has no caller in src (PROBE/out/static-
+  scans.txt S7: 0). Neither module is in the export map: importing them from a tarball-installed consumer fails ERR_PACKAGE_PATH_NOT_EXPORTED (PROBE/out/installed-consumer-surface-prob
+  DET: V0 read of both modules, grep for callers across apps/ packages/ scripts/ qa/, and an import probe from an installed consumer (execution on a scratch copy of the pin
+  (PROBE/copy-69cb016d = git archive
+  NOTE: Applies to the Mechanical half of C173 (the premise that P07 has a producer 'effect-intent lookup' to integrate). The module-level existence of the named functions is established; an
+  integrable lookup keyed by Pi invocation is not, and depends on mw-03 H02/H07 plus an export.
+  DRIFT: 'Mechanical exports an effect-intent store/reader' is true of module exports and false of package exports; 'lookup' has no witness at all: there is a path-addre
+
+[lens-joint.jsonl|joint] rel=SPECIALIZES status=ESTABLISHED
+  EV: Module level, as the claim states: pins/mw-69cb016d/apps/development-rig/src/effect-intent.ts:154 `export function readEffectIntent(path: string): EffectIntentRecord {`;
+  pins/mw-69cb016d/apps/development-rig/src/effect-intent.ts:143 `export function fileEffectIntentStore(path: string): EffectIntentStore {`; pins/mw-69cb016d/apps/development-rig/src/effect-
+  reconciliation.ts:86 `export async function reconcileUncertainEffect(record: ReconcileRecord, sources: ReconcileSources): Promise<Reconciliation> {` | Pi tools exist:
+  pins/pi-0fb90672/src/work
+  DET: Read of the rig package.json exports map (two keys) and of every export statement in src/host.ts at 69cb016d. Power: complete for what a consumer can import from the packed rig by
+  package specifier; a
+  NOTE: The claim as written is true at module level: the store, the reader and the reconciliation decision are exported from their source modules. NARROWER PROPOSITION, REFUTED at 69cb016d:
+  that Pi can import a Mechanical effect-intent lookup today. Through the only subpath the package exposes, and the only one Pi permits itself, none of these functions i
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+[lens-negative-ev.jsonl|negative-ev] rel=SUPPORTS status=ESTABLISHED
+  EV: [{'pin': 'mw@69cb016d', 'path': 'apps/development-rig/src/effect-intent.ts', 'lines': '53-154', 'observation': 'Module-level exports exist: openEffectIntent (53), attachEffectRefs (65),
+  settleEffectIntent (103), fileEffectIntentStore (143), readEffectIntent (154).'}, {'pin': 'mw@69cb016d', 'path': 'apps/development-rig/src', 'probe': 'readEffectIntent and
+  fileEffectIntentStore have no caller outside effect-intent.ts.'}, {'pin': 'mw@69cb016d', 'path': 'qa/integration/pi-native-interoperability-2026-11-09/m01/installed-host-l2-receipt.json',
+  'lin
+  DET: Module export list, the package exports map and a call-site search over the rig's src. Power: complete for what exists and for what an installed consumer can reach.
+  NOTE: Established at module level only. None of these symbols is reachable through ./host, the one subpath Pi may import (pi-02 section 8), so 'integrate Mechanical effect-intent lookup'
+  (P07) names a surface that does not exist for a consumer (NE-18).
+  DRIFT:
+
+######## C174
+[lens-lineage.jsonl|lineage] rel=CONFLICTS_WITH status=NON-EPISTEMIC; flagged as a reconciliation condition: compatible only if the MII adapter persists into the existing journal/task store, otherwise it conflicts with EAT-R239/EAT-R250
+  EV: MNI docs/workbench/programs/mechanical-native-interoperability-2026-11-09/requirements/ATOMIC-REQUIREMENTS.md EAT-R239 'Function state MUST live in the existing Workbench
+  task/observation store; the function path MUST NOT introduce a parallel hidden task table' and EAT-R250 'journal a durable local intent record ... reusing the existing workflow journal
+  rather than a new store'. Existing journal at 0fb90672: pins/pi-0fb90672/src/workflow/journal.ts (on-disk per-run append-only JSONL, appendFileSync :254; nativeRefs member :285);
+  workflowTasks s
+  DET: Literal grep of the MII corpus for journal.ts|workflowTasks|existing journal (0 hits); requirement text read.
+  NOTE: Remediation ADD_MISSING_PREMISE: MII P02/P07 must state whether the durable lease/journal reuses src/workflow/journal.ts and the task store, or record an explicit supersession of
+  EAT-R239/R250 with reasons.
+  DRIFT: none
+
+[lens-lineage.jsonl|lineage] rel=CONFLICTS_WITH status=C017/C054 SUPPORTED with a caveat (the Claude-host 'primitive' carries a witnessed pending cancellation defect); C168/C174 PROPOSAL missing MNI's EAT-R253 ordering gate; C207/C224 NORMATIVE
+  EV: pins/pi-0fb90672/test/workbench-mwi-cancel-repro.test.ts:1353-1359 describe('EAT-R015 a runtime skip issued while the host's beforeDispatch is parked (wb-9v02)') / it('R015-SPAWN fresh
+  spawn: the seam validates, and the skip is lost: one SDK start, settled done...') expecting kind 'observed-violation' (breach literal 'sdk-started-after-skip' :472);
+  docs/workbench/receipts/wb-9v02.md: 12 dated entries, each 'Status: pending, unchanged ... this cut carries no fix ... the witnessed violations authorize a separate repair proposal for slice
+  PI-4'. M
+  DET: Literal grep of the repro's verdict literal and the receipt's status lines; blob identity of the two host files; regex over the bead store; grep of the MII corpus.
+  NOTE: A known open defect that MNI made a precondition of effectful dispatch disappears from the successor program and has no live carrier bead. Remediation ADD_MISSING_PREMISE in pi-01
+  section A and pi-03 P05/P07: cite wb-9v02/EAT-R253 and keep the dispatch-disabled-until-repaired gate.
+  DRIFT: none: the violation is witnessed at 8e2fedeb and still at 0fb90672.
+
+[lens-joint.jsonl|joint] rel=CONTRADICTS status=REFUTED
+  EV: Pi draws Mechanical edges only into P04 and P08: pi-03-IMPLEMENTATION-PACKETS.md:8 "+-> P02 durable lease/fencing ----------+--> P04 composed admission --> P05 registered function
+  launcher"; pi-03-IMPLEMENTATION-PACKETS.md:10 "+-> P06 observation contract [parallel] -+-------------+---------------------+--> P07 journal/control/reconcile"; pi-03-IMPLEMENTATION-
+  PACKETS.md:51 "### P06 — Producer-qualified observation bridge (P0; parallel with P04)"; pi-03-IMPLEMENTATION-PACKETS.md:57 "### P07 — Durable invocation journal, controls and reconciliati
+  DET: Two absences carry this row. (a) No effect-intent, reconciliation or progress surface is importable from the rig: read of the two-key exports map in the rig package.json and of every
+  export statement
+  NOTE: PREMISE GRADED: that the Pi dependency graph and packet headings state the complete set of Mechanical prerequisites: none for P02, P06 and P07, and for P05 only what it inherits
+  through P04. Pi's own packet text and the pinned code contradict it. P07 must 'integrate Mechanical effect-intent lookup', and no effect-intent or reconciliation function i
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+[lens-joint.jsonl|joint] rel=DEPENDS_ON status=UNDETERMINED
+  EV: Pi persists an effect intent before calling Mechanical: pi-02-PROTOCOL-AND-RUNTIME.md:22 "A6 journal effect intent durably and send only a constrained reviewed execution plan to
+  Mechanical. Return launch reference without claiming success/completion."; pi-02-PROTOCOL-AND-RUNTIME.md:17 "A1 create invocation intent id, capture host-only scope
+  {principal,sessionId,authorizedRoot}, grants and budgets; refuse unknown authority data."; pi-02-PROTOCOL-AND-RUNTIME.md:34 "Journal immutable events: admitted, lease_acquired,
+  effect_intent_persisted, dispa
+  DET: Case-insensitive counts asserted by this generator: 'journal' occurs 14 times in the Pi files and once in the Mechanical files (in the README's packet list); the Pi files never say
+  where Mechanical's
+  NOTE: Two durable records of 'effect intent' are specified for one invocation, a Pi journal event written before the handoff and a Mechanical intent record written before the provider
+  writer, and the relation between them is not defined by either program: which is authoritative on recovery, whether they share an id, who chooses where Mechanical's record
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+[lens-contradict.jsonl|contradict] rel=CONFLICTS_WITH status=C142/C163 UNSUPPORTED (prerequisite sets conflict across repos and the labels are ambiguous); C139/C141 NON-EPISTEMIC
+  EV: pi-03 L39: '### P04 — Reviewed installed host consumer (P0; MW H01/H02)' and L11: 'Mechanical H01/H02/H03 host, native proof, services ----> P08 joined native journey' | mw-05 L27: '|
+  H03 exact executable manifest | Pi P04 installed host |', L28: '| H04 closed binding and allowedEffects | Pi P03/P04 composed admission |', L30: '| H06 composed host entrypoint | Pi P04/P05
+  authority transitivity |' | mw-03 L63: '### H08 — Registered Pi joint native acceptance (P0; H05–H07 + Pi P05–P07)' and L11 'H05 + H06 + H07 + Pi registered dispatcher ----> H0
+  DET: Reconstructed both dependency graphs as edge lists from pi-03 L5-14 + pi-05 L29-34 and mw-03 L5-14 + mw-05 L21-32; compared the Mechanical prerequisites each side assigns to Pi P04 and
+  to the joined j
+  NOTE: Both repos cannot schedule against each other's graph. Remediation: SURFACE_DISAGREEMENT then one ratified joint DAG in P00/H00.
+  DRIFT: DAG conflict: Pi says P04 needs 'MW H01/H02' (under pi-05 numbering: binding + callbacks; under mw-03 numbering: Forge certificate + effect law); MW says P04 ne
+
+[lens-contradict.jsonl|contradict] rel=CONFLICTS_WITH status=NON-EPISTEMIC; SPLIT_CLAIM the term into 'event replay (idempotent, always allowed)' and 'effect replay (denied on unknown)'
+  EV: pi-02 L34: 'replay is idempotent by event id. Native events are append-only facts, projection can be rebuilt.' | pi-01 L23 (I7): '... produce explicit uncertainty, retained native refs
+  and zero blind replay.' | pi-02 L44: 'No auto re-invoke on unknown.' | mw-03 L30: 'Unknown denies replay' | mw-02 L61: 'A new writer attempt requires an explicitly new authorized attempt
+  only after proven safe effects; never automatic on timeout.'
+  DET: Collected every use of 'replay' and classified it as event/projection replay or effect/writer replay.
+  NOTE: A requirement writer copying 'zero blind replay' and 'replay is idempotent' into one row would produce a contradiction; naming the two senses prevents it.
+  DRIFT: semantic: one token for two opposite policies (always-idempotent vs never-automatic)
+
+[lens-negative-ev.jsonl|negative-ev] rel=ASSUMES status=UNSUPPORTED
+  EV: [{'pin': 'mw@69cb016d', 'path': 'apps/development-rig/src/host.ts', 'lines': '13-18', 'observation': 'The export list holds no effect-intent, reconciliation or service-composition
+  symbol.'}, {'pin': 'mw@69cb016d', 'path': 'apps/development-rig/src/host-services.ts', 'lines': '30-103', 'observation': "createDevelopmentServices (30), developThroughHost (53),
+  projectForgeVerification (70) and describeProducerReceipt (103) have no caller in the rig's src and are not re-exported by host.ts; one test file uses them."}, {'pin': 'companion program
+  (mw-
+  DET: Export list of the one consumable subpath and a call-site search over apps/development-rig/src for each symbol. Power: complete for what an installed consumer can reach and for
+  production callers in t
+  NOTE: Embedded premises only: that Pi can today integrate a Mechanical effect-intent lookup (P07) and that a producer host runs the four callbacks composed from native services (P04 Done,
+  H02). At the pin the lookup is module-internal and the four-callback adapter is test-only, while the native path in live-development.ts is a separate flow. Each is a Me
+  DRIFT:
+
+######## C175
+[lens-mw-src.jsonl|mw-src] rel=ASSUMES status=NON-EPISTEMIC
+  EV: The first-release definition requires a 'strict native Forge gate' and P08/V4 require a real verified case 'using native evidence only'. The companion's strict rule requires
+  gate_passed===true, native candidate commit/tree, native gate definition AND a pinned execution environment (mw-01 MW-I01; mw-02 §4; mw-04 Q05 'execution_environment.pinned false/missing ...
+  indeterminate'). In the producer repository at the pin, execution_environment.pinned is false in every one of its 148 occurrences across the 16 evidence files that carry it (54 JSON fil
+  DET: JSON walk over every evidence and program receipt file at the pin for members named pinned, gated_commit, gated_tree, harness; read of the test fixture. No Forge gate was run by this
+  lens; the install
+  NOTE: PREMISE-SPLIT: 'a native Forge full gate in the first-release topology can yield a strict-native PASS' => UNDETERMINED. Missing artifact: one native gate.run envelope from the
+  currently installed Forge on a clean committed disposable package showing execution_environment.pinned true together with native commit/tree and gate definition; or a joint d
+  DRIFT: Attainability of the positive strict case in the stated topology (same machine, host execution) is presupposed, never evidenced. All available witnesses point t
+
+[lens-mw-src.jsonl|mw-src] rel=CONFLICTS_WITH status=NON-EPISTEMIC
+  EV: Paths the companion packets name that do not exist at the pin (PROBE/out/static-scans.txt S9): apps/development-rig/src/effect-abort.ts (mw-03:29; the module is post-dispatch-abort.ts),
+  the directory 'tests/' in 'tests/effect-intent.test.ts', 'tests/entrypoint-*.test.ts', 'tests/host-facade.test.ts' (mw-03:29,41,52; the directory is test/), and 'progress' (progress-
+  stages.ts). mw-README:20 says installed-host.ts 'packs/imports exact tarball'; it copies and installs a caller-supplied tarball and never packs (installed-host.ts:19-35). All Mechani
+  DET: git cat-file -e for each cited path at 69cb016d.
+  NOTE: Low severity, but a bead written from mw-03 H02/H04/H06 verbatim would point agents at nonexistent files. Not a defect of the Pi artifact; recorded because Pi's dependency rows inherit
+  it.
+  DRIFT: The producer packets that Pi's P07/P08 depend on carry phantom file names; the Pi corpus's own Mechanical path references are sound.
+
+######## C176
+[lens-lineage.jsonl|lineage] rel=CONFLICTS_WITH status=C139/C141 PROPOSAL (NON-EPISTEMIC) whose sequencing contradicts the live DAG - the MII parallelism is a bead-graph edit, not a description; C187-C204 NORMATIVE with no lineage to the in-flight A/B/C rows
+  EV: MII pi-03 dependency graph: 'P06 observation contract [parallel]' hangs off P00 only and the P06 heading reads '(P0; parallel with P04)'. Live beads at 0fb90672 (.beads/issues.jsonl):
+  wb-9a1o [MWI-outcomes] blocked by wb-4bxo; wb-upad [MWI-observe] blocked by wb-4bxo, wb-9a1o, wb-mwsy; wb-4bxo blocked by wb-y0n6, wb-2ukh (+ closed wb-ocie, wb-201v, wb-3121). wb-xr1z (MNI
+  P08, EAT-R265..R279: A01-A14 + B01-B14 through registered tools) status in_progress, notes 'STOP (predecessor-first, no cut) - ws-10 run g10-work-s281, written 2026-11-09T22:44
+  DET: Bead store dependency read; ASCII graph read; grep of pi-04/mw-04 for A0|B0|Q0 ids (0 hits in MII; MNI ids absent from MII).
+  NOTE: Three unmapped falsifier vocabularies and a label 'P08' that means the adversarial matrix in the live bead and native acceptance in MII. Remediation: one joint falsifier id map (G/P
+  <-> A/B/C <-> Q) and explicit edge changes if P06 is to run before the launcher; release the stale wb-xr1z claim before reusing it.
+  DRIFT: none; wb-xr1z's in_progress is a stale claim lock (no cut), not active implementation.
+
+[lens-lineage.jsonl|lineage] rel=SPECIALIZES status=C024 ESTABLISHED (scoped to a JOINED invocation: the trial is Pi-only, no Mechanical producer); C054/C075 ESTABLISHED; C204/C176 NORMATIVE/PROPOSAL that should extend wb-7wkb's harness rather than start one
+  EV: pins/pi-0fb90672/test/worktree-process-kill-preservation.test.ts (added 17dbc50c wb-7wkb 2026-11-09, extended c13cf116, 9389a0a3 wb-7u0r, 83dde194 wb-okve; 12 cases): a child Node
+  process runs the real cleanupWorktree parked at each of five git steps and is killed; separate verifier processes read before/after snapshots and the exact tracked/untracked bytes.
+  docs/workbench/receipts/wb-7wkb.md: EAT-R215 'new process-kill trial'; 'Not claimed: a kill inside a running git process; power loss; a kill of a Pi session or of an AgentManager run'; EAT-
+  DET: Test file and receipt read; commit attribution via `git log --name-only`; grep of the MII corpus.
+  NOTE: Unacknowledged extension: MII P09 should reuse the wb-7wkb kill/verifier harness and inherit its 'not claimed' list; MII's absence claims about crash proof stay correct only because
+  they are scoped to the joined route.
+  DRIFT: MOVED vs MNI baseline: Pi-only process-kill preservation evidence now exists for the parked-step forms (EAT-R215); EAT-R216 remains BLOCKED.
+
+[lens-joint.jsonl|joint] rel=CONFLICTS_WITH status=NON-EPISTEMIC
+  EV: Shared tests are promised: pi-02-PROTOCOL-AND-RUNTIME.md:48 "Both test the same versioned fixture vectors."; mw-03-IMPLEMENTATION-PACKETS.md:20 "**Done:** jointly agreed contract
+  fixtures; no feature marked joined yet." | Pi identifiers: pi-03-IMPLEMENTATION-PACKETS.md:69 "**Change:** tests for G01–G12 and Pi-specific P-cases, process-kill harness, soak
+  instrumentation."; pi-04-ADVERSARIAL-VERIFICATION.md:28 "| P13 | principal or grant revoked during install | final-boundary refusal, zero writer calls |" | Mechanical identifiers:
+  mw-03-IMPLEMEN
+  DET: Regex census asserted by this generator: no Q-identifier occurs in the six Pi files; no G01..G12 and no P13..P18 occurs in the six Mechanical files; the Mechanical files define 24
+  distinct Q-identifie
+  NOTE: Two disjoint test namespaces cover largely the same faults with no cross-reference, so 'the same versioned fixture vectors' has no shared identifier to hang on. Content mapping:
+  G01~Q01; G02~Q03; G03~Q04+Q05; G04~Q11; G05~Q12; G06 and G07~Q18; G09~Q16; G11~Q19; G12~Q08; P13 and P14~Q17. Pi-only: G08 (Beads notes), G10 (forged request fields; Mechan
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+
+######## C177
+[lens-lineage.jsonl|lineage] rel=CONFLICTS_WITH status=C137 NON-EPISTEMIC (definition) with its embedded mapping premise SUPPORTED as corrected above; C139/C141/C143 PROPOSAL whose packet names collide with live MNI labels (P01, P02, P04-P09 denote different work in the two programs)
+  EV: pins/pi-0fb90672/docs/programs/mechanical-native-interoperability-2026-11-09/02-IMPLEMENTATION-PACKAGES.md headings: P00 re-pin/adopt ABI, P01 safety foundations, P02
+  descriptor+installed package, P03 authority+source admission, P04 registered workflow_execute(function) branch, P05 observation, P06 controls/journal/reconcile, P07 first live journey, P08
+  adversarial matrix, P09 crash/load, P10 release, P11 detached/Furnace, P12 HX/RF+coordination. MII pi-03 headings: P00 re-pin/ratify, P01 canonical input, P02 durable lease, P03 authority
+  rechec
+  DET: Side-by-side heading extraction of the two packet documents; bead-store read of the epic description; literal grep of the skill for P07/P08-P10.
+  NOTE: Three P-number schemes now coexist on master (MNI beads+skill, MII docs, MW companion in MII numbering). Remediation SURFACE_DISAGREEMENT + ADD_MISSING_PREMISE: publish one MII-label
+  -> MNI-label -> bead-id map (the EAT-R309 reconciliation duty) before any bead is filed; the skill's line 40 must be renumbered or qualified.
+  DRIFT: none
+
+[lens-lineage.jsonl|lineage] rel=CONTRADICTS status=C220 ESTABLISHED at 0fb90672 ('begins with the November 9 program'); at the document pin the skill carries dual routing (MII 'next', MNI 'current, start with') and the three other surfaces still route to MNI - 'the skill points at MII now' is SUPPORTED only for the link, REFUTED for 'as the program to start with'
+  EV: `git show 3fc0ead1:.agents/skills/pi-mechanical-interop/SKILL.md` (object reachable in pins/pi-0fb90672): line 8 '**Next design program (2026-11-10, planned; not shipped):** [mechanical-
+  interop-integrity-2026-11-10](../../../docs/programs/mechanical-interop-integrity-2026-11-10/README.md) ... Treat the November 9 program below as established design lineage'; line 11
+  '**Start with the current local Pi design program:** `docs/programs/mechanical-native-interoperability-2026-11-09/README.md`'. The 3fc0ead1 diff only shortens the link from ../../..
+  DET: Read of the four routing surfaces at 3fc0ead1 and the two deposit commits' file lists; relative-path resolution checked with git cat-file -e.
+  NOTE: Remediation SURFACE_DISAGREEMENT / ADD_TEMPORAL_QUALIFIER: one entry program per surface; the MANIFEST's 'MII supersedes/extends MNI packet scopes' is not what any routing surface says
+  (the skill calls MNI 'established design lineage' and 'current').
+  DRIFT: document pin 3fc0ead1 vs env pin 0fb90672: the skill's first bold line changed; no other routing surface moved.
+
+[lens-lineage.jsonl|lineage] rel=ASSUMES status=C002 ESTABLISHED (0fb90672 is a master continuity-merge commit); C005(ii) 'self-contained' UNSUPPORTED as 'nothing has to be fetched': the corpus, both requirement sets and the bead label map are absent from the branch where machine lanes cut; C034/C229 NORMATIVE but missing the trunk premise
+  EV: In pins/pi-0fb90672: `git merge-base 0fb90672 ce180d82` = ce180d82 (trunk workbench/implementation-program is an ancestor of master); `git rev-list --count ce180d82..0fb90672` = 39
+  master-only commits, all docs/new-feedback (list: 18b016b2 EAT-R201..R310 requirements, 4b219f24 skill rewrite, adf2c52d..bea7c6a0 the MNI program, 0b25e14e and b8cd53aa the 11-04/11-06
+  triages, d7666a76, 7c80c343 ...). `git cat-file -e ce180d82:<path>` ABSENT for docs/programs/mechanical-native-interoperability-2026-11-09/README.md, docs/workbench/programs/mechanica
+  DET: Ancestry and path-existence checks against the fetched trunk ref; literal grep of the MII corpus for 'implementation-program' (0 hits).
+  NOTE: Operational consequence for P10/C226: a trunk lane editing SKILL.md edits the 35-line pre-MNI text, so the next continuity merge into master (which holds the MNI rewrite plus the MII
+  line) conflicts. Remediation ADD_MISSING_PREMISE: name the landing trunk, the master-only docs set and the merge direction in P00/P10.
+  DRIFT: fetched origin/workbench/implementation-program = ce180d82 (no movement visible at audit time); the MANIFEST notes L1089+ pending.
+
+[lens-lineage.jsonl|lineage] rel=ASSUMES status=NON-EPISTEMIC (P10 proposal); embedded premise 'the named doc paths exist at 0fb90672' ESTABLISHED; the validator's program-docs anchor is an unstated dependency of every MII docs cut
+  EV: pins/pi-0fb90672/qa/workbench/mwi-release.mjs:420 SKILL_PATH = '.agents/skills/pi-mechanical-interop/SKILL.md'; :440-443 the EAT-R082 same-cut pointers (W11 section, skill, program
+  docs); test/workbench-mwi-release.test.ts:855-857 pins SKILL_PATH, FEATURE_MATRIX_PATH and PROGRAM_DOCS_DIR = 'docs/workbench/programs/mechanical-workflows-interop-2026-11-04/' and refuses a
+  slice cut that leaves the skill or docs pointer unchanged ('same-cut-skill', 'same-cut-docs'). MII's program lives at docs/programs/mechanical-interop-integrity-2026-11-10/ (outs
+  DET: Read of the validator constants and their pinning test; path comparison.
+  NOTE: Remediation ADD_MISSING_PREMISE: P10 must either touch the 11-04 program directory per slice cut or re-pin PROGRAM_DOCS_DIR (a validator change gated by test/workbench-mwi-
+  release.test.ts).
+  DRIFT: none
+
+[lens-pi-src.jsonl|pi-src] rel=SUPPORTS status=ESTABLISHED
+  EV: Each named surface exists at the pin: pins/pi-0fb90672/docs/workbench/feature-matrix.md:108-112 (W11, `planned`; the row text reads 'Hosted develop() with real scope-limited service
+  bindings (HX->RF->Claude SDK->Forge composition; four domain outcome variants preserved)'), pins/pi-0fb90672/README.md, pins/pi-0fb90672/AGENTS.md, pins/pi-0fb90672/.agents/skills/pi-
+  mechanical-interop/SKILL.md (39 lines; :8 '**Start with the current local Pi design program:** `docs/programs/mechanical-native-interoperability-2026-11-09/README.md`'), and docs/workbe
+  DET: ls of docs/workbench and .agents/skills/pi-mechanical-interop; grep -n W11 over the feature matrix.
+  NOTE: Established is the existence premise and the W11 wording; neither is a witness of a joined route. [Status scope: the status is for the embedded empirical premise; C177 (PROPOSAL) is a
+  rule or proposal row and stays NON-EPISTEMIC as such.]
+  DRIFT: The W11 row still describes the HX->RF composition, not the Git-census/plain first release. Three of these surfaces differ between master and the trunk branch a
+
+[lens-pi-src.jsonl|pi-src] rel=QUALIFIES status=NON-EPISTEMIC
+  EV: An existing release validator constrains the surfaces these rows change. pins/pi-0fb90672/qa/workbench/mwi-release.mjs:432 `export const HOSTS_DIR = "src/workbench/hosts/";` and :985
+  rule `w11-absence-stale`: 'W11 states that no binding host exists while <modules> names MechanicalWorkflows'; :1017-1019 `traceability-changed` (TRACEABILITY must equal the cut base);
+  :1023-1025 `shared-index-added` for any added docs/**/index.md; :1028-1032 `receipt-not-per-bead` ('a receipt is one per-bead file, docs/workbench/receipts/<bead-id>.md') and `receipt
+  DET: Read of the validator's rule sites and of the test header; the validator was not run.
+  NOTE: Whether the validator is run against MII cuts is a process fact this lens cannot read from the pin (it is written for the November 4 program's `mwi-release` blocks). If it is: the
+  first cut that adds a host module naming Mechanical under src/workbench/hosts/ must rewrite the W11 absence sentence in that same cut (so W11 moves at P04/P05, not at P10
+  DRIFT: The artifact names W11 and the skill as P10 work and tells every packet to update status 'in the SAME implementation cut', but does not name this validator. pi
+
+[lens-negative-ev.jsonl|negative-ev] rel=SUPPORTS status=ESTABLISHED
+  EV: [{'pin': 'pi@ce180d82 (gated trunk tip), pi@0fb90672, pi@3fc0ead1 (document pin)', 'path': 'epistemic-triage/.work/negev-scratch/remediation_census_replay.py -> remediation-census-
+  replay.json; skill_line_probe2.py -> skill-line-probe2.json', 'probe': "Static replay of the STANDS and ABSENT pins of findingsOf (test/workbench-mwi-docs-remediation-
+  census.test.ts:1263-1283), all 50 rows parsed from the test file at the pin. Trunk tip ce180d82: 50 clean (positive control; page line counts match the census header). Inspected revision
+  0fb90672: 2 red,
+  DET: Static replay of the test's own string predicate through git show, validated by the all-clean reading on the tree the gate runs on. Power: exact for STANDS and ABSENT; the HIDDEN-form
+  check is not rep
+  NOTE: Status is for C220's premise, that a default-tier census reads the skill by frozen wording and line, with the measured consequence. 'Design only' does not entail 'gate-neutral': on the
+  branch the program names as its baseline two census rows already read red, and the program's own deposit adds a third. pi-05 L23 and P10 order further skill edits in
+  DRIFT: Three trees differ on this file: the skill has 35 lines on trunk, 39 at 0fb90672 and 42 at 3fc0ead1.
+
+######## C178
+[lens-pi-src.jsonl|pi-src] rel=SUPPORTS status=ESTABLISHED
+  EV: Both P11 subjects exist only in script-shaped form. Detached: pins/pi-0fb90672/src/workbench/execute-tool.ts:31-33 'Review assertion for a detached launch: the local detached host admits
+  only a reviewed script.' and pins/pi-0fb90672/src/workbench/hosts/local-detached.ts:68 `trustedScript: true;`, :416 the refusal of anything else. Furnace:
+  pins/pi-0fb90672/src/workbench/hosts/furnace-hosted.ts:1-9 'Optional Furnace-hosted execution adapter (wb-zmd, W18-C). A Pi process registers ONE deterministic workflow callback as a Furnace
+  ExecutorApp execu
+  DET: Importers of src/workbench/hosts/furnace-hosted.ts in src/ = 0 (grep); it is exercised by tests and its own forge tiers (forge.toml:39-44 furnace-hosted-retry-fault and furnace-hosted-
+  live), not from
+  NOTE: Consistent with the observe-handle row: a detached launch has no workflow_observe path today, so P11 inherits that gap as well as the binding. [Status scope: the status is for the
+  embedded empirical premise; C178 (PROPOSAL) is a rule or proposal row and stays NON-EPISTEMIC as such.]
+  DRIFT: Baseline only: a detached FUNCTION binding and a Furnace Run/Attempt for a function are both new work, which is what the packet says. pi 0fb90672 -> 3fc0ead1 (d
+
+######## C179
+[lens-lineage.jsonl|lineage] rel=CONFLICTS_WITH status=C017 SUPPORTED as an enumeration but not exhaustive (the 'do not reclassify as missing' rule is violated by MII's own omission); C179 NON-EPISTEMIC with its embedded premise 'no separate reviewed coordination id/grant exists yet' REFUTED at 0fb90672
+  EV: pins/pi-0fb90672/src/workbench/mechanical-coordination.ts (added 3658beb9 2026-11-08 wb-0gbh, narrowed 9ac06511/31759c81, 1cfbb4d7 2026-11-09 wb-ub94; both beads closed, children of
+  wb-1a3t): MECHANICAL_COORDINATION_GRANT = "workbench:coordinate" (:136), MECHANICAL_COORDINATION_AUTHORITY = "observation-only" (:138), reviewed descriptor coordination-reconcile.v1 pinned
+  by SHA-256 (:149-162), invokeMechanicalCoordination (:376); `grep -rn mechanical-coordination src/` finds no importer (component exists, wired into no registered tool); test/workb
+  DET: `git diff --name-status 8e2fedeb 0fb90672 -- src/` (the one added file), importer grep over src/, literal grep of the MII corpus for coordination|wb-0gbh|workbench:coordinate (0 hits
+  outside P12's gen
+  NOTE: A from-scratch MII P12 bead would duplicate wb-0gbh/wb-ub94, which MNI EAT-R301 forbids. Remediation ADD_MISSING_PREMISE: P12 and the README baseline must name the landed observation-
+  only boundary and its remaining installed/registered leg.
+  DRIFT: none since 0fb90672; the component was absent at MNI's 8e2fedeb and present at its doc commit b085c34e (MNI drift note K024/M022).
+
+######## C180
+[lens-lineage.jsonl|lineage] rel=ASSUMES status=NON-EPISTEMIC (P10 proposal); embedded premise 'the named doc paths exist at 0fb90672' ESTABLISHED; the validator's program-docs anchor is an unstated dependency of every MII docs cut
+  EV: pins/pi-0fb90672/qa/workbench/mwi-release.mjs:420 SKILL_PATH = '.agents/skills/pi-mechanical-interop/SKILL.md'; :440-443 the EAT-R082 same-cut pointers (W11 section, skill, program
+  docs); test/workbench-mwi-release.test.ts:855-857 pins SKILL_PATH, FEATURE_MATRIX_PATH and PROGRAM_DOCS_DIR = 'docs/workbench/programs/mechanical-workflows-interop-2026-11-04/' and refuses a
+  slice cut that leaves the skill or docs pointer unchanged ('same-cut-skill', 'same-cut-docs'). MII's program lives at docs/programs/mechanical-interop-integrity-2026-11-10/ (outs
+  DET: Read of the validator constants and their pinning test; path comparison.
+  NOTE: Remediation ADD_MISSING_PREMISE: P10 must either touch the 11-04 program directory per slice cut or re-pin PROGRAM_DOCS_DIR (a validator change gated by test/workbench-mwi-
+  release.test.ts).
+  DRIFT: none
+
+[lens-lineage.jsonl|lineage] rel=SUPPORTS status=C056/C216/C217 ESTABLISHED; C001/C147 ESTABLISHED (both registers agree nothing joined is shipped); C180 NORMATIVE
+  EV: pins/pi-0fb90672/docs/workbench/feature-matrix.md W11 section: status 'planned'; evidence cell cites 'Beads wb-04s (W11) status=blocked and wb-w12 (VC-3 epic) status=blocked; no other
+  W11 beads at the 2026-10-15 export' and 'HX->RF->Claude SDK->Forge composition'; `git diff --stat 8e2fedeb 0fb90672 -- docs/workbench/feature-matrix.md` empty (unchanged since MNI's
+  baseline; last re-measured 2026-11-07 wb-r5q2). Bead store: wb-04s blocked (updated 2026-10-15), wb-w12 blocked (updated 2026-10-15); W11 names neither epic wb-1a3t's live children nor
+  DET: Section extraction and diff of the feature matrix; bead store read; JSON read of the ledger fixture; grep of the MII corpus for status-ledger (0 hits).
+  NOTE: MII restates in prose what the landed EAT-R202 ledger records row by row (and the ledger's pins are the trunk, not master). Remediation ADD_SOURCE: cite the ledger as the status
+  register for EAT-R001..R200 and say whether MII's EAT-R391+ rows join it.
+  DRIFT: none
+
+[lens-pi-src.jsonl|pi-src] rel=QUALIFIES status=NON-EPISTEMIC
+  EV: An existing release validator constrains the surfaces these rows change. pins/pi-0fb90672/qa/workbench/mwi-release.mjs:432 `export const HOSTS_DIR = "src/workbench/hosts/";` and :985
+  rule `w11-absence-stale`: 'W11 states that no binding host exists while <modules> names MechanicalWorkflows'; :1017-1019 `traceability-changed` (TRACEABILITY must equal the cut base);
+  :1023-1025 `shared-index-added` for any added docs/**/index.md; :1028-1032 `receipt-not-per-bead` ('a receipt is one per-bead file, docs/workbench/receipts/<bead-id>.md') and `receipt
+  DET: Read of the validator's rule sites and of the test header; the validator was not run.
+  NOTE: Whether the validator is run against MII cuts is a process fact this lens cannot read from the pin (it is written for the November 4 program's `mwi-release` blocks). If it is: the
+  first cut that adds a host module naming Mechanical under src/workbench/hosts/ must rewrite the W11 absence sentence in that same cut (so W11 moves at P04/P05, not at P10
+  DRIFT: The artifact names W11 and the skill as P10 work and tells every packet to update status 'in the SAME implementation cut', but does not name this validator. pi
+
+[lens-mw-src.jsonl|mw-src] rel=CONFLICTS_WITH status=NON-EPISTEMIC
+  EV: Three receipt shapes for the joint work. Implemented and validated at the pin: mw.pi-interop-receipt.v1, snake_case, tiers L0-L6, fields mechanical_sha, pi_sha, pi_invocation_id,
+  claude_session_id, forge_operation_id, native_gate_verdict, effect_disposition, commands, negative_controls, mutants, limitations (scripts/check-interop-receipt.ts:12-22). Proposed by the
+  companion: 'mechanical.pi-host.release/v1' with packages[].installedContentSha256, claudeSdkIdentity, forgeSdkIdentity, native.environmentPin, effects.fencingGeneration, tests[] (mw-0
+  DET: Read of the validator source and of both proposed templates.
+  NOTE: Same failure family as the predecessor's phantom receipt names: a joint artifact both sides must emit is specified twice, differently. P00 should fix one schema id, one tier vocabulary
+  and one validator, and gate on it.
+  DRIFT: The 'truthful L4 source-pinned receipt from both repositories' (mw-03 H08) and Pi's V4 receipt have no single agreed schema or tier vocabulary (Pi V0-V6, produc
+
+[lens-joint.jsonl|joint] rel=CONFLICTS_WITH status=NON-EPISTEMIC
+  EV: Pi release receipt, no schema id: pi-04-ADVERSARIAL-VERIFICATION.md:65 "JSON fields: {schema, generatedAt, pi:{branch,sha,dirty},mechanical:{branch,sha,dirty}, nodeVersion,
+  sdkIdentities, packages:[{name,sha256,runtimeManifestSha256}], tier, gates:[{command,exitCode,forgeOperationId}], fixtures:[{id,positive,mutant,observed}],
+  native:{invocationId,claudeSessionId,baseCommit,baseTree,candidateCommit,candidateTree,forgeOperationId,gateDefinitionSha256,environmentBinding},
+  effects:{intentId,leaseGeneration,disposition,reconciliation}, residualUnkn
+  DET:
+  NOTE: Both receipt formats are templates. The same facts carry different names, so the two receipts of one joint run cannot be joined by field: repository blocks (Pi 'sha', Mechanical
+  'commit'; Mechanical's Pi block has no 'dirty'); SDK identity (one 'sdkIdentities' against 'claudeSdkIdentity' and 'forgeSdkIdentity'); package integrity ('runtimeManifestS
+  DRIFT: None for the cited sources. The twelve documents are byte-identical to Pi master 3fc0ead1 and MW main 6476372f (sha256 of each file compared with `git show <com
+

@@ -1,0 +1,33 @@
+{
+ "status_counts": {
+  "ESTABLISHED": 82,
+  "NON-EPISTEMIC": 124,
+  "REFUTED": 6,
+  "UNSUPPORTED": 4,
+  "SUPPORTED": 13,
+  "PLAUSIBLE": 1
+ },
+ "kind_counts": {
+  "OBSERVATION": 84,
+  "NORMATIVE": 68,
+  "INFERENCE": 10,
+  "DEFINITION": 5,
+  "SOURCE_REPORT": 5,
+  "HYPOTHESIS": 6,
+  "PROPOSAL": 52
+ },
+ "material_status_counts": {
+  "ESTABLISHED": 81,
+  "REFUTED": 6,
+  "UNSUPPORTED": 4,
+  "SUPPORTED": 13,
+  "PLAUSIBLE": 1,
+  "NON-EPISTEMIC": 43
+ },
+ "claims": 230,
+ "evidence": 465,
+ "relations": 690,
+ "patch_rows": 2,
+ "remediation_rows": 239,
+ "mismatch_rows": 18
+}

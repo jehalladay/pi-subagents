@@ -1,0 +1,153 @@
+{
+  "command": {
+    "ids": {
+      "buildOperationId": "op-d042078a098c4a078c485dcb001b2676",
+      "commandId": "cmd_8af70a7bc28f",
+      "operationId": "op-14cd8d1e269b4aa8a0311a76f03932a0",
+      "traceId": "55b7a67f51034aaf94cf41878c8bf71e"
+    },
+    "system": "forge"
+  },
+  "environment": {
+    "forge": {
+      "install": "uv-tools non-editable, /local/home/jehallad/.local/share/agent-tools-update/uv-tools/forge-20261019T103010Z",
+      "revision": "f897f3619fa9",
+      "version_line": "forge 0.2.1 (rev f897f3619fa9, built 2026-10-19, indeterminate: installed from the build directory /home/jehallad/.local"
+    },
+    "forge_sdk": {
+      "installed_how": "npm install --no-save from a fresh clone build; environment, not source",
+      "package": "@forge/sdk",
+      "revision": "1f3450aedcc04651a2f9d5f1494ba945b1b9e018",
+      "source": "https://github.com/jehalladay/Forge sdk/typescript",
+      "version": "0.1.0"
+    },
+    "host": "cloud desktop, serialized forge slot (one gate at a time)",
+    "node": "v24.20.0",
+    "rig_commit": "c89421361c15bb5e3c431be8a747926d14ba2fd7",
+    "scratch_root": "/workplace/jehallad/mw-scratch/s143-live-root (own git repo; forge.toml typing step = node --version)",
+    "scratch_root_commit": "f47d41a1c5464c3479ffd020506ccee4c1feddbc"
+  },
+  "forge_records": {
+    "operation_log": {
+      "bytes_written": 193,
+      "capture_mode": "captured",
+      "closed_at": "2026-10-20T02:44:50.398818+00:00",
+      "command": "build",
+      "command_id": "cmd_8af70a7bc28f",
+      "complete": true,
+      "created_at": "2026-10-20T02:44:49.317208+00:00",
+      "evicted_at": null,
+      "incomplete_reason": null,
+      "merged_or_split_streams": "merged",
+      "operation_id": "op-d042078a098c4a078c485dcb001b2676",
+      "path": ".forge/logs/operations/op-d042078a098c4a078c485dcb001b2676.log",
+      "retention": {
+        "max_bytes": 268435456,
+        "max_days": 30
+      },
+      "schema": "forge/operation-log/1",
+      "task": "build",
+      "trace_id": "55b7a67f51034aaf94cf41878c8bf71e"
+    },
+    "operation_record": {
+      "admission": null,
+      "cancel_requested": false,
+      "command_id": "cmd_8af70a7bc28f",
+      "created_at": "2026-10-20T02:44:49.193905+00:00",
+      "disconnected": false,
+      "forge_revision": "f897f3619fa9",
+      "history": [
+        "CREATED",
+        "RUNNING",
+        "TERMINAL"
+      ],
+      "kind": "gate-operation",
+      "method": "gate",
+      "operation_id": "op-d042078a098c4a078c485dcb001b2676",
+      "parent_operation_id": null,
+      "process": {
+        "boot_id": "6c081436-73e6-42a2-8295-dfd91f87ca1e",
+        "exit_code": null,
+        "host": "dev-dsk-jehallad-2b-bd3e1444.us-west-2.amazon.com",
+        "launch_token": null,
+        "ownership_mode": null,
+        "pgid": null,
+        "pid": 2463786,
+        "pid_start_ticks": 53738618,
+        "signal": null,
+        "started_at": null,
+        "survivors": [],
+        "tree_terminated": null
+      },
+      "recovery": null,
+      "request_id": null,
+      "result_ref": null,
+      "revision": 2,
+      "schema": "forge/operation-record/1",
+      "server_pid": 2463786,
+      "started_at": "2026-10-20T02:44:49.193985+00:00",
+      "state": "TERMINAL",
+      "terminal": {
+        "answered": true,
+        "disposition": "completed",
+        "observation_kind": "result",
+        "outcome_class": "success",
+        "refusal_code": null,
+        "signal_name": null,
+        "status": "success"
+      },
+      "terminal_at": "2026-10-20T02:44:50.467959+00:00",
+      "trace_id": "55b7a67f51034aaf94cf41878c8bf71e"
+    },
+    "terminal_event": [
+      {
+        "chain_v": 1,
+        "data": {
+          "answered": true,
+          "disposition": "completed",
+          "outcome_class": "success",
+          "status": "success"
+        },
+        "event": "operation_event",
+        "forge_revision": "f897f3619fa9",
+        "forge_variant": "python-reference",
+        "kind": "terminal",
+        "operation_id": "op-d042078a098c4a078c485dcb001b2676",
+        "prev_row_digest": "sha256:89bf57c737be7a7ad7b5235b313636589f4de8510b4b9c3861656324cade8206",
+        "seq": 7,
+        "storage_v": 1,
+        "timestamp": "2026-10-20T02:44:50.505459+00:00"
+      }
+    ],
+    "trace_steps": {
+      "test": {
+        "exit_code": 0,
+        "status": "passed"
+      },
+      "typing": {
+        "exit_code": 0,
+        "status": "passed"
+      }
+    }
+  },
+  "gated_commit": "d2f60a2e7df7eb4023037179fca0102c677c42c4",
+  "gated_tree": "b5140b65111bf0ddb10aa30e4c3933aa66356f46",
+  "mode": "live",
+  "note": "A served gate.run at forge f897f3619fa9 writes no commands.jsonl row; the gated commit and tree are the receipt frame's statements, cross-checked by the rig against the candidate's clean Git basis before and after the gate.",
+  "observation": {
+    "mode": "live",
+    "outcome": "observed",
+    "receipt": {
+      "ids": {
+        "buildOperationId": "op-d042078a098c4a078c485dcb001b2676",
+        "commandId": "cmd_8af70a7bc28f",
+        "operationId": "op-14cd8d1e269b4aa8a0311a76f03932a0",
+        "traceId": "55b7a67f51034aaf94cf41878c8bf71e"
+      },
+      "system": "forge"
+    }
+  },
+  "requirement": "MechanicalWorkflows-s14.3 (CA-R3): committed M2 exit evidence of the witnessed live journey",
+  "schema": "mw.live-gate-flow-evidence.v1",
+  "trace_id": "55b7a67f51034aaf94cf41878c8bf71e"
+}

@@ -1,0 +1,81 @@
+80 requirements parsed
+391 core NORMATIVE_DESI NORMATIVE_DECISION                 P:P00         V:V1,V2,V3    beads:w8fk           nC:3 mut:F ext:203,205
+392 core BEHAVIORAL     RISK_CONTROL                       P:P01         V:V1,V2,V3    beads:               nC:3 mut:F ext:
+393 core BEHAVIORAL     NORMATIVE_DECISION                 P:P01         V:V1,V3       beads:               nC:3 mut:F ext:154
+394 core NEGATIVE_REGRE NORMATIVE_DECISION                 P:P01         V:V1,V3       beads:               nC:3 mut:F ext:154
+395 core NEGATIVE_REGRE LINGUISTIC_INTEGRITY               P:P01         V:V1,V3       beads:               nC:3 mut:F ext:154
+396 core BEHAVIORAL     NORMATIVE_DECISION                 P:P01,P03     V:V1,V2,V3    beads:               nC:3 mut:F ext:
+397 core BEHAVIORAL     NORMATIVE_DECISION                 P:P01,P03     V:V1,V3       beads:               nC:3 mut:F ext:
+398 core NORMATIVE_DESI NORMATIVE_DECISION                 P:P00,P02,P03 V:V1,V2,V5    beads:w8fk           nC:3 mut:F ext:207,232,269
+399 core BEHAVIORAL     RISK_CONTROL                       P:P02         V:V1,V3,V5    beads:2ukh           nC:3 mut:F ext:232
+400 core BEHAVIORAL     RISK_CONTROL                       P:P02         V:V1,V3,V5    beads:2ukh           nC:3 mut:F ext:232
+401 core BEHAVIORAL     RISK_CONTROL                       P:P02,P03     V:V1,V2,V3,V5 beads:2ukh           nC:3 mut:F ext:207,232,269
+402 core BEHAVIORAL     RISK_CONTROL                       P:P02,P07     V:V1,V3,V5    beads:2ukh           nC:3 mut:F ext:232,278,280,281
+403 core BEHAVIORAL     NORMATIVE_DECISION                 P:P02,P07     V:V1,V3,V5    beads:2ukh           nC:3 mut:F ext:232,251,254,282
+404 core NORMATIVE_DESI NORMATIVE_DECISION                 P:P00,P02     V:V1,V3,V5    beads:2ukh           nC:3 mut:F ext:207,232
+405 core BEHAVIORAL     RISK_CONTROL                       P:P00,P03     V:V1,V2,V3    beads:w8fk           nC:3 mut:F ext:203,204,205
+406 core BEHAVIORAL     RISK_CONTROL                       P:P03         V:V1,V3,V5    beads:2ukh           nC:3 mut:F ext:
+407 core BEHAVIORAL     NORMATIVE_DECISION                 P:P03         V:V1,V2,V3    beads:2ukh           nC:3 mut:F ext:204,225,227,228
+408 core BEHAVIORAL     NORMATIVE_DECISION                 P:P03         V:V1,V2,V3    beads:2ukh           nC:3 mut:F ext:
+409 core BEHAVIORAL     RISK_CONTROL                       P:P03         V:V1,V2,V3,V5 beads:2ukh           nC:3 mut:F ext:
+410 core BEHAVIORAL     NORMATIVE_DECISION                 P:P03         V:V1,V2,V3    beads:2ukh           nC:3 mut:F ext:229,230,231,268
+411 core NORMATIVE_DESI NORMATIVE_DECISION                 P:P03,P04,P05 V:V1,V2,V3    beads:2ukh           nC:3 mut:F ext:
+412 core BEHAVIORAL     NORMATIVE_DECISION                 P:P05         V:V1,V2,V3    beads:4bxo           nC:3 mut:F ext:
+413 core NEGATIVE_REGRE RISK_CONTROL                       P:P05,P07     V:V1,V3,V5    beads:               nC:3 mut:F ext:160,213,253,413
+414 core NORMATIVE_DESI NORMATIVE_DECISION                 P:P05,P07     V:V0,V1,V3,V5 beads:mwsy           nC:4 mut:F ext:239,250
+415 core VERIFICATION   EVIDENCE_ACQUISITION               P:P07         V:V1,V2,V3,V5 beads:mwsy           nC:3 mut:F ext:250
+416 core BEHAVIORAL     NORMATIVE_DECISION                 P:P07         V:V1,V3,V5    beads:mwsy           nC:3 mut:F ext:250
+417 core BEHAVIORAL     NORMATIVE_DECISION                 P:P07         V:V1,V3,V5    beads:mwsy           nC:3 mut:F ext:
+418 core BEHAVIORAL     NORMATIVE_DECISION                 P:P07         V:V1,V3,V5    beads:mwsy           nC:3 mut:F ext:243,252,253
+419 core REPRESENTATION NORMATIVE_DECISION                 P:P05,P07     V:V1,V2,V3    beads:4bxo           nC:4 mut:F ext:
+420 core BEHAVIORAL     RISK_CONTROL                       P:P07         V:V1,V2,V3,V5 beads:mwsy           nC:3 mut:F ext:
+421 core BEHAVIORAL     NORMATIVE_DECISION                 P:P04         V:V2,V3       beads:y0n6           nC:4 mut:F ext:221
+422 core NEGATIVE_REGRE RISK_CONTROL                       P:P04         V:V2,V3       beads:y0n6           nC:4 mut:F ext:
+423 core NEGATIVE_REGRE NORMATIVE_DECISION                 P:P04         V:V2,V3       beads:y0n6           nC:4 mut:F ext:
+424 core BEHAVIORAL     NORMATIVE_DECISION                 P:P04         V:V1,V3       beads:y0n6,w8fk      nC:4 mut:F ext:
+425 core INSTRUMENTATIO EVIDENCE_ACQUISITION               P:P04         V:V2,V4       beads:y0n6           nC:4 mut:F ext:286
+426 core BEHAVIORAL     NORMATIVE_DECISION                 P:P05         V:V3,V4       beads:4bxo           nC:5 mut:F ext:
+427 core NEGATIVE_REGRE RISK_CONTROL                       P:P05         V:V3          beads:4bxo,2ukh      nC:4 mut:F ext:
+428 core BEHAVIORAL     NORMATIVE_DECISION                 P:P05,P06     V:V3,V4       beads:9a1o           nC:4 mut:F ext:
+429 core BEHAVIORAL     NORMATIVE_DECISION                 P:P06         V:V3          beads:9a1o           nC:4 mut:F ext:
+430 core BEHAVIORAL     NORMATIVE_DECISION                 P:P06,P08     V:V3,V4       beads:p3i2,9a1o      nC:4 mut:F ext:
+431 core VERIFICATION   EVIDENCE_ACQUISITION               P:P08         V:V4          beads:p3i2           nC:4 mut:F ext:
+432 core REPRESENTATION LINGUISTIC_INTEGRITY               P:P08,P10     V:V0,V3       beads:               nC:3 mut:F ext:
+433 core BEHAVIORAL     RISK_CONTROL                       P:P06         V:V3,V4       beads:9a1o           nC:5 mut:F ext:
+434 core BEHAVIORAL     RISK_CONTROL                       P:P06         V:V3,V4       beads:9a1o           nC:4 mut:F ext:
+435 core NEGATIVE_REGRE RISK_CONTROL                       P:P06,P07     V:V3,V4       beads:9a1o,mwsy      nC:4 mut:F ext:245
+436 core BEHAVIORAL     NORMATIVE_DECISION                 P:P06         V:V3,V4       beads:9a1o           nC:3 mut:F ext:245
+437 core VERIFICATION   EVIDENCE_ACQUISITION               P:P08         V:V0,V4       beads:p3i2           nC:4 mut:F ext:
+438 core BEHAVIORAL     NORMATIVE_DECISION                 P:P06         V:V3,V5       beads:9a1o           nC:4 mut:F ext:
+439 core BEHAVIORAL     NORMATIVE_DECISION                 P:P06         V:V3          beads:9a1o           nC:6 mut:F ext:
+440 core NEGATIVE_REGRE NORMATIVE_DECISION                 P:P06,P07     V:V3          beads:9a1o,mwsy      nC:5 mut:F ext:
+441 core REPRESENTATION LINGUISTIC_INTEGRITY               P:P05         V:V1,V3       beads:4bxo           nC:4 mut:F ext:
+442 core BEHAVIORAL     NORMATIVE_DECISION                 P:P07         V:V3,V5       beads:mwsy           nC:5 mut:F ext:
+443 core NEGATIVE_REGRE RISK_CONTROL                       P:P07         V:V3,V5       beads:mwsy           nC:5 mut:F ext:
+444 core BEHAVIORAL     NORMATIVE_DECISION                 P:P07         V:V3,V5       beads:mwsy           nC:4 mut:F ext:
+445 core BEHAVIORAL     RISK_CONTROL                       P:P07         V:V3,V5       beads:mwsy,9bof      nC:5 mut:F ext:
+446 core VERIFICATION   NORMATIVE_DECISION; secondary RISK P:P09         V:V1,V3       beads:xr1z           nC:5 mut:F ext:
+447 core VERIFICATION   NORMATIVE_DECISION; secondary RISK P:P09         V:V1,V3,V5    beads:9bof           nC:3 mut:F ext:
+448 core VERIFICATION   NORMATIVE_DECISION; secondary RISK P:P09         V:V1,V3,V5    beads:9bof           nC:3 mut:F ext:
+449 core VERIFICATION   NORMATIVE_DECISION; secondary RISK P:P09         V:V1,V2,V3    beads:xr1z           nC:5 mut:F ext:
+450 core VERIFICATION   NORMATIVE_DECISION; secondary RISK P:P09         V:V5          beads:9bof           nC:3 mut:F ext:
+451 core VERIFICATION   NORMATIVE_DECISION                 P:P06         V:V1,V3       beads:9a1o           nC:4 mut:F ext:
+452 core BEHAVIORAL     NORMATIVE_DECISION                 P:P06         V:V3          beads:9a1o           nC:4 mut:F ext:
+453 core VERIFICATION   NORMATIVE_DECISION; secondary RISK P:P09         V:V3          beads:xr1z           nC:3 mut:F ext:
+454 core BEHAVIORAL     NORMATIVE_DECISION                 P:P07         V:V3,V5       beads:mwsy           nC:3 mut:F ext:
+455 core VERIFICATION   NORMATIVE_DECISION; secondary LING P:P09         V:V5          beads:9bof           nC:3 mut:F ext:
+456 core REPRESENTATION NORMATIVE_DECISION; secondary LING P:P10         V:V0,V1       beads:yiu4           nC:4 mut:F ext:
+457 core INSTRUMENTATIO NORMATIVE_DECISION; secondary LING P:P08         V:V4          beads:p3i2           nC:3 mut:F ext:
+458 core REPRESENTATION NORMATIVE_DECISION                 P:P10         V:V1,V4,V5    beads:yiu4           nC:3 mut:F ext:
+459 core VERIFICATION   NORMATIVE_DECISION                 P:P10         V:V0,V1       beads:yiu4           nC:5 mut:F ext:
+460 core VERIFICATION   NORMATIVE_DECISION                 P:P04         V:V2          beads:y0n6           nC:3 mut:F ext:
+461 core VERIFICATION   NORMATIVE_DECISION                 P:P05         V:V3          beads:4bxo           nC:3 mut:F ext:
+462 core VERIFICATION   EVIDENCE_ACQUISITION               P:P08         V:V4          beads:p3i2           nC:3 mut:F ext:
+463 core VERIFICATION   EVIDENCE_ACQUISITION               P:P09         V:V5          beads:9bof           nC:3 mut:F ext:
+464 core VERIFICATION   EVIDENCE_ACQUISITION; secondary RI P:P02         V:V1,V3,V5    beads:2ukh           nC:3 mut:F ext:
+465 core BEHAVIORAL     NORMATIVE_DECISION                 P:P05         V:V3          beads:4bxo           nC:4 mut:F ext:
+466 core BEHAVIORAL     NORMATIVE_DECISION                 P:P06         V:V3          beads:9a1o           nC:3 mut:F ext:
+467 core BEHAVIORAL     NORMATIVE_DECISION; secondary RISK P:P07         V:V3,V5       beads:mwsy           nC:3 mut:F ext:
+468 core REPRESENTATION NORMATIVE_DECISION; secondary LING P:P10         V:V0,V1       beads:yiu4           nC:7 mut:F ext:
+469 core REPRESENTATION NORMATIVE_DECISION                 P:P00         V:V0,V1       beads:w8fk           nC:5 mut:F ext:
+470 core REPRESENTATION NORMATIVE_DECISION; secondary EVID P:P00         V:V0,V1       beads:w8fk           nC:7 mut:F ext:

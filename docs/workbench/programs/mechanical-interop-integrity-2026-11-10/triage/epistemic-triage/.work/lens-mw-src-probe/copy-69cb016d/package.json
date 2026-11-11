@@ -1,0 +1,32 @@
+{
+  "name": "@mechanical/workflows-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.18.0 <25"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "structure": "node scripts/check-structure.ts && node scripts/check-standards.ts",
+    "docs:check": "node scripts/check-docs.ts && node scripts/check-docs-stale-claims.ts",
+    "build": "npm run build --workspace @mechanical/workflows-development && npm run build --workspace @mechanical/workflows-coordination && npm run build --workspace @mechanical/development-rig",
+    "test": "npm run build && node --test scripts/*.test.ts && npm run test --workspace @mechanical/workflows-development && npm run test --workspace @mechanical/workflows-coordination && npm run test --workspace @mechanical/development-rig && node scripts/check-tap-plan.ts",
+    "fixture": "npm run build && node apps/development-rig/dist/cli.js --fixture",
+    "gate": "npm run structure && npm test && npm run docs:check",
+    "typecheck:qa": "tsc -p tsconfig.qa.json",
+    "example:landing-queue": "npm run build && node examples/run-example.ts landing-queue",
+    "example:compaction-inheritance": "npm run build && node examples/run-example.ts compaction-inheritance",
+    "example:colony-resilience": "npm run build && node examples/run-example.ts colony-resilience",
+    "example:artifact-recovery": "npm run build && node examples/run-example.ts artifact-recovery",
+    "example:quorum-evidence": "npm run build && node examples/run-example.ts quorum-evidence",
+    "example:live": "npm run build && node examples/run-example.ts live"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.2",
+    "typescript": "5.9.3"
+  }
+}

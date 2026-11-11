@@ -1,0 +1,3 @@
+citation tokens (distinct per requirement): 423 | with inline status label: 415 | distinct claims cited: 190
+label != ledger (manual read required):
+weak-status claims cited without an inline status label:

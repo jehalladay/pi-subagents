@@ -1,0 +1,64 @@
+# git facts captured 2026-11-11T06:00:00Z (read-only commands; MW pin worktree + scratch bare repo mw-remote.git)
+
+## pin HEAD
+69cb016dd293a17bcc893f2baf410a51c226f4c9 parents=c8be64dae5fe9c787305694e962e034e9b549d6e author=2026-11-10T16:41:18Z commit=2026-11-10T17:47:28Z
+
+## local tracking origin/main and its reflog
+0ffdc844b23148f2b80347663aacf1501403924e
+0ffdc844 refs/remotes/origin/main@{2026-11-11T05:56:51Z}: fetch -q origin: fast-forward
+6476372f refs/remotes/origin/main@{2026-11-11T04:28:07Z}: fetch -q origin: fast-forward
+69cb016d refs/remotes/origin/main@{2026-11-11T03:45:36Z}: fetch -q origin: fast-forward
+928b4920 refs/remotes/origin/main@{2026-11-10T09:53:52Z}: fetch -q origin: fast-forward
+
+## live remote main (scratch fetch into mw-remote.git, alternates = local objects)
+0ffdc844b23148f2b80347663aacf1501403924e
+
+## commits 69cb016d..remote-main
+0ffdc844b23148f2b80347663aacf1501403924e parents=6476372f authorDate=2026-11-11T03:41:19Z commitDate=2026-11-11T04:58:58Z | test(development-rig): test-pin the MW-R3 identifier row on the post-dispatch abort suite (MechanicalWorkflows-nfv9b.4)
+6476372fc3405e5a59f9b7f01d1f31969455b211 parents=1be2b8dc authorDate=2026-11-10T20:27:41-08:00 commitDate=2026-11-10T20:27:41-08:00 | docs: add Mechanical Pi host integrity design and native verification program
+1be2b8dc7e1e852fd35f9b6e3347386377c3f371 parents=69cb016d authorDate=2026-11-11T03:38:24Z commitDate=2026-11-11T03:54:09Z | test(development-rig): pin identifier MW-R2 to host-services.test.ts in the 04 mapping (MechanicalWorkflows-i348s.3) The 04 identifier mapping carried MW-R2 as defined with the delivery-program document as 
+
+## name-status 69cb016d..remote-main
+M	.agents/skills/mechanical-pi-host/SKILL.md
+M	apps/development-rig/test/host-services.test.ts
+M	apps/development-rig/test/post-dispatch-abort.test.ts
+A	docs/programs/pi-host-integrity-2026-11-10/01-AUDIT-AND-PROOF.md
+A	docs/programs/pi-host-integrity-2026-11-10/02-HOST-AND-EFFECT-CONTRACT.md
+A	docs/programs/pi-host-integrity-2026-11-10/03-IMPLEMENTATION-PACKETS.md
+A	docs/programs/pi-host-integrity-2026-11-10/04-VERIFICATION-AND-RELEASE.md
+A	docs/programs/pi-host-integrity-2026-11-10/05-OPERATIONS-AND-HANDOFF.md
+A	docs/programs/pi-host-integrity-2026-11-10/README.md
+M	docs/programs/pi-native-interoperability-2026-11-09/04-IDENTIFIER-MAPPING.md
+
+## pickaxe: introduction of ./host export in apps/development-rig/package.json
+24ef8984450bfeef0fd1d4a6b714f3c844fb6248 author=2026-11-09T23:25:32Z commit=2026-11-09T23:57:34Z | feat(development-rig): export the independently installed host facade ./host with SHA-256 admission guards, an external installed-consumer test and a core no-SDK guard (MechanicalWorkflows-loexn.5)
+
+## exports key at 62a10b59 (MNI env pin)
+0
+62a10b5924ccb10db428999cb148fa23f732e4fe commit=2026-11-09T06:13:13Z
+commits 62a10b59..69cb016d: 37
+62a10b59..24ef8984: 18
+
+## first-commit dates of host modules
+host.ts: 24ef8984 2026-11-09T23:57:34Z
+host-binding.ts: 6c287304 2026-11-09T22:53:09Z
+host-services.ts: c9d0ed52 2026-11-09T23:27:21Z
+effect-intent.ts: 1b554c5b 2026-11-10T01:16:25Z
+effect-reconciliation.ts: 321ef043 2026-11-07T23:33:39Z
+
+## Pi doc deposit commits
+3fc0ead1e99f854365fd4226f582eaf4f19f8858 parents=91d8fa8c commit=2026-11-10T20:27:58-08:00 | docs: correct Pi interoperability skill program link
+91d8fa8c76f4b3711545e081c949d768098a4e3b parents=0fb90672 commit=2026-11-10T20:22:15-08:00 | docs: add Pi Mechanical interoperability integrity design program and skill routing
+0fb9067262532289104417d2b7f2f25704563a75 parents=95dcdfce ce180d82 commit=2026-11-11T00:23:06Z | continuity-18: merge workbench/implementation-program (landings 1087-1088) into master
+
+## companion program presence
+69cb016d: files=0
+1be2b8dc: files=0
+6476372f: files=6
+
+## descriptor blob identity
+MW 69cb016d: d4f43d384446d692e6bafddf4f2a8a60c19df0cf sha256=68cc312ba82c5837eff64bb6de39e0db09073c836d851d550e13aa458d192d0f
+Pi fixture sha256=68cc312ba82c5837eff64bb6de39e0db09073c836d851d550e13aa458d192d0f
+
+## CI config paths at MW pin (expect none)
+0

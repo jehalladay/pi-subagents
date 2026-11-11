@@ -1,0 +1,27 @@
+{
+  "name": "@mechanical/workflows-coordination",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Pure typed coordination policy ports, composition operators and a deterministic resolver; no effects, no product SDK deps",
+  "type": "module",
+  "engines": {
+    "node": ">=22.18.0 <25"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --test test/*.test.ts"
+  },
+  "license": "MIT"
+}

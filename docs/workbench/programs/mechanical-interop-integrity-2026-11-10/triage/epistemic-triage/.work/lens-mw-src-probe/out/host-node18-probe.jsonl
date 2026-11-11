@@ -1,0 +1,1 @@
+{"probe":"host-under-out-of-range-node","node":"v18.20.2","enginesDeclared":{"node":">=22.18.0 <25"},"result":{"admitted":true,"outcome":"verified_candidate"}}

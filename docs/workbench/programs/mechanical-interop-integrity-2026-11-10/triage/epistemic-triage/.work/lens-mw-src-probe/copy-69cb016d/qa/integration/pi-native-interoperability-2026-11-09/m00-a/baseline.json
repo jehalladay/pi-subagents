@@ -1,0 +1,164 @@
+{
+  "schema": "mw.pi-interop-receipt.v1",
+  "kind": "baseline",
+  "program": "mechanical-pi-native-interop-2026-11-09",
+  "packet": "M00-A",
+  "scope": "baseline-reconciliation-at-live-main",
+  "status": "pass",
+  "evidence_tier": "L1",
+  "mechanical_sha": "7f3809fd8d6f20d22b9b4b81b6dfdb917bcc3c73",
+  "pi_sha": "b085c34ed01cb71ce0d600ac98ade7ee18e832f0",
+  "candidate_source_commit": "7f3809fd8d6f20d22b9b4b81b6dfdb917bcc3c73",
+  "candidate_source_tree": "00b00a49b3a0fd185c177252a57fa6bf987e95cf",
+  "forge_manifest_sha256": null,
+  "descriptor_sha256": null,
+  "mechanical_tarball_sha256": null,
+  "pi_definition_digest": null,
+  "pi_invocation_id": null,
+  "claude_session_id": null,
+  "forge_operation_id": "op-e645708fa67b4df283266a06f1cb31d6",
+  "native_gate_verdict": "PASS",
+  "mechanical_outcome": "absent",
+  "effect_disposition": "not-started",
+  "baseline": {
+    "node_version": "v24.20.0",
+    "sdk_version": null,
+    "sdk_resolution": "not-installed: no node_modules/@anthropic-ai/claude-agent-sdk exists in the implementing checkout or its materialized node_modules; development-rig imports the module by dynamic specifier and declares no dependency on it",
+    "gates": [
+      {
+        "scope": "root",
+        "command_id": "cmd_c34dcc937454",
+        "operation_id": "op-e645708fa67b4df283266a06f1cb31d6",
+        "verdict": "PASS"
+      },
+      {
+        "scope": "packages/development",
+        "command_id": "cmd_ff8be2a00d4d",
+        "operation_id": "op-49dbf6eac40d4e5f86f4298e0397ba2e",
+        "verdict": "PASS"
+      },
+      {
+        "scope": "packages/coordination",
+        "command_id": "cmd_15418fe5cdc5",
+        "operation_id": "op-c499560f83f943a284a1bd3b191f1a19",
+        "verdict": "PASS"
+      },
+      {
+        "scope": "apps/development-rig",
+        "command_id": "cmd_d7729bd0b1ba",
+        "operation_id": "op-b37362c682b54bdf91df04380fed8389",
+        "verdict": "PASS"
+      }
+    ]
+  },
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "-C",
+        "<implementing checkout>",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit": 0,
+      "output_path": "7f3809fd8d6f20d22b9b4b81b6dfdb917bcc3c73 (stdout)"
+    },
+    {
+      "argv": [
+        "git",
+        "ls-remote",
+        "https://github.com/jehalladay/pi-subagents",
+        "refs/heads/master"
+      ],
+      "exit": 0,
+      "output_path": "b085c34ed01cb71ce0d600ac98ade7ee18e832f0 (stdout, 2026-11-09 UTC)"
+    },
+    {
+      "argv": [
+        "node",
+        "--version"
+      ],
+      "exit": 0,
+      "output_path": "v24.20.0 (stdout)"
+    },
+    {
+      "argv": [
+        "env",
+        "FORGE_JSON=1",
+        "forge",
+        "build"
+      ],
+      "cwd": "<root>",
+      "exit": 0,
+      "output_path": "/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/OrchestrationEngineer/ledger/20261109T2018Z-run217-07-implement-c5/gate-root-base.envelope.json"
+    },
+    {
+      "argv": [
+        "env",
+        "FORGE_JSON=1",
+        "forge",
+        "build"
+      ],
+      "cwd": "packages/development",
+      "exit": 0,
+      "output_path": "/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/OrchestrationEngineer/ledger/20261109T2018Z-run217-07-implement-c5/gate-dev.envelope.json"
+    },
+    {
+      "argv": [
+        "env",
+        "FORGE_JSON=1",
+        "forge",
+        "build"
+      ],
+      "cwd": "packages/coordination",
+      "exit": 0,
+      "output_path": "/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/OrchestrationEngineer/ledger/20261109T2018Z-run217-07-implement-c5/gate-coord.envelope.json"
+    },
+    {
+      "argv": [
+        "env",
+        "FORGE_JSON=1",
+        "forge",
+        "build"
+      ],
+      "cwd": "apps/development-rig",
+      "exit": 0,
+      "output_path": "/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/OrchestrationEngineer/ledger/20261109T2018Z-run217-07-implement-c5/gate-rig.envelope.json"
+    }
+  ],
+  "negative_controls": [
+    {
+      "id": "validator-refuses-assumed-sha",
+      "observed": "scripts/check-interop-receipt.test.ts: mechanical_sha, pi_sha and native_gate_verdict set to assumed or removed each exit 2"
+    },
+    {
+      "id": "validator-refuses-pass-with-not-run",
+      "observed": "scripts/check-interop-receipt.test.ts: status pass with native_gate_verdict not-run refused"
+    }
+  ],
+  "mutants": [
+    {
+      "id": "drop-assumed-verdict-check",
+      "observed": "killed by the verdict probe"
+    },
+    {
+      "id": "drop-fixture-id-pattern",
+      "observed": "killed by the fixture probe"
+    },
+    {
+      "id": "accept-pass-with-not-run",
+      "observed": "killed by the pass probe"
+    }
+  ],
+  "performance": {
+    "measured": false,
+    "reason": "not-run"
+  },
+  "limitations": [
+    "The four gates ran at 7f3809fd on a detached checkout whose node_modules was copied from the OrchestrationEngineer rig checkout (install not run through Forge; pnpm shim has no active version), so the install is non-hermetic and not a native install PASS.",
+    "No Pi gate or Pi test ran: pi_sha names the live Pi master head read with git ls-remote and nothing else about Pi at that commit is established.",
+    "The @anthropic-ai/claude-agent-sdk is absent from the implementing checkout, so the resolved SDK version is null; the audit's host-installed 0.3.300 is not reproduced here.",
+    "pi_invocation_id, claude_session_id, forge_manifest_sha256, descriptor_sha256, mechanical_tarball_sha256 and pi_definition_digest are null: this cut runs no Pi function route, no Claude session, no packed artifact.",
+    "The receipt covers the program audit pins MW 62a10b59 and Pi 8e2fedeb only as superseded: main moved to 7f3809fd and Pi master to the recorded head, so neither audit pin describes the current state."
+  ]
+}

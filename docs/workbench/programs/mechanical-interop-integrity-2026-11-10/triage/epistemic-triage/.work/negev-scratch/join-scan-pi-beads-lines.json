@@ -1,0 +1,24 @@
+{
+ "file": ".beads/issues.jsonl",
+ "records": 1376,
+ "records_with_pi-run+outcome+forge-op": 0,
+ "hits": []
+}
+{
+ "file": ".beads/archive/issues-closed-2026-10.jsonl",
+ "records": 903,
+ "records_with_pi-run+outcome+forge-op": 0,
+ "hits": []
+}
+{
+ "file": ".beads/archive/issues-closed-2026-11.jsonl",
+ "records": 410,
+ "records_with_pi-run+outcome+forge-op": 0,
+ "hits": []
+}
+{
+ "file": ".beads/interactions.jsonl",
+ "records": 2406,
+ "records_with_pi-run+outcome+forge-op": 0,
+ "hits": []
+}

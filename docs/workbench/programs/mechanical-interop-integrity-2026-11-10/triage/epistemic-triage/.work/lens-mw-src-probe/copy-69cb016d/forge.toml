@@ -1,0 +1,26 @@
+[package]
+name = "MechanicalWorkflows"
+type = "code"
+version = "0.1.0"
+language = "typescript"
+description = "Forge-managed monorepo for independently deployable, ordinary-code workflow libraries"
+
+[toolchain]
+manager = "mise"
+config_path = ".mise.toml"
+
+# Root gate owns integration of the two members; members have their own local gates.
+# Neither Forge nor any product is asked to execute a fake integration check.
+[build]
+backend = "typescript"
+timeout = 1800
+gate = ["structure", "typing", "test", "python-consumer", "evidence", "docs"]
+tiers = ["structure", "typing", "test", "docs"]
+
+[build.commands]
+structure = { command = "npm run structure", inputs = ["packages/**", "apps/**", "forge.toml", "forge.workspace.toml", "package.json", "packages/**/forge.toml", "packages/**/package.json", "apps/**/forge.toml", "apps/**/package.json", "scripts/check-structure*.ts", "scripts/**/*.ts", "qa/**/*.ts", "apps/**/*.ts", "packages/**/*.ts", "examples/**/*.ts"] }
+typing = { command = "npm run build && npm run typecheck:qa", inputs = ["packages/**", "apps/**", "qa/**/*.ts", "scripts/**/*.ts", "examples/**/*.ts", "packages/**/tsconfig.json", "apps/**/tsconfig.json", "tsconfig.qa.json", "**/package.json", "tsconfig.base.json"] }
+test = { command = "npm test", inputs = ["packages/**", "apps/**", "scripts/**", "examples/**", "qa/**", "docs/**", "contracts/**", "README.md", "AGENTS.md", "LICENSE", "forge.toml", "forge.workspace.toml", "tsconfig.base.json", "package.json", ".buildkite", ".buildkite/**", ".builds", ".builds/**", ".circleci", ".circleci/**", ".cirrus.yml", ".drone.yaml", ".drone.yml", ".forgejo/workflows", ".forgejo/workflows/**", ".gitea/workflows", ".gitea/workflows/**", ".github", ".github/**", ".gitlab-ci.yaml", ".gitlab-ci.yml", ".semaphore", ".semaphore/**", ".tekton", ".tekton/**", ".travis.yaml", ".travis.yml", ".woodpecker", ".woodpecker/**", ".woodpecker.yaml", ".woodpecker.yml", ".zuul.yaml", "Jenkinsfile", "appveyor.yml", "azure-pipelines.yaml", "azure-pipelines.yml", "bitbucket-pipelines.yaml", "bitbucket-pipelines.yml", "buildkite.yml", "buildspec.yml"] }
+python-consumer = { command = "mise exec -- python -I -m unittest discover -s qa/integration/python-consumer -p 'test_*.py'", inputs = ["packages/**", "apps/**", "qa/integration/python-consumer/**", ".mise.toml", "forge.toml"] }
+evidence = { command = "node --test qa/performance-native.ts qa/integration/mw-coverage-audit.ts qa/integration/container-worker.test.ts qa/integration/graph-policy-host.integration.test.ts qa/adversarial/forge-gate-faults.test.ts qa/adversarial/forge-gate-cancel.test.ts", inputs = ["packages/**", "apps/**", "qa/performance-native.ts", "qa/integration/mw-coverage-audit.ts", "qa/integration/container-worker*.ts", "qa/integration/graph-policy-host.*", "qa/integration/python-consumer/fixtures/**", "qa/integration/evidence/**", "qa/adversarial/**", "docs/02-atomic-requirements.md", "docs/10-current-state-and-gaps.md", "forge.toml"] }
+docs = { command = "npm run docs:check", inputs = ["packages/**", "apps/**", "README.md", "AGENTS.md", "docs/**", "contracts/**", "qa/**", "packages/**/*.md", "apps/**/*.md", "scripts/check-docs*.ts"] }

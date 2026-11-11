@@ -1,0 +1,76 @@
+{
+ "schema": "mechanical-workflows/furnace-supervision-intervals/v1",
+ "date": "2026-10-15",
+ "furnace": {
+  "furnace_version": "0.1.0",
+  "protocol_version": 1,
+  "beads_version": "1.1.0-rc.1",
+  "beads_probe_dir": "/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/MechanicalWorkflows/MechanicalWorkflows/src/MechanicalWorkflows",
+  "supported_state_schema": 1,
+  "binary_revision": "e2294c9f00b3",
+  "binary_path": "/local/home/jehallad/.local/bin/furnace",
+  "binary_digest": "ddf8da529961f5fb3fa3524ff0482e94971c383fcce3f783e3482331559f4799"
+ },
+ "pollInterval": "2s (execution.poll_interval default, furnace config explain)",
+ "method": "intervals subtracted from Furnace's own run status (created_at, state_since) and attempt list (created_at, started_at, finished_at) timestamps recorded in 2026-10-15-furnace-process-host.json; no SDK, no wall clock of the consumer",
+ "rows": [
+  {
+   "journey": "gate-pass",
+   "runId": "frn-run-mwfh-wisp-ciz",
+   "attemptId": "frn-atm-mwfh-wisp-83m-1",
+   "finalState": "completed",
+   "exitCode": 0,
+   "runCreatedToAttemptCreatedMs": 1600,
+   "attemptCreatedToStartedMs": 1,
+   "attemptDurationMs": 8548,
+   "attemptFinishedToRunStateMs": 645
+  },
+  {
+   "journey": "gate-fail-negative-control",
+   "runId": "frn-run-mwff-wisp-chy",
+   "attemptId": "frn-atm-mwff-wisp-oaf-1",
+   "finalState": "needs_attention",
+   "exitCode": 1,
+   "runCreatedToAttemptCreatedMs": 1601,
+   "attemptCreatedToStartedMs": 1,
+   "attemptDurationMs": 2187,
+   "attemptFinishedToRunStateMs": 101
+  },
+  {
+   "journey": "gate-misconfigured-forge-binary",
+   "runId": "frn-run-mwnf-wisp-bn8",
+   "attemptId": "frn-atm-mwnf-wisp-b7q-1",
+   "finalState": "needs_attention",
+   "exitCode": 70,
+   "runCreatedToAttemptCreatedMs": 1559,
+   "attemptCreatedToStartedMs": 1,
+   "attemptDurationMs": 80,
+   "attemptFinishedToRunStateMs": 100
+  },
+  {
+   "journey": "develop-same-function-under-furnace",
+   "runId": "frn-run-mwdv-wisp-5yb",
+   "attemptId": "frn-atm-mwdv-wisp-3jk-1",
+   "finalState": "completed",
+   "exitCode": 0,
+   "runCreatedToAttemptCreatedMs": 1569,
+   "attemptCreatedToStartedMs": 1,
+   "attemptDurationMs": 34340,
+   "attemptFinishedToRunStateMs": 635
+  }
+ ],
+ "summaryMs": {
+  "runCreatedToAttemptCreatedMs": {
+   "min": 1559,
+   "max": 1601
+  },
+  "attemptCreatedToStartedMs": {
+   "min": 1,
+   "max": 1
+  },
+  "attemptFinishedToRunStateMs": {
+   "min": 100,
+   "max": 645
+  }
+ }
+}

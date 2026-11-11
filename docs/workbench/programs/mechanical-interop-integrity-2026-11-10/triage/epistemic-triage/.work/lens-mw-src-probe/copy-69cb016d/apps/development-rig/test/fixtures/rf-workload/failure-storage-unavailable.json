@@ -1,0 +1,14 @@
+{
+ "schema": "reactive-fiber.cli/v1",
+ "ok": false,
+ "command": "context.render",
+ "operation_id": "rfo_hand_derived",
+ "fixture_provenance": "hand-derived envelope for the exit 6 family (storage/backend unavailable per rf --help); the code spelling is a stand-in, not captured; a fixture result never counts as a native PASS",
+ "result": null,
+ "diagnostics": [
+  {
+   "code": "RF_STORAGE_UNAVAILABLE",
+   "message": "backend unavailable"
+  }
+ ]
+}

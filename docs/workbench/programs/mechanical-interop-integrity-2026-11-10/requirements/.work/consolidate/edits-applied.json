@@ -1,0 +1,1570 @@
+[
+ {
+  "requirement": "EAT-R441",
+  "field": "statement",
+  "finding": "RA-02",
+  "note": "statement clause replaced with the audit's section 4 text (model-facing envelope, not the inner builder type)",
+  "before": "The function launch reply MUST remain the actual pin-time shape — outer `workbench.tool-reply/v1`, inner `workbench.execute/v1` with required `contractVersion`, `status in {accepted, launched, refused}`, `completion: \"not-asserted\"`, `invoked`, `nativeRefs`, `truncated` — MUST NOT introduce the pi-05 illustration members (`tool`, `next`) or the literal `\"tool-reply/v1\"` as a contract string, MUST NOT emit `accepted` for the function route without a ratified meaning, and no launch, observation or UI surface MAY render SUCCESS/completed/verified from a launch result.",
+  "after": "The function launch reply MUST keep the registered tool's model-facing envelope as pinned — `contract: \"workbench.tool-reply/v1\"`, `tool: \"workflow_execute\"`, `ok`, `invoked`, `status`, `completion: \"not-asserted\"`, `nativeRefs` and the optional members `invocationId`, `definition`, `hostMode`, `nativeRefsOmitted`, `policy`, `provenance`, `error`, `truncated {reason, maxBytes}`, `truncation` — adding only versioned members; MUST NOT add the illustration member `next` or emit the bare string `tool-reply/v1`; MUST NOT emit `accepted` for the function route without a ratified meaning, and no launch, observation or UI surface MAY render SUCCESS/completed/verified from a launch result."
+ },
+ {
+  "requirement": "EAT-R441",
+  "field": "criteria:0",
+  "finding": "RA-02",
+  "note": "criterion 1 replaced with the audit's section 4 text",
+  "before": "Schema test: the function-route reply validates against the existing `WorkflowExecuteReply` type plus additive, versioned members only; `contractVersion === \"workbench.execute/v1\"` (or the ratified successor) and the outer `contractVersion === \"workbench.tool-reply/v1\"`; properties `tool` and `next` are absent.",
+  "after": "Through ORACLE-REG the function-route reply parses as the pinned envelope plus additive versioned members: `contract === \"workbench.tool-reply/v1\"`, `tool === \"workflow_execute\"`, `next` absent; the script-path rows of workbench-surface-census.test.ts and workbench-execute-tool.test.ts stay green unedited. A unit assertion on the pure builder checks `contractVersion === \"workbench.execute/v1\"` and boolean `truncated`."
+ },
+ {
+  "requirement": "EAT-R441",
+  "field": "rationale",
+  "finding": "RA-02",
+  "note": "rationale carries the audit's correction of the comparison object; ledger correction entry for C225 / K006 is owed (not written here)",
+  "before": "C126 ESTABLISHED (at 0fb90672 the execute envelope is `workbench.tool-reply/v1` with launch-only `invoked`/status and `completion: \"not-asserted\"`; `accepted` is a permitted type value, not a currently emitted execute status — E180: tool-replies.ts:14, execute-tool.ts:108-113/151-156, execute.ts:57-58). C071 and C072 ESTABLISHED (the envelope and the completion semantics exist to preserve). E062 (pi-05's illustration carries `tool`/`next` and the bare string `tool-reply/v1`; the real `WorkflowExecuteReply` has `contractVersion`/`truncated` required and no `tool`/`next`; C225 marks the illustration a proposal). C223 NON-EPISTEMIC (\"Never label a workflow SUCCESS because a launcher succeeded\"; M232). C063 NON-EPISTEMIC (accepted/launched != completed).",
+  "after": "C126 ESTABLISHED (at 0fb90672 the execute envelope is `workbench.tool-reply/v1` with launch-only `invoked`/status and `completion: \"not-asserted\"`; `accepted` is a permitted type value, not a currently emitted execute status — E180: tool-replies.ts:14, execute-tool.ts:108-113/151-156, execute.ts:57-58). C071 and C072 ESTABLISHED (the envelope and the completion semantics exist to preserve). E062 (pi-05's illustration carries `tool`/`next` and the bare string `tool-reply/v1`; the real `WorkflowExecuteReply` has `contractVersion`/`truncated` required and no `tool`/`next`; C225 marks the illustration a proposal). C223 NON-EPISTEMIC (\"Never label a workflow SUCCESS because a launcher succeeded\"; M232). C063 NON-EPISTEMIC (accepted/launched != completed). Consolidation correction (RA-02): the object the model reads is the registered tool's `WorkflowExecuteEnvelope` (execute-tool.ts:107-124 at 0fb90672: outer key `contract` :108, member `tool: \"workflow_execute\"` :109, built by `envelope()` :143; the script-path bytes are pinned by test/workbench-surface-census.test.ts:269), not the pure builder's `WorkflowExecuteReply` (execute.ts:65-79, which carries `contractVersion` and boolean `truncated`). The E062 / K006 comparison quoted above was made against the inner type; relative to the envelope the single foreign illustration member is `next`. C225 NON-EPISTEMIC and K006 owe a ledger correction entry (the comparison object is the envelope)."
+ },
+ {
+  "requirement": "EAT-R441",
+  "field": "criteria:2",
+  "finding": "RA-09",
+  "note": "criterion 3 bound to option (i) of the EAT-R466 decision",
+  "before": "`status === \"accepted\"` is never emitted by the function branch unless a ratified decision row is cited in the test fixture (test fails on `accepted` by default).",
+  "after": "`accepted` is emitted only under option (i) of the EAT-R466 launch-status decision recorded in the EAT-R405 ratification record; the test fails on `status === \"accepted\"` by default and admits it only when the fixture cites that recorded option."
+ },
+ {
+  "requirement": "EAT-R441",
+  "field": "conditions",
+  "finding": "RA-09",
+  "note": "conditions name the owning decision row and the G-RATIFY block",
+  "before": "none.",
+  "after": "The launch-status decision is owned by EAT-R466 and recorded in the EAT-R405 ratification record; until that record exists criterion 3 is BLOCKED on G-RATIFY (RA-09). Otherwise none."
+ },
+ {
+  "requirement": "EAT-R412",
+  "field": "criteria:2",
+  "finding": "RA-09",
+  "note": "criterion 3: empty native-ref list only under option (i)",
+  "before": "Launch returns a truthful host-minted invocation address and workbench.tool-reply/v1 completion:not-asserted while the worker continues. Real native refs are included only if observed; an empty truthful list is not replaced with a synthetic id. Existing script, detached-script and standalone subagent tests remain green.",
+  "after": "Launch returns a truthful host-minted invocation address and workbench.tool-reply/v1 completion:not-asserted while the worker continues. Real native refs are included only if observed; an empty list is permitted only under option (i) of the EAT-R466 launch-status decision and is never replaced with a synthetic id. Existing script, detached-script and standalone subagent tests remain green."
+ },
+ {
+  "requirement": "EAT-R412",
+  "field": "conditions",
+  "finding": "RA-09",
+  "note": "conditions name the owning decision row and the G-RATIFY block",
+  "before": "EAT-R391–411 relevant prerequisites plus EAT-R413 gating. Backend-conditional registration is a stated test precondition. V3 deterministic callbacks make no V4 native-provider claim.",
+  "after": "EAT-R391–411 relevant prerequisites plus EAT-R413 gating. Backend-conditional registration is a stated test precondition. V3 deterministic callbacks make no V4 native-provider claim. Launch status for a launch that has no producer-native reference yet is the EAT-R466 decision recorded in the EAT-R405 ratification record; until that record exists criterion 3's status clause is BLOCKED on G-RATIFY (RA-09)."
+ },
+ {
+  "requirement": "EAT-R466",
+  "field": "statement",
+  "finding": "RA-09",
+  "note": "row made the owner of the one launch-status decision (audit section 4 text)",
+  "before": "The launch reply MUST assert only launch (invocation ID, source commit, definition digest, host mode, launch-only status) and MUST never signal completion or SUCCESS because the launcher succeeded; the observation view MUST carry independent rows for native session, candidate commit/tree, Forge gate, evidence strength, effect intent/reconciliation and last update; empty nativeRefs MUST appear only when truthfully empty; and the exact outer/inner response envelope MUST be ratified before tests, examples or docs copy the doc-05 illustration.",
+  "after": "The launch reply MUST assert only launch (invocation ID, source commit, definition digest, host mode, launch-only status) and MUST never signal completion or SUCCESS because the launcher succeeded; the observation view MUST carry independent rows for native session, candidate commit/tree, Forge gate, evidence strength, effect intent/reconciliation and last update; empty nativeRefs MUST appear only when truthfully empty; and the exact outer/inner response envelope MUST be ratified before tests, examples or docs copy the doc-05 illustration. This row owns one decision, recorded in the EAT-R405 ratification record — launch status for an embedded function launch with no producer-native reference yet: exactly one of (i) `accepted` with a ratified meaning, (ii) `launched` carrying a host-minted Pi-native reference, (iii) the reply is delayed until the first native reference."
+ },
+ {
+  "requirement": "EAT-R466",
+  "field": "conditions",
+  "finding": "RA-09",
+  "note": "conditions state the G-RATIFY block shared by R412 / R441 / R466",
+  "before": "envelope ratification is a P00/P05 owner decision.",
+  "after": "envelope ratification is a P00/P05 owner decision. Until the launch-status decision record exists, this clause, EAT-R412 criterion 3 and EAT-R441 criterion 3 are BLOCKED on G-RATIFY (RA-09)."
+ },
+ {
+  "requirement": "EAT-R446",
+  "field": "statement",
+  "finding": "RA-03",
+  "note": "statement replaced with the audit's section 4 text (Pi-side projection legs only)",
+  "before": "The verification suite MUST implement falsifiers G01 (nominal Forge PASS missing the gate-passed datum → no strict native verification), G02 (matching commit without candidate-tree evidence → indeterminate unless documented independent native tree proof), G03 (missing/contradicted gate-definition or environment evidence → no strict promotion) and G12 (HEAD/source tree changed after native PASS → historical proof recorded, no current-source promotion), each as a red test plus negative mutant, with the classifier red/mutant landed on the Mechanical producer side first and the Pi projection assertion second.",
+  "after": "The Pi suite MUST implement the Pi-side projection legs of G01, G02, G03 and G12 — a red test and a negative mutant each, through ORACLE-REG with an injected observed envelope and, where applicable, an injected producer certificate — asserting the EAT-R433..R436 projections. The producer-side classifier tests (MW Q01, Q03, Q04, Q05, Q08 by content) are Mechanical-owned (mw-03 H01/H09; tracker wb-1zn2): the Pi receipt cites the producer receipt when it exists and records BLOCKED(producer-red-absent) when it does not. No Pi cut adds or edits a test in the Mechanical repository."
+ },
+ {
+  "requirement": "EAT-R446",
+  "field": "criteria:0",
+  "finding": "RA-03",
+  "note": "CONSEQUENTIAL: criterion 1 required a producer-side (MW) test and classifier mutant; realigned to the replaced statement using the statement's own terms (no section 4 text exists for this criterion)",
+  "before": "For each of G01/G02/G03/G12 a producer-side (MW) test injects the stated evidence defect and asserts the required classification (indeterminate / no strict promotion), and a mutant that weakens the classifier turns the test red.",
+  "after": "For each of G01/G02/G03/G12 a Pi-side red test through ORACLE-REG injects the stated evidence defect as an observed envelope (and, where applicable, an injected producer certificate) and asserts the EAT-R433..R436 projection (indeterminate / no strict promotion); a negative mutant that weakens the Pi projection guard turns the test red. The Pi receipt cites the producer-side classifier receipt (MW Q01, Q03, Q04, Q05, Q08 by content; Mechanical-owned) when it exists and records BLOCKED(producer-red-absent) when it does not."
+ },
+ {
+  "requirement": "EAT-R446",
+  "field": "tier",
+  "finding": "RA-03",
+  "note": "tier set to V1 + V3 (also discharges RA-12 for this row)",
+  "before": "V1 (producer red/mutant) + V4 projection assertion.",
+  "after": "V1 + V3 (audited tier, RA-03 / RA-12; the draft's producer-side leg and native projection leg are replaced: an injected envelope defect cannot come from a real Forge run, so the projection is the registered-route tier)."
+ },
+ {
+  "requirement": "EAT-R401",
+  "field": "statement",
+  "finding": "RA-03",
+  "note": "statement subject moved from the provider write entry (mw-03 H06) to Pi; audit's section 4 text",
+  "before": "Every admitted provider write entry MUST deny a stale or invalid lease generation through the ratified current-authority verifier before the effect is dispatched.",
+  "after": "Pi MUST expose the ratified current-generation verifier to the composed host and MUST keep effectful function readiness false for any topology in which the installed host does not demonstrably deny a stale or invalid generation at provider write entry (consumption test: stale token → zero edit, commit and gate effects)."
+ },
+ {
+  "requirement": "EAT-R391",
+  "field": "mutant",
+  "finding": "RA-03",
+  "note": "TEXT item: mutant rephrased as a consumer-side conformance failure against a fixture reader (no producer code is mutated by a Pi cut)",
+  "before": "Replace the producer hash with bare SHA-256 of canonical JSON; the byte-equality control passes but the shared digest vector must fail.",
+  "after": "Consumer-side conformance failure against a fixture reader: a fixture reader that computes bare SHA-256 of canonical JSON (dropping the ratified prefix/domain) passes the byte-equality control but must fail the shared digest vector."
+ },
+ {
+  "requirement": "EAT-R398",
+  "field": "mutant",
+  "finding": "RA-03",
+  "note": "TEXT item: mutant rephrased as a consumer-side conformance failure against a fixture host",
+  "before": "Have Mechanical accept the serialized generation without current-authority validation; the stale-token fixture must fail.",
+  "after": "Consumer-side conformance failure against a fixture host: a fixture host that accepts the serialized generation without current-authority validation must fail the stale-token fixture."
+ },
+ {
+  "requirement": "EAT-R447",
+  "field": "statement",
+  "finding": "RA-03",
+  "note": "TEXT item: statement names which arm is Pi's (audit's section 4 phrase)",
+  "before": "The suite MUST implement G04 (writer edits then restores bytes before a lost acknowledgment → no blind retry from clean HEAD) and G05 (ignored/untracked/out-of-worktree side effect with lost acknowledgment → uncertainty preserved; retry denied absent comprehensive native absence evidence), with the bounded effect class and its non-occurrence detector defined before any retry is permitted.",
+  "after": "The suite MUST implement G04 (writer edits then restores bytes before a lost acknowledgment → no blind retry from clean HEAD) and G05 (ignored/untracked/out-of-worktree side effect with lost acknowledgment → uncertainty preserved; retry denied absent comprehensive native absence evidence), with the bounded effect class and its non-occurrence detector defined before any retry is permitted. Pi-side arms only; the producer-side red is consumed."
+ },
+ {
+  "requirement": "EAT-R458",
+  "field": "criteria:0",
+  "finding": "RA-03",
+  "note": "TEXT item: criterion 1 no longer requires the MW emitter to validate (audit's section 4 text)",
+  "before": "The schema file exists with a schema id and version; the Pi and MW receipt emitters both validate against it or against explicit documented mappings; join keys resolve one logical invocation across both receipts.",
+  "after": "The schema file exists with a schema id and version; the Pi emitter validates; the MW receipt is joined through the documented mapping; MW-side adoption is tracked by wb-1zn2; join keys resolve one logical invocation across both receipts."
+ },
+ {
+  "requirement": "EAT-R448",
+  "field": "conditions",
+  "finding": "RA-04",
+  "note": "conditions replaced (cycle with EAT-R464 removed; substrate rows named)",
+  "before": "cross-process lease substrate must exist first (EAT-R464); until then these tests are definitionally red.",
+  "after": "prerequisite: EAT-R399, R400, R401, R402; red by construction until they land; EAT-R464 is downstream."
+ },
+ {
+  "requirement": "EAT-R450",
+  "field": "conditions",
+  "finding": "RA-04",
+  "note": "conditions name the substrate and journal rows instead of EAT-R464",
+  "before": "durable intent/fence journal (MII P02/P07) must exist; see EAT-R464.",
+  "after": "durable intent/fence journal (MII P02/P07) must exist: EAT-R399..R403 and EAT-R414..R417."
+ },
+ {
+  "requirement": "EAT-R463",
+  "field": "conditions",
+  "finding": "RA-04",
+  "note": "conditions name the harness, substrate, journal and joined-route rows instead of EAT-R464",
+  "before": "requires EAT-R450 harness and EAT-R464 durable lease/journal.",
+  "after": "requires the EAT-R450 harness, EAT-R399..R403, EAT-R414..R417 and the joined route (EAT-R412, R426)."
+ },
+ {
+  "requirement": "EAT-R464",
+  "field": "statement",
+  "finding": "RA-04",
+  "note": "statement narrowed to the acquisition receipt (audit's section 4 text); the 'compatible' and P00 clauses are kept",
+  "before": "The program MUST produce the currently nonexistent evidence of writer-lease exclusivity beyond one process: a durable same-machine cross-process lease (persisting after launch return, fencing stale generations, surviving restart in a recovery-held state) proven by the G06/G07 tests; the README term \"compatible distributed lease\" MUST be given a defined referent or be dropped; and the lease-owner ruling plus the wb-1zn2 external-gate dependency MUST be carried into P00 so the acquisition is tracked against its MW-owned blockers.",
+  "after": "The program MUST record, as a receipt, that EAT-R448 passed against the EAT-R399..R401 substrate in the named same-machine topology; it adds no second substrate; the README term \"compatible distributed lease\" MUST be given a defined referent or be dropped; and the lease-owner ruling plus the wb-1zn2 external-gate dependency MUST be carried into P00 so the acquisition is tracked against its MW-owned blockers."
+ },
+ {
+  "requirement": "EAT-R464",
+  "field": "criteria:0",
+  "finding": "RA-04",
+  "note": "CONSEQUENTIAL: criterion 1 asked this row to make the substrate exist; realigned to the narrowed statement (no section 4 text exists for this criterion)",
+  "before": "A durable lease substrate exists whose persisted owner is observable; G06/G07 (EAT-R448) pass against it including the restart case; timeout-only release is impossible by construction (a timeout transitions to recovery-held, never to free; mutant proves it).",
+  "after": "The receipt records that G06/G07 (EAT-R448) passed, including the restart case, against the EAT-R399..R401 substrate, whose persisted owner is observable; timeout-only release is impossible by construction (a timeout transitions to recovery-held, never to free; mutant proves it). This row builds no substrate of its own."
+ },
+ {
+  "requirement": "EAT-R464",
+  "field": "conditions",
+  "finding": "RA-04",
+  "note": "conditions state the resulting order",
+  "before": "owner decision on the \"compatible\" referent (pin owner: Pi Workbench).",
+  "after": "owner decision on the \"compatible\" referent (pin owner: Pi Workbench). Downstream of EAT-R448; resulting order EAT-R398 → EAT-R399..R403 → EAT-R448 → EAT-R464 (RA-04)."
+ },
+ {
+  "requirement": "EAT-R464",
+  "field": "tier",
+  "finding": "RA-12",
+  "note": "tier set to the audited value (metadata only)",
+  "before": "V1 + V5.",
+  "after": "V1 + V3 + V5 (audited tier, RA-12; the draft omitted the registered-route tier carried by its behaviour row EAT-R400)."
+ },
+ {
+  "requirement": "EAT-R462",
+  "field": "statement",
+  "finding": "RA-05",
+  "note": "strict-positive MUST replaced with the audit's section 4 text (non-strict V4 receipt allowed; strict stays the EAT-R437 gate)",
+  "before": "The program MUST produce the currently nonexistent joined-run evidence: a V4 receipt of one invocation through the registered Pi route reaching a Mechanical function with real Claude, real Git and a real strict Forge gate — capturing the actual strict-positive native envelope, exact resolved SDK paths/versions and the certificate result/event carrier — and, before claiming any broader absence or firstness, MUST census the evidence stores outside the two repositories (the OrchestrationEngineer ledger directory and home-directory Forge ledgers cited by existing receipts) for prior joined receipts.",
+  "after": "The program MUST produce the currently nonexistent joined-run evidence: a V4 receipt of one invocation through the registered Pi route reaching a Mechanical function with real Claude, real Git and the native Forge full gate; where EAT-R437 has settled attainability by envelope, the strict-positive envelope is captured; until then a V4 receipt whose assurance is the weak value is a valid non-strict V4 receipt and the strict clause stays `undetermined`; the receipt also captures exact resolved SDK paths/versions and the certificate result/event carrier; and, before claiming any broader absence or firstness, MUST census the evidence stores outside the two repositories (the OrchestrationEngineer ledger directory and home-directory Forge ledgers cited by existing receipts) for prior joined receipts."
+ },
+ {
+  "requirement": "EAT-R462",
+  "field": "statement",
+  "finding": "RA-05",
+  "note": "duty split with EAT-R431 stated; census scope extended to C024 / C025",
+  "before": "The program MUST produce the currently nonexistent joined-run evidence: a V4 receipt of one invocation through the registered Pi route reaching a Mechanical function with real Claude, real Git and the native Forge full gate; where EAT-R437 has settled attainability by envelope, the strict-positive envelope is captured; until then a V4 receipt whose assurance is the weak value is a valid non-strict V4 receipt and the strict clause stays `undetermined`; the receipt also captures exact resolved SDK paths/versions and the certificate result/event carrier; and, before claiming any broader absence or firstness, MUST census the evidence stores outside the two repositories (the OrchestrationEngineer ledger directory and home-directory Forge ledgers cited by existing receipts) for prior joined receipts.",
+  "after": "The program MUST produce the currently nonexistent joined-run evidence: a V4 receipt of one invocation through the registered Pi route reaching a Mechanical function with real Claude, real Git and the native Forge full gate; where EAT-R437 has settled attainability by envelope, the strict-positive envelope is captured; until then a V4 receipt whose assurance is the weak value is a valid non-strict V4 receipt and the strict clause stays `undetermined`; the receipt also captures exact resolved SDK paths/versions and the certificate result/event carrier; and, before claiming any broader absence or firstness, MUST census the evidence stores outside the two repositories (the OrchestrationEngineer ledger directory and home-directory Forge ledgers cited by existing receipts) for prior joined receipts. Duty split (RA-05): EAT-R431 owns the receipt content, provider readback and BLOCKED semantics; this row owns (a) the acquisition, citing the EAT-R431 receipt, and (b) the external-store census, whose scope extends to the crash-restart and lease absences (C024 ESTABLISHED, C025 ESTABLISHED)."
+ },
+ {
+  "requirement": "EAT-R462",
+  "field": "criteria:0",
+  "finding": "RA-05",
+  "note": "CONSEQUENTIAL: criterion 1 aligned with the replaced statement (cites the EAT-R431 receipt; non-strict V4 receipt valid)",
+  "before": "A V4 receipt (EAT-R458 schema) exists with non-null native axes validated per EAT-R457, produced through the registered route (route witness as in EAT-R461).",
+  "after": "A V4 receipt (EAT-R458 schema; content, provider readback and BLOCKED semantics owned by EAT-R431) exists with non-null native axes validated per EAT-R457, produced through the registered route (route witness as in EAT-R461); where EAT-R437 has not settled strict attainability by envelope, a receipt whose assurance is the weak value is a valid non-strict V4 receipt and carries the strict clause as `undetermined`."
+ },
+ {
+  "requirement": "EAT-R462",
+  "field": "criteria:1",
+  "finding": "RA-05",
+  "note": "census scope extended to the crash-restart and lease absences",
+  "before": "The external-store census runs with a stated detection surface (directories enumerated, query used, time window) and its result (prior joined receipts found or none-in-surface) is recorded in the receipt; absence wording stays scoped to the censused surfaces.",
+  "after": "The external-store census runs with a stated detection surface (directories enumerated, query used, time window) and its result (prior joined receipts found or none-in-surface) is recorded in the receipt; absence wording stays scoped to the censused surfaces. The census covers three absences: joined native-run receipts (C023 ESTABLISHED), joined crash-restart proof (C024 ESTABLISHED) and cross-process writer-lease proof (C025 ESTABLISHED)."
+ },
+ {
+  "requirement": "EAT-R462",
+  "field": "conditions",
+  "finding": "RA-05",
+  "note": "conditions carry the EAT-R437 gate and the one-bead filing rule",
+  "before": "blocked on MW native closure (mw-03 packets per EAT-R469 crosswalk) and opt-in credentials.",
+  "after": "blocked on MW native closure (mw-03 packets per EAT-R469 crosswalk) and opt-in credentials. Strict attainability remains the EAT-R437 acquisition gate (UNDETERMINED until settled by envelope or by recorded decision). EAT-R431, EAT-R457 and EAT-R462 are filed as legs of one bead under wb-p3i2 (RA-05)."
+ },
+ {
+  "requirement": "EAT-R431",
+  "field": "conditions",
+  "finding": "RA-05",
+  "note": "duty split with EAT-R462 stated",
+  "before": "EAT-R421-R426 landed; EAT-R253 repair receipt (E013: the parked-beforeDispatch skip loss is unrepaired at 0fb90672 and gates effectful dispatch); MW composed export and native four services (mw-03 H05/H06 — dependency by content, since the label \"Mechanical H01/H02/H03\" is UNSUPPORTED as a packet reference, C142); credentials; strict-PASS attainability UNDETERMINED (EAT-R437) — a V4 receipt with `assurance: legacy-weak` is a valid non-strict V4 receipt, not a failure and not a strict pass.",
+  "after": "EAT-R421-R426 landed; EAT-R253 repair receipt (E013: the parked-beforeDispatch skip loss is unrepaired at 0fb90672 and gates effectful dispatch); MW composed export and native four services (mw-03 H05/H06 — dependency by content, since the label \"Mechanical H01/H02/H03\" is UNSUPPORTED as a packet reference, C142); credentials; strict-PASS attainability UNDETERMINED (EAT-R437) — a V4 receipt with `assurance: legacy-weak` is a valid non-strict V4 receipt, not a failure and not a strict pass. Duty split (RA-05): this row owns the receipt content, provider readback and BLOCKED semantics; EAT-R462 owns the acquisition and the external-store census; EAT-R431, EAT-R457 and EAT-R462 are filed as legs of one bead under wb-p3i2."
+ },
+ {
+  "requirement": "EAT-R470",
+  "field": "statement",
+  "finding": "RA-06",
+  "note": "map gains P01 (audit's section 4 text); wb-w8fk status drift corrected under RA-01",
+  "before": "The program MUST publish, before build dispatch, a reconciliation map from MII packet labels to the live MNI-era beads each one extends — P00→wb-w8fk (in_progress, + carry the wb-1zn2 (deferred) external-gate tracker), P02→wb-2ukh (in_progress, which also owns the MII P03 authority surface), P03→wb-2ukh, P04→wb-y0n6 (in_progress; its title says MNI \"P02\", so append-correct its notes to record the MII P04 correspondence), P05→wb-4bxo (open), P06→wb-9a1o (open), P07→wb-mwsy (open; controls lineage wb-5a7k closed), P08→wb-p3i2 (open), P09→wb-xr1z (open) and wb-9bof (open; harness lineage wb-7wkb closed), P10→wb-yiu4 (open; docs lineage wb-12x1 closed), epic wb-1a3t (open) — reconciling by work content and current evidence, never by packet number; closed carriers (wb-7wkb, wb-5a7k, wb-12x1, wb-5ik5) and blockers MUST be retained as lineage, not reopened or re-released; every packet closure receipt MUST record the real bead id (or explicit none) with a named receipt file target; and the map MUST name the referent of the protected \"completed source changes\" of the November 9 program (file or bead list) before any MII cut touches those paths.",
+  "after": "The program MUST publish, before build dispatch, a reconciliation map from MII packet labels to the live MNI-era beads each one extends — P00→wb-w8fk (open at the 2026-11-11 live reads; + carry the wb-1zn2 (deferred) external-gate tracker), P01 → new (no MNI carrier; wb-7wkb is the closed MNI P01 and different work), P02→wb-2ukh (in_progress, which also owns the MII P03 authority surface), P03→wb-2ukh, P04→wb-y0n6 (in_progress; its title says MNI \"P02\", so append-correct its notes to record the MII P04 correspondence), P05→wb-4bxo (open), P06→wb-9a1o (open), P07→wb-mwsy (open; controls lineage wb-5a7k closed), P08→wb-p3i2 (open), P09→wb-xr1z (open) and wb-9bof (open; harness lineage wb-7wkb closed), P10→wb-yiu4 (open; docs lineage wb-12x1 closed), epic wb-1a3t (open) — reconciling by work content and current evidence, never by packet number; closed carriers (wb-7wkb, wb-5a7k, wb-12x1, wb-5ik5) and blockers MUST be retained as lineage, not reopened or re-released; every packet closure receipt MUST record the real bead id (or explicit none) with a named receipt file target; and the map MUST name the referent of the protected \"completed source changes\" of the November 9 program (file or bead list) before any MII cut touches those paths."
+ },
+ {
+  "requirement": "EAT-R470",
+  "field": "statement",
+  "finding": "RA-06",
+  "note": "map entry for P06 names the closed lineage bead (audit's section 4 text)",
+  "before": "The program MUST publish, before build dispatch, a reconciliation map from MII packet labels to the live MNI-era beads each one extends — P00→wb-w8fk (open at the 2026-11-11 live reads; + carry the wb-1zn2 (deferred) external-gate tracker), P01 → new (no MNI carrier; wb-7wkb is the closed MNI P01 and different work), P02→wb-2ukh (in_progress, which also owns the MII P03 authority surface), P03→wb-2ukh, P04→wb-y0n6 (in_progress; its title says MNI \"P02\", so append-correct its notes to record the MII P04 correspondence), P05→wb-4bxo (open), P06→wb-9a1o (open), P07→wb-mwsy (open; controls lineage wb-5a7k closed), P08→wb-p3i2 (open), P09→wb-xr1z (open) and wb-9bof (open; harness lineage wb-7wkb closed), P10→wb-yiu4 (open; docs lineage wb-12x1 closed), epic wb-1a3t (open) — reconciling by work content and current evidence, never by packet number; closed carriers (wb-7wkb, wb-5a7k, wb-12x1, wb-5ik5) and blockers MUST be retained as lineage, not reopened or re-released; every packet closure receipt MUST record the real bead id (or explicit none) with a named receipt file target; and the map MUST name the referent of the protected \"completed source changes\" of the November 9 program (file or bead list) before any MII cut touches those paths.",
+  "after": "The program MUST publish, before build dispatch, a reconciliation map from MII packet labels to the live MNI-era beads each one extends — P00→wb-w8fk (open at the 2026-11-11 live reads; + carry the wb-1zn2 (deferred) external-gate tracker), P01 → new (no MNI carrier; wb-7wkb is the closed MNI P01 and different work), P02→wb-2ukh (in_progress, which also owns the MII P03 authority surface), P03→wb-2ukh, P04→wb-y0n6 (in_progress; its title says MNI \"P02\", so append-correct its notes to record the MII P04 correspondence), P05→wb-4bxo (open), P06 → wb-9a1o (wb-upad closed into it), P07→wb-mwsy (open; controls lineage wb-5a7k closed), P08→wb-p3i2 (open), P09→wb-xr1z (open) and wb-9bof (open; harness lineage wb-7wkb closed), P10→wb-yiu4 (open; docs lineage wb-12x1 closed), epic wb-1a3t (open) — reconciling by work content and current evidence, never by packet number; closed carriers (wb-7wkb, wb-5a7k, wb-12x1, wb-5ik5) and blockers MUST be retained as lineage, not reopened or re-released; every packet closure receipt MUST record the real bead id (or explicit none) with a named receipt file target; and the map MUST name the referent of the protected \"completed source changes\" of the November 9 program (file or bead list) before any MII cut touches those paths."
+ },
+ {
+  "requirement": "EAT-R470",
+  "field": "statement",
+  "finding": "RA-06",
+  "note": "map gains P11 and P12 as deferred packets (audit's section 4 text; packet deferral, not bead status)",
+  "before": "The program MUST publish, before build dispatch, a reconciliation map from MII packet labels to the live MNI-era beads each one extends — P00→wb-w8fk (open at the 2026-11-11 live reads; + carry the wb-1zn2 (deferred) external-gate tracker), P01 → new (no MNI carrier; wb-7wkb is the closed MNI P01 and different work), P02→wb-2ukh (in_progress, which also owns the MII P03 authority surface), P03→wb-2ukh, P04→wb-y0n6 (in_progress; its title says MNI \"P02\", so append-correct its notes to record the MII P04 correspondence), P05→wb-4bxo (open), P06 → wb-9a1o (wb-upad closed into it), P07→wb-mwsy (open; controls lineage wb-5a7k closed), P08→wb-p3i2 (open), P09→wb-xr1z (open) and wb-9bof (open; harness lineage wb-7wkb closed), P10→wb-yiu4 (open; docs lineage wb-12x1 closed), epic wb-1a3t (open) — reconciling by work content and current evidence, never by packet number; closed carriers (wb-7wkb, wb-5a7k, wb-12x1, wb-5ik5) and blockers MUST be retained as lineage, not reopened or re-released; every packet closure receipt MUST record the real bead id (or explicit none) with a named receipt file target; and the map MUST name the referent of the protected \"completed source changes\" of the November 9 program (file or bead list) before any MII cut touches those paths.",
+  "after": "The program MUST publish, before build dispatch, a reconciliation map from MII packet labels to the live MNI-era beads each one extends — P00→wb-w8fk (open at the 2026-11-11 live reads; + carry the wb-1zn2 (deferred) external-gate tracker), P01 → new (no MNI carrier; wb-7wkb is the closed MNI P01 and different work), P02→wb-2ukh (in_progress, which also owns the MII P03 authority surface), P03→wb-2ukh, P04→wb-y0n6 (in_progress; its title says MNI \"P02\", so append-correct its notes to record the MII P04 correspondence), P05→wb-4bxo (open), P06 → wb-9a1o (wb-upad closed into it), P07→wb-mwsy (open; controls lineage wb-5a7k closed), P08→wb-p3i2 (open), P09→wb-xr1z (open) and wb-9bof (open; harness lineage wb-7wkb closed), P10→wb-yiu4 (open; docs lineage wb-12x1 closed), P11 → wb-zswl (deferred), P12 → wb-pxvv (deferred), epic wb-1a3t (open) — reconciling by work content and current evidence, never by packet number; closed carriers (wb-7wkb, wb-5a7k, wb-12x1, wb-5ik5) and blockers MUST be retained as lineage, not reopened or re-released; every packet closure receipt MUST record the real bead id (or explicit none) with a named receipt file target; and the map MUST name the referent of the protected \"completed source changes\" of the November 9 program (file or bead list) before any MII cut touches those paths."
+ },
+ {
+  "requirement": "EAT-R470",
+  "field": "statement",
+  "finding": "RA-01",
+  "note": "closed-carrier lineage list gains wb-upad",
+  "before": "The program MUST publish, before build dispatch, a reconciliation map from MII packet labels to the live MNI-era beads each one extends — P00→wb-w8fk (open at the 2026-11-11 live reads; + carry the wb-1zn2 (deferred) external-gate tracker), P01 → new (no MNI carrier; wb-7wkb is the closed MNI P01 and different work), P02→wb-2ukh (in_progress, which also owns the MII P03 authority surface), P03→wb-2ukh, P04→wb-y0n6 (in_progress; its title says MNI \"P02\", so append-correct its notes to record the MII P04 correspondence), P05→wb-4bxo (open), P06 → wb-9a1o (wb-upad closed into it), P07→wb-mwsy (open; controls lineage wb-5a7k closed), P08→wb-p3i2 (open), P09→wb-xr1z (open) and wb-9bof (open; harness lineage wb-7wkb closed), P10→wb-yiu4 (open; docs lineage wb-12x1 closed), P11 → wb-zswl (deferred), P12 → wb-pxvv (deferred), epic wb-1a3t (open) — reconciling by work content and current evidence, never by packet number; closed carriers (wb-7wkb, wb-5a7k, wb-12x1, wb-5ik5) and blockers MUST be retained as lineage, not reopened or re-released; every packet closure receipt MUST record the real bead id (or explicit none) with a named receipt file target; and the map MUST name the referent of the protected \"completed source changes\" of the November 9 program (file or bead list) before any MII cut touches those paths.",
+  "after": "The program MUST publish, before build dispatch, a reconciliation map from MII packet labels to the live MNI-era beads each one extends — P00→wb-w8fk (open at the 2026-11-11 live reads; + carry the wb-1zn2 (deferred) external-gate tracker), P01 → new (no MNI carrier; wb-7wkb is the closed MNI P01 and different work), P02→wb-2ukh (in_progress, which also owns the MII P03 authority surface), P03→wb-2ukh, P04→wb-y0n6 (in_progress; its title says MNI \"P02\", so append-correct its notes to record the MII P04 correspondence), P05→wb-4bxo (open), P06 → wb-9a1o (wb-upad closed into it), P07→wb-mwsy (open; controls lineage wb-5a7k closed), P08→wb-p3i2 (open), P09→wb-xr1z (open) and wb-9bof (open; harness lineage wb-7wkb closed), P10→wb-yiu4 (open; docs lineage wb-12x1 closed), P11 → wb-zswl (deferred), P12 → wb-pxvv (deferred), epic wb-1a3t (open) — reconciling by work content and current evidence, never by packet number; closed carriers (wb-7wkb, wb-5a7k, wb-upad, wb-12x1, wb-5ik5) and blockers MUST be retained as lineage, not reopened or re-released; every packet closure receipt MUST record the real bead id (or explicit none) with a named receipt file target; and the map MUST name the referent of the protected \"completed source changes\" of the November 9 program (file or bead list) before any MII cut touches those paths."
+ },
+ {
+  "requirement": "EAT-R470",
+  "field": "conditions",
+  "finding": "RA-06",
+  "note": "conditions point at the explicit deferral section",
+  "before": "bead statuses drift with the store; the validator re-reads live status at every gate rather than trusting this file's snapshot.",
+  "after": "bead statuses drift with the store; the validator re-reads live status at every gate rather than trusting this file's snapshot. P11, P12 and V6 are explicit deferrals (section 'Explicit deferrals'; RA-06): 'P11 → wb-zswl (deferred)' and 'P12 → wb-pxvv (deferred)' state the packet disposition; the bead status is whatever the live read returns."
+ },
+ {
+  "requirement": "EAT-R438",
+  "field": "criteria:2",
+  "finding": "RA-06",
+  "note": "criterion 3: untestable detached arm marked deferred to P11; the refusal is the first-release assertion",
+  "before": "Given a detached function launch (if admitted at all before P11), the execute reply's guidance text does not contain \"observe the launch through workflow_observe\" and contains an explicit `observability: \"not-observable-in-this-mode\"` member; a text census over `src/workbench/execute-tool.ts` reply builders enforces it.",
+  "after": "First-release assertion: a detached function launch is refused (EAT-R404 criterion 3, EAT-R412 criterion 2), and a text census over `src/workbench/execute-tool.ts` reply builders asserts that no function-route reply contains \"observe the launch through workflow_observe\" for a mode that is not observable. DEFERRED to P11 (EXTENDS EAT-R296; carrier wb-zswl): for an admitted detached function launch the execute reply's guidance text does not contain that instruction and carries an explicit `observability: \"not-observable-in-this-mode\"` member."
+ },
+ {
+  "requirement": "EAT-R469",
+  "field": "statement",
+  "finding": "RA-07",
+  "note": "crosswalk namespaces D and tier and the two glossary rows added (audit's section 4 text)",
+  "before": "Before any cross-repository dependency is declared or scheduled, the program MUST ratify one joint identifier table covering: Pi handoff rows H01–H05 and MW packet labels (with owner + document namespace + content on every row), MW README aliases, Pi packets P00–P12, the G/P↔Q falsifier correspondence, MNI lineage labels and actual bead ids; after ratification, a dependency declared by bare H-number (or bare packet number) without owner/content qualification MUST be rejected by review tooling. The crosswalk MUST record the content mapping the audit established — Pi H01→MW H03/H04/H06, Pi H02→MW H05, Pi H03→MW H01, Pi H04→MW H02/H07 — as the starting proposal for ratification, and MUST name exact export paths for consumed MW surfaces.",
+  "after": "Before any cross-repository dependency is declared or scheduled, the program MUST ratify one joint identifier table covering: Pi handoff rows H01–H05 and MW packet labels (with owner + document namespace + content on every row), MW README aliases, Pi packets P00–P12, the G/P↔Q falsifier correspondence, MNI lineage labels and actual bead ids; after ratification, a dependency declared by bare H-number (or bare packet number) without owner/content qualification MUST be rejected by review tooling. The crosswalk MUST record the content mapping the audit established — Pi H01→MW H03/H04/H06, Pi H02→MW H05, Pi H03→MW H01, Pi H04→MW H02/H07 — as the starting proposal for ratification, and MUST name exact export paths for consumed MW surfaces. The crosswalk MUST also carry namespace `D` (id, ledger id PI-I0n / MW-I0n, owner in each program, severity in each program, content, Pi consumption rows, MW packet, ruling), namespace `tier` (V ↔ MW-L ↔ L0-L10; EXTENDS EAT-R209), and glossary rows for 'strict' (axes of EAT-R434, attainability EAT-R437) and MW-CONTRACT (the EAT-R405 record)."
+ },
+ {
+  "requirement": "EAT-R469",
+  "field": "criteria:3",
+  "finding": "RA-07",
+  "note": "acceptance criterion added (audit's section 4 text)",
+  "before": "",
+  "after": "The table records one owner ruling for D6 (two-part: Pi P04/P05 wiring + MW H06 composed host), one severity ruling each for D4, D10, D11, MW-I10, MW-I12, and one label for D7; until a ruling exists the row reads CONTESTED and no bead is keyed by the bare label."
+ },
+ {
+  "requirement": "EAT-R434",
+  "field": "conditions",
+  "finding": "RA-07",
+  "note": "D8 named with its companion definition reference (one disposition: row edit)",
+  "before": "the `execution_environment.pinned:true` axis may be unattainable in the first-release topology (EAT-R437); until settled, a `pinned:false` envelope yields the weak value by design and the release definition's strict clause stays UNDETERMINED.",
+  "after": "the `execution_environment.pinned:true` axis may be unattainable in the first-release topology (EAT-R437); until settled, a `pinned:false` envelope yields the weak value by design and the release definition's strict clause stays UNDETERMINED. D-ledger (RA-07): this row is the Pi-side consumption guard for D8 (mw-01 MW-I06, Mechanical P1: the projection checks the candidate commit only, not all strict axes) — every axis is validated against the observed envelope and a partial certificate is never strict; the repair is MW packet mw-03 H01 (tracker wb-1zn2), never a Pi bead."
+ },
+ {
+  "requirement": "EAT-R428",
+  "field": "conditions",
+  "finding": "RA-07",
+  "note": "D10 named with its companion definition reference (one disposition: row edit)",
+  "before": "the exact fault-code table and its mapping to the pi-02 categories and MW `HOST_*` codes is unratified (K009; mw-02 §8 codes have 0 occurrences at 69cb016d, E114).",
+  "after": "the exact fault-code table and its mapping to the pi-02 categories and MW `HOST_*` codes is unratified (K009; mw-02 §8 codes have 0 occurrences at 69cb016d, E114). D-ledger (RA-07): criterion 2 is the Pi-side consumption guard for D10 (mw-01 MW-I07, Mechanical P2: a malformed descriptor is dereferenced into a TypeError instead of a typed refusal) — any thrown producer fault stays on the typed fault channel, never an outcome; Pi's own descriptor shape check is EAT-R219; the repair is MW packet mw-03 H04 (tracker wb-1zn2), never a Pi bead; the severity ruling is owner-routed through the EAT-R469 crosswalk."
+ },
+ {
+  "requirement": "EAT-R425",
+  "field": "conditions",
+  "finding": "RA-07",
+  "note": "D11 named with its companion definition reference (one disposition: row edit)",
+  "before": "which side owns the SDK pin is a decision conflict (E226: pi-05 assigns it to MW H02; mw-05 says the rig owns the SDKs; mw-02 says the host supplies provider factories) — this requirement records identity regardless of owner and does not resolve the conflict.",
+  "after": "which side owns the SDK pin is a decision conflict (E226: pi-05 assigns it to MW H02; mw-05 says the rig owns the SDKs; mw-02 says the host supplies provider factories) — this requirement records identity regardless of owner and does not resolve the conflict. D-ledger (RA-07): this row is the Pi-side consumption guard for D11 (mw-01 MW-I08, Mechanical P1: the packed host loads callbacks without proving SDK / executable identity or credentials) — identity is recorded and an unavailable runtime is refused, together with EAT-R465 (native-provider readiness axis) and EAT-R431 (BLOCKED, never an imitation); the repair is MW packet mw-03 H03 / H05 (tracker wb-1zn2), never a Pi bead; the severity ruling and the SDK-pin owner (RA-15) are owner-routed through the EAT-R469 crosswalk and the EAT-R405 record."
+ },
+ {
+  "requirement": "EAT-R413",
+  "field": "conditions",
+  "finding": "RA-08",
+  "note": "repair orphan recorded; carrier marked TO-BE-FILED by the owner (no bead id invented)",
+  "before": "New live repair/gate carrier required after a fresh bead census; wb-9v02 and wb-3121 are closed evidence carriers, not safe Maps-to live targets.",
+  "after": "New live repair/gate carrier required after a fresh bead census; wb-9v02 and wb-3121 are closed evidence carriers, not safe Maps-to live targets. RA-08: the repair itself (legs EAT-R213 / R214 / R253, authority EMPIRICAL_REPAIR; the red-first evidence is the existing repro test/workbench-mwi-cancel-repro.test.ts) is compiled nowhere in EAT-R391..R470 and had no live bead at the 2026-11-11 reads. ONE new bead carries those legs with this row as its gate leg; it is TO-BE-FILED at bead filing by the owner. Until its receipt exists every effectful arm (EAT-R431, R444, R445, R454, R457, R462) stays fixture-only."
+ },
+ {
+  "requirement": "EAT-R431",
+  "field": "conditions",
+  "finding": "RA-08",
+  "note": "conditions cite EAT-R413 as the MII carrier of the EAT-R253 gate",
+  "before": "EAT-R421-R426 landed; EAT-R253 repair receipt (E013: the parked-beforeDispatch skip loss is unrepaired at 0fb90672 and gates effectful dispatch); MW composed export and native four services (mw-03 H05/H06 — dependency by content, since the label \"Mechanical H01/H02/H03\" is UNSUPPORTED as a packet reference, C142); credentials; strict-PASS attainability UNDETERMINED (EAT-R437) — a V4 receipt with `assurance: legacy-weak` is a valid non-strict V4 receipt, not a failure and not a strict pass. Duty split (RA-05): this row owns the receipt content, provider readback and BLOCKED semantics; EAT-R462 owns the acquisition and the external-store census; EAT-R431, EAT-R457 and EAT-R462 are filed as legs of one bead under wb-p3i2.",
+  "after": "EAT-R421-R426 landed; EAT-R413 (MII carrier of the EAT-R253 gate): the EAT-R253 repair receipt (E013: the parked-beforeDispatch skip loss is unrepaired at 0fb90672 and gates effectful dispatch); MW composed export and native four services (mw-03 H05/H06 — dependency by content, since the label \"Mechanical H01/H02/H03\" is UNSUPPORTED as a packet reference, C142); credentials; strict-PASS attainability UNDETERMINED (EAT-R437) — a V4 receipt with `assurance: legacy-weak` is a valid non-strict V4 receipt, not a failure and not a strict pass. Duty split (RA-05): this row owns the receipt content, provider readback and BLOCKED semantics; EAT-R462 owns the acquisition and the external-store census; EAT-R431, EAT-R457 and EAT-R462 are filed as legs of one bead under wb-p3i2."
+ },
+ {
+  "requirement": "EAT-R431",
+  "field": "conditions",
+  "finding": "scan",
+  "note": "status label moved next to its claim id so the laundering scan reads it (wording only; grade unchanged)",
+  "before": "EAT-R421-R426 landed; EAT-R413 (MII carrier of the EAT-R253 gate): the EAT-R253 repair receipt (E013: the parked-beforeDispatch skip loss is unrepaired at 0fb90672 and gates effectful dispatch); MW composed export and native four services (mw-03 H05/H06 — dependency by content, since the label \"Mechanical H01/H02/H03\" is UNSUPPORTED as a packet reference, C142); credentials; strict-PASS attainability UNDETERMINED (EAT-R437) — a V4 receipt with `assurance: legacy-weak` is a valid non-strict V4 receipt, not a failure and not a strict pass. Duty split (RA-05): this row owns the receipt content, provider readback and BLOCKED semantics; EAT-R462 owns the acquisition and the external-store census; EAT-R431, EAT-R457 and EAT-R462 are filed as legs of one bead under wb-p3i2.",
+  "after": "EAT-R421-R426 landed; EAT-R413 (MII carrier of the EAT-R253 gate): the EAT-R253 repair receipt (E013: the parked-beforeDispatch skip loss is unrepaired at 0fb90672 and gates effectful dispatch); MW composed export and native four services (mw-03 H05/H06 — dependency by content, since the label \"Mechanical H01/H02/H03\" is not a packet reference — C142 UNSUPPORTED); credentials; strict-PASS attainability UNDETERMINED (EAT-R437) — a V4 receipt with `assurance: legacy-weak` is a valid non-strict V4 receipt, not a failure and not a strict pass. Duty split (RA-05): this row owns the receipt content, provider readback and BLOCKED semantics; EAT-R462 owns the acquisition and the external-store census; EAT-R431, EAT-R457 and EAT-R462 are filed as legs of one bead under wb-p3i2."
+ },
+ {
+  "requirement": "EAT-R444",
+  "field": "conditions",
+  "finding": "RA-08",
+  "note": "conditions cite EAT-R413; the cross-reference embedded in the draft Maps-to line moved here (also discharges the RA-19 item for this row)",
+  "before": "MW export of an invocation-keyed lookup (mw-03 H02/H07; wb-1zn2); recovery precedence between Pi journal and MW intent (E228) is a joint decision this row leaves explicit.",
+  "after": "MW export of an invocation-keyed lookup (mw-03 H02/H07; wb-1zn2); recovery precedence between Pi journal and MW intent (E228) is a joint decision this row leaves explicit. EAT-R413 (MII carrier of the EAT-R253 gate) must hold before any effectful (non-fixture) arm of this row runs (see EAT-R445 conditions; moved here from the draft Maps-to line)."
+ },
+ {
+  "requirement": "EAT-R445",
+  "field": "conditions",
+  "finding": "RA-08",
+  "note": "conditions cite EAT-R413 as the MII carrier of the EAT-R253 gate",
+  "before": "durable lease/fence store (MII P02, out of this cluster — consumed as a named condition); the two-process same-root arm (G07/Q18) belongs to the lease vertical and is only observed here; EAT-R253 (parked-beforeDispatch skip/retry loss, E013) must carry a repair receipt before any effectful (non-fixture) arm of this row or of EAT-R431 runs.",
+  "after": "durable lease/fence store (MII P02, out of this cluster — consumed as a named condition); the two-process same-root arm (G07/Q18) belongs to the lease vertical and is only observed here; EAT-R413 (MII carrier of the EAT-R253 gate): EAT-R253 (parked-beforeDispatch skip/retry loss, E013) must carry a repair receipt before any effectful (non-fixture) arm of this row or of EAT-R431 runs."
+ },
+ {
+  "requirement": "EAT-R413",
+  "field": "statement",
+  "finding": "RA-08",
+  "note": "statement closes an independent-path bypass under the owner directive",
+  "before": "Effectful function readiness MUST remain disabled or fixture-only while a reused dispatch path can lose the pending skip/retry during parked beforeDispatch.",
+  "after": "Effectful function readiness MUST remain disabled or fixture-only while a reused dispatch path can lose the pending skip/retry during parked beforeDispatch. Every effectful function arm, including a newly independent dispatch path, MUST remain gated on the source-pinned EAT-R213 / R214 / R253 repair receipt plus this EAT-R413 gate; no path renaming waives the gate."
+ },
+ {
+  "requirement": "EAT-R413",
+  "field": "criteria:1",
+  "finding": "RA-08",
+  "note": "owner direction: no independent-path bypass of repair; every effectful arm is blocked",
+  "before": "If implementation uses a genuinely independent dispatch path, record that explicit design decision and run an equivalent registered-route barrier test; a skip/retry while parked yields zero late writer/SDK starts. Do not silently waive EAT-R253 by renaming the path.",
+  "after": "An independent dispatch path is not an exception to the EAT-R253 repair gate. Record the design decision and run an equivalent registered-route barrier test (skip/retry while parked yields zero late writer/SDK starts), but keep every effectful arm disabled or fixture-only until the source-pinned EAT-R213 / R214 / R253 repair receipt and this EAT-R413 gate exist. Do not silently waive EAT-R253 by renaming the path."
+ },
+ {
+  "requirement": "EAT-R447",
+  "field": "tier",
+  "finding": "RA-12",
+  "note": "tier set to the audited value (metadata only)",
+  "before": "V1 + V5.",
+  "after": "V1 + V3 + V5 (audited tier, RA-12; the draft omitted the registered-route tier carried by its behaviour row EAT-R443)."
+ },
+ {
+  "requirement": "EAT-R448",
+  "field": "tier",
+  "finding": "RA-12",
+  "note": "tier set to the audited value (metadata only)",
+  "before": "V1 + V5.",
+  "after": "V1 + V3 + V5 (audited tier, RA-12; the statement says 'through the registered route')."
+ },
+ {
+  "requirement": "EAT-R449",
+  "field": "tier",
+  "finding": "RA-12",
+  "note": "tier set to the audited value (metadata only)",
+  "before": "V1 + V3.",
+  "after": "V1 + V2 + V3 (audited tier, RA-12; G09 is an installed-consumer falsifier, as its behaviour row EAT-R422)."
+ },
+ {
+  "requirement": "EAT-R446",
+  "field": "conditions",
+  "finding": "RA-19",
+  "note": "K023 field names no longer called design prose; certificate mapping still ratified",
+  "before": "field vocabulary (`data.gate_passed`, gate-definition hash, environment binding) is design prose at the pins, not verified code fields; EAT-R458 ratification must precede test authorship.",
+  "after": "field vocabulary (`data.gate_passed`, gate-definition hash, environment binding) uses Forge fields documented and pinned at the source (K023 RESOLVED-BY-SOURCE; EAT-R434): `data.gated_commit`, `data.gated_tree`, `gate_passed`, `gate_definition`, `execution_environment`; the certificate transport/eligibility decision still needs EAT-R458 ratification; EAT-R458 ratification must precede test authorship."
+ },
+ {
+  "requirement": "EAT-R451",
+  "field": "rationale",
+  "finding": "RA-19",
+  "note": "E169 caveat restores the already-green seam controls",
+  "before": "C201, C202, C203 NON-EPISTEMIC (NORMATIVE). C213 (ESTABLISHED — at the Pi pin workflow_observe is keyed by taskId over local session/workspace/principal state; it does not yet establish the program's invocation-scoped observation), so these rows currently have no implemented subject and must land with the P06 bridge. Cures M210, M211, M212; M222 for C213 (define the logical-invocation-to-existing-store mapping and durable replay without parallel hidden state; preserve scope, freshness and gap counters).",
+  "after": "C201, C202, C203 NON-EPISTEMIC (NORMATIVE). C213 (ESTABLISHED — at the Pi pin workflow_observe is keyed by taskId over local session/workspace/principal state; it does not yet establish the program's invocation-scoped observation), so the seam-level observation ingest greens are controls (E169); the joined P06 observation bridge remains the new red subject. Cures M210, M211, M212; M222 for C213 (define the logical-invocation-to-existing-store mapping and durable replay without parallel hidden state; preserve scope, freshness and gap counters)."
+ },
+ {
+  "requirement": "EAT-R449",
+  "field": "conditions",
+  "finding": "RA-19",
+  "note": "E169 caveat recorded",
+  "before": "none beyond re-pin (P00).",
+  "after": "none beyond re-pin (P00). E169 seam-level greens (e.g., admission-only notes tests and observation ingest) are baseline controls, not a registered-route red test; the new G08/G09/G10/P13/P14 red tests are through the named joined or installed boundary (RA-19)."
+ },
+ {
+  "requirement": "EAT-R459",
+  "field": "statement",
+  "finding": "RA-19",
+  "note": "L4/L5 namespace clarified",
+  "before": "Each doc-04 release veto MUST be enforced by a named executable gate — unsupported function invocable; raw caller field becoming authority / no exact grant; launch handle freeing an active writer / second process writing the same root; canonical digest differing from the payload reaching Mechanical; missing Forge proof becoming verified_candidate or a historical pass credited to a changed tree; unknown effect auto-retrying or missing evidence resolving to failure/success; registration test bypassing the Pi tool or native test using fake SDK/Forge; missing L4/L5 marked shipped; skill/README/feature-matrix advertising deployment without receipts; existing script/subagent regression failures — and the tier and falsifier identifiers backing each veto MUST come from a ratified G/P↔Q↔MNI A/B/C mapping table naming the actual enforcing validator or counter for each row. Veto documentation MUST NOT justify ownership via the shared D-ledger reading.",
+  "after": "Each doc-04 release veto MUST be enforced by a named executable gate — unsupported function invocable; raw caller field becoming authority / no exact grant; launch handle freeing an active writer / second process writing the same root; canonical digest differing from the payload reaching Mechanical; missing Forge proof becoming verified_candidate or a historical pass credited to a changed tree; unknown effect auto-retrying or missing evidence resolving to failure/success; registration test bypassing the Pi tool or native test using fake SDK/Forge; missing Mechanical L4/L5 (MW evidence ladder; not this matrix's agentic-tdd L4/L5) marked shipped; skill/README/feature-matrix advertising deployment without receipts; existing script/subagent regression failures — and the tier and falsifier identifiers backing each veto MUST come from a ratified G/P↔Q↔MNI A/B/C mapping table naming the actual enforcing validator or counter for each row. Veto documentation MUST NOT justify ownership via the shared D-ledger reading."
+ },
+ {
+  "requirement": "EAT-R421",
+  "field": "criteria:0",
+  "finding": "RA-19",
+  "note": "exact eight host subpath runtime exports enumerated (audit section 4)",
+  "before": "Given a fresh external consumer directory outside both repositories holding the independently packed rig tarball and library tarball, when the adapter is pointed at it with the allowlist digests, then `import()` resolves `@mechanical/development-rig/host` from that installed root (assert the resolved module URL is under the consumer root) and the four exported symbols listed in C214 are present.",
+  "after": "Given a fresh external consumer directory outside both repositories holding the independently packed rig tarball and library tarball, when the adapter is pointed at it with the allowlist digests, then `import()` resolves `@mechanical/development-rig/host` from that installed root (assert the resolved module URL is under the consumer root) and the eight runtime exports listed in C214 are present: `invokeDevelopmentHost`, `HostAdmissionError`, `HOST_API_VERSION`, `HostBindingError`, `WRITE_GRANT`, `admitHostBinding`, `dispatchWriteAtFinalBoundary`, `validateHostBinding`."
+ },
+ {
+  "requirement": "EAT-R466",
+  "field": "criteria:1",
+  "finding": "RA-19",
+  "note": "wrong R446 proof-reference corrected to R433/R434",
+  "before": "Observation projection shows the independent rows populated from distinct witnesses; evidence strength is computed from the producer certificate (EAT-R446), never from launch status.",
+  "after": "Observation projection shows the independent rows populated from distinct witnesses; evidence strength is computed from the producer certificate projected under EAT-R433 / EAT-R434 (EAT-R446 is the falsifier suite, not the projector), never from launch status."
+ },
+ {
+  "requirement": "EAT-R470",
+  "field": "criteria:2",
+  "finding": "RA-19",
+  "note": "undefined adjacent schema reference replaced with audit section 4 text",
+  "before": "Each packet closure receipt validates against the EAT-R458-adjacent closure schema with a non-empty bead field (`wb-*` or `none:<reason>`) and lands at the named receipt file target.",
+  "after": "Each packet closure receipt validates against the packet-closure receipt schema (pi-03 L83-84 field list; EXTENDS EAT-R291), ratified with EAT-R458 with a non-empty bead field (`wb-*` or `none:<reason>`) and lands at the named receipt file target."
+ },
+ {
+  "requirement": "EAT-R470",
+  "field": "conditions",
+  "finding": "RA-20",
+  "note": "two parent epics + one owner ruling for new MII beads",
+  "before": "bead statuses drift with the store; the validator re-reads live status at every gate rather than trusting this file's snapshot. P11, P12 and V6 are explicit deferrals (section 'Explicit deferrals'; RA-06): 'P11 → wb-zswl (deferred)' and 'P12 → wb-pxvv (deferred)' state the packet disposition; the bead status is whatever the live read returns.",
+  "after": "bead statuses drift with the store; the validator re-reads live status at every gate rather than trusting this file's snapshot. P11, P12 and V6 are explicit deferrals (section 'Explicit deferrals'; RA-06): 'P11 → wb-zswl (deferred)' and 'P12 → wb-pxvv (deferred)' state the packet disposition; the bead status is whatever the live read returns. Both parent epics exist: wb-1a3t (MWI) and wb-rhyt (MNI); the filing owner chooses one parent for new MII beads (new MII epic, or wb-rhyt related to wb-1a3t), never assumes there is only one (RA-20)."
+ },
+ {
+  "requirement": "EAT-R439",
+  "field": "criteria:5",
+  "finding": "RA-13",
+  "note": "privacy obligation attached to R439 (test is NOT_RUN)",
+  "before": "",
+  "after": "Model-visible summaries and file names are redacted under the existing observe scope rules; the test asserts no workspace-absolute path or note text in the reply."
+ },
+ {
+  "requirement": "EAT-R414",
+  "field": "criteria:3",
+  "finding": "RA-13",
+  "note": "privacy obligation attached to R414 (test is NOT_RUN)",
+  "before": "",
+  "after": "The durable record is readable only through the operator-scoped path; an out-of-scope read is refused."
+ },
+ {
+  "requirement": "EAT-R459",
+  "field": "criteria:3",
+  "finding": "RA-13",
+  "note": "QA step 7 gate predicate attached to R459",
+  "before": "",
+  "after": "A release dry-run vetoes when there is no recorded local full Forge gate (forge.toml `gate`) on each cut and on the final merged tree (EXTENDS EAT-R286)."
+ },
+ {
+  "requirement": "EAT-R470",
+  "field": "criteria:4",
+  "finding": "RA-13",
+  "note": "QA step 1 re-pin record attached to R470",
+  "before": "",
+  "after": "A pre-cut re-pin record names both full SHAs, trees and the active bead snapshot (EXTENDS EAT-R201)."
+ },
+ {
+  "requirement": "EAT-R470",
+  "field": "criteria:5",
+  "finding": "RA-13",
+  "note": "landing-branch / validator-anchor rule attached to R470",
+  "before": "",
+  "after": "The map names the landing trunk, the default branch, the merge direction and the program-docs validator anchor."
+ },
+ {
+  "requirement": "EAT-R468",
+  "field": "criteria:3",
+  "finding": "RA-13",
+  "note": "P10 sample transcript / QA step 8 obligation attached to R468",
+  "before": "",
+  "after": "Sample invocation / observe / control transcripts are captured from registered-route runs and carry their receipt reference; the pi-05 JSON stays labelled proposal."
+ },
+ {
+  "requirement": "EAT-R461",
+  "field": "criteria:0",
+  "finding": "RA-13",
+  "note": "workflow_reconcile joined to V3 gate",
+  "before": "The gate invokes the registered tool by its registered name through the tool dispatcher (not by importing the launcher), asserts exactly-once callback delivery, and asserts the same invocationId is observable via workflow_observe.",
+  "after": "The gate invokes the registered tool by its registered name through the tool dispatcher (not by importing the launcher), asserts exactly-once callback delivery, and asserts the same invocationId is observable via workflow_observe and workflow_reconcile in the same invocation."
+ },
+ {
+  "requirement": "EAT-R468",
+  "field": "criteria:4",
+  "finding": "RA-14",
+  "note": "wording-only remediation insert custody attached to R468",
+  "before": "",
+  "after": "The MII program directory gains one appended annotation block (insert-only, after the pinned sections) carrying the deferred REMEDIATION inserts; the block lists each M-id landed; the pin advance stays an owner decision."
+ },
+ {
+  "requirement": "EAT-R468",
+  "field": "criteria:5",
+  "finding": "RA-14",
+  "note": "recorded-red wb-12x1 census repair precondition attached to R468",
+  "before": "",
+  "after": "The first docs/skill cut repairs the recorded-red census rows through the census's append-only protocol before any other skill edit (authority EMPIRICAL_REPAIR; restore the M049 / M050 standing text or re-pin the rows through the census's append-only receipt protocol)."
+ },
+ {
+  "requirement": "EAT-R405",
+  "field": "criteria:0",
+  "finding": "RA-15",
+  "note": "joint ratification record gains SDK/factory owner and V3 fixture seam",
+  "before": "The host-owned ratification record names both full source pins, descriptor/schema/status/export choices, mechanical.development.develop.v1, exact mechanical:develop-write, EAT-R391 digest vectors, EAT-R398 lease authority and installed-host evidence digests. Unknown/missing/altered records refuse readiness.",
+  "after": "The host-owned ratification record names both full source pins, descriptor/schema/status/export choices, mechanical.development.develop.v1, exact mechanical:develop-write, EAT-R391 digest vectors, EAT-R398 lease authority and installed-host evidence digests, SDK pin owner and provider-factory ownership, and the V3 fixture-host injection seam. Unknown/missing/altered records refuse readiness."
+ },
+ {
+  "requirement": "EAT-R426",
+  "field": "conditions",
+  "finding": "RA-15",
+  "note": "callback ownership is an explicit decision gate",
+  "before": "COMPOSED-EXPORT ratification (EAT-R423); the P04/P05 ordering is a decision conflict in the program's own DAG (C139, C141 NON-EPISTEMIC; C140 UNSUPPORTED \"P04 composed admission\" names different work in the graph node and the section) — this requirement orders nothing, it only counts.",
+  "after": "COMPOSED-EXPORT ratification (EAT-R423); the P04/P05 ordering is a decision conflict in the program's own DAG (C139, C141 NON-EPISTEMIC; C140 UNSUPPORTED \"P04 composed admission\" names different work in the graph node and the section) — this requirement orders nothing, it only counts. The EAT-R405 ratification record must choose SDK pin owner, provider-factory ownership (Pi passing callbacks versus Mechanical composing them from host-supplied factories), and the V3 fixture-host injection seam (E226 / K032); this row does not choose for the owners (RA-15)."
+ },
+ {
+  "requirement": "EAT-R461",
+  "field": "conditions",
+  "finding": "RA-15",
+  "note": "V3 evidence waits on the owner/factory ruling",
+  "before": "P05 registration landed; grant adoption (wb-w8fk) ratified.",
+  "after": "P05 registration landed; grant adoption (wb-w8fk) ratified. The EAT-R405 ratification record must settle SDK pin owner, provider-factory ownership and the V3 fixture-host injection seam (E226 / K032) before the tier is claimed (RA-15)."
+ },
+ {
+  "requirement": "EAT-R419",
+  "field": "criteria:3",
+  "finding": "RA-15",
+  "note": "one effect-axis vocabulary row attached to R419; field choice still owner-ratified",
+  "before": "",
+  "after": "The table has one effect-axis row (K030): a ratified field name, value set and a rule that `no-effect` is never assigned after dispatch; EAT-R439 / R443 / R444 / R445 use that one ratified field name, never competing aliases."
+ },
+ {
+  "requirement": "EAT-R444",
+  "field": "criteria:2",
+  "finding": "RA-15",
+  "note": "R444 criterion 3 uses the one ratified field name",
+  "before": "Given the lookup throws `ERR_PACKAGE_PATH_NOT_EXPORTED` (the 69cb016d state) or returns no record, `workflow_reconcile` reports `effectDisposition: \"unknown\"`, `producerIntent: null`, and an operator instruction; a mutant mapping \"no record\" to `no-effect` turns red.",
+  "after": "Given the lookup throws `ERR_PACKAGE_PATH_NOT_EXPORTED` (the 69cb016d state) or returns no record, `workflow_reconcile` reports `<EAT-R419 ratified effect-axis field>: \"unknown\"`, `producerIntent: null`, and an operator instruction; a mutant mapping \"no record\" to `no-effect` turns red."
+ },
+ {
+  "requirement": "EAT-R439",
+  "field": "statement",
+  "finding": "RA-15",
+  "note": "one ratified K030 field name replaces conflicting Pi-side aliases; value set remains owner-ratified",
+  "before": "`workflow_observe` for a function invocation MUST return, each as its own field: Pi invocation id; rig and library package digests and descriptor digest; source `{baseCommit, baseTree, forgeManifestSha256, workspaceRealpath-redacted}`; producer stage (raw and mapped) and the unmodified domain outcome (EAT-R428); Claude session ref; Forge operation ref and observed envelope summary; assurance (EAT-R433) with missing axes; effect disposition (EAT-R443); `freshness`, `sourceCursorGap` and `droppedEventCount`; every unavailable member MUST be rendered as an explicit `null` with an `unknown` marker, never omitted and never defaulted.",
+  "after": "`workflow_observe` for a function invocation MUST return, each as its own field: Pi invocation id; rig and library package digests and descriptor digest; source `{baseCommit, baseTree, forgeManifestSha256, workspaceRealpath-redacted}`; producer stage (raw and mapped) and the unmodified domain outcome (EAT-R428); Claude session ref; Forge operation ref and observed envelope summary; assurance (EAT-R433) with missing axes; effect disposition (EAT-R443, using the one ratified effect-axis field name and value set in EAT-R419); `freshness`, `sourceCursorGap` and `droppedEventCount`; every unavailable member MUST be rendered as an explicit `null` with an `unknown` marker, never omitted and never defaulted."
+ },
+ {
+  "requirement": "EAT-R443",
+  "field": "criteria:0",
+  "finding": "RA-15",
+  "note": "one ratified K030 field name replaces conflicting Pi-side aliases; value set remains owner-ratified",
+  "before": "Through ORACLE-REG with a dispatch whose acknowledgment is dropped after an injected writer created an ignored-path file (G05-ignored), a tracked edit-then-revert (G04) and an untracked file (control), reconciliation reports `disposition: \"unknown\"`, `retryPermitted: false`, `lease.state: \"fenced\"` for the first two; the untracked arm reports `occurred` (status detector) — never `not-occurred` for any arm.",
+  "after": "Through ORACLE-REG with a dispatch whose acknowledgment is dropped after an injected writer created an ignored-path file (G05-ignored), a tracked edit-then-revert (G04) and an untracked file (control), reconciliation reports `<EAT-R419 ratified effect-axis field>: \"unknown\"`, `retryPermitted: false`, `lease.state: \"fenced\"` for the first two; the untracked arm reports `occurred` (status detector) — never `not-occurred` for any arm."
+ },
+ {
+  "requirement": "EAT-R444",
+  "field": "statement",
+  "finding": "RA-15",
+  "note": "one ratified K030 field name replaces conflicting Pi-side aliases; value set remains owner-ratified",
+  "before": "`workflow_reconcile` and the recovery path MUST read producer effect-intent records only through an export of `@mechanical/development-rig/host` (or a ratified sibling subpath) keyed by the Pi invocation id; Pi MUST NOT deep-import `dist/effect-intent.js`/`dist/effect-reconciliation.js`; at dispatch Pi MUST persist the correlation `{wf_ invocationId, producer intentId, invocationIdentitySha256, fencingGeneration}` in its own journal; and a producer intent that cannot be found or read MUST yield `effectDisposition: \"unknown\"`, never `no-effect`/`not-occurred`.",
+  "after": "`workflow_reconcile` and the recovery path MUST read producer effect-intent records only through an export of `@mechanical/development-rig/host` (or a ratified sibling subpath) keyed by the Pi invocation id; Pi MUST NOT deep-import `dist/effect-intent.js`/`dist/effect-reconciliation.js`; at dispatch Pi MUST persist the correlation `{wf_ invocationId, producer intentId, invocationIdentitySha256, fencingGeneration}` in its own journal; and a producer intent that cannot be found or read MUST yield `<EAT-R419 ratified effect-axis field>: \"unknown\"`, never `no-effect`/`not-occurred`."
+ },
+ {
+  "requirement": "EAT-R445",
+  "field": "criteria:0",
+  "finding": "RA-15",
+  "note": "one ratified K030 field name replaces conflicting Pi-side aliases; value set remains owner-ratified",
+  "before": "Through ORACLE-REG with an injected writer paused after its first edit, `workflow_control` cancel returns `cancellation: \"requested\"`, `effect: \"dispatched-uncertain\"`, known `nativeRefs`, and a text census of the reply finds no `rolled back`/`reverted`/`undone`; when the injected producer later confirms abort, a second observe shows `cancellation: \"established\"` and the late commit (if any) remains visible (B11 lineage).",
+  "after": "Through ORACLE-REG with an injected writer paused after its first edit, `workflow_control` cancel returns `cancellation: \"requested\"`, `<EAT-R419 ratified effect-axis field>: \"dispatched-uncertain\"`, known `nativeRefs`, and a text census of the reply finds no `rolled back`/`reverted`/`undone`; when the injected producer later confirms abort, a second observe shows `cancellation: \"established\"` and the late commit (if any) remains visible (B11 lineage)."
+ },
+ {
+  "requirement": "EAT-R455",
+  "field": "criteria:2",
+  "finding": "RA-18",
+  "note": "row-specific negative mutant named; NOT_RUN",
+  "before": "",
+  "after": "A receipt carrying an SLA with no raw measurement row is accepted by a mutant validator; the RA-18 test must reject it."
+ },
+ {
+  "requirement": "EAT-R455",
+  "field": "mutant",
+  "finding": "RA-18",
+  "note": "draft supplied no negative mutant; consolidated row supplies an explicit mutant",
+  "before": "",
+  "after": "A receipt carrying an SLA with no raw measurement row is accepted by a mutant validator; the RA-18 test must reject it."
+ },
+ {
+  "requirement": "EAT-R456",
+  "field": "criteria:3",
+  "finding": "RA-18",
+  "note": "row-specific negative mutant named; NOT_RUN",
+  "before": "",
+  "after": "A validator mutant accepts a write into a prior source-pinned receipt directory; the append-only custody check must turn red."
+ },
+ {
+  "requirement": "EAT-R456",
+  "field": "mutant",
+  "finding": "RA-18",
+  "note": "draft supplied no negative mutant; consolidated row supplies an explicit mutant",
+  "before": "",
+  "after": "A validator mutant accepts a write into a prior source-pinned receipt directory; the append-only custody check must turn red."
+ },
+ {
+  "requirement": "EAT-R459",
+  "field": "criteria:4",
+  "finding": "RA-18",
+  "note": "row-specific negative mutant named; NOT_RUN",
+  "before": "",
+  "after": "A release mutant proceeds with an unmapped veto predicate; the executable gate must turn red."
+ },
+ {
+  "requirement": "EAT-R459",
+  "field": "mutant",
+  "finding": "RA-18",
+  "note": "draft supplied no negative mutant; consolidated row supplies an explicit mutant",
+  "before": "",
+  "after": "A release mutant proceeds with an unmapped veto predicate; the executable gate must turn red."
+ },
+ {
+  "requirement": "EAT-R460",
+  "field": "criteria:2",
+  "finding": "RA-18",
+  "note": "row-specific negative mutant named; NOT_RUN",
+  "before": "",
+  "after": "A V2 gate mutant accepts a changed installed `dist` runtime file after tarball verification; the fresh-consumer runtime-file check must turn red."
+ },
+ {
+  "requirement": "EAT-R460",
+  "field": "mutant",
+  "finding": "RA-18",
+  "note": "draft supplied no negative mutant; consolidated row supplies an explicit mutant",
+  "before": "",
+  "after": "A V2 gate mutant accepts a changed installed `dist` runtime file after tarball verification; the fresh-consumer runtime-file check must turn red."
+ },
+ {
+  "requirement": "EAT-R465",
+  "field": "criteria:3",
+  "finding": "RA-18",
+  "note": "row-specific negative mutant named; NOT_RUN",
+  "before": "",
+  "after": "An inspect mutant reports ready when one named readiness axis is broken; the per-axis disabled test must turn red."
+ },
+ {
+  "requirement": "EAT-R465",
+  "field": "mutant",
+  "finding": "RA-18",
+  "note": "draft supplied no negative mutant; consolidated row supplies an explicit mutant",
+  "before": "",
+  "after": "An inspect mutant reports ready when one named readiness axis is broken; the per-axis disabled test must turn red."
+ },
+ {
+  "requirement": "EAT-R468",
+  "field": "criteria:6",
+  "finding": "RA-18",
+  "note": "row-specific negative mutant named; NOT_RUN",
+  "before": "",
+  "after": "A docs-lint mutant accepts a shipped W11 row without a receipt link; the same-cut documentation gate must turn red."
+ },
+ {
+  "requirement": "EAT-R468",
+  "field": "mutant",
+  "finding": "RA-18",
+  "note": "draft supplied no negative mutant; consolidated row supplies an explicit mutant",
+  "before": "",
+  "after": "A docs-lint mutant accepts a shipped W11 row without a receipt link; the same-cut documentation gate must turn red."
+ },
+ {
+  "requirement": "EAT-R469",
+  "field": "criteria:4",
+  "finding": "RA-18",
+  "note": "row-specific negative mutant named; NOT_RUN",
+  "before": "",
+  "after": "A crosswalk-lint mutant accepts a dependency keyed by a bare H-number with no owner/content; the namespace validator must turn red."
+ },
+ {
+  "requirement": "EAT-R469",
+  "field": "mutant",
+  "finding": "RA-18",
+  "note": "draft supplied no negative mutant; consolidated row supplies an explicit mutant",
+  "before": "",
+  "after": "A crosswalk-lint mutant accepts a dependency keyed by a bare H-number with no owner/content; the namespace validator must turn red."
+ },
+ {
+  "requirement": "EAT-R470",
+  "field": "criteria:6",
+  "finding": "RA-18",
+  "note": "row-specific negative mutant named; NOT_RUN",
+  "before": "",
+  "after": "A map-validator mutant accepts a closed bead as an active filing carrier; the live exact-id census check must turn red."
+ },
+ {
+  "requirement": "EAT-R470",
+  "field": "mutant",
+  "finding": "RA-18",
+  "note": "draft supplied no negative mutant; consolidated row supplies an explicit mutant",
+  "before": "",
+  "after": "A map-validator mutant accepts a closed bead as an active filing carrier; the live exact-id census check must turn red."
+ },
+ {
+  "requirement": "EAT-R449",
+  "field": "criteria:4",
+  "finding": "RA-18",
+  "note": "one guard-removal mutant per G08/G09/G10/P13/P14 arm",
+  "before": "",
+  "after": "One guard-removal mutant per falsifier: G08 reintroduces the notes-bearing raw payload; G09 skips the installed-file manifest check; G10 trusts each of forged grant/root/profile/principal in four distinct mutants; P13 skips the post-wait grant read; P14 skips the post-wait source / manifest read. Each mutant must turn its own red test red."
+ },
+ {
+  "requirement": "EAT-R451",
+  "field": "criteria:3",
+  "finding": "RA-18",
+  "note": "one guard-removal mutant per P15/P16/P17 arm",
+  "before": "",
+  "after": "One guard-removal mutant per falsifier: P15 drops scope authorization on a captured native ref; P16 disables event-ID deduplication; P17 truncates a long native ref instead of omitting it. Each mutant must turn its own red test red."
+ },
+ {
+  "requirement": "EAT-R391",
+  "field": "lineage",
+  "finding": "RA-10",
+  "note": "lineage ids corrected",
+  "before": "Extends MNI EAT-R203/EAT-R204; fills the new D3 wire-digest gap.",
+  "after": "Extends MNI EAT-R203 and EAT-R205 (the draft cited R203/R204; corrected under RA-10); fills the new D3 wire-digest gap."
+ },
+ {
+  "requirement": "EAT-R402",
+  "field": "lineage",
+  "finding": "RA-10",
+  "note": "open-ended lineage range closed",
+  "before": "Extends MNI EAT-R232/EAT-R280+ custody behavior; historical cleanup trial is not a joined-host test.",
+  "after": "Extends MNI EAT-R232, EAT-R278, EAT-R280 and EAT-R281 custody behavior (the draft wrote the open range R280+; closed under RA-10); historical cleanup trial is not a joined-host test."
+ },
+ {
+  "requirement": "EAT-R403",
+  "field": "lineage",
+  "finding": "RA-10",
+  "note": "lineage ids corrected",
+  "before": "Extends MNI EAT-R232/EAT-R250 recovery custody; maintains EAT-R207 lease-owner choice.",
+  "after": "Extends MNI EAT-R232, EAT-R251, EAT-R254 and EAT-R282 recovery custody (the draft cited R250; corrected under RA-10); maintains the R207 lease-owner choice."
+ },
+ {
+  "requirement": "EAT-R407",
+  "field": "lineage",
+  "finding": "RA-10",
+  "note": "lineage ids corrected",
+  "before": "Extends existing dispatchFunctionWithAuthority seam and MNI EAT-R204/R224+; no existing green seam is relabeled registered proof.",
+  "after": "Extends existing dispatchFunctionWithAuthority seam and MNI EAT-R204, EAT-R225, EAT-R227 and EAT-R228 (the draft cited R224+; corrected under RA-10: R224 is installed-package serialization, the grant rows are R225 / R227 / R228); no existing green seam is relabeled registered proof."
+ },
+ {
+  "requirement": "EAT-R410",
+  "field": "lineage",
+  "finding": "RA-10",
+  "note": "lineage ids corrected",
+  "before": "Extends MNI EAT-R225+ source admission; MII P03/P14.",
+  "after": "Extends MNI EAT-R229, EAT-R230, EAT-R231 and EAT-R268 source admission (the draft cited R225+; corrected under RA-10: R225 is rights, source admission is R229-R231 and R268); MII P03/P14."
+ },
+ {
+  "requirement": "EAT-R418",
+  "field": "lineage",
+  "finding": "RA-01",
+  "note": "closed carrier repointed to wb-mwsy; lineage ids corrected (RA-10)",
+  "before": "Extends live wb-5a7k controls and MNI EAT-R251/R253 ordering, not closed repro status.",
+  "after": "Extends the controls scope now carried by live wb-mwsy (lineage: wb-5a7k, closed 2026-11-11T05:29:23Z, consolidated into wb-mwsy) and MNI EAT-R243, EAT-R252 and EAT-R253 ordering (the draft cited R251; corrected under RA-10: R251 is native readback, the stop asymmetry is R252), not closed repro status."
+ },
+ {
+  "requirement": "EAT-R419",
+  "field": "lineage",
+  "finding": "RA-01",
+  "note": "closed coordination target repointed to wb-mwsy",
+  "before": "Extends MNI registered dispatch/error contract and live wb-4bxo; coordinates wb-5a7k recovery help.",
+  "after": "Extends MNI registered dispatch/error contract and live wb-4bxo; coordinates the recovery help now carried by wb-mwsy (lineage: wb-5a7k, closed 2026-11-11T05:29:23Z, consolidated into wb-mwsy)."
+ },
+ {
+  "requirement": "EAT-R420",
+  "field": "lineage",
+  "finding": "RA-01",
+  "note": "closed coordination target repointed to wb-mwsy",
+  "before": "Extends MNI effect/journal/reconcile requirements on live wb-mwsy; actual controls coordinated with wb-5a7k.",
+  "after": "Extends MNI effect/journal/reconcile requirements on live wb-mwsy; actual controls are carried by wb-mwsy (lineage: wb-5a7k, closed 2026-11-11T05:29:23Z, consolidated into wb-mwsy)."
+ },
+ {
+  "requirement": "EAT-R391",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R203, EAT-R205 — CORRECT",
+  "after": "EAT-R203, EAT-R205; CORRECT — the draft cited R203/R204."
+ },
+ {
+  "requirement": "EAT-R392",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "none — NEW",
+  "after": "none — NEW (no EAT-R201..R310 predecessor)"
+ },
+ {
+  "requirement": "EAT-R393",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "none — NEW",
+  "after": "none — NEW (no EAT-R201..R310 predecessor)"
+ },
+ {
+  "requirement": "EAT-R394",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "none — NEW",
+  "after": "none — NEW (no EAT-R201..R310 predecessor)"
+ },
+ {
+  "requirement": "EAT-R395",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "none — NEW",
+  "after": "none — NEW (no EAT-R201..R310 predecessor)"
+ },
+ {
+  "requirement": "EAT-R396",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R223, EAT-R229, EAT-R230 — ADD",
+  "after": "EAT-R223, EAT-R229, EAT-R230; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R397",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R225, EAT-R270 — ADD",
+  "after": "EAT-R225, EAT-R270; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R398",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R207, EAT-R232, EAT-R269 — OK",
+  "after": "EAT-R207, EAT-R232, EAT-R269; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R399",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R232, EAT-R269 — OK",
+  "after": "EAT-R232, EAT-R269; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R400",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R232 — OK",
+  "after": "EAT-R232; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R401",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R207, EAT-R232, EAT-R269 — OK",
+  "after": "EAT-R207, EAT-R232, EAT-R269; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R402",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R232, EAT-R278, EAT-R280, EAT-R281 — CORRECT",
+  "after": "EAT-R232, EAT-R278, EAT-R280, EAT-R281; CORRECT — the draft wrote the open range R280+."
+ },
+ {
+  "requirement": "EAT-R403",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R232, EAT-R251, EAT-R254, EAT-R282 — CORRECT",
+  "after": "EAT-R232, EAT-R251, EAT-R254, EAT-R282; CORRECT — the draft cited R250 where R251 / R254 / R282 apply."
+ },
+ {
+  "requirement": "EAT-R404",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R207, EAT-R226, EAT-R232, EAT-R303 — OK",
+  "after": "EAT-R207, EAT-R226, EAT-R232, EAT-R303; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R405",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R203, EAT-R204, EAT-R205 — OK",
+  "after": "EAT-R203, EAT-R204, EAT-R205; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R406",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R223, EAT-R228, EAT-R270 — ADD",
+  "after": "EAT-R223, EAT-R228, EAT-R270; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R407",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R204, EAT-R225, EAT-R227, EAT-R228 — CORRECT",
+  "after": "EAT-R204, EAT-R225, EAT-R227, EAT-R228; CORRECT — the draft cited R224+ (R224 is installed-package serialization; the grant rows are R225 / R227 / R228)."
+ },
+ {
+  "requirement": "EAT-R408",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R229, EAT-R233 — ADD",
+  "after": "EAT-R229, EAT-R233; ADD — the draft restated EAT-R233 without naming it."
+ },
+ {
+  "requirement": "EAT-R409",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R228, EAT-R234 — ADD",
+  "after": "EAT-R228, EAT-R234; ADD — EXTENDS and QUALIFIES EAT-R234: the Pi-side no-await chain remains necessary for the Pi-to-host handoff and is not the final boundary (E227, K034)."
+ },
+ {
+  "requirement": "EAT-R410",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R229, EAT-R230, EAT-R231, EAT-R268 — CORRECT",
+  "after": "EAT-R229, EAT-R230, EAT-R231, EAT-R268; CORRECT — the draft cited R225+ (rights; source admission is R229-R231, R268)."
+ },
+ {
+  "requirement": "EAT-R411",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R206, EAT-R234, EAT-R238 — ADD",
+  "after": "EAT-R206, EAT-R234, EAT-R238; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R412",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R235, EAT-R236, EAT-R237, EAT-R240, EAT-R270 — ADD",
+  "after": "EAT-R235, EAT-R236, EAT-R237, EAT-R240, EAT-R270; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R413",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R213, EAT-R214, EAT-R253 — OK",
+  "after": "EAT-R213, EAT-R214, EAT-R253; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R413",
+  "field": "maps",
+  "finding": "RA-08",
+  "note": "TO-BE-FILED carrier (no id invented); repair legs and gate leg named",
+  "before": "MII P05 / P07; new.",
+  "after": "MII P05 / P07; TO-BE-FILED at bead filing by the owner (new bead, blocks every effectful arm per the audit); legs EAT-R213 / R214 / R253 with EAT-R413 as the gate leg."
+ },
+ {
+  "requirement": "EAT-R414",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R239, EAT-R250 — OK",
+  "after": "EAT-R239, EAT-R250; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R415",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R250, EAT-R251, EAT-R261 — OK",
+  "after": "EAT-R250, EAT-R251, EAT-R261; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R416",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R250 — OK",
+  "after": "EAT-R250; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R417",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R254, EAT-R281 — ADD",
+  "after": "EAT-R254, EAT-R281; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R418",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R243, EAT-R252, EAT-R253 — CORRECT",
+  "after": "EAT-R243, EAT-R252, EAT-R253; CORRECT — the draft cited R251 (native readback; stop asymmetry is R252)."
+ },
+ {
+  "requirement": "EAT-R418",
+  "field": "maps",
+  "finding": "RA-01",
+  "note": "closed carrier repointed; old id retained only as lineage",
+  "before": "MII P07; LIVE bead wb-5a7k (extend; re-read live DB before mutation).",
+  "after": "MII P07; wb-mwsy (open; re-read at filing)."
+ },
+ {
+  "requirement": "EAT-R419",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R205, EAT-R238, EAT-R243 — ADD",
+  "after": "EAT-R205, EAT-R238, EAT-R243; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R420",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R251, EAT-R254, EAT-R282 — ADD",
+  "after": "EAT-R251, EAT-R254, EAT-R282; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R421",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R220, EAT-R221 — OK",
+  "after": "EAT-R220, EAT-R221; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R422",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R220, EAT-R222 — OK",
+  "after": "EAT-R220, EAT-R222; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R423",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R221, EAT-R223 — OK",
+  "after": "EAT-R221, EAT-R223; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R424",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R203, EAT-R204, EAT-R233 — OK",
+  "after": "EAT-R203, EAT-R204, EAT-R233; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R425",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R263, EAT-R271, EAT-R286 — OK",
+  "after": "EAT-R263, EAT-R271, EAT-R286; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R426",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R235, EAT-R258 — OK",
+  "after": "EAT-R235, EAT-R258; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R427",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R225, EAT-R228, EAT-R238, EAT-R267 — OK",
+  "after": "EAT-R225, EAT-R228, EAT-R238, EAT-R267; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R428",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R242, EAT-R243 — OK",
+  "after": "EAT-R242, EAT-R243; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R429",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R244, EAT-R248 — OK",
+  "after": "EAT-R244, EAT-R248; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R429",
+  "field": "maps",
+  "finding": "RA-01",
+  "note": "closed carrier repointed; old id retained only as lineage",
+  "before": "MII P06 | wb-upad (observe) with wb-9a1o | extends EAT-R244, EAT-R248.",
+  "after": "MII P06; wb-9a1o (open; re-read at filing)."
+ },
+ {
+  "requirement": "EAT-R430",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R229, EAT-R242, EAT-R248 — OK",
+  "after": "EAT-R229, EAT-R242, EAT-R248; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R431",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R259, EAT-R260, EAT-R263, EAT-R277 — OK",
+  "after": "EAT-R259, EAT-R260, EAT-R263, EAT-R277; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R432",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R293, EAT-R310 — OK",
+  "after": "EAT-R293, EAT-R310; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R433",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R244, EAT-R245, EAT-R274 — OK",
+  "after": "EAT-R244, EAT-R245, EAT-R274; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R434",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R245, EAT-R274 — OK",
+  "after": "EAT-R245, EAT-R274; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R435",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R231, EAT-R245 — OK",
+  "after": "EAT-R231, EAT-R245; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R436",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R245, EAT-R275 — OK",
+  "after": "EAT-R245, EAT-R275; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R436",
+  "field": "maps",
+  "finding": "RA-01",
+  "note": "closed carrier repointed; old id retained only as lineage",
+  "before": "MII P06 | wb-9a1o with wb-upad | extends EAT-R245 (B07), EAT-R275.",
+  "after": "MII P06; wb-9a1o (open; re-read at filing)."
+ },
+ {
+  "requirement": "EAT-R437",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R259, EAT-R261, EAT-R274 — OK",
+  "after": "EAT-R259, EAT-R261, EAT-R274; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R438",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R239, EAT-R246, EAT-R275 — OK",
+  "after": "EAT-R239, EAT-R246, EAT-R275; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R438",
+  "field": "maps",
+  "finding": "RA-01",
+  "note": "closed carrier repointed; old id retained only as lineage",
+  "before": "MII P06 | wb-upad | extends EAT-R239, EAT-R246, EAT-R275.",
+  "after": "MII P06; wb-9a1o (open; re-read at filing)."
+ },
+ {
+  "requirement": "EAT-R439",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R244, EAT-R247 — OK",
+  "after": "EAT-R244, EAT-R247; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R439",
+  "field": "maps",
+  "finding": "RA-01",
+  "note": "closed carrier repointed; old id retained only as lineage",
+  "before": "MII P06 | wb-upad with wb-9a1o | extends EAT-R244, EAT-R247.",
+  "after": "MII P06; wb-9a1o (open; re-read at filing)."
+ },
+ {
+  "requirement": "EAT-R440",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R247, EAT-R248 — OK",
+  "after": "EAT-R247, EAT-R248; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R440",
+  "field": "maps",
+  "finding": "RA-01",
+  "note": "closed carrier repointed; old id retained only as lineage",
+  "before": "MII P06/P07 | wb-upad with wb-5a7k | extends EAT-R247, EAT-R248.",
+  "after": "MII P06 / P07; wb-9a1o (open; re-read at filing); wb-mwsy (open; re-read at filing)."
+ },
+ {
+  "requirement": "EAT-R441",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R240, EAT-R247 — OK",
+  "after": "EAT-R240, EAT-R247; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R442",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R239, EAT-R250 — OK",
+  "after": "EAT-R239, EAT-R250; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R443",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R251, EAT-R254, EAT-R282 — OK",
+  "after": "EAT-R251, EAT-R254, EAT-R282; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R444",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R251, EAT-R253, EAT-R282 — OK",
+  "after": "EAT-R251, EAT-R253, EAT-R282; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R444",
+  "field": "maps",
+  "finding": "RA-01",
+  "note": "closed carrier repointed; old id retained only as lineage",
+  "before": "MII P07 | wb-mwsy with wb-5a7k | extends EAT-R251, EAT-R282; condition: EAT-R253 (see EAT-R445 conditions).",
+  "after": "MII P07; wb-mwsy (open; re-read at filing)."
+ },
+ {
+  "requirement": "EAT-R445",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R252, EAT-R254, EAT-R256, EAT-R280, EAT-R281 — OK",
+  "after": "EAT-R252, EAT-R254, EAT-R256, EAT-R280, EAT-R281; OK — audited lineage retained."
+ },
+ {
+  "requirement": "EAT-R445",
+  "field": "maps",
+  "finding": "RA-01",
+  "note": "closed carrier repointed; old id retained only as lineage",
+  "before": "MII P07 | wb-5a7k with wb-mwsy (V3) and wb-9bof (V5) | extends EAT-R252, EAT-R254, EAT-R256, EAT-R280, EAT-R281.",
+  "after": "MII P07; wb-mwsy (open; re-read at filing); wb-9bof (open; re-read at filing)."
+ },
+ {
+  "requirement": "EAT-R446",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R245, EAT-R272, EAT-R274 — ADD",
+  "after": "EAT-R245, EAT-R272, EAT-R274; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R447",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R251, EAT-R254, EAT-R280, EAT-R282 — ADD",
+  "after": "EAT-R251, EAT-R254, EAT-R280, EAT-R282; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R448",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R232, EAT-R269, EAT-R284 — ADD",
+  "after": "EAT-R232, EAT-R269, EAT-R284; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R449",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R266, EAT-R267, EAT-R268, EAT-R270, EAT-R272 — ADD",
+  "after": "EAT-R266, EAT-R267, EAT-R268, EAT-R270, EAT-R272; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R450",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R216, EAT-R257, EAT-R278, EAT-R280, EAT-R281 — ADD",
+  "after": "EAT-R216, EAT-R257, EAT-R278, EAT-R280, EAT-R281; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R451",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R247, EAT-R248, EAT-R275, EAT-R281 — ADD",
+  "after": "EAT-R247, EAT-R248, EAT-R275, EAT-R281; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R452",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R242, EAT-R243, EAT-R273 — ADD",
+  "after": "EAT-R242, EAT-R243, EAT-R273; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R453",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R238, EAT-R266, EAT-R272, EAT-R279 — ADD",
+  "after": "EAT-R238, EAT-R266, EAT-R272, EAT-R279; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R454",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R252, EAT-R280, EAT-R282 — ADD",
+  "after": "EAT-R252, EAT-R280, EAT-R282; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R454",
+  "field": "maps",
+  "finding": "RA-01",
+  "note": "closed carrier repointed; old id retained only as lineage",
+  "before": "MII P07 — extends wb-mwsy (open) (controls lineage: wb-5a7k, closed).",
+  "after": "MII P07; wb-mwsy (open; re-read at filing)."
+ },
+ {
+  "requirement": "EAT-R455",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R284, EAT-R285 — ADD",
+  "after": "EAT-R284, EAT-R285; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R456",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R291, EAT-R307, EAT-R308 — ADD",
+  "after": "EAT-R291, EAT-R307, EAT-R308; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R457",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R261, EAT-R277, EAT-R291 — ADD",
+  "after": "EAT-R261, EAT-R277, EAT-R291; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R458",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R208, EAT-R241, EAT-R291 — ADD",
+  "after": "EAT-R208, EAT-R241, EAT-R291; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R459",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R209, EAT-R286, EAT-R292, EAT-R294 — ADD",
+  "after": "EAT-R209, EAT-R286, EAT-R292, EAT-R294; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R460",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R220, EAT-R271 — ADD",
+  "after": "EAT-R220, EAT-R271; ADD — the draft stated bead lineage only; EAT-R271's condition 'conditional on MW-INSTALLED-HOST' is retired at 69cb016d."
+ },
+ {
+  "requirement": "EAT-R461",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R235, EAT-R265, EAT-R304 — ADD",
+  "after": "EAT-R235, EAT-R265, EAT-R304; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R462",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R259, EAT-R260, EAT-R263, EAT-R277 — ADD",
+  "after": "EAT-R259, EAT-R260, EAT-R263, EAT-R277; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R463",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R215, EAT-R216, EAT-R257, EAT-R278, EAT-R279, EAT-R280, EAT-R281 — ADD",
+  "after": "EAT-R215, EAT-R216, EAT-R257, EAT-R278, EAT-R279, EAT-R280, EAT-R281; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R464",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R207, EAT-R232, EAT-R269 — ADD",
+  "after": "EAT-R207, EAT-R232, EAT-R269; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R465",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R249, EAT-R289 — ADD",
+  "after": "EAT-R249, EAT-R289; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R466",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R240, EAT-R244, EAT-R289 — ADD",
+  "after": "EAT-R240, EAT-R244, EAT-R289; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R467",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R252, EAT-R282, EAT-R289 — ADD",
+  "after": "EAT-R252, EAT-R282, EAT-R289; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R467",
+  "field": "maps",
+  "finding": "RA-01",
+  "note": "closed carrier repointed; old id retained only as lineage",
+  "before": "MII P07 — extends wb-mwsy (open) (controls lineage: wb-5a7k, closed).",
+  "after": "MII P07; wb-mwsy (open; re-read at filing)."
+ },
+ {
+  "requirement": "EAT-R468",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R288, EAT-R290, EAT-R293, EAT-R294, EAT-R306, EAT-R308, EAT-R310 — ADD",
+  "after": "EAT-R288, EAT-R290, EAT-R293, EAT-R294, EAT-R306, EAT-R308, EAT-R310; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R469",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R206, EAT-R209, EAT-R309 — ADD",
+  "after": "EAT-R206, EAT-R209, EAT-R309; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R469",
+  "field": "maps",
+  "finding": "RA-01",
+  "note": "wb-w8fk now OPEN per owner directive / latest read",
+  "before": "MII P00 — extends wb-w8fk (in_progress).",
+  "after": "MII P00; wb-w8fk (open; re-read at filing)."
+ },
+ {
+  "requirement": "EAT-R470",
+  "field": "extends",
+  "finding": "RA-10",
+  "note": "audited Extends line copied from Matrix A",
+  "before": "EAT-R201, EAT-R202, EAT-R309 — ADD",
+  "after": "EAT-R201, EAT-R202, EAT-R309; ADD — the draft stated no EAT lineage (RA-10)."
+ },
+ {
+  "requirement": "EAT-R470",
+  "field": "maps",
+  "finding": "RA-01",
+  "note": "wb-w8fk now OPEN per owner directive / latest read",
+  "before": "MII P00 — extends wb-w8fk (in_progress); program epic wb-1a3t (open).",
+  "after": "MII P00; wb-w8fk (open; re-read at filing)."
+ }
+]

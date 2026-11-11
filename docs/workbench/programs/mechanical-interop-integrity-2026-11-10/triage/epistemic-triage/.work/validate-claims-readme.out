@@ -1,0 +1,19 @@
+rows: 35 | ids: C001 .. C035
+kinds: {'DEFINITION': 1, 'INFERENCE': 3, 'NORMATIVE': 3, 'OBSERVATION': 27, 'SOURCE_REPORT': 1}
+timeContext: {'history': 4, 'mw-69cb016d': 8, 'none': 4, 'pi-0fb90672': 19}
+material true: 31 | false: 4
+sentences without a strongestWording anchor (informational):
+   line 2 | **Owner:** Pi Workbench.
+   line 2 | **Default branch:** master.
+   line 4 | **Companion Mechanical program:** https://github.com/jehalladay/MechanicalWorkflows/tree/main/docs/programs/pi
+   line 10 | 1. [01 — source evidence, audit disposition and invariants](01-AUDIT-AND-INVARIANTS.md)
+   line 11 | 2. [02 — protocol, owned execution and state model](02-PROTOCOL-AND-RUNTIME.md)
+   line 12 | 3. [03 — executable implementation packets](03-IMPLEMENTATION-PACKETS.md)
+   line 13 | 4. [04 — falsification, native verification and release](04-ADVERSARIAL-VERIFICATION.md)
+   line 14 | 5. [05 — agent/operator LX, docs, handoffs and adoption](05-OPERATIONS-AND-HANDOFF.md)
+   line 21 | Design authorship is not implementation.
+   line 27 | A P0 here is a blocker for this target release, not a claim of a current exploitable Pi function route.
+   line 30 | No GitHub CI.
+   line 30 | Use actual Beads identity if available; packet IDs in this program are *planning labels*, not fabricated bead 
+   line 30 | Documentation, skill, examples and agent LX updates are part of closure, not an afterthought.
+ERRORS: 0

@@ -1,0 +1,19 @@
+{
+  "episode": {
+    "events": [
+      {
+        "detail": "outcome=observed",
+        "kind": "forge.observed",
+        "mode": "replay",
+        "step": 1,
+        "subject": "op-14cd8d1e269b4aa8a0311a76f03932a0"
+      }
+    ]
+  },
+  "mode": "replay",
+  "note": "Offline replay of the witnessed run; a replay label can never become live.",
+  "schema": "mw.live-gate-flow-evidence.v1",
+  "sourceBuildOperationId": "op-d042078a098c4a078c485dcb001b2676",
+  "sourceCommandId": "cmd_8af70a7bc28f",
+  "sourceOperationId": "op-14cd8d1e269b4aa8a0311a76f03932a0"
+}

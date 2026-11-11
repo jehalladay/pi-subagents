@@ -1,0 +1,882 @@
+{
+ "EAT-R201": {
+  "title": "Re-pin and classify branch state",
+  "statement": "The Pi/MW implementation MUST re-pin and classify branch state as specified by the assertions below.",
+  "maps": "P00; existing group B-contract-choice / wb-w8fk; extends/supersedes earlier EAT-R147, EAT-R159, EAT-R171, EAT-R172 (prior text remains historical).",
+  "type": "VERIFICATION",
+  "authority": "EVIDENCE_ACQUISITION",
+  "tier": "V0 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R202": {
+  "title": "Classify historical requirement status",
+  "statement": "The Pi/MW implementation MUST classify historical requirement status as specified by the assertions below.",
+  "maps": "P00; existing group B-contract-choice / wb-w8fk; extends/supersedes earlier EAT-R147, EAT-R159, EAT-R172 (prior text remains historical).",
+  "type": "REPRESENTATION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V0 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R203": {
+  "title": "Ratify a single versioned host ABI",
+  "statement": "The Pi/MW implementation MUST ratify a single versioned host ABI as specified by the assertions below.",
+  "maps": "P00; existing group B-contract-choice / wb-w8fk; extends/supersedes earlier EAT-R005, EAT-R006, EAT-R148, EAT-R150, EAT-R152, EAT-R161 (prior text remains historical).",
+  "type": "NORMATIVE_DESIGN",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V1 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R204": {
+  "title": "Ratify an exact function-action grant",
+  "statement": "The Pi/MW implementation MUST ratify an exact function-action grant as specified by the assertions below.",
+  "maps": "P00; existing group B-contract-choice / wb-w8fk; extends/supersedes earlier EAT-R005, EAT-R028, EAT-R029, EAT-R151 (prior text remains historical).",
+  "type": "NORMATIVE_DESIGN",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V1 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R205": {
+  "title": "Fail closed on incompatible contract admission",
+  "statement": "The Pi/MW implementation MUST fail closed on incompatible contract admission as specified by the assertions below.",
+  "maps": "P00; existing group B-contract-choice / wb-w8fk; extends/supersedes earlier EAT-R006, EAT-R151, EAT-R165 (prior text remains historical).",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "RISK_CONTROL",
+  "tier": "V1 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R206": {
+  "title": "Rule one cross-program dependency DAG",
+  "statement": "The Pi/MW implementation MUST rule one cross-program dependency DAG as specified by the assertions below.",
+  "maps": "P00; existing group B-contract-choice / wb-w8fk; extends/supersedes earlier EAT-R151, EAT-R159 (prior text remains historical).",
+  "type": "REPRESENTATION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V0 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R207": {
+  "title": "Assign canonical writer-lease ownership",
+  "statement": "The Pi/MW implementation MUST assign canonical writer-lease ownership as specified by the assertions below.",
+  "maps": "P00; existing group B-source / wb-s8rm; extends/supersedes earlier EAT-R024, EAT-R025, EAT-R150 (prior text remains historical).",
+  "type": "NORMATIVE_DESIGN",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V1 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R208": {
+  "title": "Adopt one joined receipt contract",
+  "statement": "The Pi/MW implementation MUST adopt one joined receipt contract as specified by the assertions below.",
+  "maps": "P00; existing group B-release / wb-j5y5; extends/supersedes earlier EAT-R082, EAT-R085, EAT-R086, EAT-R165 (prior text remains historical).",
+  "type": "REPRESENTATION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V1 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R209": {
+  "title": "Publish the V/L evidence vocabulary map",
+  "statement": "The Pi/MW implementation MUST publish the V/L evidence vocabulary map as specified by the assertions below.",
+  "maps": "P00; existing group B-release / wb-j5y5; extends/supersedes earlier EAT-R165, EAT-R170 (prior text remains historical).",
+  "type": "REPRESENTATION",
+  "authority": "LINGUISTIC_INTEGRITY",
+  "tier": "V1 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R210": {
+  "title": "Preserve edited bytes on Git preservation failure",
+  "statement": "The Pi/MW implementation MUST preserve edited bytes on Git preservation failure as specified by the assertions below.",
+  "maps": "P01; existing group B-preserve / wb-5ik5; extends/supersedes earlier EAT-R001, EAT-R002, EAT-R003, EAT-R144 (prior text remains historical).",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V1 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R211": {
+  "title": "Retain both detached Claude grant producers",
+  "statement": "The Pi/MW implementation MUST retain both detached Claude grant producers as specified by the assertions below.",
+  "maps": "P01; existing group B-detached-grants / wb-wupg; extends/supersedes earlier EAT-R012, EAT-R013, EAT-R014 (prior text remains historical).",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V1 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R212": {
+  "title": "Retain the workflow-wide post-startup abort barrier",
+  "statement": "The Pi/MW implementation MUST retain the workflow-wide post-startup abort barrier as specified by the assertions below.",
+  "maps": "P01; existing group B-cancel-repro / wb-9v02; extends/supersedes earlier EAT-R015, EAT-R016, EAT-R160 (prior text remains historical).",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V1 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R213": {
+  "title": "Honor per-agent skip at parked startup",
+  "statement": "The Pi/MW implementation MUST honor per-agent skip at parked startup as specified by the assertions below.",
+  "maps": "P01; existing group B-cancel-repro / wb-9v02; extends/supersedes earlier EAT-R015, EAT-R160 (prior text remains historical).",
+  "type": "BEHAVIORAL",
+  "authority": "EMPIRICAL_REPAIR",
+  "tier": "V1 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R214": {
+  "title": "Suppress the original attempt after parked retry",
+  "statement": "The Pi/MW implementation MUST suppress the original attempt after parked retry as specified by the assertions below.",
+  "maps": "P01; existing group B-cancel-repro / wb-9v02; extends/supersedes earlier EAT-R016, EAT-R160 (prior text remains historical).",
+  "type": "BEHAVIORAL",
+  "authority": "EMPIRICAL_REPAIR",
+  "tier": "V1 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R215": {
+  "title": "Acquire process-death preservation evidence",
+  "statement": "The Pi/MW implementation MUST acquire process-death preservation evidence as specified by the assertions below.",
+  "maps": "P01; existing group B-preserve / wb-5ik5; extends/supersedes earlier EAT-R001, EAT-R003, EAT-R144 (prior text remains historical).",
+  "type": "VERIFICATION",
+  "authority": "EVIDENCE_ACQUISITION",
+  "tier": "V5 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R216": {
+  "title": "Acquire SDK child-death settlement evidence",
+  "statement": "The Pi/MW implementation MUST acquire SDK child-death settlement evidence as specified by the assertions below.",
+  "maps": "P01; existing group B-cancel-repro / wb-9v02; extends/supersedes earlier EAT-R015, EAT-R016, EAT-R043, EAT-R160 (prior text remains historical).",
+  "type": "VERIFICATION",
+  "authority": "EVIDENCE_ACQUISITION",
+  "tier": "V5 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R217": {
+  "title": "Consume the committed producer descriptor",
+  "statement": "The Pi/MW implementation MUST consume the committed producer descriptor as specified by the assertions below.",
+  "maps": "P02; existing group B-descriptor / wb-ocie; extends/supersedes earlier EAT-R007, EAT-R009, EAT-R153 (prior text remains historical).",
+  "type": "VERIFICATION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V2 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R218": {
+  "title": "Validate saved definition digest independently",
+  "statement": "The Pi/MW implementation MUST validate saved definition digest independently as specified by the assertions below.",
+  "maps": "P02; existing group B-descriptor / wb-ocie; extends/supersedes earlier EAT-R007, EAT-R008, EAT-R152 (prior text remains historical).",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V1 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R219": {
+  "title": "Reject noncanonical descriptor shape",
+  "statement": "The Pi/MW implementation MUST reject noncanonical descriptor shape as specified by the assertions below.",
+  "maps": "P02; existing group B-descriptor / wb-ocie; extends/supersedes earlier EAT-R007, EAT-R009, EAT-R010 (prior text remains historical).",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V2 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R220": {
+  "title": "Pin exact installed executable tarball bytes",
+  "statement": "The Pi/MW implementation MUST pin exact installed executable tarball bytes as specified by the assertions below.",
+  "maps": "P02; existing group B-descriptor / wb-ocie; extends/supersedes earlier EAT-R008, EAT-R152, EAT-R174 (prior text remains historical).",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "RISK_CONTROL",
+  "tier": "V2 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R221": {
+  "title": "Admit only the reviewed installed host export",
+  "statement": "The Pi/MW implementation MUST admit only the reviewed installed host export as specified by the assertions below.",
+  "maps": "P02; existing group B-descriptor / wb-ocie; extends/supersedes earlier EAT-R010, EAT-R035, EAT-R089, EAT-R174 (prior text remains historical).",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V2 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R222": {
+  "title": "Confine descriptor and artifact paths before import",
+  "statement": "The Pi/MW implementation MUST confine descriptor and artifact paths before import as specified by the assertions below.",
+  "maps": "P02; existing group B-descriptor / wb-ocie; extends/supersedes earlier EAT-R011, EAT-R153 (prior text remains historical).",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "RISK_CONTROL",
+  "tier": "V2 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R223": {
+  "title": "Ignore model-provided import authority",
+  "statement": "The Pi/MW implementation MUST ignore model-provided import authority as specified by the assertions below.",
+  "maps": "P02; existing group B-descriptor / wb-ocie; extends/supersedes earlier EAT-R010, EAT-R034, EAT-R154 (prior text remains historical).",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "RISK_CONTROL",
+  "tier": "V3 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R224": {
+  "title": "Serialize competing installed-package attempts safely",
+  "statement": "The Pi/MW implementation MUST serialize competing installed-package attempts safely as specified by the assertions below.",
+  "maps": "P02; existing group B-descriptor / wb-ocie; extends/supersedes earlier EAT-R007, EAT-R008 (prior text remains historical).",
+  "type": "BEHAVIORAL",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V2 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R225": {
+  "title": "Require exact execute and function action rights",
+  "statement": "The Pi/MW implementation MUST require exact execute and function action rights as specified by the assertions below.",
+  "maps": "P03; existing group B-authority / wb-201v; extends/supersedes earlier EAT-R028, EAT-R029, EAT-R151 (prior text remains historical).",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V1 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R226": {
+  "title": "Require detach right for detached function placement",
+  "statement": "The Pi/MW implementation MUST require detach right for detached function placement as specified by the assertions below.",
+  "maps": "P03; existing group B-authority / wb-201v; extends/supersedes earlier EAT-R028, EAT-R064 (prior text remains historical).",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V1 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R227": {
+  "title": "Keep SDK invocation and tool rights independent",
+  "statement": "The Pi/MW implementation MUST keep SDK invocation and tool rights independent as specified by the assertions below.",
+  "maps": "P03; existing group B-authority / wb-201v; extends/supersedes earlier EAT-R012, EAT-R014, EAT-R028 (prior text remains historical).",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V1 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R228": {
+  "title": "Re-read principal session and grants at final dispatch",
+  "statement": "The Pi/MW implementation MUST re-read principal session and grants at final dispatch as specified by the assertions below.",
+  "maps": "P03; existing group B-authority / wb-201v; extends/supersedes earlier EAT-R030, EAT-R031 (prior text remains historical).",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "RISK_CONTROL",
+  "tier": "V1 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R229": {
+  "title": "Confine the effectful source to a clean canonical root",
+  "statement": "The Pi/MW implementation MUST confine the effectful source to a clean canonical root as specified by the assertions below.",
+  "maps": "P03; existing group B-source / wb-s8rm; extends/supersedes earlier EAT-R022, EAT-R023, EAT-R027 (prior text remains historical).",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V1 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R230": {
+  "title": "Reject unmeasurable raw Git identity",
+  "statement": "The Pi/MW implementation MUST reject unmeasurable raw Git identity as specified by the assertions below.",
+  "maps": "P03; existing group B-source / wb-s8rm; extends/supersedes earlier EAT-R022, EAT-R023, EAT-R026 (prior text remains historical).",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V1 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R231": {
+  "title": "Bind a fresh Forge manifest to the source basis",
+  "statement": "The Pi/MW implementation MUST bind a fresh Forge manifest to the source basis as specified by the assertions below.",
+  "maps": "P03; existing group B-source / wb-s8rm; extends/supersedes earlier EAT-R025, EAT-R026 (prior text remains historical).",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "RISK_CONTROL",
+  "tier": "V1 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R232": {
+  "title": "Enforce one writer per canonical root",
+  "statement": "The Pi/MW implementation MUST enforce one writer per canonical root as specified by the assertions below.",
+  "maps": "P03; existing group B-source / wb-s8rm; extends/supersedes earlier EAT-R024, EAT-R025 (prior text remains historical).",
+  "type": "BEHAVIORAL",
+  "authority": "RISK_CONTROL",
+  "tier": "V1 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R233": {
+  "title": "Require host-minted current write attestation",
+  "statement": "The Pi/MW implementation MUST require host-minted current write attestation as specified by the assertions below.",
+  "maps": "P03; existing group B-source / wb-s8rm; extends/supersedes earlier EAT-R027, EAT-R030 (prior text remains historical).",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V1 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R234": {
+  "title": "Compose one no-await final authority-to-dispatch chain",
+  "statement": "The Pi/MW implementation MUST compose one no-await final authority-to-dispatch chain as specified by the assertions below.",
+  "maps": "P03; existing group B-authority / wb-201v; extends/supersedes earlier EAT-R028, EAT-R031, EAT-R022, EAT-R025, EAT-R032 (prior text remains historical).",
+  "type": "BEHAVIORAL",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V1 (pi-03 hierarchy; no automatic promotion from a lower tier)."
+ },
+ "EAT-R235": {
+  "title": "Registered workflow_execute MUST execute an admitted kind:function definition",
+  "statement": "The registered `workflow_execute` tool MUST, for an exactly allowlisted saved `kind:function` definition whose descriptor/export pin and admission checks pass, call the installed producer host, mint a Pi logical invocation ID, and return provider-qualified refs \u2014 replacing the pin-time refusal with a real function branch, editing only the P04 surfaces (`src/workbench/execute-tool.ts`, `src/index.ts`, optionally `execute.ts`, a narrow Mechanical adapter under `src/workbench/hosts/`).",
+  "maps": "P04; B-dispatch (C157 ESTABLISHED); extends EAT-R032, EAT-R054.",
+  "type": "BEHAVIORAL",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V3 (native proof deferred to P07 \u2014 EAT-R259)."
+ },
+ "EAT-R236": {
+  "title": "Script workflows MUST remain byte/behavior compatible after the function branch lands",
+  "statement": "Landing the function branch MUST leave all existing script golden fixtures, workflow tool names and the reply dialect byte/behavior compatible where pi-02 requires it, and MUST NOT register duplicate workflow tool names.",
+  "maps": "P04; B-dispatch; extends EAT-R033.",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V3 (fixtures at V1 feed it)."
+ },
+ "EAT-R237": {
+  "title": "furnace-formula MUST stay an explicit refusal outside the Mechanical adapter",
+  "statement": "After the function branch lands, a `furnace-formula` definition MUST still be refused with the explicit unsupported diagnostic, and MUST never be routed into the Mechanical adapter, any producer import, or any effect.",
+  "maps": "P04; B-dispatch; extends EAT-R155.",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V3."
+ },
+ "EAT-R238": {
+  "title": "Invalid definition, permissions or source MUST never enter the producer on the registered path",
+  "statement": "The registered function branch MUST compose final function authority and writer source admission into its one effectful dispatch chain so that any invalid definition, permission or source state is refused before descriptor import, producer call or any effect, with no await between the final grant decision and the single dispatch.",
+  "maps": "P04; B-dispatch (composes B-authority/B-source outputs); extends EAT-R025, EAT-R030, EAT-R031.",
+  "type": "BEHAVIORAL",
+  "authority": "RISK_CONTROL",
+  "tier": "V3."
+ },
+ "EAT-R239": {
+  "title": "Function state MUST live in the existing Workbench task/observation store",
+  "statement": "Function invocation state MUST be registered in the existing Workbench task/observation store; the function path MUST NOT introduce a parallel hidden task table.",
+  "maps": "P04; B-dispatch; prior: none directly (complements EAT-R032).",
+  "type": "NORMATIVE_DESIGN",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V3 (plus V0 cut census)."
+ },
+ "EAT-R240": {
+  "title": "The function launch MUST return promptly with completion:not-asserted",
+  "statement": "The registered function branch MUST persist launch intention, schedule execution asynchronously, and return `completion: not-asserted` plus provider-qualified refs promptly; it MUST NOT block the tool reply on workflow completion and MUST NOT assert completion at launch.",
+  "maps": "P04; B-dispatch; extends EAT-R032, EAT-R042.",
+  "type": "BEHAVIORAL",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V3."
+ },
+ "EAT-R241": {
+  "title": "The P04 gate receipt MUST encode its evidence level",
+  "statement": "The P04 gate receipt (`PI-FUNCTION-REGISTERED`) MUST derive from a real registered-path controlled test (not a stub typed helper) and MUST encode its evidence level (V3, injected callbacks) wherever the label is emitted, so it cannot be read as MW M06's native exit of the same name; until the P00/M00 receipt-vocabulary ruling, every emission carries the level marker.",
+  "maps": "P04; B-dispatch; extends EAT-R085.",
+  "type": "REPRESENTATION",
+  "authority": "LINGUISTIC_INTEGRITY",
+  "tier": "V3 (receipt about the V3 gate)."
+ },
+ "EAT-R242": {
+  "title": "All four original Mechanical outcomes MUST project through the registered route",
+  "statement": "`workflow_execute` plus `workflow_observe` MUST carry each of the four original `DevelopmentOutcome` variants \u2014 `verified_candidate`, `verification_failed`, `needs_evidence`, `indeterminate` \u2014 end-to-end, asserting the complete original outcome payload and the separate host envelope, never only a `kind` string.",
+  "maps": "P05; B-outcomes; extends EAT-R036.",
+  "type": "BEHAVIORAL",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V3 (native V4 instances arrive at P07 \u2014 EAT-R260)."
+ },
+ "EAT-R243": {
+  "title": "Observation MUST NOT collapse domain, transport and process statuses",
+  "statement": "Pi MUST never coerce `needs_evidence` or `indeterminate` into failure, nor `verification_failed` into a transport error; transport-level success and the Mechanical domain outcome MUST remain separately readable on every reply.",
+  "maps": "P05; B-outcomes; extends EAT-R037, EAT-R040.",
+  "type": "BEHAVIORAL",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V3."
+ },
+ "EAT-R244": {
+  "title": "Observation MUST project separate axes and preserve unknowns explicitly",
+  "statement": "Function observation MUST project, as separate fields: launch/admission, execution status, original Mechanical domain outcome, native Forge verdict/operation and complete-gate selection, source commit/tree/freshness, effect disposition, and provider-qualified refs; missing fields and unknown states MUST be preserved explicitly, never defaulted, fabricated, or implied by omission.",
+  "maps": "P05; B-observe; extends EAT-R037, EAT-R052.",
+  "type": "BEHAVIORAL",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V3."
+ },
+ "EAT-R245": {
+  "title": "Gate credit MUST be freshness- and identity-bound",
+  "statement": "Observation MUST revoke current-gate credit whenever the gate does not bind the exact current candidate: native PASS with mismatched tree, partial/incomplete gate, transport exit 0 with native FAIL, stale tree after PASS, or a no-code-change candidate MUST never read as a current verified PASS; historical proof stays visible with freshness `stale`.",
+  "maps": "P05; B-observe (joins B-git-census at P07); extends EAT-R038, EAT-R052.",
+  "type": "BEHAVIORAL",
+  "authority": "RISK_CONTROL",
+  "tier": "V3 (native freshness instances at V4 in P07)."
+ },
+ "EAT-R246": {
+  "title": "The invocation MUST remain addressable after the initiating turn",
+  "statement": "A function invocation MUST remain addressable by its Pi logical invocation ID after the initiating model turn finishes; reopening an archived invocation MUST return the exact domain outcome, native refs and source identity.",
+  "maps": "P05; B-observe; extends EAT-R051.",
+  "type": "BEHAVIORAL",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V3."
+ },
+ "EAT-R247": {
+  "title": "Model-facing output MUST stay bounded while structured detail retains native identifiers",
+  "statement": "Model-facing observation output MUST respect the byte budget and redaction while native IDs, evidence-gap and source-stale labels remain present in structured detail; a UI success glyph MUST NOT read as native Forge PASS without current proof.",
+  "maps": "P05; B-observe; extends EAT-R040, EAT-R052.",
+  "type": "BEHAVIORAL",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V3."
+ },
+ "EAT-R248": {
+  "title": "Observer gaps and missing identities MUST read as gaps, not success",
+  "statement": "A dropped or out-of-order observer cursor, a blank agent session, an absent Forge operation ID, or a missing candidate tree MUST render as an explicit gap/stale/unknown diagnostic and MUST never imply successful completion or any verified claim.",
+  "maps": "P05; B-observe; extends EAT-R052.",
+  "type": "BEHAVIORAL",
+  "authority": "RISK_CONTROL",
+  "tier": "V3."
+ },
+ "EAT-R249": {
+  "title": "Profile reporting MUST be adoption-gated and factual",
+  "statement": "Until the P00/M00 ABI adopts host-owned evidence/context profile selectors, Pi observation and receipts MUST NOT present `evidenceProfile`/`contextProfile` values (including `git-census-v1`/`plain-v1`) as executed; after adoption and live execution, Pi MUST record and report the profile identifiers actually used by the invocation, witnessed from the producer side.",
+  "maps": "P05; B-observe (vocabulary shared with B-git-census); prior: none (new audit finding).",
+  "type": "INSTRUMENTATION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V3 pre-adoption; V4 for live reporting."
+ },
+ "EAT-R250": {
+  "title": "Durable intent MUST precede any writer/claim/gate dispatch",
+  "statement": "The function path MUST journal a durable local intent record before any writer, claim or gate dispatch and append settled native refs afterward, reusing the existing workflow journal rather than a new store.",
+  "maps": "P06; B-effects; extends EAT-R041, EAT-R042.",
+  "type": "BEHAVIORAL",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V3."
+ },
+ "EAT-R251": {
+  "title": "Uncertain effects MUST resolve only by native readback",
+  "statement": "On lost acknowledgment, cancel, or process death, the function path MUST reconcile through Git/Forge native readback using the recovery oracle \u2014 `occurred` only from producer-native evidence; `not-occurred` only from positive authoritative absence at a queryable identity and current source; `unknown` from an incomplete read \u2014 reusing Mechanical's typed `DevelopmentAbortedAfterDispatchError` / `DevelopmentLostAcknowledgementError` semantics.",
+  "maps": "P06; B-effects / B-replay; extends EAT-R043, EAT-R044.",
+  "type": "BEHAVIORAL",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V3 (full process-kill matrix at V5 \u2014 EAT-R256/R257 and the P09 sibling lane)."
+ },
+ "EAT-R252": {
+  "title": "Stop semantics MUST be pre/post-dispatch asymmetric and never rollback",
+  "statement": "A stop requested before dispatch MUST prevent any SDK session; a stop after dispatch MUST record cancellation-requested with effect disposition uncertain/occurred and MUST NOT claim rollback; late candidate/gate evidence MUST stay visible; a cancellation request MUST never close Beads, reset Git, reverse a Forge gate, or undo a Furnace Attempt.",
+  "maps": "P06; B-controls; extends EAT-R045, EAT-R046, EAT-R047, EAT-R070.",
+  "type": "BEHAVIORAL",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V3."
+ },
+ "EAT-R253": {
+  "title": "The parked-beforeDispatch skip/retry loss MUST be repaired before effectful dispatch",
+  "statement": "Pi MUST honor a per-agent skip or retry issued while `beforeDispatch` is parked (the witnessed wb-9v02 defect), so the pending cancel takes effect at the exact barrier and no late SDK query starts; this repair MUST land before any effectful function dispatch is enabled.",
+  "maps": "P06; B-cancel-repro; bead wb-9v02 (per M006), epic wb-1a3t (C158 ESTABLISHED); extends EAT-R015, EAT-R016, EAT-R160.",
+  "type": "BEHAVIORAL",
+  "authority": "EMPIRICAL_REPAIR",
+  "tier": "V3."
+ },
+ "EAT-R254": {
+  "title": "Effect count MUST stay <=1 absent native not-occurred evidence",
+  "statement": "Across journal replay, duplicate control events and host restart, the function path MUST keep native effect attempts at <=1 per authorized invocation; a new dispatch is permitted only after positively evidenced not-occurred plus newly authorized source; repeated cancel/reconcile events MUST be idempotent.",
+  "maps": "P06; B-replay; extends EAT-R021, EAT-R043, EAT-R044.",
+  "type": "BEHAVIORAL",
+  "authority": "RISK_CONTROL",
+  "tier": "V3 behavioral; process-death instances at V5 (EAT-R256)."
+ },
+ "EAT-R255": {
+  "title": "Failed preservation MUST never trigger destructive cleanup on the function path",
+  "statement": "The function host MUST use the safe `cleanupWorktree` path: on a status/add/commit/branch preservation failure it MUST surface the typed preservation-failed result (kept path plus diagnostic, with the changed tracked and untracked bytes retained at the kept worktree/HEAD) and MUST NOT invoke destructive cleanup or report a false clean.",
+  "maps": "P06; B-preserve; extends EAT-R001, EAT-R002, EAT-R003, EAT-R144.",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "RISK_CONTROL",
+  "tier": "V3 (crash-overlap at V5 via EAT-R256/R257)."
+ },
+ "EAT-R256": {
+  "title": "P06 fault tests MUST record the full before/after evidence set at controlled barriers",
+  "statement": "Every P06 fault test MUST record full tracked and untracked worktree bytes, HEAD/index, source/permission basis, native-effect attempt count and the Pi journal before and after; each fault MUST be injected at an independently controlled barrier; the P06 matrix MUST cover at least: parked startup + per-agent skip, during-edit abort, after-commit-before-ack, gate-sent-reply-lost, restored Pi session, duplicate events/cancels, and host-process-killed-and-reattached \u2014 with inspection after a separate process restart where feasible.",
+  "maps": "P06; B-controls; extends EAT-R086, EAT-R168, EAT-R170.",
+  "type": "VERIFICATION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V5 for process-kill members; V3 for in-process barriers."
+ },
+ "EAT-R257": {
+  "title": "SDK-child host death MUST gain its missing test",
+  "statement": "Pi MUST add the named missing evidence for host death: a test that kills the SDK child process mid-query and asserts the settled result/journal state \u2014 the session identified as unknown/active or explicitly unknown, a stale/unknown observer cursor with reattach id and ref, and no auto-repeat without a native read.",
+  "maps": "P06; B-controls; prior: none (named audit gap).",
+  "type": "VERIFICATION",
+  "authority": "EVIDENCE_ACQUISITION",
+  "tier": "V5."
+ },
+ "EAT-R258": {
+  "title": "The function path MUST NOT add a second scheduler or duplicate Furnace",
+  "statement": "The function execution path MUST reuse existing dispatch/journal/reconcile authorities and MUST NOT introduce a new scheduler inside Pi nor duplicate Furnace's durable Run/Work/Attempt ownership; in the optional detached/Furnace mode, reconciliation MUST go through the native controller/Run/Attempt, never a bespoke local scheduler.",
+  "maps": "P06 (P11 boundary); B-dispatch; extends EAT-R069.",
+  "type": "NORMATIVE_DESIGN",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V0 census plus V3 behavioral tie-in."
+ },
+ "EAT-R259": {
+  "title": "The first live journey MUST bind registered route, native writer, native gate and observation into one V4 receipt",
+  "statement": "P07 MUST execute the real registered `workflow_execute(kind:function)` with the exact independently packed Mechanical host on an isolated scratch Forge package, where one genuine native Claude SDK writer produces a changed clean commit/tree, the native Forge full gate binds that candidate, and `workflow_observe` returns the original domain and refs; the receipt MUST carry the full V4 field set \u2014 pinned versions, SDK session ID, Pi logical invocation ID, Mechanical domain, gate operation ID/selection, source base/commit/tree, matching candidate commit/tree and gate manifest, definition/descriptor/package digests, and the exact input task \u2014 all from producer-native API evidence, never an assistant's summary.",
+  "maps": "P07; B-git-census; extends EAT-R054, EAT-R055, EAT-R085.",
+  "type": "VERIFICATION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V4."
+ },
+ "EAT-R260": {
+  "title": "The live journey MUST include native PASS, native FAIL and unknown/refusal variants",
+  "statement": "P07 MUST produce three genuine native variations \u2014 one true PASS, one native Forge FAIL, and one unknown/partial/dirty refusal \u2014 each through the registered route with producer-native IDs; no fixture or proxy result may be counted as native.",
+  "maps": "P07; B-git-census; extends EAT-R055, EAT-R056.",
+  "type": "VERIFICATION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V4."
+ },
+ "EAT-R261": {
+  "title": "The P07 gate MUST join only producer-defined receipts",
+  "statement": "The P07 joint gate MUST be configured over receipt labels that have a producer-side definition at gate time \u2014 at the pins that is MW M06's actual exit pair (`PI-FUNCTION-REGISTERED` then `PI-GIT-CENSUS-LIVE`) or the P00/M00-adopted set \u2014 and MUST NOT wait on `MW-PI-NATIVE-LIVE`, which no MW document or repository defines.",
+  "maps": "P07; B-git-census (ruling input: B-contract-choice); extends EAT-R085, EAT-R086.",
+  "type": "REPRESENTATION",
+  "authority": "LINGUISTIC_INTEGRITY",
+  "tier": "V0 config truth, enforced again at V4 execution."
+ },
+ "EAT-R262": {
+  "title": "P07 profile instantiation MUST wait for ratified selectors and record executed literals",
+  "statement": "P07 MUST instantiate `git-census-v1`/`plain-v1` only after the P00/M00 ABI lands those selectors in producer and consumer code; its receipts MUST name the selector literals actually executed, witnessed from the installed producer package, and MUST NOT present an unratified identifier as an executed profile.",
+  "maps": "P07; B-git-census; extends EAT-R053.",
+  "type": "REPRESENTATION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V4 (conditional on adoption)."
+ },
+ "EAT-R263": {
+  "title": "Unavailable credentials or binaries MUST record BLOCKED, never an imitation pass",
+  "statement": "When credentials or binaries for the live journey are unavailable, the P07 receipt MUST record status BLOCKED naming the missing prerequisite; no imitation pass, fabricated native ID, or PARTIAL-relabeled-PASS is permitted; a gate or requirement label becomes an actual claim only with a passing receipt on a pinned candidate.",
+  "maps": "P07; B-git-census; extends EAT-R085, EAT-R086, EAT-R087.",
+  "type": "REPRESENTATION",
+  "authority": "LINGUISTIC_INTEGRITY",
+  "tier": "V0 validator behavior, exercised in the V4 context."
+ },
+ "EAT-R264": {
+  "title": "P07 dependency and exit metadata MUST state M05/M06 truthfully and defer release",
+  "statement": "Scheduling, bead and receipt metadata for P07 MUST describe M05 as MW's fixture-safe installed-consumer conformance (L2, not native) and M06 as the same joint event as P07 (not a producer-side live input); dependency edges MUST NOT be filed from the artifact's conflicting DAGs until the P00/M00 joint-DAG ruling; and the P07 exit MUST state that function hosting is demonstrated for a real provider while W11 release/graduation still requires P08\u2013P10.",
+  "maps": "P07; B-contract-choice + B-git-census; epic wb-1a3t (per M032/C158); extends EAT-R159, EAT-R172.",
+  "type": "REPRESENTATION",
+  "authority": "LINGUISTIC_INTEGRITY",
+  "tier": "V0 metadata truth, joined to the V4 receipts."
+ },
+ "EAT-R265": {
+  "title": "P08 matrix tests MUST drive the registered tool objects, not admission helpers",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R266": {
+  "title": "A01-A05 identity/admission negatives MUST fail closed with zero import or effect",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R267": {
+  "title": "A06-A09 rights and principal negatives MUST refuse at the final authority boundary with no dispatch",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R268": {
+  "title": "A10-A11 source-admission negatives MUST refuse before any writer, retain bytes and reject a moved basis",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R269": {
+  "title": "A12: concurrent invocations on one realpath MUST admit exactly one writer or refuse boundedly",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R270": {
+  "title": "A13-A14: one registered function tool, no script drift, no capability from tool input",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R271": {
+  "title": "The V2 installed-consumer leg MUST import the real packed artifacts from an external temp consumer, conditional on MW-INSTALLED-HOST",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R272": {
+  "title": "Every P08 property MUST carry a one-check-removal mutant with a positive control and an honest per-mutant record",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R273": {
+  "title": "B01-B04: the four original Mechanical outcomes MUST reach workflow_observe intact on separate axes",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R274": {
+  "title": "B05-B08 and B14: no PASS without matching fresh native proof, no invented domain",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R275": {
+  "title": "B09-B11: cursor gaps, reopen after the originating turn, and stop-with-late-commit MUST be truthful",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R276": {
+  "title": "B12-B13: coordination proposals are non-authoritative and unsupported profiles are refused while Git/plain stays operable",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R277": {
+  "title": "The V4 receipt MUST carry producer-native identities for one PASS, one FAIL and one unknown, joined to the Pi invocation",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R278": {
+  "title": "V5 fault tests MUST snapshot bytes, basis, attempt counts and journal around an independently controlled barrier",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R279": {
+  "title": "Pre-effect faults (C rows 1-5) MUST leave zero effects and honor pending cancellation at the exact barrier",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R280": {
+  "title": "Effectful faults (C rows 6-10) MUST preserve bytes and native identities and never claim rollback or a second effect",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R281": {
+  "title": "Observation, replay and control faults (C rows 11-14) MUST yield stale/unknown states, refused replays and idempotent controls, including a real host kill",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R282": {
+  "title": "Effect recovery MUST follow the occurred / not-occurred / unknown oracle and cancellation MUST reverse nothing",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R283": {
+  "title": "The function host MUST use the preservation-safe cleanup path and MUST NOT add a Run/Attempt scheduler",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R284": {
+  "title": "P09 MUST run the 1/4/16 workload tiers and the two-writer contention trial with per-phase instrumentation",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R285": {
+  "title": "Numeric budgets MUST derive from measured baselines, be asserted as counters/caps, and never be imported from history",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R286": {
+  "title": "Release proof MUST run the Section D gates on the final merged trees of both repos at re-pinned heads, on Node 24",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R287": {
+  "title": "Test runs MUST be separated by claim and native lanes run explicitly; a default green MUST NOT be recorded as native certification",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R288": {
+  "title": "Script, standalone Agent and detached Claude paths MUST show no regression and no census edits alongside the function route",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R289": {
+  "title": "workflow_observe and the existing operator surfaces MUST answer the ten operator questions without guessing, with no success glyph absent current native proof",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R290": {
+  "title": "Ten agent LX scenarios MUST run from the installed README/AGENTS/skill alone and be scored for real commands",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R291": {
+  "title": "Per-cut receipts MUST follow one adopted schema with a declared join key, encoded evidence level and no fabricated identities",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R292": {
+  "title": "The release validator MUST be used only as an evidence validator and its PASS MUST never be recorded as a native function call",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R293": {
+  "title": "W11 and program documentation MUST state only receipt-backed, dated status and keep historical notes historical",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R294": {
+  "title": "W11 MAY be marked shipped only when every required item is receipt-backed and no veto predicate fires",
+  "statement": "",
+  "maps": "",
+  "type": "",
+  "authority": "",
+  "tier": ""
+ },
+ "EAT-R295": {
+  "title": "Detached functions bind immutable launch snapshots",
+  "statement": "The optional detached Mechanical function host MUST execute only the immutable host-authorized source/artifact/config snapshot admitted for its registered invocation.",
+  "maps": "P11; B-detached-function; pinned Beads lineage: wb-zswl; B-detached-grants/wb-wupg as preserved prerequisite; extends EAT-R064, EAT-R066, EAT-R226, EAT-R227. Prior text/history remains intact.",
+  "type": "BEHAVIORAL",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V5 (pi-03 V ladder; NOT_RUN, no tier promotion)."
+ },
+ "EAT-R296": {
+  "title": "Detached reconnect preserves identity and launch uncertainty",
+  "statement": "The optional detached function reconnect path MUST preserve its original invocation/host identity and unknown-start state across disconnect or lost start acknowledgment without launching a replacement.",
+  "maps": "P11; B-detached-function; pinned Beads lineage: wb-zswl; B-observe/wb-upad and B-effects/wb-mwsy dependencies; extends EAT-R065, EAT-R066, EAT-R067. Prior text/history remains intact.",
+  "type": "BEHAVIORAL",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V5 (pi-03 V ladder; NOT_RUN, no tier promotion)."
+ },
+ "EAT-R297": {
+  "title": "Furnace owns durable function lifecycle decisions",
+  "statement": "The optional Furnace integration MUST delegate durable Run/Work/Attempt scheduling, retry and pause/stop decisions to the actual Furnace producer rather than a Pi function scheduler.",
+  "maps": "P11; B-furnace-function; pinned Beads lineage: wb-dlc6; MW-owned gate tracker wb-1zn2; extends EAT-R068, EAT-R069, EAT-R070, EAT-R092, EAT-R258. Prior text/history remains intact.",
+  "type": "NORMATIVE_DESIGN",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V6 (pi-03 V ladder; NOT_RUN, no tier promotion)."
+ },
+ "EAT-R298": {
+  "title": "Witness Furnace function faults at the native boundary",
+  "statement": "The optional Furnace function delivery MUST acquire producer-native fault evidence for lost start acknowledgment, controller liveness and duplicate Attempt prevention before claiming durable function support.",
+  "maps": "P11; B-furnace-function; pinned Beads lineage: wb-dlc6; MW-owned gate tracker wb-1zn2; extends EAT-R068, EAT-R069, EAT-R092. Prior text/history remains intact.",
+  "type": "VERIFICATION",
+  "authority": "EVIDENCE_ACQUISITION",
+  "tier": "V6 (pi-03 V ladder; NOT_RUN, no tier promotion)."
+ },
+ "EAT-R299": {
+  "title": "Enable HX scope only from native task proof",
+  "statement": "The optional certified HX evidence profile MUST admit a writer only from terminal producer-native task/revision/query/coverage proof matching that invocation.",
+  "maps": "P12; B-hx-admit; pinned Beads lineage: wb-pxvv; B-hx-evidence/wb-f3wd history; MW tracker wb-1zn2; extends EAT-R057, EAT-R058, EAT-R059, EAT-R063, EAT-R163. Prior text/history remains intact.",
+  "type": "BEHAVIORAL",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V6 (pi-03 V ladder; NOT_RUN, no tier promotion)."
+ },
+ "EAT-R300": {
+  "title": "Enable RF context only from committed provenance",
+  "statement": "The optional committed RF context profile MUST reject context lacking producer-native committed render provenance and replay identity bound to the current invocation source.",
+  "maps": "P12; B-rf-admit; pinned Beads lineage: wb-669r; MW tracker wb-1zn2; extends EAT-R060, EAT-R061, EAT-R062, EAT-R063, EAT-R091. Prior text/history remains intact.",
+  "type": "BEHAVIORAL",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V6 (pi-03 V ladder; NOT_RUN, no tier promotion)."
+ },
+ "EAT-R301": {
+  "title": "Coordination exposes only one pinned read-only contract",
+  "statement": "The optional coordination callable MUST expose only the separately allowlisted schema-pinned pure Mechanical export under its own host-held read-only grant.",
+  "maps": "P12; B-coordination; pinned Beads lineage: wb-0gbh and wb-ub94 are historical carriers; remaining cut must reuse their lineage, not invent a live status; extends EAT-R071, EAT-R093. Prior text/history remains intact.",
+  "type": "BEHAVIORAL",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V3 (pi-03 V ladder; NOT_RUN, no tier promotion)."
+ },
+ "EAT-R302": {
+  "title": "Coordination proposals confer no effect authority",
+  "statement": "The optional coordination result MUST remain advisory observation and MUST NOT itself claim/close Beads, schedule a Furnace Attempt or grant Forge gate credit.",
+  "maps": "P12; B-coordination; pinned Beads lineage: wb-0gbh/wb-ub94 historical component; real remaining bead resolved at filing; extends EAT-R072. Prior text/history remains intact.",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V3 (pi-03 V ladder; NOT_RUN, no tier promotion)."
+ },
+ "EAT-R303": {
+  "title": "Optional extensions are not first Git/plain release blockers",
+  "statement": "The first Git/plain W11 release decision MUST NOT fail solely because P11/P12 optional detached/Furnace/HX/RF/coordination or remote-fleet evidence is absent.",
+  "maps": "P10; B-release; pinned Beads lineage: wb-j5y5 historical validator carrier; extends EAT-R062, EAT-R085, EAT-R165. Prior text/history remains intact.",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V1 (pi-03 V ladder; NOT_RUN, no tier promotion)."
+ },
+ "EAT-R304": {
+  "title": "Each behavior cut retains registered red-first evidence",
+  "statement": "Each implementation behavior cut MUST retain a pre-implementation failing consumer-visible registered-path test with a valid positive and single-fault negative before landing.",
+  "maps": "P08; B-release; pinned Beads lineage: wb-j5y5 historical carrier; applies to every packet bead; extends EAT-R083, EAT-R168, EAT-R170. Prior text/history remains intact.",
+  "type": "VERIFICATION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V3 (pi-03 V ladder; NOT_RUN, no tier promotion)."
+ },
+ "EAT-R305": {
+  "title": "Mutant qualification records actual dispositions",
+  "statement": "Each packet\u2019s mutant qualification record MUST preserve the actual per-mutant disposition instead of asserting that every planned mutant was killed.",
+  "maps": "P08; B-release; pinned Beads lineage: wb-j5y5 historical carrier; all packet receipts; extends EAT-R083, EAT-R086, EAT-R166. Prior text/history remains intact.",
+  "type": "VERIFICATION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V3 (pi-03 V ladder; NOT_RUN, no tier promotion)."
+ },
+ "EAT-R306": {
+  "title": "Docs and operator skill close in the implementation cut",
+  "statement": "Each implementation cut MUST close its README, Workbench/W11, interop skill, operator-example and real per-bead receipt changes in that same cut at the evidenced status.",
+  "maps": "P10; B-release; pinned Beads lineage: wb-j5y5; B-docs/wb-12x1 historical carriers; extends EAT-R082, EAT-R086, EAT-R167. Prior text/history remains intact.",
+  "type": "REPRESENTATION",
+  "authority": "LINGUISTIC_INTEGRITY",
+  "tier": "V1 (pi-03 V ladder; NOT_RUN, no tier promotion)."
+ },
+ "EAT-R307": {
+  "title": "No GitHub CI or PR delivery for this program",
+  "statement": "Program implementation cuts MUST NOT introduce or use GitHub CI/PRs as this program\u2019s delivery or acceptance mechanism.",
+  "maps": "P10; B-release; pinned Beads lineage: wb-j5y5 historical carrier; extends EAT-R084. Prior text/history remains intact.",
+  "type": "NORMATIVE_DESIGN",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V1 (pi-03 V ladder; NOT_RUN, no tier promotion)."
+ },
+ "EAT-R308": {
+  "title": "Historical TRACEABILITY stays byte-identical",
+  "statement": "Every program cut MUST leave historical docs/workbench/TRACEABILITY.md byte-identical to its cut base.",
+  "maps": "P10; B-release; pinned Beads lineage: wb-j5y5; B-docs/wb-12x1 historical carriers; extends EAT-R087. Prior text/history remains intact.",
+  "type": "NEGATIVE_REGRESSION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V1 (pi-03 V ladder; NOT_RUN, no tier promotion)."
+ },
+ "EAT-R309": {
+  "title": "Reconciliation retains original requirement and Beads identities",
+  "statement": "The program reconciliation handoff MUST preserve historical EAT identifiers/audit sources and attach remaining work to the existing real Beads lineage without a second Beads namespace or false closure.",
+  "maps": "P00; B-contract-choice; pinned Beads lineage: wb-w8fk; epic wb-1a3t; MW tracker wb-1zn2; closed carrier history stays intact; extends EAT-R086, EAT-R147, EAT-R172, EAT-R202. Prior text/history remains intact.",
+  "type": "REPRESENTATION",
+  "authority": "NORMATIVE_DECISION",
+  "tier": "V0 (pi-03 V ladder; NOT_RUN, no tier promotion)."
+ },
+ "EAT-R310": {
+  "title": "W11 wording never exceeds pinned joined evidence",
+  "statement": "W11, skills and release receipts MUST describe current interoperability only at the evidence level and final source/artifact pins actually witnessed, preserving historical, partial, proposed, unknown and not-run distinctions.",
+  "maps": "P10; B-release; pinned Beads lineage: wb-j5y5; W11 history; B-docs/wb-12x1; extends EAT-R082, EAT-R085, EAT-R165, EAT-R166, EAT-R170, EAT-R171. Prior text/history remains intact.",
+  "type": "REPRESENTATION",
+  "authority": "LINGUISTIC_INTEGRITY",
+  "tier": "V5 (pi-03 V ladder; NOT_RUN, no tier promotion)."
+ }
+}

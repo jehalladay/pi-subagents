@@ -1,0 +1,22 @@
+# Three independent Forge members. The repository root's forge.toml is NOT a member.
+# Regenerate the ignored forge.lock.json with 'forge workspace lock' when needed.
+name = "mechanical-workflows"
+affected_always = []
+# Shared roots every member's build reads; a change here marks all members affected.
+affected_global_paths = ["tsconfig.base.json", "package.json", "package-lock.json", ".mise.toml"]
+affected_base_max_age_days = 14
+
+[[packages]]
+ref = "library:workflows-development"
+source_type = "local"
+path = "packages/development"
+
+[[packages]]
+ref = "code:development-rig"
+source_type = "local"
+path = "apps/development-rig"
+
+[[packages]]
+ref = "library:workflows-coordination"
+source_type = "local"
+path = "packages/coordination"

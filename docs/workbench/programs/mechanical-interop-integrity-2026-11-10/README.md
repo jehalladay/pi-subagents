@@ -1,0 +1,8 @@
+# Mechanical-interop-integrity (MII) 2026-11-10 — epistemic triage + requirements
+
+Successor design to mechanical-native-interoperability-2026-11-09 (MNI). User-directed /epistemic-adversarial-triage (workflow wf_f4bb896a-b88, 21 agents; consolidation agent). Pins: environment Pi 0fb90672 + MW 69cb016d (document Pi 3fc0ead1, MW companion 6476372f).
+
+- triage/epistemic-triage/ — 230-claim ledger (82 ESTABLISHED / 13 SUPPORTED / 1 PLAUSIBLE / 4 UNSUPPORTED / 6 REFUTED / 124 NON-EPISTEMIC; C107/C173 arbitrated — ARBITRATION-2026-11-11.md + CLAIMS.patch.jsonl), 465 evidence rows, 690 relations, 37 contradiction sets, 239 remediation rows (all inserts; pin advance deferred to owner). Phase-9 gate PASS (0 failures every class).
+- requirements/ — consolidated ATOMIC-REQUIREMENTS.md EAT-R391..R470 (80 rows; REQUIREMENTS-AUDIT.md was FAIL AS DRAFTED, cured by CONSOLIDATION.md applying RA-01..RA-22; scanners: 0 label mismatches, 0 closed-bead targets, 0 AMEND, 76/76 anchors), CLAIM-REQUIREMENT-MAP.jsonl, TDD-MATRIX.md. DX program owns EAT-R311..R390 + R471..R488.
+- Key verified upgrades vs MNI: @mechanical/development-rig/host subpath SHIPS at mw 69cb016d (MNI C239 phantom-subpath resolved as real pin drift, landed 24ef8984) — lifts the MNI V2 BLOCKED rows at their next gate; REFUTED: self-contained claim (C005), attached placement (C029), raw JSON budgets (C095), no-GitHub-CI (C138).
+- Owner decisions carried in-row (G-RATIFY gates): launch-status option (R466/R405), SDK factory boundary + effect-axis vocabulary (R405/R419), D6 ownership + severity/label rulings (R469). Ratification record lands with the P00 contract (wb-w8fk).

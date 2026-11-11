@@ -1,0 +1,75 @@
+{
+  "generatedAt": "2026-11-11T07:36:35.362195+00:00",
+  "pins": [
+    {
+      "repo": "pi",
+      "head": "0fb9067262532289104417d2b7f2f25704563a75",
+      "dirty": false
+    },
+    {
+      "repo": "mw",
+      "head": "69cb016dd293a17bcc893f2baf410a51c226f4c9",
+      "dirty": false
+    }
+  ],
+  "nodeVersion": "v24.20.0",
+  "instrument": "Direct pinned TypeScript imports with Node --experimental-transform-types and scratch resolve hook mapping relative .js imports to same pinned .ts source. typebox/value Check stub throws if called; no probe calls it. No registered tool/native SDK/Forge run, no full test suite. P9 Git reader is deterministic; MW M1 uses real scratch Git. Probes write only under audit scratch. Initial strip-only run failed on TypeScript parameter properties; transform-types rerun passed.",
+  "commands": [
+    "node --experimental-transform-types --no-warnings --import ./register.mjs probe-pi.mjs <absolute Pi pin> <probe/tmp>",
+    "node --experimental-transform-types --no-warnings --import ./register.mjs probe-mw.mjs <absolute MW pin> <probe/tmp>"
+  ],
+  "probeExitCodes": {
+    "pi": 0,
+    "mw": 0
+  },
+  "probeFiles": {
+    "hooks.mjs": "1aac4bc9d2c330aa5911d3753f76a80355719ead67acbc6bdeaa1181f4b2af20",
+    "typebox-value-stub.mjs": "d8d4ea04d89c3eab483e16b41e338046a88532e0bde56d0781d1d1b5d1d5d9ef",
+    "register.mjs": "3b3d248cf4aa52d0091728435d07305c709e3dd2bf317aa538a9901c7423e5e5",
+    "probe-pi.mjs": "49e387a0ee867ffea2d4f59bc4e01e109acd0838e5c4a6312000754df042b6e4",
+    "pi-probe.jsonl": "64adfa3c8364a3caea826647f9f098a41e329dafeb07f9e6ecb4714e47de02d3",
+    "pi-probe.err": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "probe-mw.mjs": "1a506ab2704de4d3ea74cd5dea2e69ecdec6c431d4f688cd63a9f6e03affbbc4",
+    "mw-probe.jsonl": "7eda2ee3f886388a5b5c6909baca1c93bdd5e09cf17b15514296c83e9b00f309",
+    "mw-probe.err": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "staticImportCensus": [
+    {
+      "scope": "packages/development/src",
+      "files": 6,
+      "nonrelativeStaticImports": [],
+      "dynamicImportSites": []
+    },
+    {
+      "scope": "packages/coordination/src",
+      "files": 84,
+      "nonrelativeStaticImports": [
+        {
+          "file": "packages/coordination/src/canonical.ts",
+          "specifier": "node:crypto"
+        }
+      ],
+      "dynamicImportSites": []
+    }
+  ],
+  "audit": {
+    "rows": 49,
+    "statusCounts": {
+      "ESTABLISHED": 17,
+      "NON-EPISTEMIC": 28,
+      "REFUTED": 2,
+      "SUPPORTED": 2
+    },
+    "refuted": [
+      "C095",
+      "C107"
+    ],
+    "auditFileSha256": "6453fea24ed045a66f4182e26203c18e87a5d6ed69676c3788dfc19845b94b05",
+    "nonmaterialExcluded": [
+      "C086"
+    ],
+    "allMaterialCovered": true,
+    "schemaValidated": true
+  },
+  "staticImportCensusNote": "Statement-anchored import/export-from regex over every .ts file; an earlier loose regex in this audit matched string literals containing from and was discarded. Prior lens census (lens-mw-src-probe/out/static-scans.txt S1) reports the same node:crypto-only result."
+}

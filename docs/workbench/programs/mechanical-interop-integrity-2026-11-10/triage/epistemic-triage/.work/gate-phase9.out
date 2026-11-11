@@ -1,0 +1,21 @@
+{
+ "claims": 230,
+ "evidence": 465,
+ "anchored_failures": 0,
+ "self_referential": 0,
+ "string_shaped": 0,
+ "duplicate_wording": 0,
+ "absent_deliverables": 0,
+ "directory_paths": 0,
+ "unresolved_paths": 0,
+ "root_failures": 0,
+ "sentence_failures": 0,
+ "no_evidence": 0,
+ "history_grammar": 0,
+ "remediation_coverage": 0,
+ "schema": 0,
+ "arbitration_dates": [
+  "2026-11-11"
+ ]
+}
+GATE PASS

@@ -1,0 +1,3 @@
+qa/integration/pi-native-interoperability-2026-11-09/m00-a/baseline.json: no refusals
+qa/integration/pi-native-interoperability-2026-11-09/m01/installed-host-l2-receipt.json: no refusals
+qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-consumer-l2-receipt.json: refused (19)

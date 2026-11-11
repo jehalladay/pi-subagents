@@ -1,0 +1,616 @@
+{
+ "anchors": 76,
+ "files": 29,
+ "match": 76,
+ "mismatch": 0,
+ "rows": [
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/index.ts",
+   "line": 3009,
+   "expected": "pi.registerTool(createWorkflowExecuteTool(",
+   "match": true,
+   "cited_by": "r-exec ORACLE-REG"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/index.ts",
+   "line": 3014,
+   "expected": "mintInvocationId: workflowRunId",
+   "match": true,
+   "cited_by": "r-exec ORACLE-REG"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/index.ts",
+   "line": 2933,
+   "expected": "name: \"workflow_observe\"",
+   "match": true,
+   "cited_by": "r-exec ORACLE-REG"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/index.ts",
+   "line": 2997,
+   "expected": "pi.registerTool(createWorkflowReconcileTool(",
+   "match": true,
+   "cited_by": "r-exec ORACLE-REG"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/index.ts",
+   "line": 3063,
+   "expected": "pi.registerTool(createWorkflowControlTool(",
+   "match": true,
+   "cited_by": "r-exec ORACLE-REG"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/reconcile-tool.ts",
+   "line": 62,
+   "expected": "name: \"workflow_reconcile\"",
+   "match": true,
+   "cited_by": "r-exec ORACLE-REG"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/control-tool.ts",
+   "line": 138,
+   "expected": "name: \"workflow_control\"",
+   "match": true,
+   "cited_by": "r-exec ORACLE-REG"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/native-modules.ts",
+   "line": 109,
+   "expected": "loadWorkbenchNative",
+   "match": true,
+   "cited_by": "r-exec DETECT-ZERO"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/native-modules.ts",
+   "line": 126,
+   "expected": "isWorkbenchNativeLoaded",
+   "match": true,
+   "cited_by": "r-exec DETECT-ZERO"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/index.ts",
+   "line": 2460,
+   "expected": "const workflowTasks = new Map",
+   "match": true,
+   "cited_by": "R438"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/index.ts",
+   "line": 2965,
+   "expected": "Workflow unavailable in this local operator/session/workspace scope.",
+   "match": true,
+   "cited_by": "R438"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/execute-tool.ts",
+   "line": 163,
+   "expected": "observe the launch through workflow_observe",
+   "match": true,
+   "cited_by": "R438"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/execute-tool.ts",
+   "line": 179,
+   "expected": "observe the launch through workflow_observe",
+   "match": true,
+   "cited_by": "R438"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/observation.ts",
+   "line": 2,
+   "expected": "export interface NativeRef { provider: string; type: string; id: string; scope?: string }",
+   "match": true,
+   "cited_by": "R440"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/observation.ts",
+   "line": 638,
+   "expected": "ingest(event: ObservationEvent): \"applied\" | \"duplicate\" | \"out-of-order\" | \"refused\"",
+   "match": true,
+   "cited_by": "R429"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workflow/journal.ts",
+   "line": 43,
+   "expected": "JSON Lines",
+   "match": true,
+   "cited_by": "R442"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workflow/journal.ts",
+   "line": 252,
+   "expected": "export function appendJournal",
+   "match": true,
+   "cited_by": "R442"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workflow/journal.ts",
+   "line": 254,
+   "expected": "appendFileSync(",
+   "match": true,
+   "cited_by": "R442"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/index.ts",
+   "line": 2629,
+   "expected": ".workflow.jsonl",
+   "match": true,
+   "cited_by": "R442"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/index.ts",
+   "line": 2631,
+   "expected": "console.warn(",
+   "match": true,
+   "cited_by": "R442"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/tool-replies.ts",
+   "line": 14,
+   "expected": "TOOL_REPLY_CONTRACT_VERSION = \"workbench.tool-reply/v1\"",
+   "match": true,
+   "cited_by": "R441"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/execute.ts",
+   "line": 14,
+   "expected": "EXECUTE_CONTRACT_VERSION = \"workbench.execute/v1\"",
+   "match": true,
+   "cited_by": "R441"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/execute.ts",
+   "line": 58,
+   "expected": "export type LaunchStatus = \"accepted\" | \"launched\" | \"refused\";",
+   "match": true,
+   "cited_by": "R441"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/execute.ts",
+   "line": 65,
+   "expected": "export interface WorkflowExecuteReply {",
+   "match": true,
+   "cited_by": "R441 (inner builder type)"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/execute.ts",
+   "line": 77,
+   "expected": "readonly truncated: boolean;",
+   "match": true,
+   "cited_by": "R441 (inner builder type)"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/execute-tool.ts",
+   "line": 107,
+   "expected": "export interface WorkflowExecuteEnvelope {",
+   "match": true,
+   "cited_by": "audit RA-02"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/execute-tool.ts",
+   "line": 108,
+   "expected": "readonly contract: typeof TOOL_REPLY_CONTRACT_VERSION;",
+   "match": true,
+   "cited_by": "audit RA-02 (first line of the range R441 cites, :108-113)"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/execute-tool.ts",
+   "line": 109,
+   "expected": "readonly tool: \"workflow_execute\";",
+   "match": true,
+   "cited_by": "audit RA-02"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/execute-tool.ts",
+   "line": 151,
+   "expected": "contract: TOOL_REPLY_CONTRACT_VERSION,",
+   "match": true,
+   "cited_by": "audit RA-02"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/execute-tool.ts",
+   "line": 152,
+   "expected": "tool: \"workflow_execute\",",
+   "match": true,
+   "cited_by": "audit RA-02"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "test/workbench-surface-census.test.ts",
+   "line": 269,
+   "expected": "\"contract\":\"workbench.tool-reply/v1\",\"tool\":\"workflow_execute\"",
+   "match": true,
+   "cited_by": "audit RA-02"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "test/workbench-execute-tool.test.ts",
+   "line": 69,
+   "expected": "contract: TOOL_REPLY_CONTRACT_VERSION, tool: \"workflow_execute\"",
+   "match": true,
+   "cited_by": "audit RA-02"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "test/workbench-execute-tool.test.ts",
+   "line": 106,
+   "expected": "contract: TOOL_REPLY_CONTRACT_VERSION, tool: \"workflow_execute\"",
+   "match": true,
+   "cited_by": "audit RA-02"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/execute-tool.ts",
+   "line": 143,
+   "expected": "function envelope(built: WorkflowExecuteReply",
+   "match": true,
+   "cited_by": "audit RA-02"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/execute-tool.ts",
+   "line": 204,
+   "expected": "return textResult(sanitizeWorkbenchJsonText(envelope(",
+   "match": true,
+   "cited_by": "audit RA-02 (refused-admission return)"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/execute-tool.ts",
+   "line": 253,
+   "expected": "return textResult(sanitizeWorkbenchJsonText(envelope(",
+   "match": true,
+   "cited_by": "audit RA-02 (launch return)"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/execute.ts",
+   "line": 279,
+   "expected": "A launched reply requires at least one native reference.",
+   "match": true,
+   "cited_by": "audit RA-09"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/execute-tool.ts",
+   "line": 218,
+   "expected": "refuse(\"unsupported-definition-kind\", \"only script definitions launch in this host\");",
+   "match": true,
+   "cited_by": "baseline C008/C041"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/execute.ts",
+   "line": 81,
+   "expected": "const REQUEST_KEYS: readonly string[] = [\"definitionRef\", \"input\", \"hostMode\", \"policy\"];",
+   "match": true,
+   "cited_by": "R424 / C095 facet"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/execute.ts",
+   "line": 88,
+   "expected": "const INPUT_BYTES = 64 * 1024;",
+   "match": true,
+   "cited_by": "R395"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/execute.ts",
+   "line": 89,
+   "expected": "const POLICY_BYTES = 4096;",
+   "match": true,
+   "cited_by": "R395"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/identity.ts",
+   "line": 104,
+   "expected": "if (depth > 64)",
+   "match": true,
+   "cited_by": "R394"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/identity.ts",
+   "line": 146,
+   "expected": "> 1024 * 1024",
+   "match": true,
+   "cited_by": "R394"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/mechanical-descriptor.ts",
+   "line": 108,
+   "expected": "MECHANICAL_DESCRIPTOR_STATUS = \"descriptor-only\"",
+   "match": true,
+   "cited_by": "E235"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/mechanical-descriptor.ts",
+   "line": 131,
+   "expected": "package: \"@mechanical/workflows-development\"",
+   "match": true,
+   "cited_by": "R421"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/mechanical-descriptor.ts",
+   "line": 132,
+   "expected": "export: \"develop\"",
+   "match": true,
+   "cited_by": "R421"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "src/workbench/forge-operation-observer.ts",
+   "line": 52,
+   "expected": "GATED_COMMIT_FIELD = \"gated_commit\"",
+   "match": true,
+   "cited_by": "R433"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "forge.toml",
+   "line": 9,
+   "expected": "gate = [\"lint\", \"typing\", \"build\", \"test\", \"census\", \"workbench-shell\", \"package-smoke\"]",
+   "match": true,
+   "cited_by": "TDD-MATRIX section 1"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "package.json",
+   "line": 36,
+   "expected": "\"@anthropic-ai/claude-agent-sdk\": \"0.3.300\"",
+   "match": true,
+   "cited_by": "audit RA-15"
+  },
+  {
+   "pin": "pi-0fb90672",
+   "path": "package.json",
+   "line": 37,
+   "expected": "\"@forge/sdk\": \"file:vendor/forge-sdk-0.1.0.tgz\"",
+   "match": true,
+   "cited_by": "audit RA-15"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/host-services.ts",
+   "line": 10,
+   "expected": "HOST_SERVICE_NAMES = [\"discover\", \"compileContext\", \"implement\", \"verify\"]",
+   "match": true,
+   "cited_by": "R426"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/host-services.ts",
+   "line": 36,
+   "expected": "HostServicesError(\"HOST_SERVICE_EXTRA_MEMBER\"",
+   "match": true,
+   "cited_by": "R426"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/host-services.ts",
+   "line": 94,
+   "expected": "\"uncertain\"",
+   "match": true,
+   "cited_by": "R430/R440"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/host-services.ts",
+   "line": 106,
+   "expected": "\"uncertain\"",
+   "match": true,
+   "cited_by": "R430/R440"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/progress-stages.ts",
+   "line": 9,
+   "expected": "PROGRAM_STAGES = [\"discovery\", \"context\", \"sdk_startup\", \"first_edit\", \"commit\", \"gate_dispatch\", \"settlement\"]",
+   "match": true,
+   "cited_by": "R429"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/progress-stages.ts",
+   "line": 38,
+   "expected": "agentSessionId: string | null",
+   "match": true,
+   "cited_by": "R440"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/host-binding.ts",
+   "line": 9,
+   "expected": "HOST_BINDING_CONTRACT = \"mechanical.pi-host/v1\"",
+   "match": true,
+   "cited_by": "R424"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/host-binding.ts",
+   "line": 14,
+   "expected": "WRITE_GRANT = \"mechanical:develop-write\"",
+   "match": true,
+   "cited_by": "R424"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/host-binding.ts",
+   "line": 40,
+   "expected": "allowedEffects: readonly string[];",
+   "match": true,
+   "cited_by": "R424"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/host-binding.ts",
+   "line": 112,
+   "expected": "[\"workspaceRealpath\", \"baseCommit\", \"baseTree\", \"forgeManifestSha256\"]",
+   "match": true,
+   "cited_by": "R424"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/live-gate.ts",
+   "line": 205,
+   "expected": "data[\"gate_passed\"] === false",
+   "match": true,
+   "cited_by": "R433/R434"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/live-gate.ts",
+   "line": 208,
+   "expected": "kind: \"passed\"",
+   "match": true,
+   "cited_by": "R433/R434"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/live-development.ts",
+   "line": 387,
+   "expected": "forge.kind === \"passed\" ? \"passed\"",
+   "match": true,
+   "cited_by": "R433"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/live-development.ts",
+   "line": 414,
+   "expected": "verifiedTree: matches ? gate.basis.tree : null, gateDefinitionSha256: gateManifestSha256",
+   "match": true,
+   "cited_by": "R435"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/effect-reconciliation.ts",
+   "line": 79,
+   "expected": "retryPermitted: disposition === \"not-occurred\"",
+   "match": true,
+   "cited_by": "R443"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/effect-reconciliation.ts",
+   "line": 98,
+   "expected": "\"head-at-base-clean-worktree\"",
+   "match": true,
+   "cited_by": "R443"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/installed-host.ts",
+   "line": 51,
+   "expected": "digestFile(artifact) !== options.artifactDigest",
+   "match": true,
+   "cited_by": "R422"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/entrypoint-host.ts",
+   "line": 124,
+   "expected": "ENTRYPOINT_OUTPUT_INVALID",
+   "match": true,
+   "cited_by": "R428"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/claude-implement.ts",
+   "line": 94,
+   "expected": "\"@anthropic-ai/claude-agent-sdk\"",
+   "match": true,
+   "cited_by": "R425"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/host.ts",
+   "line": 13,
+   "expected": "export { HostBindingError, WRITE_GRANT, admitHostBinding, dispatchWriteAtFinalBoundary, validateHostBinding }",
+   "match": true,
+   "cited_by": "R421 / RA-19"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/host.ts",
+   "line": 18,
+   "expected": "export const HOST_API_VERSION = HOST_BINDING_CONTRACT;",
+   "match": true,
+   "cited_by": "R423"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/host.ts",
+   "line": 21,
+   "expected": "export class HostAdmissionError extends Error",
+   "match": true,
+   "cited_by": "R421"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/host.ts",
+   "line": 52,
+   "expected": "export async function invokeDevelopmentHost(options: DevelopmentHostOptions, input: unknown): Promise<DevelopmentOutcome>",
+   "match": true,
+   "cited_by": "R423"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/src/effect-intent.ts",
+   "line": 27,
+   "expected": "invocationIdentitySha256: string | null",
+   "match": true,
+   "cited_by": "R444"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "packages/development/src/contracts.ts",
+   "line": 54,
+   "expected": "export type DevelopmentOutcome =",
+   "match": true,
+   "cited_by": "R428"
+  },
+  {
+   "pin": "mw-69cb016d",
+   "path": "apps/development-rig/package.json",
+   "line": 14,
+   "expected": "\"./host\": {",
+   "match": true,
+   "cited_by": "R421"
+  }
+ ]
+}

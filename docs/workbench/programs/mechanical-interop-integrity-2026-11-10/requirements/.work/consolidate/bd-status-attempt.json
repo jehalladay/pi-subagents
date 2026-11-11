@@ -1,0 +1,259 @@
+{
+ "attempt_utc": "2026-11-11T11:08:47Z",
+ "result": "PARTIAL / read-only bd --json show each id: timeout after 120s on wb-752.13; earlier results held only in a process variable and were not flushed; no fresh complete census claimed",
+ "prior_audit_read": "2026-11-11T10:29:12Z (bd-status-reread.json)",
+ "owner_graph_audit_directives": {
+  "wb-upad": {
+   "status": "closed",
+   "repoint_to": "wb-9a1o"
+  },
+  "wb-5a7k": {
+   "status": "closed",
+   "repoint_to": "wb-mwsy"
+  },
+  "wb-79k.1": {
+   "status": "closed",
+   "repoint_to": "wb-79k.3"
+  },
+  "wb-79k.2": {
+   "status": "closed",
+   "repoint_to": "wb-79k.3"
+  },
+  "wb-9x5.10": {
+   "status": "closed",
+   "repoint_to": "wb-9x5.11"
+  },
+  "wb-9x5.16": {
+   "status": "closed",
+   "repoint_to": "wb-9x5.11"
+  },
+  "wb-69g.7": {
+   "status": "closed",
+   "repoint_to": "wb-h8f.7"
+  },
+  "wb-752.12": {
+   "status": "closed",
+   "repoint_to": "wb-752.13"
+  },
+  "wb-w8fk": {
+   "status": "open",
+   "repoint_to": null
+  },
+  "wb-rz62": {
+   "status": "open",
+   "repoint_to": null
+  },
+  "wb-xeej": {
+   "status": "open",
+   "repoint_to": null
+  },
+  "wb-9d2g": {
+   "status": "open",
+   "repoint_to": null
+  },
+  "wb-79k.3": {
+   "status": "live target (owner directive; live status not re-read)",
+   "repoint_to": null
+  },
+  "wb-9x5.11": {
+   "status": "live target (owner directive; live status not re-read)",
+   "repoint_to": null
+  },
+  "wb-h8f.7": {
+   "status": "live target (owner directive; live status not re-read)",
+   "repoint_to": null
+  },
+  "wb-752.13": {
+   "status": "live target (owner directive; live status not re-read)",
+   "repoint_to": null
+  }
+ },
+ "citation_status_basis": {
+  "wb-rhyt": {
+   "status": "open",
+   "updated_at": "2026-11-09T22:28:12Z",
+   "assignee": null
+  },
+  "wb-1a3t": {
+   "status": "open",
+   "updated_at": "2026-11-09T22:41:22Z",
+   "assignee": null
+  },
+  "wb-w8fk": {
+   "status": "open",
+   "updated_at": "2026-11-11T09:52:21Z",
+   "assignee": "flywheel"
+  },
+  "wb-y0n6": {
+   "status": "in_progress",
+   "updated_at": "2026-11-11T09:11:48Z",
+   "assignee": "flywheel"
+  },
+  "wb-2ukh": {
+   "status": "in_progress",
+   "updated_at": "2026-11-11T09:35:34Z",
+   "assignee": "flywheel"
+  },
+  "wb-4bxo": {
+   "status": "open",
+   "updated_at": "2026-11-09T22:38:26Z",
+   "assignee": null
+  },
+  "wb-9a1o": {
+   "status": "open",
+   "updated_at": "2026-11-11T05:26:22Z",
+   "assignee": null
+  },
+  "wb-upad": {
+   "status": "closed",
+   "updated_at": "2026-11-11T05:28:31Z",
+   "assignee": null
+  },
+  "wb-mwsy": {
+   "status": "open",
+   "updated_at": "2026-11-11T05:28:47Z",
+   "assignee": null
+  },
+  "wb-5a7k": {
+   "status": "closed",
+   "updated_at": "2026-11-11T05:29:23Z",
+   "assignee": null
+  },
+  "wb-p3i2": {
+   "status": "open",
+   "updated_at": "2026-11-09T22:39:40Z",
+   "assignee": null
+  },
+  "wb-xr1z": {
+   "status": "open",
+   "updated_at": "2026-11-11T05:36:58Z",
+   "assignee": "flywheel"
+  },
+  "wb-9bof": {
+   "status": "open",
+   "updated_at": "2026-11-09T22:30:14Z",
+   "assignee": null
+  },
+  "wb-yiu4": {
+   "status": "open",
+   "updated_at": "2026-11-09T22:30:17Z",
+   "assignee": null
+  },
+  "wb-zswl": {
+   "status": "open",
+   "updated_at": "2026-11-11T05:29:33Z",
+   "assignee": null
+  },
+  "wb-dlc6": {
+   "status": "closed",
+   "updated_at": "2026-11-11T05:30:29Z",
+   "assignee": null
+  },
+  "wb-pxvv": {
+   "status": "in_progress",
+   "updated_at": "2026-11-11T09:03:29Z",
+   "assignee": "flywheel"
+  },
+  "wb-669r": {
+   "status": "closed",
+   "updated_at": "2026-11-11T05:31:19Z",
+   "assignee": null
+  },
+  "wb-7wkb": {
+   "status": "closed",
+   "updated_at": "2026-11-10T05:01:40Z",
+   "assignee": "flywheel"
+  },
+  "wb-1zn2": {
+   "status": "deferred",
+   "updated_at": "2026-11-07T07:27:48Z",
+   "assignee": "flywheel"
+  },
+  "wb-12x1": {
+   "status": "closed",
+   "updated_at": "2026-11-08T19:43:36Z",
+   "assignee": "flywheel"
+  },
+  "wb-5ik5": {
+   "status": "closed",
+   "updated_at": "2026-11-07T09:03:54Z",
+   "assignee": "flywheel"
+  },
+  "wb-s8rm": {
+   "status": "closed",
+   "updated_at": "2026-11-08T19:20:08Z",
+   "assignee": "flywheel"
+  },
+  "wb-9v02": {
+   "status": "closed",
+   "updated_at": "2026-11-08T23:20:31Z",
+   "assignee": "flywheel"
+  },
+  "wb-3121": {
+   "status": "closed",
+   "updated_at": "2026-11-10T00:40:04Z",
+   "assignee": "flywheel"
+  },
+  "wb-9d2g": {
+   "status": "open",
+   "updated_at": "2026-11-11T08:13:52Z",
+   "assignee": null
+  },
+  "wb-9btr": {
+   "status": "in_progress",
+   "updated_at": "2026-11-11T09:16:49Z",
+   "assignee": "flywheel"
+  },
+  "wb-5xdi": {
+   "status": "in_progress",
+   "updated_at": "2026-11-11T09:42:04Z",
+   "assignee": "flywheel"
+  },
+  "wb-djk5": {
+   "status": "open",
+   "updated_at": "2026-11-11T08:26:53Z",
+   "assignee": null
+  },
+  "wb-r1bz": {
+   "status": "open",
+   "updated_at": "2026-11-11T08:27:18Z",
+   "assignee": null
+  },
+  "wb-q0on": {
+   "status": "open",
+   "updated_at": "2026-11-11T08:30:06Z",
+   "assignee": null
+  },
+  "wb-nagx": {
+   "status": "open",
+   "updated_at": "2026-11-11T08:34:49Z",
+   "assignee": null
+  },
+  "wb-hbju": {
+   "status": "open",
+   "updated_at": "2026-11-11T08:39:25Z",
+   "assignee": null
+  },
+  "wb-n9hd": {
+   "status": "open",
+   "updated_at": "2026-11-11T08:40:33Z",
+   "assignee": null
+  },
+  "wb-0gbh": {
+   "status": "closed",
+   "updated_at": "2026-11-09T09:04:14Z",
+   "assignee": "flywheel"
+  },
+  "wb-201v": {
+   "status": "closed",
+   "updated_at": "2026-11-08T02:40:02Z",
+   "assignee": "flywheel"
+  },
+  "wb-ocie": {
+   "status": "closed",
+   "updated_at": "2026-11-08T05:45:40Z",
+   "assignee": "flywheel"
+  }
+ },
+ "filing_rule": "bd --readonly --json exact-id re-read at bead filing; fail closed on timeout"
+}

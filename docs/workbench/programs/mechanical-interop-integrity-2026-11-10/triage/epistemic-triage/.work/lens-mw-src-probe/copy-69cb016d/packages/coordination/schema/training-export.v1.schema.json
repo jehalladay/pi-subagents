@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mw.training-export.v1",
+  "title": "mw.training-export.v1",
+  "description": "Off-policy training export derived from one mw.episode.v1 record, one step per decision. A value nobody recorded is the literal \"unknown\", never omitted, defaulted or null. The mode label is the episode's and never rises above it.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "version", "mode", "episodeId", "environment", "steps", "verifier", "lineage", "sanitize", "digest"],
+  "properties": {
+    "schema": { "const": "mw.training-export.v1" },
+    "version": { "const": 1 },
+    "mode": { "enum": ["fixture", "replay", "live"] },
+    "episodeId": { "type": "string", "minLength": 1 },
+    "environment": { "enum": ["landing-queue", "compaction-inheritance", "colony-resilience", "artifact-recovery", "quorum-evidence", "native-replay", "landing-queue-elastic", "landing-queue-heterogeneous", "landing-queue-temporal", "dag-assignment"] },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["step", "actorId", "sampled", "mask", "support", "logProb", "checkpoint", "observationDigest", "provenance"],
+        "properties": {
+          "step": { "type": "integer" },
+          "actorId": { "type": "string", "minLength": 1 },
+          "sampled": { "type": "array", "items": { "type": "string" } },
+          "mask": {
+            "type": "object", "additionalProperties": false, "required": ["admitted", "rejected"],
+            "properties": {
+              "admitted": { "type": "array", "items": { "type": "string" } },
+              "rejected": { "type": "array", "items": { "type": "object", "additionalProperties": false, "required": ["intentId", "code"], "properties": { "intentId": { "type": "string" }, "code": { "type": "string" } } } }
+            }
+          },
+          "support": { "type": "object", "additionalProperties": false, "required": ["policyId", "revision", "configHash"], "properties": { "policyId": { "type": "string" }, "revision": { "type": "string" }, "configHash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" } } },
+          "logProb": { "oneOf": [{ "type": "number" }, { "const": "unknown" }] },
+          "checkpoint": {
+            "type": "object", "additionalProperties": false, "required": ["before", "after"],
+            "properties": {
+              "before": { "oneOf": [{ "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }, { "const": "unknown" }] },
+              "after": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+            }
+          },
+          "observationDigest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+          "provenance": {
+            "type": "object", "additionalProperties": false, "required": ["basis", "family", "readSet", "evidence"],
+            "properties": {
+              "basis": { "type": "string", "minLength": 1 },
+              "family": { "type": "string", "minLength": 1 },
+              "readSet": { "type": "array", "items": { "type": "string" } },
+              "evidence": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "verifier": { "type": "object", "additionalProperties": false, "required": ["label", "receiptDigest", "verdict"], "properties": { "label": { "enum": ["fixture", "replay"] }, "receiptDigest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }, "verdict": { "type": "string" } } },
+    "lineage": {
+      "type": "object", "additionalProperties": false, "required": ["attempts", "arms"],
+      "properties": {
+        "attempts": { "oneOf": [{ "const": "unknown" }, { "type": "array", "items": { "type": "object", "additionalProperties": false, "required": ["id", "parent", "outcome"], "properties": { "id": { "type": "string" }, "parent": { "type": "string" }, "outcome": { "type": "string" } } } }] },
+        "arms": { "type": "object", "additionalProperties": false, "required": ["controlId", "treatmentId"], "properties": { "controlId": { "type": "string" }, "treatmentId": { "type": "string" } } }
+      }
+    },
+    "sanitize": { "type": "object", "additionalProperties": false, "required": ["ran", "removed", "inherited"], "properties": { "ran": { "const": true }, "removed": { "type": "array", "items": { "type": "string" } }, "inherited": { "type": "array", "items": { "type": "string" } } } },
+    "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "credits": {
+      "description": "OPTIONAL per-actor credit rows attachPerActorCredit writes, present only once attached. Every row derives from an intervention or counterfactual (a global team outcome alone never attributes per-actor benefit) and carries an integer micro-value within the safe-integer range.",
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["actorId", "valueMicro", "derivation"],
+        "properties": {
+          "actorId": { "type": "string", "minLength": 1 },
+          "valueMicro": { "type": "integer", "minimum": -9007199254740991, "maximum": 9007199254740991 },
+          "derivation": {
+            "type": "object", "additionalProperties": false, "required": ["kind", "reference"],
+            "properties": { "kind": { "enum": ["intervention", "counterfactual"] }, "reference": { "type": "string", "minLength": 1 } }
+          }
+        }
+      }
+    }
+  }
+}

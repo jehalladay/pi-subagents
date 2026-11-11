@@ -1,0 +1,16 @@
+TAP version 13
+# Subtest: the committed M05 receipt, when present, is an L2 MW-INSTALLED-HOST record with every adverse row and never a native proof
+ok 1 - the committed M05 receipt, when present, is an L2 MW-INSTALLED-HOST record with every adverse row and never a native proof
+  ---
+  duration_ms: 3.213715
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3824.190156

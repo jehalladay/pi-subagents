@@ -1,0 +1,1169 @@
+
+===== C007 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: src/workbench/execute-tool.ts registers one executable tool
+LOC: docs/pi-README.md :: Observed baseline, bullet 1 (line 17), sentence 1, clause 1
+PROP: src/workbench/execute-tool.ts provides exactly one executable tool, workflow_execute, the registered tool whose kind=function route the Purpose names. Two readings of 'registers': the file itself calls Pi's registration API, or it defines the tool that another file registers. 'One' is scoped to this file, not to every launch-capable tool Pi registers.
+SCOPE: Pi src/workbench/execute-tool.ts at 0fb90672 (the tool definitions it exports) and the call site that registers that tool.
+PERMITTED: src/workbench/execute-tool.ts defines the one executable tool workflow_execute; src/index.ts:3009 registers it in sessions whose workbench settings select the Claude backend; launch-capable workflow_detached and forge_gate_run are registered beside it.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['NARROW_SCOPE']
+DRIFT: None for this row's evidence: pi 0fb90672->3fc0ead1 (document commit) touches only the 6 program docs + .agents/skills/pi-mechanical-interop/SKILL.md; git diff over src/test/qa/package.json/forge.toml is empty (re-verified in the pin clone).
+
+===== C008 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: its non-script branch returns unsupported-definition-kind
+LOC: docs/pi-README.md :: Observed baseline, bullet 1 (line 17), sentence 1, clause 2
+PROP: In the workflow_execute tool of src/workbench/execute-tool.ts, a request whose definition kind is not script is never launched: the non-script branch returns a refusal carrying the code unsupported-definition-kind. This covers kind function and kind furnace-formula alike. Requests refused earlier in the handler (admission or grant checks) do not reach this branch.
+SCOPE: The workflow_execute handler in Pi src/workbench/execute-tool.ts at 0fb90672: definition kinds other than script, and the refusal code returned to the model.
+PERMITTED: a non-script request that passes admission (and, in detached mode, holds workbench:detach) is refused unsupported-definition-kind and never reaches a launcher; earlier refusal codes exist for grant/admission failures.
+DEPS: ['C007'] PROPAGATION: {"dependencies": {"C007": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "weakest_dependency": "C007", "note": "status consistent with premises"}
+REMED: []
+DRIFT: None for this row's evidence: pi 0fb90672->3fc0ead1 (document commit) touches only the 6 program docs + .agents/skills/pi-mechanical-interop/SKILL.md; git diff over src/test/qa/package.json/forge.toml is empty (re-verified in the pin clone).
+
+===== C009 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: src/index.ts wires script launchers only.
+LOC: docs/pi-README.md :: Observed baseline, bullet 1 (line 17), sentence 2
+PROP: Absence claim over one file: src/index.ts wires only script launchers into the registered workflow_execute tool. Each launcher it supplies, for every host mode, runs a saved script; it wires no function launcher, no furnace-formula launcher and no Mechanical host.
+SCOPE: Pi src/index.ts at 0fb90672: the launcher dependencies passed to the workflow_execute tool where it is registered, and any other call site in that file that could launch a non-script definition. Detection surface: that file's launcher wiring and imports.
+PERMITTED: src/index.ts wires only script launchers into the registered workflow_execute tool; no function, furnace-formula or Mechanical launcher is wired anywhere in the file (which also registers other, likewise non-function, tools).
+DEPS: ['C007'] PROPAGATION: {"dependencies": {"C007": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "weakest_dependency": "C007", "note": "status consistent with premises"}
+REMED: ['NARROW_SCOPE']
+DRIFT: None for this row's evidence: pi 0fb90672->3fc0ead1 (document commit) touches only the 6 program docs + .agents/skills/pi-mechanical-interop/SKILL.md; git diff over src/test/qa/package.json/forge.toml is empty (re-verified in the pin clone).
+
+===== C011 [INFERENCE] ESTABLISHED material=True =====
+VERBATIM: The model schema advertising function and furnace-formula is NOT execution support.
+LOC: docs/pi-README.md :: Observed baseline, bullet 1 (line 17), sentence 3 (predicate)
+PROP: The schema's advertisement of function and furnace-formula (C010) is not execution support: at the inspected revision no request of kind function or furnace-formula can execute through the registered tool. This is an inference from the non-script refusal (C008) and the script-only wiring (C009); it fails if any other reachable path launches a non-script definition.
+SCOPE: The whole registered Pi tool surface at 0fb90672, in every host mode. 'Execution support' = a launch that reaches a function or formula producer.
+PERMITTED: at 0fb90672 no request of kind function or furnace-formula can execute through the registered tool in any host mode; the schema's advertisement is not execution support.
+DEPS: ['C008', 'C009', 'C010'] PROPAGATION: {"dependencies": {"C008": "ESTABLISHED", "C009": "ESTABLISHED", "C010": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": true, "weakest_dependency": "C008", "note": "status at or below the weakest necessary premise"}
+REMED: []
+DRIFT: None for this row's evidence: pi 0fb90672->3fc0ead1 (document commit) touches only the 6 program docs + .agents/skills/pi-mechanical-interop/SKILL.md; git diff over src/test/qa/package.json/forge.toml is empty (re-verified in the pin clone).
+
+===== C013 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: src/workbench/function-authority.ts can adopt and recheck exact grants
+LOC: docs/pi-README.md :: Observed baseline, bullet 2 (line 18), clause 2, first half
+PROP: src/workbench/function-authority.ts can do two things with exact grants: (i) adopt them, that is bind a function definition to one exact action-grant spelling; (ii) recheck them, that is read the host's grants again at the final dispatch boundary instead of relying on the decision taken when the request entered.
+SCOPE: Pi src/workbench/function-authority.ts at 0fb90672: the adoption function and the authority decision and dispatch boundary. 'Can' = the capability exists in the module, not that a registered path uses it.
+PERMITTED: the module can adopt exact grants and re-reads host grants+identity at the dispatch boundary; nothing in production calls it, and the final read does not cover source, manifest or leases.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: []
+DRIFT: None for this row's evidence: pi 0fb90672->3fc0ead1 (document commit) touches only the 6 program docs + .agents/skills/pi-mechanical-interop/SKILL.md; git diff over src/test/qa/package.json/forge.toml is empty (re-verified in the pin clone).
+
+===== C014 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: its exported default FUNCTION_ACTION_CONTRACT remains unadopted
+LOC: docs/pi-README.md :: Observed baseline, bullet 2 (line 18), clause 2, second half
+PROP: The contract value that src/workbench/function-authority.ts exports as the one in force, FUNCTION_ACTION_CONTRACT, is in the unadopted state: no exact function action grant has been adopted for any definition. 'Exported default' is read as the default contract value the module exports, not necessarily an ES default export.
+SCOPE: The exported constant FUNCTION_ACTION_CONTRACT in Pi src/workbench/function-authority.ts at 0fb90672 and every importer that supplies a contract to the authority decision. 'Remains' implies it was also unadopted at earlier revisions.
+PERMITTED: the module's exported default contract VALUE (a named export, not an ES default export) is unadopted and has been since its introduction; nothing in production supplies any contract to the boundary.
+DEPS: ['C013'] PROPAGATION: {"dependencies": {"C013": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "weakest_dependency": "C013", "note": "status consistent with premises"}
+REMED: ['DOWNGRADE_MODALITY']
+DRIFT: None for this row's evidence: pi 0fb90672->3fc0ead1 (document commit) touches only the 6 program docs + .agents/skills/pi-mechanical-interop/SKILL.md; git diff over src/test/qa/package.json/forge.toml is empty (re-verified in the pin clone). MW side: None for this row's evidence: mw 69cb016d->1be2b8dc (the README's noted additional main commit) changes only apps/development-rig/test/host-services.test.ts among apps/packages/contracts/qa (re-verified in the pin clone); this row's witnesses are untouched.
+
+===== C016 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: carries a process-local WriterLeases map
+LOC: docs/pi-README.md :: Observed baseline, bullet 2 (line 18), clause 3, second half
+PROP: src/workbench/source-admission.ts keeps writer leases in a WriterLeases registry backed by an in-memory map, so lease state lives only in the process that created the registry. It is not persisted and is not visible to another process or host, and therefore gives no cross-process or post-restart exclusivity.
+SCOPE: The WriterLeases class in Pi src/workbench/source-admission.ts at 0fb90672 and the sites that instantiate it. 'Process-local' contains an absence claim (no durable or shared lease store behind it); its detection surface is that class and its callers.
+PERMITTED: writer leases live in a per-instance in-memory Map: no persistence, no cross-process visibility, no post-restart exclusivity, and nothing in production instantiates a registry.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['DOWNGRADE_MODALITY']
+DRIFT: None for this row's evidence: pi 0fb90672->3fc0ead1 (document commit) touches only the 6 program docs + .agents/skills/pi-mechanical-interop/SKILL.md; git diff over src/test/qa/package.json/forge.toml is empty (re-verified in the pin clone).
+
+===== C038 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: Function admission digests withoutBeadsNotes(input)
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L7
+PROP: Function admission computes the input digest after withoutBeadsNotes strips note text.
+SCOPE: Pi function admission calculation, not dispatched function execution.
+PERMITTED: At Pi 0fb90672, function admission computes workflow-execute-input over the canonical result of withoutBeadsNotes(input); this is not a dispatched function payload.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C039 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: the script-style launcher structure reads original params.input.
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L7
+PROP: The script-style launcher structure reads the original params.input.
+SCOPE: Pi current launcher input construction; does not assert a function is launched through it.
+PERMITTED: The current script launch record carries the original params.input object; reusing this structure for a function would not automatically dispatch the canonical admitted payload.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: []
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C040 [NORMATIVE] NON-EPISTEMIC material=False =====
+VERBATIM: A new function route MUST dispatch exactly the admitted canonical input.
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L7
+PROP: A new function route must dispatch precisely the canonical input admitted.
+SCOPE: Target Pi function route; requirement force is distinct from the source mismatch premise.
+PERMITTED: The new function route MUST dispatch the exact typed canonical admitted payload.
+DEPS: ['C038', 'C039'] PROPAGATION: {"dependencies": {"C038": "ESTABLISHED", "C039": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C038=ESTABLISHED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C041 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: No current function launch occurs.
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L7
+PROP: No current function launch occurs in the registered Pi route.
+SCOPE: Pi registered workflow_execute path. Detection surface: execute-tool.ts kind dispatch plus src/index.ts launcher wiring; not all hypothetical callers of internal helpers.
+PERMITTED: At Pi 0fb90672, registered workflow_execute never launches a function; sessions must enable the Claude workbench backend and load its native modules for that tool to register.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: []
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C042 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: An in-memory lease
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L8
+PROP: WriterLeases uses in-memory lease ownership.
+SCOPE: Pi source admission WriterLeases storage; no claim about separate future lease implementations.
+PERMITTED: WriterLeases holds leases in a private in-memory Map per instance; it is an unwired source-admission seam, not production writer exclusion.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C043 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: An in-memory lease is released when the dispatch promise resolves.
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L8
+PROP: The source-admission lease is released when the dispatch promise resolves.
+SCOPE: Pi admitSourceWrite dispatch lifetime; independent of whether a native writer has terminated.
+PERMITTED: admitSourceWrite releases its acquired lease when dispatch settles, and on post-acquisition refusal; no native terminal lifetime is tracked.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C044 [HYPOTHESIS] SUPPORTED material=True =====
+VERBATIM: A detached or asynchronous launch may return before the writer terminates
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L8
+PROP: A detached or asynchronous launch may return while its writer is still running.
+SCOPE: Conditional launcher-lifetime hazard, not an observed joined Mechanical failure. Test surface: a dispatch promise resolving with a paused native writer.
+PERMITTED: If a function dispatcher returns a native launch handle before writer termination, the present dispatch-settlement lease seam would release early.
+DEPS: ['C043'] PROPAGATION: {"dependencies": {"C043": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "weakest_dependency": "C043", "note": "status consistent with premises"}
+REMED: ['MARK_AS_HYPOTHESIS']
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C045 [PROPOSAL] NON-EPISTEMIC material=False =====
+VERBATIM: move ownership to persistent invocation lifetime.
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L8
+PROP: Move writer ownership to persistent invocation lifetime.
+SCOPE: Target Pi P02/P03 ownership model.
+PERMITTED: The program proposes Pi-owned durable invocation-lifetime writer ownership.
+DEPS: ['C042', 'C043', 'C044'] PROPAGATION: {"dependencies": {"C042": "ESTABLISHED", "C043": "ESTABLISHED", "C044": "SUPPORTED"}, "cap": "SUPPORTED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C044=SUPPORTED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C046 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: Registered tool supports script only
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L9
+PROP: The registered Pi execute tool supports script execution only.
+SCOPE: Pi registered tool execution, not model schema vocabulary. Detection surface: execute-tool.ts non-script branch and index.ts launcher wiring.
+PERMITTED: At the pin, the registered workflow_execute handler launches script definitions only; the advertised other kind values do not confer execution support.
+DEPS: ['C041'] PROPAGATION: {"dependencies": {"C041": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "weakest_dependency": "C041", "note": "status consistent with premises"}
+REMED: []
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C047 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: function authority, descriptor/source guards and Mechanical host are not transitively wired.
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L9
+PROP: The registered execution path does not transitively compose function authority, descriptor/source guards and the Mechanical host.
+SCOPE: One conjunction claim about a composed route; does not assert the individual components are absent. Detection surface: registered execute-tool.ts route and src/index.ts dependency wiring.
+PERMITTED: No registered workflow_execute function route composes the existing guard seams with a Pi Mechanical host at 0fb90672.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['SPLIT_CLAIM']
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C048 [INFERENCE] SUPPORTED material=True =====
+VERBATIM: Independent rechecks are individually valuable but do not form one atomic policy across async waits
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L10
+PROP: Independent source and authority rechecks do not by themselves form an atomic policy across asynchronous waits.
+SCOPE: Pi source-admission.ts and function-authority.ts composition; a reasoning claim, not a demonstrated race or assertion of a currently exploitable function route.
+PERMITTED: The separate helper final checks do not themselves establish one atomic authority/source policy across later asynchronous waits.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C049 [NORMATIVE] NON-EPISTEMIC material=False =====
+VERBATIM: revalidate all mutable facts at final effect boundary.
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L10
+PROP: Revalidate all mutable policy facts at the final effect boundary.
+SCOPE: Target Pi composed dispatch policy.
+PERMITTED: The target host MUST revalidate mutable facts at its last effect handoff, use fencing, and document the remaining asynchronous window.
+DEPS: ['C048'] PROPAGATION: {"dependencies": {"C048": "SUPPORTED"}, "cap": "SUPPORTED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C048=SUPPORTED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C050 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: Adopted function grant is absent from production export (FUNCTION_ACTION_CONTRACT = unadopted / MW-CONTRACT).
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L11
+PROP: The production-exported FUNCTION_ACTION_CONTRACT is unadopted and blocked on MW-CONTRACT.
+SCOPE: Pi exported default only; does not deny helper support for adopted contracts. Detection surface: FUNCTION_ACTION_CONTRACT value and refusal handling in function-authority.ts.
+PERMITTED: The exported default contract value is the named export FUNCTION_ACTION_CONTRACT={state:unadopted,blockedOn:MW-CONTRACT}; it is not a mechanically enforced joint-ratification gate.
+FACETS: {"facet graded by mw-src#13": "SUPPORTED: Independent producer-side corroboration of the Pi-side observations (their primary reading belongs to the Pi-source lens): both repositories record the contract as unadopted. The same naming gap sits under the A2 adoptio"}
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C051 [NORMATIVE] NON-EPISTEMIC material=False =====
+VERBATIM: Candidate mechanical:develop-write requires joint explicit acceptance.
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L11
+PROP: The candidate mechanical:develop-write grant requires explicit joint acceptance.
+SCOPE: Pi/MW proposed action spelling; not a statement of adoption or a current supported grant.
+PERMITTED: Joint explicit acceptance of mechanical:develop-write is required but not established; the spelling is only a producer candidate.
+EMBEDDED_FLAGS: [{"lens": "negative-ev#7", "evidence": "E028", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}, {"lens": "joint#16", "evidence": "E216", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}]
+DEPS: ['C050'] PROPAGATION: {"dependencies": {"C050": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C050=ESTABLISHED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C059 [NORMATIVE] NON-EPISTEMIC material=False =====
+VERBATIM: Principal, session, permissions, authorized roots, lease token, source basis, chosen evidence/context profiles and effect budget come from trusted host state, not tool JSON, Beads notes or annotations.
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L18
+PROP: I2 requires authority, scope, source basis, profiles and effect budget to originate in trusted host state rather than model/tool metadata.
+SCOPE: Target host-only authority rule; no assertion that profile names already have code witnesses.
+PERMITTED: Authority over scope, basis, grants, profiles and effects MUST originate in a trusted host source; caller suggestions may only be compared against that source, never trusted.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['SPLIT_CLAIM']
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C060 [NORMATIVE] NON-EPISTEMIC material=False =====
+VERBATIM: Function inputDigest is computed over the same typed canonical JSON that reaches Mechanical; stripped Beads note text is neither hashed nor dispatched nor used for replay/admission. Reject unrepresentable, accessor/cyclic/budget-exceeding forms. Never silently widen a caller policy.
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L19
+PROP: I3 requires digest/dispatch/replay identity over the same typed canonical input, excludes stripped Beads notes, rejects nonrepresentable or over-budget forms, and forbids silent policy widening.
+SCOPE: Target canonical input rule, not a claim about an existing joined function dispatch.
+PERMITTED: For the target function, one specified digest MUST bind the same canonical payload retained, dispatched and replay-admitted, excluding stripped notes; reject accessors in all retained members.
+EMBEDDED_FLAGS: [{"lens": "pi-src#26", "evidence": "E164", "status": "CONTESTED", "what": "CONTESTED"}, {"lens": "pi-src#28", "evidence": "E166", "status": "CONTESTED", "what": "CONTESTED"}]
+DEPS: ['C038', 'C039', 'C040'] PROPAGATION: {"dependencies": {"C038": "ESTABLISHED", "C039": "ESTABLISHED", "C040": "NON-EPISTEMIC"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C038=ESTABLISHED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C061 [NORMATIVE] NON-EPISTEMIC material=False =====
+VERBATIM: Before effect dispatch, re-read effective principal/session/grants, re-measure authorized root/Git HEAD/tree/status/Forge manifest and assert resource/lease ownership. Validate already-verified immutable artifacts against the runtime manifest.
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L20
+PROP: I4 requires re-reading mutable authority and source facts and asserting ownership before effects, plus validating immutable artifacts against the runtime manifest.
+SCOPE: Target final-boundary rule; prior verification is a precondition, not an assertion that runtime manifests are presently implemented.
+PERMITTED: The composed target MUST remeasure mutable source/authority and validate its fence at the final effect boundary, with a documented residual async window.
+DEPS: ['C048', 'C049'] PROPAGATION: {"dependencies": {"C048": "SUPPORTED", "C049": "NON-EPISTEMIC"}, "cap": "SUPPORTED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C048=SUPPORTED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C062 [NORMATIVE] NON-EPISTEMIC material=False =====
+VERBATIM: A lease cannot be released on "launched". Ownership lasts until a native terminal with safe settlement, or remains fenced in uncertain/recovering state. A second host/process sees the same authoritative lease.
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L21
+PROP: I5 retains ownership until safe native settlement, fences uncertain or recovering invocations, and requires another host/process to observe the same authoritative lease.
+SCOPE: Target exclusive ownership rule, not current distributed-lease behavior.
+PERMITTED: The first-release design requires Pi-owned same-machine cross-process exclusion among admitted Mechanical function writers until safe settlement, with uncertain invocations fenced; cross-host exclusion is not yet proved.
+DEPS: ['C042', 'C043', 'C044', 'C045'] PROPAGATION: {"dependencies": {"C042": "ESTABLISHED", "C043": "ESTABLISHED", "C044": "SUPPORTED", "C045": "NON-EPISTEMIC"}, "cap": "SUPPORTED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C044=SUPPORTED); requirement force is a separate dimension"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C064 [NORMATIVE] NON-EPISTEMIC material=False =====
+VERBATIM: Lost acknowledgment, cancellation after effects, killed worker, stale source or missing native evidence produce explicit uncertainty, retained native refs and zero blind replay.
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L23
+PROP: I7 maps ambiguous post-effect outcomes or missing evidence to explicit uncertainty, retained native references and no blind replay.
+SCOPE: Target failure/uncertainty policy; the enumerated scenarios are required inputs, not reports of observed incidents.
+PERMITTED: Ambiguous post-effect outcomes MUST retain refs and fence ownership without automatic effect reinvocation; idempotent journal-event replay remains allowed.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['SPLIT_CLAIM']
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C071 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: Maintain the Pi model-facing tool-reply/v1 envelope
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L39
+PROP: Pi already has a model-facing tool-reply/v1 envelope to preserve.
+SCOPE: Embedded compatibility premise concerning Pi tool replies; existence only, not universal compliance.
+PERMITTED: The registered execute reply uses the model-facing workbench.tool-reply/v1 outer envelope; preservation must target that actual shape.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: []
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C072 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: the explicit "completion:not-asserted" launch semantics.
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L39
+PROP: Pi already exposes explicit completion-not-asserted launch semantics to preserve.
+SCOPE: Embedded Pi launch compatibility premise. Validate semantic representation rather than assuming the quoted spelling must occur literally.
+PERMITTED: Registered workflow_execute exposes completion:not-asserted and launch-only status; observe later execution rather than treating launch as completed.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: []
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C080 [HYPOTHESIS] PLAUSIBLE material=True =====
+VERBATIM: input { task:"X", notes:"untrusted" } admitted as { task:"X" } yet passed through unchanged to a naive launcher.
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L32
+PROP: A naive launcher could pass note-bearing original input unchanged after admitting only the stripped task input.
+SCOPE: Canonical-note counterexample shape for a future function route; not a current joined invocation. Detection surface proposed by the document: exact canonical bytes at Mechanical callback.
+PERMITTED: Reusing raw input can cause an admission/dispatch mismatch; through the current host enumerable notes cause refusal, while hidden-note carriers can reach callbacks. This is a future-route test hypothesis, not a current joined leak.
+FACETS: {"facet graded by lineage#4": "ESTABLISHED: D3/P01 has no MNI carrier and must be a new bead; it must not be filed onto wb-7wkb (MNI 'P01', closed) despite the shared label. Attack hypothesis 'phantom receipt/ requirement' fails: MII does not claim MNI covered it.", "facet graded by pi-src#25": "SUPPORTED: For { task: \"X\", notes: \"untrusted\" } the admitted digest covers { task: \"X\" } and a launcher reusing ExecuteLaunch.input would receive the note. Sound as a red-test shape."}
+DEPS: ['C038', 'C039', 'C041'] PROPAGATION: {"dependencies": {"C038": "ESTABLISHED", "C039": "ESTABLISHED", "C041": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "weakest_dependency": "C038", "note": "status consistent with premises"}
+REMED: ['DOWNGRADE_MODALITY', 'SPLIT_CLAIM']
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation. MW environment 69cb016dd293a17bcc893f2baf410a51c226f4c9 to document commit 6476372f and fetched origin/main 0ffdc844: cited rig source, rig manifest, development source, contracts and receipt paths have no delta. Two test titles and an identifier-mapping row changed before the companion deposit; the deposit corrected the stale host-export skill line. No current native runtime proof is inferred from that drift.
+
+===== C081 [HYPOTHESIS] SUPPORTED material=True =====
+VERBATIM: launch returns native handle while worker is paused at first edit
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L33
+PROP: A native-handle-returning launch could release ownership while its writer is paused before the first edit.
+SCOPE: Early-release adversarial test shape; proposed falsifier is whether a second invocation remains blocked, not a claimed existing occurrence.
+PERMITTED: A handle-returning function launch composed with the current lease helper could release ownership before a paused writer resumes.
+DEPS: ['C043', 'C044', 'C062'] PROPAGATION: {"dependencies": {"C043": "ESTABLISHED", "C044": "SUPPORTED", "C062": "NON-EPISTEMIC"}, "cap": "SUPPORTED", "binds": false, "weakest_dependency": "C044", "note": "status consistent with premises"}
+REMED: ['MARK_AS_HYPOTHESIS']
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C082 [HYPOTHESIS] SUPPORTED material=True =====
+VERBATIM: principal unchanged when function authority checks; source changes before artifact import; grant revoked after installation but before first writer effect.
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L34
+PROP: Authority and source checks could become stale if source changes before artifact import or a grant is revoked after installation but before first effect.
+SCOPE: Split-guard temporal counterexample shape; independent mutations are test inputs, not observed exploits. Proposed required outcome: refuse before effects.
+PERMITTED: Source or grants could change during later asynchronous import/work; the existing independent helpers alone do not falsify that hypothetical stale-check window.
+DEPS: ['C048', 'C061'] PROPAGATION: {"dependencies": {"C048": "SUPPORTED", "C061": "NON-EPISTEMIC"}, "cap": "SUPPORTED", "binds": false, "weakest_dependency": "C048", "note": "status consistent with premises"}
+REMED: []
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C083 [HYPOTHESIS] SUPPORTED material=True =====
+VERBATIM: producer might have edited, committed or dispatched Forge but acknowledgment is dropped
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L35
+PROP: A producer may already have performed effects when its acknowledgment is lost.
+SCOPE: Post-dispatch loss possibility for the target joined route; no actual occurrence asserted. Required journal/fence/no-default-retry response is captured by I5/I7.
+PERMITTED: After a producer dispatch, losing acknowledgement can leave effects unknown; preserve intent/refs and forbid automatic reinvocation until affirmative safe proof.
+DEPS: ['C062', 'C064'] PROPAGATION: {"dependencies": {"C062": "NON-EPISTEMIC", "C064": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+REMED: []
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation. MW environment 69cb016dd293a17bcc893f2baf410a51c226f4c9 to document commit 6476372f and fetched origin/main 0ffdc844: cited rig source, rig manifest, development source, contracts and receipt paths have no delta. Two test titles and an identifier-mapping row changed before the companion deposit; the deposit corrected the stale host-export skill line. No current native runtime proof is inferred from that drift.
+
+===== C085 [NORMATIVE] NON-EPISTEMIC material=False =====
+VERBATIM: Define v1 around source hashes and validated artifact bytes; changing a schema requires a versioned validator and explicit refusal for unknown versions. Do not upgrade existing script envelopes or observer scopes silently. Maintain the Pi model-facing tool-reply/v1 envelope and the explicit "completion:not-asserted" launch semantics. Expose the producer's actual domain result later through workflow_observe.
+LOC: docs/pi-01-AUDIT-AND-INVARIANTS.md :: L39
+PROP: Define v1 using source hashes and validated bytes, require versioned schema validators and unknown-version refusal, preserve existing script/scope/envelope/launch semantics, and expose actual later producer results via workflow_observe.
+SCOPE: Target v1 compatibility boundary; existing envelope and launch premises separated into C071-C072.
+PERMITTED: The target v1 MUST use explicit version validators, refuse unknown versions, preserve current script/outer-envelope/scope semantics, and later expose the original producer result for the same invocation.
+DEPS: ['C052', 'C071', 'C072'] PROPAGATION: {"dependencies": {"C052": "ESTABLISHED", "C071": "ESTABLISHED", "C072": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C052=ESTABLISHED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Pi environment 0fb9067262532289104417d2b7f2f25704563a75 to document 3fc0ead1: git diff over src,test,qa,package.json,forge.toml is empty; only six program docs and interop skill changed. Grades describe the environment pin, not a future implementation.
+
+===== C086 [DEFINITION] NON-EPISTEMIC material=False =====
+VERBATIM: Proposed v1 protocol, not existing implementation.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L2 header
+PROP: The pi-02 document stipulates its own status: everything in it is a proposed v1 protocol to be versioned jointly with Mechanical, not a description of existing implementation.
+SCOPE: whole document pi-02; frames every later row as PROPOSAL/NORMATIVE unless a sentence asserts current state
+PERMITTED: pi-02 stipulates that its contents are a proposed v1 protocol to be versioned jointly with Mechanical, not a description of existing implementation.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: []
+DRIFT: pi 0fb90672 -> 3fc0ead1 (document pin): six program docs + .agents/skills/pi-mechanical-interop/SKILL.md only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> 1be2b8dc -> 6476372f -> 0ffdc844: test titles, one mapping row, companion docs and skill only.
+
+===== C087 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: exact producer-side binding is mechanical.pi-host/v1
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L2 header; L6 pinning source
+PROP: Embedded premise: the producer-side binding contract named mechanical.pi-host/v1 exists at the Mechanical pin as HOST_BINDING_CONTRACT in apps/development-rig/src/host-binding.ts, with a closed MechanicalHostBindingV1 shape whose source member is {workspaceRealpath, baseCommit, baseTree, forgeManifestSha256} (the fields pi-02's host-held plan calls 'pinning source'), an invocationId, evidence/context profiles and an intent with writer:"single".
+SCOPE: MW 69cb016d, apps/development-rig/src/host-binding.ts; the module itself says the status stays descriptor-only until joint ratification
+PERMITTED: At MW 69cb016d, proposed mechanical.pi-host/v1 has the listed JSON shape and pure validation helpers; the current invokeDevelopmentHost call does not require that binding and joint ratification is not established.
+FACETS: {"facet graded by contradict#15": "SUPPORTED: No shape drift found: mw-02 \u00a71's described v1 members equal the pinned closed key set, so the 'same version, changed contents' attack fails here (recorded as a failed attack)."}
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['NARROW_SCOPE', 'ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C088 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: reviewed descriptor mechanical.development.develop.v1
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L2 header; L16 A0
+PROP: Embedded premise: the reviewed descriptor id mechanical.development.develop.v1 exists on both sides at the pins: it is the sole entry of Pi's frozen MECHANICAL_REVIEWED_ENTRYPOINTS allowlist (package @mechanical/workflows-development, export develop, four bindings) and Mechanical's HOST_BINDING_DESCRIPTOR_ID.
+SCOPE: Pi 0fb90672 src/workbench/mechanical-descriptor.ts; MW 69cb016d host-binding.ts
+PERMITTED: Both pins share a reviewed descriptor ID for the descriptor-only pure library entrypoint; this is not yet an allowlisted composed rig-host export.
+FACETS: {"facet graded by contradict#15": "SUPPORTED: No shape drift found: mw-02 \u00a71's described v1 members equal the pinned closed key set, so the 'same version, changed contents' attack fails here (recorded as a failed attack).", "facet graded by mw-src#46": "SUPPORTED: The Mechanical half of both claims is established; the Pi allowlist half belongs to the Pi-source lens, hence SUPPORTED for the two-sided claims. The descriptor digest is the one identity value already byte-agreed across"}
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C089 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: definitionRef {kind:"function", id:"mechanical.development.develop.v1", schemaVersion:<exact reviewed version>, artifactDigest:<sha256>}
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L5 §1 model-facing surface
+PROP: Proposed model-facing workflow_execute request for the function route: definitionRef {kind:"function", id:"mechanical.development.develop.v1", schemaVersion:<exact reviewed version>, artifactDigest:<sha256>}; input {task, workspaceId, baseRevision} admitted only when those inputs are host-constrained to authorized values; hostMode "embedded" for the first cut; an optional request policy {allowWrites:true}; the host may instead expose a narrower task-only request and inject workspace/basis itself.
+SCOPE: first-cut function route only (embedded host mode); detached is a later enablement
+PERMITTED: Propose embedded function execution with host-authoritative workspace/basis, an explicitly selected input surface and a defined write-request rule; execution remains unimplemented.
+EMBEDDED_FLAGS: [{"lens": "joint#24", "evidence": "E224", "status": "REFUTED", "what": "REFUTED"}]
+DEPS: ['C095', 'C090'] PROPAGATION: {"dependencies": {"C095": "REFUTED", "C090": "ESTABLISHED"}, "cap": "REFUTED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C095=REFUTED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C090 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: input {task, workspaceId, baseRevision}
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L5 §1 input triple; L11 §2.3
+PROP: Embedded premise: the producer DevelopmentRequest at the Mechanical pin is exactly the three fields task, workspaceId, baseRevision (packages/development/src/contracts.ts), and develop() refuses an empty or non-string value of any of them with INVALID_DEVELOPMENT_REQUEST; the interface is a TypeScript type, not a runtime-closed record.
+SCOPE: MW 69cb016d packages/development/src/{contracts,develop}.ts
+PERMITTED: The core DevelopmentRequest names task/workspaceId/baseRevision and develop checks them for nonblank strings. The host additionally checks enumerable keys, not full canonical-object identity.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C091 [NORMATIVE] NON-EPISTEMIC material=True =====
+VERBATIM: The selected artifact path, write root, permissions, principal, invocation id, fingerprints, profile and execution backend MUST NOT be inferred from caller assertions.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L5 §1
+PROP: Rule: the selected artifact path, write root, permissions, principal, invocation id, fingerprints, profile and execution backend must never be inferred from caller assertions (model-supplied JSON); they come from trusted host state.
+SCOPE: all function-route requests, both request surfaces
+PERMITTED: Require authority to derive from protected host state; caller-provided workspace/basis may only be compared with independently authoritative measurements.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C092 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: All entries are checked before invoking Mechanical.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L6 §1 host-held plan
+PROP: Proposed host-held executable plan record: logical invocation id, canonical request bytes/digest, exact definition/descriptor/package/runtime-manifest digests, pinning source {workspaceRealpath, HEAD commit, HEAD tree, forge.toml sha256}, explicit mechanical:develop-write and workbench:execute grants, effective principal and session, the profile pair git-census-v1/plain-v1, an effect budget and a durable lease token; every entry is checked before Mechanical is invoked.
+SCOPE: per invocation; Pi-owned record distinct from the serialized mechanical.pi-host/v1 binding
+PERMITTED: Propose a Pi-owned plan with separate identities for all executing artifacts and trusted live authority access at the final provider boundary.
+EMBEDDED_FLAGS: [{"lens": "joint#24", "evidence": "E224", "status": "REFUTED", "what": "REFUTED"}]
+WORDING_MISMATCH: "indicative wording in a PROPOSAL row carries embedded premises graded ['REFUTED']"
+DEPS: ['C087', 'C093'] PROPAGATION: {"dependencies": {"C087": "ESTABLISHED", "C093": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C087=ESTABLISHED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C093 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: profile pair git-census-v1/plain-v1
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L6 §1 profile pair and grant
+PROP: Embedded premise: the profile spellings git-census-v1 and plain-v1 and the grant spelling mechanical:develop-write have code witnesses at the Mechanical pin: EVIDENCE_PROFILES = ["git-census-v1","hx-task-scope-v1"], CONTEXT_PROFILES = ["plain-v1","rf-committed-v1"] and WRITE_GRANT = "mechanical:develop-write", the last annotated as a candidate spelling not yet adopted jointly with Pi.
+SCOPE: MW 69cb016d apps/development-rig/src/host-binding.ts constants; the optional HX/RF profiles exist as values but are excluded from the first release by pi-README
+PERMITTED: MW 69cb016d declares git-census-v1/plain-v1 and candidate mechanical:develop-write; the candidate spelling is accepted by both action grammars, without establishing joint adoption.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['ADD_TEMPORAL_QUALIFIER']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C094 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: optional request policy {allowWrites:true}
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L5 §1 optional policy
+PROP: Embedded premise: {allowWrites:true} is the policy form Pi's source-admission already recognizes as asking for writes (writesRequested: a plain or null-prototype object with an own data member allowWrites === true, at the suite-pinned forms), and asking grants nothing by itself.
+SCOPE: Pi 0fb90672 src/workbench/source-admission.ts writesRequested; other policy forms NOT CLAIMED by the module
+PERMITTED: The source seam recognizes an own allowWrites:true on accepted plain policy objects as a request, never as an authorization.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: []
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C095 [OBSERVATION] REFUTED material=True =====
+VERBATIM: Decide schema, definition and raw JSON budgets using current workbench rules.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L9 §2 step 1
+PROP: Embedded premise: 'current workbench rules' for schema, definition and raw JSON budgets exist at the Pi pin: decideExecute enforces closed request keys {definitionRef,input,hostMode,policy}, closed definition keys {kind,id,schemaVersion,artifactDigest} with kinds script|function|furnace-formula, a sha256 digest grammar, hostMode in {embedded,detached}, and byte budgets INPUT_BYTES = 64 KiB and POLICY_BYTES = 4096.
+SCOPE: Pi 0fb90672 src/workbench/execute.ts decideExecute
+PERMITTED: At the Pi pin, request/definition keys are closed and the 64 KiB input / 4096-byte policy budgets apply to canonicalized, notes-stripped function values, not raw caller JSON.
+FACETS: {"facet graded by pi-src#29": "ESTABLISHED: Further existing bounds the proposal can cite rather than restate: canonicalJson's depth 64 and 1 MiB cap (identity.ts:104, :146), and 256-byte clean text for definition id and schemaVersion (execute.ts:90, :110-112)."}
+WORDING_MISMATCH: "artifact wording is indicative ('Decide schema, definition and raw JSON budgets using current workbench rules.') but the warrant is REFUTED"
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['SPLIT_CLAIM', 'ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C096 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: For function only, call withoutBeadsNotes on a defensive copy.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L10 §2 step 2
+PROP: Embedded premise: withoutBeadsNotes exists (src/workbench/identity.ts) and decideExecute applies it to a function definition's caller policy and input only (kind === "function"), claimed only at the EAT-R154 rows of test/workbench-function-authority.test.ts; it returns a copy for plain records/arrays but returns the original object unchanged for non-plain prototypes, depth over 64 or cycles.
+SCOPE: Pi 0fb90672 identity.ts/execute.ts; other request forms NOT CLAIMED by the module
+PERMITTED: For function admissions, withoutBeadsNotes copies supported records/arrays and omits notes by name; unsupported visited values may be returned unchanged for the following canonical validator to reject.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C097 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: reject cycles, accessors in authority-bearing members, huge/deep inputs and prototype ambiguities; preserve typed relevant fields exactly.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L10 §2 step 2
+PROP: Proposed canonical admission: canonicalize/serialize the function input to one single admitted payload; reject cycles, accessors in authority-bearing members, huge or deep inputs and prototype ambiguities; preserve typed relevant fields exactly.
+SCOPE: function route input/policy canonicalization (D3)
+PERMITTED: Extend existing canonical checks to return one admitted immutable payload; retain rejection of every non-note accessor and omit notes before any value-reading copy.
+EMBEDDED_FLAGS: [{"lens": "pi-src#28", "evidence": "E166", "status": "CONTESTED", "what": "CONTESTED"}]
+DEPS: ['C096', 'C095'] PROPAGATION: {"dependencies": {"C096": "ESTABLISHED", "C095": "REFUTED"}, "cap": "REFUTED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C095=REFUTED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C098 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: Bind workspaceId and baseRevision to host-measured workspace; refuse inconsistent caller values rather than overriding silently.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L11 §2 step 3
+PROP: Proposed producer-shape validation: the admitted input must be a DevelopmentRequest with nonempty task, workspaceId and baseRevision and no other members (closed), and workspaceId/baseRevision must be bound to the host-measured workspace, refusing inconsistent caller values rather than silently overriding them.
+SCOPE: function route admission (D3/D9); 'closed members' exceeds develop()'s current required-field check
+PERMITTED: Require a canonical three-field DevelopmentRequest and an explicit workspaceId-to-authorized-root and baseRevision-to-measured-commit relationship.
+DEPS: ['C090'] PROPAGATION: {"dependencies": {"C090": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C090=ESTABLISHED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C099 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: Compute and retain inputDigest from exact canonical admitted payload; make that payload immutable and dispatch it.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L12 §2 step 4
+PROP: Proposed input identity: inputDigest is computed and retained from the exact canonical admitted payload, that payload is made immutable, and that same payload (not any other form) is what gets dispatched to Mechanical.
+SCOPE: function route (D3, invariant I3)
+PERMITTED: Require one named function-input digest construction and immutable admitted payload to be retained, dispatched, journaled and observed consistently.
+EMBEDDED_FLAGS: [{"lens": "pi-src#26", "evidence": "E164", "status": "CONTESTED", "what": "CONTESTED"}, {"lens": "joint#32", "evidence": "E232", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}]
+DEPS: ['C097', 'C100'] PROPAGATION: {"dependencies": {"C097": "NON-EPISTEMIC", "C100": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C100=ESTABLISHED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C100 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: The dispatched callback must never see raw params.input.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L12 §2 step 4
+PROP: Embedded premise (the D3 defect shape): at the Pi pin decideExecute computes inputDigest over the judged, notes-stripped, byte-bounded copy of the input (execute.ts:203) while the registered tool's launcher structure hands launches params.input, the raw caller object (execute-tool.ts:198, 236); the two bases are structurally different objects, and no function launch occurs today because the non-script branch refuses.
+SCOPE: Pi 0fb90672 execute.ts + execute-tool.ts; script launches only
+PERMITTED: The existing launcher structure retains raw params.input while function admission hashes a judged copy; this is a latent integration hazard, not an observed function-route dispatch at 0fb90672.
+DEPS: ['C096'] PROPAGATION: {"dependencies": {"C096": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "weakest_dependency": "C096", "note": "status consistent with premises"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C101 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: Add a test that poisons a note getter and checks it is neither read nor forwarded.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L12 §2 step 4
+PROP: Proposed test obligation: a test plants a poisoned getter on a note member of the input and asserts the getter is neither invoked during admission nor forwarded to the dispatched callback.
+SCOPE: function route test suite (D3)
+PERMITTED: Add a composed/registered-route test proving the poisoned note is neither read nor present at the callback, preserving existing green admission tests.
+EMBEDDED_FLAGS: [{"lens": "pi-src#31", "evidence": "E169", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}]
+WORDING_MISMATCH: "indicative wording in a PROPOSAL row carries embedded premises graded ['UNSUPPORTED']"
+DEPS: ['C099'] PROPAGATION: {"dependencies": {"C099": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C102 [NORMATIVE] NON-EPISTEMIC material=True =====
+VERBATIM: Bound model-visible reply bytes/redaction independently; never truncate authority/evidence stored in durable host records.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L13 §2 step 5; L40 §6
+PROP: Rule: the model-visible reply is bounded (bytes/redaction) independently of the durable host record; authority and evidence stored in durable host records are never truncated; returned definition and native reference identities stay addressable; the durable journal retains the complete internally authorized evidence while the model reply stays bounded.
+SCOPE: function route replies and durable records; current reply builder trims identity text and reports nativeRefsOmitted
+PERMITTED: Require independently bounded/redacted model replies and complete authorized durable evidence, preserving addressable identities or honest omission indicators.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C103 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: perform a final combined authority/source/fencing check just before the first possible side effect
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L16-L22 §3 A0-A6
+PROP: Proposed ordered admission transaction A0..A6: resolve reviewed definition+descriptor against the Pi allowlist and check both digests (A0); create an invocation intent id, capture host-only scope {principal,sessionId,authorizedRoot}, grants and budgets, refusing unknown authority data (A1); admit the function action grant (A2); resolve and bind source (A3); acquire durable ownership (A4); verify the exact installed runtime manifest and native provider availability and perform a final combined authority/source/fencing check just before the first possible side effect, with no long async work between the last check and effect handoff without a second check (A5); journal intent and dispatch a constrained plan (A6); grant and source checks are repeated after any asynchronous wait or installation.
+SCOPE: function route admission ordering (D6/D9, invariant I4)
+PERMITTED: Propose joint ordered admission with explicit attestation and producer-side live revalidation after preparation/durable intent; no global atomicity claim.
+EMBEDDED_FLAGS: [{"lens": "pi-src#6", "evidence": "E144", "status": "CONTESTED", "what": "CONTESTED"}, {"lens": "pi-src#19", "evidence": "E157", "status": "CONTESTED", "what": "CONTESTED"}, {"lens": "joint#27", "evidence": "E227", "status": "REFUTED", "what": "REFUTED"}]
+DEPS: ['C104', 'C106', 'C110', 'C111'] PROPAGATION: {"dependencies": {"C104": "ESTABLISHED", "C106": "ESTABLISHED", "C110": "ESTABLISHED", "C111": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C104=ESTABLISHED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C104 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: A0 resolve the saved reviewed definition and descriptor with Pi allowlist
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L16 §3 A0
+PROP: Embedded premise: Pi's mechanical-descriptor boundary at the pin already pins the descriptor file and packed artifact by sha256 against a MechanicalReleasePin, judges the descriptor against the fixed frozen allowlist, returns closed typed refusals {code:"mechanical-entrypoint-refused", field, reason} with no path or file text, and hands the loader the reviewed allowlist entry rather than any descriptor-spelled member; its form is enumerated, not general.
+SCOPE: Pi 0fb90672 src/workbench/mechanical-descriptor.ts; forms outside the cited test cases NOT CLAIMED by the module
+PERMITTED: Pi has an unwired descriptor/regular-artifact integrity seam with allowlisted metadata and typed refusals, not an installed runtime-closure verifier.
+DEPS: ['C088'] PROPAGATION: {"dependencies": {"C088": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "weakest_dependency": "C088", "note": "status consistent with premises"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C105 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: ONLY after MW-CONTRACT ratification and exact installed host tests. Require workbench:execute AND action grant; detached additionally workbench:detach when enabled.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L18 §3 A2
+PROP: Proposed A2 adoption gate: the function action grant mechanical:develop-write for definition mechanical.development.develop.v1 is adopted through adoptFunctionActions only after MW-CONTRACT ratification and exact installed-host tests; dispatch requires workbench:execute AND the adopted action grant, and detached host mode additionally requires workbench:detach when enabled.
+SCOPE: function route authority composition (D6); detached mode is a later enablement
+PERMITTED: Require host adoption to be tied to a jointly signed-off pinned contract and installed-host evidence, then decide each invocation against the held contract and all applicable grants.
+EMBEDDED_FLAGS: [{"lens": "negative-ev#7", "evidence": "E028", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}, {"lens": "joint#16", "evidence": "E216", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}]
+DEPS: ['C106', 'C107', 'C093'] PROPAGATION: {"dependencies": {"C106": "ESTABLISHED", "C107": "ESTABLISHED", "C093": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C106=ESTABLISHED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C106 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: adoptFunctionActions([{definitionId:"mechanical.development.develop.v1",actionGrant:"mechanical:develop-write"}])
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L18 §3 A2
+PROP: Embedded premise: adoptFunctionActions exists at the Pi pin and accepts 1..64 bindings each holding exactly {definitionId, actionGrant}; it refuses a grant in Pi's own workbench namespace as a function action and binds each definition and each grant once; only a contract object adoptFunctionActions itself returned is honored by the dispatch boundary.
+SCOPE: Pi 0fb90672 src/workbench/function-authority.ts
+PERMITTED: adoptFunctionActions mints frozen provenance-checked contracts with 1..64 exact definition/action pairs, unique within each contract; it is not full artifact or ratification admission.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C107 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: ONLY after MW-CONTRACT ratification
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L18 §3 A2
+PROP: Embedded premise: at the Pi pin FUNCTION_ACTION_CONTRACT is {state:"unadopted", blockedOn:"MW-CONTRACT"}; no action spelling is adopted, so a function dispatch that passes the earlier authority rules refuses as function-action-unadopted, and the module states routing a function launcher through this boundary is a later cut.
+SCOPE: Pi 0fb90672 src/workbench/function-authority.ts
+PERMITTED: At Pi 0fb90672 FUNCTION_ACTION_CONTRACT is the frozen named export {state:'unadopted', blockedOn:'MW-CONTRACT'} (unchanged since 029dabca), no production module adopts a contract or calls the boundary, and a dispatch supplied that default refuses function-action-unadopted after the earlier checks; the helper dispatches when handed a contract minted by adoptFunctionActions (probe P7-adoption), so the ratification gate is a constant, not an enforced invariant, and production wires no function launcher.
+FACETS: {"FUNCTION_ACTION_CONTRACT = {unadopted, blockedOn MW-CONTRACT}": "ESTABLISHED", "no action spelling adopted at the pin (no production adopter)": "ESTABLISHED", "'so a dispatch that passes the earlier rules refuses function-action-unadopted' - for the exported default (the only contract reachable in a production process at the pin)": "ESTABLISHED", "the same sentence as a universal over the helper (any contract)": "REFUTED (an adopted contract dispatches at the helper seam)", "module states routing a launcher through the boundary is a later cut": "ESTABLISHED"}
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['NARROW_SCOPE', 'ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C108 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: Proposed v1 protocol, not existing implementation.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L2 header (baseline presupposed by §3 A2-A3)
+PROP: Embedded baseline premise: at the Pi pin the registered workflow_execute tool launches script definitions only (its non-script branch refuses unsupported-definition-kind: "only script definitions launch in this host"), src/index.ts wires only launchEmbeddedWorkflow/launchDetachedWorkflow script launchers, and a detached launch requires both workbench:execute and workbench:detach; the function authority, descriptor and source-admission seams are not transitively wired into that tool.
+SCOPE: Pi 0fb90672 src/workbench/execute-tool.ts + src/index.ts
+PERMITTED: At Pi 0fb90672, when workflow_execute is registered, its eligible non-script requests refuse and its production launch wiring is script-only; the three function seams are not transitively invoked.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C109 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: A4 acquire durable one-writer ownership keyed by canonical root; persist generation and invocation.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L19-L20 §3 A3-A4
+PROP: Proposed A3/A4: resolve the canonical Git worktree, HEAD commit/tree, clean status and forge manifest, validate that no publication effect is pending, bind the Mechanical host source to exactly these host-measured values and reject any independently supplied source authority; then acquire durable one-writer ownership keyed by the canonical root, persisting a generation and the invocation, with grant and source checks repeated after any asynchronous admission wait or installation.
+SCOPE: function route source binding and ownership (D5/D9)
+PERMITTED: Propose attested canonical initial source binding and durable ownership with stage-appropriate revalidation after waits; no publication authority is inferred.
+EMBEDDED_FLAGS: [{"lens": "pi-src#19", "evidence": "E157", "status": "CONTESTED", "what": "CONTESTED"}]
+DEPS: ['C110', 'C117'] PROPAGATION: {"dependencies": {"C110": "ESTABLISHED", "C117": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C110=ESTABLISHED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C110 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: A3 resolve canonical Git worktree, HEAD/tree/clean status and forge manifest
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L19-L20 §3 A3-A4
+PROP: Embedded premise: source-admission at the Pi pin already realpath-confines the workspace under the authorized root, measures the worktree root, HEAD commit and tree, clean status and the gate manifest (forge.toml) digest into a SourceIdentity, refuses dirty-base/source-unmeasurable, and after host.admissionWait re-measures the root and re-reads the attestation, refusing source-changed on a differing digest (rules 10-11).
+SCOPE: Pi 0fb90672 src/workbench/source-admission.ts; claimed only at the suite-pinned forms
+PERMITTED: The suite-scoped source seam confines and measures Git HEAD/tree/status plus a host-selected manifest, then remeasures and rechecks attestation after a wait; the fixture selects forge.toml.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C111 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: perform a final combined authority/source/fencing check just before the first possible side effect
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L21 §3 A5
+PROP: Embedded premise: Pi's dispatchFunctionWithAuthority at the pin already decides authority at entry and again from fresh host reads (grants, identity) once the optional wait settles, refusing at dispatch on the six listed changes with zero callback, loader and provider calls; this final-boundary re-read covers grants and identity only, not source, runtime manifest or lease fencing.
+SCOPE: Pi 0fb90672 src/workbench/function-authority.ts at the wb-m83p pinned rows
+PERMITTED: The authority seam rechecks grants/principal/session after its optional park for the enumerated forms; it does not provide composed source/runtime/fence freshness.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C112 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: A6 journal effect intent durably and send only a constrained reviewed execution plan to Mechanical. Return launch reference without claiming success/completion.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L22 §3 A6
+PROP: Proposed A6: journal the effect intent durably before dispatch, send Mechanical only a constrained reviewed execution plan, and return a launch reference that claims neither success nor completion.
+SCOPE: function route dispatch (D5/D6); Mechanical side has mechanical.effect-intent/v1 as lineage
+PERMITTED: Require durable Pi admission/dispatch intent and correlated producer effect intent before their respective boundaries, returning launch-only status.
+EMBEDDED_FLAGS: [{"lens": "joint#28", "evidence": "E228", "status": "UNDETERMINED", "what": "UNDETERMINED"}]
+DEPS: ['C126'] PROPAGATION: {"dependencies": {"C126": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C126=ESTABLISHED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C113 [INFERENCE] SUPPORTED material=True =====
+VERBATIM: Git, permission store, lease store, runtime import and external SDK are not one ACID transaction.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L24 §3 atomicity caveat
+PROP: Git, the permission store, the lease store, the runtime import and the external SDK are independent systems with no shared transaction manager, so the admission steps do not form one ACID transaction; a window between the last check and the first effect remains.
+SCOPE: any Pi host composing these five stores; structural claim about the systems, no version dependence stated
+PERMITTED: The inspected helpers and proposed cross-system handoffs do not establish a shared ACID transaction; final-check-to-effect windows must be modeled explicitly.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C114 [NORMATIVE] NON-EPISTEMIC material=True =====
+VERBATIM: Use explicit fencing + final-boundary revalidation + durable intent; document the remaining window and have the provider reject a stale fence where possible. Never describe independent helper calls as globally atomic.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L24 §3 atomicity caveat
+PROP: Rule: compensate for the non-atomic admission with explicit fencing, final-boundary revalidation and durable intent; document the remaining window; have the provider reject a stale fence where possible; never describe independent helper calls as globally atomic.
+SCOPE: function route documentation and implementation (D9)
+PERMITTED: Require explicit final-boundary fencing/revalidation and durable intent while documenting remaining asynchronous windows; do not claim global atomicity.
+DEPS: ['C113'] PROPAGATION: {"dependencies": {"C113": "SUPPORTED"}, "cap": "SUPPORTED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C113=SUPPORTED); requirement force is a separate dimension"}
+REMED: ['SURFACE_DISAGREEMENT']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C115 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: The "accepted"/"launched" event is NOT a release transition.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L27 §4 lease semantics
+PROP: Proposed lease object {rootRealpath, invocationId, generation, ownerId, acquiredAt, state, heartbeat/fencing metadata} with states reserved -> active -> uncertain/recovering -> settled/released, where the accepted/launched event is explicitly not a release transition.
+SCOPE: invocation-scoped writer ownership (D5, invariant I5)
+PERMITTED: Introduce the proposed invocation-owned persistent lease lifecycle; accepted/launched alone must not release ownership.
+DEPS: ['C117'] PROPAGATION: {"dependencies": {"C117": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C117=ESTABLISHED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C116 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: a documented, durable single-machine lock/journal and cross-process exclusivity, not the existing process-local WriterLeases alone
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L28 §4
+PROP: Proposed ownership substrate: the first release uses a documented, durable single-machine lock/journal with cross-process exclusivity rather than the existing process-local WriterLeases alone; a distributed fleet uses a coordinator with monotonic fencing generations, and tests must falsify stale-worker writes.
+SCOPE: first release single-machine; distributed fleet deferred to a coordinator
+PERMITTED: Require durable cross-process single-machine ownership for first release; distributed coordination is a separately tested later capability.
+EMBEDDED_FLAGS: [{"lens": "negative-ev#10", "evidence": "E031", "status": "REFUTED", "what": "REFUTED"}]
+DEPS: ['C117'] PROPAGATION: {"dependencies": {"C117": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C117=ESTABLISHED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C117 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: the existing process-local WriterLeases
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L28 §4
+PROP: Embedded premise (the D5 defect shape): at the Pi pin WriterLeases is an in-memory Map inside one host process ('One WriterLeases registry binds the writers of one host process'), and admitSourceWrite releases the lease in its finally block as soon as the dispatch promise settles, so ownership neither outlives the dispatch promise nor survives the process, and a second process does not see the lease.
+SCOPE: Pi 0fb90672 src/workbench/source-admission.ts WriterLeases/admitSourceWrite
+PERMITTED: WriterLeases is registry-instance-local memory and admitSourceWrite releases it when its dispatch promise settles; no cross-process or restart persistence follows.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C118 [INFERENCE] SUPPORTED material=True =====
+VERBATIM: A timeout is not proof of safe release.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L29 §4
+PROP: A lease timeout by itself does not establish that the writer has stopped or that its effects have settled, so a timeout is not proof of safe release.
+SCOPE: writer ownership under lost heartbeat, kill or partition
+PERMITTED: A timeout alone does not establish quiescence or settled effects; safe release needs additional fencing/termination/producer evidence.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C119 [NORMATIVE] NON-EPISTEMIC material=True =====
+VERBATIM: On lost heartbeat or kill, quarantine/fence until evidence justifies release or operator intervention resolves it.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L29 §4
+PROP: Rule: on lost heartbeat or a killed worker, the lease is quarantined/fenced and stays so until evidence justifies release or an operator intervention resolves it.
+SCOPE: writer ownership recovery (D5, invariant I7)
+PERMITTED: Retain fenced/quarantined ownership after lost heartbeat/kill until justified recovery or an explicit audited operator disposition.
+DEPS: ['C118'] PROPAGATION: {"dependencies": {"C118": "SUPPORTED"}, "cap": "SUPPORTED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C118=SUPPORTED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C120 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: Simultaneous functions to different roots may proceed under resource caps. Two aliases resolving to one realpath must conflict.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L30 §4
+PROP: Proposed concurrency law: simultaneous function invocations against different canonical roots may proceed under resource caps, while two workspace aliases resolving to one realpath must conflict.
+SCOPE: writer leases keyed by canonical realpath root; current WriterLeases already keys by measured canonical root and the suite pins the symlink-alias conflict
+PERMITTED: Require alias conflict at the authoritative store; permit concurrent roots only under an explicit overlap/isolation policy and resource caps.
+DEPS: ['C117'] PROPAGATION: {"dependencies": {"C117": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C117=ESTABLISHED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C121 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: Release on verified complete/known no-write terminal only after all effects have stopped; retain lock on after-dispatch unknown.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L31 §4
+PROP: Proposed release law: release only on a verified complete or known no-write terminal after all effects have stopped; retain the lock on an after-dispatch unknown; prompt/script worktrees stay unaffected by the function lease.
+SCOPE: function writer lease lifetime (D5); script/prompt worktree preservation is a separate existing path
+PERMITTED: Release a function lease only after known-safe terminal effect disposition; retain uncertain leases and preserve existing script behavior without claiming script writers are fenced.
+DEPS: ['C115'] PROPAGATION: {"dependencies": {"C115": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+REMED: ['NARROW_SCOPE', 'ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C122 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: replay is idempotent by event id. Native events are append-only facts, projection can be rebuilt.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L34 §5
+PROP: Proposed journal: immutable events admitted, lease_acquired, effect_intent_persisted, dispatch_requested, native_session_observed, first_edit, candidate_committed, forge_dispatched, forge_observed, effect_settled, release_fenced, release_complete; each event references one invocation and source pin, carries a monotonic local sequence, a native ref and an evidence strength; replay is idempotent by event id; native events are append-only facts and the projection can be rebuilt from them.
+SCOPE: Pi-owned invocation journal (new); no durable journal exists at the pin, the observation projection is in-memory
+PERMITTED: Propose an idempotent durable function-event journal extending or explicitly replacing existing script/task storage; early events carry native refs only when actually observed.
+EMBEDDED_FLAGS: [{"lens": "negative-ev#25", "evidence": "E046", "status": "REFUTED", "what": "REFUTED"}, {"lens": "pi-src#40", "evidence": "E178", "status": "REFUTED", "what": "REFUTED"}, {"lens": "joint#28", "evidence": "E228", "status": "UNDETERMINED", "what": "UNDETERMINED"}]
+WORDING_MISMATCH: "indicative wording in a PROPOSAL row carries embedded premises graded ['REFUTED', 'UNDETERMINED']"
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['SPLIT_CLAIM', 'ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C123 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: Cancellation requested is separate from cancellation established. Control carries target native identity and exact scope, and never relabels an unknown effect as rolled back.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L35 §5
+PROP: Proposed invocation state machine admitted -> reserved -> dispatched -> observing -> completed_known OR outcome_unknown -> reconciling -> completed_known OR operator_action_required; cancellation requested is a distinct state from cancellation established; control carries the target native identity and exact scope and never relabels an unknown effect as rolled back.
+SCOPE: Pi invocation lifecycle (D5/D6, invariant I7); existing control-tool already distinguishes requested/acknowledged/result
+PERMITTED: Introduce the function invocation lifecycle while preserving requested-versus-established cancellation and explicit scoped recovery; an unknown effect never becomes rollback by projection.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C124 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: Domain result remains one of verified_candidate / verification_failed / needs_evidence / indeterminate, unmodified.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L36 §5
+PROP: Embedded premise: Mechanical's DevelopmentOutcome at the pin is exactly the four-way union verified_candidate | verification_failed | needs_evidence | indeterminate (packages/development/src/contracts.ts), and develop() returns no other kind.
+SCOPE: MW 69cb016d packages/development/src/{contracts,develop}.ts
+PERMITTED: All normal develop results use the four-domain union; thrown input/callback/admission/uncertainty errors remain separately observable and must not be collapsed into a fabricated outcome.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C125 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: Add observed assurance: strict-native, legacy-weak, unknown; effect: no-effect, dispatched-uncertain, occurred, settled. Avoid a single synthetic "success" boolean.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L36 §5
+PROP: Proposed projection axes added beside the unmodified domain result: observed assurance in {strict-native, legacy-weak, unknown} and effect in {no-effect, dispatched-uncertain, occurred, settled}; no single synthetic success boolean.
+SCOPE: Pi observation projection of a function invocation (D1/D7 consumer side); vocabulary is pi-02's own, the companion mw-02 spells the weak case differently
+PERMITTED: Propose independent domain/assurance/effect axes, pending a joint enumeration and lossless mapping from legacy producer values.
+DEPS: ['C124'] PROPAGATION: {"dependencies": {"C124": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C124=ESTABLISHED); requirement force is a separate dimension"}
+REMED: ['SURFACE_DISAGREEMENT']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C126 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: workflow_execute reply remains tool-reply/v1 with invoked/launch-only semantics.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L39 §6
+PROP: Embedded premise behind 'remains': at the Pi pin the workflow_execute reply is the workbench.tool-reply/v1 envelope whose invoked member reports whether a launch happened, whose completion member is always "not-asserted", and whose launch statuses are only accepted | launched | refused.
+SCOPE: Pi 0fb90672 src/workbench/tool-replies.ts, execute.ts, execute-tool.ts
+PERMITTED: The registered execute envelope is workbench.tool-reply/v1 with launch-only invoked/status and completion:not-asserted; accepted is a permitted type value, not a currently emitted execute status.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C130 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: Reject with stable categories: definition-unreviewed; descriptor-mismatch; artifact-mismatch; installed-content-mismatch; runtime-unavailable; permission-unknown; grant-revoked; principal-changed; source-changed; workspace-dirty; writer-held; capacity-exhausted; intent-persist-failed; dispatch-outcome-unknown; post-dispatch-aborted; native-gate-unestablished; recovery-not-authorized.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L43 §7
+PROP: Proposed stable refusal/recovery vocabulary of 17 categories: definition-unreviewed, descriptor-mismatch, artifact-mismatch, installed-content-mismatch, runtime-unavailable, permission-unknown, grant-revoked, principal-changed, source-changed, workspace-dirty, writer-held, capacity-exhausted, intent-persist-failed, dispatch-outcome-unknown, post-dispatch-aborted, native-gate-unestablished, recovery-not-authorized.
+SCOPE: function route typed refusals; only writer-held and source-changed match existing source-admission codes verbatim, the rest are new or respelled (unknown-permission-data, changed-effective-identity, dirty-base, descriptor reasons)
+PERMITTED: Propose stable public refusal/recovery categories with explicit mappings from retained Pi seam codes and producer codes, preserving pre-effect versus post-effect meaning.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C131 [NORMATIVE] NON-EPISTEMIC material=True =====
+VERBATIM: Before possible side effects: no launch and safe refusal. After possible side effects: publish uncertain with native ids and frozen lease.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L44 §7
+PROP: Rule: before any possible side effect a fault yields no launch and a safe refusal; after a possible side effect the invocation is published as uncertain with its native ids and a frozen lease; there is no automatic re-invoke on an unknown outcome.
+SCOPE: function route failure handling (D2/D5, invariant I7)
+PERMITTED: Require safe refusal only when non-dispatch is established; after possible effect retain uncertainty, known refs and ownership, with no automatic re-invocation.
+DEPS: ['C115', 'C119'] PROPAGATION: {"dependencies": {"C115": "NON-EPISTEMIC", "C119": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C132 [INFERENCE] ESTABLISHED material=True =====
+VERBATIM: a clean HEAD alone is not universal non-occurrence evidence
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L44 §7
+PROP: A clean HEAD observed after a dispatch is a time-local worktree observation that does not by itself prove the effect did not occur; recovery therefore needs affirmative occurrence/non-occurrence proof from producer-native sources.
+SCOPE: post-dispatch recovery of a Mechanical develop invocation (Claude edit/commit, Forge dispatch may have happened without acknowledgment)
+PERMITTED: A clean HEAD/status observation cannot prove no effect: at MW 69cb016d an ignored-file effect survives while reconciliation returns not-occurred and permits retry.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['REPLACE_SOURCE', 'ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C135 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: Both test the same versioned fixture vectors. Old v1 descriptors without mandatory new assurances remain descriptor-only or legacy-weak; never silently promote.
+LOC: docs/pi-02-PROTOCOL-AND-RUNTIME.md :: L48 §8
+PROP: Proposed ABI handshake enumerating descriptor id/schema, host version, export names, write grant grammar, closed input/output JSON, progress/event vocabulary, result semantics, native refs, evidence profile, runtime manifest, disposition, cancellation and retry law; both repositories test the same versioned fixture vectors; old v1 descriptors lacking the mandatory new assurances remain descriptor-only or legacy-weak and are never silently promoted.
+SCOPE: joint Pi/Mechanical compatibility boundary (D8); descriptor-only is the existing MECHANICAL_DESCRIPTOR_STATUS constant, legacy-weak is pi-02's §5 assurance value
+PERMITTED: Jointly ratify a versioned ABI and fixture map before composed invocation; legacy descriptor-only records must never be silently upgraded to strict execution evidence.
+EMBEDDED_FLAGS: [{"lens": "pi-src#6", "evidence": "E144", "status": "CONTESTED", "what": "CONTESTED"}, {"lens": "joint#34", "evidence": "E234", "status": "REFUTED", "what": "REFUTED"}, {"lens": "joint#35", "evidence": "E235", "status": "UNDETERMINED", "what": "UNDETERMINED"}]
+DEPS: ['C125', 'C087'] PROPAGATION: {"dependencies": {"C125": "NON-EPISTEMIC", "C087": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C087=ESTABLISHED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Direct git diff verified: Pi 0fb90672 -> document 3fc0ead1 changes six program docs and a skill only; src/test/qa/package.json/forge.toml unchanged. MW 69cb016d -> companion baseline 1be2b8dc changes two test titles and identifier mapping only; deposit 6476372f adds docs/skill. Source, contracts and manifests cited here are unchanged even through locally available 0ffdc844. Verdict remains scoped to the supplied environment pins, not arbitrary current heads.
+
+===== C140 [INFERENCE] UNSUPPORTED material=True =====
+VERBATIM: P04 composed admission
+LOC: docs/pi-03-IMPLEMENTATION-PACKETS.md :: L8 graph node vs L39 heading
+PROP: Implicit identity premise: the dependency-graph node labelled 'P04 composed admission' denotes the same packet as the section '### P04 — Reviewed installed host consumer (P0; MW H01/H02)'. The two names describe different work (composition of P01-P03 admission vs. consuming the reviewed installed Mechanical host); the document never states they are one packet, and P05's header '(P0; P01–P04)' is the only place the chain is restated.
+SCOPE: internal consistency of pi-03 only
+PERMITTED: P04 covers installed-host review; admission composition remains to be explicitly assigned.
+WORDING_MISMATCH: "artifact wording is indicative (inferred) ('P04 composed admission') but the warrant is UNSUPPORTED"
+DEPS: ['C139'] PROPAGATION: {"dependencies": {"C139": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+REMED: ['SPLIT_CLAIM']
+DRIFT: Documents identical to Pi master 3fc0ead1; no implementation to resolve label.
+
+===== C145 [INFERENCE] SUPPORTED material=True =====
+VERBATIM: exact action grant mechanical:develop-write
+LOC: docs/pi-03-IMPLEMENTATION-PACKETS.md :: L18 P00 Implement
+PROP: The exact v1 action grant spelling is 'mechanical:develop-write', presented as the literal both repositories sign off. Embedded empirical premise: this spelling is already the Mechanical side's spelling (witnessed at 69cb016d in apps/development-rig/src/host-binding.ts and tests) and Pi has NOT adopted it (zero occurrences in Pi src at 0fb90672; function-authority.ts FUNCTION_ACTION_CONTRACT is frozen at state 'unadopted', blockedOn 'MW-CONTRACT'); the spelling appears in Pi only in the MNI program docs.
+SCOPE: joint v1 contract; Pi src vs MW src witnesses differ; overlaps live bead wb-w8fk (in_progress, contract choice)
+PERMITTED: Mechanical proposes mechanical:develop-write; Pi must ratify and adopt that exact candidate before dispatch.
+FACETS: {"facet graded by negative-ev#8": "ESTABLISHED: Pi's adoption seam has never been exercised with the candidate spelling; the first test that does so is P00 or P03 work.", "facet graded by pi-src#9": "ESTABLISHED: Nothing in production supplies any contract to the boundary, adopted or not, because nothing in production calls the boundary.", "facet graded by joint#33": "ESTABLISHED: Per identifier and per repository: the grant spelling and both profile identifiers are witnessed in Mechanical code and absent from Pi code. That is consistent with both programs calling the grant a candidate and the rou"}
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['NARROW_SCOPE']
+DRIFT: MW grant is candidate and Pi remains unadopted at document commits; no implementation drift.
+
+===== C149 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: src/workbench/execute.ts, execute-tool.ts, identity.ts as needed; do NOT alter script execution semantics
+LOC: docs/pi-03-IMPLEMENTATION-PACKETS.md :: L22 P01 Change
+PROP: P01 change set is confined to src/workbench/execute.ts, execute-tool.ts and identity.ts 'as needed', and must not alter script execution semantics. Embedded premise: the script execution path is implemented in or through those same three files, so a function-route change there can regress scripts.
+SCOPE: P01; Pi at 0fb90672; function route only, script path preserved
+PERMITTED: Limit new canonical function payload to function admissions and preserve the script tests.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: No code drift to doc commit.
+
+===== C150 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: raw-vs-canonical divergence
+LOC: docs/pi-03-IMPLEMENTATION-PACKETS.md :: L24 P01 Red tests (implicit premise)
+PROP: Implicit empirical premise presupposed by the 'raw-vs-canonical divergence' red test and by pi-01 PI-I01: at 0fb90672 the function admission digest is computed over withoutBeadsNotes(input) while the script-style launcher structure reads the original params.input, so a function route built on the existing launcher structure could dispatch bytes that differ from the digested canonical payload. (No current function launch occurs, so the divergence is latent, not exercised.)
+SCOPE: Pi at 0fb90672; latent structure, not an observed runtime defect
+PERMITTED: A future function launcher patterned on the script branch could dispatch raw params.input while hashing stripped input; no such function dispatch exists at this pin.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['DOWNGRADE_MODALITY']
+DRIFT: Pi relevant blobs identical to MNI baseline 8e2fedeb and document commit 3fc0ead1.
+
+===== C151 [PROPOSAL] NON-EPISTEMIC material=False =====
+VERBATIM: normalized immutable function request returned by admission, digest computed over exactly dispatched payload; protective handling of Beads notes, getter/cycle/prototype edge cases, UTF-8/depth budgets
+LOC: docs/pi-03-IMPLEMENTATION-PACKETS.md :: L23 P01 Implement
+PROP: P01 deliverable: admission returns a normalized immutable function request; the digest is computed over exactly the dispatched payload; Beads notes, getter/cycle/prototype edge cases and UTF-8/depth budgets are handled protectively.
+SCOPE: P01; overlaps MNI P01/P03 and D3 (PI-I01)
+PERMITTED: For function admissions, design a protected canonical payload carrier whose dispatched bytes and digest match without changing script semantics.
+DEPS: ['C150'] PROPAGATION: {"dependencies": {"C150": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C150=ESTABLISHED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: No source change at doc commit.
+
+===== C152 [PROPOSAL] NON-EPISTEMIC material=False =====
+VERBATIM: note-only changes never affect function identity; typed source/basis changes DO affect identity; a test launcher receives canonical bytes only
+LOC: docs/pi-03-IMPLEMENTATION-PACKETS.md :: L24 P01 Red tests
+PROP: P01 red-test specification: raw-vs-canonical divergence; poisoned note getter; note-only changes never affect function identity; typed source/basis changes DO affect identity; a test launcher receives canonical bytes only.
+SCOPE: P01 tests; relates to G08 (differing Beads notes, identical typed input) in pi-04
+PERMITTED: These are new registered-route or composed-boundary red tests; distinguish already-green pure seam assertions.
+EMBEDDED_FLAGS: [{"lens": "pi-src#31", "evidence": "E169", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}]
+DEPS: ['C151'] PROPAGATION: {"dependencies": {"C151": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+REMED: ['NARROW_SCOPE', 'SPLIT_CLAIM']
+DRIFT: No relevant implementation drift at doc commits.
+
+===== C153 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: callback input deep-equals admitted payload and hashes to stored inputDigest; no leaking note bytes
+LOC: docs/pi-03-IMPLEMENTATION-PACKETS.md :: L25 P01 Done
+PROP: P01 exit criteria: the callback input deep-equals the admitted payload and hashes to the stored inputDigest; no note bytes leak. Embedded premise: an inputDigest field is already stored by the existing invocation record at the pin (symbol present in src/workbench/execute.ts, src/index.ts and reconcile/task modules).
+SCOPE: P01 acceptance; Pi at 0fb90672 for the stored-digest premise
+PERMITTED: For new function invocations, the callback must receive the admitted payload and a specifically named, persisted domain-separated function inputDigest must match it.
+EMBEDDED_FLAGS: [{"lens": "pi-src#26", "evidence": "E164", "status": "CONTESTED", "what": "CONTESTED"}, {"lens": "joint#32", "evidence": "E232", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}]
+DEPS: ['C151', 'C152'] PROPAGATION: {"dependencies": {"C151": "NON-EPISTEMIC", "C152": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+REMED: ['SPLIT_CLAIM', 'ADD_MISSING_PREMISE']
+DRIFT: No code drift at Pi document commit.
+
+===== C154 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: src/workbench/source-admission.ts (retain pure checks), new host lease/ownership adapter under src/workbench/ and tests; journal storage explicit
+LOC: docs/pi-03-IMPLEMENTATION-PACKETS.md :: L28-L29 P02 Change
+PROP: P02 change set: keep src/workbench/source-admission.ts's pure checks; add a new host lease/ownership adapter (and tests) under src/workbench/; make journal storage explicit; keep existing script helper behavior unless requalified. Embedded premise: source-admission.ts at the pin separates pure checks from host/lease state so the former can be retained unchanged.
+SCOPE: P02; Pi at 0fb90672; overlaps live bead wb-2ukh (MNI P03 writer source admission) rather than wb-y0n6 (MNI P02)
+PERMITTED: Keep existing script launch behavior; retain reusable pure source checks; a new function lease adapter must not assume scripts use this helper.
+EMBEDDED_FLAGS: [{"lens": "negative-ev#10", "evidence": "E031", "status": "REFUTED", "what": "REFUTED"}, {"lens": "pi-src#16", "evidence": "E154", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}]
+DEPS: ['C137'] PROPAGATION: {"dependencies": {"C137": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+REMED: ['SPLIT_CLAIM']
+DRIFT: Pi source unchanged at document commit.
+
+===== C155 [OBSERVATION] SUPPORTED material=True =====
+VERBATIM: remove lease release from launch-return lifetime for function workflows
+LOC: docs/pi-03-IMPLEMENTATION-PACKETS.md :: L29 P02 Implement (implicit premise)
+PROP: Implicit empirical premise presupposed by 'remove lease release from launch-return lifetime' and by pi-01 PI-I02: at 0fb90672 the writer lease (WriterLeases in source-admission.ts) is a process-local in-memory map released when the dispatch promise resolves, i.e. bound to the launch-return lifetime; a detached or asynchronous launch can therefore return before the writer terminates.
+SCOPE: Pi at 0fb90672; script path uses the same helper
+PERMITTED: If a future reference-returning function launcher is passed to admitSourceWrite, its lease ends when references return, not when the writer finishes; current scripts do not use this helper.
+FACETS: {"facet graded by lineage#0": "ESTABLISHED: Nothing MOVED in the descriptor/authority/source-admission/worktree/abort/detached-grant states MNI graded: every MII baseline observation about those files inherits the MNI verdict byte-for-byte. The only src movement s", "facet graded by negative-ev#10": "REFUTED: Refuted facet only: that scripts or any registered path use this lease helper today (stated in the scope of row C155 and presupposed by the two quoted sentences). The storage and release facets are NE-10. Consequences: '"}
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Relevant Pi blobs same since MNI env pin 8e2fedeb and at MII doc commit.
+
+===== C156 [PROPOSAL] NON-EPISTEMIC material=False =====
+VERBATIM: lease persists after launch return, cross-process same-machine exclusivity, stale-owner fencing, recovery-held state
+LOC: docs/pi-03-IMPLEMENTATION-PACKETS.md :: L29 P02 Implement
+PROP: P02 deliverable: the lease persists after launch return; cross-process same-machine exclusivity; stale-owner fencing; a recovery-held state; lease release removed from the launch-return lifetime for function workflows.
+SCOPE: P02; same-machine topology only (no distributed lease claimed)
+PERMITTED: Build a durable invocation-owned same-machine lease with explicit fence carrier, release only after justified settlement.
+EMBEDDED_FLAGS: [{"lens": "negative-ev#10", "evidence": "E031", "status": "REFUTED", "what": "REFUTED"}]
+DEPS: ['C155'] PROPAGATION: {"dependencies": {"C155": "SUPPORTED"}, "cap": "SUPPORTED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C155=SUPPORTED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: No implementation at either source pin; document commits only propose it.
+
+===== C157 [PROPOSAL] NON-EPISTEMIC material=False =====
+VERBATIM: launch resolves while writer sleeps, second root alias refused; distinct roots allowed; crash/restart leaves uncertain lease; failed pre-dispatch safely releases; stale generation cannot write; lease is not freed by timeout only
+LOC: docs/pi-03-IMPLEMENTATION-PACKETS.md :: L30 P02 Red tests
+PROP: P02 red-test specification: launch resolves while the writer sleeps and a second root alias is refused; distinct roots allowed; crash/restart leaves an uncertain lease; failed pre-dispatch safely releases; a stale generation cannot write; the lease is not freed by timeout alone.
+SCOPE: P02 tests; maps to G06/G07 in pi-04
+PERMITTED: The new red tests target long-lived, cross-process function invocations, not the already-green in-memory seam.
+EMBEDDED_FLAGS: [{"lens": "pi-src#31", "evidence": "E169", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}]
+WORDING_MISMATCH: "indicative wording in a PROPOSAL row carries embedded premises graded ['UNSUPPORTED']"
+DEPS: ['C156'] PROPAGATION: {"dependencies": {"C156": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+REMED: ['NARROW_SCOPE']
+DRIFT: No joined route at either document commit.
+
+===== C158 [PROPOSAL] NON-EPISTEMIC material=False =====
+VERBATIM: no duplicate concurrent writer on supported host topology and exact persisted owner is observable
+LOC: docs/pi-03-IMPLEMENTATION-PACKETS.md :: L31 P02 Done
+PROP: P02 exit criteria: no duplicate concurrent writer on the supported host topology, and the exact persisted owner is observable. Scope premise: 'supported host topology' is not enumerated in this document (P09 asks to state untested topologies explicitly).
+SCOPE: P02 acceptance; topology quantifier unspecified here
+PERMITTED: Done only for explicitly enumerated same-machine topology and tested aliases, process deaths and recovery windows; show persisted owner.
+DEPS: ['C156', 'C157'] PROPAGATION: {"dependencies": {"C156": "NON-EPISTEMIC", "C157": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+REMED: ['NARROW_SCOPE']
+DRIFT: No implementation at document commit.
+
+===== C159 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: function-authority.ts adoption and source-admission host composition; maintain model input/host separation
+LOC: docs/pi-03-IMPLEMENTATION-PACKETS.md :: L34 P03 Change
+PROP: P03 change set names 'function-authority.ts adoption' and source-admission host composition while maintaining model-input/host separation. Embedded empirical premise: at 0fb90672 function-authority.ts contains an adoption mechanism (FunctionActionContract with exported default FUNCTION_ACTION_CONTRACT = {state:'unadopted', blockedOn:'MW-CONTRACT'}) and the rechecks in source-admission.ts/function-authority.ts exist but do not form one atomic policy across async waits (pi-01 PI-I04).
+SCOPE: Pi at 0fb90672; overlaps live bead wb-2ukh (MNI P03) and MNI D6/D9
+PERMITTED: Pi has an unadopted action-contract seam and source checks; no production caller adopts them.
+DEPS: ['C145'] PROPAGATION: {"dependencies": {"C145": "SUPPORTED"}, "cap": "SUPPORTED", "binds": false, "weakest_dependency": "C145", "note": "cap does not bind: the adoption mechanism exists by direct source reading; C145 (grant spelling jointly signed off, SUPPORTED) is a presupposition about the grant, not about the mechanism"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Pi source same at document commit.
+
+===== C160 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: exact workbench:execute + mechanical:develop-write, host-only effective principal/session, source Git HEAD/tree/clean/Forge manifest, operator attestation and authorized root; repeat after async install/wait and immediately at effect dispatch, bound to active fence
+LOC: docs/pi-03-IMPLEMENTATION-PACKETS.md :: L35 P03 Implement
+PROP: P03 deliverable: require exact workbench:execute + mechanical:develop-write grants, host-only effective principal/session, source Git HEAD/tree/clean state and Forge manifest, operator attestation and an authorized root; repeat the whole check after async install/wait and immediately at effect dispatch, bound to the active fence. Embedded premise: 'workbench:execute' is an existing Pi grant spelling (witnessed in execute-tool.ts/execute.ts/function-authority.ts).
+SCOPE: P03; depends on P02 fence; overlaps mw-03 H06 (recheck after async preparation immediately before effect)
+PERMITTED: P03 must verify exact grants and host-only authority after waits; producer must independently recheck/fence immediately before its effect, with attestation minting specified.
+EMBEDDED_FLAGS: [{"lens": "pi-src#19", "evidence": "E157", "status": "CONTESTED", "what": "CONTESTED"}, {"lens": "joint#27", "evidence": "E227", "status": "REFUTED", "what": "REFUTED"}]
+DEPS: ['C145', 'C156', 'C159'] PROPAGATION: {"dependencies": {"C145": "SUPPORTED", "C156": "NON-EPISTEMIC", "C159": "ESTABLISHED"}, "cap": "SUPPORTED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C145=SUPPORTED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE', 'SPLIT_CLAIM']
+DRIFT: No source change at doc commit; proposed composed entry not yet implemented.
+
+===== C161 [PROPOSAL] NON-EPISTEMIC material=False =====
+VERBATIM: revoked action grant, changed principal, source changed during install, moved worktree symlink, changed manifest, wrong workspace/identity, extra action permission, user-provided fake grant, machine PID race
+LOC: docs/pi-03-IMPLEMENTATION-PACKETS.md :: L36 P03 Red tests
+PROP: P03 red-test specification: revoked action grant, changed principal, source changed during install, moved worktree symlink, changed manifest, wrong workspace/identity, extra action permission, user-provided fake grant, machine PID race.
+SCOPE: P03 tests; maps to G10 in pi-04
+PERMITTED: Write registered/composed function tests for the nine mutation cases; cite existing seam tests as prerequisites.
+EMBEDDED_FLAGS: [{"lens": "pi-src#31", "evidence": "E169", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}]
+DEPS: ['C160'] PROPAGATION: {"dependencies": {"C160": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+REMED: ['NARROW_SCOPE']
+DRIFT: No source change at doc commit.
+
+===== C162 [PROPOSAL] NON-EPISTEMIC material=False =====
+VERBATIM: first effect cannot occur with any stale mutable authority axis
+LOC: docs/pi-03-IMPLEMENTATION-PACKETS.md :: L37 P03 Done
+PROP: P03 exit criterion, universally quantified: the first effect cannot occur with ANY stale mutable authority axis (grant, principal/session, source HEAD/tree/clean, manifest, attestation, root, fence).
+SCOPE: P03 acceptance; quantifier 'any' over the axes listed in L35
+PERMITTED: In the enumerated tests no first effect occurs after stale authority detection; disclose remaining race and producer stale-fence enforcement.
+EMBEDDED_FLAGS: [{"lens": "joint#27", "evidence": "E227", "status": "REFUTED", "what": "REFUTED"}]
+DEPS: ['C160', 'C161'] PROPAGATION: {"dependencies": {"C160": "NON-EPISTEMIC", "C161": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+REMED: ['NARROW_SCOPE', 'DOWNGRADE_MODALITY']
+DRIFT: No implementation at document commits can discharge universal predicate.
+
+===== C167 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: src/workbench/execute-tool.ts; src/index.ts registration; logic isolated from script launcher
+LOC: docs/pi-03-IMPLEMENTATION-PACKETS.md :: L46 P05 Change
+PROP: P05 change set presupposes that workflow_execute is registered in src/index.ts and implemented in src/workbench/execute-tool.ts, with function logic to be isolated from the script launcher. Embedded premise (baseline): at 0fb90672 execute-tool.ts registers one executable tool whose non-script branch returns unsupported-definition-kind, and src/index.ts carries the workflow_execute registration (tool name present at index.ts L2618/L3006).
+SCOPE: Pi at 0fb90672; overlaps live bead wb-4bxo (MWI-dispatch through the registered Pi tool) and MNI P04
+PERMITTED: workflow_execute is registered; at this pin its executable branch is script-only.
+DEPS: ['C147'] PROPAGATION: {"dependencies": {"C147": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "weakest_dependency": "C147", "note": "status consistent with premises"}
+REMED: []
+DRIFT: Pi source unchanged to 3fc0ead1.
+
+===== C168 [PROPOSAL] NON-EPISTEMIC material=True =====
+VERBATIM: one allowlisted function branch with A0–A6 admission, resource reservation and durable launch; precise launch reply (never false completion); preserve script, detached provider grant and standalone subagent paths. No shell/script alias.
+LOC: docs/pi-03-IMPLEMENTATION-PACKETS.md :: L47 P05 Implement
+PROP: P05 deliverable: one allowlisted function branch with A0-A6 admission (pi-02 stages: resolve, create, admit, resolve, acquire, verify, journal), resource reservation and durable launch; a precise launch reply that never reports false completion; the script, detached provider-grant and standalone subagent paths preserved; no shell/script alias. Embedded premise: those three existing paths are distinct code paths in execute-tool.ts/hosts at the pin.
+SCOPE: P05; depends on P01-P04
+PERMITTED: A new registered function branch must leave existing paths intact, reuse journal/task identity and block effect dispatch until the known cancellation ordering defect is repaired or safely isolated.
+DEPS: ['C139', 'C167'] PROPAGATION: {"dependencies": {"C139": "NON-EPISTEMIC", "C167": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C167=ESTABLISHED); requirement force is a separate dimension"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Pi code and pending repro unchanged from MNI environment to MII document commit.
+
+===== C169 [PROPOSAL] NON-EPISTEMIC material=False =====
+VERBATIM: invoke the actual registered Pi tool, assert Mechanical function callback reached exactly once; absent grant -> zero callbacks; function refuses if not reviewed; first successful launch returns invocation+native refs while worker continues
+LOC: docs/pi-03-IMPLEMENTATION-PACKETS.md :: L48-L49 P05 Red tests + Done
+PROP: P05 red tests and exit: invoking the actual registered Pi tool reaches the Mechanical function callback exactly once; absent grant yields zero callbacks; the function refuses if not reviewed; the first successful launch returns invocation+native refs while the worker continues; V3 is recorded through Pi registration, not a direct host-helper call.
+SCOPE: P05 acceptance; V3 tier (pi-04 L8)
+PERMITTED: P05 test should require a truthful invocation ref and actual native refs when available; absent producer IDs stay absent, not synthetic.
+EMBEDDED_FLAGS: [{"lens": "joint#9", "evidence": "E209", "status": "REFUTED", "what": "REFUTED"}]
+DEPS: ['C168'] PROPAGATION: {"dependencies": {"C168": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+REMED: ['SURFACE_DISAGREEMENT']
+DRIFT: No Pi source drift to document commit.
+
+===== C173 [OBSERVATION] SUPPORTED material=True =====
+VERBATIM: workflow_control/workflow_reconcile adapters, host journal and lease state; integrate Mechanical effect-intent lookup
+LOC: docs/pi-03-IMPLEMENTATION-PACKETS.md :: L58 P07 Change
+PROP: P07 change set presupposes existing workflow_control and workflow_reconcile adapters in Pi, a host journal and lease state (from P02), and a Mechanical 'effect-intent lookup' to integrate. Embedded premises: at 0fb90672 the tools exist (control-tool.ts; reconcile-tool.ts registers name 'workflow_reconcile'); at 69cb016d Mechanical exports an effect-intent store/reader (effect-intent.ts: openEffectIntent, attachEffectRefs, settleEffectIntent, readEffectIntent, fileEffectIntentStore; effect-reconciliation.ts: reconcileUncertainEffect, describeLostAcknowledgement).
+SCOPE: Pi at 0fb90672 and MW at 69cb016d; overlaps live beads wb-mwsy (MWI-effects) and wb-5a7k (MWI-controls), MNI P06, mw-03 H02/H07
+PERMITTED: At Pi 0fb90672 workflow_control and workflow_reconcile are registered (control-tool.ts:138, reconcile-tool.ts:62) and a workflow journal exists; at MW 69cb016d effect-intent.ts and effect-reconciliation.ts export openEffectIntent, attachEffectRefs, settleEffectIntent, readEffectIntent, fileEffectIntentStore and reconcileUncertainEffect at module level only: neither module is in the rig's export map (an installed consumer gets ERR_PACKAGE_PATH_NOT_EXPORTED), the record carries intentId and invocationIdentitySha256 but no Pi invocation id, and reconcileUncertainEffect has no src caller, so an integrable 'effect-intent lookup' does not yet exist and depends on MW H02/H07 plus an export.
+FACETS: {"Pi workflow_control/workflow_reconcile adapters and a journal exist": "ESTABLISHED", "MW effect-intent/effect-reconciliation functions exist at module level": "ESTABLISHED", "MW 'exports' them (package export reachable by Pi)": "REFUTED (ERR_PACKAGE_PATH_NOT_EXPORTED)", "a producer 'effect-intent lookup' keyed by invocation exists to integrate": "UNSUPPORTED (path-addressed single-file reader; no index; no caller)", "host journal and lease state from P02": "NON-EPISTEMIC (future)"}
+DEPS: ['C154', 'C156'] PROPAGATION: {"dependencies": {"C154": "NON-EPISTEMIC", "C156": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+REMED: ['SPLIT_CLAIM', 'ADD_MISSING_PREMISE']
+DRIFT: MW document commit test-title only; no public lookup added.
+
+===== C174 [PROPOSAL] NON-EPISTEMIC material=False =====
+VERBATIM: no unknown effect is replayed just because Pi restarted, and writer lease stays fenced until justified
+LOC: docs/pi-03-IMPLEMENTATION-PACKETS.md :: L59-L61 P07 Implement/Red/Done
+PROP: P07 deliverable and exit: append-only idempotent event ids; pre- vs post-dispatch cancellation distinguished; native lookup with no blind retry; reattach the same invocation to still-running native producers; an operator action for unknown outcomes; red tests across kill windows (after intent before SDK, after first edit, after commit, before/after gate dispatch), lost ack, double stop, late events, corrupted journal, start/recovery race; done when no unknown effect is replayed merely because Pi restarted and the writer lease stays fenced until justified.
+SCOPE: P07 acceptance; maps to G04/G05/G11 in pi-04; depends on P02/P05/P06
+PERMITTED: Specify idempotent event projection replay separately from forbidden automatic effect/writer replay; align Pi and Mechanical intent identifiers and recovery authority.
+EMBEDDED_FLAGS: [{"lens": "negative-ev#17", "evidence": "E038", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}, {"lens": "contradict#2", "evidence": "E059", "status": "UNSUPPORTED", "what": "C142/C163 UNSUPPORTED (prerequisite sets conflict across repos and the labels are ambiguous); C139/C141 NON-EPISTEMIC"}, {"lens": "joint#9", "evidence": "E209", "status": "REFUTED", "what": "REFUTED"}, {"lens": "joint#28", "evidence": "E228", "status": "UNDETERMINED", "what": "UNDETERMINED"}]
+WORDING_MISMATCH: "indicative wording in a PROPOSAL row carries embedded premises graded ['REFUTED', 'UNDETERMINED', 'UNSUPPORTED']"
+DEPS: ['C141', 'C173'] PROPAGATION: {"dependencies": {"C141": "NON-EPISTEMIC", "C173": "SUPPORTED"}, "cap": "SUPPORTED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C173=SUPPORTED); requirement force is a separate dimension"}
+REMED: ['SPLIT_CLAIM', 'ADD_MISSING_PREMISE']
+DRIFT: No joined store or public producer lookup at document commits.
+
+===== C192 [NORMATIVE] NON-EPISTEMIC material=False =====
+VERBATIM: second same-root invocation rejected; lease retained
+LOC: docs/pi-04-ADVERSARIAL-VERIFICATION.md :: L21
+PROP: G06: A worker still alive after a launch reply must retain the same-root lease and reject a second invocation.
+SCOPE: Pi/MW proposed falsification matrix, not an executed test
+PERMITTED: A joined writer fence must outlive launch acknowledgment until native terminal or known-safe settlement. Current process-local source admission is only a primitive.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Pi source/test/qa/package surfaces are unchanged from environment 0fb90672 to document 3fc0ead1; the deposit adds six program files and edits the skill. MW 69cb016d to companion deposit 6476372f changes docs/skill and test titles, not the cited production code or manifests. Later local origin/main 0ffdc844 adds another test-title/identifier edit; it is not substituted for the environment pin.
+
+===== C193 [NORMATIVE] NON-EPISTEMIC material=False =====
+VERBATIM: exactly one live writer, including restart case
+LOC: docs/pi-04-ADVERSARIAL-VERIFICATION.md :: L22
+PROP: G07: Two distinct Pi processes targeting one canonical root must not both acquire live writer authority, including across restart.
+SCOPE: Pi/MW proposed falsification matrix, not an executed test
+PERMITTED: G07 applies to the stated single-machine cross-PID topology, including restart. It is not satisfied by the process-local map or a distributed claim.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Pi source/test/qa/package surfaces are unchanged from environment 0fb90672 to document 3fc0ead1; the deposit adds six program files and edits the skill. MW 69cb016d to companion deposit 6476372f changes docs/skill and test titles, not the cited production code or manifests. Later local origin/main 0ffdc844 adds another test-title/identifier edit; it is not substituted for the environment pin.
+
+===== C194 [NORMATIVE] NON-EPISTEMIC material=False =====
+VERBATIM: identical admitted and dispatched canonical input, no note read
+LOC: docs/pi-04-ADVERSARIAL-VERIFICATION.md :: L23
+PROP: G08: Changing only free-form Beads notes must not alter canonical admitted/dispatched function input or cause those notes to be read.
+SCOPE: Pi/MW proposed falsification matrix, not an executed test
+PERMITTED: G08 must compare admitted canonical bytes/digest with the actual registered dispatch payload and count note getter/read calls. Existing admission-only green tests do not prove that boundary.
+EMBEDDED_FLAGS: [{"lens": "pi-src#31", "evidence": "E169", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}]
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Pi source/test/qa/package surfaces are unchanged from environment 0fb90672 to document 3fc0ead1; the deposit adds six program files and edits the skill. MW 69cb016d to companion deposit 6476372f changes docs/skill and test titles, not the cited production code or manifests. Later local origin/main 0ffdc844 adds another test-title/identifier edit; it is not substituted for the environment pin.
+
+===== C196 [NORMATIVE] NON-EPISTEMIC material=False =====
+VERBATIM: no additional authority or side effect
+LOC: docs/pi-04-ADVERSARIAL-VERIFICATION.md :: L25
+PROP: G10: A tool request with forged grant, root, profile or principal must receive no additional authority or side effect.
+SCOPE: Pi/MW proposed falsification matrix, not an executed test
+PERMITTED: Forged caller fields must grant nothing and produce no effect. Separately ensure future writer roots cannot mutate the authority source; no OS sandbox claim is warranted.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Pi source/test/qa/package surfaces are unchanged from environment 0fb90672 to document 3fc0ead1; the deposit adds six program files and edits the skill. MW 69cb016d to companion deposit 6476372f changes docs/skill and test titles, not the cited production code or manifests. Later local origin/main 0ffdc844 adds another test-title/identifier edit; it is not substituted for the environment pin.
+
+===== C199 [NORMATIVE] NON-EPISTEMIC material=False =====
+VERBATIM: final-boundary refusal, zero writer calls
+LOC: docs/pi-04-ADVERSARIAL-VERIFICATION.md :: L28
+PROP: P13: Revocation of a principal or grant during installation must be caught at the final boundary with zero writer callbacks.
+SCOPE: Pi/MW proposed falsification matrix, not an executed test
+PERMITTED: P13 must exercise revocation across actual registered asynchronous install/dispatch and count zero writers; extend rather than duplicate existing authority guards.
+EMBEDDED_FLAGS: [{"lens": "pi-src#31", "evidence": "E169", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}]
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Pi source/test/qa/package surfaces are unchanged from environment 0fb90672 to document 3fc0ead1; the deposit adds six program files and edits the skill. MW 69cb016d to companion deposit 6476372f changes docs/skill and test titles, not the cited production code or manifests. Later local origin/main 0ffdc844 adds another test-title/identifier edit; it is not substituted for the environment pin.
+
+===== C200 [NORMATIVE] NON-EPISTEMIC material=False =====
+VERBATIM: refuse, retain source mismatch reason
+LOC: docs/pi-04-ADVERSARIAL-VERIFICATION.md :: L29
+PROP: P14: A source cleanliness or manifest change during the wait must refuse and preserve the source-mismatch reason.
+SCOPE: Pi/MW proposed falsification matrix, not an executed test
+PERMITTED: P14 extends existing source/manifest remeasurement to the registered async path and preserves exact refusal reason; it does not assert the guard is wholly absent today.
+EMBEDDED_FLAGS: [{"lens": "pi-src#31", "evidence": "E169", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}]
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Pi source/test/qa/package surfaces are unchanged from environment 0fb90672 to document 3fc0ead1; the deposit adds six program files and edits the skill. MW 69cb016d to companion deposit 6476372f changes docs/skill and test titles, not the cited production code or manifests. Later local origin/main 0ffdc844 adds another test-title/identifier edit; it is not substituted for the environment pin.
+
+===== C202 [NORMATIVE] NON-EPISTEMIC material=False =====
+VERBATIM: idempotent projection, no new effect
+LOC: docs/pi-04-ADVERSARIAL-VERIFICATION.md :: L31
+PROP: P16: Duplicate or late events after terminal must project idempotently with no new effect.
+SCOPE: Pi/MW proposed falsification matrix, not an executed test
+PERMITTED: P16 requires idempotent durable projection after terminal and zero new effect. Existing read-only cache handling alone is insufficient restart evidence.
+EMBEDDED_FLAGS: [{"lens": "pi-src#31", "evidence": "E169", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}]
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Pi source/test/qa/package surfaces are unchanged from environment 0fb90672 to document 3fc0ead1; the deposit adds six program files and edits the skill. MW 69cb016d to companion deposit 6476372f changes docs/skill and test titles, not the cited production code or manifests. Later local origin/main 0ffdc844 adds another test-title/identifier edit; it is not substituted for the environment pin.
+
+===== C204 [NORMATIVE] NON-EPISTEMIC material=False =====
+VERBATIM: unknown + retained fence, no second effect
+LOC: docs/pi-04-ADVERSARIAL-VERIFICATION.md :: L33
+PROP: P18: An executor crash with an open writer fence must remain unknown, retain its fence and avoid a second effect.
+SCOPE: Pi/MW proposed falsification matrix, not an executed test
+PERMITTED: An executor crash with possible dispatch retains unknown state and authoritative fence until safe settlement; process-kill and power-loss claims require distinct durability evidence.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Pi source/test/qa/package surfaces are unchanged from environment 0fb90672 to document 3fc0ead1; the deposit adds six program files and edits the skill. MW 69cb016d to companion deposit 6476372f changes docs/skill and test titles, not the cited production code or manifests. Later local origin/main 0ffdc844 adds another test-title/identifier edit; it is not substituted for the environment pin.
+
+===== C206 [NORMATIVE] NON-EPISTEMIC material=False =====
+VERBATIM: Input/permission denial: 0 Mechanical callbacks, 0 SDK sessions, 0 Forge gate requests, 0 workspace writes.
+LOC: docs/pi-04-ADVERSARIAL-VERIFICATION.md :: L39
+PROP: An input or permission denial must cause zero Mechanical callbacks, SDK sessions, Forge requests and workspace writes.
+SCOPE: Pi/MW pre-effect denial
+PERMITTED: Input/permission denial must be measured with independent callback/session/gate/write detectors on the actual new path; preexisting function refusal is only a baseline control.
+DEPS: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Pi source/test/qa/package surfaces are unchanged from environment 0fb90672 to document 3fc0ead1; the deposit adds six program files and edits the skill. MW 69cb016d to companion deposit 6476372f changes docs/skill and test titles, not the cited production code or manifests. Later local origin/main 0ffdc844 adds another test-title/identifier edit; it is not substituted for the environment pin.
+
+===== C210 [NORMATIVE] NON-EPISTEMIC material=False =====
+VERBATIM: Returned launch handle frees a still-active writer; second process can write same canonical root.
+LOC: docs/pi-04-ADVERSARIAL-VERIFICATION.md :: L57
+PROP: Release is vetoed if a returned launch handle releases an active writer or another process can write the same canonical root; the other veto rows also bar unsupported routes, false input identity, missing gate proof, unknown-effect retry, fake native tests and misleading docs.
+SCOPE: Pi/MW proposed first-release veto set, lines 55-62
+PERMITTED: These are mandatory first-release veto obligations; no gate was executed. Restate joined native/recovery evidence as namespaced V4/V5 or mapped MW interoperability L4/L5.
+EMBEDDED_FLAGS: [{"lens": "negative-ev#27", "evidence": "E048", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}]
+DEPS: ['C192', 'C193', 'C204'] PROPAGATION: {"dependencies": {"C192": "NON-EPISTEMIC", "C193": "NON-EPISTEMIC", "C204": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+REMED: ['ADD_MISSING_PREMISE']
+DRIFT: Pi source/test/qa/package surfaces are unchanged from environment 0fb90672 to document 3fc0ead1; the deposit adds six program files and edits the skill. MW 69cb016d to companion deposit 6476372f changes docs/skill and test titles, not the cited production code or manifests. Later local origin/main 0ffdc844 adds another test-title/identifier edit; it is not substituted for the environment pin.
+
+===== C025 [OBSERVATION] ESTABLISHED material=True =====
+VERBATIM: no compatible distributed lease proof
+LOC: docs/pi-README.md :: Observed baseline, bullet 5 (line 21), sentence 1, clause 3
+PROP: Absence claim: no proof exists of a distributed writer lease that is compatible with this design, that is, no evidence that one writer lease is honoured across processes or hosts. 'Compatible' is not defined in the README; it may mean compatible with the program's lease semantics or compatible between Pi and Mechanical.
+SCOPE: Lease implementations, tests and receipts in Pi at 0fb90672 and Mechanical at 69cb016d; no detection surface is stated. Related to the process-local lease registry of C016.
+PERMITTED: no distributed — nor even cross-process — writer-lease implementation or proof exists in either repository at the pins; 'compatible' has no defined referent; the first release's own requirement (cross-process same-machine exclusivity) is equally unproven.
+FACETS: {"facet graded by negative-ev#1": "UNDETERMINED: Global (unscoped) reading only; the scoped verdicts are NE-01, NE-03, NE-04 and NE-06. Missing artifact that would settle it: a search of the stores the standing census declares unread. Remediation NARROW_SCOPE: name the", "facet graded by mw-src#55": "SUPPORTED: Producer-side corroboration of three Pi-side absence claims; their primary detection surface is the Pi repository (Pi-source and negative-evidence lenses).", "facet graded by pi-src#13": "SUPPORTED: The schedule-store lock releases on PID liveness alone, which is the rule pi-02 section 4 forbids for writer leases ('A timeout is not proof of safe release'), so it is not a reusable pattern for P02.", "facet graded by joint#3": "SUPPORTED: The three absence statements are supported by a detector with stated reach rather than by the companion's concurrence. They are universal negatives over 'any receipt or proof', so they are capped at SUPPORTED: the search"}
+MISSING: stores outside the two repositories (an OrchestrationEngineer ledger directory and home-directory Forge ledgers are cited by receipts) were not censused for a joined receipt; the two-repository absence stands
+DEPS: ['C016'] PROPAGATION: {"dependencies": {"C016": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "weakest_dependency": "C016", "note": "status consistent with premises"}
+REMED: ['NARROW_SCOPE', 'ADD_MISSING_PREMISE']
+DRIFT: None for this row's evidence: pi 0fb90672->3fc0ead1 (document commit) touches only the 6 program docs + .agents/skills/pi-mechanical-interop/SKILL.md; git diff over src/test/qa/package.json/forge.toml is empty (re-verified in the pin clone). MW side: None for this row's evidence: mw 69cb016d->1be2b8dc (the README's noted additional main commit) changes only apps/development-rig/test/host-services.test.ts among apps/packages/contracts/qa (re-verified in the pin clone); this row's witnesses are untouched.
+
+===== C029 [OBSERVATION] REFUTED material=True =====
+VERBATIM: attached or explicitly admitted same-machine execution
+LOC: docs/pi-README.md :: Release definition (line 24), sentence 1, item 2 (presupposition)
+PROP: The execution placements named for the first release exist in Pi at the inspected revision: an 'attached' mode, read here as execution inside the calling Pi session, and a same-machine mode that requires explicit admission. Implicit second facet: the corpus uses one placement vocabulary for the first release, so 'attached or explicitly admitted same-machine' names the same scope as the host-mode statements in documents 02 and 05.
+SCOPE: The host-mode vocabulary and grants of Pi's workflow_execute at 0fb90672; the README does not define 'attached'. Consistency facet: document 02 section 1 (host mode for the first cut) and document 05 'Supported first release / future variants', at the document pin.
+PERMITTED: Pi at 0fb90672 has two execution placements: embedded (inside the calling session) and the explicitly admitted same-machine detached host; 'attached' names no Pi placement. The first-release placement must be stated in one word across README, pi-02 and pi-05 (pi-02 says embedded).
+FACETS: {"facet graded by contradict#0": "UNSUPPORTED: The README release definition and the 05 'Supported first release' section contradict each other on whether attached/detached placements are in the first release. Remediation NARROW_SCOPE on README L24 to 'embedded (same", "facet graded by pi-src#47": "UNSUPPORTED: Unsupported is the facet 'an attached mode exists'. The embedded mode (execution inside the calling session) and the detached same-machine host both exist; the corpus-consistency facet is in the next row."}
+WORDING_MISMATCH: "artifact wording is indicative ('attached or explicitly admitted same-machine execution') but the warrant is REFUTED"
+DEPS: ['C007'] PROPAGATION: {"dependencies": {"C007": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "weakest_dependency": "C007", "note": "status consistent with premises"}
+REMED: ['NARROW_SCOPE', 'SURFACE_DISAGREEMENT']
+DRIFT: None for this row's evidence: pi 0fb90672->3fc0ead1 (document commit) touches only the 6 program docs + .agents/skills/pi-mechanical-interop/SKILL.md; git diff over src/test/qa/package.json/forge.toml is empty (re-verified in the pin clone). The contradiction is BETWEEN pinned documents of the same deposit, so no drift explains it away.
+
+===== C230 [NORMATIVE] NON-EPISTEMIC material=False =====
+VERBATIM: First: embedded same-machine Pi host, reviewed ordinary develop, Git census/plain context, single-writer runtime with cross-PID fence and native Forge evidence.
+LOC: docs/pi-05-OPERATIONS-AND-HANDOFF.md :: L41
+PROP: The supported first release is same-machine embedded Pi with reviewed ordinary develop, Git census/plain context, cross-PID single writer and native Forge evidence; detached/Furnace/HX/RF and other functions require independent future proof, not implicit prerequisites.
+SCOPE: Proposed release scope, not current availability
+PERMITTED: The proposed first release is embedded same-machine Git-census/plain with cross-PID exclusion and native proof. Attached is undefined; detached/HX/RF/Furnace/distributed variants remain future separately evidenced scope.
+DEPS: ['C184', 'C185', 'C186'] PROPAGATION: {"dependencies": {"C184": "NON-EPISTEMIC", "C185": "NON-EPISTEMIC", "C186": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+REMED: ['NARROW_SCOPE']
+DRIFT: Pi source/test/qa/package surfaces are unchanged from environment 0fb90672 to document 3fc0ead1; the deposit adds six program files and edits the skill. MW 69cb016d to companion deposit 6476372f changes docs/skill and test titles, not the cited production code or manifests. Later local origin/main 0ffdc844 adds another test-title/identifier edit; it is not substituted for the environment pin.

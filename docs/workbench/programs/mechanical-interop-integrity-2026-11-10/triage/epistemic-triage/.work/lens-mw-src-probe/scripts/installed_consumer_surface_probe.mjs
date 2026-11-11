@@ -1,0 +1,13 @@
+const out = r => console.log(JSON.stringify(r));
+const tryImport = async spec => { try { const m = await import(spec); return { spec, ok: true, exports: Object.keys(m).sort() }; } catch (e) { return { spec, ok: false, code: e.code ?? null, message: String(e.message).slice(0, 140) }; } };
+out(await tryImport("@mechanical/development-rig/host"));
+out(await tryImport("@mechanical/development-rig"));
+out(await tryImport("@mechanical/development-rig/host-services"));
+out(await tryImport("@mechanical/development-rig/dist/host-services.js"));
+out(await tryImport("@mechanical/development-rig/dist/effect-intent.js"));
+out(await tryImport("@mechanical/development-rig/dist/effect-reconciliation.js"));
+out(await tryImport("@mechanical/development-rig/dist/live-development.js"));
+out(await tryImport("@mechanical/development-rig/package.json"));
+out(await tryImport("@anthropic-ai/claude-agent-sdk"));
+out(await tryImport("@forge/sdk"));
+out({ resolvedHost: import.meta.resolve("@mechanical/development-rig/host").replace(process.cwd(), "<consumer>"), node: process.version });

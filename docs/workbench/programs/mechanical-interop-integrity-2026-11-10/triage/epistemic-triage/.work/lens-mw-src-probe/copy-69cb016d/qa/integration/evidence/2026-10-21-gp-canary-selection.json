@@ -1,0 +1,174 @@
+{
+ "mode": "select-bead",
+ "selection": {
+  "schema": "mw.bead-selection.v1",
+  "version": 1,
+  "decisionId": "sel:4bc858298ec693d670f54bb6",
+  "at": "2026-10-21T07:34:57.139Z",
+  "mode": "canary",
+  "store": "MechanicalWorkflows",
+  "readyDigest": "sha256:3037d7674ad7b1d56f0d012e14a450301287373fa6b5d62b64f1047d87b0293f",
+  "readyCount": 62,
+  "support": [
+   "MechanicalWorkflows-93bl",
+   "MechanicalWorkflows-40a1",
+   "MechanicalWorkflows-pa8u",
+   "MechanicalWorkflows-u54e",
+   "MechanicalWorkflows-rzih"
+  ],
+  "baseline": {
+   "beadId": "MechanicalWorkflows-93bl",
+   "rule": "priority-then-oldest-then-id"
+  },
+  "advice": {
+   "kind": "advice",
+   "chosen": "MechanicalWorkflows-93bl",
+   "logProb": -0.9925209879875183,
+   "ranking": [
+    {
+     "id": "MechanicalWorkflows-93bl",
+     "score": -0.29874998331069946,
+     "probability": 0.37064114212989807
+    },
+    {
+     "id": "MechanicalWorkflows-40a1",
+     "score": -0.8999000191688538,
+     "probability": 0.20317836105823517
+    },
+    {
+     "id": "MechanicalWorkflows-pa8u",
+     "score": -0.8999000191688538,
+     "probability": 0.20317836105823517
+    },
+    {
+     "id": "MechanicalWorkflows-rzih",
+     "score": -1.4999501705169678,
+     "probability": 0.1115010529756546
+    },
+    {
+     "id": "MechanicalWorkflows-u54e",
+     "score": -1.4999501705169678,
+     "probability": 0.1115010529756546
+    }
+   ],
+   "gp": {
+    "chosen": "MechanicalWorkflows-93bl",
+    "logProbability": -0.9925209879875183,
+    "logProbabilityWord": "bf7e15db",
+    "candidates": [
+     {
+      "id": "MechanicalWorkflows-40a1",
+      "score": -0.8999000191688538,
+      "probability": 0.20317836105823517,
+      "logProbability": -1.5936710834503174
+     },
+     {
+      "id": "MechanicalWorkflows-93bl",
+      "score": -0.29874998331069946,
+      "probability": 0.37064114212989807,
+      "logProbability": -0.9925209879875183
+     },
+     {
+      "id": "MechanicalWorkflows-pa8u",
+      "score": -0.8999000191688538,
+      "probability": 0.20317836105823517,
+      "logProbability": -1.5936710834503174
+     },
+     {
+      "id": "MechanicalWorkflows-rzih",
+      "score": -1.4999501705169678,
+      "probability": 0.1115010529756546,
+      "logProbability": -2.193721294403076
+     },
+     {
+      "id": "MechanicalWorkflows-u54e",
+      "score": -1.4999501705169678,
+      "probability": 0.1115010529756546,
+      "logProbability": -2.193721294403076
+     }
+    ],
+    "decisionDigest": "sha256:e36ffa519d94bd2a4d9432f6352cdd2305fede2ae0626c693f2144b843f2ad7c",
+    "journalEntry": "dfad3ddfd2b137e63a2dfae88ae8498c131e3c39d9b06af8417a4d7bd9eabb05",
+    "programDigest": "graphpolicy.program.c1:170a6b3937949a12a12037972e3ea9044e9fd818f9f69b8a6df7401fd8b6761f",
+    "checkpointDigest": "graphpolicy.checkpoint.c1:44b30bb191166800fc6096e59bc882601c2f979e3492ac632a1604669b7e11c8",
+    "graphDigest": "sha256:d08d7120a97e7e86846de92df9612bc1be875fabcff199cefe9bc84518b0e746",
+    "backend": "reference",
+    "temperature": 1,
+    "seed": "20261021"
+   },
+   "identities": {
+    "program": "graphpolicy.program.c1:170a6b3937949a12a12037972e3ea9044e9fd818f9f69b8a6df7401fd8b6761f",
+    "checkpoint": "graphpolicy.checkpoint.c1:44b30bb191166800fc6096e59bc882601c2f979e3492ac632a1604669b7e11c8"
+   },
+   "elapsedMs": 458,
+   "snapshotDigest": "sha256:d08d7120a97e7e86846de92df9612bc1be875fabcff199cefe9bc84518b0e746",
+   "stats": {
+    "entities": 62,
+    "relationsKept": 7,
+    "relationsTotal": 15,
+    "support": 5
+   }
+  },
+  "resolved": {
+   "beadId": "MechanicalWorkflows-93bl",
+   "source": "graph-policy"
+  },
+  "config": {
+   "id": "bead-scorer-v1",
+   "checkpoint": "graphpolicy.checkpoint.c1:44b30bb191166800fc6096e59bc882601c2f979e3492ac632a1604669b7e11c8",
+   "temperature": 1,
+   "seed": "20261021"
+  },
+  "receipt": {
+   "schema": "mw.decision-receipt.v1",
+   "version": 1,
+   "decisionId": "sel:4bc858298ec693d670f54bb6",
+   "gp": {
+    "graphHash": "sha256:d08d7120a97e7e86846de92df9612bc1be875fabcff199cefe9bc84518b0e746",
+    "programHash": "sha256:6d37d3a9b18d7c648c643eabeb4507179b1ef76931a452b719df69e4a5320835",
+    "checkpointHash": "sha256:edb6ed90b6384129530b94aba3217aff97402a37c1f20d8bc3b5ec74fb5efa3c",
+    "snapshotHash": "sha256:3037d7674ad7b1d56f0d012e14a450301287373fa6b5d62b64f1047d87b0293f"
+   },
+   "featureProjectionDigest": "unknown",
+   "actor": {
+    "id": "development-rig:select-bead",
+    "revision": "bead-scorer-v1"
+   },
+   "selector": {
+    "id": "gp-sample",
+    "revision": "graphpolicy.checkpoint.c1:44b30bb191166800fc6096e59bc882601c2f979e3492ac632a1604669b7e11c8"
+   },
+   "support": [
+    "MechanicalWorkflows-93bl",
+    "MechanicalWorkflows-40a1",
+    "MechanicalWorkflows-pa8u",
+    "MechanicalWorkflows-u54e",
+    "MechanicalWorkflows-rzih"
+   ],
+   "logProb": -0.9925209879875183,
+   "completeness": "depends_on coverage=7/15 partial",
+   "actions": {
+    "proposed": [
+     "MechanicalWorkflows-93bl"
+    ],
+    "admitted": [
+     "MechanicalWorkflows-93bl"
+    ],
+    "executed": "unknown"
+   },
+   "sourceReceipt": "unknown",
+   "resolverVerdict": "support=5;mode=canary;source=graph-policy",
+   "verifierOutcome": "unknown",
+   "feedback": {
+    "status": "pending"
+   }
+  }
+ },
+ "claim": {
+  "status": "in_progress"
+ },
+ "feedback": {
+  "entry": ""
+ },
+ "records": "/workplace/jehallad/mw-scratch/gpc-records"
+}

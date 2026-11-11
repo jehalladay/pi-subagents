@@ -1,0 +1,859 @@
+{
+ "mode": "select-bead",
+ "selection": {
+  "schema": "mw.bead-selection.v1",
+  "version": 1,
+  "decisionId": "sel:3e651a2b3c5c647fbd5dc32d",
+  "at": "2026-10-21T07:26:50.334Z",
+  "mode": "shadow",
+  "store": "MechanicalWorkflows",
+  "readyDigest": "sha256:b34486dde77c9484b1fd4f1e479964a2d740107eb70f578bd117ec361faee486",
+  "readyCount": 58,
+  "support": [
+   "MechanicalWorkflows-93bl",
+   "MechanicalWorkflows-8zuu",
+   "MechanicalWorkflows-6il",
+   "MechanicalWorkflows-5pqt",
+   "MechanicalWorkflows-91di",
+   "MechanicalWorkflows-d9ed",
+   "MechanicalWorkflows-w79t",
+   "MechanicalWorkflows-jjhw",
+   "MechanicalWorkflows-p1ql",
+   "MechanicalWorkflows-05ho",
+   "MechanicalWorkflows-939n",
+   "MechanicalWorkflows-49xq",
+   "MechanicalWorkflows-qpqy",
+   "MechanicalWorkflows-pl19",
+   "MechanicalWorkflows-3s1l",
+   "MechanicalWorkflows-5dbr",
+   "MechanicalWorkflows-73kp",
+   "MechanicalWorkflows-8vk2",
+   "MechanicalWorkflows-wf57",
+   "MechanicalWorkflows-x1f1",
+   "MechanicalWorkflows-hu9s",
+   "MechanicalWorkflows-o25m",
+   "MechanicalWorkflows-a5wy",
+   "MechanicalWorkflows-c62z",
+   "MechanicalWorkflows-81pm",
+   "MechanicalWorkflows-3jks",
+   "MechanicalWorkflows-4l4c",
+   "MechanicalWorkflows-fqa1",
+   "MechanicalWorkflows-ny4a",
+   "MechanicalWorkflows-h262",
+   "MechanicalWorkflows-pkca",
+   "MechanicalWorkflows-zrb4",
+   "MechanicalWorkflows-z1qv",
+   "MechanicalWorkflows-vaci",
+   "MechanicalWorkflows-addy",
+   "MechanicalWorkflows-goqs",
+   "MechanicalWorkflows-6nya",
+   "MechanicalWorkflows-sq63",
+   "MechanicalWorkflows-86pl",
+   "MechanicalWorkflows-enyy",
+   "MechanicalWorkflows-abgd",
+   "MechanicalWorkflows-0m1z",
+   "MechanicalWorkflows-nh21",
+   "MechanicalWorkflows-uwbx",
+   "MechanicalWorkflows-1l1v",
+   "MechanicalWorkflows-w7rc",
+   "MechanicalWorkflows-jrci",
+   "MechanicalWorkflows-wpy5",
+   "MechanicalWorkflows-e0vm",
+   "MechanicalWorkflows-jfst",
+   "MechanicalWorkflows-ep2f",
+   "MechanicalWorkflows-09um",
+   "MechanicalWorkflows-5czj",
+   "MechanicalWorkflows-nzfw",
+   "MechanicalWorkflows-hxfm",
+   "MechanicalWorkflows-fp38",
+   "MechanicalWorkflows-ydft",
+   "MechanicalWorkflows-t1i2"
+  ],
+  "baseline": {
+   "beadId": "MechanicalWorkflows-6il",
+   "rule": "priority-then-oldest-then-id"
+  },
+  "advice": {
+   "kind": "advice",
+   "chosen": "MechanicalWorkflows-hxfm",
+   "logProb": -4.283084869384766,
+   "ranking": [
+    {
+     "id": "MechanicalWorkflows-8zuu",
+     "score": -0.19850000739097595,
+     "probability": 0.0451265349984169
+    },
+    {
+     "id": "MechanicalWorkflows-6il",
+     "score": -0.2893500328063965,
+     "probability": 0.041207507252693176
+    },
+    {
+     "id": "MechanicalWorkflows-93bl",
+     "score": -0.2990000247955322,
+     "probability": 0.04081176593899727
+    },
+    {
+     "id": "MechanicalWorkflows-wf57",
+     "score": -0.7843500971794128,
+     "probability": 0.02511889487504959
+    },
+    {
+     "id": "MechanicalWorkflows-8vk2",
+     "score": -0.7848500609397888,
+     "probability": 0.025106338784098625
+    },
+    {
+     "id": "MechanicalWorkflows-5dbr",
+     "score": -0.7854500412940979,
+     "probability": 0.025091281160712242
+    },
+    {
+     "id": "MechanicalWorkflows-73kp",
+     "score": -0.7854500412940979,
+     "probability": 0.025091281160712242
+    },
+    {
+     "id": "MechanicalWorkflows-3s1l",
+     "score": -0.789650022983551,
+     "probability": 0.02498611807823181
+    },
+    {
+     "id": "MechanicalWorkflows-pl19",
+     "score": -0.7919999957084656,
+     "probability": 0.024927470833063126
+    },
+    {
+     "id": "MechanicalWorkflows-49xq",
+     "score": -0.7975000739097595,
+     "probability": 0.024790745228528976
+    },
+    {
+     "id": "MechanicalWorkflows-939n",
+     "score": -0.800599992275238,
+     "probability": 0.024714015424251556
+    },
+    {
+     "id": "MechanicalWorkflows-p1ql",
+     "score": -0.8249500393867493,
+     "probability": 0.02411949448287487
+    },
+    {
+     "id": "MechanicalWorkflows-jjhw",
+     "score": -0.8259500861167908,
+     "probability": 0.024095386266708374
+    },
+    {
+     "id": "MechanicalWorkflows-w79t",
+     "score": -0.827000081539154,
+     "probability": 0.024070098996162415
+    },
+    {
+     "id": "MechanicalWorkflows-d9ed",
+     "score": -0.8687500357627869,
+     "probability": 0.023085862398147583
+    },
+    {
+     "id": "MechanicalWorkflows-91di",
+     "score": -0.8709500432014465,
+     "probability": 0.02303512953221798
+    },
+    {
+     "id": "MechanicalWorkflows-5pqt",
+     "score": -0.8737999796867371,
+     "probability": 0.022969573736190796
+    },
+    {
+     "id": "MechanicalWorkflows-qpqy",
+     "score": -1.0958000421524048,
+     "probability": 0.018396684899926186
+    },
+    {
+     "id": "MechanicalWorkflows-05ho",
+     "score": -1.1228500604629517,
+     "probability": 0.01790572516620159
+    },
+    {
+     "id": "MechanicalWorkflows-ny4a",
+     "score": -1.24590003490448,
+     "probability": 0.01583258993923664
+    },
+    {
+     "id": "MechanicalWorkflows-hxfm",
+     "score": -1.3833000659942627,
+     "probability": 0.01380002498626709
+    },
+    {
+     "id": "MechanicalWorkflows-nzfw",
+     "score": -1.3833000659942627,
+     "probability": 0.01380002498626709
+    },
+    {
+     "id": "MechanicalWorkflows-5czj",
+     "score": -1.3840501308441162,
+     "probability": 0.013789677992463112
+    },
+    {
+     "id": "MechanicalWorkflows-09um",
+     "score": -1.3854000568389893,
+     "probability": 0.013771075755357742
+    },
+    {
+     "id": "MechanicalWorkflows-ep2f",
+     "score": -1.386199951171875,
+     "probability": 0.013760064728558064
+    },
+    {
+     "id": "MechanicalWorkflows-jfst",
+     "score": -1.386199951171875,
+     "probability": 0.013760064728558064
+    },
+    {
+     "id": "MechanicalWorkflows-e0vm",
+     "score": -1.3863000869750977,
+     "probability": 0.013758686371147633
+    },
+    {
+     "id": "MechanicalWorkflows-jrci",
+     "score": -1.3870999813079834,
+     "probability": 0.013747685588896275
+    },
+    {
+     "id": "MechanicalWorkflows-wpy5",
+     "score": -1.3870999813079834,
+     "probability": 0.013747685588896275
+    },
+    {
+     "id": "MechanicalWorkflows-w7rc",
+     "score": -1.388700008392334,
+     "probability": 0.013725707307457924
+    },
+    {
+     "id": "MechanicalWorkflows-1l1v",
+     "score": -1.3887500762939453,
+     "probability": 0.013725019991397858
+    },
+    {
+     "id": "MechanicalWorkflows-uwbx",
+     "score": -1.389700174331665,
+     "probability": 0.013711986131966114
+    },
+    {
+     "id": "MechanicalWorkflows-nh21",
+     "score": -1.3897500038146973,
+     "probability": 0.013711302541196346
+    },
+    {
+     "id": "MechanicalWorkflows-0m1z",
+     "score": -1.396200180053711,
+     "probability": 0.013623147271573544
+    },
+    {
+     "id": "MechanicalWorkflows-abgd",
+     "score": -1.3969001770019531,
+     "probability": 0.013613613322377205
+    },
+    {
+     "id": "MechanicalWorkflows-enyy",
+     "score": -1.3995001316070557,
+     "probability": 0.013578264974057674
+    },
+    {
+     "id": "MechanicalWorkflows-86pl",
+     "score": -1.3997001647949219,
+     "probability": 0.013575549237430096
+    },
+    {
+     "id": "MechanicalWorkflows-sq63",
+     "score": -1.4011001586914062,
+     "probability": 0.013556556776165962
+    },
+    {
+     "id": "MechanicalWorkflows-6nya",
+     "score": -1.4017000198364258,
+     "probability": 0.013548427261412144
+    },
+    {
+     "id": "MechanicalWorkflows-goqs",
+     "score": -1.428450107574463,
+     "probability": 0.013190810568630695
+    },
+    {
+     "id": "MechanicalWorkflows-addy",
+     "score": -1.4292001724243164,
+     "probability": 0.013180919922888279
+    },
+    {
+     "id": "MechanicalWorkflows-vaci",
+     "score": -1.4367501735687256,
+     "probability": 0.013081778772175312
+    },
+    {
+     "id": "MechanicalWorkflows-z1qv",
+     "score": -1.4372999668121338,
+     "probability": 0.01307458896189928
+    },
+    {
+     "id": "MechanicalWorkflows-zrb4",
+     "score": -1.4390499591827393,
+     "probability": 0.013051728717982769
+    },
+    {
+     "id": "MechanicalWorkflows-pkca",
+     "score": -1.4402000904083252,
+     "probability": 0.013036725111305714
+    },
+    {
+     "id": "MechanicalWorkflows-h262",
+     "score": -1.4444000720977783,
+     "probability": 0.012982087209820747
+    },
+    {
+     "id": "MechanicalWorkflows-fqa1",
+     "score": -1.4458999633789062,
+     "probability": 0.012962629087269306
+    },
+    {
+     "id": "MechanicalWorkflows-3jks",
+     "score": -1.4650001525878906,
+     "probability": 0.01271738950163126
+    },
+    {
+     "id": "MechanicalWorkflows-81pm",
+     "score": -1.467750072479248,
+     "probability": 0.012682465836405754
+    },
+    {
+     "id": "MechanicalWorkflows-c62z",
+     "score": -1.4756500720977783,
+     "probability": 0.012582669965922832
+    },
+    {
+     "id": "MechanicalWorkflows-o25m",
+     "score": -1.4963500499725342,
+     "probability": 0.01232488639652729
+    },
+    {
+     "id": "MechanicalWorkflows-hu9s",
+     "score": -1.4973499774932861,
+     "probability": 0.012312567792832851
+    },
+    {
+     "id": "MechanicalWorkflows-x1f1",
+     "score": -1.4999001026153564,
+     "probability": 0.012281209230422974
+    },
+    {
+     "id": "MechanicalWorkflows-4l4c",
+     "score": -1.7465500831604004,
+     "probability": 0.00959671102464199
+    },
+    {
+     "id": "MechanicalWorkflows-a5wy",
+     "score": -1.7784000635147095,
+     "probability": 0.009295872412621975
+    },
+    {
+     "id": "MechanicalWorkflows-t1i2",
+     "score": -2.040900230407715,
+     "probability": 0.007149698678404093
+    },
+    {
+     "id": "MechanicalWorkflows-ydft",
+     "score": -2.0794501304626465,
+     "probability": 0.006879323627799749
+    },
+    {
+     "id": "MechanicalWorkflows-fp38",
+     "score": -2.0868000984191895,
+     "probability": 0.006828946527093649
+    }
+   ],
+   "gp": {
+    "chosen": "MechanicalWorkflows-hxfm",
+    "logProbability": -4.283084869384766,
+    "logProbabilityWord": "c0890f08",
+    "candidates": [
+     {
+      "id": "MechanicalWorkflows-05ho",
+      "score": -1.1228500604629517,
+      "probability": 0.01790572516620159,
+      "logProbability": -4.022634506225586
+     },
+     {
+      "id": "MechanicalWorkflows-09um",
+      "score": -1.3854000568389893,
+      "probability": 0.013771075755357742,
+      "logProbability": -4.285184860229492
+     },
+     {
+      "id": "MechanicalWorkflows-0m1z",
+      "score": -1.396200180053711,
+      "probability": 0.013623147271573544,
+      "logProbability": -4.295984745025635
+     },
+     {
+      "id": "MechanicalWorkflows-1l1v",
+      "score": -1.3887500762939453,
+      "probability": 0.013725019991397858,
+      "logProbability": -4.288534641265869
+     },
+     {
+      "id": "MechanicalWorkflows-3jks",
+      "score": -1.4650001525878906,
+      "probability": 0.01271738950163126,
+      "logProbability": -4.3647847175598145
+     },
+     {
+      "id": "MechanicalWorkflows-3s1l",
+      "score": -0.789650022983551,
+      "probability": 0.02498611807823181,
+      "logProbability": -3.689434766769409
+     },
+     {
+      "id": "MechanicalWorkflows-49xq",
+      "score": -0.7975000739097595,
+      "probability": 0.024790745228528976,
+      "logProbability": -3.697284698486328
+     },
+     {
+      "id": "MechanicalWorkflows-4l4c",
+      "score": -1.7465500831604004,
+      "probability": 0.00959671102464199,
+      "logProbability": -4.646334648132324
+     },
+     {
+      "id": "MechanicalWorkflows-5czj",
+      "score": -1.3840501308441162,
+      "probability": 0.013789677992463112,
+      "logProbability": -4.283834934234619
+     },
+     {
+      "id": "MechanicalWorkflows-5dbr",
+      "score": -0.7854500412940979,
+      "probability": 0.025091281160712242,
+      "logProbability": -3.685234785079956
+     },
+     {
+      "id": "MechanicalWorkflows-5pqt",
+      "score": -0.8737999796867371,
+      "probability": 0.022969573736190796,
+      "logProbability": -3.7735848426818848
+     },
+     {
+      "id": "MechanicalWorkflows-6il",
+      "score": -0.2893500328063965,
+      "probability": 0.041207507252693176,
+      "logProbability": -3.1891348361968994
+     },
+     {
+      "id": "MechanicalWorkflows-6nya",
+      "score": -1.4017000198364258,
+      "probability": 0.013548427261412144,
+      "logProbability": -4.30148458480835
+     },
+     {
+      "id": "MechanicalWorkflows-73kp",
+      "score": -0.7854500412940979,
+      "probability": 0.025091281160712242,
+      "logProbability": -3.685234785079956
+     },
+     {
+      "id": "MechanicalWorkflows-81pm",
+      "score": -1.467750072479248,
+      "probability": 0.012682465836405754,
+      "logProbability": -4.367534637451172
+     },
+     {
+      "id": "MechanicalWorkflows-86pl",
+      "score": -1.3997001647949219,
+      "probability": 0.013575549237430096,
+      "logProbability": -4.299484729766846
+     },
+     {
+      "id": "MechanicalWorkflows-8vk2",
+      "score": -0.7848500609397888,
+      "probability": 0.025106338784098625,
+      "logProbability": -3.6846346855163574
+     },
+     {
+      "id": "MechanicalWorkflows-8zuu",
+      "score": -0.19850000739097595,
+      "probability": 0.0451265349984169,
+      "logProbability": -3.0982847213745117
+     },
+     {
+      "id": "MechanicalWorkflows-91di",
+      "score": -0.8709500432014465,
+      "probability": 0.02303512953221798,
+      "logProbability": -3.7707347869873047
+     },
+     {
+      "id": "MechanicalWorkflows-939n",
+      "score": -0.800599992275238,
+      "probability": 0.024714015424251556,
+      "logProbability": -3.7003846168518066
+     },
+     {
+      "id": "MechanicalWorkflows-93bl",
+      "score": -0.2990000247955322,
+      "probability": 0.04081176593899727,
+      "logProbability": -3.198784828186035
+     },
+     {
+      "id": "MechanicalWorkflows-a5wy",
+      "score": -1.7784000635147095,
+      "probability": 0.009295872412621975,
+      "logProbability": -4.678184509277344
+     },
+     {
+      "id": "MechanicalWorkflows-abgd",
+      "score": -1.3969001770019531,
+      "probability": 0.013613613322377205,
+      "logProbability": -4.296684741973877
+     },
+     {
+      "id": "MechanicalWorkflows-addy",
+      "score": -1.4292001724243164,
+      "probability": 0.013180919922888279,
+      "logProbability": -4.32898473739624
+     },
+     {
+      "id": "MechanicalWorkflows-c62z",
+      "score": -1.4756500720977783,
+      "probability": 0.012582669965922832,
+      "logProbability": -4.375434875488281
+     },
+     {
+      "id": "MechanicalWorkflows-d9ed",
+      "score": -0.8687500357627869,
+      "probability": 0.023085862398147583,
+      "logProbability": -3.7685346603393555
+     },
+     {
+      "id": "MechanicalWorkflows-e0vm",
+      "score": -1.3863000869750977,
+      "probability": 0.013758686371147633,
+      "logProbability": -4.2860846519470215
+     },
+     {
+      "id": "MechanicalWorkflows-enyy",
+      "score": -1.3995001316070557,
+      "probability": 0.013578264974057674,
+      "logProbability": -4.299284934997559
+     },
+     {
+      "id": "MechanicalWorkflows-ep2f",
+      "score": -1.386199951171875,
+      "probability": 0.013760064728558064,
+      "logProbability": -4.285984516143799
+     },
+     {
+      "id": "MechanicalWorkflows-fp38",
+      "score": -2.0868000984191895,
+      "probability": 0.006828946527093649,
+      "logProbability": -4.986584663391113
+     },
+     {
+      "id": "MechanicalWorkflows-fqa1",
+      "score": -1.4458999633789062,
+      "probability": 0.012962629087269306,
+      "logProbability": -4.34568452835083
+     },
+     {
+      "id": "MechanicalWorkflows-goqs",
+      "score": -1.428450107574463,
+      "probability": 0.013190810568630695,
+      "logProbability": -4.328234672546387
+     },
+     {
+      "id": "MechanicalWorkflows-h262",
+      "score": -1.4444000720977783,
+      "probability": 0.012982087209820747,
+      "logProbability": -4.344184875488281
+     },
+     {
+      "id": "MechanicalWorkflows-hu9s",
+      "score": -1.4973499774932861,
+      "probability": 0.012312567792832851,
+      "logProbability": -4.397134780883789
+     },
+     {
+      "id": "MechanicalWorkflows-hxfm",
+      "score": -1.3833000659942627,
+      "probability": 0.01380002498626709,
+      "logProbability": -4.283084869384766
+     },
+     {
+      "id": "MechanicalWorkflows-jfst",
+      "score": -1.386199951171875,
+      "probability": 0.013760064728558064,
+      "logProbability": -4.285984516143799
+     },
+     {
+      "id": "MechanicalWorkflows-jjhw",
+      "score": -0.8259500861167908,
+      "probability": 0.024095386266708374,
+      "logProbability": -3.7257347106933594
+     },
+     {
+      "id": "MechanicalWorkflows-jrci",
+      "score": -1.3870999813079834,
+      "probability": 0.013747685588896275,
+      "logProbability": -4.286884784698486
+     },
+     {
+      "id": "MechanicalWorkflows-nh21",
+      "score": -1.3897500038146973,
+      "probability": 0.013711302541196346,
+      "logProbability": -4.289534568786621
+     },
+     {
+      "id": "MechanicalWorkflows-ny4a",
+      "score": -1.24590003490448,
+      "probability": 0.01583258993923664,
+      "logProbability": -4.145684719085693
+     },
+     {
+      "id": "MechanicalWorkflows-nzfw",
+      "score": -1.3833000659942627,
+      "probability": 0.01380002498626709,
+      "logProbability": -4.283084869384766
+     },
+     {
+      "id": "MechanicalWorkflows-o25m",
+      "score": -1.4963500499725342,
+      "probability": 0.01232488639652729,
+      "logProbability": -4.396134853363037
+     },
+     {
+      "id": "MechanicalWorkflows-p1ql",
+      "score": -0.8249500393867493,
+      "probability": 0.02411949448287487,
+      "logProbability": -3.7247347831726074
+     },
+     {
+      "id": "MechanicalWorkflows-pkca",
+      "score": -1.4402000904083252,
+      "probability": 0.013036725111305714,
+      "logProbability": -4.339984893798828
+     },
+     {
+      "id": "MechanicalWorkflows-pl19",
+      "score": -0.7919999957084656,
+      "probability": 0.024927470833063126,
+      "logProbability": -3.6917848587036133
+     },
+     {
+      "id": "MechanicalWorkflows-qpqy",
+      "score": -1.0958000421524048,
+      "probability": 0.018396684899926186,
+      "logProbability": -3.995584726333618
+     },
+     {
+      "id": "MechanicalWorkflows-sq63",
+      "score": -1.4011001586914062,
+      "probability": 0.013556556776165962,
+      "logProbability": -4.30088472366333
+     },
+     {
+      "id": "MechanicalWorkflows-t1i2",
+      "score": -2.040900230407715,
+      "probability": 0.007149698678404093,
+      "logProbability": -4.940684795379639
+     },
+     {
+      "id": "MechanicalWorkflows-uwbx",
+      "score": -1.389700174331665,
+      "probability": 0.013711986131966114,
+      "logProbability": -4.289484977722168
+     },
+     {
+      "id": "MechanicalWorkflows-vaci",
+      "score": -1.4367501735687256,
+      "probability": 0.013081778772175312,
+      "logProbability": -4.3365349769592285
+     },
+     {
+      "id": "MechanicalWorkflows-w79t",
+      "score": -0.827000081539154,
+      "probability": 0.024070098996162415,
+      "logProbability": -3.7267847061157227
+     },
+     {
+      "id": "MechanicalWorkflows-w7rc",
+      "score": -1.388700008392334,
+      "probability": 0.013725707307457924,
+      "logProbability": -4.288484573364258
+     },
+     {
+      "id": "MechanicalWorkflows-wf57",
+      "score": -0.7843500971794128,
+      "probability": 0.02511889487504959,
+      "logProbability": -3.6841349601745605
+     },
+     {
+      "id": "MechanicalWorkflows-wpy5",
+      "score": -1.3870999813079834,
+      "probability": 0.013747685588896275,
+      "logProbability": -4.286884784698486
+     },
+     {
+      "id": "MechanicalWorkflows-x1f1",
+      "score": -1.4999001026153564,
+      "probability": 0.012281209230422974,
+      "logProbability": -4.399684906005859
+     },
+     {
+      "id": "MechanicalWorkflows-ydft",
+      "score": -2.0794501304626465,
+      "probability": 0.006879323627799749,
+      "logProbability": -4.97923469543457
+     },
+     {
+      "id": "MechanicalWorkflows-z1qv",
+      "score": -1.4372999668121338,
+      "probability": 0.01307458896189928,
+      "logProbability": -4.337084770202637
+     },
+     {
+      "id": "MechanicalWorkflows-zrb4",
+      "score": -1.4390499591827393,
+      "probability": 0.013051728717982769,
+      "logProbability": -4.338834762573242
+     }
+    ],
+    "decisionDigest": "sha256:19acb948c4786b495a278b1b630b36d015746c40b60307fd001359c490820407",
+    "journalEntry": "10513f0b25de18c0a59f61574e3e1df2874821fff1cbe50bbeb0c132310bf4f0",
+    "programDigest": "graphpolicy.program.c1:170a6b3937949a12a12037972e3ea9044e9fd818f9f69b8a6df7401fd8b6761f",
+    "checkpointDigest": "graphpolicy.checkpoint.c1:44b30bb191166800fc6096e59bc882601c2f979e3492ac632a1604669b7e11c8",
+    "graphDigest": "sha256:155723cefaff469197a9a06aab5c9268f54d97d825793d2cd03fad1f37aed861",
+    "backend": "reference",
+    "temperature": 1,
+    "seed": "7"
+   },
+   "identities": {
+    "program": "graphpolicy.program.c1:170a6b3937949a12a12037972e3ea9044e9fd818f9f69b8a6df7401fd8b6761f",
+    "checkpoint": "graphpolicy.checkpoint.c1:44b30bb191166800fc6096e59bc882601c2f979e3492ac632a1604669b7e11c8"
+   },
+   "elapsedMs": 331,
+   "snapshotDigest": "sha256:155723cefaff469197a9a06aab5c9268f54d97d825793d2cd03fad1f37aed861",
+   "stats": {
+    "entities": 58,
+    "relationsKept": 7,
+    "relationsTotal": 15,
+    "support": 58
+   }
+  },
+  "resolved": {
+   "beadId": "MechanicalWorkflows-6il",
+   "source": "host-baseline"
+  },
+  "config": {
+   "id": "bead-scorer-v1",
+   "checkpoint": "graphpolicy.checkpoint.c1:44b30bb191166800fc6096e59bc882601c2f979e3492ac632a1604669b7e11c8",
+   "temperature": 1,
+   "seed": "7"
+  },
+  "receipt": {
+   "schema": "mw.decision-receipt.v1",
+   "version": 1,
+   "decisionId": "sel:3e651a2b3c5c647fbd5dc32d",
+   "gp": {
+    "graphHash": "sha256:155723cefaff469197a9a06aab5c9268f54d97d825793d2cd03fad1f37aed861",
+    "programHash": "sha256:6d37d3a9b18d7c648c643eabeb4507179b1ef76931a452b719df69e4a5320835",
+    "checkpointHash": "sha256:edb6ed90b6384129530b94aba3217aff97402a37c1f20d8bc3b5ec74fb5efa3c",
+    "snapshotHash": "sha256:b34486dde77c9484b1fd4f1e479964a2d740107eb70f578bd117ec361faee486"
+   },
+   "featureProjectionDigest": "unknown",
+   "actor": {
+    "id": "development-rig:select-bead",
+    "revision": "bead-scorer-v1"
+   },
+   "selector": {
+    "id": "host-baseline",
+    "revision": "priority-then-oldest-then-id"
+   },
+   "support": [
+    "MechanicalWorkflows-93bl",
+    "MechanicalWorkflows-8zuu",
+    "MechanicalWorkflows-6il",
+    "MechanicalWorkflows-5pqt",
+    "MechanicalWorkflows-91di",
+    "MechanicalWorkflows-d9ed",
+    "MechanicalWorkflows-w79t",
+    "MechanicalWorkflows-jjhw",
+    "MechanicalWorkflows-p1ql",
+    "MechanicalWorkflows-05ho",
+    "MechanicalWorkflows-939n",
+    "MechanicalWorkflows-49xq",
+    "MechanicalWorkflows-qpqy",
+    "MechanicalWorkflows-pl19",
+    "MechanicalWorkflows-3s1l",
+    "MechanicalWorkflows-5dbr",
+    "MechanicalWorkflows-73kp",
+    "MechanicalWorkflows-8vk2",
+    "MechanicalWorkflows-wf57",
+    "MechanicalWorkflows-x1f1",
+    "MechanicalWorkflows-hu9s",
+    "MechanicalWorkflows-o25m",
+    "MechanicalWorkflows-a5wy",
+    "MechanicalWorkflows-c62z",
+    "MechanicalWorkflows-81pm",
+    "MechanicalWorkflows-3jks",
+    "MechanicalWorkflows-4l4c",
+    "MechanicalWorkflows-fqa1",
+    "MechanicalWorkflows-ny4a",
+    "MechanicalWorkflows-h262",
+    "MechanicalWorkflows-pkca",
+    "MechanicalWorkflows-zrb4",
+    "MechanicalWorkflows-z1qv",
+    "MechanicalWorkflows-vaci",
+    "MechanicalWorkflows-addy",
+    "MechanicalWorkflows-goqs",
+    "MechanicalWorkflows-6nya",
+    "MechanicalWorkflows-sq63",
+    "MechanicalWorkflows-86pl",
+    "MechanicalWorkflows-enyy",
+    "MechanicalWorkflows-abgd",
+    "MechanicalWorkflows-0m1z",
+    "MechanicalWorkflows-nh21",
+    "MechanicalWorkflows-uwbx",
+    "MechanicalWorkflows-1l1v",
+    "MechanicalWorkflows-w7rc",
+    "MechanicalWorkflows-jrci",
+    "MechanicalWorkflows-wpy5",
+    "MechanicalWorkflows-e0vm",
+    "MechanicalWorkflows-jfst",
+    "MechanicalWorkflows-ep2f",
+    "MechanicalWorkflows-09um",
+    "MechanicalWorkflows-5czj",
+    "MechanicalWorkflows-nzfw",
+    "MechanicalWorkflows-hxfm",
+    "MechanicalWorkflows-fp38",
+    "MechanicalWorkflows-ydft",
+    "MechanicalWorkflows-t1i2"
+   ],
+   "logProb": 0,
+   "completeness": "depends_on coverage=7/15 partial",
+   "actions": {
+    "proposed": [
+     "MechanicalWorkflows-hxfm"
+    ],
+    "admitted": [
+     "MechanicalWorkflows-6il"
+    ],
+    "executed": "unknown"
+   },
+   "sourceReceipt": "unknown",
+   "resolverVerdict": "support=58;mode=shadow;source=host-baseline",
+   "verifierOutcome": "unknown",
+   "feedback": {
+    "status": "unknown"
+   }
+  }
+ },
+ "claim": null,
+ "feedback": null,
+ "records": "/tmp/claude-27639525/gp-records-shadow"
+}

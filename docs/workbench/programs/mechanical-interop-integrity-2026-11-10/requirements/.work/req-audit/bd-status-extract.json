@@ -1,0 +1,176 @@
+{
+ "read_at": "2026-11-11T09:32:10Z",
+ "command": "bd --readonly --json list --all --limit 0 (cwd PrimaryInstallation/src/Pi-subagents)",
+ "source_sha256": "8136ca3021809c10f41a52fcddcf6252534a7d0ddd89a3d031d025bda86ec9df",
+ "rows_total": 1395,
+ "beads": {
+  "wb-rhyt": {
+   "status": "open",
+   "title": "[MNI-2026-11-09] Registered native Mechanical function interoperability \u2014 program epic (EAT-R201..R310)",
+   "updated_at": "2026-11-09T22:28:12Z",
+   "closed_at": null
+  },
+  "wb-1a3t": {
+   "status": "open",
+   "title": "[MWI] Pi<->MechanicalWorkflows interop program (mechanical-workflows-interop-2026-11-04)",
+   "updated_at": "2026-11-09T22:41:22Z",
+   "closed_at": null
+  },
+  "wb-w8fk": {
+   "status": "in_progress",
+   "title": "[MWI-contract-choice] Adopt the Pi side of one versioned cross-repository invocation contract",
+   "updated_at": "2026-11-11T05:22:22Z",
+   "closed_at": null
+  },
+  "wb-y0n6": {
+   "status": "in_progress",
+   "title": "[MNI-2026-11-09 P02] Installed producer descriptor/package admission, external consumer (EAT-R217..R226)",
+   "updated_at": "2026-11-11T09:11:48Z",
+   "closed_at": null
+  },
+  "wb-2ukh": {
+   "status": "in_progress",
+   "title": "[MNI-2026-11-09 P03] Function authority + writer source admission integrated, no-await dispatch chain (EAT-R227..R234)",
+   "updated_at": "2026-11-11T07:06:12Z",
+   "closed_at": null
+  },
+  "wb-4bxo": {
+   "status": "open",
+   "title": "[MWI-dispatch] Launch authorized embedded functions through the registered Pi tool",
+   "updated_at": "2026-11-09T22:38:26Z",
+   "closed_at": null
+  },
+  "wb-9a1o": {
+   "status": "open",
+   "title": "[MWI-outcomes] MNI P05: original Mechanical outcomes, native evidence and reopenable bounded observation",
+   "updated_at": "2026-11-11T05:26:22Z",
+   "closed_at": null
+  },
+  "wb-upad": {
+   "status": "closed",
+   "title": "[MWI-observe] Reopen native invocation observations with honest freshness",
+   "updated_at": "2026-11-11T05:28:31Z",
+   "closed_at": "2026-11-11T05:28:31Z"
+  },
+  "wb-mwsy": {
+   "status": "open",
+   "title": "[MWI-effects] MNI P06: durable intent, exact controls and conservative uncertain-effect recovery",
+   "updated_at": "2026-11-11T05:28:47Z",
+   "closed_at": null
+  },
+  "wb-5a7k": {
+   "status": "closed",
+   "title": "[MWI-controls] Target Pi controls exactly and retain cancellation uncertainty",
+   "updated_at": "2026-11-11T05:29:23Z",
+   "closed_at": "2026-11-11T05:29:23Z"
+  },
+  "wb-p3i2": {
+   "status": "open",
+   "title": "[MWI-git-census] Compose the installed Git-census host in an isolated Pi-owned invocation",
+   "updated_at": "2026-11-09T22:39:40Z",
+   "closed_at": null
+  },
+  "wb-xr1z": {
+   "status": "open",
+   "title": "[MNI-2026-11-09 P08] Adversarial admission/semantics matrix A01-A14 + B01-B14 through registered tools (EAT-R265..R279)",
+   "updated_at": "2026-11-11T05:36:58Z",
+   "closed_at": null
+  },
+  "wb-9bof": {
+   "status": "open",
+   "title": "[MNI-2026-11-09 P09] Crash/recovery fault matrix + workload/resource tests (EAT-R280..R285)",
+   "updated_at": "2026-11-09T22:30:14Z",
+   "closed_at": null
+  },
+  "wb-yiu4": {
+   "status": "open",
+   "title": "[MNI-2026-11-09 P10] Release proof, regressions, agent LX, W11 truth (EAT-R286..R294)",
+   "updated_at": "2026-11-09T22:30:17Z",
+   "closed_at": null
+  },
+  "wb-zswl": {
+   "status": "open",
+   "title": "[MWI-detached-function] MNI P11: detached reattach and Furnace-owned native function Attempts",
+   "updated_at": "2026-11-11T05:29:33Z",
+   "closed_at": null
+  },
+  "wb-dlc6": {
+   "status": "closed",
+   "title": "[MWI-furnace-function] Project one Furnace-owned function attempt without duplicating runtime authority",
+   "updated_at": "2026-11-11T05:30:29Z",
+   "closed_at": "2026-11-11T05:30:29Z"
+  },
+  "wb-pxvv": {
+   "status": "in_progress",
+   "title": "[MWI-hx-admit] MNI P12: certified HX scope and committed RF context admission",
+   "updated_at": "2026-11-11T09:03:29Z",
+   "closed_at": null
+  },
+  "wb-669r": {
+   "status": "closed",
+   "title": "[MWI-rf-admit] Keep RF preview separate from committed context in Pi invocation",
+   "updated_at": "2026-11-11T05:31:19Z",
+   "closed_at": "2026-11-11T05:31:19Z"
+  },
+  "wb-7wkb": {
+   "status": "closed",
+   "title": "[MNI-2026-11-09 P01] Safety-foundation falsifier expansion incl. host-death evidence (EAT-R211..R216)",
+   "updated_at": "2026-11-10T05:01:40Z",
+   "closed_at": "2026-11-10T05:00:11Z"
+  },
+  "wb-1zn2": {
+   "status": "deferred",
+   "title": "[MWI-external-gates] MW-owned deliverables tracker (MW-CONTRACT/HOST/CANCEL/NATIVE/FURNACE/COORDINATION)",
+   "updated_at": "2026-11-07T07:27:48Z",
+   "closed_at": null
+  },
+  "wb-12x1": {
+   "status": "closed",
+   "title": "[MWI-docs] Land corrected program and audited triage through the workbench machine",
+   "updated_at": "2026-11-08T19:43:36Z",
+   "closed_at": "2026-11-08T19:41:57Z"
+  },
+  "wb-5ik5": {
+   "status": "closed",
+   "title": "[MWI-preserve] P0 preserve edited worktrees when Git preservation fails",
+   "updated_at": "2026-11-07T09:03:54Z",
+   "closed_at": "2026-11-07T09:02:55Z"
+  },
+  "wb-s8rm": {
+   "status": "closed",
+   "title": "[MWI-source] Admit writes only against host-owned immutable source identity",
+   "updated_at": "2026-11-08T19:20:08Z",
+   "closed_at": "2026-11-08T19:17:17Z"
+  },
+  "wb-9v02": {
+   "status": "closed",
+   "title": "[MWI-cancel-repro] Reproduce parked per-agent skip and retry before choosing a repair",
+   "updated_at": "2026-11-08T23:20:31Z",
+   "closed_at": "2026-11-08T23:12:15Z"
+  },
+  "wb-3121": {
+   "status": "closed",
+   "title": "[9v02-exit-2] none-plan no-call words equal to pins: runtime witness before the first run of all 42 PLAN-DOMAIN plan inputs + every-run recording (GW-ONCE, S3-NONE-SECOND-EXPORT-RUN red), narrowed out of wb-7ak9 by rule-19 structural exit R-B751",
+   "updated_at": "2026-11-10T00:40:04Z",
+   "closed_at": "2026-11-10T00:39:02Z"
+  },
+  "wb-201v": {
+   "status": "closed",
+   "title": "[MWI-authority] Enforce exact function authority at the final dispatch boundary",
+   "updated_at": "2026-11-08T02:40:02Z",
+   "closed_at": "2026-11-08T02:39:18Z"
+  },
+  "wb-ocie": {
+   "status": "closed",
+   "title": "[MWI-descriptor] Validate the actual published descriptor and artifact at the Pi boundary",
+   "updated_at": "2026-11-08T05:45:40Z",
+   "closed_at": "2026-11-08T05:45:08Z"
+  },
+  "wb-0gbh": {
+   "status": "closed",
+   "title": "[MWI-coordination] Invoke one pinned pure coordination export without effect authority",
+   "updated_at": "2026-11-09T09:04:14Z",
+   "closed_at": "2026-11-09T09:04:14Z"
+  }
+ }
+}

@@ -1,0 +1,36 @@
+TAP version 13
+# Subtest: the committed M05 receipt, when present, is an L2 MW-INSTALLED-HOST record with every adverse row and never a native proof
+not ok 1 - the committed M05 receipt, when present, is an L2 MW-INSTALLED-HOST record with every adverse row and never a native proof
+  ---
+  duration_ms: 3.780159
+  type: 'test'
+  location: '/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/Pi/PiSubagents/scratch/mii-triage-1110/epistemic-triage/.work/lens-mw-src-probe/copy-69cb016d-mutant/apps/development-rig/test/installed-pi-consumer-conformance.test.ts:367:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    @mechanical/workflows-development: the committed receipt content digest is stale against the tarball packed from this tree (regenerate with MW_M05_OBSERVATIONS_OUT)
+    + actual - expected
+    
+    + 'sha256:fa970eefebbde03234c77459585a6f6784157fe269d46cd07828059c51a57dab'
+    - 'sha256:85b88cc8a5b01fe6ef56689922ab7bab919104b1476ce412a49ffc5220862732'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'sha256:85b88cc8a5b01fe6ef56689922ab7bab919104b1476ce412a49ffc5220862732'
+  actual: 'sha256:fa970eefebbde03234c77459585a6f6784157fe269d46cd07828059c51a57dab'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workplace/jehallad/AgentEcosystem/ForgeWorkspaces/Pi/PiSubagents/scratch/mii-triage-1110/epistemic-triage/.work/lens-mw-src-probe/copy-69cb016d-mutant/apps/development-rig/test/installed-pi-consumer-conformance.test.ts:386:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5859.591558

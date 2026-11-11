@@ -1,0 +1,457 @@
+"""Generate requirements/REQUIREMENTS-AUDIT.md for the MII Phase 10.9 audit."""
+import json, pathlib, re, sys, collections, hashlib
+sys.path.insert(0, str(pathlib.Path(__file__).parent))
+import audit_data as D
+
+ROOT = pathlib.Path(sys.argv[1])
+WORK = ROOT / "requirements" / ".work"
+reqs = {int(r["id"][5:]): r for r in json.loads((WORK / "req-audit" / "reqs-parsed.json").read_text())}
+maps = {}
+for f in sorted(WORK.glob("map-*.jsonl")):
+    for line in f.read_text().splitlines():
+        m = json.loads(line)
+        maps[int(m["requirement"][5:])] = m
+claims = {r["id"]: r for r in map(json.loads, (ROOT / "epistemic-triage" / "CLAIMS.jsonl").read_text().splitlines())}
+scan = json.loads((WORK / "req-audit" / "laundering-scan.json").read_text())
+anch = json.loads((WORK / "req-audit" / "anchor-check.json").read_text())
+IDS = list(range(391, 471))
+rev = collections.defaultdict(list)
+for n, m in maps.items():
+    for c in m["derived_from"]:
+        rev[c].append(n)
+sha = {f.name: hashlib.sha256(f.read_bytes()).hexdigest() for f in list(WORK.glob("req-r-*.md")) + list(WORK.glob("map-r-*.jsonl"))}
+sha["CLAIMS.jsonl"] = hashlib.sha256((ROOT / "epistemic-triage/CLAIMS.jsonl").read_bytes()).hexdigest()
+sha["REMEDIATION.md"] = hashlib.sha256((ROOT / "epistemic-triage/REMEDIATION.md").read_bytes()).hexdigest()
+
+
+def R(xs):
+    return ", ".join("R" + str(x) for x in xs)
+
+
+def esc(s):
+    return s.replace("|", "\\|")
+
+
+types = collections.Counter(reqs[n]["type"] for n in IDS)
+auths = collections.Counter(maps[n]["authority"] for n in IDS)
+cross = collections.Counter((reqs[n]["type"], maps[n]["authority"]) for n in IDS)
+second = collections.Counter(s for n in IDS for s in maps[n].get("secondary_authorities", []))
+pk = collections.defaultdict(list)
+for n in IDS:
+    for x in reqs[n]["packets"]:
+        pk[x].append(n)
+derived = {c for m in maps.values() for c in m["derived_from"] if c.startswith("C")}
+cited_body = set()
+for n in IDS:
+    r = reqs[n]
+    cited_body |= set(re.findall(r"\bC\d{3}\b", " ".join([r["statement"], r["rationale"], " ".join(r["criteria"]), r["conditions"], r["derived_text"], r["lineage_text"], r["maps_text"]])))
+extc = collections.Counter(D.EXT[n][1] for n in IDS)
+blocked = [n for n in IDS if D.ST[n][0] == "BLOCKED"]
+new_rows = [n for n in IDS if not D.BEAD[n]]
+inprog = [n for n in IDS if any(D.BEAD_STATUS[b] == "in_progress" for b in D.BEAD[n])]
+load = collections.defaultdict(list)
+for n in IDS:
+    for b in (D.BEAD[n] or ["new bead owed"]):
+        load[b].append(n)
+
+o = []
+w = o.append
+w("# REQUIREMENTS-AUDIT — Phase 10.9 requirement-set audit")
+w("")
+w("Program: `mechanical-interop-integrity-2026-11-10` (MII; Pi-subagents), successor design to MNI-2026-11-09. Audit date: 2026-11-11. Role: Phase 10.9 requirement-set auditor (epistemic-adversarial-triage). Range audited: EAT-R391..EAT-R470 (80 rows in three compile shards).")
+w("")
+w("Pins: document Pi `3fc0ead1` (pi-README + pi-01..pi-05; MW companion mw-* at `6476372f`, context only); environment Pi `0fb90672` (worktree `pins/pi-0fb90672`), MW `69cb016d` (worktree `pins/mw-69cb016d`). This is an **L0 static audit of the drafted requirement set**. No test, build, install, gate or native launch was executed. Commands run were read-only: file reads at the pins, `forge`/`node`/`mise`/`npm`/`bd` version probes, and bead reads with `bd --readonly --json` (three `list --all` reads between " + D.BEAD_FIRST_READ_AT + " and " + D.BEAD_READ_AT + "; `show` on sixteen ids). The reads wrote nothing: the store's own interaction log shows only `flywheel` rows in that interval. Both repositories and the ledger were left untouched; outputs are this file, `TDD-MATRIX.md` and scratch under `requirements/.work/req-audit/`.")
+w("")
+w("## Verdict")
+w("")
+w("**FAIL AS DRAFTED — repairable at consolidation, no re-triage needed. After the ten blocking fixes RA-01..RA-10 the set is a CONDITIONAL PASS, with RA-11..RA-22 as filing-time or next-text-cycle conditions.**")
+w("")
+w("What holds: every one of the 411 inline status labels on 421 claim citations equals the ledger's final status; no REFUTED or UNSUPPORTED ledger row is used as a positive premise; the 80 ids are unique, contiguous and inside EAT-R391..R470; every row carries a packet, a V-tier and a Maps-to line.")
+w("")
+w("What fails, in order of consequence:")
+w("")
+w("1. **Eight rows map to beads that are closed** (RA-01). wb-upad and wb-5a7k were consolidated into wb-9a1o and wb-mwsy at 05:28-05:29Z today; two shards carry the statuses of the committed JSONL export, which was 19 beads behind the live store.")
+w("2. **One requirement contradicts the pin it says it preserves** (RA-02). EAT-R441 forbids a `tool` member and tests an outer `contractVersion` key; the registered tool's model-facing envelope carries `tool: \"workflow_execute\"` and the key `contract`, pinned byte-exact by an existing census.")
+w("3. **Two rows make Mechanical's half a Pi deliverable** (RA-03). EAT-R446 requires producer-side tests and classifier mutants; EAT-R401's statement puts the MUST on the provider write entry.")
+w("4. **The lease rows contain a dependency cycle** (RA-04): EAT-R448 waits for EAT-R464, whose acceptance is EAT-R448 passing; neither names the rows that build the substrate (EAT-R399..R403).")
+w("5. **One acquisition row assumes what the ledger leaves undetermined** (RA-05). EAT-R462 requires a strict-positive Forge envelope; strict attainability is UNDETERMINED (EAT-R437) and EAT-R431, its near-duplicate, correctly allows a non-strict V4 receipt.")
+w("6. **Coverage gaps against the mandated checklist**: P11, P12 and V6 have no row and no explicit deferral (RA-06); D8, D10 and D11 and the contested D6 ownership have no stated disposition (RA-07).")
+w("7. **The critical path has an orphan** (RA-08): every effectful arm waits on the EAT-R253 repair, which has no live bead.")
+w("8. **Three rows pull one undecided reply-status question in different directions** (RA-09).")
+w("9. **EXTENDS flags are missing or wrong on 41 rows** (RA-10): all 25 release rows and ten core rows state no EAT lineage where a predecessor exists; six core rows cite a wrong or open-ended id.")
+w("")
+w("The exact replacement text for each blocking fix is in section 4. `TDD-MATRIX.md` Matrix A already carries the audited carrier, EXTENDS lineage and L0 verdict per row, so the fixes can be applied mechanically.")
+w("")
+w("Re-audit after consolidation: run `parse_reqs.py`, `laundering_scan.py` and `anchor_check.py` on the consolidated file and re-read the bead store. The set earns CONDITIONAL PASS when the scan still shows 0 label mismatches, no Maps-to line names a closed bead, no row is `AMEND` in Matrix A, and the deferral and D-number tables are present.")
+w("")
+w("## 1. Audited inputs")
+w("")
+w("| Input | Rows | sha256 (first 16) |")
+w("|---|---|---|")
+for name, rows in (("req-r-core.md", "EAT-R391..R420 (30)"), ("map-r-core.jsonl", "30"), ("req-r-exec.md", "EAT-R421..R445 (25)"), ("map-r-exec.jsonl", "25"), ("req-r-release.md", "EAT-R446..R470 (25)"), ("map-r-release.jsonl", "25"), ("CLAIMS.jsonl", "230 (as patched: C107, C173 arbitrated)"), ("REMEDIATION.md", "239 rows over 202 claims")):
+    w(f"| `{name}` | {rows} | `{sha[name][:16]}` |")
+w("")
+w("Also read: `CONTRADICTIONS.md` (K001-K037), `EVIDENCE.jsonl` (465), `EPISTEMIC-AUDIT.md`, the six program files under `docs/` in full, the companion's mw-01 and mw-03 in full and mw-04's ladder and Q matrix (mw-02, mw-05 and mw-README only through the ledger's quotations), the predecessor set at `pins/pi-0fb90672/docs/workbench/programs/mechanical-native-interoperability-2026-11-09/requirements/` (EAT-R201..R310, 110 rows), and the sibling roll-up `scratch/pi-system-triage-1111/requirements/` (titles only). No consolidated `ATOMIC-REQUIREMENTS.md` or `CLAIM-REQUIREMENT-MAP.jsonl` existed under `requirements/` when this audit ran; it audits the three shard drafts.")
+w("")
+w("## 2. Detection surfaces")
+w("")
+w("Every absence or 'none' statement below is bounded to the surface named here.")
+w("")
+w(f"- **Citation / laundering scan** (`req-audit/laundering_scan.py`): regex `\\bC\\d{{3}}\\b` over statement, rationale, criteria, conditions and Maps-to of all 80 rows: {scan['totals']['cited']} (requirement, claim) citations, {scan['totals']['labelled']} with an inline status label, {len(cited_body)} distinct claims cited; map rows derive from {len(derived)} distinct claims. Each label was compared with the ledger's final status; weak-status citations were required to carry a status word in the citing row. All 80 bodies were read end to end. The scan cannot see a premise that is asserted without citing its claim; the code-fact checks below are the control for that.")
+w(f"- **Code-fact checks at the pins** (`req-audit/anchor_check.py` → `anchor-check.json`): {anch['anchors']} file:line anchors in {anch['files']} files — the ones the drafts quote plus the ones this audit relies on — were re-opened and compared with the quoted text: {anch['match']} match, {anch['mismatch']} mismatch. The quotes are right; one requirement reads its anchor as covering the model-facing reply when it covers the inner builder type (RA-02).")
+w("- **Id resolution**: every claim, evidence, remediation and contradiction id cited in the three drafts resolves in the ledger (0 unknown C, E, M or K ids), and every bead id they cite exists in the live store. No phantom identifier was found; the one undefined name is a schema reference (RA-19).")
+w("- **Structure scan** (`req-audit/parse_reqs.py`): headings `## EAT-R\\d+ —`, fields Type / Authority / Statement / Rationale / acceptance criteria / V-tier (or 'Evidence tier target') / Maps-to / Conditions, and a 1:1 join against the 80 map rows.")
+w("- **Coverage scans**: tokens `G01..G12`, `P13..P18`, `P00..P12`, `V0..V6`, `D1..D12`, `H0n`, `Q\\d\\d` and the words privacy / redact / Furnace / transcript / re-pin / 'full gate' over the 80 parsed bodies (shard preambles excluded). A row covering a family without its token is found only by the end-to-end read.")
+w("- **Predecessor overlap**: the 110 EAT-R201..R310 titles and Maps-to lines, with full acceptance text read for thirteen rows (R201, R203, R204, R209, R224, R225, R228, R232, R233, R234, R238, R303, R307); token scan of the predecessor bodies for `withoutBeadsNotes`, `inputDigest`, `canonical input`, `allowWrites`, `workspaceId`, `baseRevision`.")
+w(f"- **Bead state**: `bd --readonly --json list --all --limit 0` in `PrimaryInstallation/src/Pi-subagents` at {D.BEAD_FIRST_READ_AT} and again at {D.BEAD_READ_AT} (1,395 beads both times; statuses parsed by exact id from JSON, never grepped; this file reports the later read), then `bd --readonly --json show` for sixteen ids (title, parent, dependencies, close reason) and one more `list --all` read in between for the repair-carrier and sibling-program searches. Drift between the first and last read: {D.BEAD_DRIFT}. The committed `.beads/issues.jsonl` (1,376 rows; byte-identical to the pin export) was read for comparison only.")
+w("- **Sibling program**: `scratch/pi-system-triage-1111/requirements/TDD-MATRIX.md` titles (98 rows) and the live bead titles; requirement bodies of that program were not audited.")
+w("")
+
+# ---------------- check table ----------------
+w("## 3. Check results")
+w("")
+w("| # | Check | Result | Evidence |")
+w("|---|---|---|---|")
+w(f"| 1 | No rationale states a premise stronger than its audited status (laundering vs CLAIMS.jsonl) | **PASS, two exceptions** | 0 mismatches among {scan['totals']['labelled']} labelled citations; 0 weak-status claims cited without a status word. Exceptions found by reading, not by the scan: EAT-R441 hardens a lens observation about the inner reply type into a prohibition on the model-facing envelope, which the pin contradicts (RA-02); EAT-R462 states as a MUST what EAT-R437 holds UNDETERMINED (RA-05). Two smaller wording drifts: EAT-R446's condition calls the Forge envelope fields 'design prose' although K023 is RESOLVED-BY-SOURCE and EAT-R434 says so; EAT-R451 says its falsifiers 'have no implemented subject' although E169 records seam-level greens (RA-19). |")
+w("| 2 | REFUTED / UNSUPPORTED rows appear only as negative, representation or ratification duties | **PASS, one coverage gap** | C029→R468, C032→R459 (R432 explains), C095→R395 (R424 cites only its surviving closed-keys facet), C138→R456: all negative clauses. C006→R470, C140→R411/R426/R469, C142→R411/R469, C163→R411/R423/R469: must-ratify or acquisition, never assumed. **C005 and C035 have no row and no explicit deferral**, although the release shard's coverage note says other blocks carry them (RA-14). Appendix A. |")
+w("| 3 | Every operationally material UNDETERMINED / CONTESTED premise maps to a gate or an explicit deferral | **PASS, three gaps** | Strict attainability (C026/C175/C185) → R437. Intent correlation (E228) → R415. Certificate carrier (E239) → conditions on R433/R434/R439 and acquisition in R462. Descriptor status transition (E235) → R405 c1 by content. Gaps: SDK-pin / provider-factory ownership (E226, K032) is recorded by R425 but no row resolves it, and it decides what V3 injects; the effect-axis vocabulary (K030) is unratified and the exec shard uses three field names for it; D6 ownership (K004, CONTESTED) has no ruling row (RA-07, RA-15). Section 8. |")
+w("| 4 | Id uniqueness and range EAT-R391..R470 | **PASS** | 80 ids, unique, contiguous, 1:1 with 80 map rows; no reference into the reserved EAT-R311..R390. The range is closed above: the pi-system-dx triage allocated EAT-R471..R488 (bead wb-9d2g, created 2026-11-11T08:13:52Z); any new id starts at EAT-R489. `MANIFEST.md`'s lineage line predates that overflow. |")
+w("| 5 | Every D1-D12 item covered or explicitly deferred; MW-owned items as Pi-side consumption | **FAIL** | By content every D-number has a Pi-side row, but D8, D10 and D11 are named in no row (D8/D10/D11/D12 occur only in R459's negative lint and R432), and the open rulings behind them (D6 owner, D4/D10/D11 severity, D7 label) have no carrier (RA-07). Section 6.1. |")
+w("| 6 | Every packet P00-P12 covered or explicitly deferred | **FAIL** | " + "; ".join(f"{k}: {len(pk.get(k, []))}" for k in [f"P{i:02d}" for i in range(13)]) + ". P11 and P12 have no row and no explicit deferral; their claims C178, C179, C143 are derived by no map row (RA-06). EAT-R470's own packet list omits P01, P11 and P12 and would fail its own validator. Section 6.2. |")
+w("| 7 | Every doc-04 matrix family covered or explicitly deferred | **PARTIAL** | Tier ladder V2-V5 → R460-R463; all 18 falsifiers G01-G12, P13-P18 → R446-R451 (and their behaviour rows); four outcomes → R452/R428; denial zero → R453/R427; post-dispatch cancel → R454/R445; kill at each stage → R463/R450; resource trials → R455; vetoes → R459; receipt → R458/R457. Not covered and not deferred: V6; the 'Privacy' row; QA step 7 (local full Forge gate per package and on the final merged tree); QA step 1 re-pin with the landing-branch rule; P10 sample transcripts (RA-06, RA-13). Section 6.3. |")
+w("| 8 | Every requirement has packet + V-tier + Maps-to | **PASS on presence; FAIL on content for 13 rows** | 80/80 carry all three (the exec shard labels the tier line 'Evidence tier target'). Content: 8 rows name a closed bead (RA-01); 5 rows carry a wrong or incomplete tier (RA-12). |")
+w("| 9 | MW-owned items become interface / consumption requirements, never Pi implementations | **FAIL on two rows** | R422, R423, R433-R435, R443, R444 are correctly consumer-side guards. R446 mandates producer-side tests and mutants; R401's statement obliges the provider write entry. Four joint rows (R391, R398, R447, R458) do not separate their Pi leg from their MW leg (RA-03). |")
+w(f"| 10 | Overlaps with EAT-R201..R310 flagged as EXTENDS, not duplicates | **FAIL** | Audited lineage: OK {extc['OK']}, ADD {extc['ADD']}, CORRECT {extc['CORRECT']}, NEW {extc['NEW']}. All 25 release rows cite no EAT id (they extend live beads only); 10 core rows cite none where a predecessor exists; 6 core rows cite a wrong or open-ended id. No row is a pure duplicate: each has a stated delta, thin for R416, R452, R453, R454, R455 (RA-10). Matrix A carries the audited list. |")
+w("| 11 | Authority and type discipline; atomicity; executable acceptance | **PASS with findings** | Authority never disguises a premise: RISK_CONTROL on the hazards that are supported but unobserved, EVIDENCE_ACQUISITION on the seven acquisition rows, LINGUISTIC_INTEGRITY on the three wording rows. No row uses EMPIRICAL_REPAIR, yet two established Pi-side defects sit on the path (the EAT-R253 skip loss; the census red on master) — RA-08, RA-14. 21 rows bundle independently failing clauses (RA-16); 8 rows name no negative mutant (RA-18). |")
+w("| 12 | Every implementation-relevant remediation covered or explicitly deferred | **PARTIAL** | 239 remediation rows; 207 name 'EAT-R391+' as tracker; 178 are cited by a requirement. 46 rows with that tracker are cited by none: 20 are covered by content, 10 are uncovered (landing trunk, re-pin pair, receipt validator in the gate, live bead edges, W11 detector, tier map), 16 are wording-only inserts that the ledger defers to the requirement set and the core shard defers back to the owner (RA-14). Section 9. |")
+crit = [reqs[n]["n_criteria"] for n in IDS]
+w(f"| 13 | Every requirement appears in TDD-MATRIX.md with every applied tier mapped and every `·`, `S`, `A*` justified | **PASS** | 80/80 rows in Matrix A (traceability) and Matrix B (tiers and gates); 18 falsifier gate rows; 21 compound rows enumerated clause by clause; 9 explicit-deferral lines. `req-audit/check_data.py` finds 0 unjustified non-`A` cells. Acceptance criteria per row: {min(crit)}-{max(crit)}, all assertion-shaped; two depend on code in the other repository (RA-03). |")
+w("| 14 | Cross-shard consistency | **FAIL** | The three shards were compiled blind to each other: one dependency cycle (RA-04), one three-way conflict on launch status (RA-09), twenty overlap groups with no cross-links (RA-11), two wrong cross-references (RA-19), two epics named as 'the' epic (RA-20), three map schemas (RA-17). |")
+w("")
+
+# ---------------- findings ----------------
+w("## 4. Findings and exact fixes")
+w("")
+w("Severity: **BLOCKING** = the text or mapping must change before a bead is filed from the row; **CONDITION** = apply at filing; **TEXT** = next requirements text cycle; **OBS** = observation.")
+w("")
+F = []
+F.append(("RA-01", "BLOCKING", "R418, R429, R436, R438, R439, R440, R444, R445",
+ "Maps-to names a closed bead. Live reads " + D.BEAD_FIRST_READ_AT + " and " + D.BEAD_READ_AT + ": wb-upad closed 2026-11-11T05:28:31Z ('Consolidated its unexpired scope and acceptance into wb-9a1o'); wb-5a7k closed 2026-11-11T05:29:23Z ('… into wb-mwsy'). The exec shard says the statuses were 're-read in the current installation (statuses unchanged on 2026-11-11)', which is false for four of the ten beads it lists (wb-y0n6 is in_progress, wb-upad and wb-5a7k are closed, wb-xr1z is open) and was already false when the shard was written (both closures precede 08:55Z). The core shard's list is labelled as the pin export. The release shard's sixteen statuses all matched the store at the first read; by the last read one had moved (wb-w8fk, in_progress to open at 09:52:21Z) — the drift the filing-time read rule is for.",
+ "Retarget: wb-upad → wb-9a1o on R429, R436, R438, R439, R440; wb-5a7k → wb-mwsy on R418, R440, R444, R445; keep the closed ids as lineage. Replace both shard headers' status lists with the live table in section 10. Add the rule to the consolidated header: bead status is a `bd --readonly --json` read at filing time; the committed `.beads/issues.jsonl` is a passive export."))
+F.append(("RA-02", "BLOCKING", "R441 (shared facts: R466, R412 c3)",
+ "R441 says the launch reply 'MUST NOT introduce the pi-05 illustration members (`tool`, `next`)' and criterion 1 asserts 'the outer `contractVersion === \"workbench.tool-reply/v1\"`; properties `tool` and `next` are absent'. At 0fb90672 the registered tool returns `WorkflowExecuteEnvelope` (execute-tool.ts:107-124; `contract` :108, `tool` :109; built by `envelope()` at :143 with `contract` :151 and `tool` :152): outer key `contract`, member `tool: \"workflow_execute\"`, plus `ok`, `invoked`, `status`, `completion`, `nativeRefs`; `contractVersion` and boolean `truncated` belong to the pure builder's `WorkflowExecuteReply` (execute.ts:65-79), which is not what the model reads. Every reply of the tool, for every definition kind and including the function-kind refusal, leaves through that one builder (the only two return sites are :204 and :253). The script-path bytes are pinned by test/workbench-surface-census.test.ts:269 and asserted at test/workbench-execute-tool.test.ts:69 and :106. As written, criterion 1 fails against today's function-kind reply for a reason unrelated to the missing behaviour, and it can be met only by changing the shared envelope or by giving the function route a different envelope from the script route — both against R441's own first clause ('MUST remain the actual pin-time shape') and pi-01 section E ('Maintain the Pi model-facing tool-reply/v1 envelope'). Cause: lens record E062 / K006 compared the illustration with the inner type only, although the range the ledger cites for the envelope (E180: execute-tool.ts:108-113) opens with exactly these two members; relative to the envelope the single foreign member is `next`.",
+ "Replace the clause with: 'MUST keep the registered tool's model-facing envelope as pinned — `contract: \"workbench.tool-reply/v1\"`, `tool: \"workflow_execute\"`, `ok`, `invoked`, `status`, `completion: \"not-asserted\"`, `nativeRefs` and the optional members `invocationId`, `definition`, `hostMode`, `nativeRefsOmitted`, `policy`, `provenance`, `error`, `truncated {reason, maxBytes}`, `truncation` — adding only versioned members; MUST NOT add the illustration member `next` or emit the bare string `tool-reply/v1`'. Replace criterion 1 with: 'Through ORACLE-REG the function-route reply parses as the pinned envelope plus additive versioned members: `contract === \"workbench.tool-reply/v1\"`, `tool === \"workflow_execute\"`, `next` absent; the script-path rows of workbench-surface-census.test.ts and workbench-execute-tool.test.ts stay green unedited. A unit assertion on the pure builder checks `contractVersion === \"workbench.execute/v1\"` and boolean `truncated`.' Ledger note for the consolidator: C225 / K006 owe a correction entry (the comparison object is the envelope)."))
+F.append(("RA-03", "BLOCKING (R446, R401); TEXT (R391, R398, R447, R458)", "R446, R401; R391, R398, R447, R458",
+ "R446: 'with the classifier red/mutant landed on the Mechanical producer side first' and criterion 1 'a producer-side (MW) test injects the stated evidence defect … and a mutant that weakens the classifier turns the test red' make Mechanical's tests a Pi deliverable; its tier line ('V1 (producer red/mutant) + V4 projection') follows from that and is wrong (RA-12). R401: 'Every admitted provider write entry MUST deny a stale or invalid lease generation' — the provider write entry is the composed host's (mw-03 H06); R401's Conditions already call the producer side 'a named blocking dependency', so only the statement's subject is wrong. R391 and R398 define their negative mutant in producer code; R447 inherits 'producer red first' from M199 without saying which arm is Pi's; R458 c1 requires the MW receipt emitter to validate.",
+ "R446 statement: 'The Pi suite MUST implement the Pi-side projection legs of G01, G02, G03 and G12 — a red test and a negative mutant each, through ORACLE-REG with an injected observed envelope and, where applicable, an injected producer certificate — asserting the EAT-R433..R436 projections. The producer-side classifier tests (MW Q01, Q03, Q04, Q05, Q08 by content) are Mechanical-owned (mw-03 H01/H09; tracker wb-1zn2): the Pi receipt cites the producer receipt when it exists and records BLOCKED(producer-red-absent) when it does not. No Pi cut adds or edits a test in the Mechanical repository.' Tier: V1 + V3. R401 statement: 'Pi MUST expose the ratified current-generation verifier to the composed host and MUST keep effectful function readiness false for any topology in which the installed host does not demonstrably deny a stale or invalid generation at provider write entry (consumption test: stale token → zero edit, commit and gate effects).' R391 / R398 mutants: phrase as consumer-side conformance failures against a fixture reader / fixture host. R447: add 'Pi-side arms only; the producer-side red is consumed'. R458 c1: 'the Pi emitter validates; the MW receipt is joined through the documented mapping; MW-side adoption is tracked by wb-1zn2'."))
+F.append(("RA-04", "BLOCKING", "R448, R450, R463, R464",
+ "R448 Conditions: 'cross-process lease substrate must exist first (EAT-R464)'. R464 criterion 1: 'G06/G07 (EAT-R448) pass against it'. As bead edges this is a cycle. R450 ('see EAT-R464') and R463 ('EAT-R464 durable lease/journal') also treat R464 as the builder of the substrate. The rows that specify the substrate are R399 (store), R400 (lifetime), R401 (stale generation), R402 (crash fence), R403 (release law) and, for the journal, R414-R417; the release shard names none of them.",
+ "R448 Conditions: 'prerequisite: EAT-R399, R400, R401, R402; red by construction until they land; EAT-R464 is downstream'. R450 Conditions: 'EAT-R399..R403 and EAT-R414..R417'. R463 Conditions: 'the EAT-R450 harness, EAT-R399..R403, EAT-R414..R417 and the joined route (EAT-R412, R426)'. R464: narrow to the acquisition — 'MUST record, as a receipt, that EAT-R448 passed against the EAT-R399..R401 substrate in the named same-machine topology; it adds no second substrate' — keeping the 'compatible' and P00 clauses. Resulting order: R398 → R399-R403 → R448 → R464."))
+F.append(("RA-05", "BLOCKING", "R462, R431 (R437, R457)",
+ "R462: 'MUST produce … a V4 receipt … with real Claude, real Git and a real strict Forge gate — capturing the actual strict-positive native envelope'. Strict attainability in the first-release topology is UNDETERMINED (C026 facet; the ledger counts `execution_environment.pinned` false in all 148 committed occurrences), and R437 exists to settle it. R431, compiled in another shard for the same packet and bead, says the opposite and is the warranted reading: 'a V4 receipt with `assurance: legacy-weak` is a valid non-strict V4 receipt'. pi-04's tier ladder defines V4 without the word strict; 'strict' comes from the release definition and the P08 packet text. R431 and R462 are also one acquisition stated twice.",
+ "R462 statement: replace the quoted clause with 'the native Forge full gate; where EAT-R437 has settled attainability by envelope, the strict-positive envelope is captured; until then a V4 receipt whose assurance is the weak value is a valid non-strict V4 receipt and the strict clause stays `undetermined`'. Split the duty: R431 owns the receipt content, provider readback and BLOCKED semantics; R462 owns (a) the acquisition, citing the R431 receipt, and (b) the external-store census (extend its scope to the crash-restart and lease absences of C024 / C025). File R431, R457, R462 as legs of one bead under wb-p3i2."))
+F.append(("RA-06", "BLOCKING", "set-level; R470 (carriers of the fence: R404, R412, R438)",
+ "P11 (optional detached function + Furnace), P12 (optional HX / RF and further function families) and tier V6 have no row (0 of 80 Maps-to lines name P11 or P12; 0 bodies mention V6 or Furnace) and no explicit deferral: the core preamble only disclaims 'implicit detached/Furnace/HX/RF enablement', and R404 c3 / R412 c2 refuse detached or arbitrary functions; P11 is mentioned twice in passing (R404 lineage, R438 c3) and P12 once (R469's 'Pi packets P00-P12'). C178, C179 and C143 are derived by no map row. R470's map enumerates P00, P02-P10 only, while its own validator fails on 'an MII packet absent from the map'.",
+ "Add an 'Explicit deferrals' section to the consolidated file (text in TDD-MATRIX section 8): P11 → DEFERRED, EXTENDS EAT-R295..R298 and R303, carrier wb-zswl (open); P12 → DEFERRED, EXTENDS EAT-R299..R302 and R303, carrier wb-pxvv (in_progress, in-flight MNI work, not an MII dependency); V6 → DEFERRED with them. Record C178, C179 and C143 in the map as deferral records (`requirement: null`, `disposition: DEFERRED`, carrier, `extends_eat`), so the ledger-to-map join shows them deferred rather than underived and the 1:1 requirement join is untouched. R470 statement: add 'P01 → new (no MNI carrier; wb-7wkb is the closed MNI P01 and different work)', 'P06 → wb-9a1o (wb-upad closed into it)', 'P11 → wb-zswl (deferred)', 'P12 → wb-pxvv (deferred)'. R438 c3 ('if admitted at all before P11') is untestable while R404 / R412 refuse detached functions: mark it deferred to P11 (EXTENDS EAT-R296) and keep the refusal as the first-release assertion."))
+F.append(("RA-07", "BLOCKING", "set-level; R469 (R459)",
+ "The checklist asks for every D1-D12 item covered or explicitly deferred. D8 (partial projection), D10 (malformed descriptor typing) and D11 (provider runtime) are named in no row; their Pi-side consumption exists only by content (R434; R428 / R419; R425 / R465). The D-numbers are defined only in the companion (C032 REFUTED as 'described in this corpus'), D6 has two owners with different content (K004, CONTESTED), D4 / D10 / D11 severity differs between the programs (K015), and README's D7 label differs from mw-01's. R469's crosswalk namespaces omit D-numbers, tier names, 'strict' and MW-CONTRACT, which are exactly the terms that make the corpus not self-contained (C005). R459's lint ('rejects a veto/ownership row citing a bare D-number without its MW companion definition reference') has no table to resolve against.",
+ "Add the disposition table of section 6.1 to the consolidated file. R469: add crosswalk namespaces `D` (id, ledger id PI-I0n / MW-I0n, owner in each program, severity in each program, content, Pi consumption rows, MW packet, ruling), `tier` (V ↔ MW-L ↔ L0-L10; EXTENDS EAT-R209), and glossary rows for 'strict' (axes of R434, attainability R437) and MW-CONTRACT (the R405 record). R469 acceptance: add 'the table records one owner ruling for D6 (two-part: Pi P04/P05 wiring + MW H06 composed host), one severity ruling each for D4, D10, D11, MW-I10, MW-I12, and one label for D7; until a ruling exists the row reads CONTESTED and no bead is keyed by the bare label'."))
+F.append(("RA-08", "BLOCKING", "R413 (R431, R444, R445, R454, R457, R462)",
+ "R413 keeps effectful readiness off until an EAT-R253 repair receipt exists, and correctly says 'New live repair/gate carrier required after a fresh bead census'. But the repair itself is compiled nowhere in R391-R470 and has no live bead: wb-9v02 (to which the MNI audit attached R213 / R214 / R253) closed 2026-11-08 as the repro bead, wb-3121 closed 2026-11-10; the live store has no open bead that carries the repair (regex `EAT-R253|EAT-R213|EAT-R214|beforeDispatch` over title, description, notes, acceptance and design of the 67 non-closed beads: two hits, wb-f5y 'W03: Role/tool/model config and permissions' and the P09 fault matrix wb-9bof, neither a repair). The sibling DX set does not carry it either (0 hits for `EAT-R253|EAT-R213|EAT-R214|parked|beforeDispatch|wb-9v02` in its roll-up and four shard files). wb-3121's 'no source change' is the ledger's statement (E013). Every effectful arm of R431, R445, R454, R457 and R462 is therefore blocked on work nobody holds. The exec shard cites EAT-R253 directly and never R413.",
+ "File ONE new bead: legs EAT-R213, EAT-R214, EAT-R253 (authority EMPIRICAL_REPAIR: the red repro test/workbench-mwi-cancel-repro.test.ts exists and is the red-first evidence) plus EAT-R413 (the gate). R413 Maps-to: 'new bead; legs EAT-R213 / R214 / R253'. R431, R444, R445 Conditions: cite 'EAT-R413 (MII carrier of the EAT-R253 gate)'."))
+F.append(("RA-09", "BLOCKING", "R412, R441, R466",
+ "An embedded function launch returns before any producer-native reference exists. The pinned builder refuses `launched` with zero refs (execute.ts:279: 'A launched reply requires at least one native reference'). R412 c3 allows 'an empty truthful list'; R441 c3 fails any `accepted` 'unless a ratified decision row is cited'; R466 leaves the envelope to ratification 'before anything copies' the illustration. Together, with no decision recorded, no status is admissible for that launch. C225's permitted wording names the three options; no row owns the choice.",
+ "Make R466 the owner of one decision (recorded in the R405 ratification record): 'Launch status for an embedded function launch with no producer-native reference yet: exactly one of (i) `accepted` with a ratified meaning, (ii) `launched` carrying a host-minted Pi-native reference, (iii) the reply is delayed until the first native reference.' R412 c3: 'an empty list is permitted only under option (i)'. R441 c3: '`accepted` is emitted only under option (i)'. Until the record exists all three rows are BLOCKED on G-RATIFY for this clause."))
+F.append(("RA-10", "BLOCKING (mechanical)", "all 25 release rows; R396, R397, R406, R408, R409, R411, R412, R417, R419, R420; R391, R402, R403, R407, R410, R418",
+ "Release rows R446-R470 carry 'extends wb-…' and no EAT lineage. Core rows: R407 cites 'R224+' (R224 is installed-package serialization; the grant rows are R225 / R227 / R228); R410 cites 'R225+' (rights; source admission is R229-R231, R268); R418 cites R251 (native readback; stop asymmetry is R252); R402 writes an open range 'R280+'; R403 cites R250 where R251 / R254 / R282 apply; R391 cites R204. R408 restates R233 without naming it; R409 qualifies R234 (the no-await chain an in-progress bead is building) without naming it.",
+ "Add an `Extends:` line to every row from Matrix A (column 'EXTENDS R201-R310 (audited)'). For R409 write 'EXTENDS and QUALIFIES EAT-R234: the Pi-side no-await chain remains necessary for the Pi-to-host handoff and is not the final boundary (E227, K034)'. For R460 note that EAT-R271's condition 'conditional on MW-INSTALLED-HOST' is retired at 69cb016d."))
+F.append(("RA-11", "CONDITION", "20 groups, section 7",
+ "Each release verification row restates acceptance already owned by a core or exec behaviour row, and no row names its counterpart. Four rows state 'cancel requested vs established' (R418, R445, R454, R467); R403 c3 and R467 c2 are the same override rule; R416 and R442 are one ordering obligation; R415 acquires what R444 consumes.",
+ "Add `Verifies:` / `Verified-by:` lines per section 7 (also Matrix A, 'Linked rows'). At filing, one test family has one owning bead: the behaviour row's bead owns the test, the verification row's bead consumes its receipt."))
+F.append(("RA-12", "TEXT (R446 is fixed under RA-03)", "R446, R447, R448, R449, R464",
+ "R446 'V1 (producer) + V4 projection' — an injected envelope defect cannot come from a real Forge run; the projection is V3 (R434-R436 say so). R447 and R464 omit V3 while their behaviour rows (R443, R400) carry it. R448 says 'through the registered route' and lists V1 + V5. R449 omits V2 for G09 (R422 is V2).",
+ "Tiers: R446 V1,V3; R447 V1,V3,V5; R448 V1,V3,V5; R449 V1,V2,V3; R464 V1,V3,V5 (Matrix B)."))
+F.append(("RA-13", "CONDITION", "R414, R439, R459, R461, R468, R470",
+ "doc-04 items with no acceptance criterion: (a) 'Privacy' row — only fragments (R439 redacted path and bounded reply, R465 c3, R419 c3, R414 c3); the ledger has no claim row for doc-04 L41 or L43; (b) QA step 7, local full Forge gate per package and on the final merged tree (predecessor EAT-R286); (c) QA step 1 / P00 re-pin and the landing-branch rule — C034's permitted wording says the program documents and both requirement sets are master-only and absent from the gated trunk where machine lanes cut (M002, M003, M037, M136, M187, M238; predecessor EAT-R201); (d) P10 sample transcripts and QA step 8 (EAT-R289 / R290); (e) QA step 4 names `workflow_reconcile`, R461 checks `workflow_observe` only.",
+ "(a) R439: add 'model-visible summaries and file names are redacted under the existing observe scope rules; the test asserts no workspace-absolute path or note text in the reply'; R414: add 'the durable record is readable only through the operator-scoped path; an out-of-scope read is refused'. (b) R459: add veto predicate 'no recorded local full Forge gate (forge.toml `gate`) on each cut and on the final merged tree'. (c) R470: add criteria 'a pre-cut re-pin record names both full SHAs, trees and the active bead snapshot (EXTENDS EAT-R201)' and 'the map names the landing trunk, the default branch, the merge direction and the program-docs validator anchor'. (d) R468: add 'sample invocation / observe / control transcripts are captured from registered-route runs and carry their receipt reference; the pi-05 JSON stays labelled proposal'. (e) R461: add `workflow_reconcile` to the same-invocation check."))
+F.append(("RA-14", "CONDITION", "R468, R469 (set-level)",
+ "REFUTED C005 ('self-contained') and C035 (profile-independence presuppositions; CI facet shared with C138) are derived by no row and deferred nowhere, contrary to the release shard's note. 46 remediation rows whose tracker is 'none (EAT-R391+)' are cited by no row; 16 of them are wording-only inserts for which the ledger names the requirement set as tracker while the core shard hands 'pure wording-only repairs' back to the owner — nobody holds the insert block. Separately, the wb-12x1 census is recorded red on master (C220 / E010) and its carrier is closed; R468's same-cut gate cannot be met there until that red is repaired, and R468 does not say so.",
+ "R468: add criterion 'the MII program directory gains one appended annotation block (insert-only, after the pinned sections) carrying the deferred REMEDIATION inserts; the block lists each M-id landed; the pin advance stays an owner decision', and 'the first docs/skill cut repairs the recorded-red census rows through the census's append-only protocol before any other skill edit (authority EMPIRICAL_REPAIR; the repair REMEDIATION describes: restore the M049 / M050 standing text or re-pin the rows through the census's append-only receipt protocol)'. Record in the consolidated deferral section: C005 → wording insert (M005/M006) plus the RA-07 crosswalk rows; C035 facets (i)-(iii) established, (iv) Furnace-profile wording insert (M038/M039, tracker wb-12x1 row M047), (v) CI → R456; the GitHub-Actions run record is routed to the Pi owner and is out of program scope. Cite the 20 content-covered M-ids on their rows (section 9)."))
+F.append(("RA-15", "CONDITION", "R405, R425, R426, R461, R439, R443, R444, R445",
+ "(a) E226 / K032: who pins the SDKs and who composes the four callbacks (Pi passing callbacks, or Mechanical composing them from host-supplied provider factories) is undecided; it determines what 'deterministic four callbacks' means at V3 (R426 c1 'an injected installed host', R461). R425 records identity 'regardless of owner'. Host fact for the decision: Pi already pins `@anthropic-ai/claude-agent-sdk` 0.3.300 and vendors `@forge/sdk` 0.1.0 (package.json:36-37); the MW rig declares neither. (b) K030: the effect axis has no ratified value set (Pi 'no-effect' vs MW 'no-dispatch'), and the exec shard writes it three ways — `effect: \"dispatched-uncertain\"` (R445), `disposition: \"unknown\"` (R443), `effectDisposition: \"unknown\"` (R444) — for the same post-dispatch state.",
+ "R405 c1: add to the ratification record 'SDK pin owner and provider-factory ownership' and 'the V3 fixture-host injection seam'. R426 / R461 Conditions: cite that record. Add one effect-axis row to the R419 table (field name, value set, and the rule that `no-effect` is never assigned after a dispatch); R439, R443, R444, R445 criteria then use the one ratified field name."))
+F.append(("RA-16", "CONDITION", "R423, R438, R440, R442-R451, R456, R459, R462, R464, R466, R467, R468, R470",
+ "21 rows bundle clauses that pass or fail independently; the six falsifier rows bundle 18 falsifiers.",
+ "No new ids (range closed; next free id EAT-R489): each clause is its own gate line in the bead acceptance, as enumerated in TDD-MATRIX sections 6 and 7."))
+F.append(("RA-17", "TEXT", "set-level",
+ "Field and schema drift across shards: 'V-tier' vs 'Evidence tier target'; 'Priority' and 'Derived from' only in the core shard; no shard uses the template's 'Epistemic basis' bullet list. Maps: `maps_to.extends` is a list of EAT ids in the exec shard and a bead id in the release shard; three `derivation` vocabularies (none the recommended one); the release shard mixes 55 M-ids into `derived_from`; `tdd_levels`, `planned_evidence` and input hashes exist only in the core shard; the exec and release shards name no planned evidence artifact.",
+ "Consolidate to one schema: `{requirement, type, authority, secondary_authorities[], priority, derived_from[C/H ids], remediation_ids[], epistemic_basis[], embedded_premise_flags[], derivation, conditions[], verification[V], tdd_levels[], maps_to{mii_packets[], live_beads[], extends_eat[]}, planned_evidence, compile_input_hashes}`; state 'P0 for the first release' once in the header."))
+F.append(("RA-18", "TEXT", "R455, R456, R459, R460, R465, R468, R469, R470; R449, R451",
+ "The program's packet rule is a red test and its negative mutant for every behaviour. These rows name none; R449 and R451 say 'each as red test plus negative mutant' without naming the mutants.",
+ "Name one per row, e.g. R455: receipt with an SLA and no measurement row is accepted; R456: validator accepts a write into a prior receipt directory; R459: release proceeds with an unmapped veto; R460: gate accepts a mutated installed dist file; R465: a broken axis reads ready; R468: lint accepts a shipped row without a receipt link; R469: lint accepts a bare H-number edge; R470: validator accepts a closed bead as carrier. R449 / R451: one guard-removal mutant per falsifier."))
+F.append(("RA-19", "TEXT", "R421, R424, R431, R438, R444, R446, R449, R451, R459, R461, R462, R466, R470",
+ "R466 says 'evidence strength is computed from the producer certificate (EAT-R446)'; R446 is the falsifier suite, the projection is R433 / R434. R470 c3 names an 'EAT-R458-adjacent closure schema' that no row defines (the packet-closure receipt of pi-03 L83-84; predecessor EAT-R291). R446's condition contradicts K023 / R434 (above). R449 / R451 omit the E169 caveat that seam-level greens are controls; R451's 'no implemented subject' overstates. R459 repeats 'missing L4/L5' without a namespace. R421 c1 says 'the four exported symbols'; the subpath has 8 runtime exports at 69cb016d. R444's Maps-to embeds a cross-reference. R424 cites the surviving facet of REFUTED C095 for 'keys are closed': true for the request and definition keys (execute.ts:81-82), not for members of `input`, which is `Type.Unknown()` — the refusal in criterion 2 is new behaviour. R431 / R444 / R445 cite EAT-R253 without R413.",
+ "Correct each reference as stated; R470 c3: 'validates against the packet-closure receipt schema (pi-03 L83-84 field list; EXTENDS EAT-R291), ratified with EAT-R458'; R421 c1: enumerate `invokeDevelopmentHost`, `HostAdmissionError`, `HOST_API_VERSION`, `HostBindingError`, `WRITE_GRANT`, `admitHostBinding`, `dispatchWriteAtFinalBoundary`, `validateHostBinding`."))
+F.append(("RA-20", "CONDITION", "R470",
+ "R470 names 'program epic wb-1a3t'; MANIFEST and the exec shard name 'epic wb-rhyt'. Both exist and the carriers are split: wb-1a3t (MWI 2026-11-04) parents wb-w8fk, wb-4bxo, wb-9a1o, wb-mwsy, wb-p3i2, wb-zswl, wb-pxvv; wb-rhyt (MNI 2026-11-09) parents wb-y0n6, wb-2ukh, wb-xr1z, wb-9bof, wb-yiu4. No row decides where MII beads hang.",
+ "R470 map: name both parents per carrier and record one ruling for new MII beads (a new MII epic, or wb-rhyt with a `related` edge to wb-1a3t)."))
+F.append(("RA-21", "CONDITION", f"{len(inprog)} rows on in-progress carriers",
+ "Carriers " + ", ".join(sorted({b for n in inprog for b in D.BEAD[n] if D.BEAD_STATUS[b] == 'in_progress'})) + " are in_progress (assignee flywheel); wb-w8fk was in_progress at the first read and open at the last, still assigned. 'Extend' on a claimed bead would change its acceptance in flight; R409 additionally qualifies EAT-R234, the chain wb-2ukh is building.",
+ "File MII obligations as successor beads with a blocking dependency on the in-flight bead and append-only notes (`--append-notes-file`, never `--notes`); do not edit the acceptance of a claimed bead. Attach R409's qualification of EAT-R234 to wb-2ukh as an appended note before its next gate."))
+F.append(("RA-22", "CONDITION", "R412, R414, R417, R418, R419, R427, R438-R442, R445, R454, R465-R468",
+ "A concurrent program (pi-system-dx triage, EAT-R311..R390 + R471..R488, epic wb-9d2g) has beads on the same Pi files; two of the overlapping ones are already in_progress (wb-9btr, wb-5xdi). The MII shards were compiled without sight of it. Overlaps by title: launch-reply orientation per host mode (EAT-R321) ↔ R438 c3 / R441 / R466; admission and interop refusals (EAT-R324, R337, R338) ↔ R419 / R427; one observe dialect (EAT-R328, R333) ↔ R439 / R440; control replies and embedded cancel (EAT-R334, R335, R486) ↔ R418 / R445 / R454 / R467; journal identity and replay (EAT-R357, R358, R360, R361) ↔ R414 / R417 / R438 c2 / R442; installed-package interop coherence (EAT-R339) ↔ R468; host-incompatible definitions (EAT-R472) ↔ R412 c2; detached lifecycle (EAT-R341..R345) ↔ R438 c3. Surface: titles only.",
+ "At filing add `related` edges from the MII beads to wb-9btr (DX P03), wb-5xdi (DX P04), wb-djk5 (DX P05), wb-r1bz (DX P06), wb-q0on (DX P09), wb-nagx (DX P13), wb-hbju (DX P15); where both programs change one reply or journal shape, the later landing re-reads the earlier receipt. A body-level reconciliation of the two sets is owed and was not done here."))
+w("| ID | Severity | Rows | Finding and evidence | Exact fix |")
+w("|---|---|---|---|---|")
+for fid, sev, rows, find, fix in F:
+    w(f"| {fid} | {sev} | {esc(rows)} | {esc(find)} | {esc(fix)} |")
+w("")
+w(f"Findings: {len(F)} (blocking {sum(1 for f in F if f[1].startswith('BLOCKING'))}, condition {sum(1 for f in F if f[1].startswith('CONDITION'))}, text {sum(1 for f in F if f[1].startswith('TEXT'))}). Rows whose statement, criteria, conditions, tier or carrier must change before filing: {len(D.AMEND)} ({R(sorted(D.AMEND))}). RA-10's `Extends:` line is additionally owed on the 35 rows marked ADD in Matrix A; copying that column discharges it.")
+w("")
+
+# ---------------- inventory ----------------
+w("## 5. Requirement inventory")
+w("")
+tys = ["BEHAVIORAL", "NEGATIVE_REGRESSION", "VERIFICATION", "INSTRUMENTATION", "REPRESENTATION", "NORMATIVE_DESIGN"]
+aus = ["NORMATIVE_DECISION", "RISK_CONTROL", "EVIDENCE_ACQUISITION", "LINGUISTIC_INTEGRITY", "EMPIRICAL_REPAIR"]
+w("| Type \\ primary authority | " + " | ".join(aus) + " | Total |")
+w("|---|" + "---|" * (len(aus) + 1))
+for t in tys:
+    w(f"| {t} | " + " | ".join(str(cross[(t, a)]) for a in aus) + f" | {types[t]} |")
+w("| Total | " + " | ".join(str(auths[a]) for a in aus) + f" | {len(IDS)} |")
+w("")
+w("Secondary authorities (release shard only): " + ", ".join(f"{k} {v}" for k, v in second.most_common()) + ". Priority is stated only in the core shard (P0 on all 30); the program's own rule makes every first-release row P0 and P11/P12 P2.")
+w("")
+w("Requirement force and warrant stay separate in all 80 rows: 53 rows rest on adopted norms or proposals (NON-EPISTEMIC ledger rows) and say so; the 17 RISK_CONTROL rows guard hazards the ledger grades as established source facts, SUPPORTED or PLAUSIBLE inferences, or conditional risks carried by NON-EPISTEMIC norms, and each says no joined incident was observed on a function route that does not exist yet; the 7 EVIDENCE_ACQUISITION rows (R415, R425, R431, R437, R462, R463, R464) name the missing artifact.")
+w("")
+
+# ---------------- coverage ----------------
+w("## 6. Coverage")
+w("")
+w("### 6.1 D1-D12 (definitions: pi-01 section A for D3, D5, D6, D9; mw-01 defect ledger for the rest)")
+w("")
+w("| D | Ledger id, owner, severity as written | Content | Pi-side rows (consumption or guard for MW-owned items) | MW-side carrier (never a Pi bead) | Disposition | Open ruling |")
+w("|---|---|---|---|---|---|---|")
+DT = [
+ ("D1", "MW-I01, Mechanical P0", "classifier passes a frame unless `gate_passed === false`; gate definition and environment may be descriptor-only", "R433, R434 (consume and validate the certificate; never strict from the domain arm), R437 (attainability), R446[G01, G03]", "mw-03 H01; wb-1zn2", "COVERED as consumption", "—"),
+ ("D2", "MW-I03, Mechanical P0", "clean HEAD + clean status classified not-occurred / retryPermitted", "R443 (never consume that verdict), R420, R403, R447[G04, G05]", "mw-03 H02; wb-1zn2", "COVERED as consumption", "—"),
+ ("D3", "PI-I01, Pi P0", "admission digests the notes-stripped value; launchers read raw `params.input`", "R391-R397, R449[G08]", "—", "COVERED", "digest construction (R391)"),
+ ("D4", "MW-I05, Mechanical P1; Pi treats its exit as P0 (K015)", "tarball re-hashed, installed files not checked before import", "R421, R422 (Pi consumer-side manifest guard), R460, R449[G09]", "mw-03 H03; wb-1zn2", "COVERED as consumption", "severity ruling (K015)"),
+ ("D5", "PI-I02, Pi P0", "process-local lease released when the dispatch promise settles", "R398-R404, R448, R464", "provider-entry fence check: mw-03 H06", "COVERED", "lease ABI (R398)"),
+ ("D6", "PI-I03 (Pi wiring) and MW-I04 (host composition) under one number; README assigns it to Pi", "registered tool is script-only; exported host call requires no binding, grant, source or lease", "R405-R412 (Pi wiring), R423, R424, R426 (consume one composed export; never the legacy call), R461", "mw-03 H06; wb-1zn2", "COVERED on both halves; ownership CONTESTED (K004)", "one owner ruling — proposed: two-part shared (RA-07)"),
+ ("D7", "MW-I02, Mechanical P0; README labels D7 'strict Forge proof'", "settlement fed the locally re-measured tree and cached manifest hash", "R435 (never substitute a local tree), R446[G02]", "mw-03 H01 / H02; wb-1zn2", "COVERED as consumption", "label ruling"),
+ ("D8", "MW-I06, Mechanical P1", "projection checks the candidate commit only, not all strict axes", "R434 (every axis validated against the observed envelope; a partial certificate is never strict), R433", "mw-03 H01; wb-1zn2", "COVERED by content — **not named in any row**", "name it (RA-07)"),
+ ("D9", "PI-I04, Pi P0", "independent rechecks are not one atomic policy across async waits", "R409, R410, R411, R427 c3, R449[P13, P14]", "final check before the writer is the producer's (K034): mw-03 H06", "COVERED", "—"),
+ ("D10", "MW-I07, Mechanical P2", "malformed descriptor dereferenced → TypeError instead of a typed refusal", "R428 (any thrown producer fault on the typed fault channel, never an outcome), R419 c3 (unknown codes stay typed unknown); Pi's own descriptor shape check is EAT-R219", "mw-03 H04; wb-1zn2", "COVERED by content — **not named in any row**", "severity ruling; name it"),
+ ("D11", "MW-I08, Mechanical P1", "packed host loads callbacks without proving SDK / executable identity or credentials", "R425 (record identity, refuse runtime-unavailable), R465 (native-provider readiness axis), R431 (BLOCKED, never an imitation)", "mw-03 H03 / H05; wb-1zn2", "COVERED by content — **not named in any row**", "severity ruling; SDK-pin owner (RA-15)"),
+ ("D12", "MW-I09, Mechanical P1", "SDK tool filters are not OS write isolation", "R432 (containment wording), R406 (authority source out of the writer's reach)", "none named: the companion states a trusted-host boundary; stronger containment is post-v1", "COVERED as wording obligation", "—"),
+]
+for row in DT:
+    w("| " + " | ".join(esc(x) for x in row) + " |")
+w("")
+w("Related companion items outside the D-numbers: MW-I10 (no parent-directory fsync) → R445 c4, R416 c2-c3; MW-I11 (install per call) → R455 cold/warm measurement; MW-I12 (no joined journey) → R431, R462.")
+w("")
+w("### 6.2 Packets P00-P12")
+w("")
+w("| Packet | Rows (a row with two packets is listed under both) | Audited carrier | Result |")
+w("|---|---|---|---|")
+PC = {"P00": f"wb-w8fk ({D.BEAD_STATUS['wb-w8fk']}); MW tracker wb-1zn2 (deferred)", "P01": "none — new bead owed", "P02": f"wb-2ukh ({D.BEAD_STATUS['wb-2ukh']})", "P03": f"wb-2ukh ({D.BEAD_STATUS['wb-2ukh']})", "P04": f"wb-y0n6 ({D.BEAD_STATUS['wb-y0n6']})", "P05": "wb-4bxo (open)", "P06": "wb-9a1o (open)", "P07": "wb-mwsy (open)", "P08": "wb-p3i2 (open)", "P09": "wb-xr1z (open), wb-9bof (open)", "P10": "wb-yiu4 (open)", "P11": "wb-zswl (open)", "P12": "wb-pxvv (in_progress)"}
+for k in [f"P{i:02d}" for i in range(13)]:
+    rows = pk.get(k, [])
+    res = "covered" if rows else "**no row, no explicit deferral (RA-06)**"
+    w(f"| {k} | {R(rows) if rows else '—'} | {PC[k]} | {res} |")
+w("")
+w("P00's 'Done' line (identical compatibility matrix in both repositories; unknown versions fail closed) is met by R405 c1, R391 and R423 c2 by content; its re-pin duty is not restated (RA-13). The packet DAG edges of pi-03 (C139, C141, C143) appear only as C139 in R411; the P06-parallel and P08 → P09 → P10 edges must be set as bead dependencies at filing (live `blocks` rows read with `bd show`: wb-yiu4 is blocked by wb-9bof and wb-xr1z; wb-9bof by wb-xr1z and wb-p3i2; wb-xr1z by wb-p3i2; wb-p3i2 by wb-4bxo, wb-9a1o and wb-mwsy; wb-9a1o and wb-mwsy by wb-4bxo; wb-4bxo by wb-w8fk, wb-y0n6 and wb-2ukh).")
+w("")
+w("### 6.3 doc-04 families")
+w("")
+w("| Family (doc-04 lines) | Rows | Result |")
+w("|---|---|---|")
+D4 = [
+ ("Preamble: a falsifier for every positive, zero effect for negatives, new source-pinned receipt directory (L2)", "R453, R456; mutants per row", "covered; mutants missing on 8 rows (RA-18)"),
+ ("Tier ladder V0-V6 (L5-L11)", "V2 R460, V3 R461, V4 R462 / R431, V5 R463; V0 / V1 are definitions used by every row", "covered; **V6 neither covered nor deferred (RA-06)**"),
+ ("Falsifier matrix G01-G12 (L16-L27)", "R446 (G01, G02, G03, G12), R447 (G04, G05), R448 (G06, G07), R449 (G08, G09, G10), R450 (G11)", "covered (12/12); tiers RA-12; MW half RA-03"),
+ ("Falsifier matrix P13-P18 (L28-L33)", "R449 (P13, P14), R451 (P15, P16, P17), R450 (P18)", "covered (6/6)"),
+ ("Four domain outcomes (L36)", "R452, R428", "covered; 'CLI output' surface has no referent at the pin (C219) and stays skipped until the owner rules"),
+ ("Safety matrix: denial → zero callbacks, sessions, gate requests, writes (L39)", "R453, R427", "covered"),
+ ("Safety matrix: after-dispatch cancellation (L40)", "R454, R445, R418", "covered"),
+ ("Safety matrix: host / process kill at each stage (L41)", "R463 c1, R450, R402, R445 c2-c3", "covered (the ledger has no claim row for L41)"),
+ ("Safety matrix: resource trials 1 / 4 / 16 + same-root (L42)", "R455", "covered"),
+ ("Safety matrix: privacy (L43)", "fragments in R439, R465 c3, R419 c3, R414 c3", "**no owning row (RA-13)**; the ledger has no claim row for L43"),
+ ("QA sequence step 1: SHAs, clean Git, pinned manifests, no unmerged work overwritten (L46)", "R405 c1 (pins in the record), R470 (map)", "**re-pin and landing-branch rule uncovered (RA-13)**; predecessor EAT-R201"),
+ ("QA steps 2-6 (L47-L51)", "per-row tests; R460, R425; R461; R462, R457; R463", "covered; step 4's `workflow_reconcile` missing from R461 (RA-13)"),
+ ("QA step 7: local full Forge gate per package and on the final merged tree (L52)", "—", "**uncovered (RA-13)**; predecessor EAT-R286"),
+ ("QA step 8: docs, skills, example transcripts against the built CLI; W11 only for achieved tiers (L53)", "R468, R452", "covered except transcripts (RA-13)"),
+ ("Release vetoes (L56-L62; seven bullets, fifteen predicates)", "R459", "covered as one row (RA-16); 'L4/L5' unnamespaced (RA-19)"),
+ ("Release receipt format (L65)", "R458, R457, R431", "covered"),
+]
+for row in D4:
+    w("| " + " | ".join(esc(x) for x in row) + " |")
+w("")
+w("doc-01 / doc-02 / doc-05 by content: ledger PI-I01..I08 → R392, R400, R412, R409 / R410, R405, R438 / R439, R412 c3 / R413, R468; invariants I1-I10 → R421-R423 / R405, R406 / R424, R391-R395, R409 / R410, R400-R403, R441 / R433, R443 / R445 / R420, R412 / R407 / R423, R428 / R469, R460 / R461 / R456; admission stages A0-A6 → R411 (trace) with R405, R407, R408, R410, R399, R422 / R425, R416 / R442; refusal map (pi-02 section 7) → R419; LX, launch / observe view, controls (pi-05) → R465, R466, R467; handoffs H01-H05 → R469 with R421-R423, R426, R433 / R434, R443 / R444, R431 / R462.")
+w("")
+
+# ---------------- overlap groups ----------------
+w("## 7. Intra-set overlap groups (RA-11)")
+w("")
+w("| Group | Behaviour / contract rows | Verification / acquisition rows | Relation to write into the rows |")
+w("|---|---|---|---|")
+for name, beh, ver, why in D.GROUPS:
+    w(f"| {name} | {R(beh)} | {R(ver) if ver else '—'} | {esc(why)} |")
+w("")
+
+# ---------------- weak claims / decision conflicts ----------------
+w("## 8. Uncertainty and conflict handling")
+w("")
+w("### 8.1 UNDETERMINED premises")
+w("")
+w("| Premise (evidence) | Rows | Handling | Gap |")
+w("|---|---|---|---|")
+U = [
+ ("strict-native PASS attainable in the first-release topology (C026 facet; C175, C185 missing-to-settle)", "R437; conditions on R431, R434", "EVIDENCE_ACQUISITION with an either/or settlement; surfaces must say undetermined", "R462 assumes it (RA-05)"),
+ ("Pi journal ↔ MW intent identity, custody and precedence (E228)", "R415; R416, R403, R420, R444 blocked on it", "EVIDENCE_ACQUISITION naming the missing public lookup", "none"),
+ ("certificate carrier (E239)", "conditions on R433, R434, R439; acquisition in R462", "named condition; no certificate is ever constructed by Pi", "none"),
+ ("SDK pin and provider-factory ownership (E226; K032)", "R425 records identity", "recorded, not resolved", "no decision row (RA-15)"),
+ ("descriptor status transition from `descriptor-only` (E235)", "R405 c1 ('descriptor/schema/status/export choices')", "decision item in the ratification record", "evidence id not cited"),
+ ("absence of joined receipts beyond the two repositories (C023, C024, C025 missing-to-settle)", "R462 census", "census with a stated detection surface", "scope names the joined-run receipt only (RA-05 fix widens it)"),
+ ("whether GitHub Actions ran the master deposits (C035 facet v)", "—", "routed to the Pi owner by REMEDIATION; out of program scope (M047)", "state the deferral in the consolidated file (RA-14)"),
+ ("referent of 'its completed source changes' (C006)", "R470 c4", "acquisition of the referent list before any cut touches it", "none"),
+]
+for row in U:
+    w("| " + " | ".join(esc(x) for x in row) + " |")
+w("")
+w("### 8.2 Contradiction sets (K001-K037)")
+w("")
+w("The ledger has no CONTESTED claim row; two sets carry a CONTESTED embedded premise (K002, K004) and the rest are decision conflicts of one authoring lineage. Handling in the set:")
+w("")
+w("| Sets | Subject | Rows that keep the conflict explicit | Gap |")
+w("|---|---|---|---|")
+K = [
+ ("K001, K019", "release placement ('attached'), 'isolated'", "R404, R412 c2, R468 (lint), R432", "none"),
+ ("K002, K003, K017, K026", "H-label drift, cross-program DAG, indicative verbs, missing Mechanical edges", "R469, R411 c2", "none"),
+ ("K004, K005, K015, K021", "D6 owner, D-ledger outside the corpus, D4 severity, 'self-contained'", "R459 (negative lint only)", "**no ruling carrier (RA-07, RA-14)**"),
+ ("K006", "reply shape", "R441, R466", "**R441 wrong on the envelope (RA-02)**; status question undecided (RA-09)"),
+ ("K007, K034", "residual non-atomic window; final check is the producer's", "R409, R411 c3", "R409 does not name EAT-R234 (RA-10)"),
+ ("K008, K024", "assurance enumeration; meaning of verified_candidate", "R433 (keeps both vocabularies until ratified), R428", "none"),
+ ("K009", "refusal vocabulary", "R419, R427, R428, R467", "none"),
+ ("K010, K027", "V and L ladders", "R459 (ratified map), exec-shard definitions", "R459 still writes 'L4/L5' (RA-19)"),
+ ("K011", "caller-supplied basis", "R396", "none"),
+ ("K012", "legacy export", "R423", "none"),
+ ("K013, K014, K035", "lease owner, exclusivity scope, fence enforcement modality", "R398, R404, R401", "R401's subject (RA-03)"),
+ ("K016, K029", "binding settled vs proposed; what P00 ratifies", "R405, R424", "none"),
+ ("K020", "event replay vs effect replay", "R417, R442, R443 and the exec-shard definitions", "none"),
+ ("K023 (resolved by source)", "Forge envelope fields", "R434", "R446 says the opposite (RA-19)"),
+ ("K028", "G/P ↔ Q namespaces", "R459, R469", "mapping reproduced as a proposal in TDD-MATRIX section 6"),
+ ("K030", "effect-axis vocabulary", "—", "**no row (RA-15)**"),
+ ("K031", "two receipt templates", "R458", "MW emitter obligation (RA-03)"),
+ ("K032", "who composes the callbacks", "R423, R426 by implication", "**no decision row (RA-15)**"),
+ ("K033", "one digest for three executable packages", "R421, R422, R423", "none"),
+ ("K036", "event / stage vocabulary", "R429, R442", "none"),
+ ("K037", "null vs 'uncertain' sentinel", "R440, R430", "none"),
+ ("K018, K022, K025", "resolved, wording-only, or no defect", "—", "none"),
+]
+for row in K:
+    w("| " + " | ".join(esc(x) for x in row) + " |")
+w("")
+
+# ---------------- remediation ----------------
+w("## 9. Remediation coverage")
+w("")
+w("REMEDIATION.md: 239 rows; every repair is an insert whose pin advance is deferred to the owner (Pi Workbench), and 207 rows name 'EAT-R391+' as tracker. 178 rows are cited by at least one requirement. The 46 uncited rows with that tracker:")
+w("")
+w("| Class | M-ids (claim) | Disposition |")
+w("|---|---|---|")
+w("| Implementation-relevant, covered by content — cite on the row | M028, M029 (C029 → R468); M034, M035 (C032 → R459); M055 (C055 → R413, R412 c3); M058 (C058 → R421-R423); M067 (C067 → R459); M076 (C079 → R432); M081, M082 (C087 → R424); M083 (C088 → R405 c1, R421); M097 (C102 → R439 c4, R440 c2, R414 c3); M132, M133 (C133 → R423, R429); M150 (C148 → R405 c1, R391); M152 (C150 → R392); M176, M177 (C171 → R433); M221 (C212 → R412); M223 (C214 → R421) | 20 rows; add the M-id to the named row |")
+w("| Implementation-relevant, **uncovered** | M002 (C002), M037 (C034), M136 (C136), M187 (C177): landing trunk, master-only documents, merge direction, validator anchor; M003 (C003): one re-pinned pair; M017 (C020): receipt validator inside the gate, write-once vs regeneration; M143, M144 (C141): live bead edges; M056 (C056): W11 detector when the host location changes; M191 (C182): tier map distinguished from L0-L10 | 10 rows; fixes under RA-13 (R470, R459, R468) — M191 is discharged by TDD-MATRIX section 2 once R459 cites it |")
+w("| Wording-only inserts | M001, M005, M006, M007, M008, M012, M041, M068, M069, M070, M071, M074, M075, M104, M134, M163 | 16 rows; one annotation block under R468 (RA-14); M007 / M008's referent list is R470 c4 |")
+w("")
+und = sorted(set(claims) - derived)
+und_e = [c for c in und if claims[c]["status"] == "ESTABLISHED"]
+und_n = [c for c in und if claims[c]["status"] == "NON-EPISTEMIC"]
+und_r = [c for c in und if claims[c]["status"] == "REFUTED"]
+w(f"Ledger claims that no map row derives from: {len(und)} of {len(claims)}. {len(und_e)} are ESTABLISHED baseline observations or source reports with no obligation of their own ({', '.join(und_e)}); their facts reach the set through sibling claims. {len(und_n)} are NON-EPISTEMIC norms, proposals or definitions ({', '.join(und_n)}): fourteen are met by content through other rows (C037 red-first discipline; C055 → R412 c3, R413; C057 → R468; C058 → R421-R423; C067 → R456, R460, R461; C076 → R470; C078 → R460; C086 and C182 definitions; C102 → R439, R440; C148 → R405, R391, R423; C171 → R428, R429, R433, R439, R440; C176 → R446-R455, R463; C177 → R456, R458, R459, R468), and five are not: C031 (ownership and severity split, RA-07), C141 and C143 (packet order, to be set as bead edges), C178 and C179 (P11, P12; RA-06). {len(und_r)} are REFUTED ({', '.join(und_r)}; RA-14).")
+w("")
+w("The 15 uncited rows with another tracker (M032, M033, M038, M039, M040, M053, M054, M057, M072, M073, M139, M147, M185, M186, M188) point at wb-w8fk / wb-1zn2, wb-12x1 rows, wb-9v02 / wb-7wkb, wb-p3i2 / wb-xr1z / wb-9bof and wb-0gbh / wb-ub94; four of those trackers are closed beads (wb-12x1, wb-9v02, wb-7wkb, wb-0gbh), so their rows need a live carrier at filing. The two repairs REMEDIATION routes to the owner as EMPIRICAL_REPAIR candidates are both uncompiled: the census red on master (RA-14) and committed producer red tests for the C033 gaps (MW-owned; consumed under RA-03).")
+w("")
+
+# ---------------- bead facts ----------------
+w("## 10. Bead mapping facts (live read " + D.BEAD_READ_AT + ")")
+w("")
+w("| Bead | Live status | Title (abridged) | Parent | MII rows (audited) |")
+w("|---|---|---|---|---|")
+BT = [
+ ("wb-w8fk", "[MWI-contract-choice] Adopt the Pi side of one versioned cross-repository invocation contract", "wb-1a3t"),
+ ("wb-y0n6", "[MNI P02] Installed producer descriptor/package admission, external consumer", "wb-rhyt"),
+ ("wb-2ukh", "[MNI P03] Function authority + writer source admission integrated, no-await dispatch chain", "wb-rhyt"),
+ ("wb-4bxo", "[MWI-dispatch] Launch authorized embedded functions through the registered Pi tool", "wb-1a3t"),
+ ("wb-9a1o", "[MWI-outcomes] MNI P05: original Mechanical outcomes, native evidence and reopenable bounded observation", "wb-1a3t"),
+ ("wb-mwsy", "[MWI-effects] MNI P06: durable intent, exact controls and conservative uncertain-effect recovery", "wb-1a3t"),
+ ("wb-p3i2", "[MWI-git-census] Compose the installed Git-census host in an isolated Pi-owned invocation", "wb-1a3t"),
+ ("wb-xr1z", "[MNI P08] Adversarial admission/semantics matrix A01-A14 + B01-B14 through registered tools", "wb-rhyt"),
+ ("wb-9bof", "[MNI P09] Crash/recovery fault matrix + workload/resource tests", "wb-rhyt"),
+ ("wb-yiu4", "[MNI P10] Release proof, regressions, agent LX, W11 truth", "wb-rhyt"),
+]
+for b, title, parent in BT:
+    w(f"| {b} | {D.BEAD_STATUS[b]} | {title} | {parent} | {R(load.get(b, []))} ({len(load.get(b, []))}) |")
+w(f"| — | new bead owed | P01 canonical input (R392-R397); EAT-R253 repair + gate (R413); containment wording (R432) | ruling owed (RA-20) | {R(load.get('new bead owed', []))} ({len(load.get('new bead owed', []))}) |")
+w("")
+w("Not carriers: wb-upad (closed 05:28:31Z, into wb-9a1o), wb-5a7k (closed 05:29:23Z, into wb-mwsy), wb-dlc6 and wb-669r (closed into wb-zswl and wb-pxvv), wb-7wkb, wb-12x1, wb-5ik5, wb-s8rm, wb-9v02, wb-3121 (closed lineage), wb-1zn2 (deferred; MW-owned deliverables tracker, never a Pi implementation bead). Deferred packets: wb-zswl (open, MNI P11), wb-pxvv (in_progress, MNI P12). Epics: wb-1a3t (open, MWI), wb-rhyt (open, MNI). Rows counted twice above: R424 (wb-y0n6, wb-w8fk), R427 (wb-4bxo, wb-2ukh), R430 (wb-p3i2, wb-9a1o), R435 and R440 (wb-9a1o, wb-mwsy), R445 (wb-mwsy, wb-9bof).")
+w("")
+w("Filing rules that follow from the audit: (1) read status with `bd --readonly --json` at filing, parse by exact id; (2) successor beads with blocking dependencies for in-progress carriers, append-only notes (RA-21); (3) one bead per overlap group's test family (RA-11); (4) one new bead for the EAT-R253 repair with R413 as its gate leg (RA-08); (5) R431 + R457 + R462 as legs of one bead (RA-05); (6) MW-owned work is never filed in the Pi store except as the existing external tracker wb-1zn2; (7) `related` edges to the DX beads on shared files (RA-22).")
+w("")
+
+# ---------------- residual ----------------
+w("## 11. Residual assumptions and release gates")
+w("")
+w("- **G-RATIFY is the first gate.** " + str(sum(1 for n in IDS if 'G-RATIFY' in D.ST[n][1] or '*RAT' in D.C[n])) + " rows name G-RATIFY in a cell or in their gate status; the joint record does not exist; its Pi carrier wb-w8fk is " + D.BEAD_STATUS['wb-w8fk'] + " and its MW tracker is deferred. Nothing downstream can close before it, and no Pi bead can ratify alone.")
+w("- **Strict-native is undetermined, not failed.** Until EAT-R437 settles by envelope or by decision, no surface may say the first release's strict clause is achievable, and a V4 receipt may be non-strict.")
+w("- **Effectful dispatch is off** until the EAT-R253 repair receipt exists (RA-08); V3 rows run on fixtures only.")
+w("- **Mechanical work is consumed, not built**: composed export, runtime manifest, strict certificate, non-occurrence certificate, invocation-keyed lookup, progress member (mw-03 H01-H07). Each missing piece is a BLOCKED cell with its packet named.")
+w(f"- **Gate status**: NOT_RUN {len(IDS) - len(blocked)}, BLOCKED {len(blocked)}; no row is PASS (TDD-MATRIX Matrix B).")
+w("- **Pins move.** Verdicts hold at Pi 0fb90672 / MW 69cb016d; MW main was three commits past the snapshot at ledger time and Pi trunk keeps moving. Re-pin before the first cut (EAT-R201) and re-read the bead store before filing.")
+w("")
+w("## 12. Audit limits")
+w("")
+w("- Static audit: no requirement's acceptance was executed; 'runnable now' in the matrix means the leg has no external blocker, not that it was run.")
+w("- The EXTENDS adjudication read all 110 predecessor titles and Maps-to lines but the full acceptance text of thirteen rows only; an overlap visible only in an unread criterion would be missed.")
+w("- The sibling DX program was compared by title; RA-22 is a risk list, not a reconciliation.")
+w("- The census 'red on master' and the 148 `pinned:false` occurrences are ledger statements (C220 / E010; C026 facet), not re-measured here.")
+w("- Credential presence, the installed Forge envelope and any MW state after 69cb016d were not read.")
+w("- The L1-L10 cell assignment in TDD-MATRIX is this auditor's reading of each row; the core shard supplied its own level list (kept), the other two shards supplied none.")
+w("- No numeric confidence is stated anywhere; counts are descriptive.")
+w("")
+
+# ---------------- appendix A ----------------
+w("## Appendix A — weak-claim disposition map (ledger → requirements)")
+w("")
+w("| Claim | Final status | Rows (map) | Disposition |")
+w("|---|---|---|---|")
+WA = [
+ ("C005", "'self-contained' — no row; wording insert M005/M006 plus the RA-07 crosswalk rows are owed (RA-14)"),
+ ("C006", "acquisition of the protected-changes referent list (R470 c4); never assumed"),
+ ("C029", "negative: docs lint rejects 'attached' as a Pi placement (R468); R438 conditions on observability, not placement"),
+ ("C032", "negative: no veto or ownership row may cite a bare D-number (R459); R432 takes a wording obligation only"),
+ ("C035", "no row; facets (i)-(iii) established, (iv) wording insert, (v) covered by C138 → R456 (RA-14)"),
+ ("C080", "PLAUSIBLE hazard → RISK_CONTROL guard (R392) and falsifier G08 (R449); stated as plausible, not observed"),
+ ("C095", "negative regression R395; R424 cites only the surviving closed-keys facet (caution in RA-19)"),
+ ("C138", "negative: wording may not assert that the repository has no GitHub CI; CI is never cited as proof (R456)"),
+ ("C140", "must-ratify: explicit DAG (R411), no ordering assumed (R426), crosswalk (R469)"),
+ ("C142", "must-ratify (R411, R469); R431 names dependencies by content"),
+ ("C163", "must-ratify (R411, R469); R423 names dependencies by content"),
+]
+for c, disp in WA:
+    rows = sorted(set(rev.get(c, [])))
+    w(f"| {c} | {claims[c]['status']} | {R(rows) if rows else '— none'} | {esc(disp)} |")
+sup = sorted(c for c, r in claims.items() if r["status"] == "SUPPORTED")
+w("")
+w("SUPPORTED rows (13) are cited with that label and used as hazards or bounded baselines, never as established fact: " + "; ".join(f"{c} → {R(sorted(set(rev.get(c, []))))}" for c in sup) + ".")
+w("")
+w("## Appendix B — scratch artifacts of this audit (`requirements/.work/req-audit/`)")
+w("")
+w("`parse_reqs.py` → `reqs-parsed.json` (80 parsed rows); `laundering_scan.py` → `laundering-scan.json`; `mni-digest.json` (110 predecessor rows); `bd-status-extract.json` (first live read) and `bd-status-reread.json` (last live read; each with the digest of the 108 MB list output, which was not kept); `anchor_check.py` → `anchor-check.json` (code anchors); `audit_data.py` (per-row audit judgments), `check_data.py`, `gen_matrix.py`, `gen_audit.py` (generators of the two deliverables).")
+w("")
+(ROOT / "requirements" / "REQUIREMENTS-AUDIT.md").write_text("\n".join(o) + "\n")
+print("REQUIREMENTS-AUDIT.md written:", len(o), "lines;", sum(len(x) for x in o), "chars; findings", len(F))
+print("blocking", sum(1 for f in F if f[1].startswith("BLOCKING")), "condition", sum(1 for f in F if f[1].startswith("CONDITION")), "text", sum(1 for f in F if f[1].startswith("TEXT")))
+print("ratify rows", sum(1 for n in IDS if 'G-RATIFY' in D.ST[n][1] or '*RAT' in D.C[n]), "inprog rows", len(inprog), "new", new_rows)
+print({k: len(v) for k, v in load.items()})

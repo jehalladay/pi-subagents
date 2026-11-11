@@ -1,0 +1,63 @@
+{
+ "schema": "mechanical-workflows/fresh-clone-typing-recovery/v1",
+ "date": "2026-10-15",
+ "method": "git clone --no-hardlinks <local repo> <tmp>; npm ci --ignore-scripts; npm run build; npm run typecheck:qa; FORGE_JSON=1 forge build. No provider SDK installed in either clone (node_modules/@forge absent before and after).",
+ "foundBy": "MechanicalWorkflows - Orchestration Engineer peer session, own rig clone, npm ci then forge build",
+ "red": {
+  "commit": "79c1a22",
+  "npmCiExit": 0,
+  "buildExit": 0,
+  "typecheckQaExit": 2,
+  "typescriptErrors": [
+   "qa/adversarial/forge-gate-cancel.ts(13,117): error TS2307: Cannot find module '@forge/sdk' or its corresponding type declarations."
+  ],
+  "forgeSdkPresent": false
+ },
+ "green": {
+  "commit": "9a83892",
+  "npmCiExit": 0,
+  "buildExit": 0,
+  "typecheckQaExit": 0,
+  "typescriptErrors": [],
+  "forgeSdkPresent": false,
+  "forge": {
+   "verdict": "PASS",
+   "commandId": "cmd_cd155ade2625",
+   "operationId": "op-e8d4c46761e241abbbbeb0c9c93f642b",
+   "steps": [
+    {
+     "name": "structure",
+     "status": "passed",
+     "durationMs": 175
+    },
+    {
+     "name": "typing",
+     "status": "passed",
+     "durationMs": 2915
+    },
+    {
+     "name": "test",
+     "status": "passed",
+     "durationMs": 10070
+    },
+    {
+     "name": "python-consumer",
+     "status": "passed",
+     "durationMs": 83
+    },
+    {
+     "name": "evidence",
+     "status": "passed",
+     "durationMs": 546
+    },
+    {
+     "name": "docs",
+     "status": "passed",
+     "durationMs": 175
+    }
+   ]
+  }
+ },
+ "fix": "qa/adversarial/forge-gate-cancel.ts loads the @forge/sdk fallback through a non-literal specifier; scripts/check-structure.ts refuses string-literal imports of the four optional provider SDKs (OPTIONAL_SDK_LITERAL_IMPORT) under scripts/, qa/, apps/, packages/",
+ "bead": "MechanicalWorkflows-33w"
+}

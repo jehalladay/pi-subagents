@@ -1,0 +1,118 @@
+{
+ "root": "pins/pi-0fb90672",
+ "entry": "src/index.ts",
+ "src_files": 124,
+ "modules_scanned": 124,
+ "reachable_from_entry": 107,
+ "targets": {
+  "src/workbench/function-authority.ts": {
+   "tracked": true,
+   "reachable_from_entry": false,
+   "direct_importers_in_src": []
+  },
+  "src/workbench/source-admission.ts": {
+   "tracked": true,
+   "reachable_from_entry": false,
+   "direct_importers_in_src": []
+  },
+  "src/workbench/mechanical-descriptor.ts": {
+   "tracked": true,
+   "reachable_from_entry": false,
+   "direct_importers_in_src": [
+    "src/workbench/mechanical-coordination.ts"
+   ]
+  },
+  "src/workbench/mechanical-coordination.ts": {
+   "tracked": true,
+   "reachable_from_entry": false,
+   "direct_importers_in_src": []
+  },
+  "src/workbench/execute-tool.ts": {
+   "tracked": true,
+   "reachable_from_entry": true,
+   "direct_importers_in_src": [
+    "src/index.ts"
+   ]
+  },
+  "src/workbench/execute.ts": {
+   "tracked": true,
+   "reachable_from_entry": true,
+   "direct_importers_in_src": [
+    "src/workbench/execute-tool.ts",
+    "src/workbench/function-authority.ts"
+   ]
+  },
+  "src/workbench/observation.ts": {
+   "tracked": true,
+   "reachable_from_entry": true,
+   "direct_importers_in_src": [
+    "src/index.ts",
+    "src/ui/workflow-inspector.ts",
+    "src/ui/workflow-menu.ts",
+    "src/workbench/attention.ts",
+    "src/workbench/beads-observer.ts",
+    "src/workbench/beads-program-readiness.ts",
+    "src/workbench/claude-control-observer.ts",
+    "src/workbench/claude-evidence.ts",
+    "src/workbench/claude-topology.ts",
+    "src/workbench/collective-event.ts",
+    "src/workbench/control-tool.ts",
+    "src/workbench/control.ts",
+    "src/workbench/detached-control.ts",
+    "src/workbench/detached-observer.ts",
+    "src/workbench/evidence-loader.ts",
+    "src/workbench/evidence-producers.ts",
+    "src/workbench/evidence-wiring.ts",
+    "src/workbench/execute-tool.ts",
+    "src/workbench/execute.ts",
+    "src/workbench/forge-evidence.ts",
+    "src/workbench/forge-observer.ts",
+    "src/workbench/forge-operation-observer.ts",
+    "src/workbench/furnace-evidence.ts",
+    "src/workbench/furnace-observer.ts",
+    "src/workbench/graph-view.ts",
+    "src/workbench/hyperunix-observer.ts",
+    "src/workbench/latency.ts",
+    "src/workbench/native-evidence.ts",
+    "src/workbench/observe-query.ts",
+    "src/workbench/reactivefiber-observer.ts",
+    "src/workbench/reconcile-decision.ts",
+    "src/workbench/reconcile-tool.ts",
+    "src/workbench/telemetry.ts",
+    "src/workbench/timeline.ts",
+    "src/workbench/topology-slice.ts",
+    "src/workflow/journal-compat.ts",
+    "src/workflow/journal.ts",
+    "src/workflow/reconcile.ts"
+   ]
+  },
+  "src/workbench/native-modules.ts": {
+   "tracked": true,
+   "reachable_from_entry": true,
+   "direct_importers_in_src": [
+    "src/index.ts",
+    "src/workbench/evidence-wiring.ts"
+   ]
+  }
+ },
+ "unreachable_modules": [
+  "src/workbench/beads-observer.ts",
+  "src/workbench/beads-program-readiness.ts",
+  "src/workbench/claude-topology.ts",
+  "src/workbench/collective-event.ts",
+  "src/workbench/detached-observer.ts",
+  "src/workbench/executable-identity.ts",
+  "src/workbench/function-authority.ts",
+  "src/workbench/hosts/furnace-hosted.ts",
+  "src/workbench/hyperunix-observer.ts",
+  "src/workbench/latency.ts",
+  "src/workbench/mechanical-coordination.ts",
+  "src/workbench/mechanical-descriptor.ts",
+  "src/workbench/patch-proposal.ts",
+  "src/workbench/reactivefiber-observer.ts",
+  "src/workbench/source-admission.ts",
+  "src/workbench/telemetry.ts",
+  "src/workflow/journal-compat.ts"
+ ],
+ "unresolved_relative_specifiers": {}
+}

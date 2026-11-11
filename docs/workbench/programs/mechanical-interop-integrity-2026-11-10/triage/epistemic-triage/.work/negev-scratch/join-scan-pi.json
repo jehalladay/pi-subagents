@@ -1,0 +1,77 @@
+{
+ "root": "pins/pi-0fb90672",
+ "counts": {
+  "files": 2223,
+  "binary_or_unreadable": 5
+ },
+ "with_pi_run": 57,
+ "with_outcome": 114,
+ "with_forge_op": 29,
+ "pi_run+forge_op": [
+  ".beads/archive/issues-closed-2026-10.jsonl",
+  ".beads/archive/issues-closed-2026-11.jsonl",
+  ".beads/interactions.jsonl",
+  ".beads/issues.jsonl",
+  "docs/workbench/TRACEABILITY.md",
+  "test/workbench-control-tool.test.ts"
+ ],
+ "pi_run+outcome": [
+  ".beads/archive/issues-closed-2026-10.jsonl",
+  ".beads/archive/issues-closed-2026-11.jsonl",
+  ".beads/issues.jsonl",
+  "test/workbench-mechanical-evidence-census.test.ts"
+ ],
+ "forge_op+outcome": [
+  ".beads/archive/issues-closed-2026-10.jsonl",
+  ".beads/archive/issues-closed-2026-11.jsonl",
+  ".beads/issues.jsonl",
+  "docs/workbench/programs/mechanical-interoperability-audit-2026-11-06/triage/epistemic-triage/CLAIMS.jsonl",
+  "docs/workbench/programs/mechanical-interoperability-audit-2026-11-06/triage/epistemic-triage/EVIDENCE.jsonl",
+  "docs/workbench/programs/mechanical-interoperability-audit-2026-11-06/triage/epistemic-triage/status-part-g03.jsonl",
+  "docs/workbench/programs/mechanical-native-interoperability-2026-11-09/triage/epistemic-triage/CLAIMS.jsonl",
+  "docs/workbench/programs/mechanical-native-interoperability-2026-11-09/triage/epistemic-triage/RELATIONS.jsonl",
+  "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/epistemic-triage/.work-phase9/backup/EVIDENCE.jsonl",
+  "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/epistemic-triage/EVIDENCE.jsonl",
+  "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/epistemic-triage/dossiers/C0367.json",
+  "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/epistemic-triage/dossiers/C0368.json",
+  "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/epistemic-triage/relations-part-g03.jsonl",
+  "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/epistemic-triage/status-part-g03.jsonl",
+  "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/scratch-g03/evidence_g03.py"
+ ],
+ "all_four(pi-run,outcome,forge-op,pin)": [
+  ".beads/archive/issues-closed-2026-10.jsonl",
+  ".beads/archive/issues-closed-2026-11.jsonl",
+  ".beads/issues.jsonl"
+ ],
+ "forge_op_files": [
+  ".beads/archive/issues-closed-2026-10.jsonl",
+  ".beads/archive/issues-closed-2026-11.jsonl",
+  ".beads/interactions.jsonl",
+  ".beads/issues.jsonl",
+  "docs/workbench/TRACEABILITY.md",
+  "docs/workbench/programs/mechanical-interoperability-audit-2026-11-06/triage/epistemic-triage/CLAIMS.jsonl",
+  "docs/workbench/programs/mechanical-interoperability-audit-2026-11-06/triage/epistemic-triage/EVIDENCE.jsonl",
+  "docs/workbench/programs/mechanical-interoperability-audit-2026-11-06/triage/epistemic-triage/dossiers/C1327-part03.md",
+  "docs/workbench/programs/mechanical-interoperability-audit-2026-11-06/triage/epistemic-triage/dossiers/C1365.md",
+  "docs/workbench/programs/mechanical-interoperability-audit-2026-11-06/triage/epistemic-triage/dossiers/C1490.md",
+  "docs/workbench/programs/mechanical-interoperability-audit-2026-11-06/triage/epistemic-triage/lens-provenance.jsonl",
+  "docs/workbench/programs/mechanical-interoperability-audit-2026-11-06/triage/epistemic-triage/relations-part-g03.jsonl",
+  "docs/workbench/programs/mechanical-interoperability-audit-2026-11-06/triage/epistemic-triage/status-part-g03.jsonl",
+  "docs/workbench/programs/mechanical-native-interoperability-2026-11-09/triage/epistemic-triage/CLAIMS.jsonl",
+  "docs/workbench/programs/mechanical-native-interoperability-2026-11-09/triage/epistemic-triage/RELATIONS.jsonl",
+  "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/epistemic-triage/.work-phase9/backup/EVIDENCE.jsonl",
+  "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/epistemic-triage/EVIDENCE.jsonl",
+  "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/epistemic-triage/dossiers/C0367.json",
+  "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/epistemic-triage/dossiers/C0368.json",
+  "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/epistemic-triage/relations-part-g03.jsonl",
+  "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/epistemic-triage/status-part-g03.jsonl",
+  "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/scratch-g03/evidence_g03.py",
+  "docs/workbench/receipts/wb-a3s.md",
+  "new-feedback/2026-10-26-positive-4-of-4-typed-record-honesty-refusals-in-24-h-measured-a-census-header-claim-false-by-a-partial-mutant-3-green-1-anchor-red-so-the-header-rows-give-the-gate-its-target.md",
+  "qa/workbench/receipts/wb-muip-forge-transport-probe.json",
+  "test/workbench-control-tool.test.ts",
+  "test/workbench-forge-contract.test.ts",
+  "test/workbench-forge-observer.test.ts",
+  "test/workbench-forge-operation-observer.test.ts"
+ ]
+}

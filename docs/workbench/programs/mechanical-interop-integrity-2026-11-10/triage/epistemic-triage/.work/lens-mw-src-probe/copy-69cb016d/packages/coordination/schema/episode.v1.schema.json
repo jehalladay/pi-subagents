@@ -1,0 +1,464 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mw.episode.v1",
+  "title": "mw.episode.v1",
+  "description": "Shared emitted episode record. A value the environment does not know is the literal \"unknown\", never omitted, defaulted or null.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "version",
+    "mode",
+    "episodeId",
+    "environment",
+    "source",
+    "task",
+    "policy",
+    "roles",
+    "initialCheckpoint",
+    "checkpoints",
+    "decisions",
+    "events",
+    "artifacts",
+    "attempts",
+    "cost",
+    "verifier",
+    "arms",
+    "sanitize"
+  ],
+  "properties": {
+    "schema": {
+      "const": "mw.episode.v1"
+    },
+    "version": {
+      "const": 1
+    },
+    "mode": {
+      "enum": [
+        "fixture",
+        "replay",
+        "live"
+      ]
+    },
+    "episodeId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "environment": {
+      "enum": [
+        "landing-queue",
+        "compaction-inheritance",
+        "colony-resilience",
+        "artifact-recovery",
+        "quorum-evidence",
+        "native-replay",
+        "landing-queue-elastic",
+        "landing-queue-heterogeneous",
+        "landing-queue-temporal",
+        "dag-assignment"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "seed"
+      ],
+      "properties": {
+        "schema": {
+          "type": "string"
+        },
+        "seed": {
+          "type": "integer"
+        }
+      }
+    },
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "basis",
+        "family"
+      ],
+      "properties": {
+        "basis": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "revision",
+        "configHash"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "revision": {
+          "type": "string"
+        },
+        "configHash": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      }
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "initialCheckpoint": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        {
+          "const": "unknown"
+        }
+      ]
+    },
+    "checkpoints": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^sha256:[0-9a-f]{64}$"
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "step",
+          "observationDigest",
+          "proposed",
+          "eligibility",
+          "logProb",
+          "readSet",
+          "provenance"
+        ],
+        "properties": {
+          "step": {
+            "type": "integer"
+          },
+          "observationDigest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "proposed": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "eligibility": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "admitted",
+              "rejected"
+            ],
+            "properties": {
+              "admitted": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "rejected": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "intentId",
+                    "code"
+                  ],
+                  "properties": {
+                    "intentId": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "logProb": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "const": "unknown"
+              }
+            ]
+          },
+          "readSet": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "provenance": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "step",
+          "kind",
+          "subject",
+          "detail"
+        ],
+        "properties": {
+          "step": {
+            "type": "integer"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "created",
+        "consumed"
+      ],
+      "properties": {
+        "created": {
+          "oneOf": [
+            {
+              "const": "unknown"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "producer",
+                  "digest"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "producer": {
+                    "type": "string"
+                  },
+                  "digest": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "consumed": {
+          "oneOf": [
+            {
+              "const": "unknown"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "attempt",
+                  "artifactId",
+                  "digest"
+                ],
+                "properties": {
+                  "attempt": {
+                    "type": "string"
+                  },
+                  "artifactId": {
+                    "type": "string"
+                  },
+                  "digest": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "attempts": {
+      "oneOf": [
+        {
+          "const": "unknown"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "parent",
+              "outcome"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "parent": {
+                "type": "string"
+              },
+              "outcome": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "cost": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "steps",
+        "budgetSpent",
+        "environmentCost"
+      ],
+      "properties": {
+        "steps": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "budgetSpent": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "compute",
+            "workers",
+            "queue",
+            "latencyMs"
+          ],
+          "properties": {
+            "compute": {
+              "type": "number"
+            },
+            "workers": {
+              "type": "number"
+            },
+            "queue": {
+              "type": "number"
+            },
+            "latencyMs": {
+              "type": "number"
+            }
+          }
+        },
+        "environmentCost": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "const": "unknown"
+            }
+          ]
+        }
+      }
+    },
+    "verifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "receiptDigest",
+        "verdict"
+      ],
+      "properties": {
+        "label": {
+          "enum": [
+            "fixture",
+            "replay"
+          ]
+        },
+        "receiptDigest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "verdict": {
+          "type": "string"
+        }
+      }
+    },
+    "arms": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "controlId",
+        "treatmentId"
+      ],
+      "properties": {
+        "controlId": {
+          "type": "string"
+        },
+        "treatmentId": {
+          "type": "string"
+        }
+      }
+    },
+    "sanitize": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ran",
+        "removed"
+      ],
+      "properties": {
+        "ran": {
+          "const": true
+        },
+        "removed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

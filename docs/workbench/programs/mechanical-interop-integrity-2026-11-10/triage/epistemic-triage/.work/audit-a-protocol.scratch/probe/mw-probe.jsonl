@@ -1,0 +1,11 @@
+{"probe":"M1-negative-evidence","label":"pristine","ignoredEffectExists":false,"gitStatus":"","effect":"writer","disposition":"not-occurred","retryPermitted":true,"evidence":{"system":"git","kind":"head-at-base-clean-worktree","id":"9395845984089ff7cb3fc22724a6eaeff037ef1a"}}
+{"probe":"M1-negative-evidence","label":"ignored-effect","ignoredEffectExists":true,"gitStatus":"","effect":"writer","disposition":"not-occurred","retryPermitted":true,"evidence":{"system":"git","kind":"head-at-base-clean-worktree","id":"9395845984089ff7cb3fc22724a6eaeff037ef1a"}}
+{"probe":"M1-negative-evidence","label":"edit-restored","ignoredEffectExists":true,"gitStatus":"","effect":"writer","disposition":"not-occurred","retryPermitted":true,"evidence":{"system":"git","kind":"head-at-base-clean-worktree","id":"9395845984089ff7cb3fc22724a6eaeff037ef1a"}}
+{"probe":"M1-negative-evidence","label":"untracked-effect","ignoredEffectExists":true,"gitStatus":"?? untracked\n","effect":"writer","disposition":"occurred","retryPermitted":false,"evidence":{"system":"git","kind":"worktree-status","id":"9395845984089ff7cb3fc22724a6eaeff037ef1a"}}
+{"probe":"M2-binding-validation","label":"plain","accepted":true}
+{"probe":"M2-binding-validation","label":"symbol-extra","accepted":true}
+{"probe":"M2-binding-validation","label":"inherited-fields","accepted":true}
+{"probe":"M2-binding-validation","label":"sha256-git","accepted":false,"code":"HOST_BINDING_FIELD_INVALID"}
+{"probe":"M3-grant-grammar","token":"mechanical:develop-write","mw":true,"piAction":true}
+{"probe":"M3-grant-grammar","token":"org.fixture-fn:develop-write","mw":false,"piAction":true}
+{"probe":"M3-grant-grammar","token":"claude:tool:Read","mw":false,"piAction":false}

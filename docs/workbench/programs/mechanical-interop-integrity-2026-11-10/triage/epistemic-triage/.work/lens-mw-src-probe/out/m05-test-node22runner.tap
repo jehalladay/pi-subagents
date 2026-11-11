@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: the external fixture runs on Node 24 and the installed tree resolves under its own node_modules
+ok 1 - the external fixture runs on Node 24 and the installed tree resolves under its own node_modules
+  ---
+  duration_ms: 37.993199
+  type: 'test'
+  ...
+# Subtest: the Node 24 resolver takes the first candidate that reports v24, ignores other majors and unprobeable binaries, and yields nothing when none qualifies
+ok 2 - the Node 24 resolver takes the first candidate that reports v24, ignores other majors and unprobeable binaries, and yields nothing when none qualifies
+  ---
+  duration_ms: 1.159822
+  type: 'test'
+  ...
+# Subtest: positive control: the pinned descriptor and tarball admit once, each callback runs once, and the import counter moves
+ok 3 - positive control: the pinned descriptor and tarball admit once, each callback runs once, and the import counter moves
+  ---
+  duration_ms: 1542.621275
+  type: 'test'
+  ...
+# Subtest: a corrupt descriptor byte refuses HOST_DESCRIPTOR_DIGEST_MISMATCH before any import
+ok 4 - a corrupt descriptor byte refuses HOST_DESCRIPTOR_DIGEST_MISMATCH before any import
+  ---
+  duration_ms: 320.649842
+  type: 'test'
+  ...
+# Subtest: a corrupt tarball byte refuses ENTRYPOINT_ARTIFACT_MISMATCH before any import
+ok 5 - a corrupt tarball byte refuses ENTRYPOINT_ARTIFACT_MISMATCH before any import
+  ---
+  duration_ms: 372.805973
+  type: 'test'
+  ...
+# Subtest: an alternate export name in a re-digested descriptor refuses ENTRYPOINT_CONTRACT_INVALID before any import
+ok 6 - an alternate export name in a re-digested descriptor refuses ENTRYPOINT_CONTRACT_INVALID before any import
+  ---
+  duration_ms: 461.153727
+  type: 'test'
+  ...
+# Subtest: a tarball path swapped after a first admission refuses the second invocation with zero imports for it
+ok 7 - a tarball path swapped after a first admission refuses the second invocation with zero imports for it
+  ---
+  duration_ms: 1669.643972
+  type: 'test'
+  ...
+# Subtest: the host's own tarball overwritten while npm installs refuses ENTRYPOINT_ARTIFACT_MISMATCH with zero imports
+ok 8 - the host's own tarball overwritten while npm installs refuses ENTRYPOINT_ARTIFACT_MISMATCH with zero imports
+  ---
+  duration_ms: 1044.085557
+  type: 'test'
+  ...
+# Subtest: a symlinked artifact path refuses ENTRYPOINT_ARTIFACT_INVALID before any copy or import
+ok 9 - a symlinked artifact path refuses ENTRYPOINT_ARTIFACT_INVALID before any copy or import
+  ---
+  duration_ms: 330.684798
+  type: 'test'
+  ...
+# Subtest: a dot-dot artifact path refuses ENTRYPOINT_ARTIFACT_PATH_INVALID before any read or import
+ok 10 - a dot-dot artifact path refuses ENTRYPOINT_ARTIFACT_PATH_INVALID before any read or import
+  ---
+  duration_ms: 336.0576
+  type: 'test'
+  ...
+# Subtest: a services object without the verify callback refuses ENTRYPOINT_BINDING_INVALID before any import
+ok 11 - a services object without the verify callback refuses ENTRYPOINT_BINDING_INVALID before any import
+  ---
+  duration_ms: 337.582052
+  type: 'test'
+  ...
+# Subtest: a four-key services object whose verify is not a function refuses ENTRYPOINT_BINDING_INVALID before any import (the key count passes, so only the per-key function check can refuse it)
+ok 12 - a four-key services object whose verify is not a function refuses ENTRYPOINT_BINDING_INVALID before any import (the key count passes, so only the per-key function check can refuse it)
+  ---
+  duration_ms: 348.114595
+  type: 'test'
+  ...
+# Subtest: a four-key services object whose verify key is renamed refuses ENTRYPOINT_BINDING_INVALID before any import (the key count passes, so only the per-key function check can refuse it)
+ok 13 - a four-key services object whose verify key is renamed refuses ENTRYPOINT_BINDING_INVALID before any import (the key count passes, so only the per-key function check can refuse it)
+  ---
+  duration_ms: 362.682731
+  type: 'test'
+  ...
+# Subtest: a binding that names a non-absolute workspace refuses HOST_BINDING_FIELD_INVALID with zero loader calls
+ok 14 - a binding that names a non-absolute workspace refuses HOST_BINDING_FIELD_INVALID with zero loader calls
+  ---
+  duration_ms: 320.104011
+  type: 'test'
+  ...
+# Subtest: a write dispatched without the exact grant refuses WRITE_GRANT_ABSENT and never starts the writer
+ok 15 - a write dispatched without the exact grant refuses WRITE_GRANT_ABSENT and never starts the writer
+  ---
+  duration_ms: 332.576867
+  type: 'test'
+  ...
+# Subtest: a binding that asks for more than one writer refuses HOST_BINDING_FIELD_INVALID with zero loader calls
+ok 16 - a binding that asks for more than one writer refuses HOST_BINDING_FIELD_INVALID with zero loader calls
+  ---
+  duration_ms: 324.160306
+  type: 'test'
+  ...
+# Subtest: a binding whose base commit is an abbreviation refuses HOST_BINDING_FIELD_INVALID with zero loader calls
+ok 17 - a binding whose base commit is an abbreviation refuses HOST_BINDING_FIELD_INVALID with zero loader calls
+  ---
+  duration_ms: 322.024071
+  type: 'test'
+  ...
+# Subtest: negative control for the counter: a trusted import under a host root would register, so a zero is a measured zero
+ok 18 - negative control for the counter: a trusted import under a host root would register, so a zero is a measured zero
+  ---
+  duration_ms: 0.459682
+  type: 'test'
+  ...
+# Subtest: receipt output: with MW_M05_OBSERVATIONS_OUT set the observed rows, tarball digests and pack lists are written for the committed receipt
+ok 19 - receipt output: with MW_M05_OBSERVATIONS_OUT set the observed rows, tarball digests and pack lists are written for the committed receipt
+  ---
+  duration_ms: 279.036737
+  type: 'test'
+  ...
+# Subtest: the committed M05 receipt, when present, is an L2 MW-INSTALLED-HOST record with every adverse row and never a native proof
+ok 20 - the committed M05 receipt, when present, is an L2 MW-INSTALLED-HOST record with every adverse row and never a native proof
+  ---
+  duration_ms: 1.143109
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 13868.966908

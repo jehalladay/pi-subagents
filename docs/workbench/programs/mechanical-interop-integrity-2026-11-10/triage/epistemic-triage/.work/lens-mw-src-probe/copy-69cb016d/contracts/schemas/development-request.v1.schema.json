@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mechanical-workflows/development-request.v1.schema.json",
+  "title": "DevelopmentRequest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "task",
+    "workspaceId",
+    "baseRevision"
+  ],
+  "properties": {
+    "task": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workspaceId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "baseRevision": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

@@ -1,0 +1,88 @@
+{
+ "rows_parsed": 50,
+ "kinds": {
+  "edit": 44,
+  "same-edit": 3,
+  "ledger-only": 3
+ },
+ "revisions": {
+  "ce180d82": {
+   "pages_present": {
+    "README": 25,
+    "01": 67,
+    "02": 80,
+    "03": 62,
+    "04": 45,
+    "SKILL": 36
+   },
+   "red_rows": [],
+   "clean_rows": 50
+  },
+  "0fb9067262532289104417d2b7f2f25704563a75": {
+   "pages_present": {
+    "README": 25,
+    "01": 67,
+    "02": 80,
+    "03": 62,
+    "04": 45,
+    "SKILL": 40
+   },
+   "red_rows": [
+    {
+     "id": "M049",
+     "req": "EAT-R142",
+     "where": "SKILL:L16",
+     "findings": [
+      "M049 stands 0 times"
+     ]
+    },
+    {
+     "id": "M050",
+     "req": "EAT-R143",
+     "where": "SKILL:L16",
+     "findings": [
+      "M050 stands 0 times"
+     ]
+    }
+   ],
+   "clean_rows": 48
+  },
+  "3fc0ead1e99f854365fd4226f582eaf4f19f8858": {
+   "pages_present": {
+    "README": 25,
+    "01": 67,
+    "02": 80,
+    "03": 62,
+    "04": 45,
+    "SKILL": 43
+   },
+   "red_rows": [
+    {
+     "id": "M048",
+     "req": "EAT-R141",
+     "where": "SKILL:L14",
+     "findings": [
+      "M048 stands at SKILL:L17"
+     ]
+    },
+    {
+     "id": "M049",
+     "req": "EAT-R142",
+     "where": "SKILL:L16",
+     "findings": [
+      "M049 stands 0 times"
+     ]
+    },
+    {
+     "id": "M050",
+     "req": "EAT-R143",
+     "where": "SKILL:L16",
+     "findings": [
+      "M050 stands 0 times"
+     ]
+    }
+   ],
+   "clean_rows": 47
+  }
+ }
+}

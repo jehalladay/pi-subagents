@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mechanical-workflows/development-outcome.v1.schema.json",
+  "title": "DevelopmentOutcome v1 (coarse top-level discriminator; native refs stay opaque)",
+  "oneOf": [
+    {
+      "type": "object",
+      "required": [
+        "kind",
+        "candidate",
+        "verification"
+      ],
+      "properties": {
+        "kind": {
+          "const": "verified_candidate"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "kind",
+        "candidate",
+        "verification"
+      ],
+      "properties": {
+        "kind": {
+          "const": "verification_failed"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "kind",
+        "scope",
+        "reason"
+      ],
+      "properties": {
+        "kind": {
+          "const": "needs_evidence"
+        },
+        "reason": {
+          "const": "SCOPE_INCOMPLETE"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "kind",
+        "reason"
+      ],
+      "properties": {
+        "kind": {
+          "const": "indeterminate"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  ]
+}

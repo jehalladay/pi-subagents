@@ -1,0 +1,145 @@
+# static scans at MW 69cb016d captured 2026-11-11T06:00:31Z
+
+## S1 static non-relative import specifiers: packages/development/src + packages/coordination/src
+      1 "node:crypto"
+dynamic import( sites in packages: 0
+
+## S2 static non-relative import specifiers: apps/development-rig/src
+     21 "@mechanical/workflows-development"
+     19 "node:path"
+     16 "node:fs"
+     15 "node:child_process"
+     12 "node:util"
+     11 "node:crypto"
+      9 "node:fs/promises"
+      9 "@mechanical/workflows-coordination"
+      5 "node:os"
+      2 "node:url"
+      2 "node:module"
+      1 "node:readline"
+-- dynamic string specifiers
+apps/development-rig/src/furnace-app.ts:15:moduleName: string = "@furnace/sdk"
+apps/development-rig/src/candidate-selection.ts:62:specifier:string="@anthropic-ai/claude-agent-sdk"
+apps/development-rig/src/claude-review.ts:18:specifier:string="@anthropic-ai/claude-agent-sdk"
+apps/development-rig/src/hx-dependencies.ts:8:specifier:string="@hyperunix/sdk"
+apps/development-rig/src/hx-scope.ts:26:specifier:string="@hyperunix/sdk"
+apps/development-rig/src/live-gate.ts:232:specifier: string = "@forge/sdk"
+apps/development-rig/src/claude-implement.ts:94:moduleName: string = "@anthropic-ai/claude-agent-sdk"
+
+## S3 Pi-surface tokens in MW code/test/qa (files) vs md
+workflow_execute: code=scripts/check-docs-stale-claims.test.ts scripts/check-docs-stale-claims.ts scripts/check-docs-stale-claims.baseline.json 
+workflow_observe: code=
+pi-subagents: code=qa/integration/pi-native-interoperability-2026-11-09/m00-a/baseline.json scripts/check-docs-stale-claims.baseline.json scripts/check-docs-stale-claims.test.ts scripts/check-structure.test.ts scripts/check-structure.ts 
+@tintinweb: code=scripts/check-structure.test.ts scripts/check-structure.ts 
+@earendil-works: code=apps/development-rig/test/core-no-sdk-guard.test.ts scripts/check-structure.test.ts scripts/check-structure.ts 
+registerTool: code=
+ExtensionAPI: code=
+
+## S4 proposed-vocabulary witnesses in code/tests/contracts (count)
+strict-native: 0
+legacy-weak: 0
+legacy-observed: 0
+candidate-bound-native: 0
+VerificationCertificate: 0
+invokeAuthorizedDevelopmentHost: 0
+HOST_LEASE_STALE: 0
+HOST_NATIVE_PROOF_INCOMPLETE: 0
+effect-intent/v2: 0
+mechanical.pi-host.release/v1: 0
+runtimeManifest: 0
+installedContentSha256: 0
+MW-CONTRACT: 0
+word lease|fence|fencing in apps/development-rig/src: 0
+
+## S5 profile label witnesses
+apps/development-rig/src/host-binding.ts:11:export const EVIDENCE_PROFILES = ["git-census-v1", "hx-task-scope-v1"] as const;
+apps/development-rig/src/host-binding.ts:12:export const CONTEXT_PROFILES = ["plain-v1", "rf-committed-v1"] as const;
+contracts/schemas/mechanical-host-binding.v1.schema.json:85:        "git-census-v1",
+contracts/schemas/mechanical-host-binding.v1.schema.json:86:        "hx-task-scope-v1"
+contracts/schemas/mechanical-host-binding.v1.schema.json:91:        "plain-v1",
+contracts/schemas/mechanical-host-binding.v1.schema.json:92:        "rf-committed-v1"
+tests naming git-census-v1|plain-v1: apps/development-rig/test/host-binding.test.ts apps/development-rig/test/installed-pi-consumer-conformance.test.ts 
+Pi src occurrences at 0fb90672: git-census-v1|plain-v1=0 mechanical.pi-host/v1=0 mechanical:develop-write=0 development-rig=0
+
+## S6 scheduler vocabulary (grep -i schedul) in src
+apps/development-rig/src/furnace-gate.ts:3: * No Furnace scheduling, Run establishment, retries, or waiting are implemented here.
+packages/development/src/review.ts:1:/** A bounded application review policy; no scheduler, registry or generic DAG. */
+packages/coordination/src/elastic-landing.ts:68:/** The Load-row verdict: LOAD_INFEASIBLE marks a scenario no scheduler could finish, which is not a policy failure. */
+packages/coordination/src/elastic-landing.ts:298:  /** No scheduler finishes sooner: every landing needs its own attempt step and, between landings, one restack step. */
+packages/coordination/src/step-fixture.ts:5: * environment registry, reward engine or scheduler is introduced. A step source must DECLARE
+packages/coordination/src/step-fixture.ts:43:const CRITERION = "step surfaces exist only over sources with real step semantics, and no generic environment registry, reward engine or scheduler is intro
+packages/coordination/src/runtime-plan.ts:11: * schedules or mints an identifier.
+apps/development-rig/src/workspace-materialize.ts:6: * identically on any host. No RPC, scheduling or durability is implemented here.
+
+## S7 consumers of host-services exports outside host-services.ts
+apps/development-rig/test/host-services.test.ts
+consumers of reconcileUncertainEffect in src (excluding its module): 0
+
+## S8 D-number occurrences per program doc
+pi-01-AUDIT-AND-INVARIANTS.md: D3 D5 D6 D9 
+pi-02-PROTOCOL-AND-RUNTIME.md: 
+pi-03-IMPLEMENTATION-PACKETS.md: 
+pi-04-ADVERSARIAL-VERIFICATION.md: 
+pi-05-OPERATIONS-AND-HANDOFF.md: 
+pi-README.md: D1 D2 D3 D4 D5 D6 D7 D8 D9 D10 D11 D12 
+mw-01-AUDIT-AND-PROOF.md: D1 D2 D4 D6 D7 D8 D10 D11 D12 
+mw-02-HOST-AND-EFFECT-CONTRACT.md: 
+mw-03-IMPLEMENTATION-PACKETS.md: 
+mw-04-VERIFICATION-AND-RELEASE.md: 
+mw-05-OPERATIONS-AND-HANDOFF.md: 
+mw-README.md: 
+
+## S9 existence at 69cb016d of paths named by the programs
+ABSENT apps/development-rig/src/effect-abort.ts
+EXISTS apps/development-rig/src/post-dispatch-abort.ts
+ABSENT apps/development-rig/tests
+EXISTS apps/development-rig/test
+EXISTS apps/development-rig/src/host.ts
+EXISTS apps/development-rig/src/host-binding.ts
+EXISTS apps/development-rig/src/host-services.ts
+
+## S10 joint ratification tokens (corrected invocation)
+MW 69cb016d: MW-CONTRACT (all files)=0; P-contract=4; P-descriptor=3
+docs/programs/pi-native-interoperability-2026-11-09/02-IMPLEMENTATION-PACKAGES.md:74:- **Edit:** isolated external package fixture and `qa/integration/` receipts; coordinate Pi P-descriptor/P-contract implementation.
+qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-consumer-l2-receipt.json:738:    "no Pi P-descriptor/P-contract coordination was performed (M05 coordinates it)"
+docs/10-current-state-and-gaps.md:967:`apps/development-rig/test/installed-pi-consumer-conformance.test.ts` installs the three packed tarballs into an empty external npm project on Node 24 and runs fifteen rows, each in its own ch
+contracts/README.md:22:`schemas/mechanical-host-binding.v1.schema.json` is the closed JSON schema of the proposed application-host binding `MechanicalHostBindingV1`; `apps/development-rig/src/host-binding.ts` is the single produce
+Pi 0fb90672 src: MW-CONTRACT=4; P-contract (src+docs)=0
+
+## S11 recorded Forge evidence: execution_environment.pinned and gated_commit/tree (python scan of qa/**/evidence/*.json + program receipts)
+2026-10-15-slot-wait-immediate.json                  pinned true=0 false=6 | gated_* non-null=4 null=0 | ['forge 0.2.1 (rev 0deb972720ce) at /loc']
+2026-10-15-slot-wait-queued.json                     pinned true=0 false=6 | gated_* non-null=4 null=0 | ['forge 0.2.1 (rev 0deb972720ce) at /loc']
+2026-10-15-agent-edits-manually-verified.json        pinned true=0 false=12 | gated_* non-null=0 null=4 | ['forge 0.2.1 (rev 0deb972720ce) at /loc']
+2026-10-15-beads-claim-agent-forge-verified.json     pinned true=0 false=12 | gated_* non-null=0 null=4 | ['forge 0.2.1 (rev 0deb972720ce) at /loc']
+2026-10-15-fresh-clone-cold.json                     pinned true=0 false=7 | gated_* non-null=4 null=0 | ['forge 0.2.1 (rev 0deb972720ce) at /loc']
+2026-10-15-fresh-clone-warm.json                     pinned true=0 false=7 | gated_* non-null=4 null=0 | ['forge 0.2.1 (rev 0deb972720ce) at /loc']
+2026-10-15-furnace-process-host.json                 pinned true=0 false=6 | gated_* non-null=0 null=4 | ['forge 0.2.1 (rev 0deb972720ce) at /loc']
+2026-10-15-live-claude-forge-verified.json           pinned true=0 false=12 | gated_* non-null=0 null=4 | ['forge 0.2.1 (rev 0deb972720ce) at /loc']
+2026-10-15-live-rf-claude-forge-verified.json        pinned true=0 false=12 | gated_* non-null=0 null=4 | ['forge 0.2.1 (rev 0deb972720ce) at /loc']
+2026-10-15-live-verify-fail.json                     pinned true=0 false=6 | gated_* non-null=8 null=4 | ['forge 0.2.1 (rev 0deb972720ce) at /loc']
+2026-10-15-live-verify-first-indeterminate.json      pinned true=0 false=12 | gated_* non-null=0 null=4 | ['forge 0.2.1 (rev 0deb972720ce) at /loc']
+2026-10-15-live-verify-pass.json                     pinned true=0 false=12 | gated_* non-null=0 null=4 | ['forge 0.2.1 (rev 0deb972720ce) at /loc']
+2026-10-15-root-full-gate-run-a.json                 pinned true=0 false=7 | gated_* non-null=4 null=0 | ['forge 0.2.1 (rev 0deb972720ce) at /loc']
+2026-10-15-root-full-gate-run-b.json                 pinned true=0 false=7 | gated_* non-null=4 null=0 | ['forge 0.2.1 (rev 0deb972720ce) at /loc']
+2026-10-16-live-gate-flow-witnessed.json             pinned true=0 false=0 | gated_* non-null=2 null=0 | []
+2026-10-20-native-inheritance-journey-replay.json    pinned true=0 false=12 | gated_* non-null=16 null=0 | ['forge 0.2.1 (rev f897f3619fa9) at /loc']
+2026-10-20-native-landing-journey-replay.json        pinned true=0 false=12 | gated_* non-null=16 null=0 | ['forge 0.2.1 (rev f897f3619fa9) at /loc']
+installed-host-l2-receipt.json                       pinned true=0 false=0 | gated_* non-null=2 null=0 | []
+files scanned: 54 with either field: 18 | total pinned:true occurrences: 0 pinned:false occurrences: 148
+
+## S12 members named like pi*invocation, and evidence_tier, in every JSON under qa/
+qa json files: 93
+pi*invocation members: [('qa/integration/pi-native-interoperability-2026-11-09/m00-a/baseline.json', '/pi_invocation_id', None), ('qa/integration/pi-native-interoperability-2026-11-09/m01/installed-host-l2-receipt.json', '/pi_invocation_id', None)]
+evidence_tier: {'qa/integration/pi-native-interoperability-2026-11-09/m00-a/baseline.json': 'L1', 'qa/integration/pi-native-interoperability-2026-11-09/m01/installed-host-l2-receipt.json': 'L2', 'qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-consumer-l2-receipt.json': 'L2'}
+
+## S13 release markers
+git tags: 0
+packages/coordination/package.json:3:  "version": "0.1.0",
+packages/development/package.json:3:  "version": "0.1.0",
+apps/development-rig/package.json:3:  "version": "0.1.0",
+
+## S14 execution_environment.kind / env_mode over the same evidence set as S11
+files: 54 files with a pinned member: 16 kind: {'host': 148} env_mode: {'inherited': 30}
+
+## S15 installed forge on this host (not probed for gate behaviour)
+forge 0.2.1 (rev e3d480952064, built 2026-11-10, code e547deba496f, fresh: installed from the build directory /home/jehallad/.local/share/agent-tools-update/ws/

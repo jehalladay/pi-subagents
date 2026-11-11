@@ -1,0 +1,669 @@
+{
+ "schema": "mechanical-workflows/furnace-executor-app-host-witness/v1",
+ "recordedAt": "2026-10-15T12:22Z",
+ "claim": "MW-062: the optional @furnace/sdk ExecutorApp adapter (apps/development-rig/src/furnace-app.ts, mechanical.forge-gate) maps an established Forge gate PASS, FAIL and an unknown outcome into three distinct native ExecutionResult statuses, which the Furnace SDK host exits with three distinct codes and the installed Furnace binary records as three distinct Attempt outcomes, without the adapter owning scheduling or Run/Work/Attempt state.",
+ "producers": {
+  "furnace": {
+   "version": "furnace 0.1.0",
+   "binaryRevision": "e2294c9f00b3",
+   "binaryPath": "/local/home/jehallad/.local/bin/furnace",
+   "binarySha256": "ddf8da529961f5fb3fa3524ff0482e94971c383fcce3f783e3482331559f4799",
+   "driver": "process (execution.driver is not a setting on this binary; the extension driver is not present)",
+   "contextDelivery": "stdin-json"
+  },
+  "furnaceSdk": {
+   "package": "@furnace/sdk 0.1.0",
+   "sourceRevision": "1cf027b0c5c4",
+   "sourceWorktree": "/tmp/mw-furnace-sdk-1cf027b0c5c4/sdk/typescript",
+   "build": "npm ci --ignore-scripts && npm run build: exit 2 with 5 test-only diagnostics; src/ compiles; dist/src emitted (noEmitOnError unset)",
+   "diagnostics": [
+    "test/attempt_ceiling_override.test.ts(38,3): error TS2353: Object literal may only specify known properties, and 'ceiling_override' does not exist in type 'AttemptDto'.",
+    "test/attempt_ceiling_override.test.ts(42,33): error TS2339: Property 'ceiling_override' does not exist on type 'AttemptDto'.",
+    "test/attempt_ceiling_override.test.ts(51,20): error TS2339: Property 'ceiling_override' does not exist on type 'AttemptDto'.",
+    "test/attempt_ceiling_override.test.ts(52,26): error TS2339: Property 'ceiling_override' does not exist on type 'AttemptDto'.",
+    "test/battery.test.ts(126,5): error TS2353: Object literal may only specify known properties, and 'attempt_timeout' does not exist in type 'RunDto'."
+   ],
+   "hostEntry": "/tmp/mw-furnace-sdk-1cf027b0c5c4/sdk/typescript/dist/src/host.js",
+   "hostEntrySha256": "3dbef4c66136703eebf056ee2f7ce5e257b250f308db6103268d1105d243e76f",
+   "notReleaseGrade": "an unreleased source build whose own test compile is red; linked out of band with npm install --no-save, package.json unchanged (fvh stays open)"
+  },
+  "forgeSdk": {
+   "package": "@forge/sdk",
+   "source": "/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/PrimaryInstallation/src/Forge/sdk/typescript (prebuilt dist)",
+   "linked": "npm install --no-save"
+  },
+  "forge": {
+   "version": "forge 0.2.1 (rev 0deb972720ce, built 2026-10-14, indeterminate: installed from the build directory /workplace/jehallad/AgentEcosystem/ForgeWorkspaces/PrimaryInstallation/src/Forge; no owning source repository, so ancestry cannot be computed (built from https://github.com/jehalladay/Forge@0deb972720ce, 2026-10-14); running from /local/home/jehallad/.local/share/uv/tools/forge; set FORGE_SOURCE_REPO to a clone that contains 0deb972720ce, or to place it: git -C <clone> fetch https://github.com/jehalladay/Forge && git -C <clone> rev-list --count 0deb972720ce..FETCH_HEAD)",
+   "binary": "/home/jehallad/.local/share/uv/tools/forge/bin/forge"
+  },
+  "rig": {
+   "clone": "/tmp/mw-062-rig",
+   "revision": "09f98606e0f729df32bcc48e29d150afc560ce26",
+   "build": "npm ci --ignore-scripts && npm run build (exit 0)",
+   "app": "/tmp/mw-062-rig/apps/development-rig/dist/furnace-app.js",
+   "appSha256": "1d6d26f5554c3920536867f0f54c88d3b06caa7795b6351bffb3ba565c8ff6db"
+  },
+  "node": "v24.20.0",
+  "beads": "bd version 1.1.0-rc.1 (2d9e4321c) db-schema-max=v59"
+ },
+ "executorDefinition": "[execution]\nexecutor = \"mw-062-executor-app\"\nmax_parallel = 1\nattempt_timeout = \"20m\"\n\n[executors.mw-062-executor-app]\nprogram = \"<node>\"\nargs = [\"/tmp/mw-furnace-sdk-1cf027b0c5c4/sdk/typescript/dist/src/host.js\", \"--app\", \"/tmp/mw-062-rig/apps/development-rig/dist/furnace-app.js\", \"--executor\", \"mechanical.forge-gate\"]\ncontext = \"stdin-json\"\nenv = { MECHANICAL_FORGE_BINARY = \"<forge>\" }\n",
+ "formula": "formula = \"mw-062\"\ntype = \"workflow\"\nversion = 1\n\n[[steps]]\nid = \"gate\"\ntitle = \"[gate] full native Forge gate through the @furnace/sdk ExecutorApp host\"\ndescription = \"Furnace starts the Furnace TypeScript SDK host (node dist/src/host.js) with the MechanicalWorkflows ExecutorApp; its mechanical.forge-gate callback runs the full Forge gate on this committed workspace and projects the gate observation into ExecutionResult.success / failure / indeterminate.\"\n",
+ "mappingTable": [
+  {
+   "gateObservation": "passed (FORGE_GATE_PASS)",
+   "executionResult": "success",
+   "hostExit": 0,
+   "furnaceAttemptOutcome": "success",
+   "runState": "completed",
+   "runStartExit": 0
+  },
+  {
+   "gateObservation": "failed (FORGE_GATE_FAIL)",
+   "executionResult": "failure, failure_class task",
+   "hostExit": 10,
+   "furnaceAttemptOutcome": "work_failure",
+   "runState": "needs_attention",
+   "runStartExit": 5
+  },
+  {
+   "gateObservation": "indeterminate (WORKSPACE_NOT_CLEAN_AFTER_GATE)",
+   "executionResult": "indeterminate",
+   "hostExit": 12,
+   "furnaceAttemptOutcome": "work_failure",
+   "runState": "needs_attention",
+   "runStartExit": 5
+  }
+ ],
+ "arms": {
+  "pass": {
+   "subject": {
+    "root": "/tmp/mw-062/pass",
+    "head": "d330e6fb9121444c09b51353c1ebca4d3594f321",
+    "tree": "ee0cf0169f01327346a27a7da28f8f39ca3bb24c",
+    "dirtyBeforeRun": 0,
+    "dirtyAfterRun": [],
+    "arm": "the clean scratch package at the earlier witness commit 03a0fa58 plus the untracked-Beads commit"
+   },
+   "directForgePrecheck": {
+    "command": "FORGE_JSON=1 forge build (run directly in the subject before the Furnace Run, hatch env warm-up)",
+    "status": "success",
+    "gateVerdict": "PASS",
+    "steps": [
+     [
+      "lint",
+      "passed"
+     ],
+     [
+      "typing",
+      "passed"
+     ],
+     [
+      "test",
+      "passed"
+     ],
+     [
+      "coverage",
+      "passed"
+     ],
+     [
+      "wheel",
+      "passed"
+     ]
+    ]
+   },
+   "runStart": {
+    "exit": 0,
+    "stdoutEnvelope": {
+     "protocol_version": 1,
+     "kind": "run_start",
+     "request_id": "mw-062-pass-122126",
+     "ok": true,
+     "data": {
+      "run_id": "frn-run-pass-wisp-lm4",
+      "beads_run_id": "pass-wisp-lm4",
+      "formula": "mw-062",
+      "resolved_runtime_config_digest": "42aec75c3cf0c063f76aec7aa5dc77f97e5a44f068825465718bfd1a1baaf98b",
+      "workspace": "/tmp/mw-062/pass",
+      "state": "completed",
+      "mode": "ephemeral_wisp",
+      "furnace_version": "0.1.0",
+      "beads_version": "1.1.0-rc.1",
+      "created_at": "2026-10-15T12:21:27.121597509+00:00",
+      "updated_at": "2026-10-15T12:21:36.105817889+00:00",
+      "state_since": "2026-10-15T12:21:36.105817889+00:00",
+      "executor": "mw-062-executor-app",
+      "max_parallel": 1
+     }
+    },
+    "stderrEnvelopeLastLine": null
+   },
+   "runStatus": {
+    "run_id": "frn-run-pass-wisp-lm4",
+    "beads_run_id": "pass-wisp-lm4",
+    "formula": "mw-062",
+    "resolved_runtime_config_digest": "42aec75c3cf0c063f76aec7aa5dc77f97e5a44f068825465718bfd1a1baaf98b",
+    "workspace": "/tmp/mw-062/pass",
+    "state": "completed",
+    "mode": "ephemeral_wisp",
+    "furnace_version": "0.1.0",
+    "beads_version": "1.1.0-rc.1",
+    "created_at": "2026-10-15T12:21:27.121597509+00:00",
+    "updated_at": "2026-10-15T12:21:36.105817889+00:00",
+    "state_since": "2026-10-15T12:21:36.105817889+00:00",
+    "executor": "mw-062-executor-app",
+    "controller": {
+     "live": false,
+     "pid": 1324920,
+     "start_fingerprint": "6c081436-73e6-42a2-8295-dfd91f87ca1e:13998876",
+     "controller_session_id": "frn-ses-18deb356b8b109b7-1324920",
+     "hostname": null,
+     "started_at": "2026-10-15T12:21:27.122232823+00:00"
+    },
+    "max_parallel": 1,
+    "completed": 1,
+    "total": 1,
+    "active": [],
+    "failed": [],
+    "failed_total": 0,
+    "attention": [],
+    "unreadable": [],
+    "corrupt_events": [],
+    "corrupt_events_total": 0,
+    "conflicts": []
+   },
+   "runInspect": {
+    "run_id": "frn-run-pass-wisp-lm4",
+    "beads_run_id": "pass-wisp-lm4",
+    "creating_request_id": "mw-062-pass-122126",
+    "formula": "mw-062",
+    "resolved_runtime_config_digest": "42aec75c3cf0c063f76aec7aa5dc77f97e5a44f068825465718bfd1a1baaf98b",
+    "workspace": "/tmp/mw-062/pass",
+    "state": "completed",
+    "mode": "ephemeral_wisp",
+    "furnace_version": "0.1.0",
+    "beads_version": "1.1.0-rc.1",
+    "created_at": "2026-10-15T12:21:27.121597509+00:00",
+    "updated_at": "2026-10-15T12:21:36.105817889+00:00",
+    "state_since": "2026-10-15T12:21:36.105817889+00:00",
+    "executor": "mw-062-executor-app",
+    "controller": {
+     "live": false,
+     "pid": 1324920,
+     "start_fingerprint": "6c081436-73e6-42a2-8295-dfd91f87ca1e:13998876",
+     "controller_session_id": "frn-ses-18deb356b8b109b7-1324920",
+     "hostname": null,
+     "started_at": "2026-10-15T12:21:27.122232823+00:00"
+    },
+    "max_parallel": 1
+   },
+   "attempt": {
+    "attempt_id": "frn-atm-pass-wisp-exm-1",
+    "run_id": "frn-run-pass-wisp-lm4",
+    "work_id": "pass-wisp-exm",
+    "title": "[gate] full native Forge gate through the @furnace/sdk ExecutorApp host",
+    "ordinal": 1,
+    "executor": "mw-062-executor-app",
+    "state": "succeeded",
+    "outcome": "success",
+    "created_at": "2026-10-15T12:21:28.858079888+00:00",
+    "started_at": "2026-10-15T12:21:28.858829161+00:00",
+    "finished_at": "2026-10-15T12:21:35.520242746+00:00",
+    "exit_code": 0,
+    "termination_cause": "natural_exit",
+    "process": {
+     "pid": 1328357,
+     "process_group": 1328357,
+     "start_fingerprint": "6c081436-73e6-42a2-8295-dfd91f87ca1e:13999083",
+     "executable_hint": "/local/home/jehallad/.local/share/mise/installs/node/24.20.0/bin/node"
+    }
+   },
+   "hostResultDocument": {
+    "path": "/tmp/mw-062/pass/.furnace/results/frn-atm-pass-wisp-exm-1.json",
+    "document": {
+     "data": {
+      "basis": {
+       "clean": true,
+       "commit": "d330e6fb9121444c09b51353c1ebca4d3594f321",
+       "tree": "ee0cf0169f01327346a27a7da28f8f39ca3bb24c"
+      },
+      "operation_id": "op-a3d72d12c5b0470f9905fcd5507b695d",
+      "reason": "FORGE_GATE_PASS"
+     },
+     "status": "success",
+     "summary": "Forge established a passing gate for the pinned candidate"
+    }
+   },
+   "expected": {
+    "gate": "passed",
+    "status": "success",
+    "exit": 0,
+    "furnaceOutcome": "success",
+    "runState": "completed",
+    "runStartExit": 0
+   },
+   "observed": {
+    "gateKind": "FORGE_GATE_PASS",
+    "executionResultStatus": "success",
+    "hostExit": 0,
+    "furnaceOutcome": "success",
+    "runState": "completed",
+    "terminationCause": "natural_exit"
+   },
+   "observedMatchesExpected": true
+  },
+  "fail": {
+   "subject": {
+    "root": "/tmp/mw-062/fail",
+    "head": "82f2e45404b9060d074e38a73be805811966cb30",
+    "tree": "12b97d261a3595990d3d221171453a7928fc42be",
+    "dirtyBeforeRun": 0,
+    "dirtyAfterRun": [],
+    "arm": "adds tests/test_red.py, a committed test that fails at runtime"
+   },
+   "directForgePrecheck": {
+    "command": "FORGE_JSON=1 forge build (run directly in the subject before the Furnace Run, hatch env warm-up)",
+    "status": "error",
+    "gateVerdict": "FAIL",
+    "steps": [
+     [
+      "lint",
+      "passed"
+     ],
+     [
+      "typing",
+      "passed"
+     ],
+     [
+      "test",
+      "failed"
+     ]
+    ]
+   },
+   "runStart": {
+    "exit": 5,
+    "stdoutEnvelope": null,
+    "stderrEnvelopeLastLine": {
+     "protocol_version": 1,
+     "kind": "run_start",
+     "request_id": "mw-062-fail-122135",
+     "ok": false,
+     "error": {
+      "code": "unsafe_recovery",
+      "message": "no automatic Attempt remains for Work \"fail-wisp-iui\": retry policy does not enable work_failure",
+      "retryable": false,
+      "hint": "work_failure is never retried automatically and no setting enables it: fix the cause, then run resume frn-run-fail-wisp-nwd, then work retry fail-wisp-iui --run frn-run-fail-wisp-nwd",
+      "details": {
+       "attempt_id": "frn-atm-fail-wisp-iui-1",
+       "attention": {
+        "actions": [
+         "inspect",
+         "retry",
+         "resume"
+        ],
+        "conflicts": [
+         "retry_class_not_enabled"
+        ]
+       },
+       "beads_run_id": "fail-wisp-nwd",
+       "exit_code": 10,
+       "outcome": "work_failure",
+       "run_id": "frn-run-fail-wisp-nwd",
+       "termination_cause": "natural_exit"
+      }
+     }
+    }
+   },
+   "runStatus": {
+    "run_id": "frn-run-fail-wisp-nwd",
+    "beads_run_id": "fail-wisp-nwd",
+    "formula": "mw-062",
+    "resolved_runtime_config_digest": "42aec75c3cf0c063f76aec7aa5dc77f97e5a44f068825465718bfd1a1baaf98b",
+    "workspace": "/tmp/mw-062/fail",
+    "state": "needs_attention",
+    "mode": "ephemeral_wisp",
+    "furnace_version": "0.1.0",
+    "beads_version": "1.1.0-rc.1",
+    "created_at": "2026-10-15T12:21:35.917124790+00:00",
+    "updated_at": "2026-10-15T12:21:42.138493556+00:00",
+    "state_since": "2026-10-15T12:21:42.138493556+00:00",
+    "executor": "mw-062-executor-app",
+    "controller": {
+     "live": false,
+     "pid": 1331319,
+     "start_fingerprint": "6c081436-73e6-42a2-8295-dfd91f87ca1e:13999758",
+     "controller_session_id": "frn-ses-18deb358c62f6298-1331319",
+     "hostname": null,
+     "started_at": "2026-10-15T12:21:35.917616506+00:00"
+    },
+    "max_parallel": 1,
+    "completed": 0,
+    "total": 1,
+    "active": [],
+    "failed": [
+     {
+      "attempt_id": "frn-atm-fail-wisp-iui-1",
+      "run_id": "frn-run-fail-wisp-nwd",
+      "work_id": "fail-wisp-iui",
+      "title": "[gate] full native Forge gate through the @furnace/sdk ExecutorApp host",
+      "ordinal": 1,
+      "executor": "mw-062-executor-app",
+      "state": "failed",
+      "outcome": "work_failure",
+      "created_at": "2026-10-15T12:21:37.742740087+00:00",
+      "started_at": "2026-10-15T12:21:37.743518668+00:00",
+      "finished_at": "2026-10-15T12:21:42.037842123+00:00",
+      "exit_code": 10,
+      "termination_cause": "natural_exit",
+      "process": {
+       "pid": 1332909,
+       "process_group": 1332909,
+       "start_fingerprint": "6c081436-73e6-42a2-8295-dfd91f87ca1e:13999972",
+       "executable_hint": "/local/home/jehallad/.local/share/mise/installs/node/24.20.0/bin/node"
+      }
+     }
+    ],
+    "failed_total": 1,
+    "attention": [],
+    "unreadable": [],
+    "corrupt_events": [],
+    "corrupt_events_total": 0,
+    "conflicts": [
+     {
+      "work_id": "fail-wisp-iui",
+      "conflict": "retry_class_not_enabled"
+     }
+    ]
+   },
+   "runInspect": {
+    "run_id": "frn-run-fail-wisp-nwd",
+    "beads_run_id": "fail-wisp-nwd",
+    "creating_request_id": "mw-062-fail-122135",
+    "formula": "mw-062",
+    "resolved_runtime_config_digest": "42aec75c3cf0c063f76aec7aa5dc77f97e5a44f068825465718bfd1a1baaf98b",
+    "workspace": "/tmp/mw-062/fail",
+    "state": "needs_attention",
+    "mode": "ephemeral_wisp",
+    "furnace_version": "0.1.0",
+    "beads_version": "1.1.0-rc.1",
+    "created_at": "2026-10-15T12:21:35.917124790+00:00",
+    "updated_at": "2026-10-15T12:21:42.138493556+00:00",
+    "state_since": "2026-10-15T12:21:42.138493556+00:00",
+    "executor": "mw-062-executor-app",
+    "controller": {
+     "live": false,
+     "pid": 1331319,
+     "start_fingerprint": "6c081436-73e6-42a2-8295-dfd91f87ca1e:13999758",
+     "controller_session_id": "frn-ses-18deb358c62f6298-1331319",
+     "hostname": null,
+     "started_at": "2026-10-15T12:21:35.917616506+00:00"
+    },
+    "max_parallel": 1
+   },
+   "attempt": {
+    "attempt_id": "frn-atm-fail-wisp-iui-1",
+    "run_id": "frn-run-fail-wisp-nwd",
+    "work_id": "fail-wisp-iui",
+    "title": "[gate] full native Forge gate through the @furnace/sdk ExecutorApp host",
+    "ordinal": 1,
+    "executor": "mw-062-executor-app",
+    "state": "failed",
+    "outcome": "work_failure",
+    "created_at": "2026-10-15T12:21:37.742740087+00:00",
+    "started_at": "2026-10-15T12:21:37.743518668+00:00",
+    "finished_at": "2026-10-15T12:21:42.037842123+00:00",
+    "exit_code": 10,
+    "termination_cause": "natural_exit",
+    "process": {
+     "pid": 1332909,
+     "process_group": 1332909,
+     "start_fingerprint": "6c081436-73e6-42a2-8295-dfd91f87ca1e:13999972",
+     "executable_hint": "/local/home/jehallad/.local/share/mise/installs/node/24.20.0/bin/node"
+    }
+   },
+   "hostResultDocument": {
+    "path": "/tmp/mw-062/fail/.furnace/results/frn-atm-fail-wisp-iui-1.json",
+    "document": {
+     "data": {
+      "basis": {
+       "clean": true,
+       "commit": "82f2e45404b9060d074e38a73be805811966cb30",
+       "tree": "12b97d261a3595990d3d221171453a7928fc42be"
+      },
+      "operation_id": "op-9055570a746a4e5c82c903ccb57abeeb",
+      "reason": "FORGE_GATE_FAIL"
+     },
+     "failure_class": "task",
+     "status": "failure",
+     "summary": "Forge gate failed: FORGE_GATE_FAIL"
+    }
+   },
+   "expected": {
+    "gate": "failed",
+    "status": "failure",
+    "exit": 10,
+    "furnaceOutcome": "work_failure",
+    "runState": "needs_attention",
+    "runStartExit": 5
+   },
+   "observed": {
+    "gateKind": "FORGE_GATE_FAIL",
+    "executionResultStatus": "failure",
+    "hostExit": 10,
+    "furnaceOutcome": "work_failure",
+    "runState": "needs_attention",
+    "terminationCause": "natural_exit"
+   },
+   "observedMatchesExpected": true
+  },
+  "unknown": {
+   "subject": {
+    "root": "/tmp/mw-062/unknown",
+    "head": "d39afd8b2b42d81b2f24a3d1609d2cd99a833a45",
+    "tree": "b7c8d771c6f1cd7dbe27f9f1cd3868b0fa2d2517",
+    "dirtyBeforeRun": 0,
+    "dirtyAfterRun": [
+     "?? gate-side-effect.txt"
+    ],
+    "arm": "adds tests/test_side_effect.py, a committed passing test that writes gate-side-effect.txt into the package root during the gate"
+   },
+   "directForgePrecheck": {
+    "command": "FORGE_JSON=1 forge build (run directly in the subject before the Furnace Run, hatch env warm-up)",
+    "status": "success",
+    "gateVerdict": "PASS",
+    "steps": [
+     [
+      "lint",
+      "passed"
+     ],
+     [
+      "typing",
+      "passed"
+     ],
+     [
+      "test",
+      "passed"
+     ],
+     [
+      "coverage",
+      "passed"
+     ],
+     [
+      "wheel",
+      "passed"
+     ]
+    ]
+   },
+   "runStart": {
+    "exit": 5,
+    "stdoutEnvelope": null,
+    "stderrEnvelopeLastLine": {
+     "protocol_version": 1,
+     "kind": "run_start",
+     "request_id": "mw-062-unknown-122144",
+     "ok": false,
+     "error": {
+      "code": "unsafe_recovery",
+      "message": "no automatic Attempt remains for Work \"unknown-wisp-cfo\": retry policy does not enable work_failure",
+      "retryable": false,
+      "hint": "work_failure is never retried automatically and no setting enables it: fix the cause, then run resume frn-run-unknown-wisp-w1g, then work retry unknown-wisp-cfo --run frn-run-unknown-wisp-w1g",
+      "details": {
+       "attempt_id": "frn-atm-unknown-wisp-cfo-1",
+       "attention": {
+        "actions": [
+         "inspect",
+         "retry",
+         "resume"
+        ],
+        "conflicts": [
+         "retry_class_not_enabled"
+        ]
+       },
+       "beads_run_id": "unknown-wisp-w1g",
+       "exit_code": 12,
+       "outcome": "work_failure",
+       "run_id": "frn-run-unknown-wisp-w1g",
+       "termination_cause": "natural_exit"
+      }
+     }
+    }
+   },
+   "runStatus": {
+    "run_id": "frn-run-unknown-wisp-w1g",
+    "beads_run_id": "unknown-wisp-w1g",
+    "formula": "mw-062",
+    "resolved_runtime_config_digest": "42aec75c3cf0c063f76aec7aa5dc77f97e5a44f068825465718bfd1a1baaf98b",
+    "workspace": "/tmp/mw-062/unknown",
+    "state": "needs_attention",
+    "mode": "ephemeral_wisp",
+    "furnace_version": "0.1.0",
+    "beads_version": "1.1.0-rc.1",
+    "created_at": "2026-10-15T12:21:45.143121322+00:00",
+    "updated_at": "2026-10-15T12:21:55.102034367+00:00",
+    "state_since": "2026-10-15T12:21:55.102034367+00:00",
+    "executor": "mw-062-executor-app",
+    "controller": {
+     "live": false,
+     "pid": 1339634,
+     "start_fingerprint": "6c081436-73e6-42a2-8295-dfd91f87ca1e:14000678",
+     "controller_session_id": "frn-ses-18deb35aeadfeddc-1339634",
+     "hostname": null,
+     "started_at": "2026-10-15T12:21:45.143711481+00:00"
+    },
+    "max_parallel": 1,
+    "completed": 0,
+    "total": 1,
+    "active": [],
+    "failed": [
+     {
+      "attempt_id": "frn-atm-unknown-wisp-cfo-1",
+      "run_id": "frn-run-unknown-wisp-w1g",
+      "work_id": "unknown-wisp-cfo",
+      "title": "[gate] full native Forge gate through the @furnace/sdk ExecutorApp host",
+      "ordinal": 1,
+      "executor": "mw-062-executor-app",
+      "state": "failed",
+      "outcome": "work_failure",
+      "created_at": "2026-10-15T12:21:46.857063187+00:00",
+      "started_at": "2026-10-15T12:21:46.857742437+00:00",
+      "finished_at": "2026-10-15T12:21:55.001484267+00:00",
+      "exit_code": 12,
+      "termination_cause": "natural_exit",
+      "process": {
+       "pid": 1341302,
+       "process_group": 1341302,
+       "start_fingerprint": "6c081436-73e6-42a2-8295-dfd91f87ca1e:14000883",
+       "executable_hint": "/local/home/jehallad/.local/share/mise/installs/node/24.20.0/bin/node"
+      }
+     }
+    ],
+    "failed_total": 1,
+    "attention": [],
+    "unreadable": [],
+    "corrupt_events": [],
+    "corrupt_events_total": 0,
+    "conflicts": [
+     {
+      "work_id": "unknown-wisp-cfo",
+      "conflict": "retry_class_not_enabled"
+     }
+    ]
+   },
+   "runInspect": {
+    "run_id": "frn-run-unknown-wisp-w1g",
+    "beads_run_id": "unknown-wisp-w1g",
+    "creating_request_id": "mw-062-unknown-122144",
+    "formula": "mw-062",
+    "resolved_runtime_config_digest": "42aec75c3cf0c063f76aec7aa5dc77f97e5a44f068825465718bfd1a1baaf98b",
+    "workspace": "/tmp/mw-062/unknown",
+    "state": "needs_attention",
+    "mode": "ephemeral_wisp",
+    "furnace_version": "0.1.0",
+    "beads_version": "1.1.0-rc.1",
+    "created_at": "2026-10-15T12:21:45.143121322+00:00",
+    "updated_at": "2026-10-15T12:21:55.102034367+00:00",
+    "state_since": "2026-10-15T12:21:55.102034367+00:00",
+    "executor": "mw-062-executor-app",
+    "controller": {
+     "live": false,
+     "pid": 1339634,
+     "start_fingerprint": "6c081436-73e6-42a2-8295-dfd91f87ca1e:14000678",
+     "controller_session_id": "frn-ses-18deb35aeadfeddc-1339634",
+     "hostname": null,
+     "started_at": "2026-10-15T12:21:45.143711481+00:00"
+    },
+    "max_parallel": 1
+   },
+   "attempt": {
+    "attempt_id": "frn-atm-unknown-wisp-cfo-1",
+    "run_id": "frn-run-unknown-wisp-w1g",
+    "work_id": "unknown-wisp-cfo",
+    "title": "[gate] full native Forge gate through the @furnace/sdk ExecutorApp host",
+    "ordinal": 1,
+    "executor": "mw-062-executor-app",
+    "state": "failed",
+    "outcome": "work_failure",
+    "created_at": "2026-10-15T12:21:46.857063187+00:00",
+    "started_at": "2026-10-15T12:21:46.857742437+00:00",
+    "finished_at": "2026-10-15T12:21:55.001484267+00:00",
+    "exit_code": 12,
+    "termination_cause": "natural_exit",
+    "process": {
+     "pid": 1341302,
+     "process_group": 1341302,
+     "start_fingerprint": "6c081436-73e6-42a2-8295-dfd91f87ca1e:14000883",
+     "executable_hint": "/local/home/jehallad/.local/share/mise/installs/node/24.20.0/bin/node"
+    }
+   },
+   "hostResultDocument": {
+    "path": "/tmp/mw-062/unknown/.furnace/results/frn-atm-unknown-wisp-cfo-1.json",
+    "document": {
+     "status": "indeterminate",
+     "summary": "Forge gate outcome indeterminate: WORKSPACE_NOT_CLEAN_AFTER_GATE operation=op-df3cfcb298ef47a7b36f014a986f3374"
+    }
+   },
+   "expected": {
+    "gate": "indeterminate",
+    "status": "indeterminate",
+    "exit": 12,
+    "furnaceOutcome": "work_failure",
+    "runState": "needs_attention",
+    "runStartExit": 5
+   },
+   "observed": {
+    "gateKind": null,
+    "executionResultStatus": "indeterminate",
+    "hostExit": 12,
+    "furnaceOutcome": "work_failure",
+    "runState": "needs_attention",
+    "terminationCause": "natural_exit"
+   },
+   "observedMatchesExpected": true
+  }
+ },
+ "whatThisDoesNotEstablish": [
+  "the Furnace extension driver (Generation 2 resident host): absent from the installed binary, so the ExecutorApp ran under the process driver through the SDK's own dist/src/host.js",
+  "a release-grade @furnace/sdk: the dist was built from a source tree whose test compile is red",
+  "cancellation through the host",
+  "Furnace reading the ExecutionResult document: under the process driver Furnace reads only the exit status; the document is the SDK host's reserved result file"
+ ]
+}

@@ -1,0 +1,1602 @@
+{
+ "schema": "mw.graph-policy-replay-report.v1",
+ "at": "2026-10-21T08:02:18.475Z",
+ "history": "/workplace/jehallad/mw-scratch/gpc-history/all-issues.json",
+ "historyDigest": "sha256:ceb980f36baf3744753796e045341fe2ffde44d760a7838358abfd46f38c96ca",
+ "program": "graphpolicy.program.c1:170a6b3937949a12a12037972e3ea9044e9fd818f9f69b8a6df7401fd8b6761f",
+ "programId": "mw-bead-scorer-v1",
+ "config": "bead-scorer-v1",
+ "baselineCheckpoint": "graphpolicy.checkpoint.c1:44b30bb191166800fc6096e59bc882601c2f979e3492ac632a1604669b7e11c8",
+ "splitAt": "2026-10-20T00:00:00Z",
+ "contexts": {
+  "total": 567,
+  "train": 395,
+  "test": 172,
+  "dropped": [
+   {
+    "reason": "chosen fails its own candidate predicate at its start instant",
+    "count": 2
+   }
+  ],
+  "meanSupportTrain": 22.253164556962027,
+  "meanSupportTest": 94.62209302325581
+ },
+ "selection": {
+  "rule": "max train meanLogLikelihood over theta0, the single-unit probes and the perturbations; test metrics reported, never used for selection",
+  "best": "theta-seed2032",
+  "theta0": "theta0",
+  "perturbationScale": 3,
+  "perturbations": 60,
+  "probes": 16
+ },
+ "arms": [
+  {
+   "arm": "baseline:priority-first",
+   "train": {
+    "arm": "baseline:priority-first",
+    "n": 395,
+    "top1": 0.010970464135021096,
+    "mrr": 0.1800631075041954,
+    "meanLogLikelihood": null,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "baseline:priority-first",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.030503068700859247,
+    "meanLogLikelihood": null,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "baseline:oldest-first",
+   "train": {
+    "arm": "baseline:oldest-first",
+    "n": 395,
+    "top1": 0.013502109704641349,
+    "mrr": 0.16867848903612515,
+    "meanLogLikelihood": null,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "baseline:oldest-first",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.033336726771444614,
+    "meanLogLikelihood": null,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "baseline:newest-first",
+   "train": {
+    "arm": "baseline:newest-first",
+    "n": 395,
+    "top1": 0.6261603375527426,
+    "mrr": 0.7000789070546019,
+    "meanLogLikelihood": null,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "baseline:newest-first",
+    "n": 172,
+    "top1": 0.21511627906976744,
+    "mrr": 0.32411389956026515,
+    "meanLogLikelihood": null,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "baseline:most-dependents-first",
+   "train": {
+    "arm": "baseline:most-dependents-first",
+    "n": 395,
+    "top1": 0.016157351790263185,
+    "mrr": 0.2032266337318238,
+    "meanLogLikelihood": null,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "baseline:most-dependents-first",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.02093549851537465,
+    "meanLogLikelihood": null,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "baseline:uniform",
+   "train": {
+    "arm": "baseline:uniform",
+    "n": 395,
+    "top1": 0.14482987716475973,
+    "mrr": 0.2430865480150862,
+    "meanLogLikelihood": null,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "baseline:uniform",
+    "n": 172,
+    "top1": 0.011190760831632146,
+    "mrr": 0.022118910596932894,
+    "meanLogLikelihood": null,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta0",
+   "train": {
+    "arm": "theta0",
+    "n": 395,
+    "top1": 0.012658227848101266,
+    "mrr": 0.1810942740019587,
+    "meanLogLikelihood": -6.476739358189269,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta0",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.01977595756282389,
+    "meanLogLikelihood": -12.854875328793849,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-unit0+",
+   "train": {
+    "arm": "theta-unit0+",
+    "n": 395,
+    "top1": 0.5700201902365288,
+    "mrr": 0.6223686331809462,
+    "meanLogLikelihood": -1.8969738913786274,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-unit0+",
+    "n": 172,
+    "top1": 0.0014534883720930232,
+    "mrr": 0.02937386325590947,
+    "meanLogLikelihood": -4.512359653807268,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-unit0-",
+   "train": {
+    "arm": "theta-unit0-",
+    "n": 395,
+    "top1": 0.007154912597950572,
+    "mrr": 0.17737165539679964,
+    "meanLogLikelihood": -3.559736013645183,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-unit0-",
+    "n": 172,
+    "top1": 0.004069767441860465,
+    "mrr": 0.03011624062172926,
+    "meanLogLikelihood": -4.897738903588729,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-unit1+",
+   "train": {
+    "arm": "theta-unit1+",
+    "n": 395,
+    "top1": 0.0212616497426624,
+    "mrr": 0.22370385476022753,
+    "meanLogLikelihood": -3.1215299727666026,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-unit1+",
+    "n": 172,
+    "top1": 0.0048449612403100775,
+    "mrr": 0.05319779287836244,
+    "meanLogLikelihood": -4.398304578867815,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-unit1-",
+   "train": {
+    "arm": "theta-unit1-",
+    "n": 395,
+    "top1": 0.13329449845439187,
+    "mrr": 0.3347904634331061,
+    "meanLogLikelihood": -2.393073145194711,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-unit1-",
+    "n": 172,
+    "top1": 0.0017016390307748564,
+    "mrr": 0.016821521734072694,
+    "meanLogLikelihood": -5.093331648602028,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-unit2+",
+   "train": {
+    "arm": "theta-unit2+",
+    "n": 395,
+    "top1": 0.016157351790263185,
+    "mrr": 0.2032266337318238,
+    "meanLogLikelihood": -11.185814200025048,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-unit2+",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.02093549851537465,
+    "meanLogLikelihood": -23.609105783667008,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-unit2-",
+   "train": {
+    "arm": "theta-unit2-",
+    "n": 395,
+    "top1": 0.22595280888290267,
+    "mrr": 0.35118602064271726,
+    "meanLogLikelihood": -2.066488704913461,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-unit2-",
+    "n": 172,
+    "top1": 0.012674626203014756,
+    "mrr": 0.025316172119671614,
+    "meanLogLikelihood": -4.430999701248075,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-unit3+",
+   "train": {
+    "arm": "theta-unit3+",
+    "n": 395,
+    "top1": 0.008879566284629575,
+    "mrr": 0.16059605081595726,
+    "meanLogLikelihood": -3.689513267542967,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-unit3+",
+    "n": 172,
+    "top1": 0.0048449612403100775,
+    "mrr": 0.03224667526153787,
+    "meanLogLikelihood": -6.434054012509407,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-unit3-",
+   "train": {
+    "arm": "theta-unit3-",
+    "n": 395,
+    "top1": 0.6072450474982121,
+    "mrr": 0.6754462000041492,
+    "meanLogLikelihood": -1.7390223103524107,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-unit3-",
+    "n": 172,
+    "top1": 0.2136627906976744,
+    "mrr": 0.3187776836054132,
+    "meanLogLikelihood": -4.247187633188456,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-unit4+",
+   "train": {
+    "arm": "theta-unit4+",
+    "n": 395,
+    "top1": 0.18889831194312628,
+    "mrr": 0.30923232095955994,
+    "meanLogLikelihood": -2.224166663268231,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-unit4+",
+    "n": 172,
+    "top1": 0.012426238504254948,
+    "mrr": 0.02476832811151935,
+    "meanLogLikelihood": -4.466332084402255,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-unit4-",
+   "train": {
+    "arm": "theta-unit4-",
+    "n": 395,
+    "top1": 0.024996705123287406,
+    "mrr": 0.21712995365314697,
+    "meanLogLikelihood": -2.6007142206048846,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-unit4-",
+    "n": 172,
+    "top1": 0.0017030772844726333,
+    "mrr": 0.022525347183167982,
+    "meanLogLikelihood": -4.678995506508314,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-unit5+",
+   "train": {
+    "arm": "theta-unit5+",
+    "n": 395,
+    "top1": 0.14482987716475973,
+    "mrr": 0.2430865480150862,
+    "meanLogLikelihood": -2.327473232876326,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-unit5+",
+    "n": 172,
+    "top1": 0.011190760831632146,
+    "mrr": 0.022118910596932894,
+    "meanLogLikelihood": -4.52209976666503,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-unit5-",
+   "train": {
+    "arm": "theta-unit5-",
+    "n": 395,
+    "top1": 0.14482987716475973,
+    "mrr": 0.2430865480150862,
+    "meanLogLikelihood": -2.327473232876326,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-unit5-",
+    "n": 172,
+    "top1": 0.011190760831632146,
+    "mrr": 0.022118910596932894,
+    "meanLogLikelihood": -4.52209976666503,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-unit6+",
+   "train": {
+    "arm": "theta-unit6+",
+    "n": 395,
+    "top1": 0.14482987716475973,
+    "mrr": 0.2430865480150862,
+    "meanLogLikelihood": -2.327473232876326,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-unit6+",
+    "n": 172,
+    "top1": 0.011190760831632146,
+    "mrr": 0.022118910596932894,
+    "meanLogLikelihood": -4.52209976666503,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-unit6-",
+   "train": {
+    "arm": "theta-unit6-",
+    "n": 395,
+    "top1": 0.14482987716475973,
+    "mrr": 0.2430865480150862,
+    "meanLogLikelihood": -2.327473232876326,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-unit6-",
+    "n": 172,
+    "top1": 0.011190760831632146,
+    "mrr": 0.022118910596932894,
+    "meanLogLikelihood": -4.52209976666503,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-unit7+",
+   "train": {
+    "arm": "theta-unit7+",
+    "n": 395,
+    "top1": 0.14482987716475973,
+    "mrr": 0.2430865480150862,
+    "meanLogLikelihood": -2.327473232876326,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-unit7+",
+    "n": 172,
+    "top1": 0.011190760831632146,
+    "mrr": 0.022118910596932894,
+    "meanLogLikelihood": -4.52209976666503,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-unit7-",
+   "train": {
+    "arm": "theta-unit7-",
+    "n": 395,
+    "top1": 0.14482987716475973,
+    "mrr": 0.2430865480150862,
+    "meanLogLikelihood": -2.327473232876326,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-unit7-",
+    "n": 172,
+    "top1": 0.011190760831632146,
+    "mrr": 0.022118910596932894,
+    "meanLogLikelihood": -4.52209976666503,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2001",
+   "train": {
+    "arm": "theta-seed2001",
+    "n": 395,
+    "top1": 0.01139240506329114,
+    "mrr": 0.18784972412004564,
+    "meanLogLikelihood": -16.057849202619426,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2001",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.016936036873671637,
+    "meanLogLikelihood": -33.51304721831782,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2002",
+   "train": {
+    "arm": "theta-seed2002",
+    "n": 395,
+    "top1": 0.027848101265822784,
+    "mrr": 0.2635179306455775,
+    "meanLogLikelihood": -4.774593469342484,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2002",
+    "n": 172,
+    "top1": 0.00872093023255814,
+    "mrr": 0.056785030427438855,
+    "meanLogLikelihood": -8.915038311736032,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2003",
+   "train": {
+    "arm": "theta-seed2003",
+    "n": 395,
+    "top1": 0.007594936708860759,
+    "mrr": 0.18439297159277912,
+    "meanLogLikelihood": -10.29396189190721,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2003",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.02892851794962417,
+    "meanLogLikelihood": -16.066388326422555,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2004",
+   "train": {
+    "arm": "theta-seed2004",
+    "n": 395,
+    "top1": 0.016666666666666666,
+    "mrr": 0.2954435000066414,
+    "meanLogLikelihood": -11.849664188067653,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2004",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.018486393970118784,
+    "meanLogLikelihood": -24.468150369974733,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2005",
+   "train": {
+    "arm": "theta-seed2005",
+    "n": 395,
+    "top1": 0.008860759493670886,
+    "mrr": 0.1843790096164919,
+    "meanLogLikelihood": -16.663067964039374,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2005",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.026054376210623936,
+    "meanLogLikelihood": -33.36456199899217,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2006",
+   "train": {
+    "arm": "theta-seed2006",
+    "n": 395,
+    "top1": 0.015189873417721518,
+    "mrr": 0.28508183438627327,
+    "meanLogLikelihood": -27.496216004722978,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2006",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.06203776350034874,
+    "meanLogLikelihood": -61.126515278347355,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2007",
+   "train": {
+    "arm": "theta-seed2007",
+    "n": 395,
+    "top1": 0.008860759493670886,
+    "mrr": 0.1899979627847909,
+    "meanLogLikelihood": -12.438541658258899,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2007",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.022971479790345934,
+    "meanLogLikelihood": -23.41359267902266,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2008",
+   "train": {
+    "arm": "theta-seed2008",
+    "n": 395,
+    "top1": 0.007594936708860759,
+    "mrr": 0.18152814309653423,
+    "meanLogLikelihood": -15.731286302485149,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2008",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.01956674034469039,
+    "meanLogLikelihood": -27.092320157240668,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2009",
+   "train": {
+    "arm": "theta-seed2009",
+    "n": 395,
+    "top1": 0.008438818565400845,
+    "mrr": 0.17580095041347316,
+    "meanLogLikelihood": -10.68351986504015,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2009",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.03351911067086343,
+    "meanLogLikelihood": -16.03747767679945,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2010",
+   "train": {
+    "arm": "theta-seed2010",
+    "n": 395,
+    "top1": 0.55957805907173,
+    "mrr": 0.6334253422369006,
+    "meanLogLikelihood": -1.7421223893738451,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2010",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.06355804422366806,
+    "meanLogLikelihood": -4.475264781297474,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2011",
+   "train": {
+    "arm": "theta-seed2011",
+    "n": 395,
+    "top1": 0.013924050632911392,
+    "mrr": 0.24995594153394973,
+    "meanLogLikelihood": -3.887465036196978,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2011",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.042239795609976295,
+    "meanLogLikelihood": -7.306003730147793,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2012",
+   "train": {
+    "arm": "theta-seed2012",
+    "n": 395,
+    "top1": 0.012658227848101266,
+    "mrr": 0.2970938408517022,
+    "meanLogLikelihood": -10.87213619067397,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2012",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.027950760966760923,
+    "meanLogLikelihood": -19.88604643789516,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2013",
+   "train": {
+    "arm": "theta-seed2013",
+    "n": 395,
+    "top1": 0.015189873417721518,
+    "mrr": 0.1913055749550342,
+    "meanLogLikelihood": -6.025022382891736,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2013",
+    "n": 172,
+    "top1": 0.01744186046511628,
+    "mrr": 0.051957942704997914,
+    "meanLogLikelihood": -9.77004995834347,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2014",
+   "train": {
+    "arm": "theta-seed2014",
+    "n": 395,
+    "top1": 0.01139240506329114,
+    "mrr": 0.2588874403231219,
+    "meanLogLikelihood": -17.33642953220046,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2014",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.025745908482425615,
+    "meanLogLikelihood": -37.74468547581514,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2015",
+   "train": {
+    "arm": "theta-seed2015",
+    "n": 395,
+    "top1": 0.04156118143459915,
+    "mrr": 0.23449528409241527,
+    "meanLogLikelihood": -2.7730076432373747,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2015",
+    "n": 172,
+    "top1": 0.005813953488372093,
+    "mrr": 0.02497770229974197,
+    "meanLogLikelihood": -4.838038100526785,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2016",
+   "train": {
+    "arm": "theta-seed2016",
+    "n": 395,
+    "top1": 0.00780590717299578,
+    "mrr": 0.1921017724661531,
+    "meanLogLikelihood": -7.329072417014067,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2016",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.027982865561257984,
+    "meanLogLikelihood": -14.670331223013916,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2017",
+   "train": {
+    "arm": "theta-seed2017",
+    "n": 395,
+    "top1": 0.022995780590717295,
+    "mrr": 0.24085819420962673,
+    "meanLogLikelihood": -3.9682649093835516,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2017",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.02274194545579993,
+    "meanLogLikelihood": -6.149839565240408,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2018",
+   "train": {
+    "arm": "theta-seed2018",
+    "n": 395,
+    "top1": 0.010126582278481013,
+    "mrr": 0.17930548069631713,
+    "meanLogLikelihood": -10.4547660987624,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2018",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.040861226485385274,
+    "meanLogLikelihood": -19.61442464889905,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2019",
+   "train": {
+    "arm": "theta-seed2019",
+    "n": 395,
+    "top1": 0.24248945147679324,
+    "mrr": 0.4679566283690938,
+    "meanLogLikelihood": -5.059758386696519,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2019",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.046878926334122266,
+    "meanLogLikelihood": -9.758283353500104,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2020",
+   "train": {
+    "arm": "theta-seed2020",
+    "n": 395,
+    "top1": 0.008860759493670886,
+    "mrr": 0.18354390770333576,
+    "meanLogLikelihood": -17.00164871837393,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2020",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.03766995726325311,
+    "meanLogLikelihood": -30.946941134662154,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2021",
+   "train": {
+    "arm": "theta-seed2021",
+    "n": 395,
+    "top1": 0.01139240506329114,
+    "mrr": 0.2222913707321998,
+    "meanLogLikelihood": -27.585789449809045,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2021",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.017234599802364338,
+    "meanLogLikelihood": -59.63688946922355,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2022",
+   "train": {
+    "arm": "theta-seed2022",
+    "n": 395,
+    "top1": 0.007594936708860759,
+    "mrr": 0.1805162812351266,
+    "meanLogLikelihood": -10.792696258891324,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2022",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.02039669858947958,
+    "meanLogLikelihood": -19.9437270024008,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2023",
+   "train": {
+    "arm": "theta-seed2023",
+    "n": 395,
+    "top1": 0.01139240506329114,
+    "mrr": 0.29558123529426905,
+    "meanLogLikelihood": -4.184036072013177,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2023",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.0653826850459771,
+    "meanLogLikelihood": -8.18440362004417,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2024",
+   "train": {
+    "arm": "theta-seed2024",
+    "n": 395,
+    "top1": 0.010126582278481013,
+    "mrr": 0.18027262861920584,
+    "meanLogLikelihood": -8.427488247040532,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2024",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.03284105865100371,
+    "meanLogLikelihood": -15.053750781317719,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2025",
+   "train": {
+    "arm": "theta-seed2025",
+    "n": 395,
+    "top1": 0.008860759493670886,
+    "mrr": 0.2308487449958168,
+    "meanLogLikelihood": -10.80418311774348,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2025",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.0202536984723154,
+    "meanLogLikelihood": -19.402597335729645,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2026",
+   "train": {
+    "arm": "theta-seed2026",
+    "n": 395,
+    "top1": 0.00780590717299578,
+    "mrr": 0.18730418143025962,
+    "meanLogLikelihood": -6.475635871334178,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2026",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.02555512540089487,
+    "meanLogLikelihood": -9.972922359705933,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2027",
+   "train": {
+    "arm": "theta-seed2027",
+    "n": 395,
+    "top1": 0.026582278481012658,
+    "mrr": 0.35020040656734003,
+    "meanLogLikelihood": -2.26631530115493,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2027",
+    "n": 172,
+    "top1": 0.047480620155038754,
+    "mrr": 0.11092819238040945,
+    "meanLogLikelihood": -4.351935464601236,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2028",
+   "train": {
+    "arm": "theta-seed2028",
+    "n": 395,
+    "top1": 0.015189873417721518,
+    "mrr": 0.29128036194042967,
+    "meanLogLikelihood": -16.158180287648957,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2028",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.07158914415476005,
+    "meanLogLikelihood": -37.73702652453802,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2029",
+   "train": {
+    "arm": "theta-seed2029",
+    "n": 395,
+    "top1": 0.010759493670886076,
+    "mrr": 0.23100870192694858,
+    "meanLogLikelihood": -3.9325235067223976,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2029",
+    "n": 172,
+    "top1": 0.005813953488372093,
+    "mrr": 0.024662294593589644,
+    "meanLogLikelihood": -4.97712644463782,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2030",
+   "train": {
+    "arm": "theta-seed2030",
+    "n": 395,
+    "top1": 0.002742616033755274,
+    "mrr": 0.23018012849282002,
+    "meanLogLikelihood": -5.433250589464947,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2030",
+    "n": 172,
+    "top1": 0.005813953488372093,
+    "mrr": 0.03552622834220571,
+    "meanLogLikelihood": -6.56114252560226,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2031",
+   "train": {
+    "arm": "theta-seed2031",
+    "n": 395,
+    "top1": 0.015189873417721518,
+    "mrr": 0.1826108923196289,
+    "meanLogLikelihood": -7.022962779913332,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2031",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.03403724252173944,
+    "meanLogLikelihood": -13.485783913334542,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2032",
+   "train": {
+    "arm": "theta-seed2032",
+    "n": 395,
+    "top1": 0.4916455696202532,
+    "mrr": 0.6298764740064244,
+    "meanLogLikelihood": -1.5817744862987442,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2032",
+    "n": 172,
+    "top1": 0.04844961240310078,
+    "mrr": 0.20868841291968093,
+    "meanLogLikelihood": -4.0191459137521415,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2033",
+   "train": {
+    "arm": "theta-seed2033",
+    "n": 395,
+    "top1": 0.010126582278481013,
+    "mrr": 0.18217659098519434,
+    "meanLogLikelihood": -22.897566618701447,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2033",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.0266529227835685,
+    "meanLogLikelihood": -46.284519100620884,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2034",
+   "train": {
+    "arm": "theta-seed2034",
+    "n": 395,
+    "top1": 0.5747679324894516,
+    "mrr": 0.6330244891078528,
+    "meanLogLikelihood": -2.398494638897799,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2034",
+    "n": 172,
+    "top1": 0.005813953488372093,
+    "mrr": 0.06149245363064801,
+    "meanLogLikelihood": -4.798693185126382,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2035",
+   "train": {
+    "arm": "theta-seed2035",
+    "n": 395,
+    "top1": 0.008860759493670886,
+    "mrr": 0.20268958820825714,
+    "meanLogLikelihood": -9.409307828359,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2035",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.03476477381622868,
+    "meanLogLikelihood": -21.284673756784766,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2036",
+   "train": {
+    "arm": "theta-seed2036",
+    "n": 395,
+    "top1": 0.008860759493670886,
+    "mrr": 0.17680202631852338,
+    "meanLogLikelihood": -12.7782079872104,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2036",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.02024687075116828,
+    "meanLogLikelihood": -26.703840423840067,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2037",
+   "train": {
+    "arm": "theta-seed2037",
+    "n": 395,
+    "top1": 0.012658227848101266,
+    "mrr": 0.19021573667698635,
+    "meanLogLikelihood": -33.70122943093129,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2037",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.039125428149670356,
+    "meanLogLikelihood": -57.040671929310406,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2038",
+   "train": {
+    "arm": "theta-seed2038",
+    "n": 395,
+    "top1": 0.08860759493670886,
+    "mrr": 0.3249997017006029,
+    "meanLogLikelihood": -2.8505224174473254,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2038",
+    "n": 172,
+    "top1": 0.011627906976744186,
+    "mrr": 0.035405064023694366,
+    "meanLogLikelihood": -5.2227103795608825,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2039",
+   "train": {
+    "arm": "theta-seed2039",
+    "n": 395,
+    "top1": 0.010126582278481013,
+    "mrr": 0.17461238365305343,
+    "meanLogLikelihood": -8.057173543642717,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2039",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.02008753855378568,
+    "meanLogLikelihood": -14.038373019995957,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2040",
+   "train": {
+    "arm": "theta-seed2040",
+    "n": 395,
+    "top1": 0.16886075949367088,
+    "mrr": 0.32840381009844716,
+    "meanLogLikelihood": -3.3928675821591368,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2040",
+    "n": 172,
+    "top1": 0.041666666666666664,
+    "mrr": 0.07411911418059082,
+    "meanLogLikelihood": -6.260030079688476,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2041",
+   "train": {
+    "arm": "theta-seed2041",
+    "n": 395,
+    "top1": 0.02911392405063291,
+    "mrr": 0.2728554617598854,
+    "meanLogLikelihood": -3.2997439876539185,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2041",
+    "n": 172,
+    "top1": 0.005813953488372093,
+    "mrr": 0.07145316005218029,
+    "meanLogLikelihood": -4.928416167189468,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2042",
+   "train": {
+    "arm": "theta-seed2042",
+    "n": 395,
+    "top1": 0.012658227848101266,
+    "mrr": 0.19218959941955965,
+    "meanLogLikelihood": -13.549037951427879,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2042",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.031118001662131255,
+    "meanLogLikelihood": -19.913129709317328,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2043",
+   "train": {
+    "arm": "theta-seed2043",
+    "n": 395,
+    "top1": 0.046497890295358654,
+    "mrr": 0.23004148952555467,
+    "meanLogLikelihood": -7.3296662983423,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2043",
+    "n": 172,
+    "top1": 0.005813953488372093,
+    "mrr": 0.028832343492578127,
+    "meanLogLikelihood": -15.605373742857648,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2044",
+   "train": {
+    "arm": "theta-seed2044",
+    "n": 395,
+    "top1": 0.016455696202531647,
+    "mrr": 0.1845856629145904,
+    "meanLogLikelihood": -6.662777964023719,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2044",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.026803422889882564,
+    "meanLogLikelihood": -13.061988501279215,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2045",
+   "train": {
+    "arm": "theta-seed2045",
+    "n": 395,
+    "top1": 0.04725738396624472,
+    "mrr": 0.3729287294227498,
+    "meanLogLikelihood": -2.5233253083453144,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2045",
+    "n": 172,
+    "top1": 0.041666666666666664,
+    "mrr": 0.07549422773152621,
+    "meanLogLikelihood": -4.66345991772684,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2046",
+   "train": {
+    "arm": "theta-seed2046",
+    "n": 395,
+    "top1": 0.010126582278481013,
+    "mrr": 0.18044115672832758,
+    "meanLogLikelihood": -20.351618682319423,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2046",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.024762047959506542,
+    "meanLogLikelihood": -39.14774805530549,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2047",
+   "train": {
+    "arm": "theta-seed2047",
+    "n": 395,
+    "top1": 0.24396624472573838,
+    "mrr": 0.46149296508879534,
+    "meanLogLikelihood": -5.711350025764654,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2047",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.05563925716428619,
+    "meanLogLikelihood": -14.061681629520557,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2048",
+   "train": {
+    "arm": "theta-seed2048",
+    "n": 395,
+    "top1": 0.01139240506329114,
+    "mrr": 0.17587461666958226,
+    "meanLogLikelihood": -11.706667096906665,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2048",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.02544037525932148,
+    "meanLogLikelihood": -19.72428725767823,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2049",
+   "train": {
+    "arm": "theta-seed2049",
+    "n": 395,
+    "top1": 0.15886075949367087,
+    "mrr": 0.4115519549396148,
+    "meanLogLikelihood": -11.063407613225072,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2049",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.03561179216629326,
+    "meanLogLikelihood": -23.41540164553268,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2050",
+   "train": {
+    "arm": "theta-seed2050",
+    "n": 395,
+    "top1": 0.007594936708860759,
+    "mrr": 0.24774064036645008,
+    "meanLogLikelihood": -2.882391301498353,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2050",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.031103259900889833,
+    "meanLogLikelihood": -5.538640265548422,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2051",
+   "train": {
+    "arm": "theta-seed2051",
+    "n": 395,
+    "top1": 0.013502109704641349,
+    "mrr": 0.24167188473717477,
+    "meanLogLikelihood": -2.9358006262247303,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2051",
+    "n": 172,
+    "top1": 0.005813953488372093,
+    "mrr": 0.03415984212298773,
+    "meanLogLikelihood": -5.317449447927919,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2052",
+   "train": {
+    "arm": "theta-seed2052",
+    "n": 395,
+    "top1": 0.010126582278481013,
+    "mrr": 0.2588127248451089,
+    "meanLogLikelihood": -16.163176850774345,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2052",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.04540822448169422,
+    "meanLogLikelihood": -31.59289114323075,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2053",
+   "train": {
+    "arm": "theta-seed2053",
+    "n": 395,
+    "top1": 0.004641350210970464,
+    "mrr": 0.18530196239316146,
+    "meanLogLikelihood": -12.634605355511852,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2053",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.020265481331568837,
+    "meanLogLikelihood": -25.946707869415746,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2054",
+   "train": {
+    "arm": "theta-seed2054",
+    "n": 395,
+    "top1": 0.012658227848101266,
+    "mrr": 0.1923443774545147,
+    "meanLogLikelihood": -3.8575293411882954,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2054",
+    "n": 172,
+    "top1": 0.005813953488372093,
+    "mrr": 0.05094476012530102,
+    "meanLogLikelihood": -4.993746353897014,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2055",
+   "train": {
+    "arm": "theta-seed2055",
+    "n": 395,
+    "top1": 0.02172995780590717,
+    "mrr": 0.20724802877816206,
+    "meanLogLikelihood": -21.9773262147149,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2055",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.01649847056745422,
+    "meanLogLikelihood": -44.88437253400264,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2056",
+   "train": {
+    "arm": "theta-seed2056",
+    "n": 395,
+    "top1": 0.010126582278481013,
+    "mrr": 0.182448399354031,
+    "meanLogLikelihood": -7.751293681589511,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2056",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.03228385685506089,
+    "meanLogLikelihood": -11.33303503004405,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2057",
+   "train": {
+    "arm": "theta-seed2057",
+    "n": 395,
+    "top1": 0.020253164556962026,
+    "mrr": 0.25942602588856123,
+    "meanLogLikelihood": -4.8314641344880895,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2057",
+    "n": 172,
+    "top1": 0.011627906976744186,
+    "mrr": 0.05515286811957148,
+    "meanLogLikelihood": -7.37696708614613,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2058",
+   "train": {
+    "arm": "theta-seed2058",
+    "n": 395,
+    "top1": 0.02383966244725738,
+    "mrr": 0.22544037659959068,
+    "meanLogLikelihood": -6.828318015216629,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2058",
+    "n": 172,
+    "top1": 0.005813953488372093,
+    "mrr": 0.04130356916930358,
+    "meanLogLikelihood": -8.444327672936707,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2059",
+   "train": {
+    "arm": "theta-seed2059",
+    "n": 395,
+    "top1": 0.010126582278481013,
+    "mrr": 0.17793076684919865,
+    "meanLogLikelihood": -11.96336715215299,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2059",
+    "n": 172,
+    "top1": 0,
+    "mrr": 0.029631093795884387,
+    "meanLogLikelihood": -23.09446513609422,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  },
+  {
+   "arm": "theta-seed2060",
+   "train": {
+    "arm": "theta-seed2060",
+    "n": 395,
+    "top1": 0.04029535864978903,
+    "mrr": 0.24768678717460732,
+    "meanLogLikelihood": -3.776440439953828,
+    "expectedRandomTop1": 0.14482987716475973
+   },
+   "test": {
+    "arm": "theta-seed2060",
+    "n": 172,
+    "top1": 0.005813953488372093,
+    "mrr": 0.027430095995618232,
+    "meanLogLikelihood": -5.624099898997596,
+    "expectedRandomTop1": 0.011190760831632146
+   }
+  }
+ ],
+ "gp": {
+  "evaluations": 43659,
+  "gpReportedMs": 89078,
+  "wallMs": 230856,
+  "transport": "gp rpc --stdio (one session)"
+ },
+ "outputs": {
+  "bestTheta": "best-theta.json",
+  "bestCheckpointDocument": "best-checkpoint.v1.json"
+ }
+}

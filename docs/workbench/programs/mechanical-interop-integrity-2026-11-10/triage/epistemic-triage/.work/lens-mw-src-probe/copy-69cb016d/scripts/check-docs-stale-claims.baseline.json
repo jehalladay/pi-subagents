@@ -1,0 +1,6 @@
+[
+  "docs/programs/pi-workbench-interoperability-audit-2026-11-06/02-host-contract.md|son` as bare schema filenames. `status: descriptor-only` is historical metadata, **not** a claim of remote availability.",
+  "docs/programs/pi-workbench-interoperability-audit-2026-11-06/03-delivery-program.md|tly. The first joint live cut, MW-R4, depends only on these concrete, measured ingredients.",
+  "docs/programs/pi-workbench-interoperability-audit-2026-11-06/04-qa-feedback.md|- **L4 registered joint:** call actual Pi `workflow_execute` function branch, observe through Pi, and correlate Mechanical's four-domain",
+  "docs/programs/pi-workbench-interoperability-audit-2026-11-06/README.md|bindings and supporting coordination functions. The Pi-side companion lives at `pi-subagents/docs/workbench/programs/mechanical-interopera"
+]

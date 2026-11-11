@@ -1,0 +1,164 @@
+{
+ "schema": "mechanical-workflows/gate-interval-distribution/v1",
+ "package": "scratch Forge Python package",
+ "commit": "ce0657c",
+ "runs": [
+  {
+   "verdict": "PASS",
+   "elapsed": 4690,
+   "launch": 1534,
+   "child": 1982,
+   "controller": 2708,
+   "commit": "ce0657c"
+  },
+  {
+   "verdict": "PASS",
+   "elapsed": 4769,
+   "launch": 1666,
+   "child": 1995,
+   "controller": 2774,
+   "commit": "ce0657c"
+  },
+  {
+   "verdict": "PASS",
+   "elapsed": 4671,
+   "launch": 1549,
+   "child": 1962,
+   "controller": 2709,
+   "commit": "ce0657c"
+  },
+  {
+   "verdict": "PASS",
+   "elapsed": 4682,
+   "launch": 1559,
+   "child": 1966,
+   "controller": 2716,
+   "commit": "ce0657c"
+  },
+  {
+   "verdict": "PASS",
+   "elapsed": 4682,
+   "launch": 1540,
+   "child": 1972,
+   "controller": 2710,
+   "commit": "ce0657c"
+  },
+  {
+   "verdict": "PASS",
+   "elapsed": 4702,
+   "launch": 1528,
+   "child": 1972,
+   "controller": 2730,
+   "commit": "ce0657c"
+  },
+  {
+   "verdict": "PASS",
+   "elapsed": 4686,
+   "launch": 1549,
+   "child": 1980,
+   "controller": 2706,
+   "commit": "ce0657c"
+  },
+  {
+   "verdict": "PASS",
+   "elapsed": 4684,
+   "launch": 1543,
+   "child": 1957,
+   "controller": 2727,
+   "commit": "ce0657c"
+  },
+  {
+   "verdict": "PASS",
+   "elapsed": 4628,
+   "launch": 1535,
+   "child": 1947,
+   "controller": 2681,
+   "commit": "ce0657c"
+  },
+  {
+   "verdict": "PASS",
+   "elapsed": 4683,
+   "launch": 1532,
+   "child": 1960,
+   "controller": 2723,
+   "commit": "ce0657c"
+  }
+ ],
+ "summaryMs": {
+  "elapsed": {
+   "min": 4628,
+   "median": 4683.5,
+   "max": 4769
+  },
+  "launch": {
+   "min": 1528,
+   "median": 1541.5,
+   "max": 1666
+  },
+  "child": {
+   "min": 1947,
+   "median": 1969.0,
+   "max": 1995
+  },
+  "controller": {
+   "min": 2681,
+   "median": 2713.0,
+   "max": 2774
+  }
+ },
+ "note": "ten consecutive root gates on one clean scratch commit, same host, no cache reset; native intervals copied from each envelope, no arithmetic across overlapping phases",
+ "sdkGlue": {
+  "schema": "mechanical-workflows/sdk-glue-samples/v1",
+  "package": "scratch Forge Python package at /tmp/mw-repair-auto-target2",
+  "method": "ServerConnection.spawn('forge'); initialize(); dispatch gate.run; first operation.started notification stamps startedAfterDispatchMs; initializeMs = spawn+initialize wall time",
+  "samples": [
+   {
+    "sample": 1,
+    "initializeMs": 1640,
+    "startedAfterDispatchMs": 28,
+    "verdict": "PASS",
+    "operationId": "op-9632e57d7bae46ab857735db9b94a8ea"
+   },
+   {
+    "sample": 2,
+    "initializeMs": 1581,
+    "startedAfterDispatchMs": 30,
+    "verdict": "PASS",
+    "operationId": "op-d20dd996b14f4fafaa4ed5bb26492230"
+   },
+   {
+    "sample": 3,
+    "initializeMs": 1581,
+    "startedAfterDispatchMs": 28,
+    "verdict": "PASS",
+    "operationId": "op-0a9b31c69e95421a9537f3799dae748d"
+   },
+   {
+    "sample": 4,
+    "initializeMs": 1531,
+    "startedAfterDispatchMs": 28,
+    "verdict": "PASS",
+    "operationId": "op-6c4291b4854f4d66955e600804cfcad2"
+   },
+   {
+    "sample": 5,
+    "initializeMs": 1541,
+    "startedAfterDispatchMs": 33,
+    "verdict": "PASS",
+    "operationId": "op-1b1f94e83b9342f2bf3308794c0c21bb"
+   }
+  ],
+  "summaryMs": {
+   "startedAfterDispatch": {
+    "min": 28,
+    "median": 28,
+    "max": 33
+   },
+   "initialize": {
+    "min": 1531,
+    "median": 1581,
+    "max": 1640
+   }
+  }
+ }
+}

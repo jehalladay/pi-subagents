@@ -1,0 +1,155 @@
+{
+ "schema": "mechanical-workflows/forge-cancel-fix-recheck/v1",
+ "date": "2026-10-15",
+ "fixCommit": "669cae5e75 fix(app-server): carry the projection keys on a peer-cancelled answer (Forge main, 2026-10-15T07:28:59Z)",
+ "probeA": {
+  "forge": "source aef8dcb30a94 built into an isolated venv (shared install untouched)",
+  "answer": {
+   "forgeBin": "/tmp/mw-forge-fix-venv/bin/forge",
+   "operationIdFromStarted": "op-3a56fa12f9434aecab5ebe2b1b8c2bb0",
+   "cancelledAfterMs": 1000,
+   "receipt": {
+    "cancel_acceptance": "ACCEPTED",
+    "cancel_intent": "CANCEL_REQUESTED",
+    "cancellation_established": false,
+    "operation_id": "op-3a56fa12f9434aecab5ebe2b1b8c2bb0",
+    "telemetry": {
+     "durable": "recorded",
+     "recorded": true,
+     "resident": {
+      "hits": [],
+      "misses": [],
+      "served": false
+     },
+     "time_ns": {
+      "decomposition_claim": "additive_exclusive",
+      "members": {
+       "application": 6048966,
+       "decode": 35990,
+       "validation": 13028
+      },
+      "total_ns": 13402689,
+      "unattributed_ns": 7304705
+     }
+    }
+   },
+   "answerTopKeys": [
+    "artifacts",
+    "command",
+    "completed_at",
+    "contract_version",
+    "data",
+    "delivery",
+    "diagnostics",
+    "envelope",
+    "forge_result",
+    "ids",
+    "lifecycle_state",
+    "next_actions",
+    "operation_id",
+    "platform",
+    "recovery_actions",
+    "resolution",
+    "resource",
+    "started_at",
+    "status",
+    "target",
+    "target_scope",
+    "telemetry",
+    "terminal_disposition",
+    "terminal_fact"
+   ],
+   "topLevel": {
+    "operation_id": "op-3a56fa12f9434aecab5ebe2b1b8c2bb0",
+    "terminal_fact": "cancelled-established",
+    "forge_result_present": true,
+    "status": "error"
+   },
+   "nested": {
+    "dataOperationId": "op-3a56fa12f9434aecab5ebe2b1b8c2bb0",
+    "establishment": "CANCELLED_CONFIRMED",
+    "terminalDisposition": "cancelled-established",
+    "delivery": {
+     "complete": true,
+     "dropped_count": 0,
+     "first_dropped_class": null
+    }
+   },
+   "forgeResultSameAsFlat": true
+  }
+ },
+ "probeB": {
+  "forge": "installed 0.2.1 rev 0deb972720ce",
+  "answer": {
+   "forgeBin": "/local/home/jehallad/.local/share/uv/tools/forge/bin/forge",
+   "operationIdFromStarted": "op-5b9bd39d34884be1b788f5d6db269563",
+   "cancelledAfterMs": 1000,
+   "receipt": {
+    "cancel_acceptance": "ACCEPTED",
+    "cancel_intent": "CANCEL_REQUESTED",
+    "cancellation_established": false,
+    "operation_id": "op-5b9bd39d34884be1b788f5d6db269563",
+    "telemetry": {
+     "durable": "recorded",
+     "recorded": true,
+     "resident": {
+      "hits": [],
+      "misses": [],
+      "served": false
+     },
+     "time_ns": {
+      "decomposition_claim": "additive_exclusive",
+      "members": {
+       "application": 8391824,
+       "decode": 47021,
+       "validation": 12363
+      },
+      "total_ns": 15153672,
+      "unattributed_ns": 6702464
+     }
+    }
+   },
+   "answerTopKeys": [
+    "artifacts",
+    "command",
+    "completed_at",
+    "contract_version",
+    "data",
+    "delivery",
+    "diagnostics",
+    "envelope",
+    "ids",
+    "lifecycle_state",
+    "next_actions",
+    "platform",
+    "recovery_actions",
+    "resolution",
+    "resource",
+    "started_at",
+    "status",
+    "target",
+    "target_scope",
+    "telemetry",
+    "terminal_disposition"
+   ],
+   "topLevel": {
+    "operation_id": null,
+    "terminal_fact": null,
+    "forge_result_present": false,
+    "status": "error"
+   },
+   "nested": {
+    "dataOperationId": "op-5b9bd39d34884be1b788f5d6db269563",
+    "establishment": "CANCELLED_CONFIRMED",
+    "terminalDisposition": "cancelled-established",
+    "delivery": {
+     "complete": true,
+     "dropped_count": 0,
+     "first_dropped_class": null
+    }
+   },
+   "forgeResultSameAsFlat": null
+  }
+ },
+ "consumerImpact": "classifyGateResponse already reads both shapes: cancellationEstablished() keys on data.cancellation.establishment (present in both) and operationIdOf() falls back to data.operation_id; the fixed shape adds top-level operation_id/terminal_fact/forge_result, and terminal_fact there reads the disposition value cancelled-established, which the classifier never treats as a PASS/FAIL fact."
+}

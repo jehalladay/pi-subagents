@@ -1,0 +1,136 @@
+{
+ "mode": "live-select",
+ "report": {
+  "basis": {
+   "workspaceId": "/tmp/mw-select-integrate",
+   "revision": "ce0657cb7437fb25f66b2dbf3449fdbeae55a83b"
+  },
+  "plan": {
+   "candidates": [
+    {
+     "revision": "e9874212b05afb0c589053d4f290c5dfea9bfef7",
+     "branch": "mw/candidate/ce0657c-1-b62ea0",
+     "worktree": "/tmp/mw-candidate-TZ5IZz",
+     "evidence": {
+      "system": "claude-agent-sdk",
+      "kind": "session",
+      "id": "6cc2a4f5-d2ef-4faf-b5fb-e3096f219b31"
+     }
+    },
+    {
+     "revision": "9e71a4db2988dceee62bc23a5041c777973f7b5a",
+     "branch": "mw/candidate/ce0657c-2-628690",
+     "worktree": "/tmp/mw-candidate-CwS56b",
+     "evidence": {
+      "system": "claude-agent-sdk",
+      "kind": "session",
+      "id": "0d111f18-c486-4ad1-b052-9149677fa786"
+     }
+    }
+   ]
+  },
+  "excluded": [],
+  "choice": {
+   "revision": "e9874212b05afb0c589053d4f290c5dfea9bfef7",
+   "evidence": {
+    "system": "claude-agent-sdk",
+    "kind": "selection-session",
+    "id": "cba7ba6d-dacf-4845-baf2-8df1ca42721d"
+   }
+  },
+  "outcome": {
+   "kind": "reviewed_candidate",
+   "candidate": {
+    "parentBasis": {
+     "workspaceId": "/tmp/mw-select-integrate",
+     "revision": "ce0657cb7437fb25f66b2dbf3449fdbeae55a83b"
+    },
+    "basis": {
+     "workspaceId": "/tmp/mw-select-integrate",
+     "revision": "e9874212b05afb0c589053d4f290c5dfea9bfef7"
+    },
+    "evidence": {
+     "system": "claude-agent-sdk",
+     "kind": "session",
+     "id": "6cc2a4f5-d2ef-4faf-b5fb-e3096f219b31"
+    }
+   },
+   "review": {
+    "basis": {
+     "workspaceId": "/tmp/mw-select-integrate",
+     "revision": "e9874212b05afb0c589053d4f290c5dfea9bfef7"
+    },
+    "verdict": "approved",
+    "evidence": {
+     "system": "claude-agent-sdk",
+     "kind": "review-session",
+     "id": "053caa26-b020-4aae-9459-e74fc41dd998"
+    }
+   },
+   "verification": {
+    "basis": {
+     "workspaceId": "/tmp/mw-select-integrate",
+     "revision": "e9874212b05afb0c589053d4f290c5dfea9bfef7"
+    },
+    "verdict": "passed",
+    "evidence": {
+     "system": "forge",
+     "kind": "operation",
+     "id": "op-57f13950f4874265aa32406f60a01e65"
+    },
+    "diagnostic": "FORGE_GATE_PASS"
+   }
+  },
+  "integration": {
+   "basis": {
+    "workspaceId": "/tmp/mw-select-integrate",
+    "revision": "ce0657cb7437fb25f66b2dbf3449fdbeae55a83b"
+   },
+   "candidate": {
+    "workspaceId": "/tmp/mw-select-integrate",
+    "revision": "e9874212b05afb0c589053d4f290c5dfea9bfef7"
+   },
+   "baseUnchanged": true,
+   "fastForward": true,
+   "reverification": {
+    "basis": {
+     "workspaceId": "/tmp/mw-select-integrate",
+     "revision": "e9874212b05afb0c589053d4f290c5dfea9bfef7"
+    },
+    "verdict": "passed",
+    "evidence": {
+     "system": "forge",
+     "kind": "operation",
+     "id": "op-980ae7634d144fe69ff195df464930fa"
+    },
+    "diagnostic": "FORGE_GATE_PASS"
+   },
+   "verified": true
+  }
+ },
+ "invocation": {
+  "argv": [
+   "node",
+   "apps/development-rig/dist/cli.js",
+   "--live-select",
+   "--integrate",
+   "--allow-writes",
+   "--workspace",
+   "/tmp/mw-select-integrate",
+   "--task",
+   "Add a function halve(x) that returns x / 2 next to the existing double function, with one unit test, keeping the existing style and the Forge gate green.",
+   "--candidates",
+   "2"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 133,
+  "mainCheckoutAfter": {
+   "head": "ce0657c",
+   "dirty": 0,
+   "candidateBranchesKept": 2,
+   "worktreesRemoved": true
+  },
+  "forge": "forge 0.2.1 (rev 0deb972720ce)",
+  "claudeAgentSdk": "0.3.300"
+ }
+}

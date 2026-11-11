@@ -1,0 +1,167 @@
+{
+  "bodyDigest": "sha256:7ebd90df8982640de7b5ea4067ec69396c6cf1b2b0fc6142025adb243100bb0e",
+  "certified": false,
+  "claimsEstablished": [
+    "the built package entry exports graphPolicyHost and the unconfigured host reproduces the fallback finalHash on 6 pinned fixture runs",
+    "four injected client doubles (throws, budget-exhausted, abstain, malformed-body) each fall back with their named GP_* reason, one gp-fallback trace line per consulted step, and leave the landing-queue seed 7 finalHash equal to the unconfigured run",
+    "the committed landing-queue-seed7 and vertical-cut-seed7 fixtures regenerate byte-identical through the built package"
+  ],
+  "claimsUnestablished": [
+    "any live GraphPolicyCLI behavior: no implementation exists, every client here is an in-process double",
+    "a native Forge receipt: the operation id of the gate run that reached this journey lives in the candidate record, not in this body",
+    "any runtime rollout surface or its readiness: none exists, and this journey adds none",
+    "measured overhead: overheadMicro is injected from a propose-call count, not a wall clock",
+    "coordination quality or safety in any real environment"
+  ],
+  "evidenceGrade": "FIXTURE",
+  "fixtureReverify": {
+    "landingQueueSeed7": "REGENERATED_BYTES_EQUAL",
+    "verticalCutSeed7": "REGENERATED_BYTES_EQUAL"
+  },
+  "injectedFailure": {
+    "doubles": [
+      {
+        "double": "throws",
+        "fallbackTraceLines": 12,
+        "finalHash": "sha256:618ac15a3852a99de105e3c54aea5f65f3a784960d903e1f22d046f3552936c3",
+        "reasons": [
+          "GP_UNAVAILABLE"
+        ],
+        "steps": 12
+      },
+      {
+        "double": "budget-exhausted",
+        "fallbackTraceLines": 12,
+        "finalHash": "sha256:618ac15a3852a99de105e3c54aea5f65f3a784960d903e1f22d046f3552936c3",
+        "reasons": [
+          "GP_BUDGET_EXHAUSTED"
+        ],
+        "steps": 12
+      },
+      {
+        "double": "abstain",
+        "fallbackTraceLines": 12,
+        "finalHash": "sha256:618ac15a3852a99de105e3c54aea5f65f3a784960d903e1f22d046f3552936c3",
+        "reasons": [
+          "GP_ABSTAIN"
+        ],
+        "steps": 12
+      },
+      {
+        "double": "malformed-body",
+        "fallbackTraceLines": 12,
+        "finalHash": "sha256:618ac15a3852a99de105e3c54aea5f65f3a784960d903e1f22d046f3552936c3",
+        "reasons": [
+          "GP_RESPONSE_MALFORMED"
+        ],
+        "steps": 12
+      }
+    ],
+    "unconfiguredFinalHash": "sha256:618ac15a3852a99de105e3c54aea5f65f3a784960d903e1f22d046f3552936c3"
+  },
+  "mode": "fixture",
+  "observations": [
+    {
+      "configuration": {
+        "fallback": {
+          "id": "restack-first",
+          "revision": "fixture-1"
+        },
+        "graphPolicy": "absent",
+        "reason": "GP_UNCONFIGURED"
+      },
+      "fallbackFinalHash": "sha256:618ac15a3852a99de105e3c54aea5f65f3a784960d903e1f22d046f3552936c3",
+      "hostFinalHash": "sha256:618ac15a3852a99de105e3c54aea5f65f3a784960d903e1f22d046f3552936c3",
+      "label": "landing-queue seed 7 restack-first",
+      "proposeCalls": 12
+    },
+    {
+      "configuration": {
+        "fallback": {
+          "id": "fifo-landing",
+          "revision": "fixture-1"
+        },
+        "graphPolicy": "absent",
+        "reason": "GP_UNCONFIGURED"
+      },
+      "fallbackFinalHash": "sha256:500e0353cf3621eebf1fad52c9b3eedd9ab05845ce47991cbc451402e0fc4904",
+      "hostFinalHash": "sha256:500e0353cf3621eebf1fad52c9b3eedd9ab05845ce47991cbc451402e0fc4904",
+      "label": "landing-queue seed 3 fifo",
+      "proposeCalls": 12
+    },
+    {
+      "configuration": {
+        "fallback": {
+          "id": "provenance-checked",
+          "revision": "fixture-1"
+        },
+        "graphPolicy": "absent",
+        "reason": "GP_UNCONFIGURED"
+      },
+      "fallbackFinalHash": "sha256:8c02f112a7eae7243968e2444ea1bc4a9fbcb0f6ec0349a534cbe4f3035b6b1b",
+      "hostFinalHash": "sha256:8c02f112a7eae7243968e2444ea1bc4a9fbcb0f6ec0349a534cbe4f3035b6b1b",
+      "label": "compaction-inheritance seed 7",
+      "proposeCalls": 8
+    },
+    {
+      "configuration": {
+        "fallback": {
+          "id": "receipt-checked",
+          "revision": "fixture-1"
+        },
+        "graphPolicy": "absent",
+        "reason": "GP_UNCONFIGURED"
+      },
+      "fallbackFinalHash": "sha256:2b980fe8d8930dc7c78807b85547607f436fc729f89519c45216ffe29d02d42d",
+      "hostFinalHash": "sha256:2b980fe8d8930dc7c78807b85547607f436fc729f89519c45216ffe29d02d42d",
+      "label": "colony-resilience seed 3",
+      "proposeCalls": 2
+    },
+    {
+      "configuration": {
+        "fallback": {
+          "id": "resume-from-snapshot",
+          "revision": "fixture-1"
+        },
+        "graphPolicy": "absent",
+        "reason": "GP_UNCONFIGURED"
+      },
+      "fallbackFinalHash": "sha256:796070ad3d58ad1511d06aa2216c94d7248a12f841b6d99c3328c88ce67bd1b6",
+      "hostFinalHash": "sha256:796070ad3d58ad1511d06aa2216c94d7248a12f841b6d99c3328c88ce67bd1b6",
+      "label": "artifact-recovery seed 7 treatment",
+      "proposeCalls": 14
+    },
+    {
+      "configuration": {
+        "fallback": {
+          "id": "independent-test-first",
+          "revision": "fixture-1"
+        },
+        "graphPolicy": "absent",
+        "reason": "GP_UNCONFIGURED"
+      },
+      "fallbackFinalHash": "sha256:404b99e01779d8588dda13222c97e8587d77b9e9c9c2c353025a58f7575c5ff6",
+      "hostFinalHash": "sha256:404b99e01779d8588dda13222c97e8587d77b9e9c9c2c353025a58f7575c5ff6",
+      "label": "quorum-evidence seed 7 independent-test-first",
+      "proposeCalls": 30
+    }
+  ],
+  "overheadMicro": {
+    "basis": "one micro-unit per host propose call; no wall clock",
+    "hostProposeCalls": 126,
+    "kind": "injected",
+    "micro": 126000000
+  },
+  "producer": "@mechanical/workflows-coordination",
+  "producerVersion": "0.1.0",
+  "schema": "mw.graph-policy-host-journey.v1",
+  "subjectBasis": {
+    "builtEntry": "packages/coordination/dist/index.js",
+    "fixtures": {
+      "landing-queue-seed7": "sha256:077fa15d85f98a732764762255606995f2ef94050356c7980ccf46cd0a3061ac",
+      "vertical-cut-seed7": "sha256:856595fc9ca1561399a16d1c04093a96400efb8e2067e2459fb28ba018865c4c"
+    },
+    "hostSourceSha256": "sha256:9237e674000108248a699efa73343c50dbc2cecab64e596d86800c571ab952ca",
+    "packageManifestSha256": "sha256:9efffdab4cf52fc0f7cd1c8eb37836a9a515eb01c7415893ae2a68813d3de4c0"
+  }
+}

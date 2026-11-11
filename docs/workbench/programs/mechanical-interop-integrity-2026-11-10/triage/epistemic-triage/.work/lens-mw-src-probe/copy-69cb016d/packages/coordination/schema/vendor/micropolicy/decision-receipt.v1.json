@@ -1,0 +1,81 @@
+{
+  "$id": "micropolicy.decision-receipt.v1",
+  "title": "DecisionReceiptV1",
+  "description": "Immutable circuit.v1 decision receipt (MP-W06): program/checkpoint digests, FP32 input/output snapshots, prior and proposed state, and the host categorical selection with its exact behavior probability, mask and RNG record. Reals are bit words (FP32 8 hex, float64 16 hex). It proposes; it never records an executed external effect.",
+  "type": "object",
+  "required": ["schema", "decisionId", "backend", "programDigest", "checkpointDigest", "inputs", "state", "outputs", "proposedState", "effects", "digest"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {"type": "string", "const": "micropolicy.decision-receipt.v1"},
+    "decisionId": {"$ref": "#/$defs/name"},
+    "backend": {"type": "string", "enum": ["handwired", "reference"]},
+    "pin": {"$ref": "#/$defs/pin"},
+    "programDigest": {"$ref": "#/$defs/digest"},
+    "checkpointDigest": {"$ref": "#/$defs/digest"},
+    "inputs": {"type": "array", "maxItems": 32, "items": {"$ref": "#/$defs/port"}},
+    "state": {"$ref": "#/$defs/state"},
+    "outputs": {"type": "array", "maxItems": 64, "items": {"$ref": "#/$defs/port"}},
+    "proposedState": {"$ref": "#/$defs/state"},
+    "selection": {"$ref": "#/$defs/selection"},
+    "effects": {"type": "string", "const": "none"},
+    "digest": {"$ref": "#/$defs/digest"}
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "name": {"type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_.:-]{0,127}$"},
+    "f32": {"type": "string", "pattern": "^[0-9a-f]{8}$"},
+    "f64": {"type": "string", "pattern": "^[0-9a-f]{16}$"},
+    "words": {"type": "array", "minItems": 1, "maxItems": 128, "items": {"$ref": "#/$defs/f32"}},
+    "port": {
+      "title": "DecisionPortV1", "type": "object", "required": ["name", "words"], "additionalProperties": false,
+      "properties": {"name": {"$ref": "#/$defs/name"}, "words": {"$ref": "#/$defs/words"}}
+    },
+    "pin": {
+      "title": "HandwiredPinV1", "type": "object", "required": ["repository", "commit", "path", "blobSha1"], "additionalProperties": false,
+      "properties": {
+        "repository": {"type": "string", "maxLength": 512},
+        "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "path": {"type": "string", "maxLength": 512},
+        "blobSha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "state": {
+      "title": "DecisionStateV1", "type": "object", "required": ["schema", "programDigest", "version", "cells", "digest"], "additionalProperties": false,
+      "properties": {
+        "schema": {"type": "string", "const": "micropolicy.state.v1"},
+        "programDigest": {"$ref": "#/$defs/digest"},
+        "version": {"type": "integer", "minimum": 0, "maximum": 9007199254740991},
+        "cells": {"type": "array", "maxItems": 64, "items": {"$ref": "#/$defs/words"}},
+        "digest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "rng": {
+      "title": "DecisionRngV1", "type": "object", "required": ["algorithm", "seed", "draw"], "additionalProperties": false,
+      "properties": {
+        "algorithm": {"type": "string", "const": "fmix32-mp1"},
+        "seed": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+        "draw": {"type": "integer", "minimum": 0, "maximum": 4294967295}
+      }
+    },
+    "choice": {
+      "title": "DecisionChoiceV1", "type": "object", "required": ["action", "eligible"], "additionalProperties": false,
+      "properties": {"action": {"$ref": "#/$defs/name"}, "eligible": {"type": "boolean"}, "probability": {"$ref": "#/$defs/f64"}}
+    },
+    "selection": {
+      "title": "DecisionSelectionV1", "type": "object",
+      "required": ["output", "mode", "temperature", "choices", "action", "actionIndex", "probability", "logProbability"],
+      "additionalProperties": false,
+      "properties": {
+        "output": {"$ref": "#/$defs/name"},
+        "mode": {"type": "string", "enum": ["sample", "greedy"]},
+        "temperature": {"$ref": "#/$defs/f64"},
+        "choices": {"type": "array", "minItems": 2, "maxItems": 128, "items": {"$ref": "#/$defs/choice"}},
+        "rng": {"$ref": "#/$defs/rng"},
+        "action": {"$ref": "#/$defs/name"},
+        "actionIndex": {"type": "integer", "minimum": 0, "maximum": 127},
+        "probability": {"$ref": "#/$defs/f64"},
+        "logProbability": {"$ref": "#/$defs/f64"}
+      }
+    }
+  }
+}

@@ -1,0 +1,1095 @@
+====================================================================================================
+C018 | OBSERVATION | ESTABLISHED | material=True | docs/pi-README.md @ Observed baseline, bullet 4 (line 20), sentence 1, item 1; Release definition (line 24), 'four Mechanical callbacks' and 'original domain result' (presuppositions)
+VERBATIM: Mechanical has ordinary develop(services,request)
+PROPOSITION: Mechanical has an ordinary function develop(services, request), that is a plain function that receives its services as an argument. The services it takes are exactly four callbacks, the 'four Mechanical callbacks' of the release definition, and its return value is the domain result that the release definition requires workflow_observe to show unchanged.
+SCOPE: {"description": "Mechanical source at 69cb016d: the develop export and its services, request and outcome contract. The artifact cites no path. 'Ordinary', 'exactly four' and 'returns a domain result' are separate facets.", "environment": "mw-69cb016d"}
+PERMITTED_WORDING: Mechanical has ordinary develop(services, request) with exactly four callbacks and a four-outcome domain union; 'the domain result workflow_observe must show unchanged' is a release target, and the core's verified_candidate acceptance is looser than the program's strict-Forge target.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: []
+RIVAL: develop is not 'ordinary' (hidden context or effects), the services are not exactly four, or the outcome contract is weaker than the release leans on.
+SUPPORT: ["E082", "E257"] COUNTER: []
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C019 | OBSERVATION | ESTABLISHED | material=True | docs/pi-README.md @ Observed baseline, bullet 4 (line 20), sentence 1, item 2
+VERBATIM: a shipped @mechanical/development-rig/host subpath
+PROPOSITION: The Mechanical package @mechanical/development-rig ships a host subpath: the module specifier @mechanical/development-rig/host resolves through the package's export map to a built host entry that is part of the packed artifact. 'Shipped' is stronger than 'declared in source'.
+SCOPE: {"description": "Mechanical at 69cb016d: the development-rig package manifest (exports, files), the host source it points to and the built or packed output. Whether the package is published to a registry is not stated.", "environment": "mw-69cb016d"}
+PERMITTED_WORDING: 'shipped' = landed on main, declared in the export map, present in the packed tarball, importable by a tarball-installed external consumer; registry publication is not established.
+FACETS: {"facet graded by joint#2": "SUPPORTED: The subpath, the L2 installed-consumer test and two L2 receipts exist at the pin. 'Shipped' and 'L2 evidence exists' rest on committed producer receipts, which are reports of a pack and a run rather than something re-exe"}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_TEMPORAL_QUALIFIER", "DOWNGRADE_MODALITY"]
+RIVAL: (MNI lesson: phantom subpath) @mechanical/development-rig/host does not resolve, or 'shipped' means registry-published/stable, which nothing shows; the producer's own skill text at the pin even denies the export.
+SUPPORT: ["E012", "E087", "E202", "E258"] COUNTER: ["E121"]
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C020 | OBSERVATION | ESTABLISHED | material=True | docs/pi-README.md @ Observed baseline, bullet 4 (line 20), sentence 1, item 3
+VERBATIM: L2 external installed-host fixtures
+PROPOSITION: Mechanical has L2 external installed-host fixtures: tests or fixtures, at the tier Mechanical calls L2, that pack the host, install it into a consumer outside the workspace sources and exercise the installed artifact.
+SCOPE: {"description": "Mechanical at 69cb016d: development-rig tests, fixtures and QA receipts labelled L2, installed-host or installed-consumer. 'L2' is Mechanical's tier name and is not defined in the README; 'external' = installed outside the workspace source tree.", "environment": "mw-69cb016d"}
+PERMITTED_WORDING: Mechanical has L2 external installed-host fixtures (pack -> install into an external consumer -> exercise), with fixture callbacks over real packed bytes; the committed M05 receipt is partially unbound and refused by the producer's own validator, so cite the executable tests, not the receipt alone.
+FACETS: {"facet graded by joint#2": "SUPPORTED: The subpath, the L2 installed-consumer test and two L2 receipts exist at the pin. 'Shipped' and 'L2 evidence exists' rest on committed producer receipts, which are reports of a pack and a run rather than something re-exe"}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C019"] PROPAGATION: {"dependencies": {"C019": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "weakest_dependency": "C019", "note": "status consistent with premises"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: The 'L2 external installed-host fixtures' are absent, Pi-flavoured in name only, or their receipts are too weak for the tier label to mean anything.
+SUPPORT: ["E012", "E096", "E098", "E099", "E202", "E259"] COUNTER: ["E100"]
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C021 | OBSERVATION | SUPPORTED | material=True | docs/pi-README.md @ Observed baseline, bullet 4 (line 20), sentence 1, item 4
+VERBATIM: standalone native Git/Claude/Forge execution
+PROPOSITION: Mechanical has standalone native execution for three providers: (i) Git, (ii) Claude, (iii) Forge. 'Standalone' means run by Mechanical's own rig without Pi; 'native' means the real provider (real Git operations, the real Claude Agent SDK, a real Forge gate) rather than a fake or fixture.
+SCOPE: {"description": "Mechanical at 69cb016d: the live development producer of the development rig and its recorded native evidence. Three conjuncts, one verdict each. 'Has ... execution' may mean code that can run natively or runs that were actually recorded; the artifact does not say which.", "environment": "mw-69cb016d"}
+PERMITTED_WORDING: Mechanical has the standalone producer code path; the Git leg re-verified at the pin; native Claude/Forge legs are recorded 2026-10-15 receipts at then-current sources and are NOT re-run or runnable from the packed artifact at the paired snapshot (SDKs live outside the packed closure by design).
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_TEMPORAL_QUALIFIER"]
+RIVAL: 'Mechanical has standalone native Git/Claude/Forge execution' reads as a capability demonstrable at the paired snapshot; in fact the packed rig cannot run the Claude or Forge legs at all without out-of-manifest SDK installs, so the bullet is a historical resume presented as current capability.
+SUPPORT: ["E101", "E260"] COUNTER: []
+HISTORY: ["graded SUPPORTED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C022 | OBSERVATION | ESTABLISHED | material=True | docs/pi-README.md @ Observed baseline, bullet 4 (line 20), sentence 2
+VERBATIM: Those proofs do NOT run through registered Pi.
+PROPOSITION: Absence claim: none of the four Mechanical assets just listed (the develop function, the host subpath, the L2 installed-host fixtures, the standalone native execution), which the artifact here calls 'proofs', runs through Pi's registered tool. Whatever they demonstrate, they demonstrate it without a registered Pi workflow_execute invocation.
+SCOPE: {"description": "Mechanical tests, fixtures and receipts at 69cb016d, read against Pi's registered tool at 0fb90672. No detection surface is stated; the candidate is whether any Mechanical test or receipt loads the Pi extension or calls its registered workflow_execute. A consumer that is only named after Pi does not count as registered Pi.", "environment": "mw-69cb016d"}
+PERMITTED_WORDING: none of the four listed assets runs through Pi's registered tool; whatever they demonstrate, they demonstrate without a registered Pi workflow_execute invocation ('assets', since two of the four are code rather than proofs).
+FACETS: {"facet graded by negative-ev#1": "UNDETERMINED: Global (unscoped) reading only; the scoped verdicts are NE-01, NE-03, NE-04 and NE-06. Missing artifact that would settle it: a search of the stores the standing census declares unread. Remediation NARROW_SCOPE: name the"}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C008", "C009", "C018", "C019", "C020", "C021"] PROPAGATION: {"dependencies": {"C008": "ESTABLISHED", "C009": "ESTABLISHED", "C018": "ESTABLISHED", "C019": "ESTABLISHED", "C020": "ESTABLISHED", "C021": "SUPPORTED"}, "cap": "SUPPORTED", "binds": false, "weakest_dependency": "C021", "note": "cap does not bind: the absence (nothing non-script launches through the registered tool) is warranted independently by C008/C009 (ESTABLISHED); C021 is an existence presupposition about the asset, not a necessary premise"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: []
+RIVAL: Some listed Mechanical asset does reach registered Pi (the 'pi-consumer' suite being the obvious candidate), or the sentence smuggles a global absence it cannot see.
+SUPPORT: ["E026", "E103", "E261"] COUNTER: []
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C023 | OBSERVATION | ESTABLISHED | material=True | docs/pi-README.md @ Observed baseline, bullet 5 (line 21), sentence 1, clause 1
+VERBATIM: No live joined Claude/Git/Forge Pi receipt
+PROPOSITION: Absence claim: no receipt exists of a live, joined run, meaning one invocation through Pi's registered route that reached a Mechanical function and real Claude, real Git and real Forge. The slash-joined triple is read as one run covering all three providers; the stronger per-provider reading (no live joined Pi receipt for Claude, none for Git, none for Forge) is the reading to attack.
+SCOPE: {"description": "Committed receipts and evidence in Pi at 0fb90672 and in Mechanical at 69cb016d. No detection surface is stated; receipts held outside the two repositories are not covered. 'Live' = real providers; 'joined' = through registered Pi into Mechanical. Standalone Mechanical receipts and Pi script receipts do not count.", "environment": "pi-0fb90672"}
+PERMITTED_WORDING: no joined live Claude/Git/Forge receipt exists in the committed stores of either repository at the pins, and none could have been produced through the registered route at any ancestor revision; absence beyond the two repositories is undetermined (M050 wording form).
+FACETS: {"facet graded by negative-ev#1": "UNDETERMINED: Global (unscoped) reading only; the scoped verdicts are NE-01, NE-03, NE-04 and NE-06. Missing artifact that would settle it: a search of the stores the standing census declares unread. Remediation NARROW_SCOPE: name the", "facet graded by mw-src#55": "SUPPORTED: Producer-side corroboration of three Pi-side absence claims; their primary detection surface is the Pi repository (Pi-source and negative-evidence lenses).", "facet graded by pi-src#37": "SUPPORTED: The receipt search only confirms that no Pi document claims otherwise; the stronger ground is that nothing launches a function.", "facet graded by joint#3": "SUPPORTED: The three absence statements are supported by a detector with stated reach rather than by the companion's concurrence. They are universal negatives over 'any receipt or proof', so they are capped at SUPPORTED: the search"}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C008", "C009", "C022"] PROPAGATION: {"dependencies": {"C008": "ESTABLISHED", "C009": "ESTABLISHED", "C022": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "weakest_dependency": "C008", "note": "status consistent with premises"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: stores outside the two repositories (an OrchestrationEngineer ledger directory and home-directory Forge ledgers are cited by receipts) were not censused for a joined receipt; the two-repository absence stands
+REMEDIATION_CLASSES: ["NARROW_SCOPE"]
+RIVAL: A joined live receipt exists somewhere the search did not reach — the artifact sentence is a global absence with NO stated detection surface; or, per provider, a joined receipt exists for at least one of Claude/Git/Forge.
+SUPPORT: ["E021", "E137", "E175", "E203", "E262"] COUNTER: []
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C026 | DEFINITION | NON-EPISTEMIC | material=False | docs/pi-README.md @ Release definition (line 24), both sentences
+VERBATIM: No script alias, model-provided action grant, ambient workspace write, generic function import, invented verification, or automatic uncertain-effect retry.
+PROPOSITION: Release definition (stipulated): the first supported vertical is (i) the host-reviewed function mechanical.development.develop.v1; (ii) attached or explicitly admitted same-machine execution; (iii) one clean isolated Git worktree; (iv) the profile pair git-census-v1/plain-v1; (v) four Mechanical callbacks; (vi) a candidate commit made by the real Claude Agent SDK; (vii) a strict native Forge gate; (viii) workflow_observe of the same logical invocation, showing the original domain result. Excluded from it: a script alias, a model-provided action grant, an ambient workspace write, a generic function import, invented verification, and automatic retry of an uncertain effect.
+SCOPE: {"description": "Stipulated scope of the first release. Its current-state premises are separate rows: function id (C027), profiles (C028), execution placement (C029), observation (C030), develop and its callbacks (C018), worktree confinement (C015), native providers (C021). Items (vi) to (viii) are targets, not present-state claims.", "environment": "none"}
+PERMITTED_WORDING: The release definition stipulates the first supported vertical. Its placement clause ('attached or explicitly admitted same-machine execution') conflicts with pi-02 L5 and pi-05 L41 ('embedded' first, detached deferred to P11), 'attached' names no Pi host mode (EXECUTE_HOST_MODES = embedded, detached), 'isolated' means a dedicated worktree rather than containment, and whether a strict-native Forge PASS is attainable in the first-release topology is undetermined: execution_environment.pinned is false in all 148 occurrences across the committed MW evidence files and true only in synthetic test fixtures.
+FACETS: {"release definition (stipulation)": "NON-EPISTEMIC", "placement clause consistent with pi-02/pi-05": "REFUTED (three incompatible release-boundary sentences)", "'attached' has a code witness": "UNSUPPORTED", "strict-native Forge PASS attainable in the first-release topology": "UNDETERMINED", "develop/callbacks/function id/profile labels exist": "ESTABLISHED (C018, C027, C028)"}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C015", "C018", "C021", "C027", "C028", "C029", "C030"] PROPAGATION: {"dependencies": {"C015": "ESTABLISHED", "C018": "ESTABLISHED", "C021": "SUPPORTED", "C027": "ESTABLISHED", "C028": "ESTABLISHED", "C029": "REFUTED", "C030": "SUPPORTED"}, "cap": "REFUTED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C029=REFUTED); requirement force is a separate dimension"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: one native gate.run envelope from the installed Forge on a clean committed disposable package showing execution_environment.pinned true with native commit, tree and gate definition; or a joint decision that strict v1 does not require the environment pin
+REMEDIATION_CLASSES: ["SURFACE_DISAGREEMENT", "NARROW_SCOPE", "PRESERVE_AS_UNDETERMINED"]
+RIVAL: no Phase 5 audit row; graded at consolidation from the lens rows listed in support/counterevidence and the consolidation re-verification record
+SUPPORT: ["E160", "E186", "E465"] COUNTER: ["E057", "E075", "E079"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C027 | OBSERVATION | ESTABLISHED | material=True | docs/pi-README.md @ Release definition (line 24), sentence 1, item 1 (presupposition); Purpose (line 7), 'versioned'
+VERBATIM: host-reviewed mechanical.development.develop.v1
+PROPOSITION: mechanical.development.develop.v1 is an existing, versioned identity of Mechanical's develop function, and it is 'host-reviewed' in the sense that Pi's fixed allowlist of reviewed entrypoints names it. Two facets, one per repository: a producer-side descriptor carries the id; Pi's allowlist carries the same id.
+SCOPE: {"description": "Pi at 0fb90672 (the reviewed-entrypoint allowlist of the descriptor module in C012) and Mechanical at 69cb016d (the entrypoint descriptor and schemas that name the id). 'Host-reviewed' is not defined in the README.", "environment": "pi-0fb90672"}
+PERMITTED_WORDING: the versioned id exists on both sides and Pi's frozen allowlist names it; 'host-reviewed' means allowlisted-by-id only — the reviewed descriptor is descriptor-only and not invocable, and no production pin, caller or rig-package coverage exists at the pins.
+FACETS: {"facet graded by mw-src#46": "SUPPORTED: The Mechanical half of both claims is established; the Pi allowlist half belongs to the Pi-source lens, hence SUPPORTED for the two-sided claims. The descriptor digest is the one identity value already byte-agreed across"}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C012", "C018"] PROPAGATION: {"dependencies": {"C012": "ESTABLISHED", "C018": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "weakest_dependency": "C012", "note": "status consistent with premises"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["DOWNGRADE_MODALITY"]
+RIVAL: 'Host-reviewed mechanical.development.develop.v1' reads as 'reviewed and invocable': the id is docs-only vocabulary, or the review covers the wrong package, so the release-definition premise is hollow.
+SUPPORT: ["E039", "E128", "E143", "E265"] COUNTER: []
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C028 | OBSERVATION | ESTABLISHED | material=True | docs/pi-README.md @ Release definition (line 24), sentence 1, item 4 (presupposition); Operating constraints (line 30), 'first Git/plain release'
+VERBATIM: git-census-v1/plain-v1
+PROPOSITION: git-census-v1 and plain-v1 are existing named profile identifiers, an evidence profile and a context profile that together form the 'Git/plain' pair, and they are witnessed in code rather than only in program documents. The README does not say which repository defines them or whether Pi's own source knows them.
+SCOPE: {"description": "Source, schemas and tests in Mechanical at 69cb016d and in Pi at 0fb90672; documents do not count as witnesses. One verdict per identifier and per repository.", "environment": "mw-69cb016d"}
+PERMITTED_WORDING: git-census-v1 and plain-v1 exist as validated label constants in Mechanical's host-binding (plus schema and tests); they are absent from Pi source and bind no behaviour at either pin — the release definition's 'git-census-v1/plain-v1' names labels, not shipped selectable profiles.
+FACETS: {"facet graded by negative-ev#33": "REFUTED: Refuted facet: a code witness in Pi (there is none; the row asks for one verdict per repository). The Mechanical facet (also C093) is ESTABLISHED as labels only: two validator constants, a JSON schema and an identity axi"}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["NARROW_SCOPE"]
+RIVAL: (MNI lesson) git-census-v1/plain-v1 are profile vocabulary with no code witness — or, in the other direction, 'witnessed in code' gets read as 'a selectable Git/plain profile ships'.
+SUPPORT: ["E094", "E233", "E266"] COUNTER: ["E054"]
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C030 | OBSERVATION | SUPPORTED | material=True | docs/pi-README.md @ Release definition (line 24), sentence 1, item 8 (presupposition)
+VERBATIM: workflow_observe of the SAME logical invocation and original domain result
+PROPOSITION: Pi at the inspected revision registers a workflow_observe tool, and workflow_execute mints a host-side logical invocation reference under which a launch can later be observed. This is the existing mechanism that 'workflow_observe of the SAME logical invocation' builds on. Showing a Mechanical domain result through it is a target, not part of this premise.
+SCOPE: {"description": "Pi's registered tools at 0fb90672: the handle workflow_observe accepts and the invocation reference workflow_execute returns. Whether the two are the same value in each host mode is part of the claim.", "environment": "pi-0fb90672"}
+PERMITTED_WORDING: Pi registers workflow_observe, and for an EMBEDDED launch the minted wf_ invocation reference is observable within the same extension process and session; a detached launch returns the same reference but is not observable through the registered workflow_observe at the pin, and no observation survives an extension restart.
+FACETS: {"facet graded by negative-ev#14": "REFUTED: Refuted facets: C030's 'in each host mode' (a detached workflow_execute launch cannot be observed through workflow_observe by its invocation reference, although the reply tells the model to do that) and C029's 'attached'"}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C007", "C017"] PROPAGATION: {"dependencies": {"C007": "ESTABLISHED", "C017": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "weakest_dependency": "C007", "note": "status consistent with premises"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["SPLIT_CLAIM", "NARROW_SCOPE"]
+RIVAL: The observe premise holds universally: workflow_execute's minted reference can be observed through workflow_observe in every host mode (which the tool's own reply text asserts by telling the model to do exactly that).
+SUPPORT: ["E174", "E268"] COUNTER: ["E035"]
+HISTORY: ["graded SUPPORTED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C033 | INFERENCE | ESTABLISHED | material=True | docs/pi-README.md @ Severity and ownership (line 27), sentence 2 (presuppositions); Purpose (line 7), 'no false Forge verification'
+VERBATIM: Mechanical owns: P0 strict Forge proof (D1/D7), P0 negative-effect semantics (D2), packed executable closure (D4), native service binding and provider receipts.
+PROPOSITION: Embedded premise of the Mechanical-owned items: at the paired snapshot the Mechanical producer really has the gaps these labels name. (i) Its Forge verification is not strict: a Forge result can be accepted as passed or verified without complete native proof (D1/D7; the 'false Forge verification' the Purpose excludes). (ii) Its negative-effect semantics can conclude that no effect occurred from evidence that does not establish it (D2). (iii) The executable closure of its packed host is not fully pinned or verified (D4). The README gives labels only and cites no source for any of the three.
+SCOPE: {"description": "Mechanical source at 69cb016d (development rig: gate classification, effect-intent settlement and reconciliation, installed-host loading). The README defines none of D1, D2, D4, D7. Document 01's header treats earlier deep-audit candidate references as hypotheses until a red test exercises them.", "environment": "mw-69cb016d"}
+PERMITTED_WORDING: At MW 69cb016d the producer has the three gaps the README labels: live-gate.ts:205-208 classifies a frame as passed unless gate_passed === false and live-development.ts:387 credits that on a commit match while :414 feeds settlement the locally measured tree and cached manifest hash (D1/D7); effect-reconciliation.ts:98 returns not-occurred with retryPermitted (:79) for HEAD-at-base with clean status, missing ignored-path effects (D2); installed-host.ts:49-51 re-hashes the tarball, not the installed dist files, before the trusted import (D4). Read at source and reproduced by scratch probes at the pin (PROBE/out/defect-probe.jsonl), not yet by committed red tests; unchanged at 1be2b8dc and 0ffdc844.
+FACETS: {"(i) D1/D7 Forge verification not strict": "ESTABLISHED (source + executed probe)", "(ii) D2 negative-effect inference from clean HEAD": "ESTABLISHED (source + executed probe with ignored-path effect)", "(iii) D4 executable closure not verified per installed file": "ESTABLISHED (source + executed mutated dist/index.js probe)"}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C019", "C021", "C032"] PROPAGATION: {"dependencies": {"C019": "ESTABLISHED", "C021": "SUPPORTED", "C032": "REFUTED"}, "cap": "REFUTED", "binds": false, "weakest_dependency": "C032", "note": "cap does not bind: the three producer gaps are established by direct source reading and executed probes at 69cb016d independently of C032 (the D-ledger labelling, REFUTED) and C021"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_SOURCE"]
+RIVAL: no Phase 5 audit row; graded at consolidation from the lens rows listed in support/counterevidence and the consolidation re-verification record
+SUPPORT: ["E049", "E104", "E206"] COUNTER: ["E060", "E071", "E074", "E079"]
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C052 | OBSERVATION | ESTABLISHED | material=True | docs/pi-01-AUDIT-AND-INVARIANTS.md @ L12
+VERBATIM: Bounded scoped native observation exists
+PROPOSITION: Pi provides bounded, scoped native observation.
+SCOPE: {"description": "Existing Pi observation implementation and tool handlers, not joined Mechanical observation.", "environment": "pi-0fb90672"}
+PERMITTED_WORDING: Pi contains bounded workspace/principal-scoped native observation with registered-tool session checks; the projection is in memory and is not Mechanical integration proof.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: []
+RIVAL: A pure in-memory projection might not support bounded/scoped native observation through any tool.
+SUPPORT: ["E173", "E379"] COUNTER: []
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C053 | OBSERVATION | ESTABLISHED | material=True | docs/pi-01-AUDIT-AND-INVARIANTS.md @ L12
+VERBATIM: Mechanical logical invocation -> producer refs, evidence and separate effect disposition are not connected.
+PROPOSITION: Mechanical logical invocation is not connected end-to-end to producer references, evidence and separate effect disposition.
+SCOPE: {"description": "Joined Pi Mechanical observation projection. Detection surface: observation.ts plus registered execution/observation tool handlers; not provider-native standalone evidence.", "environment": "pi-0fb90672"}
+PERMITTED_WORDING: At 0fb90672, no registered Mechanical logical invocation is connected to Pi observation of its producer references, domain evidence and separate effect disposition.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C047"] PROPAGATION: {"dependencies": {"C047": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "weakest_dependency": "C047", "note": "status consistent with premises"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: []
+RIVAL: Existing NativeRef fields or generic observation could already carry all Mechanical state without product-name literals.
+SUPPORT: ["E034", "E155", "E380"] COUNTER: []
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C063 | NORMATIVE | NON-EPISTEMIC | material=False | docs/pi-01-AUDIT-AND-INVARIANTS.md @ L22
+VERBATIM: accepted/launched != completed; Mechanical verified_candidate is a domain claim requiring validated native evidence, not merely an SDK response or Forge transport success; observed status does not grant control.
+PROPOSITION: I6 distinguishes launch acceptance from completion, requires validated native evidence for Mechanical verified_candidate, and prevents observed status from granting control.
+SCOPE: {"description": "Target semantics of independently meaningful status/evidence/authority statements; not a claim that legacy results already satisfy the strict verifier.", "environment": "none"}
+PERMITTED_WORDING: Launch is not completion. Target strict-native assurance requires validated producer proof separately from the unchanged domain outcome; a current verified_candidate alone does not establish that assurance.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: [{"lens": "joint#39", "evidence": "E239", "status": "UNDETERMINED", "what": "UNDETERMINED"}]
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: indicative wording in a NORMATIVE row carries embedded premises graded ['UNDETERMINED']
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["SPLIT_CLAIM"]
+RIVAL: The current producer verified_candidate means passed verdict plus named evidence, not the target strict gate/tree/environment guarantee.
+SUPPORT: ["E390"] COUNTER: ["E084"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C064 | NORMATIVE | NON-EPISTEMIC | material=False | docs/pi-01-AUDIT-AND-INVARIANTS.md @ L23
+VERBATIM: Lost acknowledgment, cancellation after effects, killed worker, stale source or missing native evidence produce explicit uncertainty, retained native refs and zero blind replay.
+PROPOSITION: I7 maps ambiguous post-effect outcomes or missing evidence to explicit uncertainty, retained native references and no blind replay.
+SCOPE: {"description": "Target failure/uncertainty policy; the enumerated scenarios are required inputs, not reports of observed incidents.", "environment": "none"}
+PERMITTED_WORDING: Ambiguous post-effect outcomes MUST retain refs and fence ownership without automatic effect reinvocation; idempotent journal-event replay remains allowed.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["SPLIT_CLAIM"]
+RIVAL: Unknown outcome is not necessarily failure, but a killed worker before any effects could have affirmative no-effect proof; projection replay is safe even when effect replay is not.
+SUPPORT: ["E391"] COUNTER: ["E076"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C068 | OBSERVATION | ESTABLISHED | material=True | docs/pi-01-AUDIT-AND-INVARIANTS.md @ L26
+VERBATIM: Existing direct Mechanical L2
+PROPOSITION: Direct Mechanical L2 evidence already exists.
+SCOPE: {"description": "Mechanical direct installed-host L2 evidence at paired snapshot; no assertion of registered Pi coverage.", "environment": "mw-69cb016d"}
+PERMITTED_WORDING: Direct installed-host L2 fixture evidence exists at MW 69cb016d; it excludes Pi registration/live SDK/native proof, and the M05 JSON is not a validator-conforming certificate.
+FACETS: {"facet graded by joint#2": "SUPPORTED: The subpath, the L2 installed-consumer test and two L2 receipts exist at the pin. 'Shipped' and 'L2 evidence exists' rest on committed producer receipts, which are reports of a pack and a run rather than something re-exe"}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_SOURCE"]
+RIVAL: A committed M05 receipt is a source report, may be invalid under its own schema, and alone cannot certify L2 at the new pin.
+SUPPORT: ["E096", "E098", "E099", "E202", "E395"] COUNTER: ["E100"]
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C069 | OBSERVATION | ESTABLISHED | material=True | docs/pi-01-AUDIT-AND-INVARIANTS.md @ L26
+VERBATIM: older native L3
+PROPOSITION: Older Mechanical native L3 evidence exists.
+SCOPE: {"description": "Historical native Mechanical evidence preceding MII; exact producer receipt and revision are not cited here and must be acquired in later evidence tracing.", "environment": "history"}
+PERMITTED_WORDING: Committed older standalone-native records exist for their historical journey; they are legacy evidence, not current strict-native or Pi integration certification.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_SOURCE", "ADD_TEMPORAL_QUALIFIER"]
+RIVAL: Historical native receipts may lack strict environment/tree bindings and independent surviving producer-ledger records.
+SUPPORT: ["E102", "E396"] COUNTER: []
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C071 | OBSERVATION | ESTABLISHED | material=True | docs/pi-01-AUDIT-AND-INVARIANTS.md @ L39
+VERBATIM: Maintain the Pi model-facing tool-reply/v1 envelope
+PROPOSITION: Pi already has a model-facing tool-reply/v1 envelope to preserve.
+SCOPE: {"description": "Embedded compatibility premise concerning Pi tool replies; existence only, not universal compliance.", "environment": "pi-0fb90672"}
+PERMITTED_WORDING: The registered execute reply uses the model-facing workbench.tool-reply/v1 outer envelope; preservation must target that actual shape.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: []
+RIVAL: tool-reply/v1 could be an invented contract spelling or the illustration could be mistaken for the actual envelope.
+SUPPORT: ["E180", "E398"] COUNTER: ["E062"]
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C072 | OBSERVATION | ESTABLISHED | material=True | docs/pi-01-AUDIT-AND-INVARIANTS.md @ L39
+VERBATIM: the explicit "completion:not-asserted" launch semantics.
+PROPOSITION: Pi already exposes explicit completion-not-asserted launch semantics to preserve.
+SCOPE: {"description": "Embedded Pi launch compatibility premise. Validate semantic representation rather than assuming the quoted spelling must occur literally.", "environment": "pi-0fb90672"}
+PERMITTED_WORDING: Registered workflow_execute exposes completion:not-asserted and launch-only status; observe later execution rather than treating launch as completed.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: []
+RIVAL: A launched response might assert success implicitly despite its explicit completion marker.
+SUPPORT: ["E180", "E399"] COUNTER: []
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C073 | OBSERVATION | ESTABLISHED | material=True | docs/pi-01-AUDIT-AND-INVARIANTS.md @ L29
+VERBATIM: @mechanical/development-rig/host already exists.
+PROPOSITION: Mechanical already exports the @mechanical/development-rig/host package subpath.
+SCOPE: {"description": "Paired MW snapshot package export; existence is not proof of Pi execution or complete packed artifact closure.", "environment": "mw-69cb016d"}
+PERMITTED_WORDING: @mechanical/development-rig/host exists as a landed, tarball-packable, independently importable subpath at MW 69cb016d; this does not prove registry publication or Pi integration.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: []
+RIVAL: The host subpath may be absent as it was at the MNI environment pin, or a stale producer skill may deny it.
+SUPPORT: ["E012", "E087", "E400"] COUNTER: ["E121"]
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C077 | OBSERVATION | ESTABLISHED | material=True | docs/pi-01-AUDIT-AND-INVARIANTS.md @ L29
+VERBATIM: an independently installed Node consumer named pi-consumer
+PROPOSITION: The pi-consumer name refers to an independently installed Node consumer, not an actual registered Pi execution.
+SCOPE: {"description": "MW fixture named pi-consumer at the paired snapshot; inspect its launcher and imports to distinguish its identity from Pi, rather than treating the label as proof.", "environment": "mw-69cb016d"}
+PERMITTED_WORDING: The named pi-consumer fixture is an external Node installed-host consumer, not a registered Pi invocation.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: []
+RIVAL: pi-consumer name might denote real Pi package/tool execution despite external Node construction.
+SUPPORT: ["E012", "E026", "E096", "E404"] COUNTER: []
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C083 | HYPOTHESIS | SUPPORTED | material=True | docs/pi-01-AUDIT-AND-INVARIANTS.md @ L35
+VERBATIM: producer might have edited, committed or dispatched Forge but acknowledgment is dropped
+PROPOSITION: A producer may already have performed effects when its acknowledgment is lost.
+SCOPE: {"description": "Post-dispatch loss possibility for the target joined route; no actual occurrence asserted. Required journal/fence/no-default-retry response is captured by I5/I7.", "environment": "none"}
+PERMITTED_WORDING: After a producer dispatch, losing acknowledgement can leave effects unknown; preserve intent/refs and forbid automatic reinvocation until affirmative safe proof.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C062", "C064"] PROPAGATION: {"dependencies": {"C062": "NON-EPISTEMIC", "C064": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: []
+RIVAL: Lost acknowledgement may mean no effect, but transport loss alone cannot settle occurrence; blind replay is not justified.
+SUPPORT: ["E410"] COUNTER: []
+HISTORY: ["graded SUPPORTED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C084 | HYPOTHESIS | ESTABLISHED | material=True | docs/pi-01-AUDIT-AND-INVARIANTS.md @ L36
+VERBATIM: Mechanical may report a legacy PASS frame lacking native gate/tree/environment bindings
+PROPOSITION: Mechanical may report a legacy PASS frame without native gate/tree/environment bindings.
+SCOPE: {"description": "Paired Mechanical producer result shape is the empirical premise to test; possible legacy output is not strict verified evidence. Preserve weak observations without promotion.", "environment": "mw-69cb016d"}
+PERMITTED_WORDING: At MW 69cb016d, a synthetic legacy PASS frame without the proposed strict proof axes can yield verified_candidate; historical records also carry weak bindings. Neither is strict-native Pi proof.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C063"] PROPAGATION: {"dependencies": {"C063": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: []
+RIVAL: A legacy PASS observation might be merely a hypothetical malformed provider frame that no producer accepts.
+SUPPORT: ["E105", "E411"] COUNTER: []
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C100 | OBSERVATION | ESTABLISHED | material=True | docs/pi-02-PROTOCOL-AND-RUNTIME.md @ L12 §2 step 4
+VERBATIM: The dispatched callback must never see raw params.input.
+PROPOSITION: Embedded premise (the D3 defect shape): at the Pi pin decideExecute computes inputDigest over the judged, notes-stripped, byte-bounded copy of the input (execute.ts:203) while the registered tool's launcher structure hands launches params.input, the raw caller object (execute-tool.ts:198, 236); the two bases are structurally different objects, and no function launch occurs today because the non-script branch refuses.
+SCOPE: {"description": "Pi 0fb90672 execute.ts + execute-tool.ts; script launches only", "environment": "pi-0fb90672"}
+PERMITTED_WORDING: The existing launcher structure retains raw params.input while function admission hashes a judged copy; this is a latent integration hazard, not an observed function-route dispatch at 0fb90672.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C096"] PROPAGATION: {"dependencies": {"C096": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "weakest_dependency": "C096", "note": "status consistent with premises"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["NARROW_SCOPE"]
+RIVAL: This describes an actual note-leaking function execution, or an ordinary script whose admitted and executed JSON differ.
+SUPPORT: ["E005", "E162", "E327"] COUNTER: []
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C122 | PROPOSAL | NON-EPISTEMIC | material=True | docs/pi-02-PROTOCOL-AND-RUNTIME.md @ L34 §5
+VERBATIM: replay is idempotent by event id. Native events are append-only facts, projection can be rebuilt.
+PROPOSITION: Proposed journal: immutable events admitted, lease_acquired, effect_intent_persisted, dispatch_requested, native_session_observed, first_edit, candidate_committed, forge_dispatched, forge_observed, effect_settled, release_fenced, release_complete; each event references one invocation and source pin, carries a monotonic local sequence, a native ref and an evidence strength; replay is idempotent by event id; native events are append-only facts and the projection can be rebuilt from them.
+SCOPE: {"description": "Pi-owned invocation journal (new); no durable journal exists at the pin, the observation projection is in-memory", "environment": "none"}
+PERMITTED_WORDING: Propose an idempotent durable function-event journal extending or explicitly replacing existing script/task storage; early events carry native refs only when actually observed.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: [{"lens": "negative-ev#25", "evidence": "E046", "status": "REFUTED", "what": "REFUTED"}, {"lens": "pi-src#40", "evidence": "E178", "status": "REFUTED", "what": "REFUTED"}, {"lens": "joint#28", "evidence": "E228", "status": "UNDETERMINED", "what": "UNDETERMINED"}]
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: indicative wording in a PROPOSAL row carries embedded premises graded ['REFUTED', 'UNDETERMINED']
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["SPLIT_CLAIM", "ADD_MISSING_PREMISE"]
+RIVAL: Pi has no journal at all, or every proposed journal event can already carry a producer-native reference.
+SUPPORT: ["E349"] COUNTER: ["E007", "E046", "E076", "E114", "E178", "E236"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C123 | PROPOSAL | NON-EPISTEMIC | material=True | docs/pi-02-PROTOCOL-AND-RUNTIME.md @ L35 §5
+VERBATIM: Cancellation requested is separate from cancellation established. Control carries target native identity and exact scope, and never relabels an unknown effect as rolled back.
+PROPOSITION: Proposed invocation state machine admitted -> reserved -> dispatched -> observing -> completed_known OR outcome_unknown -> reconciling -> completed_known OR operator_action_required; cancellation requested is a distinct state from cancellation established; control carries the target native identity and exact scope and never relabels an unknown effect as rolled back.
+SCOPE: {"description": "Pi invocation lifecycle (D5/D6, invariant I7); existing control-tool already distinguishes requested/acknowledged/result", "environment": "none"}
+PERMITTED_WORDING: Introduce the function invocation lifecycle while preserving requested-versus-established cancellation and explicit scoped recovery; an unknown effect never becomes rollback by projection.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: Existing requested/acknowledged/result controls already implement the function state machine and same-invocation restart.
+SUPPORT: ["E176", "E350"] COUNTER: ["E007", "E013"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C124 | OBSERVATION | ESTABLISHED | material=True | docs/pi-02-PROTOCOL-AND-RUNTIME.md @ L36 §5
+VERBATIM: Domain result remains one of verified_candidate / verification_failed / needs_evidence / indeterminate, unmodified.
+PROPOSITION: Embedded premise: Mechanical's DevelopmentOutcome at the pin is exactly the four-way union verified_candidate | verification_failed | needs_evidence | indeterminate (packages/development/src/contracts.ts), and develop() returns no other kind.
+SCOPE: {"description": "MW 69cb016d packages/development/src/{contracts,develop}.ts", "environment": "mw-69cb016d"}
+PERMITTED_WORDING: All normal develop results use the four-domain union; thrown input/callback/admission/uncertainty errors remain separately observable and must not be collapsed into a fabricated outcome.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["NARROW_SCOPE"]
+RIVAL: Exactly four outcomes means every host invocation completes with one of those values and no exception channel exists.
+SUPPORT: ["E083", "E351"] COUNTER: []
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C125 | PROPOSAL | NON-EPISTEMIC | material=True | docs/pi-02-PROTOCOL-AND-RUNTIME.md @ L36 §5
+VERBATIM: Add observed assurance: strict-native, legacy-weak, unknown; effect: no-effect, dispatched-uncertain, occurred, settled. Avoid a single synthetic "success" boolean.
+PROPOSITION: Proposed projection axes added beside the unmodified domain result: observed assurance in {strict-native, legacy-weak, unknown} and effect in {no-effect, dispatched-uncertain, occurred, settled}; no single synthetic success boolean.
+SCOPE: {"description": "Pi observation projection of a function invocation (D1/D7 consumer side); vocabulary is pi-02's own, the companion mw-02 spells the weak case differently", "environment": "none"}
+PERMITTED_WORDING: Propose independent domain/assurance/effect axes, pending a joint enumeration and lossless mapping from legacy producer values.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C124"] PROPAGATION: {"dependencies": {"C124": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C124=ESTABLISHED); requirement force is a separate dimension"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["SURFACE_DISAGREEMENT"]
+RIVAL: Both repositories already share these assurance/effect enums, or Pi must rewrite a legacy producer result to match strict semantics.
+SUPPORT: ["E352"] COUNTER: ["E064", "E114", "E219", "E220"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C126 | OBSERVATION | ESTABLISHED | material=True | docs/pi-02-PROTOCOL-AND-RUNTIME.md @ L39 §6
+VERBATIM: workflow_execute reply remains tool-reply/v1 with invoked/launch-only semantics.
+PROPOSITION: Embedded premise behind 'remains': at the Pi pin the workflow_execute reply is the workbench.tool-reply/v1 envelope whose invoked member reports whether a launch happened, whose completion member is always "not-asserted", and whose launch statuses are only accepted | launched | refused.
+SCOPE: {"description": "Pi 0fb90672 src/workbench/tool-replies.ts, execute.ts, execute-tool.ts", "environment": "pi-0fb90672"}
+PERMITTED_WORDING: The registered execute envelope is workbench.tool-reply/v1 with launch-only invoked/status and completion:not-asserted; accepted is a permitted type value, not a currently emitted execute status.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["NARROW_SCOPE"]
+RIVAL: tool-reply/v1 is the exact literal, accepted is emitted by this tool, or invoked proves native completion.
+SUPPORT: ["E180", "E353"] COUNTER: ["E062"]
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C127 | PROPOSAL | NON-EPISTEMIC | material=True | docs/pi-02-PROTOCOL-AND-RUNTIME.md @ L39 §6
+VERBATIM: workflow_observe(scope,invocationId) must correlate: Pi invocation; package + descriptor digest; source commit/tree; Mechanical domain outcome and provider stage; Claude session; Forge operation/native receipt; environment/gate-definition completeness; last known effect disposition; freshness, source-cursor gap and dropped-event count.
+PROPOSITION: Proposed workflow_observe(scope, invocationId) correlation for one logical invocation: Pi invocation; package + descriptor digest; source commit/tree; Mechanical domain outcome and provider stage; Claude session; Forge operation/native receipt; environment/gate-definition completeness; last known effect disposition; freshness, source-cursor gap and dropped-event count.
+SCOPE: {"description": "Pi observation tool for the function route (D6 observation); the registered tool at the pin takes taskId (wf_*) while the pure observeInvocation request carries scope + invocationId; freshness/cursor/drop counters exist in the projection", "environment": "none"}
+PERMITTED_WORDING: Extend scoped observation of the same logical function invocation, retaining domain result, producer references, strict proof provenance and existing freshness/drop indicators.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: [{"lens": "joint#39", "evidence": "E239", "status": "UNDETERMINED", "what": "UNDETERMINED"}]
+DEPENDENCIES: ["C126"] PROPAGATION: {"dependencies": {"C126": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C126=ESTABLISHED); requirement force is a separate dimension"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: The public tool already accepts scope/invocationId and can correlate all required strict proof and producer references.
+SUPPORT: ["E173", "E354"] COUNTER: ["E220", "E236"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C128 | NORMATIVE | NON-EPISTEMIC | material=True | docs/pi-02-PROTOCOL-AND-RUNTIME.md @ L39 §6
+VERBATIM: Native refs use provider/type/id/scope; never fake names for absent IDs. Control/reconcile cannot manufacture missing producer references.
+PROPOSITION: Rule: native references are {provider, type, id, scope}; a missing producer id is never replaced by a fabricated name, and control/reconcile paths cannot manufacture missing producer references.
+SCOPE: {"description": "all Pi records and replies for the function route (invariant I10); NativeRef shape exists in observation.ts", "environment": "none"}
+PERMITTED_WORDING: Require native references to retain provider/type/id and authorized scope when available, never substituting diagnostic sentinels for absent IDs.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: Every current NativeRef requires scope, or a nonblank producer string necessarily names a real native record.
+SUPPORT: ["E173", "E355"] COUNTER: ["E237"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C129 | NORMATIVE | NON-EPISTEMIC | material=True | docs/pi-02-PROTOCOL-AND-RUNTIME.md @ L40 §6
+VERBATIM: Structured producer progress callback is data only; do not let callback exceptions change outcome or trigger a duplicate effect.
+PROPOSITION: Rule: the structured producer progress callback is data only; an exception thrown by the callback must neither change the domain outcome nor trigger a duplicate effect.
+SCOPE: {"description": "Pi-Mechanical progress channel (D2/D5)", "environment": "none"}
+PERMITTED_WORDING: Require observer failures not to change domain outcome or trigger another effect, while separately surfacing durable-custody failures as uncertainty.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C133"] PROPAGATION: {"dependencies": {"C133": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: The host ABI already exports a progress channel and swallowing all callback failures supplies durable correctness.
+SUPPORT: ["E356"] COUNTER: []
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C131 | NORMATIVE | NON-EPISTEMIC | material=True | docs/pi-02-PROTOCOL-AND-RUNTIME.md @ L44 §7
+VERBATIM: Before possible side effects: no launch and safe refusal. After possible side effects: publish uncertain with native ids and frozen lease.
+PROPOSITION: Rule: before any possible side effect a fault yields no launch and a safe refusal; after a possible side effect the invocation is published as uncertain with its native ids and a frozen lease; there is no automatic re-invoke on an unknown outcome.
+SCOPE: {"description": "function route failure handling (D2/D5, invariant I7)", "environment": "none"}
+PERMITTED_WORDING: Require safe refusal only when non-dispatch is established; after possible effect retain uncertainty, known refs and ownership, with no automatic re-invocation.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C115", "C119"] PROPAGATION: {"dependencies": {"C115": "NON-EPISTEMIC", "C119": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: Any exception before a returned launch handle proves no effect; absent native IDs make uncertainty unreportable.
+SUPPORT: ["E358"] COUNTER: []
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C132 | INFERENCE | ESTABLISHED | material=True | docs/pi-02-PROTOCOL-AND-RUNTIME.md @ L44 §7
+VERBATIM: a clean HEAD alone is not universal non-occurrence evidence
+PROPOSITION: A clean HEAD observed after a dispatch is a time-local worktree observation that does not by itself prove the effect did not occur; recovery therefore needs affirmative occurrence/non-occurrence proof from producer-native sources.
+SCOPE: {"description": "post-dispatch recovery of a Mechanical develop invocation (Claude edit/commit, Forge dispatch may have happened without acknowledgment)", "environment": "none"}
+PERMITTED_WORDING: A clean HEAD/status observation cannot prove no effect: at MW 69cb016d an ignored-file effect survives while reconciliation returns not-occurred and permits retry.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["REPLACE_SOURCE", "ADD_MISSING_PREMISE"]
+RIVAL: Unchanged HEAD plus clean status is a complete no-effect detector for this invocation.
+SUPPORT: ["E359"] COUNTER: []
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C133 | PROPOSAL | NON-EPISTEMIC | material=True | docs/pi-02-PROTOCOL-AND-RUNTIME.md @ L47 §8
+VERBATIM: Pi consumes only @mechanical/development-rig/host and exact pinned tarballs; Mechanical receives trusted host binding + constrained four service callbacks and a cancellation/progress channel.
+PROPOSITION: Proposed repository boundary: Pi consumes only the @mechanical/development-rig/host subpath and exact pinned tarballs; Mechanical receives a trusted host binding, the constrained four service callbacks and a cancellation/progress channel; Pi imports no Mechanical private src files and reimplements no developer logic; Mechanical core imports nothing from Pi.
+SCOPE: {"description": "cross-repo dependency direction for the function route (D4/D8); the cancellation/progress channel is not part of the shipped host facade signature at the pin", "environment": "none"}
+PERMITTED_WORDING: Keep the stable public ./host dependency direction; add a ratified composed entrypoint exposing trusted binding, native services and observation/control channels without Pi importing private source.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: [{"lens": "contradict#11", "evidence": "E068", "status": "UNSUPPORTED", "what": "The universal 'no route to an effect without complete trust composition' is UNSUPPORTED while the legacy export stays on the same shipped subpath; SUPPORTED only if scoped to 'through the Pi-facing composed call' (NARROW_SCOPE)"}, {"lens": "pi-src#6", "evidence": "E144", "status": "CONTESTED", "what": "CONTESTED"}]
+DEPENDENCIES: ["C134"] PROPAGATION: {"dependencies": {"C134": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C134=ESTABLISHED); requirement force is a separate dimension"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["SURFACE_DISAGREEMENT", "ADD_MISSING_PREMISE"]
+RIVAL: The shipped ./host subpath already supplies native service composition, binding, progress, cancellation and reconciliation.
+SUPPORT: ["E036", "E244", "E360"] COUNTER: ["E068", "E090", "E144", "E223"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C134 | OBSERVATION | ESTABLISHED | material=True | docs/pi-02-PROTOCOL-AND-RUNTIME.md @ L47 §8
+VERBATIM: Mechanical core never imports Pi.
+PROPOSITION: Embedded premise about the pins: @mechanical/development-rig/host is the only code subpath in the rig package exports map (apps/development-rig/package.json) and exports invokeDevelopmentHost, HostAdmissionError, HOST_API_VERSION and the host-binding guards; DevelopmentServices is exactly the four callbacks discover, compileContext, implement, verify; and at mw-69cb016d packages/development/src and packages/coordination/src contain no import of Pi (detection surface: grep over packages/*/src for pi-subagents, @pi/ and bare "pi" import specifiers).
+SCOPE: {"description": "MW 69cb016d apps/development-rig/{package.json,src/host.ts}, packages/development/src/contracts.ts, packages/*/src", "environment": "mw-69cb016d"}
+PERMITTED_WORDING: At MW 69cb016d, ./host is the rig export map code subpath, the facade exports the listed entry/error/guards, and the two core source trees contain no Pi package import in the inspected static census.
+FACETS: {"facet graded by contradict#11": "UNSUPPORTED: Pi's safety then rests on pi-03 P04 'reject disallowed exports' (Pi-side allowlist of export names), which the MW Done criterion should name instead of claiming closure on its own."}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_SOURCE"]
+RIVAL: The host subpath is nonexistent, four callbacks are only prose, or grep failed to detect real Pi package imports.
+SUPPORT: ["E012", "E051", "E088", "E242", "E361"] COUNTER: ["E068"]
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C163 | INFERENCE | UNSUPPORTED | material=True | docs/pi-03-IMPLEMENTATION-PACKETS.md @ L39 P04 heading
+VERBATIM: Reviewed installed host consumer (P0; MW H01/H02)
+PROPOSITION: Dependency claim: P04 (reviewed installed host consumer) depends on Mechanical packets 'H01/H02'. Embedded label premise: under pi-05's numbering H01=host accepts validated mechanical.pi-host/v1 binding + immutable package/runtime manifest and H02=production four callbacks (a coherent dependency for P04's content); under mw-03's numbering H01=strict Forge certificate and H02=negative effect/recovery semantics, while the installed-runtime closure and descriptor/binding hardening that P04's content actually consumes are mw-03 H03/H04.
+SCOPE: {"description": "cross-corpus label resolution; MW at 69cb016d; overlaps live bead wb-y0n6 (MNI P02 installed descriptor/package admission)", "environment": "mw-69cb016d"}
+PERMITTED_WORDING: P04 requires the specific MW installed closure, closed binding and authorized composed host, with identifiers ratified in P00/H00.
+FACETS: {"facet graded by lineage#14": "CONTESTED: Same defect class as the MNI 'conflicting Pi-vs-MW DAGs' lesson, now at the label level. Remediation ADD_MISSING_PREMISE: a joint 11-10 identifier map (Pi P, Pi H, MW H, MNI P, bead ids) in both repos, in the form MW's 0", "facet graded by mw-src#29": "CONTESTED: Applies to the label-resolution premise of this inference. Code check: none of the candidate meanings has an implementation at the pin, so the code cannot arbitrate. Beads must be keyed by function and owner, never by H-", "facet graded by joint#7": "REFUTED: PREMISE GRADED: that 'MW H01/H02' (P04) and 'Mechanical H01/H02/H03' (P08) name definite Mechanical packets with the content Pi intends. They do not. Read in the Mechanical program's own numbering, P04 would wait on the "}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C142"] PROPAGATION: {"dependencies": {"C142": "UNSUPPORTED"}, "cap": "UNSUPPORTED", "binds": true, "weakest_dependency": "C142", "note": "status at or below the weakest necessary premise"}
+WORDING_MISMATCH: artifact wording is indicative (inferred) ('Reviewed installed host consumer (P0; MW H01/H02)') but the warrant is UNSUPPORTED
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["SURFACE_DISAGREEMENT"]
+RIVAL: P04 depends on installed closure, binding validator and composed host under mw-03 H03/H04/H06; the written H01/H02 maps to different work in pi-05, mw-README and mw-03.
+SUPPORT: ["E015"] COUNTER: ["E058", "E059", "E111", "E207", "E296"]
+HISTORY: ["graded UNSUPPORTED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C164 | OBSERVATION | ESTABLISHED | material=True | docs/pi-03-IMPLEMENTATION-PACKETS.md @ L40 P04 Change
+VERBATIM: native loader seam/host adapter and package dependencies, no private imports
+PROPOSITION: P04 change set presupposes a 'native loader seam' in Pi onto which a Mechanical host adapter and package dependencies can be added without private imports. Embedded premise: such a seam exists at 0fb90672 (src/workbench/native-modules.ts exports loadWorkbenchNative/isWorkbenchNativeLoaded/workbenchNative) and Pi currently has no import of @mechanical/development-rig/host anywhere in src.
+SCOPE: {"description": "Pi at 0fb90672", "environment": "pi-0fb90672"}
+PERMITTED_WORDING: Pi has a native import seam and no installed @mechanical/development-rig/host consumer at 0fb90672.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: []
+RIVAL: Native dynamic-import seam exists, but it is not already a Mechanical host adapter.
+SUPPORT: ["E036", "E183", "E297"] COUNTER: []
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C165 | PROPOSAL | NON-EPISTEMIC | material=True | docs/pi-03-IMPLEMENTATION-PACKETS.md @ L41 P04 Implement
+VERBATIM: import @mechanical/development-rig/host only from reviewed installed artifact; reject disallowed exports and missing callback binding; don't construct a second Mechanical scheduler
+PROPOSITION: P04 deliverable: exact descriptor/installed-package/runtime-manifest checks; import @mechanical/development-rig/host only from the reviewed installed artifact; reject disallowed exports and a missing callback binding; do not construct a second Mechanical scheduler. Embedded premises: (a) './host' is an exported subpath of @mechanical/development-rig at 69cb016d (apps/development-rig/package.json exports './host' -> dist/host.js); (b) Mechanical owns a 'scheduler' that a Pi host could otherwise duplicate (the word has witnesses only in packages/coordination at the MW pin, not in apps/development-rig).
+SCOPE: {"description": "P04; MW package surface at 69cb016d; overlaps mw-03 H03 (installed runtime closure) and H04 (binding validator), live bead wb-y0n6", "environment": "mw-69cb016d"}
+PERMITTED_WORDING: P04 must independently review the rig executable and dependency closure, then allowlist a specifically ratified composed export; construct no new scheduler.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: [{"lens": "negative-ev#26", "evidence": "E047", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}, {"lens": "contradict#11", "evidence": "E068", "status": "UNSUPPORTED", "what": "The universal 'no route to an effect without complete trust composition' is UNSUPPORTED while the legacy export stays on the same shipped subpath; SUPPORTED only if scoped to 'through the Pi-facing composed call' (NARROW_SCOPE)"}, {"lens": "pi-src#6", "evidence": "E144", "status": "CONTESTED", "what": "CONTESTED"}, {"lens": "joint#24", "evidence": "E224", "status": "REFUTED", "what": "REFUTED"}, {"lens": "joint#25", "evidence": "E225", "status": "UNDETERMINED", "what": "UNDETERMINED"}]
+DEPENDENCIES: ["C163", "C164"] PROPAGATION: {"dependencies": {"C163": "UNSUPPORTED", "C164": "ESTABLISHED"}, "cap": "UNSUPPORTED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C163=UNSUPPORTED); requirement force is a separate dimension"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["SPLIT_CLAIM", "ADD_MISSING_PREMISE"]
+RIVAL: The ./host subpath exists, but today it is an unpinned, legacy host that installs the library tarball; the reviewed Pi allowlist names a different package/export, and MW has no scheduler to duplicate.
+SUPPORT: ["E298"] COUNTER: ["E068", "E118", "E144", "E224"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C166 | PROPOSAL | NON-EPISTEMIC | material=True | docs/pi-03-IMPLEMENTATION-PACKETS.md @ L42-L43 P04 Red tests + Done
+VERBATIM: independently packed fixture and negative controls pass V2; actual MW producer host runs exact four callbacks
+PROPOSITION: P04 red tests (corrupt descriptor/tarball, alternate export, installed JS mutation, path/symlink escapes, unexpected function, missing SDK, incompatible Node version) and exit criteria: an independently packed fixture and negative controls pass V2, and the actual MW producer host runs exactly four callbacks. Embedded premises: V2 is defined in pi-04 (independent npm-packed host installed in a fresh consumer; no Pi claimed); the 'four callbacks' are Mechanical's HOST_SERVICE_NAMES discover/compileContext/implement/verify (host-services.ts at 69cb016d).
+SCOPE: {"description": "P04 acceptance; V2 tier; maps to G09 in pi-04", "environment": "mw-69cb016d"}
+PERMITTED_WORDING: P04 acceptance needs a fresh independently packed V2 fixture with runtime-file integrity and a later production four-callback producer witness; existing L2 is a narrower precursor.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: [{"lens": "negative-ev#17", "evidence": "E038", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}, {"lens": "joint#26", "evidence": "E226", "status": "UNDETERMINED", "what": "UNDETERMINED"}]
+DEPENDENCIES: ["C165"] PROPAGATION: {"dependencies": {"C165": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["NARROW_SCOPE", "SPLIT_CLAIM"]
+RIVAL: V2 is a new bar; existing L2 fixture proves packed-library digest and four fixture callbacks, not runtime-file integrity or production native four-service composition.
+SUPPORT: ["E108", "E299"] COUNTER: ["E071", "E097"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C170 | OBSERVATION | ESTABLISHED | material=True | docs/pi-03-IMPLEMENTATION-PACKETS.md @ L52 P06 Change
+VERBATIM: src/workbench/observation.ts and native adapter; workflow_observe tool, scoped event journal
+PROPOSITION: P06 change set presupposes existing Pi surfaces src/workbench/observation.ts and a registered workflow_observe tool, to be extended with a native adapter and a scoped event journal. Embedded premise: both surfaces exist at 0fb90672 (observation.ts present; workflow_observe named in src/index.ts L2640/L2933).
+SCOPE: {"description": "Pi at 0fb90672; overlaps live bead wb-9a1o (MWI-outcomes) and MNI P05", "environment": "pi-0fb90672"}
+PERMITTED_WORDING: Pi has observation.ts and registered workflow_observe at 0fb90672; no joined Mechanical observation is claimed.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: []
+RIVAL: Existing workflow_observe/cache is a Pi-native projection, not yet a producer-qualified Mechanical bridge.
+SUPPORT: ["E173", "E303"] COUNTER: []
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C171 | PROPOSAL | NON-EPISTEMIC | material=True | docs/pi-03-IMPLEMENTATION-PACKETS.md @ L53 P06 Implement
+VERBATIM: native refs + Pi invocation correlation; typed stages and raw Mechanical four domain results; strict/weak/unknown gate assurance; bounds/drop/freshness semantics. No results invented when provider missing.
+PROPOSITION: P06 deliverable: native refs correlated with the Pi invocation; typed stages and the raw Mechanical four domain results; strict/weak/unknown gate assurance; bounds/drop/freshness semantics; no results invented when the provider is missing. Embedded vocabulary premise: 'four domain results' and 'strict/weak' gate assurance correspond to Mechanical's outcome statuses (verified_candidate, verification_failed, needs_evidence, indeterminate) and its strict-vs-legacy-weak certificate distinction at 69cb016d; 'unknown' is a Pi-side addition.
+SCOPE: {"description": "P06; vocabulary judged at MW 69cb016d", "environment": "mw-69cb016d"}
+PERMITTED_WORDING: P06 proposes assurance tiers; domain-result mapping is source-backed but strict/weak/unknown must be jointly specified and implemented before a producer assertion.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: [{"lens": "negative-ev#35", "evidence": "E056", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}, {"lens": "joint#18", "evidence": "E218", "status": "REFUTED", "what": "REFUTED"}]
+DEPENDENCIES: ["C170"] PROPAGATION: {"dependencies": {"C170": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C170=ESTABLISHED); requirement force is a separate dimension"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["SPLIT_CLAIM", "SURFACE_DISAGREEMENT"]
+RIVAL: Four domain statuses exist, but Mechanical has no strict/weak/unknown certificate type at 69cb016d; its binding annotations are different and proposal documents disagree on vocabulary.
+SUPPORT: ["E304"] COUNTER: ["E008", "E064", "E114", "E218"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C172 | PROPOSAL | NON-EPISTEMIC | material=True | docs/pi-03-IMPLEMENTATION-PACKETS.md @ L54-L55 P06 Red tests + Done
+VERBATIM: out-of-order/gap, duplicate native event, collapsed verification_failed vs indeterminate, blank native id, wrong scope, truncation, failed progress observer, native record unavailable
+PROPOSITION: P06 red tests (out-of-order/gap, duplicate native event, collapsed verification_failed vs indeterminate, blank native id, wrong scope, truncation, failed progress observer, native record unavailable) and exit: a user can inspect status, evidence origin and uncertainty without Mechanical private API access. Embedded premise: verification_failed and indeterminate are distinct Mechanical outcome statuses that a bridge could wrongly collapse.
+SCOPE: {"description": "P06 acceptance; MW statuses at 69cb016d", "environment": "mw-69cb016d"}
+PERMITTED_WORDING: Bridge preserves producer result variants; a missing native ID is null/unknown with provenance, never the literal uncertain as an ID.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C171"] PROPAGATION: {"dependencies": {"C171": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: The two outcomes are distinct at the producer, while “uncertain” used as a missing native ID would violate Pi’s no-synthetic-ID rule.
+SUPPORT: ["E305"] COUNTER: ["E237"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C173 | OBSERVATION | SUPPORTED | material=True | docs/pi-03-IMPLEMENTATION-PACKETS.md @ L58 P07 Change
+VERBATIM: workflow_control/workflow_reconcile adapters, host journal and lease state; integrate Mechanical effect-intent lookup
+PROPOSITION: P07 change set presupposes existing workflow_control and workflow_reconcile adapters in Pi, a host journal and lease state (from P02), and a Mechanical 'effect-intent lookup' to integrate. Embedded premises: at 0fb90672 the tools exist (control-tool.ts; reconcile-tool.ts registers name 'workflow_reconcile'); at 69cb016d Mechanical exports an effect-intent store/reader (effect-intent.ts: openEffectIntent, attachEffectRefs, settleEffectIntent, readEffectIntent, fileEffectIntentStore; effect-reconciliation.ts: reconcileUncertainEffect, describeLostAcknowledgement).
+SCOPE: {"description": "Pi at 0fb90672 and MW at 69cb016d; overlaps live beads wb-mwsy (MWI-effects) and wb-5a7k (MWI-controls), MNI P06, mw-03 H02/H07", "environment": "pi-0fb90672"}
+PERMITTED_WORDING: At Pi 0fb90672 workflow_control and workflow_reconcile are registered (control-tool.ts:138, reconcile-tool.ts:62) and a workflow journal exists; at MW 69cb016d effect-intent.ts and effect-reconciliation.ts export openEffectIntent, attachEffectRefs, settleEffectIntent, readEffectIntent, fileEffectIntentStore and reconcileUncertainEffect at module level only: neither module is in the rig's export map (an installed consumer gets ERR_PACKAGE_PATH_NOT_EXPORTED), the record carries intentId and invocationIdentitySha256 but no Pi invocation id, and reconcileUncertainEffect has no src caller, so an integrable 'effect-intent lookup' does not yet exist and depends on MW H02/H07 plus an export.
+FACETS: {"Pi workflow_control/workflow_reconcile adapters and a journal exist": "ESTABLISHED", "MW effect-intent/effect-reconciliation functions exist at module level": "ESTABLISHED", "MW 'exports' them (package export reachable by Pi)": "REFUTED (ERR_PACKAGE_PATH_NOT_EXPORTED)", "a producer 'effect-intent lookup' keyed by invocation exists to integrate": "UNSUPPORTED (path-addressed single-file reader; no index; no caller)", "host journal and lease state from P02": "NON-EPISTEMIC (future)"}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C154", "C156"] PROPAGATION: {"dependencies": {"C154": "NON-EPISTEMIC", "C156": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["SPLIT_CLAIM", "ADD_MISSING_PREMISE"]
+RIVAL: The Pi adapters and module-level Mechanical effect-intent reader exist, but the only package subpath Pi may consume exports no lookup keyed by Pi invocation.
+SUPPORT: ["E037", "E177", "E210", "E306", "E464"] COUNTER: ["E091"]
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11 (Phase 5 audit)", "arbitration-20261111:SUPPORTED@69cb016d"]
+====================================================================================================
+C174 | PROPOSAL | NON-EPISTEMIC | material=False | docs/pi-03-IMPLEMENTATION-PACKETS.md @ L59-L61 P07 Implement/Red/Done
+VERBATIM: no unknown effect is replayed just because Pi restarted, and writer lease stays fenced until justified
+PROPOSITION: P07 deliverable and exit: append-only idempotent event ids; pre- vs post-dispatch cancellation distinguished; native lookup with no blind retry; reattach the same invocation to still-running native producers; an operator action for unknown outcomes; red tests across kill windows (after intent before SDK, after first edit, after commit, before/after gate dispatch), lost ack, double stop, late events, corrupted journal, start/recovery race; done when no unknown effect is replayed merely because Pi restarted and the writer lease stays fenced until justified.
+SCOPE: {"description": "P07 acceptance; maps to G04/G05/G11 in pi-04; depends on P02/P05/P06", "environment": "none"}
+PERMITTED_WORDING: Specify idempotent event projection replay separately from forbidden automatic effect/writer replay; align Pi and Mechanical intent identifiers and recovery authority.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: [{"lens": "negative-ev#17", "evidence": "E038", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}, {"lens": "contradict#2", "evidence": "E059", "status": "UNSUPPORTED", "what": "C142/C163 UNSUPPORTED (prerequisite sets conflict across repos and the labels are ambiguous); C139/C141 NON-EPISTEMIC"}, {"lens": "joint#9", "evidence": "E209", "status": "REFUTED", "what": "REFUTED"}, {"lens": "joint#28", "evidence": "E228", "status": "UNDETERMINED", "what": "UNDETERMINED"}]
+DEPENDENCIES: ["C141", "C173"] PROPAGATION: {"dependencies": {"C141": "NON-EPISTEMIC", "C173": "SUPPORTED"}, "cap": "SUPPORTED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C173=SUPPORTED); requirement force is a separate dimension"}
+WORDING_MISMATCH: indicative wording in a PROPOSAL row carries embedded premises graded ['REFUTED', 'UNDETERMINED', 'UNSUPPORTED']
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["SPLIT_CLAIM", "ADD_MISSING_PREMISE"]
+RIVAL: A Pi intent event and a Mechanical intent file can both be durable while disagreeing on authority, ID or recovery state.
+SUPPORT: ["E307"] COUNTER: ["E007", "E013", "E059", "E076", "E209"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C175 | PROPOSAL | NON-EPISTEMIC | material=True | docs/pi-03-IMPLEMENTATION-PACKETS.md @ L63-L66 P08
+VERBATIM: actual Pi tool → Mechanical host → Claude session edit/commit → strict matching Forge full gate → Pi observation of source/digest/native ids
+PROPOSITION: P08 (genuine native acceptance): an integration harness using installed packages and native services with opt-in credentials and exact environment proof runs actual Pi tool -> Mechanical host -> Claude session edit/commit -> strict matching Forge full gate -> Pi observation of source/digest/native ids, covering verified_candidate, verification_failed, needs_evidence and indeterminate on deterministic fixtures with the real verified case using native evidence only; exit is an independently inspectable V4 receipt with exact SHAs and commands and no simulated PASS. Dependency premise: requires P05-P07 and 'Mechanical host native closure' (mw-03 H05/H06/H07 content). Vocabulary premise: the four statuses exist at 69cb016d.
+SCOPE: {"description": "P08; V4 tier; joint Pi/MW; overlaps live bead wb-p3i2 (git-census host in isolated Pi-owned invocation), MNI P07, mw-03 H08", "environment": "mw-69cb016d"}
+PERMITTED_WORDING: P08 must produce a new V4 native receipt; attainability of strict PASS remains UNDETERMINED until a real Forge gate envelope proves environment.pinned with matching candidate/tree/definition.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C142", "C169", "C171", "C174"] PROPAGATION: {"dependencies": {"C142": "UNSUPPORTED", "C169": "NON-EPISTEMIC", "C171": "NON-EPISTEMIC", "C174": "NON-EPISTEMIC"}, "cap": "UNSUPPORTED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C142=UNSUPPORTED); requirement force is a separate dimension"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: one native gate.run envelope from the installed Forge on a clean committed disposable package showing execution_environment.pinned true with native commit, tree and gate definition
+REMEDIATION_CLASSES: ["PRESERVE_AS_UNDETERMINED", "ADD_SOURCE"]
+RIVAL: V4 is an acceptance plan; whether the first-release Forge environment can produce a strict-native pinned-environment PASS is not demonstrated by existing receipts.
+SUPPORT: ["E308"] COUNTER: ["E130"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C183 | NORMATIVE | NON-EPISTEMIC | material=False | docs/pi-04-ADVERSARIAL-VERIFICATION.md @ L7
+VERBATIM: actual independent npm-packed Mechanical host installed in fresh consumer; digest+runtime-file checks; no Pi claimed.
+PROPOSITION: V2 must install the actual independently npm-packed Mechanical host in a fresh external consumer and verify runtime files and digests without calling that a Pi invocation.
+SCOPE: {"description": "Pi/MW installed-consumer tier V2", "environment": "none"}
+PERMITTED_WORDING: V2 requires a new installed-runtime integrity journey; historical L2 is archive/fixture evidence, not V2 completion or registered Pi proof.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C214"] PROPAGATION: {"dependencies": {"C214": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C214=ESTABLISHED); requirement force is a separate dimension"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: The existing external L2 fixture already meets the new V2 runtime-file integrity bar and proves Pi execution.
+SUPPORT: ["E415"] COUNTER: ["E066", "E097", "E212"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C184 | NORMATIVE | NON-EPISTEMIC | material=False | docs/pi-04-ADVERSARIAL-VERIFICATION.md @ L8
+VERBATIM: actual registered workflow_execute(function) with deterministic four callbacks and workflow_observe, no native provider claim.
+PROPOSITION: V3 must exercise the actual Pi-registered workflow_execute(function) with deterministic four callbacks and observe the same invocation, without claiming native provider operation.
+SCOPE: {"description": "Pi registered-tool tier V3", "environment": "none"}
+PERMITTED_WORDING: V3 is planned registered-tool evidence with deterministic providers and observation of one logical invocation, not native proof.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C212", "C213", "C215"] PROPAGATION: {"dependencies": {"C212": "ESTABLISHED", "C213": "ESTABLISHED", "C215": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C212=ESTABLISHED); requirement force is a separate dimension"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: A direct develop consumer or arbitrary four callbacks can satisfy the registered Pi V3 requirement without an agreed production ABI.
+SUPPORT: ["E416"] COUNTER: ["E066", "E212", "E223"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C185 | NORMATIVE | NON-EPISTEMIC | material=False | docs/pi-04-ADVERSARIAL-VERIFICATION.md @ L9
+VERBATIM: same registered route and installed real Claude SDK + native Forge full gate, committed Git candidate tree and manifest proof; no fake green.
+PROPOSITION: V4 must run the same registered path with a real Claude SDK and native Forge full gate against a committed Git candidate/tree and manifest, rather than accept synthetic green evidence.
+SCOPE: {"description": "Pi/MW native tier V4, contingent on real provider availability", "environment": "none"}
+PERMITTED_WORDING: V4 must obtain real source-pinned native proof through the registered route. Its strict-positive attainability, certificate carrier and SDK resolution must be evidenced; unavailable native gates remain blocked, not green.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: [{"lens": "joint#39", "evidence": "E239", "status": "UNDETERMINED", "what": "UNDETERMINED"}]
+DEPENDENCIES: ["C184"] PROPAGATION: {"dependencies": {"C184": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: one native gate.run envelope from the installed Forge on a clean committed disposable package showing execution_environment.pinned true with native commit, tree and gate definition
+REMEDIATION_CLASSES: ["PRESERVE_AS_UNDETERMINED"]
+RIVAL: A real native Forge gate will necessarily provide the strict environment/candidate certificate and existing domain outputs already carry it to Pi.
+SUPPORT: ["E417"] COUNTER: ["E066", "E079", "E212"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C187 | NORMATIVE | NON-EPISTEMIC | material=False | docs/pi-04-ADVERSARIAL-VERIFICATION.md @ L16
+VERBATIM: no strict native verification
+PROPOSITION: G01: A nominal Forge PASS without gate_passed must not establish strict native verification.
+SCOPE: {"description": "Pi/MW proposed falsification matrix, not an executed test", "environment": "none"}
+PERMITTED_WORDING: G01 must block strict promotion and return the agreed incomplete-proof outcome/assurance. The producer at 69cb016d does not satisfy this guard.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C185"] PROPAGATION: {"dependencies": {"C185": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: gate_passed absence is harmless because a nominal PASS and matching commit are enough; G01 is an already passing strict guard.
+SUPPORT: ["E419"] COUNTER: ["E008", "E080"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C188 | NORMATIVE | NON-EPISTEMIC | material=False | docs/pi-04-ADVERSARIAL-VERIFICATION.md @ L17
+VERBATIM: strict result indeterminate unless documented independent native tree proof
+PROPOSITION: G02: Matching commit without candidate-tree evidence must remain indeterminate unless documented independent native tree proof exists.
+SCOPE: {"description": "Pi/MW proposed falsification matrix, not an executed test", "environment": "none"}
+PERMITTED_WORDING: Missing candidate-tree proof stays indeterminate unless a documented validated producer-native evidence chain binds the exact gated tree; local current HEAD is not proof of that run.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C185"] PROPAGATION: {"dependencies": {"C185": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_SOURCE"]
+RIVAL: Matching commit entails matching candidate tree or any local HEAD lookup is an acceptable independent native tree proof.
+SUPPORT: ["E420"] COUNTER: ["E008", "E079", "E080"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C189 | NORMATIVE | NON-EPISTEMIC | material=False | docs/pi-04-ADVERSARIAL-VERIFICATION.md @ L18
+VERBATIM: no strict promotion
+PROPOSITION: G03: Missing or contradicted native gate-definition/environment evidence must block strict promotion.
+SCOPE: {"description": "Pi/MW proposed falsification matrix, not an executed test", "environment": "none"}
+PERMITTED_WORDING: Missing, contradicted or profile-ineligible native gate-definition/environment proof must block strict promotion; descriptor identity is a separate axis.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C185"] PROPAGATION: {"dependencies": {"C185": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: Descriptor gate/environment bindings substitute for native evidence, and a present but unpinned environment establishes strict eligibility.
+SUPPORT: ["E421"] COUNTER: ["E008", "E080"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C190 | NORMATIVE | NON-EPISTEMIC | material=False | docs/pi-04-ADVERSARIAL-VERIFICATION.md @ L19
+VERBATIM: no blind retry from clean HEAD
+PROPOSITION: G04: A writer that edits and restores bytes before a lost acknowledgment must not be blindly retried merely because HEAD is clean.
+SCOPE: {"description": "Pi/MW proposed falsification matrix, not an executed test", "environment": "none"}
+PERMITTED_WORDING: G04 prohibits retry based solely on a clean tracked snapshot after dispatch; prior write occurrence remains unknown without a capable native detector.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: Clean HEAD and status prove no writer effect occurred and therefore permit retry after lost acknowledgment.
+SUPPORT: ["E422"] COUNTER: ["E008"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C191 | NORMATIVE | NON-EPISTEMIC | material=False | docs/pi-04-ADVERSARIAL-VERIFICATION.md @ L20
+VERBATIM: preserve uncertainty; retry denied without comprehensive native absence
+PROPOSITION: G05: An ignored, untracked or out-of-worktree side effect with a lost acknowledgment must remain uncertain without comprehensive native absence proof.
+SCOPE: {"description": "Pi/MW proposed falsification matrix, not an executed test", "environment": "none"}
+PERMITTED_WORDING: Test the three carriers separately: ignored red is observed; untracked denial is a regression control; external effects remain an evidence-acquisition case. None permits blind retry without a detector covering the declared effect class.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["SPLIT_CLAIM"]
+RIVAL: All ignored/untracked/out-of-worktree arms are already reproduced red, or worktree status detects every authorized effect.
+SUPPORT: ["E107", "E423"] COUNTER: ["E008"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C197 | NORMATIVE | NON-EPISTEMIC | material=False | docs/pi-04-ADVERSARIAL-VERIFICATION.md @ L26
+VERBATIM: native reconciliation, no automatic duplicate
+PROPOSITION: G11: Killing after commit or gate dispatch and losing acknowledgment must trigger native reconciliation rather than automatic duplication.
+SCOPE: {"description": "Pi/MW proposed falsification matrix, not an executed test", "environment": "none"}
+PERMITTED_WORDING: After commit/gate dispatch with lost acknowledgment, preserve uncertainty and known exact refs, use read-only native reconciliation, and deny automatic duplicate effects.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: A lost commit/gate acknowledgment can be mapped to failed/no-effect and replayed, or existing effect-intent files already prove joined crash reconciliation.
+SUPPORT: ["E429"] COUNTER: ["E008"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C198 | NORMATIVE | NON-EPISTEMIC | material=False | docs/pi-04-ADVERSARIAL-VERIFICATION.md @ L27
+VERBATIM: record historical proof but no current-source promotion
+PROPOSITION: G12: If HEAD/source tree changes after native PASS, historical proof must not promote the current source.
+SCOPE: {"description": "Pi/MW proposed falsification matrix, not an executed test", "environment": "none"}
+PERMITTED_WORDING: Before final producer certification, drift retains a weak native observation and no strict promotion; after a settled certificate, preserve its old subject and mark current freshness stale.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C185"] PROPAGATION: {"dependencies": {"C185": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_TEMPORAL_QUALIFIER"]
+RIVAL: Any native PASS can be retained as a strict historical certificate despite drift before producer settlement, and it still verifies current source.
+SUPPORT: ["E430"] COUNTER: ["E008", "E214"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C201 | NORMATIVE | NON-EPISTEMIC | material=False | docs/pi-04-ADVERSARIAL-VERIFICATION.md @ L30
+VERBATIM: zero cross-principal events, no control leak
+PROPOSITION: P15: Cross-scope native reference or observation replay must expose no cross-principal events or control.
+SCOPE: {"description": "Pi/MW proposed falsification matrix, not an executed test", "environment": "none"}
+PERMITTED_WORDING: P15 must attach host-minted scope and exercise foreign replay through the new bridge; existing observation/control scope defenses are primitives to preserve.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: Adding Mechanical native refs automatically inherits all scope security, or scope is supplied by the producer/model.
+SUPPORT: ["E433"] COUNTER: ["E008"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C202 | NORMATIVE | NON-EPISTEMIC | material=False | docs/pi-04-ADVERSARIAL-VERIFICATION.md @ L31
+VERBATIM: idempotent projection, no new effect
+PROPOSITION: P16: Duplicate or late events after terminal must project idempotently with no new effect.
+SCOPE: {"description": "Pi/MW proposed falsification matrix, not an executed test", "environment": "none"}
+PERMITTED_WORDING: P16 requires idempotent durable projection after terminal and zero new effect. Existing read-only cache handling alone is insufficient restart evidence.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: [{"lens": "pi-src#31", "evidence": "E169", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}]
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: Idempotent observation ingestion establishes durable replay/no-effect semantics after terminal for the future function runtime.
+SUPPORT: ["E169", "E434"] COUNTER: ["E008"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C203 | NORMATIVE | NON-EPISTEMIC | material=False | docs/pi-04-ADVERSARIAL-VERIFICATION.md @ L32
+VERBATIM: no non-addressable ref; invocation remains observable
+PROPOSITION: P17: A truncated response must not emit a non-addressable native identity and must leave the invocation observable.
+SCOPE: {"description": "Pi/MW proposed falsification matrix, not an executed test", "environment": "none"}
+PERMITTED_WORDING: Retain a host invocation address while omitting clipped native refs; represent unknown native identity as null with separate uncertainty, never the string uncertain.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: [{"lens": "pi-src#31", "evidence": "E169", "status": "UNSUPPORTED", "what": "UNSUPPORTED"}]
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: indicative wording in a NORMATIVE row carries embedded premises graded ['UNSUPPORTED']
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: Any nonblank string is an addressable native identity, and empty/truncated ids can be replaced by uncertain or a synthetic name.
+SUPPORT: ["E169", "E435"] COUNTER: ["E008", "E237"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C204 | NORMATIVE | NON-EPISTEMIC | material=False | docs/pi-04-ADVERSARIAL-VERIFICATION.md @ L33
+VERBATIM: unknown + retained fence, no second effect
+PROPOSITION: P18: An executor crash with an open writer fence must remain unknown, retain its fence and avoid a second effect.
+SCOPE: {"description": "Pi/MW proposed falsification matrix, not an executed test", "environment": "none"}
+PERMITTED_WORDING: An executor crash with possible dispatch retains unknown state and authoritative fence until safe settlement; process-kill and power-loss claims require distinct durability evidence.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: An executor/PID disappearance establishes settlement and safe lease release; file fsync alone proves power-loss durability.
+SUPPORT: ["E014", "E436"] COUNTER: ["E008"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C205 | DEFINITION | NON-EPISTEMIC | material=False | docs/pi-04-ADVERSARIAL-VERIFICATION.md @ L36
+VERBATIM: Verified_candidate: passed producer gate on matching candidate commit/tree with valid native gate-definition and required execution evidence.
+PROPOSITION: The proposed application domain consists of four separately inspectable outcomes: verified_candidate requires matching candidate and native proof; verification_failed requires measured native FAIL; needs_evidence means incomplete discovery with no writer/gate; indeterminate means unknown source/effect/provider. These are specifications, not observed results.
+SCOPE: {"description": "Pi/MW proposed domain-output contract; tool, CLI, UI, journal representations", "environment": "none"}
+PERMITTED_WORDING: These are target outcome definitions. Preserve original producer result separately from assurance/freshness/effect axes; today’s verified_candidate is not necessarily strict-native. Carry thrown errors separately and name the actual CLI surface.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C215"] PROPAGATION: {"dependencies": {"C215": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C215=ESTABLISHED); requirement force is a separate dimension"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["SPLIT_CLAIM"]
+RIVAL: The proposed four-way definitions are the current producer semantics and therefore any original verified_candidate is strict native verification.
+SUPPORT: ["E437"] COUNTER: ["E080", "E084"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C206 | NORMATIVE | NON-EPISTEMIC | material=False | docs/pi-04-ADVERSARIAL-VERIFICATION.md @ L39
+VERBATIM: Input/permission denial: 0 Mechanical callbacks, 0 SDK sessions, 0 Forge gate requests, 0 workspace writes.
+PROPOSITION: An input or permission denial must cause zero Mechanical callbacks, SDK sessions, Forge requests and workspace writes.
+SCOPE: {"description": "Pi/MW pre-effect denial", "environment": "none"}
+PERMITTED_WORDING: Input/permission denial must be measured with independent callback/session/gate/write detectors on the actual new path; preexisting function refusal is only a baseline control.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: Zero callbacks on a currently refused function proves safe denial for the future composed path at every effect boundary.
+SUPPORT: ["E438"] COUNTER: []
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C207 | NORMATIVE | NON-EPISTEMIC | material=False | docs/pi-04-ADVERSARIAL-VERIFICATION.md @ L40
+VERBATIM: After-dispatch cancellation: exact session/operation refs if known, explicit uncertain effect, no rollback claim.
+PROPOSITION: Cancellation after dispatch must report known exact session/operation refs and uncertain effects without claiming rollback.
+SCOPE: {"description": "Pi/MW after-dispatch cancellation", "environment": "none"}
+PERMITTED_WORDING: After dispatch, cancel is requested until native proof establishes it; retain exact known refs and uncertainty, claim no rollback. Existing pending dispatch cancellation defect is an ordering prerequisite.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: A cancel request rolls back native writes or current script cancellation primitives automatically cover the function lifecycle.
+SUPPORT: ["E439"] COUNTER: ["E013"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C209 | NORMATIVE | NON-EPISTEMIC | material=False | docs/pi-04-ADVERSARIAL-VERIFICATION.md @ L50
+VERBATIM: Capture source candidate SHA/tree, forge manifest sha, Forge operation id + original envelope/gate-def/environment proof; don't simulate PASS (V4).
+PROPOSITION: The opt-in native test must capture actual source candidate SHA/tree, Forge manifest hash, operation ID, original gate envelope, gate definition and environment, never simulate a PASS.
+SCOPE: {"description": "Pi/MW opt-in disposable native test", "environment": "none"}
+PERMITTED_WORDING: Capture original actual provider envelopes and separate candidate, native definition, admitted manifest and environment identities. Pending native availability remains a named blocker.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C185"] PROPAGATION: {"dependencies": {"C185": "NON-EPISTEMIC"}, "cap": null, "binds": false, "note": "all dependencies are normative; nothing to cap"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: Listing native receipt fields demonstrates they are attainable, or a Forge operation id alone establishes native verification.
+SUPPORT: ["E441"] COUNTER: ["E079"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C211 | PROPOSAL | NON-EPISTEMIC | material=False | docs/pi-04-ADVERSARIAL-VERIFICATION.md @ L65
+VERBATIM: Null stays null; never fabricate native IDs.
+PROPOSITION: A future source-pinned release receipt should use the specified JSON fields, preserving null for unavailable native IDs; this line is a template rather than an existing receipt.
+SCOPE: {"description": "Pi/MW proposed release receipt schema in L65", "environment": "none"}
+PERMITTED_WORDING: This is a proposed receipt field list, not a receipt. Ratify a versioned joint schema or explicit mappings, common invocation/commit keys and validator; keep unavailable IDs null and effect uncertainty separate.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: [{"lens": "joint#26", "evidence": "E226", "status": "UNDETERMINED", "what": "UNDETERMINED"}]
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: The field sketch is an existing machine-validated joint receipt schema, missing IDs can be invented, and the two repos’ templates join automatically.
+SUPPORT: ["E443"] COUNTER: ["E115", "E212", "E220", "E222"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C213 | OBSERVATION | ESTABLISHED | material=True | docs/pi-05-OPERATIONS-AND-HANDOFF.md @ L6
+VERBATIM: The observation view shows independent rows for native session
+PROPOSITION: At Pi 0fb90672, the registered workflow_observe is keyed by taskId and reads workflowTasks under local session/workspace/principal; its current route does not establish observation of a joined Mechanical function invocation.
+SCOPE: {"description": "Pi src/index.ts workflow_observe registration only; negative scope limited to this registered route", "environment": "pi-0fb90672"}
+PERMITTED_WORDING: At 0fb90672 the registered observe tool reads scoped script tasks by taskId; it does not establish joined Mechanical function observation. Existing native observation is a reusable primitive.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C212"] PROPAGATION: {"dependencies": {"C212": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "weakest_dependency": "C212", "note": "status consistent with premises"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: Existing bounded native observation is absent, or its pure invocationId query proves the registered tool already observes Mechanical functions.
+SUPPORT: ["E034", "E173", "E445"] COUNTER: []
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C214 | OBSERVATION | ESTABLISHED | material=True | docs/pi-05-OPERATIONS-AND-HANDOFF.md @ L30
+VERBATIM: @mechanical/development-rig/host accepts validated mechanical.pi-host/v1 binding
+PROPOSITION: At MW 69cb016d, @mechanical/development-rig/host is a real package subpath exporting invokeDevelopmentHost and binding guards; its exported invocation accepts artifact digests and injected services, not a required trusted validated mechanical.pi-host/v1 binding.
+SCOPE: {"description": "MW package export and host.ts facade at pin; planned binding is NOT an implemented admission claim", "environment": "mw-69cb016d"}
+PERMITTED_WORDING: At MW 69cb016d the host subpath exists with invocation and binding guards, but invocation does not require a trusted v1 binding, source/lease or native composition.
+FACETS: {"facet graded by contradict#11": "UNSUPPORTED: Pi's safety then rests on pi-03 P04 'reject disallowed exports' (Pi-side allowlist of export names), which the MW Done criterion should name instead of claiming closure on its own.", "facet graded by contradict#16": "REFUTED: Body-vs-footer class: a sentence stronger than README L2 'not implemented' allows if read literally; cured by one modal verb per item."}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_TEMPORAL_QUALIFIER"]
+RIVAL: The host subpath does not exist (old MNI premise), or re-exported guards make binding/authority mandatory in invokeDevelopmentHost.
+SUPPORT: ["E012", "E036", "E092", "E446"] COUNTER: ["E068", "E073"]
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C215 | OBSERVATION | ESTABLISHED | material=True | docs/pi-05-OPERATIONS-AND-HANDOFF.md @ L31
+VERBATIM: production four callbacks composed from native Git census/plain task
+PROPOSITION: At MW 69cb016d the ordinary development contract names exactly discover, compileContext, implement and verify callbacks and four typed outcomes; those types do not prove native provider composition through the Pi tool.
+SCOPE: {"description": "MW pure development contracts and ordinary develop function only; composition remains proposed", "environment": "mw-69cb016d"}
+PERMITTED_WORDING: At 69cb016d ordinary develop accepts discover, compileContext, implement and verify and returns a four-arm domain union; that is not native composition or an exhaustive transport/error taxonomy.
+FACETS: {"facet graded by contradict#16": "REFUTED: Body-vs-footer class: a sentence stronger than README L2 'not implemented' allows if read literally; cured by one modal verb per item."}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["NARROW_SCOPE"]
+RIVAL: Four callback/outcome type names prove production provider composition and exclude thrown runtime errors.
+SUPPORT: ["E083", "E447"] COUNTER: ["E073"]
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C218 | OBSERVATION | ESTABLISHED | material=True | docs/pi-05-OPERATIONS-AND-HANDOFF.md @ L24
+VERBATIM: supported Node/SDKs
+PROPOSITION: At the pins, Pi declares Node >=24 and MW rig declares >=22.18.0 <25; an independently installed joint host therefore needs an overlapping supported runtime and measured SDK identity, not an assumption that every Node version works.
+SCOPE: {"description": "Pi and MW package engine declarations at their pinned revisions", "environment": "pi-0fb90672|mw-69cb016d"}
+PERMITTED_WORDING: Declared joint runtime overlap is >=24 <25. Record exact runtime and resolved SDK identities; supported declarations are not runtime enforcement or measured compatibility.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: All supported standalone MW Node versions are supported in a joined Pi host, and engines ranges are enforced by installed host code.
+SUPPORT: ["E125", "E193", "E241", "E450"] COUNTER: []
+HISTORY: ["graded ESTABLISHED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C221 | OBSERVATION | SUPPORTED | material=True | docs/pi-05-OPERATIONS-AND-HANDOFF.md @ L30
+VERBATIM: H01: @mechanical/development-rig/host accepts validated mechanical.pi-host/v1 binding
+PROPOSITION: The Pi handoff numbers H01-H04 by binding, native callbacks, strict verification and effect reconciliation; MW companion implementation packets number the corresponding work as MW H06/H04, H05, H01 and H02 respectively. A handoff keyed only by H-label is ambiguous without owner and function.
+SCOPE: {"description": "Cross-document label namespaces: pi-05 L29-35 versus mw-03 and mw-05; docs, not code", "environment": "history"}
+PERMITTED_WORDING: H-labels require owner, document namespace and function. Content mapping: Pi H01 -> MW packets H03/H04/H06; H02 -> H05; H03 -> H01; H04 -> H02/H07; H05 -> relevant fixture/joint/recovery packets. A label-only handoff is ambiguous.
+FACETS: {"facet graded by lineage#14": "ESTABLISHED: Same defect class as the MNI 'conflicting Pi-vs-MW DAGs' lesson, now at the label level. Remediation ADD_MISSING_PREMISE: a joint 11-10 identifier map (Pi P, Pi H, MW H, MNI P, bead ids) in both repos, in the form MW's 0", "facet graded by contradict#1": "ESTABLISHED: Confirms the MNI lesson 'conflicting Pi-vs-MW DAGs'. Even inside the MW program the README's priority list and the 03 packet list disagree (README H06 'real joint Pi handoff' is mw-03 H08). Remediation: one shared label ", "facet graded by joint#8": "ESTABLISHED: C221 is correct and understates the problem: four H-numberings are in play, three of them inside the Mechanical program. Translation by content: Pi H01 = mw-03 H06 with H03 and H04; Pi H02 = mw-03 H05; Pi H03 = mw-03 H01"}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: [] PROPAGATION: {"dependencies": [], "cap": null, "binds": false, "note": "no recorded premise dependencies"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["SPLIT_CLAIM"]
+RIVAL: Matching H-labels identify the same producer work and the claim’s two-namespace mapping is a complete exact ownership decomposition.
+SUPPORT: ["E015", "E112", "E208", "E453"] COUNTER: ["E058"]
+HISTORY: ["graded SUPPORTED at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C223 | NORMATIVE | NON-EPISTEMIC | material=False | docs/pi-05-OPERATIONS-AND-HANDOFF.md @ L6
+VERBATIM: Never label a workflow SUCCESS because a launcher succeeded.
+PROPOSITION: Launch and observation must keep launch-only status distinct from completion and expose source, native session, candidate tree, gate, evidence and effect reconciliation as separate dimensions.
+SCOPE: {"description": "Future Pi UI, tool reply and observation LX", "environment": "none"}
+PERMITTED_WORDING: Launch-only acknowledgment remains separate from original domain result, verification assurance, effects and freshness. Current legacy verified_candidate must never be shown as strict-native by itself.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C213", "C215"] PROPAGATION: {"dependencies": {"C213": "ESTABLISHED", "C215": "ESTABLISHED"}, "cap": "ESTABLISHED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C213=ESTABLISHED); requirement force is a separate dimension"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: Successful launch means workflow SUCCESS and preserving the current producer domain result inherently supplies strict proof.
+SUPPORT: ["E455"] COUNTER: []
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C227 | NORMATIVE | NON-EPISTEMIC | material=False | docs/pi-05-OPERATIONS-AND-HANDOFF.md @ L30
+VERBATIM: H01: @mechanical/development-rig/host accepts validated mechanical.pi-host/v1 binding and exact immutable package/runtime manifest; reject malformed descriptors with typed errors.
+PROPOSITION: Mechanical producer handoff must validate the versioned host binding and immutable installed runtime before effect, compose the four real native callbacks, supply strict candidate/tree/gate/environment proof, and report durable effect intent/reconciliation.
+SCOPE: {"description": "MW-owned proposed handoff H01-H04 in Pi numbering L30-L33", "environment": "none"}
+PERMITTED_WORDING: Mechanical must supply these blocking handoffs; they are not implemented through the allowed host subpath at 69cb016d. Pi consumes ratified producer-owned APIs and proof, not copied internals.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: [{"lens": "contradict#16", "evidence": "E073", "status": "REFUTED", "what": "Present-tense reading REFUTED at the pins; requirement reading NON-EPISTEMIC (the header supports it) -> DOWNGRADE_MODALITY ('must accept', 'must be composed')"}, {"lens": "joint#26", "evidence": "E226", "status": "UNDETERMINED", "what": "UNDETERMINED"}]
+DEPENDENCIES: ["C214", "C215", "C221"] PROPAGATION: {"dependencies": {"C214": "ESTABLISHED", "C215": "ESTABLISHED", "C221": "SUPPORTED"}, "cap": "SUPPORTED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C221=SUPPORTED); requirement force is a separate dimension"}
+WORDING_MISMATCH: indicative wording in a NORMATIVE row carries embedded premises graded ['REFUTED', 'UNDETERMINED']
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["DOWNGRADE_MODALITY"]
+RIVAL: The indicative H01-H04 bullets describe already implemented secure production capabilities; invoking exported helper independently composes trust.
+SUPPORT: ["E015", "E459"] COUNTER: ["E058", "E073"]
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]
+====================================================================================================
+C228 | NORMATIVE | NON-EPISTEMIC | material=False | docs/pi-05-OPERATIONS-AND-HANDOFF.md @ L35
+VERBATIM: Pi MUST NOT implement H01–H04 by copying Mechanical internal code. Mechanical MUST NOT depend on Pi packages to implement its own four domain functions.
+PROPOSITION: Pi may not copy Mechanical internal implementation to satisfy H01-H04; Mechanical may not depend on Pi packages for its four domain functions.
+SCOPE: {"description": "Cross-repository ownership boundary, Pi H01-H04 labels", "environment": "none"}
+PERMITTED_WORDING: Pi must consume reviewed public producer boundaries, never copy Mechanical internals; Mechanical core remains Pi-independent. This coherent shared norm does not settle the incomplete composed-call ABI.
+FACETS: {}
+EMBEDDED_PREMISE_FLAGS: []
+DEPENDENCIES: ["C221"] PROPAGATION: {"dependencies": {"C221": "SUPPORTED"}, "cap": "SUPPORTED", "binds": false, "note": "normative row: embedded premises carry their own statuses (weakest C221=SUPPORTED); requirement force is a separate dimension"}
+WORDING_MISMATCH: None
+MISSING_TO_SETTLE: None
+REMEDIATION_CLASSES: ["ADD_MISSING_PREMISE"]
+RIVAL: The cross-repo design disagreement extends to dependency direction, so Pi may copy internals or MW may depend on Pi to get working callbacks.
+SUPPORT: ["E015", "E244", "E460"] COUNTER: []
+HISTORY: ["graded NON-EPISTEMIC at pin pi-0fb90672/mw-69cb016d 2026-11-11"]

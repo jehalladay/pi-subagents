@@ -1,0 +1,15 @@
+{
+  "schema": "mw.vendored-contract.provenance.v1",
+  "source": {
+    "repository": "MicroPolicyCli (local hub /workplace/jehallad/AgentEcosystem/ForgeWorkspaces/MicroPolicyCLI/hub/MicroPolicyCLI.git; commit not on the public remote at vendoring time, public main 69cdf79577a9)",
+    "commit": "9d51a8c6ed08fdb81be681a1e5cae42b4cf80961",
+    "path": "contracts/schemas/decision-receipt.v1.json",
+    "gitBlobSha1": "bfd17030e4a9381fc582b6cb30a539964ad1704b"
+  },
+  "vendored": {
+    "sha256": "12b48c2b5e57da586a0453bc80128e6bfe94c8c7a4cd7a5f9dbd45561cb6699b",
+    "retrievedAtUtc": "2026-10-19T12:08:00Z",
+    "by": "MechanicalWorkflows-8w9j seat unit"
+  },
+  "rule": "Pinned JSON copy only; no @micro-policy runtime dependency (APO-026). Re-vendor only together with a doc re-pin."
+}

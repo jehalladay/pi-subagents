@@ -1,0 +1,138 @@
+[
+ {
+  "disposition": "DEFERRED",
+  "item": "P11",
+  "derived_from": [
+   "C178"
+  ],
+  "carrier": "wb-zswl",
+  "extends_eat": [
+   "EAT-R295",
+   "EAT-R296",
+   "EAT-R297",
+   "EAT-R298",
+   "EAT-R303"
+  ],
+  "reason": "Optional detached function + Furnace; P2 after P10, not a first-release blocker; R404 c3 / R412 c2 refuse it; R438 c3 detached assertion deferred to P11.",
+  "requirement": null,
+  "epistemic_basis": [
+   {
+    "id": "C178",
+    "status": "NON-EPISTEMIC"
+   }
+  ],
+  "acceptanceState": "NOT_RUN",
+  "scope": "Disposition record, not an 81st MII requirement; claim status copied from patched ledger."
+ },
+ {
+  "disposition": "DEFERRED",
+  "item": "P12",
+  "derived_from": [
+   "C179"
+  ],
+  "carrier": "wb-pxvv",
+  "extends_eat": [
+   "EAT-R299",
+   "EAT-R300",
+   "EAT-R301",
+   "EAT-R302",
+   "EAT-R303"
+  ],
+  "reason": "Optional HX / RF and further function families; in-flight MNI work, not an MII dependency; no development-write grant inheritance.",
+  "requirement": null,
+  "epistemic_basis": [
+   {
+    "id": "C179",
+    "status": "NON-EPISTEMIC"
+   }
+  ],
+  "acceptanceState": "NOT_RUN",
+  "scope": "Disposition record, not an 81st MII requirement; claim status copied from patched ledger."
+ },
+ {
+  "disposition": "DEFERRED",
+  "item": "P11/P12 optional order",
+  "derived_from": [
+   "C143"
+  ],
+  "carrier": [
+   "wb-zswl",
+   "wb-pxvv"
+  ],
+  "extends_eat": [
+   "EAT-R303"
+  ],
+  "reason": "P08 → P09 → P10 order is a filing-time graph condition; optional P11/P12 follow their separate admission and evidence, not a first-release dependency.",
+  "requirement": null,
+  "epistemic_basis": [
+   {
+    "id": "C143",
+    "status": "NON-EPISTEMIC"
+   }
+  ],
+  "acceptanceState": "NOT_RUN",
+  "scope": "Disposition record, not an 81st MII requirement; claim status copied from patched ledger."
+ },
+ {
+  "disposition": "DEFERRED",
+  "item": "V6",
+  "derived_from": [
+   "C186"
+  ],
+  "carrier": [
+   "wb-zswl",
+   "wb-pxvv"
+  ],
+  "extends_eat": [
+   "EAT-R303"
+  ],
+  "reason": "V6 second half of C186: optional detached / Furnace / HX / RF / fleet configurations deferred with P11/P12; V5 is compiled by R463.",
+  "requirement": null,
+  "epistemic_basis": [
+   {
+    "id": "C186",
+    "status": "NON-EPISTEMIC"
+   }
+  ],
+  "acceptanceState": "NOT_RUN",
+  "scope": "Disposition record, not an 81st MII requirement; claim status copied from patched ledger."
+ },
+ {
+  "disposition": "WORDING_INSERT_AND_CROSSWALK",
+  "item": "C005",
+  "derived_from": [
+   "C005"
+  ],
+  "carrier": "wb-yiu4 / wb-w8fk (filing-time successor rule)",
+  "extends_eat": [],
+  "reason": "REFUTED self-containment premise: M005/M006 wording insert under R468 (RA-14) plus RA-07 crosswalk rows under R469; never a positive premise.",
+  "requirement": null,
+  "epistemic_basis": [
+   {
+    "id": "C005",
+    "status": "REFUTED"
+   }
+  ],
+  "acceptanceState": "NOT_RUN",
+  "scope": "Disposition record, not an 81st MII requirement; claim status copied from patched ledger."
+ },
+ {
+  "disposition": "OWNER_ROUTED",
+  "item": "C035",
+  "derived_from": [
+   "C035"
+  ],
+  "carrier": "Pi owner (GitHub-Actions run record out of program scope)",
+  "extends_eat": [],
+  "reason": "Facets (i)-(iii) established, (iv) Furnace-profile wording insert M038/M039 (lineage: wb-12x1 row M047), (v) CI → R456; no CI absence claim.",
+  "requirement": null,
+  "epistemic_basis": [
+   {
+    "id": "C035",
+    "status": "REFUTED"
+   }
+  ],
+  "acceptanceState": "NOT_RUN",
+  "scope": "Disposition record, not an 81st MII requirement; claim status copied from patched ledger."
+ }
+]

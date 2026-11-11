@@ -1,0 +1,66 @@
+{
+  "schema": "graphpolicy.function.v1",
+  "id": "mw-bead-scorer-v1",
+  "canonicalization": "graphpolicy.c1",
+  "numerical_profile": "graphpolicy.numeric.binary32.v1",
+  "max_rounds": 2,
+  "backend_features": ["reference"],
+  "graph_schema": {
+    "digest": "sha256:35d2e15030cf61e141c5511550286fc7de6fc1bca4a03d0ed4cef19d570cd50b",
+    "entity_kinds": {
+      "bead": {"features": {"priority": 1, "dependency_count": 1, "dependent_count": 1, "age_days": 1, "is_task": 1, "comment_count": 1}}
+    },
+    "relation_kinds": {
+      "depends_on": {
+        "roles": {"dependent": {"kind": "bead", "ordered": false}, "prerequisite": {"kind": "bead", "ordered": false}},
+        "features": {"blocks": 1},
+        "incidence_features": {}
+      }
+    },
+    "global_features": {},
+    "candidate_types": {"beads": {"kind": "node", "of": "bead"}}
+  },
+  "budget": {"max_entities": 512, "max_relations": 2048, "max_incidences": 4096, "max_candidates": 512, "max_depth": 16, "max_activation_bytes": 1048576},
+  "inputs": {
+    "pri": {"of": "entity", "kind": "bead", "slot": "priority", "missing": "mask"},
+    "dep": {"of": "entity", "kind": "bead", "slot": "dependency_count", "missing": "mask"},
+    "dpt": {"of": "entity", "kind": "bead", "slot": "dependent_count", "missing": "mask"},
+    "age": {"of": "entity", "kind": "bead", "slot": "age_days", "missing": "mask"},
+    "typ": {"of": "entity", "kind": "bead", "slot": "is_task", "missing": "mask"},
+    "cmt": {"of": "entity", "kind": "bead", "slot": "comment_count", "missing": "mask"}
+  },
+  "parameters": {
+    "W0": {"shape": [12, 8], "dtype": "binary32"},
+    "b0": {"shape": [1, 8], "dtype": "binary32"},
+    "Wm": {"shape": [8, 8], "dtype": "binary32"},
+    "Wu": {"shape": [16, 8], "dtype": "binary32"},
+    "Ws": {"shape": [8, 1], "dtype": "binary32"}
+  },
+  "nodes": [
+    {"id": "x_pri", "op": "feature.read", "input": "pri"},
+    {"id": "x_dep", "op": "feature.read", "input": "dep"},
+    {"id": "x_dpt", "op": "feature.read", "input": "dpt"},
+    {"id": "x_age", "op": "feature.read", "input": "age"},
+    {"id": "x_typ", "op": "feature.read", "input": "typ"},
+    {"id": "x_cmt", "op": "feature.read", "input": "cmt"},
+    {"id": "x_cat", "op": "concat", "inputs": [
+      {"node": "x_pri", "port": "value"}, {"node": "x_dep", "port": "value"}, {"node": "x_dpt", "port": "value"},
+      {"node": "x_age", "port": "value"}, {"node": "x_typ", "port": "value"}, {"node": "x_cmt", "port": "value"},
+      {"node": "x_pri", "port": "mask"}, {"node": "x_dep", "port": "mask"}, {"node": "x_dpt", "port": "mask"},
+      {"node": "x_age", "port": "mask"}, {"node": "x_typ", "port": "mask"}, {"node": "x_cmt", "port": "mask"}]},
+    {"id": "h0", "op": "dense", "input": {"node": "x_cat", "port": "out"}, "weight": "W0", "bias": "b0"},
+    {"id": "a0", "op": "relu", "input": {"node": "h0", "port": "out"}},
+    {"id": "g_dep", "op": "gather.entity_to_incidence", "input": {"node": "a0", "port": "out"}, "relation": "depends_on", "role": "prerequisite"},
+    {"id": "msg", "op": "message", "input": {"node": "g_dep", "port": "out"}, "relation": "depends_on", "role": "prerequisite", "weight": "Wm"},
+    {"id": "r_dep", "op": "reduce.incidence_to_relation", "input": {"node": "msg", "port": "out"}, "relation": "depends_on", "role": "prerequisite", "aggregate": {"reducer": "sum", "empty": "zero", "multiplicity": "multiset", "order_sensitive": false}},
+    {"id": "g_back", "op": "gather.relation_to_incidence", "input": {"node": "r_dep", "port": "out"}, "relation": "depends_on", "role": "dependent"},
+    {"id": "agg", "op": "reduce.incidence_to_entity", "input": {"node": "g_back", "port": "out"}, "relation": "depends_on", "role": "dependent", "aggregate": {"reducer": "mean", "empty": "zero-with-mask", "multiplicity": "multiset", "order_sensitive": false}},
+    {"id": "h1", "op": "update", "state": {"node": "a0", "port": "out"}, "aggregate": {"node": "agg", "port": "out"}, "entity_kind": "bead", "weight": "Wu"},
+    {"id": "h1r", "op": "relu", "input": {"node": "h1", "port": "out"}},
+    {"id": "cg", "op": "candidate.gather", "input": {"node": "h1r", "port": "out"}, "candidate": "beads"},
+    {"id": "sc", "op": "score", "input": {"node": "cg", "port": "out"}, "weight": "Ws"}
+  ],
+  "outputs": {
+    "beadScore": {"kind": "candidate", "of": "beads", "source": {"node": "sc", "port": "out"}, "dim": 1}
+  }
+}

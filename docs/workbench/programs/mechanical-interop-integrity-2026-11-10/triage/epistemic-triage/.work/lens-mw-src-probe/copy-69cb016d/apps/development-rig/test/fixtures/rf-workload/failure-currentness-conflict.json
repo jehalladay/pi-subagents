@@ -1,0 +1,14 @@
+{
+ "schema": "reactive-fiber.cli/v1",
+ "ok": false,
+ "command": "context.render",
+ "operation_id": "rfo_hand_derived",
+ "fixture_provenance": "hand-derived envelope shaped by the rf skill roster (RF_CURRENTNESS_CONFLICT, exit 4); not captured; a fixture result never counts as a native PASS",
+ "result": null,
+ "diagnostics": [
+  {
+   "code": "RF_CURRENTNESS_CONFLICT",
+   "message": "basis moved"
+  }
+ ]
+}

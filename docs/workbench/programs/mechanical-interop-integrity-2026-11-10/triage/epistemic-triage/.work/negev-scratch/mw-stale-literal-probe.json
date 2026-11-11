@@ -1,0 +1,15 @@
+{
+ "rev": "6476372f",
+ "deposit_files": [
+  ".agents/skills/mechanical-pi-host/SKILL.md",
+  "docs/programs/pi-host-integrity-2026-11-10/01-AUDIT-AND-PROOF.md",
+  "docs/programs/pi-host-integrity-2026-11-10/02-HOST-AND-EFFECT-CONTRACT.md",
+  "docs/programs/pi-host-integrity-2026-11-10/03-IMPLEMENTATION-PACKETS.md",
+  "docs/programs/pi-host-integrity-2026-11-10/04-VERIFICATION-AND-RELEASE.md",
+  "docs/programs/pi-host-integrity-2026-11-10/05-OPERATIONS-AND-HANDOFF.md",
+  "docs/programs/pi-host-integrity-2026-11-10/README.md"
+ ],
+ "hits": [],
+ "baseline_entries_at_rev": 4,
+ "baseline_entries_naming_deposit_paths": []
+}

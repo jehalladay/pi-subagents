@@ -1,0 +1,7 @@
+# static import closure of the built ./host entry (apps/development-rig/dist/host.js at the scratch copy of 69cb016d)
+modules: ['entrypoint-host.js', 'host-binding.js', 'host.js', 'installed-host.js']
+edges: [('host.js', 'host-binding.js'), ('host.js', 'installed-host.js'), ('installed-host.js', 'entrypoint-host.js')]
+external specifiers: ['node:child_process', 'node:crypto', 'node:fs', 'node:fs/promises', 'node:os', 'node:path', 'node:url', 'node:util']
+dist modules total: 60 | outside the closure: 56
+in closure? {'host-services.js': False, 'effect-intent.js': False, 'effect-reconciliation.js': False, 'live-development.js': False, 'live-gate.js': False, 'claude-implement.js': False, 'progress-stages.js': False, 'post-dispatch-abort.js': False, 'invocation-identity.js': False}
+dist modules with a runtime import of @mechanical/workflows-development: ['candidate-selection.js', 'cli.js', 'host-services.js', 'live-development.js', 'live-evidence.js', 'repair-run.js']

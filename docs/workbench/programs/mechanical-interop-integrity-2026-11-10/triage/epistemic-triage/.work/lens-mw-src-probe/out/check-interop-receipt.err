@@ -1,0 +1,19 @@
+qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-consumer-l2-receipt.json: INTEROP_RECEIPT_FIELD_MISSING: mechanical_outcome - required field is absent or blank
+qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-consumer-l2-receipt.json: INTEROP_RECEIPT_FIELD_MISSING: effect_disposition - effect_disposition must be one of not-started, started, settled, uncertain
+qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-consumer-l2-receipt.json: INTEROP_RECEIPT_FIELD_MISSING: candidate_source_commit - field must be present as a non-blank exact value or null
+qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-consumer-l2-receipt.json: INTEROP_RECEIPT_FIELD_MISSING: candidate_source_tree - field must be present as a non-blank exact value or null
+qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-consumer-l2-receipt.json: INTEROP_RECEIPT_FIELD_MISSING: forge_manifest_sha256 - field must be present as a non-blank exact value or null
+qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-consumer-l2-receipt.json: INTEROP_RECEIPT_FIELD_MISSING: descriptor_sha256 - field must be present as a non-blank exact value or null
+qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-consumer-l2-receipt.json: INTEROP_RECEIPT_FIELD_MISSING: mechanical_tarball_sha256 - field must be present as a non-blank exact value or null
+qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-consumer-l2-receipt.json: INTEROP_RECEIPT_FIELD_MISSING: pi_definition_digest - field must be present as a non-blank exact value or null
+qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-consumer-l2-receipt.json: INTEROP_RECEIPT_FIELD_MISSING: commands - field must be an array
+qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-consumer-l2-receipt.json: INTEROP_RECEIPT_FIELD_MISSING: negative_controls - field must be an array
+qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-consumer-l2-receipt.json: INTEROP_RECEIPT_FIELD_MISSING: mutants - field must be an array
+qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-consumer-l2-receipt.json: INTEROP_RECEIPT_FIELD_MISSING: performance - performance needs a boolean measured and a non-blank reason
+qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-consumer-l2-receipt.json: INTEROP_RECEIPT_SHA_INVALID: mechanical_sha - the value must be a 40-character lowercase hexadecimal commit, not blank or assumed
+qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-consumer-l2-receipt.json: INTEROP_RECEIPT_SHA_INVALID: pi_sha - the value must be a 40-character lowercase hexadecimal commit, not blank or assumed
+qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-consumer-l2-receipt.json: INTEROP_RECEIPT_FIELD_MISSING: pi_invocation_id - field must be present as an observed id or null
+qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-consumer-l2-receipt.json: INTEROP_RECEIPT_FIELD_MISSING: claude_session_id - field must be present as an observed id or null
+qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-consumer-l2-receipt.json: INTEROP_RECEIPT_GATE_UNSTATED: native_gate_verdict - native_gate_verdict must be one of PASS, FAIL, partial, unknown, not-run
+qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-consumer-l2-receipt.json: INTEROP_RECEIPT_NATIVE_ID_MISSING: forge_operation_id - status pass needs the observed Forge operation id
+qa/integration/pi-native-interoperability-2026-11-09/m05/installed-pi-consumer-l2-receipt.json: INTEROP_RECEIPT_LIMITATIONS_MISSING: limitations - limitations must list every unresolved unknown as a non-empty array of non-blank strings

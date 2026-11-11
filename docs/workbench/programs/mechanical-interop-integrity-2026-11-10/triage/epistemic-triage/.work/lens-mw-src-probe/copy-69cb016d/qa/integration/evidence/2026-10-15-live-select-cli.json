@@ -1,0 +1,109 @@
+{
+ "mode": "live-select",
+ "report": {
+  "basis": {
+   "workspaceId": "/tmp/mw-select-cli",
+   "revision": "ce0657cb7437fb25f66b2dbf3449fdbeae55a83b"
+  },
+  "plan": {
+   "candidates": [
+    {
+     "revision": "0522b07111c9da67daf963e7479754fe7e534536",
+     "branch": "mw/candidate/ce0657c-1-744c8b",
+     "worktree": "/tmp/mw-candidate-UsGyOX",
+     "evidence": {
+      "system": "claude-agent-sdk",
+      "kind": "session",
+      "id": "7bbbe691-5f53-4728-b37f-f1227955699f"
+     }
+    },
+    {
+     "revision": "b7fff1490464ed0e64a4de0c2946064b5359f0af",
+     "branch": "mw/candidate/ce0657c-2-634622",
+     "worktree": "/tmp/mw-candidate-rhbyAz",
+     "evidence": {
+      "system": "claude-agent-sdk",
+      "kind": "session",
+      "id": "42a89f01-d975-44e2-934e-fd17c959abb9"
+     }
+    }
+   ]
+  },
+  "excluded": [],
+  "choice": {
+   "revision": "0522b07111c9da67daf963e7479754fe7e534536",
+   "evidence": {
+    "system": "claude-agent-sdk",
+    "kind": "selection-session",
+    "id": "ddbd208d-b0b7-4acc-90ac-54f92205e416"
+   }
+  },
+  "outcome": {
+   "kind": "reviewed_candidate",
+   "candidate": {
+    "parentBasis": {
+     "workspaceId": "/tmp/mw-select-cli",
+     "revision": "ce0657cb7437fb25f66b2dbf3449fdbeae55a83b"
+    },
+    "basis": {
+     "workspaceId": "/tmp/mw-select-cli",
+     "revision": "0522b07111c9da67daf963e7479754fe7e534536"
+    },
+    "evidence": {
+     "system": "claude-agent-sdk",
+     "kind": "session",
+     "id": "7bbbe691-5f53-4728-b37f-f1227955699f"
+    }
+   },
+   "review": {
+    "basis": {
+     "workspaceId": "/tmp/mw-select-cli",
+     "revision": "0522b07111c9da67daf963e7479754fe7e534536"
+    },
+    "verdict": "approved",
+    "evidence": {
+     "system": "claude-agent-sdk",
+     "kind": "review-session",
+     "id": "4cb5f245-b52c-4120-b8e8-9c9b59aa3a84"
+    }
+   },
+   "verification": {
+    "basis": {
+     "workspaceId": "/tmp/mw-select-cli",
+     "revision": "0522b07111c9da67daf963e7479754fe7e534536"
+    },
+    "verdict": "passed",
+    "evidence": {
+     "system": "forge",
+     "kind": "operation",
+     "id": "op-9c4583f427c34d84a04e4a2e7d52c2fb"
+    },
+    "diagnostic": "FORGE_GATE_PASS"
+   }
+  }
+ },
+ "invocation": {
+  "argv": [
+   "node",
+   "apps/development-rig/dist/cli.js",
+   "--live-select",
+   "--allow-writes",
+   "--workspace",
+   "/tmp/mw-select-cli",
+   "--task",
+   "Add a function quadruple(x) that returns 4 * x next to the existing double function, with one unit test, keeping the existing style and the Forge gate green.",
+   "--candidates",
+   "2"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 103,
+  "mainCheckoutAfter": {
+   "head": "ce0657c",
+   "dirty": 0,
+   "candidateBranchesKept": 2,
+   "worktreesRemoved": true
+  },
+  "forge": "forge 0.2.1 (rev 0deb972720ce)",
+  "claudeAgentSdk": "0.3.300"
+ }
+}

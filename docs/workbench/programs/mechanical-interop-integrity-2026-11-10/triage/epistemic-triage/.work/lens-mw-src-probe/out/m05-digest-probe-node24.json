@@ -1,0 +1,46 @@
+{
+ "label": "node24-npm11",
+ "npm": "11.19.0",
+ "node": "v24.20.0",
+ "packages": {
+  "@mechanical/workflows-development": {
+   "files_n": 20,
+   "receipt_files_n": 20,
+   "files_equal": true,
+   "content_sha256": "sha256:fa970eefebbde03234c77459585a6f6784157fe269d46cd07828059c51a57dab",
+   "receipt_content_sha256": "sha256:fa970eefebbde03234c77459585a6f6784157fe269d46cd07828059c51a57dab",
+   "content_equal": true,
+   "whole_sha256": "sha256:db57855258f70d11eff04c626d2ee7dd088f9fe21c96d0980512707a4951315b",
+   "receipt_whole_sha256": "sha256:db57855258f70d11eff04c626d2ee7dd088f9fe21c96d0980512707a4951315b",
+   "whole_equal": true,
+   "cli_modes": {}
+  },
+  "@mechanical/workflows-coordination": {
+   "files_n": 254,
+   "receipt_files_n": 254,
+   "files_equal": true,
+   "content_sha256": "sha256:6f5e4ac1eac28ab059d5e2005fd32380989afb5876e7accf9370d5ae2b776753",
+   "receipt_content_sha256": "sha256:6f5e4ac1eac28ab059d5e2005fd32380989afb5876e7accf9370d5ae2b776753",
+   "content_equal": true,
+   "whole_sha256": "sha256:965f33079294fd25accc09ee9e12648465bc26ced6b82396a5e31263fcee4a63",
+   "receipt_whole_sha256": "sha256:965f33079294fd25accc09ee9e12648465bc26ced6b82396a5e31263fcee4a63",
+   "whole_equal": true,
+   "cli_modes": {}
+  },
+  "@mechanical/development-rig": {
+   "files_n": 182,
+   "receipt_files_n": 182,
+   "files_equal": true,
+   "content_sha256": "sha256:ad626451779230f8732ef8cf6921d9bdc4fe1cfa3cd13ed3bab7ab1c0520d67f",
+   "receipt_content_sha256": "sha256:ad626451779230f8732ef8cf6921d9bdc4fe1cfa3cd13ed3bab7ab1c0520d67f",
+   "content_equal": true,
+   "whole_sha256": "sha256:28983aab3f0f05f553f33f5d937ff2b077e06f5ceb768b6be383bf68ebb84fee",
+   "receipt_whole_sha256": "sha256:28983aab3f0f05f553f33f5d937ff2b077e06f5ceb768b6be383bf68ebb84fee",
+   "whole_equal": true,
+   "cli_modes": {
+    "package/dist/cli.js": "0o644"
+   }
+  }
+ },
+ "all_content_and_files_equal": true
+}

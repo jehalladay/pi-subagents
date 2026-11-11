@@ -1,0 +1,49 @@
+{
+  "$id": "mw.decision-receipt.v1",
+  "title": "DecisionReceiptV1",
+  "description": "GPC per-decision sidecar (GPC-EAT-R006): the single home of the field list. Correlates one decision's proposal, admission and outcome: GP graph/program/checkpoint/snapshot hashes, feature-projection digest, actor and selector id+revision, pre-sampling legal support, behavior log probability, observation completeness, proposed/admitted/executed action ids, source receipt, resolver verdict, verifier outcome and feedback status. Every absent value is the literal 'unknown'; nothing is fabricated. Separate from mw.training-export.v1 and mw.coordination-decision.v1, which are unchanged.",
+  "type": "object",
+  "required": ["schema", "version", "decisionId", "gp", "featureProjectionDigest", "actor", "selector", "support", "logProb", "completeness", "actions", "sourceReceipt", "resolverVerdict", "verifierOutcome", "feedback"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {"type": "string", "const": "mw.decision-receipt.v1"},
+    "version": {"type": "integer", "const": 1},
+    "decisionId": {"type": "string", "minLength": 1},
+    "gp": {
+      "type": "object", "required": ["graphHash", "programHash", "checkpointHash", "snapshotHash"], "additionalProperties": false,
+      "properties": {
+        "graphHash": {"oneOf": [{"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, {"type": "string", "const": "unknown"}]},
+        "programHash": {"oneOf": [{"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, {"type": "string", "const": "unknown"}]},
+        "checkpointHash": {"oneOf": [{"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, {"type": "string", "const": "unknown"}]},
+        "snapshotHash": {"oneOf": [{"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, {"type": "string", "const": "unknown"}]}
+      }
+    },
+    "featureProjectionDigest": {"oneOf": [{"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, {"type": "string", "const": "unknown"}]},
+    "actor": {
+      "type": "object", "required": ["id", "revision"], "additionalProperties": false,
+      "properties": {"id": {"type": "string", "minLength": 1}, "revision": {"type": "string", "minLength": 1}}
+    },
+    "selector": {
+      "type": "object", "required": ["id", "revision"], "additionalProperties": false,
+      "properties": {"id": {"type": "string", "minLength": 1}, "revision": {"type": "string", "minLength": 1}}
+    },
+    "support": {"oneOf": [{"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, {"type": "string", "const": "unknown"}]},
+    "logProb": {"oneOf": [{"type": "number"}, {"type": "string", "const": "unknown"}]},
+    "completeness": {"type": "string", "minLength": 1},
+    "actions": {
+      "type": "object", "required": ["proposed", "admitted", "executed"], "additionalProperties": false,
+      "properties": {
+        "proposed": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "admitted": {"oneOf": [{"type": "array", "items": {"type": "string", "minLength": 1}}, {"type": "string", "const": "unknown"}]},
+        "executed": {"oneOf": [{"type": "array", "items": {"type": "string", "minLength": 1}}, {"type": "string", "const": "unknown"}]}
+      }
+    },
+    "sourceReceipt": {"oneOf": [{"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}, {"type": "string", "const": "unknown"}]},
+    "resolverVerdict": {"type": "string", "minLength": 1},
+    "verifierOutcome": {"type": "string", "minLength": 1},
+    "feedback": {
+      "type": "object", "required": ["status"], "additionalProperties": false,
+      "properties": {"status": {"type": "string", "enum": ["unknown", "pending", "final"]}}
+    }
+  }
+}

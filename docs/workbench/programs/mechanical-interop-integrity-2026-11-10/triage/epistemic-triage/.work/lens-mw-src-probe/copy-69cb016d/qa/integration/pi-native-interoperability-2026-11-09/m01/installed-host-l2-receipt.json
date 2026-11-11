@@ -1,0 +1,176 @@
+{
+  "schema": "mw.pi-interop-receipt.v1",
+  "kind": "cut",
+  "program": "mechanical-pi-native-interop-2026-11-09",
+  "packet": "M01",
+  "scope": "installed-host-facade-L2-receipt-at-landed-24ef8984",
+  "status": "pass",
+  "evidence_tier": "L2",
+  "mechanical_sha": "24ef8984450bfeef0fd1d4a6b714f3c844fb6248",
+  "pi_sha": "b085c34ed01cb71ce0d600ac98ade7ee18e832f0",
+  "candidate_source_commit": "24ef8984450bfeef0fd1d4a6b714f3c844fb6248",
+  "candidate_source_tree": "48073f230c92b64cb5f3fe175d35b40d5fef8a8a",
+  "forge_manifest_sha256": null,
+  "descriptor_sha256": "sha256:68cc312ba82c5837eff64bb6de39e0db09073c836d851d550e13aa458d192d0f",
+  "mechanical_tarball_sha256": "sha256:db57855258f70d11eff04c626d2ee7dd088f9fe21c96d0980512707a4951315b",
+  "pi_definition_digest": null,
+  "pi_invocation_id": null,
+  "claude_session_id": null,
+  "forge_operation_id": "op-8b6cf0cb874642d2bc85e0020dcac730",
+  "native_gate_verdict": "PASS",
+  "mechanical_outcome": "absent",
+  "effect_disposition": "not-started",
+  "installed_host": {
+    "bead": "MechanicalWorkflows-loexn.17",
+    "parent_cut_bead": "MechanicalWorkflows-loexn.5",
+    "node_version": "v24.20.0",
+    "npm_version": "11.19.0",
+    "gate": {
+      "scope": "root",
+      "command_id": "cmd_a81801b510bd",
+      "operation_id": "op-8b6cf0cb874642d2bc85e0020dcac730",
+      "trace_id": "2220b855dffc40d396b55693feb441cc",
+      "verdict": "PASS",
+      "gated_commit": "24ef8984450bfeef0fd1d4a6b714f3c844fb6248",
+      "gated_tree": "48073f230c92b64cb5f3fe175d35b40d5fef8a8a",
+      "source": "forge ledger row in /home/jehallad/.forge/ledger.jsonl (landing gate of test-341)"
+    },
+    "pack_file_lists": "qa/integration/pi-native-interoperability-2026-11-09/m01/rig-pack-file-lists.json",
+    "packs": {
+      "@mechanical/workflows-development": {
+        "filename": "mechanical-workflows-development-0.1.0.tgz",
+        "sha256": "sha256:db57855258f70d11eff04c626d2ee7dd088f9fe21c96d0980512707a4951315b",
+        "entry_count": 20,
+        "size_bytes": 8074
+      },
+      "@mechanical/development-rig": {
+        "filename": "mechanical-development-rig-0.1.0.tgz",
+        "sha256": "sha256:b5454d81bce742da0a704b13a64b2c6aaad63bd492a2531aee293bb3bf9ac506",
+        "entry_count": 173,
+        "size_bytes": 187008
+      },
+      "@mechanical/workflows-coordination": {
+        "filename": "mechanical-workflows-coordination-0.1.0.tgz",
+        "sha256": "sha256:965f33079294fd25accc09ee9e12648465bc26ced6b82396a5e31263fcee4a63",
+        "entry_count": 254,
+        "size_bytes": 333295
+      }
+    },
+    "pack_hash_reproducibility": {
+      "reproducible": true,
+      "method": "npm pack --ignore-scripts --json --pack-destination <dir> in each package dir at 24ef8984 with dist built by npm run build: run 1 and run 2 on one build, run 3 after rm -rf dist plus a clean npm run build (dist byte-identical by diff -r); library also re-packed from a copied directory at a different path with dist file mtimes set to 2001-01-01",
+      "observed": "every sha256 identical across all runs for all three tarballs",
+      "toolchain": "node v24.20.0, npm 11.19.0, typescript 5.9.3 (package-lock), linux x86_64",
+      "scope_of_claim": "reproducible for this commit under this toolchain only; not asserted across npm major versions",
+      "unexplained": "the loexn.5 hot-review reading of 5c3792cc against dd2c8c46 for the library tarball was not reproduced here and its cause (different dist input or toolchain) is unknown"
+    },
+    "external_import_proof": "apps/development-rig/test/installed-consumer.test.ts, 6 tests 6 pass 0 fail: an empty external npm project installs the three packed tarballs with no NODE_PATH, imports @mechanical/development-rig/host, resolves the host, library and coordination entry specifiers under its own node_modules (none in the source checkout), and develop returns verified_candidate with callbacks discover, context, implement, verify in order",
+    "denial_proof": "same file: the import fails with ERR_MODULE_NOT_FOUND/Cannot find package when the rig tarball is absent; the deep import @mechanical/development-rig/dist/live-development.js is refused with ERR_PACKAGE_PATH_NOT_EXPORTED"
+  },
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "-C",
+        "<implementing checkout>",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit": 0,
+      "output_path": "24ef8984450bfeef0fd1d4a6b714f3c844fb6248 (origin/main at 2026-11-10T00:10Z)"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "24ef8984^{tree}"
+      ],
+      "exit": 0,
+      "output_path": "48073f230c92b64cb5f3fe175d35b40d5fef8a8a (stdout; equals the gate's gated_tree)"
+    },
+    {
+      "argv": [
+        "node",
+        "--version"
+      ],
+      "exit": 0,
+      "output_path": "v24.20.0 (stdout)"
+    },
+    {
+      "argv": [
+        "npm",
+        "--version"
+      ],
+      "exit": 0,
+      "output_path": "11.19.0 (stdout)"
+    },
+    {
+      "argv": [
+        "sha256sum",
+        "contracts/entrypoints/development.v1.json"
+      ],
+      "exit": 0,
+      "output_path": "68cc312ba82c5837eff64bb6de39e0db09073c836d851d550e13aa458d192d0f (stdout)"
+    },
+    {
+      "argv": [
+        "npm",
+        "pack",
+        "--ignore-scripts",
+        "--json",
+        "--pack-destination",
+        "<dir>"
+      ],
+      "cwd": "packages/development, apps/development-rig, packages/coordination",
+      "exit": 0,
+      "output_path": "/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/OrchestrationEngineer/ledger/20261110T0015Z-run217-07-implement-c17/pack/ (three runs per package)"
+    },
+    {
+      "argv": [
+        "node",
+        "--test",
+        "test/installed-consumer.test.ts"
+      ],
+      "cwd": "apps/development-rig",
+      "exit": 0,
+      "output_path": "/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/OrchestrationEngineer/ledger/20261110T0015Z-run217-07-implement-c17/t-consumer.log (6 tests, 6 pass)"
+    },
+    {
+      "argv": [
+        "grep",
+        "cmd_a81801b510bd",
+        "/home/jehallad/.forge/ledger.jsonl"
+      ],
+      "exit": 0,
+      "output_path": "one row: command build, gate_verdict PASS, gated_commit 24ef8984, gated_tree 48073f23, operation_id op-8b6cf0cb874642d2bc85e0020dcac730"
+    }
+  ],
+  "negative_controls": [
+    {
+      "id": "external-project-without-rig-tarball",
+      "observed": "installed-consumer.test.ts: import of @mechanical/development-rig/host exits nonzero with ERR_MODULE_NOT_FOUND"
+    },
+    {
+      "id": "deep-import-of-unlisted-rig-module",
+      "observed": "installed-consumer.test.ts: dist/live-development.js refused with ERR_PACKAGE_PATH_NOT_EXPORTED"
+    }
+  ],
+  "mutants": [
+    {
+      "id": "M6-remove-last-digest-recheck-before-import",
+      "observed": "killed: host-facade.test.ts 'one byte swapped after the post-install digest and before the import' fails with Missing expected rejection when the installed-host.ts re-check before the trusted import is deleted (14 pass, 1 fail); restored source passes 15 of 15 in three runs"
+    }
+  ],
+  "performance": {
+    "measured": false,
+    "reason": "not-run"
+  },
+  "limitations": [
+    "L2 only: fixture callbacks against real packed tarballs; no Pi registered dispatch, no application-owned bundle (M02), no native Claude or Forge provider proof; the entrypoint status stays descriptor-only.",
+    "The Forge gate cmd_a81801b510bd ran at the coordinator's landing chain in /tmp/mw-chain-test-341 on commit 24ef8984; this worker read its row from the machine-global forge ledger and did not run or witness it.",
+    "pi_sha names the Pi master head read at M00-A (b085c34e); no Pi code ran in this cut and nothing else about Pi at that commit is established.",
+    "The pack hashes were measured in a detached worktree whose node_modules came from an older checkout copy with typescript 5.9.3 and @types/node 22.20.2 matching package-lock.json; the install was not run through Forge and is non-hermetic.",
+    "The pack hash is stable only under the stated node and npm versions; the earlier hot-review hash disagreement (5c3792cc against dd2c8c46) is unexplained and not reproduced.",
+    "pi_invocation_id, claude_session_id, forge_manifest_sha256 and pi_definition_digest are null because no Pi invocation, Claude session, Forge manifest or Pi definition exists at this cut."
+  ]
+}

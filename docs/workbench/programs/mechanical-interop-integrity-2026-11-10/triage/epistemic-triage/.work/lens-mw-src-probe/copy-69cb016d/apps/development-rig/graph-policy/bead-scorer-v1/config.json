@@ -1,0 +1,13 @@
+{
+  "schema": "mw.graph-policy-config.v1",
+  "id": "bead-scorer-v1",
+  "program": "program.json",
+  "theta": "theta.json",
+  "checkpoint": "graphpolicy.checkpoint.c1:44b30bb191166800fc6096e59bc882601c2f979e3492ac632a1604669b7e11c8",
+  "graphSchema": "schema.json",
+  "port": "beadScore",
+  "candidateType": "beads",
+  "temperature": 1,
+  "timeoutMs": 20000,
+  "note": "Hand-set theta0 (2026-10-21): score = -0.6*priority -0.15*dependency_count +0.5*dependent_count +0.05*age_days +0.3*is_task; depends_on message weights are zero so the structure is present but unlearned. The checkpoint digest is gp's identity of theta0 under this program (gp inspect checkpoint)."
+}

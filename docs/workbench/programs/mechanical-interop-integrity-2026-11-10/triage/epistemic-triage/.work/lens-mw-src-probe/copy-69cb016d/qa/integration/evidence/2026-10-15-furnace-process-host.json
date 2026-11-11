@@ -1,0 +1,2461 @@
+{
+ "schema": "mechanical-workflows/furnace-process-host/v1",
+ "date": "2026-10-15",
+ "furnace": {
+  "furnace_version": "0.1.0",
+  "protocol_version": 1,
+  "beads_version": "1.1.0-rc.1",
+  "beads_probe_dir": "/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/MechanicalWorkflows/MechanicalWorkflows/src/MechanicalWorkflows",
+  "supported_state_schema": 1,
+  "binary_revision": "e2294c9f00b3",
+  "binary_path": "/local/home/jehallad/.local/bin/furnace",
+  "binary_digest": "ddf8da529961f5fb3fa3524ff0482e94971c383fcce3f783e3482331559f4799"
+ },
+ "forge": "forge 0.2.1 (rev 0deb972720ce, built 2026-10-14, indeterminate: installed from the build directory /workplace/jehallad/AgentEcosystem/ForgeWorkspaces/PrimaryInstallation/src/Forge; no owning source repository, so ancestry cannot be computed (built from https://github.com/jehalladay/Forge@0deb972720ce, 2026-10-14); running from /local/home/jehallad/.local/share/uv/tools/forge; set FORGE_SOURCE_REPO to a clone that contains 0deb972720ce, or to place it: git -C <clone> fetch https://github.com/jehalladay/Forge && git -C <clone> rev-list --count 0deb972720ce..FETCH_HEAD)",
+ "executor": "apps/development-rig/dist/furnace-process-executor.js under driver=process, context=stdin-json",
+ "formulaGate": "formula = \"mw-gate\"\ntype = \"workflow\"\nversion = 1\n\n[[steps]]\nid = \"gate\"\ntitle = \"[gate] verify this clean committed Forge package through the public @forge/sdk gate\"\ndescription = \"The MechanicalWorkflows process executor runs verifyExistingCandidate on the Run workspace and exits 0 only on an established Forge PASS.\"\n",
+ "configShape": "[execution]\nexecutor = \"mw-forge-gate\"\nmax_parallel = 1\nattempt_timeout = \"20m\"\n\n[executors.mw-forge-gate]\nprogram = \"~/.local/share/mise/installs/node/24.20.0/bin/node\"\nargs = [\"/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/MechanicalWorkflows/MechanicalWorkflows/src/MechanicalWorkflows/apps/development-rig/dist/furnace-process-executor.js\"]\ncontext = \"stdin-json\"\nenv = { MECHANICAL_FORGE_BINARY = \"~/.local/share/uv/tools/forge/bin/forge\", MW_FURNACE_RECEIPTS = \"/tmp/mw-furnace-host-pkg/.furnace/mw-receipts\" }\n",
+ "journeys": [
+  {
+   "name": "gate-pass",
+   "workspace": "/tmp/mw-furnace-host-pkg",
+   "scratchHead": "8f673307db934432f056f017bfcfb35ac23744c9",
+   "runStartStdout": {
+    "protocol_version": 1,
+    "kind": "run_start",
+    "request_id": "mw-wph-gate-001",
+    "ok": true,
+    "data": {
+     "run_id": "frn-run-mwfh-wisp-ciz",
+     "beads_run_id": "mwfh-wisp-ciz",
+     "formula": "mw-gate",
+     "resolved_runtime_config_digest": "3fb03c6cd2b33950174df6dc7272b74f5f72b427e1caadc4e425eeccfc3fe67e",
+     "workspace": "/tmp/mw-furnace-host-pkg",
+     "state": "completed",
+     "mode": "ephemeral_wisp",
+     "furnace_version": "0.1.0",
+     "beads_version": "1.1.0-rc.1",
+     "created_at": "2026-10-15T06:57:48.497478229+00:00",
+     "updated_at": "2026-10-15T06:57:59.291097798+00:00",
+     "state_since": "2026-10-15T06:57:59.291097798+00:00",
+     "executor": "mw-forge-gate",
+     "max_parallel": 1
+    }
+   },
+   "runStartStderr": null,
+   "runStatus": {
+    "protocol_version": 1,
+    "kind": "run_status",
+    "request_id": "frn-req-2442164-1792047479327541204",
+    "ok": true,
+    "data": {
+     "run_id": "frn-run-mwfh-wisp-ciz",
+     "beads_run_id": "mwfh-wisp-ciz",
+     "formula": "mw-gate",
+     "resolved_runtime_config_digest": "3fb03c6cd2b33950174df6dc7272b74f5f72b427e1caadc4e425eeccfc3fe67e",
+     "workspace": "/tmp/mw-furnace-host-pkg",
+     "state": "completed",
+     "mode": "ephemeral_wisp",
+     "furnace_version": "0.1.0",
+     "beads_version": "1.1.0-rc.1",
+     "created_at": "2026-10-15T06:57:48.497478229+00:00",
+     "updated_at": "2026-10-15T06:57:59.291097798+00:00",
+     "state_since": "2026-10-15T06:57:59.291097798+00:00",
+     "executor": "mw-forge-gate",
+     "controller": {
+      "live": false,
+      "pid": 2439063,
+      "start_fingerprint": "6c081436-73e6-42a2-8295-dfd91f87ca1e:12057020",
+      "controller_session_id": "frn-ses-18dea1ad7c261d20-2439063",
+      "hostname": null,
+      "started_at": "2026-10-15T06:57:48.497948316+00:00"
+     },
+     "max_parallel": 1,
+     "completed": 1,
+     "total": 1,
+     "active": [],
+     "failed": [],
+     "failed_total": 0,
+     "attention": [],
+     "unreadable": [],
+     "corrupt_events": [],
+     "corrupt_events_total": 0,
+     "conflicts": []
+    }
+   },
+   "attemptList": {
+    "protocol_version": 1,
+    "kind": "attempt_list",
+    "request_id": "frn-req-2442225-1792047479501225732",
+    "ok": true,
+    "data": {
+     "run_id": "frn-run-mwfh-wisp-ciz",
+     "beads_run_id": "mwfh-wisp-ciz",
+     "complete": true,
+     "limit": null,
+     "returned": 1,
+     "next_cursor": null,
+     "attempts": [
+      {
+       "attempt_id": "frn-atm-mwfh-wisp-83m-1",
+       "run_id": "frn-run-mwfh-wisp-ciz",
+       "work_id": "mwfh-wisp-83m",
+       "title": "[gate] verify this clean committed Forge package through the public @forge/sdk gate",
+       "ordinal": 1,
+       "executor": "mw-forge-gate",
+       "state": "succeeded",
+       "outcome": "success",
+       "created_at": "2026-10-15T06:57:50.097213944+00:00",
+       "started_at": "2026-10-15T06:57:50.097867380+00:00",
+       "finished_at": "2026-10-15T06:57:58.645826282+00:00",
+       "exit_code": 0,
+       "termination_cause": "natural_exit",
+       "process": {
+        "pid": 2440271,
+        "process_group": 2440271,
+        "start_fingerprint": "6c081436-73e6-42a2-8295-dfd91f87ca1e:12057207",
+        "executable_hint": "/local/home/jehallad/.local/share/mise/installs/node/24.20.0/bin/node"
+       }
+      }
+     ],
+     "unreadable": []
+    }
+   },
+   "logs": {
+    "protocol_version": 1,
+    "kind": "logs_read",
+    "request_id": "frn-req-2447762-1792047532282594164",
+    "ok": true,
+    "data": {
+     "run_id": "frn-run-mwfh-wisp-ciz",
+     "attempt_id": "frn-atm-mwfh-wisp-83m-1",
+     "stream": "stdout",
+     "started_at": "2026-10-15T06:57:50.097867380+00:00",
+     "finished_at": "2026-10-15T06:57:58.645826282+00:00",
+     "complete": true,
+     "limit": 65536,
+     "returned": 1,
+     "next_cursor": null,
+     "lossy": false,
+     "lines": [
+      "{\"schema\":\"mechanical-workflows/furnace-process-receipt/v1\",\"host\":\"furnace-process-driver\",\"guarantee\":\"Furnace reads only this Attempt's exit status; the native Forge/agent evidence is in this receipt and in the producing tools' own records\",\"furnace\":{\"runId\":\"frn-run-mwfh-wisp-ciz\",\"beadsRunId\":\"mwfh-wisp-ciz\",\"formula\":\"mw-gate\",\"workId\":\"mwfh-wisp-83m\",\"attemptId\":\"frn-atm-mwfh-wisp-83m-1\",\"ordinal\":1,\"workspaceRoot\":\"/tmp/mw-furnace-host-pkg\"},\"tag\":\"gate\",\"executorVerdict\":\"success\",\"exitCode\":0,\"forge\":{\"kind\":\"passed\",\"reason\":\"FORGE_GATE_PASS\",\"basis\":{\"commit\":\"8f673307db934432f056f017bfcfb35ac23744c9\",\"tree\":\"1d3acb6b879611f8e1600455428d7326ad037796\",\"clean\":true},\"operationId\":\"op-ab0c3ab39bff4941b218e2cd912e6dad\"},\"development\":null}"
+     ]
+    }
+   },
+   "receipts": [
+    {
+     "schema": "mechanical-workflows/furnace-process-receipt/v1",
+     "host": "furnace-process-driver",
+     "guarantee": "Furnace reads only this Attempt's exit status; the native Forge/agent evidence is in this receipt and in the producing tools' own records",
+     "furnace": {
+      "runId": "frn-run-mwfh-wisp-ciz",
+      "beadsRunId": "mwfh-wisp-ciz",
+      "formula": "mw-gate",
+      "workId": "mwfh-wisp-83m",
+      "attemptId": "frn-atm-mwfh-wisp-83m-1",
+      "ordinal": 1,
+      "workspaceRoot": "/tmp/mw-furnace-host-pkg"
+     },
+     "tag": "gate",
+     "executorVerdict": "success",
+     "exitCode": 0,
+     "forge": {
+      "kind": "passed",
+      "reason": "FORGE_GATE_PASS",
+      "basis": {
+       "commit": "8f673307db934432f056f017bfcfb35ac23744c9",
+       "tree": "1d3acb6b879611f8e1600455428d7326ad037796",
+       "clean": true
+      },
+      "operationId": "op-ab0c3ab39bff4941b218e2cd912e6dad"
+     },
+     "development": null
+    }
+   ]
+  },
+  {
+   "name": "gate-fail-negative-control",
+   "workspace": "/tmp/mw-furnace-host-fail",
+   "scratchHead": "f16264867f3a30f22437f6415e85a1e4b5196755",
+   "runStartStdout": null,
+   "runStartStderr": {
+    "protocol_version": 1,
+    "kind": "run_start",
+    "request_id": "mw-wph-gate-fail-003",
+    "ok": false,
+    "error": {
+     "code": "unsafe_recovery",
+     "message": "no automatic Attempt remains for Work \"mwff-wisp-oaf\": retry policy does not enable work_failure",
+     "retryable": false,
+     "hint": "work_failure is never retried automatically and no setting enables it: fix the cause, then run resume frn-run-mwff-wisp-chy, then work retry mwff-wisp-oaf --run frn-run-mwff-wisp-chy",
+     "details": {
+      "attempt_id": "frn-atm-mwff-wisp-oaf-1",
+      "attention": {
+       "actions": [
+        "inspect",
+        "retry",
+        "resume"
+       ],
+       "conflicts": [
+        "retry_class_not_enabled"
+       ]
+      },
+      "beads_run_id": "mwff-wisp-chy",
+      "exit_code": 1,
+      "outcome": "work_failure",
+      "run_id": "frn-run-mwff-wisp-chy",
+      "termination_cause": "natural_exit"
+     }
+    }
+   },
+   "runStatus": {
+    "protocol_version": 1,
+    "kind": "run_status",
+    "request_id": "frn-req-2522389-1792047833423543139",
+    "ok": true,
+    "data": {
+     "run_id": "frn-run-mwff-wisp-chy",
+     "beads_run_id": "mwff-wisp-chy",
+     "formula": "mw-gate",
+     "resolved_runtime_config_digest": "ae4fc4b1bfc83ba91c843d9edd63133d9c2f9db48c871004cd4157be5ea24bb4",
+     "workspace": "/tmp/mw-furnace-host-fail",
+     "state": "needs_attention",
+     "mode": "ephemeral_wisp",
+     "furnace_version": "0.1.0",
+     "beads_version": "1.1.0-rc.1",
+     "created_at": "2026-10-15T07:03:49.512337297+00:00",
+     "updated_at": "2026-10-15T07:03:53.401661580+00:00",
+     "state_since": "2026-10-15T07:03:53.401661580+00:00",
+     "executor": "mw-forge-gate",
+     "controller": {
+      "live": false,
+      "pid": 2520245,
+      "start_fingerprint": "6c081436-73e6-42a2-8295-dfd91f87ca1e:12093120",
+      "controller_session_id": "frn-ses-18dea20189b63a06-2520245",
+      "hostname": null,
+      "started_at": "2026-10-15T07:03:49.512905678+00:00"
+     },
+     "max_parallel": 1,
+     "completed": 0,
+     "total": 1,
+     "active": [],
+     "failed": [
+      {
+       "attempt_id": "frn-atm-mwff-wisp-oaf-1",
+       "run_id": "frn-run-mwff-wisp-chy",
+       "work_id": "mwff-wisp-oaf",
+       "title": "[gate] verify this clean committed Forge package through the public @forge/sdk gate",
+       "ordinal": 1,
+       "executor": "mw-forge-gate",
+       "state": "failed",
+       "outcome": "work_failure",
+       "created_at": "2026-10-15T07:03:51.113359506+00:00",
+       "started_at": "2026-10-15T07:03:51.114077441+00:00",
+       "finished_at": "2026-10-15T07:03:53.301083845+00:00",
+       "exit_code": 1,
+       "termination_cause": "natural_exit",
+       "process": {
+        "pid": 2521447,
+        "process_group": 2521447,
+        "start_fingerprint": "6c081436-73e6-42a2-8295-dfd91f87ca1e:12093309",
+        "executable_hint": "/local/home/jehallad/.local/share/mise/installs/node/24.20.0/bin/node"
+       }
+      }
+     ],
+     "failed_total": 1,
+     "attention": [],
+     "unreadable": [],
+     "corrupt_events": [],
+     "corrupt_events_total": 0,
+     "conflicts": [
+      {
+       "work_id": "mwff-wisp-oaf",
+       "conflict": "retry_class_not_enabled"
+      }
+     ]
+    }
+   },
+   "attemptList": {
+    "protocol_version": 1,
+    "kind": "attempt_list",
+    "request_id": "frn-req-2522464-1792047833617273117",
+    "ok": true,
+    "data": {
+     "run_id": "frn-run-mwff-wisp-chy",
+     "beads_run_id": "mwff-wisp-chy",
+     "complete": true,
+     "limit": null,
+     "returned": 1,
+     "next_cursor": null,
+     "attempts": [
+      {
+       "attempt_id": "frn-atm-mwff-wisp-oaf-1",
+       "run_id": "frn-run-mwff-wisp-chy",
+       "work_id": "mwff-wisp-oaf",
+       "title": "[gate] verify this clean committed Forge package through the public @forge/sdk gate",
+       "ordinal": 1,
+       "executor": "mw-forge-gate",
+       "state": "failed",
+       "outcome": "work_failure",
+       "created_at": "2026-10-15T07:03:51.113359506+00:00",
+       "started_at": "2026-10-15T07:03:51.114077441+00:00",
+       "finished_at": "2026-10-15T07:03:53.301083845+00:00",
+       "exit_code": 1,
+       "termination_cause": "natural_exit",
+       "process": {
+        "pid": 2521447,
+        "process_group": 2521447,
+        "start_fingerprint": "6c081436-73e6-42a2-8295-dfd91f87ca1e:12093309",
+        "executable_hint": "/local/home/jehallad/.local/share/mise/installs/node/24.20.0/bin/node"
+       }
+      }
+     ],
+     "unreadable": []
+    }
+   },
+   "logs": {
+    "protocol_version": 1,
+    "kind": "logs_read",
+    "request_id": "frn-req-2522471-1792047833636467027",
+    "ok": true,
+    "data": {
+     "run_id": "frn-run-mwff-wisp-chy",
+     "attempt_id": "frn-atm-mwff-wisp-oaf-1",
+     "stream": "stdout",
+     "started_at": "2026-10-15T07:03:51.114077441+00:00",
+     "finished_at": "2026-10-15T07:03:53.301083845+00:00",
+     "complete": true,
+     "limit": 65536,
+     "returned": 1,
+     "next_cursor": null,
+     "lossy": false,
+     "lines": [
+      "{\"schema\":\"mechanical-workflows/furnace-process-receipt/v1\",\"host\":\"furnace-process-driver\",\"guarantee\":\"Furnace reads only this Attempt's exit status; the native Forge/agent evidence is in this receipt and in the producing tools' own records\",\"furnace\":{\"runId\":\"frn-run-mwff-wisp-chy\",\"beadsRunId\":\"mwff-wisp-chy\",\"formula\":\"mw-gate\",\"workId\":\"mwff-wisp-oaf\",\"attemptId\":\"frn-atm-mwff-wisp-oaf-1\",\"ordinal\":1,\"workspaceRoot\":\"/tmp/mw-furnace-host-fail\"},\"tag\":\"gate\",\"executorVerdict\":\"work_failure\",\"exitCode\":1,\"forge\":{\"kind\":\"failed\",\"reason\":\"FORGE_GATE_FAIL\",\"basis\":{\"commit\":\"f16264867f3a30f22437f6415e85a1e4b5196755\",\"tree\":\"c21f55203cf64fa69a8b056bb4edd50d6f7d7ac6\",\"clean\":true},\"operationId\":\"op-fa61251eb3ac4bdb8d0cbe2ff91e8519\"},\"development\":null}"
+     ]
+    }
+   },
+   "receipts": [
+    {
+     "schema": "mechanical-workflows/furnace-process-receipt/v1",
+     "host": "furnace-process-driver",
+     "guarantee": "Furnace reads only this Attempt's exit status; the native Forge/agent evidence is in this receipt and in the producing tools' own records",
+     "furnace": {
+      "runId": "frn-run-mwff-wisp-chy",
+      "beadsRunId": "mwff-wisp-chy",
+      "formula": "mw-gate",
+      "workId": "mwff-wisp-oaf",
+      "attemptId": "frn-atm-mwff-wisp-oaf-1",
+      "ordinal": 1,
+      "workspaceRoot": "/tmp/mw-furnace-host-fail"
+     },
+     "tag": "gate",
+     "executorVerdict": "work_failure",
+     "exitCode": 1,
+     "forge": {
+      "kind": "failed",
+      "reason": "FORGE_GATE_FAIL",
+      "basis": {
+       "commit": "f16264867f3a30f22437f6415e85a1e4b5196755",
+       "tree": "c21f55203cf64fa69a8b056bb4edd50d6f7d7ac6",
+       "clean": true
+      },
+      "operationId": "op-fa61251eb3ac4bdb8d0cbe2ff91e8519"
+     },
+     "development": null
+    },
+    {
+     "schema": "mechanical-workflows/furnace-process-receipt/v1",
+     "host": "furnace-process-driver",
+     "guarantee": "Furnace reads only this Attempt's exit status; the native Forge/agent evidence is in this receipt and in the producing tools' own records",
+     "furnace": {
+      "runId": "frn-run-mwff-wisp-5e0",
+      "beadsRunId": "mwff-wisp-5e0",
+      "formula": "mw-gate",
+      "workId": "mwff-wisp-s8t",
+      "attemptId": "frn-atm-mwff-wisp-s8t-1",
+      "ordinal": 1,
+      "workspaceRoot": "/tmp/mw-furnace-host-fail"
+     },
+     "tag": "gate",
+     "executorVerdict": "work_failure",
+     "exitCode": 3,
+     "forge": {
+      "kind": "indeterminate",
+      "reason": "FORGE_GATE_FAILURE_UNESTABLISHED",
+      "basis": {
+       "commit": "f16264867f3a30f22437f6415e85a1e4b5196755",
+       "tree": "c21f55203cf64fa69a8b056bb4edd50d6f7d7ac6",
+       "clean": true
+      },
+      "operationId": "op-30edeace5fa44ae6bab3567b59ae351d"
+     },
+     "development": null
+    }
+   ]
+  },
+  {
+   "name": "gate-misconfigured-forge-binary",
+   "workspace": "/tmp/mw-furnace-host-noforge",
+   "scratchHead": "f7bf52638fdfad6580287492c43bd10efea3bcf9",
+   "runStartStdout": null,
+   "runStartStderr": {
+    "protocol_version": 1,
+    "kind": "run_start",
+    "request_id": "mw-wph-gate-noforge-002",
+    "ok": false,
+    "error": {
+     "code": "unsafe_recovery",
+     "message": "no automatic Attempt remains for Work \"mwnf-wisp-b7q\": retry policy does not enable work_failure",
+     "retryable": false,
+     "hint": "work_failure is never retried automatically and no setting enables it: fix the cause, then run resume frn-run-mwnf-wisp-bn8, then work retry mwnf-wisp-b7q --run frn-run-mwnf-wisp-bn8",
+     "details": {
+      "attempt_id": "frn-atm-mwnf-wisp-b7q-1",
+      "attention": {
+       "actions": [
+        "inspect",
+        "retry",
+        "resume"
+       ],
+       "conflicts": [
+        "retry_class_not_enabled"
+       ]
+      },
+      "beads_run_id": "mwnf-wisp-bn8",
+      "exit_code": 70,
+      "outcome": "work_failure",
+      "run_id": "frn-run-mwnf-wisp-bn8",
+      "termination_cause": "natural_exit"
+     }
+    }
+   },
+   "runStatus": {
+    "protocol_version": 1,
+    "kind": "run_status",
+    "request_id": "frn-req-2478107-1792047682902764389",
+    "ok": true,
+    "data": {
+     "run_id": "frn-run-mwnf-wisp-bn8",
+     "beads_run_id": "mwnf-wisp-bn8",
+     "formula": "mw-gate",
+     "resolved_runtime_config_digest": "ae4fc4b1bfc83ba91c843d9edd63133d9c2f9db48c871004cd4157be5ea24bb4",
+     "workspace": "/tmp/mw-furnace-host-noforge",
+     "state": "needs_attention",
+     "mode": "ephemeral_wisp",
+     "furnace_version": "0.1.0",
+     "beads_version": "1.1.0-rc.1",
+     "created_at": "2026-10-15T07:00:26.672753084+00:00",
+     "updated_at": "2026-10-15T07:00:28.413624853+00:00",
+     "state_since": "2026-10-15T07:00:28.413624853+00:00",
+     "executor": "mw-forge-gate",
+     "controller": {
+      "live": false,
+      "pid": 2460365,
+      "start_fingerprint": "6c081436-73e6-42a2-8295-dfd91f87ca1e:12072836",
+      "controller_session_id": "frn-ses-18dea1d24f880031-2460365",
+      "hostname": null,
+      "started_at": "2026-10-15T07:00:26.673242538+00:00"
+     },
+     "max_parallel": 1,
+     "completed": 0,
+     "total": 1,
+     "active": [],
+     "failed": [
+      {
+       "attempt_id": "frn-atm-mwnf-wisp-b7q-1",
+       "run_id": "frn-run-mwnf-wisp-bn8",
+       "work_id": "mwnf-wisp-b7q",
+       "title": "[gate] verify this clean committed Forge package through the public @forge/sdk gate",
+       "ordinal": 1,
+       "executor": "mw-forge-gate",
+       "state": "failed",
+       "outcome": "work_failure",
+       "created_at": "2026-10-15T07:00:28.232053100+00:00",
+       "started_at": "2026-10-15T07:00:28.232730908+00:00",
+       "finished_at": "2026-10-15T07:00:28.313133011+00:00",
+       "exit_code": 70,
+       "termination_cause": "natural_exit",
+       "process": {
+        "pid": 2461348,
+        "process_group": 2461348,
+        "start_fingerprint": "6c081436-73e6-42a2-8295-dfd91f87ca1e:12073021",
+        "executable_hint": "/local/home/jehallad/.local/share/mise/installs/node/24.20.0/bin/node"
+       }
+      }
+     ],
+     "failed_total": 1,
+     "attention": [],
+     "unreadable": [],
+     "corrupt_events": [],
+     "corrupt_events_total": 0,
+     "conflicts": [
+      {
+       "work_id": "mwnf-wisp-b7q",
+       "conflict": "retry_class_not_enabled"
+      }
+     ]
+    }
+   },
+   "attemptList": {
+    "protocol_version": 1,
+    "kind": "attempt_list",
+    "request_id": "frn-req-2461373-1792047628435566494",
+    "ok": true,
+    "data": {
+     "run_id": "frn-run-mwnf-wisp-bn8",
+     "beads_run_id": "mwnf-wisp-bn8",
+     "complete": true,
+     "limit": null,
+     "returned": 1,
+     "next_cursor": null,
+     "attempts": [
+      {
+       "attempt_id": "frn-atm-mwnf-wisp-b7q-1",
+       "run_id": "frn-run-mwnf-wisp-bn8",
+       "work_id": "mwnf-wisp-b7q",
+       "title": "[gate] verify this clean committed Forge package through the public @forge/sdk gate",
+       "ordinal": 1,
+       "executor": "mw-forge-gate",
+       "state": "failed",
+       "outcome": "work_failure",
+       "created_at": "2026-10-15T07:00:28.232053100+00:00",
+       "started_at": "2026-10-15T07:00:28.232730908+00:00",
+       "finished_at": "2026-10-15T07:00:28.313133011+00:00",
+       "exit_code": 70,
+       "termination_cause": "natural_exit",
+       "process": {
+        "pid": 2461348,
+        "process_group": 2461348,
+        "start_fingerprint": "6c081436-73e6-42a2-8295-dfd91f87ca1e:12073021",
+        "executable_hint": "/local/home/jehallad/.local/share/mise/installs/node/24.20.0/bin/node"
+       }
+      }
+     ],
+     "unreadable": []
+    }
+   },
+   "logs": {
+    "protocol_version": 1,
+    "kind": "logs_read",
+    "request_id": "frn-req-2478106-1792047682901180099",
+    "ok": true,
+    "data": {
+     "run_id": "frn-run-mwnf-wisp-bn8",
+     "attempt_id": "frn-atm-mwnf-wisp-b7q-1",
+     "stream": "stdout",
+     "started_at": "2026-10-15T07:00:28.232730908+00:00",
+     "finished_at": "2026-10-15T07:00:28.313133011+00:00",
+     "complete": true,
+     "limit": 65536,
+     "returned": 1,
+     "next_cursor": null,
+     "lossy": false,
+     "lines": [
+      "{\"schema\":\"mechanical-workflows/furnace-process-receipt/v1\",\"host\":\"furnace-process-driver\",\"guarantee\":\"Furnace reads only this Attempt's exit status; the native Forge/agent evidence is in this receipt and in the producing tools' own records\",\"furnace\":{\"runId\":\"frn-run-mwnf-wisp-bn8\",\"beadsRunId\":\"mwnf-wisp-bn8\",\"formula\":\"mw-gate\",\"workId\":\"mwnf-wisp-b7q\",\"attemptId\":\"frn-atm-mwnf-wisp-b7q-1\",\"ordinal\":1,\"workspaceRoot\":\"/tmp/mw-furnace-host-noforge\"},\"tag\":\"gate\",\"executorVerdict\":\"work_failure\",\"exitCode\":70,\"forge\":null,\"development\":null,\"error\":\"the Forge app server connection closed (exit code unknown) with \\\"initialize\\\" outstanding\"}"
+     ]
+    }
+   },
+   "receipts": [
+    {
+     "schema": "mechanical-workflows/furnace-process-receipt/v1",
+     "host": "furnace-process-driver",
+     "guarantee": "Furnace reads only this Attempt's exit status; the native Forge/agent evidence is in this receipt and in the producing tools' own records",
+     "furnace": {
+      "runId": "frn-run-mwnf-wisp-bn8",
+      "beadsRunId": "mwnf-wisp-bn8",
+      "formula": "mw-gate",
+      "workId": "mwnf-wisp-b7q",
+      "attemptId": "frn-atm-mwnf-wisp-b7q-1",
+      "ordinal": 1,
+      "workspaceRoot": "/tmp/mw-furnace-host-noforge"
+     },
+     "tag": "gate",
+     "executorVerdict": "work_failure",
+     "exitCode": 70,
+     "forge": null,
+     "development": null,
+     "error": "the Forge app server connection closed (exit code unknown) with \"initialize\" outstanding"
+    }
+   ]
+  },
+  {
+   "name": "develop-same-function-under-furnace",
+   "workspace": "/tmp/mw-furnace-host-develop",
+   "scratchHead": "74c079c66865ce958b9d92df6890cf90e7668318",
+   "runStartStdout": {
+    "protocol_version": 1,
+    "kind": "run_start",
+    "request_id": "mw-wph-develop-002",
+    "ok": true,
+    "data": {
+     "run_id": "frn-run-mwdv-wisp-5yb",
+     "beads_run_id": "mwdv-wisp-5yb",
+     "formula": "mw-develop",
+     "resolved_runtime_config_digest": "499bb1457406cc56ee52f587a23fff70ad1ee8baefded0ec2aabe7e9ca081961",
+     "workspace": "/tmp/mw-furnace-host-develop",
+     "state": "completed",
+     "mode": "ephemeral_wisp",
+     "furnace_version": "0.1.0",
+     "beads_version": "1.1.0-rc.1",
+     "created_at": "2026-10-15T07:00:36.699954166+00:00",
+     "updated_at": "2026-10-15T07:01:13.245128757+00:00",
+     "state_since": "2026-10-15T07:01:13.245128757+00:00",
+     "executor": "mw-develop",
+     "max_parallel": 1
+    }
+   },
+   "runStartStderr": null,
+   "runStatus": {
+    "protocol_version": 1,
+    "kind": "run_status",
+    "request_id": "frn-req-2466916-1792047673267244279",
+    "ok": true,
+    "data": {
+     "run_id": "frn-run-mwdv-wisp-5yb",
+     "beads_run_id": "mwdv-wisp-5yb",
+     "formula": "mw-develop",
+     "resolved_runtime_config_digest": "499bb1457406cc56ee52f587a23fff70ad1ee8baefded0ec2aabe7e9ca081961",
+     "workspace": "/tmp/mw-furnace-host-develop",
+     "state": "completed",
+     "mode": "ephemeral_wisp",
+     "furnace_version": "0.1.0",
+     "beads_version": "1.1.0-rc.1",
+     "created_at": "2026-10-15T07:00:36.699954166+00:00",
+     "updated_at": "2026-10-15T07:01:13.245128757+00:00",
+     "state_since": "2026-10-15T07:01:13.245128757+00:00",
+     "executor": "mw-develop",
+     "controller": {
+      "live": false,
+      "pid": 2462246,
+      "start_fingerprint": "6c081436-73e6-42a2-8295-dfd91f87ca1e:12073840",
+      "controller_session_id": "frn-ses-18dea1d4a5cbd129-2462246",
+      "hostname": null,
+      "started_at": "2026-10-15T07:00:36.700456802+00:00"
+     },
+     "max_parallel": 1,
+     "completed": 1,
+     "total": 1,
+     "active": [],
+     "failed": [],
+     "failed_total": 0,
+     "attention": [],
+     "unreadable": [],
+     "corrupt_events": [],
+     "corrupt_events_total": 0,
+     "conflicts": []
+    }
+   },
+   "attemptList": {
+    "protocol_version": 1,
+    "kind": "attempt_list",
+    "request_id": "frn-req-2466988-1792047673440893276",
+    "ok": true,
+    "data": {
+     "run_id": "frn-run-mwdv-wisp-5yb",
+     "beads_run_id": "mwdv-wisp-5yb",
+     "complete": true,
+     "limit": null,
+     "returned": 1,
+     "next_cursor": null,
+     "attempts": [
+      {
+       "attempt_id": "frn-atm-mwdv-wisp-3jk-1",
+       "run_id": "frn-run-mwdv-wisp-5yb",
+       "work_id": "mwdv-wisp-3jk",
+       "title": "[develop] implement the task with the single-writer agent, commit, then gate with Forge",
+       "ordinal": 1,
+       "executor": "mw-develop",
+       "state": "succeeded",
+       "outcome": "success",
+       "created_at": "2026-10-15T07:00:38.268957716+00:00",
+       "started_at": "2026-10-15T07:00:38.269629499+00:00",
+       "finished_at": "2026-10-15T07:01:12.609867054+00:00",
+       "exit_code": 0,
+       "termination_cause": "natural_exit",
+       "process": {
+        "pid": 2463252,
+        "process_group": 2463252,
+        "start_fingerprint": "6c081436-73e6-42a2-8295-dfd91f87ca1e:12074024",
+        "executable_hint": "/local/home/jehallad/.local/share/mise/installs/node/24.20.0/bin/node"
+       }
+      }
+     ],
+     "unreadable": []
+    }
+   },
+   "logs": {
+    "protocol_version": 1,
+    "kind": "logs_read",
+    "request_id": "frn-req-2500615-1792047758105846340",
+    "ok": true,
+    "data": {
+     "run_id": "frn-run-mwdv-wisp-5yb",
+     "attempt_id": "frn-atm-mwdv-wisp-3jk-1",
+     "stream": "stdout",
+     "started_at": "2026-10-15T07:00:38.269629499+00:00",
+     "finished_at": "2026-10-15T07:01:12.609867054+00:00",
+     "complete": true,
+     "limit": 65536,
+     "returned": 1,
+     "next_cursor": null,
+     "lossy": false,
+     "lines": [
+      "{\"schema\":\"mechanical-workflows/furnace-process-receipt/v1\",\"host\":\"furnace-process-driver\",\"guarantee\":\"Furnace reads only this Attempt's exit status; the native Forge/agent evidence is in this receipt and in the producing tools' own records\",\"furnace\":{\"runId\":\"frn-run-mwdv-wisp-5yb\",\"beadsRunId\":\"mwdv-wisp-5yb\",\"formula\":\"mw-develop\",\"workId\":\"mwdv-wisp-3jk\",\"attemptId\":\"frn-atm-mwdv-wisp-3jk-1\",\"ordinal\":1,\"workspaceRoot\":\"/tmp/mw-furnace-host-develop\"},\"tag\":\"develop\",\"executorVerdict\":\"success\",\"exitCode\":0,\"forge\":null,\"development\":{\"schema\":\"mechanical-workflows/development-receipt/v1\",\"outcome\":\"verified_candidate\",\"basis\":{\"base\":{\"workspaceId\":\"/tmp/mw-furnace-host-develop\",\"revision\":\"ead085517504dc8a0fa6dc5d6609d21d7f7039f0\"},\"candidate\":{\"workspaceId\":\"/tmp/mw-furnace-host-develop\",\"revision\":\"74c079c66865ce958b9d92df6890cf90e7668318\"}},\"stages\":{\"discovery\":{\"state\":\"observed\",\"reason\":\"GIT_TRACKED_FILE_CENSUS_NOT_HX_TASK_SCOPE\"},\"context\":{\"state\":\"observed\",\"reason\":\"PLAIN_CONTEXT_NOT_RF_RENDER\"},\"agent\":{\"state\":\"observed\",\"ref\":{\"system\":\"claude-agent-sdk\",\"kind\":\"session\",\"id\":\"723d42f3-9d9b-435f-aded-ff3cbf889186\"}},\"review\":{\"state\":\"not_run\"},\"candidate\":{\"state\":\"established\",\"ref\":{\"system\":\"git\",\"kind\":\"commit\",\"id\":\"74c079c66865ce958b9d92df6890cf90e7668318\"},\"reason\":\"GIT_COMMITTED_BASIS\"},\"verification\":{\"state\":\"established\",\"ref\":{\"system\":\"forge\",\"kind\":\"operation\",\"id\":\"op-811cf92e5833439dbd0e8a2e7b24c570\"},\"reason\":\"FORGE_GATE_PASS\"},\"furnace\":{\"state\":\"not_run\",\"reason\":\"LOCAL_HOST_NOT_FURNACE\"}}}}"
+     ]
+    }
+   },
+   "receipts": [
+    {
+     "schema": "mechanical-workflows/furnace-process-receipt/v1",
+     "host": "furnace-process-driver",
+     "guarantee": "Furnace reads only this Attempt's exit status; the native Forge/agent evidence is in this receipt and in the producing tools' own records",
+     "furnace": {
+      "runId": "frn-run-mwdv-wisp-5yb",
+      "beadsRunId": "mwdv-wisp-5yb",
+      "formula": "mw-develop",
+      "workId": "mwdv-wisp-3jk",
+      "attemptId": "frn-atm-mwdv-wisp-3jk-1",
+      "ordinal": 1,
+      "workspaceRoot": "/tmp/mw-furnace-host-develop"
+     },
+     "tag": "develop",
+     "executorVerdict": "success",
+     "exitCode": 0,
+     "forge": null,
+     "development": {
+      "schema": "mechanical-workflows/development-receipt/v1",
+      "outcome": "verified_candidate",
+      "basis": {
+       "base": {
+        "workspaceId": "/tmp/mw-furnace-host-develop",
+        "revision": "ead085517504dc8a0fa6dc5d6609d21d7f7039f0"
+       },
+       "candidate": {
+        "workspaceId": "/tmp/mw-furnace-host-develop",
+        "revision": "74c079c66865ce958b9d92df6890cf90e7668318"
+       }
+      },
+      "stages": {
+       "discovery": {
+        "state": "observed",
+        "reason": "GIT_TRACKED_FILE_CENSUS_NOT_HX_TASK_SCOPE"
+       },
+       "context": {
+        "state": "observed",
+        "reason": "PLAIN_CONTEXT_NOT_RF_RENDER"
+       },
+       "agent": {
+        "state": "observed",
+        "ref": {
+         "system": "claude-agent-sdk",
+         "kind": "session",
+         "id": "723d42f3-9d9b-435f-aded-ff3cbf889186"
+        }
+       },
+       "review": {
+        "state": "not_run"
+       },
+       "candidate": {
+        "state": "established",
+        "ref": {
+         "system": "git",
+         "kind": "commit",
+         "id": "74c079c66865ce958b9d92df6890cf90e7668318"
+        },
+        "reason": "GIT_COMMITTED_BASIS"
+       },
+       "verification": {
+        "state": "established",
+        "ref": {
+         "system": "forge",
+         "kind": "operation",
+         "id": "op-811cf92e5833439dbd0e8a2e7b24c570"
+        },
+        "reason": "FORGE_GATE_PASS"
+       },
+       "furnace": {
+        "state": "not_run",
+        "reason": "LOCAL_HOST_NOT_FURNACE"
+       }
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "failDirectLiveVerify": {
+  "mode": "live-forge",
+  "result": {
+   "kind": "failed",
+   "reason": "FORGE_GATE_FAIL",
+   "basis": {
+    "commit": "f16264867f3a30f22437f6415e85a1e4b5196755",
+    "tree": "c21f55203cf64fa69a8b056bb4edd50d6f7d7ac6",
+    "clean": true
+   },
+   "operationId": "op-a1e62f87ede744a9a41334b78ac14742",
+   "native": {
+    "artifacts": [],
+    "command": "build",
+    "completed_at": "2026-10-15T07:03:55.942257+00:00",
+    "contract_version": "result-envelope/v1",
+    "data": {
+     "_output": "[\n  {\n    \"cell\": null,\n    \"code\": \"B011\",\n    \"end_location\": {\n      \"column\": 17,\n      \"row\": 9\n    },\n    \"filename\": \"/tmp/mw-furnace-host-fail/tests/test_double.py\",\n    \"fix\": {\n      \"applicability\": \"unsafe\",\n      \"edits\": [\n        {\n          \"content\": \"raise AssertionError(\\\"deliberate FAIL for the Furnace process-host negative control\\\")\",\n          \"end_location\": {\n            \"column\": 82,\n            \"row\": 9\n          },\n          \"location\": {\n            \"column\": 5,\n            \"row\": 9\n          }\n        }\n      ],\n      \"message\": \"Replace `assert False`\"\n    },\n    \"location\": {\n      \"column\": 12,\n      \"row\": 9\n    },\n    \"message\": \"Do not `assert False` (`python -O` removes these calls), raise `AssertionError()`\",\n    \"name\": \"assert-false\",\n    \"noqa_row\": 9,\n    \"severity\": \"error\",\n    \"url\": \"https://docs.astral.sh/ruff/rules/assert-false\"\n  }\n]",
+     "arming_records": "/local/home/jehallad/.cache/forge-basetemp/forge-arming-88aee132af4148ec8f8ad20dc5918323.jsonl",
+     "artifacts_preexisting": [],
+     "command": "hatch run lint:check",
+     "counters": {
+      "child_wall_ms": {
+       "basis": "sum_of_owned_child_durations",
+       "observed": true,
+       "unit": "ms",
+       "value": 147
+      },
+      "replay_candidates": {
+       "basis": "replay.candidates",
+       "observed": false,
+       "reason_code": "FORGE_COUNTER_MECHANISM_ABSENT",
+       "unit": "step"
+      },
+      "replay_hits": {
+       "basis": "replay.hits",
+       "observed": true,
+       "unit": "step",
+       "value": 0
+      },
+      "replay_lookups": {
+       "basis": "replay.hits+replay.misses",
+       "observed": true,
+       "unit": "step",
+       "value": 0
+      },
+      "replay_refusals": {
+       "basis": "replay.refusals[].step",
+       "observed": true,
+       "unit": "step",
+       "value": 0
+      },
+      "replay_shadow_matches": {
+       "basis": "replay.agreements",
+       "observed": false,
+       "reason_code": "FORGE_COUNTER_MECHANISM_ABSENT",
+       "unit": "step"
+      },
+      "replay_shadow_mismatches": {
+       "basis": "replay.disagreements",
+       "observed": false,
+       "reason_code": "FORGE_COUNTER_MECHANISM_ABSENT",
+       "unit": "step"
+      },
+      "subprocess_count": {
+       "basis": "owned_step_launches",
+       "observed": true,
+       "unit": "process",
+       "value": 1
+      }
+     },
+     "cpu": {
+      "basis": "sum of each launched step's cpu_ns: os.wait4 rusage ru_utime + ru_stime of the step's child, its waited descendants included",
+      "launched": 1,
+      "measured": 1,
+      "total_ns": 193035000,
+      "unmeasured": []
+     },
+     "cwd": "/tmp/mw-furnace-host-fail",
+     "decomposition_claim": "overlapping_work_time",
+     "env_mode": "inherited",
+     "execution_environment": {
+      "fallback": null,
+      "kind": "host",
+      "pinned": false
+     },
+     "exit_code": 1,
+     "fail_open_scan": {
+      "delegated": [],
+      "examined": 0,
+      "findings": [],
+      "opaque": [],
+      "unread": [
+       "lint",
+       "typing",
+       "test",
+       "coverage",
+       "wheel"
+      ]
+     },
+     "failed_step": "lint",
+     "failure_class": "gate",
+     "gate_declared": [
+      "lint",
+      "typing",
+      "test",
+      "coverage",
+      "wheel"
+     ],
+     "gate_definition": "sha256:bba01235ebbf7d5a126ebb0e838e1d74a9b2aadba85fffec326d847f26b1f548",
+     "gate_judgment": {
+      "accept_rules": [],
+      "domain_verdict": "established_fail",
+      "epistemic_state": "REFUTED",
+      "governing_policy": null,
+      "judgment_schema": "gate-judgment-wire/v1",
+      "missing_evidence": [
+       "step:coverage:outcome-unobserved",
+       "step:test:outcome-unobserved",
+       "step:typing:outcome-unobserved",
+       "step:wheel:outcome-unobserved"
+      ],
+      "policy_revision_unsupported": [],
+      "reason": null,
+      "rule": "gate-judgment/v1",
+      "run_id": "88aee132af4148ec8f8ad20dc5918323",
+      "source_digest": "sha256:c9fd20351383b309d9fe13204ff9eb3b6df5b2054461f9eb83609d706cdb49a2",
+      "support": [
+       "step:lint=failed"
+      ]
+     },
+     "gate_measured_declared": [
+      "lint",
+      "typing",
+      "test",
+      "coverage",
+      "wheel"
+     ],
+     "gate_obligation": {
+      "asked": false,
+      "detail": "this package declares no [build] test_report, so the gate judged no per-member obligation. Declare the path your test step writes a pytest JUnit report to, and the gate will refuse a mandatory member that contributed no executed case. Judging that obligation also needs the committed FC-01 evidence catalog at requirements/fc01/catalog.toml, which supplies the mandatory denominator: declaring test_report without a real one makes the gate unable to judge the obligation (status partial, exit 3), so either commit a real catalog or keep test_report undeclared and let this field say why.",
+      "examined": 0,
+      "excluded": 0,
+      "reason": "FORGE_OBLIGATION_UNDECLARED",
+      "unsatisfied": [],
+      "verdict": null,
+      "waived": []
+     },
+     "gate_passed": false,
+     "gate_selected": [
+      "lint",
+      "typing",
+      "test",
+      "coverage",
+      "wheel"
+     ],
+     "gate_skipped": {
+      "coverage": "outcome-unobserved",
+      "test": "outcome-unobserved",
+      "typing": "outcome-unobserved",
+      "wheel": "outcome-unobserved"
+     },
+     "gate_verdict": "FAIL",
+     "harness": "forge 0.2.1 (rev 0deb972720ce) at /local/home/jehallad/.local/share/uv/tools/forge/lib/python3.15/site-packages/forge",
+     "identity_closure": {
+      "dirty_end": false,
+      "dirty_start": false,
+      "execution_isolated": false,
+      "mode": "observed-boundaries/v1",
+      "reason": "stable",
+      "stable_at_observed_boundaries": true,
+      "tree_end": "c21f55203cf64fa69a8b056bb4edd50d6f7d7ac6",
+      "tree_start": "c21f55203cf64fa69a8b056bb4edd50d6f7d7ac6"
+     },
+     "intervals": {
+      "child": {
+       "ms": 147,
+       "observed": true
+      },
+      "controller": {
+       "ms": 292,
+       "observed": true
+      },
+      "elapsed_ms": 439,
+      "launch": {
+       "ms": 1611,
+       "observed": true,
+       "source": "process-start-procfs"
+      },
+      "post_completion": {
+       "ms": 0,
+       "observed": true
+      },
+      "pre_dispatch": {
+       "ms": 10,
+       "observed": true
+      },
+      "queued": {
+       "observed": false,
+       "reason": "no-queue-owned"
+      }
+     },
+     "lint": {
+      "errors": 1,
+      "fixable": 0,
+      "ok": false
+     },
+     "nonexecution": {
+      "rows": [
+       {
+        "reason": "blocked",
+        "source": "skip-slug",
+        "source_token": "outcome-unobserved",
+        "unit": "typing",
+        "unit_kind": "step"
+       },
+       {
+        "reason": "blocked",
+        "source": "skip-slug",
+        "source_token": "outcome-unobserved",
+        "unit": "test",
+        "unit_kind": "step"
+       },
+       {
+        "reason": "blocked",
+        "source": "skip-slug",
+        "source_token": "outcome-unobserved",
+        "unit": "coverage",
+        "unit_kind": "step"
+       },
+       {
+        "reason": "blocked",
+        "source": "skip-slug",
+        "source_token": "outcome-unobserved",
+        "unit": "wheel",
+        "unit_kind": "step"
+       }
+      ],
+      "sources": [
+       "skip-slug"
+      ]
+     },
+     "occurrence_id": "88aee132af4148ec8f8ad20dc5918323",
+     "operation_log": {
+      "bytes_written": 894,
+      "capture_mode": "captured",
+      "complete": true,
+      "operation_id": "op-863103eb88d64d2884320fc926521adb",
+      "path": ".forge/logs/operations/op-863103eb88d64d2884320fc926521adb.log"
+     },
+     "preflight": {
+      "db_isolation": {
+       "elapsed_ms": 7,
+       "memo": {
+        "files": 8,
+        "hits": 8,
+        "misses": 0,
+        "path": ".forge/warm/dbscope/capabilities.json",
+        "pruned": 0,
+        "salt": "ef4772d6caa3",
+        "served": true,
+        "state": "warm",
+        "written": false
+       },
+       "reason": "",
+       "verdict": "PASS"
+      }
+     },
+     "profile": {
+      "slowest_steps": [
+       {
+        "duration_ms": 147,
+        "name": "lint"
+       }
+      ],
+      "trace_path": "/tmp/mw-furnace-host-fail/.forge/trace/cmd_157bb4542885.json"
+     },
+     "raw_log": ".forge/logs/last-build.log",
+     "remaining_findings": [
+      {
+       "argv": [
+        "hatch",
+        "run",
+        "lint:check"
+       ],
+       "at": "2026-10-15T07:03:55.788835+00:00",
+       "completed_at": "2026-10-15T07:03:55.936096+00:00",
+       "cpu_ns": 193035000,
+       "duration_ms": 147,
+       "execution_environment": {
+        "fallback": null,
+        "kind": "host",
+        "pinned": false
+       },
+       "exit_code": 1,
+       "failure_line": "[",
+       "hermeticity": null,
+       "interpreter": {
+        "env_dir": "/tmp/mw-furnace-host-fail/.hatch/lint",
+        "home": "/home/jehallad/.local/share/mise/installs/python/3.12/bin",
+        "path": "/local/home/jehallad/.local/share/mise/installs/python/3.12.15/bin/python3.12",
+        "source": "pyvenv.cfg",
+        "version": "3.12.15"
+       },
+       "intervals": {
+        "post_reap": {
+         "ms": 1,
+         "observed": true
+        },
+        "pre_spawn": {
+         "ms": 1,
+         "observed": true
+        },
+        "spawn": {
+         "ms": 0,
+         "observed": true
+        },
+        "wait": {
+         "ms": 143,
+         "observed": true
+        }
+       },
+       "load": {
+        "at_end": {
+         "basis": "the kernel's 1, 5 and 15 minute load-average windows",
+         "cores": 64,
+         "load1": 10.23,
+         "load15": 8.63,
+         "load5": 7.61,
+         "observed": true
+        },
+        "at_start": {
+         "basis": "the kernel's 1, 5 and 15 minute load-average windows",
+         "cores": 64,
+         "load1": 10.23,
+         "load15": 8.63,
+         "load5": 7.61,
+         "observed": true
+        }
+       },
+       "name": "lint",
+       "optional": false,
+       "program": "hatch",
+       "run_id": "88aee132af4148ec8f8ad20dc5918323",
+       "skippable": false,
+       "source": "default",
+       "source_snapshot_id": "c21f55203cf64fa69a8b056bb4edd50d6f7d7ac6",
+       "started_at": "2026-10-15T07:03:55.788835+00:00",
+       "status": "failed",
+       "termination_cause": {
+        "kind": "exited"
+       },
+       "timeout_seconds": 300,
+       "timeout_source": "default",
+       "workers": {
+        "declared": null,
+        "exported": [],
+        "source": null
+       },
+       "wrote": []
+      }
+     ],
+     "replay": {
+      "any_replayed": false,
+      "basis_ms": {
+       "lint": 5
+      },
+      "capabilities": {
+       "admission_rule": "verdict-step-classes",
+       "admitted_steps": null,
+       "verify_compares": true
+      },
+      "eligibility": [],
+      "eligibility_examined": "fresh-passed-steps",
+      "hits": [],
+      "inputs": {
+       "memo": {
+        "files": 7,
+        "hits": 7,
+        "misses": 0,
+        "path": ".forge/warm/source-digest/files.json",
+        "pruned": 0,
+        "served": true,
+        "state": "warm",
+        "written": false
+       },
+       "steps": [
+        {
+         "commit_ms": 0,
+         "declared_ms": 0,
+         "elapsed_ms": 5,
+         "files": 7,
+         "hashed": 0,
+         "memo_hits": 7,
+         "source_digest": "sha256:5b60a23580afa22dec73188d1b2c6b8dd5791cc0be82cc344cc757b935ddf872",
+         "step": "lint",
+         "unreadable": 0
+        }
+       ]
+      },
+      "misses": [],
+      "mode": "require-fresh",
+      "refusals": [],
+      "stored": []
+     },
+     "run_record_path": "/tmp/mw-furnace-host-fail/.forge/state/runs/mw-live-pkg-be8de5c0.json",
+     "run_record_retained_path": "/tmp/mw-furnace-host-fail/.forge/state/runs/mw-live-pkg-be8de5c0/88aee132af4148ec8f8ad20dc5918323.json",
+     "selection_accounting": {
+      "counts": {
+       "declared": 5,
+       "executed": 1,
+       "explicitly_narrowed": 0,
+       "not_run": 4,
+       "replayed": null,
+       "resume_attested": 0,
+       "resume_unattested": 0,
+       "selected": 5,
+       "unaffected": 0,
+       "unknown": 0
+      },
+      "not_applicable": [
+       "replayed"
+      ],
+      "policy": "impacted/v2",
+      "selected_steps_passed": false,
+      "unit": "step",
+      "units": [
+       {
+        "basis": {
+         "globs": [],
+         "kind": "selection-not-requested",
+         "paths": [],
+         "via": []
+        },
+        "outcome": "executed",
+        "ref": "lint",
+        "selection": "selected"
+       },
+       {
+        "basis": {
+         "globs": [],
+         "kind": "selection-not-requested",
+         "paths": [],
+         "via": [
+          "outcome-unobserved:lint"
+         ]
+        },
+        "outcome": "not_run",
+        "ref": "typing",
+        "selection": "selected"
+       },
+       {
+        "basis": {
+         "globs": [],
+         "kind": "selection-not-requested",
+         "paths": [],
+         "via": [
+          "outcome-unobserved:lint"
+         ]
+        },
+        "outcome": "not_run",
+        "ref": "test",
+        "selection": "selected"
+       },
+       {
+        "basis": {
+         "globs": [],
+         "kind": "selection-not-requested",
+         "paths": [],
+         "via": [
+          "outcome-unobserved:lint"
+         ]
+        },
+        "outcome": "not_run",
+        "ref": "coverage",
+        "selection": "selected"
+       },
+       {
+        "basis": {
+         "globs": [],
+         "kind": "selection-not-requested",
+         "paths": [],
+         "via": [
+          "outcome-unobserved:lint"
+         ]
+        },
+        "outcome": "not_run",
+        "ref": "wheel",
+        "selection": "selected"
+       }
+      ]
+     },
+     "source_tree": "c21f55203cf64fa69a8b056bb4edd50d6f7d7ac6",
+     "steps": [
+      {
+       "argv": [
+        "hatch",
+        "run",
+        "lint:check"
+       ],
+       "at": "2026-10-15T07:03:55.788835+00:00",
+       "completed_at": "2026-10-15T07:03:55.936096+00:00",
+       "cpu_ns": 193035000,
+       "duration_ms": 147,
+       "execution_environment": {
+        "fallback": null,
+        "kind": "host",
+        "pinned": false
+       },
+       "exit_code": 1,
+       "failure_line": "[",
+       "hermeticity": null,
+       "interpreter": {
+        "env_dir": "/tmp/mw-furnace-host-fail/.hatch/lint",
+        "home": "/home/jehallad/.local/share/mise/installs/python/3.12/bin",
+        "path": "/local/home/jehallad/.local/share/mise/installs/python/3.12.15/bin/python3.12",
+        "source": "pyvenv.cfg",
+        "version": "3.12.15"
+       },
+       "intervals": {
+        "post_reap": {
+         "ms": 1,
+         "observed": true
+        },
+        "pre_spawn": {
+         "ms": 1,
+         "observed": true
+        },
+        "spawn": {
+         "ms": 0,
+         "observed": true
+        },
+        "wait": {
+         "ms": 143,
+         "observed": true
+        }
+       },
+       "load": {
+        "at_end": {
+         "basis": "the kernel's 1, 5 and 15 minute load-average windows",
+         "cores": 64,
+         "load1": 10.23,
+         "load15": 8.63,
+         "load5": 7.61,
+         "observed": true
+        },
+        "at_start": {
+         "basis": "the kernel's 1, 5 and 15 minute load-average windows",
+         "cores": 64,
+         "load1": 10.23,
+         "load15": 8.63,
+         "load5": 7.61,
+         "observed": true
+        }
+       },
+       "name": "lint",
+       "optional": false,
+       "output_ref": "diagnostics[0].message",
+       "program": "hatch",
+       "run_id": "88aee132af4148ec8f8ad20dc5918323",
+       "skippable": false,
+       "source": "default",
+       "source_snapshot_id": "c21f55203cf64fa69a8b056bb4edd50d6f7d7ac6",
+       "started_at": "2026-10-15T07:03:55.788835+00:00",
+       "status": "failed",
+       "termination_cause": {
+        "kind": "exited"
+       },
+       "timeout_seconds": 300,
+       "timeout_source": "default",
+       "workers": {
+        "declared": null,
+        "exported": [],
+        "source": null
+       },
+       "wrote": []
+      }
+     ],
+     "steps_not_run": [
+      "typing",
+      "test",
+      "coverage",
+      "wheel"
+     ],
+     "telemetry_dropped": 0,
+     "telemetry_level": "basic",
+     "timing_unavailable": "per-test timing is unavailable for this run: no fresh pytest JUnit report yielded per-test time attributes \u2014 declare [build] test_report so the gate reads the report the test step writes; non-python backends and replayed steps report no fresh per-test timing",
+     "tool_versions": {
+      "ruff": "0.17.0"
+     },
+     "verification": {
+      "answered_units": [
+       "lint"
+      ],
+      "complete": false,
+      "declared_units": [
+       "lint",
+       "typing",
+       "test",
+       "coverage",
+       "wheel"
+      ],
+      "dilutions": [],
+      "jobs": 1,
+      "route": "build",
+      "warm_reads": true
+     }
+    },
+    "delivery": {
+     "complete": true,
+     "dropped_count": 0,
+     "first_dropped_class": null
+    },
+    "diagnostics": [
+     {
+      "code": "FORGE_COMMAND_FAILED",
+      "details": null,
+      "hint": null,
+      "level": "error",
+      "line": null,
+      "message": "lint failed: [\n  {\n    \"cell\": null,\n    \"code\": \"B011\",\n    \"end_location\": {\n      \"column\": 17,\n      \"row\": 9\n    },\n    \"filename\": \"/tmp/mw-furnace-host-fail/tests/test_double.py\",\n    \"fix\": {\n      \"applicability\": \"unsafe\",\n      \"edits\": [\n        {\n          \"content\": \"raise AssertionError(\\\"deliberate FAIL for the Furnace process-host negative control\\\")\",\n          \"end_location\": {\n            \"column\": 82,\n            \"row\": 9\n          },\n          \"location\": {\n            \"column\": 5,\n            \"row\": 9\n          }\n        }\n      ],\n      \"message\": \"Replace `assert False`\"\n    },\n    \"location\": {\n      \"column\": 12,\n      \"row\": 9\n    },\n    \"message\": \"Do not `assert False` (`python -O` removes these calls), raise `AssertionError()`\",\n    \"name\": \"assert-false\",\n    \"noqa_row\": 9,\n    \"severity\": \"error\",\n    \"url\": \"https://docs.astral.sh/ruff/rules/assert-false\"\n  }\n]",
+      "path": null
+     },
+     {
+      "code": "B011",
+      "details": null,
+      "hint": "Replace `assert False`",
+      "level": "error",
+      "line": 9,
+      "message": "Do not `assert False` (`python -O` removes these calls), raise `AssertionError()`",
+      "path": "tests/test_double.py"
+     },
+     {
+      "code": "FORGE_STEP_OUTCOME_UNOBSERVED",
+      "details": null,
+      "hint": "Resolve what stopped the run and re-run; until then no result covers this one.",
+      "level": "warning",
+      "line": null,
+      "message": "typing: its outcome was not observed because the run stopped before this step recorded one",
+      "path": null
+     },
+     {
+      "code": "FORGE_STEP_OUTCOME_UNOBSERVED",
+      "details": null,
+      "hint": "Resolve what stopped the run and re-run; until then no result covers this one.",
+      "level": "warning",
+      "line": null,
+      "message": "test: its outcome was not observed because the run stopped before this step recorded one",
+      "path": null
+     },
+     {
+      "code": "FORGE_STEP_OUTCOME_UNOBSERVED",
+      "details": null,
+      "hint": "Resolve what stopped the run and re-run; until then no result covers this one.",
+      "level": "warning",
+      "line": null,
+      "message": "coverage: its outcome was not observed because the run stopped before this step recorded one",
+      "path": null
+     },
+     {
+      "code": "FORGE_STEP_OUTCOME_UNOBSERVED",
+      "details": null,
+      "hint": "Resolve what stopped the run and re-run; until then no result covers this one.",
+      "level": "warning",
+      "line": null,
+      "message": "wheel: its outcome was not observed because the run stopped before this step recorded one",
+      "path": null
+     }
+    ],
+    "envelope": {
+     "contract_version": "result-envelope/v1",
+     "disposition": "FAILED",
+     "evidence_ref": "/tmp/mw-furnace-host-fail/.forge/state/runs/mw-live-pkg-be8de5c0/88aee132af4148ec8f8ad20dc5918323.json",
+     "gated_commit": null,
+     "gated_tree": null,
+     "observation": "0 of 5 steps passed; lint=failed typing=outcome-unobserved test=outcome-unobserved coverage=outcome-unobserved wheel=outcome-unobserved",
+     "operation": "build",
+     "phase": "BUILD",
+     "prior_state": null,
+     "proof": null,
+     "provenance": {
+      "build_date": "2026-10-14",
+      "build_date_basis": "committer-date",
+      "revision": "0deb972720ce",
+      "state": "indeterminate",
+      "variant": "python-reference",
+      "version": "0.2.1"
+     },
+     "reason_category": "UNHEALTHY",
+     "reason_code": "FORGE_COMMAND_FAILED",
+     "requirements": [],
+     "run_id": "88aee132af4148ec8f8ad20dc5918323",
+     "source_snapshot_id": null,
+     "transition": null,
+     "verdict": "FAIL",
+     "verification_verdict": null
+    },
+    "forge_result": {
+     "artifacts": [],
+     "command": "build",
+     "completed_at": "2026-10-15T07:03:55.942257+00:00",
+     "contract_version": "result-envelope/v1",
+     "data": {
+      "_output": "[\n  {\n    \"cell\": null,\n    \"code\": \"B011\",\n    \"end_location\": {\n      \"column\": 17,\n      \"row\": 9\n    },\n    \"filename\": \"/tmp/mw-furnace-host-fail/tests/test_double.py\",\n    \"fix\": {\n      \"applicability\": \"unsafe\",\n      \"edits\": [\n        {\n          \"content\": \"raise AssertionError(\\\"deliberate FAIL for the Furnace process-host negative control\\\")\",\n          \"end_location\": {\n            \"column\": 82,\n            \"row\": 9\n          },\n          \"location\": {\n            \"column\": 5,\n            \"row\": 9\n          }\n        }\n      ],\n      \"message\": \"Replace `assert False`\"\n    },\n    \"location\": {\n      \"column\": 12,\n      \"row\": 9\n    },\n    \"message\": \"Do not `assert False` (`python -O` removes these calls), raise `AssertionError()`\",\n    \"name\": \"assert-false\",\n    \"noqa_row\": 9,\n    \"severity\": \"error\",\n    \"url\": \"https://docs.astral.sh/ruff/rules/assert-false\"\n  }\n]",
+      "arming_records": "/local/home/jehallad/.cache/forge-basetemp/forge-arming-88aee132af4148ec8f8ad20dc5918323.jsonl",
+      "artifacts_preexisting": [],
+      "command": "hatch run lint:check",
+      "counters": {
+       "child_wall_ms": {
+        "basis": "sum_of_owned_child_durations",
+        "observed": true,
+        "unit": "ms",
+        "value": 147
+       },
+       "replay_candidates": {
+        "basis": "replay.candidates",
+        "observed": false,
+        "reason_code": "FORGE_COUNTER_MECHANISM_ABSENT",
+        "unit": "step"
+       },
+       "replay_hits": {
+        "basis": "replay.hits",
+        "observed": true,
+        "unit": "step",
+        "value": 0
+       },
+       "replay_lookups": {
+        "basis": "replay.hits+replay.misses",
+        "observed": true,
+        "unit": "step",
+        "value": 0
+       },
+       "replay_refusals": {
+        "basis": "replay.refusals[].step",
+        "observed": true,
+        "unit": "step",
+        "value": 0
+       },
+       "replay_shadow_matches": {
+        "basis": "replay.agreements",
+        "observed": false,
+        "reason_code": "FORGE_COUNTER_MECHANISM_ABSENT",
+        "unit": "step"
+       },
+       "replay_shadow_mismatches": {
+        "basis": "replay.disagreements",
+        "observed": false,
+        "reason_code": "FORGE_COUNTER_MECHANISM_ABSENT",
+        "unit": "step"
+       },
+       "subprocess_count": {
+        "basis": "owned_step_launches",
+        "observed": true,
+        "unit": "process",
+        "value": 1
+       }
+      },
+      "cpu": {
+       "basis": "sum of each launched step's cpu_ns: os.wait4 rusage ru_utime + ru_stime of the step's child, its waited descendants included",
+       "launched": 1,
+       "measured": 1,
+       "total_ns": 193035000,
+       "unmeasured": []
+      },
+      "cwd": "/tmp/mw-furnace-host-fail",
+      "decomposition_claim": "overlapping_work_time",
+      "env_mode": "inherited",
+      "execution_environment": {
+       "fallback": null,
+       "kind": "host",
+       "pinned": false
+      },
+      "exit_code": 1,
+      "fail_open_scan": {
+       "delegated": [],
+       "examined": 0,
+       "findings": [],
+       "opaque": [],
+       "unread": [
+        "lint",
+        "typing",
+        "test",
+        "coverage",
+        "wheel"
+       ]
+      },
+      "failed_step": "lint",
+      "failure_class": "gate",
+      "gate_declared": [
+       "lint",
+       "typing",
+       "test",
+       "coverage",
+       "wheel"
+      ],
+      "gate_definition": "sha256:bba01235ebbf7d5a126ebb0e838e1d74a9b2aadba85fffec326d847f26b1f548",
+      "gate_judgment": {
+       "accept_rules": [],
+       "domain_verdict": "established_fail",
+       "epistemic_state": "REFUTED",
+       "governing_policy": null,
+       "judgment_schema": "gate-judgment-wire/v1",
+       "missing_evidence": [
+        "step:coverage:outcome-unobserved",
+        "step:test:outcome-unobserved",
+        "step:typing:outcome-unobserved",
+        "step:wheel:outcome-unobserved"
+       ],
+       "policy_revision_unsupported": [],
+       "reason": null,
+       "rule": "gate-judgment/v1",
+       "run_id": "88aee132af4148ec8f8ad20dc5918323",
+       "source_digest": "sha256:c9fd20351383b309d9fe13204ff9eb3b6df5b2054461f9eb83609d706cdb49a2",
+       "support": [
+        "step:lint=failed"
+       ]
+      },
+      "gate_measured_declared": [
+       "lint",
+       "typing",
+       "test",
+       "coverage",
+       "wheel"
+      ],
+      "gate_obligation": {
+       "asked": false,
+       "detail": "this package declares no [build] test_report, so the gate judged no per-member obligation. Declare the path your test step writes a pytest JUnit report to, and the gate will refuse a mandatory member that contributed no executed case. Judging that obligation also needs the committed FC-01 evidence catalog at requirements/fc01/catalog.toml, which supplies the mandatory denominator: declaring test_report without a real one makes the gate unable to judge the obligation (status partial, exit 3), so either commit a real catalog or keep test_report undeclared and let this field say why.",
+       "examined": 0,
+       "excluded": 0,
+       "reason": "FORGE_OBLIGATION_UNDECLARED",
+       "unsatisfied": [],
+       "verdict": null,
+       "waived": []
+      },
+      "gate_passed": false,
+      "gate_selected": [
+       "lint",
+       "typing",
+       "test",
+       "coverage",
+       "wheel"
+      ],
+      "gate_skipped": {
+       "coverage": "outcome-unobserved",
+       "test": "outcome-unobserved",
+       "typing": "outcome-unobserved",
+       "wheel": "outcome-unobserved"
+      },
+      "gate_verdict": "FAIL",
+      "harness": "forge 0.2.1 (rev 0deb972720ce) at /local/home/jehallad/.local/share/uv/tools/forge/lib/python3.15/site-packages/forge",
+      "identity_closure": {
+       "dirty_end": false,
+       "dirty_start": false,
+       "execution_isolated": false,
+       "mode": "observed-boundaries/v1",
+       "reason": "stable",
+       "stable_at_observed_boundaries": true,
+       "tree_end": "c21f55203cf64fa69a8b056bb4edd50d6f7d7ac6",
+       "tree_start": "c21f55203cf64fa69a8b056bb4edd50d6f7d7ac6"
+      },
+      "intervals": {
+       "child": {
+        "ms": 147,
+        "observed": true
+       },
+       "controller": {
+        "ms": 292,
+        "observed": true
+       },
+       "elapsed_ms": 439,
+       "launch": {
+        "ms": 1611,
+        "observed": true,
+        "source": "process-start-procfs"
+       },
+       "post_completion": {
+        "ms": 0,
+        "observed": true
+       },
+       "pre_dispatch": {
+        "ms": 10,
+        "observed": true
+       },
+       "queued": {
+        "observed": false,
+        "reason": "no-queue-owned"
+       }
+      },
+      "lint": {
+       "errors": 1,
+       "fixable": 0,
+       "ok": false
+      },
+      "nonexecution": {
+       "rows": [
+        {
+         "reason": "blocked",
+         "source": "skip-slug",
+         "source_token": "outcome-unobserved",
+         "unit": "typing",
+         "unit_kind": "step"
+        },
+        {
+         "reason": "blocked",
+         "source": "skip-slug",
+         "source_token": "outcome-unobserved",
+         "unit": "test",
+         "unit_kind": "step"
+        },
+        {
+         "reason": "blocked",
+         "source": "skip-slug",
+         "source_token": "outcome-unobserved",
+         "unit": "coverage",
+         "unit_kind": "step"
+        },
+        {
+         "reason": "blocked",
+         "source": "skip-slug",
+         "source_token": "outcome-unobserved",
+         "unit": "wheel",
+         "unit_kind": "step"
+        }
+       ],
+       "sources": [
+        "skip-slug"
+       ]
+      },
+      "occurrence_id": "88aee132af4148ec8f8ad20dc5918323",
+      "operation_log": {
+       "bytes_written": 894,
+       "capture_mode": "captured",
+       "complete": true,
+       "operation_id": "op-863103eb88d64d2884320fc926521adb",
+       "path": ".forge/logs/operations/op-863103eb88d64d2884320fc926521adb.log"
+      },
+      "preflight": {
+       "db_isolation": {
+        "elapsed_ms": 7,
+        "memo": {
+         "files": 8,
+         "hits": 8,
+         "misses": 0,
+         "path": ".forge/warm/dbscope/capabilities.json",
+         "pruned": 0,
+         "salt": "ef4772d6caa3",
+         "served": true,
+         "state": "warm",
+         "written": false
+        },
+        "reason": "",
+        "verdict": "PASS"
+       }
+      },
+      "profile": {
+       "slowest_steps": [
+        {
+         "duration_ms": 147,
+         "name": "lint"
+        }
+       ],
+       "trace_path": "/tmp/mw-furnace-host-fail/.forge/trace/cmd_157bb4542885.json"
+      },
+      "raw_log": ".forge/logs/last-build.log",
+      "remaining_findings": [
+       {
+        "argv": [
+         "hatch",
+         "run",
+         "lint:check"
+        ],
+        "at": "2026-10-15T07:03:55.788835+00:00",
+        "completed_at": "2026-10-15T07:03:55.936096+00:00",
+        "cpu_ns": 193035000,
+        "duration_ms": 147,
+        "execution_environment": {
+         "fallback": null,
+         "kind": "host",
+         "pinned": false
+        },
+        "exit_code": 1,
+        "failure_line": "[",
+        "hermeticity": null,
+        "interpreter": {
+         "env_dir": "/tmp/mw-furnace-host-fail/.hatch/lint",
+         "home": "/home/jehallad/.local/share/mise/installs/python/3.12/bin",
+         "path": "/local/home/jehallad/.local/share/mise/installs/python/3.12.15/bin/python3.12",
+         "source": "pyvenv.cfg",
+         "version": "3.12.15"
+        },
+        "intervals": {
+         "post_reap": {
+          "ms": 1,
+          "observed": true
+         },
+         "pre_spawn": {
+          "ms": 1,
+          "observed": true
+         },
+         "spawn": {
+          "ms": 0,
+          "observed": true
+         },
+         "wait": {
+          "ms": 143,
+          "observed": true
+         }
+        },
+        "load": {
+         "at_end": {
+          "basis": "the kernel's 1, 5 and 15 minute load-average windows",
+          "cores": 64,
+          "load1": 10.23,
+          "load15": 8.63,
+          "load5": 7.61,
+          "observed": true
+         },
+         "at_start": {
+          "basis": "the kernel's 1, 5 and 15 minute load-average windows",
+          "cores": 64,
+          "load1": 10.23,
+          "load15": 8.63,
+          "load5": 7.61,
+          "observed": true
+         }
+        },
+        "name": "lint",
+        "optional": false,
+        "program": "hatch",
+        "run_id": "88aee132af4148ec8f8ad20dc5918323",
+        "skippable": false,
+        "source": "default",
+        "source_snapshot_id": "c21f55203cf64fa69a8b056bb4edd50d6f7d7ac6",
+        "started_at": "2026-10-15T07:03:55.788835+00:00",
+        "status": "failed",
+        "termination_cause": {
+         "kind": "exited"
+        },
+        "timeout_seconds": 300,
+        "timeout_source": "default",
+        "workers": {
+         "declared": null,
+         "exported": [],
+         "source": null
+        },
+        "wrote": []
+       }
+      ],
+      "replay": {
+       "any_replayed": false,
+       "basis_ms": {
+        "lint": 5
+       },
+       "capabilities": {
+        "admission_rule": "verdict-step-classes",
+        "admitted_steps": null,
+        "verify_compares": true
+       },
+       "eligibility": [],
+       "eligibility_examined": "fresh-passed-steps",
+       "hits": [],
+       "inputs": {
+        "memo": {
+         "files": 7,
+         "hits": 7,
+         "misses": 0,
+         "path": ".forge/warm/source-digest/files.json",
+         "pruned": 0,
+         "served": true,
+         "state": "warm",
+         "written": false
+        },
+        "steps": [
+         {
+          "commit_ms": 0,
+          "declared_ms": 0,
+          "elapsed_ms": 5,
+          "files": 7,
+          "hashed": 0,
+          "memo_hits": 7,
+          "source_digest": "sha256:5b60a23580afa22dec73188d1b2c6b8dd5791cc0be82cc344cc757b935ddf872",
+          "step": "lint",
+          "unreadable": 0
+         }
+        ]
+       },
+       "misses": [],
+       "mode": "require-fresh",
+       "refusals": [],
+       "stored": []
+      },
+      "run_record_path": "/tmp/mw-furnace-host-fail/.forge/state/runs/mw-live-pkg-be8de5c0.json",
+      "run_record_retained_path": "/tmp/mw-furnace-host-fail/.forge/state/runs/mw-live-pkg-be8de5c0/88aee132af4148ec8f8ad20dc5918323.json",
+      "selection_accounting": {
+       "counts": {
+        "declared": 5,
+        "executed": 1,
+        "explicitly_narrowed": 0,
+        "not_run": 4,
+        "replayed": null,
+        "resume_attested": 0,
+        "resume_unattested": 0,
+        "selected": 5,
+        "unaffected": 0,
+        "unknown": 0
+       },
+       "not_applicable": [
+        "replayed"
+       ],
+       "policy": "impacted/v2",
+       "selected_steps_passed": false,
+       "unit": "step",
+       "units": [
+        {
+         "basis": {
+          "globs": [],
+          "kind": "selection-not-requested",
+          "paths": [],
+          "via": []
+         },
+         "outcome": "executed",
+         "ref": "lint",
+         "selection": "selected"
+        },
+        {
+         "basis": {
+          "globs": [],
+          "kind": "selection-not-requested",
+          "paths": [],
+          "via": [
+           "outcome-unobserved:lint"
+          ]
+         },
+         "outcome": "not_run",
+         "ref": "typing",
+         "selection": "selected"
+        },
+        {
+         "basis": {
+          "globs": [],
+          "kind": "selection-not-requested",
+          "paths": [],
+          "via": [
+           "outcome-unobserved:lint"
+          ]
+         },
+         "outcome": "not_run",
+         "ref": "test",
+         "selection": "selected"
+        },
+        {
+         "basis": {
+          "globs": [],
+          "kind": "selection-not-requested",
+          "paths": [],
+          "via": [
+           "outcome-unobserved:lint"
+          ]
+         },
+         "outcome": "not_run",
+         "ref": "coverage",
+         "selection": "selected"
+        },
+        {
+         "basis": {
+          "globs": [],
+          "kind": "selection-not-requested",
+          "paths": [],
+          "via": [
+           "outcome-unobserved:lint"
+          ]
+         },
+         "outcome": "not_run",
+         "ref": "wheel",
+         "selection": "selected"
+        }
+       ]
+      },
+      "source_tree": "c21f55203cf64fa69a8b056bb4edd50d6f7d7ac6",
+      "steps": [
+       {
+        "argv": [
+         "hatch",
+         "run",
+         "lint:check"
+        ],
+        "at": "2026-10-15T07:03:55.788835+00:00",
+        "completed_at": "2026-10-15T07:03:55.936096+00:00",
+        "cpu_ns": 193035000,
+        "duration_ms": 147,
+        "execution_environment": {
+         "fallback": null,
+         "kind": "host",
+         "pinned": false
+        },
+        "exit_code": 1,
+        "failure_line": "[",
+        "hermeticity": null,
+        "interpreter": {
+         "env_dir": "/tmp/mw-furnace-host-fail/.hatch/lint",
+         "home": "/home/jehallad/.local/share/mise/installs/python/3.12/bin",
+         "path": "/local/home/jehallad/.local/share/mise/installs/python/3.12.15/bin/python3.12",
+         "source": "pyvenv.cfg",
+         "version": "3.12.15"
+        },
+        "intervals": {
+         "post_reap": {
+          "ms": 1,
+          "observed": true
+         },
+         "pre_spawn": {
+          "ms": 1,
+          "observed": true
+         },
+         "spawn": {
+          "ms": 0,
+          "observed": true
+         },
+         "wait": {
+          "ms": 143,
+          "observed": true
+         }
+        },
+        "load": {
+         "at_end": {
+          "basis": "the kernel's 1, 5 and 15 minute load-average windows",
+          "cores": 64,
+          "load1": 10.23,
+          "load15": 8.63,
+          "load5": 7.61,
+          "observed": true
+         },
+         "at_start": {
+          "basis": "the kernel's 1, 5 and 15 minute load-average windows",
+          "cores": 64,
+          "load1": 10.23,
+          "load15": 8.63,
+          "load5": 7.61,
+          "observed": true
+         }
+        },
+        "name": "lint",
+        "optional": false,
+        "output_ref": "diagnostics[0].message",
+        "program": "hatch",
+        "run_id": "88aee132af4148ec8f8ad20dc5918323",
+        "skippable": false,
+        "source": "default",
+        "source_snapshot_id": "c21f55203cf64fa69a8b056bb4edd50d6f7d7ac6",
+        "started_at": "2026-10-15T07:03:55.788835+00:00",
+        "status": "failed",
+        "termination_cause": {
+         "kind": "exited"
+        },
+        "timeout_seconds": 300,
+        "timeout_source": "default",
+        "workers": {
+         "declared": null,
+         "exported": [],
+         "source": null
+        },
+        "wrote": []
+       }
+      ],
+      "steps_not_run": [
+       "typing",
+       "test",
+       "coverage",
+       "wheel"
+      ],
+      "telemetry_dropped": 0,
+      "telemetry_level": "basic",
+      "timing_unavailable": "per-test timing is unavailable for this run: no fresh pytest JUnit report yielded per-test time attributes \u2014 declare [build] test_report so the gate reads the report the test step writes; non-python backends and replayed steps report no fresh per-test timing",
+      "tool_versions": {
+       "ruff": "0.17.0"
+      },
+      "verification": {
+       "answered_units": [
+        "lint"
+       ],
+       "complete": false,
+       "declared_units": [
+        "lint",
+        "typing",
+        "test",
+        "coverage",
+        "wheel"
+       ],
+       "dilutions": [],
+       "jobs": 1,
+       "route": "build",
+       "warm_reads": true
+      }
+     },
+     "diagnostics": [
+      {
+       "code": "FORGE_COMMAND_FAILED",
+       "details": null,
+       "hint": null,
+       "level": "error",
+       "line": null,
+       "message": "lint failed: [\n  {\n    \"cell\": null,\n    \"code\": \"B011\",\n    \"end_location\": {\n      \"column\": 17,\n      \"row\": 9\n    },\n    \"filename\": \"/tmp/mw-furnace-host-fail/tests/test_double.py\",\n    \"fix\": {\n      \"applicability\": \"unsafe\",\n      \"edits\": [\n        {\n          \"content\": \"raise AssertionError(\\\"deliberate FAIL for the Furnace process-host negative control\\\")\",\n          \"end_location\": {\n            \"column\": 82,\n            \"row\": 9\n          },\n          \"location\": {\n            \"column\": 5,\n            \"row\": 9\n          }\n        }\n      ],\n      \"message\": \"Replace `assert False`\"\n    },\n    \"location\": {\n      \"column\": 12,\n      \"row\": 9\n    },\n    \"message\": \"Do not `assert False` (`python -O` removes these calls), raise `AssertionError()`\",\n    \"name\": \"assert-false\",\n    \"noqa_row\": 9,\n    \"severity\": \"error\",\n    \"url\": \"https://docs.astral.sh/ruff/rules/assert-false\"\n  }\n]",
+       "path": null
+      },
+      {
+       "code": "B011",
+       "details": null,
+       "hint": "Replace `assert False`",
+       "level": "error",
+       "line": 9,
+       "message": "Do not `assert False` (`python -O` removes these calls), raise `AssertionError()`",
+       "path": "tests/test_double.py"
+      },
+      {
+       "code": "FORGE_STEP_OUTCOME_UNOBSERVED",
+       "details": null,
+       "hint": "Resolve what stopped the run and re-run; until then no result covers this one.",
+       "level": "warning",
+       "line": null,
+       "message": "typing: its outcome was not observed because the run stopped before this step recorded one",
+       "path": null
+      },
+      {
+       "code": "FORGE_STEP_OUTCOME_UNOBSERVED",
+       "details": null,
+       "hint": "Resolve what stopped the run and re-run; until then no result covers this one.",
+       "level": "warning",
+       "line": null,
+       "message": "test: its outcome was not observed because the run stopped before this step recorded one",
+       "path": null
+      },
+      {
+       "code": "FORGE_STEP_OUTCOME_UNOBSERVED",
+       "details": null,
+       "hint": "Resolve what stopped the run and re-run; until then no result covers this one.",
+       "level": "warning",
+       "line": null,
+       "message": "coverage: its outcome was not observed because the run stopped before this step recorded one",
+       "path": null
+      },
+      {
+       "code": "FORGE_STEP_OUTCOME_UNOBSERVED",
+       "details": null,
+       "hint": "Resolve what stopped the run and re-run; until then no result covers this one.",
+       "level": "warning",
+       "line": null,
+       "message": "wheel: its outcome was not observed because the run stopped before this step recorded one",
+       "path": null
+      }
+     ],
+     "envelope": {
+      "contract_version": "result-envelope/v1",
+      "disposition": "FAILED",
+      "evidence_ref": "/tmp/mw-furnace-host-fail/.forge/state/runs/mw-live-pkg-be8de5c0/88aee132af4148ec8f8ad20dc5918323.json",
+      "gated_commit": null,
+      "gated_tree": null,
+      "observation": "0 of 5 steps passed; lint=failed typing=outcome-unobserved test=outcome-unobserved coverage=outcome-unobserved wheel=outcome-unobserved",
+      "operation": "build",
+      "phase": "BUILD",
+      "prior_state": null,
+      "proof": null,
+      "provenance": {
+       "build_date": "2026-10-14",
+       "build_date_basis": "committer-date",
+       "revision": "0deb972720ce",
+       "state": "indeterminate",
+       "variant": "python-reference",
+       "version": "0.2.1"
+      },
+      "reason_category": "UNHEALTHY",
+      "reason_code": "FORGE_COMMAND_FAILED",
+      "requirements": [],
+      "run_id": "88aee132af4148ec8f8ad20dc5918323",
+      "source_snapshot_id": null,
+      "transition": null,
+      "verdict": "FAIL",
+      "verification_verdict": null
+     },
+     "ids": {
+      "command_id": "cmd_157bb4542885",
+      "session_id": "sess_75a8a377b4b0",
+      "trace_id": "88aee132af4148ec8f8ad20dc5918323"
+     },
+     "lifecycle_state": "TERMINAL",
+     "next_actions": [
+      "read the failing step's own output in the diagnostics[] entry whose code is FORGE_COMMAND_FAILED (envelope.reason_code; on a gate, data.failed_step names the step and its record's output_ref, when stamped, locates it) and fix what it names, then re-run",
+      "forge build --path /tmp/mw-furnace-host-fail --only lint",
+      "forge explain",
+      "forge doctor",
+      "read the full output in .forge/logs/last-build.log (data.raw_log)"
+     ],
+     "platform": {
+      "accelerators": [],
+      "arch": "x86_64",
+      "os": "linux",
+      "schema": "platform/v1"
+     },
+     "recovery_actions": [
+      {
+       "action_id": "advice:dfd6e36c44dd",
+       "addresses": [
+        "FORGE_COMMAND_FAILED"
+       ],
+       "command": null,
+       "expected_effects": [],
+       "intent": "read the failing step's own output in the diagnostics[] entry whose code is FORGE_COMMAND_FAILED (envelope.reason_code; on a gate, data.failed_step names the step and its record's output_ref, when stamped, locates it) and fix what it names, then re-run",
+       "preconditions": [],
+       "risk_class": null
+      },
+      {
+       "action_id": "forge:build",
+       "addresses": [
+        "FORGE_COMMAND_FAILED"
+       ],
+       "command": [
+        "forge",
+        "build",
+        "--path",
+        "/tmp/mw-furnace-host-fail",
+        "--only",
+        "lint"
+       ],
+       "expected_effects": [],
+       "intent": "forge build --path /tmp/mw-furnace-host-fail --only lint",
+       "preconditions": [],
+       "risk_class": null
+      },
+      {
+       "action_id": "forge:explain",
+       "addresses": [
+        "FORGE_COMMAND_FAILED"
+       ],
+       "command": [
+        "forge",
+        "explain"
+       ],
+       "expected_effects": [],
+       "intent": "forge explain",
+       "preconditions": [],
+       "risk_class": null
+      },
+      {
+       "action_id": "forge:doctor",
+       "addresses": [
+        "FORGE_COMMAND_FAILED"
+       ],
+       "command": [
+        "forge",
+        "doctor"
+       ],
+       "expected_effects": [],
+       "intent": "forge doctor",
+       "preconditions": [],
+       "risk_class": null
+      },
+      {
+       "action_id": "advice:259a94aae627",
+       "addresses": [
+        "FORGE_COMMAND_FAILED"
+       ],
+       "command": null,
+       "expected_effects": [],
+       "intent": "read the full output in .forge/logs/last-build.log (data.raw_log)",
+       "preconditions": [],
+       "risk_class": null
+      }
+     ],
+     "resolution": null,
+     "resource": {
+      "observations": [
+       {
+        "name": "controller_cpu_ns",
+        "observed": true,
+        "scope": "since_command_start",
+        "unit": "ns",
+        "value": 74581312
+       },
+       {
+        "name": "controller_cpu_total_ns",
+        "observed": true,
+        "scope": "process_total",
+        "unit": "ns",
+        "value": 1612526859
+       },
+       {
+        "name": "peak_memory_bytes",
+        "observed": true,
+        "scope": "process_total",
+        "unit": "byte",
+        "value": 154578944
+       }
+      ],
+      "schema": "resource-observation/v2",
+      "subject": "forge_controller"
+     },
+     "started_at": "2026-10-15T07:03:55.503113+00:00",
+     "status": "error",
+     "target": "mw-live-pkg",
+     "target_scope": {
+      "name": "mw-live-pkg",
+      "owner": "mw-live-pkg",
+      "scope": "package"
+     },
+     "terminal_disposition": "failed"
+    },
+    "ids": {
+     "command_id": "cmd_157bb4542885",
+     "session_id": "sess_75a8a377b4b0",
+     "trace_id": "88aee132af4148ec8f8ad20dc5918323"
+    },
+    "lifecycle_state": "TERMINAL",
+    "next_actions": [
+     "read the failing step's own output in the diagnostics[] entry whose code is FORGE_COMMAND_FAILED (envelope.reason_code; on a gate, data.failed_step names the step and its record's output_ref, when stamped, locates it) and fix what it names, then re-run",
+     "forge build --path /tmp/mw-furnace-host-fail --only lint",
+     "forge explain",
+     "forge doctor",
+     "read the full output in .forge/logs/last-build.log (data.raw_log)"
+    ],
+    "operation_id": "op-a1e62f87ede744a9a41334b78ac14742",
+    "platform": {
+     "accelerators": [],
+     "arch": "x86_64",
+     "os": "linux",
+     "schema": "platform/v1"
+    },
+    "recovery_actions": [
+     {
+      "action_id": "advice:dfd6e36c44dd",
+      "addresses": [
+       "FORGE_COMMAND_FAILED"
+      ],
+      "command": null,
+      "expected_effects": [],
+      "intent": "read the failing step's own output in the diagnostics[] entry whose code is FORGE_COMMAND_FAILED (envelope.reason_code; on a gate, data.failed_step names the step and its record's output_ref, when stamped, locates it) and fix what it names, then re-run",
+      "preconditions": [],
+      "risk_class": null
+     },
+     {
+      "action_id": "forge:build",
+      "addresses": [
+       "FORGE_COMMAND_FAILED"
+      ],
+      "command": [
+       "forge",
+       "build",
+       "--path",
+       "/tmp/mw-furnace-host-fail",
+       "--only",
+       "lint"
+      ],
+      "expected_effects": [],
+      "intent": "forge build --path /tmp/mw-furnace-host-fail --only lint",
+      "preconditions": [],
+      "risk_class": null
+     },
+     {
+      "action_id": "forge:explain",
+      "addresses": [
+       "FORGE_COMMAND_FAILED"
+      ],
+      "command": [
+       "forge",
+       "explain"
+      ],
+      "expected_effects": [],
+      "intent": "forge explain",
+      "preconditions": [],
+      "risk_class": null
+     },
+     {
+      "action_id": "forge:doctor",
+      "addresses": [
+       "FORGE_COMMAND_FAILED"
+      ],
+      "command": [
+       "forge",
+       "doctor"
+      ],
+      "expected_effects": [],
+      "intent": "forge doctor",
+      "preconditions": [],
+      "risk_class": null
+     },
+     {
+      "action_id": "advice:259a94aae627",
+      "addresses": [
+       "FORGE_COMMAND_FAILED"
+      ],
+      "command": null,
+      "expected_effects": [],
+      "intent": "read the full output in .forge/logs/last-build.log (data.raw_log)",
+      "preconditions": [],
+      "risk_class": null
+     }
+    ],
+    "resolution": null,
+    "resource": {
+     "observations": [
+      {
+       "name": "controller_cpu_ns",
+       "observed": true,
+       "scope": "since_command_start",
+       "unit": "ns",
+       "value": 74581312
+      },
+      {
+       "name": "controller_cpu_total_ns",
+       "observed": true,
+       "scope": "process_total",
+       "unit": "ns",
+       "value": 1612526859
+      },
+      {
+       "name": "peak_memory_bytes",
+       "observed": true,
+       "scope": "process_total",
+       "unit": "byte",
+       "value": 154578944
+      }
+     ],
+     "schema": "resource-observation/v2",
+     "subject": "forge_controller"
+    },
+    "started_at": "2026-10-15T07:03:55.503113+00:00",
+    "status": "error",
+    "target": "mw-live-pkg",
+    "target_scope": {
+     "name": "mw-live-pkg",
+     "owner": "mw-live-pkg",
+     "scope": "package"
+    },
+    "telemetry": {
+     "durable": "recorded",
+     "recorded": true,
+     "resident": {
+      "hits": [],
+      "misses": [],
+      "served": false
+     },
+     "time_ns": {
+      "decomposition_claim": "additive_exclusive",
+      "members": {
+       "application": 507446120,
+       "decode": 23137,
+       "event_delivery": 130618,
+       "queue": 42827,
+       "validation": 9192
+      },
+      "total_ns": 527836738,
+      "unattributed_ns": 20184844
+     }
+    },
+    "terminal_disposition": "completed",
+    "terminal_fact": "failed"
+   }
+  }
+ },
+ "classifierCorrection": {
+  "regressionCommit": "2b55c44",
+  "symptom": "a live Forge FAIL (disposition FAILED, terminal_fact failed, gate_verdict FAIL) read as indeterminate FORGE_GATE_FAILURE_UNESTABLISHED because the classifier demanded terminal_fact completed",
+  "forgeContract": "result_projection.terminal_fact_for: SUCCEEDED/NO_OP -> completed; FAILED/REJECTED/BLOCKED -> failed; PARTIAL/COULD_NOT_JUDGE -> partial-indeterminate (Forge source e7dbea23e5)",
+  "witnessBeforeFix": {
+   "run": "frn-run-mwff-wisp-5e0",
+   "attempt": "frn-atm-mwff-wisp-s8t-1",
+   "exitCode": 3,
+   "receiptKind": "indeterminate",
+   "operationId": "op-30edeace5fa44ae6bab3567b59ae351d"
+  },
+  "witnessAfterFix": {
+   "run": "frn-run-mwff-wisp-chy",
+   "attempt": "frn-atm-mwff-wisp-oaf-1",
+   "exitCode": 1,
+   "receiptKind": "failed",
+   "operationId": "op-fa61251eb3ac4bdb8d0cbe2ff91e8519"
+  }
+ }
+}

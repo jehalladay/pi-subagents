@@ -1,0 +1,47 @@
+{
+ "schema": "reactive-fiber.cli/v1",
+ "command": "context.history",
+ "workspace": {
+  "id": "rfw_aqlzrkn65w6j5wc5jz5qqbmjfe",
+  "root": "/workplace/jehallad/AgentEcosystem/ForgeWorkspaces"
+ },
+ "ok": true,
+ "operation_id": "rfo_hand_derived",
+ "fixture_provenance": "hand-derived from success-attempts-1.json: attempts 2, one superseded round, wall_ms 20500; not captured from rf; a fixture result never counts as a native PASS",
+ "result": {
+  "id": "rfr_nexiin3d3fjodn4ol2hseiz3ny",
+  "render_id": "rfr_nexiin3d3fjodn4ol2hseiz3ny",
+  "commit_seq": 79393,
+  "origin_commit_seq": 79392,
+  "session_id": "rfs_62lmdknwvbjpll7pvebpkotnd4",
+  "transaction_id": "rft_flvwntbtewdjox763brzclfrl4",
+  "created_at": "2026-11-05T06:42:27.870742Z",
+  "wall_ms": 20500,
+  "status": "success",
+  "actor": "user:jehallad",
+  "agent_id": null,
+  "task_digest": "sha256:f1f1884d665dcb21d7eaa81bca33b9a00d00547d277daa3f52e64ae63314211b",
+  "requested_model_id": "claude-opus-5",
+  "resolved_model_id": null,
+  "final_document_digest": "sha256:435d56d826588dbb9ccc90a47f564b56d3567f1ec8f4158bb3578cc678fdaa21",
+  "graph_revision_id": "sha256:d8a19b88329e83786e0366a3703a5df730227bf9226aab1f7c0e89e8d81f07ec",
+  "component_ids": [
+   "treadle.machine_brief"
+  ],
+  "replayability": "replayable_exact",
+  "replayability_reasons": [],
+  "evidence": {
+   "reachable": 13,
+   "present": 13,
+   "missing": [],
+   "mismatched": [],
+   "unresolved": []
+  },
+  "operation_id": "rfo_fli5ojcutqbzf4q2dywula3gt4",
+  "attempts": 2,
+  "superseded_transaction_ids": [
+   "rft_hand_derived_superseded_round_1"
+  ]
+ },
+ "diagnostics": []
+}

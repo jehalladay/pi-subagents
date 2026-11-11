@@ -1,0 +1,748 @@
+TAP version 13
+# Subtest: EAT-R010: committed descriptor, both schema filenames and both schema $id values agree on one version token read from contracts/ on disk
+ok 1 - EAT-R010: committed descriptor, both schema filenames and both schema $id values agree on one version token read from contracts/ on disk
+  ---
+  duration_ms: 2.561262
+  type: 'test'
+  ...
+# Subtest: EAT-R010 mutant: bumping only descriptor.id breaks version agreement
+ok 2 - EAT-R010 mutant: bumping only descriptor.id breaks version agreement
+  ---
+  duration_ms: 1.452016
+  type: 'test'
+  ...
+# Subtest: EAT-R010 mutant: bumping only descriptor.inputSchema breaks version agreement
+ok 3 - EAT-R010 mutant: bumping only descriptor.inputSchema breaks version agreement
+  ---
+  duration_ms: 1.139104
+  type: 'test'
+  ...
+# Subtest: EAT-R010 mutant: bumping only descriptor.outputSchema breaks version agreement
+ok 4 - EAT-R010 mutant: bumping only descriptor.outputSchema breaks version agreement
+  ---
+  duration_ms: 0.763626
+  type: 'test'
+  ...
+# Subtest: EAT-R010 mutant: bumping only request.$id breaks version agreement
+ok 5 - EAT-R010 mutant: bumping only request.$id breaks version agreement
+  ---
+  duration_ms: 0.855687
+  type: 'test'
+  ...
+# Subtest: EAT-R010 mutant: bumping only outcome.$id breaks version agreement
+ok 6 - EAT-R010 mutant: bumping only outcome.$id breaks version agreement
+  ---
+  duration_ms: 0.639004
+  type: 'test'
+  ...
+# Subtest: EAT-R010: a site that declares no version token fails the agreement check
+ok 7 - EAT-R010: a site that declares no version token fails the agreement check
+  ---
+  duration_ms: 0.419532
+  type: 'test'
+  ...
+# Subtest: packages/development declares no forbidden dependency and its compiled dist imports none
+ok 8 - packages/development declares no forbidden dependency and its compiled dist imports none
+  ---
+  duration_ms: 5.240214
+  type: 'test'
+  ...
+# Subtest: negative mutants: the guard turns red for a declared dependency, a peer dependency and each import form
+ok 9 - negative mutants: the guard turns red for a declared dependency, a peer dependency and each import form
+  ---
+  duration_ms: 0.932398
+  type: 'test'
+  ...
+# Subtest: positive controls: legitimate relative imports and node builtins are not flagged
+ok 10 - positive controls: legitimate relative imports and node builtins are not flagged
+  ---
+  duration_ms: 0.284475
+  type: 'test'
+  ...
+# Subtest: the rig keeps the Claude SDK behind a runtime-only import and never inside packages/*
+ok 11 - the rig keeps the Claude SDK behind a runtime-only import and never inside packages/*
+  ---
+  duration_ms: 7.647182
+  type: 'test'
+  ...
+# Subtest: committed descriptor is the only positive row: the unmodified bindings reach the loader and develop once
+ok 12 - committed descriptor is the only positive row: the unmodified bindings reach the loader and develop once
+  ---
+  duration_ms: 21.43302
+  type: 'test'
+  ...
+# Subtest: EAT-R006 pinned host: permuted, dropped or duplicated bindings refuse ENTRYPOINT_BINDING_INVALID with loads=0 and callbacks=0
+ok 13 - EAT-R006 pinned host: permuted, dropped or duplicated bindings refuse ENTRYPOINT_BINDING_INVALID with loads=0 and callbacks=0
+  ---
+  duration_ms: 2.129418
+  type: 'test'
+  ...
+# Subtest: EAT-R006 installed host: the same binding mutants refuse ENTRYPOINT_BINDING_INVALID before any install or callback
+ok 14 - EAT-R006 installed host: the same binding mutants refuse ENTRYPOINT_BINDING_INVALID before any install or callback
+  ---
+  duration_ms: 21.647303
+  type: 'test'
+  ...
+# Subtest: EAT-R008 installed host: real mutant tarball whose module exports no develop at all refuses at the installed-path literal with callbacks=0
+ok 15 - EAT-R008 installed host: real mutant tarball whose module exports no develop at all refuses at the installed-path literal with callbacks=0
+  ---
+  duration_ms: 2450.966398
+  type: 'test'
+  ...
+# Subtest: EAT-R008 installed host: real mutant tarball whose develop export is a string refuses at the installed-path literal with callbacks=0
+ok 16 - EAT-R008 installed host: real mutant tarball whose develop export is a string refuses at the installed-path literal with callbacks=0
+  ---
+  duration_ms: 937.012828
+  type: 'test'
+  ...
+# Subtest: committed descriptor stays the only positive row: unmodified descriptor resolves in both hosts
+ok 17 - committed descriptor stays the only positive row: unmodified descriptor resolves in both hosts
+  ---
+  duration_ms: 636.234985
+  type: 'test'
+  ...
+# Subtest: each deviation row refuses ENTRYPOINT_CONTRACT_INVALID before load or any install step, in both hosts
+ok 18 - each deviation row refuses ENTRYPOINT_CONTRACT_INVALID before load or any install step, in both hosts
+  ---
+  duration_ms: 42.359757
+  type: 'test'
+  ...
+# Subtest: the committed note annotation stays a single permitted optional string; absence also resolves
+ok 19 - the committed note annotation stays a single permitted optional string; absence also resolves
+  ---
+  duration_ms: 586.872538
+  type: 'test'
+  ...
+# Subtest: committed descriptor names schema files that exist beside it with one canonical grammar
+ok 20 - committed descriptor names schema files that exist beside it with one canonical grammar
+  ---
+  duration_ms: 1.646309
+  type: 'test'
+  ...
+# Subtest: invokeInstalledDevelopment accepts the committed descriptor over the real npm-packed tarball
+ok 21 - invokeInstalledDevelopment accepts the committed descriptor over the real npm-packed tarball
+  ---
+  duration_ms: 584.955034
+  type: 'test'
+  ...
+# Subtest: invokePinnedDevelopment accepts the committed descriptor and loads exactly once
+ok 22 - invokePinnedDevelopment accepts the committed descriptor and loads exactly once
+  ---
+  duration_ms: 3.210894
+  type: 'test'
+  ...
+# Subtest: mutated schema filename or path in the committed descriptor refuses before install or callback
+ok 23 - mutated schema filename or path in the committed descriptor refuses before install or callback
+  ---
+  duration_ms: 12.537145
+  type: 'test'
+  ...
+# Subtest: pinned local entrypoint validates and invokes exactly one permitted export
+ok 24 - pinned local entrypoint validates and invokes exactly one permitted export
+  ---
+  duration_ms: 24.372263
+  type: 'test'
+  ...
+# Subtest: wrong artifact digest or entrypoint refuses before loader and any effects
+ok 25 - wrong artifact digest or entrypoint refuses before loader and any effects
+  ---
+  duration_ms: 4.146343
+  type: 'test'
+  ...
+# Subtest: extra input field or missing binding refuses before loader
+ok 26 - extra input field or missing binding refuses before loader
+  ---
+  duration_ms: 1.569416
+  type: 'test'
+  ...
+# Subtest: malformed output or declared PASS without producer ref never becomes success
+ok 27 - malformed output or declared PASS without producer ref never becomes success
+  ---
+  duration_ms: 21.146994
+  type: 'test'
+  ...
+# Subtest: loader exception is indeterminate and never retried
+ok 28 - loader exception is indeterminate and never retried
+  ---
+  duration_ms: 4.261478
+  type: 'test'
+  ...
+# Subtest: schema paths are declared exactly and extra descriptor capabilities are refused
+ok 29 - schema paths are declared exactly and extra descriptor capabilities are refused
+  ---
+  duration_ms: 1.907616
+  type: 'test'
+  ...
+# Subtest: output basis mismatch refuses even with claimed producer evidence
+ok 30 - output basis mismatch refuses even with claimed producer evidence
+  ---
+  duration_ms: 4.631326
+  type: 'test'
+  ...
+# Subtest: every descriptor or contract field that deviates is ENTRYPOINT_CONTRACT_INVALID before the loader
+ok 31 - every descriptor or contract field that deviates is ENTRYPOINT_CONTRACT_INVALID before the loader
+  ---
+  duration_ms: 1.859596
+  type: 'test'
+  ...
+# Subtest: a loader that yields no develop function is ENTRYPOINT_EXPORT_INVALID and nothing is invoked
+ok 32 - a loader that yields no develop function is ENTRYPOINT_EXPORT_INVALID and nothing is invoked
+  ---
+  duration_ms: 9.974557
+  type: 'test'
+  ...
+# Subtest: an artifact path that is not a regular file is ENTRYPOINT_ARTIFACT_INVALID before the loader even with a well-formed digest
+ok 33 - an artifact path that is not a regular file is ENTRYPOINT_ARTIFACT_INVALID before the loader even with a well-formed digest
+  ---
+  duration_ms: 2.808377
+  type: 'test'
+  ...
+# Subtest: an output whose candidate parent is the base revision of another workspace refuses even with claimed producer evidence
+ok 34 - an output whose candidate parent is the base revision of another workspace refuses even with claimed producer evidence
+  ---
+  duration_ms: 5.382383
+  type: 'test'
+  ...
+# Subtest: validOutcome refuses a parent at another revision, a candidate at the base revision or in another workspace, a needs_evidence scope in another workspace, with another reason or with complete coverage, a whitespace-only indeterminate reason and a verification_failed whose verdict passed
+ok 35 - validOutcome refuses a parent at another revision, a candidate at the base revision or in another workspace, a needs_evidence scope in another workspace, with another reason or with complete coverage, a whitespace-only indeterminate reason and a verification_failed whose verdict passed
+  ---
+  duration_ms: 13.409345
+  type: 'test'
+  ...
+# Subtest: validOutcome refuses a verification basis in another workspace at the candidate revision and a needs_evidence scope at another revision of the request workspace
+ok 36 - validOutcome refuses a verification basis in another workspace at the candidate revision and a needs_evidence scope at another revision of the request workspace
+  ---
+  duration_ms: 8.282023
+  type: 'test'
+  ...
+# Subtest: validOutcome refuses a verified_candidate whose verification verdict is failed even with a forge evidence ref at the candidate basis
+ok 37 - validOutcome refuses a verified_candidate whose verification verdict is failed even with a forge evidence ref at the candidate basis
+  ---
+  duration_ms: 2.357258
+  type: 'test'
+  ...
+# Subtest: validOutcome refuses a verified_candidate whose verification verdict is unknown or partial even with a forge evidence ref at the candidate basis
+ok 38 - validOutcome refuses a verified_candidate whose verification verdict is unknown or partial even with a forge evidence ref at the candidate basis
+  ---
+  duration_ms: 2.622797
+  type: 'test'
+  ...
+# Subtest: validOutcome refuses a verified_candidate whose verification verdict is out of vocabulary or absent even with a forge evidence ref at the candidate basis
+ok 39 - validOutcome refuses a verified_candidate whose verification verdict is out of vocabulary or absent even with a forge evidence ref at the candidate basis
+  ---
+  duration_ms: 3.598807
+  type: 'test'
+  ...
+# Subtest: a valid fixture round-trips through the type and the schema with identical canonical bytes
+ok 40 - a valid fixture round-trips through the type and the schema with identical canonical bytes
+  ---
+  duration_ms: 4.15265
+  type: 'test'
+  ...
+# Subtest: refuses missing top-level field with a typed error and no loader call
+ok 41 - refuses missing top-level field with a typed error and no loader call
+  ---
+  duration_ms: 0.989241
+  type: 'test'
+  ...
+# Subtest: refuses missing nested field with a typed error and no loader call
+ok 42 - refuses missing nested field with a typed error and no loader call
+  ---
+  duration_ms: 0.429814
+  type: 'test'
+  ...
+# Subtest: refuses missing contract with a typed error and no loader call
+ok 43 - refuses missing contract with a typed error and no loader call
+  ---
+  duration_ms: 0.214568
+  type: 'test'
+  ...
+# Subtest: refuses extra top-level field (hostMode confusion) with a typed error and no loader call
+ok 44 - refuses extra top-level field (hostMode confusion) with a typed error and no loader call
+  ---
+  duration_ms: 0.391204
+  type: 'test'
+  ...
+# Subtest: refuses extra nested field with a typed error and no loader call
+ok 45 - refuses extra nested field with a typed error and no loader call
+  ---
+  duration_ms: 0.282156
+  type: 'test'
+  ...
+# Subtest: refuses unknown contract version with a typed error and no loader call
+ok 46 - refuses unknown contract version with a typed error and no loader call
+  ---
+  duration_ms: 0.320599
+  type: 'test'
+  ...
+# Subtest: refuses non-string contract with a typed error and no loader call
+ok 47 - refuses non-string contract with a typed error and no loader call
+  ---
+  duration_ms: 0.227816
+  type: 'test'
+  ...
+# Subtest: refuses unknown evidenceProfile with a typed error and no loader call
+ok 48 - refuses unknown evidenceProfile with a typed error and no loader call
+  ---
+  duration_ms: 0.595765
+  type: 'test'
+  ...
+# Subtest: refuses transport hostMode spelled as evidenceProfile with a typed error and no loader call
+ok 49 - refuses transport hostMode spelled as evidenceProfile with a typed error and no loader call
+  ---
+  duration_ms: 0.743926
+  type: 'test'
+  ...
+# Subtest: refuses unknown contextProfile with a typed error and no loader call
+ok 50 - refuses unknown contextProfile with a typed error and no loader call
+  ---
+  duration_ms: 0.42024
+  type: 'test'
+  ...
+# Subtest: refuses malformed artifact digest with a typed error and no loader call
+ok 51 - refuses malformed artifact digest with a typed error and no loader call
+  ---
+  duration_ms: 0.191072
+  type: 'test'
+  ...
+# Subtest: refuses wrong export with a typed error and no loader call
+ok 52 - refuses wrong export with a typed error and no loader call
+  ---
+  duration_ms: 0.148217
+  type: 'test'
+  ...
+# Subtest: refuses relative workspace path with a typed error and no loader call
+ok 53 - refuses relative workspace path with a typed error and no loader call
+  ---
+  duration_ms: 0.150427
+  type: 'test'
+  ...
+# Subtest: refuses multi writer with a typed error and no loader call
+ok 54 - refuses multi writer with a typed error and no loader call
+  ---
+  duration_ms: 0.155496
+  type: 'test'
+  ...
+# Subtest: refuses non-string effect with a typed error and no loader call
+ok 55 - refuses non-string effect with a typed error and no loader call
+  ---
+  duration_ms: 0.169074
+  type: 'test'
+  ...
+# Subtest: refuses null binding with a typed error and no loader call
+ok 56 - refuses null binding with a typed error and no loader call
+  ---
+  duration_ms: 0.116108
+  type: 'test'
+  ...
+# Subtest: refuses array binding with a typed error and no loader call
+ok 57 - refuses array binding with a typed error and no loader call
+  ---
+  duration_ms: 0.114213
+  type: 'test'
+  ...
+# Subtest: refuses nested non-object with a typed error and no loader call
+ok 58 - refuses nested non-object with a typed error and no loader call
+  ---
+  duration_ms: 0.130641
+  type: 'test'
+  ...
+# Subtest: the committed schema refuses the old entrypoint descriptor and the producer refuses it as a binding
+ok 59 - the committed schema refuses the old entrypoint descriptor and the producer refuses it as a binding
+  ---
+  duration_ms: 0.361464
+  type: 'test'
+  ...
+# Subtest: an admitted binding reaches the loader exactly once
+ok 60 - an admitted binding reaches the loader exactly once
+  ---
+  duration_ms: 0.178717
+  type: 'test'
+  ...
+# Subtest: the schema enums and constants agree with the producer constants
+ok 61 - the schema enums and constants agree with the producer constants
+  ---
+  duration_ms: 0.39403
+  type: 'test'
+  ...
+# Subtest: no second declaration of MechanicalHostBindingV1 exists outside the producer module
+ok 62 - no second declaration of MechanicalHostBindingV1 exists outside the producer module
+  ---
+  duration_ms: 33.877995
+  type: 'test'
+  ...
+# Subtest: the exact adopted grant dispatches the writer once
+ok 63 - the exact adopted grant dispatches the writer once
+  ---
+  duration_ms: 0.40552
+  type: 'test'
+  ...
+# Subtest: refuses a prefix of the adopted grant at the final boundary with zero writer effects
+ok 64 - refuses a prefix of the adopted grant at the final boundary with zero writer effects
+  ---
+  duration_ms: 0.368029
+  type: 'test'
+  ...
+# Subtest: refuses the adopted grant with a suffix segment at the final boundary with zero writer effects
+ok 65 - refuses the adopted grant with a suffix segment at the final boundary with zero writer effects
+  ---
+  duration_ms: 0.19951
+  type: 'test'
+  ...
+# Subtest: refuses an unrelated grant at the final boundary with zero writer effects
+ok 66 - refuses an unrelated grant at the final boundary with zero writer effects
+  ---
+  duration_ms: 0.142907
+  type: 'test'
+  ...
+# Subtest: refuses an empty grant set with zero writer effects
+ok 67 - refuses an empty grant set with zero writer effects
+  ---
+  duration_ms: 0.224324
+  type: 'test'
+  ...
+# Subtest: a grant revoked between admission and dispatch never starts the writer
+ok 68 - a grant revoked between admission and dispatch never starts the writer
+  ---
+  duration_ms: 0.214496
+  type: 'test'
+  ...
+# Subtest: grant representability: two colon-free segments only
+ok 69 - grant representability: two colon-free segments only
+  ---
+  duration_ms: 0.107688
+  type: 'test'
+  ...
+# Subtest: the facade exports a versioned host function, the typed admission error and the binding guards, and nothing else callable
+ok 70 - the facade exports a versioned host function, the typed admission error and the binding guards, and nothing else callable
+  ---
+  duration_ms: 2.674773
+  type: 'test'
+  ...
+# Subtest: positive control: committed descriptor bytes plus the exact tarball admit and run each callback once
+ok 71 - positive control: committed descriptor bytes plus the exact tarball admit and run each callback once
+  ---
+  duration_ms: 679.87953
+  type: 'test'
+  ...
+# Subtest: one changed descriptor byte refuses with HOST_DESCRIPTOR_DIGEST_MISMATCH and zero callbacks
+ok 72 - one changed descriptor byte refuses with HOST_DESCRIPTOR_DIGEST_MISMATCH and zero callbacks
+  ---
+  duration_ms: 2.086363
+  type: 'test'
+  ...
+# Subtest: bytes that hash correctly but are not a JSON descriptor refuse with HOST_DESCRIPTOR_INVALID
+ok 73 - bytes that hash correctly but are not a JSON descriptor refuse with HOST_DESCRIPTOR_INVALID
+  ---
+  duration_ms: 2.0164
+  type: 'test'
+  ...
+# Subtest: a wrong artifact digest surfaces as a typed ENTRYPOINT_ARTIFACT_MISMATCH admission error
+ok 74 - a wrong artifact digest surfaces as a typed ENTRYPOINT_ARTIFACT_MISMATCH admission error
+  ---
+  duration_ms: 8.562955
+  type: 'test'
+  ...
+# Subtest: a service failure is the caller's own error, never relabelled as an admission refusal
+ok 75 - a service failure is the caller's own error, never relabelled as an admission refusal
+  ---
+  duration_ms: 498.517811
+  type: 'test'
+  ...
+# Subtest: an extra callback beyond the four descriptor bindings refuses before install
+ok 76 - an extra callback beyond the four descriptor bindings refuses before install
+  ---
+  duration_ms: 5.391217
+  type: 'test'
+  ...
+# Subtest: a symlinked artifact refuses with ENTRYPOINT_ARTIFACT_INVALID even when the target digest matches
+ok 77 - a symlinked artifact refuses with ENTRYPOINT_ARTIFACT_INVALID even when the target digest matches
+  ---
+  duration_ms: 9.235347
+  type: 'test'
+  ...
+# Subtest: a directory standing in for the artifact refuses with ENTRYPOINT_ARTIFACT_INVALID
+ok 78 - a directory standing in for the artifact refuses with ENTRYPOINT_ARTIFACT_INVALID
+  ---
+  duration_ms: 3.998605
+  type: 'test'
+  ...
+# Subtest: a FIFO standing in for the artifact refuses without blocking
+ok 79 - a FIFO standing in for the artifact refuses without blocking
+  ---
+  duration_ms: 8.568804
+  type: 'test'
+  ...
+# Subtest: a dot-dot traversal segment in the artifact path refuses with ENTRYPOINT_ARTIFACT_PATH_INVALID before any file access
+ok 80 - a dot-dot traversal segment in the artifact path refuses with ENTRYPOINT_ARTIFACT_PATH_INVALID before any file access
+  ---
+  duration_ms: 1.68349
+  type: 'test'
+  ...
+# Subtest: a control character in the artifact path refuses with ENTRYPOINT_ARTIFACT_PATH_INVALID before any file access
+ok 81 - a control character in the artifact path refuses with ENTRYPOINT_ARTIFACT_PATH_INVALID before any file access
+  ---
+  duration_ms: 1.468
+  type: 'test'
+  ...
+# Subtest: positive control for the swap mutant: an untouched tarball is imported exactly once
+ok 82 - positive control for the swap mutant: an untouched tarball is imported exactly once
+  ---
+  duration_ms: 588.44148
+  type: 'test'
+  ...
+# Subtest: negative mutant: one byte swapped into the tarball after the initial digest fails admission with the import counter at 0
+ok 83 - negative mutant: one byte swapped into the tarball after the initial digest fails admission with the import counter at 0
+  ---
+  duration_ms: 512.778611
+  type: 'test'
+  ...
+# Subtest: negative mutant: one byte swapped after the post-install digest and before the import fails the last re-check with the import counter at 0
+ok 84 - negative mutant: one byte swapped after the post-install digest and before the import fails the last re-check with the import counter at 0
+  ---
+  duration_ms: 568.96638
+  type: 'test'
+  ...
+# Subtest: the four services run in order exactly once on the happy path and the outcome is verified_candidate
+ok 85 - the four services run in order exactly once on the happy path and the outcome is verified_candidate
+  ---
+  duration_ms: 4.834695
+  type: 'test'
+  ...
+# Subtest: the bundle has exactly the four members and refuses an unbound or an extra member
+ok 86 - the bundle has exactly the four members and refuses an unbound or an extra member
+  ---
+  duration_ms: 0.745213
+  type: 'test'
+  ...
+# Subtest: a descriptor naming a different callback id cannot change which closure runs (sentinel)
+ok 87 - a descriptor naming a different callback id cannot change which closure runs (sentinel)
+  ---
+  duration_ms: 0.352747
+  type: 'test'
+  ...
+# Subtest: a call for a different request refuses before any closure starts
+ok 88 - a call for a different request refuses before any closure starts
+  ---
+  duration_ms: 0.469734
+  type: 'test'
+  ...
+# Subtest: packages/development/src imports no provider SDK or Pi module (grep guard)
+ok 89 - packages/development/src imports no provider SDK or Pi module (grep guard)
+  ---
+  duration_ms: 1.199964
+  type: 'test'
+  ...
+# Subtest: partial discovery returns needs_evidence before any writer or verifier runs
+ok 90 - partial discovery returns needs_evidence before any writer or verifier runs
+  ---
+  duration_ms: 0.302539
+  type: 'test'
+  ...
+# Subtest: a candidate equal to the base is never verified_candidate and records no Forge verification
+ok 91 - a candidate equal to the base is never verified_candidate and records no Forge verification
+  ---
+  duration_ms: 0.327815
+  type: 'test'
+  ...
+# Subtest: a passed verification with a blank evidence id is indeterminate
+ok 92 - a passed verification with a blank evidence id is indeterminate
+  ---
+  duration_ms: 0.252057
+  type: 'test'
+  ...
+# Subtest: four-arm witness: each domain outcome is produced and returned unchanged
+ok 93 - four-arm witness: each domain outcome is produced and returned unchanged
+  ---
+  duration_ms: 1.304969
+  type: 'test'
+  ...
+# Subtest: a native pass for exactly the candidate projects passed and retains the operation id
+ok 94 - a native pass for exactly the candidate projects passed and retains the operation id
+  ---
+  duration_ms: 0.683113
+  type: 'test'
+  ...
+# Subtest: an envelope for a different commit projects unknown and retains the envelope's ids
+ok 95 - an envelope for a different commit projects unknown and retains the envelope's ids
+  ---
+  duration_ms: 0.334291
+  type: 'test'
+  ...
+# Subtest: partial, unknown and transport-only observations never project passed (mutant: coerce partial to passed turns red)
+ok 96 - partial, unknown and transport-only observations never project passed (mutant: coerce partial to passed turns red)
+  ---
+  duration_ms: 0.278335
+  type: 'test'
+  ...
+# Subtest: a pass without a native gate_definition is not PASS-shaped
+ok 97 - a pass without a native gate_definition is not PASS-shaped
+  ---
+  duration_ms: 0.114032
+  type: 'test'
+  ...
+# Subtest: a changed forge.toml hash between admission and gate refuses even a pass or a fail
+ok 98 - a changed forge.toml hash between admission and gate refuses even a pass or a fail
+  ---
+  duration_ms: 0.153939
+  type: 'test'
+  ...
+# Subtest: a measured red for the right subject stays failed
+ok 99 - a measured red for the right subject stays failed
+  ---
+  duration_ms: 0.094536
+  type: 'test'
+  ...
+# Subtest: producer ids appear only when answered, otherwise uncertain, never fabricated
+ok 100 - producer ids appear only when answered, otherwise uncertain, never fabricated
+  ---
+  duration_ms: 0.31331
+  type: 'test'
+  ...
+# Subtest: absent credentials or Forge executable record blocked with null ids and no PASS
+ok 101 - absent credentials or Forge executable record blocked with null ids and no PASS
+  ---
+  duration_ms: 0.162889
+  type: 'test'
+  ...
+# Subtest: the rig manifest's exports and types entries resolve to listed dist declarations and modules (EAT-R031)
+ok 102 - the rig manifest's exports and types entries resolve to listed dist declarations and modules (EAT-R031)
+  ---
+  duration_ms: 1.748983
+  type: 'test'
+  ...
+# Subtest: the committed pack file list record holds a base list without the host and a head list with it (EAT-R031)
+ok 103 - the committed pack file list record holds a base list without the host and a head list with it (EAT-R031)
+  ---
+  duration_ms: 0.735398
+  type: 'test'
+  ...
+# Subtest: an external project that installs only the packed tarballs imports the host subpath, resolves every module under its own node_modules, and runs develop (EAT-R005, EAT-R007)
+ok 104 - an external project that installs only the packed tarballs imports the host subpath, resolves every module under its own node_modules, and runs develop (EAT-R005, EAT-R007)
+  ---
+  duration_ms: 1764.503226
+  type: 'test'
+  ...
+# Subtest: negative control: the same import from a project without the rig tarball does not resolve to the monorepo (nonzero exit)
+ok 105 - negative control: the same import from a project without the rig tarball does not resolve to the monorepo (nonzero exit)
+  ---
+  duration_ms: 594.590654
+  type: 'test'
+  ...
+# Subtest: the exports map keeps deep imports of unlisted rig internals closed
+ok 106 - the exports map keeps deep imports of unlisted rig internals closed
+  ---
+  duration_ms: 1249.230589
+  type: 'test'
+  ...
+# Subtest: the installed library tarball digest the consumer used equals the packed bytes (fixture sanity)
+ok 107 - the installed library tarball digest the consumer used equals the packed bytes (fixture sanity)
+  ---
+  duration_ms: 1.077949
+  type: 'test'
+  ...
+# Subtest: verified_candidate: a full eligible run sees discover, context, implement, verify exactly once each
+ok 108 - verified_candidate: a full eligible run sees discover, context, implement, verify exactly once each
+  ---
+  duration_ms: 557.659186
+  type: 'test'
+  ...
+# Subtest: verification_failed arrives as a returned outcome, never a thrown transport failure, after all four callbacks
+ok 109 - verification_failed arrives as a returned outcome, never a thrown transport failure, after all four callbacks
+  ---
+  duration_ms: 562.433174
+  type: 'test'
+  ...
+# Subtest: needs_evidence: partial discovery coverage returns SCOPE_INCOMPLETE with implement and verify uninvoked, not a failed gate
+ok 110 - needs_evidence: partial discovery coverage returns SCOPE_INCOMPLETE with implement and verify uninvoked, not a failed gate
+  ---
+  duration_ms: 553.771254
+  type: 'test'
+  ...
+# Subtest: needs_evidence: unknown discovery coverage returns SCOPE_INCOMPLETE with implement and verify uninvoked, not a failed gate
+ok 111 - needs_evidence: unknown discovery coverage returns SCOPE_INCOMPLETE with implement and verify uninvoked, not a failed gate
+  ---
+  duration_ms: 512.815603
+  type: 'test'
+  ...
+# Subtest: indeterminate: DISCOVERY_BASIS_MISMATCH refuses before context, implement and verify run
+ok 112 - indeterminate: DISCOVERY_BASIS_MISMATCH refuses before context, implement and verify run
+  ---
+  duration_ms: 549.020999
+  type: 'test'
+  ...
+# Subtest: indeterminate: CONTEXT_BASIS_MISMATCH refuses before implement and verify run
+ok 113 - indeterminate: CONTEXT_BASIS_MISMATCH refuses before implement and verify run
+  ---
+  duration_ms: 561.522409
+  type: 'test'
+  ...
+# Subtest: indeterminate: CANDIDATE_BASIS_MISMATCH refuses before verify runs
+ok 114 - indeterminate: CANDIDATE_BASIS_MISMATCH refuses before verify runs
+  ---
+  duration_ms: 590.229997
+  type: 'test'
+  ...
+# Subtest: indeterminate: the partial verification verdict is preserved as VERIFICATION_PARTIAL, never promoted to verified or failed
+ok 115 - indeterminate: the partial verification verdict is preserved as VERIFICATION_PARTIAL, never promoted to verified or failed
+  ---
+  duration_ms: 593.52502
+  type: 'test'
+  ...
+# Subtest: indeterminate: the unknown verification verdict is preserved as VERIFICATION_UNKNOWN, never promoted to verified or failed
+ok 116 - indeterminate: the unknown verification verdict is preserved as VERIFICATION_UNKNOWN, never promoted to verified or failed
+  ---
+  duration_ms: 579.349973
+  type: 'test'
+  ...
+# Subtest: installed pinned host runs develop from a real local tarball, no source import
+ok 117 - installed pinned host runs develop from a real local tarball, no source import
+  ---
+  duration_ms: 549.642233
+  type: 'test'
+  ...
+# Subtest: wrong artifact digest refuses before install or callback
+ok 118 - wrong artifact digest refuses before install or callback
+  ---
+  duration_ms: 7.426001
+  type: 'test'
+  ...
+# Subtest: malformed input refuses before install and before service callbacks
+ok 119 - malformed input refuses before install and before service callbacks
+  ---
+  duration_ms: 9.067732
+  type: 'test'
+  ...
+# Subtest: local installed artifact is still pinned after the npm installation
+ok 120 - local installed artifact is still pinned after the npm installation
+  ---
+  duration_ms: 647.600927
+  type: 'test'
+  ...
+# Subtest: a symlinked TMPDIR never misfires ENTRYPOINT_INSTALL_OUTSIDE_ROOT: the install root and the installed package are compared as realpaths and the pinned host still runs develop
+ok 121 - a symlinked TMPDIR never misfires ENTRYPOINT_INSTALL_OUTSIDE_ROOT: the install root and the installed package are compared as realpaths and the pinned host still runs develop
+  ---
+  duration_ms: 838.644085
+  type: 'test'
+  ...
+# Subtest: development-rig installed-host packLibrary leaves no mw-pack-* directory under a private TMPDIR
+ok 122 - development-rig installed-host packLibrary leaves no mw-pack-* directory under a private TMPDIR
+  ---
+  duration_ms: 963.5217
+  type: 'test'
+  ...
+# Subtest: qa container-worker packLibrary leaves no mw-pack-* directory under a private TMPDIR
+ok 123 - qa container-worker packLibrary leaves no mw-pack-* directory under a private TMPDIR
+  ---
+  duration_ms: 948.521703
+  type: 'test'
+  ...
+1..123
+# tests 123
+# suites 0
+# pass 123
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7715.150568

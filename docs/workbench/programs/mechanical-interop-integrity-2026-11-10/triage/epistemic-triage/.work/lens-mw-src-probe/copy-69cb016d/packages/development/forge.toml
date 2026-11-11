@@ -1,0 +1,22 @@
+[package]
+name = "workflows-development"
+type = "library"
+version = "0.1.0"
+language = "typescript"
+description = "Ordinary-code development workflow with narrow injected service ports"
+
+[toolchain]
+manager = "mise"
+config_path = ".mise.toml"
+
+[build]
+backend = "typescript"
+timeout = 600
+gate = ["typing", "test"]
+tiers = ["typing", "test"]
+
+[build.commands]
+# npm workspaces are the declared toolchain; Forge must not infer pnpm.
+package = { command = "npm pack --ignore-scripts", inputs = ["src/**", "package.json", "tsconfig.json", "forge.toml"] }
+typing = { command = "npm run build", inputs = ["src/**/*.ts", "test/**/*.ts", "tsconfig.json", "package.json", "forge.toml"] }
+test = { command = "npm test", inputs = ["src/**", "test/**", "tsconfig.json", "package.json", "forge.toml"] }

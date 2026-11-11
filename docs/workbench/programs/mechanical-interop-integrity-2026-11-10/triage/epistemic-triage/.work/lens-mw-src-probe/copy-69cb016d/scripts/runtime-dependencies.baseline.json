@@ -1,0 +1,7 @@
+{
+  "entries": [
+    "apps/development-rig/package.json|dependencies|@mechanical/workflows-coordination|0.1.0",
+    "apps/development-rig/package.json|dependencies|@mechanical/workflows-development|0.1.0"
+  ],
+  "pythonManifests": []
+}
