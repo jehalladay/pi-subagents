@@ -168,6 +168,14 @@ timeout = 60
 command = "node qa/workbench/timeline-grouped-bench.mjs"
 timeout = 300
 
+[build.commands.graph-view-grouped-bench]
+command = "node qa/workbench/graph-view-grouped-bench.mjs"
+timeout = 300
+
+[build.commands.inspector-four-view-layout-bench]
+command = "node qa/workbench/inspector-four-view-layout-bench.mjs"
+timeout = 600
+
 [build.commands.rf-preview-tsx]
 command = "./node_modules/.bin/vitest run --config vitest.rf-tsx.config.ts"
 timeout = 180
