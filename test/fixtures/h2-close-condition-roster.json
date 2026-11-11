@@ -1,5 +1,5 @@
 {
- "provenance": "wb-4nut.6 census roster, cut by ws-02 (run g10-work-s47) on trunk edccd80289349182284b65d296aee98742c11b34 (landing 287 hop). Producer facts: read-only git show and git cat-file -e at the pins named below (H2 rows verbatim; PERF-F rows as measured cells, each beside the sha256 of its verbatim row); pin witnesses: measured by test/workbench-h2-close-condition-census.test.ts on edccd80 plus the cut, each reviewed against the bead's acceptance before it was written here. Re-measured for wb-zoq7 (the R694 follow-up from landing 308) by ws-03 (run g10-work-s80) on trunk 9f6b726eb7abcb0525b862ece779ab54b17df96e: the A3, Q1 and Q8 witnesses, the new Q10 witness, the constants closeCommands, rootFiles, followUp and findingPlants, the .beads/hooks scan root, R-SYNC, and the bd section (the installed bd 1.1.0-rc.1's help lines, verbatim); every other witness and constant is unchanged. Re-measured for wb-s6jw (the flywheel review of wb-zoq7's cut) by ws-02 (run g10-work-s91) on trunk 88b2ec526f2b1d5d29be4ac3aa225815337e59f8: the A3 witness (four human flagged controls, two human quiet controls, reviewPlants), the constants closeCommands (human respond, human dismiss), review and reviewPlants, and the bd section (every carried help line re-read byte-identical under the installed bd 1.1.0-rc.1 (c7aec2c4c), the human respond and human dismiss help lines added verbatim); every other witness and constant is unchanged. Re-measured for wb-j5y5 (the MWI release validator, slice PI-7) by ws-05 (run g10-work-s228) on trunk 814dcdd01bec171673ff17d085296276a140e15b: the Q6 witness's exportReaders gains qa/workbench/mwi-release.mjs, which reads the tracked bead export read-only for its real-bead check (EAT-R086) and writes no bead store; every other witness and constant is unchanged.",
+ "provenance": "wb-4nut.6 census roster, cut by ws-02 (run g10-work-s47) on trunk edccd80289349182284b65d296aee98742c11b34 (landing 287 hop). Producer facts: read-only git show and git cat-file -e at the pins named below (H2 rows verbatim; PERF-F rows as measured cells, each beside the sha256 of its verbatim row); pin witnesses: measured by test/workbench-h2-close-condition-census.test.ts on edccd80 plus the cut, each reviewed against the bead's acceptance before it was written here. Re-measured for wb-zoq7 (the R694 follow-up from landing 308) by ws-03 (run g10-work-s80) on trunk 9f6b726eb7abcb0525b862ece779ab54b17df96e: the A3, Q1 and Q8 witnesses, the new Q10 witness, the constants closeCommands, rootFiles, followUp and findingPlants, the .beads/hooks scan root, R-SYNC, and the bd section (the installed bd 1.1.0-rc.1's help lines, verbatim); every other witness and constant is unchanged. Re-measured for wb-s6jw (the flywheel review of wb-zoq7's cut) by ws-02 (run g10-work-s91) on trunk 88b2ec526f2b1d5d29be4ac3aa225815337e59f8: the A3 witness (four human flagged controls, two human quiet controls, reviewPlants), the constants closeCommands (human respond, human dismiss), review and reviewPlants, and the bd section (every carried help line re-read byte-identical under the installed bd 1.1.0-rc.1 (c7aec2c4c), the human respond and human dismiss help lines added verbatim); every other witness and constant is unchanged. Re-measured for wb-j5y5 (the MWI release validator, slice PI-7) by ws-05 (run g10-work-s228) on trunk 814dcdd01bec171673ff17d085296276a140e15b: the Q6 witness's exportReaders gains qa/workbench/mwi-release.mjs, which reads the tracked bead export read-only for its real-bead check (EAT-R086) and writes no bead store; every other witness and constant is unchanged. Re-measured for wb-c61s (the R694 follow-up from landing 397; cut #2, the respin by reference over landing 469, which re-cuts the parked cut #1 27772dff of ws-03, run g10-work-s96, over the landed wb-s6jw, wb-j5y5 and wb-294d shapes) by ws-13 (run g10-work-s336) on trunk ce180d82f9385a315ff26bd8e7f9202cac19f5b3: the A3, Q6 and Q10 witnesses, the constants closeCommands, rootFiles, importFollowUp, importPlants, livenessText, livenessPlants, livenessQuiet and helpRuleRefusals, and the bd section's four new help entries and its remeasured record (the installed bd 1.1.0-rc.1, build 49e4695d5); every other witness and constant is unchanged.",
  "bead": "wb-4nut.6",
  "programPin": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
  "producer": {
@@ -420,6 +420,23 @@
    [
     "human",
     "dismiss"
+   ],
+   [
+    "bootstrap"
+   ],
+   [
+    "init",
+    "fromjsonl"
+   ],
+   [
+    "doctor",
+    "fix",
+    "source",
+    "jsonl"
+   ],
+   [
+    "repo",
+    "sync"
    ]
   ],
   "instructionFiles": [
@@ -472,7 +489,7 @@
    }
   ],
   "rootFiles": {
-   "floor": 20,
+   "floor": 22,
    "anchors": [
     {
      "file": "forge.toml",
@@ -502,6 +519,76 @@
    "respondArgv": "spawnSync(\"bd\", [\"human\", \"respond\", id, text])",
    "dismissArgv": "spawnSync(\"bd\", [\"human\", \"dismiss\", id, \"--note\", note])"
   },
+  "importFollowUp": "wb-c61s",
+  "importPlants": {
+   "P14": "spawnSync(\"bd\", [\"bootstrap\", \"--yes\"])",
+   "P15": "spawnSync('bd', ['doctor', '--fix', '--source=jsonl', '--yes'])",
+   "P16": "run: bd init --from-jsonl",
+   "P17": "spawnSync(\"bd\", [\"repo\", \"sync\"])"
+  },
+  "livenessText": "bd close rftsx-auqdi",
+  "livenessPlants": [
+   "src/workbench/zz-live/plant.ts",
+   "qa/workbench/zz-live/plant.mjs",
+   "examples/workflows/zz-live/plant.js",
+   ".pi/agents/zz-live/plant.md",
+   ".codex/zz-live/nested/hooks.json",
+   ".github/workflows/zz-live/plant.yml",
+   ".beads/hooks/zz-live/nested/pre-commit",
+   ".zz-live-plant",
+   "zz-live-plant.config.ts"
+  ],
+  "livenessQuiet": [
+   "ZZ-LIVE-PLANT.md"
+  ],
+  "helpRuleRefusals": [
+   {
+    "record": {},
+    "lines": [
+     "Show issue details"
+    ]
+   },
+   {
+    "record": {
+     "via": "export"
+    },
+    "lines": [
+     "Import issues from a JSONL file (newline-delimited JSON) into the database."
+    ]
+   },
+   {
+    "record": {
+     "via": "import"
+    },
+    "lines": [
+     "Restore the pre-compaction content of a compacted issue."
+    ]
+   },
+   {
+    "record": {
+     "via": "import"
+    },
+    "lines": [
+     "Close one or more issues."
+    ]
+   },
+   {
+    "record": {
+     "via": "import"
+    },
+    "lines": [
+     "Export all issues to JSONL (newline-delimited JSON) format."
+    ]
+   },
+   {
+    "record": {
+     "via": "import"
+    },
+    "lines": [
+     "  bd import --json                 # Structured output with created and skipped IDs"
+    ]
+   }
+  ],
   "residuals": {
    "R-ARGV": [
     "Q1"
@@ -839,9 +926,20 @@
         1,
         1,
         1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
         1
        ],
        "quiet": [
+        0,
+        0,
+        0,
+        0,
+        0,
         0,
         0,
         0,
@@ -913,6 +1011,35 @@
         "launches": 1
        }
       },
+      "importPlants": {
+       "P14": {
+        "carried": true,
+        "launches": 1
+       },
+       "P15": {
+        "carried": true,
+        "launches": 1
+       },
+       "P16": {
+        "carried": true,
+        "launches": 1
+       },
+       "P17": {
+        "carried": true,
+        "launches": 1
+       }
+      },
+      "liveness": [
+       "src/workbench/zz-live/plant.ts: bd close rftsxauqdi",
+       "qa/workbench/zz-live/plant.mjs: bd close rftsxauqdi",
+       "examples/workflows/zz-live/plant.js: bd close rftsxauqdi",
+       ".pi/agents/zz-live/plant.md: bd close rftsxauqdi",
+       ".codex/zz-live/nested/hooks.json: bd close rftsxauqdi",
+       ".github/workflows/zz-live/plant.yml: bd close rftsxauqdi",
+       ".beads/hooks/zz-live/nested/pre-commit: bd close rftsxauqdi",
+       ".zz-live-plant: bd close rftsxauqdi",
+       "zz-live-plant.config.ts: bd close rftsxauqdi"
+      ],
       "seam": [
        "show"
       ],
@@ -1236,7 +1363,8 @@
       "exportReaders": [
        "qa/workbench/mwi-release.mjs",
        "qa/workbench/tracker-export.mjs"
-      ]
+      ],
+      "rawSql": 0
      }
     },
     {
@@ -1287,7 +1415,8 @@
       "federation": 0,
       "merge": 0,
       "pull": 0,
-      "tracker": 0
+      "tracker": 0,
+      "restore": 0
      }
     }
    ]
@@ -1382,6 +1511,35 @@
      "The issue is closed with a \"Dismissed\" reason and optional note."
     ]
    },
+   "bootstrap": {
+    "command": "bd bootstrap --help",
+    "via": "import",
+    "lines": [
+     "  \u2022 If .beads/backup/*.jsonl exists: restores from backup",
+     "  \u2022 If .beads/issues.jsonl exists: imports from git-tracked JSONL"
+    ]
+   },
+   "init fromjsonl": {
+    "command": "bd init --help",
+    "via": "import",
+    "lines": [
+     "      --from-jsonl                                     Import issues from configured import.path; refuses remote history unless --discard-remote authorizes replacement"
+    ]
+   },
+   "doctor fix source jsonl": {
+    "command": "bd doctor --help",
+    "via": "import",
+    "lines": [
+     "  bd doctor --fix --source=jsonl # Rebuild database from a JSONL export"
+    ]
+   },
+   "repo sync": {
+    "command": "bd repo sync --help",
+    "via": "import",
+    "lines": [
+     "Reads issues.jsonl from each additional repository and imports them into"
+    ]
+   },
    "batch": {
     "command": "bd batch --help",
     "lines": [
@@ -1398,6 +1556,10 @@
      "      --force                        Override close-time integrity guards when setting --status closed (blocked-by-open, epic-with-open-children); mirrors 'bd close --force'"
     ]
    }
+  },
+  "remeasured": {
+   "version": "bd version 1.1.0-rc.1 (49e4695d5) db-schema-max=v59",
+   "measuredBy": "bd --version and bd <command> --help for every command the root help lists and every subcommand each of those lists, run by the wb-c61s re-cutting seat (ws-13, run g10-work-s336, 2026-11-11) from an empty scratch directory outside any repository, no store opened (the directory stayed empty); every landed help line above reads verbatim in this build, and the entries bootstrap, init fromjsonl, doctor fix source jsonl and repo sync were read from it, every line verbatim, leading spaces kept (wb-c61s cut #1, ws-03 run g10-work-s96, read the first three the same way on build c7aec2c4c); among every help line naming an import, a restore or a rebuild together with JSONL or import.path, only the root command list (bd import's entry), config (the import.* settings), import, init and init-safety (init --from-jsonl), doctor, bootstrap and repo sync carry one, and every command path among them is in the vocabulary"
   }
  }
 }
