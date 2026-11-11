@@ -41,22 +41,34 @@
  *     this file: removing one of them from every literal here (table row,
  *     script step, frozen entry and header count) is NOT CLAIMED to red this
  *     census.
+ *   - Where in src/index.ts each counted errorResult call sits, and what its
+ *     result does after the call (a flag overridden afterwards, or a path no
+ *     input reaches), are NOT CLAIMED by the source anchors: they count call
+ *     expressions in the parse, and each flagged row here pins its own
+ *     recorded reply.
  *
  * Each scripted turn makes exactly one tool call, so a session's tool results
  * line up with its steps one to one, and every row checks the reply's text as
  * well as its flag: a misaligned script fails instead of passing vacuously. The
  * frozen shape at the end pins the header counts, every judged row, the
  * registered cases (vitest's task tree: each in run mode and run before it), and
- * two anchors outside this file: src/index.ts carries exactly 21 errorResult call
- * sites, as many as the 16 flagged rows here, D01-D03 of
- * test/agent-refusal-error-flag.test.ts and the two NOT CLAIMED resume sites;
- * and exactly 2 of them report a failed Agent run ("Agent failed: ..."), as many
- * as the C rows.
+ * anchors outside this file, read from the TypeScript parse of src/index.ts
+ * rather than its text, so a comment or a string that mentions errorResult(
+ * never counts (the same case first checks the reader on a probe source that
+ * names errorResult 7 times, once in a real call): exactly 21 call expressions
+ * whose callee is the identifier errorResult, as many as the 16
+ * flagged rows here, D01-D03 of test/agent-refusal-error-flag.test.ts and the
+ * two NOT CLAIMED resume sites; no other occurrence of that identifier but the
+ * helper's own top-level declaration (no alias, shadow or second binding);
+ * exactly 2 of the calls with a message that begins "Failed to resume agent",
+ * as many as those two resume sites; and exactly 2 with a message that carries
+ * "Agent failed: ", as many as the C rows.
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { type Context, fauxAssistantMessage, fauxToolCall, type ToolResultMessage, type UserMessage } from "@earendil-works/pi-ai";
+import ts from "typescript";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { registerAgents } from "../src/agent-types.js";
 import { loadCustomAgents } from "../src/custom-agents.js";
@@ -296,6 +308,61 @@ const AGREEMENT: AgreementRow[] = [
 const DIRECT_CENSUS_FLAGGED = 3;
 /** The two "Failed to resume agent" errorResult sites, NOT CLAIMED above. */
 const NOT_CLAIMED_SITES = 2;
+/** How both of those sites' messages begin (the background and the foreground resume). */
+const RESUME_FAILURE = "Failed to resume agent ";
+/** The text of each errorResult message that reports a failed Agent run (the C rows' sites). */
+const FAILED_RUN = "Agent failed: ";
+/** The reader's label for the one errorResult identifier that is not a call: the helper's own declaration. */
+const HELPER_DECLARATION = "the top-level function declaration";
+
+/**
+ * The errorResult identifiers of a TypeScript source, read from its parse
+ * rather than its text, so a comment or a string that mentions errorResult(
+ * never counts. `calls` holds each call expression whose callee is the
+ * identifier errorResult, in source order, with its first argument's literal
+ * text (a string, or a template's literal parts with every substitution
+ * dropped; "" for any other expression); `others` labels every other
+ * occurrence of the identifier by the syntax node it sits in.
+ */
+function errorResultIdentifiers(source: string): { calls: Array<{ message: string }>; others: string[] } {
+  const file = ts.createSourceFile("index.ts", source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const calls: Array<{ message: string }> = [];
+  const others: string[] = [];
+  const literalText = (node: ts.Expression | undefined): string => {
+    if (node === undefined) return "";
+    if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) return node.text;
+    if (ts.isTemplateExpression(node)) return [node.head.text, ...node.templateSpans.map((span) => span.literal.text)].join("");
+    return "";
+  };
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) && node.text === "errorResult") {
+      const parent = node.parent;
+      if (ts.isCallExpression(parent) && parent.expression === node) calls.push({ message: literalText(parent.arguments[0]) });
+      else others.push(ts.isFunctionDeclaration(parent) && parent.name === node && parent.parent === file ? HELPER_DECLARATION : ts.SyntaxKind[parent.kind]);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return { calls, others };
+}
+
+/**
+ * A probe source the reader must read as ONE errorResult call beside the
+ * helper's declaration: the commented-out call (the shape of the gate's
+ * G-S13X/G-S14X members), the line and block comments, the JSDoc link and the
+ * strings all name errorResult( without calling it.
+ */
+const READER_PROBE = [
+  "/** Flags the reply: {@link errorResult} is textResult plus isError. */",
+  "function errorResult(msg: string) {",
+  "  return msg;",
+  "}",
+  '// return errorResult("commented out");',
+  '/* errorResult("block comment") */',
+  "const quoted = 'errorResult(string)';",
+  "const templated = `errorResult(template)`;",
+  'export const real = errorResult("real");',
+].join("\n");
 
 describe("EAT-R311 in a real pi session: 16 top-level Agent, steer_subagent and get_subagent_result refusal and failed-run replies record isError:true, 6 success replies record isError:false, 9 reply classes record the same flag at the top level and in the nested tools, and 2 failed foreground runs keep their status error details and render the live Agent tool's error card", () => {
   describe("R: refusals (strict dispatch, model, unknown id, schedule conflicts)", () => {
@@ -590,12 +657,14 @@ describe("EAT-R311 in a real pi session: 16 top-level Agent, steer_subagent and 
 // a skipped block still reaches it: the header names the judged set and its
 // counts are the tables'; every judged row is listed; the registered cases are
 // exactly the tables' (vitest's task tree), each in run mode, not inverted, and
-// run before this case; and src/index.ts — outside this file — carries one
-// errorResult call site per flagged row here, per flagged row of the direct
-// census, and per NOT CLAIMED resume site, and one "Agent failed:" errorResult
-// site per C row. Removing, renaming, re-flagging or
-// skipping a row, or hollowing the header, reds here. Skipping this case
-// itself is NOT CLAIMED by this census.
+// run before this case; and src/index.ts — outside this file, read from its
+// TypeScript parse — holds one errorResult call expression per flagged row
+// here, per flagged row of the direct census and per NOT CLAIMED resume site,
+// no other errorResult identifier but the helper's declaration, two calls with
+// the resume-failure message, and one "Agent failed:" call per C row.
+// Removing, renaming, re-flagging or skipping a row, or hollowing the header,
+// reds here. Skipping this case itself, or deleting one of its own assertions
+// (the probe check included), is NOT CLAIMED by this census.
 it("frozen shape: the header, every judged row, the registered cases and the source anchor", ({ task }) => {
   const header = task.file.tasks.find((entry) => entry.type === "suite")?.name ?? "";
   expect(header).toBe("EAT-R311 in a real pi session: 16 top-level Agent, steer_subagent and get_subagent_result refusal and failed-run replies record isError:true, 6 success replies record isError:false, 9 reply classes record the same flag at the top level and in the nested tools, and 2 failed foreground runs keep their status error details and render the live Agent tool's error card");
@@ -676,15 +745,27 @@ it("frozen shape: the header, every judged row, the registered cases and the sou
     "every other case is in run mode, not inverted, and ran before this one",
   ).toEqual([]);
 
-  // The anchor outside this file: one errorResult call site in src/index.ts per
-  // flagged row here, per flagged row of the direct census, and per NOT CLAIMED
-  // resume site.
-  const source = readFileSync(fileURLToPath(new URL("../src/index.ts", import.meta.url)), "utf8");
-  const sites = source.match(/(?<!function )\berrorResult\(/g)?.length ?? 0;
-  expect(sites).toBe(topLevel.filter((row) => row.flagged).length + DIRECT_CENSUS_FLAGGED + NOT_CLAIMED_SITES);
-  // The C rows' anchor: each errorResult site that reports a failed Agent run
+  // The anchors outside this file, read from the TypeScript parse of
+  // src/index.ts. The reader first, on a probe source that names errorResult 7
+  // times (a JSDoc link, the helper's declaration, a commented-out call, a block
+  // comment, a string, a template and one real call): it reads the one call and
+  // the declaration, nothing else.
+  expect(READER_PROBE.match(/\berrorResult\b/g), "errorResult mentions in the probe source").toHaveLength(7);
+  expect(errorResultIdentifiers(READER_PROBE)).toEqual({ calls: [{ message: "real" }], others: [HELPER_DECLARATION] });
+  const { calls, others } = errorResultIdentifiers(readFileSync(fileURLToPath(new URL("../src/index.ts", import.meta.url)), "utf8"));
+  expect(calls, "errorResult calls: one per flagged row here, per flagged row of the direct census and per NOT CLAIMED resume site").toHaveLength(
+    topLevel.filter((row) => row.flagged).length + DIRECT_CENSUS_FLAGGED + NOT_CLAIMED_SITES,
+  );
+  expect(others, "the only errorResult identifier that is not a call is the helper's declaration").toEqual([HELPER_DECLARATION]);
+  expect(
+    calls.filter((call) => call.message.startsWith(RESUME_FAILURE)),
+    "the NOT CLAIMED resume sites",
+  ).toHaveLength(NOT_CLAIMED_SITES);
+  // The C rows' anchor: each errorResult call that reports a failed Agent run
   // (the foreground spawn and the foreground resume, the two that hand the
   // renderer their run's details) is drawn by one C row.
-  const failedRunSites = source.match(/\berrorResult\(`[^`]*Agent failed: /g)?.length ?? 0;
-  expect(failedRunSites).toBe(CARDS.length);
+  expect(
+    calls.filter((call) => call.message.includes(FAILED_RUN)),
+    "the failed-run sites",
+  ).toHaveLength(CARDS.length);
 });
