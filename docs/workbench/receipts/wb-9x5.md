@@ -3,9 +3,10 @@
 ## 2026-11-11 receipt: W21 parent acceptance read from seven grouped-10k bench receipt lines on one declared host (machine seat ws-13, run g10-work-s338, base ce180d8)
 
 - Acceptance (bead description): "10k+ grouped operations measured; p50/p95 reducer/layout timings on declared host; memory bounded by active projection. Acceptance: measured runs, no invented numbers."
-- What answers it: seven measured runs of four landed W21 bench CLIs, each over the deterministic grouped-10k fixture of `qa/workbench/grouped-fixture.mjs`, on one host at one clean trunk revision. R1 to R4 are the runs of record, one `forge run <bench>` each, taken in that order. X1 to X3 are direct `node --expose-gc qa/workbench/inspector-retained-memory-bench.mjs` runs taken before them in the same clean worktree. They are kept because X1 reads a finding (clause A3 below). Each run's one JSON receipt line, as its bench printed it, is committed verbatim in `test/fixtures/w21-acceptance-receipt-lines.json` and bound to this entry by its SHA-256 (Receipt lines, below), and `test/workbench-w21-acceptance-receipt.test.ts` reads every table of this entry back against those lines.
+- What answers it: seven measured runs of four landed W21 bench CLIs, each over the deterministic grouped-10k fixture of `qa/workbench/grouped-fixture.mjs`, on one host at one clean trunk revision. R1 to R4 are the runs of record, one `forge run <bench>` each, taken in that order. X1 to X3 are direct `node --expose-gc qa/workbench/inspector-retained-memory-bench.mjs` runs taken before them in the same clean worktree. They are kept because X1 reads a finding (clause A3 below). Each run's one JSON receipt line, as its bench printed it, is committed verbatim in `test/fixtures/w21-acceptance-receipt-lines.json` and bound to this entry by its SHA-256 (Receipt lines, below), and `test/workbench-w21-acceptance-receipt.test.ts` reads every table of this entry back: the falsifier table against the test's own falsifier list, every other table against those lines.
 - Seat records, not read from any receipt line: the Command id and Start load1 cells of the runs table. A command id is the forge envelope's `ids.command_id`. A start load1 is the first field of `/proc/loadavg`, read just before the run started, on a host shared with other lanes. X1's load was not read.
 - The bead's notes ask that no cap be raised blindly. This cut raises no cap and changes no file under `src/` or `qa/`.
+- Revised at cut #2 by machine seat ws-07 (run g10-work-s338, base ce180d8) after the gate refused cut #1: the test's acceptance reader now reads this entry as the page renders it, the test gained a bounds reader, a falsifier list and a reader of its table, and this revision adds this bullet and rewrites the What the test holds section, one item of NOT CLAIMED and one sentence of the bullet on what answers the acceptance. The runs, the receipt lines and every measured figure are cut #1's, unchanged; no run was repeated.
 
 ### Runs
 
@@ -110,11 +111,55 @@ Every receipt line carries this same fixture (the test holds the eight fields in
 - W21R-SHAPE: the runs table, the receipt-lines table and the data file name exactly R1 to R4 and X1 to X3, in that order; each data line is one line, and its SHA-256 is the one the receipt-lines table lists.
 - W21R-REJUDGE: each line carries its bench's contract and command, and re-judges to the exitCode, verdict and realised it records. Each one is realised.
 - W21R-RUNS: each runs-table row matches its line's utc, exit code and verdict.
-- W21R-TREE-HOST: the tree-and-host values above hold in every line.
+- W21R-TREE-HOST: every run has a parsed line, and the tree-and-host values above hold in every line.
 - W21R-A1, W21R-A2 and W21R-A3: each clause table holds exactly its frozen rows, and every cell after the field column is read from the line. The within cells are recomputed from the line, never read from the table.
-- W21R-ACCEPTANCE: the acceptance sentence is quoted once, verbatim.
-- W21R-FROZEN: the frozen-shape literals of the run set and the clause rows (standing rule 16).
-- W21R-F01 to W21R-F12: one-edit copies of this receipt, each read red: a timing cell, a planted p95 over 20 ms, a 9999-operation fixture, a dirty stamp, a dropped data line, another cpu count, X1's finding claimed away, the declared-host words dropped, a dropped memory row, a flipped memory row, another group count, and a recorded verdict its measurements contradict.
+- W21R-BOUNDS: each line records the bound its bench's assessor judges, as the bench modules export it (`NAVIGATION_TARGET_MS` for R1 and R3, `SELECTOR_TARGET_MS`, `REDRAW_MAX_HZ` and `FOLD_THRESHOLD_EVENTS` for R2, `RETAINED_BOUNDS` for R4 and X1 to X3), and the target sentence of the Performance benchmark section of `docs/workbench/14-qa-and-benchmarks.md` renders the same 20 ms, 4 Hz and 100k-event figures.
+- W21R-ACCEPTANCE: read as the page renders it (`docsSection` of `test/helpers/census.ts`), this entry carries no HTML, and exactly one of its top-level paragraphs and list items quotes the acceptance sentence, verbatim, in text that reads the same in its source.
+- W21R-FROZEN: the frozen-shape literals of the run set, the clause rows and the falsifier list (standing rule 16).
+- W21R-EDITS: the falsifier table below lists the test's falsifiers exactly, in order, each with the input its edited copy changes and its case title.
+
+The falsifiers W21R-F01 to W21R-F38 are edited copies, some with one edit and some with several. Each builds a copy of this receipt, of the data file, of both, or of `docs/workbench/14-qa-and-benchmarks.md` (docs/14), asserts that its copy changes exactly the input the table names, and reads the copy red through the reader its case title names.
+
+| Falsifier | Edited copy of | Case title |
+| --- | --- | --- |
+| W21R-F01 | receipt | a timing cell edited away from its line is named by the A2 reader |
+| W21R-F02 | data file | a p95 over 20 ms planted in R1's line under its recorded within-target verdict is caught by the re-judge |
+| W21R-F03 | data file | a 9999-operation fixture in R1's line is not the W21 shape: the re-judge and the A1 floor both name it |
+| W21R-F04 | data file | a dirty tree stamped in R3's line is named by the tree-and-host reader |
+| W21R-F05 | data file | X1's line removed from the data file is named by the shape reader and by the runs reader |
+| W21R-F06 | data file | another host's cpu count in R2's line is named by the tree-and-host reader |
+| W21R-F07 | receipt | X1's finding claimed away in the runs table (exit 0, within-bound) is named by the runs reader |
+| W21R-F08 | receipt | the acceptance quote without its declared-host words is named by the acceptance reader |
+| W21R-F09 | receipt | X1's ArrayBuffer row dropped from the memory table is named by the A3 reader |
+| W21R-F10 | receipt | X1's over-bound ArrayBuffer row marked within bound is named by the A3 reader |
+| W21R-F11 | data file | a group count changed in X2's line breaks the one-fixture rule of the A1 reader |
+| W21R-F12 | data file | an over-bound verdict recorded for R4's within-bound measurements is caught by the re-judge |
+| W21R-F13 | receipt and data file | a tree stamped dirty in the table and in every line is named by the tree-and-host reader's clean-tree rule |
+| W21R-F14 | receipt and data file | a caller-asserted short revision in the table and in every line is named by the git and full-sha rules |
+| W21R-F15 | receipt | a host row dropped from the tree-and-host table is named by its field-list rule |
+| W21R-F16 | receipt | a run of record without a cmd_ id and a direct run with one are both named by the runs reader |
+| W21R-F17 | receipt | a runs-table utc cell one millisecond off its line is named by the runs reader |
+| W21R-F18 | receipt | X3's row dropped from the runs table and from the receipt-lines table is named by the shape reader twice |
+| W21R-F19 | data file | X2's line stored over several lines is named by the shape reader's one-line rule and its sha binding |
+| W21R-F20 | data file | another contract, another command and an unmeasured flag in three lines are named by the re-judge |
+| W21R-F21 | data file | a shallowest nesting of 4 in R1's line is named by the A1 depth floor |
+| W21R-F22 | receipt | the acceptance sentence quoted a second time is named by the acceptance reader |
+| W21R-F23 | receipt | the entry heading reworded leaves every reader without its entry |
+| W21R-F24 | receipt | a second tree-and-host table in the entry is named by the one-table rule |
+| W21R-F25 | receipt | the acceptance quote hidden in an inline HTML comment inside its bullet (the gate's LEG2-P1 plant) is named by the no-HTML and rendered-quote rules |
+| W21R-F26 | receipt | the acceptance quote moved into an HTML comment block (the gate's LEG2-P2 plant) is named by the no-HTML and rendered-quote rules |
+| W21R-F27 | receipt | the acceptance quote inside a hidden span, whose text the rendered view keeps, is named by the no-HTML and plain-source rules |
+| W21R-F28 | receipt | an HTML comment elsewhere in the entry, the quote left plain, is named by the no-HTML rule alone |
+| W21R-F29 | receipt | the acceptance quote written as an image's alt text is named by the plain-source rule alone |
+| W21R-F30 | receipt | the acceptance quote moved into a link title, which the page shows only as a tooltip, is named by the rendered-quote rule alone |
+| W21R-F31 | data file | R2's selector target loosened to 2000 ms in its line (the line edit of the gate's LEG2-P9 plant) re-judges as recorded and is named by the bounds reader |
+| W21R-F32 | data file | a 25 ms overview p95 planted in R2's line under a 2000 ms target (the line edits of the gate's LEG2-P9b plant) re-judges as recorded and is named by the bounds reader |
+| W21R-F33 | data file | X1's ArrayBuffer bound loosened to 8 MiB in its line (the bound edit of the gate's LEG2-P10 plant) is named by the bounds reader |
+| W21R-F34 | data file | R1's and R3's recorded 20 ms targets raised to 200 ms in their lines are named by the bounds reader |
+| W21R-F35 | docs/14 | the docs/14 target sentence edited from 20 ms to 200 ms is named by the bounds reader against both 20 ms constants |
+| W21R-F36 | data file | an empty runs array in the data file (the gate's LEG2-P11 plant) is named by the tree-and-host reader for every run |
+| W21R-F37 | receipt | a falsifier row dropped from the receipt's falsifier table is named by the falsifier-table reader |
+| W21R-F38 | receipt | a falsifier's edited-copy cell changed from data file to receipt is named by the falsifier-table reader |
 
 ### NOT CLAIMED by this entry
 
@@ -122,7 +167,7 @@ Every receipt line carries this same fixture (the test holds the eight fields in
 - That these figures reproduce on another host, at another load or at another revision.
 - Anything about production caps. Every timed pass here runs at the bench-only limits each line records, which the retained bench labels non-comparable to production. R1's default-limits pass keeps the default caps, truncates by design and is judged on no timing.
 - Render, navigate and resize across the four views, the graph-view build and the timeline honesty bundle: one receipt scope under wb-9x5.11 since the owner graph audit of 2026-11-11 merged wb-9x5.10 and wb-9x5.16 into it. Also a live terminal, live native topology, and the other docs/14 measures (terminal bytes per update, recovery latency, Pi tool reply size), each of which has its own bench or child bead.
-- Any figure stated in this entry's prose. Only the tables and the receipt lines are read back.
+- Any claim this entry's prose makes, but the acceptance quote. The test reads back only the tables, the quote and the receipt lines (it holds the whole entry free of HTML, but reads no prose claim), so a rewrite of the A3 finding's prose (the gate's LEG2-P6 plant) reads green.
 - The bench-receipt halves of `test/workbench-docs14-performance-benchmark.census.ts`, which stay unpinned there.
 
 ### Receipt lines

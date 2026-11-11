@@ -8,12 +8,27 @@
  * forge run per bench) and three earlier direct runs of the retained-memory bench (X1-X3), kept because X1 reads a
  * finding. Each run's ONE JSON receipt line, as its bench printed it, is committed verbatim (a JSON string, in entry order)
  * in test/fixtures/w21-acceptance-receipt-lines.json, the data file, and the entry's receipt-lines table lists each
- * line's SHA-256; every table of the entry is read back against those lines here. The lines stay out of docs/ and qa/,
- * whose word censuses would read them: as docs text R2 and R3 match the docs-sentence rule (C2) of the wb-4wmu.1 status
- * census through words in their bench labels, and the src/ and qa/ word count (D1) of
+ * line's SHA-256; every measurement table of the entry is read back against those lines here. The lines stay out of
+ * docs/ and qa/, whose word censuses would read them: as docs text R2 and R3 match the docs-sentence rule (C2) of the
+ * wb-4wmu.1 status census through words in their bench labels, and the src/ and qa/ word count (D1) of
  * test/workbench-rf-federation-refusal-codes-census.test.ts matches a key of the R3 line. This file runs no bench
  * and spawns no process: it lexes the receipt with marked, parses the data file and re-judges each line with the pure
  * assessor its bench module exports.
+ *
+ * RESPIN 1 (cut #2, curing refusal #1 of cut #1 at the gate run g10-gate-s289). U1 RENDERED-TEXT DOCS TRUTH: cut #1's
+ * acceptance reader matched marked's raw list-item and paragraph text, which keeps inline HTML, so the gate's LEG2-P1
+ * plant (the quote inside an inline HTML comment the page never shows) read green. The reader now reads the entry
+ * through the shared rendered view (docsSection, test/helpers/census.ts): it refuses any HTML in the entry (block or
+ * inline, comments included), counts the quote only in rendered text, and requires the text that carries the quote to
+ * read the same in its source (W21R-F25..W21R-F30: an inline comment, a comment block, a hidden span, a comment
+ * elsewhere in the entry, image alt text, a link title). U2 RECORD HONESTY: cut #1's header called every falsifier a
+ * one-edit copy; they are edited copies, some with one edit and some with several, and each changes the receipt, the
+ * data file, both, or docs/14.
+ * FALSIFIERS names the input each one changes, every falsifier case asserts it, and W21R-EDITS reads the receipt's
+ * falsifier table against FALSIFIERS. Riders of the gate record: F1, the bounds each line was judged against are bound to
+ * the benches' exported constants and to the docs/14 target sentence (W21R-BOUNDS; W21R-F31..W21R-F35, the line edits
+ * of the LEG2-P9, P9b and P10 plants among them); F4, the tree-and-host reader names every run without a parsed line
+ * (W21R-F36, the LEG2-P11 plant).
  *
  * Pinned reader set (case id: target -> result on these bytes):
  * - W21R-SHAPE: the runs table, the receipt-lines table and the data file name exactly RUNS (R1-R4, then X1-X3) in
@@ -23,8 +38,8 @@
  *   grouped-10k shape) -> holds; X1 re-judges to its own recorded exit 1, over-bound.
  * - W21R-RUNS: each runs-table row equals its line's exitCode, verdict and utc; a run of record names a cmd_ id and a
  *   two-decimal start load1, a direct run names no command id -> holds.
- * - W21R-TREE-HOST: the tree-and-host table lists one full git revision read from git with a clean tree, and its
- *   revision, host and toolchain values equal those of every data line -> holds.
+ * - W21R-TREE-HOST: every run has a parsed data line, and the tree-and-host table lists one full git revision read from
+ *   git with a clean tree, its revision, host and toolchain values equal to those of every data line -> holds.
  * - W21R-A1: the A1 table rows are exactly the A1 pins of CLAUSES with the R1 line's values, every line measured that
  *   fixture, and it holds at least 10000 operations nested exactly 5 groups deep -> holds.
  * - W21R-A2: the A2 table rows are exactly the A2 pins of CLAUSES, each with the samples, p50, p95 and max its line
@@ -32,10 +47,19 @@
  * - W21R-A3: the A3 table rows are exactly the A3 pins of CLAUSES, each measured cell equal to the line's judged figure,
  *   each bound cell equal to its bounds figure, and each within cell equal to measured <= bound -> holds; the X1
  *   ArrayBuffer row reads no.
- * - W21R-ACCEPTANCE: the entry quotes the acceptance sentence once, verbatim, and that sentence is the three clause
- *   phrases of CLAUSES joined in order plus the outcome phrase -> holds.
- * - W21R-FROZEN: the frozen-shape literals of RUNS and CLAUSES (standing rule 16) -> holds.
- * - W21R-F01..W21R-F24: one-edit copies of the live receipt or data file, each read red by the reader its title names.
+ * - W21R-BOUNDS: docs/14's "Performance benchmark" section renders one target sentence whose 20 ms, 4 Hz and 100k-event
+ *   figures equal NAVIGATION_TARGET_MS and SELECTOR_TARGET_MS, REDRAW_MAX_HZ and FOLD_THRESHOLD_EVENTS; R1's and R3's
+ *   lines record a target.ms equal to NAVIGATION_TARGET_MS, the constant their assessors judge against, R2's line records
+ *   bounds equal to those three reducer-selector constants, and the four retained-memory lines record bounds equal to
+ *   RETAINED_BOUNDS, key for key -> holds.
+ * - W21R-ACCEPTANCE: in the shared rendered view the entry carries no HTML, exactly one of its top-level paragraphs and
+ *   list items renders the quoted acceptance sentence (the three clause phrases of CLAUSES joined in order plus the
+ *   outcome phrase), and that text reads the same in its source -> holds.
+ * - W21R-FROZEN: the frozen-shape literals of RUNS, CLAUSES and FALSIFIERS (standing rule 16) -> holds.
+ * - W21R-EDITS: the receipt's falsifier table lists exactly FALSIFIERS, in order: each id, the input its edited copy
+ *   changes and its case title -> holds.
+ * - W21R-F01..W21R-F38 (FALSIFIERS): edited copies of the live receipt, the data file or docs/14; each case first asserts
+ *   that its copy changes exactly the input FALSIFIERS names, then that the reader its title names reads the copy red.
  *
  * NOT CLAIMED by this file:
  * - that the runs happened as the runs table says: the command ids and start load1 cells are seat records, and no reader
@@ -43,26 +67,34 @@
  * - that the figures reproduce on another host, at another load or at another revision, or say anything of production
  *   caps (every figure but R1's default-limits pass is at bench-only limits, which the retained bench labels
  *   non-comparable to production);
- * - render, navigate and resize across the four views as a receipt of its own (wb-9x5.11), the graph-view build
- *   (wb-9x5.10), the timeline honesty bundle (wb-9x5.16), a live terminal or native topology;
- * - any figure the entry states in prose: only its tables and the data lines are read;
+ * - render, navigate and resize across the four views as a receipt of its own, the graph-view build and the timeline
+ *   honesty bundle (one receipt scope under wb-9x5.11 since the owner graph audit of 2026-11-11 merged wb-9x5.10 and
+ *   wb-9x5.16 into it), a live terminal or native topology;
+ * - any claim the entry's prose makes, but the acceptance quote: only its tables, the quote and the data lines are read
+ *   back (the whole entry is held free of HTML, but no prose claim is read), so a prose rewrite of the A3 finding (the
+ *   gate's LEG2-P6 plant) reads green here;
+ * - HTML outside the entry, and inline markup in entry text that carries no acceptance quote;
  * - the bench-receipt halves of test/workbench-docs14-performance-benchmark.census.ts, which stay unpinned there.
  * Scope of the re-judge: the assessors are the ones on the tree under test, so a later change to an assessor's rules
  * re-judges these lines under the new rules, and a red names the run.
  */
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
+import { isDeepStrictEqual } from "node:util";
 import { Lexer, type Token, type Tokens } from "marked";
 import { describe, expect, it } from "vitest";
-import { assessReceipt, RECEIPT_CONTRACT } from "../qa/workbench/grouped-fixture.mjs";
-import { assessReducerSelectorReceipt, REDUCER_SELECTOR_CONTRACT } from "../qa/workbench/reducer-selector-bench.mjs";
-import { assessRetainedReceipt, RETAINED_RECEIPT_CONTRACT } from "../qa/workbench/retained-memory.mjs";
+import { assessReceipt, NAVIGATION_TARGET_MS, RECEIPT_CONTRACT } from "../qa/workbench/grouped-fixture.mjs";
+import { assessReducerSelectorReceipt, FOLD_THRESHOLD_EVENTS, REDRAW_MAX_HZ, REDUCER_SELECTOR_CONTRACT, SELECTOR_TARGET_MS } from "../qa/workbench/reducer-selector-bench.mjs";
+import { assessRetainedReceipt, RETAINED_BOUNDS, RETAINED_RECEIPT_CONTRACT } from "../qa/workbench/retained-memory.mjs";
 import { assessTimelineReceipt, TIMELINE_RECEIPT_CONTRACT } from "../qa/workbench/timeline-grouped-core.mjs";
+import { docsSection } from "./helpers/census.js";
 
 type RunId = "R1" | "R2" | "R3" | "R4" | "X1" | "X2" | "X3";
 type Bench = "inspector-grouped-bench" | "reducer-selector-bench" | "timeline-grouped-bench" | "inspector-retained-memory-bench";
 type RunKind = "forge run of record" | "direct node run";
 type ClauseId = "A1" | "A2" | "A3";
+/** The committed input(s) a falsifier's edited copy changes, as the receipt's falsifier table names them. */
+type Edits = "receipt" | "data file" | "receipt and data file" | "docs/14";
 
 interface Judgement {
   readonly exitCode: number;
@@ -104,22 +136,42 @@ interface Lines {
   readonly shas: ReadonlyMap<string, string>;
   readonly findings: readonly string[];
 }
-/** The two committed inputs: the docs receipt and the data file of receipt lines. */
+/** The three committed inputs: the docs receipt, the data file of receipt lines and docs/14, whose target the benches judge. */
 interface Sources {
   readonly markdown: string;
   readonly data: string;
+  readonly docs14: string;
 }
 interface DataLine {
   readonly run: string;
   readonly bench: string;
   readonly line: string;
 }
+/** Where a bench's line records the bound its assessor judges, and that bound as the bench module exports it. */
+interface LineBound {
+  readonly path: string;
+  readonly value: unknown;
+}
+/** One falsifier: an edited copy of the live inputs and the red its case title names. */
+interface Falsifier {
+  readonly id: string;
+  readonly edits: Edits;
+  readonly title: string;
+  readonly edit: (live: Sources) => Sources;
+  readonly holds: (edited: Sources) => void;
+}
 
 const RECEIPT = new URL("../docs/workbench/receipts/wb-9x5.md", import.meta.url);
 const DATA = new URL("./fixtures/w21-acceptance-receipt-lines.json", import.meta.url);
+const DOCS14 = new URL("../docs/workbench/14-qa-and-benchmarks.md", import.meta.url);
 const DATA_SCHEMA = "workbench.w21-acceptance-lines/v1";
+const RECEIPT_TITLE = "wb-9x5: W21: Scaled swarms / profiling";
 const ENTRY_HEADING =
   "2026-11-11 receipt: W21 parent acceptance read from seven grouped-10k bench receipt lines on one declared host (machine seat ws-13, run g10-work-s338, base ce180d8)";
+const DOCS14_SECTION = "Performance benchmark";
+const DOCS14_PARENTS: readonly string[] = ["14 — Test strategy, conformance suite, benchmark and adversarial controls"];
+/** docs/14's target sentence as the page renders it: the navigation/layout target in ms, the redraw cap in Hz and the fold size in thousands of events. */
+const DOCS14_TARGET = /^Proposed responsive target <=(\d+)ms per navigation\/layout calculation on declared reference host, redraw <=(\d+)Hz live; no full (\d+)k-event fold per redraw;/;
 
 const BENCHES: Readonly<Record<Bench, BenchModule>> = {
   "inspector-grouped-bench": {
@@ -142,6 +194,18 @@ const BENCHES: Readonly<Record<Bench, BenchModule>> = {
     command: "node --expose-gc qa/workbench/inspector-retained-memory-bench.mjs",
     assess: assessRetainedReceipt as (receipt: unknown) => Judgement,
   },
+};
+
+/**
+ * The bound each bench's assessor judges a line against, and where the line records it. The R1 and R3 assessors judge
+ * against NAVIGATION_TARGET_MS and ignore the line's target; the R2 and retained-memory assessors judge against the
+ * line's own bounds, so for these committed lines it is this binding that ties those bounds to the exported constants.
+ */
+const LINE_BOUNDS: Readonly<Record<Bench, LineBound>> = {
+  "inspector-grouped-bench": { path: "target.ms", value: NAVIGATION_TARGET_MS },
+  "reducer-selector-bench": { path: "bounds", value: { selectorTargetMs: SELECTOR_TARGET_MS, redrawMaxHz: REDRAW_MAX_HZ, foldThresholdEvents: FOLD_THRESHOLD_EVENTS } },
+  "timeline-grouped-bench": { path: "target.ms", value: NAVIGATION_TARGET_MS },
+  "inspector-retained-memory-bench": { path: "bounds", value: RETAINED_BOUNDS },
 };
 
 /** The seven runs, in entry order: the four runs of record, then the three earlier direct retained-memory runs. */
@@ -234,8 +298,6 @@ const W21_DEPTH = 5;
 
 const isHeading = (token: Token): token is Tokens.Heading => token.type === "heading";
 const isTable = (token: Token): token is Tokens.Table => token.type === "table";
-const isList = (token: Token): token is Tokens.List => token.type === "list";
-const isParagraph = (token: Token): token is Tokens.Paragraph => token.type === "paragraph";
 const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null && !Array.isArray(value);
 
 /** The value at a dot path of own properties, or undefined where any step is absent. */
@@ -262,7 +324,7 @@ function readOr(file: URL): string {
   }
 }
 
-const readLive = (): Sources => ({ markdown: readOr(RECEIPT), data: readOr(DATA) });
+const readLive = (): Sources => ({ markdown: readOr(RECEIPT), data: readOr(DATA), docs14: readOr(DOCS14) });
 
 /** The top-level tokens of the one entry under ENTRY_HEADING, up to the next level-1 or level-2 heading. */
 function entryOf(markdown: string): Entry {
@@ -424,12 +486,13 @@ function runsFindings(sources: Sources): string[] {
   return out;
 }
 
-/** W21R-TREE-HOST's reader: one clean git revision and one declared host, the same in every line. */
+/** W21R-TREE-HOST's reader: every run has a parsed line, and one clean git revision and one declared host hold in every line. */
 function treeHostFindings(sources: Sources): string[] {
   const entry = entryOf(sources.markdown);
   const found = tableWith(entry, TREE_HOST_HEADER, "tree-and-host table");
   const lines = linesOf(sources);
-  const out = [...entry.findings, ...found.findings];
+  const out = [...entry.findings, ...found.findings, ...lines.findings];
+  for (const run of RUNS) if (!lines.receipts.has(run.id)) out.push(`${run.id}: no parsed receipt line to read the tree and host from`);
   if (found.table === undefined) return out;
   const fields = found.table.rows.map(row => row[0]);
   if (fields.join(", ") !== TREE_HOST_FIELDS.join(", ")) out.push(`tree-and-host fields ${fields.join(", ")}; expected ${TREE_HOST_FIELDS.join(", ")}`);
@@ -506,13 +569,85 @@ function clauseFindings(sources: Sources, id: ClauseId): string[] {
   return out;
 }
 
-/** W21R-ACCEPTANCE's reader: the entry quotes the acceptance sentence exactly once. */
+/**
+ * W21R-BOUNDS' reader: docs/14's target sentence renders the figures the bench constants carry, and every line records
+ * the bound its bench's assessor judges against (LINE_BOUNDS), key for key.
+ */
+function boundsFindings(sources: Sources): string[] {
+  const out: string[] = [];
+  const section = docsSection(sources.docs14, DOCS14_SECTION, 2, DOCS14_PARENTS);
+  if (!section.ok) out.push(`docs/14: ${section.why}`);
+  else {
+    const targets = section.blocks.flatMap(block => {
+      const match = block.kind === "paragraph" ? DOCS14_TARGET.exec(block.text) : null;
+      return match === null ? [] : [match];
+    });
+    const [target] = targets;
+    if (targets.length !== 1 || target === undefined) out.push(`docs/14: ${targets.length} paragraphs of "${DOCS14_SECTION}" render the target sentence, not 1`);
+    else {
+      const [, ms, hz, thousands] = target;
+      if (Number(ms) !== NAVIGATION_TARGET_MS) out.push(`docs/14 target <=${ms}ms; NAVIGATION_TARGET_MS is ${NAVIGATION_TARGET_MS}`);
+      if (Number(ms) !== SELECTOR_TARGET_MS) out.push(`docs/14 target <=${ms}ms; SELECTOR_TARGET_MS is ${SELECTOR_TARGET_MS}`);
+      if (Number(hz) !== REDRAW_MAX_HZ) out.push(`docs/14 redraw <=${hz}Hz; REDRAW_MAX_HZ is ${REDRAW_MAX_HZ}`);
+      if (Number(thousands) * 1000 !== FOLD_THRESHOLD_EVENTS) out.push(`docs/14 fold of ${thousands}k events; FOLD_THRESHOLD_EVENTS is ${FOLD_THRESHOLD_EVENTS}`);
+    }
+  }
+  const lines = linesOf(sources);
+  out.push(...lines.findings);
+  for (const run of RUNS) {
+    const receipt = lines.receipts.get(run.id);
+    if (receipt === undefined) {
+      out.push(`${run.id}: no parsed receipt line to read its bounds from`);
+      continue;
+    }
+    const bound = LINE_BOUNDS[run.bench];
+    const recorded = fieldAt(receipt, bound.path);
+    if (!isDeepStrictEqual(recorded, bound.value)) out.push(`${run.id}: ${bound.path} reads ${render(recorded)}; ${run.bench} judges against ${render(bound.value)}`);
+  }
+  return out;
+}
+
+const NO_HTML = "the entry carries HTML (a comment or a tag), whose rendered text can hide what its source says";
+const UNPLAIN = "the text that quotes the acceptance sentence reads differently in its source: ";
+
+/**
+ * W21R-ACCEPTANCE's reader, on the shared rendered view (docsSection): the entry carries no HTML, exactly one top-level
+ * paragraph or list item renders the quoted sentence, and every text that renders it reads the same in its source.
+ */
 function acceptanceFindings(sources: Sources): string[] {
   const entry = entryOf(sources.markdown);
+  const section = docsSection(sources.markdown, ENTRY_HEADING, 2, [RECEIPT_TITLE]);
+  if (!section.ok) return [...entry.findings, `rendered view: ${section.why}`];
+  const out = [...entry.findings];
+  if (section.hasHtml) out.push(NO_HTML);
   const quoted = `"${ACCEPTANCE}"`;
-  const texts = entry.tokens.flatMap(token => (isList(token) ? token.items.map(item => item.text) : isParagraph(token) ? [token.text] : []));
-  const hits = texts.filter(text => text.includes(quoted)).length;
-  return hits === 1 ? [...entry.findings] : [...entry.findings, `the entry quotes the acceptance sentence ${hits} times, not once: ${quoted}`];
+  const texts = section.blocks.flatMap(block => (block.kind === "list" ? block.items : block.kind === "paragraph" ? [{ text: block.text, markdown: block.markdown }] : []));
+  const quoting = texts.filter(text => text.text.includes(quoted));
+  if (quoting.length !== 1) out.push(`the entry quotes the acceptance sentence ${quoting.length} times, not once: ${quoted}`);
+  for (const text of quoting) if (text.markdown !== text.text) out.push(`${UNPLAIN}${text.markdown}`);
+  return out;
+}
+
+const FALSIFIERS_HEADER: readonly string[] = ["Falsifier", "Edited copy of", "Case title"];
+
+/** W21R-EDITS' reader: the receipt's falsifier table lists exactly FALSIFIERS, in order, each with its edited input and its case title. */
+function falsifierTableFindings(sources: Sources): string[] {
+  const entry = entryOf(sources.markdown);
+  const found = tableWith(entry, FALSIFIERS_HEADER, "falsifier table");
+  const out = [...entry.findings, ...found.findings];
+  if (found.table === undefined) return out;
+  const rows = found.table.rows.map(row => row.join(" | "));
+  const listed = FALSIFIERS.map(falsifier => [falsifier.id, falsifier.edits, falsifier.title].join(" | "));
+  for (let index = 0; index < Math.max(rows.length, listed.length); index += 1) {
+    if (rows[index] !== listed[index]) out.push(`falsifier table row ${index + 1}: ${rows[index] ?? "(absent)"}; FALSIFIERS lists ${listed[index] ?? "(none)"}`);
+  }
+  return out;
+}
+
+/** Which committed input(s) an edited copy changes against the live inputs ("nothing" when the edit did not apply). */
+function editsOf(live: Sources, edited: Sources): string {
+  const changed = [...(edited.markdown === live.markdown ? [] : ["receipt"]), ...(edited.data === live.data ? [] : ["data file"]), ...(edited.docs14 === live.docs14 ? [] : ["docs/14"])];
+  return changed.length === 0 ? "nothing" : changed.join(" and ");
 }
 
 /** The data file parsed for an edit: its object and its runs array. */
@@ -588,6 +723,386 @@ function editRow(sources: Sources, match: (cells: readonly string[]) => boolean,
 
 const rowOf = (clause: ClauseId, run: RunId, path: string) => (cells: readonly string[]): boolean => cells[0] === clause && cells[1] === run && cells[3] === path;
 
+/** The acceptance bullet as the entry writes it, the anchor of the acceptance falsifiers' edits. */
+const ACCEPTANCE_BULLET = `- Acceptance (bead description): "${ACCEPTANCE}"`;
+const QUOTED_NONE = `the entry quotes the acceptance sentence 0 times, not once: "${ACCEPTANCE}"`;
+const replaceBullet = (live: Sources, bullet: string): Sources => withMarkdown(live, markdown => markdown.replace(ACCEPTANCE_BULLET, bullet));
+const R2_BOUNDS = (selectorTargetMs: number): string => `R2: bounds reads {"selectorTargetMs":${selectorTargetMs},"redrawMaxHz":4,"foldThresholdEvents":100000}; reducer-selector-bench judges against {"selectorTargetMs":20,"redrawMaxHz":4,"foldThresholdEvents":100000}`;
+
+/**
+ * The falsifiers, in case order. Each edits a copy of the live inputs (the receipt, the data file, both, or docs/14;
+ * several carry more than one edit), and its case asserts that the copy changes exactly `edits` before the red its
+ * title names; the receipt's falsifier table lists every one (W21R-EDITS).
+ */
+const FALSIFIERS: readonly Falsifier[] = [
+  {
+    id: "W21R-F01",
+    edits: "receipt",
+    title: "a timing cell edited away from its line is named by the A2 reader",
+    edit: live => editRow(live, rowOf("A2", "R2", "reducer.all"), cells => cells.map((cell, index) => (index === 6 ? `${cell}1` : cell))),
+    holds: edited => expect(clauseFindings(edited, "A2").some(line => line.startsWith("A2/R2/reducer.all: p95 ms cell"))).toBe(true),
+  },
+  {
+    id: "W21R-F02",
+    edits: "data file",
+    title: "a p95 over 20 ms planted in R1's line under its recorded within-target verdict is caught by the re-judge",
+    edit: live => editLine(live, "R1", receipt => setAt(receipt, `${NAV}.resize.p95`, 25)),
+    holds: edited => {
+      expect(rejudgeFindings(edited)).toContain("R1: re-judged exitCode 1; the line records 0");
+      expect(shapeFindings(edited).some(line => line.startsWith("line R1: the data line's sha256 is "))).toBe(true);
+    },
+  },
+  {
+    id: "W21R-F03",
+    edits: "data file",
+    title: "a 9999-operation fixture in R1's line is not the W21 shape: the re-judge and the A1 floor both name it",
+    edit: live => editLine(live, "R1", receipt => setAt(receipt, "fixture.nodes", 9999)),
+    holds: edited => {
+      expect(rejudgeFindings(edited)).toContain("R1: not realised under the inspector-grouped-bench assessor (not the W21 shape)");
+      expect(clauseFindings(edited, "A1")).toContain("A1 floor: R1 measured 9999 operations, below 10000");
+    },
+  },
+  {
+    id: "W21R-F04",
+    edits: "data file",
+    title: "a dirty tree stamped in R3's line is named by the tree-and-host reader",
+    edit: live => editLine(live, "R3", receipt => setAt(receipt, "dirty", true)),
+    holds: edited => expect(treeHostFindings(edited)).toContain("R3: dirty reads true; the table lists false"),
+  },
+  {
+    id: "W21R-F05",
+    edits: "data file",
+    title: "X1's line removed from the data file is named by the shape reader and by the runs reader",
+    edit: live => dropLine(live, "X1"),
+    holds: edited => {
+      expect(shapeFindings(edited).some(line => line.startsWith("data lines "))).toBe(true);
+      expect(runsFindings(edited)).toContain("runs X1: no receipt line to read the row against");
+    },
+  },
+  {
+    id: "W21R-F06",
+    edits: "data file",
+    title: "another host's cpu count in R2's line is named by the tree-and-host reader",
+    edit: live => editLine(live, "R2", receipt => setAt(receipt, "cpus", 32)),
+    holds: edited => expect(treeHostFindings(edited)).toContain("R2: cpus reads 32; the table lists 64"),
+  },
+  {
+    id: "W21R-F07",
+    edits: "receipt",
+    title: "X1's finding claimed away in the runs table (exit 0, within-bound) is named by the runs reader",
+    edit: live => editRow(live, cells => cells[0] === "X1", cells => cells.map((cell, index) => (index === 6 ? "0" : index === 7 ? "within-bound" : cell))),
+    holds: edited => {
+      const findings = runsFindings(edited);
+      expect(findings).toContain("runs X1: exit cell 0; the line reads 1");
+      expect(findings).toContain("runs X1: verdict cell within-bound; the line reads over-bound");
+    },
+  },
+  {
+    id: "W21R-F08",
+    edits: "receipt",
+    title: "the acceptance quote without its declared-host words is named by the acceptance reader",
+    edit: live => withMarkdown(live, markdown => markdown.replace("reducer/layout timings on declared host;", "reducer/layout timings;")),
+    holds: edited => expect(acceptanceFindings(edited)).toHaveLength(1),
+  },
+  {
+    id: "W21R-F09",
+    edits: "receipt",
+    title: "X1's ArrayBuffer row dropped from the memory table is named by the A3 reader",
+    edit: live => editRow(live, rowOf("A3", "X1", "judged.arrayBufferGrowthBytes"), () => null),
+    holds: edited => expect(clauseFindings(edited, "A3").some(line => line.startsWith("A3 table rows differ from the frozen pins"))).toBe(true),
+  },
+  {
+    id: "W21R-F10",
+    edits: "receipt",
+    title: "X1's over-bound ArrayBuffer row marked within bound is named by the A3 reader",
+    edit: live => editRow(live, rowOf("A3", "X1", "judged.arrayBufferGrowthBytes"), cells => cells.map((cell, index) => (index === 6 ? "yes" : cell))),
+    holds: edited => expect(clauseFindings(edited, "A3")).toContain("A3/X1/judged.arrayBufferGrowthBytes: Within bound cell yes; the line reads no"),
+  },
+  {
+    id: "W21R-F11",
+    edits: "data file",
+    title: "a group count changed in X2's line breaks the one-fixture rule of the A1 reader",
+    edit: live => editLine(live, "X2", receipt => setAt(receipt, "fixture.groups", 842)),
+    holds: edited => expect(clauseFindings(edited, "A1")).toContain("A1 fixture: X2 fixture.groups reads 842; R1 reads 843"),
+  },
+  {
+    id: "W21R-F12",
+    edits: "data file",
+    title: "an over-bound verdict recorded for R4's within-bound measurements is caught by the re-judge",
+    edit: live => editLine(live, "R4", receipt => setAt(receipt, "verdict", "over-bound")),
+    holds: edited => expect(rejudgeFindings(edited)).toContain("R4: re-judged verdict within-bound; the line records over-bound"),
+  },
+  {
+    id: "W21R-F13",
+    edits: "receipt and data file",
+    title: "a tree stamped dirty in the table and in every line is named by the tree-and-host reader's clean-tree rule",
+    edit: live =>
+      editAllLines(
+        editRow(live, cells => cells.length === 2 && cells[0] === "dirty", cells => [cells[0], "true"]),
+        receipt => setAt(receipt, "dirty", true),
+      ),
+    holds: edited => expect(treeHostFindings(edited)).toEqual(["dirty true: the measured tree was not clean"]),
+  },
+  {
+    id: "W21R-F14",
+    edits: "receipt and data file",
+    title: "a caller-asserted short revision in the table and in every line is named by the git and full-sha rules",
+    edit: live => {
+      const rows = editRow(editRow(live, cells => cells.length === 2 && cells[0] === "revision", cells => [cells[0], "ce180d8"]), cells => cells.length === 2 && cells[0] === "revisionSource", cells => [cells[0], "env-override"]);
+      return editAllLines(rows, receipt => {
+        setAt(receipt, "revision", "ce180d8");
+        setAt(receipt, "revisionSource", "env-override");
+      });
+    },
+    holds: edited => expect(treeHostFindings(edited)).toEqual(["revision ce180d8 is not a full git sha", "revisionSource env-override is not git"]),
+  },
+  {
+    id: "W21R-F15",
+    edits: "receipt",
+    title: "a host row dropped from the tree-and-host table is named by its field-list rule",
+    edit: live => editRow(live, cells => cells.length === 2 && cells[0] === "toolchain.piTui", () => null),
+    holds: edited => expect(treeHostFindings(edited).some(line => line.startsWith("tree-and-host fields "))).toBe(true),
+  },
+  {
+    id: "W21R-F16",
+    edits: "receipt",
+    title: "a run of record without a cmd_ id and a direct run with one are both named by the runs reader",
+    edit: live =>
+      editRow(
+        editRow(live, cells => cells.length === 8 && cells[0] === "R1", cells => cells.map((cell, index) => (index === 3 ? "none" : cell))),
+        cells => cells.length === 8 && cells[0] === "X2",
+        cells => cells.map((cell, index) => (index === 3 ? "cmd_0123456789ab" : cell)),
+      ),
+    holds: edited => {
+      const findings = runsFindings(edited);
+      expect(findings).toContain("runs R1: command id cell none is not a cmd_ id");
+      expect(findings).toContain("runs X2: a direct run names command id cmd_0123456789ab");
+    },
+  },
+  {
+    id: "W21R-F17",
+    edits: "receipt",
+    title: "a runs-table utc cell one millisecond off its line is named by the runs reader",
+    edit: live => editRow(live, cells => cells.length === 8 && cells[0] === "R2", cells => cells.map((cell, index) => (index === 5 ? "2026-11-11T05:41:44.617Z" : cell))),
+    holds: edited => expect(runsFindings(edited)).toContain("runs R2: utc cell 2026-11-11T05:41:44.617Z; the line reads 2026-11-11T05:41:44.616Z"),
+  },
+  {
+    id: "W21R-F18",
+    edits: "receipt",
+    title: "X3's row dropped from the runs table and from the receipt-lines table is named by the shape reader twice",
+    edit: live =>
+      editRow(
+        editRow(live, cells => cells.length === 8 && cells[0] === "X3", () => null),
+        cells => cells.length === 3 && cells[0] === "X3",
+        () => null,
+      ),
+    holds: edited => {
+      const findings = shapeFindings(edited);
+      expect(findings.some(line => line.startsWith("runs table rows "))).toBe(true);
+      expect(findings.some(line => line.startsWith("receipt-lines table rows "))).toBe(true);
+    },
+  },
+  {
+    id: "W21R-F19",
+    edits: "data file",
+    title: "X2's line stored over several lines is named by the shape reader's one-line rule and its sha binding",
+    edit: live => splitLine(live, "X2"),
+    holds: edited => {
+      const findings = shapeFindings(edited);
+      expect(findings.some(line => line.startsWith("line X2: holds ") && line.endsWith(" lines, not the one receipt line"))).toBe(true);
+      expect(findings.some(line => line.startsWith("line X2: the data line's sha256 is "))).toBe(true);
+    },
+  },
+  {
+    id: "W21R-F20",
+    edits: "data file",
+    title: "another contract, another command and an unmeasured flag in three lines are named by the re-judge",
+    edit: live =>
+      editLine(
+        editLine(
+          editLine(live, "R3", receipt => setAt(receipt, "contract", "workbench.timeline-grouped-bench/v0")),
+          "R2",
+          receipt => setAt(receipt, "command", "node qa/workbench/other-bench.mjs"),
+        ),
+        "R4",
+        receipt => setAt(receipt, "measured", false),
+      ),
+    holds: edited => {
+      const findings = rejudgeFindings(edited);
+      expect(findings).toContain("R3: contract workbench.timeline-grouped-bench/v0; timeline-grouped-bench prints workbench.timeline-grouped-bench/v1");
+      expect(findings).toContain("R2: command node qa/workbench/other-bench.mjs; reducer-selector-bench is node qa/workbench/reducer-selector-bench.mjs");
+      expect(findings).toContain("R4: measured is false");
+    },
+  },
+  {
+    id: "W21R-F21",
+    edits: "data file",
+    title: "a shallowest nesting of 4 in R1's line is named by the A1 depth floor",
+    edit: live => editLine(live, "R1", receipt => setAt(receipt, "fixture.minDepth", 4)),
+    holds: edited => expect(clauseFindings(edited, "A1")).toContain("A1 floor: R1 fixture.minDepth reads 4; the W21 shape nests exactly 5 deep"),
+  },
+  {
+    id: "W21R-F22",
+    edits: "receipt",
+    title: "the acceptance sentence quoted a second time is named by the acceptance reader",
+    edit: live => withMarkdown(live, markdown => markdown.replace("\n### Runs\n", `\nQuoted again: "${ACCEPTANCE}"\n\n### Runs\n`)),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([`the entry quotes the acceptance sentence 2 times, not once: "${ACCEPTANCE}"`]),
+  },
+  {
+    id: "W21R-F23",
+    edits: "receipt",
+    title: "the entry heading reworded leaves every reader without its entry",
+    edit: live => withMarkdown(live, markdown => markdown.replace(`## ${ENTRY_HEADING}`, `## ${ENTRY_HEADING.replace("W21 parent acceptance", "W21 acceptance")}`)),
+    holds: edited => {
+      const missing = `entry: 0 level-2 headings read "${ENTRY_HEADING}", not 1`;
+      expect(shapeFindings(edited)).toContain(missing);
+      expect(runsFindings(edited)).toContain(missing);
+      expect(treeHostFindings(edited)).toContain(missing);
+      expect(acceptanceFindings(edited)).toContain(missing);
+      expect(falsifierTableFindings(edited)).toContain(missing);
+    },
+  },
+  {
+    id: "W21R-F24",
+    edits: "receipt",
+    title: "a second tree-and-host table in the entry is named by the one-table rule",
+    edit: live => {
+      const start = live.markdown.indexOf("| Field | Value |");
+      const end = live.markdown.indexOf("\n\n", start);
+      const block = live.markdown.slice(start, end);
+      return withMarkdown(live, markdown => markdown.replace(block, `${block}\n\n${block}`));
+    },
+    holds: edited => expect(treeHostFindings(edited)).toEqual(['tree-and-host table: 2 tables of the entry carry the header "Field | Value", not 1']),
+  },
+  {
+    id: "W21R-F25",
+    edits: "receipt",
+    title: "the acceptance quote hidden in an inline HTML comment inside its bullet (the gate's LEG2-P1 plant) is named by the no-HTML and rendered-quote rules",
+    edit: live => replaceBullet(live, `- Acceptance (bead description): <!-- "${ACCEPTANCE}" -->`),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([NO_HTML, QUOTED_NONE]),
+  },
+  {
+    id: "W21R-F26",
+    edits: "receipt",
+    title: "the acceptance quote moved into an HTML comment block (the gate's LEG2-P2 plant) is named by the no-HTML and rendered-quote rules",
+    edit: live => withMarkdown(live, markdown => markdown.replace(`${ACCEPTANCE_BULLET}\n`, `<!-- "${ACCEPTANCE}" -->\n\n`)),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([NO_HTML, QUOTED_NONE]),
+  },
+  {
+    id: "W21R-F27",
+    edits: "receipt",
+    title: "the acceptance quote inside a hidden span, whose text the rendered view keeps, is named by the no-HTML and plain-source rules",
+    edit: live => replaceBullet(live, `- Acceptance (bead description): <span hidden>"${ACCEPTANCE}"</span>`),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([NO_HTML, `${UNPLAIN}Acceptance (bead description): <span hidden>"${ACCEPTANCE}"</span>`]),
+  },
+  {
+    id: "W21R-F28",
+    edits: "receipt",
+    title: "an HTML comment elsewhere in the entry, the quote left plain, is named by the no-HTML rule alone",
+    edit: live => withMarkdown(live, markdown => markdown.replace("\n### Runs\n", "\n<!-- a note the page does not show -->\n\n### Runs\n")),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([NO_HTML]),
+  },
+  {
+    id: "W21R-F29",
+    edits: "receipt",
+    title: "the acceptance quote written as an image's alt text is named by the plain-source rule alone",
+    edit: live => replaceBullet(live, `- Acceptance (bead description): !["${ACCEPTANCE}"](acceptance.png)`),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([`${UNPLAIN}Acceptance (bead description): !["${ACCEPTANCE}"](acceptance.png)`]),
+  },
+  {
+    id: "W21R-F30",
+    edits: "receipt",
+    title: "the acceptance quote moved into a link title, which the page shows only as a tooltip, is named by the rendered-quote rule alone",
+    edit: live => replaceBullet(live, `- Acceptance (bead description): [the bead](https://example.invalid/wb-9x5 '"${ACCEPTANCE}"')`),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([QUOTED_NONE]),
+  },
+  {
+    id: "W21R-F31",
+    edits: "data file",
+    title: "R2's selector target loosened to 2000 ms in its line (the line edit of the gate's LEG2-P9 plant) re-judges as recorded and is named by the bounds reader",
+    edit: live => editLine(live, "R2", receipt => setAt(receipt, "bounds.selectorTargetMs", 2000)),
+    holds: edited => {
+      expect(rejudgeFindings(edited)).toEqual([]);
+      expect(boundsFindings(edited)).toEqual([R2_BOUNDS(2000)]);
+    },
+  },
+  {
+    id: "W21R-F32",
+    edits: "data file",
+    title: "a 25 ms overview p95 planted in R2's line under a 2000 ms target (the line edits of the gate's LEG2-P9b plant) re-judges as recorded and is named by the bounds reader",
+    edit: live =>
+      editLine(live, "R2", receipt => {
+        setAt(receipt, "bounds.selectorTargetMs", 2000);
+        setAt(receipt, "selectors.overview.p95", 25);
+      }),
+    holds: edited => {
+      expect(rejudgeFindings(edited)).toEqual([]);
+      expect(boundsFindings(edited)).toEqual([R2_BOUNDS(2000)]);
+    },
+  },
+  {
+    id: "W21R-F33",
+    edits: "data file",
+    title: "X1's ArrayBuffer bound loosened to 8 MiB in its line (the bound edit of the gate's LEG2-P10 plant) is named by the bounds reader",
+    edit: live => editLine(live, "X1", receipt => setAt(receipt, "bounds.arrayBufferGrowthBytes", 8_388_608)),
+    holds: edited =>
+      expect(boundsFindings(edited)).toEqual([
+        'X1: bounds reads {"heapGrowthAfterWarmupBytes":16777216,"arrayBufferGrowthBytes":8388608,"reachableBodiesAfterBlur":0}; inspector-retained-memory-bench judges against {"heapGrowthAfterWarmupBytes":16777216,"arrayBufferGrowthBytes":1048576,"reachableBodiesAfterBlur":0}',
+      ]),
+  },
+  {
+    id: "W21R-F34",
+    edits: "data file",
+    title: "R1's and R3's recorded 20 ms targets raised to 200 ms in their lines are named by the bounds reader",
+    edit: live =>
+      editLine(
+        editLine(live, "R1", receipt => setAt(receipt, "target.ms", 200)),
+        "R3",
+        receipt => setAt(receipt, "target.ms", 200),
+      ),
+    holds: edited => expect(boundsFindings(edited)).toEqual(["R1: target.ms reads 200; inspector-grouped-bench judges against 20", "R3: target.ms reads 200; timeline-grouped-bench judges against 20"]),
+  },
+  {
+    id: "W21R-F35",
+    edits: "docs/14",
+    title: "the docs/14 target sentence edited from 20 ms to 200 ms is named by the bounds reader against both 20 ms constants",
+    edit: live => ({ ...live, docs14: live.docs14.replace("Proposed responsive target <=20ms per navigation", "Proposed responsive target <=200ms per navigation") }),
+    holds: edited => expect(boundsFindings(edited)).toEqual(["docs/14 target <=200ms; NAVIGATION_TARGET_MS is 20", "docs/14 target <=200ms; SELECTOR_TARGET_MS is 20"]),
+  },
+  {
+    id: "W21R-F36",
+    edits: "data file",
+    title: "an empty runs array in the data file (the gate's LEG2-P11 plant) is named by the tree-and-host reader for every run",
+    edit: live => {
+      const { parsed } = dataForEdit(live.data);
+      parsed.runs = [];
+      return { ...live, data: `${JSON.stringify(parsed, null, 2)}\n` };
+    },
+    holds: edited => expect(treeHostFindings(edited)).toEqual(RUNS.map(run => `${run.id}: no parsed receipt line to read the tree and host from`)),
+  },
+  {
+    id: "W21R-F37",
+    edits: "receipt",
+    title: "a falsifier row dropped from the receipt's falsifier table is named by the falsifier-table reader",
+    edit: live => editRow(live, cells => cells.length === 3 && cells[0] === "W21R-F13", () => null),
+    holds: edited => {
+      const findings = falsifierTableFindings(edited);
+      expect(findings.some(line => line.startsWith("falsifier table row 13: W21R-F14 | "))).toBe(true);
+      expect(findings.at(-1)?.startsWith(`falsifier table row ${FALSIFIERS.length}: (absent); FALSIFIERS lists `)).toBe(true);
+    },
+  },
+  {
+    id: "W21R-F38",
+    edits: "receipt",
+    title: "a falsifier's edited-copy cell changed from data file to receipt is named by the falsifier-table reader",
+    edit: live => editRow(live, cells => cells.length === 3 && cells[0] === "W21R-F02", cells => [cells[0], "receipt", cells[2]]),
+    holds: edited => {
+      const title = FALSIFIERS.find(falsifier => falsifier.id === "W21R-F02")?.title ?? "";
+      expect(falsifierTableFindings(edited)).toEqual([`falsifier table row 2: W21R-F02 | receipt | ${title}; FALSIFIERS lists W21R-F02 | data file | ${title}`]);
+    },
+  },
+];
+
 describe("wb-9x5 W21 parent acceptance receipt: every table read back against the committed bench receipt lines", () => {
   it("W21R-SHAPE: the runs table, the receipt-lines table and the data file name exactly the seven runs in order, each line sha-bound and on one line", () => {
     expect(shapeFindings(readLive())).toEqual([]);
@@ -601,7 +1116,7 @@ describe("wb-9x5 W21 parent acceptance receipt: every table read back against th
     expect(runsFindings(readLive())).toEqual([]);
   });
 
-  it("W21R-TREE-HOST: one clean git revision and one declared host and toolchain, equal in every data line", () => {
+  it("W21R-TREE-HOST: every run has a parsed line, and one clean git revision and one declared host and toolchain are equal in every data line", () => {
     expect(treeHostFindings(readLive())).toEqual([]);
   });
 
@@ -617,12 +1132,16 @@ describe("wb-9x5 W21 parent acceptance receipt: every table read back against th
     expect(clauseFindings(readLive(), "A3")).toEqual([]);
   });
 
-  it("W21R-ACCEPTANCE: the entry quotes the bead's acceptance sentence once, verbatim, built from the clause phrases in order", () => {
+  it("W21R-BOUNDS: every line records the bound its bench's assessor judges, as the bench modules export it, and docs/14's target sentence renders the same figures", () => {
+    expect(boundsFindings(readLive())).toEqual([]);
+  });
+
+  it("W21R-ACCEPTANCE: read as the page renders it, the entry carries no HTML and quotes the bead's acceptance sentence once, verbatim and as plain text, built from the clause phrases in order", () => {
     expect(ACCEPTANCE).toBe("10k+ grouped operations measured; p50/p95 reducer/layout timings on declared host; memory bounded by active projection. Acceptance: measured runs, no invented numbers.");
     expect(acceptanceFindings(readLive())).toEqual([]);
   });
 
-  it("W21R-FROZEN: the run set and the clause pins keep their frozen shape (standing rule 16)", () => {
+  it("W21R-FROZEN: the run set, the clause pins and the falsifier list keep their frozen shape (standing rule 16)", () => {
     expect(RUNS.map(run => `${run.id}:${run.bench}:${run.kind}`)).toEqual([
       "R1:inspector-grouped-bench:forge run of record",
       "R2:reducer-selector-bench:forge run of record",
@@ -670,159 +1189,60 @@ describe("wb-9x5 W21 parent acceptance receipt: every table read back against th
       "A3/X3/judged.arrayBufferGrowthBytes",
       "A3/X3/judged.reachableBodiesAfterBlur",
     ]);
+    expect(FALSIFIERS.map(falsifier => `${falsifier.id}:${falsifier.edits}`)).toEqual([
+      "W21R-F01:receipt",
+      "W21R-F02:data file",
+      "W21R-F03:data file",
+      "W21R-F04:data file",
+      "W21R-F05:data file",
+      "W21R-F06:data file",
+      "W21R-F07:receipt",
+      "W21R-F08:receipt",
+      "W21R-F09:receipt",
+      "W21R-F10:receipt",
+      "W21R-F11:data file",
+      "W21R-F12:data file",
+      "W21R-F13:receipt and data file",
+      "W21R-F14:receipt and data file",
+      "W21R-F15:receipt",
+      "W21R-F16:receipt",
+      "W21R-F17:receipt",
+      "W21R-F18:receipt",
+      "W21R-F19:data file",
+      "W21R-F20:data file",
+      "W21R-F21:data file",
+      "W21R-F22:receipt",
+      "W21R-F23:receipt",
+      "W21R-F24:receipt",
+      "W21R-F25:receipt",
+      "W21R-F26:receipt",
+      "W21R-F27:receipt",
+      "W21R-F28:receipt",
+      "W21R-F29:receipt",
+      "W21R-F30:receipt",
+      "W21R-F31:data file",
+      "W21R-F32:data file",
+      "W21R-F33:data file",
+      "W21R-F34:data file",
+      "W21R-F35:docs/14",
+      "W21R-F36:data file",
+      "W21R-F37:receipt",
+      "W21R-F38:receipt",
+    ]);
+  });
+
+  it("W21R-EDITS: the receipt's falsifier table lists exactly the falsifiers of this file, in order, each with the input its edited copy changes and its case title", () => {
+    expect(falsifierTableFindings(readLive())).toEqual([]);
   });
 });
 
-describe("wb-9x5 W21 acceptance receipt falsifiers: one-edit copies of the live receipt or data file read red", () => {
-  it("W21R-F01: a timing cell edited away from its line is named by the A2 reader", () => {
-    const edited = editRow(readLive(), rowOf("A2", "R2", "reducer.all"), cells => cells.map((cell, index) => (index === 6 ? `${cell}1` : cell)));
-    expect(clauseFindings(edited, "A2").some(line => line.startsWith("A2/R2/reducer.all: p95 ms cell"))).toBe(true);
-  });
-
-  it("W21R-F02: a p95 over 20 ms planted in R1's line under its recorded within-target verdict is caught by the re-judge", () => {
-    const edited = editLine(readLive(), "R1", receipt => setAt(receipt, `${NAV}.resize.p95`, 25));
-    expect(rejudgeFindings(edited)).toContain("R1: re-judged exitCode 1; the line records 0");
-    expect(shapeFindings(edited).some(line => line.startsWith("line R1: the data line's sha256 is "))).toBe(true);
-  });
-
-  it("W21R-F03: a 9999-operation fixture in R1's line is not the W21 shape: the re-judge and the A1 floor both name it", () => {
-    const edited = editLine(readLive(), "R1", receipt => setAt(receipt, "fixture.nodes", 9999));
-    expect(rejudgeFindings(edited)).toContain("R1: not realised under the inspector-grouped-bench assessor (not the W21 shape)");
-    expect(clauseFindings(edited, "A1")).toContain("A1 floor: R1 measured 9999 operations, below 10000");
-  });
-
-  it("W21R-F04: a dirty tree stamped in R3's line is named by the tree-and-host reader", () => {
-    const edited = editLine(readLive(), "R3", receipt => setAt(receipt, "dirty", true));
-    expect(treeHostFindings(edited)).toContain("R3: dirty reads true; the table lists false");
-  });
-
-  it("W21R-F05: X1's line removed from the data file is named by the shape reader and by the runs reader", () => {
-    const edited = dropLine(readLive(), "X1");
-    expect(shapeFindings(edited).some(line => line.startsWith("data lines "))).toBe(true);
-    expect(runsFindings(edited)).toContain("runs X1: no receipt line to read the row against");
-  });
-
-  it("W21R-F06: another host's cpu count in R2's line is named by the tree-and-host reader", () => {
-    const edited = editLine(readLive(), "R2", receipt => setAt(receipt, "cpus", 32));
-    expect(treeHostFindings(edited)).toContain("R2: cpus reads 32; the table lists 64");
-  });
-
-  it("W21R-F07: X1's finding claimed away in the runs table (exit 0, within-bound) is named by the runs reader", () => {
-    const edited = editRow(readLive(), cells => cells[0] === "X1", cells => cells.map((cell, index) => (index === 6 ? "0" : index === 7 ? "within-bound" : cell)));
-    const findings = runsFindings(edited);
-    expect(findings).toContain("runs X1: exit cell 0; the line reads 1");
-    expect(findings).toContain("runs X1: verdict cell within-bound; the line reads over-bound");
-  });
-
-  it("W21R-F08: the acceptance quote without its declared-host words is named by the acceptance reader", () => {
-    const live = readLive();
-    const edited = { ...live, markdown: live.markdown.replace("reducer/layout timings on declared host;", "reducer/layout timings;") };
-    expect(acceptanceFindings(edited)).toHaveLength(1);
-  });
-
-  it("W21R-F09: X1's ArrayBuffer row dropped from the memory table is named by the A3 reader", () => {
-    const edited = editRow(readLive(), rowOf("A3", "X1", "judged.arrayBufferGrowthBytes"), () => null);
-    expect(clauseFindings(edited, "A3").some(line => line.startsWith("A3 table rows differ from the frozen pins"))).toBe(true);
-  });
-
-  it("W21R-F10: X1's over-bound ArrayBuffer row marked within bound is named by the A3 reader", () => {
-    const edited = editRow(readLive(), rowOf("A3", "X1", "judged.arrayBufferGrowthBytes"), cells => cells.map((cell, index) => (index === 6 ? "yes" : cell)));
-    expect(clauseFindings(edited, "A3")).toContain("A3/X1/judged.arrayBufferGrowthBytes: Within bound cell yes; the line reads no");
-  });
-
-  it("W21R-F11: a group count changed in X2's line breaks the one-fixture rule of the A1 reader", () => {
-    const edited = editLine(readLive(), "X2", receipt => setAt(receipt, "fixture.groups", 842));
-    expect(clauseFindings(edited, "A1")).toContain("A1 fixture: X2 fixture.groups reads 842; R1 reads 843");
-  });
-
-  it("W21R-F12: an over-bound verdict recorded for R4's within-bound measurements is caught by the re-judge", () => {
-    const edited = editLine(readLive(), "R4", receipt => setAt(receipt, "verdict", "over-bound"));
-    expect(rejudgeFindings(edited)).toContain("R4: re-judged verdict within-bound; the line records over-bound");
-  });
-
-  it("W21R-F13: a tree stamped dirty in the table and in every line is named by the tree-and-host reader's clean-tree rule", () => {
-    const live = readLive();
-    const table = editRow(live, cells => cells.length === 2 && cells[0] === "dirty", cells => [cells[0], "true"]);
-    const edited = editAllLines(table, receipt => setAt(receipt, "dirty", true));
-    expect(treeHostFindings(edited)).toEqual(["dirty true: the measured tree was not clean"]);
-  });
-
-  it("W21R-F14: a caller-asserted short revision in the table and in every line is named by the git and full-sha rules", () => {
-    const live = readLive();
-    const rows = editRow(editRow(live, cells => cells.length === 2 && cells[0] === "revision", cells => [cells[0], "ce180d8"]), cells => cells.length === 2 && cells[0] === "revisionSource", cells => [cells[0], "env-override"]);
-    const edited = editAllLines(rows, receipt => {
-      setAt(receipt, "revision", "ce180d8");
-      setAt(receipt, "revisionSource", "env-override");
+describe("wb-9x5 W21 acceptance receipt falsifiers: edited copies of the live receipt, the data file or docs/14 read red", () => {
+  for (const falsifier of FALSIFIERS) {
+    it(`${falsifier.id}: ${falsifier.title}`, () => {
+      const live = readLive();
+      const edited = falsifier.edit(live);
+      expect(editsOf(live, edited)).toBe(falsifier.edits);
+      falsifier.holds(edited);
     });
-    expect(treeHostFindings(edited)).toEqual(["revision ce180d8 is not a full git sha", "revisionSource env-override is not git"]);
-  });
-
-  it("W21R-F15: a host row dropped from the tree-and-host table is named by its field-list rule", () => {
-    const edited = editRow(readLive(), cells => cells.length === 2 && cells[0] === "toolchain.piTui", () => null);
-    expect(treeHostFindings(edited).some(line => line.startsWith("tree-and-host fields "))).toBe(true);
-  });
-
-  it("W21R-F16: a run of record without a cmd_ id and a direct run with one are both named by the runs reader", () => {
-    const live = readLive();
-    const edited = editRow(editRow(live, cells => cells.length === 8 && cells[0] === "R1", cells => cells.map((cell, index) => (index === 3 ? "none" : cell))), cells => cells.length === 8 && cells[0] === "X2", cells => cells.map((cell, index) => (index === 3 ? "cmd_0123456789ab" : cell)));
-    const findings = runsFindings(edited);
-    expect(findings).toContain("runs R1: command id cell none is not a cmd_ id");
-    expect(findings).toContain("runs X2: a direct run names command id cmd_0123456789ab");
-  });
-
-  it("W21R-F17: a runs-table utc cell one millisecond off its line is named by the runs reader", () => {
-    const edited = editRow(readLive(), cells => cells.length === 8 && cells[0] === "R2", cells => cells.map((cell, index) => (index === 5 ? "2026-11-11T05:41:44.617Z" : cell)));
-    expect(runsFindings(edited)).toContain("runs R2: utc cell 2026-11-11T05:41:44.617Z; the line reads 2026-11-11T05:41:44.616Z");
-  });
-
-  it("W21R-F18: X3's row dropped from the runs table and from the receipt-lines table is named by the shape reader twice", () => {
-    const live = readLive();
-    const edited = editRow(editRow(live, cells => cells.length === 8 && cells[0] === "X3", () => null), cells => cells.length === 3 && cells[0] === "X3", () => null);
-    const findings = shapeFindings(edited);
-    expect(findings.some(line => line.startsWith("runs table rows "))).toBe(true);
-    expect(findings.some(line => line.startsWith("receipt-lines table rows "))).toBe(true);
-  });
-
-  it("W21R-F19: X2's line stored over several lines is named by the shape reader's one-line rule and its sha binding", () => {
-    const findings = shapeFindings(splitLine(readLive(), "X2"));
-    expect(findings.some(line => line.startsWith("line X2: holds ") && line.endsWith(" lines, not the one receipt line"))).toBe(true);
-    expect(findings.some(line => line.startsWith("line X2: the data line's sha256 is "))).toBe(true);
-  });
-
-  it("W21R-F20: another contract, another command and an unmeasured flag in three lines are named by the re-judge", () => {
-    const live = readLive();
-    const edited = editLine(editLine(editLine(live, "R3", receipt => setAt(receipt, "contract", "workbench.timeline-grouped-bench/v0")), "R2", receipt => setAt(receipt, "command", "node qa/workbench/other-bench.mjs")), "R4", receipt => setAt(receipt, "measured", false));
-    const findings = rejudgeFindings(edited);
-    expect(findings).toContain("R3: contract workbench.timeline-grouped-bench/v0; timeline-grouped-bench prints workbench.timeline-grouped-bench/v1");
-    expect(findings).toContain("R2: command node qa/workbench/other-bench.mjs; reducer-selector-bench is node qa/workbench/reducer-selector-bench.mjs");
-    expect(findings).toContain("R4: measured is false");
-  });
-
-  it("W21R-F21: a shallowest nesting of 4 in R1's line is named by the A1 depth floor", () => {
-    const edited = editLine(readLive(), "R1", receipt => setAt(receipt, "fixture.minDepth", 4));
-    expect(clauseFindings(edited, "A1")).toContain("A1 floor: R1 fixture.minDepth reads 4; the W21 shape nests exactly 5 deep");
-  });
-
-  it("W21R-F22: the acceptance sentence quoted a second time is named by the acceptance reader", () => {
-    const edited = withMarkdown(readLive(), markdown => markdown.replace("\n### Runs\n", `\nQuoted again: "${ACCEPTANCE}"\n\n### Runs\n`));
-    expect(acceptanceFindings(edited)).toEqual([`the entry quotes the acceptance sentence 2 times, not once: "${ACCEPTANCE}"`]);
-  });
-
-  it("W21R-F23: the entry heading reworded leaves every reader without its entry", () => {
-    const edited = withMarkdown(readLive(), markdown => markdown.replace(`## ${ENTRY_HEADING}`, `## ${ENTRY_HEADING.replace("W21 parent acceptance", "W21 acceptance")}`));
-    const missing = `entry: 0 level-2 headings read "${ENTRY_HEADING}", not 1`;
-    expect(shapeFindings(edited)).toContain(missing);
-    expect(runsFindings(edited)).toContain(missing);
-    expect(treeHostFindings(edited)).toContain(missing);
-    expect(acceptanceFindings(edited)).toContain(missing);
-  });
-
-  it("W21R-F24: a second tree-and-host table in the entry is named by the one-table rule", () => {
-    const live = readLive();
-    const start = live.markdown.indexOf("| Field | Value |");
-    const end = live.markdown.indexOf("\n\n", start);
-    const block = live.markdown.slice(start, end);
-    const edited = withMarkdown(live, markdown => markdown.replace(block, `${block}\n\n${block}`));
-    expect(treeHostFindings(edited)).toEqual(['tree-and-host table: 2 tables of the entry carry the header "Field | Value", not 1']);
-  });
+  }
 });
