@@ -12,19 +12,20 @@
  * the fixture contract CONTRACT, which adoptFunctionActions binds to the TEST FIXTURE spelling fixture-fn:develop-write (src
  * adopts no spelling). The effect is the suite's `effect`, which calls the import, writer and Forge spies once each, in that
  * order, and the SDK query spy when its grant carries SDK rights, so "zero import, writer and Forge calls" reads as zero calls
- * to each spy. The installation barrier is the host's package.admit; the admission wait is the source host's admissionWait,
- * parked and released by the cases that say so. Every argument a case does not name is valid as chainFor builds it.
+ * to each spy, counted when the chain settles. The installation barrier is the host's package.admit; the admission wait is the
+ * source host's admissionWait, parked and released by the cases that say so. Every argument a case does not name is valid as
+ * chainFor builds it.
  *
  * CLAIMS (one line each; the census case CHAIN-CENSUS holds these lines to its REQUIREMENTS table and their ids to the module
  * header of src/workbench/function-dispatch-chain.ts):
- *   EAT-R227: the chain requires claude:invoke and one claude:tool:<name> right per host-configured tool in the host grant read at entry and again at the final boundary, independent of the function action, and forwards no other right.
- *   EAT-R228: the final boundary reads the host grants and the effective identity again after the admission wait and refuses a revoked action grant, a changed principal or session, or unknown permission data with zero effect calls.
+ *   EAT-R227: the chain requires claude:invoke and one claude:tool:<name> right per host-configured tool in the one host grant read the entry authority decision reads, judged after that decision on the chain's copy of that read, and again in the final boundary's grant read, independent of the function action, and forwards no other right.
+ *   EAT-R228: the final boundary reads the host grants and the effective identity again after the admission wait and refuses a revoked action grant, a changed principal or session (an in-place change of the object the entry identity read returned among them) or unknown permission data with zero effect calls, and an identity read whose principal or session is an accessor refuses at entry without invoking it.
  *   EAT-R229: the effect writes only a clean worktree root under the authorized root that asks for writes and is attested, and the listed sibling, escape, dirty, unmerged, submodule and no-write forms refuse with their bytes kept.
  *   EAT-R230: a reader whose Git directory, HEAD commit, HEAD tree, index entry or worktree root is not the workspace's own refuses with zero effect calls, and request text never changes the measured commit and tree.
  *   EAT-R231: the dispatched source basis binds the commit, the tree and the SHA-256 of the host gate manifest, and a HEAD move, a manifest byte change, a manifest path switch or a manifest removal during the wait refuses source-changed.
  *   EAT-R232: one canonical root admits one writer at a time through the chain, its symlink alias included, independent roots each admit one, and a settled or refused invocation frees the root.
  *   EAT-R233: only a host-minted attestation of the current root and identity passes, read again after the wait, and a replacement by another operator dispatches under that operator while the fresh identity check still governs.
- *   EAT-R234: after the installation barrier and the admission wait, one synchronous segment of fresh source, attestation, authority, SDK and package decisions invokes the single effect, whose outcome carries a P03 V1 component receipt.
+ *   EAT-R234: after the installation barrier and the admission wait, one synchronous segment of fresh source, attestation, authority, SDK and package decisions calls the single effect once, never again when it rejects or answers undefined, and its outcome carries a P03 V1 component receipt; a barrier answer other than a non-empty string refuses at entry, the listed refusals have called no effect once a 200 ms timer drain ends, and under the shipped contract each listed host refuses at entry by the seam's earliest failing rule.
  *
  * PINNED READER SET (case id: assertion target; observed at the cut: every case passing).
  * - EAT-R227 (host tools Read and Edit, so the rights claude:invoke, claude:tool:Read and claude:tool:Edit): R227-HELD, one
@@ -35,14 +36,22 @@
  *   input refuse missing-sdk-right; R227-INDEPENDENT, the rights without the action grant refuse authority
  *   missing-function-action-grant and the action grant without claude:invoke refuses missing-sdk-right; R227-NOT-FORWARDED, a
  *   held claude:tool:Bash the configuration does not name (and the policy does) is not in the grant; R227-UNKNOWN-CONFIG, a
- *   tool configuration read that is undefined, a string, or a list holding a number or null refuses unknown-sdk-rights.
+ *   tool configuration read that is undefined, a string, or a list holding a number or null refuses unknown-sdk-rights;
+ *   R227-ONE-ENTRY-READ, a host that removes claude:invoke from the very list its entry grant read answered, while the chain
+ *   reads the tool configuration at entry, passes entry (one admit call) and refuses sdk/final missing-sdk-right;
+ *   R227-SAME-ENTRY-READ, grant reads that hold claude:invoke at the first read and lack it from the second on pass entry and
+ *   refuse sdk/final missing-sdk-right after two grant reads in all; R227-AUTHORITY-FIRST, a host missing both the action grant
+ *   and claude:invoke refuses authority/entry missing-function-action-grant after exactly the identity and grant reads.
  * - EAT-R228: R228-UNCHANGED, parked with no change one dispatch on the host identity and exactly workbench:execute and the
  *   action, with the identity and grants each read twice in the order identity, grants, grants, identity; R228-PARKED-CHANGES,
  *   the action grant revoked, the principal changed, the session changed, a grant read holding Not A Grant and a grant read
  *   that is a string, each while parked, refuse authority/final (missing-function-action-grant, changed-effective-identity
  *   twice, unknown-permission-data twice) and free the root; R228-REQUEST-IDENTITY, a policy and input naming another
  *   principal, session, identity and extra grants leave the dispatched authority on the host's; R228-ENTRY-FIRST, a missing
- *   workbench:execute refuses authority/entry with zero admit, wait and Git calls.
+ *   workbench:execute refuses authority/entry with zero admit, wait and Git calls; R228-ENTRY-COPIED, the principal, and then
+ *   the session, of the very object the entry identity read returned, changed in place while parked, each refuse
+ *   authority/final changed-effective-identity and free the root; R228-ACCESSOR-IDENTITY, an identity read whose principal, or
+ *   whose sessionId, is an accessor refuses authority/entry unknown-identity-data with zero getter and admit calls.
  * - EAT-R229: R229-CLEAN, one dispatch whose source grant names ws, the HEAD commit and tree git reports and the operator;
  *   R229-SIBLING (a prefix-collision sibling) and R229-SYMLINK-ESCAPE (a symlink in the root to a repository outside it) refuse
  *   workspace-outside-root; R229-DIRTY, a tracked edit, a staged edit, an untracked file and a staged rename refuse dirty-base
@@ -76,13 +85,25 @@
  *   after the wait refuses package/final package-changed; R234-RECEIPT, the frozen receipt {packet P03, evidence V1, ...} whose
  *   JSON names no other tier; R234-UNADOPTED, under the shipped FUNCTION_ACTION_CONTRACT a host holding the proposed
  *   mechanical:develop-write refuses authority/entry function-action-unadopted with zero admit and wait calls;
- *   R234-FIXED-REASONS, each chain code's refusal carries FUNCTION_CHAIN_REASONS[code] and the invocation id.
+ *   R234-FIXED-REASONS, each chain code's refusal carries FUNCTION_CHAIN_REASONS[code] and the invocation id;
+ *   R234-ONE-CALL-REJECTS, an effect that rejects is called once and the chain rejects with that very error;
+ *   R234-ONE-CALL-UNDEFINED, an effect that resolves undefined is called once and the chain dispatches undefined;
+ *   R234-NO-LATE-EFFECT, seven refusals (authority, SDK and package at entry, the source layer, then authority, SDK and package
+ *   at the final boundary) with zero effect calls when each settles and again once a 200 ms timer drain ends;
+ *   R234-PACKAGE-NOT-STRING, an admit answering a number, a bigint, a boolean, a symbol, a function, null, an object or a list
+ *   refuses package/entry package-unadmitted with zero Git reads and no lease; R234-UNADOPTED-ORDER, under the shipped contract
+ *   a host without workbench:execute refuses missing-execute-grant, one whose identity read is a string unknown-identity-data
+ *   and one whose grant read holds Not A Grant unknown-permission-data, each at authority/entry with zero admit and wait calls.
  *
  * NOT CLAIMED (scope sentences; no residual semantics, no follow-up bead):
  * - The registered-path oracle PI-FUNCTION-REGISTERED (V3) is NOT CLAIMED by this census: no registered tool calls the chain
  *   until P04 (wb-4bxo), so each requirement's registered-path criterion is P04/P08's.
  * - An adopted action spelling is NOT CLAIMED by this census: P00 (wb-w8fk) rules it, and src keeps FUNCTION_ACTION_CONTRACT
  *   unadopted.
+ * - The producer effect boundary of EAT-R409 (mechanical-interop-integrity-2026-11-10, its ATOMIC-REQUIREMENTS.md at pi-subagents
+ *   master 347d58ea, which extends EAT-R234) is NOT CLAIMED by this census: the chain's final boundary is necessary, not the last
+ *   check before a provider effect; the composed producer's revalidation after its own asynchronous preparation is the MII
+ *   successor packet's (EAT-R399..R411).
  * - Lease custody under an adopted protocol after an uncertain effect is NOT CLAIMED by this census (the lease owner is the P00
  *   ruling EAT-R207); its present form is the residual below.
  * - Cross-process writer exclusion is NOT CLAIMED by this census: one WriterLeases registry binds one host process.
@@ -91,16 +112,40 @@
  *   SDK query, the import, the writer and the Forge call are the suite's spies, and the package identity is the host's answer.
  * - Host reads that throw, requests other than decideExecute admissions of the fixture definition, and Git forms other than
  *   the listed ones are NOT CLAIMED by this census; test/workbench-mechanical-source-admission.test.ts pins the seam's own.
+ * - Effect calls after a timer drain are NOT CLAIMED by this census outside R234-NO-LATE-EFFECT's seven refusals, and an effect
+ *   that throws synchronously, or settles other than with a value, undefined or a rejection, is NOT CLAIMED by this census.
+ * - A tier other than the default test tier is NOT CLAIMED by this census: the leg test/workbench-function-dispatch-chain.census.ts
+ *   judges the default tier's own report and no other.
+ * - A pin removed from this file, the receipt and the census-tier leg together is NOT CLAIMED by this census: no source outside
+ *   the three holds the pin set (a removal from this file and the receipt alone reds through the leg).
  *
  * RESIDUAL (named family + pinned quiet row, rule 19(d)):
  * - UNCERTAIN-EFFECT-LEASE: the chain releases the writer lease when the effect rejects, so an invocation whose effect outcome is
  *   unknown frees its root at once. Quiet row R232-UNCERTAIN-RELEASES reds the day the chain retains or reconciles custody there.
+ *
+ * CENSUS (refusal #1 U1; the parse-aware-or-reporter-verified floor of the standing program rule of 2026-10-16): CHAIN-CENSUS
+ * reads this file's cases from the runner's own task tree (task.file.tasks, the tree vitest's reporters read), never from the
+ * file's text: every registered case with its describe group, its mode, its fails flag and its result. It holds the CLAIMS
+ * lines above (this file's leading comment, as the TypeScript scanner bounds it) to REQUIREMENTS; the registered cases, group by
+ * group, to the table's pins in order, with CHAIN-CENSUS registered last; every other case to run mode, no fails flag and a
+ * passed result before it; the frozen shape; the table's requirement ids to the module header of
+ * src/workbench/function-dispatch-chain.ts (its leading comment, bounded the same way); and the pin set to two anchors outside
+ * the table: the PINNED READER SET paragraph above and the receipt's per-requirement case lists
+ * (docs/workbench/receipts/wb-2ukh.md, section-bounded through docsSection of test/helpers/census.ts). The census-tier leg
+ * test/workbench-function-dispatch-chain.census.ts holds the same pin set to the gate's own default-tier report through judge()
+ * of test/helpers/census.ts, which reads tier truth. The falsifiers each skip mode was measured red against at the cut (one edit
+ * each on a throwaway copy; the delivery note carries the counts): a skip modifier on a group's describe, a case's options
+ * { skip: true }, a case calling its context's skip function, a case inside a block comment, a group's options { skip: true }, a
+ * case's options { fails: true } with its first assertion inverted, a skipIf(true) case, a runIf(false) case and a todo case,
+ * and, for the leg, this file excluded from the default tier; a title on its own line and a case registered through test()
+ * stay green.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { mkdirSync, readdirSync, readFileSync, realpathSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
+import ts from "typescript";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { JsonValue } from "../src/workbench/capability-registry.js";
 import { decideExecute, EXECUTE_GRANT, type ExecuteAdmission } from "../src/workbench/execute.js";
@@ -123,6 +168,7 @@ import {
   WriteBoundaryAuthority,
   WriterLeases,
 } from "../src/workbench/source-admission.js";
+import { docsSection } from "./helpers/census.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 installScratchLeakGuard();
@@ -517,6 +563,45 @@ describe("EAT-R227: the SDK edge's rights, independent of the function action (w
       expect(effectCalls(chain), label).toEqual([0, 0, 0, 0]);
     }
   });
+  it("R227-ONE-ENTRY-READ: a host that removes claude:invoke from the very list its entry grant read answered, while the chain reads the SDK tool configuration at entry, passes entry and refuses missing-sdk-right at the final boundary with zero effect calls: the entry SDK rights read the chain's copy of that one grant read", async () => {
+    let removed = false;
+    const answered: string[] = [...SDK_GRANTS];
+    const chain = chainFor({
+      sdk: true,
+      grants: answered,
+      onRead: event => {
+        if (event !== "tools" || removed) return;
+        removed = true;
+        answered.splice(answered.indexOf("claude:invoke"), 1);
+      },
+    });
+    expect(readingOf(await chain.run())).toEqual({ layer: "sdk", stage: "final", code: "missing-sdk-right" });
+    expect([removed, chain.admit.mock.calls.length]).toEqual([true, 1]);
+    expect(effectCalls(chain)).toEqual([0, 0, 0, 0]);
+  });
+
+  it("R227-SAME-ENTRY-READ: grant reads that hold claude:invoke at the first read and lack it from the second on pass entry and refuse missing-sdk-right at the final boundary after two grant reads in all: the entry authority decision and the entry SDK rights read one grant read", async () => {
+    let reads = 0;
+    const chain = chainFor({
+      sdk: true,
+      onRead: (event, state) => {
+        if (event !== "grants") return;
+        reads += 1;
+        state.grants = reads === 1 ? SDK_GRANTS : SDK_GRANTS.filter(grant => grant !== "claude:invoke");
+      },
+    });
+    expect(readingOf(await chain.run())).toEqual({ layer: "sdk", stage: "final", code: "missing-sdk-right" });
+    expect([reads, chain.admit.mock.calls.length]).toEqual([2, 1]);
+    expect(effectCalls(chain)).toEqual([0, 0, 0, 0]);
+  });
+
+  it("R227-AUTHORITY-FIRST: a host missing both the action grant and claude:invoke refuses missing-function-action-grant at entry after exactly the identity and grant reads, with zero admit and effect calls: the entry authority decision comes before the SDK rights", async () => {
+    const chain = chainFor({ sdk: true, grants: [EXECUTE_GRANT, "claude:tool:Read", "claude:tool:Edit"] });
+    expect(readingOf(await chain.run())).toEqual({ layer: "authority", stage: "entry", code: "missing-function-action-grant" });
+    expect(chain.events).toEqual(["identity", "grants"]);
+    expect(chain.admit).not.toHaveBeenCalled();
+    expect(effectCalls(chain)).toEqual([0, 0, 0, 0]);
+  });
 });
 
 describe("EAT-R228: the principal, session and grants read again at the final boundary (wb-2ukh)", { timeout: CASE_MS }, () => {
@@ -587,6 +672,50 @@ describe("EAT-R228: the principal, session and grants read again at the final bo
     expect(readingOf(await chain.run())).toEqual({ layer: "authority", stage: "entry", code: "missing-execute-grant" });
     expect([chain.admit.mock.calls.length, parkOf(chain).calls(), chain.events.filter(event => event === "git").length]).toEqual([0, 0, 0]);
     expect(effectCalls(chain)).toEqual([0, 0, 0, 0]);
+  });
+  it("R228-ENTRY-COPIED: the principal, and then the session, of the very object the host's entry identity read returned, changed in place while the admission waits, each refuse changed-effective-identity at the final boundary with zero effect calls and free the root: the entry identity is a copy taken when read", async () => {
+    const changes: readonly (readonly [string, (answered: { principal: string; sessionId: string }) => void])[] = [
+      [
+        "the principal changed in place",
+        answered => {
+          answered.principal = "local-operator:1003:s1";
+        },
+      ],
+      [
+        "the session changed in place",
+        answered => {
+          answered.sessionId = "s3";
+        },
+      ],
+    ];
+    for (const [label, change] of changes) {
+      const answered = { principal: HOST.principal, sessionId: HOST.sessionId };
+      const chain = chainFor({ park: true });
+      chain.state.identity = answered;
+      const outcome = await parkedRun(chain, () => change(answered));
+      expect(readingOf(outcome), label).toEqual({ layer: "authority", stage: "final", code: "changed-effective-identity" });
+      expect(effectCalls(chain), label).toEqual([0, 0, 0, 0]);
+      expect(leases.holder(ws), label).toBeUndefined();
+    }
+  });
+
+  it("R228-ACCESSOR-IDENTITY: an identity read whose principal, or whose sessionId, is an accessor refuses unknown-identity-data at entry without invoking it, with zero admit and effect calls", async () => {
+    for (const key of ["principal", "sessionId"] as const) {
+      let getterCalls = 0;
+      const answered: Record<string, unknown> = { principal: HOST.principal, sessionId: HOST.sessionId };
+      Object.defineProperty(answered, key, {
+        enumerable: true,
+        get: () => {
+          getterCalls += 1;
+          return HOST[key];
+        },
+      });
+      const chain = chainFor();
+      chain.state.identity = answered;
+      expect(readingOf(await chain.run()), key).toEqual({ layer: "authority", stage: "entry", code: "unknown-identity-data" });
+      expect([getterCalls, chain.admit.mock.calls.length], key).toEqual([0, 0]);
+      expect(effectCalls(chain), key).toEqual([0, 0, 0, 0]);
+    }
   });
 });
 
@@ -1075,29 +1204,206 @@ describe("EAT-R234: one no-await final authority-to-dispatch chain and its P03 c
       expect(refusal?.reason.includes("caller"), code).toBe(false);
     }
   });
+  it("R234-ONE-CALL-REJECTS: an effect that rejects is called exactly once, and the chain rejects with that very error", async () => {
+    let calls = 0;
+    const failure = new Error("the effect rejects");
+    const chain = chainFor({
+      effect: async () => {
+        calls += 1;
+        throw failure;
+      },
+    });
+    await expect(chain.run()).rejects.toBe(failure);
+    expect(calls).toBe(1);
+  });
+
+  it("R234-ONE-CALL-UNDEFINED: an effect that resolves undefined is called exactly once, and the chain dispatches that undefined value", async () => {
+    let calls = 0;
+    const chain = chainFor();
+    const outcome = await dispatchFunctionChain({ admission: admissionFor(), contract: CONTRACT, workspace: ws }, chain.host, async () => {
+      calls += 1;
+      return undefined;
+    });
+    expect([outcome.status, outcome.status === "dispatched" ? outcome.value : "refused", calls]).toEqual(["dispatched", undefined, 1]);
+  });
+
+  it("R234-NO-LATE-EFFECT: seven refusals (authority, SDK and package at entry, the source layer, then authority, SDK and package at the final boundary) have called no effect when each chain settles and none once a 200 ms timer drain after them ends", async () => {
+    const entryAuthority = chainFor({ grants: [EXECUTE_GRANT] });
+    const entrySdk = chainFor({ sdk: true, grants: BASE_GRANTS });
+    const entryPackage = chainFor({ admit: async () => undefined });
+    const sourceLayer = chainFor({ attestation: null });
+    const finalAuthority = chainFor({ park: true });
+    const finalSdk = chainFor({ sdk: true, park: true });
+    const finalPackage = chainFor({ park: true });
+    const outcomes = [
+      await entryAuthority.run(),
+      await entrySdk.run(),
+      await entryPackage.run(),
+      await sourceLayer.run(),
+      await parkedRun(finalAuthority, () => {
+        finalAuthority.state.grants = [EXECUTE_GRANT];
+      }),
+      await parkedRun(finalSdk, () => {
+        finalSdk.state.grants = BASE_GRANTS;
+      }),
+      await parkedRun(finalPackage, () => {
+        finalPackage.state.installed = undefined;
+      }),
+    ];
+    const worlds = [entryAuthority, entrySdk, entryPackage, sourceLayer, finalAuthority, finalSdk, finalPackage];
+    expect(outcomes.map(readingOf)).toEqual([
+      { layer: "authority", stage: "entry", code: "missing-function-action-grant" },
+      { layer: "sdk", stage: "entry", code: "missing-sdk-right" },
+      { layer: "package", stage: "entry", code: "package-unadmitted" },
+      { layer: "source", code: "attestation-absent" },
+      { layer: "authority", stage: "final", code: "missing-function-action-grant" },
+      { layer: "sdk", stage: "final", code: "missing-sdk-right" },
+      { layer: "package", stage: "final", code: "package-changed" },
+    ]);
+    expect(worlds.map(effectCalls), "when each chain settles").toEqual(worlds.map(() => [0, 0, 0, 0]));
+    await new Promise(resolve => setTimeout(resolve, 200));
+    expect(worlds.map(effectCalls), "once a 200 ms timer drain ends").toEqual(worlds.map(() => [0, 0, 0, 0]));
+    expect(worlds.map(world => world.events.filter(event => event === "effect").length), "effect events once the drain ends").toEqual(worlds.map(() => 0));
+  });
+
+  it("R234-PACKAGE-NOT-STRING: an installation barrier answering a number, a bigint, a boolean, a symbol, a function, null, an object or a list refuses package-unadmitted at entry with zero Git reads, no lease and zero effect calls", async () => {
+    const answers: readonly (readonly [string, unknown])[] = [
+      ["a number", 42],
+      ["a bigint", 42n],
+      ["a boolean", true],
+      ["a symbol", Symbol("package")],
+      ["a function", () => PACKAGE],
+      ["null", null],
+      ["an object", { identity: PACKAGE }],
+      ["a list", [PACKAGE]],
+    ];
+    for (const [label, answer] of answers) {
+      const chain = chainFor({ admit: async () => answer as string | undefined });
+      expect(readingOf(await chain.run()), label).toEqual({ layer: "package", stage: "entry", code: "package-unadmitted" });
+      expect([chain.events.filter(event => event === "git").length, leases.holder(ws)], label).toEqual([0, undefined]);
+      expect(effectCalls(chain), label).toEqual([0, 0, 0, 0]);
+    }
+  });
+
+  it("R234-UNADOPTED-ORDER: under the shipped FUNCTION_ACTION_CONTRACT a host holding the proposed grant without workbench:execute refuses missing-execute-grant, one whose identity read is a string refuses unknown-identity-data and one whose grant read holds Not A Grant refuses unknown-permission-data, each at entry with zero admit, wait and effect calls: decideFunctionAuthority's earlier rules come before the adoption check", async () => {
+    const hosts: readonly (readonly [string, readonly string[], unknown, string])[] = [
+      ["without workbench:execute", [PROPOSED], HOST, "missing-execute-grant"],
+      ["an identity read that is a string", [EXECUTE_GRANT, PROPOSED], HOST.principal, "unknown-identity-data"],
+      ["a grant read holding Not A Grant", [EXECUTE_GRANT, PROPOSED, "Not A Grant"], HOST, "unknown-permission-data"],
+    ];
+    for (const [label, grants, identity, code] of hosts) {
+      const chain = chainFor({ park: true, grants });
+      chain.state.identity = identity;
+      expect(readingOf(await chain.run(admissionFor(), ws, FUNCTION_ACTION_CONTRACT)), label).toEqual({ layer: "authority", stage: "entry", code });
+      expect([chain.admit.mock.calls.length, parkOf(chain).calls()], label).toEqual([0, 0]);
+      expect(effectCalls(chain), label).toEqual([0, 0, 0, 0]);
+    }
+  });
 });
 
 /** The census table: each requirement id, its CLAIMS line text and its pinned case ids, in file order. */
 const REQUIREMENTS: readonly (readonly [string, string, readonly string[]])[] = [
-  ["EAT-R227", "the chain requires claude:invoke and one claude:tool:<name> right per host-configured tool in the host grant read at entry and again at the final boundary, independent of the function action, and forwards no other right.", ["R227-HELD", "R227-NO-SESSION", "R227-MISSING", "R227-REVOKED-PARKED", "R227-REQUEST-ONLY", "R227-INDEPENDENT", "R227-NOT-FORWARDED", "R227-UNKNOWN-CONFIG"]],
-  ["EAT-R228", "the final boundary reads the host grants and the effective identity again after the admission wait and refuses a revoked action grant, a changed principal or session, or unknown permission data with zero effect calls.", ["R228-UNCHANGED", "R228-PARKED-CHANGES", "R228-REQUEST-IDENTITY", "R228-ENTRY-FIRST"]],
+  [
+    "EAT-R227",
+    "the chain requires claude:invoke and one claude:tool:<name> right per host-configured tool in the one host grant read the entry authority decision reads, judged after that decision on the chain's copy of that read, and again in the final boundary's grant read, independent of the function action, and forwards no other right.",
+    ["R227-HELD", "R227-NO-SESSION", "R227-MISSING", "R227-REVOKED-PARKED", "R227-REQUEST-ONLY", "R227-INDEPENDENT", "R227-NOT-FORWARDED", "R227-UNKNOWN-CONFIG", "R227-ONE-ENTRY-READ", "R227-SAME-ENTRY-READ", "R227-AUTHORITY-FIRST"],
+  ],
+  [
+    "EAT-R228",
+    "the final boundary reads the host grants and the effective identity again after the admission wait and refuses a revoked action grant, a changed principal or session (an in-place change of the object the entry identity read returned among them) or unknown permission data with zero effect calls, and an identity read whose principal or session is an accessor refuses at entry without invoking it.",
+    ["R228-UNCHANGED", "R228-PARKED-CHANGES", "R228-REQUEST-IDENTITY", "R228-ENTRY-FIRST", "R228-ENTRY-COPIED", "R228-ACCESSOR-IDENTITY"],
+  ],
   ["EAT-R229", "the effect writes only a clean worktree root under the authorized root that asks for writes and is attested, and the listed sibling, escape, dirty, unmerged, submodule and no-write forms refuse with their bytes kept.", ["R229-CLEAN", "R229-SIBLING", "R229-SYMLINK-ESCAPE", "R229-DIRTY", "R229-UNMERGED", "R229-SUBMODULE", "R229-NO-WRITE-POLICY"]],
   ["EAT-R230", "a reader whose Git directory, HEAD commit, HEAD tree, index entry or worktree root is not the workspace's own refuses with zero effect calls, and request text never changes the measured commit and tree.", ["R230-GIT-DIR", "R230-HEAD-OBJECTS", "R230-INDEX-ENTRY", "R230-TOPLEVEL", "R230-FORGED-INPUT"]],
   ["EAT-R231", "the dispatched source basis binds the commit, the tree and the SHA-256 of the host gate manifest, and a HEAD move, a manifest byte change, a manifest path switch or a manifest removal during the wait refuses source-changed.", ["R231-BASIS", "R231-HEAD-MOVED", "R231-MANIFEST-BYTES", "R231-MANIFEST-PATH", "R231-MANIFEST-REMOVED"]],
   ["EAT-R232", "one canonical root admits one writer at a time through the chain, its symlink alias included, independent roots each admit one, and a settled or refused invocation frees the root.", ["R232-SAME-ROOT", "R232-ALIAS", "R232-INDEPENDENT", "R232-RELEASED", "R232-UNCERTAIN-RELEASES"]],
   ["EAT-R233", "only a host-minted attestation of the current root and identity passes, read again after the wait, and a replacement by another operator dispatches under that operator while the fresh identity check still governs.", ["R233-CURRENT", "R233-ENTRY-FORMS", "R233-REQUEST-MINTED", "R233-REPLACED-PARKED", "R233-OTHER-OPERATOR"]],
-  ["EAT-R234", "after the installation barrier and the admission wait, one synchronous segment of fresh source, attestation, authority, SDK and package decisions invokes the single effect, whose outcome carries a P03 V1 component receipt.", ["R234-ONE-DISPATCH", "R234-NO-AWAIT", "R234-SINGLE-FAULTS", "R234-PACKAGE", "R234-RECEIPT", "R234-UNADOPTED", "R234-FIXED-REASONS"]],
+  [
+    "EAT-R234",
+    "after the installation barrier and the admission wait, one synchronous segment of fresh source, attestation, authority, SDK and package decisions calls the single effect once, never again when it rejects or answers undefined, and its outcome carries a P03 V1 component receipt; a barrier answer other than a non-empty string refuses at entry, the listed refusals have called no effect once a 200 ms timer drain ends, and under the shipped contract each listed host refuses at entry by the seam's earliest failing rule.",
+    [
+      "R234-ONE-DISPATCH",
+      "R234-NO-AWAIT",
+      "R234-SINGLE-FAULTS",
+      "R234-PACKAGE",
+      "R234-RECEIPT",
+      "R234-UNADOPTED",
+      "R234-FIXED-REASONS",
+      "R234-ONE-CALL-REJECTS",
+      "R234-ONE-CALL-UNDEFINED",
+      "R234-NO-LATE-EFFECT",
+      "R234-PACKAGE-NOT-STRING",
+      "R234-UNADOPTED-ORDER",
+    ],
+  ],
 ];
 
-describe("the census of this file's pinned reader set (wb-2ukh, rule 16)", () => {
-  it("CHAIN-CENSUS: the header's CLAIMS lines equal REQUIREMENTS, the file's cases are its pins in order, its frozen shape holds, and the module header serves exactly its requirement ids", () => {
-    const text = readFileSync(fileURLToPath(import.meta.url), "utf8");
-    const header = text.slice(0, text.indexOf("*/"));
-    expect([...header.matchAll(/^ \* {3}(EAT-R\d{3}): (.+)$/gm)].map(match => [match[1], match[2]])).toEqual(REQUIREMENTS.map(([id, sentence]) => [id, sentence]));
-    expect([...text.matchAll(/^ {2}it\("([A-Z][A-Z0-9-]*):/gm)].map(match => match[1])).toEqual([...REQUIREMENTS.flatMap(([, , cases]) => cases), "CHAIN-CENSUS"]);
-    expect(REQUIREMENTS.map(([id, , cases]) => `${id}:${cases.length}`)).toEqual(["EAT-R227:8", "EAT-R228:4", "EAT-R229:7", "EAT-R230:5", "EAT-R231:5", "EAT-R232:5", "EAT-R233:5", "EAT-R234:7"]);
-    const module = readFileSync(join(REPO, "src", "workbench", "function-dispatch-chain.ts"), "utf8");
-    const moduleHeader = module.slice(0, module.indexOf("*/"));
-    expect([...moduleHeader.matchAll(/^ \* {3}(EAT-R\d{3}) {2}/gm)].map(match => match[1])).toEqual(REQUIREMENTS.map(([id]) => id));
+/** A registered title's id: the text before its first colon (a title without one reads whole). */
+const idOf = (title: string): string => (title.includes(":") ? title.slice(0, title.indexOf(":")) : title);
+/** One registered case, from its walked record: where it sits ("<group id> > <case id>"), its mode, fails flag and result. */
+interface RegisteredCase {
+  readonly at: string;
+  readonly mode: string;
+  readonly fails: boolean;
+  readonly state: string;
+  readonly self: boolean;
+}
+/** A walked record: the group title, the case title, mode, fails flag, result state and self flag, one per line. */
+function registeredCase(record: string): RegisteredCase {
+  const [group = "", title = "", mode = "", fails = "", state = "", self = ""] = record.split("\n");
+  return { at: group === "" ? idOf(title) : `${idOf(group)} > ${idOf(title)}`, mode, fails: fails === "true", state, self: self === "true" };
+}
+/** A source's leading comment as the TypeScript scanner bounds it: its first comment range at offset 0. */
+function leadingComment(source: string): string {
+  const [range] = ts.getLeadingCommentRanges(source, 0) ?? [];
+  return range === undefined ? "" : source.slice(range.pos, range.end);
+}
+/** The case ids a text names, in order of first mention. */
+const caseIdsIn = (text: string): string[] => [...new Set(text.match(/\bR2\d{2}-[A-Z]+(?:-[A-Z]+)*/g) ?? [])];
+const RECEIPT = join(REPO, "docs", "workbench", "receipts", "wb-2ukh.md");
+const RECEIPT_TITLE = "wb-2ukh: [MNI-2026-11-09 P03] Function authority + writer source admission integrated, no-await dispatch chain (EAT-R227..R234)";
+const RECEIPT_ENTRY = "2026-11-11 receipt: the P03 dispatch chain at evidence tier V1 (cut #2, trunk ce180d82)";
+/** The receipt entry's per-requirement case lists ("EAT-Rnnn cases: id, id, ..."), read from its rendered section. */
+function receiptCaseLists(): { readonly why: string; readonly lists: readonly (readonly [string, readonly string[]])[] } {
+  const section = docsSection(readFileSync(RECEIPT, "utf8"), RECEIPT_ENTRY, 2, [RECEIPT_TITLE]);
+  const items = section.blocks.flatMap(block => (block.kind === "list" ? block.items.map(item => item.text) : []));
+  const lists = items.flatMap(text => {
+    const match = /^(EAT-R\d{3}) cases: (.+)\.$/.exec(text);
+    return match?.[1] === undefined || match[2] === undefined ? [] : [[match[1], match[2].split(", ")] as const];
+  });
+  return { why: section.why, lists };
+}
+
+describe("CENSUS: this file's pinned reader set, read from the runner's task tree (wb-2ukh, rule 16)", () => {
+  it("CHAIN-CENSUS: the header's CLAIMS lines equal REQUIREMENTS; the runner's registered cases are its pins group by group with this census last, each other case in run mode, uninverted and passed before it; the frozen shape holds; the module header serves exactly its requirement ids; and the PINNED READER SET paragraph and the receipt's case lists name exactly its pins", ({ task }) => {
+    const header = leadingComment(readFileSync(fileURLToPath(import.meta.url), "utf8"));
+    expect([...header.matchAll(/^ \* {3}(EAT-R\d{3}): (.+)$/gm)].map(match => [match[1], match[2]]), "the header's CLAIMS lines").toEqual(REQUIREMENTS.map(([id, sentence]) => [id, sentence]));
+    // The runner's task tree (the tree vitest's reporters read), walked here with every value it yields read into text at
+    // once, so judge() of test/helpers/census.ts follows the test context through this case (the census-tier leg).
+    const walked: string[] = [];
+    for (const group of task.file.tasks) {
+      if (group.type !== "suite") {
+        walked.push(`\n${group.name}\n${group.mode}\n${group.fails === true}\n${group.result?.state ?? ""}\n${group.id === task.id}`);
+        continue;
+      }
+      for (const child of group.tasks) walked.push(`${group.name}\n${child.name}\n${child.mode}\n${child.type === "test" && child.fails === true}\n${child.result?.state ?? ""}\n${child.id === task.id}`);
+    }
+    const registered = walked.map(registeredCase);
+    expect(
+      registered.map(entry => entry.at),
+      "every case the runner registered for this file, group by group, in registration order",
+    ).toEqual([...REQUIREMENTS.flatMap(([id, , cases]) => cases.map(pin => `${id} > ${pin}`)), "CENSUS > CHAIN-CENSUS"]);
+    expect(registered.findIndex(entry => entry.self), "this census finds itself by task identity, registered last").toBe(registered.length - 1);
+    expect(
+      registered.filter(entry => !entry.self && (entry.mode !== "run" || entry.fails || entry.state !== "pass")).map(entry => `${entry.at} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${entry.state || "no result"}`),
+      "every other registered case is in run mode, not inverted, and passed before this census",
+    ).toEqual([]);
+    expect(REQUIREMENTS.map(([id, , cases]) => `${id}:${cases.length}`), "the frozen shape").toEqual(["EAT-R227:11", "EAT-R228:6", "EAT-R229:7", "EAT-R230:5", "EAT-R231:5", "EAT-R232:5", "EAT-R233:5", "EAT-R234:12"]);
+    const moduleHeader = leadingComment(readFileSync(join(REPO, "src", "workbench", "function-dispatch-chain.ts"), "utf8"));
+    expect([...moduleHeader.matchAll(/^ \* {3}(EAT-R\d{3}) {2}/gm)].map(match => match[1]), "the module header's requirement ids").toEqual(REQUIREMENTS.map(([id]) => id));
+    const pinnedSet = header.slice(header.indexOf(" * PINNED READER SET (case id"), header.indexOf(" * NOT CLAIMED (scope sentences"));
+    expect(caseIdsIn(pinnedSet), "the case ids the PINNED READER SET paragraph names, in order of first mention").toEqual(REQUIREMENTS.flatMap(([, , cases]) => cases));
+    const receipt = receiptCaseLists();
+    expect({ why: receipt.why, lists: receipt.lists }, "the receipt entry's per-requirement case lists").toEqual({ why: "", lists: REQUIREMENTS.map(([id, , cases]) => [id, cases]) });
   });
 });

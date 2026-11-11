@@ -22,12 +22,14 @@
  *     which must be the admitted one; then the one effect call, with a frozen grant.
  * A refusal at any step returns that layer's typed refusal and calls no effect. The lease admitSourceWrite takes is released
  * when the final boundary refuses and when the effect settles; an error the effect throws or rejects with propagates
- * unchanged. Required SDK rights are claude:invoke and one claude:tool:<name> right per tool the host configuration names,
- * judged only against the host's grant reads, and the effect's grant carries exactly those; a right the request names is
- * never read. A refusal of the chain's own carries the fixed reason of its code (FUNCTION_CHAIN_REASONS).
+ * unchanged; neither a rejection nor an undefined answer calls the effect again. Required SDK rights are claude:invoke and one
+ * claude:tool:<name> right per tool the host configuration names, judged only against the host's grant reads, and the
+ * effect's grant carries exactly those; a right the request names is never read. A refusal of the chain's own carries the
+ * fixed reason of its code (FUNCTION_CHAIN_REASONS).
  *
  * The requirements this chain serves, each at evidence tier V1 only (focused red/green tests and adversarial mutants on
- * named fixtures, 03-VERIFICATION-AND-RELEASE.md), as test/workbench-function-dispatch-chain.test.ts pins them:
+ * named fixtures, 03-VERIFICATION-AND-RELEASE.md), as test/workbench-function-dispatch-chain.test.ts pins them (the words
+ * above hold for the cases that suite lists, and for no form it does not):
  *   EAT-R227  the SDK edge's rights, held in each host grant read, independent of the function action
  *   EAT-R228  the principal, the session and the grants read again at the final boundary
  *   EAT-R229  the effectful source confined to a clean canonical root
@@ -40,7 +42,13 @@
  * Not wired and not adopted: no registered tool calls this chain yet (workflow_execute still refuses a function definition
  * in execute-tool.ts; the registered branch is packet P04, wb-4bxo), so no registered-path (V3) or native (V4) claim rests on
  * it; and no action spelling is adopted (FUNCTION_ACTION_CONTRACT stays unadopted until the P00 joint ruling, wb-w8fk), so
- * under the shipped contract every chain refuses function-action-unadopted at entry.
+ * under the shipped contract the entry decision refuses with decideFunctionAuthority's earliest failing rule: at the
+ * suite's listed hosts, function-action-unadopted where the identity read and the grant read are well formed and hold
+ * workbench:execute, and missing-execute-grant, unknown-identity-data or unknown-permission-data where an earlier rule fails.
+ * Nor is this chain's final boundary the last check before a provider effect: EAT-R409 of the
+ * mechanical-interop-integrity-2026-11-10 program (its ATOMIC-REQUIREMENTS.md at pi-subagents master 347d58ea) extends
+ * EAT-R234 and has the composed producer revalidate authority, source and fence after its own asynchronous preparation,
+ * which this module does not do.
  */
 import type { ExecuteAdmission } from "./execute.js";
 import {
