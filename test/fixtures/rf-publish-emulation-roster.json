@@ -132,6 +132,7 @@
               "src/workbench/process-env.ts",
               "src/workbench/providers/reactivefiber.ts",
               "src/workbench/reactivefiber-observer.ts",
+              "src/workbench/reactivefiber-wiring.ts",
               "src/workflow/reconcile.ts"
             ],
             "floorSeen": [

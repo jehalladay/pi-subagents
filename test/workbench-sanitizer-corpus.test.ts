@@ -50,6 +50,7 @@ import { selectLatencyDecomposition } from "../src/workbench/latency.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type ObservedNode, type Relation } from "../src/workbench/observation.js";
 import { type ObserveReader, observeInvocation } from "../src/workbench/observe-query.js";
 import { proposeWorkflowPatch } from "../src/workbench/patch-proposal.js";
+import { type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
 import { mintEvidenceReceipt } from "../src/workbench/reconcile-decision.js";
 import { redactWorkbenchText, sanitizeWorkbenchJson, sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText } from "../src/workbench/redaction.js";
 import { buildOperationsTelemetry } from "../src/workbench/telemetry.js";
@@ -61,6 +62,7 @@ import { reconcileGrant } from "../src/workflow/reconcile.js";
 import { detachedCatchDriver } from "./helpers/detached-peer.js";
 import { forgeGateCatchDriver } from "./helpers/forge-gate-catch.js";
 import { nativeLoadNotifyDriver } from "./helpers/native-load-notify.js";
+import { fullShapeRf, type Json } from "./helpers/rf-render-fixture.js";
 
 /**
  * wb-a3s.1 seam: @forge/sdk's ServerConnection.spawn() returns a connection whose initialize() rejects with the text the
@@ -362,6 +364,34 @@ function hyperunixTexts(raw: string): string[] {
   const topology = hyperunixTopology(reading, context);
   const facetTexts = (topology.facets ?? []).flatMap(facet => Object.entries(facet).filter(([key]) => key !== "kind").map(([, text]) => String(text)));
   return [...topology.snapshots.flatMap(snapshot => [snapshot.node.title, snapshot.node.statusText]), ...topology.diagnostics, ...facetTexts];
+}
+
+/**
+ * wb-79k.2 (owner ruling at the wb-952 gate, C1): the reactivefiber-observer.ts row, reaching its shown() through the public
+ * reactivefiberTopology. The probe rides every producer string the reading carries: the context text, a diagnostic's message,
+ * hint, source and metadata, the producer release, a TSX engine version, an observation row's status, the requested model, a
+ * block's candidate key and a decision's reason. Each is withheld, counted, or dropped when it is not a bounded displayable
+ * identity, so the row pins what shown() is handed today and a widening of those inputs (an observe-wiring surface included)
+ * reaches every corpus probe here.
+ */
+const RF_OBSERVER_SCOPE: ObservationScope = { workspace: "/tmp/reactivefiber-observer-ws", principal: "local-operator:tester" };
+type RfJson = { [key: string]: Json };
+function reactivefiberTexts(raw: string): string[] {
+  const envelope = fullShapeRf(RF_OBSERVER_SCOPE.workspace) as RfJson;
+  const result = envelope.result as RfJson;
+  (result.output as RfJson).text = raw;
+  (result.budget as RfJson).requested_model_id = raw;
+  const provenance = result.provenance as RfJson;
+  provenance.cli_version = raw;
+  (provenance.sdk_versions as RfJson).tsx_runtime = { distribution_version: raw, contract_fingerprint: "unknown" };
+  result.observations = [{ status: raw, freshness: "captured_at_render", replayed: false }];
+  (result.blocks as RfJson[])[0].candidate_key = raw;
+  (result.necessity as RfJson[])[0].reason = raw;
+  envelope.diagnostics = [{ code: "WB_CORPUS_NOTE", severity: "info", message: raw, hint: raw, source: raw, metadata: { note: raw } }];
+  const reading: JsonValue = { contract: "reactivefiber.render.preview/v1", workspaceRoot: RF_OBSERVER_SCOPE.workspace, source: envelope };
+  const context: ReactiveFiberTopologyContext = { scope: RF_OBSERVER_SCOPE, seam: "rf-cli", capturedAt: "2026-11-11T05:00:00Z", observedAt: "2026-11-11T05:00:01Z" };
+  const topology = reactivefiberTopology(reading, context);
+  return [...topology.snapshots.flatMap(snapshot => [snapshot.node.title, snapshot.node.statusText]), ...topology.diagnostics];
 }
 
 function claudeTexts(raw: string): string[] {
@@ -911,6 +941,7 @@ const SITES: readonly Site[] = [
     },
   },
   { site: "site 3 hyperunix-observer.ts shown (hyperunixTopology)", texts: hyperunixTexts },
+  { site: "wb-79k.2 reactivefiber-observer.ts shown (reactivefiberTopology)", texts: reactivefiberTexts },
   { site: "site 4 claude-topology.ts shown (projectClaudeTopology)", texts: claudeTexts },
   { site: "site 5 timeline.ts shown (buildTimelineLanes)", texts: timelineTexts },
   { site: "site 6 attention.ts titleOf (selectAttention)", texts: attentionTexts },
@@ -976,6 +1007,19 @@ describe("wb-gwr.2 site 3 facet texts are not vacuous", () => {
     const texts = hyperunixTexts(plain);
     expect(texts.filter(text => text === plain)).toHaveLength(5);
     expect(texts.filter(text => text === `HX-SCHEMA-CONFLICT ${plain}`)).toHaveLength(1);
+  });
+});
+
+describe("wb-79k.2 reactivefiber-observer row is not vacuous", () => {
+  it("the SITES row drives reactivefiberTopology, and a plain probe reaches shown() as the producer release note and the observation status note, and nowhere else", async () => {
+    // Read through the table, so a removed, renamed or re-pointed row reds here rather than leaving the corpus without it.
+    const row = SITES.find(entry => entry.site === "wb-79k.2 reactivefiber-observer.ts shown (reactivefiberTopology)");
+    expect(row?.texts).toBe(reactivefiberTexts);
+    const plain = "wb79k2-plain-probe";
+    const texts = (await row?.texts(plain)) ?? [];
+    expect(texts).toContain(`producer release from result.provenance.cli_version: rf@${plain}`);
+    expect(texts).toContain(`observations: 1 row, 1 not observed (${plain}): partial`);
+    expect(texts.filter(text => text.includes(plain))).toHaveLength(2);
   });
 });
 

@@ -29,7 +29,9 @@
  * literal. Pi's one rf reader, the reactivefiber.render.preview provider, admits a context.render envelope with additive result
  * keys and refuses every other command, so an evaluator artifact reaches a composer only as an additive key of a render
  * envelope: the probes ride three such keys (CARRIERS) and one info diagnostic's metadata. The rf observer adapter
- * (reactivefiber-observer.ts, the designated workflow_observe feed) has no src caller today; row A5 pins its projection anyway.
+ * (reactivefiber-observer.ts, the designated workflow_observe feed) has one src caller since wb-79k.2: the host seam's
+ * observe-wiring (reactivefiber-wiring.ts), which applies its output to the live projection workflow_observe reads, so
+ * workflow_observe is an rf composer; row A5 pins the observer's projection directly and through that wiring.
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label):
  *  A, acceptance (a). A1 the invoke-reference roster and its classes (every `invoke` member reference of src, called or not,
@@ -40,14 +42,15 @@
  *    as a reference), each literal read through the wrappers that keep its value (parentheses, as, satisfies, a type assertion
  *    and a non-null assertion), each form with a positive control and the non-reference shapes with quiet controls, the roster
  *    holding every control's input digest, over a walk covering every src file git lists, a narrowed walk read as not
- *    covering), and the observer's 0 src callers. A2 capability_invoke over the
+ *    covering), and the observer's one src caller, the wb-79k.2 observe-wiring. A2 capability_invoke over the
  *    native registration and a stand-in rf: the reply is Pi's frame (kind, contract, workspaceRoot, isError) plus the envelope
  *    the stand-in printed, verbatim, at value.source; the frame carries no planted string and is identical with or without the
  *    artifacts. A3 workflow_reconcile evidence: the snapshot quotes the envelope verbatim, the receipt names producer
  *    reactivefiber (capabilityId and nativeRef too) and states no domainStatus, and the frame (the result-identity digests aside)
  *    is identical with or without the artifacts and is pinned whole, its EVIDENCE_GUIDANCE lines included. A4 a workflow
  *    script's node() call returns the reading byte for byte. A5 the observer's topology and the workflow_observe reply over it
- *    are byte-identical with or without the artifacts. A6 no reply part outside content[0]: in every variant both replies hold
+ *    are byte-identical with or without the artifacts, and so are the observe-wiring's outcome and the workflow_observe reply
+ *    over the projection it alone applied the reading to (wb-79k.2). A6 no reply part outside content[0]: in every variant both replies hold
  *    exactly one content block, capability_invoke's reply has no key beside content (no structuredContent) and
  *    workflow_reconcile's details stay undefined.
  *  B, acceptance (b). B1 the transcription is the producer's fixture (digest, keys, the ten check ids, statuses, invariants) and
@@ -151,6 +154,7 @@ import { type NativeRef, ObservationProjection, type ObservationScope } from "..
 import { observeInvocation } from "../src/workbench/observe-query.js";
 import { REACTIVE_FIBER_CLI_SCHEMA, REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, registerNativeReactiveFiberRender } from "../src/workbench/providers/reactivefiber.js";
 import { type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
+import { observeReactiveFiberNode } from "../src/workbench/reactivefiber-wiring.js";
 import { EVIDENCE_GUIDANCE } from "../src/workbench/reconcile-decision.js";
 import { createWorkflowReconcileTool } from "../src/workbench/reconcile-tool.js";
 import { appendJournal } from "../src/workflow/journal.js";
@@ -301,6 +305,8 @@ const SITE_CLASSES: Readonly<Record<string, "agent" | "script" | "fixed" | "regi
   "src/workbench/evidence-wiring.ts": "fixed",
 };
 const OBSERVER_MODULE = "src/workbench/reactivefiber-observer.ts";
+/** The observer's one src caller (wb-79k.2): the host seam's observe-wiring, which A5 drives. */
+const OBSERVE_WIRING_MODULE = "src/workbench/reactivefiber-wiring.ts";
 
 interface Row {
   readonly id: string;
@@ -662,6 +668,15 @@ const OBSERVER_CONTEXT: ReactiveFiberTopologyContext = {
 function observerReading(variant: Variant): Json {
   return { contract: REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, workspaceRoot: OBSERVER_ROOT, source: envelopeOf(variant, OBSERVER_ROOT) };
 }
+/** wb-79k.2: the reading through the host seam's observe-wiring onto a fresh projection, and the workflow_observe reply over it. */
+function wired(variant: Variant): { outcome: Json; reply: Json } {
+  const projection = new ObservationProjection();
+  const host = { projection, scope: OBSERVER_SCOPE, seam: OBSERVER_CONTEXT.seam, invocationId: TASK_ID, now: () => OBSERVER_CONTEXT.capturedAt };
+  const outcome = observeReactiveFiberNode(host, { capabilityId: PREVIEW_ID, callId: 1 }, observerReading(variant));
+  expect(outcome).toStrictEqual({ kind: "projected", refresh: "applied", related: 1 });
+  const reply = observeInvocation(projection, { scope: OBSERVER_SCOPE, invocationId: TASK_ID });
+  return { outcome: clone(outcome as unknown as Json), reply: clone(reply as unknown as Json) };
+}
 /** The observer's topology and the workflow_observe reply over a fresh projection it alone refreshed. */
 function observed(variant: Variant): { topology: Json; reply: Json } {
   const topology = reactivefiberTopology(observerReading(variant), OBSERVER_CONTEXT);
@@ -1010,7 +1025,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     expect(quiet, "a capability-mode argument, a provider's own invoke and a method definition are not references").toEqual([]);
     expect(boundaryQuiet, "a wrapped literal off an access, a spread outside a pattern and a first-argument literal are not references").toEqual([]);
     expect(unclassified, "a new registry invoke site needs a class and, when it reaches an agent, a behavioral pin here").toEqual([]);
-    expect(callers, "a src caller of the rf observer makes workflow_observe an rf composer: re-measure row A").toEqual([]);
+    expect(callers, "a src caller of the rf observer other than the wb-79k.2 observe-wiring is another rf composer: re-measure row A").toEqual([OBSERVE_WIRING_MODULE]);
     expect(observerDefined).toBe(true);
     const classes = Object.fromEntries((["agent", "script", "fixed", "registry"] as const).map(name => [name, Object.keys(SITE_CLASSES).filter(file => SITE_CLASSES[file] === name).sort()]));
     return {
@@ -1086,12 +1101,22 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       if (JSON.stringify(found) === JSON.stringify(twin)) invariant += 1;
       surfaced.push(...stringLeaves(found).filter(text => plantedStrings(variant).some(item => text.includes(item))));
     }
+    // wb-79k.2: the same readings through the observe-wiring, the observer's src caller, and workflow_observe over its projection.
+    const wiredTwin = wired("absent");
+    let wiredInvariant = 0;
+    for (const variant of PLANTED) {
+      const found = wired(variant);
+      expect(found).toStrictEqual(wiredTwin);
+      if (JSON.stringify(found) === JSON.stringify(wiredTwin)) wiredInvariant += 1;
+      surfaced.push(...stringLeaves(found).filter(text => plantedStrings(variant).some(item => text.includes(item))));
+    }
     const snapshot = objectOf(listOf(objectOf(twin.topology, "topology").snapshots, "snapshots")[0], "snapshot");
     const node = objectOf(snapshot.node, "snapshot node");
     const strings = stringLeaves(twin).length;
     expect(surfaced).toEqual([]);
     expect(strings).toBeGreaterThanOrEqual(10);
-    return { invariant, surfaced, tone: String(node.statusTone), coverage: String(snapshot.coverage), stringsRead: strings >= 10 };
+    expect(stringLeaves(wiredTwin).length).toBeGreaterThanOrEqual(10);
+    return { invariant, wiredInvariant, surfaced, tone: String(node.statusTone), coverage: String(snapshot.coverage), stringsRead: strings >= 10 };
   },
   A6: async () => {
     const curated: ReplyShape[] = [];
