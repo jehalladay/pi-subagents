@@ -2685,12 +2685,28 @@ Terse command-style prompts produce shallow, generic work.
       grants: [...required].filter(grant => held.includes(grant)),
     };
   }
+  /**
+   * The extension-owned detached base of the registered launch paths (wb-r1bz, EAT-R341): join(<agent dir>,
+   * "workbench-detached") with the agent directory resolved to its real path first, so a HOME spelled through a symlink
+   * (/home/<user> -> /local/home/<user>) reaches the launcher's unchanged owner, mode and ancestor checks as the canonical
+   * path it names. Only the agent directory is resolved: the base and everything under it reach those checks as spelled,
+   * so a base replaced by a symlink still refuses. An agent directory whose realpath fails with ENOENT (it does not exist)
+   * or ELOOP (a symlink loop) stays as spelled, for the launcher's own checks to refuse.
+   */
+  function detachedBase(): string {
+    const agentDir = getAgentDir();
+    let resolved = agentDir;
+    try {
+      resolved = realpathSync(agentDir);
+    } catch {}
+    return join(resolved, "workbench-detached");
+  }
   async function launchDetachedWorkflow(ctx: ExtensionContext, launch: ExecuteLaunch): Promise<readonly NativeRef[]> {
     const settings = sourceSettings(ctx);
     const claude = settings?.workflowAgentBackend === "claude" ? detachedClaudeLaunch(ctx, settings) : undefined;
     // The review assertion is the operator's own: a digest-pinned saved source launched under the execute+detach conjunction.
     const receipt = await workbenchNative().launchDetachedWorkflow({
-      directory: join(getAgentDir(), "workbench-detached"), invocationId: launch.invocationId, scriptPath: launch.source.sourceRef,
+      directory: detachedBase(), invocationId: launch.invocationId, scriptPath: launch.source.sourceRef,
       cwd: ctx.cwd, input: launch.input, trustedScript: true, backend: claude ? "claude" : "deterministic",
       providers: [], grants: claude?.grants ?? [], permissions: ["inspect", "execute"], sourceFiles: [launch.source.sourceRef],
       ...(claude ? { claude: claude.claude } : {}),
@@ -2951,7 +2967,7 @@ Terse command-style prompts produce shallow, generic work.
       parameters: Type.Object({ action: Type.Union([Type.Literal("launch"),Type.Literal("inspect")]), invocationId:Type.String({minLength:1,maxLength:100}), scriptPath:Type.Optional(Type.String()), trustedScript:Type.Optional(Type.Boolean()), backend:Type.Optional(Type.Union([Type.Literal("deterministic"),Type.Literal("claude")])) }),
       execute: async (_id, params, _signal, _onUpdate, ctx) => {
         if (!grants(ctx).includes(params.action === "launch" ? "workbench:detach" : "workbench:observe")) return textResult("Permission denied: explicit detached launch or observe grant required.");
-        const directory=join(getAgentDir(),"workbench-detached");
+        const directory=detachedBase();
         try {
           if (params.action === "inspect") {
             const snapshot = await workbenchNative().connectDetachedWorkflow(directory,params.invocationId).inspect();
