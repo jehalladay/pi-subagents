@@ -16,8 +16,10 @@ import type {
   WorkflowSpawnResult,
 } from "../workflow/runtime.js";
 import { resolveWorkflowSource } from "../workflow/saved.js";
-import type { CapabilityRegistry } from "./capability-registry.js";
+import { type CapabilityDiagnostic, CapabilityError, type CapabilityRegistry, type JsonValue } from "./capability-registry.js";
 import { CLAUDE_CAPABILITY_TOOL_NAMES, createCuratedTools } from "./claude-capability-tools.js";
+import { type HyperUnixObservedRelation, type HyperUnixProjectionTopology, hyperunixTopology } from "./hyperunix-observer.js";
+import type { NativeRef, NativeSnapshot, ObservationScope } from "./observation.js";
 import { sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "./redaction.js";
 import { type ClaudeReplayDependencies, replayDependenciesMeasured } from "./replay-dependencies.js";
 
@@ -62,6 +64,12 @@ export interface ClaudeWorkflowHostOptions {
    * of an agent answer nor of a journaled node read. Absent, the basis is the eight policy elements alone.
    */
   replayDependencies?: ClaudeReplayDependencies;
+  /**
+   * wb-79k.1 (W13/VC-2): the live observation seam of node values. A hyperunix.find value a node call returns is projected by
+   * the landed hyperunixTopology and applied through the embedding host's own refresh and relate (observeNodeValue below), every
+   * input of its context the host's own. Absent, node values are returned unobserved, exactly as before.
+   */
+  observation?: ClaudeNodeObservation;
 }
 
 /**
@@ -152,6 +160,151 @@ function usage(result: SDKMessage & { type: "result" }): { tokens?: number; outp
     tokens: models.reduce((total, item) => total + item.inputTokens + item.outputTokens + item.cacheReadInputTokens + item.cacheCreationInputTokens, 0),
     outputTokens: models.reduce((total, item) => total + item.outputTokens, 0),
   };
+}
+
+/** wb-79k.1: the capability whose returned value the node seam observes. */
+const HYPERUNIX_FIND = "hyperunix.find";
+/** The diagnostics an outcome carries at most: the adapter's own cap (hyperunix-observer.ts MAX_DIAGNOSTICS). */
+const OBSERVED_DIAGNOSTICS = 8;
+/** A refusal message's display bound: the adapter's own diagnostic bound (hyperunix-observer.ts DIAGNOSTIC). */
+const REFUSAL_TEXT = 200;
+
+/**
+ * wb-79k.1 (W13/VC-2): the live projection seam of node values, built by the embedding host from what it owns. It hands over two
+ * functions and no projection: the host's own refresh and relate over its live projection, so a reading admits its snapshot and
+ * states its grouping edge and nothing else - no event, no staleness, no connection state, no read.
+ */
+export interface ClaudeNodeObservation {
+  /** The embedding host's ObservationProjection.refresh, answering exactly as it does. */
+  readonly refresh: (snapshot: NativeSnapshot) => "applied" | "out-of-order" | "refused";
+  /** The embedding host's ObservationProjection.relate. */
+  readonly relate: (statement: HyperUnixObservedRelation) => void;
+  /** The authenticated observer scope the embedding host bound for the run. */
+  readonly scope: ObservationScope;
+  /** The host clock: read at dispatch (the reading's capture time) and at return (its observation time). */
+  readonly now: () => string;
+  /** Told what observing each hyperunix.find value did; never consulted for the value the node returns. */
+  readonly onObserved?: (outcome: ClaudeNodeObservationOutcome) => void;
+}
+
+/** What observing one returned hyperunix.find value did (wb-79k.1). */
+export interface ClaudeNodeObservationOutcome {
+  readonly capabilityId: string;
+  readonly callId: number;
+  /** refresh's own answer for the reading's snapshot, or "diagnostic" when the adapter or the projection refused it (nothing projected). */
+  readonly result: "applied" | "out-of-order" | "refused" | "diagnostic";
+  /** The edges stated with relate: the adapter's grouping edge, stated only once its snapshot applied. */
+  readonly related: number;
+  /** The adapter's own bounded diagnostics, or the one sanitized refusal message; at most OBSERVED_DIAGNOSTICS. */
+  readonly diagnostics: readonly string[];
+  /** The typed refusal: always with "diagnostic", and beside "applied" when relate refused the edge of a snapshot that applied. */
+  readonly refusal?: CapabilityDiagnostic;
+}
+
+/** One returned node value as the seam observes it: the call, the run it belongs to and the host clock's reading at dispatch. */
+interface ObservedNodeCall {
+  readonly capabilityId: string;
+  readonly callId: number;
+  readonly input: unknown;
+  readonly invocationId?: string;
+  readonly dispatchedAt: string;
+}
+
+const recordOf = (value: unknown): Readonly<Record<string, unknown>> | undefined =>
+  typeof value === "object" && value !== null && !Array.isArray(value) ? (value as Record<string, unknown>) : undefined;
+
+/** The host clock read once; a clock that throws reads as no instant, which the adapter refuses as a typed diagnostic. */
+function clockReading(now: () => string): string {
+  try {
+    return now();
+  } catch {
+    return "";
+  }
+}
+
+/** The query the host issued, read from the node input the registry validated: the result itself names no query. */
+function issuedQuery(input: unknown): { kind: string; root?: string } {
+  const read = recordOf(input);
+  return { kind: typeof read?.kind === "string" ? read.kind : "", ...(typeof read?.root === "string" ? { root: read.root } : {}) };
+}
+
+/**
+ * The invoking node call as the run's projection names it: src/index.ts's onProgress keys a node call on the producer's own id
+ * when the runtime's nativeEvidence reads one from the value (for hyperunix.find a non-empty source.execution_id, under provider
+ * "hyperunix" and type "operation"), else on the run and the call, so the grouping edge starts at that same node.
+ */
+function invokingNode(invocationId: string, callId: number, value: JsonValue): NativeRef {
+  const executionId = recordOf(recordOf(value)?.source)?.execution_id;
+  return typeof executionId === "string" && executionId.length > 0
+    ? { provider: "hyperunix", type: "operation", id: executionId }
+    : { provider: "pi-workflow", type: "node-call", id: `${invocationId}:${callId}` };
+}
+
+/** A refusal as its typed diagnostic: a CapabilityError's own category ("validation" for any other throw), its message through the one helper. */
+function refusalOf(error: unknown): CapabilityDiagnostic {
+  const message = sanitizeWorkbenchText(error instanceof Error ? error.message : String(error), REFUSAL_TEXT, "label");
+  return { name: "CapabilityError", category: error instanceof CapabilityError ? error.category : "validation", message };
+}
+
+/**
+ * wb-79k.1 (W13/VC-2): a returned hyperunix.find value projected by the landed hyperunixTopology (hyperunix-observer.ts, unchanged)
+ * under a context of host-owned values only - the bound scope, the host clock read at dispatch (capturedAt) and at return
+ * (observedAt), the run's invocation id and the invoking node call - and its frozen result applied as it is: the snapshot through
+ * refresh, then, once it applied, the grouping edge through relate. An adapter refusal or a refresh that throws is a typed
+ * diagnostic with nothing projected; a partial or failed reading stays exactly as the adapter reads it.
+ */
+function observeHyperUnixValue(observation: ClaudeNodeObservation, call: ObservedNodeCall, value: JsonValue): ClaudeNodeObservationOutcome {
+  const base = { capabilityId: call.capabilityId, callId: call.callId };
+  let topology: HyperUnixProjectionTopology;
+  try {
+    topology = hyperunixTopology(value, {
+      scope: { workspace: observation.scope.workspace, principal: observation.scope.principal },
+      target: issuedQuery(call.input),
+      capturedAt: call.dispatchedAt,
+      observedAt: clockReading(observation.now),
+      ...(call.invocationId !== undefined ? { invocationId: call.invocationId, operationRef: invokingNode(call.invocationId, call.callId, value) } : {}),
+    });
+  } catch (error) {
+    const refusal = refusalOf(error);
+    return { ...base, result: "diagnostic", related: 0, diagnostics: [refusal.message], refusal };
+  }
+  let result: "applied" | "out-of-order" | "refused" = "applied";
+  try {
+    for (const snapshot of topology.snapshots) {
+      const applied = observation.refresh(snapshot);
+      if (applied !== "applied") result = applied;
+    }
+  } catch (error) {
+    const refusal = refusalOf(error);
+    return { ...base, result: "diagnostic", related: 0, diagnostics: [refusal.message], refusal };
+  }
+  // A snapshot the projection did not admit states no edge: nothing is said of a node it holds no reading for.
+  if (result !== "applied") return { ...base, result, related: 0, diagnostics: topology.diagnostics };
+  let related = 0;
+  try {
+    for (const relation of topology.relations) {
+      observation.relate(relation);
+      related++;
+    }
+  } catch (error) {
+    const refusal = refusalOf(error);
+    return { ...base, result, related, diagnostics: [...topology.diagnostics.slice(0, OBSERVED_DIAGNOSTICS - 1), refusal.message], refusal };
+  }
+  return { ...base, result, related, diagnostics: topology.diagnostics };
+}
+
+/**
+ * wb-79k.1: the one place a node's returned value reaches the live projection. Only a hyperunix.find value is read here; nothing
+ * here invokes a capability or holds a grant, and nothing it does reaches the value the node returns: it never throws.
+ */
+function observeNodeValue(observation: ClaudeNodeObservation, call: ObservedNodeCall, value: JsonValue): void {
+  if (call.capabilityId !== HYPERUNIX_FIND) return;
+  const outcome = observeHyperUnixValue(observation, call, value);
+  try {
+    observation.onObserved?.(outcome);
+  } catch {
+    // The listener is told what happened; what it does never reaches the node's value.
+  }
 }
 
 /** This adapter never imports AgentManager or createAgentSession. */
@@ -377,12 +530,22 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
     ...(config.capabilities ? {
       callNode: async (request: WorkflowNodeRequest) => {
         await config.beforeDispatch?.();
-        return config.capabilities!.invoke(request.capabilityId, request.input, {
+        const observation = request.capabilityId === HYPERUNIX_FIND ? config.observation : undefined;
+        // wb-79k.1: the host clock at dispatch dates the reading, so a capture time is never later than the read it dates.
+        const dispatchedAt = observation === undefined ? undefined : clockReading(observation.now);
+        const value = await config.capabilities!.invoke(request.capabilityId, request.input, {
           grants: config.grants ?? [], signal: request.signal,
           invocationId: config.invocationId,
           principal: config.principal, workspace: config.cwd,
           callId: String(request.callId),
         });
+        if (observation !== undefined && dispatchedAt !== undefined) {
+          observeNodeValue(observation, {
+            capabilityId: request.capabilityId, callId: request.callId, input: request.input, dispatchedAt,
+            ...(config.invocationId !== undefined ? { invocationId: config.invocationId } : {}),
+          }, value);
+        }
+        return value;
       },
       // Host-side policy lookup, not script-facing discovery: the host owns
       // this registry, and the journal needs the descriptor's effect class at

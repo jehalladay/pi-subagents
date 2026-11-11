@@ -3203,6 +3203,11 @@ Terse command-style prompts produce shallow, generic work.
               principal: { id: scope.principal, role: "local-operator" },
               beforeDispatch,
               replayDependencies,
+              // wb-79k.1: the live projection a returned hyperunix.find value is observed into, under this run's scope and the host clock.
+              observation: {
+                refresh: snapshot => projection.refresh(snapshot), relate: statement => projection.relate(statement),
+                scope, now: () => new Date().toISOString(),
+              },
               onMessage: (message, call) => {
                 if (message.type === "system" && message.subtype === "init") {
                   const live = liveClaudeQueries.get(liveClaudeKey(task.id, call));

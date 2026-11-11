@@ -619,9 +619,20 @@
         "kinds": [
          "ownership"
         ]
+       },
+       "src/index.ts": {
+        "calls": 1,
+        "kinds": []
+       },
+       "src/workbench/claude-host.ts": {
+        "calls": 1,
+        "kinds": []
        }
       },
-      "indexRelates": 0
+      "indexRelates": 1,
+      "hxAdapterKinds": [
+       "grouping"
+      ]
      }
     },
     {

@@ -1584,10 +1584,11 @@
         "ingest",
         "markStale",
         "query",
-        "refresh"
+        "refresh",
+        "relate"
       ],
       "type": [],
-      "reason": "the extension entry: it builds the session projection, admits observations in tool handlers and in its workflow-lifecycle emitter, reads it in a tool handler (workflow_compare) and hands the dialog seam its deps"
+      "reason": "the extension entry: it builds the session projection, admits observations in tool handlers and in its workflow-lifecycle emitter, reads it in a tool handler (workflow_compare), hands the dialog seam its deps and hands the Claude host's node seam its refresh and relate (wb-79k.1: a returned hyperunix.find value's snapshot and grouping edge)"
     },
     "src/workbench/beads-observer.ts": {
       "value": [],
