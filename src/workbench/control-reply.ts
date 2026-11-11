@@ -10,7 +10,9 @@
  * Every display string goes through the one shared helper (redaction.ts sanitizeWorkbenchText, "text" layout) exactly
  * once and before anything is cut, and the compact JSON is byte-capped with an honest truncated flag and a visible
  * truncation marker. A permit renders only when the core minted that very decision (isCoreMintedDecision, wb-5a7), and a
- * reference the core withheld renders as the core recorded it: the marker plus a fixed withheld record.
+ * reference the core withheld renders as the core recorded it: the marker plus a fixed withheld record. A denial also names
+ * what the next call needs (EAT-R334): allowed verbs, the exact grant, or the confirmation spelled as the tool's own parameter,
+ * each composed from the core's verb table with the request's provider and action read only as table keys.
  */
 import type { CapabilityErrorCategory, JsonValue } from "./capability-registry.js";
 import {
@@ -38,6 +40,12 @@ export const MAX_CONTROL_REPLY_BYTES = 65536;
 export interface ControlReplyOptions {
   /** Hard byte budget for the compact JSON text. Clamped to [MIN, MAX]; a non-finite value means the default. */
   maxBytes?: number;
+  /**
+   * The refused request's target provider and action word, so a refusal can teach the next call (EAT-R334): an unknown-action
+   * or observer-only denial names the provider's allowed verbs or the exact grant the request needs. Both are read only as keys
+   * of the core's verb table and the reply composes the table's own strings, so caller text never reaches it.
+   */
+  request?: { readonly provider: string; readonly action: string };
 }
 export interface ControlReply {
   /** The sanitized compact JSON, never longer than the effective byte budget. */
@@ -76,6 +84,8 @@ const REFUSAL_TEXT: Readonly<Record<ReplyPolicy, string>> = {
   "malformed-input": "The reply input is not a control decision or receipt.",
 };
 const CONFIRMATION_LITERAL: JsonValue = { confirmed: true };
+/** Spelled as workflow_control's own top-level parameter, so following it verbatim is the call that succeeds (EAT-R334, C188). */
+const CONFIRMATION_HINT = "Set confirmed: true (explicit operator confirmation) and request the action again.";
 const NOTICES = {
   requested: "Requested only: the producer has not acknowledged this action, and completion is not established.",
   acknowledged: "Acknowledged by the producer; completion is not established. Observe the target for its outcome.",
@@ -109,19 +119,42 @@ function requiredGrantOf(reason: unknown): string | undefined {
   const [, provider, action] = match;
   return Object.hasOwn(NATIVE_CONTROL_ACTIONS, provider) && NATIVE_CONTROL_ACTIONS[provider].includes(action) ? `control:${provider}.${action}` : undefined;
 }
+/** The core's own provider key equal to the requested one (an own key of the verb table only), never the caller's string. */
+function tableProvider(provider: unknown): string | undefined {
+  return text(provider) ? Object.keys(NATIVE_CONTROL_ACTIONS).find(known => known === provider) : undefined;
+}
+/** The verbs the core allows for the requested provider, copied from its table; none for a provider it has no verb for. */
+function allowedActionsOf(provider: unknown): string[] {
+  const known = tableProvider(provider);
+  return known === undefined ? [] : [...NATIVE_CONTROL_ACTIONS[known]];
+}
+/** The exact grant a requested provider.action needs, composed from the table's own strings when both are allowlisted. */
+function grantFor(provider: unknown, action: unknown): string | undefined {
+  const known = tableProvider(provider);
+  const verb = known !== undefined && text(action) ? NATIVE_CONTROL_ACTIONS[known].find(allowed => allowed === action) : undefined;
+  return known !== undefined && verb !== undefined ? `control:${known}.${verb}` : undefined;
+}
 function refusal(policy: ReplyPolicy, category: CapabilityErrorCategory, extra: Body = {}): Body {
   return { status: "denied", category, policy, effect: "none", reason: REFUSAL_TEXT[policy], ...extra };
 }
-function denied(decision: Extract<ControlDecision, { decision: "denied" }>): Body {
+function denied(decision: Extract<ControlDecision, { decision: "denied" }>, request: ControlReplyOptions["request"]): Body {
   const policy = DENY_POLICIES.find(known => known === decision.policy);
   const category = CATEGORIES.find(known => known === decision.category);
   if (!policy || !category) return refusal("malformed-input", "validation");
   const extra: Body = {};
   const grant = policy === "missing-exact-grant" ? requiredGrantOf(decision.reason) : undefined;
   if (grant) extra.requiredGrant = grant;
+  // EAT-R334: the data that makes the next call succeed, from the verb table only. An action the provider does not take
+  // names the verbs it does; an observer-only caller learns the exact grant, or the verbs when the pair is not allowlisted.
+  if (request !== undefined && policy === "unknown-action") extra.allowedActions = allowedActionsOf(request.provider);
+  if (request !== undefined && policy === "observer-only") {
+    const needed = grantFor(request.provider, request.action);
+    if (needed !== undefined) extra.requiredGrant = needed;
+    else extra.allowedActions = allowedActionsOf(request.provider);
+  }
   if (policy === "operator-confirmation") {
     extra.requiredParams = CONFIRMATION_LITERAL;
-    extra.hint = "Set params.confirmed to true (explicit operator confirmation) and request the action again.";
+    extra.hint = CONFIRMATION_HINT;
   }
   return refusal(policy, category, extra);
 }
@@ -188,9 +221,9 @@ function minimal(body: Body): Body {
   const keep = ["status", "phase", "category", "policy", "completionBasis", "verification", "effect", "withheld"];
   return Object.fromEntries(keep.filter(key => key in body).map(key => [key, body[key]]));
 }
-function bodyOf(source: ControlDecision | NativeControlReceipt, detail: Detail): Body {
+function bodyOf(source: ControlDecision | NativeControlReceipt, detail: Detail, request: ControlReplyOptions["request"]): Body {
   if (plain(source) && "decision" in source) {
-    if (source.decision === "denied") return denied(source);
+    if (source.decision === "denied") return denied(source, request);
     // A permit renders only when the core minted this very object: a copy, a replay or a look-alike, however exact, is not one.
     if (source.decision === "permitted" && isCoreMintedDecision(source) && wellFormed(source.receipt) && source.receipt.phase === "requested") return phased(source.receipt, detail);
     return refusal("malformed-input", "validation");
@@ -271,9 +304,9 @@ function render(shaped: Body, detail: Detail, byteCut: boolean, maxBytes: number
  */
 export function buildControlReply(source: ControlDecision | NativeControlReceipt, options: ControlReplyOptions = {}): ControlReply {
   const maxBytes = effectiveBudget(options.maxBytes);
-  const full = render(bodyOf(source, "full"), "full", false, maxBytes);
+  const full = render(bodyOf(source, "full", options.request), "full", false, maxBytes);
   if (full.bytes <= maxBytes) return full;
-  const compact = render(bodyOf(source, "compact"), "compact", true, maxBytes);
+  const compact = render(bodyOf(source, "compact", options.request), "compact", true, maxBytes);
   if (compact.bytes <= maxBytes) return compact;
-  return render(minimal(bodyOf(source, "compact")), "compact", true, maxBytes);
+  return render(minimal(bodyOf(source, "compact", options.request)), "compact", true, maxBytes);
 }
