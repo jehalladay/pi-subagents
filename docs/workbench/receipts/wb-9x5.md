@@ -6,7 +6,8 @@
 - What answers it: seven measured runs of four landed W21 bench CLIs, each over the deterministic grouped-10k fixture of `qa/workbench/grouped-fixture.mjs`, on one host at one clean trunk revision. R1 to R4 are the runs of record, one `forge run <bench>` each, taken in that order. X1 to X3 are direct `node --expose-gc qa/workbench/inspector-retained-memory-bench.mjs` runs taken before them in the same clean worktree. They are kept because X1 reads a finding (clause A3 below). Each run's one JSON receipt line, as its bench printed it, is committed verbatim in `test/fixtures/w21-acceptance-receipt-lines.json` and bound to this entry by its SHA-256 (Receipt lines, below), and `test/workbench-w21-acceptance-receipt.test.ts` reads every table of this entry back: the falsifier table against the test's own falsifier list, every other table against those lines.
 - Seat records, not read from any receipt line: the Command id and Start load1 cells of the runs table. A command id is the forge envelope's `ids.command_id`. A start load1 is the first field of `/proc/loadavg`, read just before the run started, on a host shared with other lanes. X1's load was not read.
 - The bead's notes ask that no cap be raised blindly. This cut raises no cap and changes no file under `src/` or `qa/`.
-- Revised at cut #2 by machine seat ws-07 (run g10-work-s338, base ce180d8) after the gate refused cut #1: the test's acceptance reader now reads this entry as the page renders it, the test gained a bounds reader, a falsifier list and a reader of its table, and this revision adds this bullet and rewrites the What the test holds section, one item of NOT CLAIMED and one sentence of the bullet on what answers the acceptance. The runs, the receipt lines and every measured figure are cut #1's, unchanged; no run was repeated.
+- Revised at cut #2 by machine seat ws-07 (run g10-work-s338, base ce180d8) after the gate refused cut #1: the test's acceptance reader now reads this entry through the shared rendered view (`docsSection`), the test gained a bounds reader, a falsifier list and a reader of its table, and this revision adds this bullet and rewrites the What the test holds section, one item of NOT CLAIMED and one sentence of the bullet on what answers the acceptance. The runs, the receipt lines and every measured figure are cut #1's, unchanged; no run was repeated.
+- Revised at cut #3 by machine seat ws-08 (run g10-work-s339, base ce180d8) after the gate refused cut #2: the acceptance reader now counts the acceptance sentence in every text the shared rendered view renders for this entry, requires that one occurrence to be quoted in a top-level paragraph or list item, and refuses HTML, characters outside printable ASCII and character references anywhere in this receipt and a table nested in a list item or block quote; the bounds reader refuses HTML in the Performance benchmark section of docs/14 and requires its target paragraph to read the same in its source. The test gained 17 falsifiers and a case, W21R-BITE, that runs every falsifier's assertions on the unedited inputs. This revision adds this bullet and the W21R-BITE item of What the test holds; rewrites that section's opening sentence, its W21R-BOUNDS and W21R-ACCEPTANCE items and the sentence above the falsifier table; extends the falsifier table (rows W21R-F39 to W21R-F55) and retitles five of its rows (W21R-F22, W21R-F23, W21R-F25, W21R-F26 and W21R-F30); rewrites one item of NOT CLAIMED and adds three; and rewords one phrase of the cut #2 bullet. The runs, the receipt lines and every measured figure are cut #1's, unchanged; no run was repeated.
 
 ### Runs
 
@@ -106,19 +107,20 @@ Every receipt line carries this same fixture (the test holds the eight fields in
 
 ### What the test holds
 
-`test/workbench-w21-acceptance-receipt.test.ts` lexes this entry with marked, reads the data file and re-judges each receipt line with the pure assessor its bench module exports (`assessReceipt`, `assessReducerSelectorReceipt`, `assessTimelineReceipt`, `assessRetainedReceipt`). It runs no bench and spawns no process.
+`test/workbench-w21-acceptance-receipt.test.ts` lexes this receipt and docs/14 with marked, reads the data file and re-judges each receipt line with the pure assessor its bench module exports (`assessReceipt`, `assessReducerSelectorReceipt`, `assessTimelineReceipt`, `assessRetainedReceipt`). It runs no bench and spawns no process.
 
 - W21R-SHAPE: the runs table, the receipt-lines table and the data file name exactly R1 to R4 and X1 to X3, in that order; each data line is one line, and its SHA-256 is the one the receipt-lines table lists.
 - W21R-REJUDGE: each line carries its bench's contract and command, and re-judges to the exitCode, verdict and realised it records. Each one is realised.
 - W21R-RUNS: each runs-table row matches its line's utc, exit code and verdict.
 - W21R-TREE-HOST: every run has a parsed line, and the tree-and-host values above hold in every line.
 - W21R-A1, W21R-A2 and W21R-A3: each clause table holds exactly its frozen rows, and every cell after the field column is read from the line. The within cells are recomputed from the line, never read from the table.
-- W21R-BOUNDS: each line records the bound its bench's assessor judges, as the bench modules export it (`NAVIGATION_TARGET_MS` for R1 and R3, `SELECTOR_TARGET_MS`, `REDRAW_MAX_HZ` and `FOLD_THRESHOLD_EVENTS` for R2, `RETAINED_BOUNDS` for R4 and X1 to X3), and the target sentence of the Performance benchmark section of `docs/workbench/14-qa-and-benchmarks.md` renders the same 20 ms, 4 Hz and 100k-event figures.
-- W21R-ACCEPTANCE: read as the page renders it (`docsSection` of `test/helpers/census.ts`), this entry carries no HTML, and exactly one of its top-level paragraphs and list items quotes the acceptance sentence, verbatim, in text that reads the same in its source.
+- W21R-BOUNDS: each line records the bound its bench's assessor judges, as the bench modules export it (`NAVIGATION_TARGET_MS` for R1 and R3, `SELECTOR_TARGET_MS`, `REDRAW_MAX_HZ` and `FOLD_THRESHOLD_EVENTS` for R2, `RETAINED_BOUNDS` for R4 and X1 to X3). In the shared rendered view (`docsSection` of `test/helpers/census.ts`), the Performance benchmark section of `docs/workbench/14-qa-and-benchmarks.md` carries no HTML, exactly one of its top-level paragraphs opens with the target sentence, that paragraph reads the same in its source, its millisecond figure equals `NAVIGATION_TARGET_MS` and `SELECTOR_TARGET_MS`, its hertz figure equals `REDRAW_MAX_HZ`, and its thousand-event figure times 1000 equals `FOLD_THRESHOLD_EVENTS`.
+- W21R-ACCEPTANCE: this receipt carries no HTML, no character outside printable ASCII and the line feed, and no character reference, and this entry nests no table in a list item or block quote. In the shared rendered view (`docsSection`), the acceptance sentence occurs exactly once across every text the view renders for this entry (each heading, paragraph, list item, code block, block quote and table), and that occurrence is quoted between straight double quotes in a top-level paragraph or list item whose text reads the same in its source.
 - W21R-FROZEN: the frozen-shape literals of the run set, the clause rows and the falsifier list (standing rule 16).
 - W21R-EDITS: the falsifier table below lists the test's falsifiers exactly, in order, each with the input its edited copy changes and its case title.
+- W21R-BITE: every falsifier's assertions, run on this receipt, the data file and docs/14 unedited, fail, so no falsifier's red rests on an assertion the unedited inputs also satisfy.
 
-The falsifiers W21R-F01 to W21R-F38 are edited copies, some with one edit and some with several. Each builds a copy of this receipt, of the data file, of both, or of `docs/workbench/14-qa-and-benchmarks.md` (docs/14), asserts that its copy changes exactly the input the table names, and reads the copy red through the reader its case title names.
+The falsifiers W21R-F01 to W21R-F55 are edited copies, some with one edit and some with several. Each builds a copy of this receipt, of the data file, of both, or of `docs/workbench/14-qa-and-benchmarks.md` (docs/14), asserts that its copy changes exactly the input the table names, and reads the copy red through the reader its case title names.
 
 | Falsifier | Edited copy of | Case title |
 | --- | --- | --- |
@@ -143,15 +145,15 @@ The falsifiers W21R-F01 to W21R-F38 are edited copies, some with one edit and so
 | W21R-F19 | data file | X2's line stored over several lines is named by the shape reader's one-line rule and its sha binding |
 | W21R-F20 | data file | another contract, another command and an unmeasured flag in three lines are named by the re-judge |
 | W21R-F21 | data file | a shallowest nesting of 4 in R1's line is named by the A1 depth floor |
-| W21R-F22 | receipt | the acceptance sentence quoted a second time is named by the acceptance reader |
-| W21R-F23 | receipt | the entry heading reworded leaves every reader without its entry |
+| W21R-F22 | receipt | the acceptance sentence quoted again in a second top-level paragraph is named by the acceptance reader's count |
+| W21R-F23 | receipt | the entry heading reworded leaves each of the eight readers of the entry without it: shape, runs, tree-and-host, A1, A2, A3, acceptance and falsifier table |
 | W21R-F24 | receipt | a second tree-and-host table in the entry is named by the one-table rule |
-| W21R-F25 | receipt | the acceptance quote hidden in an inline HTML comment inside its bullet (the gate's LEG2-P1 plant) is named by the no-HTML and rendered-quote rules |
-| W21R-F26 | receipt | the acceptance quote moved into an HTML comment block (the gate's LEG2-P2 plant) is named by the no-HTML and rendered-quote rules |
+| W21R-F25 | receipt | the acceptance quote hidden in an inline HTML comment inside its bullet (the gate's LEG2-P1 plant) is named by the no-HTML and count rules |
+| W21R-F26 | receipt | the acceptance quote moved into an HTML comment block (the gate's LEG2-P2 plant) is named by the no-HTML and count rules |
 | W21R-F27 | receipt | the acceptance quote inside a hidden span, whose text the rendered view keeps, is named by the no-HTML and plain-source rules |
 | W21R-F28 | receipt | an HTML comment elsewhere in the entry, the quote left plain, is named by the no-HTML rule alone |
 | W21R-F29 | receipt | the acceptance quote written as an image's alt text is named by the plain-source rule alone |
-| W21R-F30 | receipt | the acceptance quote moved into a link title, which the page shows only as a tooltip, is named by the rendered-quote rule alone |
+| W21R-F30 | receipt | the acceptance quote moved into a link title, which the page shows only as a tooltip, is named by the count rule alone |
 | W21R-F31 | data file | R2's selector target loosened to 2000 ms in its line (the line edit of the gate's LEG2-P9 plant) re-judges as recorded and is named by the bounds reader |
 | W21R-F32 | data file | a 25 ms overview p95 planted in R2's line under a 2000 ms target (the line edits of the gate's LEG2-P9b plant) re-judges as recorded and is named by the bounds reader |
 | W21R-F33 | data file | X1's ArrayBuffer bound loosened to 8 MiB in its line (the bound edit of the gate's LEG2-P10 plant) is named by the bounds reader |
@@ -160,6 +162,23 @@ The falsifiers W21R-F01 to W21R-F38 are edited copies, some with one edit and so
 | W21R-F36 | data file | an empty runs array in the data file (the gate's LEG2-P11 plant) is named by the tree-and-host reader for every run |
 | W21R-F37 | receipt | a falsifier row dropped from the receipt's falsifier table is named by the falsifier-table reader |
 | W21R-F38 | receipt | a falsifier's edited-copy cell changed from data file to receipt is named by the falsifier-table reader |
+| W21R-F39 | docs/14 | the docs/14 target sentence wrapped in a hidden span (the gate's G01 plant) is named by the bounds reader's no-HTML and plain-source rules |
+| W21R-F40 | docs/14 | the docs/14 paragraph that opens with the target sentence put inside a details block (the gate's G02 plant) is named by the bounds reader's no-HTML rule alone |
+| W21R-F41 | docs/14 | the docs/14 target sentence struck through is named by the bounds reader's plain-source rule alone |
+| W21R-F42 | receipt | a second copy of the acceptance quote in a block quote (the gate's G03 plant) is named by the acceptance reader's count |
+| W21R-F43 | receipt | a second copy of the acceptance quote in a table cell (the gate's G04 plant) is named by the acceptance reader's count |
+| W21R-F44 | receipt | a second copy of the acceptance quote as a level-3 heading (the gate's G05 plant) is named by the acceptance reader's count |
+| W21R-F45 | receipt | a second copy of the acceptance quote in a fenced code block is named by the acceptance reader's count |
+| W21R-F46 | receipt | the acceptance quote written twice in its own bullet is named by the acceptance reader's count |
+| W21R-F47 | receipt | a second copy of the acceptance quote in a sub-bullet nested under the acceptance bullet is named by the acceptance reader's count |
+| W21R-F48 | receipt | a second, unquoted copy of the acceptance sentence in a top-level paragraph is named by the acceptance reader's count |
+| W21R-F49 | receipt | the acceptance bullet with its quote marks removed, its one copy unquoted, is named by the acceptance reader's quoted-carrier rule |
+| W21R-F50 | receipt | the acceptance quote moved out of its bullet into a block quote, its one copy outside every top-level paragraph and list item, is named by the acceptance reader's quoted-carrier rule |
+| W21R-F51 | receipt | a details element opened above the entry heading, outside the entry, is named by the acceptance reader's whole-receipt no-HTML rule |
+| W21R-F52 | receipt | a second copy of the acceptance quote with one letter replaced by a Cyrillic look-alike is named by the acceptance reader's printable-ASCII rule |
+| W21R-F53 | receipt | a right-to-left override and a pop directional formatting around the acceptance quote in its bullet (the gate's G07 plant) are named by the acceptance reader's printable-ASCII rule |
+| W21R-F54 | receipt | a second copy of the acceptance quote with one letter written as a decimal character reference is named by the acceptance reader's character-reference rule |
+| W21R-F55 | receipt | a second copy of the acceptance quote in a table nested in a list item, which the shared rendered view does not render, is named by the acceptance reader's nested-table rule |
 
 ### NOT CLAIMED by this entry
 
@@ -167,7 +186,10 @@ The falsifiers W21R-F01 to W21R-F38 are edited copies, some with one edit and so
 - That these figures reproduce on another host, at another load or at another revision.
 - Anything about production caps. Every timed pass here runs at the bench-only limits each line records, which the retained bench labels non-comparable to production. R1's default-limits pass keeps the default caps, truncates by design and is judged on no timing.
 - Render, navigate and resize across the four views, the graph-view build and the timeline honesty bundle: one receipt scope under wb-9x5.11 since the owner graph audit of 2026-11-11 merged wb-9x5.10 and wb-9x5.16 into it. Also a live terminal, live native topology, and the other docs/14 measures (terminal bytes per update, recovery latency, Pi tool reply size), each of which has its own bench or child bead.
-- Any claim this entry's prose makes, but the acceptance quote. The test reads back only the tables, the quote and the receipt lines (it holds the whole entry free of HTML, but reads no prose claim), so a rewrite of the A3 finding's prose (the gate's LEG2-P6 plant) reads green.
+- Any claim this entry's prose makes, but the acceptance quote. The test reads back only the tables, the quote and the receipt lines (it holds this whole receipt free of HTML, of characters outside printable ASCII and of character references, but reads no prose claim), so a rewrite of the A3 finding's prose (the gate's LEG2-P6 plant) reads green.
+- How a renderer other than the shared rendered view draws this receipt. The acceptance reader counts what that view renders and refuses the constructs named in the W21R-ACCEPTANCE item above; no other construct is read as a copy of the acceptance sentence.
+- A copy of the acceptance sentence outside this entry, under another level-1 or level-2 heading of this receipt, and inline markup in entry text that carries no copy of the sentence.
+- docs/14 outside its Performance benchmark section (HTML there, such as an element opened above the section's heading, is not read), how a browser draws that section, and every paragraph, list and heading of the section but the one that opens with the target sentence, including one that reads like the target sentence on the page but not in the view's characters. The landed cap-saturation receipt test pins the whole section; that is program coverage, not a claim of this test.
 - The bench-receipt halves of `test/workbench-docs14-performance-benchmark.census.ts`, which stay unpinned there.
 
 ### Receipt lines

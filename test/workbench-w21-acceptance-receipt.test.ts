@@ -30,6 +30,22 @@
  * of the LEG2-P9, P9b and P10 plants among them); F4, the tree-and-host reader names every run without a parsed line
  * (W21R-F36, the LEG2-P11 plant).
  *
+ * RESPIN 2 (cut #3, curing refusal #2 of cut #2 at the gate run g10-gate-s289; alternative PIN-AND-FALSIFY for U1 and U2,
+ * with NOT CLAIMED scope sentences for every mode outside the pinned set). U1 RENDERED-TEXT DOCS TRUTH: cut #2's bounds
+ * reader read docs/14's target sentence through the shared rendered view but never read that section's HTML flag, so the
+ * gate's G01 plant (the sentence in a hidden span) and G02 plant (the paragraph in a details block) read green. The bounds
+ * reader now refuses any HTML in the section (section.hasHtml) and requires the paragraph that opens with the target
+ * sentence to read the same in its source (W21R-F39..W21R-F41). U2 CLAIMS WIDER THAN PINS: cut #2's titles said the entry
+ * quotes the acceptance sentence once, while its reader counted the quote only in top-level paragraphs and list items, so
+ * the gate's G03 (a block quote), G04 (a table cell) and G05 (a level-3 heading) copies read green. The acceptance reader
+ * now counts the sentence in every text the shared view renders for the entry and requires its one occurrence to be quoted
+ * in a top-level paragraph or list item. It also refuses four constructs, each measured on marked 18 to let a page show a
+ * copy of the sentence that the view does not count: HTML anywhere in the receipt; a character outside printable ASCII and
+ * the line feed (a look-alike letter or an invisible format character inside a copy keeps the view from counting it); a
+ * character reference (the view decodes only five named references and two forms of the apostrophe); and a table nested
+ * in a list item or block quote (the view renders no text for one) (W21R-F42..W21R-F55). The four are the ones measured,
+ * not a list of every way a renderer can differ from the view (NOT CLAIMED below). Each case title now names exactly what its case reads.
+ *
  * Pinned reader set (case id: target -> result on these bytes):
  * - W21R-SHAPE: the runs table, the receipt-lines table and the data file name exactly RUNS (R1-R4, then X1-X3) in
  *   order, each data line is one line, and its SHA-256 is the one the receipt-lines table lists -> holds.
@@ -47,19 +63,30 @@
  * - W21R-A3: the A3 table rows are exactly the A3 pins of CLAUSES, each measured cell equal to the line's judged figure,
  *   each bound cell equal to its bounds figure, and each within cell equal to measured <= bound -> holds; the X1
  *   ArrayBuffer row reads no.
- * - W21R-BOUNDS: docs/14's "Performance benchmark" section renders one target sentence whose 20 ms, 4 Hz and 100k-event
- *   figures equal NAVIGATION_TARGET_MS and SELECTOR_TARGET_MS, REDRAW_MAX_HZ and FOLD_THRESHOLD_EVENTS; R1's and R3's
- *   lines record a target.ms equal to NAVIGATION_TARGET_MS, the constant their assessors judge against, R2's line records
- *   bounds equal to those three reducer-selector constants, and the four retained-memory lines record bounds equal to
- *   RETAINED_BOUNDS, key for key -> holds.
- * - W21R-ACCEPTANCE: in the shared rendered view the entry carries no HTML, exactly one of its top-level paragraphs and
- *   list items renders the quoted acceptance sentence (the three clause phrases of CLAUSES joined in order plus the
- *   outcome phrase), and that text reads the same in its source -> holds.
+ * - W21R-BOUNDS: R1's and R3's lines record a target.ms equal to NAVIGATION_TARGET_MS, the constant their assessors
+ *   judge against, R2's line records bounds equal to SELECTOR_TARGET_MS, REDRAW_MAX_HZ and FOLD_THRESHOLD_EVENTS, and the
+ *   four retained-memory lines record bounds equal to RETAINED_BOUNDS, key for key; in the shared rendered view
+ *   (docsSection, test/helpers/census.ts) docs/14's "Performance benchmark" section carries no HTML (block or inline,
+ *   comments included), exactly one of its top-level paragraphs opens with the target sentence (DOCS14_TARGET), that
+ *   paragraph reads the same in its source (whitespace collapsed), and, each read as a decimal number, its millisecond
+ *   figure equals NAVIGATION_TARGET_MS and SELECTOR_TARGET_MS, its hertz figure equals REDRAW_MAX_HZ and its
+ *   thousand-event figure times 1000 equals FOLD_THRESHOLD_EVENTS -> holds.
+ * - W21R-ACCEPTANCE: the receipt file carries no HTML token (block or inline, comments included, inside list items, block
+ *   quotes and table cells too), no character outside printable ASCII (U+0020..U+007E) and the line feed, and no character
+ *   reference (a named, decimal or hexadecimal one); the entry nests no table in a list item or block quote, at any depth;
+ *   and in the shared rendered view the acceptance sentence (the three clause phrases of CLAUSES joined in order plus the
+ *   outcome phrase) occurs exactly once across every text the view renders for the entry (each heading, paragraph, list
+ *   item, code block, block quote and table; overlapping occurrences counted), and that one occurrence sits between two
+ *   straight double quotes in a top-level paragraph or list item whose text reads the same in its source (whitespace
+ *   collapsed) -> holds.
  * - W21R-FROZEN: the frozen-shape literals of RUNS, CLAUSES and FALSIFIERS (standing rule 16) -> holds.
  * - W21R-EDITS: the receipt's falsifier table lists exactly FALSIFIERS, in order: each id, the input its edited copy
  *   changes and its case title -> holds.
- * - W21R-F01..W21R-F38 (FALSIFIERS): edited copies of the live receipt, the data file or docs/14; each case first asserts
- *   that its copy changes exactly the input FALSIFIERS names, then that the reader its title names reads the copy red.
+ * - W21R-BITE: every falsifier's holds, run on the unedited live inputs, throws, so no falsifier's red rests on an
+ *   assertion the live inputs also satisfy (the gate's G15 plant, a holds hollowed to a no-op, reads red here) -> holds.
+ * - W21R-F01..W21R-F55 (FALSIFIERS): edited copies of the live receipt, the data file or docs/14; each case first asserts
+ *   that its copy changes exactly the input FALSIFIERS names, then that the reader or readers its title names read the
+ *   copy red with the findings the case lists.
  *
  * NOT CLAIMED by this file:
  * - that the runs happened as the runs table says: the command ids and start load1 cells are seat records, and no reader
@@ -71,9 +98,17 @@
  *   honesty bundle (one receipt scope under wb-9x5.11 since the owner graph audit of 2026-11-11 merged wb-9x5.10 and
  *   wb-9x5.16 into it), a live terminal or native topology;
  * - any claim the entry's prose makes, but the acceptance quote: only its tables, the quote and the data lines are read
- *   back (the whole entry is held free of HTML, but no prose claim is read), so a prose rewrite of the A3 finding (the
- *   gate's LEG2-P6 plant) reads green here;
- * - HTML outside the entry, and inline markup in entry text that carries no acceptance quote;
+ *   back (the whole receipt is held free of HTML, of characters outside printable ASCII and of character references, but
+ *   no prose claim is read), so a prose rewrite of the A3 finding (the gate's LEG2-P6 plant) reads green here;
+ * - how a renderer other than the shared rendered view draws the receipt: the acceptance reader counts what that view
+ *   renders and refuses the constructs named in the acceptance bullet above; no other construct is read as a copy;
+ * - a copy of the acceptance sentence outside the entry (under another level-1 or level-2 heading of the receipt), and
+ *   inline markup in entry text that carries no copy of the sentence;
+ * - docs/14 outside its "Performance benchmark" section (HTML there, such as an element opened above the section's
+ *   heading, is not read), how a browser draws that section, and every paragraph, list and heading of the section but the
+ *   one that opens with the target sentence, a paragraph that reads like the target sentence on the page but not in the
+ *   view's characters included (the landed cap-saturation receipt test pins the whole section: program coverage, not a
+ *   claim of this file);
  * - the bench-receipt halves of test/workbench-docs14-performance-benchmark.census.ts, which stay unpinned there.
  * Scope of the re-judge: the assessors are the ones on the tree under test, so a later change to an assessor's rules
  * re-judges these lines under the new rules, and a red names the run.
@@ -170,8 +205,10 @@ const ENTRY_HEADING =
   "2026-11-11 receipt: W21 parent acceptance read from seven grouped-10k bench receipt lines on one declared host (machine seat ws-13, run g10-work-s338, base ce180d8)";
 const DOCS14_SECTION = "Performance benchmark";
 const DOCS14_PARENTS: readonly string[] = ["14 — Test strategy, conformance suite, benchmark and adversarial controls"];
-/** docs/14's target sentence as the page renders it: the navigation/layout target in ms, the redraw cap in Hz and the fold size in thousands of events. */
+/** docs/14's target sentence as the shared rendered view reads it: the navigation/layout target in ms, the redraw cap in Hz and the fold size in thousands of events. */
 const DOCS14_TARGET = /^Proposed responsive target <=(\d+)ms per navigation\/layout calculation on declared reference host, redraw <=(\d+)Hz live; no full (\d+)k-event fold per redraw;/;
+/** The target sentence as docs/14 writes it today, the anchor of the docs/14 falsifiers' edits. */
+const DOCS14_SENTENCE = "Proposed responsive target <=20ms per navigation/layout calculation on declared reference host, redraw <=4Hz live; no full 100k-event fold per redraw;";
 
 const BENCHES: Readonly<Record<Bench, BenchModule>> = {
   "inspector-grouped-bench": {
@@ -299,6 +336,54 @@ const W21_DEPTH = 5;
 const isHeading = (token: Token): token is Tokens.Heading => token.type === "heading";
 const isTable = (token: Token): token is Tokens.Table => token.type === "table";
 const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null && !Array.isArray(value);
+const isList = (token: Token): token is Tokens.List => token.type === "list";
+
+/** A token's child tokens: a block's inline tokens, or a block quote's blocks; none for a leaf. */
+function childTokens(token: Token): readonly Token[] {
+  const value: unknown = (token as { tokens?: unknown }).tokens;
+  return Array.isArray(value) ? (value as Token[]) : [];
+}
+
+/** How many html tokens sit in `tokens` at any depth: block or inline, inside list items, block quotes and table cells. */
+function htmlTokensIn(tokens: readonly Token[]): number {
+  let found = 0;
+  for (const token of tokens) {
+    if (token.type === "html") found += 1;
+    if (isList(token)) for (const item of token.items) found += htmlTokensIn(item.tokens);
+    else if (isTable(token)) for (const cell of [...token.header, ...token.rows.flat()]) found += htmlTokensIn(cell.tokens);
+    else found += htmlTokensIn(childTokens(token));
+  }
+  return found;
+}
+
+/** True when a table sits inside a list item or a block quote, at any depth: the shared rendered view renders no text for one. */
+function nestsTable(tokens: readonly Token[], nested: boolean): boolean {
+  return tokens.some(token => {
+    if (isTable(token)) return nested;
+    if (isList(token)) return token.items.some(item => nestsTable(item.tokens, true));
+    return nestsTable(childTokens(token), nested || token.type === "blockquote");
+  });
+}
+
+/** Every character of `text` outside printable ASCII (U+0020..U+007E) and the line feed, named by its code point. */
+function offAsciiIn(text: string): string[] {
+  const out: string[] = [];
+  for (const char of text) {
+    const code = char.codePointAt(0) ?? 0;
+    if (char !== "\n" && (code < 0x20 || code > 0x7e)) out.push(`U+${code.toString(16).toUpperCase().padStart(4, "0")}`);
+  }
+  return out;
+}
+
+/** A character reference (named, decimal or hexadecimal): marked keeps it as written, and the page shows the character it names. */
+const CHARACTER_REFERENCE = /&(?:#[0-9]+|#[xX][0-9a-fA-F]+|[A-Za-z][A-Za-z0-9]*);/;
+
+/** How many times `needle` starts in `text`, overlapping starts counted. */
+function occurrences(text: string, needle: string): number {
+  let count = 0;
+  for (let at = text.indexOf(needle); at >= 0; at = text.indexOf(needle, at + 1)) count += 1;
+  return count;
+}
 
 /** The value at a dot path of own properties, or undefined where any step is absent. */
 function fieldAt(value: unknown, path: string): unknown {
@@ -569,23 +654,30 @@ function clauseFindings(sources: Sources, id: ClauseId): string[] {
   return out;
 }
 
+const DOCS14_NO_HTML = `docs/14: the "${DOCS14_SECTION}" section carries HTML (a comment or a tag), whose rendered text can hide what its source says`;
+const DOCS14_UNPLAIN = "docs/14: the paragraph that opens with the target sentence reads differently in its source: ";
+
 /**
- * W21R-BOUNDS' reader: docs/14's target sentence renders the figures the bench constants carry, and every line records
- * the bound its bench's assessor judges against (LINE_BOUNDS), key for key.
+ * W21R-BOUNDS' reader: every line records the bound its bench's assessor judges against (LINE_BOUNDS), key for key, and in
+ * the shared rendered view docs/14's "Performance benchmark" section carries no HTML and exactly one top-level paragraph
+ * that opens with the target sentence, reads the same in its source and carries the figures the bench constants carry.
  */
 function boundsFindings(sources: Sources): string[] {
   const out: string[] = [];
   const section = docsSection(sources.docs14, DOCS14_SECTION, 2, DOCS14_PARENTS);
   if (!section.ok) out.push(`docs/14: ${section.why}`);
   else {
+    if (section.hasHtml) out.push(DOCS14_NO_HTML);
     const targets = section.blocks.flatMap(block => {
-      const match = block.kind === "paragraph" ? DOCS14_TARGET.exec(block.text) : null;
-      return match === null ? [] : [match];
+      if (block.kind !== "paragraph") return [];
+      const match = DOCS14_TARGET.exec(block.text);
+      return match === null ? [] : [{ match, text: block.text, markdown: block.markdown }];
     });
     const [target] = targets;
-    if (targets.length !== 1 || target === undefined) out.push(`docs/14: ${targets.length} paragraphs of "${DOCS14_SECTION}" render the target sentence, not 1`);
+    if (targets.length !== 1 || target === undefined) out.push(`docs/14: ${targets.length} top-level paragraphs of "${DOCS14_SECTION}" open with the target sentence, not 1`);
     else {
-      const [, ms, hz, thousands] = target;
+      if (target.markdown !== target.text) out.push(`${DOCS14_UNPLAIN}${target.markdown}`);
+      const [, ms, hz, thousands] = target.match;
       if (Number(ms) !== NAVIGATION_TARGET_MS) out.push(`docs/14 target <=${ms}ms; NAVIGATION_TARGET_MS is ${NAVIGATION_TARGET_MS}`);
       if (Number(ms) !== SELECTOR_TARGET_MS) out.push(`docs/14 target <=${ms}ms; SELECTOR_TARGET_MS is ${SELECTOR_TARGET_MS}`);
       if (Number(hz) !== REDRAW_MAX_HZ) out.push(`docs/14 redraw <=${hz}Hz; REDRAW_MAX_HZ is ${REDRAW_MAX_HZ}`);
@@ -607,24 +699,38 @@ function boundsFindings(sources: Sources): string[] {
   return out;
 }
 
-const NO_HTML = "the entry carries HTML (a comment or a tag), whose rendered text can hide what its source says";
+const NO_HTML = "the receipt carries HTML (a comment or a tag), whose rendered text can hide what its source says";
+const OFF_ASCII = "the receipt carries characters outside printable ASCII and the line feed, where a look-alike or invisible character can make a copy of the sentence that the rendered view does not count: ";
+const REFERENCES = "the receipt carries a character reference, which the page shows as the character it names while the rendered view keeps it as written";
+const NESTED_TABLE = "the entry nests a table in a list item or block quote, whose cells the shared rendered view renders no text for";
+const NOT_QUOTED = "the acceptance sentence's one occurrence is not quoted between straight double quotes in a top-level paragraph or list item";
 const UNPLAIN = "the text that quotes the acceptance sentence reads differently in its source: ";
+const occursTimes = (count: number): string => `the acceptance sentence occurs ${count} times across the entry's rendered text, not once: "${ACCEPTANCE}"`;
 
 /**
- * W21R-ACCEPTANCE's reader, on the shared rendered view (docsSection): the entry carries no HTML, exactly one top-level
- * paragraph or list item renders the quoted sentence, and every text that renders it reads the same in its source.
+ * W21R-ACCEPTANCE's reader. Over the whole receipt file: no HTML token, no character outside printable ASCII and the line
+ * feed, no character reference. Over the entry: no table nested in a list item or block quote. In the shared rendered view
+ * (docsSection): the acceptance sentence occurs exactly once across every text the view renders for the entry, and that
+ * occurrence is quoted in a top-level paragraph or list item whose text reads the same in its source.
  */
 function acceptanceFindings(sources: Sources): string[] {
   const entry = entryOf(sources.markdown);
-  const section = docsSection(sources.markdown, ENTRY_HEADING, 2, [RECEIPT_TITLE]);
-  if (!section.ok) return [...entry.findings, `rendered view: ${section.why}`];
   const out = [...entry.findings];
-  if (section.hasHtml) out.push(NO_HTML);
+  if (htmlTokensIn(Lexer.lex(sources.markdown)) > 0) out.push(NO_HTML);
+  const off = offAsciiIn(sources.markdown);
+  if (off.length > 0) out.push(`${OFF_ASCII}${off.join(" ")}`);
+  if (CHARACTER_REFERENCE.test(sources.markdown)) out.push(REFERENCES);
+  if (nestsTable(entry.tokens, false)) out.push(NESTED_TABLE);
+  const section = docsSection(sources.markdown, ENTRY_HEADING, 2, [RECEIPT_TITLE]);
+  if (!section.ok) return [...out, `rendered view: ${section.why}`];
+  const rendered = section.blocks.flatMap(block => (block.kind === "list" ? block.items.map(item => item.text) : [block.text]));
+  const count = rendered.reduce((sum, text) => sum + occurrences(text, ACCEPTANCE), 0);
+  if (count !== 1) return [...out, occursTimes(count)];
   const quoted = `"${ACCEPTANCE}"`;
   const texts = section.blocks.flatMap(block => (block.kind === "list" ? block.items : block.kind === "paragraph" ? [{ text: block.text, markdown: block.markdown }] : []));
-  const quoting = texts.filter(text => text.text.includes(quoted));
-  if (quoting.length !== 1) out.push(`the entry quotes the acceptance sentence ${quoting.length} times, not once: ${quoted}`);
-  for (const text of quoting) if (text.markdown !== text.text) out.push(`${UNPLAIN}${text.markdown}`);
+  const carriers = texts.filter(text => text.text.includes(quoted));
+  if (carriers.length !== 1) out.push(NOT_QUOTED);
+  for (const carrier of carriers) if (carrier.markdown !== carrier.text) out.push(`${UNPLAIN}${carrier.markdown}`);
   return out;
 }
 
@@ -725,8 +831,22 @@ const rowOf = (clause: ClauseId, run: RunId, path: string) => (cells: readonly s
 
 /** The acceptance bullet as the entry writes it, the anchor of the acceptance falsifiers' edits. */
 const ACCEPTANCE_BULLET = `- Acceptance (bead description): "${ACCEPTANCE}"`;
-const QUOTED_NONE = `the entry quotes the acceptance sentence 0 times, not once: "${ACCEPTANCE}"`;
 const replaceBullet = (live: Sources, bullet: string): Sources => withMarkdown(live, markdown => markdown.replace(ACCEPTANCE_BULLET, bullet));
+/** A copy of `sources` whose receipt carries `block` as a top-level block of the entry, just above its Runs heading. */
+const beforeRuns = (live: Sources, block: string): Sources => withMarkdown(live, markdown => markdown.replace("\n### Runs\n", `\n${block}\n\n### Runs\n`));
+/** A copy of `sources` whose docs/14 has its first `from` replaced by `to`. */
+const editDocs14 = (live: Sources, from: string, to: string): Sources => ({ ...live, docs14: live.docs14.replace(from, to) });
+/** A copy of `sources` whose docs/14 has the line that opens with the target sentence wrapped between `before` and `after`. */
+function wrapTargetLine(live: Sources, before: string, after: string): Sources {
+  const start = live.docs14.indexOf(DOCS14_SENTENCE);
+  if (start < 0) return live;
+  const end = live.docs14.indexOf("\n", start);
+  const line = live.docs14.slice(start, end < 0 ? undefined : end);
+  return editDocs14(live, line, `${before}${line}${after}`);
+}
+/** A code point built at run time, never typed raw: the look-alike letter and the bidi controls below. */
+const cp = (code: number): string => String.fromCodePoint(code);
+const FENCE = "```";
 const R2_BOUNDS = (selectorTargetMs: number): string => `R2: bounds reads {"selectorTargetMs":${selectorTargetMs},"redrawMaxHz":4,"foldThresholdEvents":100000}; reducer-selector-bench judges against {"selectorTargetMs":20,"redrawMaxHz":4,"foldThresholdEvents":100000}`;
 
 /**
@@ -944,20 +1064,23 @@ const FALSIFIERS: readonly Falsifier[] = [
   {
     id: "W21R-F22",
     edits: "receipt",
-    title: "the acceptance sentence quoted a second time is named by the acceptance reader",
+    title: "the acceptance sentence quoted again in a second top-level paragraph is named by the acceptance reader's count",
     edit: live => withMarkdown(live, markdown => markdown.replace("\n### Runs\n", `\nQuoted again: "${ACCEPTANCE}"\n\n### Runs\n`)),
-    holds: edited => expect(acceptanceFindings(edited)).toEqual([`the entry quotes the acceptance sentence 2 times, not once: "${ACCEPTANCE}"`]),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([occursTimes(2)]),
   },
   {
     id: "W21R-F23",
     edits: "receipt",
-    title: "the entry heading reworded leaves every reader without its entry",
+    title: "the entry heading reworded leaves each of the eight readers of the entry without it: shape, runs, tree-and-host, A1, A2, A3, acceptance and falsifier table",
     edit: live => withMarkdown(live, markdown => markdown.replace(`## ${ENTRY_HEADING}`, `## ${ENTRY_HEADING.replace("W21 parent acceptance", "W21 acceptance")}`)),
     holds: edited => {
       const missing = `entry: 0 level-2 headings read "${ENTRY_HEADING}", not 1`;
       expect(shapeFindings(edited)).toContain(missing);
       expect(runsFindings(edited)).toContain(missing);
       expect(treeHostFindings(edited)).toContain(missing);
+      expect(clauseFindings(edited, "A1")).toContain(missing);
+      expect(clauseFindings(edited, "A2")).toContain(missing);
+      expect(clauseFindings(edited, "A3")).toContain(missing);
       expect(acceptanceFindings(edited)).toContain(missing);
       expect(falsifierTableFindings(edited)).toContain(missing);
     },
@@ -977,16 +1100,16 @@ const FALSIFIERS: readonly Falsifier[] = [
   {
     id: "W21R-F25",
     edits: "receipt",
-    title: "the acceptance quote hidden in an inline HTML comment inside its bullet (the gate's LEG2-P1 plant) is named by the no-HTML and rendered-quote rules",
+    title: "the acceptance quote hidden in an inline HTML comment inside its bullet (the gate's LEG2-P1 plant) is named by the no-HTML and count rules",
     edit: live => replaceBullet(live, `- Acceptance (bead description): <!-- "${ACCEPTANCE}" -->`),
-    holds: edited => expect(acceptanceFindings(edited)).toEqual([NO_HTML, QUOTED_NONE]),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([NO_HTML, occursTimes(0)]),
   },
   {
     id: "W21R-F26",
     edits: "receipt",
-    title: "the acceptance quote moved into an HTML comment block (the gate's LEG2-P2 plant) is named by the no-HTML and rendered-quote rules",
+    title: "the acceptance quote moved into an HTML comment block (the gate's LEG2-P2 plant) is named by the no-HTML and count rules",
     edit: live => withMarkdown(live, markdown => markdown.replace(`${ACCEPTANCE_BULLET}\n`, `<!-- "${ACCEPTANCE}" -->\n\n`)),
-    holds: edited => expect(acceptanceFindings(edited)).toEqual([NO_HTML, QUOTED_NONE]),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([NO_HTML, occursTimes(0)]),
   },
   {
     id: "W21R-F27",
@@ -1012,9 +1135,9 @@ const FALSIFIERS: readonly Falsifier[] = [
   {
     id: "W21R-F30",
     edits: "receipt",
-    title: "the acceptance quote moved into a link title, which the page shows only as a tooltip, is named by the rendered-quote rule alone",
+    title: "the acceptance quote moved into a link title, which the page shows only as a tooltip, is named by the count rule alone",
     edit: live => replaceBullet(live, `- Acceptance (bead description): [the bead](https://example.invalid/wb-9x5 '"${ACCEPTANCE}"')`),
-    holds: edited => expect(acceptanceFindings(edited)).toEqual([QUOTED_NONE]),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([occursTimes(0)]),
   },
   {
     id: "W21R-F31",
@@ -1101,9 +1224,137 @@ const FALSIFIERS: readonly Falsifier[] = [
       expect(falsifierTableFindings(edited)).toEqual([`falsifier table row 2: W21R-F02 | receipt | ${title}; FALSIFIERS lists W21R-F02 | data file | ${title}`]);
     },
   },
+  {
+    id: "W21R-F39",
+    edits: "docs/14",
+    title: "the docs/14 target sentence wrapped in a hidden span (the gate's G01 plant) is named by the bounds reader's no-HTML and plain-source rules",
+    edit: live => editDocs14(live, DOCS14_SENTENCE, `<span hidden>${DOCS14_SENTENCE}</span>`),
+    holds: edited => {
+      const findings = boundsFindings(edited);
+      expect(findings).toHaveLength(2);
+      expect(findings[0]).toBe(DOCS14_NO_HTML);
+      expect(findings[1]?.startsWith(`${DOCS14_UNPLAIN}<span hidden>${DOCS14_SENTENCE}</span> report`)).toBe(true);
+    },
+  },
+  {
+    id: "W21R-F40",
+    edits: "docs/14",
+    title: "the docs/14 paragraph that opens with the target sentence put inside a details block (the gate's G02 plant) is named by the bounds reader's no-HTML rule alone",
+    edit: live => wrapTargetLine(live, "<details>\n\n", "\n\n</details>"),
+    holds: edited => expect(boundsFindings(edited)).toEqual([DOCS14_NO_HTML]),
+  },
+  {
+    id: "W21R-F41",
+    edits: "docs/14",
+    title: "the docs/14 target sentence struck through is named by the bounds reader's plain-source rule alone",
+    edit: live => editDocs14(live, DOCS14_SENTENCE, `~~${DOCS14_SENTENCE}~~`),
+    holds: edited => {
+      const findings = boundsFindings(edited);
+      expect(findings).toHaveLength(1);
+      expect(findings[0]?.startsWith(`${DOCS14_UNPLAIN}~~${DOCS14_SENTENCE}~~ report`)).toBe(true);
+    },
+  },
+  {
+    id: "W21R-F42",
+    edits: "receipt",
+    title: "a second copy of the acceptance quote in a block quote (the gate's G03 plant) is named by the acceptance reader's count",
+    edit: live => beforeRuns(live, `> "${ACCEPTANCE}"`),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([occursTimes(2)]),
+  },
+  {
+    id: "W21R-F43",
+    edits: "receipt",
+    title: "a second copy of the acceptance quote in a table cell (the gate's G04 plant) is named by the acceptance reader's count",
+    edit: live => beforeRuns(live, `| Quoted |\n| --- |\n| "${ACCEPTANCE}" |`),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([occursTimes(2)]),
+  },
+  {
+    id: "W21R-F44",
+    edits: "receipt",
+    title: "a second copy of the acceptance quote as a level-3 heading (the gate's G05 plant) is named by the acceptance reader's count",
+    edit: live => beforeRuns(live, `### "${ACCEPTANCE}"`),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([occursTimes(2)]),
+  },
+  {
+    id: "W21R-F45",
+    edits: "receipt",
+    title: "a second copy of the acceptance quote in a fenced code block is named by the acceptance reader's count",
+    edit: live => beforeRuns(live, `${FENCE}\n"${ACCEPTANCE}"\n${FENCE}`),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([occursTimes(2)]),
+  },
+  {
+    id: "W21R-F46",
+    edits: "receipt",
+    title: "the acceptance quote written twice in its own bullet is named by the acceptance reader's count",
+    edit: live => replaceBullet(live, `${ACCEPTANCE_BULLET} and again "${ACCEPTANCE}"`),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([occursTimes(2)]),
+  },
+  {
+    id: "W21R-F47",
+    edits: "receipt",
+    title: "a second copy of the acceptance quote in a sub-bullet nested under the acceptance bullet is named by the acceptance reader's count",
+    edit: live => replaceBullet(live, `${ACCEPTANCE_BULLET}\n  - Quoted again: "${ACCEPTANCE}"`),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([occursTimes(2)]),
+  },
+  {
+    id: "W21R-F48",
+    edits: "receipt",
+    title: "a second, unquoted copy of the acceptance sentence in a top-level paragraph is named by the acceptance reader's count",
+    edit: live => beforeRuns(live, `Read again without quotes: ${ACCEPTANCE}`),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([occursTimes(2)]),
+  },
+  {
+    id: "W21R-F49",
+    edits: "receipt",
+    title: "the acceptance bullet with its quote marks removed, its one copy unquoted, is named by the acceptance reader's quoted-carrier rule",
+    edit: live => replaceBullet(live, `- Acceptance (bead description): ${ACCEPTANCE}`),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([NOT_QUOTED]),
+  },
+  {
+    id: "W21R-F50",
+    edits: "receipt",
+    title: "the acceptance quote moved out of its bullet into a block quote, its one copy outside every top-level paragraph and list item, is named by the acceptance reader's quoted-carrier rule",
+    edit: live => beforeRuns(withMarkdown(live, markdown => markdown.replace(`${ACCEPTANCE_BULLET}\n`, "")), `> "${ACCEPTANCE}"`),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([NOT_QUOTED]),
+  },
+  {
+    id: "W21R-F51",
+    edits: "receipt",
+    title: "a details element opened above the entry heading, outside the entry, is named by the acceptance reader's whole-receipt no-HTML rule",
+    edit: live => withMarkdown(live, markdown => markdown.replace(`\n## ${ENTRY_HEADING}\n`, `\n<details>\n\n## ${ENTRY_HEADING}\n`)),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([NO_HTML]),
+  },
+  {
+    id: "W21R-F52",
+    edits: "receipt",
+    title: "a second copy of the acceptance quote with one letter replaced by a Cyrillic look-alike is named by the acceptance reader's printable-ASCII rule",
+    edit: live => beforeRuns(live, `Quoted again: "${ACCEPTANCE.replace("operations", `${cp(0x43e)}perations`)}"`),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([`${OFF_ASCII}U+043E`]),
+  },
+  {
+    id: "W21R-F53",
+    edits: "receipt",
+    title: "a right-to-left override and a pop directional formatting around the acceptance quote in its bullet (the gate's G07 plant) are named by the acceptance reader's printable-ASCII rule",
+    edit: live => replaceBullet(live, `- Acceptance (bead description): ${cp(0x202e)}"${ACCEPTANCE}"${cp(0x202c)}`),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([`${OFF_ASCII}U+202E U+202C`]),
+  },
+  {
+    id: "W21R-F54",
+    edits: "receipt",
+    title: "a second copy of the acceptance quote with one letter written as a decimal character reference is named by the acceptance reader's character-reference rule",
+    edit: live => beforeRuns(live, `Quoted again: "${ACCEPTANCE.replace("grouped", "&#103;rouped")}"`),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([REFERENCES]),
+  },
+  {
+    id: "W21R-F55",
+    edits: "receipt",
+    title: "a second copy of the acceptance quote in a table nested in a list item, which the shared rendered view does not render, is named by the acceptance reader's nested-table rule",
+    edit: live => replaceBullet(live, `${ACCEPTANCE_BULLET}\n- Quoted again:\n\n  | Quoted |\n  | --- |\n  | "${ACCEPTANCE}" |`),
+    holds: edited => expect(acceptanceFindings(edited)).toEqual([NESTED_TABLE]),
+  },
 ];
 
-describe("wb-9x5 W21 parent acceptance receipt: every table read back against the committed bench receipt lines", () => {
+describe("wb-9x5 W21 parent acceptance receipt read back: its tables against the committed bench receipt lines and the falsifier list, the lines' bounds against the bench constants and docs/14, and its acceptance quote", () => {
   it("W21R-SHAPE: the runs table, the receipt-lines table and the data file name exactly the seven runs in order, each line sha-bound and on one line", () => {
     expect(shapeFindings(readLive())).toEqual([]);
   });
@@ -1132,11 +1383,11 @@ describe("wb-9x5 W21 parent acceptance receipt: every table read back against th
     expect(clauseFindings(readLive(), "A3")).toEqual([]);
   });
 
-  it("W21R-BOUNDS: every line records the bound its bench's assessor judges, as the bench modules export it, and docs/14's target sentence renders the same figures", () => {
+  it("W21R-BOUNDS: every line records the bound its bench's assessor judges, as the bench modules export it, and in the shared rendered view docs/14's Performance benchmark section carries no HTML and exactly one top-level paragraph that opens with the target sentence, reads the same in its source and carries those constants' figures", () => {
     expect(boundsFindings(readLive())).toEqual([]);
   });
 
-  it("W21R-ACCEPTANCE: read as the page renders it, the entry carries no HTML and quotes the bead's acceptance sentence once, verbatim and as plain text, built from the clause phrases in order", () => {
+  it("W21R-ACCEPTANCE: the receipt carries no HTML, no character outside printable ASCII and the line feed and no character reference, the entry nests no table in a list item or block quote, and in the shared rendered view the acceptance sentence built from the clause phrases in order occurs exactly once across the entry's rendered text, quoted in a top-level paragraph or list item that reads the same in its source", () => {
     expect(ACCEPTANCE).toBe("10k+ grouped operations measured; p50/p95 reducer/layout timings on declared host; memory bounded by active projection. Acceptance: measured runs, no invented numbers.");
     expect(acceptanceFindings(readLive())).toEqual([]);
   });
@@ -1228,11 +1479,41 @@ describe("wb-9x5 W21 parent acceptance receipt: every table read back against th
       "W21R-F36:data file",
       "W21R-F37:receipt",
       "W21R-F38:receipt",
+      "W21R-F39:docs/14",
+      "W21R-F40:docs/14",
+      "W21R-F41:docs/14",
+      "W21R-F42:receipt",
+      "W21R-F43:receipt",
+      "W21R-F44:receipt",
+      "W21R-F45:receipt",
+      "W21R-F46:receipt",
+      "W21R-F47:receipt",
+      "W21R-F48:receipt",
+      "W21R-F49:receipt",
+      "W21R-F50:receipt",
+      "W21R-F51:receipt",
+      "W21R-F52:receipt",
+      "W21R-F53:receipt",
+      "W21R-F54:receipt",
+      "W21R-F55:receipt",
     ]);
   });
 
   it("W21R-EDITS: the receipt's falsifier table lists exactly the falsifiers of this file, in order, each with the input its edited copy changes and its case title", () => {
     expect(falsifierTableFindings(readLive())).toEqual([]);
+  });
+
+  it("W21R-BITE: every falsifier's holds throws when run on the unedited live inputs, so none passes on inputs that are not red", () => {
+    const live = readLive();
+    const passing = FALSIFIERS.filter(falsifier => {
+      try {
+        falsifier.holds(live);
+        return true;
+      } catch {
+        return false;
+      }
+    }).map(falsifier => falsifier.id);
+    expect(passing).toEqual([]);
   });
 });
 
