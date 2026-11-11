@@ -7,11 +7,32 @@
  *
  * Once decideExecute (execute.ts) admits a function request, its launch may wait (an admission queue, backpressure, an
  * operator hold) before its loader imports the pinned export and its provider runs.
- * dispatchFunctionWithAuthority is the boundary such a launch passes through: it decides the function's authority when
- * the request enters and again, from FRESH host reads, once the optional wait settles. Pinned final-boundary timing: a
- * host change queued as a microtask right after the wait settles, or queued by the final read itself with or without a
- * wait, lands after the one dispatch the final decision permits is invoked. Other scheduling forms are NOT CLAIMED. No
- * decision taken at entry is carried across the wait.
+ * dispatchFunctionWithAuthority is the boundary such a launch passes through. At the rows pinned in this paragraph
+ * only, it decides the function's authority when the request enters and again, from FRESH host reads, once the optional
+ * wait settles, and carries no decision taken at entry across the wait. The rows that pin this paragraph take each of
+ * their readings twice (wb-m83p cut #3): when the boundary settles, and again once the timer drain ends. The timer
+ * drain: such a row installs vitest's fake setTimeout, clearTimeout, setInterval, clearInterval, setImmediate and
+ * clearImmediate before its request enters the boundary, with one sentinel timer planted 2147483647 ms out, and once
+ * the boundary settles, vi.runAllTimersAsync fires the timers that fake clock holds, and the timers they queue, until
+ * it holds none, and the row requires that it holds none and that the sentinel ran once. A call, read or wait that
+ * lands after the timer drain ends is NOT CLAIMED (the fake clock holds no timer set through a timer function captured
+ * before it is installed or taken from node:timers, and no I/O callback, worker or message port). Pinned final reads
+ * (wb-m83p), at the suite's 4 listed requests (the request for mechanical.development.develop.v1 under the pinned
+ * contract, in each host mode, carrying no caller policy or the caller policy {}), with an admission park and with
+ * none: a request that passes entry reads the host's grants and its identity once more each for the final decision;
+ * each of the 6 listed changes those second reads report (workbench:execute dropped, the action grant dropped, a
+ * changed principal, a changed session, a grant read that is unknown permission data, an identity read that is unknown
+ * identity data) refuses at dispatch, with zero callback, loader and provider calls; and with no change, the callback
+ * of the one dispatch receives the very authority object the boundary returns. Pinned dispatch count (wb-m83p), at the
+ * same requests and on both paths: at each of the 11 listed callback outcomes (7 resolutions: a string, an object,
+ * undefined, null, false, 0 and the empty string; 3 rejections: an Error, a string and undefined; and 1 synchronous
+ * throw of an Error), the callback is invoked once, on an authority resting on workbench:execute and the action, and
+ * the boundary returns the value it resolves with unchanged, or rejects with its rejection or its throw unchanged.
+ * Pinned final-boundary timing, at the listed request only (the embedded one carrying no caller policy): a revocation
+ * of the action grant queued as a microtask right after the wait settles, and a revoked action grant or a changed
+ * effective principal queued as a microtask by the final grant read itself, with or without a wait, land after the one
+ * dispatch the final decision permits is invoked. Other requests, changes, callback outcomes and scheduling forms are
+ * NOT CLAIMED.
  *
  * Host authority, at the suite's listed forms only. In each host mode, the request for mechanical.development.develop.v1
  * under the pinned contract, carrying any of the suite's 7776 listed caller policies (each record holding each of grants,
@@ -48,7 +69,11 @@
  *             missing-function-action-grant when adoption admits the spelling and as unknown-permission-data when it does
  *             not. Other spellings and holdings are NOT CLAIMED.
  *   EAT-R030  the effective principal and session at dispatch must each equal the one read at entry, field by field.
- *   EAT-R031  the grants are read again at dispatch, so a grant revoked during the wait refuses.
+ *   EAT-R031  at the suite's 4 listed requests (the final reads above name them), the grants are read again at dispatch,
+ *             with a wait and without one, so workbench:execute or the action grant revoked during the wait, or dropped
+ *             at that read, refuses at dispatch with zero callback, loader and provider calls, each reading taken when the
+ *             boundary settles and again once the timer drain ends (wb-m83p cut #3). Other requests, and calls that land
+ *             after the timer drain ends, are NOT CLAIMED here.
  *   EAT-R154  pinned at the suite's EAT-R154 rows only. Its listed Beads-note fixture pairs (a plain note or one carrying
  *             the listed seat tokens, in the caller policy, the caller input or the host's identity read) leave
  *             decideExecute's admission as it is for the form's listed request carrying no note, and the boundary's
@@ -63,6 +88,19 @@
  *             listed reader forms in this module, execute.ts or the hosts, and in identity.ts the note field's name as a
  *             quoted literal exactly once and none of the other three forms. Other fixtures, request forms, positions,
  *             reader forms and files, and any replay basis, are NOT CLAIMED.
+ *
+ * Read twice at the rows wb-rrni lists (the R694 follow-up of landing 1049): each listed wb-201v row takes each of its
+ * readings when the boundary settles and again once the timer drain ends. Without an admission park, 38 rows, each with
+ * a request refused at entry: the EAT-R028 binding row; the 16 EAT-R029 rows that run the boundary (the four-grant
+ * row's dispatch included); the action grammar's row for a host reporting the unrepresentable spelling; the 9 EAT-R030
+ * unknown-identity rows (the 8 listed identities and the accessor principal); the function-definition boundary's 2
+ * rows; the 7 clean-text rows that deny a listed session before any dispatch; and the 2 host-authority rows whose
+ * caller policy names the action. With an admission park given: the 9 EAT-R028 rows above; the host-authority detached
+ * row and its 13824 descriptor forms (one drain for each host mode's 6912); and the host-authority rows of the 12
+ * listed boundary scenarios, for the 7776 listed caller policies and for the 7776 listed caller inputs (one drain for
+ * each scenario in each host mode), each ending as the host-authority paragraph lists it. A row's readings are its
+ * refusal or dispatch and the park, loader, provider, dispatch callback and getter calls it counts. Other rows, and
+ * calls that land after the timer drain ends, are NOT CLAIMED here.
  *
  * PARTIAL by plan (BEAD-PLAN.md, B-authority: "enforcement seams land now; exact action grammar blocked on
  * MW-CONTRACT"). No action spelling is adopted: FUNCTION_ACTION_CONTRACT is unadopted, so every function dispatch
@@ -80,10 +118,13 @@
  * host reads are NOT CLAIMED. Routing a function launcher through this boundary is a later cut.
  *
  * The host supplies the two reads, the wait and the dispatch. Pinned fixed reasons: for each pinned pair of requests (the
- * seven pairs that differ in definition, invocation, identity and held grants, and the five pairs that differ only in
+ * seven pairs that differ in definition, invocation, identity and held grants; the five pairs that differ only in
  * definition kind, the changed identity field, the shape of unknown permission data, the held-grant count or the schema
- * version), both requests carry one reason, and the first seven name none of their definition, action, invocation or
- * identity texts. Other pairs are NOT CLAIMED.
+ * version; and the text census's seven pairs, one per policy, whose two requests share none of their 7 texts), both
+ * requests carry one reason. The reason of each of the first seven pairs and of each census pair contains none of either
+ * request's definition text members (each own key of its admitted definition beside its kind: id, schemaVersion and
+ * artifactDigest), action, invocation, or entered principal or session (wb-m83p). Whether a reason names a definition's
+ * kind, other texts and other pairs are NOT CLAIMED.
  */
 import { CapabilityError, type CapabilityErrorCategory } from "./capability-registry.js";
 import { EXECUTE_GRANT, type ExecuteAdmission } from "./execute.js";
@@ -161,7 +202,12 @@ export interface FunctionDispatchOptions<T> {
   readonly host: FunctionAuthorityHost;
   /** The admission wait (a queue, backpressure or an operator hold). The final decision is taken only after it settles. */
   readonly park?: () => Promise<void>;
-  /** The loader and provider calls. Invoked at most once, and only on an authorized FINAL decision. */
+  /**
+   * The loader and provider calls. At the rows the doc of dispatchFunctionWithAuthority names, they are invoked only on an
+   * authorized FINAL decision, and as often as that doc says (wb-m83p), each count read when the boundary settles and
+   * again once the timer drain ends (the module header defines it; wb-m83p cut #3); other requests and outcomes, and
+   * calls that land after the timer drain ends, are NOT CLAIMED.
+   */
   readonly dispatch: (authority: FunctionDispatchAuthority) => Promise<T>;
 }
 
@@ -299,9 +345,16 @@ export function decideFunctionAuthority(input: FunctionAuthorityInput): Function
 }
 
 /**
- * The final dispatch boundary. Decides at entry (a refusal there never waits), awaits the admission wait, then decides
- * again from fresh host reads and dispatches at most once on that final decision. The entry identity is copied when
- * read, so a host that later mutates the object it returned cannot move the snapshot.
+ * The final dispatch boundary, in three steps where the rows named here pin them, each reading taken when the boundary
+ * settles and again once the timer drain ends (the module header defines it; wb-m83p cut #3): an entry decision (a
+ * refusal there never waits: pinned, with an admission park given, at the 6 listed entry refusals, one for each refusal
+ * policy but changed-effective-identity), the admission wait when one is given, and the final decision on which the
+ * dispatch callback is invoked. At the suite's 4 listed requests the module header names, with an admission park and
+ * with none, the final decision is taken from fresh host reads, and at each of the 11 listed callback outcomes the header
+ * names, the callback is invoked once on it (wb-m83p). Other requests and callback outcomes, and calls, reads and waits
+ * that land after the timer drain ends, are NOT CLAIMED. At the EAT-R030 snapshot row (the listed request, with an
+ * admission park), the entry identity is copied when read, so a host that later mutates the object it returned there
+ * cannot move the snapshot.
  */
 export async function dispatchFunctionWithAuthority<T>(options: FunctionDispatchOptions<T>): Promise<FunctionDispatchResult<T>> {
   const { admission, contract, host, park, dispatch } = options;
@@ -309,7 +362,7 @@ export async function dispatchFunctionWithAuthority<T>(options: FunctionDispatch
   const entry = decideFunctionAuthority({ admission, contract, entered, current: { grants: host.grants(), identity: entered } });
   if (entry.decision === "refused") return Object.freeze({ status: "refused", stage: "entry", refusal: entry });
   if (park !== undefined) await park();
-  // The FINAL boundary: both reads are fresh.
+  // The FINAL boundary: both reads are fresh at the rows the doc above names.
   const final = decideFunctionAuthority({ admission, contract, entered, current: { grants: host.grants(), identity: host.identity() } });
   if (final.decision === "refused") return Object.freeze({ status: "refused", stage: "dispatch", refusal: final });
   const value = await dispatch(final.authority);

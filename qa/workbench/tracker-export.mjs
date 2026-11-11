@@ -1,58 +1,217 @@
 #!/usr/bin/env node
 /**
  * wb-294d (g10.24-K1): the tracker export kept under GitHub's 104,857,600-byte blob wall.
+ * wb-137f (the structural-exit child of wb-294d, ruling R-B677): the fail-closed core - each shard line PLANTED SHARD LINES names is
+ * parsed whole, never read by its prefix alone, and throws, or refuses as malformed, at each position and in each layout it names (R3,
+ * C9), and so do its four prefix forms and six comment forms at the CLI, as the older of two shards' line (K3, K7); a month shard's
+ * name is issues-closed-YYYY-MM.jsonl, a year of four digits and a calendar month: each name SHARD NAMES IN THE FORM lists is read as
+ * a shard and each name NAMES OUTSIDE THE FORM lists is not (C9, R4, K5); compact refuses a path it would write that is a directory, a
+ * symlink or a FIFO (K14). Cut #4 (refusal #3): the main export and the shards are read as UTF-8 - rows holding each character UTF-8
+ * CHARACTERS lists read back unchanged at the reader and at the CLI (R1, R2, K1, K2, K13) - and the tracked export reads as its own
+ * file's UTF-8 text, compacted to files reads back, and compacts twice at the CLI with nothing appended the second time (T1).
+ * wb-xkto (the structural-exit child of wb-137f, ruling R-B715; refusal #4 of wb-137f): the words of the pre-push hook, the soft
+ * ceiling and the read memo claim their planted forms - the root commit G9 builds as a local sha and the root commit G10 builds as a
+ * known remote sha, each sha beginning and ending with 0 (G9, G10), files holding text beyond ASCII at the ceiling, which counts UTF-8
+ * bytes (C7, K3), and a main export rewritten at the same length at its first and at its last character and in its middle line (R10).
+ * Cut #2 (refusal #1 of wb-xkto): those words claim the forms its gate named as well - G9's deleted-ref line of forty zeros before and
+ * after its line that pushes the oversized shard, and G9's three malformed deleted-ref lines (G9), G10's push of a commit over its
+ * sibling, the remote's commit, which is not a fast-forward (G10), each plant C7 CEILING PLANTS lists (C7), and two swaps of a main
+ * export's lines and a rewrite in the last line of a main export no newline ends (R10).
+ * wb-tt43 (owner ruling 2026-11-08 on the bead, a refinement of the owner shape's element 2, M:61843 - OVERFLOW-CONTINUATION SHARDS): a
+ * month's shard keeps its monthly name until a closed row's line would put it at or over the soft ceiling; the compaction then SEALS
+ * it, as at a month seal, and the line opens the month's continuation issues-closed-YYYY-MM-b.jsonl, then -c (CONTINUATION below: M3,
+ * M5, T2); a continuation is a shard, read in NAME ORDER after its monthly shard (M1, M2, M6). The pre-push guard is unchanged (GUARD).
  *
  * WHY (measured at trunk fd90f9d3, not a case: the tracked export moves). The tracker's export writes every bead, closed ones with
  * their whole bodies, into the tracked .beads/issues.jsonl: 95,821,804 bytes there (1,304 rows; the 1,179 closed rows 93,125,889
  * bytes of it, nearly all notes), growing about 6 MB a day. Owner shape ruling (bound on wb-294d): closed beads become STUB rows in
- * the pushed export, their bodies move to append-only monthly shards beside it, a round trip proves nothing is lost, and a 95 MiB
- * soft ceiling guards the export and every shard before any push. Wiring the ritual into the machine's hop and push paths (under its
- * commit lock) is the machine's, outside this repository. This module's only child process is git (S1).
+ * the pushed export, their bodies move to append-only monthly shards beside it, a round trip proves nothing is lost (T1 runs it over
+ * the tracked export), and a 95 MiB soft ceiling guards the export and every shard before any push. Wiring the ritual into the
+ * machine's hop and push paths (under its commit lock) is the machine's, outside this repository. This module's only child process
+ * is git (S1).
  *
- * CLAIMS. What this header and the docs below state is claimed by the cases each sentence cites and by nothing else: C, R, K, T and S
- * are cases of test/workbench-tracker-export-compaction.test.ts, G cases of test/workbench-tracker-export-guard.test.ts. A mode no
- * cited case runs is NOT CLAIMED (the list closing this header names the ones known).
+ * CLAIMS. The parenthesized ids cite the cases that pin a sentence: C, R, K, T, S and P are cases of
+ * test/workbench-tracker-export-compaction.test.ts, G cases of test/workbench-tracker-export-guard.test.ts. Each sentence claims the
+ * inputs its cited cases plant and no more: where a sentence names a kind of input, it means the planted members of that kind it lists
+ * or its cases plant. NOT CLAIMED, at the end of this header, names modes outside those inputs.
  *
  * LAYOUT (under a store's .beads directory):
- *   issues.jsonl                              the MAIN export: one line per line of the full export, in its order (C2) - a
- *                                             non-closed row's line unchanged (C2), a closed row's STUB line holding the
- *                                             STUB_FIELDS the row has, in the row's own key order, and no other field (C1, C11),
- *                                             a blank line kept blank (C15) - ending with a newline exactly when the full export
- *                                             does (C2, C12).
- *   archive/issues-closed-YYYY-MM.jsonl       append-only month SHARDS holding closed rows' full export lines, unchanged (C3).
- *                                             Which file names the reader and the compaction take as a month shard's, beyond the
- *                                             names the cases plant, is NOT CLAIMED: a name whose MM is 00 or 13 (refusal #3 of
- *                                             wb-294d, W-GP4-05 and W-GP4-05b) is wb-137f's (R-B677).
- * ROUTING. A closed row's period is the UTC month of its close stamp (C3, C3b), or the run's month when the row has no close stamp
- * that is a UTC stamp (C14) or its close month is after the run's (C13). The row goes to its period's shard when the period is the
- * run's month or newer than every shard that exists before the run (C3, C4b, C5), and otherwise - a month before the run's and at or
- * before the newest existing shard's, whether or not that month has a shard - to the run month's shard (C4, C4b, C5b). A closed row
- * is appended, by that rule, when no shard holds its id (C3) or its full line differs from its id's latest archived line (C4, C4b,
- * R2), and never when it equals it (C6, K1). A shard only ever grows by whole lines at its end (C4b); a shard that does not end with
- * a newline refuses (C9). The latest line of an id - the last one, shards in name order - is its body (C4, R2). So no run appends to
- * a shard that existed before it and is of a month before its own (C4, C4b), and a run creates a past month's shard only for a month
- * newer than every existing shard (C5, C5b). The period is the UTC close MONTH, as the owner shape orders (ruling R-B670 on wb-294d).
+ *   issues.jsonl                              the MAIN export: one line per line of the full export, in its order (C2, C15) - a
+ *                                             non-closed row's line unchanged, byte for byte (C2 plants the fixture's rows, a row
+ *                                             with each status STATUSES NOT CLOSED lists, rows holding UTF-8 CHARACTERS, a line of
+ *                                             spaced JSON and one holding a \u escape), a closed row's STUB line holding the
+ *                                             STUB_FIELDS the row has, in the row's own key order, and no other field (C1, C8, C11),
+ *                                             an empty line (no character at all) kept empty (C15) - ending with a newline
+ *                                             exactly when the full export does (C2, C12); the empty full export compacts to the
+ *                                             empty main export and no shard (C12); a full export holding one of the eight lines of
+ *                                             whitespace alone PLANTED SHARD LINES names (none of them is empty) refuses as
+ *                                             malformed (C8).
+ *   archive/issues-closed-YYYY-MM.jsonl       append-only month SHARDS holding closed rows' full export lines, unchanged (C3; C2
+ *                                             plants a line of spaced JSON); YYYY is a year of four digits and MM a calendar
+ *                                             month, 01 to 12 (C9, R4, K5).
+ *   archive/issues-closed-YYYY-MM-X.jsonl     a month's CONTINUATION shards (wb-tt43), X one lower-case letter b to z (M1), holding
+ *                                             closed rows' full export lines as the monthly shard does (M3, T2).
+ * ROUTING. A closed row's period is the UTC month of its close stamp (C3, C3b), or the run's month when the row's close stamp is not
+ * a UTC stamp - C14 plants none, a zone-less one, one on a day that does not exist, a word and a number - or its close month is after
+ * the run's (C13). The row goes to its period's shard when the period is the run's month or newer than every shard that exists before
+ * the run (C3, C4b, C5), and otherwise - a month before the run's and at or before the newest existing shard's, whether or not that
+ * month has a shard - to the run month's shard (C4, C4b, C5b); the newest existing shard is the newest by name, the shards given out of
+ * name order too (C17). A closed row is appended, by that rule, when no shard holds its id (C3) or its full line differs from its id's
+ * latest archived line (C4, C4b, C17, R2), and never when it equals it (C6, C17, K1). A shard only ever grows by whole lines at its end
+ * (C4b), and at the CLI the old bytes of a shard a run appends to - rows holding UTF-8 CHARACTERS among them - stay the prefix of its
+ * new bytes (K13); in each layout PLANTED SHARD LINES names, a non-empty shard that does not end with a newline refuses and an empty
+ * shard holds no line (C9). The latest line of an id - the last one, shards in name order - is its body (C4, R2), the shards given out
+ * of name order too (C17). So no run appends to a shard that existed before it and is of a month before its own (C4, C4b), and a run
+ * creates a past month's shard only for a month newer than every existing shard (C5, C5b, C17). The period is the UTC close MONTH, as
+ * the owner shape orders (ruling R-B670 on wb-294d).
+ * NAME ORDER (wb-tt43): shards are read and listed with a month's continuations after its monthly shard, in letter order, and before
+ * the next month's shards (M2, T2); for names without a continuation that is the order of the names' text, as C17 and C18 plant it.
+ * CONTINUATION (wb-tt43, owner ruling 2026-11-08). Of the shards of the month a row goes to, it goes to the latest in name order - the
+ * monthly shard when the month has no continuation (M3) - while its line leaves that shard under the soft ceiling. When the row's line
+ * would put that shard at or over the ceiling while an empty shard holds the line under it, the shard is SEALED - it keeps its bytes,
+ * and no later run appends to it (M3, M5) - and the line opens the month's next continuation, -b after the monthly shard and -c after
+ * -b, each then the month's latest shard (M3, T2). No continuation opens for a line an empty shard does not
+ * hold under the ceiling - the line goes to the latest shard, which refuses as oversize (M4; C7 and K3 plant such a line in a shard the
+ * run creates) - nor after -z, where the line goes to -z, which refuses as oversize (M4); and a latest shard already at the ceiling
+ * takes no line: the run refuses as oversize with one typed line naming that shard at its own bytes (M4).
  * Measured at fd90f9d3: the beads closed in 2026-10 hold 46,834,285 bytes, those closed 2026-11-01..06 46,291,604, so the running
- * month's shard is the one that grows toward the soft ceiling; a run that would take the main export or any shard to it refuses
- * (exit 2, nothing written: C7, K3).
+ * month's shard is the one that grows toward the soft ceiling. The ceiling counts UTF-8 bytes: a compaction after which the main
+ * export, a shard it appends to or a shard it does not append to would be at or over it refuses as oversize - at each plant C7
+ * CEILING PLANTS lists but the growing fixture's two, its file at the ceiling and one byte over it, over ASCII rows and over rows
+ * holding text beyond ASCII, whose UTF-8 bytes outnumber their UTF-16 code units (C7); at those two the run seals the shard and its line
+ * opens the shard's -b continuation (C7, M3); at the CLI compact exits 2 and writes nothing at each plant K3 CEILING PLANTS lists (K3).
  * STUB FIELDS (MEASURED, a rationale and not a case: no case reads or writes a tracker store). Two fields beyond the ruling's list (id,
  * title, status, closed stamp, close reason, dep edges): `_type` is the export's row discriminator, and `updated_at` keeps an import of
  * the main export inert against a store that already holds the full rows (the tracker's importer rewrites an issue only when a row's
  * updated_at is strictly newer and stamps an absent one with the import time; measured with a scratch store, as the compaction suite's
  * header states).
  *
- * READERS. trackerExportText(path) reads a main export. With no archive directory beside it holding a shard file - a regular file
- * named issues-closed-YYYY-MM.jsonl - it returns the file's text unchanged (R1, R4, R9). Beside one, each STUB line - a line that
- * parses as a JSON object whose status is "closed" and that holds no field but STUB_FIELDS, however its JSON is spaced (R8) - whose
- * id has an archived line is replaced by that id's latest archived line (R2), and every other line is kept as it is: a full closed
- * row (R5), a stub-shaped row that is not closed (R6, C6), a stub whose id no shard holds (R7). So a main export the compaction wrote
- * reads as the full export it was cut from (R2, K2). Only shard files are read: a file of another name, and a symlink or a directory
- * of a shard's name, beside them is not (R4). The shard line R3 plants, `{"id":` after a full line, throws, naming the shard and the
- * line (R3); what the read does with any other shard line that does not parse is NOT CLAIMED - a line that begins with the export's
- * own line prefix (refusal #3 of wb-294d: W-GP4-01, 01b, 01c) is wb-137f's, with the archived line's parse (R-B677). A process
- * reads the shards once and reads them again when the archive's shard names, or a shard's size or modification time, change; a
- * rewrite that keeps all three reads as the earlier content (R10). rehydrateTrackerExport(text, path) is the same for a text a
- * reader already read from path (R2).
+ * READERS. trackerExportText(path) reads a main export as UTF-8, given a string path or a file URL (R1, R2). With no archive directory
+ * beside it holding a shard file - a regular file named issues-closed-YYYY-MM.jsonl, YYYY four digits and MM 01 to 12, each name SHARD
+ * NAMES IN THE FORM lists among them (R4), or a continuation's issues-closed-YYYY-MM-X.jsonl, X one letter b to z, each name
+ * CONTINUATION NAMES IN THE FORM lists among them (M1) - it returns the file's text unchanged (R1, R4, R9): R1 plants ASCII rows, rows
+ * holding each
+ * character UTF-8 CHARACTERS lists, and those rows led by a byte order mark, and holds the read's UTF-8 bytes equal to the file's.
+ * Beside one, each STUB line - a line that parses as a JSON object whose status is the string "closed" and that holds no field but
+ * STUB_FIELDS, however its JSON is spaced (R8) - whose id has an archived line is replaced by that id's latest archived line (R2), and
+ * these other lines are kept as they are: a full closed row (R5: one with its body fields, and wb-c2's stub fields with one field
+ * FIELDS BEYOND STUB_FIELDS lists added), a stub-shaped row whose status is not "closed" (R6: "open", with an edge that spells a
+ * closed status, and each status STATUSES NOT CLOSED lists; C6), a stub whose id no shard holds (R7), an empty line, a line that does
+ * not parse, a line that is null, an array, a number or a string, and a closed stub-shaped row whose id is a number (R12). So a main
+ * export the compaction wrote reads as the full export it was cut from (R2, K2), rows holding each character UTF-8 CHARACTERS lists
+ * among them - read from the main export's and the two shards' files (R2) and printed by the CLI as the full export's UTF-8 bytes
+ * (K2). Of the entries beside the shards, a file of another name (a README, a day shard's name, a month 00 or 13 name, and each name
+ * NAMES OUTSIDE THE FORM lists, alone or beside the shards), a symlink of a shard's name - to a file, to a directory, or dangling -
+ * and a directory of one, is not read (R4), nor a file of each name CONTINUATION NAMES OUTSIDE THE FORM lists, alone (M1). Each line
+ * PLANTED SHARD LINES names is parsed whole, never read by its prefix alone, and
+ * throws one Error naming the shard, the line and the reason, at each position and in each layout it names; an empty line - one with
+ * no character at all - between two rows holds no row and is skipped, in each of those layouts (R3). In each of those layouts a
+ * shard's last line is parsed though no newline ends it: a whole row there is read as that row, and the prefix form cut short there
+ * throws, naming the shard and the line (R11). A process reads an archive directory's shards once and reads them again when a shard's
+ * size or modification time changes, or a shard is added, renamed (its size and modification time kept) or removed - R10 plants each
+ * change at the last shard by name and at an older one, the modification time moved by 60 s, by 0.5 s inside one second and by 0.3 ms
+ * inside one millisecond, and adds a shard after the others and before them, and M6 adds a -b continuation beside its monthly shard; a
+ * rewrite that keeps names, sizes and modification times
+ * reads as the earlier content; another archive directory is read on its own, though its shards keep the names, sizes and modification
+ * times of shards read before (R10). A main export rewritten at the same length between two reads is read again - R10 plants a rewrite
+ * in its first line, in its last line and in its middle line, one at its first character and one at its last character, two swaps of
+ * its lines (its middle and its last line, its first and its last), and a rewrite in the last line of a main export no newline ends
+ * (R10); a same-length rewrite R10 does not plant - another rewrite at a position it plants, a rewrite at another position, another
+ * reordering of the lines, or one in another line of a main export no newline ends - is NOT CLAIMED. rehydrateTrackerExport(text,
+ * path) is the same for a text a reader already read from path, given a string path or a file URL (R2), another text of the same
+ * length among them (R10);
+ * rehydrateTrackerText(main, shards) is the same for a main export's text and its shards, read in name order though given out of it
+ * (C17, M2), the shard's last line parsed though no newline ends it (R11).
+ *
+ * PLANTED SHARD LINES (the compaction suite's plant tables, by label; its case P1 reads each list below back and holds it equal to its
+ * table, and holds the plant tables sha256 equal to the digest of the JSON of BAD_SHARD_LINES, SHARD_LAYOUTS and PLANT_AT - every
+ * label, line and reason, each position's text with the line BAD planted). R3 (trackerExportText) and C9 (compactTrackerExport) plant
+ * each line of BAD_SHARD_LINES at each position of PLANT_AT in the planted shard of each layout of SHARD_LAYOUTS - the shards named in
+ * name order, every other shard of the layout whole - and each throws, or refuses as malformed, with the Error "tracker-export:
+ * archived <shard> line <n> <reason>" (C9's typed line adds "; nothing is written"), its reason the one it is listed under:
+ *   layouts: the only shard | the older of two shards | the newer of two shards | the middle of three shards
+ *   positions: line 1 before a whole row | line 2 between two whole rows | line 3 after two whole rows
+ *   does not parse: the prefix form cut short | the prefix form followed by other text | the prefix form with an id holding an
+ *     invalid escape | no prefix, cut short | no prefix, followed by other text | no prefix, an id holding an invalid escape | a line
+ *     that opens like a # comment | a line that opens like a // comment | a line that opens like a /* comment | a line that opens like
+ *     a -- comment | a line that opens like a ; comment | a line that opens like a <!-- comment | a line of one space | a line of one
+ *     tab | a line of spaces and a tab | a line of a vertical tab | a line of a form feed | a line of a no-break space | a line of a
+ *     byte order mark | a line of a line separator
+ *   is not a JSON object: an array | null | a number
+ *   has no string id: the prefix form with an empty id | no prefix, an empty id | no id | a number id
+ *   plant tables sha256: b1ccc67bbe3bb0797485f823927dbccf28ea9560a59a72a8b2c712e83595b46b
+ * The four prefix forms open with the export's own line prefix; each comment form is its opener and " a note" (the two block forms
+ * closed after it); the eight lines of whitespace alone are, by code point: U+0020; U+0009; U+0020 U+0020 U+0009 U+0020; U+000B;
+ * U+000C; U+00A0; U+FEFF; U+2028.
+ *
+ * CUT #4 PLANT TABLES (wb-137f refusal #3: the compaction suite's tables UTF8_CHARACTERS, NAMES_OUTSIDE_THE_FORM,
+ * SHARD_NAMES_IN_THE_FORM, STATUSES_NOT_CLOSED and FIELDS_BEYOND_STUB, by label, in table order; its case P2 reads each list below
+ * back and holds it equal to its table, and K14 holds its variant labels equal to the K14 variants list). UTF-8 CHARACTERS are a
+ * two-, a three- and a four-byte character, a no-break space, a letter with a combining mark after it, and a line separator inside a
+ * JSON string, each by code point; R1 also leads a main export with U+FEFF. Each status is written as its JSON string.
+ *   UTF-8 characters: U+00E9 | U+2014 | U+1F600 | U+00A0 | U+0065 U+0301 | U+2028
+ *   names outside the form: README.md | issues-closed-2026-11-03.jsonl | issues-closed-2026-00.jsonl | issues-closed-2026-13.jsonl |
+ *     issues-closed-2026-14.jsonl | issues-closed-2026-20.jsonl | issues-closed-2026-1.jsonl | issues-closed-2026-.jsonl |
+ *     issues-closed-202611.jsonl | issues-closed-202-11.jsonl | issues-closed-20261-11.jsonl | issues-closed-YYYY-11.jsonl |
+ *     issues-closed-2026-11.jsonl.bak | old-issues-closed-2026-11.jsonl | ISSUES-CLOSED-2026-11.JSONL | issues-closed-2026-11.json |
+ *     issues-closed-2026-11xjsonl
+ *   shard names in the form: issues-closed-2026-01.jsonl | issues-closed-2026-02.jsonl | issues-closed-2026-03.jsonl |
+ *     issues-closed-2026-04.jsonl | issues-closed-2026-05.jsonl | issues-closed-2026-06.jsonl | issues-closed-2026-07.jsonl |
+ *     issues-closed-2026-08.jsonl | issues-closed-2026-09.jsonl | issues-closed-2026-10.jsonl | issues-closed-2026-11.jsonl |
+ *     issues-closed-2026-12.jsonl | issues-closed-0000-01.jsonl | issues-closed-1999-01.jsonl | issues-closed-9999-12.jsonl
+ *   statuses not closed: "open" | "Closed" | "CLOSED" | "closed " | " closed" | "closed\t" | "closed\n" | "unclosed" | "closedx"
+ *   fields beyond STUB_FIELDS: _note | notes | description | created_at | priority | labels | titles | type
+ *   K14 variants: W-GP4-04 a directory at the running month's shard name | a symlink to a file at the running month's shard name |
+ *     directories at both shard names it appends to | a directory at the main export | a symlink to a file at the main export | a directory
+ *     at a shard name and at the main export | W2-17a directories at both shard names it appends to and at the main export, the full export
+ *     listing wb-c2 (closed 2026-11) before wb-c1 (closed 2026-10) | W8-03 a FIFO at the main export | a FIFO at the running month's shard
+ *     name | a dangling symlink at the main export | a symlink to a directory at the past month's shard name
+ *
+ * CONTINUATION PLANT TABLES (wb-tt43: the compaction suite's tables CONTINUATION_NAMES_IN_THE_FORM and
+ * CONTINUATION_NAMES_OUTSIDE_THE_FORM, by name, in table order; its case P3 reads each list below back and holds it equal to its
+ * table). M1 plants each name alone beside a main export and passes it alone to compactTrackerExport.
+ *   continuation names in the form: issues-closed-2026-11-b.jsonl | issues-closed-2026-11-c.jsonl | issues-closed-2026-11-z.jsonl |
+ *     issues-closed-2026-01-b.jsonl | issues-closed-2026-12-y.jsonl | issues-closed-0000-01-b.jsonl | issues-closed-9999-12-z.jsonl
+ *   continuation names outside the form: issues-closed-2026-11-a.jsonl | issues-closed-2026-11-B.jsonl |
+ *     issues-closed-2026-11-bb.jsonl | issues-closed-2026-11-1.jsonl | issues-closed-2026-11-.jsonl | issues-closed-2026-11b.jsonl |
+ *     issues-closed-2026-11_b.jsonl | issues-closed-2026-11--b.jsonl | issues-closed-2026-11-b-c.jsonl |
+ *     issues-closed-2026-11-03-b.jsonl | issues-closed-2026-13-b.jsonl | issues-closed-2026-00-b.jsonl | issues-closed-2026-11-b.json |
+ *     issues-closed-2026-11-b.jsonl.bak | old-issues-closed-2026-11-b.jsonl | ISSUES-CLOSED-2026-11-B.JSONL
+ *
+ * C7 CEILING PLANTS (wb-xkto refusal #1, U4 and U5: C7's plant table, by label, in table order; C7 holds its labels equal to this
+ * list, an anchor outside the compaction suite beside C7's own title). Each plant names one file of one fixture's compaction at the
+ * default ceiling - that run's largest file, every other file under it - and C7 sets the ceiling at that file's UTF-8 bytes and at one
+ * byte under them, where the run refuses as oversize with the one typed line naming the file - at every plant but the growing
+ * fixture's two, where it seals the shard and the run's line is the whole of the shard's -b continuation (wb-tt43, M3) - and at one
+ * byte over them, where it passes; the run stamp is 2026-11-03T12:00:00Z. The fixture is the routing fixture; the open-rows fixture is
+ * one open and one
+ * in-progress row and no closed row; the closed-rows fixture three closed rows, of 2026-09, 2026-10 and 2026-11, and no other row; the
+ * big-shard fixture one open row and one closed row of the run's month with a 4,000-character note, and the gap-month fixture the same
+ * with that row closed in 2026-10, a month before the run's and newer than every shard (C5); the growing fixture an existing run-month
+ * shard holding a closed row the full export no longer carries, beside a full export whose closed row of the run's month the run
+ * appends to it, each row with a 2,000-character note; the sealed and the later-month fixtures the routing fixture beside an existing
+ * shard of 2026-09 or of 2026-12 holding a closed row the full export no longer carries, with a 4,096-character note; the re-run
+ * fixture one open row and one closed row of the run's month with a 1,000-character note, compacted again beside the shard its first
+ * compaction wrote, with nothing to append. Each UTF-8 fixture is the fixture of its name with UTF8_TEXT - a text holding each
+ * character UTF-8 CHARACTERS lists - in its rows' titles or notes.
+ *   C7 ceiling plants: the fixture's main export | the UTF-8 fixture's main export | the open-rows fixture's main export | the UTF-8
+ *     open-rows fixture's main export | the closed-rows fixture's main export | the UTF-8 closed-rows fixture's main export | the
+ *     big-shard fixture's run-month shard, which the run creates | the UTF-8 big-shard fixture's run-month shard, which the run creates
+ *     | the gap-month fixture's past-month shard, which the run creates | the UTF-8 gap-month fixture's past-month shard, which the run
+ *     creates | the growing fixture's run-month shard, which exists before the run and grows | the UTF-8 growing fixture's run-month
+ *     shard, which exists before the run and grows | the sealed fixture's past-month shard, which the run does not append to | the UTF-8
+ *     sealed fixture's past-month shard, which the run does not append to | the re-run fixture's run-month shard, which the run does not
+ *     append to | the UTF-8 re-run fixture's run-month shard, which the run does not append to | the later-month fixture's later-month
+ *     shard, which the run does not append to | the UTF-8 later-month fixture's later-month shard, which the run does not append to
+ *
+ * K3 CEILING PLANTS (wb-xkto: K3's plant table, by label, in table order; K3 holds its labels equal to this list, an anchor outside the
+ * compaction suite beside K3's own title). The big-shard fixture is one open row and one closed row whose 4,000-character note makes
+ * its one month shard outweigh its main export; the UTF-8 fixture is the routing fixture with UTF8_TEXT - a text holding each
+ * character UTF-8 CHARACTERS lists - in its rows, and the UTF-8 big-shard fixture the big-shard fixture with UTF8_TEXT after that note.
+ *   K3 ceiling plants: the fixture's main export and both its month shards over a 64-byte ceiling | the fixture's main export alone
+ *     over its ceiling | the fixture's main export alone exactly at its ceiling | the big-shard fixture's one month shard alone over its
+ *     ceiling | the big-shard fixture's one month shard alone exactly at its ceiling | the UTF-8 fixture's main export alone exactly at
+ *     its ceiling | the UTF-8 big-shard fixture's one month shard alone exactly at its ceiling
  *
  * GUARD. The pushed commits and objects of a push of <tip> are what `git rev-list --objects <tip> --not <excluded...>` lists (G5).
  * The tracker export family is every blob a pushed commit writes to the repository path .beads/issues.jsonl or below .beads/archive/
@@ -61,55 +220,123 @@
  * .beads/archive-old/, a file named .beads/archive - is not judged (G6, G16), nor is a family blob the push would not send (G19). The
  * push refuses (exit 2) when a family blob it would send is at or over the soft ceiling (G2, G3, G4): one typed line on stderr per
  * such blob for the whole judgement, naming one family path a pushed commit writes it to, its blob and its bytes, however many family
- * paths or judged pushes hold it (G12, G14). A family blob under the ceiling passes (G2). FW_EXPORT_SOFT_CEILING
- * - a positive whole number of bytes, with no sign, padding, exponent or leading zero, at most 2^53 - 1 - replaces the default 95 MiB
- * = 99,614,720; an empty or absent value keeps the default (G1).
+ * paths or judged pushes hold it (G12, G14), and a line for each of two different blobs two commits write to one family path, of two
+ * sizes or of one size (G4). A family blob under the ceiling passes (G2). FW_EXPORT_SOFT_CEILING - a positive whole number of bytes,
+ * with no sign, padding, exponent or leading zero, at most 2^53 - 1 (G1 takes 2^53 - 1 and refuses 2^53 and 2^53 + 1) - replaces the
+ * default 95 MiB = 99,614,720; softCeiling() keeps the default for an empty or absent value (G1), and the guard and the pre-push
+ * hook each take an empty and an absent value, exiting 0 with nothing printed over G1's 10-byte export (G1). The guard compares it
+ * with a blob's size as `git cat-file` gives it (G2), the compaction with a file's UTF-8 bytes (C7, K3).
  *
  * CLI. Exit 0 done; 2 refused at the soft ceiling; 3 refused or could not run, in exactly the cases each verb lists:
  *   node qa/workbench/tracker-export.mjs compact --full <full export file> --beads <.beads dir> [--now <UTC stamp>]
- *       writes <dir>/issues.jsonl and each shard it appends to under <dir>/archive/, then prints one JSON receipt line on stdout (K1);
- *       a re-run with nothing changed appends nothing (K1); it reads only the archive's shard files (K5). --now names the run's UTC
- *       month (K12); without it the run stamp is the current time (K11). A UTC stamp is YYYY-MM-DDTHH:MM:SS, then an optional fraction
- *       of 1 to 9 digits, then Z or an offset +HH:MM / -HH:MM, every field in range (a calendar day; hour 00-23; minute and second
- *       00-59; offset hour 00-23 and offset minute 00-59), its offset applied (C9, C16, K12). Exit 2 at the soft ceiling (K3). Exit 3
- *       on a usage error (K6), a bad FW_EXPORT_SOFT_CEILING (K8), an input it cannot read (K9), a run stamp that is not a UTC stamp
- *       (K4, K12), the one malformed export K3 plants - a full export whose only line is `{not json` - and a round trip that is not
- *       byte-equal (K10). It writes nothing when it exits 2 or 3 (K3, K4, K6, K8, K9, K10). Which exit compact gives, and what it
- *       writes, over a full export malformed in any form but K3's - the forms C8 plants at compactTrackerExport, a duplicate id among
- *       them (refusal #4 of wb-294d, F3: GP2-K03) - and over a shard whose text compactTrackerExport refuses as malformed - the shard
- *       texts C9 plants at the function (refusal #4 of wb-294d, U1: GP2-K01, GP2-K02) - is NOT CLAIMED at the CLI: wb-137f's, with
- *       its CLI pins (R-B677). Over a shard holding a line that begins with the export's own line prefix and does not parse, the
- *       exits of compact and rehydrate are NOT CLAIMED (refusal #3 of wb-294d: W-GP4-03, 03b): wb-137f's (R-B677).
+ *       writes <dir>/issues.jsonl and each shard it appends to under <dir>/archive/ - each whole, by a rename over its path, leaving
+ *       no temporary file in <dir> - and no other shard: a shard it does not append to keeps its inode, bytes and modification time
+ *       (K13), a monthly shard sealed before the -b continuation the run appends to among them (M5); then it prints one JSON receipt
+ *       line, ended by a newline, and nothing else on stdout (K1), whose appended map names
+ *       each shard it appended to, with its count, in name order (K15 plants a full export listing the later month's closed row
+ *       first); a re-run with nothing changed appends nothing (K1, K13), over rows holding each character UTF-8 CHARACTERS lists too,
+ *       each shard keeping its bytes (K1). Its inputs are the archive's shard files, an existing continuation among them (M5): a file
+ *       of another name (a README, a month 13
+ *       name, and the names NAMES OUTSIDE THE FORM lists, together in one archive), a directory of a shard's name and a symlink of one
+ *       to a file outside the archive are neither inputs nor touched (K5). --now names the run's UTC month (K12); without it the run
+ *       stamp is the current time (K11). A UTC stamp is YYYY-MM-DDTHH:MM:SS, then an optional fraction of 1 to 9 digits, then Z or an
+ *       offset +HH:MM / -HH:MM, every field in range (a calendar day - C9 refuses February 29 of 2026 and of 2100, a November 31 and a
+ *       day 00, and C16 takes February 29 of 2028 and of 2000 and the last day of a 31-day, a 30-day and a 28-day month; hour 00-23;
+ *       minute and second 00-59; offset hour 00-23 and offset minute 00-59, C16 taking +23:59 and -23:59), its offset applied, and the
+ *       instant inside the years 0000-9999 (C16 takes the first instant of 0000 and the last of 9999) (C9, C16, K12). Exit 2 at the
+ *       soft ceiling, at each plant K3 CEILING PLANTS lists - two of them hold text beyond ASCII in the file at the ceiling - with
+ *       nothing on stdout, one typed line on stderr for each file at or over the ceiling, naming the file under --beads and the UTF-8
+ *       bytes the unrefused run writes to it, and the .beads directory left empty (K3). Exit 3 on a usage error (K6), a bad
+ *       FW_EXPORT_SOFT_CEILING (K8), a full export it cannot read - a missing file, a directory (K9) - a run stamp that is not a UTC
+ *       stamp (K4, K12), the one malformed export K3 plants - a full export whose text is `{not json` and a newline - and the
+ *       malformed shards K3 plants (the prefix form cut short as the only shard's line, and the four prefix forms and the six comment
+ *       forms PLANTED SHARD LINES names as the older of two shards' line), a round trip that is not byte-equal (K10), and a path it
+ *       would write - a shard it appends to, or the main export - that exists and is a directory, a symlink (to a file, to a
+ *       directory, or dangling) or a FIFO, one typed line per such path, shards in name order and then the main export, also when the
+ *       full export lists the later month's closed row first (K14). It writes nothing when it exits 2 or 3 (K3, K4, K6, K8, K9, K10,
+ *       K14). Which exit compact gives, and what it writes, over a full export malformed in any form but K3's - the forms C8 plants at
+ *       compactTrackerExport, a duplicate id among them (refusal #4 of wb-294d, F3: GP2-K03) - is NOT CLAIMED at the CLI.
  *   node qa/workbench/tracker-export.mjs rehydrate --beads <.beads dir>
- *       prints trackerExportText(<dir>/issues.jsonl) on stdout (K2); exit 3, printing nothing on stdout, on a usage error (K6) and
- *       when the read throws (K7).
+ *       prints trackerExportText(<dir>/issues.jsonl) on stdout as it is, adding no final newline (K2), the full export's UTF-8 bytes
+ *       for rows holding each character UTF-8 CHARACTERS lists (K2); exit 3, printing nothing on stdout, on a usage error (K6) and
+ *       when the read throws (K7: a missing main export; a shard line that does not parse appended to the newer of the two shards a
+ *       compaction wrote - one with no prefix, the prefix form cut short and one with an id holding an invalid escape - and the four
+ *       prefix forms and the six comment forms PLANTED SHARD LINES names appended to the older of them).
  *   node qa/workbench/tracker-export.mjs guard <tip> [--not <rev>]...
  *       judges a push of <tip> that excludes every <rev> (G2-G6); exit 3 on a usage error (G15), a bad FW_EXPORT_SOFT_CEILING (G1)
  *       and a tip git cannot list (G8).
  *   node qa/workbench/tracker-export.mjs pre-push <remote> [<url>]
- *       the git pre-push hook (G7): reads git's `<local ref> <local sha> <remote ref> <remote sha>` lines on stdin and judges each
- *       line's push of its local sha (G9), excluding the line's remote sha when this repository has that commit (G10) and every
- *       remote-tracking ref of <remote>, --remotes=<remote> (G11); a line whose local sha is all zeros (a deleted ref) pushes nothing
- *       and is skipped (G9). Exit 3 on a usage error (G15), a bad FW_EXPORT_SOFT_CEILING (G1), a malformed line (G9) and a push it
- *       cannot judge (G13) - unless a judged push refuses at the soft ceiling, when the exit is 2 (G13). Install once per clone:
+ *       the git pre-push hook (G7): reads git's `<local ref> <local sha> <remote ref> <remote sha>` lines on stdin and judges the
+ *       push of the local sha of each line that pushes on these stdins G9 plants - the base commit's line alone, its two lines at
+ *       once, its line alone whose remote sha, forty f's, this repository lacks, its line alone of the root commit G9 builds, whose
+ *       sha begins and ends with 0 and is not all zeros, and its line that pushes the oversized shard after its deleted-ref line of
+ *       forty zeros and before it - excluding, on each stdin G10 plants, the line's remote sha when this repository has it as a
+ *       commit - the local sha's parent, the root commit G10 builds as the local sha's parent, whose sha begins and ends with 0 and
+ *       is not all zeros, and the remote's commit beside the local sha, both children of one base commit (a push that is not a
+ *       fast-forward, its local side writing no family blob) - but not the remote sha G10 plants naming the oversized export's blob
+ *       or the tree of the commit holding it (G10), and excluding, on G11's stdin, the remote-tracking ref G11 plants for <remote>
+ *       (G11); G9's deleted-ref lines - `(delete)`, a local sha of zeros and the base commit as the remote sha - of forty zeros and
+ *       of sixty-four, each alone on stdin, exit 0 (G9). Exit 3 on the usage errors G15 plants (no remote, and three arguments), on
+ *       the FW_EXPORT_SOFT_CEILING "ten" G1 plants, on each malformed line G9 plants alone on stdin (one of two, three or five
+ *       fields, or one whose local or remote sha is one digit short of 40 or in upper case - each sha form planted at both positions
+ *       - and three deleted-ref lines: three fields with forty zeros, forty zeros beside a remote sha one digit short, and sixty-four
+ *       zeros beside an upper-case remote sha) and on G13's push it cannot judge, of a local sha this repository lacks, alone on
+ *       stdin - unless, on G13's stdins, a judged push refuses at the soft ceiling, when the exit is 2 (G13). Install once per clone:
  *         printf '#!/bin/sh\nexec node %s pre-push "$@"\n' "$PWD/qa/workbench/tracker-export.mjs" > "$(git rev-parse --git-path hooks)/pre-push"
  *         chmod +x "$(git rev-parse --git-path hooks)/pre-push"
  *   Any other verb, or none, exits 3 with the verbs' usage line (G15).
  *
- * RESIDUALS: none claimed at this cut; the modes refusals #3 and #4 of wb-294d realized against these words close the NOT CLAIMED
- * list.
- * NOT CLAIMED: the machine wiring named above; line ends other than a bare newline and text that is not UTF-8; two compactions of one
- * .beads directory at once, and a crash while one writes; an archive directory, shard or export the process cannot list or read (the
- * read throws; the compaction exits 3, K9); what the tracker's importer does with a main export (STUB FIELDS above is a measurement);
- * a family blob a successful `git rev-list --objects` lists that `git cat-file` cannot size; a submodule entry at a family path; a
- * directory at the name of the shard a run appends to (refusal #3 of wb-294d, F8: W-GP4-04); and the modes that refusal realized
- * against these words, all wb-137f's by the structural exit R-B677: its U1-U4 witnesses (W-GP4-01, 01b, 01c, 02, 02b, 02c, 03, 03b,
- * 05 and 05b), each NOT CLAIMED at its site above, and its F5 members (GP4-M03, M04, M06, M07, M09, M10, M11 and M12); and the
- * modes refusal #4 realized against the CLI words, wb-137f's by the same exit: its U1 members GP2-K01 and GP2-K02 (C9's shard
- * texts at the CLI, W2) and its F3 member GP2-K03 (a duplicate-id export at the CLI, W3), each NOT CLAIMED at the CLI above.
+ * RESIDUALS: none named at this cut - every member refusals #1 to #4 of wb-137f and refusal #1 of wb-xkto named is planted (refusal
+ * #2's U1-U7 by C9, C17, C18, K3, K7, K14, K15, R2, R3, R10, R11; refusal #3's U1-U6 by C2, C8, C9, C12, C16, G1, G4, K1, K2, K5, K13,
+ * R1, R2, R4, R5, R6, R10 and T1; refusal #4's U1-U3 by G9 and G10 for GP45-01, C7 and K3 for GP45-04 and GP45-05, and R10 for
+ * GP45-12, and its F4 and F5 riders by K1 for GP45-06 and G10 for GP45-13; wb-xkto refusal #1's U1-U7 by G9 for GX8-01 and GX8-03, G10
+ * for GX8-06, C7 for GX8-10, GX8-12, GX8-13, GX8-14 and GX8-15, and R10 for GX8-31 and GX8-32), and every other mode known is a scope
+ * sentence of NOT CLAIMED.
+ * NOT CLAIMED: the machine wiring named above; line ends other than a bare newline and text that is not UTF-8; a character beyond
+ * ASCII that UTF-8 CHARACTERS does not list, outside the tracked export T1 reads; two compactions of one .beads directory at once, a
+ * crash while one writes, and a write or a pre-write check that fails with an error (the error is thrown, the exit is 1, and a file
+ * written before it stays written); where the temporary file sits; an archive directory or a shard the process cannot list or read,
+ * and a full export it cannot read for a cause other than K9's two; an archive directory that is a symlink to a directory; what the
+ * tracker's importer does with a main export (STUB FIELDS above is a measurement); the time a parse of the shards takes; a family blob
+ * a successful `git rev-list --objects` lists that `git cat-file` cannot size; a submodule entry at a family path; the ceiling the
+ * guard, the pre-push hook or compact applies for an empty or absent FW_EXPORT_SOFT_CEILING (G1 plants the two at the guard and the
+ * hook over a 10-byte export only; the default's 99,614,720 bytes would need an export that size), and the exit compact gives for an
+ * empty one; a FIFO, a socket or
+ * a device file of a shard's name in the archive directory (R4 and K5 plant only symlinks and directories there), and a socket or a
+ * device file at a path compact would write (K14 plants directories, symlinks and FIFOs); a sha of 64 hex digits at the pre-push hook
+ * other than the deleted ref's sixty-four zeros - one digit short, in upper case, or a push (G9 plants 40-digit shas beside those
+ * zeros); at the pre-push hook, a stdin, a local or a remote sha and a history no G case plants - another sha that begins and ends
+ * with 0, another remote sha this repository lacks, another remote sha naming a blob or a tree, a remote sha naming a tag object and
+ * a remote-tracking ref G11 does not plant among them; at the pre-push hook, a deleted-ref line G9 does not plant - one of sixty-four
+ * zeros beside a line that pushes (refusal #2 of wb-xkto, U1: GX9-01, GX9-02), one whose remote sha is a commit holding an oversized
+ * blob, with whether another line's push excludes that commit (U2: GX9-03), one malformed in a form G9 does not plant - forty zeros
+ * beside an upper-case remote sha, sixty-four zeros beside a remote sha one digit short, sixty-four zeros and three fields (U3:
+ * GX9-04, GX9-05, GX9-06) - more than one deleted-ref line, and one between two lines that push; at the pre-push hook, a known remote
+ * commit G10 does not plant - another ancestor of the local sha than its parent, a commit that descends from the local sha (a rewind,
+ * U4: GX9-10) and a commit no ancestry joins to it - and a push that is not a fast-forward whose local side writes a family blob; at
+ * compactTrackerExport, a ceiling form C7
+ * CEILING PLANTS does not list - another set of files at or over the ceiling, a file more than one byte over it, another fixture -
+ * beyond the fixture's run-month shard and main export C7 sets each at its own ceiling; at
+ * the CLI, a ceiling form K3 CEILING PLANTS does not list - another set of files at or over the ceiling (two shards without the main
+ * export, the main export with one shard, one file exactly at the ceiling and another over it), a shard that exists before the run at
+ * or over it, and a --beads path spelled other than K3's absolute scratch path - what compact writes outside the .beads directory at
+ * K3's plants, and the CLI over a full export `{not json` with no final newline; whether compact makes the archive directory when it
+ * appends to no shard, and the order in which it writes the shards and the main export; a non-empty shard line that PLANTED SHARD
+ * LINES does not name - another comment opener, another line of whitespace alone, another malformed form - and a named line at a
+ * position or in a layout it does not name; at the CLI, a shard line R3 and C9 plant but K3 and K7 do not; a shard Map whose order C17
+ * does not plant (it plants name order, two shards in reverse name order and three in neither); a file name outside the shard form
+ * that NAMES OUTSIDE THE FORM does not list, and one in the form that SHARD NAMES IN THE FORM does not list; on a stub-shaped row
+ * beside an archive, a status other than "closed" that STATUSES NOT CLOSED does not list, and a field beyond STUB_FIELDS that FIELDS
+ * BEYOND STUB_FIELDS does not list; a change to a shard's modification time of a size R10 does not plant - one under a microsecond
+ * among them, which the read memo's key, the modification time in milliseconds as a double, may not resolve; a main export line beside
+ * an archive of a kind R5-R8 and R12 do not plant; a close stamp, a run stamp or a soft-ceiling value of a form the cited cases do not
+ * plant; of the continuations (wb-tt43): a continuation name CONTINUATION NAMES IN THE FORM does not list and a name beside the form
+ * that CONTINUATION NAMES OUTSIDE THE FORM does not list, a continuation a run opens after -c other than M4's none after -z, a
+ * continuation of a month other than the run's, a month whose shards skip a letter or hold a continuation without its monthly shard, a
+ * latest shard over the ceiling before the run (M4 plants one at it), and a shard Map order M2 does not plant.
  */
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, readdirSync, readFileSync, realpathSync, renameSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, realpathSync, renameSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -124,18 +351,46 @@ export const ARCHIVE_DIR = ".beads/archive";
 /** The fields a closed row's stub may keep (C1); a stub holds the ones its row has, in the row's own key order (stubOf: C1, C11). */
 export const STUB_FIELDS = Object.freeze(["_type", "id", "title", "status", "updated_at", "closed_at", "close_reason", "dependencies"]);
 
-const SHARD_FILE = /^issues-closed-(\d{4}-\d{2})\.jsonl$/;
+/**
+ * A shard's file name: a month's MONTHLY shard issues-closed-YYYY-MM.jsonl, YYYY four digits and MM a calendar month 01 to 12 - each name
+ * SHARD NAMES IN THE FORM lists, and no name NAMES OUTSIDE THE FORM lists (C9, R4, K5) - or one of its CONTINUATIONS
+ * issues-closed-YYYY-MM-X.jsonl, X one lower-case letter b to z - each name CONTINUATION NAMES IN THE FORM lists, and no name
+ * CONTINUATION NAMES OUTSIDE THE FORM lists (wb-tt43, M1). Group 1 is the month, group 2 a continuation's letter.
+ */
+const SHARD_FILE = /^issues-closed-(\d{4}-(?:0[1-9]|1[0-2]))(?:-([b-z]))?\.jsonl$/;
+/** A month's continuation letters in order: -b follows the monthly shard and each letter the one before it (M3); none follows -z (M4). */
+const CONTINUATION_LETTERS = "bcdefghijklmnopqrstuvwxyz";
 const SHA = /^(?:[0-9a-f]{40}|[0-9a-f]{64})$/;
 const ZERO_SHA = /^0+$/;
 const WHOLE = /^[1-9][0-9]*$/;
-/** The export's own line prefix; the id is read from it without parsing the whole body, and from a full parse otherwise. */
-const EXPORT_PREFIX = /^\{"_type":"(?:[^"\\]|\\.)*","id":"((?:[^"\\]|\\.)*)"/;
 
 /** @param {string} value @returns {string} printable ASCII only; everything else becomes ? */
 const ascii = value => value.replace(/[^\x20-\x7e]/g, "?");
 
-/** @param {string} month a UTC month, YYYY-MM @returns {string} */
-export const shardName = month => `issues-closed-${month}.jsonl`;
+/**
+ * @param {string} month a UTC month, YYYY-MM
+ * @param {string} [letter] a continuation's letter, b to z; none names the month's monthly shard
+ * @returns {string}
+ */
+export const shardName = (month, letter) => `issues-closed-${month}${letter === undefined ? "" : `-${letter}`}.jsonl`;
+
+/**
+ * A shard name's place in NAME ORDER (wb-tt43, M2): a month's continuations after its monthly shard, in letter order, and before the
+ * next month's shards - a continuation's key is its monthly shard's name, a NUL, then its letter - and any other name's own text.
+ * @param {string} name
+ * @returns {string}
+ */
+const nameKey = name => {
+  const form = SHARD_FILE.exec(name);
+  return form?.[2] === undefined ? name : `${shardName(form[1] ?? "")}\u0000${form[2]}`;
+};
+
+/** @param {string} a @param {string} b @returns {number} the two names in NAME ORDER (M2) */
+const byName = (a, b) => {
+  const left = nameKey(a);
+  const right = nameKey(b);
+  return left < right ? -1 : left > right ? 1 : 0;
+};
 
 /** A UTC stamp: date, time with seconds, an optional fraction, then Z or a +HH:MM / -HH:MM offset. */
 const UTC_STAMP = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d{1,9})?(?:Z|([+-])(\d{2}):(\d{2}))$/;
@@ -166,7 +421,8 @@ function utcMonth(stamp) {
 }
 
 /**
- * A closed row in stub shape: every field it holds is a STUB_FIELDS field.
+ * A closed row in stub shape: every field it holds is a STUB_FIELDS field; wb-c2's stub fields with one field FIELDS BEYOND
+ * STUB_FIELDS lists added are not in stub shape (R5, C8).
  * @param {Record<string, unknown>} value
  * @returns {boolean}
  */
@@ -189,8 +445,9 @@ export function softCeiling(env) {
 /** @typedef {{ ok: true, lines: Array<BlankLine | RowLine>, trailing: boolean } | { ok: false, why: string }} Parsed */
 
 /**
- * A JSON-lines export, line by line; every non-empty line must be a JSON object with a non-empty string id and a string status, ids
- * unique (C8).
+ * A JSON-lines export, line by line; an empty line - no character at all - is kept as one (C15), and each line C8 plants refuses: one
+ * that does not parse (the eight lines of whitespace alone among them), null, an array, a number or a string, a row whose id is none,
+ * empty, a number or null, a row whose status is none, a number or null, and a row repeating an id (C8).
  * @param {string} text
  * @returns {Parsed}
  */
@@ -238,14 +495,15 @@ function stubOf(value) {
 }
 
 /**
- * The id of one archived line: from the export's line prefix, else from a full parse.
+ * The id of an archived line, read from a parse of the WHOLE line and never from its prefix alone: each line PLANTED SHARD LINES names
+ * throws one Error naming the shard and the line - it does not parse, is not a JSON object, or has no non-empty string id - at each
+ * position and in each layout it names (R3, C9), and so do its four prefix forms and six comment forms at the CLI (K3, K7) and the
+ * prefix form cut short as a shard's last line with no newline after it (R11).
  * @param {string} line
  * @param {string} where
  * @returns {string}
  */
 function archivedId(line, where) {
-  const prefixed = EXPORT_PREFIX.exec(line);
-  if (prefixed) return /** @type {string} */ (JSON.parse(`"${prefixed[1] ?? ""}"`));
   /** @type {unknown} */
   let value;
   try {
@@ -260,14 +518,16 @@ function archivedId(line, where) {
 }
 
 /**
- * Every id's latest archived line: shards in name order, lines in file order, the last one wins (C4, R2).
+ * Every id's latest archived line: shards in name order, the shards given out of name order too (C17), lines in file order, the last
+ * one wins (C4, R2). Each line PLANTED SHARD LINES names goes through archivedId at each position and in each layout it names (R3, C9),
+ * and so does a shard's last line with no newline after it (R11); an empty line between two rows is skipped (R3, C9).
  * @param {Iterable<readonly [string, string]>} shards
  * @returns {Map<string, string>}
  */
 function latestArchived(shards) {
   /** @type {Map<string, string>} */
   const latest = new Map();
-  for (const [name, text] of [...shards].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))) {
+  for (const [name, text] of [...shards].sort(([a], [b]) => byName(a, b))) {
     const lines = text.split("\n");
     for (let index = 0; index < lines.length; index += 1) {
       const line = lines[index] ?? "";
@@ -279,9 +539,12 @@ function latestArchived(shards) {
 }
 
 /**
- * A main export with each STUB line whose id has an archived line replaced by that id's latest archived line. A STUB line parses as a
- * JSON object whose status is "closed" and that holds no field but STUB_FIELDS, however its JSON is spaced; every other line - a full
- * closed row, a stub-shaped row that is not closed, a stub no shard holds, a line that does not parse - is kept as it is.
+ * A main export with each STUB line whose id has an archived line replaced by that id's latest archived line (R2). A STUB line parses
+ * as a JSON object whose status is the string "closed" and that holds no field but STUB_FIELDS, however its JSON is spaced (R6, R8);
+ * these other lines are kept as they are: a full closed row (R5, with one field FIELDS BEYOND STUB_FIELDS lists added to a stub's
+ * fields among them), a stub-shaped row whose status is not "closed" (R6: "open", "Closed" and each status STATUSES NOT CLOSED lists),
+ * a stub no shard holds (R7), and the lines R12 plants - an empty line, a line that does not parse, null, an array, a number, a string
+ * and a closed stub-shaped row whose id is a number.
  * @param {string} main
  * @param {ReadonlyMap<string, string>} latest
  * @returns {string}
@@ -309,7 +572,8 @@ function substitute(main, latest) {
 }
 
 /**
- * The full export a main export and its shards stand for.
+ * The full export a main export and its shards stand for: the shards read in name order, given out of it too (C17), a shard's last line
+ * parsed though no newline ends it (R11).
  * @param {string} main
  * @param {Iterable<readonly [string, string]>} shards shard file name -> text
  * @returns {string}
@@ -322,8 +586,14 @@ export function rehydrateTrackerText(main, shards) {
 const fsPath = path => (path instanceof URL ? fileURLToPath(path) : path);
 
 /**
- * The shard files of an archive directory - regular files named issues-closed-YYYY-MM.jsonl, nothing else - with their sizes and
- * modification times, or undefined when the path is not a directory or holds no shard file.
+ * The shard files of an archive directory, in name order (M2) - regular files named issues-closed-YYYY-MM.jsonl, YYYY four digits and
+ * MM 01 to 12, each name SHARD NAMES IN THE FORM lists among them, and continuations issues-closed-YYYY-MM-X.jsonl, X one letter b to
+ * z, each name CONTINUATION NAMES IN THE FORM lists among them (M1); not the files of other names (each name NAMES OUTSIDE THE FORM lists among them), the
+ * symlinks (to a file, to a directory, dangling) and the directories of a shard's name R4 plants - under a key of the directory and each
+ * shard's name, size and modification time, so that each change R10 plants is read again (a size; a modification time moved by 60 s,
+ * by 0.5 s inside one second or by 0.3 ms inside one millisecond; a shard added, renamed or removed; another directory; a continuation
+ * added, M6), or undefined
+ * when no entry is at the path (R1), it is a file (R9) or it holds no shard file (R4).
  * @param {string} dir
  * @returns {{ key: string, names: string[] } | undefined}
  */
@@ -332,7 +602,7 @@ function archiveState(dir) {
   const names = readdirSync(dir, { withFileTypes: true })
     .filter(entry => entry.isFile() && SHARD_FILE.test(entry.name))
     .map(entry => entry.name)
-    .sort();
+    .sort(byName);
   if (names.length === 0) return undefined;
   const key = names
     .map(name => {
@@ -349,8 +619,9 @@ let archivedMemo;
 let readMemo;
 
 /**
- * The full export for a main export text a reader already read from `mainPath` (R2): the text unchanged when no archive directory
- * beside it holds a shard file (R1, R4, R9).
+ * The full export for a main export text a reader already read from `mainPath`, a string path or a file URL (R2), another text of the
+ * same length among them (R10): the text unchanged when no archive directory beside it holds a shard file (R1, R4, R9); its shards
+ * are read as UTF-8 (R2).
  * @param {string} text
  * @param {string | URL} mainPath
  * @returns {string}
@@ -369,8 +640,9 @@ export function rehydrateTrackerExport(text, mainPath) {
 }
 
 /**
- * The one read of a main export: the file's text, rehydrated from the archive directory beside it when that holds a shard file (R1,
- * R2, R9).
+ * The one read of a main export, at a string path or a file URL (R1, R2): the file's text read as UTF-8 (R1 plants each character UTF-8
+ * CHARACTERS lists, and a leading byte order mark, which it keeps), rehydrated from the archive directory beside it when that holds a
+ * shard file (R1, R2, R9).
  * @param {string | URL} mainPath
  * @returns {string}
  */
@@ -384,17 +656,24 @@ export function trackerExportText(mainPath) {
  */
 
 /**
- * Compacts a full export against the existing shards: the main export, every shard after the run, and what was appended where (C3,
- * C4, C4b). Refuses as "malformed" on a run stamp that is not a UTC stamp (C9), a shard name C9 plants that is not a month shard's (a
- * day shard's, README.md: C9), a shard that does not end with a newline or holds a line C9 plants that does not parse as a JSON object
- * with a string id (`{"id":`, `[1]` or `{"status":"closed"}` after a full line: C9), a malformed export (C8) and a stub-shaped
- * closed row in the input - a main export passed where the full export belongs (C8); as "oversize" on a
- * main export or shard at or over the ceiling (C7); as "round-trip" when the compacted export does not rehydrate to the full export
- * (C10). The CLI then writes nothing (K3, K4, K10). A change to a shard that existed before the run and is of a month before the
- * run's refuses as "sealed": a backstop the routing rule never reaches, since no run appends to such a shard, so no case reaches it.
- * Which other shard names and shard lines it refuses as malformed is NOT CLAIMED: a name whose MM is 00 or 13 (refusal #3 of
- * wb-294d: W-GP4-05), a line that begins with the export's own line prefix and does not parse or holds an empty id (W-GP4-02, 02b,
- * 02c) and a line without that prefix whose id is empty (GP4-M11) are wb-137f's, with the archived line's parse (R-B677).
+ * Compacts a full export against the existing shards, read in name order though given out of it (C17): the main export, every shard
+ * after the run and what was appended where, the shards and the appended map in name order also when the full export lists the later
+ * month's closed row first (C3, C4, C4b, C18). Refuses as "malformed" on a run stamp that is not a UTC stamp (C9 plants 24), a shard
+ * name that is not a month shard's - a day shard's, a month 00 or 13, a README, each name NAMES OUTSIDE THE FORM lists (C9) - while
+ * each name SHARD NAMES IN THE FORM lists is one (C9); in each layout PLANTED SHARD LINES names a non-empty shard that does not end
+ * with a newline, and a shard holding a line PLANTED SHARD LINES names at a position it names (C9; an empty line between two rows is
+ * skipped and an empty shard holds no line, in each of those layouts), a malformed export (C8) and a stub-shaped closed row in the
+ * input - a main export passed where the full export belongs (C8; that row with one field FIELDS BEYOND STUB_FIELDS lists added is a
+ * full row, compacted to its stub, C8); as "oversize" on a main export, a shard the run appends to or a shard it does not append to at
+ * or over the ceiling after the run, its size counted in UTF-8 bytes - at each plant C7 CEILING PLANTS lists, its file at the ceiling
+ * and one byte over it, over ASCII rows and over rows holding text beyond ASCII, whose UTF-8 bytes outnumber their UTF-16 code units
+ * (C7) - but the growing fixture's two, where the shard is sealed and the run's line opens its -b continuation (M3) - each closed
+ * line going to its month's latest shard in name order, or to the next continuation when it would put that shard at or over the
+ * ceiling while an empty shard holds it under it (CONTINUATION in the module header: M3, M4, T2); as "round-trip" when the
+ * compacted export does not rehydrate to the full export it was cut from (C10). The CLI then writes nothing (K3, K4, K10). A change to
+ * a shard that existed before the run and is of a month before the run's, or that has a later shard of its month beside it (sealed
+ * by its continuation, M3), refuses as "sealed": a backstop the routing rule never reaches, since no run appends to such a shard, so
+ * no case reaches it.
  * @param {{ full: string, shards: ReadonlyMap<string, string>, now: string, ceiling?: number, root?: string }} input
  * @returns {CompactResult}
  */
@@ -416,6 +695,14 @@ export function compactTrackerExport({ full, shards, now, ceiling = DEFAULT_SOFT
   const parsed = parseExport(full);
   if (!parsed.ok) return refuse("malformed", [`tracker-export: REFUSED the full export: ${parsed.why}; nothing is written`]);
   const newest = [...shards.keys()].map(name => SHARD_FILE.exec(name)?.[1] ?? "").reduce((a, b) => (b > a ? b : a), "");
+  // Each month's latest shard before the run, in name order (M2): the shard its next closed line goes to (M3).
+  /** @type {Map<string, string>} */
+  const latestBefore = new Map();
+  for (const name of [...shards.keys()].sort(byName)) latestBefore.set(SHARD_FILE.exec(name)?.[1] ?? "", name);
+  /** @type {Map<string, string>} */
+  const latestShard = new Map(latestBefore);
+  /** @type {Map<string, number>} */
+  const held = new Map([...shards].map(([name, text]) => [name, Buffer.byteLength(text)]));
   /** @type {string[]} */
   const mainLines = [];
   /** @type {Map<string, string[]>} */
@@ -442,7 +729,19 @@ export function compactTrackerExport({ full, shards, now, ceiling = DEFAULT_SOFT
     if (latest.get(line.id) === line.raw) continue;
     const closed = utcMonth(line.value.closed_at) ?? month;
     const period = closed < month ? closed : month;
-    const name = shardName(period === month || period > newest ? period : month);
+    const target = period === month || period > newest ? period : month;
+    // The line goes to its month's latest shard while it leaves that shard under the ceiling; a shard the line would put at or over the
+    // ceiling, when an empty shard holds the line under it (so the shard is not empty), is SEALED - it keeps its bytes - and the line
+    // opens the month's next continuation (M3), none after -z (M4). A line no empty shard holds under the ceiling stays with the latest
+    // shard, which then refuses as oversize below (M4, C7, K3).
+    let name = latestShard.get(target) ?? shardName(target);
+    const bytes = Buffer.byteLength(line.raw) + 1;
+    const holding = held.get(name) ?? 0;
+    const letter = SHARD_FILE.exec(name)?.[2];
+    const next = CONTINUATION_LETTERS[letter === undefined ? 0 : CONTINUATION_LETTERS.indexOf(letter) + 1];
+    if (holding + bytes >= ceiling && bytes < ceiling && next !== undefined) name = shardName(target, next);
+    latestShard.set(target, name);
+    held.set(name, (held.get(name) ?? 0) + bytes);
     appended.set(name, [...(appended.get(name) ?? []), line.id]);
     appendLines.set(name, [...(appendLines.get(name) ?? []), line.raw]);
   }
@@ -450,10 +749,18 @@ export function compactTrackerExport({ full, shards, now, ceiling = DEFAULT_SOFT
   /** @type {Map<string, string>} */
   const out = new Map([...shards]);
   for (const [name, lines] of appendLines) out.set(name, `${shards.get(name) ?? ""}${lines.map(line => `${line}\n`).join("")}`);
-  const sorted = new Map([...out].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)));
-  const sealed = [...shards.keys()].filter(name => (SHARD_FILE.exec(name)?.[1] ?? "") < month).sort();
+  const sorted = new Map([...out].sort(([a], [b]) => byName(a, b)));
+  // Sealed before the run: a shard of a month before the run's, or one with a later shard of its month beside it (M3). No run appends
+  // to either, so the backstop below never fires.
+  const pastMonth = (/** @type {string} */ name) => (SHARD_FILE.exec(name)?.[1] ?? "") < month;
+  const sealed = [...shards.keys()].filter(name => pastMonth(name) || latestBefore.get(SHARD_FILE.exec(name)?.[1] ?? "") !== name).sort(byName);
   const changed = sealed.filter(name => sorted.get(name) !== shards.get(name));
-  if (changed.length > 0) return refuse("sealed", changed.map(name => `tracker-export: REFUSED ${root}/archive/${name} is a past month's shard and would change; nothing is written`));
+  if (changed.length > 0) {
+    return refuse(
+      "sealed",
+      changed.map(name => `tracker-export: REFUSED ${root}/archive/${name} is ${pastMonth(name) ? "a past month's shard" : "a shard sealed by its continuation"} and would change; nothing is written`),
+    );
+  }
   /** @type {string[]} */
   const over = [];
   const mainBytes = Buffer.byteLength(main);
@@ -464,7 +771,7 @@ export function compactTrackerExport({ full, shards, now, ceiling = DEFAULT_SOFT
   }
   if (over.length > 0) return refuse("oversize", over);
   if (rehydrateTrackerText(main, sorted) !== full) return refuse("round-trip", ["tracker-export: REFUSED the compacted export does not rehydrate to the full export it was cut from; nothing is written"]);
-  return { ok: true, main, shards: sorted, appended: new Map([...appended].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))), rows, stubs, sealed };
+  return { ok: true, main, shards: sorted, appended: new Map([...appended].sort(([a], [b]) => byName(a, b))), rows, stubs, sealed };
 }
 
 /** @param {string} path @param {number} bytes @param {number} ceiling @returns {string} */
@@ -552,7 +859,8 @@ function options(args, flags) {
 }
 
 /**
- * Writes a file through a temporary file in the .beads directory, renamed over the target (atomicity under a crash is NOT CLAIMED).
+ * Writes a file whole through a temporary file renamed over the target: the target is a new file afterwards and no temporary file stays
+ * in the .beads directory (K13). Where the temporary file sits while it is written, and atomicity under a crash, are NOT CLAIMED.
  * @param {string} beads
  * @param {string} target
  * @param {string} text
@@ -592,7 +900,9 @@ function compactCli(args, err, out) {
   const shards = new Map();
   try {
     fullText = readFileSync(fullPath, "utf8");
-    // Only month shard files are inputs, as only they are read back (archiveState); a file of any other name beside them is neither.
+    // Only month shard files - monthly shards and their continuations (M5) - are inputs, as only they are read back (archiveState); K5's files of another name (the names NAMES OUTSIDE
+    // THE FORM lists among them), directory of a shard's name and symlink of one to a file are neither. The shards are read as UTF-8,
+    // so a re-run over rows holding UTF-8 CHARACTERS appends nothing (K1).
     if (existsSync(archive)) {
       for (const entry of readdirSync(archive, { withFileTypes: true })) {
         if (entry.isFile() && SHARD_FILE.test(entry.name)) shards.set(entry.name, readFileSync(join(archive, entry.name), "utf8"));
@@ -607,6 +917,15 @@ function compactCli(args, err, out) {
   if (!result.ok) {
     for (const line of result.lines) err(line);
     return result.code === "oversize" ? 2 : 3;
+  }
+  // Every path the run writes - each shard it appends to, in name order (also when the full export lists the later month's row
+  // first), then the main export - is checked before the first write: one that exists and is not a regular file (K14 plants a
+  // directory, a symlink to a file, to a directory or dangling, and a FIFO) refuses with one typed line each, and nothing is written
+  // (K14).
+  const blocked = [...[...result.appended.keys()].map(name => join(archive, name)), join(dir, "issues.jsonl")].filter(target => lstatSync(target, { throwIfNoEntry: false })?.isFile() === false);
+  if (blocked.length > 0) {
+    for (const target of blocked) err(`tracker-export: REFUSED ${ascii(target)} is not a regular file; nothing is written`);
+    return 3;
   }
   if (result.appended.size > 0) mkdirSync(archive, { recursive: true });
   for (const name of result.appended.keys()) writeWhole(dir, join(archive, name), result.shards.get(name) ?? "");
