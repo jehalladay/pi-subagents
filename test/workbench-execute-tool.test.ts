@@ -184,14 +184,20 @@ describe("workflow_execute wiring: the saved source must be the pinned one", () 
 
 /**
  * EAT-R337 criterion 1 (wb-djk5; DX triage 2026-11-11, claim C118): "a function-kind request in detached hostMode with
- * execute-only grants is refused unsupported-definition-kind without demanding workbench:detach". No host mode launches a
- * function or furnace-formula definition, so the shell judges the kind before the detach conjunction: the operator is never
- * asked for a grant that cannot make the request launch. The second case replays the probe's two readings (probe-execute-refusal
- * cases C and D: the same function request with workbench:execute alone, then with workbench:detach added). The conjunction still
- * binds every kind a host launches: F6 above pins a script request in detached hostMode with workbench:execute alone as
- * missing-detach-grant.
+ * execute-only grants is refused unsupported-definition-kind without demanding workbench:detach". The shell judges the kind
+ * before the detach conjunction. Every request these cases list carries one digest-pinned definition (the definition()
+ * fixture with kind function or furnace-formula), input {n: 1} and no policy. The first case pins the criterion's request (a
+ * function definition in detached hostMode with workbench:execute alone) and its furnace-formula twin. The second replays the
+ * probe's two readings (probe-execute-refusal cases C and D: the same function request with workbench:execute alone, then with
+ * workbench:detach added). The third lists eight requests (each kind, hostMode embedded or detached, exactly
+ * [workbench:execute] or [workbench:execute, workbench:detach] held): each refuses as unsupported-definition-kind, resolves and
+ * launches nothing, and returns reply text that names no workbench:detach, so for those requests the operator is not asked to
+ * add workbench:detach. F6 above still pins the conjunction for a script request: in detached hostMode with workbench:execute
+ * alone it refuses as missing-detach-grant. Any request form these cases do not list (another grant set, a request without
+ * workbench:execute, another definition, input or policy) and the execute-first admission order of src/workbench/execute.ts
+ * (unchanged by this cut) are NOT CLAIMED by this census.
  */
-describe("EAT-R337 criterion 1 (claim C118): a definition kind no host launches is refused before the detach conjunction is judged", () => {
+describe("EAT-R337 criterion 1 (claim C118): each listed function or furnace-formula request, in either host mode with exactly [workbench:execute] or [workbench:execute, workbench:detach] held, is refused unsupported-definition-kind, never missing-detach-grant", () => {
   it.each(["function", "furnace-formula"])(
     "a %s definition in detached hostMode with workbench:execute alone refuses as unsupported-definition-kind, its reply text names no workbench:detach, and nothing is resolved or launched",
     async kind => {
@@ -213,6 +219,28 @@ describe("EAT-R337 criterion 1 (claim C118): a definition kind no host launches 
     expect(await refusal([EXECUTE_GRANT, DETACH_GRANT], "detached")).toEqual(caseC);
     expect(await refusal([EXECUTE_GRANT], "embedded")).toEqual(caseC);
   });
+
+  it.each([
+    ["function", "embedded", [EXECUTE_GRANT]],
+    ["function", "embedded", [EXECUTE_GRANT, DETACH_GRANT]],
+    ["function", "detached", [EXECUTE_GRANT]],
+    ["function", "detached", [EXECUTE_GRANT, DETACH_GRANT]],
+    ["furnace-formula", "embedded", [EXECUTE_GRANT]],
+    ["furnace-formula", "embedded", [EXECUTE_GRANT, DETACH_GRANT]],
+    ["furnace-formula", "detached", [EXECUTE_GRANT]],
+    ["furnace-formula", "detached", [EXECUTE_GRANT, DETACH_GRANT]],
+  ] as const)(
+    "a %s definition in %s hostMode with %j held refuses as unsupported-definition-kind, its reply text names no workbench:detach, and nothing is resolved or launched",
+    async (kind, hostMode, rights) => {
+      const resolveSource = vi.fn(() => SOURCE);
+      const h = harness({ rights, resolveSource });
+      const { text, reply } = await h.run(embedded({ definitionRef: definition({ kind }), hostMode }));
+      expect(reply).toMatchObject({ ok: false, invoked: false, status: "refused" });
+      expect(reply.error?.code).toBe("unsupported-definition-kind");
+      expect(text).not.toContain(DETACH_GRANT);
+      expect([resolveSource.mock.calls.length, h.launchEmbedded.mock.calls.length, h.launchDetached.mock.calls.length]).toEqual([0, 0, 0]);
+    },
+  );
 });
 
 describe("workflow_execute wiring: the envelope", () => {

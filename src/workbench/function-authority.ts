@@ -114,9 +114,9 @@
  * grant read that is not known permission data (no read, a non-array read, or a list holding a spelling outside the
  * grammar, in the six pinned shapes) refuses as unknown-permission-data, held execute or not. In the eight pinned
  * known-permission rows, a request without workbench:execute refuses as missing-execute-grant, and the rest refuse as
- * unsupported-definition-kind, a detached request without workbench:detach included: no host mode launches the kind, so
- * the shell judges it before the detach conjunction (EAT-R337 criterion 1). Other host reads are NOT CLAIMED. Routing a
- * function launcher through this boundary is a later cut.
+ * unsupported-definition-kind, a detached request without workbench:detach included: in those rows the shell judges the
+ * kind before the detach conjunction (EAT-R337 criterion 1). Other host reads are NOT CLAIMED. Routing a function
+ * launcher through this boundary is a later cut.
  *
  * The host supplies the two reads, the wait and the dispatch. Pinned fixed reasons: for each pinned pair of requests (the
  * seven pairs that differ in definition, invocation, identity and held grants; the five pairs that differ only in

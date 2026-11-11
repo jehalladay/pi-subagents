@@ -212,8 +212,8 @@ export function createWorkflowExecuteTool(deps: WorkflowExecuteDeps) {
         outcome = refusal.outcome;
       };
       outcome = { status: "refused", reason: "launch refused" };
-      // A kind no host mode launches is refused before the detach conjunction is judged, so the operator is never asked for a
-      // grant that cannot make the request launch (EAT-R337 criterion 1, claim C118).
+      // EAT-R337 criterion 1 (claim C118): the kind is judged before the detach conjunction. At the request forms the EAT-R337 criterion 1 cases
+      // of test/workbench-execute-tool.test.ts list, a function or furnace-formula definition refuses unsupported-definition-kind, never missing-detach-grant; other forms are NOT CLAIMED.
       if (admission.definition.kind !== "script") {
         refuse("unsupported-definition-kind", "only script definitions launch in this host");
       } else if (admission.hostMode === "detached" && !rights.includes(DETACH_GRANT)) {
