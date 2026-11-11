@@ -28,6 +28,12 @@
  * (b) qa/workbench/furnace-hosted-retry-fault.mjs revision()/revisionClean(), which now takes the canonical block inline
  * (the 04:10Z recipe: node: imports only, no cross-file staging) instead of an un-toplevel-checked git call, and (c)
  * qa/workbench/live-adverse.mjs, the fourth landed inline copy of the block, which joins the INLINED drift table.
+ *
+ * wb-6ze.15 (gate refusal #1 F6): qa/workbench/live-inspector-receipt.mjs, the VC-5 inspector runner, imports the canonical
+ * module dynamically for its revision block (the live-operator-receipt form: the 7-character short sha, "-dirty", "unknown"
+ * whenever the stamp is not complete, rooted at the module's own repository), so it joins the importer, member-entry and
+ * module-rooted tables; staged with no dist/ beside it, it stops at its honest preflight and prints its typed unavailability
+ * receipt, so the stamp is the only real code path its rows run.
  */
 import { execFileSync, spawnSync } from "node:child_process";
 import { copyFileSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
@@ -155,8 +161,8 @@ function stampBlock(name: string): string {
 /** The members whose guards allow only node: imports, so they carry the canonical block inline. */
 const INLINED = ["status-ledger.mjs", "local-detached-faults.mjs", "local-detached-shared-child.mjs", "live-adverse.mjs", "furnace-hosted-retry-fault.mjs"];
 
-/** The members that import the canonical module (statically, or dynamically inside live-operator's bounded block). */
-const IMPORTERS = ["package-smoke.mjs", "live-operator-receipt.mjs", "headless-host-census.mjs", "install-minimal.mjs", "live-furnace-vc4.mjs"];
+/** The members that import the canonical module (statically, or dynamically inside live-operator's bounded block and the inspector runner's revision block). */
+const IMPORTERS = ["package-smoke.mjs", "live-operator-receipt.mjs", "headless-host-census.mjs", "install-minimal.mjs", "live-furnace-vc4.mjs", "live-inspector-receipt.mjs"];
 
 async function importBlock(name: string): Promise<{ revisionOf: (root: string) => string }> {
   const file = join(scratchDir("git-stamp-inline-"), "inline.mjs");
@@ -164,7 +170,7 @@ async function importBlock(name: string): Promise<{ revisionOf: (root: string) =
   return (await import(pathToFileURL(file).href)) as { revisionOf: (root: string) => string };
 }
 
-describe("the qa git-discovery members share the one canonical stamp (five inlined copies, five importers)", () => {
+describe("the qa git-discovery members share the one canonical stamp (five inlined copies, six importers)", () => {
   it("package-smoke runs no HEAD-only rev-parse of its own", () => {
     expect(readFileSync(join(qa, "package-smoke.mjs"), "utf8")).not.toMatch(/rev-parse['"],\s*['"]HEAD['"]\]/);
   });
@@ -380,6 +386,17 @@ const MEMBERS: Member[] = [
     cleanKey: "revisionClean",
     unreadClean: null,
   },
+  // wb-6ze.15 (gate refusal #1 F6): the VC-5 inspector runner's revision block takes the canonical stamp in the live-operator
+  // form (short sha, "unknown" fallback). Its receipt directory is given explicitly so no run leaves a receipt under TMPDIR;
+  // with no dist/ staged it exits 2 at the preflight with its typed unavailability receipt, before any pty, SDK or network.
+  {
+    name: "live-inspector-receipt.mjs",
+    files: ["live-inspector-receipt.mjs", "scratch.mjs", "git-stamp.mjs"],
+    extra: [],
+    argv: (scratch) => [scratch],
+    form: (head) => head.slice(0, 7),
+    foreign: "unknown",
+  },
 ];
 
 function stage(root: string, member: Member): string {
@@ -427,11 +444,11 @@ describe("member tables are live (owner F4: emptying a table must redden)", () =
     expect(INLINED).toEqual(["status-ledger.mjs", "local-detached-faults.mjs", "local-detached-shared-child.mjs", "live-adverse.mjs", "furnace-hosted-retry-fault.mjs"]);
   });
 
-  it("the importer table names its five importers", () => {
-    expect(IMPORTERS).toEqual(["package-smoke.mjs", "live-operator-receipt.mjs", "headless-host-census.mjs", "install-minimal.mjs", "live-furnace-vc4.mjs"]);
+  it("the importer table names its six importers", () => {
+    expect(IMPORTERS).toEqual(["package-smoke.mjs", "live-operator-receipt.mjs", "headless-host-census.mjs", "install-minimal.mjs", "live-furnace-vc4.mjs", "live-inspector-receipt.mjs"]);
   });
 
-  it("the member-entry table names all nine members", () => {
+  it("the member-entry table names all ten members", () => {
     expect(MEMBERS.map((member) => member.name)).toEqual([
       "local-detached-faults.mjs",
       "local-detached-shared-child.mjs",
@@ -442,6 +459,7 @@ describe("member tables are live (owner F4: emptying a table must redden)", () =
       "live-furnace-vc4.mjs",
       "release-checklist-receipt.mjs",
       "furnace-hosted-retry-fault.mjs",
+      "live-inspector-receipt.mjs",
     ]);
   });
 });
@@ -507,7 +525,7 @@ describe.each(MEMBERS)("member entry point $name stamps only its own repository"
 });
 
 /**
- * 04:10Z/16:26Z gate F2 (X5a-e) + owner R1 default (b): the eight MODULE-ROOTED members root their stamp at the module's
+ * 04:10Z/16:26Z gate F2 (X5a-e) + owner R1 default (b): the nine MODULE-ROOTED members root their stamp at the module's
  * own repository (import.meta.url), never at the caller's cwd. install-minimal and package-smoke are cwd-rooted BY DESIGN
  * (root = process.cwd()), so they carry no row here.
  */
@@ -520,6 +538,7 @@ const MODULE_ROOTED = [
   "live-furnace-vc4.mjs",
   "release-checklist-receipt.mjs",
   "furnace-hosted-retry-fault.mjs",
+  "live-inspector-receipt.mjs",
 ];
 
 /** A second, different repository: its HEAD differs from any other fixture's even inside the same second. */
@@ -532,8 +551,8 @@ function otherRepo(): { top: string; head: string } {
 }
 
 describe("module-rooted members stamp the module's repository, never the caller's cwd (X5)", () => {
-  it("the module-rooted table names the eight members and each is a member-entry row", () => {
-    expect(MODULE_ROOTED).toHaveLength(8);
+  it("the module-rooted table names the nine members and each is a member-entry row", () => {
+    expect(MODULE_ROOTED).toHaveLength(9);
     for (const name of MODULE_ROOTED) expect(MEMBERS.map((member) => member.name)).toContain(name);
     expect(MEMBERS.map((member) => member.name).filter((name) => !MODULE_ROOTED.includes(name))).toEqual(["install-minimal.mjs"]);
   });

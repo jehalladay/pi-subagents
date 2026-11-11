@@ -861,7 +861,7 @@ function savedWorkflowSource() {
 }
 
 async function main() {
-  const { closeSync, copyFileSync, existsSync, fstatSync, mkdirSync, openSync, readFileSync, readSync, writeFileSync } = await import("node:fs");
+  const { closeSync, existsSync, fstatSync, mkdirSync, openSync, readFileSync, readSync, writeFileSync } = await import("node:fs");
   const { dirname, join, resolve } = await import("node:path");
   const { spawn, spawnSync } = await import("node:child_process");
   const { fileURLToPath, pathToFileURL } = await import("node:url");
@@ -891,11 +891,8 @@ async function main() {
   }
 
   function finish(receipt) {
-    // Opt-in for harness debugging only: the RAW capture (unsanitized bytes) beside the receipt, flagged in the receipt itself.
-    if (outDir !== undefined && process.env.INSPECTOR_KEEP_CAPTURE === "1" && capturePathKept !== undefined && existsSync(capturePathKept)) {
-      mkdirSync(outDir, { recursive: true });
-      copyFileSync(capturePathKept, join(outDir, "inspector.capture.raw.txt"));
-    }
+    // The raw pty capture is removed with the scratch, unread by anything but the screen model: every screen string the receipt
+    // carries passed the shared helper (gate refusal #1 F3: no opt-in copies the unsanitized capture out of scratch).
     removeScratch(...scratch);
     if (outDir !== undefined) {
       mkdirSync(outDir, { recursive: true });
@@ -904,7 +901,6 @@ async function main() {
     console.log(JSON.stringify({ ...receipt, ...(outDir !== undefined ? { receiptPath: join(outDir, "inspector-receipt.json") } : {}) }));
     process.exit(exitCodeFor(receipt));
   }
-  let capturePathKept;
   const unavailable = (reason, extra = {}) => {
     // Without the shared helper the receipt keeps no text at all; the reason still reaches the operator on stderr.
     if (sanitize === undefined) console.error(`unavailable: ${reason}`);
@@ -971,7 +967,6 @@ async function main() {
   const work = makeScratch("6ze15-pty-");
   scratch.push(work);
   const capturePath = join(work, "inspector.capture.txt");
-  capturePathKept = capturePath;
   const ttyFile = join(work, "pty.name");
   const taskRoot = join(sessionScratchRoot(), encodeCwd(workspace));
   const quote = text => `'${String(text).replace(/'/gu, "'\\''")}'`;
@@ -1247,7 +1242,6 @@ async function main() {
 
   const journey = {
     captureRef: capturePath,
-    captureRetained: outDir !== undefined && process.env.INSPECTOR_KEEP_CAPTURE === "1",
     captureBytes: captured,
     framesReplayed: screen.frames,
     start: START_SIZE,
@@ -1264,7 +1258,11 @@ async function main() {
   finish(buildInspectorReceipt({ ...hostFacts, pi: piVersion, settings, preflight, commands, journey, diagnostics }, { sanitize }));
 }
 
+// Only the process's own entry module runs the journey (gate refusal #1 F4: a basename match of argv[1] ran main() when another
+// entry point imported this module with its path as argv[1], as `node -e '...' <this path>` does). import.meta.main answers that
+// exactly (Node >= 24.2; vitest's module runner sets it false); a runtime without it keeps the basename check.
 const invokedDirectly = (() => {
+  if (typeof import.meta.main === "boolean") return import.meta.main;
   if (typeof process === "undefined" || !process.argv?.[1]) return false;
   return import.meta.url.endsWith(process.argv[1].split("/").pop() ?? "\u0000");
 })();

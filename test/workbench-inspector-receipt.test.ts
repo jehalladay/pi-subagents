@@ -10,7 +10,9 @@
  *    terminal, whose bytes the screen model replays;
  *  - the judge, over one good journey and one mutant per finding rule and per unrealised reason;
  *  - the receipt builder, with the injected shared helper (sanitizeWorkbenchText) and without one.
- * The live pty run happens only when the runner is invoked as a CLI; nothing here reaches a pty, the SDK or the network.
+ * The live pty run happens only when the runner is invoked as a CLI; nothing here reaches a pty, the SDK or the network. The
+ * entry-point rows (gate refusal #1 F4) spawn a staged copy of the runner with no dist/ beside it, which stops at its honest
+ * preflight before any pty, SDK or network; the F3 row pins that no opt-in copies the raw pty capture out of scratch.
  *
  * Spec lines pinned (docs/workbench/15 VC-5, docs/workbench/10, bead acceptance):
  *  - "Four views: overview/tree, graph, timeline, evidence; hierarchical aggregation; key navigation; responsive 80x24."
@@ -20,7 +22,10 @@
  *  - "the receipt pairs each view's rendered rows with the projection's own counts so a mismatch is a finding"
  *  - "exit 2 honestly when the pty session or the four views cannot be driven, never a fake pass"; "every captured frame sanitized"
  */
-import { readFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import { copyFileSync, mkdirSync, readFileSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { type OverlayHandle, type OverlayOptions, type Terminal, TuiAltScreen } from "@earendil-works/pi-tui";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import {
@@ -60,6 +65,7 @@ import { type NativeRef, ObservationProjection, type ObservationScope, type Pres
 import { sanitizeWorkbenchText } from "../src/workbench/redaction.js";
 import { createWorkflowTask, type WorkflowTask } from "../src/workflow/task.js";
 import { ctx } from "./helpers/boot-extension.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 /* ------------------------------------------------------------------------- *
  * Typed views of the runner's pure exports (the .mjs carries no types).
@@ -882,5 +888,47 @@ describe("buildInspectorReceipt and exitCodeFor", () => {
     const unarmed = build({ ...base, journey: mutate(journey => journey.views.pop()) }, { sanitize });
     expect(unarmed).toMatchObject({ realised: false, reasons: ["journey-unarmed"], pass: false });
     expect(exitOf(unarmed)).toBe(2);
+  });
+});
+
+/* ------------------------------------------------------------------------- *
+ * The CLI entry: only the process's own entry module runs the journey, and the
+ * raw pty capture never leaves scratch.
+ * ------------------------------------------------------------------------- */
+
+installScratchLeakGuard();
+
+/** The runner and the two qa modules it imports, staged with no dist/ beside them, so a run stops at the honest preflight. */
+const STAGED_RUNNER_FILES = ["live-inspector-receipt.mjs", "scratch.mjs", "git-stamp.mjs"];
+
+describe("the runner's CLI entry (gate refusal #1 F3/F4): the journey starts only at the process entry point, and no raw capture leaves scratch", () => {
+  let root = "";
+  let entry = "";
+  beforeAll(() => {
+    root = makeScratch("6ze15-entry-");
+    const qaDir = join(root, "qa", "workbench");
+    mkdirSync(qaDir, { recursive: true });
+    for (const file of STAGED_RUNNER_FILES) copyFileSync(fileURLToPath(new URL(`../qa/workbench/${file}`, import.meta.url)), join(qaDir, file));
+    entry = join(qaDir, "live-inspector-receipt.mjs");
+  });
+  afterAll(() => removeScratch(root));
+
+  it("run as the entry point with no dist/ beside it, prints its typed unavailability receipt and exits 2 (main() ran)", () => {
+    const run = spawnSync(process.execPath, [entry], { encoding: "utf8" });
+    expect(run.status).toBe(2);
+    expect(JSON.parse(run.stdout.trim())).toMatchObject({ contract: INSPECTOR_RECEIPT_CONTRACT, journey: {}, realised: false, pass: false });
+    expect(run.stderr).toContain("unavailable: dist/index.js missing");
+  });
+
+  it("imported by another entry point that passes the module's own path as argv[1] (node -e), runs nothing", () => {
+    const script = `import(${JSON.stringify(pathToFileURL(entry).href)}).then(() => console.log("imported"))`;
+    const run = spawnSync(process.execPath, ["-e", script, entry], { encoding: "utf8" });
+    expect({ status: run.status, stdout: run.stdout }).toEqual({ status: 0, stdout: "imported\n" });
+  });
+
+  it("copies no raw pty capture out of scratch: no keep-capture opt-in and no file copy anywhere in the runner", () => {
+    const source = readFileSync(new URL("../qa/workbench/live-inspector-receipt.mjs", import.meta.url), "utf8");
+    expect(source).not.toMatch(/KEEP_CAPTURE|capture\.raw|captureRetained/u);
+    expect(source).not.toMatch(/\bcopyFileSync\b/u);
   });
 });
