@@ -117,6 +117,17 @@ function textResult(msg: string, details?: AgentDetails) {
   return { content: [{ type: "text" as const, text: msg }], details: details as any };
 }
 
+/**
+ * The same reply for a refusal or a failed run, with pi's tool-result error flag
+ * set (EAT-R311). Unflagged, pi paints it in the success tint and anything keyed
+ * on the flag (retry, telemetry) counts the refusal as a success. `details` still
+ * reaches the renderer, and the nested variants of these tools flag theirs the
+ * same way (nested-tools.ts), so both levels agree.
+ */
+function errorResult(msg: string, details?: AgentDetails) {
+  return { ...textResult(msg, details), isError: true };
+}
+
 export function renderRunningAgentStatus(
   frame: string,
   statsText: string,
@@ -1823,7 +1834,10 @@ Terse command-style prompts produce shallow, generic work.
       // Pi reports pre-execution failures (extension block, abort, argument
       // validation) as `{ content: [reason], details: {} }` with isError set —
       // no status to render, so show the reason instead of inventing one (#199).
-      if (renderContext.isError || !details?.status) {
+      // The one flagged result that does carry real status is this tool's own
+      // failed run (EAT-R311 flags `Agent failed: …`): it keeps the error card
+      // below rather than dumping its salvaged partial output into the row.
+      if (!details?.status || (renderContext.isError && details.status !== "error")) {
         return new Text(text, 0, 0);
       }
 
@@ -1930,7 +1944,7 @@ Terse command-style prompts produce shallow, generic work.
       // but the parameter is required by the schema — so gating it here would
       // make a live agent unresumable the moment its type is deleted, disabled,
       // or gains a case-clashing sibling. Only a real spawn is gated.
-      if (!dispatch.ok && !params.resume) return textResult(dispatch.message);
+      if (!dispatch.ok && !params.resume) return errorResult(dispatch.message);
       const subagentType = dispatch.ok ? dispatch.type : rawType;
       // What the caller actually asked for, named once: `fellBackFrom` is "" for
       // a blank request, so reading it inline invites the `??`-vs-`||` slip that
@@ -1960,7 +1974,7 @@ Terse command-style prompts produce shallow, generic work.
       if (resolvedConfig.modelInput) {
         const resolved = resolveModel(resolvedConfig.modelInput, ctx.modelRegistry);
         if (typeof resolved === "string") {
-          if (resolvedConfig.modelFromParams) return textResult(resolved);
+          if (resolvedConfig.modelFromParams) return errorResult(resolved);
           // config-specified: silent fallback to parent
         } else {
           model = resolved;
@@ -1978,7 +1992,7 @@ Terse command-style prompts produce shallow, generic work.
         agentLabel: customConfig?.displayName ?? subagentType,
         modelInput: resolvedConfig.modelInput,
       });
-      if (scopeVerdict.kind === "error") return textResult(scopeVerdict.message);
+      if (scopeVerdict.kind === "error") return errorResult(scopeVerdict.message);
       if (scopeVerdict.kind === "warn") ctx.ui.notify(scopeVerdict.message, "warning");
 
       const thinking = resolvedConfig.thinking;
@@ -2075,19 +2089,19 @@ Terse command-style prompts produce shallow, generic work.
       // ---- Schedule: register a job, don't spawn now ----
       if (params.schedule) {
         if (!isSchedulingEnabled()) {
-          return textResult("Scheduling is disabled in this project. Enable via /agents → Settings → Scheduling.");
+          return errorResult("Scheduling is disabled in this project. Enable via /agents → Settings → Scheduling.");
         }
         if (params.resume) {
-          return textResult("Cannot combine `schedule` with `resume` — schedules create fresh agents.");
+          return errorResult("Cannot combine `schedule` with `resume` — schedules create fresh agents.");
         }
         if (params.inherit_context) {
-          return textResult("Cannot combine `schedule` with `inherit_context` — there is no parent conversation at fire time.");
+          return errorResult("Cannot combine `schedule` with `inherit_context` — there is no parent conversation at fire time.");
         }
         if (params.run_in_background === false) {
-          return textResult("Cannot combine `schedule` with `run_in_background: false` — scheduled jobs always run in background.");
+          return errorResult("Cannot combine `schedule` with `run_in_background: false` — scheduled jobs always run in background.");
         }
         if (!scheduler.isActive()) {
-          return textResult("Scheduler is not active in this session yet. Try again after the session has fully started.");
+          return errorResult("Scheduler is not active in this session yet. Try again after the session has fully started.");
         }
         try {
           const job = scheduler.addJob({
@@ -2111,7 +2125,7 @@ Terse command-style prompts produce shallow, generic work.
             `Manage via /agents → Scheduled jobs.`,
           );
         } catch (err) {
-          return textResult(err instanceof Error ? err.message : String(err));
+          return errorResult(err instanceof Error ? err.message : String(err));
         }
       }
 
@@ -2119,10 +2133,10 @@ Terse command-style prompts produce shallow, generic work.
       if (params.resume) {
         const existing = manager.getRecord(params.resume);
         if (!existing || !isTopLevelAgent(existing)) {
-          return textResult(`Agent not found: "${params.resume}". It may have been cleaned up.`);
+          return errorResult(`Agent not found: "${params.resume}". It may have been cleaned up.`);
         }
         if (!existing.session) {
-          return textResult(`Agent "${params.resume}" has no active session to resume.`);
+          return errorResult(`Agent "${params.resume}" has no active session to resume.`);
         }
 
         // Background resume: detached run that notifies on completion, mirroring
@@ -2137,7 +2151,7 @@ Terse command-style prompts produce shallow, generic work.
           // live run's abort controller); say why here, where the model can act
           // on it, instead of letting it read as a generic failure.
           if (existing.status === "running" || existing.status === "queued") {
-            return textResult(
+            return errorResult(
               `Agent "${params.resume}" is still ${existing.status} — it can only be resumed once its current run finishes.\n` +
               `Use steer_subagent to send it a message mid-run, or get_subagent_result to wait for it.`,
             );
@@ -2149,7 +2163,7 @@ Terse command-style prompts produce shallow, generic work.
             toolCallId,
           });
           if (!record) {
-            return textResult(`Failed to resume agent "${params.resume}".`);
+            return errorResult(`Failed to resume agent "${params.resume}".`);
           }
 
           const isQueued = record.status === "queued";
@@ -2167,12 +2181,12 @@ Terse command-style prompts produce shallow, generic work.
 
         const record = await manager.resume(params.resume, params.prompt, signal);
         if (!record) {
-          return textResult(`Failed to resume agent "${params.resume}".`);
+          return errorResult(`Failed to resume agent "${params.resume}".`);
         }
         // A failed resume surfaces the error, plus any partial output THIS
         // resume produced (never the previous turn's answer, #144).
         if (record.status === "error") {
-          return textResult(`Agent failed: ${record.error}${partialOutputSuffix(record)}`, buildDetails(detailBaseFor(record), record));
+          return errorResult(`Agent failed: ${record.error}${partialOutputSuffix(record)}`, buildDetails(detailBaseFor(record), record));
         }
         return textResult(
           record.result?.trim() || "No output.",
@@ -2398,7 +2412,7 @@ Terse command-style prompts produce shallow, generic work.
 
       if (record.status === "error") {
         // Error headline + any partial output the run produced before failing.
-        return textResult(`${fallbackNote}Agent failed: ${record.error}${partialOutputSuffix(record)}`, details);
+        return errorResult(`${fallbackNote}Agent failed: ${record.error}${partialOutputSuffix(record)}`, details);
       }
 
       const durationMs = (record.completedAt ?? Date.now()) - record.startedAt;
@@ -3655,7 +3669,7 @@ Terse command-style prompts produce shallow, generic work.
     execute: async (_toolCallId, params, signal, _onUpdate, _ctx) => {
       const record = resolveAgentRef(params.agent_id);
       if (!record || !isTopLevelAgent(record)) {
-        return textResult(`Agent not found: "${params.agent_id}". It may have been cleaned up.`);
+        return errorResult(`Agent not found: "${params.agent_id}". It may have been cleaned up.`);
       }
 
       // Wait for completion if requested. Cancellation stops only this tool
@@ -3714,7 +3728,8 @@ Terse command-style prompts produce shallow, generic work.
         }
       }
 
-      return textResult(output);
+      // A failed run is reported as one (EAT-R311), as the nested variant does.
+      return record.status === "error" ? errorResult(output) : textResult(output);
     },
   }));
 
@@ -3738,10 +3753,10 @@ Terse command-style prompts produce shallow, generic work.
     execute: async (_toolCallId, params, _signal, _onUpdate, _ctx) => {
       const record = resolveAgentRef(params.agent_id);
       if (!record || !isTopLevelAgent(record)) {
-        return textResult(`Agent not found: "${params.agent_id}". It may have been cleaned up.`);
+        return errorResult(`Agent not found: "${params.agent_id}". It may have been cleaned up.`);
       }
       if (record.status !== "running") {
-        return textResult(`Agent "${params.agent_id}" is not running (status: ${record.status}). Cannot steer a non-running agent.`);
+        return errorResult(`Agent "${params.agent_id}" is not running (status: ${record.status}). Cannot steer a non-running agent.`);
       }
       if (!record.session) {
         // Session not ready yet — queue the steer for delivery once initialized
@@ -3770,7 +3785,7 @@ Terse command-style prompts produce shallow, generic work.
           `Current state: ${stateParts.join(" · ")}`,
         );
       } catch (err) {
-        return textResult(`Failed to steer agent: ${err instanceof Error ? err.message : String(err)}`);
+        return errorResult(`Failed to steer agent: ${err instanceof Error ? err.message : String(err)}`);
       }
     },
   }));
