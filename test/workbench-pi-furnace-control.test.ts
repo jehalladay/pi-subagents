@@ -32,6 +32,22 @@
  * - B7 (EAT-R348 c2, the contrast): a Run stop the fake answers stopped with a native instant settles: status settled, result
  *   phase, the echo kept and no uncertainty member. Falsifier: an uncertainty member on a settled reply, or a settled reply
  *   relabeled uncertain.
+ * - B8 (EAT-R346 c1, two Attempts; wb-qg19 refusal #1 U2): after one furnace_observe of a Run whose Attempt page returns two
+ *   Attempts, each of the two is a node of the booted projection that owns nothing: both Attempt stops are denied
+ *   no-confirmed-ownership, never cross-scope. Falsifier: a refresh loop handed less than the topology's whole snapshot list
+ *   (the gate's member G1, topology.snapshots.slice(0, 2)) leaves the second Attempt unobserved, so its stop is denied
+ *   cross-scope.
+ * - B9 (EAT-R346 beside the trunk reply; wb-qg19 refusal #1 U1): for each of two readings whose topology cannot be taken, an
+ *   Attempt page whose request id is the empty string (the vendored SDK accepts any string request id, and the observer
+ *   cannot confirm Run ownership from it) and an Attempt id of 308 code units (past the projection's 256-unit id bound),
+ *   furnace_observe still replies with the sanitized reading (its contract furnace.external-observation/v1 and its Run id),
+ *   the Run is a node of the booted projection that owns nothing (a Run stop is denied no-confirmed-ownership, never
+ *   cross-scope) and no stop command is sent. Falsifier: the topology and both loops inside the data reply's try with no
+ *   fallback (cut #1 883d4339) answer both readings with the catch reply instead of the reading.
+ * - B10 (the same reply, zero-width readings): an Attempt page whose request id carries a zero-width space, and an Attempt
+ *   whose id carries one, still get the sanitized reading as the reply, with no zero-width unit left in its text.
+ *   Falsifier: a reply that is not the reading passed through sanitizeWorkbenchJsonText (an unsanitized JSON.stringify
+ *   keeps the unit; the catch reply carries no contract).
  * - C1 (EAT-R347 c1, the constructor leg): unsupported-verb, invalid-target, foreign-workspace, permit-consumed and
  *   aborted-before-issue each reach the reply as their own exact error code with the adapter's category, and none sends a
  *   native call beyond the first issue of the consumed permit. Falsifier: the trunk class (executor-refused for all five).
@@ -43,6 +59,13 @@
  * - C3 (EAT-R348, the bound): an adapter summary whose echo and uncertainty strings are hostile and oversized keeps the whole
  *   reply within 8192 bytes, each echo string within 128 and each uncertainty label within 64 code units, with the fake
  *   credential redacted and no unsafe unit left. Falsifier: an unbounded or unsanitized fold of the adapter readings.
+ * - C4 (EAT-R347's boundary; wb-qg19 refusal #1 U3): the own-code reading covers an adapter refusal only when the adapter
+ *   sets the code. The claude-agent-sdk leg as src/index.ts writes it, over a seam bound to another session, and the
+ *   production forge leg (createRetainedForgeControlExecutor) over a retained operation, answer their typed refusals
+ *   (ClaudeControlRefusal foreign-session, ForgeControlRefusal unsupported-verb) with no own code, so the reply's code is
+ *   executor-refused for both: those two adapters do not set the own code this file's Furnace refusal sets. Falsifier: an
+ *   own code on either refusal class (that leg's code then reaches the reply, and this row and the furnace-control.ts
+ *   comment move together).
  *
  * NOT CLAIMED (scope sentences; no residual semantics, no follow-up bead): the V6 legs of EAT-R346 and EAT-R348 (a real
  * Furnace Run and Attempt, native runs.get, the native store byte oracle, control-live uncertain receipt rows) are NOT CLAIMED
@@ -50,7 +73,11 @@
  * permit-consumed are NOT CLAIMED by this file's booted rows: the core admits only `stop` for furnace, an Attempt node has no
  * outgoing ownership edge, furnace_observe admits only frn-run-* Run ids observed in the session workspace and every call
  * mints a fresh permit, so the booted tool reaches none of them (C1 pins them through the constructor). Whether a refusal
- * reports invoked false (EAT-R335) and the furnace_observe reply dialect (EAT-R349, wb-752.13) are NOT CLAIMED by this file.
+ * reports invoked false (EAT-R335) and the furnace_observe reply dialect (EAT-R349, wb-752.13) are NOT CLAIMED by this file:
+ * B9 and B10 read only that the reply is the sanitized reading (its contract, its Run id and, for B10, no zero-width unit),
+ * and the reply to any reading those rows and B1-B8 do not observe is NOT CLAIMED by this file. A Run whose Attempt page
+ * returns more than two Attempts is NOT CLAIMED by this file's booted rows (the census
+ * test/workbench-furnace-world-model-preservation-census.test.ts S1 pins the two loops' statements whole).
  * receipt-refused and the live tier's mirror executor (test/workbench-furnace-control-live.test.ts) are NOT CLAIMED by this file.
  */
 import { chmodSync, existsSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
@@ -58,8 +85,10 @@ import { delimiter, join } from "node:path";
 import type { CallOptions } from "@furnace/sdk";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import subagentsExtension from "../src/index.js";
+import { executeClaudeControl } from "../src/workbench/claude-control.js";
 import type { ControlDecision, NativeControlRequest } from "../src/workbench/control.js";
 import { type ControlExecutionSummary, type ControlExecutor, createWorkflowControlTool } from "../src/workbench/control-tool.js";
+import { createRetainedForgeControlExecutor, releaseForgeOperation, retainForgeOperation } from "../src/workbench/forge-control-retention.js";
 import {
   executeFurnaceControl,
   FURNACE_CONTROL_REFUSAL_CODES,
@@ -74,6 +103,12 @@ import { makeScratch, removeScratch } from "./helpers/scratch.js";
 
 const RUN = "frn-run-qg19fx";
 const ATTEMPT = "frn-atm-qg19fx1";
+const ATTEMPT_2 = "frn-atm-qg19fx2";
+/** An Attempt id of 308 code units: past the projection's 256-unit id bound (src/workbench/observation.ts assertRef). */
+const LONG_ATTEMPT = `frn-atm-${"a".repeat(300)}`;
+const ZWSP = String.fromCodePoint(0x200b);
+/** The reading's contract (src/workbench/furnace-observer.ts FURNACE_EXTERNAL_OBSERVATION_CONTRACT). */
+const CONTRACT = "furnace.external-observation/v1";
 const ATTEMPTS_REQUEST = "pi-qg19-attempts";
 const GRANTS = ["furnace:inspect", "control:furnace.stop"] as const;
 const PLACEHOLDER = "__REQUEST_ID__";
@@ -115,6 +150,19 @@ function textOf(result: unknown): string {
   return text;
 }
 const sleep = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
+/** A furnace_observe reply read as a reading: its contract and Run id, or the reply text itself when it is not one. */
+function readingOf(text: string): unknown {
+  try {
+    const parsed: unknown = JSON.parse(text);
+    const source: unknown = typeof parsed === "object" && parsed !== null ? Reflect.get(parsed, "source") : undefined;
+    return [
+      typeof parsed === "object" && parsed !== null ? Reflect.get(parsed, "contract") : undefined,
+      typeof source === "object" && source !== null ? Reflect.get(source, "runId") : undefined,
+    ];
+  } catch {
+    return `NOT A READING: ${text.slice(0, 160)}`;
+  }
+}
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The fake furnace CLI: the one injected boundary of the booted rows.
@@ -204,8 +252,17 @@ function firstOnPath(command: string): string | undefined {
 const envelope = (kind: string, requestId: string, data: Record<string, unknown>): string => `${JSON.stringify({ protocol_version: 1, ok: true, request_id: requestId, kind, data })}\n`;
 const failed = (kind: string, code: string): string =>
   `${JSON.stringify({ protocol_version: 1, ok: false, request_id: PLACEHOLDER, kind, error: { code, message: "HYPOTHETICAL fixture refusal", retryable: false } })}\n`;
-/** One active Run in the booted workspace with one running Attempt and an empty stdout tail. */
-function observedRun(workspace: string): Record<string, FakeAnswer> {
+/** One running Attempt row of the Run; the first keeps the one-Attempt fixture's work id. */
+const attemptRow = (id: string, ordinal: number): Record<string, unknown> => ({
+  attempt_id: id, run_id: RUN, work_id: ordinal === 1 ? "wk-qg19" : `wk-qg19-${ordinal}`, ordinal, executor: "noop", state: "running",
+  created_at: "2026-01-01T00:00:00Z", started_at: "2026-01-01T00:00:01Z",
+});
+/**
+ * One active Run in the booted workspace with its running Attempts (one by default) and an empty stdout tail of the last;
+ * `attemptsRequest` is the Attempt page's own request id.
+ */
+function observedRun(workspace: string, attempts: readonly string[] = [ATTEMPT], attemptsRequest = ATTEMPTS_REQUEST): Record<string, FakeAnswer> {
+  const last = attempts.at(-1) ?? ATTEMPT;
   return {
     "run status": {
       stdout: envelope("run_status", "pi-qg19-status", {
@@ -215,12 +272,12 @@ function observedRun(workspace: string): Record<string, FakeAnswer> {
       }),
     },
     "attempt list": {
-      stdout: envelope("attempt_list", ATTEMPTS_REQUEST, {
-        run_id: RUN, beads_run_id: "bd-qg19", unreadable: [], returned: 1, complete: true, next_cursor: null,
-        attempts: [{ attempt_id: ATTEMPT, run_id: RUN, work_id: "wk-qg19", ordinal: 1, executor: "noop", state: "running", created_at: "2026-01-01T00:00:00Z", started_at: "2026-01-01T00:00:01Z" }],
+      stdout: envelope("attempt_list", attemptsRequest, {
+        run_id: RUN, beads_run_id: "bd-qg19", unreadable: [], returned: attempts.length, complete: true, next_cursor: null,
+        attempts: attempts.map((id, index) => attemptRow(id, index + 1)),
       }),
     },
-    logs: { stdout: envelope("logs_read", "pi-qg19-logs", { run_id: RUN, attempt_id: ATTEMPT, stream: "stdout", lines: [], returned: 0, complete: true, lossy: false, next_cursor: null }) },
+    logs: { stdout: envelope("logs_read", "pi-qg19-logs", { run_id: RUN, attempt_id: last, stream: "stdout", lines: [], returned: 0, complete: true, lossy: false, next_cursor: null }) },
   };
 }
 const stopAnswer = (data: Record<string, unknown>, requestId = PLACEHOLDER, delayMs?: number): FakeAnswer => ({
@@ -405,6 +462,41 @@ describe("wb-qg19 the booted Furnace observe -> control path (EAT-R346..R348)", 
     expect([reply.control?.phase, reply.control?.completionBasis, reply.control?.uncertainty]).toStrictEqual(["result", "producer-reported", undefined]);
     expect(reply.control?.echo).toStrictEqual({ kind: "run_stop", requestId, id: RUN, state: "stopped" });
   }, BOOTED_MS);
+
+  it("B8 after one furnace_observe of a Run with two Attempts, each returned Attempt is a node of the booted projection", async () => {
+    booted = await boot(GRANTS);
+    fake.play(observedRun(booted.workspace, [ATTEMPT, ATTEMPT_2]));
+    expect(readingOf(await booted.observe()), "the reply is the reading").toStrictEqual([CONTRACT, RUN]);
+    const first = await booted.control(stopOf(booted.workspace, "attempt", ATTEMPT), { id: "qg19-attempt-1" });
+    const second = await booted.control(stopOf(booted.workspace, "attempt", ATTEMPT_2), { id: "qg19-attempt-2" });
+    expect([first.error?.code, second.error?.code], "each Attempt is a node that owns nothing").toStrictEqual(["no-confirmed-ownership", "no-confirmed-ownership"]);
+    expect(stopsOf(fake), "and no stop command is sent").toStrictEqual([]);
+  }, BOOTED_MS);
+
+  const UNTAKEN: ReadonlyArray<{ readonly row: string; readonly attempts: readonly string[]; readonly attemptsRequest: string }> = [
+    { row: "an Attempt page whose request id is empty", attempts: [ATTEMPT], attemptsRequest: "" },
+    { row: "an Attempt id of 308 code units", attempts: [LONG_ATTEMPT], attemptsRequest: ATTEMPTS_REQUEST },
+  ];
+  it.each(UNTAKEN)("B9 $row: furnace_observe still replies with the reading and the Run is observed", async ({ attempts, attemptsRequest }) => {
+    booted = await boot(GRANTS);
+    fake.play(observedRun(booted.workspace, attempts, attemptsRequest));
+    expect(readingOf(await booted.observe()), "the reply is the sanitized reading").toStrictEqual([CONTRACT, RUN]);
+    const run = await booted.control(stopOf(booted.workspace));
+    expect(run.error?.code, "the Run is a node of the booted projection that owns nothing").toBe("no-confirmed-ownership");
+    expect(stopsOf(fake), "and no stop command is sent").toStrictEqual([]);
+  }, BOOTED_MS);
+
+  const ZERO_WIDTH: ReadonlyArray<{ readonly row: string; readonly attempts: readonly string[]; readonly attemptsRequest: string }> = [
+    { row: "an Attempt page request id", attempts: [ATTEMPT], attemptsRequest: `pi-qg19${ZWSP}attempts` },
+    { row: "an Attempt id", attempts: [`frn-atm-qg19${ZWSP}fx1`], attemptsRequest: ATTEMPTS_REQUEST },
+  ];
+  it.each(ZERO_WIDTH)("B10 $row carrying a zero-width space: the reply is still the sanitized reading", async ({ attempts, attemptsRequest }) => {
+    booted = await boot(GRANTS);
+    fake.play(observedRun(booted.workspace, attempts, attemptsRequest));
+    const reply = await booted.observe();
+    expect(readingOf(reply), "the reply is the sanitized reading").toStrictEqual([CONTRACT, RUN]);
+    expect(reply.includes(ZWSP), "with no zero-width unit left").toBe(false);
+  }, BOOTED_MS);
 });
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -468,6 +560,23 @@ function constructed(targets: readonly NativeRef[], executor: ControlExecutor) {
   };
 }
 const RUN_TARGET: NativeRef = { provider: "furnace", type: "run", id: "frn-run-qg19c", scope: WS };
+/** One control call through the registered constructor with one provider's leg wired, over a target that owns one child. */
+async function viaLeg(target: NativeRef, action: string, executor: ControlExecutor): Promise<Reply> {
+  const projection = new ObservationProjection();
+  const child: NativeRef = { provider: target.provider, type: "child", id: `${target.id}-child`, scope: WS };
+  for (const source of [target, child]) {
+    projection.refresh({ source, scope: SCOPE, capturedAt: AT, observedAt: AT, kind: `${target.provider}.snapshot`, trace: { invocationId: OWNER },
+      node: { title: "qg19", type: "workflow", statusText: "active", statusTone: "active" } });
+  }
+  projection.relate({ scope: SCOPE, from: target, to: child, kind: "ownership", provenance: { source: target.provider, observedAt: AT, nativeConfirmationRef: "pi-qg19-page" } });
+  const tasks = new Map<string, WorkflowTask>([[OWNER, { id: OWNER } as unknown as WorkflowTask]]);
+  const tool = createWorkflowControlTool({
+    grants: () => [`control:${target.provider}.${action}`], observerScope: () => ({ ...SCOPE }), localPrincipal: () => SCOPE.principal, sessionIdOf: () => "s1",
+    projection, tasks, now: () => new Date().toISOString(), executors: { [target.provider]: executor },
+  });
+  const result = await tool.execute("qg19-leg", { target: { ...target }, action, confirmed: true } as never, undefined, undefined, toolCtx as never);
+  return JSON.parse(textOf(result)) as Reply;
+}
 
 describe("wb-qg19 the registered control tool's constructor over the production Furnace adapter (EAT-R347, EAT-R348 bound)", () => {
   it("C1 each typed refusal the booted tool cannot reach keeps its own exact code and category, and issues nothing", async () => {
@@ -535,5 +644,31 @@ describe("wb-qg19 the registered control tool's constructor over the production 
     const labels = [reply.control?.uncertainty?.reason, reply.control?.uncertainty?.failure?.kind, reply.control?.uncertainty?.failure?.code];
     expect(Object.values(echo).map(value => typeof value === "string" && value.length <= 128), "each echo string within 128").toStrictEqual([true, true, true, true]);
     expect(labels.map(value => typeof value === "string" && value.length <= 64), "each uncertainty label within 64").toStrictEqual([true, true, true]);
+  });
+
+  it("C4 the claude-agent-sdk and forge legs' typed refusals carry no own code, so they reach the reply as executor-refused", async () => {
+    const session: NativeRef = { provider: "claude-agent-sdk", type: "session", id: "qg19-session", scope: WS };
+    const claudeLeg: ControlExecutor = async (decision: ControlDecision, _request: NativeControlRequest, signal?: AbortSignal): Promise<ControlExecutionSummary> => {
+      const execution = await executeClaudeControl(decision, {
+        seam: { interrupt: async () => undefined }, call: { invocationId: OWNER, index: 0, sessionId: "qg19-other-session" },
+        now: () => new Date().toISOString(), timeoutMs: 10_000, ...(signal !== undefined ? { signal } : {}),
+      });
+      return { receipt: execution.receipt, status: execution.status };
+    };
+    const claude = await viaLeg(session, "interrupt", claudeLeg);
+    const gate: NativeRef = { provider: "forge", type: "gate", id: "qg19-forge-op", scope: WS };
+    const cancel = async (): Promise<never> => {
+      throw new Error("wb-qg19: no Forge cancel is expected");
+    };
+    const release = retainForgeOperation(gate.id, { operations: { cancel }, connection: { capabilities: null }, workspaceRoot: WS });
+    try {
+      const forge = await viaLeg(gate, "cancel", createRetainedForgeControlExecutor(() => new Date().toISOString()));
+      expect([claude.ok, claude.error?.code, forge.ok, forge.error?.code], "each typed refusal reaches the reply as the generic code").toStrictEqual([
+        false, "executor-refused", false, "executor-refused",
+      ]);
+    } finally {
+      release();
+      releaseForgeOperation(gate.id);
+    }
   });
 });

@@ -106,10 +106,11 @@ function isRefusalCode(value: unknown): value is FurnaceControlRefusalCode {
 /** A typed refusal raised before the native verb is issued; a refusal never follows a native call. */
 export class FurnaceControlRefusal extends CapabilityError {
   /**
-   * The refusal as the model-facing error code (wb-qg19, EAT-R347): workflow_control reads an adapter's own `code`, the
-   * convention every control leg follows, so a typed refusal reaches the model as itself instead of the generic
-   * executor-refused. Only a member of the closed vocabulary is ever a code; caller text, a stack or any other value leaves it
-   * undefined.
+   * The refusal as the model-facing error code (wb-qg19, EAT-R347): workflow_control reads a CapabilityError's own `code`
+   * (control-tool.ts), so this typed refusal reaches the model as itself instead of the generic executor-refused. That
+   * reading covers an adapter refusal only when the adapter sets the code: ClaudeControlRefusal and ForgeControlRefusal set
+   * none, so the claude-agent-sdk and forge legs' typed refusals still reach the model as executor-refused (outside EAT-R347).
+   * Only a member of the closed vocabulary is ever a code; caller text, a stack or any other value leaves it undefined.
    */
   readonly code: FurnaceControlRefusalCode | undefined;
   constructor(category: CapabilityErrorCategory, readonly refusal: FurnaceControlRefusalCode, message: string, readonly policy?: string) {

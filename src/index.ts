@@ -2900,9 +2900,15 @@ Terse command-style prompts produce shallow, generic work.
         try {
           const reading = await observer.snapshot();
           // wb-qg19 (EAT-R346): the Run, each returned Attempt and the Attempt page's native-confirmed Run -> Attempt ownership edges.
-          const topology = observer.projectionTopology(reading);
-          for (const snapshot of topology.snapshots) projection.refresh(snapshot);
-          for (const relation of topology.relations) projection.relate(relation);
+          // When the observer cannot confirm that topology, or the projection refuses one of its writes (the writes before it
+          // stand), the catch refreshes the Run snapshot, so the reply below is still the sanitized reading (refusal #1 U1).
+          try {
+            const topology = observer.projectionTopology(reading);
+            for (const snapshot of topology.snapshots) projection.refresh(snapshot);
+            for (const relation of topology.relations) projection.relate(relation);
+          } catch {
+            projection.refresh(observer.projectionSnapshot(reading));
+          }
           return textResult(sanitizeWorkbenchJsonText(reading));
         } catch (error) {
           projection.markStale({ scope, ref: {provider:"furnace",type:"run",id:params.runId,scope:scope.workspace} });

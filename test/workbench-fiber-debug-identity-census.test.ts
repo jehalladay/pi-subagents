@@ -57,7 +57,10 @@
  *    slice reads it as an unknown-relation-kind reference, never an edge, and the agent's read counts nothing and flags partial. B3 the
  *    hosted-agent report: the session adapter states only its fixed ownership, causation and grouping edges for a visual-debugging
  *    sample whose label and tool names carry the claim, a report member riding the sample is read nowhere, and src's relate() call
- *    sites are exactly the three ownership adapters (src/index.ts, which ingests the hosted agents' nodes, relates nothing). B4 the
+ *    sites are exactly the three ownership adapters and src/index.ts, which ingests the hosted agents' nodes and relates none of
+ *    them: its one relate() call (furnace_observe, wb-qg19 EAT-R346) hands on the Run -> Attempt ownership edges
+ *    src/workbench/furnace-observer.ts states, so B3 reads that call site's kinds from its own text and that module's together
+ *    (RELAYED_KINDS), and they are ownership only. B4 the
  *    witness rule, armed (witnessViolations) for the first mapping reader: the honest reader passes every claim, and reading
  *    identity from a debug id, a screenshot, id equality, an agent report or a partial witness fails, as do synthesizing the
  *    revision, dropping or rewriting the witness, and ignoring a witness that names another target. B5 every bound reader meets B4
@@ -875,6 +878,13 @@ function servingReaders(kinds: readonly string[]) {
   return { projection, relations, relationsPage, observeReader, fiberKey: keyIn(projection, FIBER_NODE) };
 }
 
+/**
+ * A src file whose relate() call hands on relations another module states, mapped to that module (wb-qg19 EAT-R346: src/index.ts's
+ * furnace_observe relates observer.projectionTopology(reading).relations, whose kind src/workbench/furnace-observer.ts states; the
+ * relay itself is pinned by test/workbench-furnace-world-model-preservation-census.test.ts S1). B3 reads such a site's kinds from
+ * its own text and that module's together, so a kind either spells reds the site.
+ */
+const RELAYED_KINDS: Readonly<Record<string, string>> = { "src/index.ts": "src/workbench/furnace-observer.ts" };
 /** The src call sites of the projection's readers, each with whether its reader argument is the session projection. */
 const READER_CALL = /(?<!function )\b(createGraphViewBuilder|buildGraphView|selectLinkedTopology|observeInvocation)\(([^;]{0,120})/g;
 function srcFiles(): string[] {
@@ -1056,13 +1066,16 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const topology = agentTopology();
     const withReport: unknown = { ...AGENT_SAMPLE, report: `React debug id 42 is fiber-optics ${FIBER_NODE.id} (${REPORT_MARKER})` };
     const reported = agentTopology(withReport as ClaudeNativeObservation);
-    const writeSites: Record<string, { calls: number; kinds: string[] }> = {};
+    const writeSites: Record<string, { calls: number; kinds: string[]; relayedFrom?: string }> = {};
     for (const file of srcFiles()) {
       const text = textOf(file);
       const calls = (text.match(/\.relate\(/g) ?? []).length;
       if (calls === 0) continue;
-      const kinds = [...new Set([...text.matchAll(/kind: ?["'](dependency|causation|ownership|grouping|hypothesis)["']/g)].map(match => match[1] ?? ""))].sort();
-      writeSites[relative(REPO, file)] = { calls, kinds };
+      const site = relative(REPO, file);
+      const relayedFrom = Object.hasOwn(RELAYED_KINDS, site) ? RELAYED_KINDS[site] : undefined;
+      const stated = relayedFrom === undefined ? text : `${text}\n${textOf(join(REPO, relayedFrom))}`;
+      const kinds = [...new Set([...stated.matchAll(/kind: ?["'](dependency|causation|ownership|grouping|hypothesis)["']/g)].map(match => match[1] ?? ""))].sort();
+      writeSites[site] = { calls, kinds, ...(relayedFrom !== undefined ? { relayedFrom } : {}) };
     }
     const relations = topology.relations.map(relation => `${relation.kind} ${refName(relation.from)} -> ${refName(relation.to)}`).sort();
     expect(JSON.stringify(reported), "a report member riding the sample changes nothing").toBe(JSON.stringify(topology));
@@ -1204,6 +1217,7 @@ describe("wb-4nut.1 Fiber debug identity census (TSX-HARNESS2-REACTIVE-EVOLUTION
     expect({
       fiberNode: FIBER_NODE, fiberPort: FIBER_PORT, debugRef: DEBUG_REF, screenshotRef: SCREENSHOT_REF, relationKinds: RELATION_KINDS,
       identityClaims: IDENTITY_CLAIMS, vocabulary: VOCABULARY, visual: VISUAL, docRoots: DOC_ROOTS, docFiles: DOC_FILES, residuals: RESIDUALS,
+      relayedKinds: RELAYED_KINDS,
     }).toStrictEqual(ROSTER.constants);
     // The producer's id forms: a component is [*bundle, "nodes", name], a port [*bundle, direction, name] (refs.py).
     const refs = producerPart("fiberOpticsRefs");
