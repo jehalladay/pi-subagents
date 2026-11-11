@@ -100,6 +100,38 @@
  * DENO_IDENTITY_SUITE and DENO_LANE_SUITE (test/helpers/rf-tsx-deno.ts), which both test files register their cases under - so
  * a pin removed from TABLE and from every literal here together still reds (CT5/CT6).
  *
+ * Row R3 (wb-x32, W10 ReactiveFiber provider/interop) binds the RF sentence "Do not declare a typed TS context-render client exists
+ * without code evidence.", flipped from its unpinned half by the seat that landed its cases. Four halves, in the sentence's order:
+ * declared-cli-contract binds the wb-2j3.12 carrier cases R2-1 and R2-3 (both registered descriptors state the carrier, and it
+ * names reactive-fiber.cli/v1 context.render --no-commit); stated-cli-surface, src-load-forms and manifest-texts bind the cases of
+ * test/workbench-rf-typed-client-evidence.test.ts, one describe each (test/helpers/rf-typed-client.ts names them and defines the
+ * terms: an RF package text is a text whose fold - NFKC, lower case, every character outside a-z and 0-9 removed - holds
+ * reactivefiber; every text is folded with its percent-escapes decoded; a specifier's package text is a bare specifier, a URL or
+ * an absolute path whole, and a relative specifier or a reference path only past its first path segment that folds to
+ * nodemodules). stated-cli-surface: Pi's three statements of its RF surface (the docs/18 risk row, the vendor/README.md
+ * ReactiveFiberCLI sentences, the provider's leading comment) read as pinned in plain source text - the README paragraph in its
+ * rendered text and in its source, so a sentence struck through or carried only as an image's alt text reads a finding - and each
+ * of the nineteen in-memory edits the S4 case names reads one finding naming its statement. src-load-forms: no specifier
+ * moduleLoads reads in its fifteen load forms (LOAD_FORMS: import and export declarations, import-equals, dynamic import, require,
+ * member-call require, require.resolve, import.meta.resolve, import type nodes, string-named ambient module declarations, the three
+ * triple-slash directives TypeScript's parser records, and import types and @import tags in attached JSDoc) from the tracked src
+ * modules of the eight script extensions has an RF package text once its percent-escapes are decoded, each of its fifty-eight
+ * planted modules (the percent-encoded, dot-segment and tab spellings among them) reads one RF load, and the named residuals
+ * R-COMPUTED, R-LOADER, R-INDIRECT-CALLEE, R-EVALUATED, R-COMMENT, R-PRAGMA, R-DATA-URL, R-PATH-ALIAS and R-OTHER-NAME read their
+ * pinned quiet values. manifest-texts: no key or string value of package.json or of the two lockfiles, at any depth, is an RF
+ * package text once its percent-escapes are decoded, nor is any string of their raw text that JSON.parse drops, each of its
+ * planted places (percent-encoded URLs, keys and escapes among them) reads one RF text, and the named residual R-OTHER-NAME reads
+ * its pinned quiet value. NOT CLAIMED by row R3
+ * (scope): Pi prose outside the three statements, modules outside src, untracked src files and src files of other extensions, load
+ * forms outside LOAD_FORMS beyond the named residuals' quiet rows, which module Node or which package npm finally loads beyond the
+ * texts read with their escapes decoded (the named residuals' quiet rows aside), TypeScript configuration, manifests other than
+ * the three, and installs outside the lockfiles. The wb-2wiv.1
+ * census's C1 and C3 read the same surface more widely, but this judge cannot bind them (context-unknown: that file hands
+ * afterAll to a call). The row's identity is frozen as FROZEN_R3 (rule 16); the R3 REPORT ANCHOR holds each of the three own
+ * halves to exactly the cases the gate's own report collects under its describe, and the R3 RECEIPT ANCHOR holds the identity to
+ * the line count and SHA-256 that receipts/wb-x32.md records, so a pin, a half or the row removed from TABLE and from every
+ * literal here together still reds (CT5/CT6).
+ *
  * ORDERING GUARD (wb-693.9, RF-TSX-AND-EMBEDDING-R11): row R4 binds the RF sentence naming the "SDK package + revision"
  * fields the adapter records (provenance.cli_version, provenance.sdk_versions.tsx_runtime/tsx_sdk) to the cases that
  * assert them: the wb-693.1 R10 engine-identity cases and the wb-2j3.1 release cases, which absorbed requirement R4 under
@@ -140,6 +172,7 @@ import { registerNativeReactiveFiberRender, registerReactiveFiberRender } from "
 import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure } from "./helpers/census.js";
 import { RF_LIVE_DRIFT_SHAPE_SUITE, RF_LIVE_DRIFT_TITLE } from "./helpers/rf-release-drift.js";
 import { DENO_CASE_SUITES, DENO_IDENTITY_SUITE, DENO_LANE_SUITE } from "./helpers/rf-tsx-deno.js";
+import { RF_MANIFEST_SUITE, RF_SRC_LOAD_SUITE, RF_STATED_SURFACE_SUITE, RF_TYPED_CLIENT_FILE, RF_TYPED_CLIENT_SUITES } from "./helpers/rf-typed-client.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 type Tier = "default-gate" | "native-read";
@@ -313,6 +346,8 @@ const RELEASE_SUITE = "producer release from result.provenance.cli_version (wb-2
 const ENGINE_SUITE = "engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-693.2 R2, wb-693.3 R3)";
 /** wb-973.17: the describe paths holding the carrier and frozen-row cases row R5 binds. */
 const CARRIER_SUITE = "rf contractSource single carrier (wb-2j3.12, R2)";
+/** wb-x32: the test file whose three describes hold the cases row R3's own halves bind (T of it is the helper's RF_TYPED_CLIENT_FILE). */
+const TYPED_CLIENT = "rf-typed-client-evidence";
 const DRIFT_SHAPE_SUITE = "SCG-R12 frozen live row source shape (not a live-run claim)";
 /** The live SCG-R12 drift row of the rf-preview tier (wb-973.12). */
 const LIVE_DRIFT_TITLE = "SCG-R12 live drift guard: the installed rf version and the preview cli_version equal the release recorded in the contractSource carrier";
@@ -623,15 +658,33 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
     ],
   },
   {
+    // wb-x32 (W10): flipped from its unpinned whole half. declared-cli-contract binds the wb-2j3.12 carrier cases; the other three
+    // halves bind test/workbench-rf-typed-client-evidence.test.ts, one describe each (R3 REPORT ANCHOR, R3 RECEIPT ANCHOR).
     row: "R3",
     section: "ReactiveFiberCLI provider",
     source: "docs",
     quote: "Do not declare a typed TS context-render client exists without code evidence.",
     halves: [
-      unpinned(
-        "whole",
-        "no landed case asserts that no typed TS context-render client is claimed: the only CLI-facing case (native-rf-preview, native-read tier) asserts the preview envelope shape, not the absence of a TypeScript client, so binding it here would overstate coverage; a seat that lands such a case flips this half to a pin consciously",
-      ),
+      gate("declared-cli-contract", [
+        pin("rf-contract-carrier", "R2-1: both registered descriptors expose the identical contractSource, and it is the exported carrier", [CARRIER_SUITE]),
+        pin("rf-contract-carrier", "R2-3: the carrier's release component string-equals the release the R8 receipt row of record stamped, over the verified schema", [CARRIER_SUITE]),
+      ]),
+      gate("stated-cli-surface", [
+        pin(TYPED_CLIENT, "S1: docs/workbench/18 § Key risks and mitigations holds exactly one 'No RF typed render SDK in pinned revision' row, reading weak integration and explicit unavailable block, provider-owned SDK improvement, with no HTML in the section", [RF_STATED_SURFACE_SUITE]),
+        pin(TYPED_CLIENT, "S2: vendor/README.md § Native SDK artifacts renders exactly one paragraph holding ReactiveFiberCLI, whose rendered text opens 'currently uses its installed CLI JSON envelope' then 'No unverified TypeScript client or invented SDK method is substituted' and whose source opens with both as plain text, with no HTML in the section", [RF_STATED_SURFACE_SUITE]),
+        pin(TYPED_CLIENT, "S3: the provider module's one leading comment states the installed CLI JSON contract and no TS SDK published", [RF_STATED_SURFACE_SUITE]),
+        pin(TYPED_CLIENT, "S4: each statement reworded to name a client, deleted or duplicated, the docs/18 row and the README paragraph also hidden in an HTML comment, the docs/18 row's first cell and each README sentence also struck through or carried only as an image's alt text, and the provider comment also joined by a second leading comment, reads exactly one finding naming its statement, and the live texts read none", [RF_STATED_SURFACE_SUITE]),
+      ]),
+      gate("src-load-forms", [
+        pin(TYPED_CLIENT, "L1: no specifier moduleLoads reads in its fifteen load forms from every tracked src module of the eight script extensions has an RF package text once its percent-escapes are decoded, over a reading of every module at its floor", [RF_SRC_LOAD_SUITE]),
+        pin(TYPED_CLIENT, "L2: each of the fifty-eight LOAD_PLANTS, every load form and the percent-encoded, dot-segment and tab spellings among them, reads exactly one RF load, naming the module, the form and the specifier as written", [RF_SRC_LOAD_SUITE]),
+        pin(TYPED_CLIENT, "L3: relative paths to Pi's own files and near-miss names read quiet, and the named residuals R-COMPUTED, R-LOADER, R-INDIRECT-CALLEE, R-EVALUATED, R-COMMENT, R-PRAGMA, R-DATA-URL, R-PATH-ALIAS and R-OTHER-NAME read their pinned quiet values", [RF_SRC_LOAD_SUITE]),
+      ]),
+      gate("manifest-texts", [
+        pin(TYPED_CLIENT, "M1: no key or string value of package.json or of either lockfile, at any depth, is an RF package text once its percent-escapes are decoded, and no string of their raw text is one JSON.parse drops, over a reading of each manifest at its floor", [RF_MANIFEST_SUITE]),
+        pin(TYPED_CLIENT, "M2: each of the twenty-nine MANIFEST_PLANTS and, in both lockfiles, each of the ten LOCK_PLANTS, the percent-encoded texts among them, reads exactly one RF text, naming the manifest and the place", [RF_MANIFEST_SUITE]),
+        pin(TYPED_CLIENT, "M3: near-miss names and reactive and fiber as two texts read quiet, and the named residual R-OTHER-NAME reads its pinned quiet value", [RF_MANIFEST_SUITE]),
+      ]),
     ],
   },
   {
@@ -859,7 +912,7 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
 
 const ROW_IDS: readonly string[] = ["W1", "F1", "F2", "F3", "F4", "F5", "F6", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "H3", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "B1", "B2", "A1", "S1", "S2"];
 /** Every half that has no landed case, as "row/half"; a seat that lands a case flips the half consciously and edits this list. */
-const UNPINNED_HALVES: readonly string[] = ["F3/whole", "F6/other-captions", "U7/events", "U8/negative-verbs", "R3/whole", "S1/owner-basis", "S1/observed-evidence", "S1/trace-correlation-recorded"];
+const UNPINNED_HALVES: readonly string[] = ["F3/whole", "F6/other-captions", "U7/events", "U8/negative-verbs", "S1/owner-basis", "S1/observed-evidence", "S1/trace-correlation-recorded"];
 
 const readRepo = (path: string): string => readFileSync(join(ROOT, path), "utf8");
 
@@ -943,6 +996,10 @@ const FROZEN_JUDGED_SHAPE: readonly string[] = [
   "H3/never-an-authority:1",
   "R1/whole:2",
   "R2/observer:3",
+  "R3/declared-cli-contract:2",
+  "R3/stated-cli-surface:4",
+  "R3/src-load-forms:3",
+  "R3/manifest-texts:3",
   "R4/producer-release:2",
   "R4/tsx-engine-identity:2",
   "R5/recorded-release:2",
@@ -1171,7 +1228,7 @@ describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () =
     expect(reasons["F6/other-captions"]).toContain("PARTIAL by design");
     expect(reasons["U7/events"]).toContain("furnace-observer.ts:2");
     expect(reasons["U8/negative-verbs"]).toContain("bare-text");
-    expect(reasons["R3/whole"]).toContain("native-rf-preview");
+    expect(Object.keys(reasons).filter(key => key.startsWith("R3/")), "row R3 holds no unpinned half since wb-x32 landed its cases").toEqual([]);
     expect(reasons["S1/trace-correlation-recorded"]).toContain("PARTIAL by design");
     expect(TABLE.filter(row => row.source === "note").map(row => row.row)).toEqual(["U8"]);
   });
@@ -4309,4 +4366,186 @@ describe("wb-klr7 docs/workbench/07 row W1: the MechanicalWorkflows composition-
     expect(named(lines)).toEqual([]);
     expect(lines.some(line => line.includes(`${MW_SECTION} is not exactly its frozen paragraph`))).toBe(true);
   });
+});
+
+/**
+ * wb-x32 (rule 16): row R3's identity as a literal, never derived from TABLE, in FROZEN_F6's form (f6IdentityOf): the sentence
+ * whole, every half with its tier and "pinned", then every pin as "half | tier | file | describe path | title" - so a shortened
+ * sentence, a dropped, swapped or re-homed pin, a dropped or reworded half or a relabelled tier reads red.
+ */
+const FROZEN_R3: readonly string[] = [
+  "quote | Do not declare a typed TS context-render client exists without code evidence.",
+  "half | declared-cli-contract | test | pinned",
+  "half | stated-cli-surface | test | pinned",
+  "half | src-load-forms | test | pinned",
+  "half | manifest-texts | test | pinned",
+  "declared-cli-contract | test | test/workbench-rf-contract-carrier.test.ts | rf contractSource single carrier (wb-2j3.12, R2) | R2-1: both registered descriptors expose the identical contractSource, and it is the exported carrier",
+  "declared-cli-contract | test | test/workbench-rf-contract-carrier.test.ts | rf contractSource single carrier (wb-2j3.12, R2) | R2-3: the carrier's release component string-equals the release the R8 receipt row of record stamped, over the verified schema",
+  "stated-cli-surface | test | test/workbench-rf-typed-client-evidence.test.ts | Pi's three statements of its RF surface, the docs/18 risk row, the vendor/README.md ReactiveFiberCLI sentences and the provider's leading comment, read as pinned in plain source text (docs/07 row R3, wb-x32) | S1: docs/workbench/18 § Key risks and mitigations holds exactly one 'No RF typed render SDK in pinned revision' row, reading weak integration and explicit unavailable block, provider-owned SDK improvement, with no HTML in the section",
+  "stated-cli-surface | test | test/workbench-rf-typed-client-evidence.test.ts | Pi's three statements of its RF surface, the docs/18 risk row, the vendor/README.md ReactiveFiberCLI sentences and the provider's leading comment, read as pinned in plain source text (docs/07 row R3, wb-x32) | S2: vendor/README.md § Native SDK artifacts renders exactly one paragraph holding ReactiveFiberCLI, whose rendered text opens 'currently uses its installed CLI JSON envelope' then 'No unverified TypeScript client or invented SDK method is substituted' and whose source opens with both as plain text, with no HTML in the section",
+  "stated-cli-surface | test | test/workbench-rf-typed-client-evidence.test.ts | Pi's three statements of its RF surface, the docs/18 risk row, the vendor/README.md ReactiveFiberCLI sentences and the provider's leading comment, read as pinned in plain source text (docs/07 row R3, wb-x32) | S3: the provider module's one leading comment states the installed CLI JSON contract and no TS SDK published",
+  "stated-cli-surface | test | test/workbench-rf-typed-client-evidence.test.ts | Pi's three statements of its RF surface, the docs/18 risk row, the vendor/README.md ReactiveFiberCLI sentences and the provider's leading comment, read as pinned in plain source text (docs/07 row R3, wb-x32) | S4: each statement reworded to name a client, deleted or duplicated, the docs/18 row and the README paragraph also hidden in an HTML comment, the docs/18 row's first cell and each README sentence also struck through or carried only as an image's alt text, and the provider comment also joined by a second leading comment, reads exactly one finding naming its statement, and the live texts read none",
+  "src-load-forms | test | test/workbench-rf-typed-client-evidence.test.ts | no specifier moduleLoads reads in its fifteen load forms from the tracked src script modules has an RF package text once its percent-escapes are decoded (docs/07 row R3, wb-x32) | L1: no specifier moduleLoads reads in its fifteen load forms from every tracked src module of the eight script extensions has an RF package text once its percent-escapes are decoded, over a reading of every module at its floor",
+  "src-load-forms | test | test/workbench-rf-typed-client-evidence.test.ts | no specifier moduleLoads reads in its fifteen load forms from the tracked src script modules has an RF package text once its percent-escapes are decoded (docs/07 row R3, wb-x32) | L2: each of the fifty-eight LOAD_PLANTS, every load form and the percent-encoded, dot-segment and tab spellings among them, reads exactly one RF load, naming the module, the form and the specifier as written",
+  "src-load-forms | test | test/workbench-rf-typed-client-evidence.test.ts | no specifier moduleLoads reads in its fifteen load forms from the tracked src script modules has an RF package text once its percent-escapes are decoded (docs/07 row R3, wb-x32) | L3: relative paths to Pi's own files and near-miss names read quiet, and the named residuals R-COMPUTED, R-LOADER, R-INDIRECT-CALLEE, R-EVALUATED, R-COMMENT, R-PRAGMA, R-DATA-URL, R-PATH-ALIAS and R-OTHER-NAME read their pinned quiet values",
+  "manifest-texts | test | test/workbench-rf-typed-client-evidence.test.ts | no key or string value of package.json or of either lockfile is an RF package text once its percent-escapes are decoded (docs/07 row R3, wb-x32) | M1: no key or string value of package.json or of either lockfile, at any depth, is an RF package text once its percent-escapes are decoded, and no string of their raw text is one JSON.parse drops, over a reading of each manifest at its floor",
+  "manifest-texts | test | test/workbench-rf-typed-client-evidence.test.ts | no key or string value of package.json or of either lockfile is an RF package text once its percent-escapes are decoded (docs/07 row R3, wb-x32) | M2: each of the twenty-nine MANIFEST_PLANTS and, in both lockfiles, each of the ten LOCK_PLANTS, the percent-encoded texts among them, reads exactly one RF text, naming the manifest and the place",
+  "manifest-texts | test | test/workbench-rf-typed-client-evidence.test.ts | no key or string value of package.json or of either lockfile is an RF package text once its percent-escapes are decoded (docs/07 row R3, wb-x32) | M3: near-miss names and reactive and fiber as two texts read quiet, and the named residual R-OTHER-NAME reads its pinned quiet value",
+];
+
+/**
+ * wb-x32 RECEIPT ANCHOR (rule 16 CT5/CT6, the 6ze.39 class; the wb-b9n.2 form): the receipt of record repeats row R3's identity
+ * OUTSIDE this file - its line count and the SHA-256 of f6IdentityOf's lines joined by newlines - as one X32_R3_IDENTITY JSON item
+ * of its dated entry, read through the rendered view (docsSection) under the receipt's own level-1 title, so a pin, a half or the
+ * row removed, swapped or reordered in TABLE and in every literal here together still reds against the receipt.
+ */
+const X32_RECEIPT_FILE = "docs/workbench/receipts/wb-x32.md";
+const X32_RECEIPT_ENTRY = "2026-11-11 receipt: the RF typed-client sentence and docs/07 census row R3";
+const X32_IDENTITY_MARK = "Identity of record: X32_R3_IDENTITY ";
+/** The receipt shape's first line (standing rule 15): "# <bead>: <bead title>"; the entry is bound under that title. */
+const X32_RECEIPT_OPENING = "# wb-x32: ";
+
+const isRecordedR3Identity = (value: unknown): value is RecordedIdentity =>
+  isRecord(value) &&
+  Object.keys(value).length === 3 &&
+  value.row === "R3" &&
+  typeof value.lines === "number" &&
+  Number.isInteger(value.lines) &&
+  typeof value.sha256 === "string" &&
+  /^[0-9a-f]{64}$/.test(value.sha256);
+
+/** The one X32_R3_IDENTITY item of the receipt entry, parsed; any other shape is a named refusal. */
+function r3ReceiptIdentity(markdown: string): ReceiptIdentity {
+  const opening = markdown.split("\n", 1)[0] ?? "";
+  if (!opening.startsWith(X32_RECEIPT_OPENING)) return { ok: false, why: `${X32_RECEIPT_FILE}: the first line does not open "${X32_RECEIPT_OPENING}" (standing rule 15)` };
+  const section = docsSection(markdown, X32_RECEIPT_ENTRY, 2, [opening.slice(2)]);
+  if (!section.ok) return { ok: false, why: `${X32_RECEIPT_FILE}: ${section.why}` };
+  if (section.hasHtml) return { ok: false, why: `${X32_RECEIPT_FILE}: the entry carries HTML, which can hide what its source says` };
+  const items = section.blocks.flatMap(block => (block.kind === "list" ? block.items.map(item => item.text) : [])).filter(text => text.startsWith(X32_IDENTITY_MARK));
+  if (items.length !== 1) return { ok: false, why: `${X32_RECEIPT_FILE}: the entry renders ${items.length} X32_R3_IDENTITY items, not exactly one` };
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse((items[0] ?? "").slice(X32_IDENTITY_MARK.length));
+  } catch (error) {
+    return { ok: false, why: `${X32_RECEIPT_FILE}: the X32_R3_IDENTITY item is not JSON (${error instanceof Error ? error.message : String(error)})` };
+  }
+  if (!isRecordedR3Identity(parsed)) return { ok: false, why: `${X32_RECEIPT_FILE}: the X32_R3_IDENTITY item is not one {row: "R3", lines, sha256} record` };
+  return { ok: true, identity: parsed };
+}
+
+/** Every disagreement between a table's row R3 and the receipt's identity of record, naming the row and its sentence. */
+function r3ReceiptFindings(table: readonly Row[], identity: RecordedIdentity): string[] {
+  const row = table.find(candidate => candidate.row === identity.row);
+  if (row === undefined) return [`row ${identity.row}: the receipt records it but the table holds no such row`];
+  const lines = f6IdentityOf(row);
+  const digest = bindingDigest(lines);
+  if (lines.length === identity.lines && digest === identity.sha256) return [];
+  return [`row R3 ("${row.quote}"): the table's identity is ${lines.length} lines (sha256 ${digest}), not the receipt's ${identity.lines} (sha256 ${identity.sha256})`];
+}
+
+describe("wb-x32 docs/workbench/07 row R3: the RF typed-client sentence, bound to its cases, frozen and anchored in the report and the receipt", () => {
+  const rowR3 = (table: readonly Row[] = TABLE): Row | undefined => table.find(candidate => candidate.row === "R3");
+  const withR3 = (change: (row: Row) => Row): readonly Row[] => TABLE.map(row => (row.row === "R3" ? change(row) : row));
+  const collectedUnder = (file: string, suite: string): string[] => {
+    const parsed: unknown = JSON.parse(readFileSync(REPORT, "utf8"));
+    if (!isReportJson(parsed)) throw new Error(`${DEFAULT_TIER_REPORT} does not have vitest's JSON reporter shape`);
+    const modules = parsed.testResults.filter(entry => entry.name.endsWith(file));
+    expect(modules, `the gate's own report holds ${file} once`).toHaveLength(1);
+    return (modules[0]?.assertionResults ?? []).filter(test => JSON.stringify(test.ancestorTitles) === JSON.stringify([suite])).map(test => `${file} | ${suite} | ${test.title}`);
+  };
+
+  it("AC1 (wb-x32): row R3 quotes the typed-client sentence whole, right after the posture sentence, binds its four halves by file, describe path, verbatim title and tier, and is frozen as a literal", () => {
+    const row = rowR3();
+    expect(row).toBeDefined();
+    if (row === undefined) return;
+    expect(row.section).toBe("ReactiveFiberCLI provider");
+    expect(row.source).toBe("docs");
+    expect(f6IdentityOf(row)).toEqual(FROZEN_R3);
+    expect(row.halves.map(half => `${half.id}:${half.pins.length}`)).toEqual(["declared-cli-contract:2", "stated-cli-surface:4", "src-load-forms:3", "manifest-texts:3"]);
+    expect(row.halves.every(half => half.tier === "default-gate" && half.reason === undefined && half.pins.every(entry => entry.suite !== undefined))).toBe(true);
+    // The sentence is the paragraph's own: the one right after the posture sentence the RF anchor leaves unbound.
+    expect((SECTION_MARKDOWN["ReactiveFiberCLI provider"] ?? "").split(`${RF_UNBOUND_SENTENCES[0] ?? ""} ${row.quote} Return actual context text`)).toHaveLength(2);
+  });
+
+  it("R3 report anchor (rule 16 CT5/CT6): each of R3's own three halves equals exactly the cases the gate's own report collects under the helper's describe for it, in report order, and declared-cli-contract binds the carrier's describe only", () => {
+    expect(RF_TYPED_CLIENT_FILE).toBe(T(TYPED_CLIENT));
+    expect(RF_TYPED_CLIENT_SUITES.map(entry => entry.suite)).toEqual([RF_STATED_SURFACE_SUITE, RF_SRC_LOAD_SUITE, RF_MANIFEST_SUITE]);
+    const row = rowR3();
+    expect(row?.halves.map(half => half.id)).toEqual(["declared-cli-contract", ...RF_TYPED_CLIENT_SUITES.map(entry => entry.half)]);
+    let checked = 0;
+    for (const entry of RF_TYPED_CLIENT_SUITES) {
+      const collected = collectedUnder(RF_TYPED_CLIENT_FILE, entry.suite);
+      expect(collected.length, `${entry.suite} collects its cases in the gate's own report`).toBeGreaterThan(0);
+      expect(row?.halves.find(half => half.id === entry.half)?.pins.map(pinLine), entry.half).toEqual(collected);
+      checked += 1;
+    }
+    expect(checked).toBe(3);
+    const declared = row?.halves.find(half => half.id === "declared-cli-contract");
+    expect(declared?.pins.map(entry => `${entry.file} | ${(entry.suite ?? []).join(" > ")}`)).toEqual([`${T("rf-contract-carrier")} | ${CARRIER_SUITE}`, `${T("rf-contract-carrier")} | ${CARRIER_SUITE}`]);
+  });
+
+  it("R3 receipt anchor (rule 16 CT5/CT6): row R3's identity is the one the receipt of record names, read from receipts/wb-x32.md through the rendered view, never from TABLE", () => {
+    const recorded = r3ReceiptIdentity(readRepo(X32_RECEIPT_FILE));
+    expect(recorded.ok, recorded.ok ? "" : recorded.why).toBe(true);
+    if (!recorded.ok) return;
+    expect(r3ReceiptFindings(TABLE, recorded.identity)).toEqual([]);
+    expect(recorded.identity.lines).toBe(17);
+  });
+
+  it("R3 receipt anchor falsifiers: a pin, a half or the row dropped, swapped, relabelled or reordered in the table (and in every literal of this file with it) reds against the receipt, naming the row and its sentence", () => {
+    const recorded = r3ReceiptIdentity(readRepo(X32_RECEIPT_FILE));
+    expect(recorded.ok).toBe(true);
+    if (!recorded.ok) return;
+    const named3 = `row R3 ("${rowR3()?.quote ?? ""}"): the table's identity is`;
+    const halfOf = (row: Row, id: string, change: (half: Half) => Half): Row => ({ ...row, halves: row.halves.map(half => (half.id === id ? change(half) : half)) });
+    const swapped = pin("rf-contract-carrier", "R2-4: the carrier's provenance comment names the receipt id the receipt row of record carries", [CARRIER_SUITE]);
+    const cases: readonly [string, readonly Row[], string][] = [
+      ["a dropped pin", withR3(row => halfOf(row, "stated-cli-surface", half => ({ ...half, pins: half.pins.slice(1) }))), `${named3} 16 lines`],
+      ["a same-seam swapped pin", withR3(row => halfOf(row, "declared-cli-contract", half => ({ ...half, pins: half.pins.map(entry => (entry.title.startsWith("R2-3:") ? swapped : entry)) }))), `${named3} 17 lines`],
+      ["a dropped half", withR3(row => ({ ...row, halves: row.halves.filter(half => half.id !== "manifest-texts") })), `${named3} 13 lines`],
+      ["a relabelled tier", withR3(row => halfOf(row, "src-load-forms", half => ({ ...half, tier: "native-read" }))), `${named3} 17 lines`],
+      ["reordered halves", withR3(row => ({ ...row, halves: [...row.halves].reverse() })), `${named3} 17 lines`],
+      ["a dropped row", TABLE.filter(row => row.row !== "R3"), "row R3: the receipt records it but the table holds no such row"],
+    ];
+    expect(cases.map(([name]) => name)).toEqual(["a dropped pin", "a same-seam swapped pin", "a dropped half", "a relabelled tier", "reordered halves", "a dropped row"]);
+    for (const [name, table, expected] of cases) {
+      expect(table, `${name} is a real edit`).not.toEqual(TABLE);
+      expect(r3ReceiptFindings(table, recorded.identity).some(line => line.startsWith(expected)), name).toBe(true);
+    }
+  });
+
+  it("R3 receipt shape: the identity item relabelled, duplicated, hidden in a comment, given a fractional line count or re-homed under another title is refused, naming the receipt", () => {
+    const source = readRepo(X32_RECEIPT_FILE);
+    const item = /- Identity of record: `X32_R3_IDENTITY [^\n]*/;
+    const shapes: readonly [string, string][] = [
+      ["the identity item relabelled", source.replace("- Identity of record: `X32_R3_IDENTITY ", "- Identity: `X32_R3_IDENTITY ")],
+      ["the identity item duplicated", source.replace(item, match => `${match}\n${match}`)],
+      ["the identity item hidden in a comment", source.replace(item, match => `<!-- ${match} -->`)],
+      ["a line count made fractional", source.replace('"lines":17,', '"lines":17.5,')],
+      ["the entry re-homed under another title", source.replace(X32_RECEIPT_OPENING, "# wb-x33: ")],
+    ];
+    expect(shapes.map(([name]) => name)).toEqual(["the identity item relabelled", "the identity item duplicated", "the identity item hidden in a comment", "a line count made fractional", "the entry re-homed under another title"]);
+    for (const [name, mutant] of shapes) {
+      expect(mutant, `${name} is a real edit`).not.toBe(source);
+      const read = r3ReceiptIdentity(mutant);
+      expect(read.ok, name).toBe(false);
+      if (!read.ok) expect(read.why, name).toContain(X32_RECEIPT_FILE);
+    }
+  });
+
+  it("M7 (wb-x32): every row-R3 pin renamed by one character is absent from the report and red, naming row R3, its half, the file and the title", () => {
+    const row = rowR3();
+    const pins = row === undefined ? [] : row.halves.flatMap(half => half.pins.map(entry => ({ half, entry })));
+    expect(pins).toHaveLength(12);
+    if (row === undefined) return;
+    for (const { half, entry } of pins) {
+      const wrong = { ...entry, title: `${entry.title}.` };
+      const verdicts = judge(REPORT, [casePin(half, wrong)]);
+      expect(verdicts[0]?.code, wrong.title).toBe("absent");
+      const [line] = failures(row, half, verdicts);
+      expect(line, wrong.title).toContain(`row R3/${half.id}`);
+      expect(line, wrong.title).toContain(entry.file);
+      expect(line, wrong.title).toContain(wrong.title);
+    }
+  }, 60_000);
 });
