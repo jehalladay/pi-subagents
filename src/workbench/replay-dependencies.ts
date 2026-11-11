@@ -121,9 +121,12 @@ export function unknownDependency(reason: string): ReplayDependency {
  * the only shape under which the Claude host permits settled replay.
  */
 export function replayDependenciesMeasured(dependencies: ClaudeReplayDependencies): boolean {
-  return [dependencies.source, dependencies.instructions, dependencies.provider].every(
-    reading => reading.state === "measured" && typeof reading.digest === "string" && DIGEST.test(reading.digest),
-  );
+  return [dependencies.source, dependencies.instructions, dependencies.provider].every(dependencyMeasured);
+}
+
+/** One reading of replayDependenciesMeasured: measured, with a well-formed digest. */
+export function dependencyMeasured(reading: ReplayDependency): boolean {
+  return reading.state === "measured" && typeof reading.digest === "string" && DIGEST.test(reading.digest);
 }
 
 /**

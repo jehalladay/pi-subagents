@@ -664,6 +664,12 @@ export function createDetachedWorkflowHost({ request, registry, principal, signa
     replaySafe: false,
     async spawnAgent() { return { ok: false, error: "Claude is not enabled; deterministic host never substitutes a fake model." }; },
     abortAgent() {},
+    // The manifest and registry refusals a dispatch would raise before any provider runs, checked before the runtime
+    // records a dispatch (wb-q0on, EAT-R358); callNode keeps both checks for a caller that skips admission.
+    admitNode(node) {
+      if (request.localProvider && !request.localProvider.capabilities.includes(node.capabilityId)) throw new CapabilityError("authorization", "Capability absent from trusted local provider manifest.");
+      registry.precheck(node.capabilityId, node.input, { grants: request.grants ?? [] });
+    },
     async callNode(node) { beforeDispatch();
       if (request.localProvider && !request.localProvider.capabilities.includes(node.capabilityId)) throw new CapabilityError("authorization", "Capability absent from trusted local provider manifest.");
       return registry.invoke(node.capabilityId, node.input, { grants: request.grants ?? [], signal: node.signal, invocationId: request.invocationId, callId: String(node.callId), principal, workspace: request.cwd }); },
