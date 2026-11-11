@@ -10,9 +10,11 @@
  * Every display string goes through the one shared helper (redaction.ts sanitizeWorkbenchText, "text" layout) exactly
  * once and before anything is cut, and the compact JSON is byte-capped with an honest truncated flag and a visible
  * truncation marker. A permit renders only when the core minted that very decision (isCoreMintedDecision, wb-5a7), and a
- * reference the core withheld renders as the core recorded it: the marker plus a fixed withheld record. A denial also names
- * what the next call needs (EAT-R334): allowed verbs, the exact grant, or the confirmation spelled as the tool's own parameter,
- * each composed from the core's verb table with the request's provider and action read only as table keys.
+ * reference the core withheld renders as the core recorded it: the marker plus a fixed withheld record. EAT-R334: with the
+ * refused request (ControlReplyOptions.request), an unknown-action denial also names the provider's allowed verbs and an
+ * observer-only denial the exact grant for a pair the core's verb table lists, else those verbs, both composed from that table
+ * with the request's provider and action compared exactly to its keys and verbs; an operator-confirmation denial names a fixed
+ * confirmation literal and hint, spelled as the tool's own parameter.
  */
 import type { CapabilityErrorCategory, JsonValue } from "./capability-registry.js";
 import {
@@ -42,8 +44,8 @@ export interface ControlReplyOptions {
   maxBytes?: number;
   /**
    * The refused request's target provider and action word, so a refusal can teach the next call (EAT-R334): an unknown-action
-   * or observer-only denial names the provider's allowed verbs or the exact grant the request needs. Both are read only as keys
-   * of the core's verb table and the reply composes the table's own strings, so caller text never reaches it.
+   * or observer-only denial names the provider's allowed verbs or the exact grant the request needs. Both are compared exactly
+   * to the keys and verbs of the core's verb table and the reply composes the table's own strings, so caller text never reaches it.
    */
   request?: { readonly provider: string; readonly action: string };
 }
@@ -119,16 +121,16 @@ function requiredGrantOf(reason: unknown): string | undefined {
   const [, provider, action] = match;
   return Object.hasOwn(NATIVE_CONTROL_ACTIONS, provider) && NATIVE_CONTROL_ACTIONS[provider].includes(action) ? `control:${provider}.${action}` : undefined;
 }
-/** The core's own provider key equal to the requested one (an own key of the verb table only), never the caller's string. */
+/** The core's own provider key exactly equal to the requested one (an own key of the verb table only), never the caller's string. */
 function tableProvider(provider: unknown): string | undefined {
   return text(provider) ? Object.keys(NATIVE_CONTROL_ACTIONS).find(known => known === provider) : undefined;
 }
-/** The verbs the core allows for the requested provider, copied from its table; none for a provider it has no verb for. */
+/** The verbs the core allows for the requested provider, copied from its table; none for a provider that is no exact key of it. */
 function allowedActionsOf(provider: unknown): string[] {
   const known = tableProvider(provider);
   return known === undefined ? [] : [...NATIVE_CONTROL_ACTIONS[known]];
 }
-/** The exact grant a requested provider.action needs, composed from the table's own strings when both are allowlisted. */
+/** The exact grant a requested provider.action needs, composed from the table's own strings when both are allowlisted as spelled. */
 function grantFor(provider: unknown, action: unknown): string | undefined {
   const known = tableProvider(provider);
   const verb = known !== undefined && text(action) ? NATIVE_CONTROL_ACTIONS[known].find(allowed => allowed === action) : undefined;
@@ -144,8 +146,8 @@ function denied(decision: Extract<ControlDecision, { decision: "denied" }>, requ
   const extra: Body = {};
   const grant = policy === "missing-exact-grant" ? requiredGrantOf(decision.reason) : undefined;
   if (grant) extra.requiredGrant = grant;
-  // EAT-R334: the data that makes the next call succeed, from the verb table only. An action the provider does not take
-  // names the verbs it does; an observer-only caller learns the exact grant, or the verbs when the pair is not allowlisted.
+  // EAT-R334: what the next call needs, from the verb table only. An action the provider does not take names the verbs it
+  // does; an observer-only caller learns the exact grant, or the verbs when the pair is not allowlisted as spelled.
   if (request !== undefined && policy === "unknown-action") extra.allowedActions = allowedActionsOf(request.provider);
   if (request !== undefined && policy === "observer-only") {
     const needed = grantFor(request.provider, request.action);

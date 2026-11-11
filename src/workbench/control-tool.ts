@@ -66,8 +66,6 @@ const CONTROL_REPLY_BYTES = 4096;
 const MAX_AUDIT_RECEIPTS = 64;
 const STATUS_CHARS = 64;
 const REASON_CHARS = 512;
-/** Every exact control grant the core's verb table admits, in table order: the tool description names each one (EAT-R334). */
-const CONTROL_GRANTS: readonly string[] = Object.entries(NATIVE_CONTROL_ACTIONS).flatMap(([provider, verbs]) => verbs.map(verb => `control:${provider}.${verb}`));
 
 function textResult(text: string) {
   return { content: [{ type: "text" as const, text }], details: undefined };
@@ -134,6 +132,9 @@ export function recordControlReceipt(deps: Pick<WorkflowControlDeps, "projection
   if (audit.receipts.length > MAX_AUDIT_RECEIPTS) audit.receipts.splice(0, audit.receipts.length - MAX_AUDIT_RECEIPTS);
   task.controlAudit = audit;
 }
+
+/** Every exact control grant the core's verb table admits, in table order: the tool description names each one (EAT-R334). */
+const CONTROL_GRANTS: readonly string[] = Object.entries(NATIVE_CONTROL_ACTIONS).flatMap(([provider, verbs]) => verbs.map(verb => `control:${provider}.${verb}`));
 
 export function createWorkflowControlTool(deps: WorkflowControlDeps) {
   return defineTool({
