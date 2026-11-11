@@ -11,7 +11,7 @@
  * Authority (grants, principal, workspace, session) comes only from host-bound context, never from params.
  */
 import type { ExtensionContext } from "@earendil-works/pi-coding-agent";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import type { WorkflowSource } from "../src/workbench/designer.js";
 import { EXECUTE_CONTRACT_VERSION, EXECUTE_GRANT } from "../src/workbench/execute.js";
 import { createWorkflowExecuteTool, DETACH_GRANT, type WorkflowExecuteDeps } from "../src/workbench/execute-tool.js";
@@ -184,30 +184,92 @@ describe("workflow_execute wiring: the saved source must be the pinned one", () 
 
 /**
  * EAT-R337 criterion 1 (wb-djk5; DX triage 2026-11-11, claim C118): "a function-kind request in detached hostMode with
- * execute-only grants is refused unsupported-definition-kind without demanding workbench:detach". The shell judges the kind
- * before the detach conjunction. Every request these cases list carries one digest-pinned definition (the definition()
- * fixture with kind function or furnace-formula), input {n: 1} and no policy. The first case pins the criterion's request (a
- * function definition in detached hostMode with workbench:execute alone) and its furnace-formula twin. The second replays the
- * probe's two readings (probe-execute-refusal cases C and D: the same function request with workbench:execute alone, then with
- * workbench:detach added). The third lists eight requests (each kind, hostMode embedded or detached, exactly
- * [workbench:execute] or [workbench:execute, workbench:detach] held): each refuses as unsupported-definition-kind, resolves and
- * launches nothing, and returns reply text that names no workbench:detach, so for those requests the operator is not asked to
- * add workbench:detach. F6 above still pins the conjunction for a script request: in detached hostMode with workbench:execute
- * alone it refuses as missing-detach-grant. Any request form these cases do not list (another grant set, a request without
- * workbench:execute, another definition, input or policy) and the execute-first admission order of src/workbench/execute.ts
- * (unchanged by this cut) are NOT CLAIMED by this census.
+ * execute-only grants is refused unsupported-definition-kind without demanding workbench:detach". Every request these cases
+ * list carries one digest-pinned definition (the definition() fixture with kind function or furnace-formula) and input
+ * {n: 1}. The first case sends the criterion's request (a function definition in detached hostMode with workbench:execute
+ * alone) and its furnace-formula twin. The second replays the probe's two readings (probe-execute-refusal cases C and D:
+ * the same function request with workbench:execute alone, then with workbench:detach added). The third lists eight
+ * requests without a policy (each kind, hostMode embedded or detached, exactly [workbench:execute] or [workbench:execute,
+ * workbench:detach] held). The fourth lists four requests in detached hostMode (each kind with exactly [workbench:execute,
+ * workbench:observe] held and no policy, and each kind with exactly [workbench:execute] held and policy {}). For each
+ * request of the first, third and fourth cases, the error code is unsupported-definition-kind, the reply text is exactly
+ * the JSON kindRefusalText() spells for that request (error message "only script definitions launch in this host"), the
+ * error message matches no "detach" in any letter case, and the resolveSource, launchEmbedded and launchDetached call
+ * counts read [0, 0, 0] when the reply settles and again once the timer drain ends. The timer drain (startTimerDrain below,
+ * the house form of test/workbench-function-authority.test.ts with a real-timer tail): before the request is sent it
+ * installs vitest's fake timers for the functions DRAIN_FAKES lists and plants one sentinel timer SENTINEL_DELAY ms out;
+ * drain() runs vi.runAllTimersAsync, requires that the fake clock then holds no timer and that the sentinel ran once,
+ * restores the real timer functions and then waits REAL_TURNS real setTimeout turns of REAL_TURN_MS ms each, and the
+ * drain ends when the last of those turns fires. F6 above still pins the conjunction for a script request: in detached
+ * hostMode with workbench:execute alone it refuses as missing-detach-grant. Any request form these cases do not list
+ * (another grant set, another policy, a request without workbench:execute, another definition or input), a call that
+ * lands after the timer drain ends, the landed case above that refuses function and furnace-formula definitions in this
+ * host, and the execute-first admission order of src/workbench/execute.ts (unchanged by this cut) are NOT CLAIMED by this
+ * census.
  */
-describe("EAT-R337 criterion 1 (claim C118): each listed function or furnace-formula request, in either host mode with exactly [workbench:execute] or [workbench:execute, workbench:detach] held, is refused unsupported-definition-kind, never missing-detach-grant", () => {
+describe("EAT-R337 criterion 1 (claim C118): each listed function or furnace-formula request is refused unsupported-definition-kind, never missing-detach-grant", () => {
+  /** The timer functions the drain fakes, how far out its sentinel timer is planted (2 ** 31 - 1 ms), and its real-timer tail. */
+  const DRAIN_FAKES = ["setTimeout", "clearTimeout", "setInterval", "clearInterval", "setImmediate", "clearImmediate"] as const;
+  const SENTINEL_DELAY = 2 ** 31 - 1;
+  const REAL_TURNS = 5;
+  const REAL_TURN_MS = 20;
+  function startTimerDrain() {
+    vi.useFakeTimers({ toFake: [...DRAIN_FAKES] });
+    const sentinel = vi.fn();
+    setTimeout(sentinel, SENTINEL_DELAY);
+    return {
+      async drain() {
+        await vi.runAllTimersAsync();
+        expect({ timers: vi.getTimerCount(), sentinel: sentinel.mock.calls.length }).toEqual({ timers: 0, sentinel: 1 });
+        vi.useRealTimers();
+        for (let turn = 0; turn < REAL_TURNS; turn += 1) await new Promise(resolve => setTimeout(resolve, REAL_TURN_MS));
+      },
+    };
+  }
+  // A row that started a timer drain gets the real timer functions back here, drained or not.
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  /** The exact reply text of the kind refusal for a listed request, spelled in literals: the shell's tool-reply/v1 members in the order it writes them. */
+  function kindRefusalText(kind: string, hostMode: string, policy?: Readonly<Record<string, never>>): string {
+    return JSON.stringify({
+      contract: "workbench.tool-reply/v1",
+      tool: "workflow_execute",
+      ok: false,
+      invoked: false,
+      status: "refused",
+      completion: "not-asserted",
+      definition: definition({ kind }),
+      hostMode,
+      nativeRefs: [],
+      ...(policy !== undefined ? { policy } : {}),
+      provenance: { grant: "workbench:execute", admissionPolicy: "digest-pinned+exact-execute-grant", principalRole: "local-operator", workspace: "/ws" },
+      error: { code: "unsupported-definition-kind", message: "only script definitions launch in this host" },
+    });
+  }
+
+  /** Sends one listed request and takes its readings when the reply settles and again once the timer drain ends. */
+  async function refusesListedRequest(kind: string, hostMode: string, rights: readonly string[], policy?: Readonly<Record<string, never>>): Promise<void> {
+    const timers = startTimerDrain();
+    const resolveSource = vi.fn(() => SOURCE);
+    const h = harness({ rights, resolveSource });
+    const { text, reply } = await h.run(embedded({ definitionRef: definition({ kind }), hostMode, ...(policy !== undefined ? { policy } : {}) }));
+    const calls = () => [resolveSource.mock.calls.length, h.launchEmbedded.mock.calls.length, h.launchDetached.mock.calls.length];
+    expect(reply).toMatchObject({ ok: false, invoked: false, status: "refused" });
+    expect(reply.error?.code).toBe("unsupported-definition-kind");
+    expect(text).toBe(kindRefusalText(kind, hostMode, policy));
+    expect(reply.error?.message).not.toMatch(/detach/i);
+    expect(text).not.toContain(DETACH_GRANT);
+    expect(calls()).toEqual([0, 0, 0]);
+    await timers.drain();
+    expect(calls()).toEqual([0, 0, 0]);
+  }
+
   it.each(["function", "furnace-formula"])(
-    "a %s definition in detached hostMode with workbench:execute alone refuses as unsupported-definition-kind, its reply text names no workbench:detach, and nothing is resolved or launched",
+    "a %s definition in detached hostMode with workbench:execute alone refuses as unsupported-definition-kind with exactly the kindRefusalText reply text, and its resolveSource, launchEmbedded and launchDetached call counts read zero when the reply settles and again once the timer drain ends",
     async kind => {
-      const resolveSource = vi.fn(() => SOURCE);
-      const h = harness({ rights: [EXECUTE_GRANT], resolveSource });
-      const { text, reply } = await h.run(embedded({ definitionRef: definition({ kind }), hostMode: "detached" }));
-      expect(reply).toMatchObject({ ok: false, invoked: false, status: "refused" });
-      expect(reply.error?.code).toBe("unsupported-definition-kind");
-      expect(text).not.toContain(DETACH_GRANT);
-      expect([resolveSource.mock.calls.length, h.launchEmbedded.mock.calls.length, h.launchDetached.mock.calls.length]).toEqual([0, 0, 0]);
+      await refusesListedRequest(kind, "detached", [EXECUTE_GRANT]);
     },
   );
 
@@ -230,15 +292,21 @@ describe("EAT-R337 criterion 1 (claim C118): each listed function or furnace-for
     ["furnace-formula", "detached", [EXECUTE_GRANT]],
     ["furnace-formula", "detached", [EXECUTE_GRANT, DETACH_GRANT]],
   ] as const)(
-    "a %s definition in %s hostMode with %j held refuses as unsupported-definition-kind, its reply text names no workbench:detach, and nothing is resolved or launched",
+    "a %s definition in %s hostMode with %j held and no policy refuses as unsupported-definition-kind with exactly the kindRefusalText reply text, and its resolveSource, launchEmbedded and launchDetached call counts read zero when the reply settles and again once the timer drain ends",
     async (kind, hostMode, rights) => {
-      const resolveSource = vi.fn(() => SOURCE);
-      const h = harness({ rights, resolveSource });
-      const { text, reply } = await h.run(embedded({ definitionRef: definition({ kind }), hostMode }));
-      expect(reply).toMatchObject({ ok: false, invoked: false, status: "refused" });
-      expect(reply.error?.code).toBe("unsupported-definition-kind");
-      expect(text).not.toContain(DETACH_GRANT);
-      expect([resolveSource.mock.calls.length, h.launchEmbedded.mock.calls.length, h.launchDetached.mock.calls.length]).toEqual([0, 0, 0]);
+      await refusesListedRequest(kind, hostMode, rights);
+    },
+  );
+
+  it.each([
+    ["function", [EXECUTE_GRANT, "workbench:observe"], "no policy", undefined],
+    ["furnace-formula", [EXECUTE_GRANT, "workbench:observe"], "no policy", undefined],
+    ["function", [EXECUTE_GRANT], "policy {}", {}],
+    ["furnace-formula", [EXECUTE_GRANT], "policy {}", {}],
+  ] as const)(
+    "a %s definition in detached hostMode with %j held and %s refuses as unsupported-definition-kind with exactly the kindRefusalText reply text, and its resolveSource, launchEmbedded and launchDetached call counts read zero when the reply settles and again once the timer drain ends",
+    async (kind, rights, _policyLabel, policy) => {
+      await refusesListedRequest(kind, "detached", rights, policy);
     },
   );
 });

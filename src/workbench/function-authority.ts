@@ -113,9 +113,9 @@
  * Not wired: each pinned workflow_execute request naming a function definition resolves and launches nothing. A host
  * grant read that is not known permission data (no read, a non-array read, or a list holding a spelling outside the
  * grammar, in the six pinned shapes) refuses as unknown-permission-data, held execute or not. In the eight pinned
- * known-permission rows, a request without workbench:execute refuses as missing-execute-grant, and the rest refuse as
- * unsupported-definition-kind, a detached request without workbench:detach included: in those rows the shell judges the
- * kind before the detach conjunction (EAT-R337 criterion 1). Other host reads are NOT CLAIMED. Routing a function
+ * known-permission rows, a request without workbench:execute refuses as missing-execute-grant, and the other four refuse
+ * as unsupported-definition-kind, the detached request without workbench:detach included: in those four the shell judges
+ * the kind before the detach conjunction (EAT-R337 criterion 1). Other host reads are NOT CLAIMED. Routing a function
  * launcher through this boundary is a later cut.
  *
  * The host supplies the two reads, the wait and the dispatch. Pinned fixed reasons: for each pinned pair of requests (the
