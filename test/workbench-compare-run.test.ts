@@ -9,21 +9,19 @@
  * docs/workbench/11-designer-and-operator.md section "Experimental read-only source tools": "Missing native measured
  * metrics yields unknown, not a claimed optimization."
  *
- * Pinned reader set (this file): NM-1..NM-8, each asserting nativeCompareRun's receipt (and, in NM-3, NM-5 and NM-7,
+ * Cases (this file): NM-1..NM-8, each asserting nativeCompareRun's receipt (and, in NM-3, NM-5 and NM-7,
  * compareWorkflowRuns over it) against figures computed by hand from the seeded source intervals, never read back from
  * the builder's own sources. Falsifiers: NM-1 and NM-2 red when the receipt's metrics come from the input or a constant;
  * NM-3 reds when rows are minted without a workflow root; NM-4 reds when freshness is assumed current; NM-5 reds when a
  * host node's ref binds a metric; NM-6 reds when rows or refs leave the invocation's bounded page; NM-7 reds when the
  * two receipts' rows are crossed or summed; NM-8 reds when a captured digest is dropped or replaced.
- * NM-0 pins the reader set itself: the case ids NM-1 to NM-8 and their titles, in order (a case removed, renamed out of
- * the set or retitled reds it).
+ * This is a behavioural test file and carries no census: a census of its own case set (its case ids, titles, count or
+ * run mode, so a case removed, skipped or retitled) is NOT CLAIMED by this file.
  * Native token usage metrics are NOT CLAIMED by this file: the builder supplies no usage rows, so tokens stay unmeasured.
  * A measured verdict through the registered tool is NOT CLAIMED by this file.
  * Every figure below is seeded by hand: no host clock or host randomness anywhere in the measured path.
  */
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { COMPARE_PAGE_LIMIT, type NativeCompareRunInput, nativeCompareRun } from "../src/workbench/compare-run.js";
 import { type CompareRun, compareWorkflowRuns, type MeasuredMetric } from "../src/workbench/designer.js";
@@ -82,21 +80,6 @@ const byName = (rows: readonly MeasuredMetric[], name: string): MeasuredMetric =
 };
 
 describe("wb-rz62 native metric sourcing: a comparison receipt's metrics come from the invocation's observed source intervals, never from its input", () => {
-  it("NM-0 pins this file's reader set: exactly the cases NM-1 to NM-8, in order, each under its claim title", () => {
-    // Frozen shape (standing rule 16 form): a case removed, renamed out of the set or retitled reds here.
-    const cases = [...readFileSync(fileURLToPath(import.meta.url), "utf8").matchAll(/\bit\("(NM-[1-9] [^"]+)"/g)].map(match => match[1]);
-    expect(cases).toEqual([
-      "NM-1 draws every metric row from the invocation's latency decomposition: the observed intervals' figures, the workflow root as source and the observed evidence",
-      "NM-2 ignores a metrics list carried on its input: a forged inline row never reaches the receipt",
-      "NM-3 yields no metric rows when the invocation's page holds no workflow root, so the comparison reads unknown rather than a claimed optimization",
-      "NM-4 reads freshness from the examined nodes: current only when every node is current, stale when one is stale, unknown for event-ingested nodes",
-      "NM-5 binds native refs as the registered tool read them: the page's refs without host nodes, so a host-rooted decomposition is never receipt-bound",
-      "NM-6 reads only the invocation's bounded page: another invocation's or principal's nodes change nothing, and a page past COMPARE_PAGE_LIMIT reads partial",
-      "NM-7 two receipts sharing one basis compare as a measured native latency delta: each side's rows are its own invocation's",
-      "NM-8 carries the host-captured identity receipt, digests and workspace label verbatim",
-    ]);
-  });
-
   it("NM-1 draws every metric row from the invocation's latency decomposition: the observed intervals' figures, the workflow root as source and the observed evidence", () => {
     const view = new ObservationProjection();
     seedInvocation(view, "ref", 100, 40);

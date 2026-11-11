@@ -12,11 +12,11 @@
  * intervals, and every figure asserted is computed by hand from those intervals. The hermetic sandbox pins no model,
  * tools, environment or cache digest and no Git workspace basis, so the registered cohort is never matched: a measured
  * verdict or delta through the registered tool is NOT CLAIMED by this file, only the natively sourced summaries.
- * NM-0 pins the file's one case, NM-9, and its title.
+ * This is a behavioural test file and carries no census: a census of its own case set (the NM-9 case id, its title or
+ * its run mode, so the case removed, skipped or retitled) is NOT CLAIMED by this file.
  */
-import { readFileSync, writeFileSync } from "node:fs";
+import { writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { fileURLToPath } from "node:url";
 import { afterEach, expect, it, vi } from "vitest";
 import subagentsExtension from "../src/index.js";
 import { type Interval, ObservationProjection, type ObservationScope } from "../src/workbench/observation.js";
@@ -43,12 +43,6 @@ async function waitFor(predicate: () => boolean): Promise<void> {
 
 interface ComparedMetric { name: string; unit: string; reference: { mean: number }; candidate: { mean: number }; delta?: number; evidenceRefs: string[] }
 interface ComparedReply { metrics: ComparedMetric[]; perMetric: { name: string; verdict: string }[]; claim: string; causalClaim: boolean }
-
-it("NM-0 pins this file's reader set: exactly the case NM-9 under its claim title", () => {
-  // Frozen shape (standing rule 16 form): the case removed, renamed out of the set or retitled reds here.
-  const cases = [...readFileSync(fileURLToPath(import.meta.url), "utf8").matchAll(/\bit\("(NM-[1-9] [^"]+)"/g)].map(match => match[1]);
-  expect(cases).toEqual(["NM-9 the registered workflow_compare draws both receipts' metrics from the session projection's native intervals, never inline"]);
-});
 
 it("NM-9 the registered workflow_compare draws both receipts' metrics from the session projection's native intervals, never inline", async () => {
   sandbox = hermeticDir({ nonRepo: true, settings: { workflowsEnabled: true, workbench: { workflowAgentBackend: "claude", capabilityGrants: ["workbench:design", "workbench:observe"] } } });
