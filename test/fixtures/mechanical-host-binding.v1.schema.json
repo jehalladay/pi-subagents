@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mechanical-workflows/mechanical-host-binding.v1.schema.json",
+  "title": "MechanicalHostBindingV1",
+  "description": "Proposed application-host binding mechanical.pi-host/v1 (EAT-R002). Closed shape; evidenceProfile and contextProfile are host-owned and distinct from Pi's transport hostMode (embedded|detached). Descriptor-only until joint ratification with Pi is recorded in writing. The TypeScript type is produced by apps/development-rig/src/host-binding.ts.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "descriptorId",
+    "artifact",
+    "source",
+    "invocationId",
+    "evidenceProfile",
+    "contextProfile",
+    "intent"
+  ],
+  "properties": {
+    "contract": {
+      "const": "mechanical.pi-host/v1"
+    },
+    "descriptorId": {
+      "const": "mechanical.development.develop.v1"
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "package",
+        "export",
+        "sha256",
+        "descriptorSha256"
+      ],
+      "properties": {
+        "package": {
+          "const": "@mechanical/workflows-development"
+        },
+        "export": {
+          "const": "develop"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "descriptorSha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workspaceRealpath",
+        "baseCommit",
+        "baseTree",
+        "forgeManifestSha256"
+      ],
+      "properties": {
+        "workspaceRealpath": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "baseCommit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "baseTree": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "forgeManifestSha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      }
+    },
+    "invocationId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidenceProfile": {
+      "enum": [
+        "git-census-v1",
+        "hx-task-scope-v1"
+      ]
+    },
+    "contextProfile": {
+      "enum": [
+        "plain-v1",
+        "rf-committed-v1"
+      ]
+    },
+    "intent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "task",
+        "writer",
+        "allowedEffects"
+      ],
+      "properties": {
+        "task": {
+          "type": "string",
+          "minLength": 1
+        },
+        "writer": {
+          "const": "single"
+        },
+        "allowedEffects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

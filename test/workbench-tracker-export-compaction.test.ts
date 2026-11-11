@@ -1763,32 +1763,64 @@ describe("wb-294d compaction ritual at the CLI: writes, receipt, refusals", { ti
     };
     const written = { fixture: unrefused("fixture"), bigShard: unrefused("bigShard"), utf8: unrefused("utf8"), utf8BigShard: unrefused("utf8BigShard") };
     const bytesOf = (sizes: ReadonlyMap<string, number>, file: string): number => sizes.get(file) ?? Number.NaN;
-    const plants: readonly { readonly plant: string; readonly input: Input; readonly ceiling: (sizes: ReadonlyMap<string, number>) => number; readonly forms: readonly string[] }[] = [
-      { plant: "the fixture's main export and both its month shards over a 64-byte ceiling", input: "fixture", ceiling: () => 64, forms: ["issues.jsonl:over", "archive/issues-closed-2026-10.jsonl:over", "archive/issues-closed-2026-11.jsonl:over"] },
-      { plant: "the fixture's main export alone over its ceiling", input: "fixture", ceiling: sizes => bytesOf(sizes, "archive/issues-closed-2026-11.jsonl") + 1, forms: ["issues.jsonl:over", "archive/issues-closed-2026-10.jsonl:under", "archive/issues-closed-2026-11.jsonl:under"] },
-      { plant: "the fixture's main export alone exactly at its ceiling", input: "fixture", ceiling: sizes => bytesOf(sizes, "issues.jsonl"), forms: ["issues.jsonl:at", "archive/issues-closed-2026-10.jsonl:under", "archive/issues-closed-2026-11.jsonl:under"] },
-      { plant: "the big-shard fixture's one month shard alone over its ceiling", input: "bigShard", ceiling: sizes => bytesOf(sizes, "issues.jsonl") + 1, forms: ["issues.jsonl:under", "archive/issues-closed-2026-11.jsonl:over"] },
-      { plant: "the big-shard fixture's one month shard alone exactly at its ceiling", input: "bigShard", ceiling: sizes => bytesOf(sizes, "archive/issues-closed-2026-11.jsonl"), forms: ["issues.jsonl:under", "archive/issues-closed-2026-11.jsonl:at"] },
-      { plant: "the UTF-8 fixture's main export alone exactly at its ceiling", input: "utf8", ceiling: sizes => bytesOf(sizes, "issues.jsonl"), forms: ["issues.jsonl:at", "archive/issues-closed-2026-10.jsonl:under", "archive/issues-closed-2026-11.jsonl:under"] },
-      { plant: "the UTF-8 big-shard fixture's one month shard alone exactly at its ceiling", input: "utf8BigShard", ceiling: sizes => bytesOf(sizes, "archive/issues-closed-2026-11.jsonl"), forms: ["issues.jsonl:under", "archive/issues-closed-2026-11.jsonl:at"] },
+    /** A plant's ceiling: a count of bytes, or the bytes the unrefused run writes to one file plus a count of bytes. */
+    type Ceiling = { readonly bytes: number } | { readonly file: string; readonly plus: number };
+    type Plant = { readonly plant: string; readonly input: Input; readonly ceiling: Ceiling; readonly forms: readonly string[] };
+    const ceilingOf = (sizes: ReadonlyMap<string, number>, ceiling: Ceiling): number => ("bytes" in ceiling ? ceiling.bytes : bytesOf(sizes, ceiling.file) + ceiling.plus);
+    const plants: readonly Plant[] = [
+      { plant: "the fixture's main export and both its month shards over a 64-byte ceiling", input: "fixture", ceiling: { bytes: 64 }, forms: ["issues.jsonl:over", "archive/issues-closed-2026-10.jsonl:over", "archive/issues-closed-2026-11.jsonl:over"] },
+      { plant: "the fixture's main export alone over its ceiling", input: "fixture", ceiling: { file: "archive/issues-closed-2026-11.jsonl", plus: 1 }, forms: ["issues.jsonl:over", "archive/issues-closed-2026-10.jsonl:under", "archive/issues-closed-2026-11.jsonl:under"] },
+      { plant: "the fixture's main export alone exactly at its ceiling", input: "fixture", ceiling: { file: "issues.jsonl", plus: 0 }, forms: ["issues.jsonl:at", "archive/issues-closed-2026-10.jsonl:under", "archive/issues-closed-2026-11.jsonl:under"] },
+      { plant: "the big-shard fixture's one month shard alone over its ceiling", input: "bigShard", ceiling: { file: "issues.jsonl", plus: 1 }, forms: ["issues.jsonl:under", "archive/issues-closed-2026-11.jsonl:over"] },
+      { plant: "the big-shard fixture's one month shard alone exactly at its ceiling", input: "bigShard", ceiling: { file: "archive/issues-closed-2026-11.jsonl", plus: 0 }, forms: ["issues.jsonl:under", "archive/issues-closed-2026-11.jsonl:at"] },
+      { plant: "the UTF-8 fixture's main export alone exactly at its ceiling", input: "utf8", ceiling: { file: "issues.jsonl", plus: 0 }, forms: ["issues.jsonl:at", "archive/issues-closed-2026-10.jsonl:under", "archive/issues-closed-2026-11.jsonl:under"] },
+      { plant: "the UTF-8 big-shard fixture's one month shard alone exactly at its ceiling", input: "utf8BigShard", ceiling: { file: "archive/issues-closed-2026-11.jsonl", plus: 0 }, forms: ["issues.jsonl:under", "archive/issues-closed-2026-11.jsonl:at"] },
     ];
-    expect(plants.map(entry => `${entry.input}|${entry.plant}|${entry.forms.join(",")}`), "K3's seven ceiling plants (frozen shape)").toEqual([
-      "fixture|the fixture's main export and both its month shards over a 64-byte ceiling|issues.jsonl:over,archive/issues-closed-2026-10.jsonl:over,archive/issues-closed-2026-11.jsonl:over",
-      "fixture|the fixture's main export alone over its ceiling|issues.jsonl:over,archive/issues-closed-2026-10.jsonl:under,archive/issues-closed-2026-11.jsonl:under",
-      "fixture|the fixture's main export alone exactly at its ceiling|issues.jsonl:at,archive/issues-closed-2026-10.jsonl:under,archive/issues-closed-2026-11.jsonl:under",
-      "bigShard|the big-shard fixture's one month shard alone over its ceiling|issues.jsonl:under,archive/issues-closed-2026-11.jsonl:over",
-      "bigShard|the big-shard fixture's one month shard alone exactly at its ceiling|issues.jsonl:under,archive/issues-closed-2026-11.jsonl:at",
-      "utf8|the UTF-8 fixture's main export alone exactly at its ceiling|issues.jsonl:at,archive/issues-closed-2026-10.jsonl:under,archive/issues-closed-2026-11.jsonl:under",
-      "utf8BigShard|the UTF-8 big-shard fixture's one month shard alone exactly at its ceiling|issues.jsonl:under,archive/issues-closed-2026-11.jsonl:at",
+    // The frozen shape holds each plant's ceiling beside its input, label and forms (wb-7xvk; landing 1038 F3: plant 1's 64 bytes): a
+    // count of bytes as its number, a ceiling read from a file as the file and the bytes added to it.
+    const spelled = (ceiling: Ceiling): string => ("bytes" in ceiling ? String(ceiling.bytes) : `${ceiling.file}+${ceiling.plus}`);
+    expect(plants.map(entry => `${entry.input}|${entry.plant}|${spelled(entry.ceiling)}|${entry.forms.join(",")}`), "K3's seven ceiling plants (frozen shape)").toEqual([
+      "fixture|the fixture's main export and both its month shards over a 64-byte ceiling|64|issues.jsonl:over,archive/issues-closed-2026-10.jsonl:over,archive/issues-closed-2026-11.jsonl:over",
+      "fixture|the fixture's main export alone over its ceiling|archive/issues-closed-2026-11.jsonl+1|issues.jsonl:over,archive/issues-closed-2026-10.jsonl:under,archive/issues-closed-2026-11.jsonl:under",
+      "fixture|the fixture's main export alone exactly at its ceiling|issues.jsonl+0|issues.jsonl:at,archive/issues-closed-2026-10.jsonl:under,archive/issues-closed-2026-11.jsonl:under",
+      "bigShard|the big-shard fixture's one month shard alone over its ceiling|issues.jsonl+1|issues.jsonl:under,archive/issues-closed-2026-11.jsonl:over",
+      "bigShard|the big-shard fixture's one month shard alone exactly at its ceiling|archive/issues-closed-2026-11.jsonl+0|issues.jsonl:under,archive/issues-closed-2026-11.jsonl:at",
+      "utf8|the UTF-8 fixture's main export alone exactly at its ceiling|issues.jsonl+0|issues.jsonl:at,archive/issues-closed-2026-10.jsonl:under,archive/issues-closed-2026-11.jsonl:under",
+      "utf8BigShard|the UTF-8 big-shard fixture's one month shard alone exactly at its ceiling|archive/issues-closed-2026-11.jsonl+0|issues.jsonl:under,archive/issues-closed-2026-11.jsonl:at",
     ]);
     // wb-xkto: the plant labels against the module header's K3 CEILING PLANTS list, an anchor outside the suite.
     expect(headerList("K3 ceiling plants"), "the module header's K3 ceiling plants").toEqual(plants.map(entry => entry.plant));
+    // Each plant's label is the one its input, its forms and its ceiling spell (wb-7xvk; landing 1038 F3: GP25-K3-H9, H11, H12 and
+    // H13): the input's words; the files its forms read at or over the ceiling - the main export and both month shards, the main
+    // export alone, or the input's one month shard alone - with their one form word, over or exactly at; then 'a <n>-byte ceiling'
+    // for a count of bytes, or 'its ceiling' for one read from a file. Forms that spell no label give a text that equals no label.
+    const inputWords: Readonly<Record<Input, string>> = { fixture: "the fixture's", bigShard: "the big-shard fixture's", utf8: "the UTF-8 fixture's", utf8BigShard: "the UTF-8 big-shard fixture's" };
+    const labelOf = ({ input, ceiling, forms }: Plant): string => {
+      const fileOf = (form: string): string => form.slice(0, form.lastIndexOf(":"));
+      const files = forms.map(fileOf);
+      const shards = files.filter(file => file.startsWith("archive/"));
+      const reached = forms.filter(form => !form.endsWith(":under"));
+      const named = reached.map(fileOf);
+      const words = new Set(reached.map(form => form.slice(form.lastIndexOf(":") + 1)));
+      const subject =
+        named.length === 3 && files.length === 3 && files[0] === "issues.jsonl" && shards.length === 2
+          ? "main export and both its month shards"
+          : named.length === 1 && named[0] === "issues.jsonl"
+            ? "main export alone"
+            : named.length === 1 && shards.length === 1 && named[0] === shards[0]
+              ? "one month shard alone"
+              : undefined;
+      const word = words.size !== 1 ? undefined : words.has("over") ? "over" : words.has("at") ? "exactly at" : undefined;
+      const ceilingWords = "bytes" in ceiling ? `a ${ceiling.bytes}-byte ceiling` : "its ceiling";
+      return subject === undefined || word === undefined ? `forms that spell no label: ${forms.join(",")}` : `${inputWords[input]} ${subject} ${word} ${ceilingWords}`;
+    };
+    expect(plants.map(labelOf), "each plant's label is the one its input, its forms and its ceiling spell").toEqual(plants.map(entry => entry.plant));
     // The title is the outside anchor of the plant table: its plant list is the table's plants, in order, and its count is theirs.
     expect(task.name.split(" - ")[1]?.split("; "), "the title names exactly K3's ceiling plants, in order").toEqual(plants.map(entry => entry.plant));
     expect(task.name.startsWith(`K3 at each of its ${["no", "one", "two", "three", "four", "five", "six", "seven"][plants.length]} soft-ceiling plants - `), "the title counts K3's ceiling plants").toBe(true);
-    for (const { plant, input, ceiling: ceilingOf, forms } of plants) {
+    for (const { plant, input, ceiling: planted, forms } of plants) {
       const sizes = written[input];
-      const ceiling = ceilingOf(sizes);
+      const ceiling = ceilingOf(sizes, planted);
       expect([...sizes].map(([file, bytes]) => `${file}:${bytes > ceiling ? "over" : bytes === ceiling ? "at" : "under"}`), `${plant}: the plant's forms`).toEqual(forms);
       const layout = beadsDir();
       writeFileSync(layout.full, inputs[input]);

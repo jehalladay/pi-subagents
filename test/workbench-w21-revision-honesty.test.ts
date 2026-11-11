@@ -13,9 +13,11 @@
  * entry 8. The ELEVENTH, inspector-grouped-bench.mjs, was the named residual (RESIDUALS) because its guarded test
  * (test/workbench-grouped-fixture.test.ts "keeps the CLI thin") pins an exact static-import list under the 14e78f1
  * two-arm rule; owner bead wb-4jr wired it on 2026-10-17 (after the wb-vko stamp helper landed) and moved its row from
- * RESIDUALS to BENCHES in the same owner commit as the pin, so RESIDUALS is empty at this cut. A W21 bench CLI that
- * lands later reddens the census until its lander wires it: the entry-8 second-lander duty, mechanical rather than
- * remembered.
+ * RESIDUALS to BENCHES in the same owner commit as the pin, so RESIDUALS is empty at this cut. A TWELFTH, the graph-view model
+ * bench (wb-9x5.10), and a THIRTEENTH, the four-view layout bench (wb-9x5.11), land later in one consolidated wb-9x5.11 cut
+ * (the owner graph audit absorbed wb-9x5.10 into wb-9x5.11; R-B767 adopts the wb-9x5.10 cut 798a2f40) and both join BENCHES
+ * as entry-8 second landers, so the census counts thirteen. A W21 bench CLI that lands later reddens the census until its
+ * lander wires it: the entry-8 second-lander duty, mechanical rather than remembered.
  * Override name: $W21_REVISION for the whole family, read by the stamp alone. inspector-cap-saturation's own
  * $CAP_BENCH_REVISION is RETIRED at this cut (pinned below), so one variable overrides every W21 receipt revision.
  */
@@ -247,6 +249,11 @@ const BENCHES: ReadonlyArray<{ file: string; flow: Flow }> = [
   // The former residual, wired by owner bead wb-4jr (2026-10-17) together with its guarded static-import pin in
   // test/workbench-grouped-fixture.test.ts: the receipt is assigned at module scope inside the CLI's try block.
   { file: "qa/workbench/inspector-grouped-bench.mjs", flow: { kind: "binds", target: "receipt", scope: "<module>" } },
+  // Second-lander row of known-conflicts entry 8 (wb-9x5.10): the graph-view model bench landed after the respin and binds its
+  // stamped receipt inside main(), as attention-grouped-bench does.
+  { file: "qa/workbench/graph-view-grouped-bench.mjs", flow: { kind: "binds", target: "receipt", scope: "main" } },
+  // Second-lander row (wb-9x5.11): the four-view layout bench assigns its receipt at module scope inside the CLI's try block.
+  { file: "qa/workbench/inspector-four-view-layout-bench.mjs", flow: { kind: "binds", target: "receipt", scope: "<module>" } },
 ];
 /** W21 bench CLIs not wired yet, each with the bead that owns its wiring (owner ruling R2=(a), 2026-10-16T17:2xZ). None at this cut. */
 const RESIDUALS: ReadonlyArray<{ file: string; bead: string }> = [];
@@ -360,12 +367,14 @@ const exitCodeAssignments = (file: ts.SourceFile): ts.BinaryExpression[] => {
 const within = (node: ts.Node, container: ts.Node): boolean => node.getStart() >= container.getStart() && node.end <= container.end;
 
 describe("the W21 bench CLI census: every W21 bench CLI on the tree is wired or a named residual (gate U1)", () => {
-  it("BENCHES plus RESIDUALS is exactly the W21 bench CLIs on this tree: eleven wired, none residual", () => {
+  it("BENCHES plus RESIDUALS is exactly the W21 bench CLIs on this tree: thirteen wired, none residual", () => {
     const wired = BENCHES.map(bench => bench.file);
     const residual = RESIDUALS.map(entry => entry.file);
     expect(new Set([...wired, ...residual]).size).toBe(wired.length + residual.length);
     expect([...wired, ...residual].sort()).toEqual(w21BenchClis());
-    expect({ wired: wired.length, residual: residual.length }).toEqual({ wired: 11, residual: 0 });
+    expect({ wired: wired.length, residual: residual.length }).toEqual({ wired: 13, residual: 0 });
+    // wb-9x5.11: the title states the census it pins, so a hollowed or renamed title reds here, not only a dropped row.
+    expect(expect.getState().currentTestName).toMatch(/ > BENCHES plus RESIDUALS is exactly the W21 bench CLIs on this tree: thirteen wired, none residual$/);
   });
 
   it("a residual is still unwired, so wiring it moves its row from RESIDUALS to BENCHES in the same commit", () => {

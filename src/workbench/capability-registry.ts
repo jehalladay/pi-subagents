@@ -87,8 +87,8 @@ const SCHEMA_MAPS = new Set(["properties", "patternProperties", "dependentSchema
 const SCHEMA_CHILDREN = new Set(["items", "additionalProperties", "contains", "propertyNames", "not", "if", "then", "else", "unevaluatedProperties", "unevaluatedItems"]);
 const SCHEMA_COMBINATORS = new Set(["allOf", "anyOf", "oneOf", "prefixItems"]);
 
-/** Validate every keyword before Check(): the validator ignores malformed/unknown keywords. */
-function assertSupportedSchema(schema: unknown, path: string): void {
+/** Validate every keyword before Check(): the validator ignores malformed/unknown keywords. The designer holds a source's declared meta.inputSchema to it too. */
+export function assertSupportedSchema(schema: unknown, path: string): void {
   if (typeof schema === "boolean") return;
   if (!schema || typeof schema !== "object" || Array.isArray(schema)) {
     throw new CapabilityError("validation", `Invalid capability schema at ${path}.`);
