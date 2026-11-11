@@ -1,0 +1,118 @@
+{
+  "bead": "wb-pxvv",
+  "note": "Vendored verbatim with read-only git show by the cutting seat (ws-08, g10-work-s337, 2026-11-11); each block runs from its requirement heading through its Adversarial mutant line, and sha256 is the SHA-256 of the block's lines joined by LF.",
+  "sources": [
+    {
+      "branch": "master",
+      "commit": "0b25e14e084a5b1d612e780bc12a927b3a80dd62",
+      "path": "docs/workbench/programs/mechanical-workflows-interop-2026-11-04/triage/requirements/ATOMIC-REQUIREMENTS.md",
+      "blob": "e1282572e755a83939c89ec632b6bf9351e01508",
+      "fileSha256": "a3b30db58ba5ce5299a9ab273cbd72fa3169724fd510a6f07c5e593a1784ae83",
+      "groups": [
+        {
+          "lines": "1222-1224",
+          "text": [
+            "## hx-admit — Admit certified HX scope only from producer-backed task witnesses",
+            "",
+            "(slice PI-5; owner Pi; depends: dispatch, hx-evidence; external: MW-NATIVE; gate: PI-HX-RF-LIVE)"
+          ]
+        },
+        {
+          "lines": "1246-1248",
+          "text": [
+            "## rf-admit — Keep RF preview separate from committed context in Pi invocation",
+            "",
+            "(slice PI-5; owner Pi; depends: dispatch; external: MW-NATIVE; gate: PI-HX-RF-LIVE)"
+          ]
+        }
+      ],
+      "requirements": [
+        {
+          "id": "EAT-R058",
+          "lines": "1226-1234",
+          "sha256": "67695c402c23c41768dddac3e8216cff8e2eee865068a19aeb0361959f8fc7fa",
+          "text": [
+            "### EAT-R058 — Pi MUST stop native-profile writer dispatch on incomplete HX scope",
+            "",
+            "- Statement: Pi MUST stop native-profile writer dispatch on incomplete HX scope.",
+            "- Authority: NORMATIVE_DECISION | Type: guardrail | Owner: Pi | Slice: PI-5 | Bead: hx-admit",
+            "- Claims: C0558 (NON-EPISTEMIC), C0328 (NON-EPISTEMIC), C0370 (NON-EPISTEMIC)",
+            "- Relations: R00595, R00640, R00720, R00863, R00864, X059",
+            "- Conditions: No additional unresolved condition; adopted program design, not an observed implementation.",
+            "- Acceptance: Feed actual host evidence fixture with partial/unknown coverage and false known-empty; assert needs_evidence and implement call count zero.",
+            "- Adversarial mutant: Map empty files to complete coverage."
+          ]
+        },
+        {
+          "id": "EAT-R059",
+          "lines": "1236-1244",
+          "sha256": "59020545b222566b4d4c4700bc23df7783c1b15741914e6e045d8690b37f1bb7",
+          "text": [
+            "### EAT-R059 — Pi MUST refuse HX evidence from another query or revision",
+            "",
+            "- Statement: Pi MUST refuse HX evidence from another query or revision.",
+            "- Authority: NORMATIVE_DECISION | Type: guardrail | Owner: Pi | Slice: PI-5 | Bead: hx-admit",
+            "- Claims: C0327 (NON-EPISTEMIC), C0557 (NON-EPISTEMIC), C0370 (NON-EPISTEMIC)",
+            "- Relations: R00594, R00595, R00641, R00719, R00863, R00864, X059",
+            "- Conditions: No additional unresolved condition; adopted program design, not an observed implementation.",
+            "- Acceptance: Mutate task, query digest or base revision independently in terminal producer evidence; assert refusal before writer dispatch.",
+            "- Adversarial mutant: Compare only the workspace name."
+          ]
+        },
+        {
+          "id": "EAT-R062",
+          "lines": "1270-1278",
+          "sha256": "7075e6f11de23d28543b1d84d599dd8f19e6d262ff6713158f6a240d7bcff569",
+          "text": [
+            "### EAT-R062 — Pi MUST block only the native profile when native evidence is unavailable",
+            "",
+            "- Statement: Pi MUST block only the native profile when native evidence is unavailable.",
+            "- Authority: RISK_CONTROL | Type: guardrail | Owner: Pi | Slice: PI-5 | Bead: rf-admit",
+            "- Claims: C03113 (NON-EPISTEMIC), C03114 (PLAUSIBLE)",
+            "- Relations: R00956, R00957, R00958, R00959, R00960, R00961, R00962, R00963, R00964, R00965, X050, X060",
+            "- Conditions: C03114 is PLAUSIBLE and unmeasured until the HX-TASK-SCOPE-PROBE gate runs: this control is conditional behavior for whenever native evidence is unavailable, and asserts neither that the installed HX lacks capability nor that the probe was run. The refusal must name the probe blocker (C03113).",
+            "- Acceptance: Installed HX probe unavailable: native-profile launch refuses with named blocker; independently authorized Git-census request still passes admission with its limited authority label.",
+            "- Adversarial mutant: Disable every Mechanical invocation when native HX is unavailable."
+          ]
+        }
+      ]
+    },
+    {
+      "branch": "master",
+      "commit": "b8cd53aa367a0b3a02101b3e1576e5013087a354",
+      "path": "docs/workbench/programs/mechanical-interoperability-audit-2026-11-06/triage/requirements/ATOMIC-REQUIREMENTS-DELTA.md",
+      "blob": "c82b3621cb1b1a504f4f28c0e1de6390deca619a",
+      "fileSha256": "85b1cae04570bef5d6c9dba8dbaf89bf54560e65f0ea0dc35a87cb3446c8523b",
+      "groups": [
+        {
+          "lines": "906",
+          "text": [
+            "## hx-admit — wb-pxvv (slice PI-5; owner Pi)"
+          ]
+        }
+      ],
+      "requirements": [
+        {
+          "id": "EAT-R163",
+          "lines": "908-920",
+          "sha256": "653968241ce18bd84ae32edd9b93a034c312e2d0c5034382a26231bf03929045",
+          "text": [
+            "### EAT-R163 — The named-query task-scope route MUST be probed before hx-task-scope-v1 is called unsupported version-wide",
+            "",
+            "- Statement: Before `hx-task-scope-v1` is described as unsupported version-wide at hx 0.1.0, the HX admission bead MUST probe a workspace-defined named query carrying a task scope against the same installed binary and record exit code, verb, roster and verdict in a dated receipt; until that receipt exists every program statement MUST keep the find-verb/84-capability-roster bound of wb-f3wd.",
+            "- Authority: EVIDENCE_ACQUISITION | Type: VERIFICATION | Owner: Pi | Slice: PI-5 | Bead: wb-pxvv | Disposition: amend:wb-pxvv",
+            "- Refines: EAT-R057, EAT-R058",
+            "- Claims: C1550 (SUPPORTED, overclaims), C1627 (SUPPORTED), C1626 (ESTABLISHED), C1224 (ESTABLISHED), C1225 (ESTABLISHED), C1551 (ESTABLISHED)",
+            "- Relations: R00528, R00529, R00530, R00531, R00532, R00533, R00534, R00535, R00536, R00537, R00538, R00755, R00756, R00757",
+            "- Supersedes (Nov-4 ids, unchanged): C03114, C03113",
+            "- Sets / remediation: — / M108",
+            "- Rationale: The wb-f3wd receipt bounds its verdict to the `find` verb and the roster and lists the named-query route as NOT CLAIMED; 02:29 reads version-wide (C1550 SUPPORTED, overclaims). The missing artifact is a probe of the unclaimed route at the same binary.",
+            "- Conditions: wb-f3wd is closed (2026-11-06T18:27Z); this is a new leg of wb-pxvv. The HX producer is not pinned by this triage; the wording repair is EAT-R185.",
+            "- Acceptance: The receipt pins the installed `hx` version output, the named-query definition, the exact command, exit code and verdict; the admission test maps 'unsupported on the named-query route' or 'supported' to the `hx-task-scope-v1` gate independently of the find-verb result; a receipt that re-cites the wb-f3wd find-verb exit codes as the named-query witness refuses.",
+            "- Adversarial mutant: Reuse the wb-f3wd find-verb exit codes as the named-query verdict; the receipt validator must refuse."
+          ]
+        }
+      ]
+    }
+  ]
+}
