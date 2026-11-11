@@ -1,31 +1,61 @@
 /**
  * agent-refusal-error-flag-e2e.test.ts — EAT-R311 (wb-wkqp, DX P01; audited
- * claim C009): every top-level Agent, steer_subagent and get_subagent_result
- * reply that reports a refusal or a failed run carries pi's tool-result error
- * flag.
+ * claim C009), read in a real pi session. The pinned reader set, by case id:
+ *
+ *   R01-R09, F01, F03-F05, G04, G06, T01 — 16 top-level Agent, steer_subagent
+ *     and get_subagent_result replies reporting a refusal or a failed run, each
+ *     recorded with pi's tool-result error flag (isError:true);
+ *   F02, G01, G02, G03, G05, G07 — 6 success replies, each recorded unflagged;
+ *   A01-A09 — 9 reply classes whose top-level and nested replies record the
+ *     same flag;
+ *   C01-C02 — the failed foreground spawn (F01's result) and the failed
+ *     foreground resume (F05's result): each recorded result keeps its status
+ *     "error" details, and the registered Agent tool's own renderer, read off
+ *     the live session, draws it as the error card.
  *
  * The flag is read where pi RECORDED it — `isError` on each tool-result message
  * of the session (pi-agent-core's agent loop keeps `result.isError === true`) —
  * through the real loader, the real extension, real runAgent and real child
- * sessions on a scripted faux model. That is the registered-tool oracle the
- * requirement names (tier V3), not the handler's own return value. Every run
- * pins `live: false`: the scenarios are scripted refusals and provider errors
- * that no live model produces on request.
+ * sessions on a scripted faux model (tier V3), not the handler's own return
+ * value. Every run pins `live: false`: the scenarios are scripted refusals and
+ * provider errors that no live model produces on request.
  *
- *   R  refusals, each flagged;
- *   F  failed runs, each flagged (the background launch beside them is not);
- *   G  golden spawn / steer / result replies stay unflagged — the positive
- *      control a cure that flags everything fails — beside the two refusals
- *      that need a live record to reach;
- *   A  the nested variants of the same three tools, which already flagged
- *      theirs, agree with the top-level ones class by class.
+ * NOT CLAIMED (scope sentences; each bounds what this census reads):
+ *   - The flag on the two "Failed to resume agent" replies (background and
+ *     foreground resume) is NOT CLAIMED by this census: no case reaches them.
+ *   - The flag on stopped and aborted (max-turns) run replies is NOT CLAIMED by
+ *     this census.
+ *   - Every other success reply of these tools (a steer queued before the
+ *     child's session exists, get_subagent_result of a running agent, the
+ *     "Scheduled ..." reply, a resume that completed) is NOT CLAIMED by this
+ *     census.
+ *   - Top-level and nested agreement for any class outside A01-A09 is NOT
+ *     CLAIMED by this census.
+ *   - Reply wording beyond the pattern each row pins is NOT CLAIMED by this
+ *     census.
+ *   - The rendered card of any result other than C01-C02's is NOT CLAIMED by
+ *     this census.
+ *   - Every other tool's replies, and EAT-R312..R316 and EAT-R320, are NOT
+ *     CLAIMED by this census.
+ *   - The 6 success rows and the A01-A09 agreement rows have no anchor outside
+ *     this file: removing one of them from every literal here (table row,
+ *     script step, frozen entry and header count) is NOT CLAIMED to red this
+ *     census.
  *
  * Each scripted turn makes exactly one tool call, so a session's tool results
  * line up with its steps one to one, and every row checks the reply's text as
- * well as its flag: a misaligned script fails instead of passing vacuously.
+ * well as its flag: a misaligned script fails instead of passing vacuously. The
+ * frozen shape at the end pins the header counts, every judged row, the
+ * registered cases (vitest's task tree: each in run mode and run before it), and
+ * two anchors outside this file: src/index.ts carries exactly 21 errorResult call
+ * sites, as many as the 16 flagged rows here, D01-D03 of
+ * test/agent-refusal-error-flag.test.ts and the two NOT CLAIMED resume sites;
+ * and exactly 2 of them report a failed Agent run ("Agent failed: ..."), as many
+ * as the C rows.
  */
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { type Context, fauxAssistantMessage, fauxToolCall, type ToolResultMessage, type UserMessage } from "@earendil-works/pi-ai";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { registerAgents } from "../src/agent-types.js";
@@ -43,6 +73,8 @@ vi.setConfig({ testTimeout: 60_000, hookTimeout: 120_000 });
 const FATAL = "invalid request: provider rejected the prompt";
 /** An agent id no run allocates. */
 const GHOST = "deadbeef-0000-000";
+/** A command the T block's project extension registers; pi's session refuses to queue its text as a steer. */
+const PROBE_COMMAND = "r311probe";
 
 interface Reply {
   tool: string;
@@ -103,6 +135,42 @@ function projectDir(prefix: string, settings: Record<string, unknown>, agents: R
   return cwd;
 }
 
+/** A plain-text theme, so a rendered card reads as the text the operator sees. */
+const PLAIN_THEME = {
+  fg: (_color: string, text: string) => text,
+  bold: (text: string) => text,
+};
+
+/** The slice of a registered tool definition this census calls: its result renderer. */
+interface CardRenderer {
+  renderResult(
+    result: { content: ToolResultMessage["content"]; details: unknown },
+    options: { expanded: boolean; isPartial: boolean },
+    theme: typeof PLAIN_THEME,
+    context: { isError: boolean },
+  ): { render(width: number): string[] };
+}
+
+function isCardRenderer(value: unknown): value is CardRenderer {
+  return typeof value === "object" && value !== null && "renderResult" in value && typeof value.renderResult === "function";
+}
+
+/** The collapsed row the live session's own Agent renderer draws for a recorded result. */
+function cardOf(run: PrintModeRun | undefined, message: ToolResultMessage): string {
+  const tool: unknown = run?.parentSession.getToolDefinition("Agent");
+  if (!isCardRenderer(tool)) throw new Error("the live session registers no Agent renderer");
+  return tool
+    .renderResult({ content: message.content, details: message.details }, { expanded: false, isPartial: false }, PLAIN_THEME, { isError: message.isError })
+    .render(120)
+    .join("\n");
+}
+
+/** The status fields a recorded result's details carry (undefined when it has none). */
+function statusOf(details: unknown): { status: unknown; error: unknown } {
+  if (typeof details !== "object" || details === null) return { status: undefined, error: undefined };
+  return { status: "status" in details ? details.status : undefined, error: "error" in details ? details.error : undefined };
+}
+
 interface Row {
   id: string;
   /** Index of the scripted step, and so of the session's tool result. */
@@ -123,6 +191,14 @@ interface AgreementRow {
   flagged: boolean;
 }
 
+interface CardRow {
+  id: string;
+  /** Index of the F block's scripted step whose recorded result is drawn. */
+  step: number;
+  label: string;
+  tool: string;
+}
+
 /** `%s`-titled cases: vitest truncates `$field` interpolations, which would clip the case titles. */
 function cases<T extends { id: string; label: string; flagged: boolean }>(rows: T[]): Array<[string, string, string, T]> {
   return rows.map((row) => [row.id, row.label, String(row.flagged), row]);
@@ -134,6 +210,13 @@ function expectRow(replies: Reply[], row: Row): void {
   expect({ tool: reply.tool, text: reply.text }).toEqual({ tool: row.tool, text: expect.stringMatching(row.text) });
   expect(reply.isError, `${row.id} ${row.label}: isError`).toBe(row.flagged);
 }
+
+const ALIGNED = "the session holds exactly one tool result per judged row";
+const STEER_ALIGNED = "the session holds the held launch, one tool result per judged row and the closing result read";
+const AGREE_ALIGNED = "both levels ran every judged class (one tool result per row, same tools in the same order)";
+const FLAG_CASE = "%s %s: the recorded reply carries isError:%s";
+const CARD_CASE = "%s %s: the recorded result keeps its status error details and the live Agent renderer draws the error card";
+const AGREE_CASE = "%s %s: top-level and nested both record isError:%s";
 
 const REFUSALS: Row[] = [
   { id: "R01", step: 0, label: "unknown agent type under strict dispatch", tool: "Agent", text: /^Unknown or disabled agent type: "code-reviewer"/, flagged: true },
@@ -155,17 +238,44 @@ const FAILURES: Row[] = [
   { id: "F05", step: 4, label: "foreground resume whose run failed", tool: "Agent", text: /^Agent failed: invalid request: provider rejected the prompt/, flagged: true },
 ];
 
+// The F block's two flagged failed runs that carry the Agent tool's own status
+// details: each recorded result, drawn by the live session's Agent renderer.
+const CARDS: CardRow[] = [
+  { id: "C01", step: 0, label: "failed foreground spawn (F01's result)", tool: "Agent" },
+  { id: "C02", step: 4, label: "failed foreground resume (F05's result)", tool: "Agent" },
+];
+
 const GOLDEN: Row[] = [
   { id: "G01", step: 0, label: "foreground spawn that completed", tool: "Agent", text: /^Agent completed in [\s\S]*CHILD_HELLO/, flagged: false },
   { id: "G02", step: 1, label: "background launch", tool: "Agent", text: /^Agent started in background\./, flagged: false },
   { id: "G03", step: 2, label: "steer_subagent of a running agent", tool: "steer_subagent", text: /^Steering message sent to agent /, flagged: false },
   // The two refusals that need a live record to reach: the background-resume
-  // refusal (C029 wording, kept byte-identical) and a resume of an agent still
-  // queued, which has no session yet.
-  { id: "G04", step: 3, label: "background resume of a still-running agent (refused)", tool: "Agent", text: /is still running — it can only be resumed once its current run finishes\./, flagged: true },
+  // refusal (the C029 wording, pinned in full here) and a resume of an agent
+  // still queued, which has no session yet.
+  {
+    id: "G04",
+    step: 3,
+    label: "background resume of a still-running agent (refused)",
+    tool: "Agent",
+    text: /^Agent "[^"]+" is still running — it can only be resumed once its current run finishes\.\nUse steer_subagent to send it a message mid-run, or get_subagent_result to wait for it\.$/,
+    flagged: true,
+  },
   { id: "G05", step: 4, label: "background launch queued behind the concurrency limit", tool: "Agent", text: /^Agent queued in background\./, flagged: false },
   { id: "G06", step: 5, label: "foreground resume of a queued agent (no session yet, refused)", tool: "Agent", text: /^Agent "[^"]+" has no active session to resume\./, flagged: true },
   { id: "G07", step: 6, label: "get_subagent_result of the completed run", tool: "get_subagent_result", text: /Status: completed[\s\S]*CHILD_DONE/, flagged: false },
+];
+
+// A steer that reaches the running child's session and is refused there: pi's
+// AgentSession will not queue the text of a registered extension command.
+const STEER_REFUSALS: Row[] = [
+  {
+    id: "T01",
+    step: 1,
+    label: "steer_subagent of a running agent whose session refuses to queue the steer (an extension command)",
+    tool: "steer_subagent",
+    text: /^Failed to steer agent: Extension command "\/r311probe" cannot be queued\./,
+    flagged: true,
+  },
 ];
 
 // One row per class; the same step index drives the parent's top-level call and
@@ -182,7 +292,12 @@ const AGREEMENT: AgreementRow[] = [
   { id: "A09", step: 8, label: "steer refused (agent not running)", tool: "steer_subagent", top: /is not running \(status: error\)/, nested: /^Running nested agent not found or not owned by this parent: /, flagged: true },
 ];
 
-describe("EAT-R311 in a real pi session: 15 top-level Agent, steer_subagent and get_subagent_result refusal and failed-run replies record isError:true, 6 success replies record isError:false, and 9 reply classes record the same flag at the top level and in the nested tools", () => {
+/** D01-D03 of test/agent-refusal-error-flag.test.ts: the flagged refusals a live session never reaches. */
+const DIRECT_CENSUS_FLAGGED = 3;
+/** The two "Failed to resume agent" errorResult sites, NOT CLAIMED above. */
+const NOT_CLAIMED_SITES = 2;
+
+describe("EAT-R311 in a real pi session: 16 top-level Agent, steer_subagent and get_subagent_result refusal and failed-run replies record isError:true, 6 success replies record isError:false, 9 reply classes record the same flag at the top level and in the nested tools, and 2 failed foreground runs keep their status error details and render the live Agent tool's error card", () => {
   describe("R: refusals (strict dispatch, model, unknown id, schedule conflicts)", () => {
     let run: PrintModeRun | undefined;
     let cwd: string | undefined;
@@ -217,17 +332,18 @@ describe("EAT-R311 in a real pi session: 15 top-level Agent, steer_subagent and 
       removeScratch(cwd);
     });
 
-    it("the session holds exactly one tool result per judged row", () => {
+    it(ALIGNED, () => {
       expect(replies.map((reply) => reply.tool)).toEqual(REFUSALS.map((row) => row.tool));
     });
 
-    it.each(cases(REFUSALS))("%s %s: the recorded reply carries isError:%s", (_id, _label, _flagged, row) => {
+    it.each(cases(REFUSALS))(FLAG_CASE, (_id, _label, _flagged, row) => {
       expectRow(replies, row);
     });
   });
 
-  describe("F: failed runs (child sessions ending in a provider error)", () => {
+  describe("F: failed runs (child sessions ending in a provider error) and the error cards their records render", () => {
     let run: PrintModeRun | undefined;
+    let records: ToolResultMessage[] = [];
     let replies: Reply[] = [];
 
     beforeAll(async () => {
@@ -244,6 +360,7 @@ describe("EAT-R311 in a real pi session: 15 top-level Agent, steer_subagent and 
         maxModelCalls: 32,
         respond: (context) => (taskOf(context).includes("Run the failure checks.") ? play(context, steps, "PARENT_DONE") : providerError()),
       });
+      records = run.parentSession.messages.filter(isToolResult);
       replies = repliesIn(run.parentSession.messages);
     });
 
@@ -251,12 +368,24 @@ describe("EAT-R311 in a real pi session: 15 top-level Agent, steer_subagent and 
       await run?.dispose();
     });
 
-    it("the session holds exactly one tool result per judged row", () => {
+    it(ALIGNED, () => {
       expect(replies.map((reply) => reply.tool)).toEqual(FAILURES.map((row) => row.tool));
     });
 
-    it.each(cases(FAILURES))("%s %s: the recorded reply carries isError:%s", (_id, _label, _flagged, row) => {
+    it.each(cases(FAILURES))(FLAG_CASE, (_id, _label, _flagged, row) => {
       expectRow(replies, row);
+    });
+
+    it.each(CARDS.map((row): [string, string, CardRow] => [row.id, row.label, row]))(CARD_CASE, (_id, _label, row) => {
+      const record = records[row.step];
+      expect(record, `${row.id} step ${row.step} (${row.label}) produced no tool result`).toBeDefined();
+      expect({ tool: record.toolName, isError: record.isError }).toEqual({ tool: row.tool, isError: true });
+      // The Agent tool's own details reach pi's record: the status the card is drawn from.
+      expect(statusOf(record.details)).toEqual({ status: "error", error: FATAL });
+      const card = cardOf(run, record);
+      expect(card).toContain(`Error: ${FATAL}`);
+      // The text fallback would show the reply itself, headline and all.
+      expect(card).not.toContain("Agent failed:");
     });
   });
 
@@ -313,11 +442,75 @@ describe("EAT-R311 in a real pi session: 15 top-level Agent, steer_subagent and 
       removeScratch(cwd);
     });
 
-    it("the session holds exactly one tool result per judged row", () => {
+    it(ALIGNED, () => {
       expect(replies.map((reply) => reply.tool)).toEqual(GOLDEN.map((row) => row.tool));
     });
 
-    it.each(cases(GOLDEN))("%s %s: the recorded reply carries isError:%s", (_id, _label, _flagged, row) => {
+    it.each(cases(GOLDEN))(FLAG_CASE, (_id, _label, _flagged, row) => {
+      expectRow(replies, row);
+    });
+  });
+
+  describe("T: a steer the running child's session refuses to queue (an extension command)", () => {
+    let run: PrintModeRun | undefined;
+    let cwd: string | undefined;
+    let replies: Reply[] = [];
+
+    beforeAll(async () => {
+      // A project extension registers one command; the parent and the child
+      // load it, and pi's AgentSession refuses to queue that command's text as a
+      // steer, so steer_subagent's own steer call throws. The child holds its
+      // answer until the steer was refused, so the record is running throughout.
+      cwd = projectDir("r311-steer-", {});
+      mkdirSync(join(cwd, ".pi", "extensions"), { recursive: true });
+      writeFileSync(
+        join(cwd, ".pi", "extensions", `${PROBE_COMMAND}.ts`),
+        `export default function (pi) {\n  pi.registerCommand("${PROBE_COMMAND}", { description: "EAT-R311 steer refusal probe", handler: async () => {} });\n}\n`,
+      );
+      let release: () => void = () => {};
+      const released = new Promise<void>((resolve) => { release = resolve; });
+      let started: () => void = () => {};
+      const childStarted = new Promise<void>((resolve) => { started = resolve; });
+
+      const steps: Step[] = [
+        agentCall({ description: "held background", prompt: "Hold until the steer is refused.", run_in_background: true }),
+        async (context) => {
+          await childStarted;
+          return fauxToolCall("steer_subagent", { agent_id: launchedId(context), message: `/${PROBE_COMMAND}` });
+        },
+        (context) => {
+          release();
+          return fauxToolCall("get_subagent_result", { agent_id: launchedId(context), wait: true });
+        },
+      ];
+      run = await runPrintMode({
+        prompt: "Run the steer refusal check.",
+        cwd,
+        live: false,
+        maxModelCalls: 16,
+        respond: async (context) => {
+          if (taskOf(context).includes("Run the steer refusal check.")) return play(context, steps, "PARENT_DONE");
+          started();
+          await released;
+          return "CHILD_DONE";
+        },
+      });
+      replies = repliesIn(run.parentSession.messages);
+    });
+
+    afterAll(async () => {
+      await run?.dispose();
+      removeScratch(cwd);
+    });
+
+    it(STEER_ALIGNED, () => {
+      expect(replies.map((reply) => reply.tool)).toEqual(["Agent", ...STEER_REFUSALS.map((row) => row.tool), "get_subagent_result"]);
+      // The scaffold around the judged row: the held launch and the read after release.
+      expect(replies[0]?.text).toMatch(/^Agent started in background\./);
+      expect(replies[2]?.text).toMatch(/Status: completed[\s\S]*CHILD_DONE/);
+    });
+
+    it.each(cases(STEER_REFUSALS))(FLAG_CASE, (_id, _label, _flagged, row) => {
       expectRow(replies, row);
     });
   });
@@ -378,67 +571,120 @@ describe("EAT-R311 in a real pi session: 15 top-level Agent, steer_subagent and 
       removeScratch(cwd);
     });
 
-    it("both levels ran every judged class (one tool result per row, same tools in the same order)", () => {
+    it(AGREE_ALIGNED, () => {
       expect(top.slice(0, AGREEMENT.length).map((reply) => reply.tool)).toEqual(AGREEMENT.map((row) => row.tool));
       expect(nested.map((reply) => reply.tool)).toEqual(AGREEMENT.map((row) => row.tool));
       // The parent's last call ran the orchestrator itself, which finished cleanly.
       expect(top[AGREEMENT.length]).toMatchObject({ tool: "Agent", isError: false, text: expect.stringMatching(/ORCH_DONE/) });
     });
 
-    it.each(cases(AGREEMENT))("%s %s: top-level and nested both record isError:%s", (_id, _label, _flagged, row) => {
+    it.each(cases(AGREEMENT))(AGREE_CASE, (_id, _label, _flagged, row) => {
       expect(top[row.step]?.text).toMatch(row.top);
       expect(nested[row.step]?.text).toMatch(row.nested);
       expect({ top: top[row.step]?.isError, nested: nested[row.step]?.isError }).toEqual({ top: row.flagged, nested: row.flagged });
     });
   });
+});
 
-  // Frozen shape: the header names the judged set, and its counts are the tables'.
-  // Removing, renaming or re-flagging a row, or hollowing the header, reds here.
-  it("frozen shape: the header and every judged row", ({ task }) => {
-    const header = task.suite?.name ?? "";
-    expect(header).toBe("EAT-R311 in a real pi session: 15 top-level Agent, steer_subagent and get_subagent_result refusal and failed-run replies record isError:true, 6 success replies record isError:false, and 9 reply classes record the same flag at the top level and in the nested tools");
-    const topLevel = [...REFUSALS, ...FAILURES, ...GOLDEN];
-    const counts = /: (\d+) top-level .* record isError:true, (\d+) success replies record isError:false, and (\d+) reply classes /.exec(header)?.slice(1).map(Number);
-    expect(counts).toEqual([topLevel.filter((row) => row.flagged).length, topLevel.filter((row) => !row.flagged).length, AGREEMENT.length]);
-    const shape = (rows: Array<{ id: string; step: number; tool: string; flagged: boolean; label: string }>) =>
-      rows.map((row) => `${row.id}:${row.step}:${row.tool}:${row.flagged}:${row.label}`);
-    expect(shape(REFUSALS)).toEqual([
-      "R01:0:Agent:true:unknown agent type under strict dispatch",
-      "R02:1:Agent:true:model not found",
-      "R03:2:Agent:true:agent not found (Agent resume)",
-      "R04:3:steer_subagent:true:agent not found (steer_subagent)",
-      "R05:4:get_subagent_result:true:agent not found (get_subagent_result)",
-      "R06:5:Agent:true:schedule combined with resume",
-      "R07:6:Agent:true:schedule combined with inherit_context",
-      "R08:7:Agent:true:schedule combined with run_in_background: false",
-      "R09:8:Agent:true:a schedule the live scheduler cannot parse",
-    ]);
-    expect(shape(FAILURES)).toEqual([
-      "F01:0:Agent:true:foreground spawn whose run failed",
-      "F02:1:Agent:false:background launch (the launch itself succeeded)",
-      "F03:2:get_subagent_result:true:get_subagent_result of the failed background run",
-      "F04:3:steer_subagent:true:steer_subagent of a run that already failed",
-      "F05:4:Agent:true:foreground resume whose run failed",
-    ]);
-    expect(shape(GOLDEN)).toEqual([
-      "G01:0:Agent:false:foreground spawn that completed",
-      "G02:1:Agent:false:background launch",
-      "G03:2:steer_subagent:false:steer_subagent of a running agent",
-      "G04:3:Agent:true:background resume of a still-running agent (refused)",
-      "G05:4:Agent:false:background launch queued behind the concurrency limit",
-      "G06:5:Agent:true:foreground resume of a queued agent (no session yet, refused)",
-      "G07:6:get_subagent_result:false:get_subagent_result of the completed run",
-    ]);
-    expect(shape(AGREEMENT)).toEqual([
-      "A01:0:Agent:true:unknown agent type",
-      "A02:1:Agent:true:model not found",
-      "A03:2:Agent:true:agent not found (Agent resume)",
-      "A04:3:get_subagent_result:true:agent not found (get_subagent_result)",
-      "A05:4:steer_subagent:true:agent not found (steer_subagent)",
-      "A06:5:Agent:true:failed run (foreground Agent)",
-      "A07:6:Agent:false:background launch (unflagged at both levels)",
-      "A08:7:get_subagent_result:true:failed run (get_subagent_result of a failed background run)",
-      "A09:8:steer_subagent:true:steer refused (agent not running)",
-    ]);
-  });
+// Frozen shape, registered beside the census block rather than inside it, so
+// a skipped block still reaches it: the header names the judged set and its
+// counts are the tables'; every judged row is listed; the registered cases are
+// exactly the tables' (vitest's task tree), each in run mode, not inverted, and
+// run before this case; and src/index.ts — outside this file — carries one
+// errorResult call site per flagged row here, per flagged row of the direct
+// census, and per NOT CLAIMED resume site, and one "Agent failed:" errorResult
+// site per C row. Removing, renaming, re-flagging or
+// skipping a row, or hollowing the header, reds here. Skipping this case
+// itself is NOT CLAIMED by this census.
+it("frozen shape: the header, every judged row, the registered cases and the source anchor", ({ task }) => {
+  const header = task.file.tasks.find((entry) => entry.type === "suite")?.name ?? "";
+  expect(header).toBe("EAT-R311 in a real pi session: 16 top-level Agent, steer_subagent and get_subagent_result refusal and failed-run replies record isError:true, 6 success replies record isError:false, 9 reply classes record the same flag at the top level and in the nested tools, and 2 failed foreground runs keep their status error details and render the live Agent tool's error card");
+  const topLevel = [...REFUSALS, ...FAILURES, ...GOLDEN, ...STEER_REFUSALS];
+  const counts = /: (\d+) top-level .* record isError:true, (\d+) success replies record isError:false, (\d+) reply classes .*, and (\d+) failed foreground runs /.exec(header)?.slice(1).map(Number);
+  expect(counts).toEqual([topLevel.filter((row) => row.flagged).length, topLevel.filter((row) => !row.flagged).length, AGREEMENT.length, CARDS.length]);
+  const shape = (rows: Array<{ id: string; step: number; tool: string; label: string; flagged?: boolean }>) =>
+    rows.map((row) => `${row.id}:${row.step}:${row.tool}:${row.flagged ?? "card"}:${row.label}`);
+  expect(shape(REFUSALS)).toEqual([
+    "R01:0:Agent:true:unknown agent type under strict dispatch",
+    "R02:1:Agent:true:model not found",
+    "R03:2:Agent:true:agent not found (Agent resume)",
+    "R04:3:steer_subagent:true:agent not found (steer_subagent)",
+    "R05:4:get_subagent_result:true:agent not found (get_subagent_result)",
+    "R06:5:Agent:true:schedule combined with resume",
+    "R07:6:Agent:true:schedule combined with inherit_context",
+    "R08:7:Agent:true:schedule combined with run_in_background: false",
+    "R09:8:Agent:true:a schedule the live scheduler cannot parse",
+  ]);
+  expect(shape(FAILURES)).toEqual([
+    "F01:0:Agent:true:foreground spawn whose run failed",
+    "F02:1:Agent:false:background launch (the launch itself succeeded)",
+    "F03:2:get_subagent_result:true:get_subagent_result of the failed background run",
+    "F04:3:steer_subagent:true:steer_subagent of a run that already failed",
+    "F05:4:Agent:true:foreground resume whose run failed",
+  ]);
+  expect(shape(CARDS)).toEqual([
+    "C01:0:Agent:card:failed foreground spawn (F01's result)",
+    "C02:4:Agent:card:failed foreground resume (F05's result)",
+  ]);
+  expect(shape(GOLDEN)).toEqual([
+    "G01:0:Agent:false:foreground spawn that completed",
+    "G02:1:Agent:false:background launch",
+    "G03:2:steer_subagent:false:steer_subagent of a running agent",
+    "G04:3:Agent:true:background resume of a still-running agent (refused)",
+    "G05:4:Agent:false:background launch queued behind the concurrency limit",
+    "G06:5:Agent:true:foreground resume of a queued agent (no session yet, refused)",
+    "G07:6:get_subagent_result:false:get_subagent_result of the completed run",
+  ]);
+  expect(shape(STEER_REFUSALS)).toEqual([
+    "T01:1:steer_subagent:true:steer_subagent of a running agent whose session refuses to queue the steer (an extension command)",
+  ]);
+  expect(shape(AGREEMENT)).toEqual([
+    "A01:0:Agent:true:unknown agent type",
+    "A02:1:Agent:true:model not found",
+    "A03:2:Agent:true:agent not found (Agent resume)",
+    "A04:3:get_subagent_result:true:agent not found (get_subagent_result)",
+    "A05:4:steer_subagent:true:agent not found (steer_subagent)",
+    "A06:5:Agent:true:failed run (foreground Agent)",
+    "A07:6:Agent:false:background launch (unflagged at both levels)",
+    "A08:7:get_subagent_result:true:failed run (get_subagent_result of a failed background run)",
+    "A09:8:steer_subagent:true:steer refused (agent not running)",
+  ]);
+
+  // The registered cases, read from vitest's task tree: exactly the tables',
+  // in order, each in run mode, not inverted, and run before this case.
+  const flagCase = (row: Row) => `${row.id} ${row.label}: the recorded reply carries isError:${row.flagged}`;
+  const roster = [
+    ALIGNED, ...REFUSALS.map(flagCase),
+    ALIGNED, ...FAILURES.map(flagCase), ...CARDS.map((row) => CARD_CASE.replace("%s", row.id).replace("%s", row.label)),
+    ALIGNED, ...GOLDEN.map(flagCase),
+    STEER_ALIGNED, ...STEER_REFUSALS.map(flagCase),
+    AGREE_ALIGNED, ...AGREEMENT.map((row) => `${row.id} ${row.label}: top-level and nested both record isError:${row.flagged}`),
+    task.name,
+  ];
+  const walked: Array<{ name: string; mode: string; fails: boolean; state: string | undefined; self: boolean }> = [];
+  const walk = (tasks: typeof task.file.tasks): void => {
+    for (const child of tasks) {
+      if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === task });
+      else if (child.type === "suite") walk(child.tasks);
+    }
+  };
+  walk(task.file.tasks);
+  expect(walked.map((entry) => entry.name)).toEqual(roster);
+  const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
+  expect(
+    walked.filter((entry) => !entry.self && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map((entry) => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${entry.state ?? "no result"}`),
+    "every other case is in run mode, not inverted, and ran before this one",
+  ).toEqual([]);
+
+  // The anchor outside this file: one errorResult call site in src/index.ts per
+  // flagged row here, per flagged row of the direct census, and per NOT CLAIMED
+  // resume site.
+  const source = readFileSync(fileURLToPath(new URL("../src/index.ts", import.meta.url)), "utf8");
+  const sites = source.match(/(?<!function )\berrorResult\(/g)?.length ?? 0;
+  expect(sites).toBe(topLevel.filter((row) => row.flagged).length + DIRECT_CENSUS_FLAGGED + NOT_CLAIMED_SITES);
+  // The C rows' anchor: each errorResult site that reports a failed Agent run
+  // (the foreground spawn and the foreground resume, the two that hand the
+  // renderer their run's details) is drawn by one C row.
+  const failedRunSites = source.match(/\berrorResult\(`[^`]*Agent failed: /g)?.length ?? 0;
+  expect(failedRunSites).toBe(CARDS.length);
 });
