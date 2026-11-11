@@ -1,7 +1,9 @@
 /**
  * mechanical-descriptor.ts — a Pi boundary for MechanicalWorkflows' published entrypoint descriptor and the packed artifact it
- * names (wb-ocie; mechanical-workflows-interop-2026-11-04 B-descriptor, requirements EAT-R007..EAT-R011, slice PI-0). Each
- * claim below names the cases of test/workbench-mechanical-descriptor.test.ts that pin it.
+ * names (wb-ocie; mechanical-workflows-interop-2026-11-04 B-descriptor, requirements EAT-R007..EAT-R011, slice PI-0), and the
+ * package admission that adds the producer's schema files (wb-y0n6; mechanical-native-interoperability-2026-11-09 packet P02).
+ * Each claim below names the cases that pin it: the wb-ocie cases of test/workbench-mechanical-descriptor.test.ts, and the
+ * wb-y0n6 cases (R217-*, R219-*, R222-*, R224-*) of test/workbench-mechanical-package.test.ts.
  *
  * FORM (respin cut #3: the enumerate-the-resolvable form under the R-B655 second-stage cap on these words): ENUMERATED, NOT
  * GENERAL. Each step below is claimed for exactly the forms the cases it cites plant (the suite's named tables are each frozen
@@ -34,8 +36,16 @@
  *  2. The descriptor FILE: its bytes are read from the path (unreadable when missing or a directory: R007-4), and their SHA-256
  *     is compared with the pin before they are decoded or parsed (digest-mismatch: R007-3, R007-9, R007-16).
  *  3. The bytes decode as UTF-8, the decoder dropping one leading UTF-8 byte order mark (R007-16), and parse as JSON (malformed:
- *     bytes that are not UTF-8, bytes that are not JSON, a second order mark, a UTF-16 order mark: R007-5, R007-16), and the
- *     value is an object (wrong-type: a list, null, a string, a number, a boolean: R007-5, R007-10).
+ *     bytes that are not UTF-8, bytes that are not JSON, a second order mark, a UTF-16 order mark: R007-5, R007-16); no one
+ *     object of the text names a member twice, the names compared after JSON string decoding (member-duplicate at descriptor,
+ *     wb-y0n6: each of the producer's eight members written a second time R219-2, status written twice in either order, three
+ *     times and the schema written again last R219-3 and R007-20, package or export twice inside implementation R219-4, a
+ *     second name spelled through a JSON escape R219-5, a name outside the member set and a name inside an object in a list
+ *     R219-6; judged after the digest and the parse and before the object test and the schema member, R219-8); a member name
+ *     inside a string value, names in two different objects and names that differ in case are not compared as one (R219-7),
+ *     and the producer members written one per line, each once, are admitted under their own pin (R219-1); and the value is an
+ *     object (wrong-type: a list, null, a string, a number, a boolean: R007-5, R007-10). The wb-y0n6 cases are in
+ *     test/workbench-mechanical-package.test.ts.
  *  4. The schema member, compared by strict equality with mechanical-workflows/entrypoint/v1: refused schema-unsupported,
  *     whatever else the object holds, are the forms R007-6, R007-11, R007-12, R007-14 and R007-17 plant (another version, a
  *     missing schema, a number, case, padding, a longer or shorter id, another producer, lists of the id, ignorable,
@@ -79,10 +89,35 @@
  * when the member is a function (export-missing: R010-6, R010-9, R010-14); the boundary never calls it (R008-3, R008-7,
  * R010-14).
  *
- * RESIDUALS (named; each with a pinned quiet row that reds when the boundary stops reading it as stated):
- *   R-DUPLICATE-MEMBER (step 5): a member written twice in the descriptor bytes reads as one member, the last written (JSON.parse
- *   keeps the last), so no duplicate is refused; quiet row R007-20: status written invocable then descriptor-only is admitted
- *   under its own pin, and written in the other order refused status-unsupported.
+ * RESIDUALS: none named. R-DUPLICATE-MEMBER (a member written twice read as one member, the last written) was this header's
+ * one named residual until wb-y0n6 cured it at step 3; R007-20, its former quiet row, now pins both orders refused
+ * member-duplicate.
+ *
+ * PACKAGE ADMISSION (wb-y0n6; mechanical-native-interoperability-2026-11-09 packet P02, EAT-R217 AC2/AC3, EAT-R222 AC1-AC3
+ * and EAT-R224 AC1-AC2 at the V1 tier; the cases are in test/workbench-mechanical-package.test.ts). resolveMechanicalPackage
+ * (validation), loadMechanicalPackage (load) and admitMechanicalPackage (validation, then load) add the producer's two schema
+ * files to the entrypoint's steps, each refusal in the closed vocabulary above, the field naming inputSchema or outputSchema:
+ *  P1. The schema pin is an object whose two digests are each in MECHANICAL_DIGEST_PATTERN, judged before the entrypoint (pin
+ *      pin-malformed: the eight pins R217-6 plants, with the descriptor path missing).
+ *  P2. Steps 1 to 10 of the entrypoint; their refusals are returned as they are, before any schema file is read (a malformed
+ *      release pin, a duplicate member, an unknown input schema name and a flipped artifact, each with the schema directory
+ *      missing: R217-4, R217-7; the stale pin, a producer file changed by one byte under the fixture's digest: R217-5).
+ *  P3. The input schema file, then the output schema file, each read by the REVIEWED entry's schema name inside the host's
+ *      schema directory, never by a descriptor string: its realpath (unreadable: the file or the directory missing, R217-2) lies
+ *      strictly inside the approved root's (outside-root: a file link and a directory link resolving outside, R222-1; a link
+ *      resolving inside is admitted, R222-1), it is a regular file judged before it is opened (not-a-file: a directory and a
+ *      FIFO, the FIFO's refusal arriving while no writer exists, R222-2), and the SHA-256 of its bytes equals the pin
+ *      (digest-mismatch: one byte flipped in either file and the two files swapped, R217-3; the input before the output, R217-7).
+ *  P4. Load: a package resolution this module did not mint is refused unresolved (R222-6); the entrypoint's load phase then
+ *      runs steps 7 to 10 again on the artifact (an artifact changed after validation refuses as the artifact, before the schema
+ *      files, R222-6).
+ *  P5. Then each schema file is measured again as in P3, its realpath compared with the one validation recorded after
+ *      containment and before the file check (digest-mismatch: a byte flipped after validation, R222-3; changed: a link
+ *      re-pointed inside the root to the same bytes, R222-4; outside-root: re-pointed outside, R222-4; not-a-file: a FIFO put in
+ *      the file's place, R222-5), and only then does the host loader run, once (R217-1, R222-3); every refusal of P1 to P5 comes
+ *      with no loader call. Two admissions run together each judge their own files (R224-1: both admitted, each load with its
+ *      own root's artifact; R224-2 and R224-3: the one with a changed schema byte or a re-pointed schema link refuses and the
+ *      other is admitted, the shared loader running once).
  *
  * NOT CLAIMED (explicitly partial; closure gate MW-INSTALLED-CONSUMER, external MW-CONTRACT and MW-PACKAGE): where the pin
  * comes from (MechanicalWorkflows publishes no release manifest at f7c0a943, so the host supplies the pin); that an installed
@@ -95,12 +130,18 @@
  * a realpath and the open of the same path (the open asks O_NOFOLLOW where the platform has it and checks the opened handle as
  * a regular file again, but no case plants a swap inside that window); hard links; a loader result whose member read runs code
  * other than through the two own accessors R010-14 plants (a proxy, a getter that throws, an inherited accessor); and the
- * window between the load-phase measurement and a host that re-opens the path instead of using the measured bytes.
+ * window between the load-phase measurement and a host that re-opens the path instead of using the measured bytes. Of the
+ * package admission (closure gates MW-INSTALLED-HOST and PI-MECHANICAL-ARTIFACT): that the schema files the cases read are the
+ * producer's own (they are stand-ins pinned by their own bytes); where the schema pin or the schema directory comes from; an
+ * installed or packed package, its tarball bytes, its name, version or runtime closure, and a host API version (EAT-R217 AC1,
+ * EAT-R220, EAT-R221); a saved function-definition digest (EAT-R218); import authority at the registered tool (EAT-R223);
+ * every registered-path criterion (PI-FUNCTION-REGISTERED, carried by P04 and P08); writer and Forge calls (none exist here);
+ * and the windows between a schema file's realpath and its open, and between its load-time measure and the host loader.
  */
 import { createHash } from "node:crypto";
 import { constants } from "node:fs";
 import { type FileHandle, open, readFile, realpath, stat } from "node:fs/promises";
-import { isAbsolute, relative, sep } from "node:path";
+import { isAbsolute, join, relative, sep } from "node:path";
 
 /** The entrypoint descriptor schema id this boundary admits, compared by strict equality (step 4 and the forms it cites). */
 export const MECHANICAL_ENTRYPOINT_SCHEMA = "mechanical-workflows/entrypoint/v1";
@@ -146,7 +187,7 @@ export type MechanicalEntrypointField = (typeof MECHANICAL_ENTRYPOINT_FIELDS)[nu
 export const MECHANICAL_ENTRYPOINT_REASONS = [
   "pin-malformed", "unreadable", "digest-mismatch", "malformed", "wrong-type", "member-unexpected", "member-missing", "schema-unsupported",
   "not-allowlisted", "schema-ref-noncanonical", "schema-ref-unknown", "bindings-mismatch", "status-unsupported", "not-a-file", "outside-root",
-  "changed", "unresolved", "export-missing",
+  "changed", "unresolved", "export-missing", "member-duplicate",
 ] as const;
 export type MechanicalEntrypointReason = (typeof MECHANICAL_ENTRYPOINT_REASONS)[number];
 /** One refusal: closed vocabulary only, never a path, a member value or file text. */
@@ -240,6 +281,53 @@ function schemaRefRefusal(field: "inputSchema" | "outputSchema", ref: unknown, r
 const sameBindings = (value: unknown, reviewed: readonly string[]): boolean =>
   Array.isArray(value) && value.length === reviewed.length && value.every((binding: unknown, index) => binding === reviewed[index]);
 
+/**
+ * Step 3's duplicate test over text JSON.parse accepted: true when one object of the text names a member twice, the names
+ * compared after JSON string decoding (so an escaped spelling is the same name). A string value is never a member name, and
+ * names in two different objects are never compared (R219-5, R219-6, R219-7).
+ */
+function holdsDuplicateMember(text: string): boolean {
+  // One entry per open object (its member names so far) or list (undefined), innermost last.
+  const containers: (Set<string> | undefined)[] = [];
+  // True where the next string of the text is a member name: after "{" and after "," inside an object.
+  let nameNext = false;
+  let at = 0;
+  while (at < text.length) {
+    const unit = text[at];
+    if (unit === '"') {
+      let end = at + 1;
+      while (end < text.length && text[end] !== '"') end += text[end] === "\\" ? 2 : 1;
+      const names = containers.at(-1);
+      if (nameNext && names !== undefined) {
+        const name: unknown = JSON.parse(text.slice(at, end + 1));
+        if (typeof name === "string") {
+          if (names.has(name)) return true;
+          names.add(name);
+        }
+      }
+      nameNext = false;
+      at = end + 1;
+      continue;
+    }
+    if (unit === "{") {
+      containers.push(new Set<string>());
+      nameNext = true;
+    } else if (unit === "[") {
+      containers.push(undefined);
+      nameNext = false;
+    } else if (unit === "}" || unit === "]") {
+      containers.pop();
+      nameNext = false;
+    } else if (unit === ",") {
+      nameNext = containers.at(-1) !== undefined;
+    } else if (unit === ":") {
+      nameNext = false;
+    }
+    at += 1;
+  }
+  return false;
+}
+
 /** Steps 3 (the object test) to 6 of the header over one parsed value; the first refusal wins (R007-13). */
 function readDescriptor(value: unknown): { readonly ok: true; readonly entry: MechanicalReviewedEntrypoint } | Refusal {
   if (!plain(value)) return refused("descriptor", "wrong-type");
@@ -273,20 +361,22 @@ function insideRoot(root: string, path: string): boolean {
   return rel !== "" && rel !== ".." && !rel.startsWith(`..${sep}`) && !isAbsolute(rel);
 }
 
+/** The files judged as regular files: the artifact (steps 9 and 10) and the two schema files (package step P3). */
+type MeasuredFileField = "artifact" | "inputSchema" | "outputSchema";
 /** Step 9 and step 10's read: stat says a regular file before any open (R011-12); the open asks O_NOFOLLOW and checks the handle again (that window is NOT CLAIMED). */
-async function readRegularFile(path: string): Promise<{ readonly ok: true; readonly bytes: Buffer } | Refusal> {
+async function readRegularFile(path: string, field: MeasuredFileField): Promise<{ readonly ok: true; readonly bytes: Buffer } | Refusal> {
   try {
-    if (!(await stat(path)).isFile()) return refused("artifact", "not-a-file");
+    if (!(await stat(path)).isFile()) return refused(field, "not-a-file");
   } catch {
-    return refused("artifact", "unreadable");
+    return refused(field, "unreadable");
   }
   let handle: FileHandle | undefined;
   try {
     handle = await open(path, READ_FLAGS);
-    if (!(await handle.stat()).isFile()) return refused("artifact", "not-a-file");
+    if (!(await handle.stat()).isFile()) return refused(field, "not-a-file");
     return { ok: true, bytes: await handle.readFile() };
   } catch {
-    return refused("artifact", "unreadable");
+    return refused(field, "unreadable");
   } finally {
     await handle?.close().catch(() => undefined);
   }
@@ -315,7 +405,7 @@ async function measureArtifact(artifactPath: string, approvedRoot: string, pinne
   }
   if (!insideRoot(root, realPath)) return refused("artifact", "outside-root");
   if (validated !== undefined && (root !== validated.root || realPath !== validated.realPath)) return refused("artifact", "changed");
-  const read = await readRegularFile(realPath);
+  const read = await readRegularFile(realPath, "artifact");
   if (!read.ok) return read;
   const digest = digestOf(read.bytes);
   if (digest !== pinned) return refused("artifact", "digest-mismatch");
@@ -335,12 +425,15 @@ export async function resolveMechanicalEntrypoint(options: MechanicalEntrypointO
     return refused("descriptor", "unreadable");
   }
   if (digestOf(bytes) !== descriptorDigest) return refused("descriptor", "digest-mismatch");
+  let text: string;
   let value: unknown;
   try {
-    value = JSON.parse(UTF8.decode(bytes));
+    text = UTF8.decode(bytes);
+    value = JSON.parse(text);
   } catch {
     return refused("descriptor", "malformed");
   }
+  if (holdsDuplicateMember(text)) return refused("descriptor", "member-duplicate");
   const reading = readDescriptor(value);
   if (!reading.ok) return reading;
   const measured = await measureArtifact(options.artifactPath, options.approvedRoot, artifactDigest);
@@ -378,4 +471,114 @@ export async function admitMechanicalEntrypoint(options: MechanicalEntrypointOpt
   const resolution = await resolveMechanicalEntrypoint(options);
   if (!resolution.ok) return resolution;
   return loadMechanicalEntrypoint(resolution.resolved, loader);
+}
+
+/** The digests the host adopted for the reviewed entry's two schema files: the SHA-256 of their exact bytes (package step P1). */
+export interface MechanicalSchemaPin {
+  readonly inputSchemaDigest: string;
+  readonly outputSchemaDigest: string;
+}
+/** What the host hands the package admission: the entrypoint options, the directory holding the producer's schema files, and their pin. */
+export interface MechanicalPackageOptions extends MechanicalEntrypointOptions {
+  readonly schemaDirectory: string;
+  readonly schemaPin: MechanicalSchemaPin;
+}
+/** One schema file as the package admission measured it: its realpath and the digest of the bytes read. */
+export interface MechanicalSchemaMeasure {
+  readonly realPath: string;
+  readonly digest: string;
+}
+/** A validated package: the entrypoint resolution and the two schema measures; loadMechanicalPackage loads only one this module minted. */
+export interface MechanicalResolvedPackage {
+  readonly entrypoint: MechanicalResolvedEntrypoint;
+  readonly inputSchema: MechanicalSchemaMeasure;
+  readonly outputSchema: MechanicalSchemaMeasure;
+}
+export type MechanicalPackageResolution =
+  | { readonly ok: true; readonly resolved: MechanicalResolvedPackage }
+  | { readonly ok: false; readonly diagnostic: MechanicalEntrypointDiagnostic };
+
+/** What the load phase re-measures the schema files against: the request as validated, keyed by the frozen package resolution (R222-6). */
+interface MintedPackage {
+  readonly schemaDirectory: string;
+  readonly inputSchemaDigest: string;
+  readonly outputSchemaDigest: string;
+}
+const MINTED_PACKAGES = new WeakMap<MechanicalResolvedPackage, MintedPackage>();
+type SchemaField = "inputSchema" | "outputSchema";
+
+/**
+ * Package steps P3 and P5: one schema file, by the reviewed entry's name inside the host's schema directory; its realpath lies
+ * strictly inside the root's, it is a regular file judged before it is opened, and the SHA-256 of its bytes equals the pin; at
+ * load (validated given) its realpath equals the one validation recorded, judged after containment and before the file check.
+ */
+async function measureSchema(path: string, root: string, pinned: string, field: SchemaField, validated?: string): Promise<({ readonly ok: true } & MechanicalSchemaMeasure) | Refusal> {
+  let realPath: string;
+  try {
+    realPath = await realpath(path);
+  } catch {
+    return refused(field, "unreadable");
+  }
+  if (!insideRoot(root, realPath)) return refused(field, "outside-root");
+  if (validated !== undefined && realPath !== validated) return refused(field, "changed");
+  const read = await readRegularFile(realPath, field);
+  if (!read.ok) return read;
+  const digest = digestOf(read.bytes);
+  if (digest !== pinned) return refused(field, "digest-mismatch");
+  return { ok: true, realPath, digest };
+}
+
+/** Package validation: the schema pin (P1), steps 1 to 10 of the entrypoint (P2), then the input and the output schema file (P3). */
+export async function resolveMechanicalPackage(options: MechanicalPackageOptions): Promise<MechanicalPackageResolution> {
+  const schemaPin: unknown = options.schemaPin;
+  const inputSchemaDigest = plain(schemaPin) ? schemaPin.inputSchemaDigest : undefined;
+  const outputSchemaDigest = plain(schemaPin) ? schemaPin.outputSchemaDigest : undefined;
+  if (!isDigest(inputSchemaDigest) || !isDigest(outputSchemaDigest)) return refused("pin", "pin-malformed");
+  const resolution = await resolveMechanicalEntrypoint(options);
+  if (!resolution.ok) return resolution;
+  const { entry, artifact } = resolution.resolved;
+  const inputMeasure = await measureSchema(join(options.schemaDirectory, entry.inputSchema), artifact.root, inputSchemaDigest, "inputSchema");
+  if (!inputMeasure.ok) return inputMeasure;
+  const outputMeasure = await measureSchema(join(options.schemaDirectory, entry.outputSchema), artifact.root, outputSchemaDigest, "outputSchema");
+  if (!outputMeasure.ok) return outputMeasure;
+  const resolved: MechanicalResolvedPackage = Object.freeze({
+    entrypoint: resolution.resolved,
+    inputSchema: Object.freeze({ realPath: inputMeasure.realPath, digest: inputMeasure.digest }),
+    outputSchema: Object.freeze({ realPath: outputMeasure.realPath, digest: outputMeasure.digest }),
+  });
+  MINTED_PACKAGES.set(resolved, Object.freeze({ schemaDirectory: options.schemaDirectory, inputSchemaDigest, outputSchemaDigest }));
+  return { ok: true, resolved };
+}
+
+/**
+ * Package load (P4 and P5): a package resolution this module did not mint is refused unresolved; the entrypoint's load phase
+ * re-measures the artifact, then the two schema files are measured again, and only then does the host loader run, once.
+ */
+export async function loadMechanicalPackage(resolved: MechanicalResolvedPackage, loader: MechanicalExportLoader): Promise<MechanicalEntrypointLoad> {
+  const minted = MINTED_PACKAGES.get(resolved);
+  if (minted === undefined) return refused("resolution", "unresolved");
+  const { entrypoint } = resolved;
+  const root = entrypoint.artifact.root;
+  const held: { refusal?: Refusal } = {};
+  const outcome = await loadMechanicalEntrypoint(entrypoint, async (entry, artifact) => {
+    const inputMeasure = await measureSchema(join(minted.schemaDirectory, entry.inputSchema), root, minted.inputSchemaDigest, "inputSchema", resolved.inputSchema.realPath);
+    if (!inputMeasure.ok) {
+      held.refusal = inputMeasure;
+      return undefined;
+    }
+    const outputMeasure = await measureSchema(join(minted.schemaDirectory, entry.outputSchema), root, minted.outputSchemaDigest, "outputSchema", resolved.outputSchema.realPath);
+    if (!outputMeasure.ok) {
+      held.refusal = outputMeasure;
+      return undefined;
+    }
+    return loader(entry, artifact);
+  });
+  return held.refusal ?? outcome;
+}
+
+/** The host's one-shot package admission: package validation, then the package load, the first refusal returned as is. */
+export async function admitMechanicalPackage(options: MechanicalPackageOptions, loader: MechanicalExportLoader): Promise<MechanicalEntrypointLoad> {
+  const resolution = await resolveMechanicalPackage(options);
+  if (!resolution.ok) return resolution;
+  return loadMechanicalPackage(resolution.resolved, loader);
 }

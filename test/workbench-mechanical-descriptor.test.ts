@@ -45,7 +45,7 @@
  *
  * Respin cut #3 (wb-ocie refusal #2; the R-B655 second-stage cap on GUARD 3, the module header's words, in the
  * enumerate-the-resolvable form) adds the cases that plant the forms the header's steps newly enumerate, among them every
- * witness of refusal #2 (WN01-WN07, WN09, WN12, WN16, WN23 and WN24): R007-16 to R007-20 (R007-20 is the quiet row of the named residual R-DUPLICATE-MEMBER), R008-9 to
+ * witness of refusal #2 (WN01-WN07, WN09, WN12, WN16, WN23 and WN24): R007-16 to R007-20 (R007-20 was the quiet row of the named residual R-DUPLICATE-MEMBER until wb-y0n6 cured it), R008-9 to
  * R008-12, R009-7 to R009-10, R010-11 to R010-13, R011-15 and R011-16. Each new table is frozen by name, and R008-12 and R009-10
  * are COMPUTED SCANS (every BMP code point through each exported grammar, every ASCII code point through the boundary). A case
  * title reads under the module header's FORM: it claims the forms its case plants.
@@ -112,6 +112,13 @@
  * still held, so that control then reads by timing, while the read leg's control still takes its bytes); and what the
  * boundary reads from a FIFO, or returns, once it opens one (the controls claim only the open and the bytes taken; the
  * module header's NOT CLAIMED list names a FIFO descriptor path).
+ *
+ * Follow-up cut (wb-y0n6; mechanical-native-interoperability-2026-11-09 packet P02, EAT-R219 AC2/AC3): the module header's step 3
+ * now refuses a member name written twice in one object of the descriptor text (member-duplicate at descriptor, the names
+ * compared after JSON string decoding), which cures the residual R-DUPLICATE-MEMBER: R007-20, its former quiet row, now pins
+ * both orders refused, and the reason list holds member-duplicate. That cut's own cases (the duplicate forms, and the package
+ * admission's schema files, containment, load-time re-measure and concurrent admissions) are in
+ * test/workbench-mechanical-package.test.ts.
  *
  * Display paths added: none (the boundary returns closed-vocabulary diagnostics and composes no label or reply text).
  */
@@ -730,12 +737,12 @@ describe("wb-ocie EAT-R007: Pi reads the exact producer descriptor file", () => 
     expect(IMPLEMENTATION_NAME_FORMS.map(({ form }) => form)).toEqual(["Package beside package", "EXPORT beside export", "export padded before", "exports, a name extended", "exp, a name cut short", "the empty name", "package with a soft hyphen inside", "package with a fullwidth first letter", "constructor", "toString"]);
   });
 
-  it("R007-20 RESIDUAL R-DUPLICATE-MEMBER, its quiet row: a member written twice reads as one member, the last written (JSON.parse keeps the last), so no duplicate is refused: status written invocable then descriptor-only is admitted under its own pin, and descriptor-only then invocable is refused status-unsupported", async () => {
+  it("R007-20 R-DUPLICATE-MEMBER CURED (wb-y0n6, EAT-R219 AC2; formerly this residual's quiet row): a member written twice is refused descriptor member-duplicate whichever copy is last, so status written invocable then descriptor-only and descriptor-only then invocable are each refused under their own pin with zero loads", async () => {
     const twice = (first: string, last: string): string =>
       mutated(`  "status": "descriptor-only",`, `  "status": ${JSON.stringify(first)},\n  "status": ${JSON.stringify(last)},`);
     expect([await loadedReadingOf(twice("invocable", MECHANICAL_DESCRIPTOR_STATUS)), await loadedReadingOf(twice(MECHANICAL_DESCRIPTOR_STATUS, "invocable"))]).toEqual([
-      "admitted loads=1",
-      "status status-unsupported loads=0",
+      "descriptor member-duplicate loads=0",
+      "descriptor member-duplicate loads=0",
     ]);
   });
 
@@ -1767,13 +1774,14 @@ describe("wb-ocie: the refusal vocabulary", () => {
     expect(Object.keys(JSON.parse(DESCRIPTOR_TEXT) as object)).toEqual([...MECHANICAL_DESCRIPTOR_MEMBERS]);
   });
 
-  it("the closed field and reason lists are frozen as written: sixteen fields and eighteen reasons", () => {
+  it("the closed field and reason lists are frozen as written: sixteen fields and nineteen reasons (wb-y0n6 added member-duplicate)", () => {
     expect(MECHANICAL_ENTRYPOINT_FIELDS).toEqual([
       "pin", "descriptor", "schema", "id", "implementation", "package", "export", "inputSchema", "outputSchema", "bindings", "status", "note", "root", "artifact", "resolution", "loaded",
     ]);
     expect(MECHANICAL_ENTRYPOINT_REASONS).toEqual([
       "pin-malformed", "unreadable", "digest-mismatch", "malformed", "wrong-type", "member-unexpected", "member-missing", "schema-unsupported", "not-allowlisted",
       "schema-ref-noncanonical", "schema-ref-unknown", "bindings-mismatch", "status-unsupported", "not-a-file", "outside-root", "changed", "unresolved", "export-missing",
+      "member-duplicate",
     ]);
   });
 });
