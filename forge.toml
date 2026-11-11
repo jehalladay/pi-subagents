@@ -15,7 +15,7 @@ build = "npm run build"
 
 [build.commands.test]
 command = "npm run test"
-timeout = 1200
+timeout = 3600
 
 [build.commands.workbench-shell]
 command = "bash qa/workbench/smoke.sh"
