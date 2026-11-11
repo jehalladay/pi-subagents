@@ -1593,7 +1593,7 @@ export default function (pi: ExtensionAPI, injected: SubagentsExtensionInjection
       Type.String({
         description:
           'Opt-in only — fire later instead of now. Omit to run immediately (the default, almost always correct). ' +
-          'Formats: 6-field cron ("0 0 9 * * 1" = 9am Mon), interval ("5m"/"1h"), one-shot ("+10m" or ISO). ' +
+          'Formats: 6-field cron ("0 0 9 * * 1" = 9am Mon), interval ("5m"/"1h"), one-shot ("+10m" or ISO). Intervals and one-shot delays must be 1000..2147483647 ms (1s to about 24.8 days); use cron for longer periods. ' +
           'Forces run_in_background; incompatible with inherit_context and resume. Returns job ID.',
       }),
     ),
