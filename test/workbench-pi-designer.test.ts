@@ -41,9 +41,12 @@ it("names an unmeasured workspace source state as a cohort confound through the 
   const reply=await pi.tools.get("workflow_compare").execute("compare",{referenceTask:ids[0],candidateTask:ids[1]},undefined,undefined,context);
   const result=JSON.parse(reply.content[0].text);
   // The hermetic sandbox is not a Git checkout: both receipts carry the same unmeasured subject basis, which must not read as matched.
-  expect(result.status).not.toBe("comparable");
-  expect(result.cohort.matched).toBe(false);
-  expect(result.cohort.confounds.some((item:{field:string;kind:string})=>item.field==="workspaceSourceState"&&item.kind==="absent")).toBe(true);
-  expect(result.claim).toBe("none"); expect(result.metrics).toEqual([]); expect(result.causalClaim).toBe(false);
+  // wb-h8f.7: the tool answers with the bounded builder's workbench.tool-reply/v1 reply, so each core member this case reads is
+  // read where the reply echoes it: the core status as coreStatus, the cohort's confounds (non-empty exactly when the core's
+  // matched flag is false) under alignment, and claim and causalClaim under limits.
+  expect(result.coreStatus).not.toBe("comparable");
+  expect(result.alignment.aligned).toBe(false);
+  expect(result.alignment.confounds.some((item:{field:string;kind:string})=>item.field==="workspaceSourceState"&&item.kind==="absent")).toBe(true);
+  expect(result.limits.claim).toBe("none"); expect(result.metrics).toEqual([]); expect(result.limits.causalClaim).toBe(false);
   await waitFor(()=>ids.every(id=>pi.pi.sendMessage.mock.calls.some(([item]:[unknown])=>JSON.stringify(item).includes(id))));
 });
