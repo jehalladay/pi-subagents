@@ -172,6 +172,10 @@ timeout = 300
 command = "./node_modules/.bin/vitest run --config vitest.rf-tsx.config.ts"
 timeout = 180
 
+[build.commands.forge-verify-live]
+command = "./node_modules/.bin/vitest run --config vitest.forge-verify-live.config.ts"
+timeout = 300
+
 [build.commands.forge-control-live]
 command = "./node_modules/.bin/vitest run --config vitest.forge-control-live.config.ts"
 timeout = 600
