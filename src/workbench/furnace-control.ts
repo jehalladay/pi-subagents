@@ -87,10 +87,34 @@ const ISSUE: Readonly<Record<FurnaceControlCommand, (client: FurnaceControlClien
 
 export type FurnaceControlRefusalCode = "denied-decision" | "unvetted-decision" | "permit-consumed" | "unsupported-verb" | "invalid-target" |
   "invalid-deps" | "foreign-workspace" | "aborted-before-issue";
+/** The closed refusal vocabulary, exactly FurnaceControlRefusalCode (satisfies refuses a missing and an extra key alike). */
+const REFUSAL_CODES: Readonly<Record<FurnaceControlRefusalCode, true>> = Object.freeze({
+  "denied-decision": true,
+  "unvetted-decision": true,
+  "permit-consumed": true,
+  "unsupported-verb": true,
+  "invalid-target": true,
+  "invalid-deps": true,
+  "foreign-workspace": true,
+  "aborted-before-issue": true,
+} satisfies Record<FurnaceControlRefusalCode, true>);
+/** Every code a FurnaceControlRefusal can carry, in declaration order. */
+export const FURNACE_CONTROL_REFUSAL_CODES: readonly FurnaceControlRefusalCode[] = Object.freeze(Object.keys(REFUSAL_CODES) as FurnaceControlRefusalCode[]);
+function isRefusalCode(value: unknown): value is FurnaceControlRefusalCode {
+  return typeof value === "string" && Object.hasOwn(REFUSAL_CODES, value);
+}
 /** A typed refusal raised before the native verb is issued; a refusal never follows a native call. */
 export class FurnaceControlRefusal extends CapabilityError {
+  /**
+   * The refusal as the model-facing error code (wb-qg19, EAT-R347): workflow_control reads an adapter's own `code`, the
+   * convention every control leg follows, so a typed refusal reaches the model as itself instead of the generic
+   * executor-refused. Only a member of the closed vocabulary is ever a code; caller text, a stack or any other value leaves it
+   * undefined.
+   */
+  readonly code: FurnaceControlRefusalCode | undefined;
   constructor(category: CapabilityErrorCategory, readonly refusal: FurnaceControlRefusalCode, message: string, readonly policy?: string) {
     super(category, message);
+    this.code = isRefusalCode(refusal) ? refusal : undefined;
   }
 }
 

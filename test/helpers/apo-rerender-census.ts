@@ -7459,9 +7459,9 @@ const STATES_RELATE = "it references the class only in the statement type relate
  */
 export const NON_RENDER: Readonly<Record<string, NonRenderReader>> = {
   "src/index.ts": {
-    value: ["ingest", "markStale", "query", "refresh"],
+    value: ["ingest", "markStale", "query", "refresh", "relate"],
     type: [],
-    reason: "the extension entry: it builds the session projection, admits observations in tool handlers and in its workflow-lifecycle emitter, reads it in a tool handler (workflow_compare) and hands the dialog seam its deps",
+    reason: "the extension entry: it builds the session projection, admits observations in tool handlers and in its workflow-lifecycle emitter, states the native-confirmed Furnace Run -> Attempt ownership edges furnace_observe reads (wb-qg19), reads it in a tool handler (workflow_compare) and hands the dialog seam its deps",
   },
   "src/workbench/beads-observer.ts": { value: [], type: ["relate"], reason: `the Beads adapter: ${STATES_RELATE}` },
   "src/workbench/claude-control-observer.ts": { value: ["query", "relate"], type: [], reason: "the Claude control observer: on an SDK init it reads the session node and states the session's ownership" },

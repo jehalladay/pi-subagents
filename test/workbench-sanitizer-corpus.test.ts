@@ -34,6 +34,7 @@ import { type ClaudeQuery, createClaudeWorkflowHost } from "../src/workbench/cla
 import { type ClaudeTopologyInput, projectClaudeTopology } from "../src/workbench/claude-topology.js";
 import { CONTROL_CONTRACT_VERSION, CONTROL_PERMIT_POLICY, type NativeControlReceipt } from "../src/workbench/control.js";
 import { buildControlReply, MAX_CONTROL_REPLY_BYTES } from "../src/workbench/control-reply.js";
+import { type ControlExecutor, createWorkflowControlTool } from "../src/workbench/control-tool.js";
 import type { WorkflowSource } from "../src/workbench/designer.js";
 import { type DetachedControlClient, type DetachedControlExecution, type DetachedControlInput, executeDetachedControl } from "../src/workbench/detached-control.js";
 import { projectDetachedReading } from "../src/workbench/detached-observer.js";
@@ -41,6 +42,7 @@ import { type EvidenceLoader, EvidenceStore } from "../src/workbench/evidence-lo
 import { buildWorkflowExecuteReply, decideExecute, EXECUTE_GRANT, type ExecuteDecision, type LaunchOutcome, type WorkflowExecuteRequest } from "../src/workbench/execute.js";
 import { readForgeOperationEvidence } from "../src/workbench/forge-evidence.js";
 import { forgeGateTopology } from "../src/workbench/forge-observer.js";
+import { executeFurnaceControl, type FurnaceControlClient } from "../src/workbench/furnace-control.js";
 import { readFurnaceAttemptLogEvidence } from "../src/workbench/furnace-evidence.js";
 import { FurnaceHostedExecutor, SHIPPED_FURNACE_SDK } from "../src/workbench/hosts/furnace-hosted.js";
 import { DetachedFrameDecoder, decodeDetachedCommand, detachedFrame } from "../src/workbench/hosts/local-detached.js";
@@ -828,6 +830,53 @@ function controlReplyTexts(raw: string): string[] {
 }
 
 /**
+ * DIRECT-CALLER row (wb-qg19, EAT-R348): control-tool.ts keeps an adapter's uncertainty reason and failure label and the
+ * producer's echo under reply.control, each through the one helper's label layout, bounded. Two legs over a furnace Run target
+ * with a furnace-confirmed ownership edge: the production Furnace adapter (executeFurnaceControl) answered by an envelope whose
+ * kind, request id, Run id and state carry the probe (unattributable-answer, the adapter's own echo bound and then the fold), and
+ * a summary that carries the probe in every reading the fold keeps (the tool's own pass, whatever an adapter hands it).
+ */
+async function controlToolReadingTexts(raw: string): Promise<string[]> {
+  const target: NativeRef = { provider: "furnace", type: "run", id: "frn-run-corpus", scope: ALICE.workspace };
+  const child: NativeRef = { provider: "furnace", type: "attempt", id: "frn-atm-corpus", scope: ALICE.workspace };
+  const projection = new ObservationProjection();
+  for (const source of [target, child]) {
+    projection.refresh({ source, scope: ALICE, capturedAt: NOW, observedAt: NOW, kind: "furnace.snapshot", node: { title: "corpus", type: "workflow", statusText: "active", statusTone: "active" } });
+  }
+  projection.relate({ scope: ALICE, from: target, to: child, kind: "ownership", provenance: { source: "furnace", observedAt: NOW, nativeConfirmationRef: "req-control-corpus" } });
+  const unexpected = async (): Promise<never> => {
+    throw new Error("wb-qg19 corpus: only run stop is expected");
+  };
+  const client = {
+    runs: { stop: async () => ({ kind: raw, requestId: raw, data: { run_id: raw, state: raw } }), pause: unexpected, resume: unexpected },
+    attempts: { stop: unexpected },
+  } as unknown as FurnaceControlClient;
+  const legs: readonly ControlExecutor[] = [
+    async (decision, request, signal) => {
+      const execution = await executeFurnaceControl(decision, { client, workspaceRoot: request.scope.workspace, now: () => NOW, timeoutMs: 1_000, ...(signal !== undefined ? { signal } : {}) });
+      return { receipt: execution.receipt, status: execution.status, ...(execution.uncertainty !== undefined ? { uncertainty: execution.uncertainty } : {}), ...(execution.echo !== undefined ? { echo: execution.echo } : {}) };
+    },
+    async decision => {
+      if (decision.decision !== "permitted") throw new Error("wb-qg19 corpus: a permit is expected");
+      return { receipt: decision.receipt, status: "uncertain", uncertainty: { reason: raw, failure: { kind: raw, code: raw } }, echo: { kind: raw, requestId: raw, id: raw, state: raw } };
+    },
+  ];
+  const texts: string[] = [];
+  for (const executor of legs) {
+    const tool = createWorkflowControlTool({
+      grants: () => ["control:furnace.stop"], observerScope: () => ({ ...ALICE }), localPrincipal: () => ALICE.principal, sessionIdOf: () => "s-corpus",
+      projection, tasks: new Map(), now: () => NOW, executors: { furnace: executor },
+    });
+    const result = await tool.execute("corpus-control", { target: { ...target }, action: "stop", confirmed: true } as never, undefined, undefined,
+      { cwd: ALICE.workspace, sessionManager: { getSessionId: () => "s-corpus" } } as never);
+    const text = result.content[0]?.type === "text" ? result.content[0].text : "";
+    const control = (JSON.parse(text) as { control?: { uncertainty?: unknown; echo?: unknown } }).control;
+    texts.push(...strings(control?.uncertainty), ...strings(control?.echo));
+  }
+  return texts;
+}
+
+/**
  * wb-wyr: claude-host.ts producer outcomes (createClaudeWorkflowHost.spawnAgent over the ClaudeQuery seam). The SDK text
  * reaches the outcome error on five paths: the auth error from a result and from a thrown error (authRequiredError), the
  * success-subtype and error-subtype result arms, and the thrown catch message. Every one routes through the one helper
@@ -921,6 +970,7 @@ const SITES: readonly Site[] = [
   { site: "site 9 patch-proposal.ts displayText (proposeWorkflowPatch)", texts: patchTexts },
   { site: "site 10 beads-observer.ts cleanText (readBeadsWork, projectBeadsWork)", texts: beadsTexts },
   { site: "site 13 control-reply.ts buildControlReply (requested target id, acknowledged and result echo refs)", texts: controlReplyTexts },
+  { site: "wb-qg19 control-tool.ts adapter readings (DIRECT-CALLER: uncertainty reason and failure label, native echo under reply.control)", texts: controlToolReadingTexts },
   { site: "site 15 furnace-evidence.ts sanitize (readFurnaceAttemptLogEvidence)", texts: furnaceEvidenceTexts },
   { site: "site 16 evidence-loader.ts safeChunks (EvidenceStore)", texts: storeTexts },
   { site: "claude-evidence.ts sanitizeRow (readClaudeMessageEvidence preview lines)", texts: claudeEvidenceTexts },
@@ -945,6 +995,14 @@ describe("wb-952 one-helper corpus through every census site's public function",
       expectClean(await texts(probe.raw), probe);
     });
   }
+});
+
+describe("wb-qg19 control-tool adapter readings row is not vacuous", () => {
+  it("a plain probe reaches the adapter's four echo fields, and the summary's reason, failure kind and code and four echo fields", async () => {
+    const plain = "wb-qg19 obviously fake plain probe";
+    const texts = await controlToolReadingTexts(plain);
+    expect(texts.filter(text => text === plain)).toHaveLength(11);
+  });
 });
 
 describe("wb-h8f.6 workflow_validate row is not vacuous", () => {

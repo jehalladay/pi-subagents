@@ -2931,7 +2931,7 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "NAMES/R-RUNTIME-MEMBER:1",
     ]);
     expect(Object.entries(NON_RENDER).map(([module, entry]) => `${module}:${entry.value.length}+${entry.type.length}`)).toEqual([
-      "src/index.ts:4+0",
+      "src/index.ts:5+0",
       "src/workbench/beads-observer.ts:0+1",
       "src/workbench/claude-control-observer.ts:2+0",
       "src/workbench/claude-topology.ts:0+1",

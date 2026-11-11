@@ -2899,7 +2899,10 @@ Terse command-style prompts produce shallow, generic work.
           limits:{maxPolls:1,intervalMs:1000,maxElapsedMs:30_000,attemptLimit:20,logBytes:512,callTimeoutMs:10_000}, signal });
         try {
           const reading = await observer.snapshot();
-          projection.refresh(observer.projectionSnapshot(reading));
+          // wb-qg19 (EAT-R346): the Run, each returned Attempt and the Attempt page's native-confirmed Run -> Attempt ownership edges.
+          const topology = observer.projectionTopology(reading);
+          for (const snapshot of topology.snapshots) projection.refresh(snapshot);
+          for (const relation of topology.relations) projection.relate(relation);
           return textResult(sanitizeWorkbenchJsonText(reading));
         } catch (error) {
           projection.markStale({ scope, ref: {provider:"furnace",type:"run",id:params.runId,scope:scope.workspace} });
@@ -3042,7 +3045,9 @@ Terse command-style prompts produce shallow, generic work.
         const execution = await executeFurnaceControl(decision, {
           client, workspaceRoot: request.scope.workspace, now: controlNow, timeoutMs: 10_000, ...(signal !== undefined ? { signal } : {}),
         });
-        return { receipt: execution.receipt, status: execution.status };
+        // wb-qg19 (EAT-R348): the adapter's own bounded uncertainty and the producer's echo travel with the receipt.
+        return { receipt: execution.receipt, status: execution.status, ...(execution.uncertainty !== undefined ? { uncertainty: execution.uncertainty } : {}),
+          ...(execution.echo !== undefined ? { echo: execution.echo } : {}) };
       },
       "local-detached": async (_decision, request): Promise<ControlExecutionSummary> => {
         const directory = join(getAgentDir(), "workbench-detached");

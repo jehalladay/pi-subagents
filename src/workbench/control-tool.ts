@@ -30,10 +30,28 @@ import type { ObservationProjection, ObservationScope } from "./observation.js";
 import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText } from "./redaction.js";
 import { TOOL_REPLY_CONTRACT_VERSION } from "./tool-replies.js";
 
-/** What an adapter leg answers with: the most advanced receipt it holds and its own one-word status. */
+/** Why an adapter could not establish its native effect, as the adapter bounded it: a closed reason and failure label. */
+export interface ControlExecutionUncertainty {
+  readonly reason: string;
+  readonly failure?: { readonly kind: string; readonly code?: string };
+}
+/** The producer's own answer to the one native call, as the adapter observed and bounded it: observed, never verified. */
+export interface ControlExecutionEcho {
+  readonly kind?: string;
+  readonly requestId?: string;
+  readonly id?: string;
+  readonly state?: string;
+}
+/**
+ * What an adapter leg answers with: the most advanced receipt it holds, its own one-word status and, when it has them, its
+ * own account of an effect it could not establish and the producer's echo (wb-qg19, EAT-R348), which the reply keeps under
+ * `control` so an uncertain execution says why.
+ */
 export interface ControlExecutionSummary {
   readonly receipt: NativeControlReceipt;
   readonly status: string;
+  readonly uncertainty?: ControlExecutionUncertainty;
+  readonly echo?: ControlExecutionEcho;
 }
 
 /** One wired adapter leg. It receives the exact minted decision and the host-assembled request, never params. */
@@ -66,6 +84,39 @@ const CONTROL_REPLY_BYTES = 4096;
 const MAX_AUDIT_RECEIPTS = 64;
 const STATUS_CHARS = 64;
 const REASON_CHARS = 512;
+/** Bounds on the adapter readings the reply keeps (wb-qg19): a closed-vocabulary label, and one echoed native string. */
+const LABEL_CHARS = 64;
+const ECHO_CHARS = 128;
+const ECHO_FIELDS = ["kind", "requestId", "id", "state"] as const;
+
+/** One adapter reading as display text: the shared helper's label layout, bounded, never composed locally. */
+function shownReading(value: unknown, chars: number): string | undefined {
+  return typeof value === "string" ? sanitizeWorkbenchText(value, chars, "label") : undefined;
+}
+/**
+ * The adapter's own uncertainty and the producer's echo, as the reply keeps them under `control` (wb-qg19, EAT-R348). Each
+ * string goes through the one helper with a named layout and a bound; a reading of another shape is not kept. Nothing here
+ * relabels the status or the phase: an uncertain execution stays uncertain and its receipt keeps its own phase.
+ */
+function adapterReadings(summary: ControlExecutionSummary): { [key: string]: JsonValue } {
+  const readings: { [key: string]: JsonValue } = {};
+  const { uncertainty, echo } = summary;
+  const reason = shownReading(uncertainty?.reason, LABEL_CHARS);
+  if (reason !== undefined) {
+    const kind = shownReading(uncertainty?.failure?.kind, LABEL_CHARS);
+    const code = shownReading(uncertainty?.failure?.code, LABEL_CHARS);
+    readings.uncertainty = { reason, ...(kind !== undefined ? { failure: { kind, ...(code !== undefined ? { code } : {}) } } : {}) };
+  }
+  if (echo !== undefined) {
+    const shown: { [key: string]: JsonValue } = {};
+    for (const field of ECHO_FIELDS) {
+      const value = shownReading(echo[field], ECHO_CHARS);
+      if (value !== undefined) shown[field] = value;
+    }
+    readings.echo = shown;
+  }
+  return readings;
+}
 
 function textResult(text: string) {
   return { content: [{ type: "text" as const, text }], details: undefined };
@@ -215,7 +266,7 @@ export function createWorkflowControlTool(deps: WorkflowControlDeps) {
       return reply({
         ok: true, invoked: true,
         status: sanitizeWorkbenchText(summary.status).slice(0, STATUS_CHARS),
-        control: folded.reply, truncated: folded.truncated,
+        control: { ...folded.reply, ...adapterReadings(summary) }, truncated: folded.truncated,
       });
     },
   });

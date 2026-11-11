@@ -1584,10 +1584,11 @@
         "ingest",
         "markStale",
         "query",
-        "refresh"
+        "refresh",
+        "relate"
       ],
       "type": [],
-      "reason": "the extension entry: it builds the session projection, admits observations in tool handlers and in its workflow-lifecycle emitter, reads it in a tool handler (workflow_compare) and hands the dialog seam its deps"
+      "reason": "the extension entry: it builds the session projection, admits observations in tool handlers and in its workflow-lifecycle emitter, states the native-confirmed Furnace Run -> Attempt ownership edges furnace_observe reads (wb-qg19), reads it in a tool handler (workflow_compare) and hands the dialog seam its deps"
     },
     "src/workbench/beads-observer.ts": {
       "value": [],

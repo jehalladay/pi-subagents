@@ -10,10 +10,11 @@
  * Receipts stay phase-honest: requested, acknowledged and result are distinct, the acknowledged phase echoes Furnace's own
  * run_stop envelope and the result only its stopped record; the Run is read back independently and recorded, never inferred.
  *
- * STRICT-READING LIMIT (named, never papered over): the BOOTED extension cannot admit the fixture Run today. Its observer
- * scope is the Pi session's cwd (src/index.ts observerScope) while the Run node's scope is the fixture root, and its
- * furnace_observe tool refreshes projectionSnapshot only, never the Run->Attempt ownership topology, so decideControl would
- * deny cross-scope or no-confirmed-ownership. The journey therefore runs the registered tool's own constructor over a
+ * STRICT-READING LIMIT (named, never papered over): this tier boots no extension. The booted furnace_observe ingests the
+ * Run->Attempt ownership topology since wb-qg19 (EAT-R346, measured in the default gate over a fake furnace CLI by
+ * test/workbench-pi-furnace-control.test.ts), but its observer scope is the Pi session's cwd (src/index.ts observerScope)
+ * while the fixture Run's workspace is the fixture root, so a session outside that root observes no fixture Run and
+ * decideControl would deny it cross-scope. The journey therefore runs the registered tool's own constructor over a
  * harness-owned projection fed only from a real FurnaceObserver reading's native-confirmed topology, and the receipt records
  * the strict booted-tool reading as UNREALISED.
  *
@@ -174,7 +175,7 @@ const evidence: ReceiptEvidence = {
 };
 evidence.scenarios[SCENARIOS.strictBooted] = {
   realised: false,
-  detail: "UNREALISED: the booted extension's observer scope is the Pi session cwd and its furnace_observe tool never ingests the Run->Attempt ownership topology, so the booted registered tool cannot permit a fixture Run target; this journey ran the registered tool's constructor over a harness-owned projection fed only from a real FurnaceObserver reading.",
+  detail: "UNREALISED: this tier boots no extension, and the booted observer scope is the Pi session cwd, not the fixture root (its furnace_observe ingests the Run->Attempt ownership topology since wb-qg19), so the booted tool cannot permit a fixture Run target from here; this journey ran the registered tool's constructor over a harness-owned projection fed only from a real FurnaceObserver reading.",
 };
 if (preflightFailure !== null) evidence.unrealised.push({ step: "furnace-unavailable", diagnostic: preflightFailure });
 
