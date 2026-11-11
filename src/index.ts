@@ -2667,8 +2667,8 @@ Terse command-style prompts produce shallow, generic work.
    * "workbench-detached") with the agent directory resolved to its real path first, so a HOME spelled through a symlink
    * (/home/<user> -> /local/home/<user>) reaches the launcher's unchanged owner, mode and ancestor checks as the canonical
    * path it names. Only the agent directory is resolved: the base and everything under it reach those checks as spelled,
-   * so a base replaced by a symlink still refuses. An agent directory that does not resolve stays as spelled, for the
-   * launcher's own checks to refuse.
+   * so a base replaced by a symlink still refuses. An agent directory whose realpath fails with ENOENT (it does not exist)
+   * or ELOOP (a symlink loop) stays as spelled, for the launcher's own checks to refuse.
    */
   function detachedBase(): string {
     const agentDir = getAgentDir();

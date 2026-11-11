@@ -22,12 +22,14 @@
  *
  * PINNED reader set: each case id below leads its own test titles in this file. The CENSUS row holds this list, its
  * sentences, the collected titles and the frozen PINNED_CASES literal (each id with the count of tests it leads) to one
- * another, and the rows' expected values to anchors outside this file: the DetachedTransportLoss union and the
- * resultOmitted member of src/workbench/hosts/local-detached.ts, and the two registered launch producers of src/index.ts.
+ * another, and the rows' expected values to anchors outside this file: the DetachedTransportLoss union, the resultOmitted
+ * member and the members of DetachedSnapshot in src/workbench/hosts/local-detached.ts, and the two registered launch
+ * producers of src/index.ts.
  *   R341a, through each producer: under a HOME that is a symlink to a private directory, the launch is admitted, the resolved base is a real directory owned by this uid at mode 0700 holding exactly the launched id, exactly one live host process names its boot pin under that base, and workflow_detached inspect reads the run completed with result 42.
  *   R341b, through each producer and under that symlinked HOME: a base at mode 0755, a world-writable ancestor of the resolved base, a base owned by a uid other than the operator's and a base replaced by a symlink each refuse the launch with the launcher's own Authorization words, reserve no invocation and start no host process.
  *   R341c, through each producer: an agent directory that does not exist refuses the launch with the ENOENT lstat words naming that directory, workflow_detached as its reply rather than a throw, reserving no invocation and starting no host process.
- *   R342a, a reviewed script returning "x".repeat(300 * 1024) reads terminal completed with no result and the typed omission resultOmitted exceeds-snapshot-bound, and its snapshot holds none of the 300 KiB.
+ *   R341d, through each producer: an agent directory that is a symlink loop, whose realpath fails with ELOOP, refuses the launch with the launcher's own ancestor words, workflow_detached as its reply rather than a throw, starting no host process.
+ *   R342a, a reviewed script returning "x".repeat(300 * 1024) reads terminal completed with no result and the typed omission resultOmitted exceeds-snapshot-bound; its snapshot carries exactly the thirteen fields of R342A_FIELDS, its receipt equals the host's own receipt.json, and no field but that receipt holds two consecutive x.
  *   R342b, a reviewed script that throws reads terminal failed with its error as the diagnostic and no resultOmitted.
  *   R342c, a reviewed script returning 42 reads terminal completed with result 42 and no resultOmitted, and each R342 snapshot stays within DETACHED_MAX_FRAME_BYTES.
  *   R344a, inspect of an id no launch reserved reads transportLoss no-such-invocation with no terminal, no diagnostic and no reconcile hint, both before any detached root exists and beside another launched invocation.
@@ -36,26 +38,36 @@
  *   R344d, a host held stopped by SIGSTOP reads transportLoss transport-timeout with terminal unknown and the reconcile hint.
  *   R344e, an invocation directory reserved without a receipt reads transportLoss transport-failure with terminal unknown and the reconcile hint.
  *   R344f, a socket that closes the connection without answering reads transportLoss transport-failure with terminal unknown and the reconcile hint.
+ *   R344g, a host whose socket sat in the shared pw-<uid> directory of a private runtime base, retired by SIGTERM, with that directory then removed reads transportLoss socket-missing with terminal unknown and the reconcile hint.
  * The falsifiers each row reds under: the trunk launch paths (the base join(getAgentDir(), "workbench-detached") unresolved)
  * refuse every R341a launch with "Authorization: unsafe detached directory ancestor."; resolving the base itself, not its agent
- * directory, admits R341b's replaced base; a resolution that throws reds R341c's workflow_detached row and one that falls
- * back to another directory reds both R341c rows; the trunk classifier, which reclassifies an oversized completed result as failed,
- * reds R342a; a classifier that keeps completed for a thrown error reds R342b; the trunk client, whose every lost reading is one
- * undifferentiated unknown carrying the reconcile hint, reds R344a through R344f.
+ * directory, admits R341b's replaced base; a resolution that rethrows realpath's ENOENT reds R341c's workflow_detached row
+ * (a throw, not a reply), one that rethrows its ELOOP reds both R341d rows (workflow_detached throws; workflow_execute's
+ * launch-failed words are realpath's ELOOP words, not the launcher's ancestor words), and one that falls back to another
+ * directory reds both R341c rows; the trunk classifier, which reclassifies an oversized completed result as failed, reds R342a,
+ * and so does a classifier that adds a field (a diagnostic preview of the value), writes a run of two or more characters of
+ * the returned value into a field other than the receipt (a progress row), or rewrites the receipt it carries (a launchedAt
+ * spelled from the value); a classifier that keeps completed for a thrown error reds R342b; the trunk client, whose every
+ * lost reading is one undifferentiated unknown carrying the reconcile hint, reds R344a through R344g; a client that reads
+ * socket-missing only from the absent socket itself, not from its absent directory, reds R344g.
  * NOT CLAIMED by this census: EAT-R343, the authorized detached stop, is NOT CLAIMED by this census. The local-detached leg of
  * workflow_control, which keeps join(getAgentDir(), "workbench-detached") byte-pinned by
  * test/workbench-detached-control-live-receipt.test.ts, is NOT CLAIMED by this census. A directory a caller passes to the module
  * API is NOT CLAIMED by this census. An ancestor replaced between the resolution and the launcher's own check is NOT CLAIMED by
  * this census. A base owned by a real second account is NOT CLAIMED by this census: R341b presents the operator as uid + 1 for
  * its one call instead, since a non-root test cannot chown. A result the snapshot contract refuses for its depth or shape rather
- * than its size is NOT CLAIMED by this census. A transport failure other than R344e's is NOT CLAIMED by this census.
+ * than its size is NOT CLAIMED by this census. A transport failure other than R344e's is NOT CLAIMED by this census. An agent
+ * directory whose realpath fails with a code other than ENOENT (R341c) or ELOOP (R341d) is NOT CLAIMED by this census. The
+ * tmpdir fallback's per-launch socket directory, which a retired host removes and which the registered tools reach only on a
+ * host with no private runtime base, is NOT CLAIMED by this census. A socket that goes between the client's private-path check
+ * and its connect is NOT CLAIMED by this census.
  *
  * This suite is a member of the detached-* family (test/workbench-detached-timing-guard.test.ts, wb-maza): every timed wait is
  * pollFor, a reply that carries one of the product's two fixed-bound lapse sentences where none is expected fails re-labelled
  * with the strict marker (markTimingLapse), and the hook that stops hosts waits for their exit under HOST_HOOK_TIMEOUT_MS and
  * reports a lapse only after its cleanup (reportAfterCleanup).
  */
-import { chmodSync, existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, realpathSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, realpathSync, rmdirSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { createServer } from "node:net";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -84,6 +96,9 @@ const TRANSPORT_TIMEOUT = "Detached transport timeout; effects may be unresolved
 const PRODUCERS = ["workflow_detached", "workflow_execute"] as const;
 /** R342a's expected typed omission; the CENSUS row holds it to the resultOmitted member of DetachedSnapshot in src. */
 const OMISSION = "exceeds-snapshot-bound";
+/** Every field R342a's snapshot carries, sorted: a completed reading that names no result, diagnostic, reconcile hint or
+ * transport loss. The CENSUS row holds each one to a member of DetachedSnapshot in src. */
+const R342A_FIELDS = ["cancellationRequested", "contract", "controlAudit", "droppedProgress", "invocationId", "nativeRuntimeIdentity", "observation", "observedAt", "progress", "receipt", "resultOmitted", "source", "terminal"] as const;
 type Producer = (typeof PRODUCERS)[number];
 
 interface RegisteredTool {
@@ -289,10 +304,24 @@ describe("EAT-R341: the registered launch paths resolve the extension-owned base
     expect(existsSync(absent), "the absent agent directory").toBe(false);
     expect(hostsUnder(absent).length, "live host processes under the absent agent directory").toBe(0);
   }, 30_000);
+
+  it.each(PRODUCERS)("R341d: %s with an agent directory that is a symlink loop, whose realpath fails with ELOOP, refuses the launch with the launcher's own ancestor words, as a reply rather than a throw, starting no host", async producer => {
+    const booted = await boot(PURE);
+    const loop = join(booted.dir, "loop-agent-dir");
+    symlinkSync(loop, loop);
+    expect(() => realpathSync(loop), "the agent directory's realpath").toThrow(/^ELOOP: /);
+    process.env.PI_CODING_AGENT_DIR = loop;
+    bases.push(loop);
+    const launch = await launchThrough(producer, booted, "wb-r1bz-r341d");
+    expect(launch.id, `the ${producer} launch was admitted: ${launch.text}`).toBeUndefined();
+    expect(refusalWords(producer, launch.text)).toContain(ANCESTOR_WORDS);
+    expect(lstatSync(loop).isSymbolicLink(), "the looped agent directory is left as it was").toBe(true);
+    expect(hostsUnder(loop).length, "live host processes under the looped agent directory").toBe(0);
+  }, 30_000);
 });
 
 describe("EAT-R342: the terminal classifier keeps completion distinct from result omission", () => {
-  it("R342a: a reviewed script returning a 300 KiB string reads terminal completed, carries no result, names resultOmitted exceeds-snapshot-bound and holds none of the 300 KiB", async () => {
+  it("R342a: a reviewed script returning a 300 KiB string reads terminal completed, carries no result, names resultOmitted exceeds-snapshot-bound, carries exactly the thirteen R342A_FIELDS with the host's own receipt, and no field but that receipt holds two consecutive x", async () => {
     const booted = await boot(OVERSIZED);
     const launch = await launchThrough("workflow_detached", booted, "wb-r1bz-r342a");
     if (!launch.id) throw new Error(`R342a: the launch was refused: ${launch.text}`);
@@ -301,6 +330,10 @@ describe("EAT-R342: the terminal classifier keeps completion distinct from resul
     expect(snapshot).not.toHaveProperty("result");
     expect(text).not.toContain("x".repeat(1024));
     expect(Buffer.byteLength(text), "the serialized snapshot").toBeLessThanOrEqual(DETACHED_MAX_FRAME_BYTES);
+    expect(Object.keys(snapshot).sort(), "the fields the snapshot carries").toEqual([...R342A_FIELDS]);
+    expect(snapshot.receipt, "the snapshot's receipt").toEqual(receiptOf(booted, launch.id));
+    const { receipt: _receipt, ...rest } = snapshot;
+    expect(JSON.stringify(rest).match(/x{2,}/g) ?? [], "runs of two or more x outside the receipt").toEqual([]);
   }, 60_000);
 
   it("R342b: a reviewed script that throws reads terminal failed with its error as the diagnostic and no resultOmitted", async () => {
@@ -325,7 +358,7 @@ describe("EAT-R342: the terminal classifier keeps completion distinct from resul
 });
 
 /** Each R344 row's expected cause; the CENSUS row holds these values to the DetachedTransportLoss union in src. */
-const TRANSPORT_ROWS = { R344a: "no-such-invocation", R344b: "socket-missing", R344c: "connection-refused", R344d: "transport-timeout", R344e: "transport-failure", R344f: "transport-failure" } as const;
+const TRANSPORT_ROWS = { R344a: "no-such-invocation", R344b: "socket-missing", R344c: "connection-refused", R344d: "transport-timeout", R344e: "transport-failure", R344f: "transport-failure", R344g: "socket-missing" } as const;
 /** The fields a reading of a host that may have run carries, whatever the cause it names. */
 const lostHost = (transportLoss: string) => ({ observation: "unknown", source: "local-client-transport", terminal: "unknown", transportLoss, reconcileHint: RECONCILE });
 
@@ -416,6 +449,34 @@ describe("EAT-R344: detached inspect names a typed transport-loss cause", () => 
       await new Promise<void>(resolve => silent.close(() => resolve()));
     }
   }, 60_000);
+
+  it("R344g: a host whose socket sat in the shared pw-<uid> directory of a private runtime base, retired by SIGTERM, with that directory then removed reads socket-missing with terminal unknown and the reconcile hint", async () => {
+    // A private runtime base of the row's own (a fresh 0700 scratch directory this uid owns) stands in for XDG_RUNTIME_DIR,
+    // so removing its shared socket directory, as a cleaned runtime base does, touches no other host's socket.
+    const runtime = makeScratch("wb-r1bz-run-");
+    scratch.push(runtime);
+    const runtimeBefore = process.env.XDG_RUNTIME_DIR;
+    process.env.XDG_RUNTIME_DIR = runtime;
+    try {
+      const booted = await boot(HOLDING);
+      const launch = await launchThrough("workflow_detached", booted, "wb-r1bz-r344g");
+      if (!launch.id) throw new Error(`R344g: the launch was refused: ${launch.text}`);
+      await runningReading(booted, launch.id);
+      const { pid, socketPath, socketBase } = receiptOf(booted, launch.id);
+      const shared = join(runtime, `pw-${uid}`);
+      expect({ socketBase, directory: dirname(socketPath) }, "the socket's placement").toEqual({ socketBase: runtime, directory: shared });
+      process.kill(pid, "SIGTERM");
+      await gone(pid);
+      expect({ socket: existsSync(socketPath), directory: existsSync(shared) }, "the retired host unlinked its socket and left the shared directory").toEqual({ socket: false, directory: true });
+      rmdirSync(shared);
+      const { snapshot } = await inspectThrough(booted, launch.id);
+      expect(snapshot).toMatchObject(lostHost(TRANSPORT_ROWS.R344g));
+      expect(snapshot).not.toHaveProperty("result");
+    } finally {
+      if (runtimeBefore === undefined) delete process.env.XDG_RUNTIME_DIR;
+      else process.env.XDG_RUNTIME_DIR = runtimeBefore;
+    }
+  }, 60_000);
 });
 
 /** A vitest task as this file reads it: a test, or a suite holding tasks. */
@@ -433,9 +494,16 @@ function unionMembers(source: string, name: string): string[] {
   const declaration = new RegExp(`export type ${name} = ([^;]+);`).exec(source)?.[1] ?? "";
   return declaration.split("|").map(member => member.trim().replace(/^"|"$/g, "")).filter(member => member.length > 0);
 }
+/** The member names of the interface `name` declared in `source` (export interface <name> { <member>?: ...; }), in order. */
+function interfaceMembers(source: string, name: string): string[] {
+  const body = new RegExp(`export interface ${name} \\{([\\s\\S]*?)\\n\\}`).exec(source)?.[1] ?? "";
+  return [...body.matchAll(/^ {2}(\w+)\??:/gm)].map(match => match[1] ?? "");
+}
+/** The DetachedSnapshot members R342a's reading leaves out: its result, and the fields of a failed, cancelled or lost one. */
+const R342A_LEFT_OUT = ["diagnostic", "reconcileHint", "result", "transportLoss"] as const;
 
 describe("wb-r1bz census: the leading comment's pinned reader set is exactly this file's cases", () => {
-  it("CENSUS: the leading comment pins exactly the PINNED_CASES ids in order with their claim sentences verbatim, each id leads exactly its frozen count of collected titles, no other title but this row's is collected, and the anchors outside this file's literals (the DetachedTransportLoss union, the resultOmitted member and the two registered launch producers in src) are exactly the ones the rows read", ({ task }) => {
+  it("CENSUS: the leading comment pins exactly the PINNED_CASES ids in order with their claim sentences verbatim, each id leads exactly its frozen count of collected titles, no other title but this row's is collected, and the anchors outside this file's literals (the DetachedTransportLoss union, the resultOmitted member, the DetachedSnapshot members and the two registered launch producers in src) are exactly the ones the rows read", ({ task }) => {
     const source = readFileSync(SELF, "utf8");
     const comment = source.slice(0, source.indexOf("*/"));
     const pinnedLines = [...comment.matchAll(/^ \* {3}(R34[0-9][a-z]), (.+)$/gm)].map(match => [match[1], match[2]] as const);
@@ -449,6 +517,7 @@ describe("wb-r1bz census: the leading comment's pinned reader set is exactly thi
     expect(Object.keys(TRANSPORT_ROWS).every(id => ids.includes(id)), "every transport row is a pinned case").toBe(true);
     expect([...new Set(Object.values(TRANSPORT_ROWS))].sort(), "the causes the R344 rows read are the src union's").toEqual(unionMembers(host, "DetachedTransportLoss").sort());
     expect(/resultOmitted\?: "([a-z-]+)";/.exec(host)?.[1], "the omission R342a reads is the src member's").toBe(OMISSION);
+    expect([...R342A_FIELDS, ...R342A_LEFT_OUT].sort(), "R342a's fields and the ones it leaves out are DetachedSnapshot's members").toEqual(interfaceMembers(host, "DetachedSnapshot").sort());
     expect(repoText("src", "index.ts").split("workbenchNative().launchDetachedWorkflow(").length - 1, "the registered launch producers").toBe(PRODUCERS.length);
   });
 });
@@ -458,6 +527,7 @@ const PINNED_CASES = [
   "R341a:2",
   "R341b:8",
   "R341c:2",
+  "R341d:2",
   "R342a:1",
   "R342b:1",
   "R342c:1",
@@ -467,13 +537,15 @@ const PINNED_CASES = [
   "R344d:1",
   "R344e:1",
   "R344f:1",
+  "R344g:1",
 ] as const;
 /** Each claim sentence of the comment, verbatim. */
 const CLAIM_SENTENCES: readonly string[] = [
   "through each producer: under a HOME that is a symlink to a private directory, the launch is admitted, the resolved base is a real directory owned by this uid at mode 0700 holding exactly the launched id, exactly one live host process names its boot pin under that base, and workflow_detached inspect reads the run completed with result 42.",
   "through each producer and under that symlinked HOME: a base at mode 0755, a world-writable ancestor of the resolved base, a base owned by a uid other than the operator's and a base replaced by a symlink each refuse the launch with the launcher's own Authorization words, reserve no invocation and start no host process.",
   "through each producer: an agent directory that does not exist refuses the launch with the ENOENT lstat words naming that directory, workflow_detached as its reply rather than a throw, reserving no invocation and starting no host process.",
-  'a reviewed script returning "x".repeat(300 * 1024) reads terminal completed with no result and the typed omission resultOmitted exceeds-snapshot-bound, and its snapshot holds none of the 300 KiB.',
+  "through each producer: an agent directory that is a symlink loop, whose realpath fails with ELOOP, refuses the launch with the launcher's own ancestor words, workflow_detached as its reply rather than a throw, starting no host process.",
+  'a reviewed script returning "x".repeat(300 * 1024) reads terminal completed with no result and the typed omission resultOmitted exceeds-snapshot-bound; its snapshot carries exactly the thirteen fields of R342A_FIELDS, its receipt equals the host\'s own receipt.json, and no field but that receipt holds two consecutive x.',
   "a reviewed script that throws reads terminal failed with its error as the diagnostic and no resultOmitted.",
   "a reviewed script returning 42 reads terminal completed with result 42 and no resultOmitted, and each R342 snapshot stays within DETACHED_MAX_FRAME_BYTES.",
   "inspect of an id no launch reserved reads transportLoss no-such-invocation with no terminal, no diagnostic and no reconcile hint, both before any detached root exists and beside another launched invocation.",
@@ -482,4 +554,5 @@ const CLAIM_SENTENCES: readonly string[] = [
   "a host held stopped by SIGSTOP reads transportLoss transport-timeout with terminal unknown and the reconcile hint.",
   "an invocation directory reserved without a receipt reads transportLoss transport-failure with terminal unknown and the reconcile hint.",
   "a socket that closes the connection without answering reads transportLoss transport-failure with terminal unknown and the reconcile hint.",
+  "a host whose socket sat in the shared pw-<uid> directory of a private runtime base, retired by SIGTERM, with that directory then removed reads transportLoss socket-missing with terminal unknown and the reconcile hint.",
 ];

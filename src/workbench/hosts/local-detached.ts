@@ -129,10 +129,11 @@ export interface DetachedSnapshot {
 }
 /**
  * The cause a client-side inspect names when it reaches no live host (wb-r1bz, EAT-R344). no-such-invocation: no launch
- * reserved the id under this root, so no host ran for it. socket-missing: the receipt's socket is absent (a retired host
- * unlinks it; that alone does not prove a graceful retirement). connection-refused: the socket is there and nothing accepts
- * on it (a crashed host leaves it). transport-timeout: the client's fixed socket timeout lapsed. transport-failure: among
- * others, an invocation reserved without a receipt, and a socket that closes the connection without answering.
+ * reserved the id under this root, so no host ran for it. socket-missing: the receipt's socket is absent from the shared
+ * pw-<uid> directory of a private runtime base (a retired host unlinks it), or that directory is (a cleaned runtime base);
+ * neither proves a graceful retirement. connection-refused: the socket is there and nothing accepts on it (a crashed host
+ * leaves it). transport-timeout: the client's fixed socket timeout lapsed. transport-failure: among others, an invocation
+ * reserved without a receipt, and a socket that closes the connection without answering.
  */
 export type DetachedTransportLoss = "no-such-invocation" | "socket-missing" | "connection-refused" | "transport-timeout" | "transport-failure";
 export type DetachedCommand =
