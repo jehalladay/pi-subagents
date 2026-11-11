@@ -74,6 +74,9 @@ interface Receipt {
   benchmark: string;
   measured: boolean;
   scopeLabel: string;
+  comparisonLabel?: string;
+  spanCompleteLabel?: string;
+  comparison?: { passRequests: Record<PassLabel, { relationLimit: number }>; fanIn: FanInShape; label: string };
   utc: string;
   revision: string;
   node: string;
@@ -114,6 +117,20 @@ interface Fixture {
   relations: unknown[];
   updates: unknown[];
   shape: FixtureShape;
+}
+type RefreshInput = Parameters<ObservationProjection["refresh"]>[0];
+type RelateInput = Parameters<ObservationProjection["relate"]>[0];
+type IngestInput = Parameters<ObservationProjection["ingest"]>[0];
+/** The bench-only fan-in overlay as the receipt states it (wb-9x5.16). */
+interface FanInShape {
+  every: number;
+  offset: number;
+  tiers: number[];
+  kind: string;
+  source: string;
+  targets: number;
+  byTier: Record<string, number>;
+  edges: number;
 }
 interface Host {
   utc: string;
@@ -389,7 +406,7 @@ describe("W21 truncation rates at maxQuery 40 versus 100 (C4)", () => {
     for (const label of ["maxQuery-40", "maxQuery-100"] as const) {
       const pass = receipt.passes[label];
       for (const value of Object.values(pass.truncatedRates)) expect(value >= 0 && value <= 1).toBe(true);
-      expect(pass.relationPages.requestedLimit).toBe(40);
+      expect(pass.relationPages.requestedLimit).toBe(label === "maxQuery-40" ? 40 : 100);
       expect(pass.relationPages.pages).toBe(pass.relationReads.total);
       expect(pass.relationPages.atRequestedLimitRate).toBeGreaterThanOrEqual(0);
       expect(pass.relationPages.atMaxQueryRate).toBeGreaterThanOrEqual(0);
@@ -576,13 +593,248 @@ describe("W21 live read-count detector and degenerate-comparison labels (respin 
     expect(verdict.target.readsExceedingRows).toEqual(["maxQuery-40", "maxQuery-100"]);
   }, 120_000);
 
-  it("states the degenerate comparison and the span.complete rate in the receipt header, verbatim", () => {
-    const header = smallRun().receipt as unknown as Record<string, unknown>;
-    expect(header.comparisonLabel).toBe(
-      "comparison degenerate at relationLimit 40: timeline.ts requests 40 so both passes issue identical reader calls; the grouped-10k fixture never fills a relation page (incoming maxObserved 4) and every truncation rate is 0 at both caps",
+  it("retires the degenerate-comparison label for the measured comparison and keeps the span.complete label in the receipt header, verbatim (wb-9x5.16)", () => {
+    const header = smallRun().receipt;
+    expect(Object.hasOwn(header, "comparisonLabel")).toBe(false);
+    expect(header.comparison?.label).toBe(
+      "pass maxQuery-40 requests relationLimit 40 (the model default) and pass maxQuery-100 requests relationLimit 100 (the model maximum), so the two passes issue different reader calls; a bench-only fan-in overlay gives every 125th operation snapshot from ordinal 62 (fixture order) 60 or 120 extra incoming dependency edges, alternating, so a row with 60 extra fills its relation page at 40 but not at 100 and a row with 120 extra fills it at both caps",
     );
     expect(header.spanCompleteLabel).toBe("span.complete rate 0: every 100-row window holds an open or missing interval");
   });
+});
+
+/* wb-9x5.16, the W21 honesty bundle the owner ruled on the wb-9x5.7 gate (R2 + the real truncation-visibility
+ * measurement): the recorded series are the builds' own, never range-checked only, and the 40-versus-100 comparison is
+ * measured over reader calls and relation pages that differ. */
+const PASSES = ["maxQuery-40", "maxQuery-100"] as const;
+const SMALL_FIXTURE = { seed: 5, nodes: 2_400, depth: 5, ticks: 150 } as const;
+const rate4 = (count: number, total: number): number => (total === 0 ? 0 : Math.round((count / total) * 10_000) / 10_000);
+const p50max = (values: readonly number[]): { p50: number | null; max: number | null } => {
+  const sorted = [...values].sort((a, b) => a - b);
+  return { p50: sorted[Math.floor(sorted.length * 0.5)] ?? null, max: sorted[sorted.length - 1] ?? null };
+};
+interface ScriptedBuild {
+  request: TimelineRequest;
+  model: TimelineModel;
+  pages: Array<{ limit: number | undefined; length: number }>;
+}
+interface ScriptedRun {
+  receipt: Receipt;
+  builds: ScriptedBuild[];
+}
+let cachedScripted: ScriptedRun | undefined;
+/**
+ * One run over the small fixture whose builder is the real lane model reading through a spy reader, so every relation
+ * page it reads is a real page, recorded with the limit it asked for. The five fields the core aggregates from a model
+ * (truncated.*, span.complete, concurrency.maxMeasured, lanes and rows per lane) are then replaced by pure functions
+ * of the request, so each recorded series has a known truth that no constant, zero or one can stand in for.
+ */
+const scriptedRun = (): ScriptedRun => {
+  if (cachedScripted) return cachedScripted;
+  const builds: ScriptedBuild[] = [];
+  const scripted: Builder = (reader, request) => {
+    const pages: ScriptedBuild["pages"] = [];
+    const spy: Parameters<Builder>[0] = {
+      window: input => reader.window(input),
+      relations: input => {
+        const page = reader.relations(input);
+        pages.push({ limit: input.limit, length: page.length });
+        return page;
+      },
+      relationRevision: () => reader.relationRevision(),
+    };
+    const real = buildTimelineLanes(spy, request);
+    const lane = real.lanes[0];
+    const row = lane?.rows[0];
+    if (lane === undefined || row === undefined) throw new Error("the scripted run needs a window with at least one row");
+    const step = request.offset / 100;
+    const model: TimelineModel = {
+      ...real,
+      lanes: Array.from({ length: request.zoom }, (_, index) => ({ ...lane, rows: Array.from({ length: index + 1 + (request.columns === 120 ? 3 : 0) }, () => row) })),
+      span: { ...real.span, complete: request.pan === 100 && request.columns === 80 },
+      concurrency: { ...real.concurrency, maxMeasured: step + 3 * request.zoom },
+      truncated: { relations: step % 3 === 0, window: request.zoom >= 4, rows: request.pan === 10, lanes: request.columns === 120 && request.zoom === 1 },
+    };
+    builds.push({ request, model, pages });
+    return model;
+  };
+  const receipt = run({ Projection: ObservationProjection, buildTimelineLanes: scripted, fixture: build({ ...SMALL_FIXTURE }), host: HOST, sampling: { rounds: 1 } });
+  cachedScripted = { receipt, builds };
+  return cachedScripted;
+};
+/** The builds of one pass: the passes run in order, each for its own sample count. */
+const passBuilds = (label: PassLabel): ScriptedBuild[] => {
+  const { receipt, builds } = scriptedRun();
+  const first = receipt.passes["maxQuery-40"].samples;
+  return label === "maxQuery-40" ? builds.slice(0, first) : builds.slice(first);
+};
+/**
+ * The fan-in overlay re-derived from the receipt's own statement of it, independently of the core: among the operation
+ * snapshots in fixture order, every `every`-th from `offset` is a target, targets take `tiers` in turn, and a target's
+ * sources are the operations just before it, wrapping, never the target itself.
+ */
+const deriveFanIn = (fixture: Fixture, fanIn: FanInShape): RelateInput[] => {
+  const operations = fixture.snapshots.map(snapshot => (snapshot as RefreshInput).source).filter(source => source.type === "operation");
+  const edges: RelateInput[] = [];
+  let target = 0;
+  for (let ordinal = fanIn.offset; ordinal < operations.length; ordinal += fanIn.every) {
+    const wanted = Math.min(fanIn.tiers[target % fanIn.tiers.length] ?? 0, operations.length - 1);
+    target++;
+    const to = operations[ordinal];
+    for (let back = 1; back <= wanted; back++) {
+      const from = operations[(ordinal - back + operations.length) % operations.length];
+      if (to !== undefined && from !== undefined) edges.push({ scope, from, to, kind: "dependency", provenance: { source: fanIn.source } });
+    }
+  }
+  return edges;
+};
+/** A projection holding the fixture and then `overlay`, applied in the order the core applies them. */
+const oracleProjection = (fixture: Fixture, overlay: readonly RelateInput[], limits: Record<string, number>): ObservationProjection => {
+  const projection = new ObservationProjection(limits);
+  for (const snapshot of fixture.snapshots) projection.refresh(snapshot as RefreshInput);
+  for (const relation of fixture.relations) projection.relate(relation as RelateInput);
+  for (const update of fixture.updates) projection.ingest(update as IngestInput);
+  for (const relation of overlay) projection.relate(relation);
+  return projection;
+};
+/** Every window of `projection`'s invocation, in order. */
+const windowsOf = (projection: ObservationProjection): ReturnType<ObservationProjection["window"]>["nodes"][] => {
+  const total = projection.window({ scope, invocationId: invocation, offset: 0, limit: 1 }).total;
+  const windows: ReturnType<ObservationProjection["window"]>["nodes"][] = [];
+  for (let offset = 0; offset < total; offset += 100) windows.push(projection.window({ scope, invocationId: invocation, offset, limit: 100 }).nodes);
+  return windows;
+};
+
+describe("W21 honesty bundle: recorded series are the builds' own and the 40-versus-100 comparison is measured (wb-9x5.16)", () => {
+  it("records truncated.* rates, span.complete, concurrency max, lanes per model and rows per lane exactly as the builds returned them (R2: G7, G12, G13, G14)", () => {
+    const { receipt, builds } = scriptedRun();
+    expect(builds).toHaveLength(receipt.passes["maxQuery-40"].samples + receipt.passes["maxQuery-100"].samples);
+    for (const label of PASSES) {
+      const pass = receipt.passes[label];
+      const models = passBuilds(label).map(item => item.model);
+      expect(models).toHaveLength(pass.samples);
+      const count = (flag: (model: TimelineModel) => boolean): number => rate4(models.filter(flag).length, models.length);
+      const truth = {
+        truncatedRates: {
+          relations: count(model => model.truncated.relations),
+          window: count(model => model.truncated.window),
+          rows: count(model => model.truncated.rows),
+          lanes: count(model => model.truncated.lanes),
+        },
+        spanCompleteRate: count(model => model.span.complete),
+        concurrencyMaxMeasured: Math.max(...models.map(model => model.concurrency.maxMeasured)),
+        lanesPerModel: p50max(models.map(model => model.lanes.length)),
+        rowsPerLaneMax: Math.max(...models.flatMap(model => model.lanes.map(lane => lane.rows.length))),
+      };
+      // The truth is non-trivial: every rate lies strictly between 0 and 1 and every maximum is above 1.
+      for (const value of [...Object.values(truth.truncatedRates), truth.spanCompleteRate]) expect(value > 0 && value < 1).toBe(true);
+      expect(truth.concurrencyMaxMeasured).toBeGreaterThan(1);
+      expect(truth.rowsPerLaneMax).toBeGreaterThan(1);
+      expect({
+        truncatedRates: pass.truncatedRates,
+        spanCompleteRate: pass.spanCompleteRate,
+        concurrencyMaxMeasured: pass.concurrencyMaxMeasured,
+        lanesPerModel: pass.lanesPerModel,
+        rowsPerLaneMax: pass.rowsPerLaneMax,
+      }).toEqual(truth);
+    }
+  }, 120_000);
+
+  it("counts exact-page and at-cap relation pages exactly as the builds' own reads returned them, with full pages at both caps (R2: G8 and the exact-page counter)", () => {
+    const { receipt } = scriptedRun();
+    const requestedFull: Record<PassLabel, number> = { "maxQuery-40": 0, "maxQuery-100": 0 };
+    for (const label of PASSES) {
+      const pass = receipt.passes[label];
+      const pages = passBuilds(label).flatMap(item => item.pages);
+      const atRequestedLimit = pages.filter(page => page.limit !== undefined && page.length >= page.limit).length;
+      const atMaxQuery = pages.filter(page => page.length >= passLimits[label].maxQuery).length;
+      expect(pass.relationReads.total).toBe(pages.length);
+      expect({
+        pages: pass.relationPages.pages,
+        atRequestedLimit: pass.relationPages.atRequestedLimit,
+        atRequestedLimitRate: pass.relationPages.atRequestedLimitRate,
+        atMaxQuery: pass.relationPages.atMaxQuery,
+        atMaxQueryRate: pass.relationPages.atMaxQueryRate,
+      }).toEqual({ pages: pages.length, atRequestedLimit, atRequestedLimitRate: rate4(atRequestedLimit, pages.length), atMaxQuery, atMaxQueryRate: rate4(atMaxQuery, pages.length) });
+      expect(atRequestedLimit).toBeGreaterThan(0);
+      expect(atMaxQuery).toBeGreaterThan(0);
+      requestedFull[label] = atRequestedLimit;
+    }
+    // A row with 60 extra incoming edges fills its page at relationLimit 40 but not at 100.
+    expect(requestedFull["maxQuery-40"]).toBeGreaterThan(requestedFull["maxQuery-100"]);
+  }, 120_000);
+
+  it("censuses incoming relation pages at each pass's cap as an independent re-derivation of the declared fan-in overlay counts them (R2: G9)", () => {
+    const { receipt } = smallRun();
+    const fanIn = receipt.comparison?.fanIn;
+    expect(fanIn).toBeDefined();
+    if (fanIn === undefined) return;
+    const fixture = build({ ...SMALL_FIXTURE });
+    const overlay = deriveFanIn(fixture, fanIn);
+    expect(overlay).toHaveLength(fanIn.edges);
+    const capped: Record<PassLabel, number> = { "maxQuery-40": 0, "maxQuery-100": 0 };
+    for (const label of PASSES) {
+      const cap = passLimits[label].maxQuery;
+      const projection = oracleProjection(fixture, overlay, passLimits[label]);
+      let rows = 0;
+      let atMaxQuery = 0;
+      let maxObserved = 0;
+      for (const nodes of windowsOf(projection)) {
+        for (const node of nodes) {
+          const incoming = projection.relations({ scope, to: node.key, limit: cap }).length;
+          rows++;
+          if (incoming >= cap) atMaxQuery++;
+          maxObserved = Math.max(maxObserved, incoming);
+        }
+      }
+      expect(receipt.passes[label].relationPages.incoming).toEqual({ rows, atMaxQuery, atMaxQueryRate: rate4(atMaxQuery, rows), maxObserved, cap });
+      expect(atMaxQuery).toBeGreaterThan(0);
+      capped[label] = atMaxQuery;
+    }
+    expect(capped["maxQuery-40"]).toBeGreaterThan(capped["maxQuery-100"]);
+  }, 120_000);
+
+  it("keeps the span.complete label true on the measured windows: every window holds an open or missing interval and no build saw a complete span", () => {
+    const { receipt } = smallRun();
+    const windows = windowsOf(oracleProjection(build({ ...SMALL_FIXTURE }), [], benchLimits));
+    expect(windows.length).toBeGreaterThan(0);
+    expect(windows.filter(nodes => nodes.some(node => node.interval === undefined || node.interval.endedAt === undefined))).toHaveLength(windows.length);
+    for (const label of PASSES) expect(receipt.passes[label].spanCompleteRate).toBe(0);
+    expect(receipt.spanCompleteLabel).toBe("span.complete rate 0: every 100-row window holds an open or missing interval");
+  }, 120_000);
+
+  it("measures a non-degenerate 40-versus-100 comparison: maxQuery-100 requests relationLimit 100 and the fan-in rows fill relation pages at 40 that 100 does not (retires R4)", () => {
+    const { receipt, built } = smallRun();
+    const first = receipt.passes["maxQuery-40"].samples;
+    expect(built).toHaveLength(first + receipt.passes["maxQuery-100"].samples);
+    expect(built.slice(0, first).every(request => request.relationLimit === undefined)).toBe(true);
+    expect(built.slice(first).every(request => request.relationLimit === 100)).toBe(true);
+    expect(receipt.comparison?.passRequests).toEqual({ "maxQuery-40": { relationLimit: 40 }, "maxQuery-100": { relationLimit: 100 } });
+    const overlayEdges = 10 * 60 + 9 * 120;
+    expect(receipt.comparison?.fanIn).toEqual({
+      every: 125,
+      offset: 62,
+      tiers: [60, 120],
+      kind: "dependency",
+      source: "w21-timeline-fan-in",
+      targets: 19,
+      byTier: { "60": 10, "120": 9 },
+      edges: overlayEdges,
+    });
+    const fixture = build({ ...SMALL_FIXTURE });
+    for (const label of PASSES) {
+      const pass = receipt.passes[label];
+      expect(pass.relationPages.requestedLimit).toBe(label === "maxQuery-40" ? 40 : 100);
+      expect(pass.offered.edges).toBe(fixture.relations.length + overlayEdges);
+      expect(pass.retained.edges).toBe(pass.offered.edges);
+      expect(pass.notes.rates["relation-page-full"]).toBe(pass.truncatedRates.relations);
+    }
+    const at40 = receipt.passes["maxQuery-40"];
+    const at100 = receipt.passes["maxQuery-100"];
+    expect(at100.truncatedRates.relations).toBeGreaterThan(0);
+    expect(at40.truncatedRates.relations).toBeGreaterThan(at100.truncatedRates.relations);
+    expect([at40.relationPages.incoming.maxObserved, at100.relationPages.incoming.maxObserved]).toEqual([40, 100]);
+  }, 120_000);
 });
 
 describe("W21 the sampled function is the lane model, timed only around the call (C2)", () => {
