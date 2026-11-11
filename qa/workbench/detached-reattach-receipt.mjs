@@ -27,7 +27,9 @@
 // Launch deviation, recorded in launchProfile and never hidden: the registered workflow_detached launch pins providers []
 // and no local provider, so a script it launches has no capability through which the host could write a marker. The
 // launching client therefore calls launchDetachedWorkflow from the compiled host module with a reviewed trusted-local
-// provider (the wb-0kg.1 effect fixture, reused, plus the client-exit wait), under the Pi tool's own permission pin.
+// provider (the wb-0kg.1 effect fixture, reused, plus the client-exit wait), under the Pi tool's own permission pin. The exit
+// the marker follows is therefore this module-API client's, not a Pi client's: the bead's "full Pi client exit" is narrowed to
+// it, a disclosed scope boundary that the receipt's fifth non-claim states.
 // Exit 0 = realised and clean, 1 = realised with findings, 2 = not realised (honest environment unavailability: no compiled
 // dist, no Linux local operator, a refused socket placement, a client that could not run, a host that outlived its
 // SIGKILL). The receipt is printed as one JSON line and written to $DETACHED_REATTACH_RECEIPT when set.
@@ -86,6 +88,18 @@ export const PI_TOOL_PERMISSIONS = Object.freeze(["inspect", "execute"]);
 /** The compiled entries the runner's roles load, relative to the package root. */
 export const RUNNER_ENTRIES = Object.freeze({ host: "dist/workbench/hosts/local-detached.js", extension: "dist/index.js" });
 /**
+ * The receipt blocks buildDetachedReattachReceipt passes through basenameOnly (qa/workbench/local-detached-faults-receipt.mjs),
+ * in receipt order: an absolute path of two or more segments inside a string value becomes its basename. Object keys, utc and
+ * revision are kept as given.
+ */
+export const DETACHED_REATTACH_SCRUBBED = Object.freeze(["tools", "host", "commands", "nativeRefs", "launchProfile", "journeys", "markerCounts", "findings", "diagnostics"]);
+/**
+ * What buildDetachedReattachReceipt refuses to build without (docs/workbench/14), one entry per requirement it checks: a
+ * nonempty utc and revision; tools.node and tools.package; host.hostname, host.platform and host.arch, each a nonempty string;
+ * and commands, a nonempty list (commands) of nonempty strings (commands.entry).
+ */
+export const DETACHED_REATTACH_REQUIRED = Object.freeze(["utc", "revision", "tools.node", "tools.package", "host.hostname", "host.platform", "host.arch", "commands", "commands.entry"]);
+/**
  * The wording the receipt carries (docs/workbench/08: OS DAC only, not remote authentication or hostile-same-user
  * protection; the host's own lifetime label: survives client disconnect, not host crash). buildDetachedReattachReceipt
  * stamps these module constants, never caller text; the judge flags any drift and any host label that claims more.
@@ -99,6 +113,7 @@ export const DETACHED_REATTACH_WORDING = Object.freeze({
     "no hostile-same-user isolation evidence",
     "no host-crash durability evidence",
     "no launch through the registered workflow_detached tool: its launch pins providers [] and no local provider, so a module-API client launches this invocation",
+    "no Pi-client exit evidence: the client whose exit the marker follows is the module-API launching client, not a Pi session",
   ]),
 });
 
@@ -216,7 +231,7 @@ export function assessDetachedReattachJourneys(input) {
   if (wording) {
     const claims = arrayOf(wording.nonClaims);
     if (wording.security !== frozen.security || wording.lifetime !== frozen.lifetime || wording.nativeRuntimeIdentity !== frozen.nativeRuntimeIdentity || !frozen.nonClaims.every(claim => claims.includes(claim))) {
-      add("overclaim", "wording drifted from the frozen labels and non-claims (remote authentication, hostile-same-user isolation, crash durability and the Pi-tool launch are never claimed).");
+      add("overclaim", "wording drifted from the frozen labels and non-claims (remote authentication, hostile-same-user isolation, crash durability, the Pi-tool launch and a Pi-client exit are never claimed).");
     }
   }
   if (launch) {
@@ -251,7 +266,11 @@ function requiredFields(input, field, keys) {
   return { ...value };
 }
 
-/** Frozen evidence-grade receipt (docs/workbench/14). Every absolute path is scrubbed to its basename; wording is the module's. */
+/**
+ * Frozen evidence-grade receipt (docs/workbench/14). It refuses an input missing a DETACHED_REATTACH_REQUIRED field; every
+ * DETACHED_REATTACH_SCRUBBED block passes through basenameOnly, so an absolute path of two or more segments in a string value
+ * becomes its basename (object keys, utc and revision are kept as given); the wording is the module's.
+ */
 export function buildDetachedReattachReceipt(input) {
   if (!isObject(input)) throw new Error("buildDetachedReattachReceipt: input is required.");
   const utc = requiredText(input, "utc");
