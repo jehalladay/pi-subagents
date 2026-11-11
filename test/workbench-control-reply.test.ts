@@ -103,7 +103,10 @@ describe("denied decisions render typed sanitized refusals", () => {
     const body = parse(buildControlReply(decide({ params: {} })).text);
     expect(body.requiredParams).toEqual({ confirmed: true });
     expect(body.policy).toBe("operator-confirmation");
-    expect(String(body.hint)).toContain("params.confirmed");
+    // EAT-R334 (wb-5xdi, C188 ESTABLISHED): the hint names the tool's own top-level confirmed parameter; the former
+    // params.confirmed spelling is a path workflow_control's schema does not have, so following it literally looped.
+    expect(body.hint).toBe("Set confirmed: true (explicit operator confirmation) and request the action again.");
+    expect(String(body.hint)).not.toContain("params.");
   });
 
   it("is a pure render: the same denied decision always renders identically", () => {

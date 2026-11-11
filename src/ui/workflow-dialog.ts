@@ -83,7 +83,7 @@ import {
   type WorkflowCardSegment,
   type WorkflowCardTask,
 } from "./workflow-card.js";
-import { type InspectorModel, type InspectorState, initialInspectorState, inspectorEvidenceTarget, layoutInspector, reduceInspectorKey } from "./workflow-inspector.js";
+import { type InspectorModel, type InspectorState, initialInspectorState, inspectorEvidenceTarget, inspectorTranscriptTarget, layoutInspector, reduceInspectorKey } from "./workflow-inspector.js";
 
 /** Fallback width when the caller does not know the terminal's. */
 const DEFAULT_WIDTH = 80;
@@ -1261,12 +1261,16 @@ export class WorkflowDialog implements Component {
     const source = this.snapshot();
     const hasLegacyRows = source.progress.some(entry => entry.type === "workflow_agent");
     const rich = source.observation?.projection.window({scope:source.observation.scope,invocationId:source.observation.invocationId,offset:0,limit:1}).total;
+    // While the rich inspector is drawn with its filter editor open, a typed g goes to the reducer's editor, not to the g
+    // toggle below (EAT-R355). Escape or Enter ends editing in the reducer, and the toggle applies again. The
+    // legacy-to-inspector switch needs no such guard: it fires only while the legacy dialog is drawn, never the editor.
+    const editingFilter = this.inspectorState.editingFilter && source.observation !== undefined && Boolean(rich) && (this.preferRich || !hasLegacyRows);
     if ((matchesKey(data,"g") || matchesKey(data,"tab")) && source.observation && rich && hasLegacyRows && !this.preferRich) {
       this.preferRich = true;
       this.tui.requestRender();
       return;
     }
-    if (matchesKey(data,"g") && source.observation && rich) {
+    if (!editingFilter && matchesKey(data,"g") && source.observation && rich) {
       this.preferRich = !this.preferRich;
       this.tui.requestRender();
       return;
@@ -1277,8 +1281,9 @@ export class WorkflowDialog implements Component {
       this.inspectorState = outcome.state;
       if (outcome.action === "close") this.dispatch({kind:"cancel"});
       else if (outcome.action === "transcript") {
-        const item = source.observation.projection.window({scope:source.observation.scope,invocationId:source.observation.invocationId,offset:this.inspectorState.index,limit:1}).nodes[0];
-        if (item?.nativeRef.provider === "claude-agent-sdk" && item.nativeRef.type === "session") this.actions.onOpenAgent?.(`claude:${item.nativeRef.id}`);
+        // The session the pointer is drawn on, resolved by key exactly as the reducer resolved it (EAT-R354).
+        const session = inspectorTranscriptTarget(source.observation, this.inspectorState);
+        if (session !== undefined) this.actions.onOpenAgent?.(`claude:${session}`);
       }
       else if (outcome.action === "load-evidence") {
         // The reducer only names the request; the host-supplied store performs

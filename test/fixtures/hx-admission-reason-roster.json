@@ -2219,7 +2219,9 @@
               "src/workbench/native-modules.ts",
               "src/workbench/providers/hyperunix.ts"
             ],
-            "adapterImporters": []
+            "adapterImporters": [
+              "src/workbench/claude-host.ts"
+            ]
           }
         },
         {
