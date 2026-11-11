@@ -592,7 +592,7 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
     // wb-kku9.1: one half per clause, in the sentence's order, bound to the observation-class census (its rows B, R and C).
     halves: [
       gate("no-authority-kind-or-reference", [pin(OBSERVATION_CENSUS, "B1: hyperunixTopology over hyperunix.find/v1 readings of every read kind, whose rows name tracker, gate, run and repository paths, carries no beads, forge, furnace or git kind, reference or edge")]),
-      gate("host-grouping-only", [pin(OBSERVATION_CENSUS, "R1 R-HOST-OPERATION: the HX adapter echoes the operation the host names as its display grouping, and no src module calls either topology adapter")]),
+      gate("host-grouping-only", [pin(OBSERVATION_CENSUS, "R1 R-HOST-OPERATION: the HX adapter echoes the operation the host names as its display grouping; its one src caller is the observation-class Claude host and no src module calls the Claude topology adapter")]),
       gate("never-an-authority", [pin(OBSERVATION_CENSUS, "C1: the module graph: the observation class, the authority modules and the five holders are the measured rosters and no edge joins the first two outside the holders")]),
     ],
   },
@@ -1004,7 +1004,7 @@ const identityOf = (row: Row): string[] => [
 const FROZEN_H3: readonly string[] = [
   "quote | An HX answer is an observation only: the hyperunix.find reader adapter projects one hyperunix.query.snapshot whose evidence references are hx-binary and hx-coverage references only and no Beads, Forge, Furnace or Git kind or reference, and its one possible edge is the display grouping from the invoking operation the host names, so an HX answer never closes Beads work, passes a Forge gate or stands for a Furnace state or a Git basis.",
   "no-authority-kind-or-reference | test/workbench-observation-class-census.test.ts | B1: hyperunixTopology over hyperunix.find/v1 readings of every read kind, whose rows name tracker, gate, run and repository paths, carries no beads, forge, furnace or git kind, reference or edge",
-  "host-grouping-only | test/workbench-observation-class-census.test.ts | R1 R-HOST-OPERATION: the HX adapter echoes the operation the host names as its display grouping, and no src module calls either topology adapter",
+  "host-grouping-only | test/workbench-observation-class-census.test.ts | R1 R-HOST-OPERATION: the HX adapter echoes the operation the host names as its display grouping; its one src caller is the observation-class Claude host and no src module calls the Claude topology adapter",
   "never-an-authority | test/workbench-observation-class-census.test.ts | C1: the module graph: the observation class, the authority modules and the five holders are the measured rosters and no edge joins the first two outside the holders",
 ];
 const FROZEN_A1: readonly string[] = [

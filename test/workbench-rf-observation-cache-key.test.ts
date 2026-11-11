@@ -1342,6 +1342,7 @@ const RF_CONSUMERS: Readonly<Record<string, string>> = {
   "src/workbench/process-env.ts": "spawn environment",
   "src/workbench/providers/reactivefiber.ts": "producer (reading = envelope verbatim)",
   "src/workbench/reactivefiber-observer.ts": "projection",
+  "src/workbench/reactivefiber-wiring.ts": "projection (host-seam observe-wiring: applies the observer's topology to the live projection)",
   "src/workflow/reconcile.ts": "reconcile read roster",
 };
 const RF_TOKEN = /reactivefiber|reactive_fiber|REACTIVE_?FIBER/i;

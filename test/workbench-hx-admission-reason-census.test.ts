@@ -102,8 +102,8 @@
  * registered provider hands the surviving containers, the armed carriers among them, to its invoking caller verbatim - only the
  * display projection withholds them, so the echo the statement owes binds the armed half, not today's raw reading (Q4);
  * R-INTERRUPTED a stem split by a zero-width code point or spelled with a homoglyph letter is not caught (Q5); R-SCOPE the trigger
- * reads the two files the acceptance names: the src modules that load the HX SDK or provider lie outside it, and no src module
- * imports the adapter yet (Q6); R-EMBEDDED provider evidence embedded in an admission record's own checked-fact text is echoed
+ * reads the two files the acceptance names: the src modules that load the HX SDK or provider lie outside it, and so does the one
+ * src module that imports the adapter, the Claude host's node seam (wb-79k.1: src/workbench/claude-host.ts) (Q6); R-EMBEDDED provider evidence embedded in an admission record's own checked-fact text is echoed
  * verbatim by the honest reader and no check fires, because (c) binds the per-law trace and (b) owes the facts verbatim (Q7).
  * SCOPE: the stem judge does not read negation or context, so a comment that merely mentions a stem in either file reds A1
  * (OVER-READ, disclosed: neither file spells one today, and an edit that must will re-measure this census). The armed contract
