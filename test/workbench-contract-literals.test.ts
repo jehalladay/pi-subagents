@@ -50,6 +50,7 @@ import { DETACHED_CONTRACT } from "../src/workbench/hosts/local-detached.js";
 import { HYPERUNIX_OBSERVATION_CONTRACT } from "../src/workbench/hyperunix-observer.js";
 import { WORKFLOW_SCRIPT_SCHEMA_VERSION } from "../src/workbench/identity.js";
 import { LATENCY_CONTRACT } from "../src/workbench/latency.js";
+import { MECHANICAL_HOST_BINDING_CONTRACT } from "../src/workbench/mechanical-host-binding.js";
 import { OBSERVE_CONTRACT } from "../src/workbench/observe-query.js";
 import { PATCH_PROPOSAL_CONTRACT } from "../src/workbench/patch-proposal.js";
 import { FORGE_GATE_STATUS_CONTRACT } from "../src/workbench/providers/forge.js";
@@ -117,6 +118,8 @@ const CARRIERS: Readonly<Record<string, string>> = {
   "workbench.forge-gate-run/v1": "index.ts",
   // wb-4ap.17: Forge's own result contract, carried once by the gate.run reader that reads a reply's run-start pin only under it.
   "result-envelope/v1": "workbench/forge-operation-observer.ts",
+  // wb-w8fk: MechanicalWorkflows' proposed host binding contract (a producer proposal, not adopted), spelled once by its Pi consumer.
+  "mechanical.pi-host/v1": "workbench/mechanical-host-binding.ts",
 };
 
 /**
@@ -464,7 +467,7 @@ describe("contract literals have one carrier each", () => {
       BEADS_WORK_CONTRACT, FURNACE_EXTERNAL_OBSERVATION_CONTRACT, HYPERUNIX_OBSERVATION_CONTRACT, REACTIVEFIBER_OBSERVATION_CONTRACT,
       EXECUTABLE_IDENTITY_CONTRACT, FURNACE_HOSTED_CONTRACT, PATCH_PROPOSAL_CONTRACT, VALIDATE_REPLY_CONTRACT_VERSION,
       LATENCY_CONTRACT, OBSERVE_CONTRACT, TELEMETRY_CONTRACT, TELEMETRY_EVENT_CONTRACT,
-      CLAUDE_EVIDENCE_CONTRACT, EXECUTE_CONTRACT_VERSION, CONTROL_REPLY_CONTRACT_VERSION, GRAPH_VIEW_CONTRACT,
+      CLAUDE_EVIDENCE_CONTRACT, EXECUTE_CONTRACT_VERSION, CONTROL_REPLY_CONTRACT_VERSION, GRAPH_VIEW_CONTRACT, MECHANICAL_HOST_BINDING_CONTRACT,
     }).toEqual({
       FORGE_GATE_STATUS_CONTRACT: "forge.gate.status/v1",
       FURNACE_RUN_INSPECT_CONTRACT: "furnace.run.inspect/v1",
@@ -498,6 +501,7 @@ describe("contract literals have one carrier each", () => {
       EXECUTE_CONTRACT_VERSION: "workbench.execute/v1",
       CONTROL_REPLY_CONTRACT_VERSION: "workbench.control-reply/v1",
       GRAPH_VIEW_CONTRACT: "workbench.graph-view/v1",
+      MECHANICAL_HOST_BINDING_CONTRACT: "mechanical.pi-host/v1",
     });
   });
 

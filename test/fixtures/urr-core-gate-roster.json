@@ -3146,6 +3146,7 @@
        "src/README.md"
       ],
       "rfCensus": [
+       "src/workbench/mechanical-host-binding.ts | StringLiteral < ArrayLiteralExpression < AsExpression < CallExpression Object.freeze #0 | \"rf-committed-v1\"",
        "src/workbench/process-env.ts | StringLiteral < ArrayLiteralExpression < CallExpression Object.freeze #0 | \"RF_WORKSPACE\"",
        "src/workbench/process-env.ts | StringLiteral < ArrayLiteralExpression < CallExpression Object.freeze #0 | \"SWARM_RF_WORKSPACE\"",
        "src/workbench/providers/reactivefiber.ts | RegularExpressionLiteral < PropertyAccessExpression < CallExpression /^RF_[A-Z0-9_]+$/.test callee | \"^RF_[A-Z0-9_]+$\"",
