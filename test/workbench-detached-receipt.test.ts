@@ -7,39 +7,45 @@
  *   docs/workbench/14-qa-and-benchmarks.md, "Truth labels and release gates": "Every test evidence artifact includes revision, tool versions, commands, timestamp, host, native references and actual output."
  *
  * qa/workbench/detached-reattach-receipt.mjs is the pure judge (assessDetachedReattachJourneys, buildDetachedReattachReceipt,
- * exitCodeFor) and the live runner (`npm run build && node qa/workbench/detached-reattach-receipt.mjs`): a module-API client
- * process launches the saved fixture workflow on the local detached profile and exits entirely; the detached host itself
- * writes the exactly-once effect marker after that exit; a booted Pi extension relaunched in a new process reattaches by the
- * invocation ref through workflow_detached inspect with zero control verbs; the host is killed with SIGKILL and a second
- * booted Pi inspects after the loss.
- * NARROWING (a disclosed scope boundary; the bead's acceptance asks for the marker "AFTER full Pi client exit"): the client
- * whose exit the marker follows is that module-API launching client, not a Pi client. The registered workflow_detached launch
- * passes providers [] and no localProvider (PI_PIN below), so a script it launches has no capability through which the host
- * could write a marker, and this bead leaves src untouched. The launching client therefore imports the compiled host module,
- * calls its launchDetachedWorkflow with a reviewed trusted-local provider and boots no Pi extension (RUNNER below), and the
- * receipt's own wording carries the matching non-claim. The Pi processes of the journeys are the relaunched observer and the
- * post-loss inspector.
+ * exitCodeFor) and the live runner (`npm run build && node qa/workbench/detached-reattach-receipt.mjs`). This census never
+ * runs the runner. The runner is written to measure four journeys when it runs: a module-API client process launches the
+ * saved fixture workflow on the local detached profile and exits; the detached host writes the effect marker after that exit;
+ * a booted Pi extension relaunched in a new process reattaches by the invocation ref through workflow_detached inspect; the
+ * host is killed and a second booted Pi inspects after the loss.
+ * NARROWING (a disclosed scope boundary, R-B773; the bead's acceptance asks for the marker "AFTER full Pi client exit"): the
+ * client whose exit the marker follows is the runner's launchClient role, a module-API client, and a Pi-client exit is not
+ * claimed. The registered workflow_detached launch call passes providers as an empty array literal and no localProvider key
+ * (PI_PIN below) and this bead leaves src untouched, so launchClient imports RUNNER_ENTRIES.host and calls
+ * launchDetachedWorkflow on that import, while the member access RUNNER_ENTRIES.extension appears only in piInspectClient and
+ * toolVersions and harness spells RUNNER_ENTRIES only in Object.values(RUNNER_ENTRIES) (RUNNER and RUNNER_CALLS below). The
+ * receipt's fifth non-claim states the same boundary.
  *
  * PINNED reader set (this file; every case runs offline over fabricated journeys and three source texts - src/index.ts and the
  * receipt module, each read as a TypeScript syntax tree, and this file itself, read as its leading comment, this header, and as
- * a syntax tree for its case titles - and starts no process).
+ * a syntax tree for its case titles, imports and reads - and starts no process).
  * Each label below opens exactly one header line and at least one case title:
  *   CLEAN: the clean journey is judged realised with no finding and maps to exit 0.
  *   MUTANTS: rows for every finding rule of DETACHED_REATTACH_FINDING_RULES (host-not-detached, host-stopped-by-client-exit, effect-lost, effect-not-in-host, duplicate-effect, reattach-failed, reattach-identity-mismatch, no-own-terminal, observer-control-call, replayed-verdict, unknown-not-reconcilable, rerun-after-loss, overclaim), in roster order with frozen per-rule row counts; each row's mutant is judged realised with its rule among the findings and maps to exit 1.
  *   NOT_REALISED: rows for every condition of DETACHED_REATTACH_UNREALISED (launch-and-exit-unarmed, continued-execution-unarmed, observer-reattach-unarmed, host-loss-unarmed, evidence-block-missing, client-not-exited, host-pid-invalid, effect-before-exit, observer-not-booted, host-not-lost, inspector-not-booted), in roster order with frozen per-condition row counts; each row's plant is judged not realised with its condition among the unmet ones, directly and through a built receipt that then maps to exit 2.
  *   SHAPE: the built receipt carries contract, utc, revision, tools, host, commands, nativeRefs, wording, launchProfile, journeys, markerCounts, findings, unrealised, diagnostics, realised and pass, in that order, frozen at every depth, with the wording stamped from the module's constants.
- *   SCRUB: one row per block of DETACHED_REATTACH_SCRUBBED (tools, host, commands, nativeRefs, launchProfile, journeys, markerCounts, findings, diagnostics): an absolute path planted in a string value of that block (for findings, a markerCounts key that a duplicate-effect detail names) reaches the built block as its basename only.
+ *   SCRUB: one row per block of DETACHED_REATTACH_SCRUBBED (tools, host, commands, nativeRefs, launchProfile, journeys, markerCounts, findings, diagnostics), in roster order: the row plants PLANTED/<name> paths (PLANTED is /tmp/wb-scrub-plant/deep; the commands row plants two, the others one) in one string value of that block (for findings, in a markerCounts key that a duplicate-effect detail names), and the built block deep-equals the planted input's block with each planted path written as its bare <name> (for findings, exactly one duplicate-effect finding whose detail is the row's text), so the planted value reads exactly as the row's scrubbed text and no other value of the block changes; the three-path SCRUB case reads each of its planted values as its exact scrubbed text.
  *   REFUSALS: one row per requirement of DETACHED_REATTACH_REQUIRED (utc, revision, tools.node, tools.package, host.hostname, host.platform, host.arch, commands, commands.entry): an input that breaks it - an empty utc or revision, tools or host without that key, an empty commands list, an empty command - makes buildDetachedReattachReceipt throw its own error naming the field.
- *   PI_PIN: the one registered workflow_detached launch call in src/index.ts passes providers as an empty array literal, permissions as the string literals of PI_TOOL_PERMISSIONS (inspect, execute), and no localProvider property, among its own properties or in the object literals it spreads.
- *   RUNNER: in the runner, the Pi role piInspectClient imports RUNNER_ENTRIES.extension (dist/index.js) and uses the workflow_detached tool only through execute calls whose action is the string literal inspect; the launcher role launchClient imports RUNNER_ENTRIES.host (dist/workbench/hosts/local-detached.js), calls launchDetachedWorkflow and names neither the Pi extension entry nor workflow_detached; toolVersions digests both entries; every kill call naming hostPid in harness sends the string literal SIGKILL, and the host-loss record's signal is that literal (the signal sent: the host is not the harness's child); the runner imports basenameOnly and faultProviderSource from ./local-detached-faults-receipt.mjs.
+ *   PI_PIN: src/index.ts spells the string literal workflow_detached once, as the name of the one object literal passed to defineTool inside a registerTool call, and spells localProvider and __proto__ nowhere (no identifier, no string literal); inside that tool object launchDetachedWorkflow is spelled once, as the member of one direct call whose first argument is an object literal; every spread of that argument reaches only object literals, through parentheses and conditionals, and every key, its own and in those object literals, resolves to a static name (an identifier, string, numeric or template-literal key, a shorthand, method or accessor name, or a computed key holding such a literal), and among them providers appears once, initialized by an empty array literal, and permissions once, initialized by an array literal of the string literals of PI_TOOL_PERMISSIONS (inspect, execute).
+ *   RUNNER: in the runner, RUNNER_ENTRIES (RUNNER_ENTRIES.host (dist/workbench/hosts/local-detached.js) and RUNNER_ENTRIES.extension (dist/index.js)) is declared once and otherwise spelled at five sites: launchClient's RUNNER_ENTRIES.host, piInspectClient's RUNNER_ENTRIES.extension, both in toolVersions and harness's Object.values(RUNNER_ENTRIES); the runner's own import declarations are exactly the nine its RUNNER case lists, it re-exports nothing, and it holds exactly two dynamic imports, launchClient's of pathToFileURL(join(ROOT, RUNNER_ENTRIES.host)).href and piInspectClient's of pathToFileURL(join(ROOT, RUNNER_ENTRIES.extension)).href, with ROOT declared once as join(dirname(SELF), "..", ".."), SELF once as fileURLToPath(import.meta.url), and join and pathToFileURL once each, by those imports; and it spells none of require, createRequire, getBuiltinModule, eval or Function.
+ *   RUNNER_CALLS: in the runner, launchDetachedWorkflow is spelled once, as host.launchDetachedWorkflow called in launchClient, whose host is declared once there and written only by its dynamic import of RUNNER_ENTRIES.host; the string literal workflow_detached is spelled once, as the argument of piInspectClient's tools.get call; and execute is spelled twice, as the string literal of PI_TOOL_PERMISSIONS and as the member of one direct call in piInspectClient whose second argument is an object literal without spreads holding exactly one action key, resolved as PI_PIN resolves keys, initialized by the string literal inspect.
+ *   RUNNER_SIGNALS: in the runner, kill is spelled four times, each the member of a direct call in harness sending the string literal SIGKILL (process.kill(hostPid, "SIGKILL") twice, a child's kill("SIGKILL") twice); process is never declared, assigned or spelled as a string literal, and hostPid is declared once; the one spawn call spawns process.execPath with this file (SELF) first; the string literal host-loss is spelled at three sites (the journey roster, the judge's journey lookup and harness's record), and the one host-loss record harness assigns has one signal key, initialized by the string literal SIGKILL; and every element access whose key is not a literal is one of the ten the RUNNER_SIGNALS case lists, none in launchClient or piInspectClient.
  * Each positive claim's falsifier: removing or inverting any operand of the && and || chains, at any depth, of the condition of
  * an if statement in assessDetachedReattachJourneys whose branch adds a finding or an unmet condition, or inverting that whole
- * condition, turns a CLEAN, MUTANTS or NOT_REALISED row red; leaving one DETACHED_REATTACH_SCRUBBED block unscrubbed turns its
- * SCRUB row red; dropping one requirement check of buildDetachedReattachReceipt turns its REFUSALS row red; a header label line
- * duplicated, added or emptied, a table row removed with or without its frozen-shape entry, or a roster entry removed here turns
- * the header, frozen-shape or roster row red against the module's own rosters; and a launch property, tool call, import or kill
- * signal changed in source while a comment keeps the old text turns its PI_PIN or RUNNER row red.
- * NOT CLAIMED by this census: the live journey's outcome on any machine (it is measured by running the runner, whose receipt this file never reads); a Pi-client exit before the marker (the narrowing above); launch through the registered workflow_detached tool; remote authentication; hostile-same-user isolation; host-crash durability; native executable identity; removing a conjoined isNumber guard, which only widens its condition, and weakening a comparison rather than removing or inverting it, beyond the rows that plant it; an absolute path in an object key, in utc or revision, or of a single segment; a value of another type that buildDetachedReattachReceipt also refuses; the wording of each row's plant description (a row's rule, condition, block or requirement and the per-table counts are pinned, its description is not).
+ * condition, turns a CLEAN, MUTANTS or NOT_REALISED row red; leaving a SCRUB row's planted path unscrubbed, scrubbing it to any
+ * other text, or changing any other value of that block turns its SCRUB row red; dropping one requirement check of
+ * buildDetachedReattachReceipt turns its REFUSALS row red; a label line (a header line opening with an upper-case label and a
+ * colon, at any indentation) duplicated, added or emptied, a table row removed without its frozen-shape entry, every row of
+ * one rule, condition, block or requirement removed with or without its entry, or a roster entry removed here turns the
+ * header, frozen-shape or roster row red against the module's own rosters; and any change to a spelling count, site,
+ * declaration, import, key or literal that the PI_PIN, RUNNER, RUNNER_CALLS or RUNNER_SIGNALS line states (an alias, a
+ * shadowing declaration, a helper, a quoted or computed key, a second binding, an element access, a changed literal) turns
+ * that line's row red; a comment never satisfies any of them, since each reads a syntax tree.
+ * NOT CLAIMED by this census: the live journey's outcome on any machine (it is measured by running the runner, whose receipt this file never reads); a Pi-client exit before the marker (the narrowing above); launch through the registered workflow_detached tool; remote authentication; hostile-same-user isolation; host-crash durability; native executable identity; whether a process the runner starts loads the Pi extension through a module it imports (the compiled host module) or through a name assembled at run time; a member, module or call reached without spelling its name (by iterating an object's values or entries, or through a function received at run time) and the text inside template literals (the sources the runner writes for the host to load); what launchDetachedWorkflow or any function called from the workflow_detached tool object does with the launch, and the launch of any other registered tool (workflow_execute's detached launcher included); removing a conjoined isNumber guard, which only widens its condition, and weakening a comparison rather than removing or inverting it, beyond the rows that plant it; any absolute path but the SCRUB rows' and the three-path SCRUB case's planted ones, so one in an object key, in utc or revision, or of a single segment; a value of another type that buildDetachedReattachReceipt also refuses; removing one row of a rule or condition that keeps another row together with its frozen per-table count (row counts have no source of truth outside this file); the wording of each row's plant description (a row's rule, condition, block or requirement and the per-table counts are pinned, its description is not).
  */
 import { readFileSync } from "node:fs";
 import ts from "typescript";
@@ -363,24 +369,34 @@ const NOT_REALISED: readonly Unrealised[] = [
   ["inspector-not-booted", "the armed post-loss Pi inspector carries no exit record", o => { Reflect.deleteProperty(lossOf(o), "inspectorExit"); return o; }],
 ];
 
-/** One row per scrubbed block: the block, what it plants, the basename the built block must keep, and the plant. */
-type Scrub = readonly [block: string, plants: string, basename: string, plant: (input: ReceiptInput) => object];
+/**
+ * One row per scrubbed block: the block, what it plants, the exact text the planted value must read as once built, and the
+ * plant, which writes each path it plants through `at` - plantedPath (PLANTED/<name>) for the planted input, bareName
+ * (<name> alone) for the input whose block the built block must equal.
+ */
+type Scrub = readonly [block: string, plants: string, scrubbed: string, plant: (input: ReceiptInput, at: (name: string) => string) => object];
 const PLANTED = "/tmp/wb-scrub-plant/deep";
+const plantedPath = (name: string): string => `${PLANTED}/${name}`;
+const bareName = (name: string): string => name;
 const SCRUB: readonly Scrub[] = [
-  ["tools", "a tool digest names the compiled host module's path", "local-detached.js", input => ({ ...input, tools: { ...input.tools, hostModuleSha256: `missing at ${PLANTED}/local-detached.js` } })],
-  ["host", "the host release names a path", "release-6.12", input => ({ ...input, host: { ...input.host, release: `${PLANTED}/release-6.12` } })],
-  ["commands", "the launch command names the runner and request paths", "request.json", input => ({ ...input, commands: [`node ${PLANTED}/detached-reattach-receipt.mjs --client launch ${PLANTED}/request.json`, ...input.commands.slice(1)] })],
-  ["nativeRefs", "the invocation ref carries a scope path", "invocation-scope", input => ({ ...input, nativeRefs: [{ ...input.nativeRefs[0], scope: `${PLANTED}/invocation-scope` }, ...input.nativeRefs.slice(1)] })],
-  ["launchProfile", "the launch profile names its directory path", "workbench-detached", input => ({ ...input, launchProfile: { ...input.launchProfile, directory: `${PLANTED}/workbench-detached` } })],
-  ["journeys", "the reattached snapshot's hint names a receipt path", "receipt.json", input => {
+  ["tools", "a tool digest names the compiled host module's path", "missing at local-detached.js", (input, at) => ({ ...input, tools: { ...input.tools, hostModuleSha256: `missing at ${at("local-detached.js")}` } })],
+  ["host", "the host release names a path", "release-6.12", (input, at) => ({ ...input, host: { ...input.host, release: at("release-6.12") } })],
+  ["commands", "the launch command names the runner and request paths", "node detached-reattach-receipt.mjs --client launch request.json", (input, at) => ({ ...input, commands: [`node ${at("detached-reattach-receipt.mjs")} --client launch ${at("request.json")}`, ...input.commands.slice(1)] })],
+  ["nativeRefs", "the invocation ref carries a scope path", "invocation-scope", (input, at) => ({ ...input, nativeRefs: [{ ...input.nativeRefs[0], scope: at("invocation-scope") }, ...input.nativeRefs.slice(1)] })],
+  ["launchProfile", "the launch profile names its directory path", "workbench-detached", (input, at) => ({ ...input, launchProfile: { ...input.launchProfile, directory: at("workbench-detached") } })],
+  ["journeys", "the reattached snapshot's hint names a receipt path", "attached at receipt.json", (input, at) => {
     const observed = clean();
-    reattachOf(observed).final.reconcileHint = `attached at ${PLANTED}/receipt.json`;
+    reattachOf(observed).final.reconcileHint = `attached at ${at("receipt.json")}`;
     return { ...input, journeys: observed.journeys };
   }],
-  ["markerCounts", "a marker census value names a path", "marker-note", input => ({ ...input, markerCounts: { ...input.markerCounts, note: `${PLANTED}/marker-note` } })],
-  ["findings", "a duplicate-effect detail names a marker key's path", "pi-exit-reattach-copy", input => ({ ...input, markerCounts: { ...input.markerCounts, [`${PLANTED}/pi-exit-reattach-copy`]: 2 } })],
-  ["diagnostics", "a diagnostic names its scratch path", "source", input => ({ ...input, diagnostics: [`scratch at ${PLANTED}/source`] })],
+  ["markerCounts", "a marker census value names a path", "marker-note", (input, at) => ({ ...input, markerCounts: { ...input.markerCounts, note: at("marker-note") } })],
+  ["findings", "a duplicate-effect detail names a marker key's path", "pi-exit-reattach-copy has 2 markers; the effect must happen exactly once per logical invocation.", (input, at) => ({ ...input, markerCounts: { ...input.markerCounts, [at("pi-exit-reattach-copy")]: 2 } })],
+  ["diagnostics", "a diagnostic names its scratch path", "scratch at source", (input, at) => ({ ...input, diagnostics: [`scratch at ${at("source")}`] })],
 ];
+/** The block a SCRUB row's built block must equal: the bare-name input's block, or for findings the one duplicate-effect finding. */
+function scrubExpected(block: string, scrubbed: string, plant: Scrub[3]): unknown {
+  return block === "findings" ? [{ rule: "duplicate-effect", detail: scrubbed }] : Reflect.get(plant(receiptInput(clean()), bareName), block);
+}
 
 /** One row per receipt requirement: the requirement, what breaks it, the field the refusal names, and the override. */
 type Refusal = readonly [requirement: string, plants: string, field: string, override: object];
@@ -405,7 +421,9 @@ function unfrozenPaths(value: unknown, path: string): string[] {
 // The source pins below are syntax pins: the sources are parsed, so a comment, a string or an earlier textual match never
 // satisfies one, and every lookup that names one node asserts that exactly one exists.
 const CENSUS_PATH = "test/workbench-detached-receipt.test.ts";
-const LABELS = ["CLEAN", "MUTANTS", "NOT_REALISED", "SHAPE", "SCRUB", "REFUSALS", "PI_PIN", "RUNNER"] as const;
+const INDEX_PATH = "src/index.ts";
+const RUNNER_PATH = "qa/workbench/detached-reattach-receipt.mjs";
+const LABELS = ["CLEAN", "MUTANTS", "NOT_REALISED", "SHAPE", "SCRUB", "REFUSALS", "PI_PIN", "RUNNER", "RUNNER_CALLS", "RUNNER_SIGNALS"] as const;
 
 function sourceFile(path: string, kind: ts.ScriptKind): ts.SourceFile {
   return ts.createSourceFile(path, readRepo(path), ts.ScriptTarget.Latest, true, kind);
@@ -428,30 +446,26 @@ function calleeName(call: ts.CallExpression): string | undefined {
   if (ts.isPropertyAccessExpression(call.expression)) return call.expression.name.text;
   return ts.isIdentifier(call.expression) ? call.expression.text : undefined;
 }
-function callsNamed(root: ts.Node, name: string): ts.CallExpression[] {
-  return descendants(root, ts.isCallExpression).filter(call => calleeName(call) === name);
-}
 function dynamicImports(root: ts.Node): ts.CallExpression[] {
   return descendants(root, ts.isCallExpression).filter(call => call.expression.kind === ts.SyntaxKind.ImportKeyword);
-}
-/** The RUNNER_ENTRIES members a node reads, as `RUNNER_ENTRIES.<member>`, in source order. */
-function entriesRead(root: ts.Node): string[] {
-  return descendants(root, ts.isPropertyAccessExpression)
-    .filter(access => ts.isIdentifier(access.expression) && access.expression.text === "RUNNER_ENTRIES")
-    .map(access => `RUNNER_ENTRIES.${access.name.text}`);
-}
-function mentions(root: ts.Node, name: string): boolean {
-  return descendants(root, ts.isIdentifier).some(identifier => identifier.text === name);
 }
 /** A string literal's text; any other node reads as its source text marked as no literal, so it never equals a literal pin. */
 function literal(node: ts.Node | undefined, source: ts.SourceFile): string {
   if (node === undefined) return "(absent)";
   return ts.isStringLiteralLike(node) ? node.text : `${node.getText(source)} (not a string literal)`;
 }
-/** The initializer of an object literal's own `name: value` property, when exactly one exists. */
-function initializer(object: ts.ObjectLiteralExpression, name: string, source: ts.SourceFile): ts.Expression | undefined {
-  const own = object.properties.filter((member): member is ts.PropertyAssignment => ts.isPropertyAssignment(member) && member.name.getText(source) === name);
-  return own.length === 1 ? own[0].initializer : undefined;
+/**
+ * A property name read statically: identifier, private, string, numeric and template-literal names, and computed
+ * names holding such a literal; undefined for any other computed name (and for a bigint name).
+ */
+function keyOf(name: ts.PropertyName): string | undefined {
+  if (ts.isComputedPropertyName(name)) return ts.isStringLiteralLike(name.expression) || ts.isNumericLiteral(name.expression) ? name.expression.text : undefined;
+  return ts.isIdentifier(name) || ts.isPrivateIdentifier(name) || ts.isStringLiteralLike(name) || ts.isNumericLiteral(name) ? name.text : undefined;
+}
+/** The initializer of an object literal's own `key: value` member keyed `name` (as keyOf reads keys), when it is the only own member with that key. */
+function initializer(object: ts.ObjectLiteralExpression, name: string): ts.Expression | undefined {
+  const own = object.properties.filter(member => !ts.isSpreadAssignment(member) && keyOf(member.name) === name);
+  return own.length === 1 && ts.isPropertyAssignment(own[0]) ? own[0].initializer : undefined;
 }
 /** The object literals a spread contributes, read through parentheses and conditionals; any other spread is refused. */
 function spreadObjects(expression: ts.Expression, source: ts.SourceFile): ts.ObjectLiteralExpression[] {
@@ -460,26 +474,76 @@ function spreadObjects(expression: ts.Expression, source: ts.SourceFile): ts.Obj
   if (ts.isObjectLiteralExpression(expression)) return [expression];
   throw new Error(`a spread this reader cannot resolve: ${expression.getText(source)}`);
 }
-/** Every property name an object literal carries, its own and through the object literals it spreads. */
-function propertyNames(object: ts.ObjectLiteralExpression, source: ts.SourceFile): string[] {
-  return object.properties.flatMap(member => (ts.isSpreadAssignment(member) ? spreadObjects(member.expression, source).flatMap(spread => propertyNames(spread, source)) : [member.name.getText(source)]));
+/** Every key an object literal carries, as keyOf reads it, its own and in the object literals it spreads; undefined marks a key keyOf cannot resolve. */
+function propertyKeys(object: ts.ObjectLiteralExpression, source: ts.SourceFile): (string | undefined)[] {
+  return object.properties.flatMap(member => (ts.isSpreadAssignment(member) ? spreadObjects(member.expression, source).flatMap(spread => propertyKeys(spread, source)) : [keyOf(member.name)]));
 }
-/** The value references to `name` under `root`: never a declaration's own name, a member name or a key, and never inside a function that rebinds `name` as a parameter. */
-function references(root: ts.Node, name: string, source: ts.SourceFile): ts.Identifier[] {
-  const found: ts.Identifier[] = [];
+/** Every identifier, private name and string literal under `root` spelled exactly `name`, in source order; a comment or template-literal text is never one. */
+function spelled(root: ts.Node, name: string): ts.Node[] {
+  return descendants(root, (node): node is ts.Node => (ts.isIdentifier(node) || ts.isPrivateIdentifier(node) || ts.isStringLiteralLike(node)) && node.text === name);
+}
+/** The name of the function declaration enclosing `node`, or "module" at module scope. */
+function ownerOf(node: ts.Node): string {
+  for (let at: ts.Node | undefined = node.parent; at !== undefined; at = at.parent) if (ts.isFunctionDeclaration(at)) return at.name?.text ?? "(anonymous)";
+  return "module";
+}
+/** The call that `node` names as its member, `<receiver>.<node>(...)`, or undefined for any other use of `node`. */
+function calledMember(node: ts.Node): ts.CallExpression | undefined {
+  const access = node.parent;
+  if (!ts.isPropertyAccessExpression(access) || access.name !== node) return undefined;
+  return ts.isCallExpression(access.parent) && access.parent.expression === access ? access.parent : undefined;
+}
+function isAssignment(kind: ts.SyntaxKind): boolean {
+  return kind >= ts.SyntaxKind.FirstAssignment && kind <= ts.SyntaxKind.LastAssignment;
+}
+/** Every name a declaration binds under `root`: variables (destructured ones included), parameters, functions, classes, imports and catch bindings. */
+function declaredNames(root: ts.Node): string[] {
+  const names: string[] = [];
+  const bind = (name: ts.BindingName): void => {
+    if (ts.isIdentifier(name)) names.push(name.text);
+    else for (const element of name.elements) if (!ts.isOmittedExpression(element)) bind(element.name);
+  };
   const visit = (node: ts.Node): void => {
-    if (ts.isFunctionLike(node) && node !== root && node.parameters.some(parameter => parameter.name.getText(source) === name)) return;
-    if (ts.isIdentifier(node) && node.text === name) {
-      const parent = node.parent;
-      const declared = ts.isVariableDeclaration(parent) && parent.name === node;
-      const memberName = ts.isPropertyAccessExpression(parent) && parent.name === node;
-      const key = ts.isPropertyAssignment(parent) && parent.name === node;
-      if (!declared && !memberName && !key) found.push(node);
-    }
+    if (ts.isVariableDeclaration(node) || ts.isParameter(node)) bind(node.name);
+    else if ((ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node) || ts.isClassDeclaration(node) || ts.isClassExpression(node)) && node.name) names.push(node.name.text);
+    else if (ts.isImportClause(node) && node.name) names.push(node.name.text);
+    else if (ts.isNamespaceImport(node) || ts.isImportSpecifier(node)) names.push(node.name.text);
     ts.forEachChild(node, visit);
   };
   visit(root);
-  return found;
+  return names;
+}
+/** The one variable declaration of `name` in `source`, as `<name> = <initializer>`, or how many there are. */
+function declarationOf(source: ts.SourceFile, name: string): string {
+  const found = descendants(source, ts.isVariableDeclaration).filter(declaration => ts.isIdentifier(declaration.name) && declaration.name.text === name);
+  return found.length === 1 ? `${name} = ${found[0].initializer?.getText(source) ?? "(no initializer)"}` : `${found.length} declarations of ${name}`;
+}
+/** Each use of the identifier `name` under `root`, in source order: declared, written (with the operator and the written expression) or read (with its parent); member names and keys are not uses. */
+function valueUses(root: ts.Node, name: string, source: ts.SourceFile): string[] {
+  return descendants(root, ts.isIdentifier)
+    .filter(node => node.text === name && !(ts.isPropertyAccessExpression(node.parent) && node.parent.name === node) && !(ts.isPropertyAssignment(node.parent) && node.parent.name === node))
+    .map(node => {
+      const parent = node.parent;
+      if (ts.isVariableDeclaration(parent) && parent.name === node) return "declared";
+      if (ts.isBinaryExpression(parent) && parent.left === node && isAssignment(parent.operatorToken.kind)) return `written ${parent.operatorToken.getText(source)} ${parent.right.getText(source)}`;
+      return `read: ${parent.getText(source)}`;
+    });
+}
+/** Each import declaration of `source` as `<specifier>: <bound names>`, in source order. */
+function importsOf(source: ts.SourceFile): string[] {
+  return source.statements.filter(ts.isImportDeclaration).map(statement => {
+    const clause = statement.importClause;
+    const bindings = clause?.namedBindings;
+    const named =
+      bindings === undefined ? [] : ts.isNamedImports(bindings) ? bindings.elements.map(element => (element.propertyName ? `${element.propertyName.getText(source)} as ${element.name.text}` : element.name.text)) : [`* as ${bindings.name.text}`];
+    return `${literal(statement.moduleSpecifier, source)}: ${[...(clause?.name ? [clause.name.text] : []), ...named].join(", ")}`;
+  });
+}
+/** Every element access under `root` whose key is not a string or numeric literal, as `<owner>:<text>`, in source order. */
+function computedAccesses(root: ts.Node, source: ts.SourceFile): string[] {
+  return descendants(root, ts.isElementAccessExpression)
+    .filter(access => !ts.isStringLiteralLike(access.argumentExpression) && !ts.isNumericLiteral(access.argumentExpression))
+    .map(access => `${ownerOf(access)}:${access.getText(source)}`);
 }
 function censusHeader(): string {
   const text = readRepo(CENSUS_PATH);
@@ -663,18 +727,18 @@ describe("wb-0kg.3 receipt rosters and frozen shapes: the module rosters, the MU
     expect(new Set(NOT_REALISED.map(([, plants]) => plants)).size).toBe(NOT_REALISED.length);
   });
 
-  it("SCRUB holds one row per block of the module's DETACHED_REATTACH_SCRUBBED, in roster order, with the frozen block:basename shapes and distinct plants", () => {
+  it("SCRUB holds one row per block of the module's DETACHED_REATTACH_SCRUBBED, in roster order, with the frozen block:scrubbed-text shapes and distinct plants", () => {
     expect(SCRUB.map(([block]) => block)).toEqual([...DETACHED_REATTACH_SCRUBBED]);
-    expect(SCRUB.map(([block, , basename]) => `${block}:${basename}`)).toEqual([
-      "tools:local-detached.js",
+    expect(SCRUB.map(([block, , scrubbed]) => `${block}:${scrubbed}`)).toEqual([
+      "tools:missing at local-detached.js",
       "host:release-6.12",
-      "commands:request.json",
+      "commands:node detached-reattach-receipt.mjs --client launch request.json",
       "nativeRefs:invocation-scope",
       "launchProfile:workbench-detached",
-      "journeys:receipt.json",
+      "journeys:attached at receipt.json",
       "markerCounts:marker-note",
-      "findings:pi-exit-reattach-copy",
-      "diagnostics:source",
+      "findings:pi-exit-reattach-copy has 2 markers; the effect must happen exactly once per logical invocation.",
+      "diagnostics:scratch at source",
     ]);
     expect(new Set(SCRUB.map(([, plants]) => plants)).size).toBe(SCRUB.length);
   });
@@ -696,11 +760,11 @@ describe("wb-0kg.3 receipt rosters and frozen shapes: the module rosters, the MU
     expect(() => buildDetachedReattachReceipt(receiptInput(clean()))).not.toThrow();
   });
 
-  it("the header holds each PINNED label on exactly one line, in order, opening a case title, its lines name the module's rosters, fields, pins and clean exit, and its one NOT CLAIMED sentence names every receipt non-claim", () => {
+  it("the header holds each PINNED label on exactly one line, in order, opening a case title, at any indentation no other label line, its lines name the module's rosters, fields, pins and clean exit and the RUNNER_CALLS and RUNNER_SIGNALS lines their call and signal tokens, and its one NOT CLAIMED sentence names every receipt non-claim", () => {
     const header = censusHeader();
     expect(header.startsWith("/**")).toBe(true);
     const lines = header.split("\n");
-    expect(lines.map(line => /^ \* {3}([A-Z_]+): /.exec(line)?.[1]).filter(label => label !== undefined)).toEqual([...LABELS]);
+    expect(lines.map(line => /^\s*\*\s*([A-Z][A-Z_]*):\s/.exec(line)?.[1]).filter(label => label !== undefined)).toEqual([...LABELS]);
     const listed = (label: string): string => {
       const found = lines.filter(line => line.startsWith(` *   ${label}: `));
       expect(found, label).toHaveLength(1);
@@ -714,6 +778,8 @@ describe("wb-0kg.3 receipt rosters and frozen shapes: the module rosters, the MU
     expect(named(listed("PI_PIN"), "PI_TOOL_PERMISSIONS")).toEqual([...PI_TOOL_PERMISSIONS]);
     expect(named(listed("RUNNER"), "RUNNER_ENTRIES.extension")).toEqual([RUNNER_ENTRIES.extension]);
     expect(named(listed("RUNNER"), "RUNNER_ENTRIES.host")).toEqual([RUNNER_ENTRIES.host]);
+    for (const token of ["launchDetachedWorkflow", "tools.get", "PI_TOOL_PERMISSIONS", "the string literal inspect"]) expect(listed("RUNNER_CALLS"), token).toContain(token);
+    for (const token of ['process.kill(hostPid, "SIGKILL")', "host-loss", "spawn"]) expect(listed("RUNNER_SIGNALS"), token).toContain(token);
     const fields = /receipt carries (.*?), in that order/.exec(listed("SHAPE"))?.[1] ?? "";
     expect(fields.replace(" and ", ", ").split(", ")).toEqual(Object.keys(buildDetachedReattachReceipt(receiptInput(clean()))));
     expect(/maps to exit (\d)/.exec(listed("CLEAN"))?.[1]).toBe(String(exitCodeFor(buildDetachedReattachReceipt(receiptInput(clean())))));
@@ -726,6 +792,24 @@ describe("wb-0kg.3 receipt rosters and frozen shapes: the module rosters, the MU
       expect(subject.length, claim).toBeGreaterThan(0);
       expect(notClaimed[0], subject).toContain(subject);
     }
+  });
+
+  it("the PINNED reader set: this census imports only node:fs, typescript, vitest and the receipt module, holds no dynamic import and no require, and reads source text only through readRepo, of this file, src/index.ts and the receipt module", () => {
+    const source = sourceFile(CENSUS_PATH, ts.ScriptKind.TS);
+    expect(importsOf(source)).toEqual([
+      "node:fs: readFileSync",
+      "typescript: ts",
+      "vitest: describe, expect, it",
+      "../qa/workbench/detached-reattach-receipt.mjs: assessDetachedReattachJourneys, buildDetachedReattachReceipt, DETACHED_REATTACH_CONTRACT, DETACHED_REATTACH_FINDING_RULES, DETACHED_REATTACH_JOURNEYS, DETACHED_REATTACH_REQUIRED, DETACHED_REATTACH_SCRUBBED, DETACHED_REATTACH_UNREALISED, DETACHED_REATTACH_WORDING, exitCodeFor, PI_TOOL_PERMISSIONS, RUNNER_ENTRIES",
+    ]);
+    // This file names the spellings it looks up as string literals, so its own read counts identifiers only.
+    expect(dynamicImports(source).map(call => call.getText(source))).toEqual([]);
+    expect(["require", "createRequire", "getBuiltinModule", "eval", "Function"].flatMap(name => spelled(source, name).filter(ts.isIdentifier).map(node => node.getText(source)))).toEqual([]);
+    expect(spelled(source, "readFileSync").filter(ts.isIdentifier).map(node => `${ownerOf(node)}:${ts.isImportSpecifier(node.parent) ? "imported" : ts.isCallExpression(node.parent) && node.parent.expression === node ? "called" : "another use"}`)).toEqual(["module:imported", "readRepo:called"]);
+    const reads = descendants(source, ts.isCallExpression).filter(call => calleeName(call) === "readRepo" || calleeName(call) === "sourceFile");
+    expect([...new Set(reads.map(call => `${calleeName(call)}(${call.arguments[0]?.getText(source)})`))].sort()).toEqual(["readRepo(CENSUS_PATH)", "readRepo(path)", "sourceFile(CENSUS_PATH)", "sourceFile(INDEX_PATH)", "sourceFile(RUNNER_PATH)"]);
+    expect(reads.filter(call => call.arguments[0]?.getText(source) === "path").map(ownerOf)).toEqual(["sourceFile"]);
+    expect([CENSUS_PATH, INDEX_PATH, RUNNER_PATH]).toEqual(["test/workbench-detached-receipt.test.ts", "src/index.ts", "qa/workbench/detached-reattach-receipt.mjs"]);
   });
 });
 
@@ -781,7 +865,7 @@ describe("wb-0kg.3 receipt SHAPE, SCRUB and REFUSALS: the docs/14 evidence field
     expect(receipt.pass).toBe(true);
   });
 
-  it("SCRUB: the absolute paths planted together in a journey hint, the launch command and a diagnostic scrub to exact basenames", () => {
+  it("SCRUB: three absolute paths planted together, in a journey hint, the launch command and a diagnostic, are built exactly as attached at receipt.json, node detached-reattach-receipt.mjs --client launch request.json and scratch at source, with no /tmp/, /home/someone or wb-reattach-abc text left in the receipt", () => {
     const input = receiptInput(clean());
     const observed = clean();
     reattachOf(observed).final.reconcileHint = "attached at /tmp/wb-reattach-abc/agent/workbench-detached/pi-exit-reattach/receipt.json";
@@ -791,19 +875,19 @@ describe("wb-0kg.3 receipt SHAPE, SCRUB and REFUSALS: the docs/14 evidence field
       commands: ["node /home/someone/repo/qa/workbench/detached-reattach-receipt.mjs --client launch /tmp/wb-reattach-abc/request.json", ...input.commands.slice(1)],
       diagnostics: ["scratch at /tmp/wb-reattach-abc/source"],
     });
-    const text = JSON.stringify(receipt);
-    expect(text).not.toMatch(/\/tmp\/|\/home\/someone/);
-    expect(text).toContain("receipt.json");
-    expect(receipt.commands[0]).toBe("node detached-reattach-receipt.mjs --client launch request.json");
+    expect(JSON.stringify(receipt)).not.toMatch(/\/tmp\/|\/home\/someone|wb-reattach-abc/);
+    expect(receipt.journeys["observer-reattach"].final.reconcileHint).toBe("attached at receipt.json");
+    expect(receipt.commands).toEqual(["node detached-reattach-receipt.mjs --client launch request.json", ...input.commands.slice(1)]);
     expect(receipt.diagnostics).toEqual(["scratch at source"]);
   });
 
-  it.each(SCRUB.map(([block, plants, basename, plant]) => ({ block, plants, basename, plant })))("SCRUB $block: $plants, built as its basename $basename", ({ block, basename, plant }) => {
-    const planted = plant(receiptInput(clean()));
+  it.each(SCRUB.map(([block, plants, scrubbed, plant]) => ({ block, plants, scrubbed, plant })))("SCRUB $block: $plants, built exactly as $scrubbed with the rest of the block unchanged", ({ block, scrubbed, plant }) => {
+    const planted = plant(receiptInput(clean()), plantedPath);
     expect(JSON.stringify(planted)).toContain(PLANTED);
-    const built = JSON.stringify(buildDetachedReattachReceipt(planted)[block]);
-    expect(built).toContain(basename);
-    expect(built).not.toContain("/tmp/");
+    const built = Reflect.get(buildDetachedReattachReceipt(planted), block);
+    expect(built).toEqual(scrubExpected(block, scrubbed, plant));
+    expect(JSON.stringify(built)).toContain(JSON.stringify(scrubbed));
+    expect(JSON.stringify(built)).not.toContain("wb-scrub-plant");
   });
 
   it.each(REFUSALS.map(([requirement, plants, field, override]) => ({ requirement, plants, field, override })))("REFUSALS $requirement: $plants is refused, naming $field", ({ field, override }) => {
@@ -811,79 +895,155 @@ describe("wb-0kg.3 receipt SHAPE, SCRUB and REFUSALS: the docs/14 evidence field
   });
 });
 
-describe("wb-0kg.3 PI_PIN and RUNNER, read as syntax trees: the registered workflow_detached launch literals, and the runner's role imports, tool calls, launch call and kill signal", () => {
-  it("PI_PIN: the one registered workflow_detached launch call in src/index.ts passes providers [], permissions [inspect, execute] and no localProvider", () => {
-    const source = sourceFile("src/index.ts", ts.ScriptKind.TS);
-    const tools = descendants(source, ts.isObjectLiteralExpression).filter(object => literal(initializer(object, "name", source), source) === "workflow_detached");
-    expect(tools).toHaveLength(1);
-    const launches = callsNamed(tools[0], "launchDetachedWorkflow");
+describe("wb-0kg.3 PI_PIN and the RUNNER lines, read as syntax trees: the spellings, keys and literals of the registered workflow_detached launch, and the runner's entry sites, module loads, calls and signals", () => {
+  it("PI_PIN: src/index.ts spells workflow_detached once, as its registered tool object's name, and never spells localProvider or __proto__; that tool object's one launchDetachedWorkflow call passes providers [] and permissions [inspect, execute], its spreads and keys all resolved", () => {
+    const source = sourceFile(INDEX_PATH, ts.ScriptKind.TS);
+    const names = spelled(source, "workflow_detached");
+    expect(names).toHaveLength(1);
+    const assignment = names[0].parent;
+    const tool = assignment.parent;
+    if (!ts.isPropertyAssignment(assignment) || assignment.initializer !== names[0] || keyOf(assignment.name) !== "name" || !ts.isObjectLiteralExpression(tool)) {
+      throw new Error(`workflow_detached is not a tool object's name: ${assignment.getText(source)}`);
+    }
+    const defined = tool.parent;
+    const registered = defined.parent;
+    expect([
+      ts.isCallExpression(defined) && calleeName(defined) === "defineTool" && defined.arguments[0] === tool,
+      ts.isCallExpression(registered) && calleeName(registered) === "registerTool" && registered.arguments[0] === defined,
+    ]).toEqual([true, true]);
+    expect(spelled(source, "localProvider").map(node => node.getText(source))).toEqual([]);
+    expect(spelled(source, "__proto__").map(node => node.getText(source))).toEqual([]);
+    const launches = spelled(tool, "launchDetachedWorkflow");
     expect(launches).toHaveLength(1);
-    const launch = launches[0].arguments[0];
-    if (launch === undefined || !ts.isObjectLiteralExpression(launch)) throw new Error("the workflow_detached launch argument is not an object literal");
-    const names = propertyNames(launch, source);
-    expect(names.filter(name => name === "providers")).toHaveLength(1);
-    expect(names.filter(name => name === "permissions")).toHaveLength(1);
-    expect(names).not.toContain("localProvider");
-    expect(descendants(tools[0], ts.isIdentifier).map(identifier => identifier.text)).not.toContain("localProvider");
-    const providers = initializer(launch, "providers", source);
+    const launch = calledMember(launches[0])?.arguments[0];
+    if (launch === undefined || !ts.isObjectLiteralExpression(launch)) throw new Error("the workflow_detached launch is not a direct call with an object literal argument");
+    const keys = propertyKeys(launch, source);
+    expect(keys.filter(key => key === undefined)).toEqual([]);
+    expect(keys.filter(key => key === "providers")).toHaveLength(1);
+    expect(keys.filter(key => key === "permissions")).toHaveLength(1);
+    const providers = initializer(launch, "providers");
     expect(providers !== undefined && ts.isArrayLiteralExpression(providers) ? providers.elements.length : literal(providers, source)).toBe(0);
-    const permissions = initializer(launch, "permissions", source);
+    const permissions = initializer(launch, "permissions");
     expect(permissions !== undefined && ts.isArrayLiteralExpression(permissions) ? permissions.elements.map(element => literal(element, source)) : literal(permissions, source)).toEqual([...PI_TOOL_PERMISSIONS]);
     expect([...PI_TOOL_PERMISSIONS]).toEqual(["inspect", "execute"]);
   });
 
-  it("RUNNER: the Pi role imports dist/index.js and only inspects through workflow_detached execute, the launcher imports the host module and launches without a Pi extension, and harness kills the host with SIGKILL", () => {
-    const source = sourceFile("qa/workbench/detached-reattach-receipt.mjs", ts.ScriptKind.JS);
+  it("RUNNER entries: RUNNER_ENTRIES is declared once and otherwise spelled at its five sites, the runner's own import declarations are the nine listed, it re-exports nothing, and its two dynamic imports are launchClient's of RUNNER_ENTRIES.host and piInspectClient's of RUNNER_ENTRIES.extension", () => {
+    const source = sourceFile(RUNNER_PATH, ts.ScriptKind.JS);
     expect(RUNNER_ENTRIES).toEqual({ host: "dist/workbench/hosts/local-detached.js", extension: "dist/index.js" });
-    const piRole = functionNamed(source, "piInspectClient");
-    const launcher = functionNamed(source, "launchClient");
-    const harness = functionNamed(source, "harness");
+    const declared = declaredNames(source);
+    expect(["RUNNER_ENTRIES", "ROOT", "SELF", "join", "pathToFileURL"].map(name => `${name}:${declared.filter(other => other === name).length}`)).toEqual([
+      "RUNNER_ENTRIES:1",
+      "ROOT:1",
+      "SELF:1",
+      "join:1",
+      "pathToFileURL:1",
+    ]);
+    expect(["SELF", "ROOT"].map(name => declarationOf(source, name))).toEqual(["SELF = fileURLToPath(import.meta.url)", 'ROOT = join(dirname(SELF), "..", "..")']);
+    const sites = spelled(source, "RUNNER_ENTRIES").map(node => {
+      const parent = node.parent;
+      if (ts.isVariableDeclaration(parent) && parent.name === node) return `${ownerOf(node)}:declared`;
+      if (ts.isPropertyAccessExpression(parent) && parent.expression === node) return `${ownerOf(node)}:${parent.getText(source)}`;
+      if (ts.isCallExpression(parent) && parent.arguments.some(argument => argument === node)) return `${ownerOf(node)}:${parent.getText(source)}`;
+      return `${ownerOf(node)}:another use, ${parent.getText(source)}`;
+    });
+    expect(sites).toEqual([
+      "module:declared",
+      "launchClient:RUNNER_ENTRIES.host",
+      "piInspectClient:RUNNER_ENTRIES.extension",
+      "toolVersions:RUNNER_ENTRIES.host",
+      "toolVersions:RUNNER_ENTRIES.extension",
+      "harness:Object.values(RUNNER_ENTRIES)",
+    ]);
+    expect(importsOf(source)).toEqual([
+      "node:child_process: spawn",
+      "node:crypto: createHash",
+      "node:fs: existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, realpathSync, unlinkSync, writeFileSync",
+      "node:os: hostname, release",
+      "node:path: basename, dirname, join",
+      "node:url: fileURLToPath, pathToFileURL",
+      "./git-stamp.mjs: revisionOf",
+      "./local-detached-faults-receipt.mjs: basenameOnly, faultProviderSource",
+      "./scratch.mjs: installScratchLeakGuard, makeScratch, removeScratch",
+    ]);
+    const reexports = source.statements.filter(statement => (ts.isExportDeclaration(statement) && statement.moduleSpecifier !== undefined) || ts.isImportEqualsDeclaration(statement));
+    expect(reexports.map(statement => statement.getText(source))).toEqual([]);
+    expect(dynamicImports(source).map(call => `${ownerOf(call)}:${call.arguments.map(argument => argument.getText(source)).join(", ")}`)).toEqual([
+      "launchClient:pathToFileURL(join(ROOT, RUNNER_ENTRIES.host)).href",
+      "piInspectClient:pathToFileURL(join(ROOT, RUNNER_ENTRIES.extension)).href",
+    ]);
+    expect(["require", "createRequire", "getBuiltinModule", "eval", "Function"].flatMap(name => spelled(source, name).map(node => `${ownerOf(node)}:${node.getText(source)}`))).toEqual([]);
+  });
 
-    expect(dynamicImports(piRole).map(entriesRead)).toEqual([["RUNNER_ENTRIES.extension"]]);
-    const getters = descendants(piRole, ts.isCallExpression).filter(call => ts.isPropertyAccessExpression(call.expression) && call.expression.name.text === "get" && call.expression.expression.getText(source) === "tools");
-    expect(getters.map(call => call.arguments.map(argument => literal(argument, source)))).toEqual([["workflow_detached"]]);
-    const binding = getters[0].parent;
-    if (!ts.isVariableDeclaration(binding) || !ts.isIdentifier(binding.name)) throw new Error("the workflow_detached tool is not bound to a name");
-    const executions: ts.CallExpression[] = [];
-    for (const use of references(piRole, binding.name.text, source)) {
-      const parent = use.parent;
-      if (ts.isPrefixUnaryExpression(parent) && parent.operator === ts.SyntaxKind.ExclamationToken) continue;
-      const call = ts.isPropertyAccessExpression(parent) && parent.name.text === "execute" && ts.isCallExpression(parent.parent) && parent.parent.expression === parent ? parent.parent : undefined;
-      expect(call, parent.getText(source)).toBeDefined();
-      if (call) executions.push(call);
-    }
-    expect(executions.length).toBeGreaterThan(0);
-    for (const call of executions) {
+  it("RUNNER_CALLS: launchDetachedWorkflow is called once, on launchClient's host import; workflow_detached is fetched once, by piInspectClient's tools.get; execute is spelled only as the PI_TOOL_PERMISSIONS literal and as one direct call in piInspectClient whose one action key is the literal inspect", () => {
+    const source = sourceFile(RUNNER_PATH, ts.ScriptKind.JS);
+    const launches = spelled(source, "launchDetachedWorkflow").map(node => `${ownerOf(node)}:${calledMember(node)?.expression.getText(source) ?? `not a direct call, ${node.parent.getText(source)}`}`);
+    expect(launches).toEqual(["launchClient:host.launchDetachedWorkflow"]);
+    expect(valueUses(functionNamed(source, "launchClient"), "host", source)).toEqual([
+      "declared",
+      "written = await import(pathToFileURL(join(ROOT, RUNNER_ENTRIES.host)).href)",
+      "read: host.launchDetachedWorkflow",
+    ]);
+    expect(spelled(source, "workflow_detached").map(node => `${ownerOf(node)}:${node.parent.getText(source)}`)).toEqual(['piInspectClient:tools.get("workflow_detached")']);
+    const executes = spelled(source, "execute");
+    const sites = executes.map(node => `${ownerOf(node)}:${ts.isStringLiteralLike(node) ? `literal in ${node.parent.getText(source)}` : calledMember(node) ? "direct call" : `not a direct call, ${node.parent.getText(source)}`}`);
+    expect(sites).toEqual(['module:literal in ["inspect", "execute"]', "piInspectClient:direct call"]);
+    expect(declarationOf(source, "PI_TOOL_PERMISSIONS")).toBe('PI_TOOL_PERMISSIONS = Object.freeze(["inspect", "execute"])');
+    const calls = executes.map(calledMember).filter((call): call is ts.CallExpression => call !== undefined);
+    expect(calls).toHaveLength(1);
+    for (const call of calls) {
       const params = call.arguments[1];
-      if (params === undefined || !ts.isObjectLiteralExpression(params)) throw new Error(`workflow_detached execute without an object literal: ${call.getText(source)}`);
-      expect(params.properties.some(ts.isSpreadAssignment), call.getText(source)).toBe(false);
-      expect(propertyNames(params, source).filter(name => name === "action"), call.getText(source)).toHaveLength(1);
-      expect(literal(initializer(params, "action", source), source), call.getText(source)).toBe("inspect");
+      if (params === undefined || !ts.isObjectLiteralExpression(params)) throw new Error(`execute without an object literal: ${call.getText(source)}`);
+      expect(params.properties.filter(ts.isSpreadAssignment).map(spread => spread.getText(source)), call.getText(source)).toEqual([]);
+      expect(propertyKeys(params, source).filter(key => key === "action" || key === undefined), call.getText(source)).toEqual(["action"]);
+      expect(literal(initializer(params, "action"), source), call.getText(source)).toBe("inspect");
     }
+  });
 
-    expect(dynamicImports(launcher).map(entriesRead)).toEqual([["RUNNER_ENTRIES.host"]]);
-    expect(callsNamed(launcher, "launchDetachedWorkflow")).toHaveLength(1);
-    expect(entriesRead(launcher)).toEqual(["RUNNER_ENTRIES.host"]);
-    expect(descendants(launcher, ts.isStringLiteralLike).map(literal => literal.text)).not.toContain("workflow_detached");
-    expect(entriesRead(functionNamed(source, "toolVersions"))).toEqual(["RUNNER_ENTRIES.host", "RUNNER_ENTRIES.extension"]);
-
-    const kills = callsNamed(harness, "kill").filter(call => call.arguments.some(argument => mentions(argument, "hostPid")));
-    expect(kills.length).toBeGreaterThan(0);
-    for (const call of kills) {
-      expect([call.arguments.length, call.arguments[0]?.getText(source), literal(call.arguments[1], source)], call.getText(source)).toEqual([2, "hostPid", "SIGKILL"]);
-    }
-    const lossRecords = descendants(harness, ts.isBinaryExpression).filter(
+  it("RUNNER_SIGNALS: kill is spelled only as four direct SIGKILL calls in harness, process is never declared, assigned or quoted, hostPid is declared once, the one spawn runs process.execPath on this file, the one host-loss record's signal is the literal SIGKILL, and the runner's ten literal-free element accesses are the listed ones", () => {
+    const source = sourceFile(RUNNER_PATH, ts.ScriptKind.JS);
+    expect(spelled(source, "kill").map(node => `${ownerOf(node)}:${calledMember(node)?.getText(source) ?? `not a direct call, ${node.parent.getText(source)}`}`)).toEqual([
+      'harness:child.kill("SIGKILL")',
+      'harness:process.kill(hostPid, "SIGKILL")',
+      'harness:child.kill("SIGKILL")',
+      'harness:process.kill(hostPid, "SIGKILL")',
+    ]);
+    const declared = declaredNames(source);
+    expect(["process", "hostPid", "spawn"].map(name => `${name}:${declared.filter(other => other === name).length}`)).toEqual(["process:0", "hostPid:1", "spawn:1"]);
+    const processWrites = descendants(source, ts.isBinaryExpression).filter(binary => isAssignment(binary.operatorToken.kind) && spelled(binary.left, "process").length > 0);
+    expect(processWrites.map(binary => binary.getText(source))).toEqual([]);
+    expect(spelled(source, "process").filter(ts.isStringLiteralLike).map(node => node.getText(source))).toEqual([]);
+    const spawns = spelled(source, "spawn").map(node => {
+      const parent = node.parent;
+      if (ts.isImportSpecifier(parent)) return `${ownerOf(node)}:imported`;
+      if (ts.isCallExpression(parent) && parent.expression === node) return `${ownerOf(node)}:spawn(${parent.arguments.slice(0, 2).map(argument => argument.getText(source)).join(", ")}, ...)`;
+      return `${ownerOf(node)}:another use, ${parent.getText(source)}`;
+    });
+    expect(spawns).toEqual(["module:imported", 'harness:spawn(process.execPath, [SELF, "--client", ...args], ...)']);
+    expect(spelled(source, "host-loss").map(node => `${ownerOf(node)}:${node.parent.getText(source)}`)).toEqual([
+      'module:["launch-and-exit", "continued-execution", "observer-reattach", "host-loss"]',
+      'assessDetachedReattachJourneys:journey("host-loss")',
+      'harness:journeys["host-loss"]',
+    ]);
+    const records = descendants(source, ts.isBinaryExpression).filter(
       binary => binary.operatorToken.kind === ts.SyntaxKind.EqualsToken && ts.isElementAccessExpression(binary.left) && literal(binary.left.argumentExpression, source) === "host-loss",
     );
-    expect(lossRecords).toHaveLength(1);
-    const record = lossRecords[0].right;
+    expect(records.map(record => ownerOf(record))).toEqual(["harness"]);
+    const record = records[0].right;
     if (!ts.isObjectLiteralExpression(record)) throw new Error("the host-loss record is not an object literal");
-    const signal = initializer(record, "signal", source);
-    expect(literal(signal, source)).toBe("SIGKILL");
-
-    const faults = source.statements.filter(ts.isImportDeclaration).filter(statement => literal(statement.moduleSpecifier, source) === "./local-detached-faults-receipt.mjs");
-    expect(faults).toHaveLength(1);
-    const bindings = faults[0].importClause?.namedBindings;
-    expect(bindings !== undefined && ts.isNamedImports(bindings) ? bindings.elements.map(element => element.name.text) : []).toEqual(["basenameOnly", "faultProviderSource"]);
+    expect(propertyKeys(record, source).filter(key => key === "signal" || key === undefined)).toEqual(["signal"]);
+    expect(literal(initializer(record, "signal"), source)).toBe("SIGKILL");
+    expect(computedAccesses(source, source)).toEqual([
+      "module:b[at]",
+      "assessDetachedReattachJourneys:journeys[key]",
+      "assessDetachedReattachJourneys:journeys[key]",
+      "assessDetachedReattachJourneys:journeys[key]",
+      "requiredText:input[field]",
+      "requiredFields:input[field]",
+      "requiredFields:value[key]",
+      "requiredFields:value[key]",
+      "harness:counts[id]",
+      "harness:counts[id]",
+    ]);
   });
 });
