@@ -1,0 +1,31 @@
+{
+ "program": "mechanical-interop-integrity-2026-11-10",
+ "source": {
+  "commit": "53ac7f356096c71447416f64149ae463f0deb7ef",
+  "read": "git cat-file blob <blob>; lines first..last joined with LF, no trailing LF"
+ },
+ "pieces": [
+  {
+   "id": "EAT-R456",
+   "path": "docs/workbench/programs/mechanical-interop-integrity-2026-11-10/requirements/ATOMIC-REQUIREMENTS.md",
+   "blob": "a8a9bf091e2658a9eb698a023bd9bdb7076fa0e5",
+   "lines": [
+    1657,
+    1680
+   ],
+   "sha256": "fb08f608be06a03437ebbb22ad84764d4bd8557fea58d56aeb37c379088cc47b",
+   "text": "## EAT-R456 — Persist QA evidence in a new source-pinned receipt directory; never rewrite provenance; never cite or deny GitHub CI\n\n- Type: REPRESENTATION\n- Authority: NORMATIVE_DECISION; secondary LINGUISTIC_INTEGRITY\n- Statement: All release-program logs and evidence MUST land in a new source-pinned QA receipt directory; older receipts and provenance MUST NOT be rewritten; release evidence MUST NOT cite GitHub CI runs as proof; and program/receipt wording MUST NOT assert that the Pi repository has no GitHub CI.\n- Rationale: doc-04 preamble duty (persist under a new source-pinned QA receipt directory) is NON-EPISTEMIC (NORMATIVE). C181 (SOURCE_REPORT, ESTABLISHED) with cure M190: keep attribution and authoring interval; do not infer no historical tests or a gate-neutral deposit. C138 is REFUTED — the absence claim \"the Pi repository has no GitHub CI\" is false at the pin (a ci.yml with lint/typecheck/test jobs exists at 0fb90672) — so it compiles negatively only: the rule reading \"do not rely on CI as packet evidence\" stands (C034, C136 NON-EPISTEMIC), while the empirical absence wording is barred.\n- Epistemic basis: C181 ESTABLISHED; C138 REFUTED; C034 NON-EPISTEMIC; C136 NON-EPISTEMIC.\n- Derived from / remediation: C181, C138, C034, C136; M190.\n- Executable acceptance criteria:\n  1. A validator asserts every new receipt lives under a directory keyed by both source SHAs and rejects writes into prior receipt directories (append-only custody).\n  2. Grep-gate over program docs and receipts: no sentence asserts \"no GitHub CI\" as a repository fact; evidence tables contain no GitHub Actions run as a gate witness.\n  3. Historical receipts byte-identical before/after the release cut (hash census).\n  4. A validator mutant accepts a write into a prior source-pinned receipt directory; the append-only custody check must turn red.\n- Negative mutant: A validator mutant accepts a write into a prior source-pinned receipt directory; the append-only custody check must turn red.\n- V-tier: V0, V1; EAT-R456@V0/V1 (the draft names no artifact; location per EAT-R456); target detail: V0 + V1 (validator).\n- Conditions / unresolved gates: none. Filing-time / next-text-cycle: RA-16.\n- Maps-to: MII P10; wb-yiu4 (open; re-read at filing).\n- Extends: EAT-R291, EAT-R307, EAT-R308; ADD — the draft stated no EAT lineage (RA-10).\n- Predecessor lineage: The draft stated bead lineage only.\n- Linked rows: none stated in Matrix A.\n- Verifies: none (behaviour/contract or independent decision row).\n- Verified-by: none stated in Matrix A; own gate / validator.\n- L0: TRACEABLE (conditions: RA-16); text consolidated: RA-10, RA-18; acceptance NOT_RUN.\n- Gate status (unexecuted): **NOT_RUN** — validator and grep gate; no external blocker"
+  },
+  {
+   "id": "EAT-R456-clauses",
+   "path": "docs/workbench/programs/mechanical-interop-integrity-2026-11-10/requirements/TDD-MATRIX.md",
+   "blob": "073567e8c568ecc3fe2d894153915aada567add3",
+   "lines": [
+    280,
+    280
+   ],
+   "sha256": "772cca8993f8d9e2d5bdb83c5f29f3826a1b967fe700768530455a3878ff043d",
+   "text": "| EAT-R456 | (a) receipts land in a new source-pinned directory; (b) prior receipts are byte-identical; (c) no GitHub Actions run cited as a gate witness; (d) no sentence asserts the repository has no GitHub CI |"
+  }
+ ]
+}
