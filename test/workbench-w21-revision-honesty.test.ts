@@ -13,7 +13,8 @@
  * entry 8. The ELEVENTH, inspector-grouped-bench.mjs, was the named residual (RESIDUALS) because its guarded test
  * (test/workbench-grouped-fixture.test.ts "keeps the CLI thin") pins an exact static-import list under the 14e78f1
  * two-arm rule; owner bead wb-4jr wired it on 2026-10-17 (after the wb-vko stamp helper landed) and moved its row from
- * RESIDUALS to BENCHES in the same owner commit as the pin, so RESIDUALS is empty at this cut. A W21 bench CLI that
+ * RESIDUALS to BENCHES in the same owner commit as the pin, so RESIDUALS is empty at this cut. A TWELFTH, the graph-view model
+ * bench (wb-9x5.10), landed later and joins BENCHES as the entry-8 second lander in its own commit. A W21 bench CLI that
  * lands later reddens the census until its lander wires it: the entry-8 second-lander duty, mechanical rather than
  * remembered.
  * Override name: $W21_REVISION for the whole family, read by the stamp alone. inspector-cap-saturation's own
@@ -247,6 +248,9 @@ const BENCHES: ReadonlyArray<{ file: string; flow: Flow }> = [
   // The former residual, wired by owner bead wb-4jr (2026-10-17) together with its guarded static-import pin in
   // test/workbench-grouped-fixture.test.ts: the receipt is assigned at module scope inside the CLI's try block.
   { file: "qa/workbench/inspector-grouped-bench.mjs", flow: { kind: "binds", target: "receipt", scope: "<module>" } },
+  // Second-lander row of known-conflicts entry 8 (wb-9x5.10): the graph-view model bench landed after the respin and binds its
+  // stamped receipt inside main(), as attention-grouped-bench does.
+  { file: "qa/workbench/graph-view-grouped-bench.mjs", flow: { kind: "binds", target: "receipt", scope: "main" } },
 ];
 /** W21 bench CLIs not wired yet, each with the bead that owns its wiring (owner ruling R2=(a), 2026-10-16T17:2xZ). None at this cut. */
 const RESIDUALS: ReadonlyArray<{ file: string; bead: string }> = [];
@@ -360,12 +364,12 @@ const exitCodeAssignments = (file: ts.SourceFile): ts.BinaryExpression[] => {
 const within = (node: ts.Node, container: ts.Node): boolean => node.getStart() >= container.getStart() && node.end <= container.end;
 
 describe("the W21 bench CLI census: every W21 bench CLI on the tree is wired or a named residual (gate U1)", () => {
-  it("BENCHES plus RESIDUALS is exactly the W21 bench CLIs on this tree: eleven wired, none residual", () => {
+  it("BENCHES plus RESIDUALS is exactly the W21 bench CLIs on this tree: twelve wired, none residual", () => {
     const wired = BENCHES.map(bench => bench.file);
     const residual = RESIDUALS.map(entry => entry.file);
     expect(new Set([...wired, ...residual]).size).toBe(wired.length + residual.length);
     expect([...wired, ...residual].sort()).toEqual(w21BenchClis());
-    expect({ wired: wired.length, residual: residual.length }).toEqual({ wired: 11, residual: 0 });
+    expect({ wired: wired.length, residual: residual.length }).toEqual({ wired: 12, residual: 0 });
   });
 
   it("a residual is still unwired, so wiring it moves its row from RESIDUALS to BENCHES in the same commit", () => {
