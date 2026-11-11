@@ -2,7 +2,8 @@
  * wb-69g.7 (W16-H/VC-6): the pure bounded workflow_compare reply builder, src/workbench/compare-tool.ts, over the landed
  * W17 comparison core (src/workbench/designer.ts compareWorkflowRuns, read here and never edited).
  *
- * Spec lines pinned (docs/workbench/11-designer-and-operator.md, read by CMP-SPEC-LINES):
+ * Spec lines pinned (docs/workbench/11-designer-and-operator.md, read by CMP-SPEC-LINES on the rendered view of the named
+ * section, as described below):
  * - "First public Pi tools (proposed)": "workflow_compare(referenceRun,candidateRun,dimensions?): source/config/basis
  *   alignment, measured metrics and confidence/coverage limits." -> CMP-ALIGN-ECHO, CMP-GROUPS, CMP-MEASURED-LIMITS,
  *   CMP-SINGLE-RUN, CMP-MIXED, CMP-DIMENSIONS-SELECT, CMP-DIMENSIONS-UNMATCHED, CMP-DIMENSIONS-INVALID.
@@ -27,6 +28,16 @@
  * sourcing for live runs (wb-pno's open item); evidence references for a metric the core withheld before aggregation (the
  * core result carries none, so the builder has none to echo; CMP-COVERAGE-WITHHELD pins that the row's list is empty, never
  * invented).
+ * The docs reading (wb-h8f.7 refusal #1, U2 and U3): CMP-SPEC-LINES and CMP-PINS-DOC read each quoted bullet on the shared
+ * rendered view (docsSection, test/helpers/census.ts) of the level-2 section named above, under the page title. The bullet
+ * is the one rendered unit of that section showing the line, a list item that reads exactly the line rendered and in its
+ * source; the section holds no HTML block and no subsection heading, and the protocol section carries no HTML at all.
+ * Each raw line still occurs exactly once in the page. CMP-SPEC-PROBE plants thirteen shapes in memory (the gate's P1-P5,
+ * then TAG, BLOCK, TWICE, HTML, WITHDRAWN, DEMOTED, PIN-TWICE and HIDDEN-COPY), and each is refused by the reading it
+ * hollows: the bullet's, CMP-PINS-DOC's pin sentence's, or both (P3-P5 and HTML). Section-wide HTML absence in "First
+ * public Pi tools (proposed)" is NOT CLAIMED by this file: the landed workflow_reconcile bullet there spells
+ * reconcile:<producer>.<action>, two inline HTML tags, so that section is held to no HTML block and to the tool bullet's
+ * own source, and CMP-SPEC-LINES holds the exemption to that cause.
  * The typed declined-precision reply is the reply whose status is "declined": its metric rows are kind "declined" and carry
  * no number. (The module spells neither "precision" nor an inconsistency word: the src vocabulary censuses
  * test/workbench-edc-demand-channel-census.test.ts and test/workbench-rf-federation-refusal-codes-census.test.ts pin their
@@ -55,6 +66,7 @@ import { type CompareRun, compareWorkflowRuns, type MeasuredMetric, type Workflo
 import { type InvocationSnapshot, identityDigest } from "../src/workbench/identity.js";
 import { sanitizeWorkbenchText } from "../src/workbench/redaction.js";
 import { TOOL_REPLY_CONTRACT_VERSION } from "../src/workbench/tool-replies.js";
+import { docsSection, type RenderedBlock } from "./helpers/census.js";
 import { UNSAFE_DISPLAY } from "./helpers/unsafe-display.js";
 
 const GRANTS = ["workbench:design", "workbench:observe"] as const;
@@ -134,16 +146,154 @@ function claimedNumbers(reply: CompareCompletedReply): number[] {
 }
 const fieldsOf = (comparison: WorkflowComparison): string[] => comparison.cohort.basis.map(row => row.field);
 
+/** docs/11, the page every quote of this file is read from, and the page title its sections sit under. */
+const DOCS11 = new URL("../docs/workbench/11-designer-and-operator.md", import.meta.url);
+const DOCS11_TITLE = "11 — Pi designer, operator tools and closed-loop experimentation";
+const TOOLS_SECTION = "First public Pi tools (proposed)";
+const PROTOCOL_SECTION = "Comparative experiment protocol";
+const TOOL_LINE = "workflow_compare(referenceRun,candidateRun,dimensions?): source/config/basis alignment, measured metrics and confidence/coverage limits.";
+const PIN_LINE = "Pin workload, input revisions, workspace basis, code digest, model config, SDK versions and permissions.";
+const WEAK_PIN_LINE = "Pin workload, input revisions, workspace basis, code digest and model config.";
+const OBSERVE_BULLET = "- workflow_observe(ref,selectors?,cursor?,limit?): bounded native snapshot, event window, aggregates, freshness, anomaly evidence.";
+const DECLINE_LINE = "Decline precise claim if trace coverage insufficient; include raw evidence references.";
+/** The three docs/11 bullets this file quotes, each under the level-2 section its header attributes it to. */
+const SPEC_BULLETS: readonly { readonly section: string; readonly line: string }[] = [
+  { section: TOOLS_SECTION, line: TOOL_LINE },
+  { section: PROTOCOL_SECTION, line: PIN_LINE },
+  { section: PROTOCOL_SECTION, line: DECLINE_LINE },
+];
+/**
+ * The one section exempt from the no-HTML floor: the landed workflow_reconcile bullet in it spells its grant as
+ * reconcile:<producer>.<action>, which renders as two inline HTML tags. CMP-SPEC-LINES holds the exemption to that cause.
+ */
+const INLINE_HTML_SECTIONS: ReadonlySet<string> = new Set([TOOLS_SECTION]);
+
+/** One unit of a rendered section as a reader sees it (each list item, each other block), beside its source. */
+interface RenderedUnit {
+  readonly kind: string;
+  readonly text: string;
+  readonly source: string;
+}
+function unitsOf(blocks: readonly RenderedBlock[]): RenderedUnit[] {
+  return blocks.flatMap((block): RenderedUnit[] => {
+    if (block.kind === "list") return block.items.map(item => ({ kind: "list item", text: item.text, source: item.markdown }));
+    if (block.kind === "paragraph") return [{ kind: "paragraph", text: block.text, source: block.markdown }];
+    if (block.kind === "html") return [{ kind: "html", text: "", source: block.raw }];
+    return [{ kind: block.kind === "other" ? block.type : block.kind, text: block.text, source: block.text }];
+  });
+}
+/**
+ * U2/U3 of wb-h8f.7 refusal #1: a quoted bullet is judged on the rendered view of the section its header names, never on
+ * the raw page. docsSection binds the unique level-2 heading under the page title (a heading inside a comment or a fence
+ * is no heading). The section holds no HTML block and no subsection heading; exactly one rendered unit of it shows the
+ * line (in its rendered text or its source), and that unit is a list item whose source is exactly the line, so no comment,
+ * tag or inline markup sits in it (each quoted line is plain text, so its rendered text is then the line too; the text
+ * check is kept beside the source check and is equivalent to it for these lines). Outside INLINE_HTML_SECTIONS the section
+ * carries no HTML at all. [] means the bullet is live where its quote says it is.
+ */
+function bulletFindings(markdown: string, section: string, line: string): string[] {
+  const bound = docsSection(markdown, section, 2, [DOCS11_TITLE]);
+  if (!bound.ok) return [`${section}: ${bound.why}`];
+  const out: string[] = [];
+  if (bound.hasHtml && !INLINE_HTML_SECTIONS.has(section)) out.push(`${section}: the section carries HTML`);
+  for (const block of bound.blocks) if (block.kind === "html" || block.kind === "heading") out.push(`${section}: the section holds a ${block.kind} block`);
+  const showing = unitsOf(bound.blocks).filter(unit => unit.text.includes(line) || unit.source.includes(line));
+  if (showing.length !== 1) out.push(`${section}: ${showing.length} rendered units show the line, not 1`);
+  for (const unit of showing) if (unit.kind !== "list item" || unit.text !== line || unit.source !== line) out.push(`${section}: the ${unit.kind} showing the line reads ${JSON.stringify(unit.source)}`);
+  return out;
+}
+/** The protocol's pin bullet on the rendered view: its section carries no HTML and exactly one list item opens "Pin " (its source is CMP-SPEC-LINES'). */
+function pinSentence(markdown: string): { readonly sentence: string; readonly findings: readonly string[] } {
+  const bound = docsSection(markdown, PROTOCOL_SECTION, 2, [DOCS11_TITLE]);
+  if (!bound.ok) return { sentence: "", findings: [`${PROTOCOL_SECTION}: ${bound.why}`] };
+  const findings: string[] = bound.hasHtml ? [`${PROTOCOL_SECTION}: the section carries HTML`] : [];
+  const pins = unitsOf(bound.blocks).filter(unit => unit.kind === "list item" && unit.text.startsWith("Pin "));
+  if (pins.length !== 1) findings.push(`${PROTOCOL_SECTION}: ${pins.length} list items open "Pin ", not 1`);
+  return { sentence: pins[0]?.text ?? "", findings };
+}
+
+/** `markdown` with its one occurrence of `target` replaced; a target found other than once throws, so no probe row is vacuous. */
+function replaceOnce(markdown: string, target: string, replacement: string): string {
+  const at = markdown.indexOf(target);
+  if (at < 0 || markdown.indexOf(target, at + 1) >= 0) throw new Error(`probe target must occur exactly once: ${JSON.stringify(target)}`);
+  return markdown.slice(0, at) + replacement + markdown.slice(at + target.length);
+}
+/** The two readings a probe can hollow: a quoted bullet (bulletFindings) and the protocol's pin sentence (pinSentence). */
+type DocReading = "bullet" | "pin";
+/**
+ * Docs probes, each one edit of the live docs/11 text in memory, naming the quoted bullet it is judged on and the readings
+ * that must refuse it. P1-P5 are the gate's probes of wb-h8f.7 refusal #1 (archived patches 08 and 10-13; the docs/12
+ * probe P1b is PCR-SPEC-PROBE's). TAG, BLOCK and TWICE carry the same classes to the tool and decline bullets; HTML,
+ * WITHDRAWN, DEMOTED, PIN-TWICE and HIDDEN-COPY each turn one part of the reading red alone: the protocol section's no-HTML
+ * floor, the no-subsection rule, the bullet form, the one pin item and a copy hidden in another bullet's source.
+ */
+const DOC_PROBES: readonly { readonly id: string; readonly shape: string; readonly line: string; readonly refuses: readonly DocReading[]; readonly edit: (markdown: string) => string }[] = [
+  { id: "P1", shape: "the decline bullet wrapped in an inline HTML comment", line: DECLINE_LINE, refuses: ["bullet"], edit: doc => replaceOnce(doc, `- ${DECLINE_LINE}`, `- <!-- ${DECLINE_LINE} -->`) },
+  { id: "P2", shape: "the tool bullet moved out of its section to an EOF appendix", line: TOOL_LINE, refuses: ["bullet"], edit: doc => `${replaceOnce(doc, `- ${TOOL_LINE}\n`, "")}\n## Appendix (probe)\n\n- ${TOOL_LINE}\n` },
+  {
+    id: "P3",
+    shape: "the full pin bullet in a multi-line HTML comment above a weakened live one",
+    line: PIN_LINE,
+    refuses: ["bullet", "pin"],
+    edit: doc => replaceOnce(doc, `- ${PIN_LINE}`, `<!--\n- ${PIN_LINE}\n-->\n- ${WEAK_PIN_LINE}`),
+  },
+  {
+    id: "P4",
+    shape: "the full pin bullet in a fenced block under another section, the live one weakened",
+    line: PIN_LINE,
+    refuses: ["bullet", "pin"],
+    edit: doc => replaceOnce(replaceOnce(doc, `- ${PIN_LINE}`, `- ${WEAK_PIN_LINE}`), "## Pi remains the intelligence\n\n", `## Pi remains the intelligence\n\n\`\`\`text\n- ${PIN_LINE}\n\`\`\`\n\n`),
+  },
+  {
+    id: "P5",
+    shape: "the full pin bullet live under another section, the protocol one weakened",
+    line: PIN_LINE,
+    refuses: ["bullet", "pin"],
+    edit: doc => replaceOnce(replaceOnce(doc, `- ${PIN_LINE}`, `- ${WEAK_PIN_LINE}`), "## Workflow analysis capabilities\n\n", `## Workflow analysis capabilities\n\n- ${PIN_LINE}\n`),
+  },
+  { id: "TAG", shape: "the tool bullet's text inside an inline tag a browser hides", line: TOOL_LINE, refuses: ["bullet"], edit: doc => replaceOnce(doc, `- ${TOOL_LINE}`, `- <span hidden>${TOOL_LINE}</span>`) },
+  {
+    id: "BLOCK",
+    shape: "the tool list wrapped in an HTML block",
+    line: TOOL_LINE,
+    refuses: ["bullet"],
+    edit: doc => replaceOnce(replaceOnce(doc, `## ${TOOLS_SECTION}\n\n`, `## ${TOOLS_SECTION}\n\n<details>\n\n`), `- ${TOOL_LINE}\n`, `- ${TOOL_LINE}\n\n</details>\n`),
+  },
+  { id: "TWICE", shape: "a second live decline bullet in its own section", line: DECLINE_LINE, refuses: ["bullet"], edit: doc => replaceOnce(doc, `- ${DECLINE_LINE}`, `- ${DECLINE_LINE}\n- ${DECLINE_LINE}`) },
+  {
+    id: "HTML",
+    shape: "an inline HTML comment in another bullet of the protocol section",
+    line: DECLINE_LINE,
+    refuses: ["bullet", "pin"],
+    edit: doc => replaceOnce(doc, "- Capture cold/warm cache state and environment differences.", "- Capture cold/warm cache state <!-- probe --> and environment differences."),
+  },
+  { id: "WITHDRAWN", shape: "the decline bullet kept under a withdrawn subsection of its own section", line: DECLINE_LINE, refuses: ["bullet"], edit: doc => replaceOnce(doc, `- ${DECLINE_LINE}`, `\n### Withdrawn\n\n- ${DECLINE_LINE}`) },
+  { id: "DEMOTED", shape: "the decline bullet turned into a paragraph of its own section", line: DECLINE_LINE, refuses: ["bullet"], edit: doc => replaceOnce(doc, `- ${DECLINE_LINE}`, `\n${DECLINE_LINE}`) },
+  { id: "PIN-TWICE", shape: "a weakened second pin bullet after the full one in the protocol section", line: PIN_LINE, refuses: ["pin"], edit: doc => replaceOnce(doc, `- ${PIN_LINE}`, `- ${PIN_LINE}\n- ${WEAK_PIN_LINE}`) },
+  { id: "HIDDEN-COPY", shape: "a copy of the tool line in an inline comment of another tools bullet", line: TOOL_LINE, refuses: ["bullet"], edit: doc => replaceOnce(doc, OBSERVE_BULLET, `${OBSERVE_BULLET} <!-- ${TOOL_LINE} -->`) },
+];
+
 describe("wb-69g.7 workflow_compare reply: spec lines and the measured, aligned comparison", () => {
-  it("CMP-SPEC-LINES: docs/11 carries each quoted spec line exactly once", () => {
-    const doc = readFileSync(new URL("../docs/workbench/11-designer-and-operator.md", import.meta.url), "utf8");
-    for (const line of [
-      "workflow_compare(referenceRun,candidateRun,dimensions?): source/config/basis alignment, measured metrics and confidence/coverage limits.",
-      "Pin workload, input revisions, workspace basis, code digest, model config, SDK versions and permissions.",
-      "Decline precise claim if trace coverage insufficient; include raw evidence references.",
-    ]) {
+  it("CMP-SPEC-LINES: docs/11 carries each quoted spec line exactly once, as a live bullet of the section the header names, read the same rendered and in its source", () => {
+    const doc = readFileSync(DOCS11, "utf8");
+    for (const { section, line } of SPEC_BULLETS) {
       expect(doc.split(line).length - 1, line).toBe(1);
+      expect(bulletFindings(doc, section, line), line).toEqual([]);
     }
+    for (const section of INLINE_HTML_SECTIONS) expect(docsSection(doc, section, 2, [DOCS11_TITLE]).hasHtml, `${section} is exempt only while it carries inline HTML`).toBe(true);
+  });
+
+  it.each(DOC_PROBES.map(probe => [probe.id, probe.shape, probe] as const))("CMP-SPEC-PROBE %s: docs/11 with %s is refused by the readings it hollows", (_id, _shape, { line, refuses, edit }) => {
+    const doc = readFileSync(DOCS11, "utf8");
+    const bullet = SPEC_BULLETS.find(candidate => candidate.line === line);
+    if (bullet === undefined) throw new Error(`no quoted bullet ${line}`);
+    expect(bulletFindings(doc, bullet.section, line)).toEqual([]);
+    expect(pinSentence(doc)).toEqual({ sentence: PIN_LINE, findings: [] });
+    const edited = edit(doc);
+    expect(edited).not.toBe(doc);
+    expect(refuses.length).toBeGreaterThan(0);
+    if (refuses.includes("bullet")) expect(bulletFindings(edited, bullet.section, line)).not.toEqual([]);
+    if (refuses.includes("pin")) expect(pinSentence(edited)).not.toEqual({ sentence: PIN_LINE, findings: [] });
   });
 
   it("CMP-ENVELOPE: a measured comparison is a workbench.tool-reply/v1 workflow_compare reply, ok, never invoked, within the default cap", () => {
@@ -303,10 +453,12 @@ describe("wb-69g.7 workflow_compare reply: misaligned and declined comparisons",
 });
 
 describe("wb-69g.7 workflow_compare reply: the comparative experiment protocol's pins", () => {
-  it("CMP-PINS-DOC: the pins are the protocol sentence's seven, in its order, each over basis fields the landed core emits (frozen shape)", () => {
-    const doc = readFileSync(new URL("../docs/workbench/11-designer-and-operator.md", import.meta.url), "utf8");
-    const sentence = doc.split("\n").find(line => line.startsWith("- Pin ")) ?? "";
-    const named = sentence.replace(/^- Pin /, "").replace(/\.$/, "").split(/, | and /);
+  it("CMP-PINS-DOC: the pins are the protocol sentence's seven, read from its rendered section, in its order, each over basis fields the landed core emits (frozen shape)", () => {
+    const doc = readFileSync(DOCS11, "utf8");
+    const read = pinSentence(doc);
+    expect(read.findings).toEqual([]);
+    expect(doc.split("\n").find(line => line.startsWith("- Pin "))).toBe(`- ${read.sentence}`);
+    const named = read.sentence.replace(/^Pin /, "").replace(/\.$/, "").split(/, | and /);
     expect(COMPARE_PROTOCOL_PINS.map(pin => pin.pin)).toEqual(named);
     expect(COMPARE_PROTOCOL_PINS.map(pin => `${pin.pin}:${pin.fields.join(",")}`)).toEqual([
       "workload:definition,schemaVersion",

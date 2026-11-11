@@ -5,7 +5,7 @@
  * evidence references its own projection read collected. Every case boots the REAL extension in claude mode through
  * test/helpers/boot-extension.ts and drives the registered tool.
  *
- * Spec lines pinned (docs/workbench, read by PCR-SPEC-LINES):
+ * Spec lines pinned (docs/workbench, read by PCR-SPEC-LINES on the rendered view of the named section, as described below):
  * - 11 "First public Pi tools (proposed)": "workflow_compare(referenceRun,candidateRun,dimensions?): source/config/basis
  *   alignment, measured metrics and confidence/coverage limits." -> PCR-C1-BUILDER-OUTPUT, PCR-C1-ALIGNMENT, PCR-DIMENSIONS.
  * - 11 "Comparative experiment protocol": "Decline precise claim if trace coverage insufficient; include raw evidence
@@ -20,6 +20,19 @@
  * - the owner's O23 carry on this bead (SDK-EVIDENCE-DIRECTED-COMPUTATION-R17): numbers in the reply come only from the core's
  *   measured fields, a missing field is a typed declined reply and never a number, and model prose is never presented as a
  *   probability -> PCR-R17-ECHOED, PCR-R17-MISSING, PCR-R17-PROSE.
+ *
+ * The docs reading (wb-h8f.7 refusal #1, U2 and U3): PCR-SPEC-LINES reads each quote above on the shared rendered view
+ * (docsSection and sectionTables, test/helpers/census.ts) of the level-2 section it names, under its page's title, in the
+ * quote's form: a whole bullet (a list item reading exactly the quote rendered and in its source), a clause inside one
+ * paragraph (docs/11's unknown-metrics sentence, docs/16's migration clause), or one table cell (docs/15's W16 Acceptance
+ * cell). The section holds no HTML block and no subsection heading, exactly one rendered unit of it shows the quote, and
+ * each raw quote still occurs exactly once in its page. PCR-SPEC-PROBE plants sixteen shapes in memory (the gate's P1, P1b
+ * and P2, five more of the same classes carried to the clause and cell quotes, and eight that each turn one part of the
+ * reading red alone), and each is refused for the quote it hollows.
+ * Section-wide HTML absence in docs/11 "First public Pi tools (proposed)" is NOT CLAIMED by this file: the landed
+ * workflow_reconcile bullet there spells reconcile:<producer>.<action>, two inline HTML tags, so that section is held to
+ * no HTML block and to the tool bullet's own source, and PCR-SPEC-LINES holds the exemption to that cause; every other
+ * quoted section carries no HTML at all.
  *
  * Seams: the native references are real. A stub `rf` first on a PATH scoped to this file answers the workflow's
  * reactivefiber.render.preview node with the full-shape offline envelope (test/helpers/rf-render-fixture.ts), a fresh rfo_
@@ -57,6 +70,7 @@ import { sanitizeWorkbenchText } from "../src/workbench/redaction.js";
 import { TOOL_REPLY_CONTRACT_VERSION } from "../src/workbench/tool-replies.js";
 import { FOREIGN_WORKFLOW_TOOL_NAMES } from "../src/workflow/collisions.js";
 import { ctx, hermeticDir, makePi, textOf } from "./helpers/boot-extension.js";
+import { docsSection, type RenderedBlock, sectionTables } from "./helpers/census.js";
 import { fullShapeRf } from "./helpers/rf-render-fixture.js";
 import { makeScratch, removeScratch } from "./helpers/scratch.js";
 import { UNSAFE_DISPLAY } from "./helpers/unsafe-display.js";
@@ -220,22 +234,166 @@ function measuredCore(): WorkflowComparison {
   return realCompare([fixtureRun("ra", SOURCE_V1, 10), fixtureRun("rb", SOURCE_V1, 20)], [fixtureRun("rc", SOURCE_V2, 5), fixtureRun("rd", SOURCE_V2, 15)]);
 }
 
+/** The docs/workbench pages the header quotes, each with the page title its level-2 sections sit under. */
+const PAGE_TITLES: Readonly<Record<string, string>> = {
+  "11-designer-and-operator.md": "11 — Pi designer, operator tools and closed-loop experimentation",
+  "12-security.md": "12 — Trust model, authorization, isolation and sensitive data",
+  "15-implementation-program.md": "15 — Full implementation program and vertical-cut acceptance",
+  "16-repository-refactor.md": "16 — Fork implementation refactor map and upstream compatibility",
+};
+/**
+ * One quoted spec text and where the header attributes it: a page, its level-2 section, and the form the quote takes
+ * there - a whole bullet, a clause inside one paragraph, or one table cell (named by its row's first cell and its column).
+ */
+interface SpecQuote {
+  readonly page: string;
+  readonly section: string;
+  readonly form: "bullet" | "paragraph" | "cell";
+  readonly text: string;
+  readonly row?: string;
+  readonly column?: string;
+}
+const TOOL_LINE = "workflow_compare(referenceRun,candidateRun,dimensions?): source/config/basis alignment, measured metrics and confidence/coverage limits.";
+const DECLINE_LINE = "Decline precise claim if trace coverage insufficient; include raw evidence references.";
+const UNKNOWN_LINE = "Missing native measured metrics yields unknown, not a claimed optimization.";
+const GRANTS_LINE = "Separate discover, inspect, observe, invoke and control grants.";
+const SCOPE_LINE = "Caller identity and scope bound at workbench entry point; impersonation from script payload prohibited.";
+const W16_CELL = "compact bounded result and ACL";
+const MIGRATION_CLAUSE = "no accidental duplication of tools or permission escalation";
+const OBSERVE_BULLET = "- workflow_observe(ref,selectors?,cursor?,limit?): bounded native snapshot, event window, aggregates, freshness, anomaly evidence.";
+const SPEC_QUOTES: readonly SpecQuote[] = [
+  { page: "11-designer-and-operator.md", section: "First public Pi tools (proposed)", form: "bullet", text: TOOL_LINE },
+  { page: "11-designer-and-operator.md", section: "Comparative experiment protocol", form: "bullet", text: DECLINE_LINE },
+  { page: "11-designer-and-operator.md", section: "Experimental read-only source tools", form: "paragraph", text: UNKNOWN_LINE },
+  { page: "12-security.md", section: "Authorization design", form: "bullet", text: GRANTS_LINE },
+  { page: "12-security.md", section: "Authorization design", form: "bullet", text: SCOPE_LINE },
+  { page: "15-implementation-program.md", section: "Independently assignable packages", form: "cell", text: W16_CELL, row: "W16", column: "Acceptance" },
+  { page: "16-repository-refactor.md", section: "Migration acceptance", form: "paragraph", text: MIGRATION_CLAUSE },
+];
+/**
+ * The one section exempt from the no-HTML floor: docs/11's landed workflow_reconcile bullet spells its grant as
+ * reconcile:<producer>.<action>, which renders as two inline HTML tags. PCR-SPEC-LINES holds the exemption to that cause.
+ */
+const INLINE_HTML_SECTIONS: ReadonlySet<string> = new Set(["11-designer-and-operator.md#First public Pi tools (proposed)"]);
+const pageText = (page: string): string => readFileSync(new URL(`../docs/workbench/${page}`, import.meta.url), "utf8");
+
+/** One unit of a rendered section as a reader sees it (each list item, each other block), beside its source. */
+interface RenderedUnit {
+  readonly kind: string;
+  readonly text: string;
+  readonly source: string;
+}
+function unitsOf(blocks: readonly RenderedBlock[]): RenderedUnit[] {
+  return blocks.flatMap((block): RenderedUnit[] => {
+    if (block.kind === "list") return block.items.map(item => ({ kind: "list item", text: item.text, source: item.markdown }));
+    if (block.kind === "paragraph") return [{ kind: "paragraph", text: block.text, source: block.markdown }];
+    if (block.kind === "html") return [{ kind: "html", text: "", source: block.raw }];
+    return [{ kind: block.kind === "other" ? block.type : block.kind, text: block.text, source: block.text }];
+  });
+}
+/** The cell form: across the section's tables, the one row whose first cell is quote.row reads exactly the quote under quote.column. */
+function cellFindings(markdown: string, quote: SpecQuote, where: string, parents: readonly string[]): string[] {
+  const tables = sectionTables(markdown, quote.section, 2, parents);
+  if (!tables.ok) return [`${where}: ${tables.why}`];
+  const cells = tables.grids.flatMap(grid => {
+    const column = (grid[0] ?? []).indexOf(quote.column ?? "");
+    return column < 0 ? [] : grid.slice(1).flatMap(row => (row[0] === quote.row ? [row[column] ?? ""] : []));
+  });
+  return cells.length === 1 && cells[0] === quote.text ? [] : [`${where}: the ${quote.row} row's ${quote.column} cells read ${JSON.stringify(cells)}, not exactly the quote`];
+}
+/**
+ * U2/U3 of wb-h8f.7 refusal #1: a quote is judged on the rendered view of the section its header names, never on the raw
+ * page. docsSection binds the unique level-2 heading under the page title (a heading inside a comment or a fence is no
+ * heading). The section holds no HTML block and no subsection heading, and exactly one rendered unit of it shows the quote
+ * (in its rendered text or its source). By form: a bullet is a list item whose source is exactly the quote; a paragraph
+ * clause occurs once in one paragraph's source; a cell is the one cell of its row and column (sectionTables, the same
+ * binding) and reads exactly the quote. Each quote is plain text, so a bullet whose source is the quote renders as the
+ * quote, and in a section with no HTML a clause once in the source renders once: the rendered-text checks kept beside the
+ * source checks are equivalent to them for these quotes. Outside INLINE_HTML_SECTIONS the section carries no HTML at all.
+ * [] means the quote is live where the header says it is.
+ */
+function quoteFindings(markdown: string, quote: SpecQuote): string[] {
+  const where = `${quote.page} § ${quote.section}`;
+  const parents = [PAGE_TITLES[quote.page] ?? ""];
+  const bound = docsSection(markdown, quote.section, 2, parents);
+  if (!bound.ok) return [`${where}: ${bound.why}`];
+  const out: string[] = [];
+  if (bound.hasHtml && !INLINE_HTML_SECTIONS.has(`${quote.page}#${quote.section}`)) out.push(`${where}: the section carries HTML`);
+  for (const block of bound.blocks) if (block.kind === "html" || block.kind === "heading") out.push(`${where}: the section holds a ${block.kind} block`);
+  const showing = unitsOf(bound.blocks).filter(unit => unit.text.includes(quote.text) || unit.source.includes(quote.text));
+  if (showing.length !== 1) out.push(`${where}: ${showing.length} rendered units show the quote, not 1`);
+  for (const unit of showing) {
+    if (quote.form === "bullet" && (unit.kind !== "list item" || unit.text !== quote.text || unit.source !== quote.text)) out.push(`${where}: the ${unit.kind} showing the quote reads ${JSON.stringify(unit.source)}, not the whole bullet`);
+    if (quote.form === "paragraph" && (unit.kind !== "paragraph" || unit.text.split(quote.text).length !== 2 || unit.source.split(quote.text).length !== 2)) out.push(`${where}: the ${unit.kind} showing the quote does not render it once in its text and once in its source`);
+  }
+  if (quote.form === "cell") out.push(...cellFindings(markdown, quote, where, parents));
+  return out;
+}
+
+/** `markdown` with its one occurrence of `target` replaced; a target found other than once throws, so no probe row is vacuous. */
+function replaceOnce(markdown: string, target: string, replacement: string): string {
+  const at = markdown.indexOf(target);
+  if (at < 0 || markdown.indexOf(target, at + 1) >= 0) throw new Error(`probe target must occur exactly once: ${JSON.stringify(target)}`);
+  return markdown.slice(0, at) + replacement + markdown.slice(at + target.length);
+}
+/**
+ * Docs probes, each one edit of a live page in memory, naming the quote it hollows. P1, P1b and P2 are the gate's probes of
+ * wb-h8f.7 refusal #1 (archived patches 08-10; P3-P5 hollow the pin bullet, CMP-SPEC-PROBE's). UNKNOWN-MOVED through
+ * MIGRATION-FENCED carry the same classes to the paragraph and cell quotes; AUTH-HTML, GRANTS-WITHDRAWN, SCOPE-DEMOTED,
+ * TOOL-TAG, UNKNOWN-MARKUP, TOOL-HIDDEN-COPY, W16-TWICE and W16-COLUMN each turn one part of the reading red alone (the
+ * no-HTML floor, the no-subsection rule, the bullet form, the bullet's source, the clause's source, a copy hidden in another
+ * bullet's source, the one row, the column). A reader blind to a shape still finds the quote, so the row reds.
+ */
+const PCR_PROBES: readonly { readonly id: string; readonly shape: string; readonly text: string; readonly edit: (markdown: string) => string }[] = [
+  { id: "P1", shape: "the docs/11 decline bullet wrapped in an inline HTML comment", text: DECLINE_LINE, edit: doc => replaceOnce(doc, `- ${DECLINE_LINE}`, `- <!-- ${DECLINE_LINE} -->`) },
+  { id: "P1b", shape: "the docs/12 grants bullet wrapped in an inline HTML comment", text: GRANTS_LINE, edit: doc => replaceOnce(doc, `- ${GRANTS_LINE}`, `- <!-- ${GRANTS_LINE} -->`) },
+  { id: "P2", shape: "the docs/11 tool bullet moved out of its section to an EOF appendix", text: TOOL_LINE, edit: doc => `${replaceOnce(doc, `- ${TOOL_LINE}\n`, "")}\n## Appendix (probe)\n\n- ${TOOL_LINE}\n` },
+  { id: "UNKNOWN-MOVED", shape: "the docs/11 unknown-metrics sentence moved to the acceptance journeys", text: UNKNOWN_LINE, edit: doc => replaceOnce(replaceOnce(doc, ` ${UNKNOWN_LINE}`, ""), "## Acceptance journeys\n\n", `## Acceptance journeys\n\n${UNKNOWN_LINE}\n\n`) },
+  { id: "UNKNOWN-COMMENT", shape: "the docs/11 unknown-metrics sentence inside an inline HTML comment", text: UNKNOWN_LINE, edit: doc => replaceOnce(doc, UNKNOWN_LINE, `<!-- ${UNKNOWN_LINE} -->`) },
+  { id: "W16-COMMENT", shape: "the docs/15 W16 acceptance cell inside an inline HTML comment", text: W16_CELL, edit: doc => replaceOnce(doc, `| ${W16_CELL} |`, `| <!-- ${W16_CELL} --> |`) },
+  { id: "W16-MOVED", shape: "the docs/15 W16 acceptance cell emptied and its text moved to the gating policy", text: W16_CELL, edit: doc => replaceOnce(replaceOnce(doc, `| ${W16_CELL} |`, "| pending |"), "## Gating policy\n\n", `## Gating policy\n\n${W16_CELL}\n\n`) },
+  { id: "MIGRATION-FENCED", shape: "the docs/16 migration clause moved into a fenced block of its own section", text: MIGRATION_CLAUSE, edit: doc => replaceOnce(replaceOnce(doc, `; ${MIGRATION_CLAUSE}.`, "."), "## Migration acceptance\n\n", `## Migration acceptance\n\n\`\`\`text\n${MIGRATION_CLAUSE}\n\`\`\`\n\n`) },
+  { id: "AUTH-HTML", shape: "an inline HTML comment in another bullet of the docs/12 authorization section", text: GRANTS_LINE, edit: doc => replaceOnce(doc, "- Treat unknown permission data as deny.", "- Treat unknown permission data <!-- probe --> as deny.") },
+  { id: "GRANTS-WITHDRAWN", shape: "the docs/12 grants bullet kept under a withdrawn subsection of its own section", text: GRANTS_LINE, edit: doc => replaceOnce(doc, `- ${GRANTS_LINE}`, `\n### Withdrawn\n\n- ${GRANTS_LINE}`) },
+  { id: "SCOPE-DEMOTED", shape: "the docs/12 scope bullet turned into a paragraph of its own section", text: SCOPE_LINE, edit: doc => replaceOnce(doc, `- ${SCOPE_LINE}\n`, `${SCOPE_LINE}\n\n`) },
+  { id: "TOOL-TAG", shape: "the docs/11 tool bullet's text inside an inline tag a browser hides", text: TOOL_LINE, edit: doc => replaceOnce(doc, `- ${TOOL_LINE}`, `- <span hidden>${TOOL_LINE}</span>`) },
+  {
+    id: "UNKNOWN-MARKUP",
+    shape: "the docs/11 unknown-metrics sentence split by inline emphasis in its source",
+    text: UNKNOWN_LINE,
+    edit: doc => replaceOnce(doc, UNKNOWN_LINE, UNKNOWN_LINE.replace("measured", "*measured*")),
+  },
+  { id: "W16-TWICE", shape: "a second docs/15 W16 row carrying the same acceptance cell", text: W16_CELL, edit: doc => replaceOnce(doc, `| W16 | W13 | Pi catalog/inspect/observe/control tools | ${W16_CELL} |`, `| W16 | W13 | Pi catalog/inspect/observe/control tools | ${W16_CELL} |\n| W16 | W13 | Pi catalog tools | ${W16_CELL} |`) },
+  { id: "TOOL-HIDDEN-COPY", shape: "a copy of the docs/11 tool line in an inline comment of another tools bullet", text: TOOL_LINE, edit: doc => replaceOnce(doc, OBSERVE_BULLET, `${OBSERVE_BULLET} <!-- ${TOOL_LINE} -->`) },
+  {
+    id: "W16-COLUMN",
+    shape: "the docs/15 W16 acceptance text swapped into the row's scope column",
+    text: W16_CELL,
+    edit: doc => replaceOnce(doc, `| W16 | W13 | Pi catalog/inspect/observe/control tools | ${W16_CELL} |`, `| W16 | W13 | ${W16_CELL} | Pi catalog/inspect/observe/control tools |`),
+  },
+];
+
 describe("wb-h8f.7 workflow_compare: the spec lines", () => {
-  it("PCR-SPEC-LINES: docs/workbench carries every quoted spec line exactly once", () => {
-    const quoted: ReadonlyArray<readonly [string, readonly string[]]> = [
-      ["11-designer-and-operator.md", [
-        "workflow_compare(referenceRun,candidateRun,dimensions?): source/config/basis alignment, measured metrics and confidence/coverage limits.",
-        "Decline precise claim if trace coverage insufficient; include raw evidence references.",
-        "Missing native measured metrics yields unknown, not a claimed optimization.",
-      ]],
-      ["12-security.md", ["Separate discover, inspect, observe, invoke and control grants.", "Caller identity and scope bound at workbench entry point; impersonation from script payload prohibited."]],
-      ["15-implementation-program.md", ["compact bounded result and ACL"]],
-      ["16-repository-refactor.md", ["no accidental duplication of tools or permission escalation"]],
-    ];
-    for (const [page, lines] of quoted) {
-      const doc = readFileSync(new URL(`../docs/workbench/${page}`, import.meta.url), "utf8");
-      for (const line of lines) expect(doc.split(line).length - 1, `${page}: ${line}`).toBe(1);
+  it("PCR-SPEC-LINES: docs/workbench carries every quoted spec text exactly once, in the form and section the header names, read the same rendered and in its source", () => {
+    for (const quote of SPEC_QUOTES) {
+      const doc = pageText(quote.page);
+      expect(doc.split(quote.text).length - 1, `${quote.page}: ${quote.text}`).toBe(1);
+      expect(quoteFindings(doc, quote), `${quote.page}: ${quote.text}`).toEqual([]);
     }
+    for (const key of INLINE_HTML_SECTIONS) {
+      const [page = "", section = ""] = key.split("#");
+      expect(docsSection(pageText(page), section, 2, [PAGE_TITLES[page] ?? ""]).hasHtml, `${key} is exempt only while it carries inline HTML`).toBe(true);
+    }
+  });
+
+  it.each(PCR_PROBES.map(probe => [probe.id, probe.shape, probe] as const))("PCR-SPEC-PROBE %s: %s is refused for the quote it hollows", (_id, _shape, { text, edit }) => {
+    const quote = SPEC_QUOTES.find(candidate => candidate.text === text);
+    if (quote === undefined) throw new Error(`no quoted text ${text}`);
+    const doc = pageText(quote.page);
+    expect(quoteFindings(doc, quote)).toEqual([]);
+    const edited = edit(doc);
+    expect(edited).not.toBe(doc);
+    expect(quoteFindings(edited, quote)).not.toEqual([]);
   });
 });
 
