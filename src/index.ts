@@ -70,6 +70,7 @@ import { type CapabilityDescriptor, CapabilityError, type CapabilityErrorCategor
 import { executeClaudeControl } from "./workbench/claude-control.js";
 import { createClaudeControlObserver, createClaudeControlRetention } from "./workbench/claude-control-observer.js";
 import type { ClaudeCallIdentity } from "./workbench/claude-host.js";
+import { buildWorkflowCompareReply, COMPARE_REPLY_MAX_DIMENSIONS } from "./workbench/compare-tool.js";
 import { type ControlExecutionSummary, type ControlExecutor, createWorkflowControlTool } from "./workbench/control-tool.js";
 import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflowSource } from "./workbench/designer.js";
 import { executeDetachedControl } from "./workbench/detached-control.js";
@@ -2834,11 +2835,18 @@ Terse command-style prompts produce shallow, generic work.
         } catch (error) { return textResult(sanitizeWorkbenchText(error instanceof Error ? error.message : String(error))); }
       },
     }));
+    // wb-h8f.7: the bounded compare-tool.ts reply over today's compareWorkflowRuns result, with the grant snapshot from
+    // grants(ctx) and the native references this handler's projection read collected; grants, scope and principal stay
+    // host-owned, and the design+observe refusal and the scope refusal keep today's bytes in today's order.
     pi.registerTool(defineTool({
       name: "workflow_compare",
       label: "Compare workflow evidence",
-      description: "Compare captured workflow source/config/input cohorts without claiming causal gains or complete native metrics. Requires workbench:design and workbench:observe.",
-      parameters: Type.Object({ referenceTask: Type.String(), candidateTask: Type.String() }),
+      description: `Compare captured workflow source/config/input cohorts without claiming causal gains or complete native metrics. Requires workbench:design and workbench:observe. Name the reference and candidate tasks; dimensions selects metrics by name. The reply is ${TOOL_REPLY_CONTRACT_VERSION}: source, config and basis alignment rows with every confound, the comparison protocol's pins, measured metrics with their run counts or declined rows with their reasons, the raw native references of both tasks, offered and returned counts, and a byte-cap marker when the reply was cut.`,
+      parameters: Type.Object({
+        referenceTask: Type.String(),
+        candidateTask: Type.String(),
+        dimensions: Type.Optional(Type.Array(Type.String(), { maxItems: COMPARE_REPLY_MAX_DIMENSIONS })),
+      }),
       execute: async (_id, params, _signal, _onUpdate, ctx) => {
         const rights = grants(ctx);
         if (!rights.includes("workbench:design") || !rights.includes("workbench:observe")) return textResult("Permission denied: design and observe grants required.");
@@ -2854,7 +2862,12 @@ Terse command-style prompts produce shallow, generic work.
             metrics: [],
           });
         }
-        return textResult(sanitizeWorkbenchJsonText(compareWorkflowRuns([runs[0]], [runs[1]])));
+        return textResult(buildWorkflowCompareReply({
+          comparison: compareWorkflowRuns([runs[0]], [runs[1]]),
+          grants: rights,
+          ...(params.dimensions !== undefined ? { dimensions: params.dimensions } : {}),
+          nativeRefs: { reference: runs[0].nativeRefs, candidate: runs[1].nativeRefs },
+        }).text);
       },
     }));
     pi.registerTool(defineTool({
