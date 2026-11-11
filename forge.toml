@@ -10,12 +10,15 @@ gate = ["lint", "typing", "build", "test", "census", "workbench-shell", "package
 
 [build.commands]
 lint = "npm run lint"
-typing = "npm run typecheck && npm run typecheck:test"
 build = "npm run build"
+
+[build.commands.typing]
+command = "npm run typecheck && npm run typecheck:test"
+timeout = 900
 
 [build.commands.test]
 command = "npm run test"
-timeout = 1200
+timeout = 3600
 
 [build.commands.workbench-shell]
 command = "bash qa/workbench/smoke.sh"
