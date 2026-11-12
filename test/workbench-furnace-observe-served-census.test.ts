@@ -43,6 +43,24 @@
  * refusal's rider on FROZEN SHAPE's value-swap words by narrowing them to a value with another digest. MEMBERS records what
  * each member reads on these bytes.
  *
+ * wb-752.13 (VC-4 W13-Fw/W16-Bw2; EAT-R349) RE-ANCHORS the four reply rows under the 2026-11-12 rule-22(d) ruling on that bead
+ * (PROCEED; re-anchor authorized for exactly the landed cases the convergence reddens, restated red-first, C3/C4 restated and
+ * never removed): furnace_observe now answers every call in the shared workbench.tool-reply/v1 dialect, so each reply row
+ * names the typed text the served execute now returns. RED FIRST, measured on the converged src/index.ts with these cases
+ * unchanged: C1, C2, C3, C4, C5 and A1 red (the old texts REFUSALS.grant, REFUSALS.identity, sanitizeWorkbenchJsonText(R) and
+ * sanitizeWorkbenchText(M), and the old four sites, two literals and two sanitizer calls); GREEN after this restatement. The
+ * rows, their pins, the cases and every judge and reader fixture are unchanged: only the four reply rows' clauses and sites,
+ * C1-C5's expected texts and A1's titles move. TYPED.grant and TYPED.identity are the typed errors spelled here, independent
+ * of the builder: { contract: TOOL_REPLY_CONTRACT_VERSION, tool: "furnace_observe", ok: false, invoked: false, error: { code,
+ * message } } serialized by JSON.stringify, with code not-granted and invalid-run-id and message REFUSALS.grant and
+ * REFUSALS.identity, verbatim. E(R) is furnaceObserveReply (src/workbench/furnace-observe-reply.ts) over P(R), the census's own
+ * projection of R's Run viewport (a fresh ObservationProjection refreshed with R's Run snapshot and its topology's Attempt rows
+ * by an observer with traceRun, under the served scope { workspace: the sandbox, principal: SERVED_PRINCIPAL }), read through
+ * the served view (observeInvocation over P(R) scoped to the Run, no paging); F(M) is furnaceObserveFailure over the same view
+ * of a fresh projection and the census observer's rejection. MEMBERS below are the receipts of the bytes each names: the src plants they apply were
+ * written against the pre-convergence execute and are not re-measured on these bytes, except that the plain JSON reply's
+ * witness keeps its form here (THE PLAIN JSON REPLY of E(R): E(R)'s envelope with R's raw source, which holds INVISIBLE).
+ *
  * THE READER is test/helpers/furnace-observe-served-reader.ts, whose header is the reading of record. In one line: pi's
  * extension loader keys an extension's tools by tool.name and the last registration wins, so the census reads the served tool
  * where the boot harness keys it the same way (K1), and reads its replies by calling it.
@@ -91,19 +109,19 @@
  *   then once with it; each boot's <sandbox>/.pi/subagents.json reads the reader header's settings with that boot's grants;
  *   judgeRegistrations(received, "furnace_observe") is [] for each, and each serves an execute under that name.
  * - C1 [grant]: target the served execute of bootServed([]) called with { runId: "frn-run-census-grant" }; observed:
- *   judgeReply(result, REFUSALS.grant) is [].
+ *   judgeReply(result, TYPED.grant) is [].
  * - C2 [identity]: target the served execute of bootServed(["furnace:inspect"]) called with { runId: "census-not-a-run" };
- *   observed: judgeReply(result, REFUSALS.identity) is [].
+ *   observed: judgeReply(result, TYPED.identity) is [].
  * - C3 [data]: target the same boot's served execute called with { runId: "frn-run-census-complete" } while the fake plays the
- *   complete Run, under atFixedDate; observed: judgeReply(result, sanitizeWorkbenchJsonText(R)) is [], where R is the census
- *   observer's reading of the same Run under the same fixed Date, and R's completeness is "complete"; R's plain JSON text,
- *   JSON.stringify(R), holds INVISIBLE; and THE PLAIN JSON REPLY, the result { content: [{ type: "text", text: JSON.stringify(R)
- *   }], details: undefined }, judged for sanitizeWorkbenchJsonText(R), reads exactly the one finding `item text: <JSON.stringify
- *   of JSON.stringify(R)>`.
+ *   complete Run, under atFixedDate; observed: judgeReply(result, E(R)) is [], where R is the census observer's reading of the
+ *   same Run under the same fixed Date, and R's completeness is "complete"; E(R) parses to a tool-reply/v1 envelope whose
+ *   observe reply holds the Run's own row; the plain JSON text of E(R)'s envelope with R's raw source holds INVISIBLE; and THE
+ *   PLAIN JSON REPLY, the result { content: [{ type: "text", text: that plain text }], details: undefined }, judged for E(R),
+ *   reads exactly the one finding `item text: <JSON.stringify of that plain text>`.
  * - C4 [data]: the same for { runId: "frn-run-census-partial" } and the partial Run; R's completeness is "partial".
  * - C5 [error]: the same boot's served execute called with { runId: "frn-run-census-failing" } while the fake plays the failing
- *   Run; observed: judgeReply(result, sanitizeWorkbenchText(M)) is [], where M is the message of the Error the census observer
- *   rejects the same Run with.
+ *   Run; observed: judgeReply(result, F(M)) is [], where M is the message of the Error the census observer rejects the same
+ *   Run with, and F(M)'s error message is M.
  * - A0 []: target sourceAnchors over the 34 A0 fixtures (planted texts); observed: each fixture's literal count and reply
  *   sites, exactly. The fixtures write these forms of the reader header's sourceAnchors reading, each by the spellings named,
  *   and the census claims the reading at them and at no other: the keys (the identifiers name and execute and the string
@@ -195,8 +213,8 @@
  * finding, or its absence, says of a result is the judge's reading, which the reader header describes at every value and the
  * census claims at three places only: for T at the 87 values J2 PINNED FORMS lists and for each expected text J2 OTHER-TEXT
  * FORMS names at its own values, where judgeReply returns exactly the fixture's findings, in order (J2); and at THE PLAIN JSON
- * REPLY of C3's and C4's reading R, judged for sanitizeWorkbenchJsonText(R), where it returns exactly the one text finding C3
- * and C4 state (C3, C4). At any other value the reading is NOT CLAIMED (below). "Served" is the reader's isServedTool, claimed
+ * REPLY of C3's and C4's reading R, judged for E(R), where it returns exactly the one text finding C3 and C4 state (C3,
+ * C4). At any other value the reading is NOT CLAIMED (below). "Served" is the reader's isServedTool, claimed
  * at S0's 13 values (S0); what bootServed's serves and call do with an entry is claimed at the entries B0 plants (B0), and each
  * pinned boot serves an execute under furnace_observe (C0).
  * - registered: the pinned boot, booted once without the furnace:inspect grant and once with it, its settings read back, hands
@@ -206,26 +224,27 @@
  *   is true (C0). The recorder is claimed at J0's values and the count at J1's nine lists, and their reading of a boot's own
  *   list is claimed no wider than C0 asserts it (NOT CLAIMED below).
  * - grant: without the furnace:inspect grant the served furnace_observe replies to C1's call with a result judgeReply reads as
- *   textResult(REFUSALS.grant) (C1; J2, S0, B0, K1).
- * - identity: with the grant it replies to C2's call with a result judgeReply reads as textResult(REFUSALS.identity) (C2; J2,
- *   S0, B0, K1).
- * - data: for the complete and the partial pinned Run it replies with a result judgeReply reads as
- *   textResult(sanitizeWorkbenchJsonText(R)), R being the census observer's reading of that Run (C3, C4; J2, S0, B0, K1, I1);
- *   and for each of those two Runs the plain JSON reply, whose text JSON.stringify(R) holds INVISIBLE (C3, C4), does not read
- *   so: judged for sanitizeWorkbenchJsonText(R) it reads exactly its one text finding (C3, C4). So a served reply of the
- *   reading's plain JSON text reds C3 and C4 (the witness GP8-W01, MEMBERS); a judge that removes every format character
+ *   textResult(TYPED.grant), the typed not-granted tool-reply/v1 error carrying REFUSALS.grant (C1; J2, S0, B0, K1).
+ * - identity: with the grant it replies to C2's call with a result judgeReply reads as textResult(TYPED.identity), the typed
+ *   invalid-run-id tool-reply/v1 error carrying REFUSALS.identity (C2; J2, S0, B0, K1).
+ * - data: for the complete and the partial pinned Run it replies with a result judgeReply reads as textResult(E(R)), R being
+ *   the census observer's reading of that Run and E(R) the tool-reply/v1 envelope over P(R), R's Run viewport (C3, C4; J2, S0,
+ *   B0, K1, I1); and for each of those two Runs the plain JSON reply, whose text, E(R)'s envelope with R's raw source, holds
+ *   INVISIBLE (C3, C4), does not read so: judged for E(R) it reads exactly its one text finding (C3, C4). So a served reply of
+ *   the envelope's plain JSON text reds C3 and C4 (the witness form of GP8-W01, MEMBERS); a judge that removes every format character
  *   (Unicode category Cf) from both texts, or every character outside printable ASCII, before === reads no finding there and
  *   reds C3 and C4 too (GP8-M01 and GP8-M02, MEMBERS), and J2 reds under each at its INNER forms; a judge that removes from
  *   both texts only U+FEFF (GP10-T14), or only U+00AD, U+2060 and U+FEFF (GP10-T17), still reads the finding there, and J2
  *   reds under it at the INNER form of each character it removes (MEMBERS). No other partial removal is claimed here (NOT
  *   CLAIMED below).
- * - error: for the failing pinned Run it replies with a result judgeReply reads as textResult(sanitizeWorkbenchText(M)), M
- *   being the message of the census observer's rejection, FAILING_MESSAGE (C5; J2, S0, B0, K1, I1).
+ * - error: for the failing pinned Run it replies with a result judgeReply reads as textResult(F(M)), the typed unavailable
+ *   tool-reply/v1 error whose message is M, the message of the census observer's rejection, FAILING_MESSAGE (C5; J2, S0, B0,
+ *   K1, I1).
  *
  * NOT CLAIMED (scope sentences; no residual semantics; no follow-up bead):
  * - The judge's reading anywhere but for T at the 87 J2 values, for each J2 OTHER-TEXT expected text at its own values and at
- *   C3's and C4's plain JSON reply is NOT CLAIMED by this census: a result judged for a row's own text X (REFUSALS.grant,
- *   REFUSALS.identity, sanitizeWorkbenchJsonText(R) or sanitizeWorkbenchText(M)) in any form but the plain JSON reply is
+ *   C3's and C4's plain JSON reply is NOT CLAIMED by this census: a result judged for a row's own text X (TYPED.grant,
+ *   TYPED.identity, E(R) or F(M)) in any form but the plain JSON reply is
  *   outside them, and so is a result judged for T in a form J2 PINNED FORMS does not list (another key, details value,
  *   content, element, type or text; among them a text or a type differing from the expected one at an inner character other
  *   than the INNER forms'), and a result judged for any other expected text in a form J2 OTHER-TEXT FORMS does not list. Of a
@@ -234,9 +253,8 @@
  *   other than GP10-T14's and GP10-T17's removals (CLAIMS, data), is NOT CLAIMED by this census: neither what it reads at C3's
  *   and C4's plain JSON reply nor whether J2 reds under it. MEMBERS records what the census reads under the removals its
  *   members make, wb-rldu's refusal #1's four among them.
- * - Which other spellings of the data reply's text the census tells from textResult(sanitizeWorkbenchJsonText(R)) is NOT
- *   CLAIMED by this census: it claims the plain JSON reply (C3, C4) and the judge's reading for T at J2's values, and no other
- *   text of R.
+ * - Which other spellings of the data reply's text the census tells from textResult(E(R)) is NOT CLAIMED by this census: it
+ *   claims the plain JSON reply (C3, C4) and the judge's reading for T at J2's values, and no other text of R.
  * - That bootServed refuses an entry under furnace_observe that isServedTool reads as not served, other than the array tool B0
  *   plants, so that call throws and the calling case reds, is NOT CLAIMED by this census: isServedTool's reading is claimed at
  *   S0's values, and bootServed's refusal at B0's one planted entry.
@@ -253,13 +271,17 @@
  *   Run, an Attempt page that holds Attempts and their log reads) is NOT CLAIMED by this census.
  * - A boot other than the pinned boot (other settings, pi's own loader and runtime, a registration made after session_start) is
  *   NOT CLAIMED by this census.
- * - What the observer reads from a Run and what the shared sanitizers do are NOT CLAIMED by this census: the expected replies
- *   are computed with the FurnaceObserver and the sanitizers src/index.ts imports, so a change to
- *   src/workbench/furnace-observer.ts or src/workbench/redaction.ts moves both sides alike (wb-b04.2's census reads them).
+ * - What the observer reads from a Run, what the shared sanitizers do and what the reply builder builds are NOT CLAIMED by this
+ *   census: the expected replies are computed with the FurnaceObserver, the sanitizers and the builders
+ *   (furnaceObserveReply, furnaceObserveFailure) and observeInvocation src/index.ts imports, so a change to
+ *   src/workbench/furnace-observer.ts, src/workbench/redaction.ts or src/workbench/furnace-observe-reply.ts moves both sides
+ *   alike (wb-b04.2's census reads the first two; test/workbench-furnace-observe-reply.test.ts the third). SERVED_PRINCIPAL is
+ *   the host's local-operator principal as src/index.ts derives it for the harness session s1, spelled here; another principal
+ *   derivation is NOT CLAIMED either.
  * - Whether the served execute is the function the furnace_observe literal holds, and what it hands the client and the observer
  *   it builds, are NOT CLAIMED by this census: only its replies to the pinned calls are.
- * - Whether the error reply is run through sanitizeWorkbenchText is NOT CLAIMED by this census: FAILING_MESSAGE is a text that
- *   sanitizer leaves unchanged, so C5 reads the reply's text only.
+ * - Whether the error reply's message is run through sanitizeWorkbenchText is NOT CLAIMED by this census: FAILING_MESSAGE is a
+ *   text that sanitizer leaves unchanged, so C5 reads the reply's text only.
  * - A served execute that tells this census's calls from others is NOT CLAIMED by this census.
  * - Tools other than furnace_observe are NOT CLAIMED by this census: their names are read only to count furnace_observe.
  *
@@ -383,10 +405,17 @@
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { readFileSync, realpathSync } from "node:fs";
+import { userInfo } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { Furnace } from "@furnace/sdk";
 import { describe, expect, it } from "vitest";
+import { type FurnaceObserveView, furnaceObserveFailure, furnaceObserveReply } from "../src/workbench/furnace-observe-reply.js";
+import { FurnaceObserver, type FurnaceReading } from "../src/workbench/furnace-observer.js";
+import { ObservationProjection } from "../src/workbench/observation.js";
+import { observeInvocation } from "../src/workbench/observe-query.js";
 import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText } from "../src/workbench/redaction.js";
+import { TOOL_REPLY_CONTRACT_VERSION } from "../src/workbench/tool-replies.js";
 import { makePi } from "./helpers/boot-extension.js";
 import {
   atFixedDate,
@@ -399,6 +428,7 @@ import {
   isServedTool,
   judgeRegistrations,
   judgeReply,
+  LIMITS,
   ownObserver,
   type PlantedFactory,
   REFUSALS,
@@ -415,6 +445,35 @@ const REPO = join(dirname(fileURLToPath(import.meta.url)), "..");
 const LOADER = "node_modules/@earendil-works/pi-coding-agent/dist/core/extensions/loader.js";
 /** The message the census observer rejects the failing Run with. */
 const FAILING_MESSAGE = "Furnace status unavailable (run_not_found)";
+/** wb-752.13: the typed tool-reply/v1 errors the two refusal rows expect, spelled here (independent of the builder). */
+const typedRefusal = (code: string, message: string): string => JSON.stringify({ contract: TOOL_REPLY_CONTRACT_VERSION, tool: SERVED_NAME, ok: false, invoked: false, error: { code, message } });
+const TYPED = { grant: typedRefusal("not-granted", REFUSALS.grant), identity: typedRefusal("invalid-run-id", REFUSALS.identity) } as const;
+/** The host's local-operator principal for the harness session s1, as src/index.ts derives it (localPrincipal). */
+const SERVED_PRINCIPAL = `local-operator:${process.getuid?.() ?? userInfo().username}:s1`;
+/** The served scope of a boot's sandbox. */
+const servedScope = (workspace: string) => ({ workspace, principal: SERVED_PRINCIPAL });
+/** The served execute's view of a Run's viewport in a projection: observeInvocation scoped to the Run, no paging. */
+const servedView = (projection: ObservationProjection, workspace: string, runId: string): FurnaceObserveView => ({
+  runId,
+  read: maxBytes => observeInvocation(projection, { scope: servedScope(workspace), invocationId: runId, maxBytes }),
+});
+/** E(R): the data reply over P(R), the census's own projection of R's Run viewport (see the header). */
+function expectedReply(fake: FakeFurnace, reading: FurnaceReading): string {
+  const { workspaceRoot, runId } = reading.source;
+  const viewer = new FurnaceObserver(new Furnace({ binary: fake.binary, cwd: workspaceRoot, timeoutMs: 10_000 }), {
+    workspaceRoot,
+    runId,
+    scope: servedScope(workspaceRoot),
+    limits: { ...LIMITS },
+    traceRun: true,
+  });
+  const projection = new ObservationProjection();
+  projection.refresh(viewer.projectionSnapshot(reading));
+  const topology = viewer.projectionTopology(reading);
+  for (const attempt of topology.snapshots.slice(1)) projection.refresh(attempt);
+  for (const relation of topology.relations) projection.relate(relation);
+  return furnaceObserveReply(servedView(projection, workspaceRoot, runId), reading);
+}
 /** Every case's bound (a case that boots the extension needs it under load), handed in an options literal in the second place
  * (vitest 4's test(name, options, fn)), the one form test/workbench-retry-census.test.ts reads beside a forwarded body. */
 const CASE_TIMEOUT_MS = 60_000;
@@ -436,30 +495,30 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "grant",
-    clause: "without the furnace:inspect grant the served furnace_observe replies to C1's call with a result judgeReply reads as textResult(REFUSALS.grant)",
+    clause: "without the furnace:inspect grant the served furnace_observe replies to C1's call with a result judgeReply reads as textResult(TYPED.grant)",
     anchor: "reply",
-    site: { kind: "literal", text: REFUSALS.grant },
+    site: { kind: "call", text: "furnaceObserveRefusal" },
     pins: ["J2", "S0", "B0", "K1", "C1"],
   },
   {
     id: "identity",
-    clause: "with the grant it replies to C2's call with a result judgeReply reads as textResult(REFUSALS.identity)",
+    clause: "with the grant it replies to C2's call with a result judgeReply reads as textResult(TYPED.identity)",
     anchor: "reply",
-    site: { kind: "literal", text: REFUSALS.identity },
+    site: { kind: "other", text: "refused" },
     pins: ["J2", "S0", "B0", "K1", "C2"],
   },
   {
     id: "data",
-    clause: "for the complete and the partial pinned Run it replies with a result judgeReply reads as textResult(sanitizeWorkbenchJsonText(R))",
+    clause: "for the complete and the partial pinned Run it replies with a result judgeReply reads as textResult(E(R))",
     anchor: "reply",
-    site: { kind: "call", text: "sanitizeWorkbenchJsonText" },
+    site: { kind: "call", text: "furnaceObserveReply" },
     pins: ["J2", "S0", "B0", "K1", "I1", "C3", "C4"],
   },
   {
     id: "error",
-    clause: "for the failing pinned Run it replies with a result judgeReply reads as textResult(sanitizeWorkbenchText(M))",
+    clause: "for the failing pinned Run it replies with a result judgeReply reads as textResult(F(M))",
     anchor: "reply",
-    site: { kind: "call", text: "sanitizeWorkbenchText" },
+    site: { kind: "call", text: "furnaceObserveFailure" },
     pins: ["J2", "S0", "B0", "K1", "I1", "C5"],
   },
 ];
@@ -487,19 +546,19 @@ const CASES = {
     rows: ["registered"],
     title: "the pinned boot, booted without the grant and then with it, its settings read back, hands registerTool exactly one furnace_observe, and the harness serves it",
   },
-  C1: { rows: ["grant"], title: "without the grant the served furnace_observe's reply reads as textResult of the grant refusal" },
-  C2: { rows: ["identity"], title: "with the grant and the Run id census-not-a-run its reply reads as textResult of the identity refusal" },
+  C1: { rows: ["grant"], title: "without the grant the served furnace_observe's reply reads as textResult of the typed not-granted error" },
+  C2: { rows: ["identity"], title: "with the grant and the Run id census-not-a-run its reply reads as textResult of the typed invalid-run-id error" },
   C3: {
     rows: ["data"],
-    title: "for the complete Run its reply reads as textResult of the sanitized text of the census observer's reading, and the plain JSON reply of that reading reads one text finding",
+    title: "for the complete Run its reply reads as textResult of the tool-reply/v1 envelope over the census observer's reading's Run viewport, and the plain JSON reply of that envelope reads one text finding",
   },
   C4: {
     rows: ["data"],
-    title: "for the partial Run its reply reads as textResult of the sanitized text of the census observer's partial reading, and the plain JSON reply of that reading reads one text finding",
+    title: "for the partial Run its reply reads as textResult of the tool-reply/v1 envelope over the census observer's partial reading's Run viewport, and the plain JSON reply of that envelope reads one text finding",
   },
-  C5: { rows: ["error"], title: "for the failing Run its reply reads as textResult of the sanitized text of the census observer's error message" },
+  C5: { rows: ["error"], title: "for the failing Run its reply reads as textResult of the typed unavailable error carrying the census observer's error message" },
   A0: { rows: [], title: "the anchor reader reads each key, value, literal, execute, callee, order and argument form A0 writes as the census header lists it" },
-  A1: { rows: [], title: "outside anchors: src/index.ts's furnace_observe literal and its execute's four textResult sites, one per reply row" },
+  A1: { rows: [], title: "outside anchors: src/index.ts's furnace_observe literal and its execute's four textResult sites, one per reply row (the typed refusal, the request refusal, the reply and the failure)" },
   F1: { rows: [], title: "FROZEN SHAPE (standing rule 16): the rows, the cases, the scenarios and the judges' and readers' fixtures" },
   J3: { rows: [], title: "the judged set: each row's pins are exactly the cases naming it, and every case is registered once" },
 } as const satisfies Readonly<Record<string, Case>>;
@@ -1274,7 +1333,7 @@ describe("wb-g20x: the furnace_observe served census", () => {
     "C1",
     async () => {
       await withServed([], async boot => {
-        expect(judgeReply(await boot.call({ runId: "frn-run-census-grant" }), REFUSALS.grant)).toStrictEqual([]);
+        expect(judgeReply(await boot.call({ runId: "frn-run-census-grant" }), TYPED.grant)).toStrictEqual([]);
       });
     },
   );
@@ -1283,7 +1342,7 @@ describe("wb-g20x: the furnace_observe served census", () => {
     "C2",
     async () => {
       await withServed(["furnace:inspect"], async boot => {
-        expect(judgeReply(await boot.call({ runId: "census-not-a-run" }), REFUSALS.identity)).toStrictEqual([]);
+        expect(judgeReply(await boot.call({ runId: "census-not-a-run" }), TYPED.identity)).toStrictEqual([]);
       });
     },
   );
@@ -1300,12 +1359,16 @@ describe("wb-g20x: the furnace_observe served census", () => {
           fake.play(scenario(run, runId, boot.workspace));
           const [result, reading] = await atFixedDate(async () => [await boot.call({ runId }), await ownObserver(fake, boot.workspace, runId).snapshot()] as const);
           expect(reading.completeness, "the census observer's reading").toBe(run);
-          expect(judgeReply(result, sanitizeWorkbenchJsonText(reading))).toStrictEqual([]);
-          // wb-bk8a: THE PLAIN JSON REPLY, a reply of the reading's plain JSON text, which holds INVISIBLE, reads one text finding;
-          // GP8-M01's and GP8-M02's folds read none.
-          const plain = JSON.stringify(reading);
-          expect(plain.includes(INVISIBLE), "the reading's plain JSON text holds INVISIBLE").toBe(true);
-          expect(judgeReply({ content: [{ type: "text", text: plain }], details: undefined }, sanitizeWorkbenchJsonText(reading)), "the plain JSON reply reads one text finding").toStrictEqual([
+          const expected = expectedReply(fake, reading);
+          const envelope: Record<string, unknown> = JSON.parse(expected);
+          const observe = envelope.observe as { nodes: { nativeRef: { type: string; id: string } }[] };
+          expect([envelope.contract, observe.nodes.map(node => `${node.nativeRef.type}:${node.nativeRef.id}`)], "E(R): the envelope over the Run's own row").toStrictEqual([TOOL_REPLY_CONTRACT_VERSION, [`run:${runId}`]]);
+          expect(judgeReply(result, expected)).toStrictEqual([]);
+          // wb-bk8a, restated by wb-752.13: THE PLAIN JSON REPLY, a reply of the envelope's plain JSON text with R's raw source,
+          // which holds INVISIBLE, reads one text finding; GP8-M01's and GP8-M02's folds read none.
+          const plain = JSON.stringify({ ...envelope, source: reading.source });
+          expect(plain.includes(INVISIBLE), "the envelope's plain JSON text holds INVISIBLE").toBe(true);
+          expect(judgeReply({ content: [{ type: "text", text: plain }], details: undefined }, expected), "the plain JSON reply reads one text finding").toStrictEqual([
             `item text: ${JSON.stringify(plain)}`,
           ]);
         });
@@ -1321,7 +1384,9 @@ describe("wb-g20x: the furnace_observe served census", () => {
         fake.play(scenario("failing", runId, boot.workspace));
         const [result, failure] = await atFixedDate(async () => [await boot.call({ runId }), await failureOf(ownObserver(fake, boot.workspace, runId).snapshot())] as const);
         expect(failure, "the census observer rejects the Run with an Error").toBeInstanceOf(Error);
-        expect(judgeReply(result, sanitizeWorkbenchText(failure instanceof Error ? failure.message : String(failure)))).toStrictEqual([]);
+        const expected = furnaceObserveFailure(servedView(new ObservationProjection(), boot.workspace, runId), failure);
+        expect((JSON.parse(expected) as { error: { message: string } }).error.message, "F(M) carries M").toBe(sanitizeWorkbenchText(failure instanceof Error ? failure.message : String(failure)));
+        expect(judgeReply(result, expected)).toStrictEqual([]);
       });
     },
   );
@@ -1343,10 +1408,10 @@ describe("wb-g20x: the furnace_observe served census", () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toStrictEqual(["registered:6", "grant:5", "identity:5", "data:7", "error:6"]);
     expect(ROWS.map(row => row.clause)).toStrictEqual([
       "the pinned boot, booted once without the furnace:inspect grant and once with it, hands the harness's registerTool exactly one tool named furnace_observe",
-      "without the furnace:inspect grant the served furnace_observe replies to C1's call with a result judgeReply reads as textResult(REFUSALS.grant)",
-      "with the grant it replies to C2's call with a result judgeReply reads as textResult(REFUSALS.identity)",
-      "for the complete and the partial pinned Run it replies with a result judgeReply reads as textResult(sanitizeWorkbenchJsonText(R))",
-      "for the failing pinned Run it replies with a result judgeReply reads as textResult(sanitizeWorkbenchText(M))",
+      "without the furnace:inspect grant the served furnace_observe replies to C1's call with a result judgeReply reads as textResult(TYPED.grant)",
+      "with the grant it replies to C2's call with a result judgeReply reads as textResult(TYPED.identity)",
+      "for the complete and the partial pinned Run it replies with a result judgeReply reads as textResult(E(R))",
+      "for the failing pinned Run it replies with a result judgeReply reads as textResult(F(M))",
     ]);
     expect(CASE_IDS).toStrictEqual(["J0", "J1", "J2", "S0", "B0", "K1", "I1", "C0", "C1", "C2", "C3", "C4", "C5", "A0", "A1", "F1", "J3"]);
     expect([...SCENARIO_IDS]).toStrictEqual(["complete", "partial", "failing"]);

@@ -80,6 +80,7 @@ import { createWorkflowExecuteTool, type ExecuteLaunch } from "./workbench/execu
 import { createRetainedForgeControlExecutor, retainForgeOperation } from "./workbench/forge-control-retention.js";
 import { type ForgeObservedHead, type ForgeOperationObserver, observeForgeGateRun } from "./workbench/forge-operation-observer.js";
 import { executeFurnaceControl } from "./workbench/furnace-control.js";
+import { furnaceObserveFailure, furnaceObserveRefusal, furnaceObserveReply, furnaceObserveRequestRefusal } from "./workbench/furnace-observe-reply.js";
 import { FurnaceObserver } from "./workbench/furnace-observer.js";
 import { captureInvocationIdentity, type IdentityCaptureInput, identityDigest, verifyInvocationIdentity, WORKFLOW_SCRIPT_SCHEMA_VERSION } from "./workbench/identity.js";
 import { loadWorkbenchNative, workbenchNative } from "./workbench/native-modules.js";
@@ -2958,23 +2959,38 @@ Terse command-style prompts produce shallow, generic work.
     pi.registerTool(defineTool({
       name: "furnace_observe",
       label: "Observe external Furnace Run",
-      description: "Read one bounded snapshot of an externally launched native Run and Attempt/log references in this workspace. Requires furnace:inspect. Never controls the Run.",
-      parameters: Type.Object({ runId: Type.String({minLength:1,maxLength:128}) }),
+      description: "Read one bounded snapshot of an externally launched native Run and Attempt/log references in this workspace, answered in the shared tool-reply dialect: the Run's provenance and facts beside a paged, byte-capped view of its Run and Attempt rows (limit, cursor, maxBytes as workflow_observe takes them). Requires furnace:inspect. Never controls the Run.",
+      parameters: Type.Object({
+        runId: Type.String({minLength:1,maxLength:128}),
+        limit: Type.Optional(Type.Integer({ minimum: 1, maximum: OBSERVE_MAX_LIMIT })),
+        cursor: Type.Optional(Type.String({ maxLength: OBSERVE_CURSOR_MAX_BYTES })),
+        maxBytes: Type.Optional(Type.Integer({ minimum: OBSERVE_MIN_MAX_BYTES, maximum: OBSERVE_MAX_MAX_BYTES })),
+      }),
       execute: async (_id, params, signal, _onUpdate, ctx) => {
-        if (!grants(ctx).includes("furnace:inspect")) return textResult("Permission denied: furnace:inspect grant required.");
-        if (typeof params.runId !== "string" || !/^frn-run-[a-zA-Z0-9_-]{1,100}$/.test(params.runId)) return textResult("Invalid native Furnace Run identity.");
+        if (!grants(ctx).includes("furnace:inspect")) return textResult(furnaceObserveRefusal("not-granted", "Permission denied: furnace:inspect grant required."));
+        // The Run identity (its landed grammar, unchanged) and the paging and byte-cap bounds, refused typed before any native read.
+        const refused = furnaceObserveRequestRefusal(params);
+        if (refused !== undefined) return textResult(refused);
         const scope = observerScope(ctx);
+        // wb-752.13: the reply reads the Run's own viewport of the session projection, at the byte budget its builder leaves it.
+        const view = { runId: params.runId, maxBytes: params.maxBytes, read: (maxBytes: number) => observeInvocation(projection, { scope, invocationId: params.runId, maxBytes,
+          ...(params.limit === undefined ? {} : { limit: params.limit }), ...(params.cursor === undefined ? {} : { cursor: params.cursor }) }) };
         const { Furnace } = workbenchNative();
         const client = new Furnace({binary:"furnace",cwd:scope.workspace,timeoutMs:10_000});
-        const observer = new FurnaceObserver(client, { workspaceRoot:scope.workspace,runId:params.runId,scope,
+        // wb-752.13: the reply reads the Run's own viewport, so the Run snapshot carries the Run ID as its trace (traceRun).
+        const observer = new FurnaceObserver(client, { workspaceRoot:scope.workspace,runId:params.runId,scope,traceRun:true,
           limits:{maxPolls:1,intervalMs:1000,maxElapsedMs:30_000,attemptLimit:20,logBytes:512,callTimeoutMs:10_000}, signal });
         try {
           const reading = await observer.snapshot();
           projection.refresh(observer.projectionSnapshot(reading));
-          return textResult(sanitizeWorkbenchJsonText(reading));
+          // The Attempt rows and their native-confirmed Run->Attempt ownership edges (the topology's Run snapshot is the one above).
+          const topology = observer.projectionTopology(reading);
+          for (const attempt of topology.snapshots.slice(1)) projection.refresh(attempt);
+          for (const relation of topology.relations) projection.relate(relation);
+          return textResult(furnaceObserveReply(view, reading));
         } catch (error) {
           projection.markStale({ scope, ref: {provider:"furnace",type:"run",id:params.runId,scope:scope.workspace} });
-          return textResult(sanitizeWorkbenchText(error instanceof Error ? error.message : String(error)));
+          return textResult(furnaceObserveFailure(view, error));
         }
         finally { observer.close(); }
       },

@@ -260,7 +260,9 @@ const PROBES: Array<{ tool: string; params: Params; zeroGrant: string; sameWhenU
   { tool: "workflow_validate", params: { name: "missing" }, zeroGrant: "Permission denied: workbench:design grant required." },
   { tool: "workflow_catalog", params: {}, zeroGrant: "Permission denied: workbench:design grant required." },
   { tool: "workflow_compare", params: { referenceTask: "wf_a", candidateTask: "wf_b" }, zeroGrant: "Permission denied: design and observe grants required." },
-  { tool: "furnace_observe", params: { runId: "not-a-run" }, zeroGrant: "Permission denied: furnace:inspect grant required." },
+  // wb-752.13 (EAT-R349, re-anchor authorized by the 2026-11-12 22(d) ruling): furnace_observe answers its refusals in the
+  // tool-reply/v1 dialect too; zero grants read as the typed not-granted error, its message the landed denial text verbatim.
+  { tool: "furnace_observe", params: { runId: "not-a-run" }, zeroGrant: '{"contract":"workbench.tool-reply/v1","tool":"furnace_observe","ok":false,"invoked":false,"error":{"code":"not-granted","message":"Permission denied: furnace:inspect grant required."}}' },
   // wb-a3s: an absolute target that resolves nowhere inside the bound workspace is refused before any connection is opened.
   { tool: "forge_gate_run", params: { target: "/census/not-within-the-workspace" }, zeroGrant: "Permission denied: forge:run grant required." },
   { tool: "workflow_detached", params: { action: "inspect", invocationId: "inv-census" }, zeroGrant: "Permission denied: explicit detached launch or observe grant required." },

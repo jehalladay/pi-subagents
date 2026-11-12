@@ -13,7 +13,11 @@ export interface FurnaceObserverClient {
   logs: {read(id:string,request?:{attempt?:string;limit?:number;stream?:'stdout'|'stderr'},call?:{timeoutMs?:number}):Promise<Response<LogsReadDto>>};
 }
 export interface FurnaceObserverLimits {maxPolls:number;intervalMs:number;maxElapsedMs:number;attemptLimit:number;logBytes:number;callTimeoutMs:number}
-export interface FurnaceObserverOptions {workspaceRoot:string;runId:string;scope:ObservationScope;limits:FurnaceObserverLimits;signal?:AbortSignal}
+export interface FurnaceObserverOptions {workspaceRoot:string;runId:string;scope:ObservationScope;limits:FurnaceObserverLimits;signal?:AbortSignal;
+  /** wb-752.13: when true the Run snapshot carries trace.invocationId = the Run ID (the ID its Attempt snapshots carry), so the
+   * Run's own viewport (ObservationProjection.window, observeInvocation scoped to the Run) holds it. Absent, the snapshot is
+   * byte-identical to the one this observer has always written. */
+  traceRun?:boolean}
 export interface FurnaceAttemptReference {
   id:string;runId:string;workId:string;ordinal:number;executor:string;state:AttemptState;outcome?:AttemptOutcome;
   createdAt:string;startedAt?:string;finishedAt?:string;exitCode?:number;terminationCause?:AttemptDto['termination_cause'];
@@ -148,7 +152,7 @@ export class FurnaceObserver {
     return {source:{provider:'furnace',type:'run',id:reading.source.runId,scope:reading.source.workspaceRoot},scope:this.options.scope,capturedAt:reading.capturedAt,observedAt:reading.observedAt,
       coverage:reading.completeness,sourceRevision:reading.source.producerRevision,
       node:{title:`Furnace Run ${reading.source.runId}`,type:'workflow',statusText:reading.run.state,statusTone:reading.run.state==='completed'?'success':reading.run.state==='failed'||reading.run.state==='needs_attention'?'failure':reading.run.state==='active'?'active':'waiting'},
-      kind:'furnace.run.snapshot',evidenceRefs:reading.attempts.items.map(item=>item.id)};
+      kind:'furnace.run.snapshot',evidenceRefs:reading.attempts.items.map(item=>item.id),...(this.options.traceRun===true?{trace:{invocationId:reading.source.runId}}:{})};
   }
   /** The unchanged Run snapshot, one Attempt snapshot per returned page item and one Run->Attempt ownership edge each.
    * Ownership is native-confirmed: the Attempt page (its request ID is the confirmation reference) asserts every

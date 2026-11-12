@@ -120,37 +120,50 @@
  * one in another letter case). No body S1 reads: an execute keyed by the quoted key "execute", the computed key
  * ["execute"] or the identifier execute spelled with a \u escape (four-hex or braced), or held by a method, a shorthand
  * property or an accessor.
+ * wb-752.13 RESTATEMENT (VC-4 W13-Fw/W16-Bw2; EAT-R349; the 2026-11-12 rule-22(d) ruling authorized re-anchoring S1, restated
+ * red-first and never removed): furnace_observe now answers in the shared workbench.tool-reply/v1 dialect, its data reply
+ * built by furnaceObserveReply (src/workbench/furnace-observe-reply.ts) over the Run's own viewport, and that builder
+ * serializes through sanitizeWorkbenchJsonText; so "the sanitizer the data reply of the execute body S1 reads calls" below (R1,
+ * O1) is the sanitizer that builder calls. RED FIRST, measured on the converged src/index.ts with S1 unchanged: S1 red (the
+ * reply, the reading's calls and mentions, the returns, the resolved names and references, and the witnesses' deltas); GREEN
+ * after this restatement, which states the new body below and adds one witness (S1-WRITE-AS-BUILDER). The reading S1 holds:
  * The body binds the reading as `const reading = await observer.snapshot()` and holds the refresh
- * `projection.refresh(observer.projectionSnapshot(reading))` and the data reply
- * `return textResult(sanitizeWorkbenchJsonText(reading))`. It names that reading exactly three times, its binding and the
- * arguments of observer.projectionSnapshot and of that sanitizer, so it hands the reading to no other call and binds, iterates,
- * writes or returns it nowhere else; its textResult calls and its return statements are exactly four, each read in its reply
- * shape (every argument of the call by itself: a string literal or a template literal without a placeholder as "<literal>", a
- * call as its callee with each of its arguments read as "reading" when it is that identifier and "..." otherwise, any other
- * argument as written): textResult("<literal>") twice, textResult(sanitizeWorkbenchJsonText(reading)) and
- * textResult(sanitizeWorkbenchText(...)); its new expressions are exactly new Furnace(...) and then new FurnaceObserver(...);
+ * `projection.refresh(observer.projectionSnapshot(reading))`, the topology `const topology = observer.projectionTopology(reading)`
+ * whose Attempt rows it refreshes one by one (`projection.refresh(attempt)`, a declared loop variable) and whose ownership edges
+ * it relates, and the data reply `return textResult(furnaceObserveReply(view, reading))`. It names that reading exactly four
+ * times, its binding and the arguments of observer.projectionSnapshot, observer.projectionTopology and furnaceObserveReply, so
+ * it hands the reading to no other call and binds, iterates, writes or returns it nowhere else; its textResult calls and its
+ * return statements are exactly four, each read in its reply shape (every argument of the call by itself: a string literal or
+ * a template literal without a placeholder as "<literal>", a call as its callee with each of its arguments read as "reading"
+ * when it is that identifier and "..." otherwise, any other argument as written): textResult(furnaceObserveRefusal(...,...)),
+ * textResult(refused), textResult(furnaceObserveReply(...,reading)) and textResult(furnaceObserveFailure(...,...)); its new
+ * expressions are exactly new Furnace(...) and then new FurnaceObserver(...);
  * and it holds no write its write reader reads: no assignment (compound, logical or destructuring included), increment or
  * decrement (prefix or postfix), delete, or for-of or for-in target that is an expression rather than a declared variable. S1
  * also reads the names its data path calls through by binding, as the TypeScript checker binds src/index.ts alone: the callee
- * of each textResult reply, the plain callee of each call a reply is handed (sanitizeWorkbenchJsonText and
- * sanitizeWorkbenchText here), every identifier the body spells reading, the reading's receiver
+ * of each textResult reply, the plain callee of each call a reply is handed (furnaceObserveRefusal, furnaceObserveReply and
+ * furnaceObserveFailure here), every identifier the body spells reading, the reading's receiver
  * (`reading = [await] <receiver>.<method>(...)`) and the class that receiver is built from
  * (`<receiver> = [await] new <Class>(...)`), each read from the one variable declaration its binding has (any other declaration
  * or initializer reads no receiver or class, so S1 reds). Each resolves to one declaration: textResult to the module's own
- * function, the two sanitizers to their redaction.ts imports, the reading and its receiver each to one const of the body, and
- * FurnaceObserver to its furnace-observer.ts import. Every reference the checker binds to textResult's binding or to either
- * sanitizer's, anywhere in the file, is that declaration or the callee of a call, so none of the three is written, handed on or
+ * function, the three builders to their furnace-observe-reply.ts imports, the reading and its receiver each to one const of the
+ * body, and FurnaceObserver to its furnace-observer.ts import. Every reference the checker binds to textResult's binding or to
+ * a builder's, anywhere in the file, is that declaration or the callee of a call, so none of them is written, handed on or
  * exported anywhere in the file (a write in any form is such a reference: the refusals' assignment, compound and logical
  * assignment, increment, decrement, for-of, for-in, array- and object-pattern, rest and default witnesses below); the reading's
- * binding is referenced only as its declaration and those two arguments, the receiver's only as its declaration and the object
- * its snapshot, projectionSnapshot and close methods are called on, and FurnaceObserver's only as its import and the class of
+ * binding is referenced only as its declaration and those three arguments, the receiver's only as its declaration and the object
+ * its snapshot, projectionSnapshot, projectionTopology and close methods are called on, and FurnaceObserver's only as its import
+ * and the class of
  * that one new expression (an export specifier is read as the local binding it exports, and a shorthand property's name as the
  * binding its value names); and textResult's declaration reads TEXT_RESULT (whitespace removed), so it returns the text it is
  * handed, unchanged, as its one content item. Each witness of the class (the refusals' G24 and GP15 witnesses and this census's
- * own members, planted on the furnace_observe slice of the file) changes exactly the readings it names. O1 holds that the two
- * calls leave the reading unchanged, so R1 and O1 read the text the data reply of the body S1 reads carries when that body
- * reaches it: both call that sanitizer and O1 builds its readings with that class, each imported from the module src/index.ts
- * imports it from, with the census's own client and options standing in for the tool's. S1 reads src/index.ts alone and runs
+ * own members, planted on the furnace_observe slice of the file) changes exactly the readings it names. O1 holds that the
+ * calls leave the reading unchanged, so R1 and O1 read what the serializer of the data reply of the body S1 reads makes of the
+ * reading's fields when that body reaches it (wb-752.13: the reply carries the reading's source, its freshness facts, its Run
+ * facts, its Attempt page's counts and its log references through that serializer, and its Attempt items as the viewport's
+ * rows; test/workbench-furnace-observe-reply.test.ts holds that envelope): both call that sanitizer and O1 builds its readings
+ * with that class, each imported from the module src/index.ts imports it from, with the census's own client and options
+ * standing in for the tool's. S1 reads src/index.ts alone and runs
  * none of it, so what another
  * module does (to the class, its prototype or the sanitizer's module) escapes it, as do the families inside src/index.ts that
  * S1 names, each with pinned quiet rows (a plant S1 reads exactly as the slice does, beside what the body's call reader or the
@@ -359,7 +372,7 @@ const CASES = {
   E1: { rows: ["redaction", "privacy"], title: "the log evidence presentation of either stream keeps a producer's redaction redacted and redacts every corpus class" },
   S1: {
     rows: ["surfaces"],
-    title: "the execute S1 reads (the one literal whose name, keyed by the identifier name as written, is the string literal furnace_observe) returns textResult(sanitizeWorkbenchJsonText(reading)) as its one reply naming the reading, which it names only there, at its binding and in the refresh's Run snapshot (which execute pi serves, what its other replies say and whether the body reaches them are not read)",
+    title: "the execute S1 reads (the one literal whose name, keyed by the identifier name as written, is the string literal furnace_observe) returns textResult(furnaceObserveReply(view,reading)) as its one reply naming the reading, which it names only there, at its binding, in the refresh's Run snapshot and in the topology whose Attempt rows it refreshes (which execute pi serves, what its other replies say and whether the body reaches them are not read)",
   },
   A1: { rows: [], title: "outside anchors: the export title and notes, docs/12's floor sentence, the observer's operands, NativeSnapshot, RunState and OutputStream" },
   F1: { rows: [], title: "FROZEN SHAPE (standing rule 16): the rows' pin counts and every table's ids" },
@@ -1753,35 +1766,41 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
     expect(tool?.bindings.filter(binding => binding.startsWith("observer=")).map(binding => binding.slice(0, "observer=newFurnaceObserver(".length))).toStrictEqual([
       "observer=newFurnaceObserver(",
     ]);
-    expect(tool?.calls.filter(call => call.startsWith("projection.refresh(")), "the body holds one projection.refresh call, handed that reading's Run snapshot").toStrictEqual([
+    // wb-752.13: the body also refreshes the topology's Attempt rows, each by its own loop variable.
+    expect(tool?.calls.filter(call => call.startsWith("projection.refresh(")), "the body holds two projection.refresh calls, handed that reading's Run snapshot and each Attempt row").toStrictEqual([
       "projection.refresh(observer.projectionSnapshot(reading))",
+      "projection.refresh(attempt)",
     ]);
-    expect(tool?.calls.filter(call => call.startsWith("textResult(") && call.includes("reading")), "the one textResult call whose text spells reading is textResult(sanitizeWorkbenchJsonText(reading))").toStrictEqual([
-      "textResult(sanitizeWorkbenchJsonText(reading))",
+    // wb-752.13 (re-anchor under the 2026-11-12 22(d) ruling; restated red-first, never removed): the data reply is the
+    // tool-reply/v1 envelope furnaceObserveReply builds over the Run's viewport, so the reading reaches the reply through it.
+    expect(tool?.calls.filter(call => call.startsWith("textResult(") && call.includes("reading")), "the one textResult call whose text spells reading is textResult(furnaceObserveReply(view,reading))").toStrictEqual([
+      "textResult(furnaceObserveReply(view,reading))",
     ]);
-    expect(tool?.replies, "its textResult replies by shape: two literals, the sanitized reading and one sanitizeWorkbenchText call handed one argument that is not the bare reading (no literal's text is read)").toStrictEqual([
-      'textResult("<literal>")',
-      'textResult("<literal>")',
-      "textResult(sanitizeWorkbenchJsonText(reading))",
-      "textResult(sanitizeWorkbenchText(...))",
+    expect(tool?.replies, "its textResult replies by shape: the typed refusal, the request refusal, the reply over the reading and the failure (only the bare reading is read as reading)").toStrictEqual([
+      "textResult(furnaceObserveRefusal(...,...))",
+      "textResult(refused)",
+      "textResult(furnaceObserveReply(...,reading))",
+      "textResult(furnaceObserveFailure(...,...))",
     ]);
-    expect(tool?.calls.filter(call => /\breading\b/.test(call)), "no call of the body names the reading but its Run snapshot, its sanitizer and the refresh and reply that hold them").toStrictEqual([
+    expect(tool?.calls.filter(call => /\breading\b/.test(call)), "no call of the body names the reading but its Run snapshot, its topology, the reply and the refresh and reply that hold them").toStrictEqual([
       "projection.refresh(observer.projectionSnapshot(reading))",
       "observer.projectionSnapshot(reading)",
-      "textResult(sanitizeWorkbenchJsonText(reading))",
-      "sanitizeWorkbenchJsonText(reading)",
+      "observer.projectionTopology(reading)",
+      "textResult(furnaceObserveReply(view,reading))",
+      "furnaceObserveReply(view,reading)",
     ]);
     expect(tool?.writes.filter(target => /^reading\b/.test(target)), "and no write target the write reader reads begins with it").toStrictEqual([]);
-    expect(tool?.mentions, "the body names the reading only where it binds it and as those two calls' argument").toStrictEqual([
+    expect(tool?.mentions, "the body names the reading only where it binds it and as the argument of the Run snapshot, the topology and the reply").toStrictEqual([
       "binding",
       "argument of observer.projectionSnapshot",
-      "argument of sanitizeWorkbenchJsonText",
+      "argument of observer.projectionTopology",
+      "argument of furnaceObserveReply",
     ]);
     expect(tool?.returns, "and every return is one of its four textResult replies").toStrictEqual([
-      'textResult("<literal>")',
-      'textResult("<literal>")',
-      "textResult(sanitizeWorkbenchJsonText(reading))",
-      "textResult(sanitizeWorkbenchText(...))",
+      "textResult(furnaceObserveRefusal(...,...))",
+      "textResult(refused)",
+      "textResult(furnaceObserveReply(...,reading))",
+      "textResult(furnaceObserveFailure(...,...))",
     ]);
     expect(toolBody("zz-no-such-tool"), "the reader finds no body for a name no literal holds").toBeUndefined();
     expect(toolBody("workflow_observe")?.calls.length ?? 0, "and finds another tool's body").toBeGreaterThan(0);
@@ -1887,35 +1906,38 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
     // as the TypeScript checker binds src/index.ts alone, is one declaration; the reading, its receiver and the receiver's class are
     // referenced only where the data path uses them; textResult and the two sanitizers are referenced only as their declarations
     // and the callees of calls; and textResult hands its text on.
-    expect(tool?.resolved, "the data path resolves to the module's textResult, its redaction.ts and furnace-observer.ts imports and two body consts").toStrictEqual([
+    expect(tool?.resolved, "the data path resolves to the module's textResult, its furnace-observer.ts and furnace-observe-reply.ts imports and two body consts").toStrictEqual([
       'FurnaceObserver: import FurnaceObserver from "./workbench/furnace-observer.js" (module)',
+      'furnaceObserveFailure: import furnaceObserveFailure from "./workbench/furnace-observe-reply.js" (module)',
+      'furnaceObserveRefusal: import furnaceObserveRefusal from "./workbench/furnace-observe-reply.js" (module)',
+      'furnaceObserveReply: import furnaceObserveReply from "./workbench/furnace-observe-reply.js" (module)',
       "observer: const (body)",
       "reading: const (body)",
-      'sanitizeWorkbenchJsonText: import sanitizeWorkbenchJsonText from "./workbench/redaction.js" (module)',
-      'sanitizeWorkbenchText: import sanitizeWorkbenchText from "./workbench/redaction.js" (module)',
       "textResult: FunctionDeclaration (module)",
     ]);
     expect(tool?.references, "the reading, its receiver and its class are referenced nowhere else in src/index.ts, and the callables only as callees").toStrictEqual([
       "reading: binding (body)",
       "reading: argument of observer.projectionSnapshot (body)",
-      "reading: argument of sanitizeWorkbenchJsonText (body)",
+      "reading: argument of observer.projectionTopology (body)",
+      "reading: argument of furnaceObserveReply (body)",
       "observer: binding (body)",
       "observer: receiver of snapshot (body)",
       "observer: receiver of projectionSnapshot (body)",
+      "observer: receiver of projectionTopology (body)",
       "observer: receiver of close (body)",
       "FurnaceObserver: binding (module)",
       "FurnaceObserver: class of new (body)",
     ]);
     expect(tool?.replier, "textResult returns the text it is handed as its one content item, unchanged").toStrictEqual([TEXT_RESULT]);
-    // Live on the landing-668 gate's G8-S1-SANITIZER-SHADOW, rebuilt on the real source: a body-local sanitizer bound before the
-    // reading is the binding the reply's sanitizer resolves to.
+    // Live on the landing-668 gate's G8-S1-SANITIZER-SHADOW, rebuilt on the real source: a body-local callable bound before the
+    // reading is the binding the reply resolves to (wb-752.13: the reply's builder, furnaceObserveReply, in the sanitizer's place).
     const index = readFileSync(join(REPO, INDEX_SOURCE), "utf8");
     const anchor = "const reading = await observer.snapshot();";
     expect(index.split(anchor).length, "the shadow plant's anchor stands once in src/index.ts").toBe(2);
-    const shadowed = toolBody("furnace_observe", index.replace(anchor, `const sanitizeWorkbenchJsonText = (value: unknown): string => JSON.stringify(value);\n          ${anchor}`));
-    expect(delta(tool, shadowed), "a body-local sanitizer is the binding the reply resolves to").toStrictEqual([
-      "+resolved sanitizeWorkbenchJsonText: const (body)",
-      '-resolved sanitizeWorkbenchJsonText: import sanitizeWorkbenchJsonText from "./workbench/redaction.js" (module)',
+    const shadowed = toolBody("furnace_observe", index.replace(anchor, `const furnaceObserveReply = (...args: unknown[]): string => JSON.stringify(args);\n          ${anchor}`));
+    expect(delta(tool, shadowed), "a body-local builder is the binding the reply resolves to").toStrictEqual([
+      "+resolved furnaceObserveReply: const (body)",
+      '-resolved furnaceObserveReply: import furnaceObserveReply from "./workbench/furnace-observe-reply.js" (module)',
     ]);
     // The refusals' witnesses (G24-S1-* from refusal #1, GP15-* from refusal #2, as their PREPs planted them) and this census's
     // own members of the class, rebuilt on the furnace_observe slice of src/index.ts, which reads as the whole file does; each
@@ -1941,7 +1963,7 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
     const TRY = "        try {";
     const READING = "          const reading = await observer.snapshot();";
     const REFRESH = "          projection.refresh(observer.projectionSnapshot(reading));";
-    const REPLY = "          return textResult(sanitizeWorkbenchJsonText(reading));";
+    const REPLY = "          return textResult(furnaceObserveReply(view, reading));";
     const CLOSE = "observer.close();";
     const SCOPE = "        const scope = observerScope(ctx);";
     const BUILT = "const observer = new FurnaceObserver(client, {";
@@ -2002,6 +2024,8 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
       ["G24-S1-WRITE-DESTRUCT-AS", [atModule(`({ zz: (textResult as unknown) } = { zz: ${FAKE} });`)]],
       ["G24-S1-WRITE-NONNULL-MODULE", [atModule(`textResult! = ${FAKE} as typeof textResult;`)]],
       ["G24-S1-WRITE-AS-SANITIZER", [atModule("(sanitizeWorkbenchJsonText as unknown) = (value: unknown): string => JSON.stringify(value);")]],
+      // wb-752.13: the reply's builder took the sanitizer's place on the data path, so its write is this member's live form.
+      ["S1-WRITE-AS-BUILDER", [atModule("(furnaceObserveReply as unknown) = (...args: unknown[]): string => JSON.stringify(args);")]],
       ["S1-WRITE-SATISFIES-MODULE", [atModule(`(textResult satisfies unknown) = ${FAKE};`)]],
       ["S1-WRITE-INSTANTIATION-MODULE", [atModule(`(textResult<never>) = ${FAKE};`)]],
       ["G24-S1-WRITE-LOGICAL-CTRL", [atModule(`(textResult as unknown) ??= 0;\ntextResult ||= ${FAKE} as typeof textResult;`)]],
@@ -2092,7 +2116,10 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
           "+reference textResult: in typeoftextResult (nested)",
         ],
       ],
-      ["G24-S1-WRITE-AS-SANITIZER", ["+reference sanitizeWorkbenchJsonText: in sanitizeWorkbenchJsonTextasunknown (module)"]],
+      // wb-752.13: the sanitizer is off the data path (the builder is), so a write of it reads nothing here; S1-WRITE-AS-BUILDER
+      // is the member's live form.
+      ["G24-S1-WRITE-AS-SANITIZER", []],
+      ["S1-WRITE-AS-BUILDER", ["+reference furnaceObserveReply: in furnaceObserveReplyasunknown (module)"]],
       ["S1-WRITE-SATISFIES-MODULE", ["+reference textResult: in textResultsatisfiesunknown (module)"]],
       ["S1-WRITE-INSTANTIATION-MODULE", ["+reference textResult: in textResult<never> (module)"]],
       [
@@ -2167,16 +2194,20 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
       [
         "S1-REPLY-SECOND-ARGUMENT",
         [
+          "+reference reading: argument of sanitizeWorkbenchJsonText (body)",
           "+reference reading: argument of zzDetails (body)",
+          '+resolved sanitizeWorkbenchJsonText: import sanitizeWorkbenchJsonText from "./workbench/redaction.js" (module)',
           "+resolved zzDetails: global (no binding in the file)",
+          "-reference reading: argument of furnaceObserveReply (body)",
+          '-resolved furnaceObserveReply: import furnaceObserveReply from "./workbench/furnace-observe-reply.js" (module)',
         ],
       ],
       [
         "S1-REPLY-MEMBER-CALLEE",
         [
           "+reference reading: argument of JSON.stringify (body)",
-          "-reference reading: argument of sanitizeWorkbenchJsonText (body)",
-          '-resolved sanitizeWorkbenchJsonText: import sanitizeWorkbenchJsonText from "./workbench/redaction.js" (module)',
+          "-reference reading: argument of furnaceObserveReply (body)",
+          '-resolved furnaceObserveReply: import furnaceObserveReply from "./workbench/furnace-observe-reply.js" (module)',
         ],
       ],
       [
@@ -2187,6 +2218,7 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
           "-reference observer: binding (body)",
           "-reference observer: receiver of close (body)",
           "-reference observer: receiver of projectionSnapshot (body)",
+          "-reference observer: receiver of projectionTopology (body)",
           "-reference observer: receiver of snapshot (body)",
           '-resolved FurnaceObserver: import FurnaceObserver from "./workbench/furnace-observer.js" (module)',
           "-resolved observer: const (body)",
@@ -2200,6 +2232,7 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
           "-reference observer: binding (body)",
           "-reference observer: receiver of close (body)",
           "-reference observer: receiver of projectionSnapshot (body)",
+          "-reference observer: receiver of projectionTopology (body)",
           "-reference observer: receiver of snapshot (body)",
           '-resolved FurnaceObserver: import FurnaceObserver from "./workbench/furnace-observer.js" (module)',
           "-resolved observer: const (body)",
@@ -2213,6 +2246,7 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
           "-reference observer: binding (body)",
           "-reference observer: receiver of close (body)",
           "-reference observer: receiver of projectionSnapshot (body)",
+          "-reference observer: receiver of projectionTopology (body)",
           "-reference observer: receiver of snapshot (body)",
           '-resolved FurnaceObserver: import FurnaceObserver from "./workbench/furnace-observer.js" (module)',
           "-resolved observer: const (body)",
@@ -2227,6 +2261,7 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
           "-reference observer: binding (body)",
           "-reference observer: receiver of close (body)",
           "-reference observer: receiver of projectionSnapshot (body)",
+          "-reference observer: receiver of projectionTopology (body)",
           "-reference observer: receiver of snapshot (body)",
           '-resolved FurnaceObserver: import FurnaceObserver from "./workbench/furnace-observer.js" (module)',
           "-resolved observer: const (body)",
@@ -2314,6 +2349,7 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
           "-reference observer: binding (body)",
           "-reference observer: receiver of close (body)",
           "-reference observer: receiver of projectionSnapshot (body)",
+          "-reference observer: receiver of projectionTopology (body)",
           "-reference observer: receiver of snapshot (body)",
           '-resolved FurnaceObserver: import FurnaceObserver from "./workbench/furnace-observer.js" (module)',
           "-resolved observer: const (body)",
