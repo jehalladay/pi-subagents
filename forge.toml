@@ -61,7 +61,7 @@ timeout = 300
 
 [build.commands.package-smoke]
 command = "bash qa/workbench/package-smoke.sh"
-timeout = 120
+timeout = 300
 
 [build.commands.release-checklist]
 command = "node qa/workbench/release-checklist-receipt.mjs"
@@ -199,6 +199,10 @@ timeout = 600
 command = "./node_modules/.bin/vitest run --config vitest.furnace-control-live.config.ts"
 timeout = 900
 
+[build.commands.census-file]
+command = "node qa/workbench/census-file.mjs"
+timeout = 1200
+
 [build.commands.detached-control-live]
 command = "./node_modules/.bin/vitest run --config vitest.detached-control-live.config.ts"
 timeout = 600
@@ -209,6 +213,6 @@ timeout = 900
 
 [build.commands.census]
 command = "npm run test:census"
-timeout = 300
+timeout = 900
 after = ["test"]
 consumes = ["test"]

@@ -111,7 +111,7 @@ import { decideWorkflowCollision, FOREIGN_WORKFLOW_TOOL_NAMES } from "./workflow
 import { WORKFLOW_ENTRY_TYPE, type WorkflowEntryData, workflowEntryData } from "./workflow/entry.js";
 import { createWorkflowHost } from "./workflow/host.js";
 import type { WorkflowJournalEntry } from "./workflow/journal.js";
-import { extractMeta, type WorkflowMeta, workflowCallName } from "./workflow/meta.js";
+import { describeWorkflowSyntaxFault, extractMeta, type WorkflowMeta, workflowCallName, workflowSyntaxFault } from "./workflow/meta.js";
 import { type ClaudeNativeObservation, elapsedMs, type WorkflowAgentEntry } from "./workflow/progress.js";
 import { admitResumeJournal, journalAppender, spendOverridesAtResume } from "./workflow/resume-admission.js";
 import { runWorkflow } from "./workflow/runtime.js";
@@ -2823,8 +2823,9 @@ Terse command-style prompts produce shallow, generic work.
    * at start leaves no task [RF14]. Once the host started it, the Pi task reference and the host's references are reported
    * [RF01]; the task then settles with the run: completed [RF03], or failed with a fixed text that carries none of the
    * producer's [RF03b]. A run that settles with one of the four original Mechanical outcomes keeps it on the task as its
-   * mechanicalOutcome, beside the completed status and never in place of it, and a rejection is never read as one (wb-9a1o,
-   * packet P05, EAT-R242: the cases of test/workbench-function-outcome-projection.test.ts).
+   * mechanicalOutcome, beside the completed status (wb-9a1o, packet P05, EAT-R242). What it keeps is claimed only for the outcome
+   * objects, settled values and rejection reasons that the cases of test/workbench-function-outcome-projection.test.ts pin
+   * (RO01-RO05, as that file's header lists them); for any other this comment claims nothing.
    */
   async function runHostedFunction(toolCtx: ExtensionContext, hosting: WorkflowFunctionHosting, launch: ExecuteFunctionLaunch, started: (nativeRefs: readonly NativeRef[]) => void): Promise<void> {
     // The intent row first (functionJournal): no task exists and the host is not started unless it reached the journal.
@@ -3696,10 +3697,22 @@ Terse command-style prompts produce shallow, generic work.
       // the model can fix immediately, and reporting it as a background run
       // that failed a second later would just cost a turn.
       let meta: WorkflowMeta;
+      let body: string;
       try {
-        meta = extractMeta(resolved.script).meta;
+        ({ meta, body } = extractMeta(resolved.script));
       } catch (err) {
         return textResult(err instanceof Error ? err.message : String(err));
+      }
+      // Compiled the way the worker will compile it, and never run (wb-9btr, EAT-R323): a script that cannot compile is
+      // the same authoring error, refused here with its line and column instead of a background run that fails a turn later.
+      // test/workflow-script-syntax-refusal.test.ts R323-W1 pins the refusal and R323-D1 its display form.
+      const syntaxFault = workflowSyntaxFault(body);
+      if (syntaxFault !== undefined) {
+        return textResult(sanitizeWorkbenchText(
+          `Workflow "${sanitizeWorkbenchText(meta.name, 200, "label")}" was not started: its script does not compile.\n${describeWorkflowSyntaxFault(syntaxFault)}\nFix the script and call SubagentWorkflow again.`,
+          WORKBENCH_TEXT_LIMIT,
+          "lines",
+        ));
       }
 
       const runId = workflowRunId();
