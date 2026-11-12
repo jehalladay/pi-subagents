@@ -2,19 +2,13 @@
  * dx-p14-acquisition-judge.mjs - wb-mo89, the pi-system DX triage packet P14 (EAT-R478..EAT-R483; requirement text vendored
  * in test/fixtures/dx-p14-requirements-roster.json from pi-subagents master 0a5ac3a3, req-r-followon.md lines 116-200).
  *
- * The pure judges shared by the native probe (qa/workbench/dx-p14-acquisition-probe.mjs, which records the readings into
+ * The judges shared by the native probe (qa/workbench/dx-p14-acquisition-probe.mjs, which records the readings into
  * qa/workbench/receipts/wb-mo89-dx-p14-acquisition-probe.json) and by the default-tier tests that re-judge that committed
  * record (test/workbench-dx-p14-acquisition.test.ts) and the descendant fixture (test/workbench-rf-descendant-pipe.test.ts).
- * Every function judges the readings passed to it as arguments.
  *
- * Statuses. A gate judge returns 'BLOCKED' on its named gate, with every missing item named, whenever an artifact its
- * acceptance needs is absent, and 'measured' only when that evidence is present and complete; no judge here returns PASS,
- * and a BLOCKED reading is never evidence of absence. The EAT-R483 launcher contract returns 'explicit-loopback' or
- * 'refused' with a reason (or 'not-sql-server' for an argv with no sql-server argument after argv[0]).
- *
- * Census scope. The comments below describe what each function computes. The census
- * (test/workbench-dx-p14-acquisition.test.ts and test/workbench-rf-descendant-pipe.test.ts) reads each judge only on the
- * inputs its case titles name; a judge's reading of any other input is NOT CLAIMED by this census.
+ * Each exported function's comment names its requirement and the census cases that assert its readings. Beyond the
+ * @param and @returns types, no comment here states what a function returns for an input: the census claims are those
+ * cases' titles.
  */
 
 /** The committed record's schema, the probe that writes it and where it is committed. */
@@ -32,18 +26,15 @@ export const GATES = Object.freeze({
   'EAT-R483': 'G-RF',
 });
 
-/** The one host value EAT-R483 accepts. */
+/** EAT-R483's loopback host value. */
 export const LOOPBACK_HOST = '127.0.0.1';
 
-/** Host values read as wildcard binds. */
+/** The wildcard host spellings. */
 export const WILDCARD_HOSTS = Object.freeze(['0.0.0.0', '::', '[::]', '*']);
 
 /**
- * EAT-R483 criterion 2, the launcher contract over a captured argv: the three explicit host-flag forms the requirement
- * names (`-H 127.0.0.1`, `--host 127.0.0.1`, `--host=127.0.0.1`) are the only accepted spellings. Every host flag in the
- * argv must carry exactly the string 127.0.0.1; an omitted flag, a flag with no value, a wildcard value, any other value
- * and an unrecognized host-flag spelling are refused (fail closed: an implicit default is never read as an explicit flag).
- * An argv with sql-server anywhere after argv[0] is judged as a launch, global flags before it included.
+ * EAT-R483 criterion 2: the launcher-contract judge of one captured argv. The census cases that assert its readings:
+ * R483-C1-ARGV, R483-C1-BASELINE, R483-C2-FORMS, R483-C2-REFUSALS, R483-C2-ORDER and R483-Q-ARGV-HOST-ONLY.
  * @param {readonly string[]} argv a captured process argv; argv[0] is the executable
  * @returns {{ verdict: 'not-sql-server' } | { verdict: 'explicit-loopback', flags: Array<{ form: string, value: string }> } | { verdict: 'refused', reason: 'unrecognized-host-form' | 'missing-host-value' | 'no-explicit-host-flag' | 'wildcard-host' | 'host-not-127.0.0.1', flags: Array<{ form: string, value: string | null }> }}
  */
@@ -78,8 +69,8 @@ export function judgeDoltServerArgv(argv) {
 }
 
 /**
- * Parses `ss -ltnpH` output into listeners: each line's local address and port, and the pids its process column names.
- * Lines that do not parse are skipped.
+ * EAT-R483 criterion 1: the `ss -ltnpH` text reader whose rows judgeLoopbackListeners judges. The census cases that assert
+ * its readings: R483-C1-LISTENER-REFUSALS and R483-Q-UNATTRIBUTED-LISTENER.
  * @param {string} text
  * @returns {Array<{ address: string, port: number, pids: number[] }>}
  */
@@ -100,9 +91,8 @@ export function parseSsListeners(text) {
 }
 
 /**
- * EAT-R483 criterion 1, the independent socket readback for one process: its listening sockets (every listener whose
- * process column names the pid, whichever position the pid holds there) must exist, every one must be bound at an address
- * that is exactly the string 127.0.0.1, wherever it is listed, and one must be the port the server ledger recorded.
+ * EAT-R483 criterion 1: the socket-readback judge of one pid's listeners and its server-ledger port. The census cases that
+ * assert its readings: R483-C1-SOCKETS, R483-C1-LISTENER-REFUSALS and R483-Q-UNATTRIBUTED-LISTENER.
  * @param {{ pid: number, port: number, listeners: ReadonlyArray<{ address: string, port: number, pids: readonly number[] }> }} reading
  * @returns {{ verdict: 'loopback-only' | 'refused', reason?: 'no-listener-for-pid' | 'listener-not-127.0.0.1' | 'ledger-port-not-listening', addresses: string[] }}
  */
@@ -134,12 +124,8 @@ const texts = (value) => Array.isArray(value) && value.length > 0 && value.every
 const object = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
 
 /**
- * EAT-R478: an outside-machine enforcement receipt for a seam-changing cut. Each field acceptance criterion 1 names must be
- * present (the external configuration revision, the exact base and head, each a 40-character lower-case hex commit sha,
- * the changed seam paths, the validator argv and exit, and the same-cut skill/doc decision), and criterion 2's two controls
- * (a disposable seam-only cut and a matching same-cut documentation control) must each carry a validator verdict. Absent
- * or partial evidence is BLOCKED on G-EXTERNAL-ENFORCEMENT, naming what is missing; complete evidence is measured, with
- * controlsDistinguishable true when the two control verdict strings differ and false when they are equal.
+ * EAT-R478: the judge of an outside-machine enforcement receipt for a seam-changing cut. The census cases that assert its
+ * readings: R478-C2-BLOCKED, R478-C1-FIELDS, R478-C1-SHAS and R478-C2-CONTROLS.
  * @param {unknown} evidence
  */
 export function judgeExternalEnforcement(evidence) {
@@ -164,11 +150,8 @@ export function judgeExternalEnforcement(evidence) {
 }
 
 /**
- * EAT-R480: a captured render of the authorized fork artifact's registry page. Criterion 1's fields must be present (the
- * artifact identity and version, the manifest media URLs, the page URL, the capture date and the rendered image/video
- * sources), an authorized fork identity must be named, and criterion 2's check must hold: the captured artifact is that
- * fork identity, not the upstream package. Absent or partial evidence is BLOCKED on G-FORK-MEDIA and the premise keeps its
- * PLAUSIBLE grade; a capture of the upstream package is never measured as the fork's.
+ * EAT-R480: the judge of a captured registry-page render of the authorized fork artifact. The census cases that assert its
+ * readings: R480-C2-BLOCKED, R480-C1-FIELDS and R480-C2-IDENTITY.
  * @param {unknown} evidence
  */
 export function judgeForkMedia(evidence) {
@@ -191,11 +174,8 @@ export function judgeForkMedia(evidence) {
 }
 
 /**
- * EAT-R481: a native-read tier receipt from an independent host layout. The receipt must come from a host where the
- * original developer home is not available, name that host's declared PATH and HYPERUNIX_HX, the resolved binaries and
- * their versions with none resolved under the developer home, the cwd and the test result (criterion 1), and the Forge
- * gate-status probe's own repository target or its explicit refusal of a missing target (criterion 2). Anything else, a
- * reading from the developer layout included, is BLOCKED on G-CROSS-HOST naming the missing host or runtime (criterion 3).
+ * EAT-R481: the judge of a native-read tier receipt from an independent host layout. The census cases that assert its
+ * readings: R481-C3-BLOCKED, R481-C1-FIELDS and R481-C1-BINARIES.
  * @param {unknown} evidence
  */
 export function judgeCrossHost(evidence) {
@@ -221,8 +201,8 @@ export function judgeCrossHost(evidence) {
 }
 
 /**
- * EAT-R479: the live Forge leg the probe records. BLOCKED on G-FORGE when the executable, the disposable fixture's gate
- * runs or a gate.status operation envelope is missing; otherwise measured.
+ * EAT-R479: the judge of the live Forge leg the probe records. The census cases that assert its readings: R479-C1-PRODUCER
+ * and R479-C2-BLOCKED.
  * @param {unknown} leg
  */
 export function judgeForgeLeg(leg) {
@@ -242,14 +222,8 @@ export function judgeForgeLeg(leg) {
 }
 
 /**
- * EAT-R482: one descendant-pipe trial. BLOCKED on G-DESCENDANT-PIPE, naming each absent item, when the controlled
- * descendant fixture, the process-tree readback, the direct child's pid and stdout readback, a held-pipe trial's grandchild
- * pid and stdout readback, the readback of the reading process's own end of the stdout stream, the registry inFlight
- * samples, the deadline time, the direct child's disappearance time or the grace window is absent (never an inference
- * that descendants were reaped or that the stream closed). Otherwise measured: the registry's inFlight at the first sample
- * at least `graceMs` after the direct child disappeared (null when no sample reaches that point), when the slot settled
- * (or that the observation window expired first), and how long settlement followed the child's disappearance and the
- * pipe's closure.
+ * EAT-R482: the judge of one descendant-pipe trial. The census cases that assert its readings (in
+ * test/workbench-rf-descendant-pipe.test.ts): R482-C1-HELD, R482-C2-NO-GRANDCHILD and R482-C3-BLOCKED.
  * @param {unknown} trial
  */
 export function judgeDescendantTrial(trial) {

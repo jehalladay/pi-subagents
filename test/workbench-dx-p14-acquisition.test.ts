@@ -7,11 +7,20 @@
  *    qa/workbench/dx-p14-acquisition-probe.mjs and tied to its bytes by SHA-256, re-judged here through
  *    qa/workbench/dx-p14-acquisition-judge.mjs and, for EAT-R479's binding, through src (nativeEvidence,
  *    mintEvidenceReceipt and decideReconcile);
- *  - the judges themselves, against receipts planted in this file (never the record of record): each gate judge is read
- *    on exactly the planted inputs its case title lists (each omission, malformed shape and alternative receipt named
- *    there) and measures the complete planted evidence, and EAT-R483's launcher contract and listener judge are judged
- *    over the captured-argv and ss-line literals the R483-C2 and R483-C1-LISTENER-REFUSALS cases list. A judge's reading
- *    of any input no case title here names is NOT CLAIMED by this census.
+ *  - the judges themselves, on inputs planted in this file (those of R479-C2-BLOCKED are edited copies of the record's
+ *    EAT-R479 leg): each such case reads the planted inputs its title lists.
+ * CLAIMED (cut #3, the rule-14 enumerate form of the refusal #2 claim sets, guard row M:78417): each case title below and
+ * nothing wider - ROSTER-BLOCKS, ROSTER-GATES, RECORD-TIE, RECORD-NO-HOST-PATH and RECORD-LEGS; R478-C2-BLOCKED,
+ * R478-C1-FIELDS, R478-C1-SHAS and R478-C2-CONTROLS; R479-C1-PRODUCER, R479-C1-READS, R479-C1-NATIVEREF, R479-C2-BINDING,
+ * R479-C2-NO-REFS and R479-C2-BLOCKED; R480-C2-BLOCKED, R480-C1-FIELDS and R480-C2-IDENTITY; R481-C3-BLOCKED,
+ * R481-C1-FIELDS and R481-C1-BINARIES; R483-C1-JOURNEY, R483-C1-ARGV, R483-C1-SOCKETS, R483-C1-BASELINE, R483-C2-FORMS,
+ * R483-C2-REFUSALS, R483-C2-ORDER and R483-C1-LISTENER-REFUSALS.
+ * RESIDUALS (named, each with its pinned quiet row): R-ARGV-HOST-ONLY, a bind address a launch supplies outside its host
+ * flags (a dolt --config file), quiet row R483-Q-ARGV-HOST-ONLY; R-UNATTRIBUTED-LISTENER, a listener ss does not attribute
+ * to the server's pid (a line with no users column, or one naming only another process), quiet row
+ * R483-Q-UNATTRIBUTED-LISTENER; R-SELF-ANCHORED-ROSTER, a vendored block edited together with its recorded SHA-256 (the
+ * F2 finding of refusals #1 and #2), quiet row ROSTER-Q-SELF-ANCHORED.
+ * NOT CLAIMED by this census: what a judge returns for an input that no case title here lists.
  * Regenerating the record needs forge, rf and dolt on PATH: npm run build && node qa/workbench/dx-p14-acquisition-probe.mjs
  * --write qa/workbench/receipts/wb-mo89-dx-p14-acquisition-probe.json.
  */
@@ -109,15 +118,20 @@ describe("wb-mo89 committed acquisition record", () => {
     expect(committed.probe).toEqual({ script: PROBE_SCRIPT, scriptSha256: sha256(readFileSync(join(REPO, PROBE_SCRIPT))) });
   });
 
-  it("RECORD-NO-HOST-PATH: no member name and no string value in the committed record contains /home/, /local/, /tmp/, /workplace/, /opt/ or /usr/", () => {
+  it("RECORD-NO-HOST-PATH: the committed record's text equals JSON.stringify of its parsed document with a two-space indent plus a final newline, so it carries no duplicate member, and neither that text nor any member name or string value of the parsed document contains /home/, /local/, /tmp/, /workplace/, /opt/ or /usr/", () => {
+    const text = repoText(RECORD_PATH);
     const strings: string[] = [];
-    JSON.parse(repoText(RECORD_PATH), (key, value: unknown) => {
+    const parsed: unknown = JSON.parse(text, (key, value: unknown) => {
       strings.push(key);
       if (typeof value === "string") strings.push(value);
       return value;
     });
-    expect(strings.length).toBeGreaterThan(0);
-    expect(strings.filter(value => /\/(home|local|tmp|workplace|opt|usr)\//.test(value))).toEqual([]);
+    expect(text).toBe(`${JSON.stringify(parsed, null, 2)}\n`);
+    expect(strings).toContain("schema");
+    expect(strings).toContain(RECORD_SCHEMA);
+    const hostPath = /\/(home|local|tmp|workplace|opt|usr)\//;
+    expect(hostPath.test(text)).toBe(false);
+    expect(strings.filter(value => hostPath.test(value))).toEqual([]);
   });
 
   it("RECORD-LEGS: the record holds exactly the EAT-R478, EAT-R479, EAT-R480, EAT-R481 and EAT-R483 legs, each naming its requirement and the gate GATES assigns it", () => {
@@ -131,6 +145,18 @@ describe("wb-mo89 committed acquisition record", () => {
 });
 
 describe("EAT-R478 outside-machine same-cut enforcement (G-EXTERNAL-ENFORCEMENT)", () => {
+  /** The complete receipt the R478-C1 and R478-C2-CONTROLS cases plant (never the record). */
+  const complete = {
+    configRevision: "enforcement-config@planted",
+    base: "1".repeat(40),
+    head: "2".repeat(40),
+    changedSeamPaths: ["src/workbench/planted-seam.ts"],
+    validator: { argv: ["planted-validator", "--same-cut"], exit: 1 },
+    sameCutDecision: "documentation required in the same cut",
+    controls: { seamOnly: { verdict: "refused" }, sameCutDoc: { verdict: "admitted" } },
+  };
+  const blocked = (missing: string[]) => ({ status: "BLOCKED", requirement: "EAT-R478", gate: "G-EXTERNAL-ENFORCEMENT", missing });
+
   it("R478-C2-BLOCKED: the record's leg holds no evidence, names the repository comparator qa/workbench/mwi-release.mjs, and reads BLOCKED on G-EXTERNAL-ENFORCEMENT naming the configuration and the producer invocation receipt; re-judging its evidence gives that reading", () => {
     const external = leg("EAT-R478");
     expect(external.evidence).toBeNull();
@@ -141,31 +167,8 @@ describe("EAT-R478 outside-machine same-cut enforcement (G-EXTERNAL-ENFORCEMENT)
     expect(judgeExternalEnforcement(external.evidence)).toEqual(expected);
   });
 
-  it("R478-C1-FIELDS: against a receipt planted here, the judge names each criterion-1 field and each criterion-2 control verdict one omission at a time, names exact base for a 7-, 8-, 39- or 41-hex or an upper-case 40-hex base and exact head for an absent, a symbolic (HEAD) or a 39-hex head, and measures the complete receipt with its controls distinguishable for the verdict pairs (refused, admitted) and (admitted, refused) and not distinguishable for (admitted, admitted) and (refused, refused)", () => {
-    const complete = {
-      configRevision: "enforcement-config@planted",
-      base: "1".repeat(40),
-      head: "2".repeat(40),
-      changedSeamPaths: ["src/workbench/planted-seam.ts"],
-      validator: { argv: ["planted-validator", "--same-cut"], exit: 1 },
-      sameCutDecision: "documentation required in the same cut",
-      controls: { seamOnly: { verdict: "refused" }, sameCutDoc: { verdict: "admitted" } },
-    };
+  it("R478-C1-FIELDS: against the receipt planted here, the judge measures the complete receipt and names the one missing item for each omission: configRevision '', base 1234567, head absent, changedSeamPaths [], validator without argv, validator without exit, sameCutDecision null, controls without seamOnly and controls without sameCutDoc", () => {
     expect(judgeExternalEnforcement(complete)).toEqual({ status: "measured", requirement: "EAT-R478", controlsDistinguishable: true });
-    expect(judgeExternalEnforcement({ ...complete, controls: { seamOnly: { verdict: "admitted" }, sameCutDoc: { verdict: "admitted" } } })).toEqual({ status: "measured", requirement: "EAT-R478", controlsDistinguishable: false });
-    expect(judgeExternalEnforcement({ ...complete, controls: { seamOnly: { verdict: "admitted" }, sameCutDoc: { verdict: "refused" } } })).toEqual({ status: "measured", requirement: "EAT-R478", controlsDistinguishable: true });
-    expect(judgeExternalEnforcement({ ...complete, controls: { seamOnly: { verdict: "refused" }, sameCutDoc: { verdict: "refused" } } })).toEqual({ status: "measured", requirement: "EAT-R478", controlsDistinguishable: false });
-    const shapes: Array<[string, Json, string]> = [
-      ["base 8-hex", { ...complete, base: "12345678" }, "exact base"],
-      ["base 39-hex", { ...complete, base: "1".repeat(39) }, "exact base"],
-      ["base 41-hex", { ...complete, base: "1".repeat(41) }, "exact base"],
-      ["base upper-case 40-hex", { ...complete, base: "A".repeat(40) }, "exact base"],
-      ["head HEAD", { ...complete, head: "HEAD" }, "exact head"],
-      ["head 39-hex", { ...complete, head: "2".repeat(39) }, "exact head"],
-    ];
-    for (const [shape, evidence, named] of shapes) {
-      expect(judgeExternalEnforcement(evidence), shape).toEqual({ status: "BLOCKED", requirement: "EAT-R478", gate: "G-EXTERNAL-ENFORCEMENT", missing: [named] });
-    }
     const omissions: Array<[string, Json, string]> = [
       ["configRevision", { ...complete, configRevision: "" }, "external enforcement configuration revision"],
       ["base", { ...complete, base: "1234567" }, "exact base"],
@@ -177,8 +180,38 @@ describe("EAT-R478 outside-machine same-cut enforcement (G-EXTERNAL-ENFORCEMENT)
       ["controls.seamOnly", { ...complete, controls: { sameCutDoc: { verdict: "admitted" } } }, "seam-only cut control verdict"],
       ["controls.sameCutDoc", { ...complete, controls: { seamOnly: { verdict: "refused" } } }, "same-cut documentation control verdict"],
     ];
-    for (const [field, evidence, named] of omissions) {
-      expect(judgeExternalEnforcement(evidence), field).toEqual({ status: "BLOCKED", requirement: "EAT-R478", gate: "G-EXTERNAL-ENFORCEMENT", missing: [named] });
+    for (const [field, evidence, named] of omissions) expect(judgeExternalEnforcement(evidence), field).toEqual(blocked([named]));
+  });
+
+  it("R478-C1-SHAS: against the receipt planted here, the judge names exact base as the one missing item for the bases 12345678, 39-hex, 41-hex and upper-case 40-hex, and exact head for the heads HEAD, 7-hex, 8-hex, 39-hex, 41-hex and upper-case 40-hex", () => {
+    const shapes: Array<[string, Json, string]> = [
+      ["base 8-hex", { ...complete, base: "12345678" }, "exact base"],
+      ["base 39-hex", { ...complete, base: "1".repeat(39) }, "exact base"],
+      ["base 41-hex", { ...complete, base: "1".repeat(41) }, "exact base"],
+      ["base upper-case 40-hex", { ...complete, base: "A".repeat(40) }, "exact base"],
+      ["head HEAD", { ...complete, head: "HEAD" }, "exact head"],
+      ["head 7-hex", { ...complete, head: "2".repeat(7) }, "exact head"],
+      ["head 8-hex", { ...complete, head: "2".repeat(8) }, "exact head"],
+      ["head 39-hex", { ...complete, head: "2".repeat(39) }, "exact head"],
+      ["head 41-hex", { ...complete, head: "2".repeat(41) }, "exact head"],
+      ["head upper-case 40-hex", { ...complete, head: "B".repeat(40) }, "exact head"],
+    ];
+    for (const [shape, evidence, named] of shapes) expect(judgeExternalEnforcement(evidence), shape).toEqual(blocked([named]));
+  });
+
+  it("R478-C2-CONTROLS: the judge measures the complete planted receipt with controlsDistinguishable true for the control verdict pairs (seamOnly, sameCutDoc) (refused, admitted), (admitted, refused), (admitted, error) and (refused, error), and false for (admitted, admitted), (refused, refused) and (error, error)", () => {
+    const pairs: Array<[string, string, boolean]> = [
+      ["refused", "admitted", true],
+      ["admitted", "refused", true],
+      ["admitted", "error", true],
+      ["refused", "error", true],
+      ["admitted", "admitted", false],
+      ["refused", "refused", false],
+      ["error", "error", false],
+    ];
+    for (const [seamOnly, sameCutDoc, distinguishable] of pairs) {
+      const evidence = { ...complete, controls: { seamOnly: { verdict: seamOnly }, sameCutDoc: { verdict: sameCutDoc } } };
+      expect(judgeExternalEnforcement(evidence), `${seamOnly}/${sameCutDoc}`).toEqual({ status: "measured", requirement: "EAT-R478", controlsDistinguishable: distinguishable });
     }
   });
 });
@@ -226,7 +259,7 @@ function committedReading(index: number): JsonValue {
 }
 const readingOperation = (index: number): string => String(object(object(committedReading(index)).source).operation_id);
 /** One reconcile against `row`: the evidence decision, the receipt minted from the committed reading, and the effect-absent acknowledgement citing it. */
-function reconcileWith(row: WorkflowJournalEntry, readingIndex: number): { read: { input: JsonValue; recordedNativeRefs: readonly unknown[] }; receipt: EvidenceReceipt; outcome: string } {
+function reconcileWith(row: WorkflowJournalEntry, readingIndex: number): { read: { capabilityId: string; input: JsonValue; recordedNativeRefs: readonly unknown[] }; receipt: EvidenceReceipt; outcome: string } {
   const evidence = decideReconcile(request("evidence", { evidence: { capabilityId: "forge.gate.status", input: { target: FIXTURE_ROOT } } }), deps(row, []));
   if (evidence.decision !== "evidence") throw new Error(`the reconcile core refused the evidence read: ${outcomeOf(evidence)}`);
   const receipt = mintEvidenceReceipt({
@@ -242,7 +275,7 @@ describe("EAT-R479 live Forge reconcile binding (G-FORGE)", () => {
     const forge = leg("EAT-R479");
     const producer = object(forge.producer);
     expect(producer.name).toBe("forge");
-    for (const field of ["version", "revision", "variant"]) expect(typeof producer[field], field).toBe("string");
+    expect([producer.version, producer.revision, producer.variant]).toEqual([expect.stringMatching(/^\d+\.\d+\.\d+/), expect.stringMatching(/^[0-9a-f]{7,64}$/), expect.stringMatching(/^\S+$/)]);
     expect(producer.executableSha256).toMatch(/^[0-9a-f]{64}$/);
     const runs = list(forge.gateRuns).map(object);
     expect(runs.map(run => [run.ordinal, run.argv, run.processExit, run.gateVerdict])).toEqual([[1, ["forge", "build", "--json"], 0, "PASS"], [2, ["forge", "build", "--json"], 0, "PASS"]]);
@@ -290,11 +323,11 @@ describe("EAT-R479 live Forge reconcile binding (G-FORGE)", () => {
   it("R479-C2-BINDING: through src decideReconcile and mintEvidenceReceipt on the planted non-read row, the evidence read asks forge.gate.status with input {target} only; the row recording the first reading's own operation binds journal-recorded and acknowledges producer-confirmed, the row recording the first gate run's operation binds unbound and is denied evidence-identity-mismatch, and the row recording the first reading's operation is denied the same way against the second reading", () => {
     const gateRun = String(object(list(leg("EAT-R479").gateRuns)[0]).operationId);
     const matched = reconcileWith(plantedRow(readingOperation(0)), 0);
-    expect(matched.read.input).toEqual({ target: FIXTURE_ROOT });
+    expect([matched.read.capabilityId, matched.read.input]).toEqual(["forge.gate.status", { target: FIXTURE_ROOT }]);
     expect(matched.read.recordedNativeRefs).toEqual([{ provider: "forge", type: "operation", id: readingOperation(0) }]);
     expect([matched.receipt.binding, matched.receipt.nativeRef, matched.outcome]).toEqual(["journal-recorded", { provider: "forge", type: "operation", id: readingOperation(0) }, "ack:producer-confirmed"]);
     const unrelated = reconcileWith(plantedRow(gateRun), 0);
-    expect(unrelated.read.input).toEqual({ target: FIXTURE_ROOT });
+    expect([unrelated.read.capabilityId, unrelated.read.input]).toEqual(["forge.gate.status", { target: FIXTURE_ROOT }]);
     expect(unrelated.read.recordedNativeRefs).toEqual([{ provider: "forge", type: "operation", id: gateRun }]);
     expect([unrelated.receipt.binding, unrelated.outcome]).toEqual(["unbound", "deny:evidence-identity-mismatch"]);
     const laterRead = reconcileWith(plantedRow(readingOperation(0)), 1);
@@ -307,25 +340,46 @@ describe("EAT-R479 live Forge reconcile binding (G-FORGE)", () => {
     expect([bare.receipt.binding, bare.outcome]).toEqual(["operator-asserted", "ack:operator-asserted"]);
   });
 
-  it("R479-C2-BLOCKED: the forge-leg judge reads BLOCKED on G-FORGE naming the executable, the gate runs and the operation envelope for no leg, and naming the one missing item for the committed leg with an empty producer, with a producer lacking its SHA-256 or its version, with one gate run, with a gate run lacking its operation id or its process exit, with no readings, with readings that carry no operation id, and with only its second reading lacking the operation id", () => {
+  it("R479-C2-BLOCKED: the forge-leg judge reads BLOCKED on G-FORGE naming the executable, the gate runs and the operation envelope for the null leg, and names the one missing item for the committed leg (two gate runs, two readings) edited to carry: an empty producer; a producer without its SHA-256; a producer without its version; only the first gate run; the first or the second gate run without its operation id; the first or the second gate run with process exit null; no readings; both readings with an empty source; the first or the second reading without its operation id", () => {
     const forge = leg("EAT-R479");
     const blocked = (missing: string[]) => ({ status: "BLOCKED", requirement: "EAT-R479", gate: "G-FORGE", missing });
+    const runs = list(forge.gateRuns);
+    const reads = list(forge.statusReads);
+    expect([runs.length, reads.length]).toEqual([2, 2]);
+    const runEdited = (at: number, edit: Json): unknown[] => runs.map((run, index) => (index === at ? { ...object(run), ...edit } : run));
+    const readWithoutOperation = (at: number): unknown[] => {
+      const copy = JSON.parse(JSON.stringify(reads)) as Array<{ reading: { source: Json } }>;
+      delete copy[at]?.reading.source.operation_id;
+      return copy;
+    };
     expect(judgeForgeLeg(null)).toEqual(blocked(["forge executable", "disposable fixture gate runs", "gate.status operation envelope"]));
     expect(judgeForgeLeg({ ...forge, producer: {} })).toEqual(blocked(["forge executable"]));
     expect(judgeForgeLeg({ ...forge, producer: { ...object(forge.producer), executableSha256: undefined } })).toEqual(blocked(["forge executable"]));
     expect(judgeForgeLeg({ ...forge, producer: { ...object(forge.producer), version: undefined } })).toEqual(blocked(["forge executable"]));
-    expect(judgeForgeLeg({ ...forge, gateRuns: list(forge.gateRuns).slice(0, 1) })).toEqual(blocked(["disposable fixture gate runs"]));
-    expect(judgeForgeLeg({ ...forge, gateRuns: list(forge.gateRuns).map((run, index) => (index === 0 ? { ...object(run), operationId: undefined } : run)) })).toEqual(blocked(["disposable fixture gate runs"]));
-    expect(judgeForgeLeg({ ...forge, gateRuns: list(forge.gateRuns).map((run, index) => (index === 0 ? { ...object(run), processExit: null } : run)) })).toEqual(blocked(["disposable fixture gate runs"]));
+    expect(judgeForgeLeg({ ...forge, gateRuns: runs.slice(0, 1) })).toEqual(blocked(["disposable fixture gate runs"]));
+    for (const at of [0, 1]) {
+      expect(judgeForgeLeg({ ...forge, gateRuns: runEdited(at, { operationId: undefined }) }), `gate run ${at + 1} operationId`).toEqual(blocked(["disposable fixture gate runs"]));
+      expect(judgeForgeLeg({ ...forge, gateRuns: runEdited(at, { processExit: null }) }), `gate run ${at + 1} processExit`).toEqual(blocked(["disposable fixture gate runs"]));
+      expect(judgeForgeLeg({ ...forge, statusReads: readWithoutOperation(at) }), `reading ${at + 1} operation_id`).toEqual(blocked(["gate.status operation envelope"]));
+    }
     expect(judgeForgeLeg({ ...forge, statusReads: [] })).toEqual(blocked(["gate.status operation envelope"]));
-    expect(judgeForgeLeg({ ...forge, statusReads: list(forge.statusReads).map(read => ({ ...object(read), reading: { contract: FORGE_GATE_STATUS_CONTRACT, source: {} } })) })).toEqual(blocked(["gate.status operation envelope"]));
-    const oneMissing = JSON.parse(JSON.stringify(list(forge.statusReads))) as Array<{ reading: { source: Json } }>;
-    delete oneMissing[1]?.reading.source.operation_id;
-    expect(judgeForgeLeg({ ...forge, statusReads: oneMissing })).toEqual(blocked(["gate.status operation envelope"]));
+    expect(judgeForgeLeg({ ...forge, statusReads: reads.map(read => ({ ...object(read), reading: { contract: FORGE_GATE_STATUS_CONTRACT, source: {} } })) })).toEqual(blocked(["gate.status operation envelope"]));
   });
 });
 
 describe("EAT-R480 authorized fork registry media (G-FORK-MEDIA)", () => {
+  /** The complete capture the R480-C1-FIELDS and R480-C2-IDENTITY cases plant (never the record). */
+  const complete = {
+    authorizedForkIdentity: "@planted/fork-artifact",
+    upstreamIdentity: "@planted/upstream-artifact",
+    capturedArtifact: { name: "@planted/fork-artifact", version: "0.0.1" },
+    manifestMediaUrls: ["https://media.invalid/planted.png"],
+    pageUrl: "https://registry.invalid/planted",
+    captureDate: "planted capture date",
+    renderedSources: ["https://media.invalid/planted.png"],
+  };
+  const blocked = (missing: string[]) => ({ status: "BLOCKED", requirement: "EAT-R480", gate: "G-FORK-MEDIA", grade: "PLAUSIBLE", missing });
+
   it("R480-C2-BLOCKED: the record's leg reads the manifest identity (the upstream identity) and its two media URLs by SHA-256 with no approved fork identity and no capture, and reads BLOCKED on G-FORK-MEDIA keeping PLAUSIBLE; re-judging its evidence gives that reading", () => {
     const media = leg("EAT-R480");
     const evidence = object(media.evidence);
@@ -343,25 +397,13 @@ describe("EAT-R480 authorized fork registry media (G-FORK-MEDIA)", () => {
     expect(judgeForkMedia(media.evidence)).toEqual(expected);
   });
 
-  it("R480-C1-FIELDS: against a capture planted here, the judge names each criterion-1 field one omission at a time, reads BLOCKED a capture of the upstream package (with the fork or the upstream identity named as the authorized one) and a capture of a third package, and measures a complete capture of the named fork identity", () => {
-    const complete = {
-      authorizedForkIdentity: "@planted/fork-artifact",
-      upstreamIdentity: "@planted/upstream-artifact",
-      capturedArtifact: { name: "@planted/fork-artifact", version: "0.0.1" },
-      manifestMediaUrls: ["https://media.invalid/planted.png"],
-      pageUrl: "https://registry.invalid/planted",
-      captureDate: "planted capture date",
-      renderedSources: ["https://media.invalid/planted.png"],
-    };
-    const blocked = (missing: string[]) => ({ status: "BLOCKED", requirement: "EAT-R480", gate: "G-FORK-MEDIA", grade: "PLAUSIBLE", missing });
+  it("R480-C1-FIELDS: against the capture planted here, the judge measures the complete capture of the named fork identity, reads the null input BLOCKED naming the fork identity and the render capture, and names the one missing item for each omission: authorizedForkIdentity null, capturedArtifact without its name, capturedArtifact without its version, manifestMediaUrls [], pageUrl '', captureDate absent and renderedSources []", () => {
     expect(judgeForkMedia(complete)).toEqual({ status: "measured", requirement: "EAT-R480", belongsToFork: true });
     expect(judgeForkMedia(null)).toEqual(blocked(["approved fork artifact identity", "remote registry-page render capture"]));
-    expect(judgeForkMedia({ ...complete, capturedArtifact: { name: "@planted/upstream-artifact", version: "0.0.1" } })).toEqual(blocked(["a capture of the authorized fork artifact (the capture names another package)"]));
-    expect(judgeForkMedia({ ...complete, capturedArtifact: { name: "@planted/other-artifact", version: "0.0.1" } })).toEqual(blocked(["a capture of the authorized fork artifact (the capture names another package)"]));
-    expect(judgeForkMedia({ ...complete, authorizedForkIdentity: "@planted/upstream-artifact", capturedArtifact: { name: "@planted/upstream-artifact", version: "0.0.1" } })).toEqual(blocked(["a capture of the authorized fork artifact (the capture names another package)"]));
     const omissions: Array<[string, Json, string]> = [
       ["authorizedForkIdentity", { ...complete, authorizedForkIdentity: null }, "approved fork artifact identity"],
-      ["capturedArtifact", { ...complete, capturedArtifact: { name: "@planted/fork-artifact" } }, "captured artifact identity and version"],
+      ["capturedArtifact.name", { ...complete, capturedArtifact: { version: "0.0.1" } }, "captured artifact identity and version"],
+      ["capturedArtifact.version", { ...complete, capturedArtifact: { name: "@planted/fork-artifact" } }, "captured artifact identity and version"],
       ["manifestMediaUrls", { ...complete, manifestMediaUrls: [] }, "manifest media URLs"],
       ["pageUrl", { ...complete, pageUrl: "" }, "registry page URL"],
       ["captureDate", { ...complete, captureDate: undefined }, "capture date"],
@@ -369,11 +411,33 @@ describe("EAT-R480 authorized fork registry media (G-FORK-MEDIA)", () => {
     ];
     for (const [field, evidence, named] of omissions) expect(judgeForkMedia(evidence), field).toEqual(blocked([named]));
   });
+
+  it("R480-C2-IDENTITY: against the capture planted here, the judge reads BLOCKED, naming a capture of the authorized fork artifact, a capture of the upstream package with the fork identity or with the upstream identity named as the authorized one, and a capture of a third package; and a capture of the upstream package with pageUrl '' names the registry page URL only", () => {
+    const another = blocked(["a capture of the authorized fork artifact (the capture names another package)"]);
+    const upstream = { name: "@planted/upstream-artifact", version: "0.0.1" };
+    expect(judgeForkMedia({ ...complete, capturedArtifact: upstream })).toEqual(another);
+    expect(judgeForkMedia({ ...complete, authorizedForkIdentity: "@planted/upstream-artifact", capturedArtifact: upstream })).toEqual(another);
+    expect(judgeForkMedia({ ...complete, capturedArtifact: { name: "@planted/other-artifact", version: "0.0.1" } })).toEqual(another);
+    expect(judgeForkMedia({ ...complete, capturedArtifact: upstream, pageUrl: "" })).toEqual(blocked(["registry page URL"]));
+  });
 });
 
 describe("EAT-R481 native-tier portability outside the developer layout (G-CROSS-HOST)", () => {
   const BLOCKED_HERE = ["a host where the developer home is not available", "the host's declared PATH", "the host's declared HYPERUNIX_HX", "resolved binaries and versions", "cwd", "native-read test result", "the gate-status probe's own repository target or its refusal"];
-  it("R481-C3-BLOCKED: the record's leg is this seat's developer layout (developer home available; hx, rf and forge each resolved under it, versions not read) and reads BLOCKED on G-CROSS-HOST naming each missing host and runtime item; re-judging its evidence gives that reading", () => {
+  /** The complete independent-host receipt the R481-C1 cases plant (never the record). */
+  const complete = {
+    developerHomeAvailable: false,
+    path: "/opt/planted/bin",
+    hyperunixHx: "/opt/planted/bin/hx",
+    binaries: [{ name: "hx", version: "0.0.0-planted", underDeveloperHome: false }],
+    cwd: "/srv/planted-checkout",
+    testResult: { command: "planted native-read", exit: 0 },
+    forgeTarget: { recorded: "/srv/planted-checkout" },
+  };
+  const blocked = (missing: string[]) => ({ status: "BLOCKED", requirement: "EAT-R481", gate: "G-CROSS-HOST", missing });
+  const binary = (name: string, version: string | null, underDeveloperHome: boolean) => ({ name, version, underDeveloperHome });
+
+  it("R481-C3-BLOCKED: the record's leg is this seat's developer layout (developer home available; hx, rf and forge each resolved under it, versions not read) and reads BLOCKED on G-CROSS-HOST naming the seven items BLOCKED_HERE lists; re-judging its evidence gives that reading", () => {
     const host = leg("EAT-R481");
     const evidence = object(host.evidence);
     expect(evidence.developerHomeAvailable).toBe(true);
@@ -383,21 +447,9 @@ describe("EAT-R481 native-tier portability outside the developer layout (G-CROSS
     expect(judgeCrossHost(host.evidence)).toEqual(expected);
   });
 
-  it("R481-C1-FIELDS: against an independent-host receipt planted here, the judge names each field one omission at a time, reads BLOCKED a receipt whose only or second binary resolves under the developer home and one whose second binary has no version, and measures the complete receipt", () => {
-    const complete = {
-      developerHomeAvailable: false,
-      path: "/opt/planted/bin",
-      hyperunixHx: "/opt/planted/bin/hx",
-      binaries: [{ name: "hx", version: "0.0.0-planted", underDeveloperHome: false }],
-      cwd: "/srv/planted-checkout",
-      testResult: { command: "planted native-read", exit: 0 },
-      forgeTarget: { recorded: "/srv/planted-checkout" },
-    };
-    const blocked = (missing: string[]) => ({ status: "BLOCKED", requirement: "EAT-R481", gate: "G-CROSS-HOST", missing });
+  it("R481-C1-FIELDS: against the independent-host receipt planted here, the judge measures the complete receipt and the same receipt with forgeTarget {refusedMissing: true}, reads the null input BLOCKED naming the host layout and its receipt, and names the one missing item for each omission: developerHomeAvailable true, path null, hyperunixHx '', the only binary without a version, the only binary under the developer home, cwd absent, testResult without exit and forgeTarget {}", () => {
     expect(judgeCrossHost(complete)).toEqual({ status: "measured", requirement: "EAT-R481", testExit: 0 });
     expect(judgeCrossHost({ ...complete, forgeTarget: { refusedMissing: true } })).toEqual({ status: "measured", requirement: "EAT-R481", testExit: 0 });
-    expect(judgeCrossHost({ ...complete, binaries: [{ name: "hx", version: "1", underDeveloperHome: false }, { name: "rf", version: "1", underDeveloperHome: true }] })).toEqual(blocked(["binaries resolved outside the developer home"]));
-    expect(judgeCrossHost({ ...complete, binaries: [{ name: "hx", version: "1", underDeveloperHome: false }, { name: "rf", version: null, underDeveloperHome: false }] })).toEqual(blocked(["resolved binaries and versions"]));
     expect(judgeCrossHost(null)).toEqual(blocked(["an independent host layout without the developer home", "that host's native-read receipt"]));
     const omissions: Array<[string, Json, string]> = [
       ["developerHomeAvailable", { ...complete, developerHomeAvailable: true }, "a host where the developer home is not available"],
@@ -410,6 +462,19 @@ describe("EAT-R481 native-tier portability outside the developer layout (G-CROSS
       ["forgeTarget", { ...complete, forgeTarget: {} }, "the gate-status probe's own repository target or its refusal"],
     ];
     for (const [field, evidence, named] of omissions) expect(judgeCrossHost(evidence), field).toEqual(blocked([named]));
+  });
+
+  it("R481-C1-BINARIES: against the planted receipt carrying two or three binaries, the judge names only binaries resolved outside the developer home when the second or the third binary resolves under the developer home, and only resolved binaries and versions when the second or the third binary has no version and when the first binary resolves under the developer home and the second has no version", () => {
+    const home = "binaries resolved outside the developer home";
+    const versions = "resolved binaries and versions";
+    const receipts: Array<[string, Array<ReturnType<typeof binary>>, string]> = [
+      ["second under the developer home", [binary("hx", "1", false), binary("rf", "1", true)], home],
+      ["third under the developer home", [binary("hx", "1", false), binary("rf", "1", false), binary("forge", "1", true)], home],
+      ["second without a version", [binary("hx", "1", false), binary("rf", null, false)], versions],
+      ["third without a version", [binary("hx", "1", false), binary("rf", "1", false), binary("forge", null, false)], versions],
+      ["first under the developer home, second without a version", [binary("hx", "1", true), binary("rf", null, false)], versions],
+    ];
+    for (const [shape, binaries, named] of receipts) expect(judgeCrossHost({ ...complete, binaries }), shape).toEqual(blocked([named]));
   });
 });
 
@@ -427,6 +492,11 @@ const C238_BASELINE = [
 const launch = (...flags: string[]): string[] => ["dolt", "sql-server", ...flags, "--port", "3306"];
 
 describe("EAT-R483 explicit loopback binding for rf-spawned Dolt servers (G-RF)", () => {
+  const reason = (argv: readonly string[]): string => {
+    const judged = judgeDoltServerArgv(argv);
+    return judged.verdict === "refused" ? judged.reason : judged.verdict;
+  };
+
   it("R483-C1-JOURNEY: the record's leg initialised a dolt-backed workspace, read the root's ledger empty, returned one registered reactivefiber.render.preview invoke, then read exactly one launched, proven, active server for that root, stopped it with the root-selected stop, saw its pid gone and read the root's ledger empty again", () => {
     const rf = leg("EAT-R483");
     expect(object(object(rf.workspace).init)).toEqual({ argv: ["rf", "init", "--backend", "dolt", "--json", "--no-input", "<workspace>"], processExit: 0, ok: true });
@@ -471,19 +541,16 @@ describe("EAT-R483 explicit loopback binding for rf-spawned Dolt servers (G-RF)"
     expect(C238_BASELINE.map(argv => judgeDoltServerArgv(argv).verdict)).toEqual(["explicit-loopback", "explicit-loopback", "explicit-loopback", "explicit-loopback"]);
   });
 
-  it("R483-C2-FORMS: the launcher contract accepts each of the three explicit forms -H 127.0.0.1, --host 127.0.0.1 and --host=127.0.0.1 as one explicit-loopback flag, reads dolt version (not a sql-server launch) as not-sql-server, and judges dolt --data-dir /srv/planted sql-server --host 0.0.0.0 (a global flag before sql-server) as a launch refused wildcard-host", () => {
+  it("R483-C2-FORMS: the launcher contract accepts each of the three explicit forms -H 127.0.0.1, --host 127.0.0.1 and --host=127.0.0.1 as one explicit-loopback flag, reads dolt version as not-sql-server, and judges dolt --data-dir /srv/planted sql-server --host 0.0.0.0 and dolt --data-dir /srv/planted --loglevel warning sql-server --host 0.0.0.0 (one and two global flags before sql-server) as launches refused wildcard-host", () => {
     expect(judgeDoltServerArgv(launch("-H", "127.0.0.1"))).toEqual({ verdict: "explicit-loopback", flags: [{ form: "-H", value: "127.0.0.1" }] });
     expect(judgeDoltServerArgv(launch("--host", "127.0.0.1"))).toEqual({ verdict: "explicit-loopback", flags: [{ form: "--host", value: "127.0.0.1" }] });
     expect(judgeDoltServerArgv(launch("--host=127.0.0.1"))).toEqual({ verdict: "explicit-loopback", flags: [{ form: "--host=", value: "127.0.0.1" }] });
     expect(judgeDoltServerArgv(["dolt", "version"])).toEqual({ verdict: "not-sql-server" });
     expect(judgeDoltServerArgv(["dolt", "--data-dir", "/srv/planted", "sql-server", "--host", "0.0.0.0"])).toMatchObject({ verdict: "refused", reason: "wildcard-host" });
+    expect(judgeDoltServerArgv(["dolt", "--data-dir", "/srv/planted", "--loglevel", "warning", "sql-server", "--host", "0.0.0.0"])).toMatchObject({ verdict: "refused", reason: "wildcard-host" });
   });
 
-  it("R483-C2-REFUSALS: over captured argv the launcher contract refuses, each with its reason: no host flag; a trailing --host, -H before another flag and an empty --host=; 0.0.0.0, ::, [::] and * in each of the three forms; 10.0.0.5, 192.168.1.20, dolt.example.invalid, localhost, ::1, 127.0.0.2 and 127.0.0.10; a second host flag carrying 0.0.0.0 or 10.0.0.5 beside 127.0.0.1; and the spellings -H127.0.0.1, -H=127.0.0.1 and --hostname", () => {
-    const reason = (argv: readonly string[]): string => {
-      const judged = judgeDoltServerArgv(argv);
-      return judged.verdict === "refused" ? judged.reason : judged.verdict;
-    };
+  it("R483-C2-REFUSALS: over captured argv the launcher contract refuses, each with its reason: no host flag; a trailing --host, -H before another flag and an empty --host=; 0.0.0.0, ::, [::] and * in each of the three forms; 10.0.0.5, 192.168.1.20, dolt.example.invalid, localhost, ::1, 127.0.0.2, 127.0.0.10, '127.0.0.1 ' and ' 127.0.0.1' after --host, and --host='127.0.0.1 '; and the spellings -H127.0.0.1, -H=127.0.0.1 and --hostname", () => {
     expect(reason(launch())).toBe("no-explicit-host-flag");
     expect(reason(["dolt", "sql-server", "--port", "3306", "--host"])).toBe("missing-host-value");
     expect(reason(launch("-H", "--loglevel=warning"))).toBe("missing-host-value");
@@ -491,26 +558,61 @@ describe("EAT-R483 explicit loopback binding for rf-spawned Dolt servers (G-RF)"
     for (const wildcard of ["0.0.0.0", "::", "[::]", "*"]) {
       expect([reason(launch("-H", wildcard)), reason(launch("--host", wildcard)), reason(launch(`--host=${wildcard}`))], wildcard).toEqual(["wildcard-host", "wildcard-host", "wildcard-host"]);
     }
-    for (const other of ["10.0.0.5", "192.168.1.20", "dolt.example.invalid", "localhost", "::1", "127.0.0.2", "127.0.0.10"]) {
-      expect(reason(launch("--host", other)), other).toBe("host-not-127.0.0.1");
+    for (const other of ["10.0.0.5", "192.168.1.20", "dolt.example.invalid", "localhost", "::1", "127.0.0.2", "127.0.0.10", "127.0.0.1 ", " 127.0.0.1"]) {
+      expect(reason(launch("--host", other)), `[${other}]`).toBe("host-not-127.0.0.1");
     }
-    expect(reason(launch("-H", "127.0.0.1", "--host", "0.0.0.0"))).toBe("wildcard-host");
-    expect(reason(launch("--host=127.0.0.1", "-H", "10.0.0.5"))).toBe("host-not-127.0.0.1");
+    expect(reason(launch("--host=127.0.0.1 "))).toBe("host-not-127.0.0.1");
     for (const spelling of ["-H127.0.0.1", "-H=127.0.0.1", "--hostname"]) expect(reason(launch(spelling)), spelling).toBe("unrecognized-host-form");
   });
 
-  it("R483-C1-LISTENER-REFUSALS: over literal ss lines the listener judge accepts one 127.0.0.1 listener on the ledger port and refuses a pid with no listener, a 0.0.0.0 listener listed after or before a 127.0.0.1 one, a 0.0.0.0 listener whose users column names another process before this pid, a listener at [::], 127.0.0.2 or 127.0.0.10, and a ledger port the pid does not listen on", () => {
+  it("R483-C2-ORDER: with two host flags the launcher contract refuses 0.0.0.0 listed after 127.0.0.1 (-H 127.0.0.1 --host 0.0.0.0) and before it (--host 0.0.0.0 -H 127.0.0.1) as wildcard-host, and 10.0.0.5 listed after 127.0.0.1 (--host=127.0.0.1 -H 10.0.0.5) and before it (-H 10.0.0.5 --host 127.0.0.1) as host-not-127.0.0.1", () => {
+    expect(reason(launch("-H", "127.0.0.1", "--host", "0.0.0.0"))).toBe("wildcard-host");
+    expect(reason(launch("--host", "0.0.0.0", "-H", "127.0.0.1"))).toBe("wildcard-host");
+    expect(reason(launch("--host=127.0.0.1", "-H", "10.0.0.5"))).toBe("host-not-127.0.0.1");
+    expect(reason(launch("-H", "10.0.0.5", "--host", "127.0.0.1"))).toBe("host-not-127.0.0.1");
+  });
+
+  it("R483-C1-LISTENER-REFUSALS: over literal ss lines the listener judge accepts one 127.0.0.1 listener on the ledger port and refuses a pid with no listener, a 0.0.0.0 listener listed after or before a 127.0.0.1 one, a 0.0.0.0 listener whose users column names this pid after another process, before another process or between two others, a listener at [::], 127.0.0.2 or 127.0.0.10, and a ledger port the pid does not listen on", () => {
     const ss = (address: string, port: number, pid: number): string => `LISTEN 0      4096   ${address}:${port}   0.0.0.0:*    users:(("dolt",pid=${pid},fd=17))`;
     const judge = (lines: string[], port = 41687) => judgeLoopbackListeners({ pid: 4242, port, listeners: parseSsListeners(lines.join("\n")) });
     expect(judge([ss("127.0.0.1", 41687, 4242)])).toEqual({ verdict: "loopback-only", addresses: ["127.0.0.1:41687"] });
     expect(judge([ss("127.0.0.1", 41687, 4343)])).toEqual({ verdict: "refused", reason: "no-listener-for-pid", addresses: [] });
     expect(judge([ss("127.0.0.1", 41687, 4242), ss("0.0.0.0", 41688, 4242)])).toEqual({ verdict: "refused", reason: "listener-not-127.0.0.1", addresses: ["127.0.0.1:41687", "0.0.0.0:41688"] });
     expect(judge([ss("0.0.0.0", 41688, 4242), ss("127.0.0.1", 41687, 4242)])).toEqual({ verdict: "refused", reason: "listener-not-127.0.0.1", addresses: ["0.0.0.0:41688", "127.0.0.1:41687"] });
-    const shared = `LISTEN 0      4096   0.0.0.0:41688   0.0.0.0:*    users:(("sh",pid=9,fd=3),("dolt",pid=4242,fd=18))`;
-    expect(judge([ss("127.0.0.1", 41687, 4242), shared])).toEqual({ verdict: "refused", reason: "listener-not-127.0.0.1", addresses: ["127.0.0.1:41687", "0.0.0.0:41688"] });
+    const shared = (users: string): string => `LISTEN 0      4096   0.0.0.0:41688   0.0.0.0:*    users:(${users})`;
+    for (const users of [`("sh",pid=9,fd=3),("dolt",pid=4242,fd=18)`, `("dolt",pid=4242,fd=18),("sh",pid=9,fd=3)`, `("sh",pid=9,fd=3),("dolt",pid=4242,fd=18),("sh",pid=10,fd=4)`]) {
+      expect(judge([ss("127.0.0.1", 41687, 4242), shared(users)]), users).toEqual({ verdict: "refused", reason: "listener-not-127.0.0.1", addresses: ["127.0.0.1:41687", "0.0.0.0:41688"] });
+    }
     expect(judge([ss("127.0.0.10", 41687, 4242)])).toEqual({ verdict: "refused", reason: "listener-not-127.0.0.1", addresses: ["127.0.0.10:41687"] });
     expect(judge([ss("[::]", 41687, 4242)])).toEqual({ verdict: "refused", reason: "listener-not-127.0.0.1", addresses: ["[::]:41687"] });
     expect(judge([ss("127.0.0.2", 41687, 4242)])).toEqual({ verdict: "refused", reason: "listener-not-127.0.0.1", addresses: ["127.0.0.2:41687"] });
     expect(judge([ss("127.0.0.1", 41687, 4242)], 41690)).toEqual({ verdict: "refused", reason: "ledger-port-not-listening", addresses: ["127.0.0.1:41687"] });
+  });
+});
+
+describe("wb-mo89 named residuals: each quiet row reds when its escape stops being quiet", () => {
+  it("R483-Q-ARGV-HOST-ONLY (R-ARGV-HOST-ONLY): the launcher-contract judge reads dolt sql-server --config /srv/planted/config.yaml -H 127.0.0.1 as explicit-loopback with the one -H flag, reading no host the config file would set", () => {
+    expect(judgeDoltServerArgv(["dolt", "sql-server", "--config", "/srv/planted/config.yaml", "-H", "127.0.0.1"])).toEqual({ verdict: "explicit-loopback", flags: [{ form: "-H", value: "127.0.0.1" }] });
+  });
+
+  it("R483-Q-UNATTRIBUTED-LISTENER (R-UNATTRIBUTED-LISTENER): beside this pid's one 127.0.0.1 listener on the ledger port, the listener judge reads a 0.0.0.0 ss line with no users column, and a 0.0.0.0 ss line naming only another process, as no listener of this pid: loopback-only", () => {
+    const own = `LISTEN 0      4096   127.0.0.1:41687   0.0.0.0:*    users:(("dolt",pid=4242,fd=17))`;
+    const unattributed = [`LISTEN 0      4096   0.0.0.0:41688   0.0.0.0:*`, `LISTEN 0      4096   0.0.0.0:41688   0.0.0.0:*    users:(("sh",pid=9,fd=3))`];
+    for (const line of unattributed) {
+      expect(judgeLoopbackListeners({ pid: 4242, port: 41687, listeners: parseSsListeners([own, line].join("\n")) }), line).toEqual({ verdict: "loopback-only", addresses: ["127.0.0.1:41687"] });
+    }
+  });
+
+  it("ROSTER-Q-SELF-ANCHORED (R-SELF-ANCHORED-ROSTER): no file exists in this tree at the roster's recorded source path, and the first vendored block with its last line edited and its recorded SHA-256 recomputed still passes the three per-block checks ROSTER-BLOCKS applies", () => {
+    const vendored = roster();
+    expect(existsSync(join(REPO, vendored.source.path))).toBe(false);
+    const block = vendored.requirements[0];
+    if (block === undefined) throw new Error("the roster vendors no requirement block");
+    const text = [...block.text.slice(0, -1), `${block.text.at(-1) ?? ""} (planted edit)`];
+    const twin = { ...block, text, sha256: sha256(text.join("\n")) };
+    expect(twin.text).not.toEqual(block.text);
+    expect(sha256(twin.text.join("\n")), twin.id).toBe(twin.sha256);
+    expect(twin.text[0], twin.id).toMatch(new RegExp(`^## ${twin.id} — `));
+    expect(twin.text.at(-1), twin.id).toMatch(/^- Maps-to: /);
   });
 });
