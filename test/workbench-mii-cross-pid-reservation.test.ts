@@ -1,5 +1,5 @@
 /**
- * wb-yk1k (MII P03+ packet), cut #4 (the respin of cut #3 after refusal #3): EAT-R399 criterion 1 only, and two
+ * wb-yk1k (MII P03+ packet), cut #5 (the respin of cut #4 after refusal #4): EAT-R399 criterion 1 only, and two
  * in-process cases of the reservation-store form, R399-STORE-VALIDATION and R399-RECORD-NAMING, that pin forms the
  * comments of src/workbench/source-admission.ts state. Requirement text:
  * docs/workbench/programs/mechanical-interop-integrity-2026-11-10/requirements/ATOMIC-REQUIREMENTS.md at Pi master 347d58ea
@@ -21,7 +21,12 @@
  * of reports (ENTERED or RESULT) the parent had received from either child when it wrote that GO, and every race case
  * asserts it is [0, 0]. Each child then makes its one request through its own spelling of ws, a committed Git repository
  * in tracked scratch: its direct path, the symlink ws-link beside it, or the dot spelling <authorized>/./ws. A child
- * reports what it got on stdout and holds it, releasing nothing, until the parent writes FINISH. Each race over a store
+ * reports each answer acquire or admitSourceWrite gives it (a dispatched outcome as its two members decision and value
+ * only), and its grant's lease, on stdout through answerOf: { undefined: true } when the answer === undefined, else
+ * { undefined: false, value, faithful }, value being the answer's JSON and faithful whether that JSON, parsed, is
+ * deep-strictly equal to the answer (isDeepStrictEqual of node:util); the parent reads an answer as deep-strictly equal
+ * to an object only through a report whose faithful is true. A child holds what it got, releasing nothing, until the
+ * parent writes FINISH. Each race over a store
  * uses a fresh store directory. R399-C1-STORE and R399-C1-ADMISSION each run one race for
  * each unordered pair of the three spellings (ALIAS_PAIRS), the first spelling of a pair in the child that runs inv-a and
  * the second in the child that runs inv-b. R399-STORE-VALIDATION and R399-RECORD-NAMING run no race: each drives the
@@ -29,21 +34,24 @@
  *
  * PINNED READER SET (case id: reader, what it asserts):
  *   R399-C1-STORE: WriterLeases acquire, in the two children of a race over one store, released together (reportsAtGo
- *     [0, 0]), each on its spelling of ws: exactly one child gets a lease, equal to { canonicalRoot: the realpath of ws,
- *     invocationId: that child's invocation }, the other gets undefined, both children exit 0, and holder, read in the
- *     parent through a third registry over the same store, names the lease's invocation for each of the three spellings.
+ *     [0, 0]), each on its spelling of ws, each child reporting its answer through answerOf: exactly one child gets a
+ *     lease, deep-strictly equal to { canonicalRoot: the realpath of ws, invocationId: that child's invocation }, the
+ *     other gets undefined (its report is { undefined: true }), both children exit 0, and holder, read in the parent
+ *     through a third registry over the same store, names the lease's invocation for each of the three spellings.
  *   R399-C1-ADMISSION: admitSourceWrite, in the two children of a race over one store, released together (reportsAtGo
  *     [0, 0]), each child admitting its own invocation on its spelling of ws under its own authority's attestation of
  *     ws's measured identity, with a dispatch that reports ENTERED with its grant's lease and then waits for FINISH:
- *     exactly one child enters its dispatch, with the lease { canonicalRoot: the realpath of ws, invocationId: that
- *     child's invocation }, the other admission returns the whole writer-held refusal and never enters, so ENTERED is
- *     reported once across the two children; after FINISH the entered admission returns { decision: "dispatched",
- *     value: "wrote" } and both children exit 0.
+ *     exactly one child enters its dispatch, its grant's lease deep-strictly equal to { canonicalRoot: the realpath of
+ *     ws, invocationId: that child's invocation }, the other admission returns a refusal deep-strictly equal to
+ *     { decision: "refused", code: "writer-held", reason: "the writer lease of this canonical workspace is held" } and
+ *     never enters, so ENTERED is reported once across the two children; after FINISH the entered admission returns a
+ *     dispatched outcome, which its child reports as the two members decision and value only, "dispatched" and "wrote",
+ *     and both children exit 0.
  *   R399-C1-DETECTOR: the R399-C1-ADMISSION race, released together (reportsAtGo [0, 0]), over one pair (direct, symlink)
  *     with new WriterLeases() in each child and no store, the per-process registry of the named mutant: both children
- *     enter their dispatch, each with the lease { canonicalRoot: the realpath of ws, invocationId: its own invocation },
- *     so the harness's ENTERED count reads 2 in a race where both processes write, and both admissions return
- *     { decision: "dispatched", value: "wrote" }.
+ *     enter their dispatch, each grant's lease deep-strictly equal to { canonicalRoot: the realpath of ws, invocationId:
+ *     its own invocation }, so the harness's ENTERED count reads 2 in a race where both processes write, and both
+ *     admissions return a dispatched outcome that its child reports as decision "dispatched" and value "wrote".
  *   R399-C1-SHAPE: test/fixtures/mii-r399-requirement.json, the anchor outside this file's literals, vendors EAT-R399's
  *     lines 250-272 at 347d58ea: its id and line label are EAT-R399 and 250-272, its text is 23 lines, the first opening
  *     with "## EAT-R399 ", and the SHA-256 of those lines, each followed by a line feed, is VENDORED_LINES_SHA256, the
@@ -100,6 +108,8 @@
  * spelling other than the three, letter-case, hard-link and bind-mount aliases, nested or overlapping roots, and any file
  * system other than the scratch directory's are NOT CLAIMED by this census. Which child wins a race, and how close
  * together the two requests run, are NOT CLAIMED by this census. Power-loss durability is NOT CLAIMED by this census.
+ * A dispatched outcome's members other than its decision and value (its identity), and what isDeepStrictEqual does not
+ * compare (an object's non-enumerable members, and whether it is frozen), are NOT CLAIMED by this census.
  * Any options, store, root or invocation that R399-STORE-VALIDATION does not plant, and the name of the record file of
  * any root R399-RECORD-NAMING does not plant, are NOT CLAIMED by this census. Outside this header's opening paragraph,
  * any label that QUOTE_LABEL does not match, with any quote after it other than the vendored statement, criterion 1 and
@@ -112,6 +122,7 @@ import { createHash } from "node:crypto";
 import { mkdirSync, readdirSync, readFileSync, realpathSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { isDeepStrictEqual } from "node:util";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
 import { WriterLeases, type WriterReservationStore } from "../src/workbench/source-admission.js";
@@ -137,6 +148,8 @@ interface RequirementFixture {
 const REQUIREMENT = JSON.parse(readFileSync(join(ROOT, "test", "fixtures", "mii-r399-requirement.json"), "utf8")) as RequirementFixture;
 const WRITER_HELD = { decision: "refused", code: "writer-held", reason: "the writer lease of this canonical workspace is held" } as const;
 const DISPATCHED = { decision: "dispatched", value: "wrote" } as const;
+/** answerOf's report of an answer that is undefined by the child's own === test (CHILD). */
+const UNDEFINED_ANSWER = { undefined: true } as const;
 /** The tags of a child's report after GO: ENTERED for an admission whose dispatch was entered, RESULT for what it got. */
 const REPORTS: readonly string[] = ["ENTERED", "RESULT"];
 /** The messages of the validation CapabilityErrors WriterLeases throws with a store (src/workbench/source-admission.ts). */
@@ -164,7 +177,7 @@ const BULLET_NEXT = /^ \* {5}\S/;
 const VENDORED_LINES_SHA256 = "e8d65ac05b6bafa4dbc508e8e59110d00db1d50310b14963b862b96748f42d89";
 /** This header's first sentence: R399-C1-SHAPE composes the header's opening paragraph from it and the fixture. */
 const SCOPE_SENTENCE =
-  "wb-yk1k (MII P03+ packet), cut #4 (the respin of cut #3 after refusal #3): EAT-R399 criterion 1 only, and two in-process cases of the reservation-store form, R399-STORE-VALIDATION and R399-RECORD-NAMING, that pin forms the comments of src/workbench/source-admission.ts state.";
+  "wb-yk1k (MII P03+ packet), cut #5 (the respin of cut #4 after refusal #4): EAT-R399 criterion 1 only, and two in-process cases of the reservation-store form, R399-STORE-VALIDATION and R399-RECORD-NAMING, that pin forms the comments of src/workbench/source-admission.ts state.";
 /**
  * R399-C1-SHAPE's label form: the statement, criterion <n> or the negative mutant, then a comma, the word line, a number and a
  * colon, in any letter case. The opening paragraph quotes each vendored line right after one such label.
@@ -215,6 +228,7 @@ import { existsSync } from "node:fs";
 import { registerHooks } from "node:module";
 import { createInterface } from "node:readline";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { isDeepStrictEqual } from "node:util";
 registerHooks({
   resolve(specifier, context, nextResolve) {
     if (specifier.startsWith(".") && specifier.endsWith(".js") && context.parentURL?.startsWith("file:")) {
@@ -227,7 +241,12 @@ registerHooks({
 });
 const plan = JSON.parse(process.env.R399_PLAN);
 const { WriteBoundaryAuthority, WriterLeases, admitSourceWrite, measureSourceIdentity } = await import(pathToFileURL(plan.module).href);
-const say = (tag, value) => process.stdout.write(tag + " " + JSON.stringify(value === undefined ? null : value) + "\\n");
+const say = (tag, value) => process.stdout.write(tag + " " + JSON.stringify(value) + "\\n");
+const answerOf = value => {
+  if (value === undefined) return { undefined: true };
+  const json = JSON.stringify(value);
+  return { undefined: false, value, faithful: json !== undefined && isDeepStrictEqual(JSON.parse(json), value) };
+};
 const lines = createInterface({ input: process.stdin })[Symbol.asyncIterator]();
 const line = async () => (await lines.next()).value;
 const git = (directory, args) => {
@@ -251,15 +270,15 @@ if (plan.mode === "admission") {
 say("READY", process.pid);
 if ((await line()) !== "GO") process.exit(4);
 if (plan.mode === "store") {
-  say("RESULT", leases.acquire(plan.spelling, plan.invocationId));
+  say("RESULT", answerOf(leases.acquire(plan.spelling, plan.invocationId)));
   await line();
 } else {
   const outcome = await admitSourceWrite({ invocationId: plan.invocationId, workspace: plan.spelling, policy: { allowWrites: true } }, host, async grant => {
-    say("ENTERED", { canonicalRoot: grant.lease.canonicalRoot, invocationId: grant.lease.invocationId });
+    say("ENTERED", answerOf(grant.lease));
     await line();
     return "wrote";
   });
-  say("RESULT", outcome.decision === "dispatched" ? { decision: outcome.decision, value: outcome.value } : outcome);
+  say("RESULT", answerOf(outcome.decision === "dispatched" ? { decision: outcome.decision, value: outcome.value } : outcome));
   if (outcome.decision !== "dispatched") await line();
 }
 process.exit(0);
@@ -432,6 +451,16 @@ async function race(mode: "store" | "admission", store: string | null, pair: rea
   }
 }
 
+/** answerOf's report of an answer that is not undefined and whose JSON, parsed, is deep-strictly equal to value (CHILD). */
+function faithful(value: unknown): unknown {
+  return { undefined: false, value, faithful: true };
+}
+
+/** The faithful report of the lease { canonicalRoot: ws, invocationId }. */
+function leaseOf(invocationId: string | undefined): unknown {
+  return faithful({ canonicalRoot: ws, invocationId });
+}
+
 function lastResult(events: readonly ChildEvent[]): unknown {
   return events.filter(event => event.tag === "RESULT").at(-1)?.value;
 }
@@ -557,15 +586,15 @@ describe("EAT-R399 criterion 1: two processes over one configured store hold one
         reading.first.map(event => event.tag),
         label,
       ).toEqual(["RESULT", "RESULT"]);
-      const leases = reading.first.map((event, index) => ({ invocationId: INVOCATIONS[index], value: event.value })).filter(entry => entry.value !== null);
-      expect(leases, label).toHaveLength(1);
-      const [won] = leases;
-      expect(won?.value, label).toStrictEqual({ canonicalRoot: ws, invocationId: won?.invocationId });
+      const answers = reading.first.map(event => event.value);
+      const won = INVOCATIONS.filter((_, index) => !isDeepStrictEqual(answers[index], UNDEFINED_ANSWER));
+      expect(won, label).toHaveLength(1);
+      expect(answers, label).toStrictEqual(INVOCATIONS.map(invocationId => (won.includes(invocationId) ? leaseOf(invocationId) : UNDEFINED_ANSWER)));
       const reader = new WriterLeases({ store });
       expect(
         ALIAS_KINDS.map(kind => reader.holder(spellingOf(kind))),
         label,
-      ).toEqual(ALIAS_KINDS.map(() => won?.invocationId));
+      ).toEqual(ALIAS_KINDS.map(() => won[0]));
     }
   });
 
@@ -581,12 +610,12 @@ describe("EAT-R399 criterion 1: two processes over one configured store hold one
       const entered = reading.first.map((event, index) => ({ invocationId: INVOCATIONS[index], event, index })).filter(entry => entry.event.tag === "ENTERED");
       expect(entered, label).toHaveLength(1);
       const [winner] = entered;
-      expect(winner?.event.value, label).toStrictEqual({ canonicalRoot: ws, invocationId: winner?.invocationId });
+      expect(winner?.event.value, label).toStrictEqual(leaseOf(winner?.invocationId));
       const loser = reading.first.findIndex(event => event.tag !== "ENTERED");
-      expect(reading.first[loser], label).toStrictEqual({ tag: "RESULT", value: WRITER_HELD });
+      expect(reading.first[loser], label).toStrictEqual({ tag: "RESULT", value: faithful(WRITER_HELD) });
       expect(reading.events[loser]?.some(event => event.tag === "ENTERED"), label).toBe(false);
       expect(enteredCount(reading), label).toBe(1);
-      expect(lastResult(reading.events[winner?.index ?? -1] ?? []), label).toStrictEqual(DISPATCHED);
+      expect(lastResult(reading.events[winner?.index ?? -1] ?? []), label).toStrictEqual(faithful(DISPATCHED));
     }
   });
 
@@ -598,11 +627,11 @@ describe("EAT-R399 criterion 1: two processes over one configured store hold one
       { code: 0, signal: null },
     ]);
     expect(reading.first).toStrictEqual([
-      { tag: "ENTERED", value: { canonicalRoot: ws, invocationId: "inv-a" } },
-      { tag: "ENTERED", value: { canonicalRoot: ws, invocationId: "inv-b" } },
+      { tag: "ENTERED", value: leaseOf("inv-a") },
+      { tag: "ENTERED", value: leaseOf("inv-b") },
     ]);
     expect(enteredCount(reading)).toBe(2);
-    expect(reading.events.map(lastResult)).toStrictEqual([DISPATCHED, DISPATCHED]);
+    expect(reading.events.map(lastResult)).toStrictEqual([faithful(DISPATCHED), faithful(DISPATCHED)]);
   });
 
   it(ROSTER[3], () => {
