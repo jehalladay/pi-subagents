@@ -12,6 +12,12 @@
 // The timed region is exactly one call to buildTimelineLanes, bracketed by performance.now(); the counting reader's
 // increments sit inside that call and are part of the measured cost. Everything derived from the model (notes,
 // lanes, rates) is computed after the clock stops.
+//
+// wb-9x5.16 (the W21 honesty bundle the owner ruled on the wb-9x5.7 gate) makes the 40-versus-100 comparison measure
+// something: pass maxQuery-100 asks the model for relationLimit 100 (PASS_REQUESTS), so its reader calls differ from
+// pass maxQuery-40's, and a bench-only fan-in overlay (FAN_IN, related after the fixture and counted as offered) gives a
+// few operation rows enough incoming edges to fill a relation page at 40, or at both caps. The fixture module is
+// reused unchanged.
 import {
   assessFixtureShape,
   BENCH_ONLY_LIMITS,
@@ -38,6 +44,23 @@ export const DEFAULT_TIMELINE_SAMPLING = Object.freeze({
 });
 /** The request knobs left at the model's own defaults (timeline.ts DEFAULT_LANES / DEFAULT_ROWS / DEFAULT_RELATIONS). */
 export const MODEL_DEFAULTS = Object.freeze({maxLanes: 16, maxRowsPerLane: 40, relationLimit: 40});
+/** The relation page each pass asks the model for (wb-9x5.16): pass maxQuery-40 leaves relationLimit at the model
+ * default, pass maxQuery-100 asks for the model maximum (timeline.ts MAX_RELATIONS), so the 100 cap can bind. */
+export const PASS_REQUESTS = Object.freeze({
+  'maxQuery-40': Object.freeze({}),
+  'maxQuery-100': Object.freeze({relationLimit: 100}),
+});
+/**
+ * Bench-only fan-in overlay (wb-9x5.16). On its own the grouped fixture never fills a relation page (incoming
+ * maxObserved 4), so every truncation rate would be 0 at both caps. Among the operation snapshots in fixture order,
+ * every `every`-th from `offset` is a target and the targets take `tiers` in turn: 60 extra incoming edges fill a page
+ * at 40 but not at 100, 120 fill it at both. A target's sources are the operations just before it, wrapping, never the
+ * target itself. They are dependency edges, which never place a row or change its timing (timeline.ts), related after
+ * the fixture's own edges so every row keeps its lane parent on its first relation page, under their own provenance
+ * source so none collapses into a fixture edge.
+ */
+export const FAN_IN = Object.freeze({every: 125, offset: 62, tiers: Object.freeze([60, 120]), kind: 'dependency', source: 'w21-timeline-fan-in'});
+const COMPARISON_LABEL = `pass maxQuery-40 requests relationLimit ${MODEL_DEFAULTS.relationLimit} (the model default) and pass maxQuery-100 requests relationLimit ${PASS_REQUESTS['maxQuery-100'].relationLimit} (the model maximum), so the two passes issue different reader calls; a bench-only fan-in overlay gives every ${FAN_IN.every}th operation snapshot from ordinal ${FAN_IN.offset} (fixture order) ${FAN_IN.tiers[0]} or ${FAN_IN.tiers[1]} extra incoming dependency edges, alternating, so a row with ${FAN_IN.tiers[0]} extra fills its relation page at ${MODEL_DEFAULTS.relationLimit} but not at ${PASS_REQUESTS['maxQuery-100'].relationLimit} and a row with ${FAN_IN.tiers[1]} extra fills it at both caps`;
 const OUTLIERS = 5;
 const clock = () => performance.now();
 const round = value => Math.round(value * 10_000) / 10_000;
@@ -60,6 +83,29 @@ function applyFixture(projection, fixture) {
   for (const snapshot of fixture.snapshots) projection.refresh(snapshot);
   for (const item of fixture.relations) projection.relate(item);
   for (const update of fixture.updates) projection.ingest(update);
+}
+
+/** The FAN_IN edges for one fixture as relate() inputs, with the shape the receipt states. Plain data; no clock. */
+function fanInOverlay(fixture) {
+  const operations = fixture.snapshots.filter(snapshot => snapshot.source.type === 'operation').map(snapshot => snapshot.source);
+  const relations = [];
+  const byTier = Object.fromEntries(FAN_IN.tiers.map(tier => [String(tier), 0]));
+  let targets = 0;
+  for (let ordinal = FAN_IN.offset; ordinal < operations.length; ordinal += FAN_IN.every) {
+    const tier = FAN_IN.tiers[targets % FAN_IN.tiers.length];
+    targets++;
+    byTier[String(tier)]++;
+    for (let back = 1; back <= Math.min(tier, operations.length - 1); back++) {
+      relations.push({
+        scope: SCOPE, from: operations[(ordinal - back + operations.length) % operations.length], to: operations[ordinal],
+        kind: FAN_IN.kind, provenance: {source: FAN_IN.source},
+      });
+    }
+  }
+  return {
+    relations,
+    shape: {every: FAN_IN.every, offset: FAN_IN.offset, tiers: [...FAN_IN.tiers], kind: FAN_IN.kind, source: FAN_IN.source, targets, byTier, edges: relations.length},
+  };
 }
 
 /** Untimed census of incoming-edge pages at the projection's query cap: how many rows have a cut page. */
@@ -101,9 +147,11 @@ function countingReader(projection, maxQuery) {
   return {reader, state, reset: () => Object.assign(state, {reads: 0, windowRows: 0, atRequestedLimit: 0, atMaxQuery: 0})};
 }
 
-function measurePass({label, Projection, buildTimelineLanes, fixture, limits, sampling}) {
+function measurePass({label, Projection, buildTimelineLanes, fixture, overlay, limits, extra, sampling}) {
   const projection = new Projection(limits);
   applyFixture(projection, fixture);
+  for (const item of overlay.relations) projection.relate(item);
+  const offeredEdges = fixture.relations.length + overlay.relations.length;
   const retained = projection.stats();
   const head = projection.window({scope: SCOPE, invocationId: INVOCATION_ID, offset: 0, limit: 1});
   const counting = countingReader(projection, limits.maxQuery);
@@ -126,7 +174,7 @@ function measurePass({label, Projection, buildTimelineLanes, fixture, limits, sa
       for (const zoom of sampling.zooms) {
         for (const pan of sampling.pans) {
           for (const columns of sampling.columns) {
-            const request = {scope: SCOPE, invocationId: INVOCATION_ID, offset, limit: sampling.limit, zoom, pan, columns};
+            const request = {scope: SCOPE, invocationId: INVOCATION_ID, offset, limit: sampling.limit, zoom, pan, columns, ...extra};
             counting.reset();
             const begin = clock();
             const model = buildTimelineLanes(counting.reader, request);
@@ -172,12 +220,12 @@ function measurePass({label, Projection, buildTimelineLanes, fixture, limits, sa
     limits: {...limits},
     limitsLabel: 'bench-only: spread locally in qa/workbench/timeline-grouped-core.mjs from BENCH_ONLY_LIMITS, never written into src/',
     constructorArgs: 1,
-    offered: {nodes: fixture.snapshots.length, edges: fixture.relations.length, updates: fixture.updates.length},
+    offered: {nodes: fixture.snapshots.length, edges: offeredEdges, updates: fixture.updates.length},
     retained,
     truncation: {
-      truncated: retained.nodes < fixture.snapshots.length || retained.edges < fixture.relations.length,
+      truncated: retained.nodes < fixture.snapshots.length || retained.edges < offeredEdges,
       nodesNotRetained: fixture.snapshots.length - retained.nodes,
-      edgesNotRetained: fixture.relations.length - retained.edges,
+      edgesNotRetained: offeredEdges - retained.edges,
     },
     rows: head.total,
     samples: total,
@@ -190,7 +238,7 @@ function measurePass({label, Projection, buildTimelineLanes, fixture, limits, sa
       invariant: 'reads <= rows returned by window() on every build; buildsExceedingRows must be 0',
     },
     relationPages: {
-      requestedLimit: MODEL_DEFAULTS.relationLimit,
+      requestedLimit: extra.relationLimit ?? MODEL_DEFAULTS.relationLimit,
       pages: totalReads,
       atRequestedLimit: pagesAtRequestedLimit,
       atRequestedLimitRate: rate(pagesAtRequestedLimit, totalReads),
@@ -305,8 +353,12 @@ export const timelineExitCodeFor = receipt => assessTimelineReceipt(receipt).exi
  */
 export function runTimelineBench({Projection, buildTimelineLanes, fixture, host, sampling = DEFAULT_TIMELINE_SAMPLING}) {
   const plan = {...DEFAULT_TIMELINE_SAMPLING, ...sampling};
+  const overlay = fanInOverlay(fixture);
   const passes = Object.fromEntries(
-    Object.entries(PASS_LIMITS).map(([label, limits]) => [label, measurePass({label, Projection, buildTimelineLanes, fixture, limits, sampling: plan})]),
+    Object.entries(PASS_LIMITS).map(([label, limits]) => [
+      label,
+      measurePass({label, Projection, buildTimelineLanes, fixture, overlay, limits, extra: PASS_REQUESTS[label], sampling: plan}),
+    ]),
   );
   const base = {
     contract: TIMELINE_RECEIPT_CONTRACT,
@@ -314,7 +366,11 @@ export function runTimelineBench({Projection, buildTimelineLanes, fixture, host,
     measured: true,
     scopeLabel: 'pure lane-model build cost: buildTimelineLanes only; no layoutInspector call, no terminal bytes, no redraw claim',
     productionCaps: 'unchanged: bench-only limits live in qa/ and are spread locally; nothing is written into src/',
-    comparisonLabel: 'comparison degenerate at relationLimit 40: timeline.ts requests 40 so both passes issue identical reader calls; the grouped-10k fixture never fills a relation page (incoming maxObserved 4) and every truncation rate is 0 at both caps',
+    comparison: {
+      passRequests: Object.fromEntries(Object.entries(PASS_REQUESTS).map(([label, extra]) => [label, {relationLimit: extra.relationLimit ?? MODEL_DEFAULTS.relationLimit}])),
+      fanIn: overlay.shape,
+      label: COMPARISON_LABEL,
+    },
     spanCompleteLabel: 'span.complete rate 0: every 100-row window holds an open or missing interval',
     utc: host.utc,
     revision: host.revision,

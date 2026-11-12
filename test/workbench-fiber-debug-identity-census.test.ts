@@ -57,10 +57,11 @@
  *    slice reads it as an unknown-relation-kind reference, never an edge, and the agent's read counts nothing and flags partial. B3 the
  *    hosted-agent report: the session adapter states only its fixed ownership, causation and grouping edges for a visual-debugging
  *    sample whose label and tool names carry the claim, a report member riding the sample is read nowhere, and src's relate() call
- *    sites are exactly the three ownership adapters and src/index.ts, which ingests the hosted agents' nodes and relates none of
- *    them: its one relate() call (furnace_observe, wb-qg19 EAT-R346) hands on the Run -> Attempt ownership edges
- *    src/workbench/furnace-observer.ts states, so B3 reads that call site's kinds from its own text and that module's together
- *    (RELAYED_KINDS), and they are ownership only. B4 the
+ *    sites are exactly the three ownership adapters, each spelling ownership only, the two HX relay sites wb-79k.1 added (the
+ *    Claude host's node seam, src/workbench/claude-host.ts, and the closure src/index.ts hands it) and the wb-79k.2 ReactiveFiber
+ *    observe-wiring (src/workbench/reactivefiber-wiring.ts), which spell no relation kind of their own and relay the HX and the RF
+ *    reader adapters, each of whose one stated kind is display grouping (src/index.ts ingests the hosted agents' nodes and relates
+ *    only through that closure). B4 the
  *    witness rule, armed (witnessViolations) for the first mapping reader: the honest reader passes every claim, and reading
  *    identity from a debug id, a screenshot, id equality, an agent report or a partial witness fails, as do synthesizing the
  *    revision, dropping or rewriting the witness, and ignoring a witness that names another target. B5 every bound reader meets B4
@@ -127,9 +128,11 @@
  * outside every scanned root, and both spell the vocabulary (Q6, reading the export through the owner filing alone); R-STATED-EDGE
  * relate() asks a witness only of ownership, so a producer-stated dependency, causation or grouping edge from a debug ref to a
  * FiberOptics ref is admitted on its source alone and read authoritative - not an identity edge (no identity class exists), and no
- * Pi producer states one (B3) (Q7); R-FOREIGN-READER graph-view validates no kind, so a reader other than the session projection
- * serving the claim row would draw an edge of class identity; src hands graph-view, the slice and the agent's read only the session
- * projection, whose one writer refuses the kind (B1) (Q8).
+ * Pi producer states one: besides the ownership adapters, src relates only through the HX relay sites, which state the HX adapter's
+ * display grouping from the invoking operation to its query node, and the RF observe-wiring, which states the RF adapter's display
+ * grouping from the invoking node call to its preview node (B3) (Q7); R-FOREIGN-READER graph-view validates no kind, so a
+ * reader other than the session projection serving the claim row would draw an edge of class identity; src hands graph-view, the
+ * slice and the agent's read only the session projection, whose one writer refuses the kind (B1) (Q8).
  * SCOPE: C1's judge reads no negation or tense: a unit stating the prohibition reds too (OVER-READ, disclosed: no Pi doc couples the
  * families today, and a page that must will re-measure this census). The producer facts are measured at the pin; Pi vendors no
  * producer file, so a producer change is seen only when the roster is re-measured. The FiberOptics, React DevTools and screenshot
@@ -166,6 +169,9 @@ installScratchLeakGuard();
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
 const ROSTER_PATH = join(HERE, "fixtures", "fiber-debug-identity-roster.json");
+/** wb-79k.2: the relate() site that relays the ReactiveFiber reader adapter's relations, and the adapter whose kinds it relays. */
+const OBSERVE_WIRING = "src/workbench/reactivefiber-wiring.ts";
+const OBSERVE_WIRING_ADAPTER = "src/workbench/reactivefiber-observer.ts";
 const BEAD = "wb-4nut.1";
 /** ReactiveFiberTSXSDK at the program-triage pin (the bead's citation). */
 const PROGRAM_PIN = "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df";
@@ -330,6 +336,11 @@ function keysAndStrings(value: unknown): string[] {
   if (isObject(value)) return Object.entries(value).flatMap(([key, item]) => [key, ...keysAndStrings(item)]);
   return [];
 }
+/** wb-79k.1: the src relate() call sites that relay the HX adapter's statements (the Claude host's node seam and the closure src/index.ts hands it). */
+const HX_RELAY_SITES: readonly string[] = ["src/index.ts", "src/workbench/claude-host.ts"];
+/** The relation kinds a source spells as `kind: "<kind>"`, each once, sorted. */
+const kindsIn = (text: string): string[] =>
+  [...new Set([...text.matchAll(/kind: ?["'](dependency|causation|ownership|grouping|hypothesis)["']/g)].map(match => match[1] ?? ""))].sort();
 function textOf(path: string): string {
   try {
     return readFileSync(path, "utf8");
@@ -878,13 +889,6 @@ function servingReaders(kinds: readonly string[]) {
   return { projection, relations, relationsPage, observeReader, fiberKey: keyIn(projection, FIBER_NODE) };
 }
 
-/**
- * A src file whose relate() call hands on relations another module states, mapped to that module (wb-qg19 EAT-R346: src/index.ts's
- * furnace_observe relates observer.projectionTopology(reading).relations, whose kind src/workbench/furnace-observer.ts states; the
- * relay itself is pinned by test/workbench-furnace-world-model-preservation-census.test.ts S1). B3 reads such a site's kinds from
- * its own text and that module's together, so a kind either spells reds the site.
- */
-const RELAYED_KINDS: Readonly<Record<string, string>> = { "src/index.ts": "src/workbench/furnace-observer.ts" };
 /** The src call sites of the projection's readers, each with whether its reader argument is the session projection. */
 const READER_CALL = /(?<!function )\b(createGraphViewBuilder|buildGraphView|selectLinkedTopology|observeInvocation)\(([^;]{0,120})/g;
 function srcFiles(): string[] {
@@ -1066,21 +1070,27 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const topology = agentTopology();
     const withReport: unknown = { ...AGENT_SAMPLE, report: `React debug id 42 is fiber-optics ${FIBER_NODE.id} (${REPORT_MARKER})` };
     const reported = agentTopology(withReport as ClaudeNativeObservation);
-    const writeSites: Record<string, { calls: number; kinds: string[]; relayedFrom?: string }> = {};
+    const writeSites: Record<string, { calls: number; kinds: string[] }> = {};
     for (const file of srcFiles()) {
       const text = textOf(file);
       const calls = (text.match(/\.relate\(/g) ?? []).length;
       if (calls === 0) continue;
-      const site = relative(REPO, file);
-      const relayedFrom = Object.hasOwn(RELAYED_KINDS, site) ? RELAYED_KINDS[site] : undefined;
-      const stated = relayedFrom === undefined ? text : `${text}\n${textOf(join(REPO, relayedFrom))}`;
-      const kinds = [...new Set([...stated.matchAll(/kind: ?["'](dependency|causation|ownership|grouping|hypothesis)["']/g)].map(match => match[1] ?? ""))].sort();
-      writeSites[site] = { calls, kinds, ...(relayedFrom !== undefined ? { relayedFrom } : {}) };
+      writeSites[relative(REPO, file)] = { calls, kinds: kindsIn(text) };
     }
     const relations = topology.relations.map(relation => `${relation.kind} ${refName(relation.from)} -> ${refName(relation.to)}`).sort();
     expect(JSON.stringify(reported), "a report member riding the sample changes nothing").toBe(JSON.stringify(topology));
     expect(keysAndStrings(reported).some(text => text.includes(REPORT_MARKER)), "the report member is read nowhere").toBe(false);
-    expect(Object.values(writeSites).every(site => site.kinds.length === 1 && site.kinds[0] === "ownership"), "every relate() call site states ownership only").toBe(true);
+    // wb-79k.1: the HX relay sites relate the HX adapter's own statements and spell no relation kind. wb-79k.2: the host seam's
+    // ReactiveFiber observe-wiring is one more relay - it relates the RF reader adapter's frozen relations and states no kind of its
+    // own. Each relayed adapter states exactly one kind, a display grouping: never ownership, never a mapping. Every other site is an
+    // ownership adapter.
+    const adapters = Object.entries(writeSites).filter(([file]) => !HX_RELAY_SITES.includes(file) && file !== OBSERVE_WIRING);
+    expect(adapters.every(([, site]) => site.kinds.length === 1 && site.kinds[0] === "ownership"), "every adapter's relate() call site states ownership only").toBe(true);
+    expect(HX_RELAY_SITES.map(file => writeSites[file]?.kinds ?? null), "each HX relay site relates and spells no relation kind of its own").toEqual(HX_RELAY_SITES.map(() => []));
+    expect(writeSites[OBSERVE_WIRING], "the RF observe-wiring relates the reader adapter's edges and states no kind of its own").toEqual({ calls: 1, kinds: [] });
+    const hxAdapterKinds = kindsIn(textOf(join(REPO, "src", "workbench", "hyperunix-observer.ts")));
+    expect(hxAdapterKinds, "the one adapter the HX relay sites relate states display grouping only").toEqual(["grouping"]);
+    expect(kindsIn(textOf(join(REPO, OBSERVE_WIRING_ADAPTER))), "the adapter the RF observe-wiring relays states one display-grouping kind").toEqual(["grouping"]);
     return json({
       relations,
       refs: topology.snapshots.map(snapshot => refName(snapshot.source)).sort(),
@@ -1088,6 +1098,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       reportRead: keysAndStrings(reported).some(text => text.includes(REPORT_MARKER)),
       writeSites,
       indexRelates: (textOf(join(REPO, "src", "index.ts")).match(/\.relate\(/g) ?? []).length,
+      hxAdapterKinds,
     });
   },
   B4: async () => {
@@ -1217,7 +1228,6 @@ describe("wb-4nut.1 Fiber debug identity census (TSX-HARNESS2-REACTIVE-EVOLUTION
     expect({
       fiberNode: FIBER_NODE, fiberPort: FIBER_PORT, debugRef: DEBUG_REF, screenshotRef: SCREENSHOT_REF, relationKinds: RELATION_KINDS,
       identityClaims: IDENTITY_CLAIMS, vocabulary: VOCABULARY, visual: VISUAL, docRoots: DOC_ROOTS, docFiles: DOC_FILES, residuals: RESIDUALS,
-      relayedKinds: RELAYED_KINDS,
     }).toStrictEqual(ROSTER.constants);
     // The producer's id forms: a component is [*bundle, "nodes", name], a port [*bundle, direction, name] (refs.py).
     const refs = producerPart("fiberOpticsRefs");

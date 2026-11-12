@@ -1,0 +1,111 @@
+{
+  "schema": "wb-lri.hx-source-basis-probe/1",
+  "bead": "wb-lri",
+  "utc": "2026-11-11T05:36:44.126Z",
+  "probe": {
+    "script": "qa/workbench/hx-source-basis-probe.mjs",
+    "scriptSha256": "af09e069e0b56b0d793286b536df32ad4f8375c509a5224b2ee934affc8f41c9"
+  },
+  "producer": {
+    "name": "hx",
+    "version": "0.1.0",
+    "binarySha256": "50b17a4b4c2ac5bc1f7a1cbf12652ff00271ac89726f025bf5184b82a3eebc90",
+    "binaryOrigin": "path",
+    "hxsVersion": "1.0",
+    "protocol": "hxs/1.0",
+    "sdk": {
+      "name": "@hyperunix/sdk",
+      "version": "0.1.0"
+    }
+  },
+  "repository": {
+    "files": [
+      "src/a.txt",
+      "src/b.txt"
+    ],
+    "baseRevision": "04eeeaaf6cfb1db030ac3b1362e589c050d81f2a"
+  },
+  "request": {
+    "kind": "hx.fs/regular-file",
+    "root": "src",
+    "bestEffort": true,
+    "wall": "30s",
+    "timeoutMs": 60000
+  },
+  "legs": [
+    {
+      "id": "provider-live",
+      "requestedView": null,
+      "outcome": "result",
+      "exitCode": 0,
+      "terminal": "complete",
+      "statusKind": "complete",
+      "diagnostics": [
+        {
+          "code": "HX-COVERAGE-INCOMPLETE",
+          "severity": "warning",
+          "reason": null,
+          "requirements": []
+        }
+      ],
+      "view": "hx.view/workspace-head",
+      "revision": null,
+      "revisionMember": true,
+      "resultJsonKeys": [
+        "representation",
+        "operation",
+        "rows",
+        "rows_retained",
+        "coverage",
+        "status",
+        "execution_status",
+        "diagnostics",
+        "view",
+        "cost",
+        "transport",
+        "workspace_root",
+        "terminal",
+        "truth",
+        "coverage_summary",
+        "evidence",
+        "digest",
+        "digest_source",
+        "local_digest",
+        "structural_digest",
+        "execution_id",
+        "budget_dimension",
+        "extensions"
+      ],
+      "queryDigest": null,
+      "digestSource": "absent",
+      "licensesAbsence": false,
+      "completeness": "unknown",
+      "rows": 3,
+      "frames": 18
+    },
+    {
+      "id": "provider-pinned",
+      "requestedView": "git:04eeeaaf6cfb1db030ac3b1362e589c050d81f2a",
+      "outcome": "process-failure",
+      "errorCode": "SDK_PROCESS_FAILED",
+      "exitCode": 2,
+      "terminal": "usage_refused",
+      "diagnostics": [
+        {
+          "code": "HX-CLI-USAGE-ERROR",
+          "severity": "fatal",
+          "reason": "view-binding-pending: hx find under --view git:04eeeaaf6cfb1db030ac3b1362e589c050d81f2a",
+          "requirements": [
+            "HX-VIEW-003",
+            "HX-VIEW-008",
+            "HX-VIEW-013"
+          ]
+        }
+      ],
+      "view": null,
+      "revision": null,
+      "rows": null,
+      "frames": 0
+    }
+  ]
+}

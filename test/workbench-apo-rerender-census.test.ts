@@ -2940,12 +2940,14 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "src/workbench/control.ts:2+0",
       "src/workbench/detached-control.ts:0+0",
       "src/workbench/detached-observer.ts:3+2",
+      "src/workbench/detached-wiring.ts:1+0",
       "src/workbench/evidence-wiring.ts:1+0",
       "src/workbench/forge-observer.ts:0+1",
       "src/workbench/forge-operation-observer.ts:3+0",
       "src/workbench/furnace-observer.ts:0+1",
       "src/workbench/hyperunix-observer.ts:0+1",
       "src/workbench/reactivefiber-observer.ts:0+1",
+      "src/workbench/reactivefiber-wiring.ts:2+0",
     ]);
     expect(Object.entries(NON_RENDER).flatMap(([module, entry]) => (entry.refused ? [`${module}:${entry.refused.length}`] : []))).toEqual(["src/workbench/detached-control.ts:4"]);
     expect(Object.entries(NON_RENDER).flatMap(([module, entry]) => (entry.writers ? [`${module}:${entry.writers.join(",")}`] : []))).toEqual(["src/workbench/collective-event.ts:ingest"]);

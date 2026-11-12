@@ -371,7 +371,7 @@ const GRACE_TURNS_CEILING = 1_000;
 const SUBAGENT_DEPTH_CEILING = 16;
 
 /** A non-empty absolute path whose characters are all printable: no newline, NUL or other C0/DEL control character. */
-function isCleanAbsolutePath(value: unknown): value is string {
+export function isCleanAbsolutePath(value: unknown): value is string {
   if (typeof value !== "string" || value.length === 0 || !isAbsolute(value)) return false;
   for (const char of value) {
     const code = char.codePointAt(0) ?? 0;

@@ -1,0 +1,52 @@
+{
+  "bead": "wb-ecl9",
+  "note": "Vendored verbatim with read-only git show by the cutting seat (ws-12, g10-work-s339, 2026-11-11); the requirement block runs from its EAT-R432 heading through its Gate status line, the matrix row is Matrix B's EAT-R432 row, and each sha256 is the SHA-256 of the block's lines joined by LF.",
+  "source": {
+    "branch": "master",
+    "commit": "a1870c0c17df60dae63fee78197048bebf2f6b09"
+  },
+  "requirement": {
+    "id": "EAT-R432",
+    "path": "docs/workbench/programs/mechanical-interop-integrity-2026-11-10/requirements/ATOMIC-REQUIREMENTS.md",
+    "blob": "a8a9bf091e2658a9eb698a023bd9bdb7076fa0e5",
+    "fileSha256": "cd20b89bfde90fa524b4a8c917850346f54cc9e6d6a67299bf5a9b5273cf1e4c",
+    "lines": "1056-1078",
+    "sha256": "5a94bd799ecb4654c84013c2104f3b736df8725d14cc900eb37c58241a308d85",
+    "text": [
+      "## EAT-R432 — Label the writer's containment tier truthfully: dedicated clean worktree, trusted host, no OS isolation from SDK tool filters",
+      "",
+      "- Type: REPRESENTATION",
+      "- Authority: LINGUISTIC_INTEGRITY",
+      "- Statement: Every launch summary, observation reply, receipt and operator document for the function route MUST describe the Claude SDK writer's containment as `trusted-host` with a `dedicated clean Git worktree` scope, MUST NOT use the words `sandbox`, `isolated` (in the containment sense) or `contained` for behaviour that rests on SDK `allowedTools`/prompt narrowing or on Pi's worktree admission, and MUST record any stronger containment only when an OS-level mechanism is named and its escape test is cited.",
+      "- Rationale: C079 NON-EPISTEMIC (\"no sandbox claim from SDK prompt/tool filters\"). C026 permitted wording and K019 (\"isolated\" in the release headline can be read as the containment the corpus explicitly disclaims; `isolated` means a dedicated worktree rather than containment). C004 NON-EPISTEMIC (the Purpose sentence's \"exclusive workspace ownership\"/\"isolated\"; M004: write \"dedicated clean Git worktree\" for \"isolated\"). C015 ESTABLISHED (source-admission confines Git worktrees: a path/alias check, not process isolation). MW-I09/D12 (mw-01) is the producer's own statement that `allowedTools` is not OS-enforced write isolation; the Pi README assigns D12 as shared/MW-owned only by label (C032 REFUTED as \"described in this corpus\"), so this row takes only the wording obligation, not a containment design.",
+      "- Epistemic basis: C079 NON-EPISTEMIC; C026 NON-EPISTEMIC; C015 ESTABLISHED; C032 REFUTED; C004 NON-EPISTEMIC.",
+      "- Derived from / remediation: C079, C026, C015, C032, C004; M004, M023, M024.",
+      "- Executable acceptance criteria:",
+      "  1. A text census over the function route's reply builders, observation renderers, receipt emitter and docs/skill files finds `containment: \"trusted-host\"` on every launch/observation payload and zero occurrences of `sandbox`/`sandboxed` describing the function writer; `isolated` occurs only in the phrase `dedicated clean Git worktree` or with an explicit \"not containment\" qualifier.",
+      "  2. Given a hypothetical stronger tier is configured, then the payload carries `containment: {tier, mechanism, escapeTestRef}` and the census fails when `escapeTestRef` does not resolve to a committed test.",
+      "  3. Mutant: a renderer emitting `containment: \"sandboxed\"` for the trusted-host configuration turns criterion 1 red.",
+      "- Negative mutant: Mutant: a renderer emitting `containment: \"sandboxed\"` for the trusted-host configuration turns criterion 1 red.",
+      "- V-tier: V0, V3; EAT-R432@V0/V3 (the draft names no artifact; location per EAT-R456); target detail: V0 (census) exercised at V3 payloads.",
+      "- Conditions / unresolved gates: none; stronger containment is post-v1 work (mw-05 \"Native OS containment ... must be explicitly engineered/tested\").",
+      "- Maps-to: MII P08 / P10; new bead owed (containment wording; no live carrier).",
+      "- Extends: EAT-R293, EAT-R310; OK — audited lineage retained.",
+      "- Predecessor lineage: Packet role: P10 wording for the P08 arm. No live bead carries the containment wording; the nearest live release/docs bead is wb-yiu4 (related, not the carrier).",
+      "- Linked rows: none stated in Matrix A.",
+      "- Verifies: none (behaviour/contract or independent decision row).",
+      "- Verified-by: none stated in Matrix A; own gate / validator.",
+      "- L0: TRACEABLE; acceptance NOT_RUN.",
+      "- Gate status (unexecuted): **NOT_RUN** — docs census leg runnable today; payload leg waits for P05"
+    ]
+  },
+  "matrix": {
+    "id": "EAT-R432",
+    "path": "docs/workbench/programs/mechanical-interop-integrity-2026-11-10/requirements/TDD-MATRIX.md",
+    "blob": "073567e8c568ecc3fe2d894153915aada567add3",
+    "fileSha256": "3d3cd66c1beb33d63ce438ef99a07036861e9f73f6bb47db7a15b002afd84024",
+    "lines": "196",
+    "sha256": "475a50ee05aa9d2bc5348c136c568e7296a81725dfd78efa0310d447d319ba24",
+    "text": [
+      "| EAT-R432 | V0,V3 | A | A | A | A | · | · | A | A | A*(COV) | A | G-CENSUS, G-PI-DEFAULT, G-REGISTERED, G-COVERAGE | **NOT_RUN** — docs census leg runnable today; payload leg waits for P05 | EAT-R432@V0/V3 (the draft names no artifact; location per EAT-R456) | L5/L6 ·: a wording census. |"
+    ]
+  }
+}

@@ -102,7 +102,8 @@
  * projection withholds them, so the echo the statement owes binds the armed half, not today's raw reading (Q4); R-INTERRUPTED a stem
  * split by a zero-width code point or spelled with a homoglyph letter is not caught (Q5; each probe carries its interruption, and
  * repaired it spells the stems); R-SCOPE the trigger reads the two files the acceptance names: the src modules that load the HX SDK
- * or provider lie outside it, and no src module imports the adapter yet (Q6).
+ * or provider lie outside it, and so does the one src module that imports the adapter, the Claude host's node seam (wb-79k.1:
+ * src/workbench/claude-host.ts) (Q6).
  * PRODUCER (wb-dvfc F3): A1 holds the roster's producer block to what the repository holds: the vendored manifest's name, version
  * and git blob id (the pin's sdk/typescript/package.json blob is the committed tarball's package/package.json, byte for byte), the
  * decoder's frame-routing line, the representation's cited lines, the filing's own quotes of the program's lines (each producer

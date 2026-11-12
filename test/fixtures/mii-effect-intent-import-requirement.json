@@ -1,0 +1,57 @@
+{
+  "program": "mechanical-interop-integrity-2026-11-10",
+  "commit": "a1870c0c17df60dae63fee78197048bebf2f6b09",
+  "requirements": {
+    "path": "docs/workbench/programs/mechanical-interop-integrity-2026-11-10/requirements/ATOMIC-REQUIREMENTS.md",
+    "blob": "a8a9bf091e2658a9eb698a023bd9bdb7076fa0e5"
+  },
+  "matrix": {
+    "path": "docs/workbench/programs/mechanical-interop-integrity-2026-11-10/requirements/TDD-MATRIX.md",
+    "blob": "073567e8c568ecc3fe2d894153915aada567add3"
+  },
+  "requirement": {
+    "id": "EAT-R444",
+    "lines": "1360-1383",
+    "text": [
+      "## EAT-R444 — Integrate producer effect-intent only through a ratified exported, invocation-keyed lookup; persist the Pi/MW intent correlation at dispatch; missing producer intent reads `unknown`",
+      "",
+      "- Type: BEHAVIORAL",
+      "- Authority: NORMATIVE_DECISION",
+      "- Statement: `workflow_reconcile` and the recovery path MUST read producer effect-intent records only through an export of `@mechanical/development-rig/host` (or a ratified sibling subpath) keyed by the Pi invocation id; Pi MUST NOT deep-import `dist/effect-intent.js`/`dist/effect-reconciliation.js`; at dispatch Pi MUST persist the correlation `{wf_ invocationId, producer intentId, invocationIdentitySha256, fencingGeneration}` in its own journal; and a producer intent that cannot be found or read MUST yield `<EAT-R419 ratified effect-axis field>: \"unknown\"`, never `no-effect`/`not-occurred`.",
+      "- Rationale: C173 SUPPORTED (arbitrated 2026-11-11; facets: Pi `workflow_control`/`workflow_reconcile` registered and a journal exist — ESTABLISHED; MW effect-intent functions exist at module level — ESTABLISHED; MW exports them to an installed consumer — REFUTED (`ERR_PACKAGE_PATH_NOT_EXPORTED`, E464/E091); an invocation-keyed producer lookup exists — UNSUPPORTED (path-addressed single-file reader, no index, no caller); the record carries `intentId` and `invocationIdentitySha256` but no Pi invocation id). E228 (both programs persist an intent and MW is of two minds about whose store it is; recovery \"reads Mechanical's\" — the correlation row makes that read possible). C174 NON-EPISTEMIC (P07 Done; M181: bind two records, choose recovery precedence, expose lookup). C128 NON-EPISTEMIC (control/reconcile cannot manufacture missing producer references).",
+      "- Epistemic basis: C173 SUPPORTED; C174 NON-EPISTEMIC; C128 NON-EPISTEMIC.",
+      "- Derived from / remediation: C173, C174, C128; M179, M180, M181, M182.",
+      "- Executable acceptance criteria:",
+      "  1. A static census over `src/` asserts zero import specifiers matching `@mechanical/development-rig/dist/` or any path to `effect-intent`/`effect-reconciliation`; the only `@mechanical/*` specifier is the allowlisted host subpath (EAT-R421).",
+      "  2. Through ORACLE-REG, the journal's `effect_intent_persisted` row carries `producerIntentId`, `invocationIdentitySha256`, `fencingGeneration` as returned by COMPOSED-EXPORT's admission step (or `null` with `unknown` when the export does not return them — current state), and `workflow_reconcile` resolves the producer record by `wf_` id through the exported lookup spy.",
+      "  3. Given the lookup throws `ERR_PACKAGE_PATH_NOT_EXPORTED` (the 69cb016d state) or returns no record, `workflow_reconcile` reports `<EAT-R419 ratified effect-axis field>: \"unknown\"`, `producerIntent: null`, and an operator instruction; a mutant mapping \"no record\" to `no-effect` turns red.",
+      "  4. Given two Pi hosts attempt recovery of one intent (mw-03 H07 falsifier), exactly one proceeds to a read-only native lookup and the other reports `recovery-not-authorized`.",
+      "- Negative mutant: Given the lookup throws `ERR_PACKAGE_PATH_NOT_EXPORTED` (the 69cb016d state) or returns no record, `workflow_reconcile` reports `<EAT-R419 ratified effect-axis field>: \"unknown\"`, `producerIntent: null`, and an operator instruction; a mutant mapping \"no record\" to `no-effect` turns red.",
+      "- V-tier: V3, V5; EAT-R444@V3/V5 (the draft names no artifact; location per EAT-R456); target detail: V3; cross-process arm at V5.",
+      "- Conditions / unresolved gates: MW export of an invocation-keyed lookup (mw-03 H02/H07; wb-1zn2); recovery precedence between Pi journal and MW intent (E228) is a joint decision this row leaves explicit. EAT-R413 (MII carrier of the EAT-R253 gate) must hold before any effectful (non-fixture) arm of this row runs (see EAT-R445 conditions; moved here from the draft Maps-to line). Filing-time / next-text-cycle: RA-15, RA-16.",
+      "- Maps-to: MII P07; wb-mwsy (open; re-read at filing).",
+      "- Extends: EAT-R251, EAT-R253, EAT-R282; OK — audited lineage retained.",
+      "- Predecessor lineage: lineage: wb-5a7k (MWI-controls; closed 2026-11-11T05:29:23Z, consolidated into wb-mwsy) — the draft named it as co-carrier (RA-01).",
+      "- Linked rows: EAT-R415.",
+      "- Verifies: none (behaviour/contract or independent decision row).",
+      "- Verified-by: none stated in Matrix A; own gate / validator.",
+      "- L0: TRACEABLE (conditions: RA-15, RA-16); text consolidated: RA-01, RA-08, RA-19; acceptance NOT_RUN.",
+      "- Gate status (unexecuted): **BLOCKED** — MW exported lookup (mw-03 H02/H07); the static import census leg is NOT_RUN and runnable now"
+    ]
+  },
+  "allowlist": {
+    "id": "EAT-R421",
+    "line": 784,
+    "text": "- Statement: The Pi host adapter MUST resolve `@mechanical/development-rig/host` exclusively from an installed artifact whose tarball SHA-256 and descriptor SHA-256 equal the values held in Pi's reviewed allowlist entry, imported through the one native-import seam, and MUST refuse (typed `artifact-mismatch` / `descriptor-mismatch`) any resolution from a workspace checkout, a bare specifier resolved by Node's default algorithm, or an artifact whose digests differ."
+  },
+  "matrixRow": {
+    "id": "EAT-R444",
+    "line": 208,
+    "text": "| EAT-R444 | V3,V5 | A | A*(CON) | A | A | A | A*(FLT) | A | A | A*(COV) | A | G-PI-DEFAULT, G-CONSUMER, G-REGISTERED, G-FAULT, G-COVERAGE | **BLOCKED** — MW exported lookup (mw-03 H02/H07); the static import census leg is NOT_RUN and runnable now | EAT-R444@V3/V5 (the draft names no artifact; location per EAT-R456) | L2: exported lookup resolved from the installed host. L6: two Pi hosts recovering one intent. |"
+  },
+  "criterionGate": {
+    "id": "EAT-R444",
+    "line": 272,
+    "text": "| EAT-R444 | (a) no deep import of producer internals; (b) correlation persisted at dispatch; (c) lookup only through the ratified export; (d) a missing producer intent reads unknown |"
+  }
+}
