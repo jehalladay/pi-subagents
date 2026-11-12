@@ -10,7 +10,10 @@ gate = ["lint", "typing", "build", "test", "census", "workbench-shell", "package
 
 [build.commands]
 lint = "npm run lint"
-build = "npm run build"
+
+[build.commands.build]
+command = "npm run build"
+timeout = 900
 
 [build.commands.typing]
 command = "npm run typecheck && npm run typecheck:test"
