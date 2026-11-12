@@ -9,7 +9,7 @@
  *       parse-aware extraction (never bare regex over rendered markdown - HTML-comment-hidden text must not satisfy a
  *       claim, per the wb-dc0/wb-9x5 probe class)".
  *
- * FORM (respin cut #3, the rule-14 enumerate-the-resolvable form; the shape frozen at refusal #2): ENUMERATED, NOT
+ * FORM (respin cuts #3 and #4, the rule-14 enumerate-the-resolvable form; the shape frozen at refusal #2): ENUMERATED, NOT
  * GENERAL. Each case claims exactly the forms it plants, as its title lists them, and each section of the lint header
  * claims exactly the forms of the cases it cites; a form no case plants is NOT CLAIMED, whatever a title's or the lint
  * header's wording seems to cover. A known form within a claimed subject that the lint reads otherwise than its wording
@@ -50,11 +50,23 @@
  * - R-EXCLUDE-GLOB (GUARD-READERS): vitest.config.ts's exclude entries are compared as exact paths, so a glob there
  *   excludes no reader, though vitest excludes the files it matches from the default tier. Quiet row: RQ3 asserts that a
  *   file a glob entry matches is listed.
+ * - W-CRLF (GUARD-PLACEMENT; refusal #3 F4): in a receipt with CRLF line endings a claim is placed above its own line,
+ *   so a false figure appended there is placed on a landed line and is not judged in a modified receipt. Quiet row: RQ4
+ *   asserts the one-line-high placement of each claim of a two-line paragraph, a two-line list item and a table's two
+ *   body rows beside their LF twins, and that a false figure appended to a CRLF paragraph receipt is not judged (named
+ *   whole, the receipt is refused one line high).
+ * - W-NESTED-HEADING (GUARD-GRAMMAR; refusal #3 F5): a heading inside a blockquote or a list item is no heading the lint
+ *   totals, so its (N rows) makes no table claim. Quiet row: RQ5 asserts no claim from both nested forms beside the
+ *   refusal of the same heading at the top level, ATX and setext.
+ * - W-UNATTACHED-COMMENT (GUARD-CENSUS-TEXT; refusal #3 F6): a comment that no node's leading or trailing comment ranges
+ *   hold is no census text. Quiet row: RQ6 asserts no claim from six such forms, an own-line comment closing a describe
+ *   body among them, beside the refusal of the line comment leading the declaration.
  *
  * NOT CLAIMED. The merge-base default of the delivery's base and receipt changes committed after the base are NOT
  * CLAIMED by this census (its fixture cuts lint against HEAD). A sentence that starts on a landed line and ends on an
  * appended one is NOT CLAIMED by this census beyond R-SPLIT-MATCH, nor is the placement of a block inside a container
- * that itself sits inside a list item or a blockquote. Spread elements, duplicate declarations and wrapped array literals
+ * that itself sits inside a list item or a blockquote. Where forge.toml places the census-file block is NOT CLAIMED by
+ * this census (its block is read wherever it sits). Spread elements, duplicate declarations and wrapped array literals
  * are NOT CLAIMED by
  * this census. The vitest half's own output and census-file's report lines are NOT CLAIMED by this census. Wall time is
  * NOT CLAIMED by this census: every case runs under an explicit timeout, and each case's scratch is removed after it under
@@ -619,6 +631,60 @@ describe("wb-8py9 receipt lint: the quiet rows of the RESIDUALS", { timeout: CAS
     const made = repo({ "test/live/reads.test.ts": 'const DIR = "docs/workbench/receipts";\n', "vitest.config.ts": 'export default { test: { exclude: ["test/live/**"] } };\n' });
     write(made.dir, RECEIPT, "# wb-fixture: fixture\n\n## 2026-11-12 cut\n");
     expect(landedReaders(made.dir, made.sha, [RECEIPT])).toEqual(["test/live/reads.test.ts"]);
+  });
+
+  it("RQ4 W-CRLF: in a receipt with CRLF line endings a claim is placed above its own line: each claim of a two-line paragraph, a two-line list item and a table's two body rows is placed one line high where its LF twin is placed on its own line, so the CRLF twin of RL6's paragraph receipt judges nothing on its added line and named whole is refused one line high, at line 5", () => {
+    const crlf = (text: string) => text.replaceAll("\n", "\r\n");
+    const nine = `\`${CORPUS}\` holds 9 SITES rows`;
+    const forms = [
+      `The corpus \`${CORPUS}\` holds 3 SITES rows at the cut.\nSince then ${nine}.`,
+      `- The corpus \`${CORPUS}\` holds 3 SITES rows at the cut.\n  Since then ${nine}.`,
+      `| file | note |\n|---|---|\n| corpus | \`${CORPUS}\` holds 3 SITES rows |\n| again | ${nine} |`,
+    ];
+    expect(forms.map(body => claimsOf(body).map(claim => claim.line))).toEqual([
+      [5, 6],
+      [5, 6],
+      [7, 8],
+    ]);
+    expect(forms.map(body => markdownClaims(crlf(receiptText(body)), RECEIPT).map(claim => claim.line))).toEqual([
+      [4, 5],
+      [4, 5],
+      [6, 7],
+    ]);
+    // "* -text" keeps git from converting the line endings whatever core.autocrlf says, so the blob holds the CRLF bytes
+    const made = repo({ ".gitattributes": "* -text\n", [CORPUS]: CORPUS_TEXT, [RECEIPT]: crlf(receiptText(`The corpus \`${CORPUS}\` holds 3 SITES rows at the cut.`)) });
+    appendFileSync(join(made.dir, RECEIPT), crlf(`Since then ${nine}.\n`));
+    expect(lintDelivery(made.dir, { base: "HEAD" })).toMatchObject({ claims: [], findings: [] });
+    expect(lintDelivery(made.dir, { base: "HEAD", files: [RECEIPT] }).findings.map(found => [found.line, found.claim])).toEqual([[5, `${CORPUS} holds 9 SITES rows`]]);
+  });
+
+  it("RQ5 W-NESTED-HEADING: a heading ending (5 rows) over a one-row table makes no claim inside a blockquote or a list item, while at the top level, as an ATX or a setext heading, it is refused stating 5 rows where 1 renders", () => {
+    const table = ["| a |", "|---|", "| x |"];
+    const nested = [`> ## Sites (5 rows)\n>\n${table.map(line => `> ${line}`).join("\n")}`, `- ## Sites (5 rows)\n\n${table.map(line => `  ${line}`).join("\n")}`];
+    expect(nested.map(body => judged(body))).toEqual([
+      { claims: [], findings: [] },
+      { claims: [], findings: [] },
+    ]);
+    const top = [`## Sites (5 rows)\n\n${table.join("\n")}`, `Sites (5 rows)\n---\n\n${table.join("\n")}`];
+    expect(top.map(body => judged(body).findings.map(found => [found.line, found.kind, found.states, measuredFigure(found)]))).toEqual([
+      [[5, "table", "5 rows", "1 rendered rows in the heading's section"]],
+      [[5, "table", "5 rows", "1 rendered rows in the heading's section"]],
+    ]);
+  });
+
+  it("RQ6 W-UNATTACHED-COMMENT: an own-line comment closing a describe body, an if block, an empty function body, an empty array literal or an object literal after its last property, and a block comment between two call arguments on one line, are no census text and make no claim, while the line comment leading the declaration is refused at line 1 stating 3 ROWS rows where the literal declares 2", () => {
+    const comment = "// the 3 ROWS rows";
+    const unattached = [
+      `import { describe, it } from "vitest";\nconst ROWS = [1, 2];\ndescribe("s", () => {\n  it("c", () => {});\n  ${comment}\n});\n`,
+      `const ROWS = [1, 2];\nif (ROWS.length > 0) {\n  ROWS.push(3);\n  ${comment}\n}\n`,
+      `const ROWS = [1, 2];\nfunction f() {\n  ${comment}\n}\nf();\n`,
+      `const ROWS = [1, 2];\nconst EMPTY = [\n  ${comment}\n];\nexport { EMPTY };\n`,
+      `const ROWS = [1, 2];\nconst O = {\n  a: 1,\n  ${comment}\n};\nexport { O };\n`,
+      "const ROWS = [1, 2];\nconsole.log(1, /* the 3 ROWS rows */ 2);\n",
+    ];
+    expect(unattached.map(source => judgedCensus(source))).toEqual(unattached.map(() => ({ claims: [], findings: [] })));
+    const leading = judgedCensus(`${comment}\nconst ROWS = [1, 2];\nexport {};\n`);
+    expect(leading.findings.map(found => [found.line, found.kind, found.states, measuredFigure(found)])).toEqual([[1, "rows", "3 ROWS rows in test/x-census.test.ts", "2"]]);
   });
 });
 

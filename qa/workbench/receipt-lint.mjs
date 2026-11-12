@@ -12,7 +12,7 @@
  * the line PLACEMENT puts it on. An added receipt, a census file and a file named on the command line (a markdown file, or
  * a TypeScript file under test/) are judged whole.
  *
- * FORM (wb-8py9 respin cut #3, the enumerate-the-resolvable form): ENUMERATED, NOT GENERAL. A section below that cites
+ * FORM (wb-8py9 respin cuts #3 and #4, the enumerate-the-resolvable form): ENUMERATED, NOT GENERAL. A section below that cites
  * cases of test/workbench-receipt-lint.test.ts is claimed for exactly the forms those cases plant; its description claims
  * nothing beyond them, and a form no cited case plants is NOT CLAIMED. A known form a section reads otherwise than its
  * wording suggests is a RESIDUAL with a pinned quiet row:
@@ -21,7 +21,14 @@
  *   R-NEEDLE-MISMATCH  a claim whose path and figure each occur more often in its paragraph's source than in its rendered
  *                      text is placed on its path's first source line (quiet row RQ2);
  *   R-EXCLUDE-GLOB     vitest.config.ts's exclude entries are compared as exact paths, so a glob there excludes no reader
- *                      (quiet row RQ3).
+ *                      (quiet row RQ3);
+ *   W-CRLF             in a receipt with CRLF line endings a claim is placed above its own line, so a figure appended
+ *                      there is placed on a landed line and not judged in a modified receipt (quiet row RQ4);
+ *   W-NESTED-HEADING   a heading inside a blockquote or a list item is no heading this lint totals, so its "(N rows)"
+ *                      makes no table claim (quiet row RQ5);
+ *   W-UNATTACHED-COMMENT  a comment that no node's leading or trailing comment ranges hold (an own-line comment
+ *                      closing a block, a body or a literal, or one between call arguments) is no census text (quiet
+ *                      row RQ6).
  * A form found later joins this list; it is not a claim.
  *
  * PLACEMENT (the forms of RL4, RL6 and RL7). A top-level block starts on the line where its source text is found; a block
@@ -32,16 +39,18 @@
  * judged at its own line whatever text a landed line holds: RL6 plants a line continuing a landed paragraph or list item,
  * an added list item and an added table row, and RL7 a table row whose claim cell repeats a landed body cell, a header cell
  * or a landed cell of a table in a list item or a blockquote, or holds an escaped pipe, a repeated list item or
- * paragraph, and a line continuing a paragraph whose landed line holds the same claim inside an HTML comment.
+ * paragraph, and a line continuing a paragraph whose landed line holds the same claim inside an HTML comment. Those
+ * lines are LF lines: a receipt with CRLF line endings places a claim above its own line (W-CRLF, above).
  *
  * THE RENDERED VIEW (parse-aware, never a regex over raw markdown). A markdown file is lexed with marked and judged on
  * what a reader sees. An HTML comment renders nothing, so its text is never a claim and never counts toward a measured
  * figure. Text that renders through raw HTML (an HTML block, or an inline element tag such as a hidden span) depends on
  * markup this lint does not render, so a claim there is refused fail-closed (kind html). A fenced or indented code block
  * is quoted material, not a claim. Struck-through text and image alt text are not assertions. Entities are decoded and
- * the text is NFKC-normalized. A census file is parsed with TypeScript; its comments (line, block and JSDoc, leading or
- * trailing) and its case and suite titles (the first argument of it, test, describe or suite) are its text, and its other
- * string literals are data, never claims (RK4, RK8, RK9).
+ * the text is NFKC-normalized. A census file is parsed with TypeScript; its comments (line, block and JSDoc) that
+ * TypeScript returns as a node's leading or trailing comment ranges, and its case and suite titles (the first argument of
+ * it, test, describe or suite), are its text, and its other string literals are data, never claims (RK4, RK8, RK9); a
+ * comment attached to no node is no census text (W-UNATTACHED-COMMENT, above).
  *
  * THE CLAIMS (each alternative at the forms of the cases it cites). Each is matched within one sentence of one block, a
  * sentence ending at a full stop, a question mark or an exclamation mark before a word that starts upper case (RG3). A
@@ -58,7 +67,8 @@
  *          in its block (RG4; in a census file that names none, to the file itself: RG8) and to the last revision named
  *          earlier in its block, else to its own sentence's revision, even one named after it there (RG4); it states the
  *          element count and the first and last line of the literal (RK1, RK5).
- *   table  a heading whose text ends "(<N> rows)" (RG9). N is the number of rendered body rows (a row whose every cell
+ *   table  a top-level heading, ATX or setext, whose text ends "(<N> rows)" (RG9, RQ5; a heading inside a blockquote or a
+ *          list item is none: W-NESTED-HEADING, above). N is the number of rendered body rows (a row whose every cell
  *          renders no text is none) of the tables in the heading's section, a table in a list item or a blockquote
  *          included, or, when it holds no table, the number of non-blank lines of its code blocks (a listing); the
  *          section runs to the next heading of its level or a higher one (RG5, RG9, RV2).
