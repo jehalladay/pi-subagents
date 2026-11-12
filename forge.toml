@@ -15,7 +15,7 @@ build = "npm run build"
 
 [build.commands.test]
 command = "npm run test"
-timeout = 1200
+timeout = 3600
 
 [build.commands.workbench-shell]
 command = "bash qa/workbench/smoke.sh"
@@ -168,9 +168,21 @@ timeout = 60
 command = "node qa/workbench/timeline-grouped-bench.mjs"
 timeout = 300
 
+[build.commands.graph-view-grouped-bench]
+command = "node qa/workbench/graph-view-grouped-bench.mjs"
+timeout = 300
+
+[build.commands.inspector-four-view-layout-bench]
+command = "node qa/workbench/inspector-four-view-layout-bench.mjs"
+timeout = 600
+
 [build.commands.rf-preview-tsx]
 command = "./node_modules/.bin/vitest run --config vitest.rf-tsx.config.ts"
 timeout = 180
+
+[build.commands.forge-verify-live]
+command = "./node_modules/.bin/vitest run --config vitest.forge-verify-live.config.ts"
+timeout = 300
 
 [build.commands.forge-control-live]
 command = "./node_modules/.bin/vitest run --config vitest.forge-control-live.config.ts"

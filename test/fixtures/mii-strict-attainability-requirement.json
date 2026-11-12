@@ -1,0 +1,56 @@
+{
+  "bead": "wb-tl5p",
+  "note": "Vendored verbatim with read-only git cat-file by the cutting seat (ws-08, g10-work-s337, 2026-11-11) from the program source pin the MII ruling row names; both blobs are byte-identical at master tip 53ac7f356096c71447416f64149ae463f0deb7ef. The requirement block runs from its EAT-R437 heading through its Gate status line; matrixA and matrixB are the EAT-R437 rows of TDD-MATRIX.md Matrix A and Matrix B. Each sha256 is the SHA-256 of the UTF-8 text (block lines joined by LF).",
+  "source": {
+    "branch": "master",
+    "commit": "a1870c0c17df60dae63fee78197048bebf2f6b09"
+  },
+  "requirement": {
+    "id": "EAT-R437",
+    "path": "docs/workbench/programs/mechanical-interop-integrity-2026-11-10/requirements/ATOMIC-REQUIREMENTS.md",
+    "blob": "a8a9bf091e2658a9eb698a023bd9bdb7076fa0e5",
+    "fileSha256": "cd20b89bfde90fa524b4a8c917850346f54cc9e6d6a67299bf5a9b5273cf1e4c",
+    "lines": "1180-1203",
+    "sha256": "87ecde9e80113a0d69665c78919cfc8db09a32a9a936b9f1e3de3256d1dff479",
+    "text": [
+      "## EAT-R437 — Settle strict-native attainability: one real pinned-environment envelope, or a recorded joint decision; until then say UNDETERMINED",
+      "",
+      "- Type: VERIFICATION",
+      "- Authority: EVIDENCE_ACQUISITION",
+      "- Statement: Before any receipt, W11 row, skill or docs text asserts that the first release's \"strict native Forge gate\" is achievable, the implementation MUST obtain one native `gate.run` envelope from the installed Forge on a clean committed disposable package in the first-release topology showing `execution_environment.pinned: true` with native `gated_commit`, non-empty `gated_tree` and `gate_definition`, OR record an owner/joint decision that strict v1 does not require the environment pin (with the certificate schema amended accordingly); until one exists, every surface MUST describe strict-native attainability as `undetermined` and every V4 receipt MUST carry that residual unknown.",
+      "- Rationale: C026 facet \"strict-native Forge PASS attainable in the first-release topology\" UNDETERMINED; C175 and C185 NON-EPISTEMIC with the same `missing_to_settle` (\"one native gate.run envelope ... showing execution_environment.pinned true with native commit, tree and gate definition\"; M183/M194 PRESERVE_AS_UNDETERMINED). E105/E411: the only real native receipt (2026-10-15) has `execution_environment: {kind:'host', pinned:false}` and null envelope gate bindings; EPISTEMIC-AUDIT §3: `pinned` is false in all 148 occurrences across committed MW evidence and true only in synthetic test fixtures. C181/C036 ESTABLISHED as self-reports (no command or gate was executed in authoring). UNDETERMINED compiles to evidence acquisition, never to a positive premise (hard invariant 15).",
+      "- Epistemic basis: C026 NON-EPISTEMIC; C175 NON-EPISTEMIC; C185 NON-EPISTEMIC; C181 ESTABLISHED; C036 ESTABLISHED; C029 REFUTED.",
+      "- Derived from / remediation: C026, C175, C185, C181, C036, C029; M023, M024, M025, M183, M184, M194.",
+      "- Executable acceptance criteria:",
+      "  1. An artifact exists at the durable receipt location: either (a) an original Forge envelope JSON (not an assistant summary) with `data.execution_environment.pinned === true`, non-empty `gated_commit`, `gated_tree`, `gate_definition`, produced by a recorded command on a disposable clean package at recorded Pi/MW SHAs; or (b) a dated decision record naming the owner and the amended strict rule.",
+      "  2. The evidence validator refuses a receipt with `assurance: \"strict-native\"` while neither (a) nor (b) exists, and refuses a W11/docs change that drops the `undetermined` qualifier without citing (a) or (b).",
+      "  3. A docs/skill census asserts the strict clause is accompanied by `attainability: undetermined` text until criterion 1 is met (reusing the frozen-shape census pattern of test/workbench-mwi-docs-remediation-census.test.ts without editing its pinned rows).",
+      "  4. Negative: a synthetic fixture envelope with `pinned:true` is rejected as evidence for criterion 1(a) (assert provenance is a recorded live command, with operation id readable from the Forge ledger).",
+      "- Negative mutant: Negative: a synthetic fixture envelope with `pinned:true` is rejected as evidence for criterion 1(a) (assert provenance is a recorded live command, with operation id readable from the Forge ledger).",
+      "- V-tier: V0, V4; EAT-R437@V0/V4 (the draft names no artifact; location per EAT-R456); target detail: V4 (one real envelope) or V0 (decision record); the census at V0.",
+      "- Conditions / unresolved gates: installed Forge availability and credentials (BLOCKED, not imitated — EAT-R263 lineage); the first-release topology decision (embedded same-machine; C029 REFUTED \"attached\" — placement wording ruled elsewhere).",
+      "- Maps-to: MII P08; wb-p3i2 (open; re-read at filing).",
+      "- Extends: EAT-R259, EAT-R261, EAT-R274; OK — audited lineage retained.",
+      "- Predecessor lineage: Carrier role: wb-p3i2 (native); MW H01 tracked in wb-1zn2 (deferred; MW-owned deliverables tracker, never a Pi filing target); new as an explicit attainability gate.",
+      "- Linked rows: EAT-R433, EAT-R434, EAT-R435, EAT-R436.",
+      "- Verifies: none (behaviour/contract or independent decision row).",
+      "- Verified-by: none stated in Matrix A; own gate / validator.",
+      "- L0: TRACEABLE; acceptance NOT_RUN.",
+      "- Gate status (unexecuted): **BLOCKED** — G-FORGE-ENVELOPE: UNDETERMINED - 148/148 committed occurrences read pinned:false (ledger); the installed Forge envelope was not probed by the triage; alternative (b) is a G-RATIFY decision"
+    ]
+  },
+  "matrixA": {
+    "path": "docs/workbench/programs/mechanical-interop-integrity-2026-11-10/requirements/TDD-MATRIX.md",
+    "blob": "073567e8c568ecc3fe2d894153915aada567add3",
+    "line": 114,
+    "sha256": "39fdf05e3971ad4dbdde6581701d87592425b499264190b82749418e50a7aa38",
+    "text": "| EAT-R437 | Settle strict-native attainability: one real pinned-environment envelope, or a recorded joint decision; until then say UNDETERMINED | r-exec | VERIFICATION / EVIDENCE_ACQUISITION | P08 | wb-p3i2 (open) | EAT-R259, EAT-R261, EAT-R274; OK — audited lineage retained. | C181(E), C036(E) + 3 NE | R433, R434, R435, R436 | TRACEABLE |"
+  },
+  "matrixB": {
+    "path": "docs/workbench/programs/mechanical-interop-integrity-2026-11-10/requirements/TDD-MATRIX.md",
+    "blob": "073567e8c568ecc3fe2d894153915aada567add3",
+    "line": 201,
+    "sha256": "611d29ab51156620222b9896cc5bfb6508b41bcf92eaae3d27c0d1f604c39d30",
+    "text": "| EAT-R437 | V0,V4 | A*(ENV) | · | · | A | · | · | · | · | · | A*(ENV) | G-RATIFY, G-CENSUS, G-PI-DEFAULT, G-NATIVE, G-FORGE-ENVELOPE, G-RELEASE | **BLOCKED** — G-FORGE-ENVELOPE: UNDETERMINED - 148/148 committed occurrences read pinned:false (ledger); the installed Forge envelope was not probed by the triage; alternative (b) is a G-RATIFY decision | EAT-R437@V0/V4 (the draft names no artifact; location per EAT-R456) | L1/L10: one real gate.run envelope or the decision record. L2/L3/L5-L9 ·: an attainability acquisition; only its validator (L4) is code. |"
+  }
+}

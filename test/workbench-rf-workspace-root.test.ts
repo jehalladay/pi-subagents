@@ -78,7 +78,7 @@ afterEach(async () => {
   removeScratch(...scratch.splice(0));
 });
 
-/** A fresh tracked directory, as its real path (the form registryFor binds by default; a configured workbench.reactivefiberWorkspaceRoot is bound as written). */
+/** A fresh tracked directory, as its real path (the form registryFor binds by default; how a configured workbench.reactivefiberWorkspaceRoot is bound is pinned in test/workbench-rf-workspace-binding.test.ts). */
 function directory(prefix: string): string {
   const dir = makeScratch(prefix);
   scratch.push(dir);

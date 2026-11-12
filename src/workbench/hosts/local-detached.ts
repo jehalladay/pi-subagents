@@ -113,6 +113,11 @@ export interface DetachedSnapshot {
   terminal?: "completed" | "failed" | "cancelled" | "unknown";
   receipt?: DetachedReceipt;
   result?: JsonValue;
+  /** A completed run whose returned value exceeds the snapshot's byte bound stays terminal completed: the value is left
+   * out of `result` and its omission is named here (wb-r1bz, EAT-R342). */
+  resultOmitted?: "exceeds-snapshot-bound";
+  /** Why a client-side inspect reached no live host (wb-r1bz, EAT-R344). */
+  transportLoss?: DetachedTransportLoss;
   diagnostic?: string;
   reconcileHint?: string;
   nativeRuntimeIdentity: "unsupported";
@@ -122,6 +127,15 @@ export interface DetachedSnapshot {
   /** Cancellation acknowledges only this local interpreter and its owned waits. */
   cancellationRequested: boolean;
 }
+/**
+ * The cause a client-side inspect names when it reaches no live host (wb-r1bz, EAT-R344). no-such-invocation: no launch
+ * reserved the id under this root, so no host ran for it. socket-missing: the receipt's socket is absent from the shared
+ * pw-<uid> directory of a private runtime base (a retired host unlinks it), or that directory is (a cleaned runtime base);
+ * neither proves a graceful retirement. connection-refused: the socket is there and nothing accepts on it (a crashed host
+ * leaves it). transport-timeout: the client's fixed socket timeout lapsed. transport-failure: among others, an invocation
+ * reserved without a receipt, and a socket that closes the connection without answering.
+ */
+export type DetachedTransportLoss = "no-such-invocation" | "socket-missing" | "connection-refused" | "transport-timeout" | "transport-failure";
 export type DetachedCommand =
   | { command: "hello" | "inspect" | "execute"; invocationId: string }
   | { command: "cancel" | "shutdown"; invocationId: string; reason: string };
@@ -583,6 +597,8 @@ function recordedSocket(p: ReturnType<typeof paths>, id: string): string {
   if (!contained) throw new Error("Authorization: receipt socket path invalid.");
   return socketPath;
 }
+/** The code the client's own socket-timeout lapse carries, so inspect reads the lapse by code rather than by its words. */
+const TRANSPORT_TIMEOUT_CODE = "DETACHED_TRANSPORT_TIMEOUT";
 async function commandAt(root: string, id: string, command: DetachedCommand, knownSocket?: string): Promise<JsonValue> {
   const p = paths(root, id); privatePath(p.directory, "directory");
   const socketPath = knownSocket ?? recordedSocket(p, id);
@@ -591,7 +607,7 @@ async function commandAt(root: string, id: string, command: DetachedCommand, kno
     const socket = createConnection(socketPath); const decoder = new DetachedFrameDecoder();
     let answered = false;
     const fail = (error: Error) => { if (!answered) { answered = true; socket.destroy(); reject(error); } };
-    socket.setTimeout(3000, () => fail(new Error("Detached transport timeout; effects may be unresolved.")));
+    socket.setTimeout(3000, () => fail(Object.assign(new Error("Detached transport timeout; effects may be unresolved."), { code: TRANSPORT_TIMEOUT_CODE })));
     socket.once("error", fail);
     socket.once("close", () => { if (!answered) fail(new Error("Detached host disconnected before reply.")); });
     socket.once("connect", () => socket.write(detachedFrame(command)));
@@ -607,6 +623,28 @@ async function commandAt(root: string, id: string, command: DetachedCommand, kno
     });
   });
 }
+/**
+ * The transport-loss cause of a failed client command (wb-r1bz, EAT-R344), read from the failure's own code and path and from
+ * the invocation's reservation: no reserved directory is no-such-invocation, whatever the failure was.
+ */
+function transportLossOf(root: string, id: string, error: unknown): DetachedTransportLoss {
+  try {
+    if (lstatSync(join(root, id), { throwIfNoEntry: false }) === undefined) return "no-such-invocation";
+  } catch {
+    return "transport-failure";
+  }
+  const failure = error instanceof Error ? (error as NodeJS.ErrnoException) : undefined;
+  if (failure?.code === TRANSPORT_TIMEOUT_CODE) return "transport-timeout";
+  if (failure?.code === "ECONNREFUSED") return "connection-refused";
+  if (failure?.code !== "ENOENT") return "transport-failure";
+  if (failure.syscall === "connect") return "socket-missing";
+  try {
+    const socket = recordedSocket(paths(root, id), id);
+    return failure.path === socket || failure.path === dirname(socket) ? "socket-missing" : "transport-failure";
+  } catch {
+    return "transport-failure";
+  }
+}
 export function connectDetachedWorkflow(root: string, id: string) {
   localOperator(); invocationId(id);
   return {
@@ -616,7 +654,10 @@ export function connectDetachedWorkflow(root: string, id: string) {
       catch (error) {
         // Permissions/schema failures are denials, not evidence of a dead host.
         if (error instanceof Error && /Authorization|authorization|Unsupported|Invalid|EACCES|EPERM/.test(error.message)) throw error;
-        return { contract: DETACHED_CONTRACT, invocationId: id, observation: "unknown", observedAt: new Date().toISOString(), source: "local-client-transport", terminal: "unknown", diagnostic: redactWorkbenchText(error instanceof Error ? error.message : String(error)), reconcileHint: RECONCILE, nativeRuntimeIdentity: "unsupported", progress: [], droppedProgress: 0, controlAudit: [], cancellationRequested: false };
+        const transportLoss = transportLossOf(root, id, error);
+        // No launch reserved the id: no host ran for it, so the reading names no terminal, no host loss and no effects.
+        if (transportLoss === "no-such-invocation") return { contract: DETACHED_CONTRACT, invocationId: id, observation: "unknown", observedAt: new Date().toISOString(), source: "local-client-transport", transportLoss, nativeRuntimeIdentity: "unsupported", progress: [], droppedProgress: 0, controlAudit: [], cancellationRequested: false };
+        return { contract: DETACHED_CONTRACT, invocationId: id, observation: "unknown", observedAt: new Date().toISOString(), source: "local-client-transport", terminal: "unknown", transportLoss, diagnostic: redactWorkbenchText(error instanceof Error ? error.message : String(error)), reconcileHint: RECONCILE, nativeRuntimeIdentity: "unsupported", progress: [], droppedProgress: 0, controlAudit: [], cancellationRequested: false };
       }
     },
     async execute(): Promise<{ started: boolean }> { return await commandAt(root, id, { command: "execute", invocationId: id }) as unknown as { started: boolean }; },
@@ -712,7 +753,7 @@ export async function startDetachedHost(bootPath: string, expectedDigest: string
   writePrivate(p.receipt, receipt);
   const controller = new AbortController(); const sockets = new Set<Socket>();
   let started = false; let closing = false; let terminal: DetachedSnapshot["terminal"];
-  let result: JsonValue | undefined; let diagnostic: string | undefined; let droppedProgress = 0;
+  let result: JsonValue | undefined; let resultOmitted: DetachedSnapshot["resultOmitted"]; let diagnostic: string | undefined; let droppedProgress = 0;
   const progress: JsonValue[] = []; const audit: JsonValue[] = [];
   let retention: ReturnType<typeof setTimeout> | undefined;
   let deadline: ReturnType<typeof setTimeout> | undefined;
@@ -727,7 +768,7 @@ export async function startDetachedHost(bootPath: string, expectedDigest: string
   }
   const host = createDetachedWorkflowHost({ request, registry, principal: { id: receipt.owner.id, role: "local-operator" }, signal: controller.signal, beforeDispatch: basis });
   function snapshot(): DetachedSnapshot {
-    return { contract: DETACHED_CONTRACT, invocationId: request.invocationId, observation: terminal ? "observed-terminal" : started ? "observed-running" : "observed-started", observedAt: new Date().toISOString(), source: "live-detached-host", receipt, ...(terminal ? { terminal } : {}), ...(result !== undefined ? { result } : {}), ...(diagnostic ? { diagnostic } : {}), nativeRuntimeIdentity: "unsupported", progress: [...progress], droppedProgress, controlAudit: [...audit], cancellationRequested: controller.signal.aborted, ...(controller.signal.aborted ? { reconcileHint: "Local interpreter cancellation does not prove native effects rolled back; reconcile with their owning producer." } : {}) };
+    return { contract: DETACHED_CONTRACT, invocationId: request.invocationId, observation: terminal ? "observed-terminal" : started ? "observed-running" : "observed-started", observedAt: new Date().toISOString(), source: "live-detached-host", receipt, ...(terminal ? { terminal } : {}), ...(result !== undefined ? { result } : {}), ...(resultOmitted ? { resultOmitted } : {}), ...(diagnostic ? { diagnostic } : {}), nativeRuntimeIdentity: "unsupported", progress: [...progress], droppedProgress, controlAudit: [...audit], cancellationRequested: controller.signal.aborted, ...(controller.signal.aborted ? { reconcileHint: "Local interpreter cancellation does not prove native effects rolled back; reconcile with their owning producer." } : {}) };
   }
   function start(): boolean {
     if (started || terminal || closing) return false;
@@ -745,8 +786,9 @@ export async function startDetachedHost(bootPath: string, expectedDigest: string
       }
     } }).then(outcome => {
       terminal = controller.signal.aborted ? "cancelled" : outcome.status === "completed" ? "completed" : "failed";
+      // A completed run's oversized value is omitted and named; the run stays completed (wb-r1bz, EAT-R342).
       try { if (outcome.value !== undefined) result = safeJson(outcome.value); }
-      catch { terminal = "failed"; diagnostic = "Workflow returned a result exceeding the bounded JSON snapshot contract."; }
+      catch { resultOmitted = "exceeds-snapshot-bound"; }
       if (outcome.error) diagnostic = redactWorkbenchText(outcome.error);
     }, error => { terminal = controller.signal.aborted ? "cancelled" : "failed"; diagnostic = redactWorkbenchText(error instanceof Error ? error.message : String(error)); }).finally(() => {
       clearTimeout(deadline);

@@ -229,6 +229,8 @@
        "src/workbench/native-modules.ts <- src/workbench/providers/reactivefiber.ts (dynamic): import()",
        "src/workbench/reactivefiber-observer.ts <- src/workbench/native-evidence.ts (value): reportedRelease",
        "src/workbench/reactivefiber-observer.ts <- src/workbench/providers/reactivefiber.ts (value): REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, REACTIVE_FIBER_CLI_SCHEMA",
+       "src/workbench/reactivefiber-wiring.ts <- src/workbench/native-evidence.ts (value): nativeEvidence",
+       "src/workbench/reactivefiber-wiring.ts <- src/workbench/reactivefiber-observer.ts (value): ReactiveFiberProjectionTopology, ReactiveFiberSeam, reactivefiberTopology",
        "src/workbench/reconcile-decision.ts <- src/workbench/native-evidence.ts (value): nativeEvidence, nativeRefOf",
        "src/workflow/runtime.ts <- src/workbench/native-evidence.ts (value): nativeEvidence, nativeRefOf"
       ],

@@ -427,6 +427,14 @@ export class AgentManager {
   private runningBackground = 0;
   /** Number of currently running foreground (blocking) agents. */
   private runningForeground = 0;
+  /**
+   * Set by `dispose()`. Once `dispose()` has returned, a run that settles
+   * reaches no `onComplete`, on either settle path (EAT-R476 criterion 1,
+   * wb-nagx): the host disposes its manager while it shuts down, and pi
+   * invalidates that host's context afterwards, so a later callback could only
+   * read a stale context.
+   */
+  private disposed = false;
 
   constructor(
     onComplete?: OnAgentComplete,
@@ -980,6 +988,8 @@ export class AgentManager {
    * `resultConsumed` set so the callback skips notifications the inline result
    * already delivered.
    *
+   * Once `dispose()` has returned, no `onComplete` fires (see `disposed`).
+   *
    * @param guardCallback swallow a throwing `onComplete` (the success path does;
    *   the error path historically did not, and keeps not doing so).
    * @param pool the pool this run was CHARGED TO at start time — passed in, not
@@ -991,10 +1001,13 @@ export class AgentManager {
     if (pool === "background") this.runningBackground--;
     else if (pool === "foreground") this.runningForeground--;
 
-    if (guardCallback) {
-      try { this.onComplete?.(record); } catch { /* ignore completion side-effect errors */ }
-    } else {
-      this.onComplete?.(record);
+    // A disposed manager calls no completion callback (see `disposed`).
+    if (!this.disposed) {
+      if (guardCallback) {
+        try { this.onComplete?.(record); } catch { /* ignore completion side-effect errors */ }
+      } else {
+        this.onComplete?.(record);
+      }
     }
 
     // The isBackground half reproduces the pre-pool condition exactly — a
@@ -1598,5 +1611,6 @@ export class AgentManager {
     // handler and the process exits right after it returns, so anything left unawaited
     // here never runs at all. Bounded — each call carries its own ceiling, concurrently.
     await Promise.all(sessions.map(session => shutdownChildSession(session)));
+    this.disposed = true;
   }
 }

@@ -288,7 +288,7 @@ function clean(): Observed {
       "strict-booted-tool": {
         realised: false,
         detail:
-          "UNREALISED (wb-79k.3 HELD): no src ingestion of detached readings — the src/index.ts projection writers are furnace_observe and the embedded workflow only, so the booted workflow_control denies local-detached targets cross-scope; the Pi launcher additionally pins permissions inspect+execute and a host-instance ref.",
+          "UNREALISED on this tier (wb-79k.3 now projects a workflow_detached inspect reading in src): this tier drives a harness projection, not the booted tool; the booted reading (default tier, DW10) has the host refuse the admitted cancel under the Pi launch permissions inspect+execute and a host-instance ref.",
       },
     },
   };
@@ -644,7 +644,7 @@ describe("row 6 (AC5): shutdown surfaces unresolvedEffects typed; committed tree
     delete missing.journeys["shutdown-unresolved"];
     expect(assessDetachedControlLiveJourneys(missing as never).realised).toBe(false);
     expect(assessDetachedControlLiveJourneys(undefined as never).realised).toBe(false);
-    // The declared strict-booted-tool row is unrealised BY DESIGN and must cite its held bead.
+    // The declared strict-booted-tool row is unrealised BY DESIGN on this tier and must cite its bead.
     expect(clean().journeys["strict-booted-tool"].realised).toBe(false);
     expect(assessDetachedControlLiveJourneys(clean()).realised).toBe(true);
     const uncited = clone(clean());
