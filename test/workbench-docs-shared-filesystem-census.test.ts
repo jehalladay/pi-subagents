@@ -78,6 +78,21 @@
  * wb-12x1 (owner specification ruling M:60615 (2)): SCG-R5's walk holds PROGRAM_PAGES, the five pages of the one program
  * tree landed below docs/workbench/programs, beside the top-level pages and the receipts; the list is frozen, so a page
  * added, removed or renamed there reds SCG-R5 until the cut that lands it acknowledges it in PROGRAM_PAGES.
+ * wb-vnfe (2026-11-12, trunk 253b1b0a): IDENTIFIER SENTENCES. The append-only receipt docs/workbench/receipts/wb-h8f.7.md names
+ * the typed refusal MALFORMED_NATIVE_REFS and the pin PCR-C2-NATIVE-REFS; their capital REFS holds the EFS that the AC4 grep and
+ * the family rule read anywhere in a word, so two of its sentences read unqualified. On that one page (IDENTIFIER_PAGE), a
+ * sentence that carries one of those two IDENTIFIERS and names no family once they are blanked is NOT CLAIMED by this census, in
+ * every leg and in the grep floor: it names no shared-filesystem use. Each identifier is held to the product that defines it
+ * (src/workbench/compare-tool.ts declares the refusal, test/workbench-pi-compare-reply.test.ts registers the pin) and the page
+ * must still carry both, so the table admits no made-up word. Three kinds of case pin that boundary (wb-vnfe cut #2, refusal
+ * #1's U1 and U2). The sentences the page admits are pinned WHOLE, by leg (the raw and the rendered sentence of its lines 8 and
+ * 11), so an edit inside an admitted sentence reds the identifier case even under a reader that still admits it (the gate's
+ * W1: an NFS mount named at the end of line 8's sentence). For EACH of the four FAMILIES, a sentence naming it by its table
+ * name beside either identifier on that page is refused by problems and by both legs of pageFindings, one case per family,
+ * so a reader that drops a family from the blanked read reds that family's case (the gate's G121-DSF-L1, which keeps only EFS,
+ * reds the other three). Each identifier-only sentence is refused the same way on every other page docsPages() lists, pages
+ * sorting before and after IDENTIFIER_PAGE alike (the gate's G121-DSF-L2, `<=`, reds through the pages before it), and on four
+ * look-alike paths: the page name suffixed, the path prefixed, the same file name in docs/workbench and the path upper-cased.
  */
 import { createHash } from "node:crypto";
 import { mkdirSync, readdirSync, readFileSync, realpathSync, statSync, symlinkSync, writeFileSync } from "node:fs";
@@ -206,7 +221,26 @@ function docsPages(root = ROOT): string[] {
 const read = (path: string): string => readFileSync(join(ROOT, path), "utf8");
 const isMarkdown = (path: string): boolean => /\.(?:md|markdown)$/i.test(path);
 const liveMatches = (): Match[] => docsPages().flatMap(path => judge(path, read(path)));
-const problems = (matches: readonly Match[]): string[] => matches.filter(match => match.problem !== null).map(match => `${match.file}:${match.line} ${match.problem}: ${match.sentence}`);
+const problems = (matches: readonly Match[]): string[] =>
+  matches.filter(match => match.problem !== null && !identifierOnly(match.file, match.sentence)).map(match => `${match.file}:${match.line} ${match.problem}: ${match.sentence}`);
+/** wb-vnfe IDENTIFIER SENTENCES (header): the one page whose identifier-only sentences are not claimed, and the identifiers. */
+const IDENTIFIER_PAGE = `${DOCS}/receipts/wb-h8f.7.md`;
+const IDENTIFIERS = ["MALFORMED_NATIVE_REFS", "PCR-C2-NATIVE-REFS"] as const;
+/** A sentence of IDENTIFIER_PAGE that carries an identifier and names no family once every identifier is blanked. */
+const identifierOnly = (file: string, sentence: string): boolean =>
+  file === IDENTIFIER_PAGE &&
+  IDENTIFIERS.some(id => sentence.includes(id)) &&
+  classify(IDENTIFIERS.reduce((text, id) => text.split(id).join(" "), sentence)).families.length === 0;
+/** wb-vnfe cut #2 (U1/U2): a sentence that carries one identifier and nothing a family could read. */
+const identifierSentence = (id: string): string => `The receipt names ${id} and nothing more.`;
+/** wb-vnfe cut #2 (U1): the same sentence with one family named, by its table name, beside the identifier. */
+const familyBeside = (id: string, family: string): string => `The receipt names ${id} beside ${family} and nothing more.`;
+/** How the census judges one sentence on one page: exempt or not, the live raw leg's problems and both legs of pageFindings. */
+const judgedOn = (page: string, sentence: string): string =>
+  [`exempt ${identifierOnly(page, sentence)}`, ...problems(judge(page, sentence)), ...pageFindings(page, pageView(sentence))].join(" | ");
+/** What judgedOn reads for a sentence the census refuses unqualified on that page. */
+const refusedOn = (page: string, sentence: string): string =>
+  ["exempt false", `${page}:1 unqualified: ${sentence}`, `${page} rendered unqualified: ${sentence}`, `${page} raw unqualified: ${sentence}`].join(" | ");
 
 /** Gate row 621 G1-G3: AC4's path scope is all regular files under docs/workbench, not a Markdown extension list. */
 const GREP_SCOPE_ROWS = [
@@ -298,6 +332,61 @@ describe("SCG-R5 AC4 (wb-973.5): docs/workbench never presents a shared-filesyst
 
   it("SCG-R5: every sentence naming NFS, EFS, a shared filesystem or multi-host use says unsupported or not safe, and claims no safety", () => {
     expect(problems(liveMatches())).toEqual([]);
+  });
+
+  it("SCG-R5 identifier sentences (wb-vnfe): only wb-h8f.7's identifier-only NATIVE_REFS sentences go unclaimed, each pinned whole in each leg, each identifier a name the product defines", () => {
+    expect([IDENTIFIER_PAGE, ...IDENTIFIERS]).toEqual(["docs/workbench/receipts/wb-h8f.7.md", "MALFORMED_NATIVE_REFS", "PCR-C2-NATIVE-REFS"]);
+    expect(readFileSync(join(ROOT, "src/workbench/compare-tool.ts"), "utf8"), "the refusal is declared by the compare builder").toContain('"MALFORMED_NATIVE_REFS"');
+    expect(readFileSync(join(ROOT, "test/workbench-pi-compare-reply.test.ts"), "utf8"), "the pin is a registered case").toContain('it("PCR-C2-NATIVE-REFS: ');
+    const content = read(IDENTIFIER_PAGE);
+    expect(IDENTIFIERS.filter(id => !content.includes(id)), "the page still carries both identifiers").toEqual([]);
+    const legs = [
+      ...linesOf(content).flatMap(sentencesOf).map(sentence => ["raw", sentence] as const),
+      ...pageView(content).renderedSentences.map(sentence => ["rendered", sentence] as const),
+    ];
+    const admitted = legs.filter(([, sentence]) => identifierOnly(IDENTIFIER_PAGE, sentence)).map(([leg, sentence]) => `${leg}: ${sentence}`);
+    expect(admitted, "the sentences not claimed, by leg, each pinned whole (wb-vnfe cut #2, U1)").toEqual([
+      "raw: A malformed list is the typed refusal `MALFORMED_NATIVE_REFS`, decided after authorization, dimensions and the result's shape.",
+      "raw: PCR-C1-BUILDER-OUTPUT pins the reply byte for byte to the builder's text over the core result the host computed, its grant snapshot and the references its read collected (two reads, limit 40 each); PCR-C1-ALIGNMENT, PCR-C2-DECLINED, PCR-C2-NATIVE-REFS, PCR-C2-MISALIGNED (an input digest that differs between two real tasks), PCR-DIMENSIONS, PCR-C3-GRANTS (four grant sets), PCR-C3-SCOPE (a guessed task, another session's principal, another workspace), PCR-C3-FORGED, PCR-C3-NO-VERBS (no `invoke`, `inspect`, `decideControl` or projection write), PCR-C4-CAP, PCR-C4-HOSTILE-LABEL, PCR-C4-HOSTILE-ECHO, PCR-C5-SURFACE, PCR-R17-ECHOED, PCR-R17-MISSING (three fields) and PCR-R17-PROSE carry the bead's C1-C5 and the owner's O23 carry; PCR-SPEC-LINES reads every quoted docs/workbench line once.",
+      "rendered: A malformed list is the typed refusal MALFORMED_NATIVE_REFS, decided after authorization, dimensions and the result's shape.",
+      "rendered: PCR-C1-BUILDER-OUTPUT pins the reply byte for byte to the builder's text over the core result the host computed, its grant snapshot and the references its read collected (two reads, limit 40 each); PCR-C1-ALIGNMENT, PCR-C2-DECLINED, PCR-C2-NATIVE-REFS, PCR-C2-MISALIGNED (an input digest that differs between two real tasks), PCR-DIMENSIONS, PCR-C3-GRANTS (four grant sets), PCR-C3-SCOPE (a guessed task, another session's principal, another workspace), PCR-C3-FORGED, PCR-C3-NO-VERBS (no invoke, inspect, decideControl or projection write), PCR-C4-CAP, PCR-C4-HOSTILE-LABEL, PCR-C4-HOSTILE-ECHO, PCR-C5-SURFACE, PCR-R17-ECHOED, PCR-R17-MISSING (three fields) and PCR-R17-PROSE carry the bead's C1-C5 and the owner's O23 carry; PCR-SPEC-LINES reads every quoted docs/workbench line once.",
+    ]);
+    expect(identifierOnly(IDENTIFIER_PAGE, "The typed refusal MALFORMED_NATIVE_REFS means an EFS mount works for the swarm."), "a family beside an identifier").toBe(false);
+    expect(identifierOnly(`${DOCS}/receipts/wb-zz-probe.md`, "A malformed list is the typed refusal MALFORMED_NATIVE_REFS."), "the same sentence on another page").toBe(false);
+    expect(identifierOnly(IDENTIFIER_PAGE, "A malformed list is the typed refusal MALFORMED_NATIVE_REFS."), "the identifier-only sentence on its page").toBe(true);
+  });
+
+  it.each(FAMILY_NAMES)("SCG-R5 identifier sentences (wb-vnfe): a sentence naming %s beside either identifier on wb-h8f.7 is refused by problems and by both legs of pageFindings", family => {
+    const sentences = IDENTIFIERS.map(id => familyBeside(id, family));
+    expect(
+      IDENTIFIERS.map(id => classify(familyBeside(id, family).split(id).join(" ")).families),
+      "each control names exactly its family once the identifier is blanked",
+    ).toEqual(IDENTIFIERS.map(() => [family]));
+    expect(sentences.map(sentence => judgedOn(IDENTIFIER_PAGE, sentence))).toEqual(sentences.map(sentence => refusedOn(IDENTIFIER_PAGE, sentence)));
+  });
+
+  it("SCG-R5 identifier sentences (wb-vnfe): each identifier-only sentence is refused by problems and by both legs of pageFindings on every other docs page and on four look-alike paths", () => {
+    const sentences = IDENTIFIERS.map(identifierSentence);
+    expect(sentences.map(sentence => judgedOn(IDENTIFIER_PAGE, sentence)), "each is unclaimed on its own page").toEqual(sentences.map(() => "exempt true"));
+    const pages = docsPages();
+    expect(pages, "the identifier page is a docs page").toContain(IDENTIFIER_PAGE);
+    const others = pages.filter(page => page !== IDENTIFIER_PAGE);
+    expect(
+      [others.filter(page => page < IDENTIFIER_PAGE).length > 0, others.filter(page => page > IDENTIFIER_PAGE).length > 0],
+      "other docs pages sort before and after the identifier page",
+    ).toEqual([true, true]);
+    const lookAlikes = [`${IDENTIFIER_PAGE}.orig`, `archive/${IDENTIFIER_PAGE}`, `${DOCS}/wb-h8f.7.md`, IDENTIFIER_PAGE.toUpperCase()];
+    expect(lookAlikes, "the four look-alike paths").toEqual([
+      "docs/workbench/receipts/wb-h8f.7.md.orig",
+      "archive/docs/workbench/receipts/wb-h8f.7.md",
+      "docs/workbench/wb-h8f.7.md",
+      "DOCS/WORKBENCH/RECEIPTS/WB-H8F.7.MD",
+    ]);
+    expect(lookAlikes.filter(page => page === IDENTIFIER_PAGE || pages.includes(page)), "the look-alikes are not docs pages").toEqual([]);
+    const unjudged = [...others, ...lookAlikes].flatMap(page =>
+      sentences.filter(sentence => judgedOn(page, sentence) !== refusedOn(page, sentence)).map(sentence => `${page}: ${judgedOn(page, sentence)}`),
+    );
+    expect(unjudged, "pages where an identifier-only sentence is not refused as on any page").toEqual([]);
   });
 
   it("SCG-R5: the census is live on the docs: each of the four families is named by at least one docs sentence", () => {
@@ -566,8 +655,8 @@ function pageView(markdown: string): PageView {
 /** One page's family-rule findings in both legs, named by its file. */
 const pageFindings = (file: string, view: PageView): string[] => [
   ...view.unknown.map(reference => `${file} rendered refused: unknown character reference ${reference} (the census cannot say what it renders)`),
-  ...view.renderedProblems.map(([problem, sentence]) => `${file} rendered ${problem}: ${sentence}`),
-  ...view.rawProblems.map(([problem, sentence]) => `${file} raw ${problem}: ${sentence}`),
+  ...view.renderedProblems.filter(([, sentence]) => !identifierOnly(file, sentence)).map(([problem, sentence]) => `${file} rendered ${problem}: ${sentence}`),
+  ...view.rawProblems.filter(([, sentence]) => !identifierOnly(file, sentence)).map(([problem, sentence]) => `${file} raw ${problem}: ${sentence}`),
 ];
 
 /** What is wrong with docs/13's rendered root sentence: no problems means exactly one rendered sentence cites ADR-SCG-010, in a top-level paragraph of section "Host boundary", stating every clause. */
@@ -1391,7 +1480,7 @@ describe("SCG-R5 AC4 grep floor (gate row 600 U2): every sentence the AC4 grep m
       const legs = [...raw, ...rendered];
       return legs.filter(({ sentence }) => AC4_GREP.test(sentence));
     });
-    expect(found.filter(({ sentence }) => classify(sentence).families.length === 0 || !QUALIFIER.test(sentence))).toEqual([]);
+    expect(found.filter(({ path, sentence }) => !identifierOnly(path, sentence) && (classify(sentence).families.length === 0 || !QUALIFIER.test(sentence)))).toEqual([]);
     expect([...new Set(found.map(({ leg }) => leg))].sort()).toEqual(["raw", "rendered"]);
   });
 });

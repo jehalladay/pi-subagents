@@ -373,7 +373,7 @@
  *    population's own line count) and judged to the end of the longest page (farFloor: a served line planted past it
  *    reads served) and of every page (pageFloorMisses: a served line planted past the end of each population page reads
  *    served there), every Markdown page mapped and its view held to marked's HTML; no line reads served or named
- *    (lineVerdict) and the TRACEABILITY.md:236 floor reads negated; N2 the repo's own skill and agent roots serve no
+ *    (lineVerdict) but the two QUOTED_REFUSAL_LINES below, and the TRACEABILITY.md:236 floor reads negated; N2 the repo's own skill and agent roots serve no
  *    hyper-unix skill: preloadSkills from the repo root reads the placeholder for it while beads, the one tracked
  *    project skill, is read, and no tracked .pi agent and no default agent declares it (the same predicate reads a
  *    planted frontmatter declaring it); N3 no src module launches hx by a literal command (the scan sees src's git and
@@ -2657,6 +2657,45 @@ const HIDDEN_EXAMPLE = '<!-- "settingSources": ["user"] -->';
 
 /** The real Pi doc line row N's floor names: the wb-kqx.5 receipt line in the byte-frozen TRACEABILITY.md, which names the hx installer and says the skill is not found. */
 const DOC_FLOOR = ["docs/workbench/TRACEABILITY.md:236"];
+/**
+ * wb-vnfe (2026-11-12, trunk 253b1b0a): the only lines row N admits as served. Both are lines of the append-only wb-lri
+ * receipt that quote the hx CLI's own refusal reason for its provider-pinned leg, QUOTED_HX_REFUSAL, which the hx-command form
+ * reads as a shown command; each records a measured refusal, not a recipe step. N1 holds each admitted line to that quote: the
+ * line carries it, its whole view text is pinned (quotedRefusals in the roster witness), and with every copy of the quote
+ * removed (quotedRefusalReading) it reads neither served nor named. wb-vnfe cut #2 (refusal #1's U4) plants each of
+ * QUOTE_ADDITIONS on each admitted line, right before and right after the quote, and reads every planted line with the same
+ * quotedRefusalReading; the roster witness pins the whole verdict matrix (quotePlants). A recipe step (a shown hx command:
+ * "then hx find src", the gate's W3/W4 text) and another hx command (an option form) read served on either line, on either
+ * side of the quote, so either one reds N1 there; a reading that keeps only the text before the quote (the gate's G121-HX-L1A)
+ * or only the text after it (G121-HX-L1B) misreads the plants on the other side. Each plant must sit on its own side of the
+ * quote (a plant that does not reads misplaced), and each admitted line with its quote dropped reads quote lost, so the
+ * carries-it check is exercised as well. A recipe mention with a served word reads served on wb-lri.md:130 and negated on
+ * wb-lri.md:18, whose own "not" negates every mention on that line (lineVerdict's line-level marker rule, as on any docs
+ * line); a served word with no recipe mention reads none on either line. A recipe mention or a served word added to
+ * wb-lri.md:18, and a served word without a recipe mention on either line, are NOT CLAIMED by this census. Any other served or
+ * named line reds N1 as before.
+ */
+const QUOTED_HX_REFUSAL = "view-binding-pending: hx find under --view git:04eeeaaf6cfb1db030ac3b1362e589c050d81f2a";
+const QUOTED_REFUSAL_LINES = ["docs/workbench/receipts/wb-lri.md:18", "docs/workbench/receipts/wb-lri.md:130"];
+/** N1's reading of one admitted line (wb-vnfe): whether it carries QUOTED_HX_REFUSAL, and its verdict with every copy of the quote removed. */
+function quotedRefusalReading(text: string): { readonly quotes: boolean; readonly without: LineVerdict } {
+  return { quotes: text.includes(QUOTED_HX_REFUSAL), without: lineVerdict(text.split(QUOTED_HX_REFUSAL).join("")) };
+}
+/** wb-vnfe cut #2 (U4): what N1's planted controls add beside the quote on each admitted line, by name. */
+const QUOTE_ADDITIONS: ReadonlyArray<readonly [string, string]> = [
+  ["recipe step", "then hx find src"],
+  ["hx command", "hx --json runtime"],
+  ["served mention", "the hyper-unix skill is served"],
+  ["served word", "served"],
+];
+/** The additions that show an hx command, which lineVerdict reads served whatever else the line says. */
+const SHOWN_COMMAND_ADDITIONS = ["recipe step", "hx command"];
+const QUOTE_SIDES = ["before", "after"] as const;
+/** A planted reading's verdict, or "quote lost" when the planted line no longer carries the quote. */
+const quoteLostOr = (reading: { readonly quotes: boolean; readonly without: LineVerdict }): string => (reading.quotes ? reading.without : "quote lost");
+/** An admitted line with one addition planted right before or right after its quote. */
+const plantBesideQuote = (text: string, addition: string, side: (typeof QUOTE_SIDES)[number]): string =>
+  text.replace(QUOTED_HX_REFUSAL, side === "before" ? `${addition} ${QUOTED_HX_REFUSAL}` : `${QUOTED_HX_REFUSAL} ${addition}`);
 /** Launch sites src really has, so N3's scan is shown to see launches at all. */
 const LAUNCH_FLOOR = ["src/env.ts:exec:git", "src/index.ts:execFileSync:git", "src/workbench/providers/reactivefiber.ts:spawn:rf"];
 /** N3's control: a descriptor whose description shows an hx command, which the flagged reader must name. */
@@ -2924,6 +2963,22 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     const pageFloors = texts.map(([path, text]) => plantChangesOn(path, text, T10));
     const pageFloorMisses = texts.filter((_, index) => JSON.stringify(pageFloors[index]) !== JSON.stringify(["served@+1"])).map(([path]) => path);
     const pageFloorsAll = pageFloors.length === texts.length && pageFloors.length >= 100;
+    const quotedRefusals = QUOTED_REFUSAL_LINES.map(at => {
+      const path = at.slice(0, at.lastIndexOf(":"));
+      const text = viewOf(path, readFileSync(join(REPO, path), "utf8")).lines[Number(at.slice(at.lastIndexOf(":") + 1)) - 1] ?? "";
+      return { at, text, ...quotedRefusalReading(text) };
+    });
+    const quotePlants = quotedRefusals.flatMap(({ at, text }) => [
+      ...QUOTE_ADDITIONS.flatMap(([addition, words]) =>
+        QUOTE_SIDES.map(side => {
+          const planted = plantBesideQuote(text, words, side);
+          const placed = planted.includes(side === "before" ? `${words} ${QUOTED_HX_REFUSAL}` : `${QUOTED_HX_REFUSAL} ${words}`);
+          const reading = quotedRefusalReading(planted);
+          return { at, addition, side, verdict: placed ? quoteLostOr(reading) : "misplaced" };
+        }),
+      ),
+      { at, addition: "quote dropped", side: "line", verdict: quoteLostOr(quotedRefusalReading(text.replace(QUOTED_HX_REFUSAL, ""))) },
+    ]);
     const walkControl = onScratchCheckout(
       WALK_TREE.map(([path]) => path),
       `${T10}\n`,
@@ -2944,7 +2999,22 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     expect(walkControl.outside, "the independent walk on a scratch checkout").toEqual(WALK_TREE.filter(([, reached]) => reached).map(([path]) => path).sort());
     expect(walkControl.rootDocuments).toEqual(["NOTES.mdown"]);
     expect(judged.named).toEqual([]);
-    expect(judged.served).toEqual([]);
+    expect(judged.served).toEqual(QUOTED_REFUSAL_LINES);
+    expect(
+      quotedRefusals.filter(entry => !entry.quotes || entry.without === "served" || entry.without === "named").map(entry => entry.at),
+      "each admitted line quotes the hx refusal reason and reads neither served nor named without it (wb-vnfe)",
+    ).toEqual([]);
+    expect(quotePlants, "one planted line per admitted line, addition and side, and one quote-dropped line per admitted line").toHaveLength(
+      QUOTED_REFUSAL_LINES.length * (QUOTE_ADDITIONS.length * QUOTE_SIDES.length + 1),
+    );
+    expect(
+      quotePlants.filter(plant => plant.addition === "quote dropped" && plant.verdict !== "quote lost").map(plant => `${plant.at}: ${plant.verdict}`),
+      "an admitted line with its quote dropped no longer carries it (wb-vnfe cut #2, U4)",
+    ).toEqual([]);
+    expect(
+      quotePlants.filter(plant => SHOWN_COMMAND_ADDITIONS.includes(plant.addition) && plant.verdict !== "served").map(plant => `${plant.at} ${plant.addition} ${plant.side}: ${plant.verdict}`),
+      "a recipe step or another hx command planted before or after the quote reads served, so it reds N1 (wb-vnfe cut #2, U4)",
+    ).toEqual([]);
     return {
       walkComplete,
       atFloor: files.length >= 100,
@@ -2962,6 +3032,8 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       walkControl,
       named: judged.named,
       served: judged.served,
+      quotedRefusals,
+      quotePlants: quotePlants.map(plant => `${plant.at} ${plant.addition} ${plant.side}: ${plant.verdict}`),
     };
   },
   N2: () =>
