@@ -18,6 +18,7 @@ import { randomUUID } from "node:crypto";
 import type { CapabilityDiagnostic } from "../workbench/capability-registry.js";
 import type { NativeControlReceipt } from "../workbench/control.js";
 import type { InvocationSnapshot } from "../workbench/identity.js";
+import type { MechanicalOutcomeObservation } from "../workbench/observation.js";
 import { sanitizeWorkbenchText } from "../workbench/redaction.js";
 import { escapeXml } from "../xml.js";
 import type { WorkflowJournalEntry } from "./journal.js";
@@ -111,6 +112,8 @@ export interface WorkflowTask {
   error?: string;
   /** The run's typed capability diagnostic, when it failed on one (wb-q0on, EAT-R364): category, message, input path. */
   capabilityError?: CapabilityDiagnostic;
+  /** A hosted function run's original Mechanical outcome, once it settled with one (wb-9a1o, EAT-R242). */
+  mechanicalOutcome?: MechanicalOutcomeObservation;
   /** The first reason this resumed run could not replay a recorded call (EAT-R361). */
   replayDecline?: ReplayDecline;
 }

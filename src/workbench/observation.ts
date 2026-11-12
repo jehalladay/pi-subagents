@@ -985,3 +985,42 @@ export class ObservationProjection {
 
   stats():{nodes:number;events:number;edges:number} {return {nodes:this.nodes.size,events:this.eventsById.size,edges:this.edges.size};}
 }
+
+/**
+ * The original MechanicalWorkflows outcome of a hosted function's run, as workflow_observe carries it (wb-9a1o, packet P05 of
+ * mechanical-native-interoperability-2026-11-09: EAT-R242 of its requirements/ATOMIC-REQUIREMENTS.md at 18b016b2, extending the
+ * Nov-4 EAT-R036). The four domains are the variants of MechanicalWorkflows' DevelopmentOutcome union (its
+ * packages/development/src/contracts.ts at mw 28ecd6ac) in docs/workbench/01 J03's order. What is claimed is held to the cases
+ * of test/workbench-function-outcome-projection.test.ts named there.
+ */
+export const MECHANICAL_DOMAINS = Object.freeze(["verified_candidate", "verification_failed", "needs_evidence", "indeterminate"] as const);
+export type MechanicalDomain = (typeof MECHANICAL_DOMAINS)[number];
+/**
+ * The producer's own kind word as the domain, beside the complete outcome object it settled with, as JSON data: an additive
+ * member of the workflow_observe reply under its existing workbench.observe/v1 contract, no contract of its own.
+ */
+export interface MechanicalOutcomeObservation {
+  readonly domain: MechanicalDomain;
+  readonly payload: Readonly<Record<string, unknown>>;
+}
+function jsonRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+/**
+ * A settled run's value as its original Mechanical outcome: a JSON copy taken now, so a later change to the producer's object
+ * never reaches it, and its domain read from that copy's kind member. Anything else (a value that is not an object, a list, a
+ * value JSON cannot copy, a kind outside the four) is no outcome: undefined, never an invented domain.
+ */
+export function projectMechanicalOutcome(settled: unknown): MechanicalOutcomeObservation | undefined {
+  if (!jsonRecord(settled)) return undefined;
+  let payload: unknown;
+  try {
+    payload = JSON.parse(JSON.stringify(settled));
+  } catch {
+    return undefined;
+  }
+  if (!jsonRecord(payload)) return undefined;
+  const kind = payload.kind;
+  const domain = MECHANICAL_DOMAINS.find(word => word === kind);
+  return domain === undefined ? undefined : Object.freeze({ domain, payload });
+}
