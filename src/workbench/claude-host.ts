@@ -401,7 +401,16 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
     const allowedTools = previous?.tools ?? role?.tools ?? tools;
     const policyError = toolPolicyError(allowedTools);
     if (policyError !== undefined) return { ok: false, error: policyError };
+    // Registered before the pre-dispatch await, not after it (wb-e9rw: EAT-R213,
+    // EAT-R214 and EAT-R253, in the pending-abort shape of EAT-R160): a
+    // per-agent abortAgent that lands while beforeDispatch is parked aborts this
+    // controller, where it used to find none and was lost (the wb-9v02 repro,
+    // test/workbench-mwi-cancel-repro.test.ts). Every return before the query
+    // hands the controller back.
+    const controller = new AbortController();
+    controllers.set(agentId, controller);
     try { await config.beforeDispatch?.(); } catch (error) {
+      controllers.delete(agentId);
       return { ok: false, error: error instanceof Error ? `${"code" in error ? String(error.code) + ": " : ""}${error.message}` : String(error) };
     }
     // Re-checked after the await: a run abort that landed while the basis was
@@ -409,12 +418,20 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
     // start. A listener added to an already-aborted signal never fires, so the
     // first check alone let a sibling start after the operator's cancel
     // (wb-a2g.5, live finding init-after-abort).
-    if (config.signal?.aborted) return { ok: false, skipped: true, error: "Workflow aborted." };
-    const controller = new AbortController();
+    if (config.signal?.aborted) {
+      controllers.delete(agentId);
+      return { ok: false, skipped: true, error: "Workflow aborted." };
+    }
+    // The per-agent abort taken while parked stops this attempt here, before any
+    // SDK session can start; read after the run check, so a run abort beside it
+    // still settles as the run abort.
+    if (controller.signal.aborted) {
+      controllers.delete(agentId);
+      return { ok: false, skipped: true, error: "Claude SDK query was cancelled." };
+    }
     const onAbort = () => controller.abort();
     config.signal?.addEventListener("abort", onAbort, { once: true });
     if (config.signal?.aborted) controller.abort();
-    controllers.set(agentId, controller);
     const effectiveEffort = previous?.effort ?? request?.effort ?? role?.effort;
     const exposed = previous?.capabilities ?? role?.capabilities ?? [];
     const providerTools = exposed.length > 0 && config.capabilities ? createCuratedTools({
