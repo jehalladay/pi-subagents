@@ -1,3 +1,4 @@
+// @ts-check
 /**
  * wb-8py9: the entry point of forge.toml's [build.commands.census-file], the product-scoped declared command the
  * machine's claim-check runs once per leg (`FORGE_JSON=1 forge run census-file -- <files> --json`). The command carries

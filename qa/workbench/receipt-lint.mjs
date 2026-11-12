@@ -1,3 +1,4 @@
+// @ts-check
 /**
  * wb-8py9: the seat-side receipt lint. It re-measures, against the tree, the quantitative claims that a delivery's added
  * or modified receipt and census files make, so a false figure is refused at the seat instead of at the gate (bottleneck
@@ -7,7 +8,8 @@
  * THE DELIVERY. Against a base revision (--base, else the merge-base of HEAD and origin/workbench/implementation-program,
  * else HEAD), the delivery is every path git reports added or modified in the working tree, committed or not and untracked
  * included, that is a receipt (docs/workbench/receipts/<name>.md) or a census file (a TypeScript file under test/ whose
- * name holds "census"). A receipt is append-only, so a modified receipt is judged on its added lines only. An added
+ * name holds "census"). A receipt is append-only, so a modified receipt is judged on its added lines only: a claim is
+ * placed on the source line of its own match, so a line appended to a landed paragraph is judged on that line. An added
  * receipt, a census file and a file named on the command line (a markdown file, or a TypeScript file under test/) are
  * judged whole.
  *
@@ -35,7 +37,8 @@
  *   lines  "<path> (<N> lines". N is the file's line count.
  *   cite   "<path>:<A>" or "<path>:<A>-<B>" naming a file that exists at the measured revision, with A <= B <= its line
  *          count. A path absent there is an external citation and is not judged.
- * A path holds a "/", or is a bare name with a known extension. A revision that resolves to no commit here names another
+ * A path is a file name with an extension: under a directory (it holds a "/") any extension, as a bare name one of the
+ * known ones (ROOT_EXTENSIONS). A revision that resolves to no commit here names another
  * repository's commit: a cite at it is not judged, nor is a figure whose path this working tree does not hold; a figure
  * at it whose path this repository holds is refused.
  * Anything else is not a claim this lint judges: run outcomes ("N passed"), sums, prose counts, mixed-case identifiers,
@@ -308,7 +311,7 @@ function sentences(text) {
 const ENTITIES = /** @type {Record<string, string>} */ ({ amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " " });
 /** @param {string} text */
 export function decodeEntities(text) {
-  return text.replace(/&(#x[0-9a-fA-F]+|#[0-9]+|[A-Za-z]+);/g, (entity, body) => {
+  return text.replace(/&(#[xX][0-9a-fA-F]+|#[0-9]+|[A-Za-z]+);/g, (entity, body) => {
     if (body.startsWith("#x") || body.startsWith("#X")) return codePoint(Number.parseInt(body.slice(2), 16), entity);
     if (body.startsWith("#")) return codePoint(Number.parseInt(body.slice(1), 10), entity);
     return ENTITIES[body] ?? entity;
@@ -333,11 +336,56 @@ const readable = text => text.normalize("NFKC").replace(/\s+/g, " ").trim();
  * @property {string} [alt]  for an inline element: the rendered text without the text inside element tags
  */
 
-/** The line of a needle inside a unit's source, else the unit's first line. @param {Unit} unit @param {readonly string[]} needles */
-function lineIn(unit, needles) {
+/** @param {string} text */
+const escapeRegExp = text => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+/**
+ * A needle as a pattern: its words joined across any whitespace (a source line break included), each word optionally
+ * inside a code span's backticks.
+ * @param {string} needle
+ */
+const needlePattern = needle =>
+  new RegExp(
+    needle
+      .trim()
+      .split(/\s+/)
+      .map(word => `\`?${escapeRegExp(word)}\`?`)
+      .join(String.raw`\s+`),
+    "g",
+  );
+
+/** A unit's source with its HTML comments blanked (line breaks kept): a hidden copy of a needle never places a claim. @param {string} raw */
+const visibleSource = raw => raw.replace(/<!--[\s\S]*?-->/g, comment => comment.replace(/[^\n]/g, " "));
+
+/**
+ * The line of the claim matched at offset `at` of a unit's rendered text (wb-8py9 U2: each match by its own offset, so a
+ * line appended to a landed paragraph is placed on its own line, not on the first line naming the same path). For the
+ * first needle that occurs as often in the unit's source (comments blanked) as in its rendered text, the needle's first
+ * occurrence at or after `at` is located at the same rank in the source. With no such needle: `fallback` when given, else
+ * the first occurrence in the source of the first needle found there, else the unit's first line.
+ * @param {Unit} unit
+ * @param {readonly string[]} needles
+ * @param {number} at
+ * @param {number} [fallback]
+ * @returns {number}
+ */
+function lineIn(unit, needles, at, fallback) {
+  const source = visibleSource(unit.raw);
+  /** @param {number} offset */
+  const lineOf = offset => unit.line + (source.slice(0, offset).match(/\n/g) ?? []).length;
   for (const needle of needles) {
-    const at = needle === "" ? -1 : unit.raw.indexOf(needle);
-    if (at >= 0) return unit.line + (unit.raw.slice(0, at).match(/\n/g) ?? []).length;
+    if (needle.trim() === "") continue;
+    const pattern = needlePattern(needle);
+    const rendered = [...unit.text.matchAll(pattern)].map(match => match.index ?? 0);
+    const located = [...source.matchAll(pattern)].map(match => match.index ?? 0);
+    const rank = rendered.findIndex(index => index >= at);
+    const offset = located[rank];
+    if (rank >= 0 && rendered.length === located.length && offset !== undefined) return lineOf(offset);
+  }
+  if (fallback !== undefined) return fallback;
+  for (const needle of needles) {
+    const offset = needle.trim() === "" ? -1 : source.search(needlePattern(needle));
+    if (offset >= 0) return lineOf(offset);
   }
   return unit.line;
 }
@@ -364,7 +412,8 @@ function unitClaims(unit, file, context) {
       if (path === undefined || n === undefined || ident === undefined) return;
       const start = match.index ?? 0;
       covered.push([start, start + whole.length]);
-      out.push({ kind: "rows", file, line: lineIn(unit, [path, `${n} ${ident}`]), text: whole, path, ...revFields(named), ident, count: Number(n) });
+      const head = lineIn(unit, [path, `${n} ${ident}`], sentence.start + start);
+      out.push({ kind: "rows", file, line: head, text: whole, path, ...revFields(named), ident, count: Number(n) });
       const next = rowsMatches[index + 1]?.index ?? s.length;
       const tail = s.slice(start + whole.length, next);
       const nextPath = tail.search(PATH_RX);
@@ -374,7 +423,7 @@ function unitClaims(unit, file, context) {
         if (m === undefined || id === undefined) continue;
         const at = start + whole.length + (more.index ?? 0);
         covered.push([at, at + cont.length]);
-        out.push({ kind: "rows", file, line: lineIn(unit, [`${m} ${id}`, `${m} \`${id}\``, path]), text: `${whole} ${cont}`, path, ...revFields(named), ident: id, count: Number(m) });
+        out.push({ kind: "rows", file, line: lineIn(unit, [`${m} ${id}`], sentence.start + at, head), text: `${whole} ${cont}`, path, ...revFields(named), ident: id, count: Number(m) });
       }
     });
     if (context.selfArrays !== undefined && context.self !== undefined) {
@@ -385,28 +434,29 @@ function unitClaims(unit, file, context) {
         if (covered.some(([a, b]) => start >= a && start < b)) continue;
         const before = s.slice(0, start).trim().split(/\s+/).pop()?.toLowerCase() ?? "";
         if (DELTA_WORDS.has(before)) continue;
-        out.push({ kind: "rows", file, line: lineIn(unit, [`${n} ${ident}`, ident]), text: whole, path: context.self, rev: null, ident, count: Number(n) });
+        out.push({ kind: "rows", file, line: lineIn(unit, [`${n} ${ident}`, ident], sentence.start + start), text: whole, path: context.self, rev: null, ident, count: Number(n) });
       }
     }
     for (const match of s.matchAll(ARRAY_RX)) {
       const [whole, n, ident, a, b] = match;
       if (n === undefined || ident === undefined) continue;
-      const upTo = text.slice(0, sentence.start + (match.index ?? 0));
-      /** @type {Claim} */
+      const at = sentence.start + (match.index ?? 0);
+      const upTo = text.slice(0, at);
       const before = revisionIn(upTo, "last");
-      const claim = { kind: "array", file, line: lineIn(unit, [`${n} elements in the ${ident}`, `${ident} array literal`, `\`${ident}\` array literal`, ident]), text: whole, path: lastPath(upTo) ?? context.self ?? null, ...revFields(before.rev === null ? named : before), ident, count: Number(n) };
+      /** @type {Claim} */
+      const claim = { kind: "array", file, line: lineIn(unit, [`${n} elements in the ${ident}`, `${ident} array literal`, ident], at), text: whole, path: lastPath(upTo) ?? context.self ?? null, ...revFields(before.rev === null ? named : before), ident, count: Number(n) };
       if (a !== undefined && b !== undefined) claim.span = [Number(a), Number(b)];
       out.push(claim);
     }
     for (const match of s.matchAll(LINES_RX)) {
       const [whole, path, n] = match;
       if (path === undefined || n === undefined) continue;
-      out.push({ kind: "lines", file, line: lineIn(unit, [path]), text: whole, path, ...revFields(named), count: Number(n) });
+      out.push({ kind: "lines", file, line: lineIn(unit, [path], sentence.start + (match.index ?? 0)), text: whole, path, ...revFields(named), count: Number(n) });
     }
     for (const match of s.matchAll(CITE_RX)) {
       const [whole, path, a, b] = match;
       if (path === undefined || a === undefined) continue;
-      out.push({ kind: "cite", file, line: lineIn(unit, [whole, path]), text: whole, path, ...revFields(named), cite: [Number(a), Number(b ?? a)] });
+      out.push({ kind: "cite", file, line: lineIn(unit, [whole, path], sentence.start + (match.index ?? 0)), text: whole, path, ...revFields(named), cite: [Number(a), Number(b ?? a)] });
     }
   }
   return out;
@@ -758,6 +808,7 @@ const finding = (claim, states, measured) => ({ file: claim.file, line: claim.li
  * of a path absent at its measured revision is external too. Every other claim is judged.
  * @param {Claim} claim
  * @param {Tree} tree
+ * @returns {boolean}
  */
 export function isJudged(claim, tree) {
   if (claim.kind === "html") return (claim.inner ?? []).some(inner => isJudged(inner, tree));
@@ -909,17 +960,35 @@ export function lintDelivery(root, options = {}) {
   for (const file of files) {
     const text = tree.read(file, null);
     if (text === null) continue;
-    const lines = judged.get(file) ?? null;
-    const extracted = isMarkdownPath(file) ? markdownClaims(text, file) : censusClaims(text, file);
-    for (const claim of extracted) {
-      if (lines !== null && !lines.has(claim.line)) continue;
-      if (!isJudged(claim, tree)) continue;
-      claims.push(claim);
-      const found = measure(claim, tree);
-      if (found !== null) findings.push(found);
-    }
+    const report = judgeText(text, file, tree, judged.get(file) ?? null);
+    claims.push(...report.claims);
+    findings.push(...report.findings);
   }
   return { base, files, claims, findings };
+}
+
+/**
+ * Judge one file's text against a tree: its claims (a markdown file by the rendered view, any other by the census
+ * reading), each judged one re-measured; with `lines`, only the claims on those lines (a modified receipt's added lines).
+ * @param {string} text
+ * @param {string} file  the file's repository-relative path (its kind and the claims' file)
+ * @param {Tree} tree
+ * @param {ReadonlySet<number> | null} [lines]
+ * @returns {{ claims: Claim[], findings: Finding[] }}
+ */
+export function judgeText(text, file, tree, lines = null) {
+  /** @type {Claim[]} */
+  const claims = [];
+  /** @type {Finding[]} */
+  const findings = [];
+  for (const claim of isMarkdownPath(file) ? markdownClaims(text, file) : censusClaims(text, file)) {
+    if (lines !== null && !lines.has(claim.line)) continue;
+    if (!isJudged(claim, tree)) continue;
+    claims.push(claim);
+    const found = measure(claim, tree);
+    if (found !== null) findings.push(found);
+  }
+  return { claims, findings };
 }
 
 /**
