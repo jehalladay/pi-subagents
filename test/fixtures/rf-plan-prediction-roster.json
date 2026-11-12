@@ -60,7 +60,9 @@
       }
     ]
   },
-  "docsPlanSentences": [],
+  "docsPlanSentences": [
+    "Each of the four cells is judged `failed-reproduction`, the oracle met, and so are the four matching PLAN_ROWS."
+  ],
   "envelopes": {
     "plan": {
       "schema": "reactive-fiber.cli/v1",
@@ -946,7 +948,9 @@
             "floorMet": true,
             "walkAgreesWithGit": true,
             "unjudged": [],
-            "allowed": [],
+            "allowed": [
+              "Each of the four cells is judged `failed-reproduction`, the oracle met, and so are the four matching PLAN_ROWS."
+            ],
             "hits": []
           }
         }
@@ -1612,7 +1616,7 @@
     "C5:5",
     "C6:5",
     "D1:6",
-    "D2:7",
+    "D2:8",
     "E1:6",
     "E2:12",
     "E3:10",

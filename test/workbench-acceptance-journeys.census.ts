@@ -74,7 +74,7 @@
  * opens a marker exactly when it is default-ignorable or whitespace (F3 rides). Each single-unit F4 row binds its
  * title's code point to the unit it tests (F2 rides).
  *
- * Frozen literals (rule 16), each written out in full: EXPECTED_SHAPE (journey:label:kind:pins), EXPECTED_PINS (the ten
+ * Frozen literals (rule 16), each written out in full: EXPECTED_SHAPE (journey:label:kind:pins), EXPECTED_PINS (the eleven
  * pin pairs), EXPECTED_EVIDENCE (every row's evidence identity, U3) and EXPECTED_JUDGED_ROWS (the rows AC2 judges,
  * U4). AC2 asserts that the pins it judged are its row's EXPECTED_PINS entries, and its each-liveness case pins one
  * run-mode AC2 case per judged row, each reaching its last assertion.
@@ -105,11 +105,12 @@
  * budget JUDGE_BUDGET_MS (sized at its comment), and a case pins exactly which cases run under it.
  *
  * Disclosed limits (never claimed as covered): an assertion reached only through a helper the helper's body leg does
- * not follow; the receipts and the OPEN beads' real status (no bead store is read here - the two OPEN rows record
- * their store status at the cut in the delivery note, and a seat that lands one flips the row consciously, the
- * pin-flip pattern); the owner receipt's landing gate cmd_a4feb7db5cad is carried as the owner-worded literal (in-repo
- * it appears only in the .beads export, which this leg never reads); a strikethrough of a docs/11 bullet reds by
- * section exactness only, as the rendered text keeps struck words; no journey is run.
+ * not follow; the receipts and the OPEN beads' real status (no bead store is read here - the OPEN row records its
+ * store status at the cut in the delivery note, and a seat that lands one flips the row consciously, the pin-flip
+ * pattern, as wb-h8f.2's landing cut did for journey 4); the owner receipt's landing gate cmd_a4feb7db5cad is carried
+ * as the owner-worded literal (in-repo it appears only in the .beads export, which this leg never reads); a
+ * strikethrough of a docs/11 bullet reds by section exactness only, as the rendered text keeps struck words; no journey
+ * is run.
  */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
@@ -233,7 +234,10 @@ function isDeepFrozen(value: unknown): boolean {
  * the owner RULED on 2026-10-16T01:16Z (bound "as specified" at 12:52Z) - with the owner-worded citation. wb-752.3 is
  * CLOSED too (landed 2026-10-17, merge 24c8be2): journey 3 no longer carries it as an OPEN row. The vc4
  * receipt-builder falsifier is a third "fixture pass" pin; the rule-13 receipt wb-8kv (landing 173) records
- * a realised/pass live run cmd_7cea2921543b, so the external-Furnace leg now has its own "live SDK pass" row.
+ * a realised/pass live run cmd_7cea2921543b, so the external-Furnace leg now has its own "live SDK pass" row. wb-h8f.2
+ * (the VC-6 runner and its receipt assessor) is closed by its own landing, so journey 4 no longer carries it as an OPEN
+ * row: the vc6 receipt-builder falsifier is a fourth "fixture pass" pin. A live run of record for journey 4 is NOT
+ * CLAIMED by this table: no receipt cites one yet, so the journey has no "live SDK pass" row.
  */
 const ROWS: readonly JourneyRow[] = freezeDeep<readonly JourneyRow[]>([
   row(1, "fixture pass", fixture({ file: "test/workbench-host-contract.test.ts", title: "L3: unchanged script uses Claude SDK query, not Pi AgentManager; session and usage are reported" })),
@@ -268,9 +272,9 @@ const ROWS: readonly JourneyRow[] = freezeDeep<readonly JourneyRow[]>([
       { file: "test/workbench-patch-proposal.test.ts", title: "validates the candidate bytes exactly as the designer does and mirrors its status" },
       { file: "test/workbench-validate-reply.test.ts", title: "never executes or writes the candidate source" },
       { file: "test/workbench-designer.test.ts", title: "matched cohort yields measured deltas for every shared metric and states association, not causation" },
+      { file: "test/workbench-design-compare-vc6-receipt.test.ts", title: "C3: a comparison that does not measure declines precision and cites the raw native references of both cohorts" },
     ),
   ),
-  row(4, "code present", open("wb-h8f.2")),
   row(
     5,
     "fixture pass",
@@ -290,13 +294,12 @@ const EXPECTED_SHAPE: readonly string[] = [
   "2:not started:open:0",
   "3:fixture pass:cases:3",
   "3:live SDK pass:receipt:0",
-  "4:fixture pass:cases:3",
-  "4:code present:open:0",
+  "4:fixture pass:cases:4",
   "5:fixture pass:cases:3",
 ];
 const shapeOf = (rows: readonly JourneyRow[]): string[] => rows.map(r => `${r.journey}:${r.label}:${r.evidence.kind}:${r.evidence.kind === "cases" ? r.evidence.pins.length : 0}`);
 
-/** O2 row-set pin: the exact ten (journey, file, title) pairs, in table order; deleting any pin row (the J5 security row included) reads red. */
+/** O2 row-set pin: the exact eleven (journey, file, title) pairs, in table order; deleting any pin row (the J5 security row included) reads red. */
 const EXPECTED_PINS: readonly string[] = [
   "1|test/workbench-host-contract.test.ts|L3: unchanged script uses Claude SDK query, not Pi AgentManager; session and usage are reported",
   "3|test/workbench-observation.test.ts|disconnect invalidates known nodes; reconnect alone cannot restore current without snapshot",
@@ -305,6 +308,7 @@ const EXPECTED_PINS: readonly string[] = [
   "4|test/workbench-patch-proposal.test.ts|validates the candidate bytes exactly as the designer does and mirrors its status",
   "4|test/workbench-validate-reply.test.ts|never executes or writes the candidate source",
   "4|test/workbench-designer.test.ts|matched cohort yields measured deltas for every shared metric and states association, not causation",
+  "4|test/workbench-design-compare-vc6-receipt.test.ts|C3: a comparison that does not measure declines precision and cites the raw native references of both cohorts",
   "5|test/workbench-control.test.ts|rule 2: observer-only grants cannot control under any action spelling, and nothing is read before refusing",
   "5|test/workbench-control.test.ts|rule 3: only the frozen per-provider allowlist resolves an action (exact, case-sensitive, no prototype lookups)",
   "5|test/workbench-native-details.test.ts|preserves selected node on resize and closes without invoking any runtime controls",
@@ -325,8 +329,7 @@ const EXPECTED_EVIDENCE: readonly string[] = [
   "2|open|wb-04s",
   "3|cases|3",
   "3|receipt|cmd_7cea2921543b",
-  "4|cases|3",
-  "4|open|wb-h8f.2",
+  "4|cases|4",
   "5|cases|3",
 ];
 function evidenceKey(r: JourneyRow): string {
@@ -339,7 +342,7 @@ function evidenceKey(r: JourneyRow): string {
 }
 
 /** The frozen judged-row shape (rule 16, U4): journey:pin-count of every row AC2 judges, in table order. */
-const EXPECTED_JUDGED_ROWS: readonly string[] = ["1:1", "3:3", "4:3", "5:3"];
+const EXPECTED_JUDGED_ROWS: readonly string[] = ["1:1", "3:3", "4:4", "5:3"];
 const judgedShapeOf = (rows: readonly JourneyRow[]): string[] => rows.map(r => `${r.journey}:${r.evidence.kind === "cases" ? r.evidence.pins.length : 0}`);
 
 interface Reader {
@@ -771,6 +774,7 @@ const EXPECTED_BUDGETED: readonly string[] = [
   "journey 4 per-pin mutants",
   "journey 4 per-pin mutants",
   "journey 4 per-pin mutants",
+  "journey 4 per-pin mutants",
   "journey 5 per-pin mutants",
   "journey 5 per-pin mutants",
   "journey 5 per-pin mutants",
@@ -858,19 +862,19 @@ const readerOf = (files: Readonly<Record<string, string>>): Reader => ({
 });
 
 describe("wb-h8f.9 docs/workbench/11 acceptance-journeys census (report mode)", () => {
-  it("AC1: the table holds the nine frozen rows in order (journey:label:kind:pins), deeply frozen, covering all five journeys", () => {
+  it("AC1: the table holds the eight frozen rows in order (journey:label:kind:pins), deeply frozen, covering all five journeys", () => {
     expect(isDeepFrozen(ROWS)).toBe(true);
     expect(isDeepFrozen(JOURNEY_QUOTES)).toBe(false);
     expect(JOURNEY_QUOTES).toHaveLength(5);
     expect(shapeOf(ROWS)).toEqual(EXPECTED_SHAPE);
-    expect(ROWS).toHaveLength(9);
+    expect(ROWS).toHaveLength(8);
     expect([...new Set(ROWS.map(r => r.journey))].sort()).toEqual([1, 2, 3, 4, 5]);
     expect(auditCoverage(ROWS, JOURNEY_QUOTES)).toEqual([]);
   });
 
-  it("AC1: the ten (journey, file, title) pin pairs are exactly the frozen list, in order (the J5 security pins included)", () => {
+  it("AC1: the eleven (journey, file, title) pin pairs are exactly the frozen list, in order (the J5 security pins included)", () => {
     expect(pinKeys(ROWS)).toEqual(EXPECTED_PINS);
-    expect(REAL_PINS).toHaveLength(10);
+    expect(REAL_PINS).toHaveLength(11);
   });
 
   it("AC1: every row's evidence identity is exactly the frozen list: the receipt id, the owner receipt's file, contract, revision, landing gate, heading and citation, the open beads (rule 16 CT3, U3)", () => {
@@ -969,7 +973,7 @@ describe("wb-h8f.9 docs/workbench/11 acceptance-journeys census (report mode)", 
 
   it("AC3: open rows name their tracking bead and never carry a pass label", () => {
     const openRows = ROWS.filter(r => r.evidence.kind === "open");
-    expect(openRows.map(r => (r.evidence.kind === "open" ? r.evidence.bead : ""))).toEqual(["wb-04s", "wb-h8f.2"]);
+    expect(openRows.map(r => (r.evidence.kind === "open" ? r.evidence.bead : ""))).toEqual(["wb-04s"]);
     for (const r of openRows) expect(["code present", "not started"]).toContain(r.label);
   });
 

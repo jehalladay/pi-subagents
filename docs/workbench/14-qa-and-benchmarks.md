@@ -195,7 +195,7 @@ Evidence of record for the five docs/workbench/11 acceptance journeys, one row p
 | 4 | fixture pass | test/workbench-patch-proposal.test.ts: "validates the candidate bytes exactly as the designer does and mirrors its status" |
 | 4 | fixture pass | test/workbench-validate-reply.test.ts: "never executes or writes the candidate source" |
 | 4 | fixture pass | test/workbench-designer.test.ts: "matched cohort yields measured deltas for every shared metric and states association, not causation" |
-| 4 | code present | open bead wb-h8f.2 |
+| 4 | fixture pass | test/workbench-design-compare-vc6-receipt.test.ts: "C3: a comparison that does not measure declines precision and cites the raw native references of both cohorts" |
 | 5 | fixture pass | test/workbench-control.test.ts: "rule 2: observer-only grants cannot control under any action spelling, and nothing is read before refusing" |
 | 5 | fixture pass | test/workbench-control.test.ts: "rule 3: only the frozen per-provider allowlist resolves an action (exact, case-sensitive, no prototype lookups)" |
 | 5 | fixture pass | test/workbench-native-details.test.ts: "preserves selected node on resize and closes without invoking any runtime controls" |
