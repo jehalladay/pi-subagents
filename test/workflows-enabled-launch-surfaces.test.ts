@@ -23,15 +23,20 @@
  *     Falsifier: deleting a door's switch check (D1, D2: the workflowsEnabled dep in src/workbench/execute-tool.ts or its
  *     wiring in src/index.ts; D3 and D4 stood-down: their checks in src/index.ts; D4 pinned-off: the registration gate;
  *     D5: the flag's guard).
- *   CONTROL-ON, CONTROL-AUTO: with the switch pinned on, the D1 launch is launched, writes the D1 witness file and
- *     completes with its return value in the completion notification (EAT-R485 criterion 3); with no setting and no other
- *     workflow tool, SubagentWorkflow and the D1 launch both launch and complete, so the stood-down refusals come from the
- *     switch and not from the boot.
+ *   CONTROL-ON, CONTROL-AUTO: with the switch pinned on (CONTROL-ON), and with no setting and no other workflow tool
+ *     (CONTROL-AUTO), SubagentWorkflow and the D1 launch both launch, each writes its <run>.workflow.js witness file, and
+ *     each one's completion notification reads status completed and carries its return value (RESULT_MARKER; EAT-R485
+ *     criterion 3); the unset state is the one the stood-down cases start from, so their refusals come from the switch
+ *     and not from the boot. Falsifier: a completion that drops its return value (SubagentWorkflow's own, or every run's
+ *     while the switch is unpinned), or SubagentWorkflow or the D1 launch refusing in either on state.
  *   INSPECT-<pinned-off|stood-down>: workflow_detached inspect still reaches the native inspect read under the switch
  *     (pinned with an invocation no host holds, so the snapshot reads observation unknown), never the refusal.
- *   SHELL-1 (both hostModes), SHELL-2: createWorkflowExecuteTool with a workflowsEnabled dep reading false refuses as
- *     workflows-disabled with execute and detach held, before resolveSource and before either launcher; the dep is read on
- *     every call (false, then true: refused, then launched).
+ *   SHELL-1, SHELL-2, SHELL-3 (each in both hostModes): createWorkflowExecuteTool with a workflowsEnabled dep
+ *     reading false refuses as workflows-disabled with execute and detach held, before resolveSource and before either
+ *     launcher; the dep is read on every call (false, then true: refused, then launched); and for an admitted kind
+ *     function definition (the wb-ig6n census rows' reviewed function) the switch is read before the kind refusal: off
+ *     answers workflows-disabled, on answers unsupported-definition-kind, and neither call resolves a source or launches.
+ *     Falsifier: the switch check moved after the kind refusal, or the dep read once instead of on every call.
  *   WORDS-1: WORKFLOWS_DISABLED_REASON names workflowsEnabled, .pi/subagents.json and /agents → Settings → Workflows, and
  *     ends with the sentence the --subagents-workflow-file notice ends with.
  *   FROZEN (registered after the suites): the suite names, the registered cases of each (vitest's task tree: each in run
@@ -39,9 +44,11 @@
  *     every src/**.ts file read as a TypeScript syntax tree (calls of runWorkflowTask, and calls of launchDetachedWorkflow,
  *     bare or as a member, keyed by file and enclosing function, tool name or defineTool variable) are the DOORS sites, one
  *     row per site. Falsifier: a door row removed from every literal here, or a launch call site added to src.
- * NOT CLAIMED by this census: inspect of a live existing run (no host is launched here); the detached launches with the
- * switch on (test/workbench-detached-grants.test.ts launches both); the /agents → Settings → Workflows toggle as the way
- * the switch turns off mid-session (it sets the same switch the stood-down cases read, but no case drives it); runs
+ * NOT CLAIMED by this census: inspect of a live existing run (no host is launched here); the real detached launches with
+ * the switch on (SHELL-2 drives a stub launcher only; test/workbench-detached-grants.test.ts launches both); the
+ * --subagents-workflow-file run with the switch on; the switch's order against the detach-grant conjunction (no case
+ * holds workbench:execute alone in hostMode detached with the switch off); the /agents → Settings → Workflows toggle as
+ * the way the switch turns off mid-session (it sets the same switch the stood-down cases read, but no case drives it); runs
  * already in flight when the switch turns off; a launch surface of another extension. Skipping the FROZEN case itself is
  * NOT CLAIMED by this census.
  */
@@ -137,7 +144,7 @@ afterEach(async () => {
   sandbox?.restore();
   sandbox = undefined;
   vi.restoreAllMocks();
-});
+}, 60_000);
 
 function settingsFor(state: BootState): Record<string, unknown> {
   const workbench = { workflowAgentBackend: "claude", capabilityGrants: [...LAUNCH_GRANTS] };
@@ -243,34 +250,37 @@ describe("EAT-R485 DOOR cases: the five src launch doors, every launch grant hel
   }, 60_000);
 });
 
-describe("EAT-R485 CONTROL cases: with workflowsEnabled pinned true, or unset with no other workflow tool, the embedded launches launch and complete with their value", () => {
-  it("CONTROL-ON: workflowsEnabled pinned true, the embedded workflow_execute launch is launched, writes the D1 witness file and completes with its value", async () => {
-    const b = await boot("pinned-on");
-    const { reply } = await executeReply(b, "embedded");
-    expect(reply).toMatchObject({ ok: true, status: "launched" });
-    const run = reply.invocationId;
-    if (run === undefined) throw new Error(`no invocation reference in ${JSON.stringify(reply)}`);
-    expect(persistedScripts(b.dir)).toEqual([`${run}.workflow.js`]);
-    await vi.waitFor(() => expect(b.notifications().some(n => n.details?.id === run)).toBe(true), { timeout: 30_000 });
-    const done = b.notifications().find(n => n.details?.id === run);
-    expect(done?.details?.status).toBe("completed");
-    expect(done?.content).toContain(RESULT_MARKER);
+/**
+ * CONTROL: SubagentWorkflow and the embedded workflow_execute launch, in one session booted in `state`: each is launched,
+ * each writes its <run>.workflow.js witness file, and each one's completion notification reads status completed and
+ * carries the script's return value.
+ */
+async function launchesComplete(state: "pinned-on" | "auto"): Promise<void> {
+  const b = await boot(state);
+  const started = await b.tool("SubagentWorkflow").execute("r485-workflow", { scriptPath: b.scriptPath }, undefined, undefined, b.context);
+  expect(textOf(started)).toContain("started in the background");
+  const task = (started.details as { taskId?: string } | undefined)?.taskId;
+  if (task === undefined) throw new Error(`no task id in ${textOf(started)}`);
+  const { reply } = await executeReply(b, "embedded");
+  expect(reply).toMatchObject({ ok: true, status: "launched" });
+  const run = reply.invocationId;
+  if (run === undefined) throw new Error(`no invocation reference in ${JSON.stringify(reply)}`);
+  expect(persistedScripts(b.dir)).toEqual([`${run}.workflow.js`, `${task}.workflow.js`].sort());
+  for (const id of [task, run]) {
+    await vi.waitFor(() => expect(b.notifications().some(n => n.details?.id === id)).toBe(true), { timeout: 30_000 });
+    const done = b.notifications().find(n => n.details?.id === id);
+    expect(done?.details?.status, `${id} completion status`).toBe("completed");
+    expect(done?.content, `${id} completion value`).toContain(RESULT_MARKER);
+  }
+}
+
+describe("EAT-R485 CONTROL cases: with workflowsEnabled pinned true, or unset with no other workflow tool, SubagentWorkflow and the embedded workflow_execute launch both launch and complete with their return value", () => {
+  it("CONTROL-ON: workflowsEnabled pinned true, SubagentWorkflow and the embedded workflow_execute launch both launch, write their witness files and complete with their return value", async () => {
+    await launchesComplete("pinned-on");
   }, 60_000);
 
-  it("CONTROL-AUTO: no setting and no other workflow tool, SubagentWorkflow and the embedded workflow_execute launch both launch and complete", async () => {
-    const b = await boot("auto");
-    const started = await b.tool("SubagentWorkflow").execute("r485-workflow", { scriptPath: b.scriptPath }, undefined, undefined, b.context);
-    expect(textOf(started)).toContain("started in the background");
-    const task = (started.details as { taskId?: string } | undefined)?.taskId;
-    if (task === undefined) throw new Error(`no task id in ${textOf(started)}`);
-    const { reply } = await executeReply(b, "embedded");
-    expect(reply).toMatchObject({ ok: true, status: "launched" });
-    const run = reply.invocationId;
-    if (run === undefined) throw new Error(`no invocation reference in ${JSON.stringify(reply)}`);
-    expect(persistedScripts(b.dir)).toEqual([`${run}.workflow.js`, `${task}.workflow.js`].sort());
-    for (const id of [task, run]) {
-      await vi.waitFor(() => expect(b.notifications().some(n => n.details?.id === id && n.details?.status === "completed")).toBe(true), { timeout: 30_000 });
-    }
+  it("CONTROL-AUTO: no setting and no other workflow tool, SubagentWorkflow and the embedded workflow_execute launch both launch, write their witness files and complete with their return value", async () => {
+    await launchesComplete("auto");
   }, 60_000);
 });
 
@@ -291,6 +301,8 @@ const SOURCE: WorkflowSource = Object.freeze({
   sourceRef: "/ws/.pi/workflows/r485.js",
   source: "export const meta = { name: 'r485', description: 'd' }\nreturn 1\n",
 });
+/** SHELL-3: the reviewed kind function definition the wb-ig6n census rows send; the pure admission admits it, and the shell refuses its kind. */
+const FUNCTION_DEFINITION = Object.freeze({ kind: "function" as const, id: "mechanical.development.develop.v1", schemaVersion: "mechanical-workflows/entrypoint/v1", artifactDigest: DIGEST });
 /** The shell over stub host deps: grants execute and detach, and a workflowsEnabled dep answering `enabled`. */
 function shell(enabled: () => boolean) {
   const resolveSource = vi.fn((): WorkflowSource => SOURCE);
@@ -309,14 +321,14 @@ function shell(enabled: () => boolean) {
     workflowsEnabled,
   };
   const tool = createWorkflowExecuteTool(deps);
-  const run = async (hostMode: "embedded" | "detached"): Promise<ExecuteReply> => {
-    const params = { definitionRef: { ...SOURCE.definition }, input: { marker: INPUT_MARKER }, hostMode };
+  const run = async (hostMode: "embedded" | "detached", definition: WorkflowSource["definition"] = SOURCE.definition): Promise<ExecuteReply> => {
+    const params = { definitionRef: { ...definition }, input: { marker: INPUT_MARKER }, hostMode };
     return JSON.parse(textOf(await tool.execute("r485-shell", params as never, undefined, undefined, { cwd: "/ws" } as never))) as ExecuteReply;
   };
   return { run, resolveSource, launchEmbedded, launchDetached, workflowsEnabled };
 }
 
-describe("EAT-R485 SHELL cases: the workflow_execute shell reads its workflowsEnabled dep on every call, before resolveSource and either launcher", () => {
+describe("EAT-R485 SHELL cases: the workflow_execute shell reads its workflowsEnabled dep on every call, before the kind refusal, resolveSource and either launcher", () => {
   it.each(["embedded", "detached"] as const)("SHELL-1: hostMode %s, execute and detach held, the switch off: workflows-disabled before resolveSource and either launcher", async hostMode => {
     const h = shell(() => false);
     const reply = await h.run(hostMode);
@@ -326,12 +338,28 @@ describe("EAT-R485 SHELL cases: the workflow_execute shell reads its workflowsEn
     expect([h.resolveSource.mock.calls.length, h.launchEmbedded.mock.calls.length, h.launchDetached.mock.calls.length]).toEqual([0, 0, 0]);
   });
 
-  it("SHELL-2: the switch is read on every call: off then on refuses the first launch and launches the second", async () => {
+  it.each(["embedded", "detached"] as const)("SHELL-2: hostMode %s, the switch is read on every call: off then on refuses the first launch and launches the second", async hostMode => {
     const answers = [false, true];
     const h = shell(() => answers.shift() ?? true);
-    expect((await h.run("embedded")).error?.code).toBe("workflows-disabled");
-    expect(await h.run("embedded")).toMatchObject({ ok: true, status: "launched" });
-    expect([h.workflowsEnabled.mock.calls.length, h.launchEmbedded.mock.calls.length]).toEqual([2, 1]);
+    expect((await h.run(hostMode)).error?.code).toBe("workflows-disabled");
+    expect(await h.run(hostMode)).toMatchObject({ ok: true, status: "launched" });
+    const launcher = hostMode === "embedded" ? h.launchEmbedded : h.launchDetached;
+    expect([h.workflowsEnabled.mock.calls.length, launcher.mock.calls.length]).toEqual([2, 1]);
+  });
+
+  it.each(["embedded", "detached"] as const)("SHELL-3: hostMode %s, a kind function definition admitted, execute and detach held: the switch off answers workflows-disabled before the kind refusal, the switch on answers unsupported-definition-kind", async hostMode => {
+    const off = shell(() => false);
+    const refused = await off.run(hostMode, FUNCTION_DEFINITION);
+    expect(refused).toMatchObject({ ok: false, status: "refused", nativeRefs: [] });
+    expect(refused.error).toEqual({ code: "workflows-disabled", message: WORKFLOWS_DISABLED_REASON });
+    const on = shell(() => true);
+    const kind = await on.run(hostMode, FUNCTION_DEFINITION);
+    expect(kind).toMatchObject({ ok: false, status: "refused", nativeRefs: [] });
+    expect(kind.error?.code).toBe("unsupported-definition-kind");
+    expect([off, on].map(h => [h.workflowsEnabled.mock.calls.length, h.resolveSource.mock.calls.length, h.launchEmbedded.mock.calls.length, h.launchDetached.mock.calls.length])).toEqual([
+      [1, 0, 0, 0],
+      [1, 0, 0, 0],
+    ]);
   });
 });
 
@@ -397,9 +425,9 @@ it("FROZEN: the census suites, their registered cases in run mode, the DOORS row
   const suites = task.file.tasks.filter(entry => entry.type === "suite");
   expect(suites.map(suite => suite.name)).toEqual([
     "EAT-R485 DOOR cases: the five src launch doors, every launch grant held and workflowsEnabled off at boot or at run time, refuse and start nothing",
-    "EAT-R485 CONTROL cases: with workflowsEnabled pinned true, or unset with no other workflow tool, the embedded launches launch and complete with their value",
+    "EAT-R485 CONTROL cases: with workflowsEnabled pinned true, or unset with no other workflow tool, SubagentWorkflow and the embedded workflow_execute launch both launch and complete with their return value",
     "EAT-R485 INSPECT cases: under the switch, workflow_detached inspect is not a launch and reaches the native inspect read",
-    "EAT-R485 SHELL cases: the workflow_execute shell reads its workflowsEnabled dep on every call, before resolveSource and either launcher",
+    "EAT-R485 SHELL cases: the workflow_execute shell reads its workflowsEnabled dep on every call, before the kind refusal, resolveSource and either launcher",
     "EAT-R485 WORDS case: the refusal names workflowsEnabled, its settings file and its menu in the --subagents-workflow-file notice's own words",
   ]);
   const cases = suites.map(suite => (suite.type === "suite" ? suite.tasks.map(entry => entry.name) : []));
@@ -417,8 +445,8 @@ it("FROZEN: the census suites, their registered cases in run mode, the DOORS row
       "DOOR-D5-stood-down: --subagents-workflow-file, refused, nothing started",
     ],
     [
-      "CONTROL-ON: workflowsEnabled pinned true, the embedded workflow_execute launch is launched, writes the D1 witness file and completes with its value",
-      "CONTROL-AUTO: no setting and no other workflow tool, SubagentWorkflow and the embedded workflow_execute launch both launch and complete",
+      "CONTROL-ON: workflowsEnabled pinned true, SubagentWorkflow and the embedded workflow_execute launch both launch, write their witness files and complete with their return value",
+      "CONTROL-AUTO: no setting and no other workflow tool, SubagentWorkflow and the embedded workflow_execute launch both launch, write their witness files and complete with their return value",
     ],
     [
       "INSPECT-pinned-off: workflow_detached inspect reaches the native inspect read, never the refusal",
@@ -427,7 +455,10 @@ it("FROZEN: the census suites, their registered cases in run mode, the DOORS row
     [
       "SHELL-1: hostMode embedded, execute and detach held, the switch off: workflows-disabled before resolveSource and either launcher",
       "SHELL-1: hostMode detached, execute and detach held, the switch off: workflows-disabled before resolveSource and either launcher",
-      "SHELL-2: the switch is read on every call: off then on refuses the first launch and launches the second",
+      "SHELL-2: hostMode embedded, the switch is read on every call: off then on refuses the first launch and launches the second",
+      "SHELL-2: hostMode detached, the switch is read on every call: off then on refuses the first launch and launches the second",
+      "SHELL-3: hostMode embedded, a kind function definition admitted, execute and detach held: the switch off answers workflows-disabled before the kind refusal, the switch on answers unsupported-definition-kind",
+      "SHELL-3: hostMode detached, a kind function definition admitted, execute and detach held: the switch off answers workflows-disabled before the kind refusal, the switch on answers unsupported-definition-kind",
     ],
     [
       "WORDS-1: the refusal names workflowsEnabled, .pi/subagents.json and the /agents menu, and ends with the --subagents-workflow-file notice's own sentence",

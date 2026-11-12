@@ -201,14 +201,14 @@ const ROWS: readonly EnvelopeRow[] = [
  */
 const NOT_REACHED: Readonly<Record<string, string>> = {
   "unknown-permission-data": "N1: the settings loader rejects each UNREADABLE_GRANTS list before decideExecute reads permission data",
+  // wb-hbju (EAT-R485): the master switch's refusal. The admitted rows E1-E3 leave workflowsEnabled unset with no other workflow
+  // tool loaded; the switch-off refusal and its order before the kind refusal are the launch-surfaces census's (SHELL-1, SHELL-3).
+  "workflows-disabled": "E1, E2, E3: these admitted rows leave the workflowsEnabled switch unset with no other workflow tool loaded; the switch-off refusal and its order before the kind refusal are pinned by test/workflows-enabled-launch-surfaces.test.ts SHELL-1 and SHELL-3, not by these rows",
   "missing-detach-grant": "E3: decided after the kind refusal, which answers this row's function definition first",
   "source-unavailable": "E1, E2: decided after the kind refusal, which answers these rows' function definitions first",
   "definition-digest-mismatch": "E1, E2: decided after the kind refusal, which answers these rows' function definitions first",
   "definition-schema-mismatch": "E1, E2: decided after the kind refusal, which answers these rows' function definitions first",
   "launch-failed": "E1, E2: decided after the kind refusal, which answers these rows' function definitions first",
-  // wb-hbju (EAT-R485): the master switch's refusal is decided before the kind refusal, and every row leaves workflowsEnabled
-  // unset with no other workflow tool loaded, so the switch reads on and E1 and E2 reach the kind refusal.
-  "workflows-disabled": "E1, E2: decided before the kind refusal, by the workflowsEnabled switch these rows' settings leave unset with no other workflow tool loaded, so it reads on and these rows' function definitions reach the kind refusal",
 };
 /** N1: unreadable grant lists, each written as the sandbox settings file's workbench.capabilityGrants. */
 const UNREADABLE_GRANTS: ReadonlyArray<readonly [string, unknown]> = [
@@ -386,7 +386,7 @@ const ROWS_SHAPE = [
 ] as const;
 const BUILDER_SHAPE = ["B1:accepted:false", "B2:launched:false", "B3:refused:false", "B4:refused:false", "B5:launched:true"] as const;
 const CLAIMS_SHAPE = ["C1:8", "C2:5", "C3:1", "C4:1", "C5:2", "C6:1", "C7:1", "C8:1", "C9:2"] as const;
-const NOT_REACHED_SHAPE = ["unknown-permission-data:N1", "missing-detach-grant:E3", "source-unavailable:E1", "definition-digest-mismatch:E1", "definition-schema-mismatch:E1", "launch-failed:E1", "workflows-disabled:E1"] as const;
+const NOT_REACHED_SHAPE = ["unknown-permission-data:N1", "workflows-disabled:E1", "missing-detach-grant:E3", "source-unavailable:E1", "definition-digest-mismatch:E1", "definition-schema-mismatch:E1", "launch-failed:E1"] as const;
 
 /** A row as the receipt's lines hold it: its id, then its request and expectation as JSON. */
 const rowText = (row: EnvelopeRow): string => `${row.id} ${JSON.stringify({ grants: row.grants, params: row.params, members: row.members, code: row.code })}`;
