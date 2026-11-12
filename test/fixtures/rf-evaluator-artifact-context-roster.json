@@ -173,7 +173,9 @@
                 "src/workbench/capability-registry.ts"
               ]
             },
-            "observerCallers": [],
+            "observerCallers": [
+              "src/workbench/reactivefiber-wiring.ts"
+            ],
             "observerDefined": true,
             "boundaryQuiet": [],
             "controlDigests": [
@@ -331,6 +333,7 @@
           "id": "A5",
           "witness": {
             "invariant": 3,
+            "wiredInvariant": 3,
             "surfaced": [],
             "tone": "success",
             "coverage": "complete",

@@ -5,10 +5,10 @@ import { isAbsolute, relative, resolve, sep } from "node:path";
 import { Script } from "node:vm";
 import { Check } from "typebox/value";
 import ts from "typescript";
-import { decodeWorkflowLiteral, extractMeta, type WorkflowMeta } from "../workflow/meta.js";
-import { MAX_SCRIPT_LENGTH, type WorkflowScriptRef } from "../workflow/runtime.js";
+import { decodeWorkflowLiteral, extractMeta, type WorkflowLiteral, type WorkflowMeta } from "../workflow/meta.js";
+import { assertBoundarySafe, MAX_SCRIPT_LENGTH, type WorkflowScriptRef } from "../workflow/runtime.js";
 import { listSavedWorkflows, resolveWorkflowSource } from "../workflow/saved.js";
-import type { CapabilityRegistry, JsonValue } from "./capability-registry.js";
+import { assertSupportedSchema, type CapabilityRegistry, type JsonValue, validatedCapabilityJson } from "./capability-registry.js";
 import { canonicalJson, type DefinitionRef, type InvocationSnapshot, identityDigest, type NativeRef, WORKFLOW_SCRIPT_SCHEMA_VERSION } from "./identity.js";
 import { sanitizeWorkbenchText } from "./redaction.js";
 
@@ -98,6 +98,8 @@ export function validateWorkflowSource(source: WorkflowSource, options: { regist
       if (value === null || Array.isArray(value) || typeof value !== "object") throw new Error("Metadata must be an object literal.");
       // extractMeta supplies the existing shape/phase contract, only after AST proves no executable syntax.
       meta = extractMeta(source.source).meta;
+      // A declared meta.inputSchema is the schema checkWorkflowInputs holds supplied inputs to; one it cannot apply is a source defect.
+      if (Object.hasOwn(value, "inputSchema") && supportedInputSchema(value.inputSchema) === undefined) error("META_INPUT_SCHEMA", "meta.inputSchema must be a JSON Schema object using only supported keywords.");
     } catch (cause) { error("META_NOT_LITERAL", cause instanceof Error ? cause.message : String(cause)); }
   }
   const body = metaDeclarations.length === 1 ? source.source.slice(0, metaDeclarations[0].statement.getStart(ast)).concat(source.source.slice(metaDeclarations[0].statement.getStart(ast)).replace("export", "      ")) : source.source;
@@ -329,4 +331,94 @@ export function compareWorkflowRuns(reference: readonly CompareRun[], candidate:
   return {status,diagnostics,sourceDigests:{reference:sourceDigests.reference.map(item => sanitizeWorkbenchText(item)),candidate:sourceDigests.candidate.map(item => sanitizeWorkbenchText(item))},metrics,causalClaim:false,criticalPath:"unestablished",
     limitations:["Descriptive cohort statistics are not a causal improvement claim.","No critical path is derived without native dependency and interval evidence.",...(reference.length < 2 || candidate.length < 2 ? ["Single-run cohort: stochastic dispersion is unmeasured."] : []),...(claim === "association" ? ["Measured deltas are associations within the matched cohort, not causal attributions."] : []),...(confounds.length ? ["Confounds are listed in cohort.confounds; affected metrics are unknown rather than improved or regressed."] : []),...limitations],
     cohort:{matched:confounds.length === 0,basis,confounds},perMetric,claim};
+}
+
+/** What checkWorkflowInputs reads a caller's supplied inputs as. */
+export type WorkflowInputsVerdict = "conforms" | "mismatch" | "undeclared" | "unusable";
+
+/**
+ * Judge a caller's supplied inputs against the meta.inputSchema the source declares (wb-xeej). The declaration is read from
+ * the source's one exported pure-literal meta object without executing anything: no such object, or a meta without the
+ * member, is "undeclared". A declaration is usable only inside the capability registry's JSON limits and supported keyword
+ * set (validatedCapabilityJson, assertSupportedSchema), so a keyword the validator would ignore is never reported as
+ * enforced; any other declaration is "unusable". Inputs the launch's args boundary refuses (assertBoundarySafe) never
+ * conform. The workflow runtime does not read meta.inputSchema: this judges a would-be launch argument at design time.
+ */
+export function checkWorkflowInputs(source: WorkflowSource, inputs: unknown): WorkflowInputsVerdict {
+  const members = metaLiteralMembers(source.source);
+  if (members === undefined || !Object.hasOwn(members, "inputSchema")) return "undeclared";
+  const schema = supportedInputSchema(members.inputSchema);
+  if (schema === undefined) return "unusable";
+  try {
+    assertBoundarySafe(inputs, "args");
+  } catch {
+    return "mismatch";
+  }
+  try {
+    return Check(schema, inputs) ? "conforms" : "mismatch";
+  } catch {
+    return "unusable";
+  }
+}
+
+/** What checkWorkflowBindings reads a caller's supplied bindings as. */
+export type WorkflowBindingsVerdict = "matches" | "mismatch" | "malformed" | "unestablished";
+
+/**
+ * Compare a caller's supplied bindings, capability id to descriptor version, with the authorized registry snapshot: the
+ * descriptors the call's grants discover (wb-xeej). Deployment bindings still come only from that snapshot, so a supplied
+ * binding is a claim it confirms ("matches"), contradicts ("mismatch": a discovered capability under another version) or
+ * cannot speak to ("unestablished": no snapshot, or a capability the grants do not discover). Anything but a JSON object of
+ * non-empty version strings is "malformed". One contradiction outranks any unestablished entry.
+ */
+export function checkWorkflowBindings(bindings: unknown, options: { registry?: CapabilityRegistry; grants?: readonly string[] }): WorkflowBindingsVerdict {
+  if (bindings === null || typeof bindings !== "object" || Array.isArray(bindings)) return "malformed";
+  try {
+    assertBoundarySafe(bindings, "bindings");
+  } catch {
+    return "malformed";
+  }
+  const entries = Object.entries(bindings as Readonly<Record<string, unknown>>);
+  if (entries.some(([, version]) => typeof version !== "string" || version === "")) return "malformed";
+  const descriptors = options.registry?.discover({ grants: options.grants ?? [] });
+  let unestablished = false;
+  for (const [id, version] of entries) {
+    const descriptor = descriptors?.find(item => item.id === id);
+    if (descriptor === undefined) unestablished = true;
+    else if (descriptor.version !== version) return "mismatch";
+  }
+  return unestablished ? "unestablished" : "matches";
+}
+
+/**
+ * The members of the source's one exported const meta object literal, decoded from its AST without executing anything, by
+ * the declaration rule validateWorkflowSource applies; undefined when the source has no such readable literal.
+ */
+function metaLiteralMembers(source: string): { readonly [key: string]: WorkflowLiteral } | undefined {
+  if (source.length > MAX_SCRIPT_LENGTH) return undefined;
+  const ast = ts.createSourceFile("workflow.js", source, ts.ScriptTarget.ESNext, true, ts.ScriptKind.JS);
+  const declared = ast.statements.filter(ts.isVariableStatement).flatMap(statement => statement.modifiers?.some(mod => mod.kind === ts.SyntaxKind.ExportKeyword) ? statement.declarationList.declarations.filter(decl => ts.isIdentifier(decl.name) && decl.name.text === "meta").map(decl => ({statement,decl})) : []);
+  if (declared.length !== 1 || !(declared[0].statement.declarationList.flags & ts.NodeFlags.Const)) return undefined;
+  const initializer = declared[0].decl.initializer;
+  if (!initializer || !ts.isObjectLiteralExpression(initializer)) return undefined;
+  try {
+    const value = decodeWorkflowLiteral(initializer);
+    return value !== null && typeof value === "object" && !Array.isArray(value) ? value : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/** A declared meta.inputSchema held to the capability registry's JSON limits and supported keyword set; undefined when it is not one. */
+function supportedInputSchema(declared: WorkflowLiteral | undefined): { readonly [key: string]: JsonValue } | undefined {
+  if (declared === undefined || declared === null || typeof declared !== "object" || Array.isArray(declared)) return undefined;
+  try {
+    const schema = validatedCapabilityJson(declared, "meta.inputSchema");
+    if (schema === null || typeof schema !== "object" || Array.isArray(schema)) return undefined;
+    assertSupportedSchema(schema, "meta.inputSchema");
+    Check(schema, {});
+    return schema;
+  } catch {
+    return undefined;
+  }
 }

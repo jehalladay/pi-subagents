@@ -1,0 +1,223 @@
+{
+  "schema": "workbench.hx-named-query-probe/v1",
+  "bead": "wb-pxvv",
+  "requirement": "EAT-R163",
+  "gate": "HX-TASK-SCOPE-PROBE",
+  "route": "named-query",
+  "utc": "2026-11-11T07:41:37.214Z",
+  "probe": {
+    "script": "qa/workbench/hx-named-query-probe.mjs",
+    "scriptSha256": "e156f73bd8b5c537c3e1604b96cf62a93cb29b7b21ff0695d7e1b4d5fe971878",
+    "judge": "qa/workbench/hx-named-query-judge.mjs",
+    "judgeSha256": "cc1d4cd59e348c81f7f8e609f3bf700125f29e43898bdf86b9296b9cf6175764"
+  },
+  "producer": {
+    "name": "hx",
+    "version": "0.1.0",
+    "binarySha256": "50b17a4b4c2ac5bc1f7a1cbf12652ff00271ac89726f025bf5184b82a3eebc90",
+    "binaryOrigin": "path",
+    "hxsVersion": "1.0",
+    "protocol": "hxs/1.0",
+    "capabilities": {
+      "count": 84,
+      "taskNamed": []
+    },
+    "sdk": {
+      "name": "@hyperunix/sdk",
+      "version": "0.1.0",
+      "reported": "0.1.0"
+    }
+  },
+  "task": {
+    "id": "hx-task-scope-probe",
+    "kind": "hx.fs/regular-file",
+    "root": ".",
+    "baseRevision": "ac25292057ece4fc0e361eb806c0abe26ccd60e6",
+    "digest": "sha256:40e694cc6de6e3bf7db7ca4d6d300a10a8d818cd94a1308c898539355939e908"
+  },
+  "definition": {
+    "name": "hx-admit-task-scope",
+    "verb": "run",
+    "parameters": [
+      {
+        "name": "task",
+        "type": "string",
+        "default": "hx-task-scope-probe"
+      }
+    ],
+    "doc": "sha256:40e694cc6de6e3bf7db7ca4d6d300a10a8d818cd94a1308c898539355939e908",
+    "formedUnder": "git:ac25292057ece4fc0e361eb806c0abe26ccd60e6",
+    "savedView": null,
+    "semanticDigest": "sha256/hxq-normalized-v1:82613cb1319b7d5d696a7687b6b98ae8a8711e82ea5b9bc803fe80935823ab13",
+    "commands": [
+      [
+        "hx",
+        "init",
+        "<workspace>"
+      ],
+      [
+        "hx",
+        "--hxs",
+        "--view=git:ac25292057ece4fc0e361eb806c0abe26ccd60e6",
+        "find",
+        "--kind",
+        "hx.fs/regular-file",
+        "--plan",
+        "."
+      ],
+      [
+        "hx",
+        "query",
+        "save",
+        "hx-admit-task-scope",
+        "--param=task:string=hx-task-scope-probe",
+        "--doc=sha256:40e694cc6de6e3bf7db7ca4d6d300a10a8d818cd94a1308c898539355939e908"
+      ],
+      [
+        "hx",
+        "--hxs",
+        "query",
+        "show",
+        "hx-admit-task-scope"
+      ]
+    ]
+  },
+  "observations": [
+    {
+      "id": "named-query-strict",
+      "query": {
+        "operation": "run",
+        "name": "hx-admit-task-scope",
+        "kind": "hx.fs/regular-file",
+        "root": ".",
+        "view": "git:ac25292057ece4fc0e361eb806c0abe26ccd60e6",
+        "bestEffort": false
+      },
+      "argv": [
+        "--workspace",
+        "<workspace>",
+        "run",
+        "hx-admit-task-scope",
+        "--query",
+        "<captured-definition>",
+        "--hxs"
+      ],
+      "scope": "filesystem",
+      "outcome": "result",
+      "exitCode": 3,
+      "signal": null,
+      "terminal": "partial",
+      "statusKind": null,
+      "terminalReached": true,
+      "diagnostics": [
+        {
+          "code": "HX-COVERAGE-INCOMPLETE",
+          "severity": "error",
+          "reason": null
+        }
+      ],
+      "completeness": "unknown",
+      "licensesAbsence": false,
+      "coverageScopes": [
+        "fs:/",
+        "{\"path\":[],\"scope\":\"fs-subtree\"}"
+      ],
+      "view": "hx.view/workspace-head",
+      "revision": null,
+      "queryDigest": "sha256/hxq-normalized-v1:82613cb1319b7d5d696a7687b6b98ae8a8711e82ea5b9bc803fe80935823ab13",
+      "digestSource": "runtime",
+      "answerCount": 17,
+      "frames": 20
+    },
+    {
+      "id": "named-query-best-effort",
+      "query": {
+        "operation": "run",
+        "name": "hx-admit-task-scope",
+        "kind": "hx.fs/regular-file",
+        "root": ".",
+        "view": "git:ac25292057ece4fc0e361eb806c0abe26ccd60e6",
+        "bestEffort": true
+      },
+      "argv": [
+        "--workspace",
+        "<workspace>",
+        "run",
+        "hx-admit-task-scope",
+        "--query",
+        "<captured-definition>",
+        "--best-effort",
+        "--hxs"
+      ],
+      "scope": "filesystem",
+      "outcome": "result",
+      "exitCode": 0,
+      "signal": null,
+      "terminal": "complete",
+      "statusKind": null,
+      "terminalReached": true,
+      "diagnostics": [
+        {
+          "code": "HX-COVERAGE-INCOMPLETE",
+          "severity": "warning",
+          "reason": null
+        }
+      ],
+      "completeness": "unknown",
+      "licensesAbsence": false,
+      "coverageScopes": [
+        "fs:/",
+        "{\"path\":[],\"scope\":\"fs-subtree\"}"
+      ],
+      "view": "hx.view/workspace-head",
+      "revision": null,
+      "queryDigest": "sha256/hxq-normalized-v1:82613cb1319b7d5d696a7687b6b98ae8a8711e82ea5b9bc803fe80935823ab13",
+      "digestSource": "runtime",
+      "answerCount": 17,
+      "frames": 20
+    }
+  ],
+  "verdict": "task-scope-unsupported",
+  "capable": [],
+  "reasons": {
+    "named-query-strict": [
+      "exit-nonzero",
+      "coverage-not-complete",
+      "absence-unlicensed",
+      "scope-not-task",
+      "revision-unbound"
+    ],
+    "named-query-best-effort": [
+      "coverage-not-complete",
+      "absence-unlicensed",
+      "scope-not-task",
+      "revision-unbound"
+    ]
+  },
+  "blocker": {
+    "gate": "HX-TASK-SCOPE-PROBE",
+    "scope": "native-task-scope",
+    "witness": "unsupported",
+    "notBlocked": [
+      "git-census"
+    ]
+  },
+  "findVerb": {
+    "binarySha256": "50b17a4b4c2ac5bc1f7a1cbf12652ff00271ac89726f025bf5184b82a3eebc90",
+    "verdict": "task-scope-unsupported",
+    "legs": [
+      {
+        "id": "filesystem-live",
+        "exitCode": 3
+      },
+      {
+        "id": "filesystem-live-best-effort",
+        "exitCode": 0
+      },
+      {
+        "id": "revision-pinned",
+        "exitCode": 2
+      }
+    ]
+  }
+}

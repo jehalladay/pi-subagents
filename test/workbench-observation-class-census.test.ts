@@ -119,6 +119,13 @@
  * 22 filing-named titles and of the labels of rows F, M and R is held by this file and its roster alone: reworded in every literal
  * here, no outside reading sees it, while a reworded docs07-bound title (this anchor) or row A-D label (F1, against the owner
  * filing) is seen. The anchor case pins both unseen sets.
+ * WB-79K.1 (W13/VC-2 HyperUnix observe-wiring, 2026-11-11; trunk ce180d8): the Claude host's node seam (src/workbench/claude-host.ts,
+ * an observation-class module) now calls hyperunixTopology on a returned hyperunix.find value and applies it to the live
+ * projection, naming as the operation the node call the run's projection holds (provider pi-workflow, or the producer's own
+ * hyperunix execution). R1's quiet reading moves from "no src module calls either topology adapter" to that one src caller, which
+ * must stay in the observation class (observationCallers): C1 holds the class to no authority construct and no authority edge, so
+ * the operation the caller names is never an authority one it built. R1's title moves with it here, in the roster and in the docs07
+ * provider-rules census's two bindings (its TABLE half and FROZEN_H3), together; no other pin, row, label or count moves.
  *
  * Rows, each a describe of its pins:
  *  A, acceptance (a). A1 a succeeded Claude SDK run (the claude-host query seam fed SDK messages whose text and result say fixed
@@ -143,7 +150,8 @@
  *    spellings of its table, the read ones and the unread ones (wb-4tdn), its over-read rows, the filed plant per member and the
  *    spelling anchor (wb-spby).
  *  R, the named residuals, each with a pinned quiet row: R1 R-HOST-OPERATION the HX adapter echoes the operation the host names
- *    (a forge one included) as its display grouping, and no src module calls either topology adapter; R2 R-CROSS-SCOPE a value
+ *    (a forge one included) as its display grouping, its one src caller being the observation-class Claude host (WB-79K.1) and no
+ *    src module calling the Claude topology adapter; R2 R-CROSS-SCOPE a value
  *    carried between scopes (a parameter, return value, closure or module-level const) is not traced; R3 R-COMPOSED a provider
  *    or command that is not a string literal at its construct is not read; R4 R-OUT-OF-REPO collect.sh is not in this
  *    repository; R5 R-EXECUTOR-OUTCOME the Furnace host maps a hosted workflow's settlement onto the four-word Furnace result
@@ -328,7 +336,7 @@ const PIN_TITLES: Readonly<Record<string, string>> = {
   M7: "M7: an authority module re-exporting a Claude evidence type",
   M8: "M8: a new module importing the Claude host and the Forge observer",
   M9: "M9: an observation-class module type-importing the Forge observer",
-  R1: "R1 R-HOST-OPERATION: the HX adapter echoes the operation the host names as its display grouping, and no src module calls either topology adapter",
+  R1: "R1 R-HOST-OPERATION: the HX adapter echoes the operation the host names as its display grouping; its one src caller is the observation-class Claude host and no src module calls the Claude topology adapter",
   R2: "R2 R-CROSS-SCOPE: a value carried between two scopes is not traced",
   R3: "R3 R-COMPOSED: a provider or command that is not a string literal at its construct is not read",
   R4: "R4 R-OUT-OF-REPO: no file named collect.sh is part of this repository",
@@ -1540,9 +1548,12 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const witness = {
       echoed: topology.relations.map(relation => ({ kind: relation.kind, from: relation.from.provider, nativeConfirmation: relation.provenance.nativeConfirmationRef !== undefined })),
       srcCallers: callers,
+      // WB-79K.1: the adapter's src caller is held to the observation class, which C1 holds to no authority construct or edge.
+      observationCallers: callers.filter(path => real().observation.includes(path)),
     };
     expect(witness.echoed).toEqual([{ kind: "grouping", from: "forge", nativeConfirmation: false }]);
-    expect(witness.srcCallers).toEqual([]);
+    expect(witness.srcCallers).toEqual(["src/workbench/claude-host.ts"]);
+    expect(witness.observationCallers).toEqual(witness.srcCallers);
     return witness;
   },
   R2: async () =>

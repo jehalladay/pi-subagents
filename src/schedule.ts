@@ -25,6 +25,41 @@ import { resolveModel } from "./model-resolver.js";
 import type { ScheduleStore } from "./schedule-store.js";
 import type { IsolationMode, ScheduledSubagent, SubagentType, ThinkingLevel } from "./types.js";
 
+/**
+ * The timer domain a schedule's delay must fit, in ms (EAT-R379): 1 second up to Node's timer ceiling 2^31-1 ms.
+ * setTimeout and setInterval replace a longer delay with 1 ms (TimeoutOverflowWarning), so an unbounded "30d" interval
+ * spawned every millisecond and "+30d" fired at once; a "0m" interval was stored as a job that can never fire. Cron
+ * expressions are not bounded here: croner splits its own long waits.
+ */
+export const SCHEDULE_DELAY_MIN_MS = 1_000;
+export const SCHEDULE_DELAY_MAX_MS = 2_147_483_647;
+
+/** Milliseconds per unit of a duration schedule ("10s" / "5m" / "1h" / "2d"). */
+const UNIT_MS = { s: 1000, m: 60_000, h: 3_600_000, d: 86_400_000 } as const;
+type DurationUnit = keyof typeof UNIT_MS;
+
+/** The domain and its ceiling as a refusal names them. */
+const DELAY_DOMAIN = `${SCHEDULE_DELAY_MIN_MS}..${SCHEDULE_DELAY_MAX_MS} ms (1 second to about 24.8 days)`;
+const DELAY_CEILING = `at most ${SCHEDULE_DELAY_MAX_MS} ms (about 24.8 days)`;
+
+/** A duration schedule, signed or not ("5m", "+10m", "-5m", "+-5m"): whether it is a one-shot, and its length in ms. */
+function parseDuration(s: string): { oneShot: boolean; ms: number } | null {
+  const m = s.match(/^(\+?)(-?)(\d+)(s|m|h|d)$/);
+  if (!m) return null;
+  const ms = parseInt(m[3], 10) * UNIT_MS[m[4] as DurationUnit];
+  return { oneShot: m[1] === "+", ms: m[2] === "-" ? -ms : ms };
+}
+
+/** True when a delay is a safe integer inside the timer domain. */
+function inDelayDomain(ms: number): boolean {
+  return Number.isSafeInteger(ms) && ms >= SCHEDULE_DELAY_MIN_MS && ms <= SCHEDULE_DELAY_MAX_MS;
+}
+
+/** Why an absolute one-shot further ahead than the ceiling is refused (no closing period: callers end the sentence). */
+function beyondCeiling(iso: string): string {
+  return `Scheduled time ${iso} is beyond the supported timer range: a one-shot must be ${DELAY_CEILING} ahead`;
+}
+
 /** Event emitted on `pi.events` for cross-extension consumers. */
 export type ScheduleChangeEvent =
   | { type: "added"; job: ScheduledSubagent }
@@ -94,6 +129,12 @@ export class SubagentScheduler {
    */
   buildJob(input: NewJobInput): ScheduledSubagent {
     const detected = SubagentScheduler.detectSchedule(input.schedule);
+    // An absolute one-shot further ahead than the timer ceiling would overflow setTimeout and fire at once (EAT-R379), so it
+    // is refused here, before the job is stored or armed. A relative one-shot was bounded by detectSchedule, and its distance
+    // from now only shrinks.
+    if (detected.type === "once" && new Date(detected.normalized).getTime() - Date.now() > SCHEDULE_DELAY_MAX_MS) {
+      throw new Error(`${beyondCeiling(detected.normalized)}.`);
+    }
     return {
       id: nanoid(10),
       name: input.name,
@@ -171,12 +212,21 @@ export class SubagentScheduler {
     if (!store) return;
     try {
       if (job.scheduleType === "interval" && job.intervalMs) {
-        const t = setInterval(() => this.executeJob(job.id), job.intervalMs);
-        this.intervals.set(job.id, t);
+        if (job.intervalMs > SCHEDULE_DELAY_MAX_MS) {
+          // A stored interval past the timer ceiling (written outside admission, or before it was bounded) would fire
+          // every ~1 ms: disabled instead of armed (EAT-R379).
+          this.refuseArming(store, job, `Interval of ${job.intervalMs} ms is beyond the supported timer range: an interval must be ${DELAY_CEILING}`);
+        } else {
+          const t = setInterval(() => this.executeJob(job.id), job.intervalMs);
+          this.intervals.set(job.id, t);
+        }
       } else if (job.scheduleType === "once") {
         const target = new Date(job.schedule).getTime();
         const delay = target - Date.now();
-        if (delay > 0) {
+        if (delay > SCHEDULE_DELAY_MAX_MS) {
+          // The same for a stored one-shot further ahead than the ceiling: setTimeout would fire it at once.
+          this.refuseArming(store, job, beyondCeiling(job.schedule));
+        } else if (delay > 0) {
           const t = setTimeout(() => {
             this.executeJob(job.id);
             // Auto-disable one-shots after they fire (mirrors pi-cron-schedule)
@@ -197,6 +247,12 @@ export class SubagentScheduler {
     } catch (err) {
       this.emit({ type: "error", jobId: job.id, error: err instanceof Error ? err.message : String(err) });
     }
+  }
+
+  /** Disable a stored job whose delay the timer domain cannot hold rather than arm it, as the past branch does. */
+  private refuseArming(store: ScheduleStore, job: ScheduledSubagent, error: string): void {
+    store.update(job.id, { enabled: false, lastStatus: "error" });
+    this.emit({ type: "error", jobId: job.id, error: `${error}; the job was disabled instead of armed.` });
   }
 
   private unscheduleJob(id: string): void {
@@ -325,6 +381,16 @@ export class SubagentScheduler {
    */
   static detectSchedule(s: string): { type: "cron" | "once" | "interval"; intervalMs?: number; normalized: string } {
     const trimmed = s.trim();
+    // A duration ("+10m" relative one-shot, "5m" interval, or either one signed) must fit the timer domain before anything
+    // is stored or armed (EAT-R379): refused here, naming the bound, instead of overflowing the timer.
+    const duration = parseDuration(trimmed);
+    if (duration !== null && !inDelayDomain(duration.ms)) {
+      throw new Error(
+        duration.oneShot
+          ? `One-shot delay "${trimmed}" is outside the supported timer range: a one-shot delay must be ${DELAY_DOMAIN}.`
+          : `Interval "${trimmed}" is outside the supported timer range: an interval must be ${DELAY_DOMAIN}. Use a 6-field cron expression for a longer period.`,
+      );
+    }
     // "+10m" — relative one-shot
     const rel = SubagentScheduler.parseRelativeTime(trimmed);
     if (rel !== null) return { type: "once", normalized: rel };
@@ -373,7 +439,7 @@ export class SubagentScheduler {
   static parseRelativeTime(s: string): string | null {
     const m = s.match(/^\+(\d+)(s|m|h|d)$/);
     if (!m) return null;
-    const ms = parseInt(m[1], 10) * { s: 1000, m: 60_000, h: 3_600_000, d: 86_400_000 }[m[2] as "s" | "m" | "h" | "d"];
+    const ms = parseInt(m[1], 10) * UNIT_MS[m[2] as DurationUnit];
     return new Date(Date.now() + ms).toISOString();
   }
 
@@ -381,6 +447,6 @@ export class SubagentScheduler {
   static parseInterval(s: string): number | null {
     const m = s.match(/^(\d+)(s|m|h|d)$/);
     if (!m) return null;
-    return parseInt(m[1], 10) * { s: 1000, m: 60_000, h: 3_600_000, d: 86_400_000 }[m[2] as "s" | "m" | "h" | "d"];
+    return parseInt(m[1], 10) * UNIT_MS[m[2] as DurationUnit];
   }
 }

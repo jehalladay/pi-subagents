@@ -7459,9 +7459,10 @@ const STATES_RELATE = "it references the class only in the statement type relate
  */
 export const NON_RENDER: Readonly<Record<string, NonRenderReader>> = {
   "src/index.ts": {
-    value: ["ingest", "markStale", "refresh"],
+    value: ["ingest", "markStale", "query", "refresh", "relate"],
     type: [],
-    reason: "the extension entry: it builds the session projection, admits observations in tool handlers and in its workflow-lifecycle emitter, hands it to the comparison receipt builder in a tool handler (workflow_compare) and hands the dialog seam its deps",
+    reason:
+      "the extension entry: it builds the session projection, admits observations in tool handlers and in its workflow-lifecycle emitter, reads it in a tool handler (workflow_compare), hands the dialog seam its deps, hands the Claude host's node seam its refresh and relate (wb-79k.1: a returned hyperunix.find value's snapshot and grouping edge) and hands the detached observe-wiring the projection in workflow_detached's inspect (wb-79k.3)",
   },
   "src/workbench/beads-observer.ts": { value: [], type: ["relate"], reason: `the Beads adapter: ${STATES_RELATE}` },
   "src/workbench/claude-control-observer.ts": { value: ["query", "relate"], type: [], reason: "the Claude control observer: on an SDK init it reads the session node and states the session's ownership" },
@@ -7473,7 +7474,6 @@ export const NON_RENDER: Readonly<Record<string, NonRenderReader>> = {
       "the MechanicalWorkflows collective-event boundary (wb-4ap.15): ingestCollectiveEvent admits an accepted collective.event.v1 envelope through its sink's ingest - a typed writer, Pick<ObservationProjection, \"ingest\">, the one READER WALK names - and returns the hypothesis statements its caller applies with relate, whose type and ingest's result type it spells; no src module imports it",
     writers: ["ingest"],
   },
-  "src/workbench/compare-run.ts": { value: ["query"], type: [], reason: "the comparison receipt builder (wb-rz62): on a workflow_compare call it reads one invocation's page and that page's latency decomposition for one receipt, never on a redraw" },
   "src/workbench/control-tool.ts": { value: ["ingest", "query"], type: [], reason: "the control tool's receipt recorder: on a control call it reads the target node and records the receipt phase as an event of it" },
   "src/workbench/control.ts": { value: ["query", "relations"], type: [], reason: "decideControl: the decision a control request runs, reading the target node and its relations" },
   "src/workbench/detached-control.ts": {
@@ -7488,6 +7488,11 @@ export const NON_RENDER: Readonly<Record<string, NonRenderReader>> = {
     type: ["refresh", "relate"],
     reason: "the detached-run observer: applyDetachedReading admits a detached run's reading, whose statement and verdict types it spells from relate and refresh",
   },
+  "src/workbench/detached-wiring.ts": {
+    value: ["query"],
+    type: [],
+    reason: "the detached observe-wiring (wb-79k.3): an inspect reading the host took reaches the projection through the landed applyDetachedReading, and the wiring reads the invocation's held node (query) for its equal-instant guard, inside the tool call that took the reading, never on a redraw",
+  },
   "src/workbench/evidence-wiring.ts": {
     value: ["query"],
     type: [],
@@ -7498,6 +7503,11 @@ export const NON_RENDER: Readonly<Record<string, NonRenderReader>> = {
   "src/workbench/furnace-observer.ts": { value: [], type: ["relate"], reason: `the Furnace adapter: ${STATES_RELATE}` },
   "src/workbench/hyperunix-observer.ts": { value: [], type: ["relate"], reason: `the HyperUnix adapter: ${STATES_RELATE}` },
   "src/workbench/reactivefiber-observer.ts": { value: [], type: ["relate"], reason: `the ReactiveFiber adapter: ${STATES_RELATE}` },
+  "src/workbench/reactivefiber-wiring.ts": {
+    value: ["refresh", "relate"],
+    type: [],
+    reason: "the ReactiveFiber observe-wiring (wb-79k.2): the host seam's node-value hook admits a preview reading a workflow node() call answered with - refresh for its snapshot, relate for its display-grouping edge - inside that call's answer, never on a redraw",
+  },
 };
 
 export interface JudgedRow {
