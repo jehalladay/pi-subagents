@@ -70,6 +70,7 @@ import { type CapabilityDescriptor, CapabilityError, type CapabilityErrorCategor
 import { executeClaudeControl } from "./workbench/claude-control.js";
 import { createClaudeControlObserver, createClaudeControlRetention } from "./workbench/claude-control-observer.js";
 import type { ClaudeCallIdentity } from "./workbench/claude-host.js";
+import { nativeCompareRun } from "./workbench/compare-run.js";
 import { buildWorkflowCompareReply, COMPARE_REPLY_MAX_DIMENSIONS } from "./workbench/compare-tool.js";
 import { type ControlExecutionSummary, type ControlExecutor, createWorkflowControlTool } from "./workbench/control-tool.js";
 import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflowSource } from "./workbench/designer.js";
@@ -2914,12 +2915,9 @@ Terse command-style prompts produce shallow, generic work.
         for (const id of [params.referenceTask, params.candidateTask]) {
           const task = workflowTasks.get(id);
           if (!task?.identityReceipt || task.observationScope?.principal !== scope.principal || task.observationScope.workspace !== scope.workspace) return textResult("Comparison receipt unavailable in this operator/workspace scope.");
-          const observed = projection.query({ scope, invocationId: id, limit: 40 });
           // The host-measured Git basis label travels with the receipt: identical unmeasured subject-basis digests must read as a confound, not a match.
-          runs.push({ snapshot: task.identityReceipt, inputDigest: task.inputDigest, workspaceSourceState: task.workspaceSourceState,
-            nativeRefs: observed.nodes.map(node => node.nativeRef).filter(ref => ref.provider !== "pi-workflow"),
-            metrics: [],
-          });
+          // Metrics are the task's own native latency rows from this projection (wb-rz62), never a list written here.
+          runs.push(nativeCompareRun(projection, { snapshot: task.identityReceipt, scope, invocationId: id, inputDigest: task.inputDigest, workspaceSourceState: task.workspaceSourceState }));
         }
         return textResult(buildWorkflowCompareReply({
           comparison: compareWorkflowRuns([runs[0]], [runs[1]]),

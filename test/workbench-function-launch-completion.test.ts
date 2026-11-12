@@ -34,10 +34,11 @@
  *      word; censusFindings (writtenTexts, then scanText) reports each token CONTROL_SOURCE writes in a string literal, a
  *      template, an object member, a type member and a class field, and nothing from its comment or its variable names.
  *   C5 the judged set and the records: REFUSAL_ROWS, BUILDER_ROWS, BUILDER_MODULES, TOKENS and CRITERION_2 equal their
- *      frozen literals and the receipt's lines; every test of this file is ROSTER's, registered once and in order, in run
- *      mode and not inverted (read by the judged-set case before any other case runs, and again by the records case);
- *      each case before the records case reached its end with its REACHED_SHAPE count, and each row's measured witness
- *      (MEASURED) equals the one expectedWitnesses writes from the rows.
+ *      frozen literals and the lines of the receipt entry ENTRY_HEADING opens (the receipt holds that heading once);
+ *      every test of this file is ROSTER's, registered once and in order, in run mode and not inverted (read by the
+ *      judged-set case before any other case runs, and again by the records case); each case before the records case
+ *      reached its end with its REACHED_SHAPE count, and each row's measured witness (MEASURED) equals the one
+ *      expectedWitnesses writes from the rows.
  * NOT CLAIMED by this file: a successful function launch reply through the registered tool (none exists at this cut's
  *   base: after admission execute-tool.ts refuses every definition kind but script); script and furnace-formula
  *   definitions; requests, grant sets, host modes and launch outcomes other than the rows'; unknown-permission-data
@@ -46,6 +47,14 @@
  *   BUILDER_MODULES, except on the replies of C1 and C2; any success glyph or word outside TOKENS; EAT-R441 criteria 1, 3
  *   and 4 as acceptance rows of their own; EAT-R412, R419, R426, R461 and R465. The packet remainder stays owed.
  * NAMED RESIDUALS: none.
+ *
+ * wb-djk5 cut #4 (DX P05, EAT-R337 criterion 1, claim C118) moved row F3 with the order that criterion sets:
+ * src/workbench/execute-tool.ts judges the definition kind before the detach conjunction, so the reviewed function in
+ * hostMode detached under [workbench:execute] alone refuses as unsupported-definition-kind, not missing-detach-grant (the
+ * criterion's own clause: the pinned order row moves with the chosen cure). Receipts are append-only (R539), so the
+ * receipt's 2026-11-11 entry keeps its F3 line as written; the rows this file judges are the row lines of the receipt
+ * entry ENTRY_HEADING opens (the 2026-11-12 entry wb-djk5 appended), so the 2026-11-11 entry's rows do not join the
+ * comparison.
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -59,6 +68,8 @@ import { ctx, type Hermetic, hermeticDir, makePi } from "./helpers/boot-extensio
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const RECEIPT = "docs/workbench/receipts/wb-0ls3.md";
+/** The receipt entry C5a reads (appended by wb-djk5 cut #4 with the EAT-R337 criterion 1 order); C5a reads the lines of this entry only. */
+const ENTRY_HEADING = "## 2026-11-12 receipt: EAT-R441 criterion 2 rows under the EAT-R337 criterion 1 order ";
 
 /** EAT-R441 criterion 2, verbatim from the requirement file; the receipt's "- CRITERION 2 " line holds the same text. */
 const CRITERION_2 =
@@ -123,7 +134,7 @@ interface RefusalRow {
 const REFUSAL_ROWS: readonly RefusalRow[] = [
   { id: "F1", label: "the reviewed function mechanical.development.develop.v1 (hostMode embedded) under [workbench:execute]", grants: [EXECUTE], params: request(), code: "unsupported-definition-kind" },
   { id: "F2", label: "the reviewed function (hostMode detached) under [workbench:execute, workbench:detach]", grants: [EXECUTE, DETACH], params: request({ hostMode: "detached" }), code: "unsupported-definition-kind" },
-  { id: "F3", label: "the reviewed function (hostMode detached) under [workbench:execute]", grants: [EXECUTE], params: request({ hostMode: "detached" }), code: "missing-detach-grant" },
+  { id: "F3", label: "the reviewed function (hostMode detached) under [workbench:execute]", grants: [EXECUTE], params: request({ hostMode: "detached" }), code: "unsupported-definition-kind" },
   { id: "F4", label: "the reviewed function (hostMode embedded) under no grant", grants: [], params: request(), code: "missing-execute-grant" },
   {
     id: "F5",
@@ -166,7 +177,7 @@ const BUILDER_ROWS: readonly BuilderRow[] = [
 const REFUSAL_SHAPE = [
   "F1:unsupported-definition-kind",
   "F2:unsupported-definition-kind",
-  "F3:missing-detach-grant",
+  "F3:unsupported-definition-kind",
   "F4:missing-execute-grant",
   "F5:missing-execute-grant",
   "F6:unsupported-definition-kind",
@@ -227,7 +238,7 @@ function recordOf(value: unknown, what: string): Readonly<Record<string, unknown
 const refusalTitle = (row: RefusalRow): string => `C1 ${row.id}: the registered workflow_execute answers ${row.label} as refused ${row.code}, completion not-asserted, no listed token`;
 const builderTitle = (row: BuilderRow): string => `C2 ${row.id}: buildWorkflowExecuteReply over ${row.label} returns status ${row.status}, completion not-asserted, no listed token`;
 const JUDGED_ID = "C5a";
-const JUDGED_TITLE = "C5 the judged set: REFUSAL_ROWS, BUILDER_ROWS, BUILDER_MODULES, TOKENS and CRITERION_2 equal their frozen literals and the receipt's lines";
+const JUDGED_TITLE = "C5 the judged set: REFUSAL_ROWS, BUILDER_ROWS, BUILDER_MODULES, TOKENS and CRITERION_2 equal their frozen literals and the lines of the receipt's 2026-11-12 entry";
 const CENSUS_ID = "C3";
 const CENSUS_TITLE = "C3 BUILDER_MODULES: no string literal, template text or member name execute-tool.ts, execute.ts or tool-replies.ts writes holds a listed token, and each yields its LIVENESS texts";
 const SCAN_CONTROL_ID = "C4a";
@@ -239,10 +250,10 @@ const RECORDS_TITLE = "C5 the records: every test of this file is ROSTER's, regi
 
 /** Every test of this file, in registration order. */
 const ROSTER = [
-  "C5 the judged set: REFUSAL_ROWS, BUILDER_ROWS, BUILDER_MODULES, TOKENS and CRITERION_2 equal their frozen literals and the receipt's lines",
+  "C5 the judged set: REFUSAL_ROWS, BUILDER_ROWS, BUILDER_MODULES, TOKENS and CRITERION_2 equal their frozen literals and the lines of the receipt's 2026-11-12 entry",
   "C1 F1: the registered workflow_execute answers the reviewed function mechanical.development.develop.v1 (hostMode embedded) under [workbench:execute] as refused unsupported-definition-kind, completion not-asserted, no listed token",
   "C1 F2: the registered workflow_execute answers the reviewed function (hostMode detached) under [workbench:execute, workbench:detach] as refused unsupported-definition-kind, completion not-asserted, no listed token",
-  "C1 F3: the registered workflow_execute answers the reviewed function (hostMode detached) under [workbench:execute] as refused missing-detach-grant, completion not-asserted, no listed token",
+  "C1 F3: the registered workflow_execute answers the reviewed function (hostMode detached) under [workbench:execute] as refused unsupported-definition-kind, completion not-asserted, no listed token",
   "C1 F4: the registered workflow_execute answers the reviewed function (hostMode embedded) under no grant as refused missing-execute-grant, completion not-asserted, no listed token",
   "C1 F5: the registered workflow_execute answers the reviewed function (hostMode embedded) with a JSON policy naming workbench:execute, under [workbench:design] as refused missing-execute-grant, completion not-asserted, no listed token",
   "C1 F6: the registered workflow_execute answers an arbitrary function id fixture.arbitrary.fn (hostMode embedded) under [workbench:execute] as refused unsupported-definition-kind, completion not-asserted, no listed token",
@@ -261,7 +272,7 @@ const ROSTER = [
 ] as const;
 /** THE RECORD each case before the records case leaves, as `${id}:${assertions}` (vitest's tally of the case's assertions), in run order. */
 const REACHED_SHAPE = [
-  "C5a:10",
+  "C5a:11",
   "F1:10",
   "F2:10",
   "F3:10",
@@ -334,13 +345,19 @@ describe("wb-0ls3 EAT-R441 criterion 2: completion on the function route of the 
     expect(collected.filter(entry => entry.mode !== "run" || entry.fails).map(modeLine), "every test is set to run and none is inverted").toEqual([]);
     expect(REFUSAL_ROWS.map(row => `${row.id}:${row.code}`), "REFUSAL_ROWS against its frozen shape").toEqual([...REFUSAL_SHAPE]);
     expect(BUILDER_ROWS.map(row => `${row.id}:${row.status}`), "BUILDER_ROWS against its frozen shape").toEqual([...BUILDER_SHAPE]);
-    const lines = readFileSync(join(ROOT, RECEIPT), "utf8").split("\n");
+    const all = readFileSync(join(ROOT, RECEIPT), "utf8").split("\n");
+    expect(all.filter(line => line.startsWith(ENTRY_HEADING)), "the receipt holds the judged entry's heading once").toHaveLength(1);
+    // The judged entry only: from its heading to the next entry heading, so the 2026-11-11 entry above it (append-only,
+    // R539) and any later appended entry never join the comparison.
+    const start = all.findIndex(line => line.startsWith(ENTRY_HEADING));
+    const next = all.findIndex((line, index) => index > start && line.startsWith("## "));
+    const lines = all.slice(start, next < 0 ? undefined : next);
     const held = (prefix: string): string[] => lines.filter(line => line.startsWith(prefix)).map(line => line.slice(prefix.length));
-    expect(held("- REFUSAL_ROW "), "REFUSAL_ROWS against the receipt, row by row").toEqual(REFUSAL_ROWS.map(refusalRowText));
-    expect(held("- BUILDER_ROW "), "BUILDER_ROWS against the receipt, row by row").toEqual(BUILDER_ROWS.map(builderRowText));
-    expect(held("- BUILDER_MODULES "), "BUILDER_MODULES against the receipt").toEqual([BUILDER_MODULES.join(", ")]);
-    expect(held("- TOKENS "), "TOKENS against the receipt").toEqual([TOKENS.join(", ")]);
-    expect(held("- CRITERION 2 "), "CRITERION_2 against the receipt").toEqual([CRITERION_2]);
+    expect(held("- REFUSAL_ROW "), "REFUSAL_ROWS against the receipt entry, row by row").toEqual(REFUSAL_ROWS.map(refusalRowText));
+    expect(held("- BUILDER_ROW "), "BUILDER_ROWS against the receipt entry, row by row").toEqual(BUILDER_ROWS.map(builderRowText));
+    expect(held("- BUILDER_MODULES "), "BUILDER_MODULES against the receipt entry").toEqual([BUILDER_MODULES.join(", ")]);
+    expect(held("- TOKENS "), "TOKENS against the receipt entry").toEqual([TOKENS.join(", ")]);
+    expect(held("- CRITERION 2 "), "CRITERION_2 against the receipt entry").toEqual([CRITERION_2]);
     REACHED.push(endOf(JUDGED_ID));
   });
 
