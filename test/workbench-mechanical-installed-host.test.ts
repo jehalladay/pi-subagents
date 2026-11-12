@@ -22,11 +22,14 @@
  *   ignored". AC4 "falling back to the legacy export when COMPOSED-EXPORT is absent turns criterion 1 red; the correct
  *   behaviour is a typed refusal `runtime-unavailable`."
  *  EAT-R425 AC1 "Given an installed consumer with no SDKs, when a function request is admitted for a native-labelled run, then
- *   the admission record carries `sdk.claude: null`, `sdk.forge: null`, the refusal is `runtime-unavailable` naming the missing
- *   specifier". AC2 "Given the SDKs are installed in the consumer root, then the admission record carries their resolved
- *   version strings and resolution paths under the consumer root, and a test asserts the paths are not under either
- *   repository checkout." AC3 "Given `process.version` is v22.x under a Pi host declaring >=24, then admission refuses
- *   `runtime-unavailable` with the measured version in the reason; given v24.x it proceeds (positive control)."
+ *   the admission record carries `sdk.claude: null`, `sdk.forge: null`, the refusal is `runtime-unavailable`" (R425-1 pins the
+ *   refusal's field, sdk.claude or sdk.forge; the refusal carries no specifier text, so the criterion's "naming the missing
+ *   specifier" is NOT CLAIMED by this file). AC2 "Given the SDKs are installed in the consumer root, then the admission record
+ *   carries their resolved version strings and resolution paths under the consumer root, and a test asserts the paths are not
+ *   under either repository checkout." AC3 "Given `process.version` is v22.x under a Pi host declaring >=24, then admission
+ *   refuses `runtime-unavailable`" and "given v24.x it proceeds (positive control)" (R425-3 pins the measured version in the
+ *   refusal's recorded identity; the reason is the closed token runtime-unavailable, so the criterion's "with the measured
+ *   version in the reason" is NOT CLAIMED by this file).
  *
  * PINNED READER SET (each case below by its id; the assertion target is the reading "<field> <reason> imports=<n>" or
  * "admitted imports=<n>", where imports is DETECT-ZERO (a), the call count of a recording importer that imports nothing and
@@ -58,7 +61,7 @@
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { lstatSync, mkdirSync, readdirSync, readFileSync, realpathSync, renameSync, rmSync, symlinkSync, unlinkSync, writeFileSync } from "node:fs";
+import { cpSync, lstatSync, mkdirSync, readdirSync, readFileSync, realpathSync, renameSync, rmSync, symlinkSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { afterAll, afterEach, describe, expect, it } from "vitest";
@@ -158,6 +161,8 @@ interface ConsumerPlant {
   readonly options: MechanicalInstalledHostOptions;
 }
 interface PlantShape {
+  /** The directory to plant the consumer in (an existing empty directory); a fresh scratch directory by default. */
+  readonly root?: string;
   readonly rigPackage?: string;
   readonly sdks?: readonly (keyof typeof MECHANICAL_HOST_SDKS)[];
   readonly sdkUse?: "native" | "fixture";
@@ -165,7 +170,7 @@ interface PlantShape {
 }
 /** One stand-in consumer root, its entry holding the stand-ins' own digests and the suite's own manifest of the scope. */
 const plantConsumer = (shape: PlantShape = {}): ConsumerPlant => {
-  const root = scratch();
+  const root = shape.root ?? scratch();
   write(join(root, "package.json"), `${JSON.stringify({ name: "fresh-consumer", private: true, type: "module" })}\n`);
   const scope = join(root, "node_modules", "@mechanical");
   writeScope(scope, "planted", shape.rigPackage ?? `${JSON.stringify(RIG_PACKAGE, null, 2)}\n`);
@@ -197,6 +202,8 @@ const plantConsumer = (shape: PlantShape = {}): ConsumerPlant => {
 interface Recording {
   readonly importModule: (url: string) => Promise<unknown>;
   readonly urls: string[];
+  /** The number of arguments of each importer call. */
+  readonly argCounts: number[];
   /** Each name the adapter read off the namespace, the promise machinery's own "then" lookup on the awaited value excluded. */
   readonly reads: string[];
   readonly calls: string[];
@@ -222,6 +229,7 @@ const hostMembers = (calls: string[]): Record<string, unknown> => {
 /** A recording importer: it imports nothing, records each URL, and answers with a namespace proxy that records each name read. */
 const recordingImporter = (shape: (members: Record<string, unknown>) => Record<string, unknown> = members => members): Recording => {
   const urls: string[] = [];
+  const argCounts: number[] = [];
   const reads: string[] = [];
   const calls: string[] = [];
   const target = shape(hostMembers(calls));
@@ -246,14 +254,23 @@ const recordingImporter = (shape: (members: Record<string, unknown>) => Record<s
       return Reflect.ownKeys(object);
     },
   });
-  const importModule = async (url: string): Promise<unknown> => {
-    urls.push(url);
+  const importModule = async (...args: unknown[]): Promise<unknown> => {
+    argCounts.push(args.length);
+    urls.push(String(args[0]));
     return namespace;
   };
-  return { importModule, urls, reads, calls };
+  return { importModule, urls, argCounts, reads, calls };
 };
-const readingOf = (outcome: MechanicalInstalledHostLoad | MechanicalInstalledHostResolution): string =>
-  outcome.ok ? "admitted" : `${outcome.diagnostic.field} ${outcome.diagnostic.reason}`;
+/** The reading of one outcome; every refusal it reads must be frozen, its diagnostic frozen too, and carry the one refusal code. */
+const readingOf = (outcome: MechanicalInstalledHostLoad | MechanicalInstalledHostResolution): string => {
+  if (outcome.ok) return "admitted";
+  expect([Object.isFrozen(outcome), Object.isFrozen(outcome.diagnostic), outcome.diagnostic.code], "a refusal is frozen with its diagnostic and the one code").toEqual([
+    true,
+    true,
+    "mechanical-installed-host-refused",
+  ]);
+  return `${outcome.diagnostic.field} ${outcome.diagnostic.reason}`;
+};
 /** The one-shot admission's reading of one consumer: its outcome and the importer's call count. */
 async function admitReading(options: MechanicalInstalledHostOptions, recording: Recording = recordingImporter()): Promise<string> {
   return `${readingOf(await admitMechanicalInstalledHost(options, recording.importModule))} imports=${recording.urls.length}`;
@@ -271,17 +288,19 @@ async function loadReading(resolved: MechanicalResolvedInstalledHost, recording:
 const hostUrlOf = (root: string): string => pathToFileURL(join(realpathSync(root), "node_modules", "@mechanical", "development-rig", "dist", "host.js")).href;
 
 describe("wb-zwx5 EAT-R421: the installed rig host is read only from the digest-pinned installed artifact", () => {
-  it("R421-1 AC1 an admitted stand-in consumer hands the importer one file: URL, the realpath of the export map's ./host import target under the consumer root, also when the root is named through a link", async () => {
+  it("R421-1 AC1 an admitted stand-in consumer hands the importer one file: URL and no other argument, the realpath of the export map's ./host import target under the consumer root, also when the root is named through a link", async () => {
     const plant = plantConsumer();
     const direct = recordingImporter();
     expect(await admitReading(plant.options, direct)).toBe("admitted imports=1");
     expect(direct.urls).toEqual([hostUrlOf(plant.root)]);
+    expect(direct.argCounts).toEqual([1]);
     expect(direct.urls[0]?.startsWith(`${pathToFileURL(realpathSync(plant.root)).href}/`)).toBe(true);
     const link = join(scratch(), "consumer-link");
     symlinkSync(plant.root, link);
     const linked = recordingImporter();
     expect(await admitReading({ ...plant.options, consumerRoot: link }, linked)).toBe("admitted imports=1");
     expect(linked.urls).toEqual(direct.urls);
+    expect(linked.argCounts).toEqual([1]);
   });
 
   it("R421-2 AC2 a rig tarball or a descriptor flipped by one byte, its entry digest unchanged, refuses before any import, and the untouched control imports once", async () => {
@@ -321,7 +340,7 @@ describe("wb-zwx5 EAT-R421: the installed rig host is read only from the digest-
     expect(await admitReading(linkedModules.options)).toBe("installed outside-root imports=0");
   });
 
-  it("R421-4 a tarball outside the consumer root, a directory in its place, a missing tarball, a missing descriptor and a FIFO in the descriptor's place each refuse before any import", async () => {
+  it("R421-4 a tarball outside the consumer root, a directory in its place, a missing tarball, a missing descriptor, a descriptor named through a link and a FIFO in the descriptor's place each refuse before any import", async () => {
     const outside = plantConsumer();
     const elsewhere = join(scratch(), "rig.tgz");
     writeFileSync(elsewhere, readFileSync(outside.tarballPath));
@@ -336,16 +355,22 @@ describe("wb-zwx5 EAT-R421: the installed rig host is read only from the digest-
     const noDescriptor = plantConsumer();
     rmSync(noDescriptor.descriptorPath);
     expect(await admitReading(noDescriptor.options)).toBe("descriptor unreadable imports=0");
+    const linkedDescriptor = plantConsumer();
+    const descriptorTarget = join(linkedDescriptor.root, "reviewed", "development.v1.target.json");
+    renameSync(linkedDescriptor.descriptorPath, descriptorTarget);
+    symlinkSync(descriptorTarget, linkedDescriptor.descriptorPath);
+    expect(await admitReading(linkedDescriptor.options)).toBe("descriptor unreadable imports=0");
     const fifo = plantConsumer();
     rmSync(fifo.descriptorPath);
     execFileSync("mkfifo", [fifo.descriptorPath]);
     expect(await admitReading(fifo.options)).toBe("descriptor not-a-file imports=0");
   });
 
-  it("R421-5 an export map without ./host, with a target outside the package, naming no measured file, under another package name, or not JSON refuses export-map-invalid before any import; a string target and a default-only target are admitted", async () => {
+  it("R421-5 an export map that is null or lacks ./host, with a target outside the package, naming no measured file, under another package name, or not JSON refuses export-map-invalid; string and default-only targets are admitted, and import wins over a differing default", async () => {
     const mapped = (exportsMember: unknown, name = "@mechanical/development-rig"): string => `${JSON.stringify({ ...RIG_PACKAGE, name, exports: exportsMember })}\n`;
     const refusedForms: readonly string[] = [
       mapped({ "./package.json": "./package.json" }),
+      mapped(null),
       mapped({ "./host": "../escape.js" }),
       mapped({ "./host": "dist/host.js" }),
       mapped({ "./host": "./dist/absent.js" }),
@@ -359,6 +384,17 @@ describe("wb-zwx5 EAT-R421: the installed rig host is read only from the digest-
     expect(readings).toEqual(refusedForms.map(() => "exports export-map-invalid imports=0"));
     expect(await admitReading(plantConsumer({ rigPackage: mapped({ "./host": "./dist/host.js" }) }).options)).toBe("admitted imports=1");
     expect(await admitReading(plantConsumer({ rigPackage: mapped({ "./host": { default: "./dist/host.js" } }) }).options)).toBe("admitted imports=1");
+    const importFirst = plantConsumer({
+      rigPackage: mapped({ "./host": { import: "./dist/host.js", default: "./dist/other.js" } }),
+    });
+    write(join(importFirst.rig, "dist", "other.js"), "export const decoy = true;\n");
+    const importFirstOptions: MechanicalInstalledHostOptions = {
+      ...importFirst.options,
+      entry: { ...importFirst.options.entry, content: contentOf(importFirst.root) },
+    };
+    const importFirstRecording = recordingImporter();
+    expect(await admitReading(importFirstOptions, importFirstRecording)).toBe("admitted imports=1");
+    expect(importFirstRecording.urls).toEqual([hostUrlOf(importFirst.root)]);
   });
 });
 
@@ -453,20 +489,31 @@ describe("wb-zwx5 EAT-R423: the namespace is read by the allowlisted names only,
     expect(strayRecording.calls).toEqual([COMPOSED]);
   });
 
-  it("R423-2 AC2 a host whose HOST_API_VERSION is another version, absent or a number refuses version-mismatch after reading that one name", async () => {
+  it("R423-2 AC2 a host whose HOST_API_VERSION is another version, absent, a number, an accessor or only inherited refuses version-mismatch after reading that one name, the accessor never run", async () => {
+    let getterRuns = 0;
     const forms: readonly ((members: Record<string, unknown>) => Record<string, unknown>)[] = [
       members => ({ ...members, HOST_API_VERSION: `${MECHANICAL_HOST_BINDING_CONTRACT.slice(0, -1)}2` }),
       ({ HOST_API_VERSION: _absent, ...members }) => members,
       members => ({ ...members, HOST_API_VERSION: 1 }),
+      members =>
+        Object.defineProperty({ ...members }, "HOST_API_VERSION", {
+          enumerable: true,
+          get() {
+            getterRuns += 1;
+            return MECHANICAL_HOST_BINDING_CONTRACT;
+          },
+        }),
+      ({ HOST_API_VERSION: inherited, ...members }) => Object.assign(Object.create({ HOST_API_VERSION: inherited }) as Record<string, unknown>, members),
     ];
     for (const form of forms) {
       const recording = recordingImporter(form);
       expect(await admitReading(plantConsumer().options, recording)).toBe("loaded version-mismatch imports=1");
       expect(recording.reads).toEqual(["HOST_API_VERSION"]);
     }
+    expect(getterRuns).toBe(0);
   });
 
-  it("R423-3 AC4 a host without the composed export but with the legacy one, with a string in its place, or with an accessor there refuses runtime-unavailable, the legacy export never read and the accessor never run", async () => {
+  it("R423-3 AC4 a host without the composed export but with the legacy one, with a string in its place, with an accessor there, or with it only inherited refuses runtime-unavailable, the legacy export never read and the accessor never run", async () => {
     let getterRuns = 0;
     const forms: readonly ((members: Record<string, unknown>) => Record<string, unknown>)[] = [
       ({ [COMPOSED]: _absent, ...members }) => members,
@@ -479,6 +526,7 @@ describe("wb-zwx5 EAT-R423: the namespace is read by the allowlisted names only,
             return () => "accessor";
           },
         }),
+      ({ [COMPOSED]: inherited, ...members }) => Object.assign(Object.create({ [COMPOSED]: inherited }) as Record<string, unknown>, members),
     ];
     for (const form of forms) {
       const recording = recordingImporter(form);
@@ -497,7 +545,7 @@ describe("wb-zwx5 EAT-R423: the namespace is read by the allowlisted names only,
 });
 
 describe("wb-zwx5 EAT-R425: the runtime identity is recorded at admission and an incompatible runtime refuses", () => {
-  it("R425-1 AC1 a native-labelled run in a consumer with no SDKs refuses runtime-unavailable at sdk.claude, recording both SDKs null, and with only the Claude SDK at sdk.forge", async () => {
+  it("R425-1 AC1 a native-labelled run refuses runtime-unavailable at sdk.claude, recording it null, for a Claude SDK absent, linked outside the consumer root, naming another package, with a non-plain version, unparseable or JSON null, and at sdk.forge with only the Claude SDK", async () => {
     const none = await resolveMechanicalInstalledHost(plantConsumer({ sdkUse: "native" }).options);
     expect(readingOf(none)).toBe("sdk.claude runtime-unavailable");
     expect(none.ok ? undefined : none.identity?.sdk).toEqual({ claude: null, forge: null });
@@ -505,6 +553,36 @@ describe("wb-zwx5 EAT-R425: the runtime identity is recorded at admission and an
     expect(readingOf(claudeOnly)).toBe("sdk.forge runtime-unavailable");
     expect(claudeOnly.ok ? undefined : claudeOnly.identity?.sdk.forge).toBeNull();
     expect(await admitReading(plantConsumer({ sdkUse: "native" }).options)).toBe("sdk.claude runtime-unavailable imports=0");
+
+    const claudeSpecifier = MECHANICAL_HOST_SDKS["sdk.claude"];
+    const outside = scratch();
+    write(join(outside, "package.json"), `${JSON.stringify({ name: claudeSpecifier, version: "0.3.300" })}\n`);
+    const claudeDirectory = (plant: ConsumerPlant): string => join(plant.root, "node_modules", ...claudeSpecifier.split("/"));
+    const manifestText =
+      (text: string) =>
+      (plant: ConsumerPlant): void =>
+        write(join(claudeDirectory(plant), "package.json"), text);
+    const claudeForms: readonly ((plant: ConsumerPlant) => void)[] = [
+      plant => {
+        rmSync(claudeDirectory(plant), { recursive: true });
+        symlinkSync(outside, claudeDirectory(plant));
+      },
+      manifestText(`${JSON.stringify({ name: "@anthropic-ai/other", version: "0.3.300" })}\n`),
+      manifestText(`${JSON.stringify({ name: claudeSpecifier, version: "latest" })}\n`),
+      manifestText("{ not json\n"),
+      manifestText("null\n"),
+    ];
+    for (const form of claudeForms) {
+      const invalid = plantConsumer({ sdkUse: "native", sdks: ["sdk.claude", "sdk.forge"] });
+      form(invalid);
+      const outcome = await resolveMechanicalInstalledHost(invalid.options);
+      expect([readingOf(outcome), outcome.ok ? "admitted" : outcome.identity?.sdk.claude, outcome.ok ? "admitted" : outcome.identity?.sdk.forge?.specifier]).toEqual([
+        "sdk.claude runtime-unavailable",
+        null,
+        MECHANICAL_HOST_SDKS["sdk.forge"],
+      ]);
+      expect(await admitReading(invalid.options)).toBe("sdk.claude runtime-unavailable imports=0");
+    }
   });
 
   it("R425-2 AC2 a native-labelled run with both SDKs in the consumer root records each version and its realpath under the consumer root, not under the Pi checkout", async () => {
@@ -522,8 +600,8 @@ describe("wb-zwx5 EAT-R425: the runtime identity is recorded at admission and an
     expect(await admitReading(plant.options)).toBe("admitted imports=1");
   });
 
-  it("R425-3 AC3 node v22.23.2 and v25.0.0 refuse runtime-unavailable at node carrying the measured version; v24.20.0 is admitted; an absent nodeVersion records process.version", async () => {
-    for (const nodeVersion of ["v22.23.2", "v25.0.0"]) {
+  it("R425-3 AC3 node v22.23.2, v25.0.0 and a bare v24 refuse runtime-unavailable at node carrying the measured version; v24.20.0 is admitted; an absent nodeVersion records process.version", async () => {
+    for (const nodeVersion of ["v22.23.2", "v25.0.0", "v24"]) {
       const outcome = await resolveMechanicalInstalledHost(plantConsumer({ nodeVersion }).options);
       expect(readingOf(outcome)).toBe("node runtime-unavailable");
       expect(outcome.ok ? undefined : outcome.identity?.node).toBe(nodeVersion);
@@ -541,7 +619,7 @@ describe("wb-zwx5 EAT-R425: the runtime identity is recorded at admission and an
     expect(resolved.identity.sdk).toEqual({ claude: null, forge: null });
   });
 
-  it("R425-5 the identity records the node version judged, the tarball digest, and each scope package's name, version and manifest-line digest", async () => {
+  it("R425-5 the identity records the node version judged, the tarball digest and each scope package's name, version and manifest-line digest; a foreign name, the versions next and 1.2, or an unparseable package.json record null, and 0.2.0-rc.1 is kept", async () => {
     const plant = plantConsumer();
     const resolved = await resolvedOf(plant.options);
     const content = contentOf(plant.root);
@@ -560,11 +638,30 @@ describe("wb-zwx5 EAT-R425: the runtime identity is recorded at admission and an
       ],
       sdk: { claude: null, forge: null },
     });
+
+    const library = "@mechanical/workflows-development";
+    const libraryForms: readonly (readonly [string, { readonly name: string | null; readonly version: string | null }])[] = [
+      [`${JSON.stringify({ name: "@other/workflows-development", version: "0.1.0" })}\n`, { name: null, version: "0.1.0" }],
+      [`${JSON.stringify({ name: library, version: "next" })}\n`, { name: library, version: null }],
+      [`${JSON.stringify({ name: library, version: "1.2" })}\n`, { name: library, version: null }],
+      [`${JSON.stringify({ name: library, version: "0.2.0-rc.1" })}\n`, { name: library, version: "0.2.0-rc.1" }],
+      ["{ not json\n", { name: null, version: null }],
+    ];
+    const identities: unknown[] = [];
+    for (const [text] of libraryForms) {
+      const invalid = plantConsumer();
+      write(join(invalid.library, "package.json"), text);
+      const options: MechanicalInstalledHostOptions = { ...invalid.options, entry: { ...invalid.options.entry, content: contentOf(invalid.root) } };
+      const outcome = await resolveMechanicalInstalledHost(options);
+      const entry = outcome.ok ? outcome.resolved.identity.packages[1] : undefined;
+      identities.push(entry === undefined ? readingOf(outcome) : { name: entry.name, version: entry.version });
+    }
+    expect(identities).toEqual(libraryForms.map(([, expected]) => expected));
   });
 });
 
 describe("wb-zwx5: the entry, the order, the load-time checks and the vocabulary", () => {
-  it("R-ENTRY-1 malformed entries refuse entry-malformed and malformed runtime facts runtime-malformed, each before any import", async () => {
+  it("R-ENTRY-1 malformed entries refuse with frozen entry-malformed diagnostics and malformed runtime facts with frozen runtime-malformed diagnostics, each before import", async () => {
     const plant = plantConsumer();
     const { entry } = plant.options;
     const entries: readonly unknown[] = [
@@ -573,6 +670,7 @@ describe("wb-zwx5: the entry, the order, the load-time checks and the vocabulary
       { ...entry, descriptorDigest: entry.descriptorDigest.toUpperCase() },
       { ...entry, composedExport: "" },
       { ...entry, composedExport: "not-an-identifier" },
+      { ...entry, composedExport: [COMPOSED] },
       { ...entry, content: {} },
       { ...entry, content: [] },
       { ...entry, content: { "../escape.js": entry.tarballDigest } },
@@ -584,13 +682,15 @@ describe("wb-zwx5: the entry, the order, the load-time checks and the vocabulary
     const readings: string[] = [];
     for (const malformed of entries) readings.push(await admitReading({ ...plant.options, entry: malformed as MechanicalInstalledHostOptions["entry"] }));
     expect(readings).toEqual(entries.map(() => "entry entry-malformed imports=0"));
+    const frozenRefusal = await resolveMechanicalInstalledHost({ ...plant.options, entry: undefined as never });
+    expect(frozenRefusal.ok ? "admitted" : [Object.isFrozen(frozenRefusal), Object.isFrozen(frozenRefusal.diagnostic)]).toEqual([true, true]);
     const runtimes: readonly unknown[] = [undefined, {}, { sdkUse: "nativ" }, { sdkUse: "native", nodeVersion: 24 }];
     const runtimeReadings: string[] = [];
     for (const runtime of runtimes) runtimeReadings.push(await admitReading({ ...plant.options, runtime: runtime as MechanicalInstalledHostOptions["runtime"] }));
     expect(runtimeReadings).toEqual(runtimes.map(() => "runtime runtime-malformed imports=0"));
   });
 
-  it("R-ORDER-1 the first failing step answers: entry, runtime, consumer, tarball, descriptor, installed, exports, node, then the SDKs", async () => {
+  it("R-ORDER-1 the first failing step answers: entry, runtime, consumer, tarball, descriptor, installed (a link, then a missing, an unlisted and a changed file), exports, node, then the SDKs", async () => {
     const plant = (shape: PlantShape = {}): ConsumerPlant => plantConsumer(shape);
     const readings: string[] = [];
     const both = plant();
@@ -608,6 +708,20 @@ describe("wb-zwx5: the entry, the order, the load-time checks and the vocabulary
     const installed = plant({ rigPackage: "{ not json\n", nodeVersion: "v22.23.2" });
     write(join(installed.rig, "dist", "extra.js"), "export const extra = 1;\n");
     readings.push(await admitReading(installed.options));
+    const outsideFile = join(scratch(), "outside.js");
+    writeFileSync(outsideFile, "export const outside = 1;\n");
+    const linkFirst = plant();
+    symlinkSync(outsideFile, join(linkFirst.rig, "dist", "escape.js"));
+    unlinkSync(join(linkFirst.library, "dist", "index.js"));
+    const missingFirst = plant();
+    unlinkSync(join(missingFirst.library, "dist", "index.js"));
+    write(join(missingFirst.rig, "dist", "extra.js"), "export const extra = 1;\n");
+    const unlistedFirst = plant();
+    write(join(unlistedFirst.rig, "dist", "extra.js"), "export const extra = 1;\n");
+    flipOneByte(join(unlistedFirst.rig, "dist", "host.js"));
+    const withinInstalled: string[] = [];
+    for (const form of [linkFirst, missingFirst, unlistedFirst]) withinInstalled.push(await admitReading(form.options));
+    expect(withinInstalled).toEqual(["installed installed-link imports=0", "installed installed-file-missing imports=0", "installed installed-file-unlisted imports=0"]);
     readings.push(await admitReading(plant({ rigPackage: "{ not json\n", nodeVersion: "v22.23.2" }).options));
     readings.push(await admitReading(plant({ nodeVersion: "v22.23.2", sdkUse: "native" }).options));
     readings.push(await admitReading(plant({ sdkUse: "native" }).options));
@@ -624,7 +738,7 @@ describe("wb-zwx5: the entry, the order, the load-time checks and the vocabulary
     ]);
   });
 
-  it("R-LOAD-1 a resolution the module did not mint refuses unresolved, a tarball link re-pointed after validation refuses changed, and a caller's entry changed after validation reaches no load", async () => {
+  it("R-LOAD-1 an unminted resolution refuses unresolved; a tarball, node_modules or consumer-root link re-pointed after validation refuses changed; the caller's export name and content manifest changed after validation reach no load; the minted URL cannot be reassigned", async () => {
     const plant = plantConsumer();
     const resolved = await resolvedOf(plant.options);
     expect(await loadReading({ ...resolved })).toBe("resolution unresolved imports=0");
@@ -638,6 +752,27 @@ describe("wb-zwx5: the entry, the order, the load-time checks and the vocabulary
     unlinkSync(repointed.tarballPath);
     symlinkSync(second, repointed.tarballPath);
     expect(await loadReading(repointedResolved)).toBe("resolution changed imports=0");
+    const relinked = plantConsumer();
+    const firstModules = join(relinked.root, "modules-first");
+    renameSync(join(relinked.root, "node_modules"), firstModules);
+    symlinkSync(firstModules, join(relinked.root, "node_modules"));
+    const relinkedResolved = await resolvedOf(relinked.options);
+    const secondModules = join(relinked.root, "modules-second");
+    cpSync(firstModules, secondModules, { recursive: true });
+    unlinkSync(join(relinked.root, "node_modules"));
+    symlinkSync(secondModules, join(relinked.root, "node_modules"));
+    expect(await loadReading(relinkedResolved)).toBe("resolution changed imports=0");
+    const outer = scratch();
+    const inner = join(outer, "consumer");
+    mkdirSync(inner);
+    const nested = plantConsumer({ root: inner });
+    const rootLink = join(scratch(), "consumer-link");
+    symlinkSync(inner, rootLink);
+    const nestedResolved = await resolvedOf({ ...nested.options, consumerRoot: rootLink });
+    symlinkSync(join(inner, "node_modules"), join(outer, "node_modules"));
+    unlinkSync(rootLink);
+    symlinkSync(outer, rootLink);
+    expect(await loadReading(nestedResolved)).toBe("resolution changed imports=0");
     const mutable = plantConsumer();
     const entry: { tarballDigest: string; descriptorDigest: string; composedExport: string; content: Readonly<Record<string, string>> } = { ...mutable.options.entry };
     const options: MechanicalInstalledHostOptions = { ...mutable.options, entry };
@@ -646,6 +781,28 @@ describe("wb-zwx5: the entry, the order, the load-time checks and the vocabulary
     const recording = recordingImporter();
     expect(await loadReading(mutableResolved, recording)).toBe("admitted imports=1");
     expect(recording.reads).toEqual(["HOST_API_VERSION", COMPOSED]);
+
+    const contentMutable = plantConsumer();
+    const content: Record<string, string> = { ...contentMutable.options.entry.content };
+    const contentOptions: MechanicalInstalledHostOptions = {
+      ...contentMutable.options,
+      entry: { ...contentMutable.options.entry, content },
+    };
+    const contentResolved = await resolvedOf(contentOptions);
+    const hostPath = join(contentMutable.rig, "dist", "host.js");
+    writeFileSync(hostPath, "export const HOST_API_VERSION = 'changed';\n");
+    content["development-rig/dist/host.js"] = digestOf(readFileSync(hostPath));
+    expect(await loadReading(contentResolved)).toBe("installed installed-content-mismatch imports=0");
+
+    const URL_DECOY = "file:///wb-zwx5-decoy/host.js";
+    const urlPlant = plantConsumer();
+    const urlResolved = await resolvedOf(urlPlant.options);
+    expect(() => {
+      (urlResolved as { hostModuleUrl: string }).hostModuleUrl = URL_DECOY;
+    }).toThrow();
+    const urlRecording = recordingImporter();
+    expect(await loadReading(urlResolved, urlRecording)).toBe("admitted imports=1");
+    expect(urlRecording.urls).toEqual([hostUrlOf(urlPlant.root)]);
   });
 
   it("R-VOCAB-1 the closed field and reason lists", () => {

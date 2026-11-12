@@ -17,9 +17,10 @@
  * comes from is NOT CLAIMED.
  *
  * resolveMechanicalInstalledHost (validation) judges in this order and returns the first refusal, never throwing (R-ORDER-1).
- * A refusal is {code: "mechanical-installed-host-refused", field, reason}, frozen, with field and reason from the closed lists
- * below (R-VOCAB-1); a runtime-unavailable refusal also carries the runtime identity it measured (R425-1, R425-3).
- *  1. The entry: each digest in MECHANICAL_DIGEST_PATTERN, the export name an identifier other than the legacy
+ * A refusal is {code: "mechanical-installed-host-refused", field, reason}, frozen with its diagnostic (the suite's reader asserts
+ * both and the code at every planted refusal; R-ENTRY-1 states it), with field and reason from the closed lists below
+ * (R-VOCAB-1); a runtime-unavailable refusal also carries the runtime identity it measured (R425-1, R425-3).
+ *  1. The entry: each digest in MECHANICAL_DIGEST_PATTERN, the export name a string identifier other than the legacy
  *     invokeDevelopmentHost, the manifest an object of one or more members, each named by a relative path of non-empty
  *     segments other than . and .., each a digest (entry-malformed at entry: the forms R-ENTRY-1 and R423-4 plant); then the
  *     runtime facts, an sdkUse label native or fixture and a nodeVersion that is a string when present (runtime-malformed
@@ -28,44 +29,52 @@
  *  3. The tarball: its realpath lies strictly inside the consumer root's (outside-root: R421-4), it is a regular file judged
  *     by stat before it is opened (not-a-file: a directory, R421-4; unreadable: missing, R421-4), and the SHA-256 of its bytes
  *     equals the entry's (artifact-mismatch: one byte flipped with the entry unchanged, R421-2).
- *  4. The descriptor: a regular file judged by stat before it is opened (unreadable: missing, R421-4; not-a-file: a FIFO,
- *     refused while no writer exists, R421-4), and the SHA-256 of its bytes equals the entry's (descriptor-mismatch: one byte
- *     flipped with the entry unchanged, R421-2). Where the descriptor lies is not bounded.
+ *  4. The descriptor: a regular file judged by stat before it is opened (unreadable: missing, and named through a link, which
+ *     the O_NOFOLLOW open refuses, R421-4; not-a-file: a FIFO, refused while no writer exists, R421-4), and the SHA-256 of its
+ *     bytes equals the entry's (descriptor-mismatch: one byte flipped with the entry unchanged, R421-2). Where the descriptor
+ *     lies is not bounded.
  *  5. The installed content (field installed): the scope directory lies strictly inside the consumer root by realpath
  *     (outside-root: node_modules a link to a directory outside, R421-3); the walk under it, by lstat, refuses any symbolic link
  *     (installed-link: the package directory a link to a checkout outside the root, R421-3; a link to a file outside the root
  *     and a link to a file inside it, R422-3) and any entry that is neither a directory nor a regular file (not-a-file: a FIFO,
- *     R422-3); then each manifest path with no file on disk refuses installed-file-missing (R422-2), each file on disk the
- *     manifest does not name refuses installed-file-unlisted (R422-2), and each file whose SHA-256 differs from the manifest's
- *     refuses installed-content-mismatch (the rig's host module or the library's entry file flipped by one byte while the
- *     tarball is untouched, R422-1).
+ *     R422-3); then, in this order (R-ORDER-1), each manifest path with no file on disk refuses installed-file-missing (R422-2),
+ *     each file on disk the manifest does not name refuses installed-file-unlisted (R422-2), and each file whose SHA-256 differs
+ *     from the manifest's refuses installed-content-mismatch (the rig's host module or the library's entry file flipped by one
+ *     byte while the tarball is untouched, R422-1).
  *  6. The export map (field exports): the host package's package.json, a measured file, is JSON naming MECHANICAL_HOST_PACKAGE,
- *     whose exports member maps ./host to a target ("import", else "default", of an object, or a string) that is a ./ relative
- *     path naming a measured file of that package (export-map-invalid: the forms R421-5 plants).
- *  7. The runtime (R425): the identity is measured, then process.version (or the host's nodeVersion) must lie in the declared
- *     joint range MECHANICAL_HOST_NODE_MAJOR (runtime-unavailable at node: v22.23.2 and v25.0.0, R425-3; v24.20.0 admitted),
- *     then, for a run the host labels native, each of the Claude Agent SDK and the Forge SDK must resolve in the consumer root
- *     (runtime-unavailable at sdk.claude, then sdk.forge: R425-1); a run labelled fixture records an absent SDK as null and is
- *     not refused (R425-4).
+ *     whose exports member is an object mapping ./host to a target ("import", else "default", of an object, or a string; an
+ *     import target wins over a differing default, R421-5) that is a ./ relative path naming a measured file of that package
+ *     (export-map-invalid: the forms R421-5 plants, a null exports member among them).
+ *  7. The runtime (R425): the identity is measured, then process.version (or the host's nodeVersion), of the form
+ *     vMAJOR.MINOR.PATCH, must lie in the declared joint range MECHANICAL_HOST_NODE_MAJOR (runtime-unavailable at node:
+ *     v22.23.2, v25.0.0 and a bare v24, R425-3; v24.20.0 admitted), then, for a run the host labels native, each of the Claude
+ *     Agent SDK and the Forge SDK must have the identity below rather than null (runtime-unavailable at sdk.claude, then
+ *     sdk.forge: R425-1, which plants the Claude SDK absent, linked to a directory outside the consumer root, naming another
+ *     package, with the version latest, unparseable and JSON null, and the Forge SDK absent); a run labelled fixture records an
+ *     absent SDK as null and is not refused (R425-4).
  *
  * THE RUNTIME IDENTITY (R425-2, R425-5): node (the version judged), sdkUse (the host's label for the run), tarballDigest,
  * packages (for each package directory under the scope directory in name order: its package.json name when it is the scope's
- * name for that directory, and its version when plain dotted digits with an optional pre-release tag, each else null, and
- * contentDigest, the SHA-256 of its manifest lines
- * "<path inside the package> <digest>" in path order), and sdk.claude and sdk.forge: each the specifier, version and realpath
- * of node_modules/<specifier> inside the consumer root when its package.json is a regular file naming that specifier with a
- * plain version, else null. Nothing here resolves a specifier by Node's algorithm.
+ * name for that directory, and its version when plain (three dot-separated digit runs with an optional hyphenated pre-release
+ * tag), each else null (R425-5: a foreign name, the versions next and 1.2, and an unparseable package.json record null;
+ * 0.2.0-rc.1 is kept), and contentDigest, the SHA-256 of its manifest lines "<path inside the package> <digest>" in path
+ * order), and sdk.claude and sdk.forge: each the specifier, version and realpath of node_modules/<specifier> when that
+ * realpath lies inside the consumer root and its package.json is a regular file naming that specifier with a plain version,
+ * else null (R425-1, R425-2). Nothing here resolves a specifier by Node's algorithm.
  *
  * loadMechanicalInstalledHost (load): a resolution this module did not mint is refused unresolved (R-LOAD-1). Steps 2 to 6 run
- * again on the options as validated, and the consumer root's, the tarball's and the host module's realpaths are compared with
- * the ones validation recorded (changed: R-LOAD-1); so a link or a changed byte planted after validation refuses at load with
- * no import (R422-4). Only then does the importer run, once, with the file: URL of the host module's realpath (R421-1, R421-3:
- * never a bare specifier, and never a decoy package NODE_PATH names outside the root). The namespace is then read by exactly
- * two names, each as an own data member, so an accessor is never run: HOST_API_VERSION, which must equal
- * MECHANICAL_HOST_BINDING_CONTRACT (version-mismatch at loaded: another version, absent, a number, R423-2), and the entry's
- * export name, which must be a function (runtime-unavailable at loaded: absent while the legacy export is present, a string,
- * an accessor, R423-3). The legacy invokeDevelopmentHost is never read, and a stray export member of the options is ignored
- * (R423-1). The export is returned and never called (R423-1).
+ * again on the options as validated, a frozen copy (the caller's export name and content manifest changed after validation
+ * reach no load, R-LOAD-1), and the consumer root's, the tarball's and the host module's realpaths are compared with the ones
+ * validation recorded (changed: each re-pointed through a link after validation, R-LOAD-1); so a link or a changed byte
+ * planted after validation refuses at load with no import (R422-4). Only then does the importer run, once, with the file: URL
+ * of the host module's realpath and no other argument (R421-1, R421-3: never a bare specifier, and never a decoy package
+ * NODE_PATH names outside the root; the minted resolution is frozen, so that URL cannot be reassigned, R-LOAD-1). The
+ * namespace is then read by exactly two names, each as an own data member, so an accessor is never run and an inherited
+ * member never read: HOST_API_VERSION, which must equal MECHANICAL_HOST_BINDING_CONTRACT (version-mismatch at loaded: another
+ * version, absent, a number, an accessor, inherited, R423-2), and the entry's export name, which must be a function
+ * (runtime-unavailable at loaded: absent while the legacy export is present, a string, an accessor, inherited, R423-3). The
+ * legacy invokeDevelopmentHost is never read, and a stray export member of the options is ignored (R423-1). The export is
+ * returned and never called (R423-1).
  *
  * NOT CLAIMED (explicitly partial): the V2 tier, an independently packed MechanicalWorkflows host installed in a fresh external
  * consumer, and the eight runtime exports of the real host (EAT-R421 AC1, EAT-R460: closure gate G-CONSUMER); the V3 tier
@@ -74,8 +83,10 @@
  * processes (DETECT-ZERO (b) to (e): this module dispatches nothing); the binding (EAT-R424, G-RATIFY); a producer-emitted
  * manifest (MechanicalWorkflows mw-03 H03) and the trust of a manifest computed at a first admission; files outside the
  * scope directory, and what the host module itself imports from elsewhere; real SDK identity on a native run
- * (EAT-R425 V4, G-NATIVE); hard links; the windows between a realpath and the open of the same path, and between the load-time
- * measure and the importer reading the file again; and a module cache that answers a second import of the same URL.
+ * (EAT-R425 V4, G-NATIVE); hard links; the windows between a realpath or a stat and the open of the same path (the handle is
+ * checked again there), between the walk and the re-read of a measured package.json (its digest is compared again there), and
+ * between the load-time measure and the importer reading the file again; and a module cache that answers a second import of
+ * the same URL.
  */
 import { createHash } from "node:crypto";
 import { constants, type Stats } from "node:fs";
@@ -180,7 +191,7 @@ export interface MechanicalRuntimeIdentity {
   readonly packages: readonly MechanicalInstalledPackageIdentity[];
   readonly sdk: { readonly claude: MechanicalSdkIdentity | null; readonly forge: MechanicalSdkIdentity | null };
 }
-/** A validated installed host; loadMechanicalInstalledHost loads only one this module minted. */
+/** A validated installed host, frozen; loadMechanicalInstalledHost loads only one this module minted (R-LOAD-1). */
 export interface MechanicalResolvedInstalledHost {
   readonly consumerRoot: string;
   readonly hostModulePath: string;
@@ -194,7 +205,7 @@ type Refusal = {
   readonly identity?: MechanicalRuntimeIdentity;
 };
 export type MechanicalInstalledHostResolution = { readonly ok: true; readonly resolved: MechanicalResolvedInstalledHost } | Refusal;
-/** The host's importer: it receives the file: URL of the measured host module and nothing else. */
+/** The host's importer: it receives the file: URL of the measured host module and nothing else (R421-1: one argument). */
 export type MechanicalHostImporter = (url: string) => Promise<unknown>;
 /** The composed export as loaded; the adapter never calls it. */
 export type MechanicalComposedExport = (...args: never[]) => unknown;
@@ -246,7 +257,7 @@ function runtimeRefusal(runtime: unknown): Refusal | undefined {
   return undefined;
 }
 
-/** A regular file judged by stat before it is opened; the open asks O_NOFOLLOW and checks the handle again. */
+/** A regular file judged by stat before it is opened; the open asks O_NOFOLLOW (a link refuses unreadable, R421-4) and checks the handle again. */
 async function readRegularFile(path: string, field: "tarball" | "descriptor" | "installed"): Promise<{ readonly ok: true; readonly bytes: Buffer } | Refusal> {
   try {
     if (!(await stat(path)).isFile()) return refused(field, "not-a-file");
@@ -327,7 +338,7 @@ export async function measureMechanicalInstalledContent(consumerRoot: string): P
   return Object.freeze({ ok: true as const, content: Object.freeze(Object.fromEntries(walked.files)) });
 }
 
-/** The parsed JSON of a measured file whose bytes, read again, still carry the measured digest; else undefined. */
+/** The parsed JSON of a measured file read again, its bytes compared with the measured digest (a change between the walk and this read is NOT CLAIMED); else undefined, also for bytes that are not JSON (R421-5, R425-5). */
 async function measuredJson(path: string, digest: string | undefined): Promise<unknown> {
   const read = await readRegularFile(path, "installed");
   if (!read.ok || digest === undefined || digestOf(read.bytes) !== digest) return undefined;
@@ -411,7 +422,7 @@ async function packageIdentity(scope: string, directory: string, files: Readonly
   return Object.freeze({ directory, name, version, contentDigest: digestOf(lines) });
 }
 
-/** One SDK as seen from the consumer root: node_modules/<specifier>/package.json, a regular file inside the root naming it with a plain version. */
+/** One SDK as seen from the consumer root: node_modules/<specifier>, its realpath inside the root, whose package.json is a regular file naming it with a plain version (R425-1, R425-2). */
 async function sdkIdentity(root: string, specifier: string): Promise<MechanicalSdkIdentity | null> {
   let directory: string;
   try {
@@ -439,7 +450,7 @@ interface Minted {
 }
 const MINTED = new WeakMap<MechanicalResolvedInstalledHost, Minted>();
 
-/** A frozen copy of the options as validated, so a later change to the caller's objects reaches no load (R-LOAD-1). */
+/** A frozen copy of the options as validated, so a later change to the caller's entry (its export name or content manifest, R-LOAD-1) reaches no load. */
 function snapshot(options: MechanicalInstalledHostOptions): MechanicalInstalledHostOptions {
   const { entry, runtime } = options;
   return Object.freeze({
@@ -493,7 +504,7 @@ export async function resolveMechanicalInstalledHost(raw: MechanicalInstalledHos
   return Object.freeze({ ok: true as const, resolved });
 }
 
-/** One name read off the namespace as an own data member; an accessor is never run, an inherited member never read. */
+/** One name read off the namespace as an own data member; an accessor is never run, an inherited member never read (R423-2, R423-3). */
 function ownData(namespace: unknown, name: string): unknown {
   if ((typeof namespace !== "object" && typeof namespace !== "function") || namespace === null) return undefined;
   const descriptor = Reflect.getOwnPropertyDescriptor(namespace, name);
