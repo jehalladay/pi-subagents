@@ -1517,7 +1517,22 @@
        ]
       },
       "named": [],
-      "served": []
+      "served": [
+       "docs/workbench/receipts/wb-lri.md:18",
+       "docs/workbench/receipts/wb-lri.md:130"
+      ],
+      "quotedRefusals": [
+       {
+        "at": "docs/workbench/receipts/wb-lri.md:18",
+        "quotes": true,
+        "without": "none"
+       },
+       {
+        "at": "docs/workbench/receipts/wb-lri.md:130",
+        "quotes": true,
+        "without": "none"
+       }
+      ]
      }
     },
     {

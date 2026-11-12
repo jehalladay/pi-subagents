@@ -373,7 +373,7 @@
  *    population's own line count) and judged to the end of the longest page (farFloor: a served line planted past it
  *    reads served) and of every page (pageFloorMisses: a served line planted past the end of each population page reads
  *    served there), every Markdown page mapped and its view held to marked's HTML; no line reads served or named
- *    (lineVerdict) and the TRACEABILITY.md:236 floor reads negated; N2 the repo's own skill and agent roots serve no
+ *    (lineVerdict) but the two QUOTED_REFUSAL_LINES below, and the TRACEABILITY.md:236 floor reads negated; N2 the repo's own skill and agent roots serve no
  *    hyper-unix skill: preloadSkills from the repo root reads the placeholder for it while beads, the one tracked
  *    project skill, is read, and no tracked .pi agent and no default agent declares it (the same predicate reads a
  *    planted frontmatter declaring it); N3 no src module launches hx by a literal command (the scan sees src's git and
@@ -2657,6 +2657,15 @@ const HIDDEN_EXAMPLE = '<!-- "settingSources": ["user"] -->';
 
 /** The real Pi doc line row N's floor names: the wb-kqx.5 receipt line in the byte-frozen TRACEABILITY.md, which names the hx installer and says the skill is not found. */
 const DOC_FLOOR = ["docs/workbench/TRACEABILITY.md:236"];
+/**
+ * wb-vnfe (2026-11-12, trunk 253b1b0a): the only lines row N admits as served. Both are lines of the append-only wb-lri receipt
+ * that quote the hx CLI's own refusal reason for its provider-pinned leg, QUOTED_HX_REFUSAL, which the hx-command form reads
+ * as a shown command; each records a measured refusal, not a recipe step. N1 holds each admitted line to that quote: the line
+ * carries it, and with it removed the line reads neither served nor named, so a recipe step, a served word or another hx
+ * command on either line still reds. Any other served or named line reds N1 as before.
+ */
+const QUOTED_HX_REFUSAL = "view-binding-pending: hx find under --view git:04eeeaaf6cfb1db030ac3b1362e589c050d81f2a";
+const QUOTED_REFUSAL_LINES = ["docs/workbench/receipts/wb-lri.md:18", "docs/workbench/receipts/wb-lri.md:130"];
 /** Launch sites src really has, so N3's scan is shown to see launches at all. */
 const LAUNCH_FLOOR = ["src/env.ts:exec:git", "src/index.ts:execFileSync:git", "src/workbench/providers/reactivefiber.ts:spawn:rf"];
 /** N3's control: a descriptor whose description shows an hx command, which the flagged reader must name. */
@@ -2924,6 +2933,11 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     const pageFloors = texts.map(([path, text]) => plantChangesOn(path, text, T10));
     const pageFloorMisses = texts.filter((_, index) => JSON.stringify(pageFloors[index]) !== JSON.stringify(["served@+1"])).map(([path]) => path);
     const pageFloorsAll = pageFloors.length === texts.length && pageFloors.length >= 100;
+    const quotedRefusals = QUOTED_REFUSAL_LINES.map(at => {
+      const path = at.slice(0, at.lastIndexOf(":"));
+      const text = viewOf(path, readFileSync(join(REPO, path), "utf8")).lines[Number(at.slice(at.lastIndexOf(":") + 1)) - 1] ?? "";
+      return { at, quotes: text.includes(QUOTED_HX_REFUSAL), without: lineVerdict(text.split(QUOTED_HX_REFUSAL).join("")) };
+    });
     const walkControl = onScratchCheckout(
       WALK_TREE.map(([path]) => path),
       `${T10}\n`,
@@ -2944,7 +2958,11 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     expect(walkControl.outside, "the independent walk on a scratch checkout").toEqual(WALK_TREE.filter(([, reached]) => reached).map(([path]) => path).sort());
     expect(walkControl.rootDocuments).toEqual(["NOTES.mdown"]);
     expect(judged.named).toEqual([]);
-    expect(judged.served).toEqual([]);
+    expect(judged.served).toEqual(QUOTED_REFUSAL_LINES);
+    expect(
+      quotedRefusals.filter(entry => !entry.quotes || entry.without === "served" || entry.without === "named").map(entry => entry.at),
+      "each admitted line quotes the hx refusal reason and reads neither served nor named without it (wb-vnfe)",
+    ).toEqual([]);
     return {
       walkComplete,
       atFloor: files.length >= 100,
@@ -2962,6 +2980,7 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       walkControl,
       named: judged.named,
       served: judged.served,
+      quotedRefusals,
     };
   },
   N2: () =>
