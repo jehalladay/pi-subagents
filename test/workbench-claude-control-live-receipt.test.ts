@@ -698,7 +698,7 @@ describe("wb-a2g.12 live claude control receipt: assessor (O1)", () => {
 describe("wb-a2g.12 tier wiring (O2)", () => {
   it("forge.toml ends with exactly one claude-control-live block appended after detached-control-live; the furnace adjacency and the gate line are unchanged", () => {
     const toml = readRepo("forge.toml");
-    expect(toml.endsWith(`${DETACHED_BLOCK}\n${FORGE_BLOCK}\n[build.commands.census]\ncommand = "npm run test:census"\ntimeout = 300\nafter = ["test"]\nconsumes = ["test"]\n`)).toBe(true);
+    expect(toml.endsWith(`${DETACHED_BLOCK}\n${FORGE_BLOCK}\n[build.commands.census]\ncommand = "npm run test:census"\ntimeout = 900\nafter = ["test"]\nconsumes = ["test"]\n`)).toBe(true);
     expect(toml.match(/^\[build\.commands\.claude-control-live\]$/gm)).toHaveLength(1);
     expect(toml.match(/^\[build\.commands\.detached-control-live\]$/gm)).toHaveLength(1);
     expect(toml).toContain(`${FORGE_CONTROL_BLOCK}\n${FURNACE_BLOCK}`);

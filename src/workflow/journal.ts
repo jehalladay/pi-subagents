@@ -68,12 +68,50 @@
  * safely run again. A non-read dispatch is the exception: an unrecorded one
  * is exactly the window the marker closes, so runtime.ts refuses the call,
  * fail-closed, when its marker row does not reach the file.
+ *
+ * ## Function invocation rows
+ *
+ * A hosted function invocation (workflow_execute with a function definition,
+ * src/index.ts) writes node rows at position 0 of a journal under its own
+ * invocation reference (wb-mwsy). Its intent row, a dispatched marker that
+ * carries the invocation's `intent`, is appended and read back before the
+ * installed host's start is called, and the start is not called when it does
+ * not reach the file. A second marker, carrying the host's native references,
+ * follows once that start answered, and the settled row once the run's
+ * settlement resolved. A start or a settlement that rejects appends no row,
+ * so the last row stays a marker.
  */
 
 import { createHash } from "node:crypto";
 import { appendFileSync, readFileSync } from "node:fs";
 import type { NativeRef } from "../workbench/observation.js";
 import { isReconcileRecord, type ReconcileRecord } from "./reconcile.js";
+
+/**
+ * The durable local intent of one hosted function invocation (wb-mwsy, packet
+ * P06 of mechanical-native-interoperability-2026-11-09: EAT-R250, extending
+ * EAT-R041): what the installed host's start is decided under, on the intent
+ * row src/index.ts appends before that start is called.
+ */
+export interface WorkflowJournalIntent {
+  /** The logical invocation reference workflow_execute minted. */
+  invocationId: string;
+  /** The digest-pinned definition the admission named. */
+  definitionId: string;
+  definitionDigest: string;
+  /** The admission's digest of the input the installed host receives. */
+  inputDigest: string;
+  /** The authority the chain's final boundary decided: principal, session, its two grants, then the SDK rights. */
+  principal: string;
+  sessionId: string;
+  grants: readonly string[];
+  sdkRights: readonly string[];
+  /** The source admission's operator and the source identity it measured. */
+  operatorId: string;
+  sourceIdentity: string;
+  /** The installed producer package identity the chain admitted. */
+  packageIdentity: string;
+}
 
 /** One settled agent call, as replayed. */
 export interface WorkflowJournalEntry {
@@ -154,6 +192,12 @@ export interface WorkflowJournalEntry {
    * old binary keeps refusing and a resume never half-reads a decision.
    */
   reconcile?: ReconcileRecord;
+  /**
+   * The durable local intent of a hosted function invocation, on the intent
+   * row of the function path (`kind: "node"`, a dispatched marker; see the
+   * header). A row whose intent does not validate drops like any mangled line.
+   */
+  intent?: WorkflowJournalIntent;
 }
 
 /**
@@ -265,6 +309,28 @@ function isNativeRef(value: unknown): value is NativeRef {
     (ref.scope === undefined || typeof ref.scope === "string");
 }
 
+function isStringList(value: unknown): value is readonly string[] {
+  return Array.isArray(value) && value.every((item) => typeof item === "string");
+}
+
+function isIntent(value: unknown): value is WorkflowJournalIntent {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) return false;
+  const intent = value as Record<string, unknown>;
+  return (
+    typeof intent.invocationId === "string" &&
+    typeof intent.definitionId === "string" &&
+    typeof intent.definitionDigest === "string" &&
+    typeof intent.inputDigest === "string" &&
+    typeof intent.principal === "string" &&
+    typeof intent.sessionId === "string" &&
+    isStringList(intent.grants) &&
+    isStringList(intent.sdkRights) &&
+    typeof intent.operatorId === "string" &&
+    typeof intent.sourceIdentity === "string" &&
+    typeof intent.packageIdentity === "string"
+  );
+}
+
 function isEntry(value: unknown): value is WorkflowJournalEntry {
   if (typeof value !== "object" || value === null) return false;
   const entry = value as Record<string, unknown>;
@@ -286,6 +352,8 @@ function isEntry(value: unknown): value is WorkflowJournalEntry {
     // The dispatch marker means something only on a node row; anything but a
     // literal true, or a marker on any other kind, is as mangled as a bad field.
     (entry.dispatched === undefined || (entry.dispatched === true && entry.kind === "node")) &&
+    // A function intent means something only whole, and only on a node row.
+    (entry.intent === undefined || (entry.kind === "node" && isIntent(entry.intent))) &&
     // A node entry that cannot name its capability cannot name a producer to
     // reconcile with, so it is as unusable as any other mangled line.
     (entry.kind !== "node" || typeof entry.capabilityId === "string") &&
