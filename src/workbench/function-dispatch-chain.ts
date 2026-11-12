@@ -39,12 +39,14 @@
  *   EAT-R233  a host-minted current write attestation
  *   EAT-R234  one no-await final authority-to-dispatch chain and its P03 component receipt
  *
- * Not wired and not adopted: no registered tool calls this chain yet (workflow_execute still refuses a function definition
- * in execute-tool.ts; the registered branch is packet P04, wb-4bxo), so no registered-path (V3) or native (V4) claim rests on
- * it; and no action spelling is adopted (FUNCTION_ACTION_CONTRACT stays unadopted until the P00 joint ruling, wb-w8fk), so
- * under the shipped contract the entry decision refuses with decideFunctionAuthority's earliest failing rule: at the
- * suite's listed hosts, function-action-unadopted where the identity read and the grant read are well formed and hold
- * workbench:execute, and missing-execute-grant, unknown-identity-data or unknown-permission-data where an earlier rule fails.
+ * Wiring and adoption: the registered workflow_execute calls this chain only where a host composes function hosting (packet
+ * P04, wb-4bxo: execute-tool.ts WorkflowExecuteDeps.functions; a Pi session composes none and still refuses a function
+ * definition), and the registered-path (V3) claim of that branch rests on test/workbench-registered-function.test.ts, not on
+ * this module's suite; no native (V4) claim rests on it; and no action spelling is adopted (FUNCTION_ACTION_CONTRACT stays
+ * unadopted until the P00 joint ruling, wb-w8fk), so under the shipped contract the entry decision refuses with
+ * decideFunctionAuthority's earliest failing rule: at the suite's listed hosts, function-action-unadopted where the identity
+ * read and the grant read are well formed and hold workbench:execute, and missing-execute-grant, unknown-identity-data or
+ * unknown-permission-data where an earlier rule fails.
  * Nor is this chain's final boundary the last check before a provider effect: EAT-R409 of the
  * mechanical-interop-integrity-2026-11-10 program (its ATOMIC-REQUIREMENTS.md at pi-subagents master 347d58ea) extends
  * EAT-R234 and has the composed producer revalidate authority, source and fence after its own asynchronous preparation,
