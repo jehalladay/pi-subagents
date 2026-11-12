@@ -120,6 +120,9 @@ port.on("message", function (message) {
   const error = message.capabilityError
     ? new realmCapabilityError(message.capabilityError.category, message.capabilityError.message)
     : new Error(message.error || "The workflow host rejected the call.");
+  // Where an input-schema refusal failed, as the host typed it (wb-q0on, EAT-R363); never present otherwise.
+  if (message.capabilityError && typeof message.capabilityError.path === "string") error.path = message.capabilityError.path;
+  if (message.capabilityError && typeof message.capabilityError.constraint === "string") error.constraint = message.capabilityError.constraint;
   // Fatal errors are the run's, not the item's: parallel() and pipeline()
   // swallow ordinary failures into null, and a cap breach must not be
   // silently absorbed that way.
@@ -876,8 +879,12 @@ main().catch(function (error) {
     type: "error",
     message: error && error.message ? String(error.message) : String(error),
     stack: error && error.stack ? String(error.stack) : undefined,
-    capabilityError: error && error.name === "CapabilityError" ? {
+    // Only the realm's own CapabilityError is a capability failure: an ordinary error renamed "CapabilityError" is not
+    // one (wb-q0on, EAT-R364).
+    capabilityError: realmCapabilityError !== null && error instanceof realmCapabilityError ? {
       name: "CapabilityError", category: error.category, message: String(error.message),
+      ...(typeof error.path === "string" ? { path: error.path } : {}),
+      ...(typeof error.constraint === "string" ? { constraint: error.constraint } : {}),
     } : undefined,
   });
 });

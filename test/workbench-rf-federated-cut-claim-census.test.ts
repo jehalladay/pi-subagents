@@ -28,6 +28,9 @@
  * word or a max() over a position.
  * Re-measured at base b1ce8c1 (wb-tug7, the liveness follow-up): 116 src .ts modules; the same eight spell a single position
  * key and twelve spell a revision, none of them both; no module is a B4 or C3 site under the widened fold either.
+ * Re-measured at base 90f0297 (wb-q0on cut #2, EAT-R361's ReplayDecline): 132 src .ts modules; nine spell a single position
+ * key, src/workflow/progress.ts joining the eight (ReplayDecline declares a position and replayDeclineText reads it), and
+ * seventeen spell a revision, none of them both; no module is a B4 or C3 site.
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label):
  *  A, acceptance (a). A1-A5 read every file of src, test, docs, qa and the front matter (the root *.md files and examples/)
@@ -50,8 +53,8 @@
  *    reading is empty. LIVENESS (wb-tug7): siteCensus walks the roster beside src through the same text read and the
  *    case's own predicate, which must read it as a site (anchorRead: its fixture records carry RECORD_KEYS), and B4 pins
  *    its positive real src reading through siteCensus, the modules one record key short of the arm (oneRecordKey: the
- *    eight that spell one position key), so a dead predicate, an unfed one, an emptied text read or a walk that loses one
- *    of the eight reds B4. Three synthetic readers exercise the checker, and thirty-two controls pin the armed reading:
+ *    nine that spell one position key), so a dead predicate, an unfed one, an emptied text read or a walk that loses one
+ *    of the nine reds B4. Three synthetic readers exercise the checker, and thirty-two controls pin the armed reading:
  *    snake and camel (the vocabulary), recordShape, recordRead, recordQuoted, recordDestructured, recordCamel,
  *    recordOptional and recordDefaulted (one key spelling each: declared, read, quoted, destructured, camelCase, declared
  *    optional, destructured with a default), watermarkFold, watermarkFoldReversed, watermarkFoldPlural,
@@ -73,7 +76,7 @@
  *    CURSOR_PROJECTIONS, and every bound projection must echo the fixture's resource revision and cursor position, never
  *    one in place of the other. Empty today; C3 reads its anchor the same way (anchorRead: the accepted boundary holds a
  *    position beside its resource revision) and pins its positive real src reading, the modules holding a position key
- *    (positionKeys: the same eight, none beside a revision). Three synthetic projections exercise the checker, and seven
+ *    (positionKeys: the same nine, none beside a revision). Three synthetic projections exercise the checker, and seven
  *    controls pin the armed reading: snake, camel, positionBesideRevision and camelRevision (a camelCase revision beside the
  *    position) read as sites, bareWords, renamedKey and versionField do not (R-VOCABULARY).
  *  M, the matcher row A reads: M1-M11 the spellings CLAIMS must catch; Q1-Q5 the pinned quiet rows of the residuals.
@@ -91,8 +94,8 @@
  * export .beads/ spells the phrases (the owner filings quote the producer) and no scanned root reads it (Q5); new-feedback/,
  * vendor/, media/ and the other dot-directories are outside every root the same way. R-VOCABULARY the armed half (B4, C3)
  * sees a src module only through its vocabulary or its armed key shape: a single record key read without a max() fold (B4
- * control singleKey; eight src modules spell one position key today and none spells a federation word, so a one-key arm
- * would bind modules that read no rf stream; those eight are B4's and C3's pinned positive real reading, so a src module
+ * control singleKey; nine src modules spell one position key today and none spells a federation word, so a one-key arm
+ * would bind modules that read no rf stream; those nine are B4's and C3's pinned positive real reading, so a src module
  * that gains or loses a position key reds both until that reading is re-measured, though the site check binds none of
  * them), a fold written as a comparison rather than max() (comparisonFold), a max() reached as a value rather than called
  * by name (an alias such as const top = Math.max, or Reflect.apply(Math.max, ...): aliasFold; an arm reading max as a
