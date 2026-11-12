@@ -9,29 +9,56 @@
  *       parse-aware extraction (never bare regex over rendered markdown - HTML-comment-hidden text must not satisfy a
  *       claim, per the wb-dc0/wb-9x5 probe class)".
  *
- * THE PINNED READER SET is the cases of this file, each named once below; each case title names the forms it pins. A
- * J-number in a title is the gate's judge mutant of record that the case turns red (refusal #1 of wb-8py9, J01-J25),
- * and F1 is the gate's head-misattribution witness.
- * - The delivery path, on fixture cuts in scratch git repositories (test/helpers/scratch.ts): RL1 refuses one false
- *   figure in an added receipt naming the claim, its figure and the measured value; RL2 passes the true figure; RL3
- *   measures a figure at the revision it names, else at the working tree; RL5 reads a resolving all-decimal short sha as
- *   a revision; RL4 judges a modified receipt on its added lines only; RL6 places an appended figure on its own line (F1).
- * - The judged text, in memory (judgeText over a fixed tree): the rendered view in RV1 RV2 RV3 RV4 RV5 RV6, the claim
- *   kinds in RK1 RK2 RK3 RK4 RK5 RK6 RK7 RK8, and the THE CLAIMS section of the lint header, alternative by alternative,
- *   in RG1 RG2 RG3 RG4 RG5 RG6 RG7.
- * - Refusal M:75230 replayed on this repository's history: RH1 refuses the refused wb-bau receipt line 31 and RH2 holds
- *   its landed cure, both measured at ce180d82.
- * - The command and its readers: CF1 the forge.toml block; CF2 its argument, partition and argv units; CF3 both CLIs'
- *   exit codes; CF4 census-file's vitest half through a fake vitest binary; RR1 the landed readers of a delivery; RR2
- *   the untracked and census-tier files that are no readers; RT1 this header naming each registered case once.
+ * FORM (respin cut #3, the rule-14 enumerate-the-resolvable form; the shape frozen at refusal #2): ENUMERATED, NOT
+ * GENERAL. Each case claims exactly the forms it plants, as its title lists them, and each section of the lint header
+ * claims exactly the forms of the cases it cites; a form no case plants is NOT CLAIMED, whatever a title's or the lint
+ * header's wording seems to cover. A known form within a claimed subject that the lint reads otherwise than its wording
+ * suggests is a named RESIDUAL with a pinned quiet row (RESIDUALS below); a form found later joins that list, it is not a
+ * claim. A J-number in a title is a judge mutant of record of refusal #1 (J01-J25), a G-number one of refusal #2 (G01-G07,
+ * and G05b of its INFO F2), and F1, W8 and W9 are the gates' head-misattribution witnesses: each case turns its members red.
+ *
+ * THE PINNED READER SET, by the four class guards refusal #2 bound (rule 19(d): the claim sets of refusal #1's U2, U10,
+ * U7 and U9 as cut #2 stated them), then the unguarded rest; each case of this file is named once in this header:
+ * - GUARD-PLACEMENT (refusal #1 U2, refusal #2 U1; where a claim is placed, so that a modified receipt's appended figure
+ *   is the one judged): RL4 judges a modified receipt on its added lines only; RL6 places an appended figure on its own
+ *   line in its four planted forms (F1); RL7 places an appended table row on its own row's line when its claim cell
+ *   repeats a landed body cell (W8), a header cell, or a landed cell of a table in a list item or a blockquote, or holds an
+ *   escaped pipe (W9), and a repeated list item or paragraph on its own line.
+ * - GUARD-GRAMMAR (refusal #1 U10, refusal #2 U2 and U3; the lint header's THE CLAIMS section, alternative by
+ *   alternative, each claimed at the forms of the cases it cites): the revision in RG2; rows in RG1 and RG3; array in
+ *   RG4; a census file's path-less rows and array forms in RG8; table in RG5 and RG9; cite and the unresolvable revision
+ *   in RG6; path and what is no claim in RG7.
+ * - GUARD-CENSUS-TEXT (refusal #1 U7, refusal #2 U4; what a census file's text is): RK4 an it() title and a data literal;
+ *   RK8 a leading line comment, the describe, test, suite and chained it.each titles and the delta words; RK9 a block, a
+ *   JSDoc and a trailing comment (G06).
+ * - GUARD-READERS (refusal #1 U9, refusal #2 U5; the landed default-tier readers of a delivery): RR1 the readers at one
+ *   base; RR2 an untracked file and a census-tier file are none; RR3 the base's tree and the working tree's text decide.
+ * - Unguarded: the delivery path's RL1, RL2, RL3 and RL5 on fixture cuts in scratch git repositories
+ *   (test/helpers/scratch.ts); the rendered view in RV1, RV2, RV3, RV4, RV5 and RV6 and the claim kinds in RK1, RK2,
+ *   RK3, RK5, RK6 and RK7, judged in memory (judgeText over a fixed tree); refusal M:75230 replayed on this repository's
+ *   history in RH1 and RH2, both measured at ce180d82; the command in CF1 (the forge.toml block), CF2 (its argument,
+ *   partition and argv units), CF3 (both CLIs' exit codes) and CF4 (census-file's vitest half through a fake vitest
+ *   binary); and RT1, this header naming each registered case once.
+ *
+ * RESIDUALS (each a named family with its pinned quiet row; a form found later joins this list, it is not a claim):
+ * - R-SPLIT-MATCH (GUARD-PLACEMENT): a rows claim whose path and figure sit on two lines of one paragraph is placed on its
+ *   path's line, so with the path on a landed line and the figure appended below it, the false figure is not judged in a
+ *   modified receipt. Quiet row: RQ1 asserts that placement and that silence.
+ * - R-NEEDLE-MISMATCH (GUARD-PLACEMENT): a claim whose path and figure each occur more often in its paragraph's source
+ *   than in its rendered text (the path repeated in a link destination, the figure in an image's alt text) is placed on
+ *   its path's first source line. Quiet row: RQ2 asserts that placement, and the placement by the figure without the image.
+ * - R-EXCLUDE-GLOB (GUARD-READERS): vitest.config.ts's exclude entries are compared as exact paths, so a glob there
+ *   excludes no reader, though vitest excludes the files it matches from the default tier. Quiet row: RQ3 asserts that a
+ *   file a glob entry matches is listed.
  *
  * NOT CLAIMED. The merge-base default of the delivery's base and receipt changes committed after the base are NOT
- * CLAIMED by this census (its fixture cuts lint against HEAD). A claim whose sentence starts on a landed line and ends on
- * an added one is NOT CLAIMED by this census, nor is the line placement of a claim whose path or figure occurs more often
- * in its block's source than in the rendered block (a path repeated in a link destination). Spread elements, duplicate
- * declarations and wrapped array literals are NOT CLAIMED by this census. The vitest half's own output and census-file's
- * report lines are NOT CLAIMED by this census. Wall time is NOT CLAIMED by this census: every case runs under an explicit
- * timeout, and each case's scratch is removed after it under an explicit hook timeout (refusal #1 U1).
+ * CLAIMED by this census (its fixture cuts lint against HEAD). A sentence that starts on a landed line and ends on an
+ * appended one is NOT CLAIMED by this census beyond R-SPLIT-MATCH, nor is the placement of a block inside a container
+ * that itself sits inside a list item or a blockquote. Spread elements, duplicate declarations and wrapped array literals
+ * are NOT CLAIMED by
+ * this census. The vitest half's own output and census-file's report lines are NOT CLAIMED by this census. Wall time is
+ * NOT CLAIMED by this census: every case runs under an explicit timeout, and each case's scratch is removed after it under
+ * an explicit hook timeout (refusal #1 U1).
  */
 import { execFileSync, spawnSync } from "node:child_process";
 import { appendFileSync, chmodSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -180,7 +207,7 @@ describe("wb-8py9 receipt lint: the delivery path, on fixture cuts (the wb-bau c
     expect(lintDelivery(dir, { base: "HEAD" }).findings.map(found => [found.line, found.claim])).toEqual([[10, `${CORPUS} holds 8 SITES rows`]]);
   });
 
-  it("RL6 an appended figure is placed on its own source line (F1): continuing a landed paragraph or list item, or added as a list item or a table row, it is judged at that line while the landed figure beside it is not, and the receipt named whole is refused at that line only", () => {
+  it("RL6 an appended figure is placed on its own source line (F1) in four planted forms, a line continuing a landed paragraph, a line continuing a landed list item, an added list item and an added table row, each beside a landed figure of other text: it is judged at that line while the landed figure is not, and the paragraph receipt named whole is refused at that line only", () => {
     const head = "# wb-fixture: fixture\n\n## 2026-11-12 cut\n\n";
     const paragraph = "docs/workbench/receipts/wb-a-paragraph.md";
     const item = "docs/workbench/receipts/wb-b-item.md";
@@ -210,6 +237,53 @@ describe("wb-8py9 receipt lint: the delivery path, on fixture cuts (the wb-bau c
       [6, 9],
     ]);
     expect(whole.findings.filter(found => found.file === paragraph).map(found => found.line)).toEqual([6]);
+  });
+
+  it("RL7 an appended table row is placed on its own row's line whatever an earlier row holds (refusal #2 U1): a claim cell repeating a landed body cell (W8), a header cell, or a landed cell of a table in a list item or a blockquote, or holding an escaped pipe (W9), is judged at the appended line while the landed one is not; a repeated list item and a repeated paragraph are judged at their own lines, and so is a line continuing a paragraph whose landed line holds the same claim inside an HTML comment; and each receipt named whole is refused at its own rows' lines only", () => {
+    const head = "# wb-fixture: fixture\n\n## 2026-11-12 cut\n\n";
+    const nine = `\`${CORPUS}\` holds 9 SITES rows`;
+    const at = (name: string) => `docs/workbench/receipts/wb-${name}.md`;
+    // each form: the landed body (from line 5), then the appended lines
+    const forms: Readonly<Record<string, readonly [string, string]>> = {
+      [at("w8")]: [`| file | note |\n|---|---|\n| corpus | ${nine} |\n`, `| again | ${nine} |\n`],
+      [at("w8h")]: [`| ${nine} |\n|---|\n`, `| ${nine} |\n`],
+      [at("w8l")]: [`- ${nine}.\n`, `- ${nine}.\n`],
+      [at("w8m")]: [`The corpus <!-- ${nine} --> list.\n`, `Since then ${nine}.\n`],
+      [at("w8n")]: [`- the table\n\n  | file | note |\n  |---|---|\n  | corpus | ${nine} |\n`, `  | again | ${nine} |\n`],
+      [at("w8p")]: [`The corpus ${nine}.\n`, `\nThe corpus ${nine}.\n`],
+      [at("w8q")]: [`> the table\n>\n> | file | note |\n> |---|---|\n> | corpus | ${nine} |\n`, `> | again | ${nine} |\n`],
+      [at("w9")]: [`| file | note |\n|---|---|\n| corpus | \`${CORPUS}\` holds 3 SITES rows |\n`, `| again | ${nine} \\| more |\n`],
+    };
+    const made = repo({ [CORPUS]: CORPUS_TEXT, ...Object.fromEntries(Object.entries(forms).map(([path, [landed]]) => [path, `${head}${landed}`])) });
+    for (const [path, [, appended]] of Object.entries(forms)) appendFileSync(join(made.dir, path), appended);
+    const claim = `${CORPUS} holds 9 SITES rows`;
+    expect(lintDelivery(made.dir, { base: "HEAD" }).findings.map(found => [found.file, found.line, found.claim])).toEqual([
+      [at("w8"), 8, claim],
+      [at("w8h"), 7, claim],
+      [at("w8l"), 6, claim],
+      [at("w8m"), 6, claim],
+      [at("w8n"), 10, claim],
+      [at("w8p"), 7, claim],
+      [at("w8q"), 10, claim],
+      [at("w9"), 8, claim],
+    ]);
+    const whole = lintDelivery(made.dir, { base: "HEAD", files: Object.keys(forms) });
+    expect(whole.findings.map(found => [found.file, found.line])).toEqual([
+      [at("w8"), 7],
+      [at("w8"), 8],
+      [at("w8h"), 5],
+      [at("w8h"), 7],
+      [at("w8l"), 5],
+      [at("w8l"), 6],
+      [at("w8m"), 6],
+      [at("w8n"), 9],
+      [at("w8n"), 10],
+      [at("w8p"), 5],
+      [at("w8p"), 7],
+      [at("w8q"), 9],
+      [at("w8q"), 10],
+      [at("w9"), 8],
+    ]);
   });
 });
 
@@ -338,7 +412,7 @@ describe("wb-8py9 receipt lint: claim kinds, judged in memory", { timeout: CASE_
     expect(judged(`See \`${CORPUS}:4-2\`.`).findings.map(found => found.measured)).toEqual(["an inverted line range 4-2"]);
   });
 
-  it("RK8 a census file's comment is judged (J07), so are describe, test, suite and chained it.each titles (J09), and a count after any of the lint's delta words is no claim (J08)", () => {
+  it("RK8 a census file's leading line comment is judged (J07), so are describe, test, suite and chained it.each titles (J09), and a count after any of the lint's delta words in a line comment is no claim (J08)", () => {
     const rows = 'const ROWS = [{ id: "C1" }, { id: "C2" }];';
     expect(judgedCensus(`// the 3 ROWS rows each carry an id\n${rows}\n`).findings.map(found => [found.line, found.claim, measuredFigure(found)])).toEqual([[1, "3 ROWS rows", "2"]]);
     for (const title of ['describe("the 3 ROWS rows each carry an id", () => {});', 'test("the 3 ROWS rows each carry an id", () => {});', 'suite("the 3 ROWS rows each carry an id", () => {});', 'it.each([1])("the 3 ROWS rows each carry an id", () => {});']) {
@@ -350,6 +424,24 @@ describe("wb-8py9 receipt lint: claim kinds, judged in memory", { timeout: CASE_
     const deltas = ["adds", "added", "adding", "removes", "removed", "drops", "dropped", "gains", "gained", "loses", "lost", "deletes", "deleted", "moves", "moved", "extra", "new", "more", "fewer", "other", "another", "first", "last", "next"];
     const comments = deltas.map(word => `// the cut ${word} 1 ROWS rows`).join("\n");
     expect(judgedCensus(`${comments}\n// the 2 ROWS rows\n${rows}\n`).claims.map(claim => claim.line)).toEqual([deltas.length + 1]);
+  });
+
+  it("RK9 a census file's block comment, JSDoc comment and trailing line comment are judged like a leading line comment (G06): /* the 3 ROWS rows */, /** the 3 ROWS rows */ and a trailing // the 3 ROWS rows over two rows are each refused at line 1, a count on the second line of a multi-line JSDoc comment is refused at line 2, and an it() title written as a template literal, with or without a substitution, is judged on its literal text", () => {
+    const rows = 'const ROWS = [{ id: "C1" }, { id: "C2" }];';
+    for (const source of [`/* the 3 ROWS rows */\n${rows}\n`, `/** the 3 ROWS rows */\n${rows}\n`, `${rows} // the 3 ROWS rows\nexport {};\n`]) {
+      expect(
+        judgedCensus(source).findings.map(found => [found.line, found.claim, measuredFigure(found)]),
+        source,
+      ).toEqual([[1, "3 ROWS rows", "2"]]);
+    }
+    expect(judgedCensus(`/**\n * the 3 ROWS rows\n */\n${rows}\n`).findings.map(found => [found.line, found.claim, measuredFigure(found)])).toEqual([[2, "3 ROWS rows", "2"]]);
+    const substitution = `${"$"}{"x"}`;
+    for (const title of ["it(`the 3 ROWS rows each carry an id`, () => {});", `it(\`the 3 ROWS rows of ${substitution} each carry an id\`, () => {});`]) {
+      expect(
+        judgedCensus(`${rows}\n${title}\n`).findings.map(found => [found.line, found.claim, measuredFigure(found)]),
+        title,
+      ).toEqual([[2, "3 ROWS rows", "2"]]);
+    }
   });
 });
 
@@ -385,7 +477,7 @@ describe("wb-8py9 receipt lint: the lint header's THE CLAIMS grammar, alternativ
     expect(claimsOf(`\`${CORPUS}\` holds 3 SITES rows. Its first cut was at abcdef1 with fewer.`).map(claim => claim.rev)).toEqual([null]);
   });
 
-  it("RG3 a rows claim's continuations, plus and and (J17), are read in its own sentence against its path, and no claim is read across two sentences or two blocks", () => {
+  it("RG3 a rows claim's continuations, plus and and (J17), are read in its own sentence against its path, up to the next rows claim or path named after it (a continuation after a second rows claim binds to that claim's path; one after another path is none), and no claim is read across two sentences, each ended by a full stop, a question mark or an exclamation mark before an upper-case word, or across two blocks", () => {
     const files = { [CORPUS]: `${CORPUS_TEXT}export const OTHER = [1, 2];\n` };
     for (const word of ["plus", "and"]) {
       expect(
@@ -394,10 +486,19 @@ describe("wb-8py9 receipt lint: the lint header's THE CLAIMS grammar, alternativ
       ).toEqual([[`${CORPUS} holds 3 SITES rows ${word} 5 OTHER rows`, `5 OTHER rows in ${CORPUS}`]]);
     }
     expect(claimsOf(`\`${CORPUS}\` holds 3 SITES rows. Later, plus 5 OTHER rows.`).map(claim => claim.ident)).toEqual(["SITES"]);
+    for (const end of ["?", "!"]) {
+      expect(claimsOf(`\`${CORPUS}\` holds 3 SITES rows${end} Later, plus 5 OTHER rows.`).map(claim => claim.ident), end).toEqual(["SITES"]);
+    }
+    expect(claimsOf(`\`${CORPUS}\` holds 3 SITES rows and \`test/b.ts\` holds 2 OTHER rows plus 4 THIRD rows.`).map(claim => [claim.ident, claim.path])).toEqual([
+      ["SITES", CORPUS],
+      ["OTHER", "test/b.ts"],
+      ["THIRD", "test/b.ts"],
+    ]);
+    expect(claimsOf(`\`${CORPUS}\` holds 3 SITES rows, then \`test/b.ts\` plus 5 OTHER rows.`).map(claim => claim.ident)).toEqual(["SITES"]);
     expect(claimsOf(`\`${CORPUS}\` holds\n\n4 SITES rows.`)).toEqual([]);
   });
 
-  it("RG4 an array claim is read with or without the word elements and with each span form (lines or line, then to, through, a hyphen or an en dash: J19), against the last path and revision named before it in its block", () => {
+  it("RG4 an array claim is read with or without the word elements and with each span form (lines or line, then to, through, a hyphen or an en dash: J19), against the last path and the last revision named before it in its block, else its own sentence's revision, even one named after it there", () => {
     const dash = String.fromCodePoint(0x2013);
     expect(claimsOf(`\`${CORPUS}\` is the corpus: 3 in the SITES array literal.`).map(claim => [claim.kind, claim.count, claim.path])).toEqual([["array", 3, CORPUS]]);
     for (const span of ["lines 2 to 6", "lines 2 through 6", "lines 2-6", `lines 2${dash}6`, "line 2 to 6"]) {
@@ -405,13 +506,24 @@ describe("wb-8py9 receipt lint: the lint header's THE CLAIMS grammar, alternativ
     }
     const bound = claimsOf(`\`src/a.ts\` and \`${CORPUS}\` at abcdef1 are the corpus. It has 3 elements in the SITES array literal.`).filter(claim => claim.kind === "array");
     expect(bound.map(claim => [claim.path, claim.rev])).toEqual([[CORPUS, "abcdef1"]]);
+    const last = claimsOf(`\`src/a.ts\` at abcdef1 and \`${CORPUS}\` at 1234abc are the corpus. It has 3 elements in the SITES array literal.`).filter(claim => claim.kind === "array");
+    expect(last.map(claim => [claim.path, claim.rev])).toEqual([[CORPUS, "1234abc"]]);
+    const after = claimsOf(`\`${CORPUS}\` is the corpus. It has 3 elements in the SITES array literal at abcdef1.`).filter(claim => claim.kind === "array");
+    expect(after.map(claim => [claim.path, claim.rev])).toEqual([[CORPUS, "abcdef1"]]);
   });
 
-  it("RG5 a heading total counts the rendered body rows of every table in its section, else the non-blank lines of its code listing (J23), else is refused, and its section ends at the next heading of its level", () => {
+  it("RG5 a heading total counts the rendered body rows of every table in its section, a table in a list item or a blockquote included and a row whose every cell renders no text (empty, or an HTML comment) not counted, else, when the section holds no table, the non-blank lines of its code listing (J23; beside a table a listing adds nothing), else is refused, and a heading of the same level ends its section", () => {
     expect(judged("### Sites (3 rows)\n\n| site |\n|---|\n| a |\n| b |\n\n| more |\n|---|\n| c |").findings).toEqual([]);
     expect(judged("### Files (2 rows)\n\n```\na\n\nb\n```").findings).toEqual([]);
     expect(judged("### Files (2 rows)\n\nNo rows here.").findings.map(found => found.measured)).toEqual(["no table and no listing in the heading's section"]);
     expect(judged("### Sites (1 rows)\n\n| site |\n|---|\n| a |\n\n### Next\n\n| site |\n|---|\n| b |").findings).toEqual([]);
+    const totalled = (body: string) => {
+      const report = judged(body);
+      return [report.claims.map(claim => [claim.kind, claim.count]), report.findings];
+    };
+    expect(totalled("### Sites (2 rows)\n\n- item\n\n  | site |\n  |---|\n  | a |\n\n> | site |\n> |---|\n> | b |"), "a table in a list item and one in a blockquote").toEqual([[["table", 2]], []]);
+    expect(totalled("### Sites (2 rows)\n\n| site |\n|---|\n| a |\n|  |\n| <!-- c --> |\n| b |"), "an empty row and a comment-only row").toEqual([[["table", 2]], []]);
+    expect(totalled("### Sites (1 rows)\n\n| site |\n|---|\n| a |\n\n```\nx\ny\n```"), "a listing beside a table").toEqual([[["table", 1]], []]);
   });
 
   it("RG6 a citation is read as a path and a line, or a range joined by a hyphen or an en dash, and judged against the file; a figure at a revision that resolves nowhere here, of a path absent here, is not judged", () => {
@@ -437,6 +549,32 @@ describe("wb-8py9 receipt lint: the lint header's THE CLAIMS grammar, alternativ
       expect(claimsOf(quiet), quiet).toEqual([]);
     }
   });
+
+  it("RG8 in a census file a path-less rows count is a claim only when its IDENT names an array literal the file itself declares (G01: the 3 OTHER rows beside ROWS alone is none), a rows count naming the file's own path is one claim, and an array claim naming no path binds to the file itself (G02: a comment's '<N> elements in the ROWS array literal' over two elements holds at N = 2 and is refused at N = 3, naming the measured 2) while one naming a path binds to that path", () => {
+    const census = "test/x-census.test.ts";
+    expect(judgedCensus("// the 3 OTHER rows\nconst ROWS = [1];\n", census)).toMatchObject({ claims: [], findings: [] });
+    const own = judgedCensus(`// ${census} holds 3 ROWS rows\nconst ROWS = [1, 2];\n`, census);
+    expect(own.claims.map(claim => [claim.kind, claim.path, claim.count])).toEqual([["rows", census, 3]]);
+    expect(own.findings.map(measuredFigure)).toEqual(["2"]);
+    const held = judgedCensus("// 2 elements in the ROWS array literal\nconst ROWS = [1, 2];\n", census);
+    expect([held.claims.map(claim => [claim.kind, claim.path, claim.count]), held.findings]).toEqual([[["array", census, 2]], []]);
+    expect(judgedCensus("// 3 elements in the ROWS array literal\nconst ROWS = [1, 2];\n", census).findings.map(found => [found.line, found.kind, measuredFigure(found)])).toEqual([[1, "array", "2"]]);
+    const named = judgedCensus(`// \`${CORPUS}\` is the corpus: 3 elements in the SITES array literal.\nconst ROWS = [1, 2];\n`, census);
+    expect([named.claims.map(claim => [claim.kind, claim.path, claim.count]), named.findings]).toEqual([[["array", CORPUS, 3]], []]);
+  });
+
+  it("RG9 a row total is read only from a heading whose text ends (N rows) (G03: a heading ending '(5 rows) summary' is none; G04: a paragraph, a list item and a table cell ending (5 rows) are none), and a heading's section runs to the next heading of its level or a higher one, never stopping at a deeper one (G05: a #### heading inside a ### section keeps counting; G05b: a ## heading ends it)", () => {
+    const one = "| site |\n|---|\n| a |";
+    for (const quiet of [`### Sites (5 rows) summary\n\n${one}`, `Sites (5 rows)\n\n${one}`, `- Sites (5 rows)\n\n${one}`, "| Sites (5 rows) |\n|---|\n| a |"]) {
+      expect(judged(quiet), quiet).toMatchObject({ claims: [], findings: [] });
+    }
+    const counted = (body: string) => {
+      const report = judged(body);
+      return [report.claims.map(claim => [claim.kind, claim.count]), report.findings];
+    };
+    expect(counted(`### Sites (2 rows)\n\n${one}\n\n#### Sub\n\n| site |\n|---|\n| b |`), "a deeper heading").toEqual([[["table", 2]], []]);
+    expect(counted(`### Sites (1 rows)\n\n${one}\n\n## Higher\n\n| site |\n|---|\n| b |`), "a higher heading").toEqual([[["table", 1]], []]);
+  });
 });
 
 describe("wb-8py9 receipt lint: refusal M:75230 replayed on this repository's history", { timeout: CASE_TIMEOUT_MS }, () => {
@@ -461,6 +599,26 @@ describe("wb-8py9 receipt lint: refusal M:75230 replayed on this repository's hi
       ["array", "SCANNED_SITES", 7, [1453, 1461], BAU_BASE],
     ]);
     expect(claims.map(claim => measure(claim, tree))).toEqual([null, null, null, null]);
+  });
+});
+
+describe("wb-8py9 receipt lint: the quiet rows of the RESIDUALS", { timeout: CASE_TIMEOUT_MS }, () => {
+  it("RQ1 R-SPLIT-MATCH: a rows claim whose path ends landed line 5 and whose figure is appended on line 6 of the same paragraph is placed on line 5, so the modified receipt's added lines judge nothing, and named whole the receipt is refused at line 5", () => {
+    const made = repo({ [CORPUS]: CORPUS_TEXT, [RECEIPT]: receiptText(`The corpus \`${CORPUS}\` holds`) });
+    appendFileSync(join(made.dir, RECEIPT), "9 SITES rows.\n");
+    expect(lintDelivery(made.dir, { base: "HEAD" })).toMatchObject({ claims: [], findings: [] });
+    expect(lintDelivery(made.dir, { base: "HEAD", files: [RECEIPT] }).findings.map(found => [found.line, found.claim])).toEqual([[5, `${CORPUS} holds 9 SITES rows`]]);
+  });
+
+  it("RQ2 R-NEEDLE-MISMATCH: a claim on line 6 whose path also sits in line 5's link text and destination and whose figure also sits in line 5's image alt text is placed on line 5; with the image gone it is placed on line 6 by its figure", () => {
+    expect(claimsOf(`See [\`${CORPUS}\`](${CORPUS}) and ![9 SITES](sites.png).\nNow \`${CORPUS}\` holds 9 SITES rows.`).map(claim => [claim.kind, claim.line])).toEqual([["rows", 5]]);
+    expect(claimsOf(`See [\`${CORPUS}\`](${CORPUS}).\nNow \`${CORPUS}\` holds 9 SITES rows.`).map(claim => [claim.kind, claim.line])).toEqual([["rows", 6]]);
+  });
+
+  it("RQ3 R-EXCLUDE-GLOB: a test file naming the receipts directory that vitest.config.ts's exclude glob test/live/** matches is listed as a landed reader", () => {
+    const made = repo({ "test/live/reads.test.ts": 'const DIR = "docs/workbench/receipts";\n', "vitest.config.ts": 'export default { test: { exclude: ["test/live/**"] } };\n' });
+    write(made.dir, RECEIPT, "# wb-fixture: fixture\n\n## 2026-11-12 cut\n");
+    expect(landedReaders(made.dir, made.sha, [RECEIPT])).toEqual(["test/live/reads.test.ts"]);
   });
 });
 
@@ -516,7 +674,7 @@ describe("wb-8py9 census-file: the forge command and its readers", { timeout: CA
     expect(run(0, "test/a.test.ts", "test/b.census.ts")).toEqual([1, [...flags, "test/a.test.ts"]]);
   });
 
-  it("RR1 the readers of a delivery are the landed default-tier test files naming a delivered path or, for a receipt, the receipts directory", () => {
+  it("RR1 at one base the readers of a delivered receipt and census are the landed default-tier test files naming the census path or the receipts directory: of the five test files tracked there, the two naming them, while one naming neither, one in vitest.config.ts's exclude list and the delivered census itself, which names the receipts directory, are none; the lint's --readers lists the two and census-file's --readers names them as its vitest run", () => {
     const census = "test/x-census.test.ts";
     const made = repo({
       "test/reads-receipts.test.ts": 'const DIR = "docs/workbench/receipts";\n',
@@ -527,7 +685,7 @@ describe("wb-8py9 census-file: the forge command and its readers", { timeout: CA
       [census]: "export const ROWS = [];\n",
     });
     write(made.dir, RECEIPT, "# wb-fixture: fixture\n\n## 2026-11-12 cut\n");
-    appendFileSync(join(made.dir, census), "// changed\n");
+    appendFileSync(join(made.dir, census), "// changed: it reads docs/workbench/receipts too\n");
     const report = lintDelivery(made.dir);
     expect(report.files).toEqual([RECEIPT, census]);
     expect(landedReaders(made.dir, made.sha, report.files)).toEqual(["test/reads-census.test.ts", "test/reads-receipts.test.ts"]);
@@ -548,10 +706,24 @@ describe("wb-8py9 census-file: the forge command and its readers", { timeout: CA
     expect(landedReaders(made.dir, made.sha, [RECEIPT])).toEqual(["test/reads-receipts.test.ts"]);
   });
 
+  it("RR3 a landed reader is a test file tracked in the base's tree (G07) and present in the working tree, judged by its working-tree text: one naming the receipts directory committed after the base is no reader there and is one at a base that tracks it, one deleted from the working tree is none, and one edited there to name the receipts directory is one", () => {
+    const names = 'const DIR = "docs/workbench/receipts";\n';
+    const made = repo({ "test/reads-receipts.test.ts": names, "test/gone.test.ts": names, "test/edited.test.ts": 'const FILE = "src/index.ts";\n' });
+    write(made.dir, "test/later-reader.test.ts", names);
+    git(made.dir, "add", "-A");
+    git(made.dir, "commit", "-q", "-m", "a reader after the base");
+    const later = git(made.dir, "rev-parse", "HEAD");
+    rmSync(join(made.dir, "test/gone.test.ts"));
+    write(made.dir, "test/edited.test.ts", names);
+    write(made.dir, RECEIPT, "# wb-fixture: fixture\n\n## 2026-11-12 cut\n");
+    expect(landedReaders(made.dir, made.sha, [RECEIPT])).toEqual(["test/edited.test.ts", "test/reads-receipts.test.ts"]);
+    expect(landedReaders(made.dir, later, [RECEIPT])).toEqual(["test/edited.test.ts", "test/later-reader.test.ts", "test/reads-receipts.test.ts"]);
+  });
+
   it("RT1 this file's header names each case registered here exactly once and names no other case", () => {
     const source = readFileSync(fileURLToPath(import.meta.url), "utf8");
     const header = source.slice(0, source.indexOf("*/"));
-    const named = [...header.matchAll(/\b(?:R[GHKLRTV]|CF)\d\b/g)].map(match => match[0]);
+    const named = [...header.matchAll(/\b(?:R[GHKLQRTV]|CF)\d\b/g)].map(match => match[0]);
     const registered = [...source.matchAll(/^\s*it\("(\S+) /gm)].map(match => match[1] ?? "");
     expect(named.length, "a case named twice").toBe(new Set(named).size);
     expect([...named].sort()).toEqual([...registered].sort());

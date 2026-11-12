@@ -8,46 +8,76 @@
  * THE DELIVERY. Against a base revision (--base, else the merge-base of HEAD and origin/workbench/implementation-program,
  * else HEAD), the delivery is every path git reports added or modified in the working tree, committed or not and untracked
  * included, that is a receipt (docs/workbench/receipts/<name>.md) or a census file (a TypeScript file under test/ whose
- * name holds "census"). A receipt is append-only, so a modified receipt is judged on its added lines only: a claim is
- * placed on the source line of its own match, so a line appended to a landed paragraph is judged on that line. An added
- * receipt, a census file and a file named on the command line (a markdown file, or a TypeScript file under test/) are
- * judged whole.
+ * name holds "census"). A receipt is append-only, so a modified receipt is judged on its added lines only, each claim at
+ * the line PLACEMENT puts it on. An added receipt, a census file and a file named on the command line (a markdown file, or
+ * a TypeScript file under test/) are judged whole.
+ *
+ * FORM (wb-8py9 respin cut #3, the enumerate-the-resolvable form): ENUMERATED, NOT GENERAL. A section below that cites
+ * cases of test/workbench-receipt-lint.test.ts is claimed for exactly the forms those cases plant; its description claims
+ * nothing beyond them, and a form no cited case plants is NOT CLAIMED. A known form a section reads otherwise than its
+ * wording suggests is a RESIDUAL with a pinned quiet row:
+ *   R-SPLIT-MATCH      a rows claim whose path and figure sit on two lines of one paragraph is placed on its path's line,
+ *                      so a figure appended below a landed path is not judged in a modified receipt (quiet row RQ1);
+ *   R-NEEDLE-MISMATCH  a claim whose path and figure each occur more often in its paragraph's source than in its rendered
+ *                      text is placed on its path's first source line (quiet row RQ2);
+ *   R-EXCLUDE-GLOB     vitest.config.ts's exclude entries are compared as exact paths, so a glob there excludes no reader
+ *                      (quiet row RQ3).
+ * A form found later joins this list; it is not a claim.
+ *
+ * PLACEMENT (the forms of RL4, RL6 and RL7). A top-level block starts on the line where its source text is found; a block
+ * inside a list item or a blockquote starts on its container's first line plus the line breaks of the container's blocks
+ * before it; a table's header cells are on the table's first line and the cells of its body row i on that line plus 2 plus
+ * i. Within its block a claim is placed by the first of its needles that occurs as often in the block's source (HTML
+ * comments blanked) as in its rendered text, at the same rank. So an appended paragraph line, list item or table row is
+ * judged at its own line whatever text a landed line holds: RL6 plants a line continuing a landed paragraph or list item,
+ * an added list item and an added table row, and RL7 a table row whose claim cell repeats a landed body cell, a header cell
+ * or a landed cell of a table in a list item or a blockquote, or holds an escaped pipe, a repeated list item or
+ * paragraph, and a line continuing a paragraph whose landed line holds the same claim inside an HTML comment.
  *
  * THE RENDERED VIEW (parse-aware, never a regex over raw markdown). A markdown file is lexed with marked and judged on
  * what a reader sees. An HTML comment renders nothing, so its text is never a claim and never counts toward a measured
  * figure. Text that renders through raw HTML (an HTML block, or an inline element tag such as a hidden span) depends on
  * markup this lint does not render, so a claim there is refused fail-closed (kind html). A fenced or indented code block
  * is quoted material, not a claim. Struck-through text and image alt text are not assertions. Entities are decoded and
- * the text is NFKC-normalized. A census file is parsed with TypeScript; its comments and its case and suite titles (the
- * first argument of it, test, describe or suite) are its text, and its other string literals are data, never claims.
+ * the text is NFKC-normalized. A census file is parsed with TypeScript; its comments (line, block and JSDoc, leading or
+ * trailing) and its case and suite titles (the first argument of it, test, describe or suite) are its text, and its other
+ * string literals are data, never claims (RK4, RK8, RK9).
  *
- * THE CLAIMS. Each is matched within one sentence of one block. A claim's revision is the first "at|on [trunk|base|tip|
- * commit|main|origin] <hex>" of its sentence (7 to 40 hex digits), else the working tree. A token that holds a letter (or
- * all 40 digits) is a revision; an all-decimal one is a revision only when it resolves to a commit (a short sha can be all
- * digits), else it is a figure and the claim is measured at the working tree. A lettered token wins over a decimal one.
- *   rows   "<path> holds|has|carries|contains|keeps <N> <IDENT> rows|entries|elements|members", plus its continuations
- *          "plus|and <N> <IDENT> rows" in the same sentence. N is the element count of the array literal declared as
- *          IDENT (upper case) in <path>, read with the TypeScript AST. In a census file the path may be left out when
- *          IDENT is an array literal the file itself declares (not after a delta word such as "adds" or "first").
- *   array  "<N> [elements] in the <IDENT> array literal [(lines A to B)]". It binds to the last path and revision named
- *          earlier in its block (in a census file, to the file itself) and states the element count and the first and
- *          last line of the literal.
- *   table  a heading ending "(<N> rows)". N is the number of rendered body rows of the tables in the heading's section,
- *          or, when it holds no table, the number of non-blank lines of its code blocks (a listing).
- *   lines  "<path> (<N> lines". N is the file's line count.
+ * THE CLAIMS (each alternative at the forms of the cases it cites). Each is matched within one sentence of one block, a
+ * sentence ending at a full stop, a question mark or an exclamation mark before a word that starts upper case (RG3). A
+ * claim's revision is the first "at|on [trunk|base|tip|commit|main|origin] <hex>" of its sentence (7 to 40 hex digits),
+ * else the working tree. A token that holds a letter (or all 40 digits) is a revision; an all-decimal one is a revision
+ * only when it resolves to a commit (a short sha can be all digits), else it is a figure and the claim is measured at the
+ * working tree. A lettered token wins over a decimal one (RG2, RL3, RL5).
+ *   rows   "<path> holds|has|carries|contains|keeps <N> <IDENT> rows|entries|elements|members" (RG1), plus its
+ *          continuations "plus|and <N> <IDENT> rows" in the same sentence, up to the next rows claim or path named after
+ *          it (RG3). N is the element count of the array literal declared as IDENT (upper case) in <path>, read with the
+ *          TypeScript AST (RL1, RG7). In a census file the path may be left out when IDENT is an array literal the file
+ *          itself declares (RK4, RG8), not after a delta word such as "adds" or "first" (RK8).
+ *   array  "<N> [elements] in the <IDENT> array literal [(lines A to B)]" (RG4). It binds to the last path named earlier
+ *          in its block (RG4; in a census file that names none, to the file itself: RG8) and to the last revision named
+ *          earlier in its block, else to its own sentence's revision, even one named after it there (RG4); it states the
+ *          element count and the first and last line of the literal (RK1, RK5).
+ *   table  a heading whose text ends "(<N> rows)" (RG9). N is the number of rendered body rows (a row whose every cell
+ *          renders no text is none) of the tables in the heading's section, a table in a list item or a blockquote
+ *          included, or, when it holds no table, the number of non-blank lines of its code blocks (a listing); the
+ *          section runs to the next heading of its level or a higher one (RG5, RG9, RV2).
+ *   lines  "<path> (<N> lines". N is the file's line count (RK2, RK6).
  *   cite   "<path>:<A>" or "<path>:<A>-<B>" naming a file that exists at the measured revision, with A <= B <= its line
- *          count. A path absent there is an external citation and is not judged.
+ *          count. A path absent there is an external citation and is not judged (RK3, RK7, RG6).
  * A path is a file name with an extension: under a directory (it holds a "/") any extension, as a bare name one of the
- * known ones (ROOT_EXTENSIONS). A revision that resolves to no commit here names another
- * repository's commit: a cite at it is not judged, nor is a figure whose path this working tree does not hold; a figure
- * at it whose path this repository holds is refused.
+ * known ones (ROOT_EXTENSIONS) (RG7). A revision that resolves to no commit here names another repository's commit: a cite
+ * at it is not judged (RK3), nor is a figure whose path this working tree does not hold (RG6); a figure at it whose path
+ * this repository holds is refused (RL3).
  * Anything else is not a claim this lint judges: run outcomes ("N passed"), sums, prose counts, mixed-case identifiers,
- * and a figure split by an invisible character.
+ * and a figure split by an invisible character (RG7).
  *
- * READERS (--readers). The landed default-tier test files that read a delivered path: tracked at the base, absent from
- * the delivery and from vitest.config.ts's exclude list, and naming the delivered path (for a receipt, the receipts
- * directory). These are the censuses that judge the delivery's new text by their own rules (the wb-w8fk class), so a
- * seat can run them on the cut before it is enqueued. The lint lists them and runs none of them.
+ * READERS (--readers; the forms of RR1, RR2 and RR3). The landed default-tier test files that read a delivered path: the
+ * files under test/ ending .test.ts that the base's tree tracks (not HEAD's), present in the working tree, absent from the
+ * delivery and from vitest.config.ts's exclude list (its string entries, compared as exact paths), whose working-tree text
+ * names the delivered path (for a receipt, the receipts directory). These are the censuses that judge the delivery's new
+ * text by their own rules (the wb-w8fk class), so a seat can run them on the cut before it is enqueued. The lint lists
+ * them and runs none of them.
  *
  * CLI: node qa/workbench/receipt-lint.mjs [--base <rev>] [--json] [--readers] [<file> ...]
  *   exit 0: every judged claim holds (the report on stdout)
@@ -551,8 +581,14 @@ function renderedRows(table) {
   return table.rows.filter(row => row.some(cell => readable(inlineText(cell.tokens, { markup: null, depth: 0 }).text) !== "")).length;
 }
 
+/** The line breaks of a text. @param {string} text */
+const breaks = text => (text.match(/\n/g) ?? []).length;
+
 /**
- * The markdown units of a document, in source order, each with its source line.
+ * The markdown units of a document, in source order, each with its source line (wb-8py9 refusal #2 U1: a top-level block
+ * is located by its source text; a block inside a list item or a blockquote starts on its container's first line plus the
+ * line breaks of the container's blocks before it; a table's header cells are on the table's first line and the cells of
+ * its body row i on that line plus 2 plus i, so a cell is placed on its own row whatever text an earlier row holds).
  * @param {string} markdown
  * @returns {Unit[]}
  */
@@ -562,7 +598,7 @@ export function markdownUnits(markdown) {
   const units = [];
   let cursor = 0;
   /** @param {number} offset */
-  const lineAt = offset => (markdown.slice(0, offset).match(/\n/g) ?? []).length + 1;
+  const lineAt = offset => breaks(markdown.slice(0, offset)) + 1;
   /** @param {string} raw @param {number} from */
   const locate = (raw, from) => {
     const at = markdown.indexOf(raw, from);
@@ -573,11 +609,10 @@ export function markdownUnits(markdown) {
   let blockMarkup = null;
   /**
    * @param {import("marked").Token} token
-   * @param {number} offset
+   * @param {number} line  the 1-based source line the token starts on
    * @param {number} [index]  the top-level token index
    */
-  const block = (token, offset, index) => {
-    const line = lineAt(offset);
+  const block = (token, line, index) => {
     const inherited = blockDepth > 0 ? blockMarkup : null;
     if (token.type === "space" || token.type === "hr" || token.type === "code" || token.type === "def") return;
     if (token.type === "html") {
@@ -603,38 +638,38 @@ export function markdownUnits(markdown) {
       return;
     }
     if (token.type === "list") {
-      let from = offset;
+      let itemLine = line;
       for (const item of /** @type {import("marked").Tokens.List} */ (token).items) {
-        const at = locate(item.raw, from);
+        let childLine = itemLine;
         for (const child of item.tokens) {
-          const childAt = locate(child.raw, at);
           if (child.type === "text") {
             const state = { markup: inherited, depth: 0 };
             const rendered = inlineText(childrenOf(child).length > 0 ? childrenOf(child) : [child], state);
-            units.push({ text: readable(rendered.text), raw: child.raw, line: lineAt(childAt), markup: state.markup, alt: readable(rendered.alt) });
-          } else block(child, childAt);
+            units.push({ text: readable(rendered.text), raw: child.raw, line: childLine, markup: state.markup, alt: readable(rendered.alt) });
+          } else block(child, childLine);
+          childLine += breaks(child.raw);
         }
-        from = at + item.raw.length;
+        itemLine += breaks(item.raw);
       }
       return;
     }
     if (token.type === "blockquote") {
-      let from = offset;
+      let childLine = line;
       for (const child of childrenOf(token)) {
-        const at = locate(child.raw, from);
-        block(child, at);
-        from = at + child.raw.length;
+        block(child, childLine);
+        childLine += breaks(child.raw);
       }
       return;
     }
     if (isTable(token)) {
       const table = /** @type {import("marked").Tokens.Table} */ (token);
-      for (const cell of [...table.header, ...table.rows.flat()]) {
-        const state = { markup: inherited, depth: 0 };
-        const rendered = inlineText(cell.tokens, state);
-        const at = locate(cell.text, offset);
-        units.push({ text: readable(rendered.text), raw: cell.text, line: at >= offset && at < offset + token.raw.length ? lineAt(at) : line, markup: state.markup, alt: readable(rendered.alt) });
-      }
+      [table.header, ...table.rows].forEach((cells, row) => {
+        for (const cell of cells) {
+          const state = { markup: inherited, depth: 0 };
+          const rendered = inlineText(cell.tokens, state);
+          units.push({ text: readable(rendered.text), raw: cell.text, line: row === 0 ? line : line + row + 1, markup: state.markup, alt: readable(rendered.alt) });
+        }
+      });
       return;
     }
     const state = { markup: inherited, depth: 0 };
@@ -643,7 +678,7 @@ export function markdownUnits(markdown) {
   };
   tokens.forEach((token, index) => {
     const offset = locate(token.raw, cursor);
-    block(token, offset, index);
+    block(token, lineAt(offset), index);
     cursor = offset + token.raw.length;
   });
   return units;
@@ -1014,8 +1049,9 @@ function defaultExcludes(root) {
 }
 
 /**
- * The landed readers of delivered paths: default-tier test files tracked at the base, absent from the delivery and from
- * the default config's exclude list, whose text names a delivered path (for a receipt: the receipts directory).
+ * The landed readers of delivered paths: the test files under test/ ending .test.ts that the base's tree tracks, present
+ * in the working tree, absent from the delivery and from the default config's exclude list (exact paths), whose
+ * working-tree text names a delivered path (for a receipt: the receipts directory).
  * @param {string} root
  * @param {string} base
  * @param {readonly string[]} delivered
