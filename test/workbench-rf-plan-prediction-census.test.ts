@@ -45,8 +45,11 @@
  *    freshness word 'reused' under its own field name and no plan wording, and a decision word can never ride as a freshness;
  *    C6 no string or template literal of the reader modules carries plan wording, a plan verb or a decision in any spelling.
  *  D, acceptance (c). D1 no sentence of docs/workbench, in its raw or normalized view, names an rf plan term (PLAN_TERM) and an
- *    executed reuse (EXECUTED_TERM) together; D2 no sentence names a plan term at all today (the roster's allowlist
- *    docsPlanSentences is empty), the forward guard: the first docs sentence about the plan is added there and D1 judges it.
+ *    executed reuse (EXECUTED_TERM) together; D2 no sentence names a plan term outside the roster's allowlist
+ *    docsPlanSentences, the forward guard: a docs sentence naming a plan term is added there and D1 judges it. The allowlist
+ *    holds exactly one sentence (wb-vnfe, 2026-11-12): the wb-e9rw receipt's "... the four matching PLAN_ROWS.", which names
+ *    the Claude cancel-fault repro suite's PLAN_ROWS table, no rf plan; D2 holds it to that page in both views, so the same
+ *    words on another page, or this page losing them, still red. No other plan-term sentence is admitted.
  *  E, acceptance (d). E1 the decision enum is anchored on the producer (the measured summary's decision keys) and the registered
  *    reading carries every decision value at its producer path byte for byte; E2 no src or qa file respells a distinctive
  *    decision (refresh_required, non_reusable) in raw text or a cooked literal; E3 neither appears byte-exact in src or qa today.
@@ -191,6 +194,9 @@ const DECISION_FAMILY = `refresh${SEP}required|non${SEP}reusable`;
 const PLAN_VERB = /\bcontext[\s._-]+plan\b/i;
 /** (c) an rf plan term in docs: the verb, rf's plan (in the possessive too), a plan row or decision, a planner, a prediction of
  * reuse, a distinctive decision; the verb and rf's plan read the plural too (wb-b1rq F2, the gate's P9). */
+/** D2's one allowlisted sentence (wb-vnfe): the wb-e9rw receipt names its repro suite's PLAN_ROWS table, not an rf plan. */
+const E9RW_RECEIPT = "docs/workbench/receipts/wb-e9rw.md";
+const E9RW_PLAN_ROWS_SENTENCE = "Each of the four cells is judged `failed-reproduction`, the oracle met, and so are the four matching PLAN_ROWS.";
 const PLAN_TERM = new RegExp(
   [
     `\\bcontext${SEP}plans?\\b`,
@@ -1050,7 +1056,11 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(docs.floorMet && docs.sentenceFloorMet && docs.anchorRead).toBe(true);
     expect([...docs.read].sort(), "the D walk read exactly git's own listing of docs/workbench/**/*.md (wb-nrbk F1)").toStrictEqual(listed);
     expect(unjudgedPages, "every docs/workbench page git lists was judged: its units, in both views, spell git's own reading of it (wb-b1rq F1)").toEqual([]);
-    expect(ROSTER.docsPlanSentences).toEqual([]);
+    expect(ROSTER.docsPlanSentences).toEqual([E9RW_PLAN_ROWS_SENTENCE]);
+    expect(
+      named.filter(entry => allowed.has(entry.sentence)).map(entry => `${entry.file} (${entry.view})`),
+      "the allowlisted sentence is read on its own page, once in each view (wb-vnfe)",
+    ).toEqual([`${E9RW_RECEIPT} (raw)`, `${E9RW_RECEIPT} (normalized)`]);
     expect(hits).toEqual([]);
     return { floorMet: docs.floorMet, walkAgreesWithGit, unjudged: unjudgedPages, allowed: [...allowed], hits };
   },
