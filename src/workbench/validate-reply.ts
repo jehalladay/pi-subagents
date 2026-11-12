@@ -165,8 +165,12 @@ function refusalFor(input: BuildWorkflowValidateReplyInput, grants: readonly str
   return undefined;
 }
 
-function diagnosticItem({ code, message, dimension }: DesignerDiagnostic): ValidateReplyItem {
-  return { scope: "diagnostic", code: sanitizeWorkbenchText(code, 64), message: sanitizeWorkbenchText(message, 500), ...(dimension !== undefined ? { dimension: sanitizeWorkbenchText(dimension, 64) } : {}) };
+function diagnosticItem({ code, message, dimension, line, column }: DesignerDiagnostic): ValidateReplyItem {
+  return {
+    scope: "diagnostic", code: sanitizeWorkbenchText(code, 64), message: sanitizeWorkbenchText(message, 500), ...(dimension !== undefined ? { dimension: sanitizeWorkbenchText(dimension, 64) } : {}),
+    // A SCRIPT_SYNTAX error's location, where the launch tools' compile check puts it (wb-9btr, EAT-R322 criterion 3; R322-V1).
+    ...(line !== undefined ? { line } : {}), ...(column !== undefined ? { column } : {}),
+  };
 }
 /** The designer's verdicts on the supplied request arguments; a member is absent when its argument was not supplied. */
 interface RequestChecks { readonly inputs?: WorkflowInputsVerdict; readonly bindings?: WorkflowBindingsVerdict }

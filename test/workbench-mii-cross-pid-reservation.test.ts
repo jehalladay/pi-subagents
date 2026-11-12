@@ -1,5 +1,5 @@
 /**
- * wb-yk1k (MII P03+ packet), cut #5 (the respin of cut #4 after refusal #4): EAT-R399 criterion 1 only, and two
+ * wb-yk1k (MII P03+ packet), cut #6 (the respin of cut #5 after refusal #5): EAT-R399 criterion 1 only, and two
  * in-process cases of the reservation-store form, R399-STORE-VALIDATION and R399-RECORD-NAMING, that pin forms the
  * comments of src/workbench/source-admission.ts state. Requirement text:
  * docs/workbench/programs/mechanical-interop-integrity-2026-11-10/requirements/ATOMIC-REQUIREMENTS.md at Pi master 347d58ea
@@ -95,11 +95,13 @@
  *     NOT_CLAIMED_OPENER, none if either line is missing or that one comes first), each of those lines matching
  *     BULLET_ID, a bullet's first line (after the comment prefix, three spaces, a case id of capitals, digits and
  *     hyphens, a colon, a space and a non-space), or BULLET_NEXT, one of its next lines (after the comment prefix, five
- *     spaces and a non-space), and no other line of this header matches BULLET_ID; every R399 case id the source of
- *     src/workbench/source-admission.ts cites is one of those ids; each declaration line SRC_CITATIONS names occurs in
- *     that source once, as a whole line; and the R399 case ids the source cites, in source order, are exactly the ids
- *     SRC_CITATIONS lists, each declaration's ids cited, in order, by the JSDoc comment that ends on the line right before
- *     it (the comments of WriterLeases, its constructor, acquire and reservationPath).
+ *     spaces and a non-space), and the first of those lines matching BULLET_ID, so each line matching BULLET_NEXT comes
+ *     after one matching BULLET_ID and is one of the next lines of the last such line before it; no other line of this
+ *     header matches BULLET_ID; every R399 case id the source of src/workbench/source-admission.ts cites is one of those
+ *     ids; each declaration line SRC_CITATIONS names occurs in that source once, as a whole line; and the R399 case ids
+ *     the source cites, in source order, are exactly the ids SRC_CITATIONS lists, each declaration's ids cited, in order,
+ *     by the JSDoc comment that ends on the line right before it (the comments of WriterLeases, its constructor, acquire
+ *     and reservationPath).
  * NOT CLAIMED by this census: EAT-R399 criteria 2 and 3 (a fresh process reading the persisted owner, generation and
  * custody state; a second registry in one process; the receipt's store facts; restart; acquisition-store failure). When
  * and how a reservation is released (EAT-R400, EAT-R403) is NOT CLAIMED by this census. The bead's other rows (EAT-R400
@@ -177,7 +179,7 @@ const BULLET_NEXT = /^ \* {5}\S/;
 const VENDORED_LINES_SHA256 = "e8d65ac05b6bafa4dbc508e8e59110d00db1d50310b14963b862b96748f42d89";
 /** This header's first sentence: R399-C1-SHAPE composes the header's opening paragraph from it and the fixture. */
 const SCOPE_SENTENCE =
-  "wb-yk1k (MII P03+ packet), cut #5 (the respin of cut #4 after refusal #4): EAT-R399 criterion 1 only, and two in-process cases of the reservation-store form, R399-STORE-VALIDATION and R399-RECORD-NAMING, that pin forms the comments of src/workbench/source-admission.ts state.";
+  "wb-yk1k (MII P03+ packet), cut #6 (the respin of cut #5 after refusal #5): EAT-R399 criterion 1 only, and two in-process cases of the reservation-store form, R399-STORE-VALIDATION and R399-RECORD-NAMING, that pin forms the comments of src/workbench/source-admission.ts state.";
 /**
  * R399-C1-SHAPE's label form: the statement, criterion <n> or the negative mutant, then a comma, the word line, a number and a
  * colon, in any letter case. The opening paragraph quotes each vendored line right after one such label.
@@ -218,7 +220,7 @@ const ROSTER = [
   "R399-C1-SHAPE the fixture's lines hash to the digest recorded from EAT-R399's lines 250-272 at 347d58ea; this header, the file's lines before its first import line, is one comment of printable ASCII lines in which the section words open its PINNED READER SET heading, its NOT CLAIMED paragraph and RESIDUAL_LINE, the line before its close, once each and in that order; in its prose QUOTE_LABEL matches only the three labels composed from the fixture, PAGE_WORDS and EVIDENCE_WORDS match once each, also in its upper- and lower-case copies, the three vendored quotes occur once each, and the opening paragraph holds six double quote marks and equals openingParagraph's; ALIAS_KINDS are criterion 1's alias kinds and ALIAS_PAIRS their frozen unordered pairs",
   "R399-STORE-VALIDATION with a store, the constructor and acquire throw their validation CapabilityErrors with their exact messages for the options, roots and invocations this case plants, and the store then holds no file",
   "R399-RECORD-NAMING one registry over one store acquires two sibling roots, one through a symlink: each lease names its realpath, holder names each invocation, and the store holds exactly the two record files named by the SHA-256 of each realpath",
-  "ROSTER the registered tests of this file are exactly these, in order, each run and none marked to fail, ROSTER last, their leading ids are the ids of this header's PINNED READER SET bullets, every line of that section a bullet's first line or one of its next lines and no other header line a bullet's first, and the R399 case ids src/workbench/source-admission.ts cites are among them and, in source order, exactly those SRC_CITATIONS lists, each cited by the JSDoc comment right before the declaration it is listed with",
+  "ROSTER the registered tests of this file are exactly these, in order, each run and none marked to fail, ROSTER last, their leading ids are the ids of this header's PINNED READER SET bullets, the lines after that heading and before the NOT CLAIMED paragraph opening with a bullet's first line, each of them a bullet's first line or one of its next lines, no other header line a bullet's first, and the R399 case ids src/workbench/source-admission.ts cites are among them and, in source order, exactly those SRC_CITATIONS lists, each cited by the JSDoc comment right before the declaration it is listed with",
 ] as const;
 
 /** The child: the real source-admission.ts module, one request on GO, held until FINISH. */
@@ -715,6 +717,7 @@ it(ROSTER[6], ({ task }) => {
   expect(registered.filter(entry => entry.mode !== "run" || entry.fails).map(entry => entry.name)).toEqual([]);
   expect(registered.findIndex(entry => entry.self)).toBe(registered.length - 1);
   expect(pinnedLines().filter(line => !(BULLET_ID.test(line) || BULLET_NEXT.test(line)))).toEqual([]);
+  expect(pinnedLines().findIndex(line => BULLET_ID.test(line))).toBe(0);
   expect(headerLines().filter(line => BULLET_ID.test(line))).toEqual(pinnedLines().filter(line => BULLET_ID.test(line)));
   expect(registered.map(entry => titleId(entry.name))).toEqual(headerIds());
   const source = readFileSync(MODULE, "utf8");
