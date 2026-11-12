@@ -26,6 +26,11 @@ const REPLY_TEXT_LIMIT = 4096;
 
 export interface WorkflowReconcileDeps {
   tasks: ReadonlyMap<string, WorkflowTask>;
+  /**
+   * A run this process holds no record of, recovered from the caller's own session task directory after a restart
+   * (wb-q0on, EAT-R357); undefined when there is none. The decision core still applies its scope check to it.
+   */
+  recover?(taskId: string, ctx: ExtensionContext): WorkflowTask | undefined;
   registryFor(cwd: string): CapabilityRegistry;
   grants(ctx: ExtensionContext): readonly string[];
   observerScope(ctx: ExtensionContext): ObservationScope;
@@ -80,7 +85,7 @@ export function createWorkflowReconcileTool(deps: WorkflowReconcileDeps) {
       acceptDuplicateRisk: Type.Optional(Type.Boolean()),
     }),
     execute: async (_id, params, signal, _onUpdate, ctx) => {
-      const task = deps.tasks.get(params.taskId);
+      const task = deps.tasks.get(params.taskId) ?? (/^wf_[a-z0-9-]{6,}$/.test(params.taskId) ? deps.recover?.(params.taskId, ctx) : undefined);
       const scope = deps.observerScope(ctx);
       const entries = task?.journalPath !== undefined ? readJournal(task.journalPath) : [];
       const receipts: readonly EvidenceReceipt[] = task?.reconcile?.receipts ?? [];

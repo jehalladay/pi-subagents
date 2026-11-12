@@ -21,7 +21,7 @@ import { CLAUDE_CAPABILITY_TOOL_NAMES, createCuratedTools } from "./claude-capab
 import { type HyperUnixObservedRelation, type HyperUnixProjectionTopology, hyperunixTopology } from "./hyperunix-observer.js";
 import type { NativeRef, NativeSnapshot, ObservationScope } from "./observation.js";
 import { sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "./redaction.js";
-import { type ClaudeReplayDependencies, replayDependenciesMeasured } from "./replay-dependencies.js";
+import { type ClaudeReplayDependencies, dependencyMeasured, replayDependenciesMeasured } from "./replay-dependencies.js";
 
 /** SDK query injection exists for the fixture integration suite, not a fallback backend. */
 export type ClaudeQuery = (params: { prompt: string; options: Options }) => AsyncIterable<SDKMessage>;
@@ -107,6 +107,36 @@ interface SessionEntry {
   systemPrompt?: string;
   cumulativeTokens?: number;
   cumulativeOutputTokens?: number;
+}
+
+/** The eight policy elements of the host's replay basis, in basis order (createClaudeWorkflowHost). */
+const BASIS_DIMENSIONS = ["cwd", "model", "permission mode", "setting sources", "tools", "roles", "grants", "principal"] as const;
+/** The readings of the basis's ninth element, in their order. */
+const READING_NAMES = ["source", "instructions", "provider"] as const;
+
+/**
+ * The first dimension in which a basis another Claude host recorded differs from `current` (wb-q0on, EAT-R361): a
+ * policy element by name, or one of the three replay dependency readings. Undefined when the recorded basis is absent
+ * or not this host's shape (another host's opaque basis), or when nothing differs. Never the basis text.
+ */
+function changedBasisDimension(recorded: string | undefined, current: string): string | undefined {
+  if (recorded === undefined) return undefined;
+  let before: unknown;
+  try {
+    before = JSON.parse(recorded);
+  } catch {
+    return undefined;
+  }
+  const now = JSON.parse(current) as unknown[];
+  if (!Array.isArray(before) || before.length < BASIS_DIMENSIONS.length || before.length > BASIS_DIMENSIONS.length + 1) return undefined;
+  const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
+  for (const [index, name] of BASIS_DIMENSIONS.entries()) if (!same(before[index], now[index])) return name;
+  const readingsBefore = before[BASIS_DIMENSIONS.length] as Record<string, unknown> | undefined;
+  const readingsNow = now[BASIS_DIMENSIONS.length] as Record<string, unknown> | undefined;
+  if (readingsBefore === undefined && readingsNow === undefined) return undefined;
+  if (readingsBefore === undefined || readingsNow === undefined || typeof readingsBefore !== "object" || readingsBefore === null) return "replay dependency readings";
+  for (const name of READING_NAMES) if (!same(readingsBefore[name], readingsNow[name])) return `${name} reading`;
+  return undefined;
 }
 
 const MODELS = new Map([
@@ -365,6 +395,17 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
     config.principal ?? null,
     ...(dependencies === undefined ? [] : [{ source: dependencies.source, instructions: dependencies.instructions, provider: dependencies.provider }]),
   ]);
+  const replaySafe = dependencies === undefined || replayDependenciesMeasured(dependencies);
+  /**
+   * Why settled replay is declined (wb-q0on, EAT-R361): the basis is measured-unavailable, and each reading that is not
+   * measured is named with its fixed reason, so a resume reports that rather than claiming a cache hit.
+   */
+  const replayUnsafeReason = replaySafe || dependencies === undefined ? undefined
+    : `replay basis measured-unavailable: ${READING_NAMES.flatMap(name => {
+      const reading = dependencies[name];
+      if (dependencyMeasured(reading)) return [];
+      return [reading.state === "unknown" ? `${name} reading unknown (${reading.reason})` : `${name} reading malformed`];
+    }).join("; ")}`;
 
   async function invoke(
     agentId: string,
@@ -546,8 +587,10 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
     // effect class rather than replayed the way agents are. A reading that is
     // not measured with a well-formed digest declines replay outright, agent
     // answers and node reads alike (wb-413a).
-    replaySafe: dependencies === undefined || replayDependenciesMeasured(dependencies),
+    replaySafe,
     replayBasis,
+    ...(replayUnsafeReason !== undefined ? { replayUnsafeReason } : {}),
+    describeBasisChange: recorded => changedBasisDimension(recorded, replayBasis),
     async spawnAgent(request) {
       const result = await invoke(request.agentId, request.prompt, request, undefined, request.onResolved);
       config.onSettled?.(result, request);
@@ -574,6 +617,10 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
     },
     loadWorkflow(ref: WorkflowScriptRef) { return resolveWorkflowSource(ref, config.cwd); },
     ...(config.capabilities ? {
+      // The registry's own pre-dispatch checks, before the runtime records a dispatch (wb-q0on, EAT-R358).
+      admitNode: (request: { capabilityId: string; input: JsonValue }) => {
+        config.capabilities!.precheck(request.capabilityId, request.input, { grants: config.grants ?? [] });
+      },
       callNode: async (request: WorkflowNodeRequest) => {
         await config.beforeDispatch?.();
         const observation = request.capabilityId === HYPERUNIX_FIND ? config.observation : undefined;

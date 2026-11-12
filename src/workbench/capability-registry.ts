@@ -3,8 +3,8 @@
  * A descriptor is discoverable only under discovery grants; invocation always
  * checks grants again. Providers and credentials never enter the script worker.
  */
-import { Check } from "typebox/value";
-import { redactWorkbenchText } from "./redaction.js";
+import { Check, Errors } from "typebox/value";
+import { redactWorkbenchText, sanitizeWorkbenchText } from "./redaction.js";
 
 export type JsonValue = null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue };
 
@@ -38,20 +38,69 @@ export interface CapabilityProvider {
 
 export type CapabilityErrorCategory = "validation" | "authorization" | "unavailable" | "transport" | "uncertain-effect";
 
+/**
+ * Where an input-schema refusal failed (wb-q0on, EAT-R363), as display text rather than an addressable reference:
+ * `path` is the validator's instance path of its first failure ("" for the input itself, "/target" for its target
+ * member, a property the refusal names appended as written) and `constraint` is fixed words for a type, required or
+ * additionalProperties failure and the validator's own message for any other keyword; both pass the shared sanitizer.
+ */
+export interface CapabilityInputDetail {
+  readonly path: string;
+  readonly constraint: string;
+}
+
 export interface CapabilityDiagnostic {
   name: "CapabilityError";
   category: CapabilityErrorCategory;
   message: string;
+  /** An input-schema refusal's first failing location (CapabilityInputDetail.path); absent for every other diagnostic. */
+  path?: string;
+  /** An input-schema refusal's failed constraint (CapabilityInputDetail.constraint); absent for every other diagnostic. */
+  constraint?: string;
 }
 
 export class CapabilityError extends Error {
   constructor(
     readonly category: CapabilityErrorCategory,
     message: string,
+    /** Set only on an input-schema refusal (EAT-R363). */
+    readonly detail?: CapabilityInputDetail,
   ) {
     super(message);
     this.name = "CapabilityError";
   }
+}
+
+/** The display bound of a refusal's path and constraint. */
+const INPUT_DETAIL_LIMIT = 256;
+
+/**
+ * The first failure Errors() reports for an input Check() refuses, as a CapabilityInputDetail (EAT-R363): the
+ * validator's instance path and keyword, with the schema's own parameters for a required or additionalProperties
+ * failure; the path and the constraint each pass the shared sanitizer's text layout.
+ */
+function firstInputFailure(schema: Record<string, unknown>, value: unknown): CapabilityInputDetail {
+  const [first] = Errors(schema, value);
+  const bounded = (path: string, constraint: string): CapabilityInputDetail => ({
+    path: sanitizeWorkbenchText(path, INPUT_DETAIL_LIMIT, "text"),
+    constraint: sanitizeWorkbenchText(constraint, INPUT_DETAIL_LIMIT, "text"),
+  });
+  if (first === undefined) return bounded("", "does not match the capability's input schema");
+  const params = first.params as Record<string, unknown>;
+  if (first.keyword === "required" && Array.isArray(params.requiredProperties) && typeof params.requiredProperties[0] === "string") {
+    return bounded(`${first.instancePath}/${params.requiredProperties[0]}`, "is required");
+  }
+  if (first.keyword === "additionalProperties" && Array.isArray(params.additionalProperties) && typeof params.additionalProperties[0] === "string") {
+    return bounded(`${first.instancePath}/${params.additionalProperties[0]}`, "is not an allowed property");
+  }
+  // A `false` subschema: under additionalProperties, a key the schema does not allow.
+  if (first.keyword === "boolean" && first.schemaPath.endsWith("/additionalProperties")) {
+    return bounded(first.instancePath, "is not an allowed property");
+  }
+  if (first.keyword === "type" && (typeof params.type === "string" || Array.isArray(params.type))) {
+    return bounded(first.instancePath, `must be ${[params.type].flat().join(" or ")}`);
+  }
+  return bounded(first.instancePath, first.message);
 }
 
 const CAPABILITY_ID = /^[a-z][a-z0-9]*(?:[.-][a-z][a-z0-9]*)+$/;
@@ -366,11 +415,22 @@ export class CapabilityRegistry {
     return this.dispatch("inspect", id, ref, context);
   }
 
-  private async dispatch(mode: "invoke" | "inspect", id: string, input: unknown, context: InvocationContext): Promise<JsonValue> {
+  /**
+   * The invoke-mode admission dispatch applies before any provider runs, as a check a host can make before it records
+   * a dispatch (wb-q0on, EAT-R358): an unknown id, a missing invocation grant, an unsupported mode, an input outside the
+   * JSON boundary and an input the schema refuses each throw the CapabilityError that invoke() would, and nothing is
+   * invoked either way. The same checks, in the same order, as invoke() runs them (preflight).
+   */
+  precheck(id: string, input: unknown, context: Pick<InvocationContext, "grants">): void {
+    this.preflight("invoke", id, input, context.grants);
+  }
+
+  /** Every check dispatch makes before a provider can start; throws the refusal, or returns what dispatch goes on with. */
+  private preflight(mode: "invoke" | "inspect", id: string, input: unknown, contextGrants: readonly string[] | undefined) {
     const provider = this.providers.get(id);
     if (!provider) throw new CapabilityError("unavailable", `Unknown or unavailable capability: ${id}.`);
     const { descriptor } = provider;
-    const grants = Array.isArray(context.grants) ? [...context.grants] : [];
+    const grants = Array.isArray(contextGrants) ? [...contextGrants] : [];
     const permitted = mode === "inspect" ? grants.includes(`inspect:${id}`)
       : descriptor.permissions.length === 0 ? grants.includes(`invoke:${id}`)
       : descriptor.permissions.every(grant => grants.includes(grant));
@@ -380,8 +440,14 @@ export class CapabilityRegistry {
     }
     const value = validatedCapabilityJson(input, capabilityInputPath(mode, id), this.maxDepth, this.maxBytes);
     if (mode === "invoke" && !Check(descriptor.inputSchema, value)) {
-      throw new CapabilityError("validation", `Invalid input schema for capability ${id}.`);
+      // The message stays the one sentence every surface already pins; where it failed rides as typed detail (EAT-R363).
+      throw new CapabilityError("validation", `Invalid input schema for capability ${id}.`, firstInputFailure(descriptor.inputSchema, value));
     }
+    return { provider, descriptor, grants, value };
+  }
+
+  private async dispatch(mode: "invoke" | "inspect", id: string, input: unknown, context: InvocationContext): Promise<JsonValue> {
+    const { provider, descriptor, grants, value } = this.preflight(mode, id, input, context.grants);
     if (context.signal.aborted) throw new CapabilityError("transport", `Capability ${id} was cancelled before invocation.`);
     const controller = new AbortController();
     const pinnedContext: InvocationContext = {
