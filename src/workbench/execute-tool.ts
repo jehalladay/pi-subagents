@@ -31,6 +31,33 @@
  * Review assertion for a detached launch: the local detached host admits only a reviewed script. Here the review is
  * the operator's own: a digest-pinned definition that matches the saved source bytes inside the workspace, launched
  * under the execute+detach conjunction the operator granted. A model-supplied policy never stands in for that.
+ *
+ * The function branch (wb-4bxo, packet P04 of mechanical-native-interoperability-2026-11-09: EAT-R235..EAT-R241 of its
+ * requirements/ATOMIC-REQUIREMENTS.md at 18b016b2, extending EAT-R032..EAT-R035 and EAT-R155). It exists only where the host
+ * composes function hosting (WorkflowExecuteDeps.functions; src/index.ts takes it from SubagentsExtensionInjection.functionHosting,
+ * which no Pi session sets), so in a Pi session a function definition refuses as unsupported-definition-kind exactly as before,
+ * and so does a furnace-formula definition wherever hosting is composed. Where it is composed, a function definition admitted
+ * by decideExecute is judged before the detach conjunction and the script path, in this order, each claim held to the cases of
+ * test/workbench-registered-function.test.ts named
+ * beside it, all driven through the tool objects src/index.ts registers with one injected installed host (evidence level V3,
+ * injected callbacks; never MechanicalWorkflows' native exit of the same label):
+ *  1. the definition id names a reviewed entrypoint of MECHANICAL_REVIEWED_ENTRYPOINTS by strict equality, else
+ *     unsupported-definition-kind with its own fixed reason and no host read (RF04);
+ *  2. only an embedded launch is hosted, with or without workbench:detach held, else unsupported-definition-kind with its own
+ *     fixed reason and no host read (RF12);
+ *  3. dispatchFunctionChain (function-dispatch-chain.ts) judges entry authority, the installed package, source admission and the
+ *     final boundary; a refusal there replies launch-failed, its reason the deciding layer's own code then that layer's fixed
+ *     reason, and starts nothing (RF06, RF07, RF09, RF10);
+ *  4. the chain's one effect is the host's run of the function: the reply returns launched, completion not-asserted, once the
+ *     host reports its native references, while the run, and with it the chain's writer lease, continues until it settles
+ *     (RF01, RF03, RF15); the host receives the request input as a frozen JSON copy (RF13); a host that rejects at start replies
+ *     launch-failed (RF14).
+ * The branch adds no refusal code to the reply: ExecuteErrorCode keeps its members, and a function refusal/recovery code
+ * mapping is the joint P00 vocabulary ruling (MII EAT-R419), NOT CLAIMED here.
+ * NOT CLAIMED here: an adopted action spelling (FUNCTION_ACTION_CONTRACT stays unadopted, so the shipped contract refuses every
+ * function dispatch as function-action-unadopted, RF10); a real installed MechanicalWorkflows package or native evidence (P07);
+ * the definition's artifact digest compared against anything here (the package host's admission is packet P02's); the
+ * projection of a Mechanical outcome (P05); controls, cancellation and the journal (P06).
  */
 import { defineTool, type ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { Type } from "typebox";
@@ -48,9 +75,20 @@ import {
   type WorkflowExecuteReply,
   type WorkflowExecuteRequest,
 } from "./execute.js";
-import type { DefinitionRef } from "./identity.js";
+import type { FunctionActionContract } from "./function-authority.js";
+import {
+  dispatchFunctionChain,
+  type FunctionChainGrant,
+  type FunctionChainHost,
+  type FunctionChainRefused,
+  type FunctionPackageHost,
+  type FunctionSdkHost,
+} from "./function-dispatch-chain.js";
+import { type DefinitionRef, withoutBeadsNotes } from "./identity.js";
+import { MECHANICAL_REVIEWED_ENTRYPOINTS, type MechanicalReviewedEntrypoint } from "./mechanical-descriptor.js";
 import type { NativeRef, ObservationScope } from "./observation.js";
 import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText } from "./redaction.js";
+import type { SourceAdmissionHost } from "./source-admission.js";
 import { TOOL_REPLY_CONTRACT_VERSION } from "./tool-replies.js";
 
 /** The second half of the detached conjunction; the first is EXECUTE_GRANT from the pure module. */
@@ -86,6 +124,52 @@ export interface ExecuteLaunch {
   readonly admissionPolicy: typeof EXECUTE_ADMISSION_POLICY;
 }
 
+/** What a function launch's one effect receives: the reviewed entry, the input as JSON data and the grant the chain decided. */
+export interface ExecuteFunctionLaunch {
+  readonly invocationId: string;
+  readonly toolCallId: string;
+  readonly definition: Readonly<DefinitionRef>;
+  readonly entrypoint: Readonly<MechanicalReviewedEntrypoint>;
+  readonly input: JsonValue;
+  readonly inputDigest: string;
+  readonly grant: FunctionChainGrant;
+  readonly scope: { readonly workspace: string; readonly principal: string; readonly sessionId: string };
+}
+/** The function branch's host seams (packet P04); absent, a function definition refuses as unsupported-definition-kind. */
+export interface WorkflowFunctionDeps {
+  /** The function action contract in force; only a contract adoptFunctionActions returned authorizes a dispatch. */
+  readonly contract: FunctionActionContract;
+  /** The composed chain host of this call: authority reads from host context, source admission, the installed package and the SDK edge. */
+  chainHost(ctx: ExtensionContext): FunctionChainHost;
+  /**
+   * The chain's one effect, the function's run: it reports the host's native references through started() once the host has
+   * accepted the work, and settles only when the run settles, so the chain's writer lease covers the whole run.
+   */
+  run(ctx: ExtensionContext, launch: ExecuteFunctionLaunch, started: (nativeRefs: readonly NativeRef[]) => void): Promise<void>;
+}
+/** What the installed host is asked to start: serializable data and the frozen chain grant, never a callback the request supplies. */
+export interface FunctionHostStart {
+  readonly invocationId: string;
+  readonly entrypoint: Readonly<MechanicalReviewedEntrypoint>;
+  readonly definition: Readonly<DefinitionRef>;
+  readonly input: JsonValue;
+  readonly grant: FunctionChainGrant;
+  readonly signal: AbortSignal;
+}
+/** The installed host's answer once it accepted the work: its native references now, the run's settlement later. */
+export interface FunctionHostStarted {
+  readonly nativeRefs: readonly NativeRef[];
+  readonly settled: Promise<unknown>;
+}
+/** Function hosting a host composes for workflow_execute (packet P04); the model never names any part of it. */
+export interface WorkflowFunctionHosting {
+  readonly contract: FunctionActionContract;
+  readonly source: SourceAdmissionHost;
+  readonly package: FunctionPackageHost;
+  readonly sdk?: FunctionSdkHost;
+  start(request: FunctionHostStart): Promise<FunctionHostStarted>;
+}
+
 export interface WorkflowExecuteDeps {
   grants(ctx: ExtensionContext): readonly string[];
   observerScope(ctx: ExtensionContext): ObservationScope;
@@ -101,6 +185,8 @@ export interface WorkflowExecuteDeps {
   launchDetached(ctx: ExtensionContext, launch: ExecuteLaunch): Promise<readonly NativeRef[]>;
   /** Host-set cap for the model-facing text; clamped into the pure module's accepted interval. */
   replyMaxBytes?: number;
+  /** The function branch (packet P04); a host that composes no function hosting leaves it absent. */
+  functions?: WorkflowFunctionDeps;
 }
 
 /** The one envelope the model reads. `invoked` is the ruled exception to tool-reply's constant false. */
@@ -133,6 +219,60 @@ function message(error: unknown): string {
 
 function refusedLaunch(code: ExecuteLaunchRefusal, reason: string): { outcome: LaunchOutcome; code: ExecuteLaunchRefusal } {
   return { outcome: { status: "refused", reason }, code };
+}
+
+/** A JSON copy of a value, frozen at every object and list: the host never holds the request's own objects. */
+function frozenJson(value: unknown): JsonValue {
+  const freeze = (item: JsonValue): JsonValue => {
+    if (typeof item === "object" && item !== null) {
+      for (const member of Object.values(item)) freeze(member);
+      Object.freeze(item);
+    }
+    return item;
+  };
+  return freeze(JSON.parse(JSON.stringify(value ?? null)) as JsonValue);
+}
+/** A chain refusal's reason as the reply carries it: the deciding layer's own code, then that layer's fixed reason. */
+function chainRefusal(refused: FunctionChainRefused): string {
+  if (refused.layer === "authority") return `${refused.refusal.policy}: ${refused.refusal.reason}`;
+  return `${refused.refusal.code}: ${refused.refusal.reason}`;
+}
+type FunctionLaunchResult = { readonly nativeRefs: readonly NativeRef[] } | { readonly code: ExecuteLaunchRefusal; readonly reason: string };
+/**
+ * The function branch's steps 1 to 4 (module header). The chain runs on after the reply: its writer lease is held until the
+ * function's run settles, and a rejection after the host started is the run's own record (src/index.ts records it on the task).
+ */
+async function launchFunction(
+  functions: WorkflowFunctionDeps,
+  ctx: ExtensionContext,
+  toolCallId: string,
+  admission: ExecuteAdmission,
+  input: unknown,
+  scope: ExecuteFunctionLaunch["scope"],
+): Promise<FunctionLaunchResult> {
+  const { definition, invocationId } = admission;
+  const entrypoint = MECHANICAL_REVIEWED_ENTRYPOINTS.find(entry => entry.id === definition.id);
+  if (entrypoint === undefined) return { code: "unsupported-definition-kind", reason: "the definition names no reviewed Mechanical entrypoint" };
+  if (admission.hostMode !== "embedded") return { code: "unsupported-definition-kind", reason: "only an embedded function launch is hosted" };
+  const data = frozenJson(withoutBeadsNotes(input));
+  let report: (nativeRefs: readonly NativeRef[]) => void = () => undefined;
+  const started = new Promise<readonly NativeRef[]>(resolve => {
+    report = resolve;
+  });
+  try {
+    const chain = dispatchFunctionChain({ admission, contract: functions.contract, workspace: scope.workspace }, functions.chainHost(ctx), grant =>
+      functions.run(ctx, Object.freeze({ invocationId, toolCallId, definition, entrypoint, input: data, inputDigest: admission.inputDigest, grant, scope }), nativeRefs =>
+        report(nativeRefs),
+      ),
+    );
+    chain.catch(() => undefined);
+    const first = await Promise.race([started.then(nativeRefs => ({ nativeRefs })), chain.then(outcome => ({ outcome }))]);
+    if ("nativeRefs" in first) return first;
+    if (first.outcome.status === "refused") return { code: "launch-failed", reason: chainRefusal(first.outcome) };
+    return { code: "launch-failed", reason: "the installed host settled the run without reporting a native reference" };
+  } catch (error) {
+    return { code: "launch-failed", reason: message(error) };
+  }
 }
 
 /**
@@ -204,6 +344,14 @@ export function createWorkflowExecuteTool(deps: WorkflowExecuteDeps) {
         return textResult(sanitizeWorkbenchJsonText(envelope(buildWorkflowExecuteReply(decision, undefined, maxBytes), undefined, maxBytes, scope.workspace), maxBytes));
       }
       const { admission } = decision;
+      // The function branch (module header): only where hosting is composed, decided before the detach conjunction and the script path.
+      if (admission.definition.kind === "function" && deps.functions !== undefined) {
+        const launchScope = Object.freeze({ workspace: scope.workspace, principal: scope.principal, sessionId: deps.sessionIdOf(ctx) });
+        const launched = await launchFunction(deps.functions, ctx, toolCallId, admission, params.input, launchScope);
+        const result: { outcome: LaunchOutcome; code: ExecuteLaunchRefusal | undefined } =
+          "nativeRefs" in launched ? { outcome: { status: "launched", nativeRefs: launched.nativeRefs }, code: undefined } : refusedLaunch(launched.code, launched.reason);
+        return textResult(sanitizeWorkbenchJsonText(envelope(buildWorkflowExecuteReply(decision, result.outcome, maxBytes), result.code, maxBytes, scope.workspace), maxBytes));
+      }
       let launchCode: ExecuteLaunchRefusal | undefined;
       let outcome: LaunchOutcome;
       const refuse = (code: ExecuteLaunchRefusal, reason: string): void => {
