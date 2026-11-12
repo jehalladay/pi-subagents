@@ -35,27 +35,34 @@
  * The function branch (wb-4bxo, packet P04 of mechanical-native-interoperability-2026-11-09: EAT-R235..EAT-R241 of its
  * requirements/ATOMIC-REQUIREMENTS.md at 18b016b2, extending EAT-R032..EAT-R035 and EAT-R155). It exists only where the host
  * composes function hosting (WorkflowExecuteDeps.functions; src/index.ts takes it from SubagentsExtensionInjection.functionHosting,
- * which no Pi session sets), so in a Pi session a function definition refuses as unsupported-definition-kind exactly as before,
- * and so does a furnace-formula definition wherever hosting is composed. Where it is composed, a function definition admitted
- * by decideExecute is judged before the detach conjunction and the script path, in this order, each claim held to the cases of
- * test/workbench-registered-function.test.ts named
- * beside it, all driven through the tool objects src/index.ts registers with one injected installed host (evidence level V3,
- * injected callbacks; never MechanicalWorkflows' native exit of the same label):
- *  1. the definition id names a reviewed entrypoint of MECHANICAL_REVIEWED_ENTRYPOINTS by strict equality, else
- *     unsupported-definition-kind with its own fixed reason and no host read (RF04);
+ * which no Pi session sets), so in a Pi session a function definition refuses as unsupported-definition-kind exactly as before
+ * (RF11b), and so does a furnace-formula definition wherever hosting is composed (RF05). Where it is composed, a function
+ * definition admitted by decideExecute is judged before the detach conjunction and the script path, in this order, each claim
+ * held to the cases of test/workbench-registered-function.test.ts named beside it, all driven through the tool objects
+ * src/index.ts registers with one injected installed host (evidence level V3, injected callbacks; never MechanicalWorkflows'
+ * native exit of the same label):
+ *  1. the definition id names a reviewed entrypoint of MECHANICAL_REVIEWED_ENTRYPOINTS by strict equality, so an id that only
+ *     extends a reviewed id or names it in another letter case matches none; else unsupported-definition-kind with its own
+ *     fixed reason and no package, Git or host call (RF04);
  *  2. only an embedded launch is hosted, with or without workbench:detach held, else unsupported-definition-kind with its own
- *     fixed reason and no host read (RF12);
- *  3. dispatchFunctionChain (function-dispatch-chain.ts) judges entry authority, the installed package, source admission and the
- *     final boundary; a refusal there replies launch-failed, its reason the deciding layer's own code then that layer's fixed
- *     reason, and starts nothing (RF06, RF07, RF09, RF10);
+ *     fixed reason and no package, Git or host call (RF12);
+ *  3. dispatchFunctionChain (function-dispatch-chain.ts) judges entry authority, the SDK edge's rights, the installed package,
+ *     source admission and the final boundary; a refusal there replies launch-failed, its reason the deciding layer's own code
+ *     then that layer's fixed reason, and starts nothing: authority (RF06 and RF10 at entry, RF09 at the final boundary), the
+ *     SDK edge (RF17), the installed package (RF08), source admission (RF07, RF15);
  *  4. the chain's one effect is the host's run of the function: the reply returns launched, completion not-asserted, once the
  *     host reports its native references, while the run, and with it the chain's writer lease, continues until it settles
- *     (RF01, RF03, RF15); the host receives the request input as a frozen JSON copy (RF13); a host that rejects at start replies
- *     launch-failed (RF14).
+ *     (RF01, RF03, RF15); the host's start receives the chain's frozen grant (RF01; with an SDK edge, its rights, RF17b) and the
+ *     input decideExecute admitted for a function definition: the request input through withoutBeadsNotes (identity.ts,
+ *     EAT-R154, location-scoped under the owner ruling U8), which omits a Beads note at the locations RF13b lists and never
+ *     invokes it (RF13c) while a caller's own notes member at the other forms RF13b lists reaches the host byte for byte,
+ *     the host's input digesting to the admission's input digest (RF13b), as a JSON copy frozen at every object and list
+ *     (RF13); a host that rejects at start replies launch-failed (RF14).
  * The branch adds no refusal code to the reply: ExecuteErrorCode keeps its members, and a function refusal/recovery code
  * mapping is the joint P00 vocabulary ruling (MII EAT-R419), NOT CLAIMED here.
- * NOT CLAIMED here: an adopted action spelling (FUNCTION_ACTION_CONTRACT stays unadopted, so the shipped contract refuses every
- * function dispatch as function-action-unadopted, RF10); a real installed MechanicalWorkflows package or native evidence (P07);
+ * NOT CLAIMED here: an adopted action spelling (FUNCTION_ACTION_CONTRACT stays unadopted, so under the shipped contract the
+ * reviewed function's dispatch refuses as function-action-unadopted, RF10); a real installed MechanicalWorkflows package or
+ * native evidence (P07);
  * the definition's artifact digest compared against anything here (the package host's admission is packet P02's); the
  * projection of a Mechanical outcome (P05); controls, cancellation and the journal (P06).
  */
@@ -139,7 +146,7 @@ export interface ExecuteFunctionLaunch {
 export interface WorkflowFunctionDeps {
   /** The function action contract in force; only a contract adoptFunctionActions returned authorizes a dispatch. */
   readonly contract: FunctionActionContract;
-  /** The composed chain host of this call: authority reads from host context, source admission, the installed package and the SDK edge. */
+  /** The composed chain host of this call: authority reads from host context, source admission, the installed package and the SDK edge (RF17, RF17b). */
   chainHost(ctx: ExtensionContext): FunctionChainHost;
   /**
    * The chain's one effect, the function's run: it reports the host's native references through started() once the host has
@@ -147,7 +154,7 @@ export interface WorkflowFunctionDeps {
    */
   run(ctx: ExtensionContext, launch: ExecuteFunctionLaunch, started: (nativeRefs: readonly NativeRef[]) => void): Promise<void>;
 }
-/** What the installed host is asked to start: serializable data and the frozen chain grant, never a callback the request supplies. */
+/** What the installed host is asked to start: the reviewed entry, the definition, the input as frozen JSON data, the chain's frozen grant and an AbortSignal. */
 export interface FunctionHostStart {
   readonly invocationId: string;
   readonly entrypoint: Readonly<MechanicalReviewedEntrypoint>;
@@ -221,7 +228,7 @@ function refusedLaunch(code: ExecuteLaunchRefusal, reason: string): { outcome: L
   return { outcome: { status: "refused", reason }, code };
 }
 
-/** A JSON copy of a value, frozen at every object and list: the host never holds the request's own objects. */
+/** A JSON copy of a value, frozen at every object and list, so the host holds none of the request's own objects (RF13). */
 function frozenJson(value: unknown): JsonValue {
   const freeze = (item: JsonValue): JsonValue => {
     if (typeof item === "object" && item !== null) {
@@ -232,7 +239,7 @@ function frozenJson(value: unknown): JsonValue {
   };
   return freeze(JSON.parse(JSON.stringify(value ?? null)) as JsonValue);
 }
-/** A chain refusal's reason as the reply carries it: the deciding layer's own code, then that layer's fixed reason. */
+/** A chain refusal's reason as the reply carries it: the deciding layer's own code, then that layer's fixed reason (RF06-RF10, RF15, RF17). */
 function chainRefusal(refused: FunctionChainRefused): string {
   if (refused.layer === "authority") return `${refused.refusal.policy}: ${refused.refusal.reason}`;
   return `${refused.refusal.code}: ${refused.refusal.reason}`;

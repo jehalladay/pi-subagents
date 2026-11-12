@@ -5,46 +5,69 @@
  * never MechanicalWorkflows' native exit of the same name).
  *
  * Requirements (docs/workbench/programs/mechanical-native-interoperability-2026-11-09/requirements/ATOMIC-REQUIREMENTS.md at
- * 18b016b2; the Nov-4 and Nov-6 lineage EAT-R032..EAT-R035 and EAT-R155 at 0b25e14e and d7666a76):
+ * 18b016b2; the Nov-4 and Nov-6 lineage EAT-R032..EAT-R035 and EAT-R155 at 0b25e14e and d7666a76), each beside the cases that
+ * pin it; where the cases pin less than the quoted criterion, the line names what they pin and what is NOT CLAIMED:
  *   EAT-R235 AC1 "the actual registered tool object, invoked with kind:function and one injected installed host, executes exactly
  *            one function ... and returns one logical invocation ID and a native ref" (RF01); AC2 "Assert workflow_observe finds
- *            the invocation by that ID" (RF02); AC4 "a non-allowlisted function id is refused with zero producer-host calls" (RF04).
+ *            the invocation by that ID" (RF02); AC3 (this file red at the pre-implementation baseline) is the receipt's red
+ *            record, not a case; AC4 "a non-allowlisted function id is refused with zero producer-host calls" (RF04).
  *   EAT-R236 AC2 "the registered tool list contains exactly one workflow-execute surface and no duplicate workflow tool names"
  *            (RF11).
  *   EAT-R237 AC1 "kind:furnace-formula -> explicit unsupported diagnostic; assert zero source loads, zero producer-host/module
- *            imports, zero Forge dispatches" (RF05; EAT-R155 "while the same request shape with kind function ... proceeds").
+ *            imports, zero Forge dispatches": RF05 pins the diagnostic with zero package, Git and host calls; module imports and
+ *            Forge dispatches are NOT CLAIMED by this suite (no case counts them). EAT-R155 "while the same request shape with
+ *            kind function ... proceeds" (RF05).
  *   EAT-R238 AC1 "for each of {arbitrary function id (A01), absent grant (A06), dirty workspace (A10)} the registered tool refuses
- *            with zero user-loader calls, zero writer calls and zero Forge dispatches" (RF04, RF06, RF07); AC2 "a fully valid
- *            invocation reaches exactly one dispatch" (RF01); AC3 the final rights re-read (RF09).
+ *            with zero user-loader calls, zero writer calls and zero Forge dispatches": RF04 (A01) and RF06 (A06) pin zero
+ *            package, Git and host calls; RF07 (A10) pins one package admission, then zero package re-reads and zero host starts
+ *            (the installation barrier comes before source admission); user-loader calls and Forge dispatches are NOT CLAIMED by
+ *            this suite (no case counts them). AC2 "a fully valid invocation reaches exactly one dispatch" (RF01); AC3 the final
+ *            rights re-read (RF09); AC4 (no await between the final decision and the dispatch) is NOT CLAIMED by this suite (the
+ *            P03 chain suite's EAT-R234 rows pin it).
  *   EAT-R239 AC1 "the reply's invocation record and the store's task record share the same ID" (RF02).
  *   EAT-R240 AC1 "with the injected host parked on a barrier, the tool reply returns before the host completes and carries
  *            completion: not-asserted, the invocation ID and native refs"; AC2 "After releasing the barrier, workflow_observe
  *            reports the settled outcome for the same invocation ID" (RF03, RF03b).
+ *   EAT-R241 AC1 "The emitted P04 receipt names evidence_level: V3 ... adjacent to the PI-FUNCTION-REGISTERED label" (RF18, for
+ *            this cut's receipt only; a scan over other receipts is NOT CLAIMED by this suite).
  *   EAT-R032 "tool promptly returns launched with one invocation ID and completion not-asserted; observer later receives
- *            terminal state" (RF03); EAT-R033 "Disabling Mechanical hosting MUST preserve script workflow behavior" (RF11: no
- *            hosting composed, a function definition still refuses as before); EAT-R034 "worker inputs contain only
- *            serializable data and cannot install or replace callbacks" (RF13).
- * Beyond the requirement rows: the shipped contract still freezes every function dispatch (RF10), a detached function launch
- * is not hosted (RF12), a host that rejects at start launches nothing and leaves no task (RF14), and the chain's writer lease
- * covers the function's whole run, not only its start (RF15). Refusals keep the shipped code vocabulary: an unreviewed id or
- * placement is unsupported-definition-kind with its own fixed reason, and a composed-chain refusal is launch-failed whose reason
- * names the deciding layer's code first (each case pins the exact reason).
+ *            terminal state" (RF03); EAT-R033 "Disabling Mechanical hosting MUST preserve script workflow behavior" (RF11, RF11b:
+ *            no hosting composed, a function definition still refuses as before); EAT-R034 "worker inputs contain only
+ *            serializable data and cannot install or replace callbacks" (RF13, RF13b, RF13c).
+ * Owner ruling U8 (2026-11-12, on the bead): withoutBeadsNotes is location-scoped, never name-scoped. RF13b lists four Beads
+ * note locations the host's input omits (the input's own notes member, and an export row's under a member, three objects deep
+ * and in a list) and six forms of a caller's own notes member it keeps byte for byte (in a record under a member, two records
+ * deep, in a record in a list of the input, and in records lacking a string id or a string status), the host's input digesting
+ * to the admission's input digest in each; RF13c pins that a notes getter at the input's own top level is never invoked.
+ * Beyond the requirement rows: under the shipped contract a function dispatch stays frozen (RF10); a detached function launch is
+ * not hosted (RF12); a host that rejects at start launches nothing and leaves no task (RF14); the chain's writer lease covers the
+ * function's whole run, not only its start (RF15); the invocation is in the task store when the host's start runs (RF16); with
+ * an SDK edge composed and its rights held, the host's grant carries exactly those rights (RF17b). Matching a reviewed id is
+ * strict equality: an id that only extends the reviewed id, or names it in another letter case, is unreviewed (RF04). Refusals
+ * keep the shipped code vocabulary: an unreviewed id or placement is unsupported-definition-kind with its own fixed reason
+ * (RF04, RF12), and a composed-chain refusal is launch-failed whose reason is the deciding layer's own code then that layer's
+ * fixed reason, each case pinning the exact reason: authority (RF06, RF09, RF10), the SDK edge (RF17), the installed package
+ * (RF08) and source admission (RF07, RF15).
  *
  * NOT CLAIMED by this suite: a real installed MechanicalWorkflows package or its native outcome (P07, V4); any Pi session
- * composing function hosting from settings (no setting enables it, so a Pi session refuses every function definition as
- * unsupported-definition-kind, RF11); an adopted action spelling (the fixture contract binds the TEST FIXTURE spelling
- * fixture-fn:develop-write, as the P03 suite does; the shipped FUNCTION_ACTION_CONTRACT stays unadopted, RF10); the projection of
- * the original Mechanical outcome (P05); controls, cancellation and journal (P06); and the A01-A14 sweep (P08).
+ * composing function hosting from settings (no setting enables it; RF11b pins the refusal where none is composed); an adopted
+ * action spelling (the fixture contract binds the TEST FIXTURE spelling fixture-fn:develop-write, as the P03 suite does; the
+ * shipped FUNCTION_ACTION_CONTRACT stays unadopted, RF10); notes members at forms RF13b does not list (the caller policy's
+ * locations, its list rule among them, are the function-authority suite's EAT-R154 rows); the projection of the original
+ * Mechanical outcome (P05);
+ * controls, cancellation and journal (P06); and the A01-A14 sweep (P08).
  */
 import { execFileSync } from "node:child_process";
-import { realpathSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { readFileSync, realpathSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
 import subagentsExtension from "../src/index.js";
 import type { JsonValue } from "../src/workbench/capability-registry.js";
 import { decideExecute, EXECUTE_GRANT } from "../src/workbench/execute.js";
 import { DETACH_GRANT, type FunctionHostStart, type FunctionHostStarted, type WorkflowFunctionHosting } from "../src/workbench/execute-tool.js";
 import { adoptFunctionActions, FUNCTION_ACTION_CONTRACT, type FunctionActionContract } from "../src/workbench/function-authority.js";
+import { identityDigest } from "../src/workbench/identity.js";
 import { MECHANICAL_REVIEWED_ENTRYPOINTS } from "../src/workbench/mechanical-descriptor.js";
 import type { NativeRef } from "../src/workbench/observation.js";
 import { measureSourceIdentity, type SourceAdmissionHost, type SourceGitReader, WriteBoundaryAuthority, WriterLeases } from "../src/workbench/source-admission.js";
@@ -75,6 +98,17 @@ const MISSING_ACTION = "missing-function-action-grant: missing the exact functio
 const UNADOPTED = "function-action-unadopted: no exact function action grant is adopted for this definition (MW-CONTRACT)";
 const DIRTY_BASE = "dirty-base: git status lists tracked, staged or untracked edits of the implementation base";
 const WRITER_HELD = "writer-held: the writer lease of this canonical workspace is held";
+const PACKAGE_UNADMITTED = "package-unadmitted: the installed producer package was not admitted";
+const MISSING_SDK_RIGHT = "missing-sdk-right: missing an exact SDK right the function's native session requires";
+/** workflow_observe's reply for an invocation outside the reader's scope or absent from the store. */
+const UNAVAILABLE = "Workflow unavailable in this local operator/session/workspace scope.";
+/** The SDK rights an SDK edge configuring the one Claude tool Read requires: claude:invoke, then that tool's exact right. */
+const SDK_RIGHTS: readonly string[] = ["claude:invoke", "claude:tool:Read"];
+const REPO = join(dirname(fileURLToPath(import.meta.url)), "..");
+/** The receipt this cut adds (EAT-R241). */
+const RECEIPT = join(REPO, "docs", "workbench", "receipts", "wb-4bxo.md");
+const LABEL = "PI-FUNCTION-REGISTERED";
+const LEVEL = " evidence_level: V3";
 
 const FIXTURE_GIT: readonly string[] = ["-c", "user.name=Pi P04 Fixture", "-c", "user.email=p04-fixture@example.invalid", "-c", "commit.gpgsign=false", "-c", "core.hooksPath=/dev/null", "-c", "init.defaultBranch=main"];
 /** Variables that point git at another repository, index or object store than the directory it runs in. */
@@ -141,6 +175,12 @@ interface WorldOptions {
   /** How the injected host's run settles: open by the case (default), resolved at once, or rejected at once. */
   readonly settle?: "barrier" | "resolved" | "rejected";
   readonly startRejects?: boolean;
+  /** The installed package's admission answers no identity, so the installation barrier refuses. */
+  readonly packageUnadmitted?: boolean;
+  /** The Claude tools of an SDK edge the hosting composes; absent, the hosting composes no SDK edge. */
+  readonly sdkTools?: readonly string[];
+  /** Inside the installed host's start, before it answers, read the invocation through workflow_observe. */
+  readonly observeAtStart?: boolean;
 }
 
 let sandbox: Hermetic | undefined;
@@ -195,22 +235,26 @@ async function boot(options: WorldOptions = {}) {
   };
   const settles: Barrier<unknown>[] = [];
   const starts: FunctionHostStart[] = [];
+  const observedAtStart: (Observed | string)[] = [];
+  let observeHook: ((taskId: string) => Promise<Observed | string>) | undefined;
   const hosting: WorkflowFunctionHosting = {
     contract: options.contract ?? CONTRACT,
     source,
     package: {
       admit: async () => {
         calls.admit += 1;
-        return PACKAGE;
+        return options.packageUnadmitted ? undefined : PACKAGE;
       },
       current: () => {
         calls.current += 1;
         return PACKAGE;
       },
     },
+    ...(options.sdkTools !== undefined ? { sdk: { tools: () => options.sdkTools } } : {}),
     start: async (request: FunctionHostStart): Promise<FunctionHostStarted> => {
       calls.start += 1;
       starts.push(request);
+      if (options.observeAtStart && observeHook !== undefined) observedAtStart.push(await observeHook(request.invocationId));
       if (options.startRejects) throw new Error("the installed host refused to start");
       const settle = barrier<unknown>();
       settles.push(settle);
@@ -232,11 +276,14 @@ async function boot(options: WorldOptions = {}) {
     const result = await tool("workflow_execute").execute("call-4bxo", params, undefined, undefined, context);
     return JSON.parse(textOf(result)) as Reply;
   };
-  const observe = async (taskId: string): Promise<Observed | string> => {
-    const text = textOf(await tool("workflow_observe").execute("observe-4bxo", { taskId }, undefined, undefined, context));
+  /** workflow_observe read in this session, or in another session `session` names over the same workspace. */
+  const observe = async (taskId: string, session = "s1"): Promise<Observed | string> => {
+    const reader = session === "s1" ? context : ctx({ cwd: dir, sessionManager: { getSessionId: () => session, getBranch: () => [] } });
+    const text = textOf(await tool("workflow_observe").execute("observe-4bxo", { taskId }, undefined, undefined, reader));
     return text.startsWith("{") ? (JSON.parse(text) as Observed) : text;
   };
-  return { pi, dir, workspace, context, calls, starts, settles, admissionPark, execute, observe };
+  observeHook = observe;
+  return { pi, dir, workspace, context, calls, starts, settles, admissionPark, observedAtStart, execute, observe };
 }
 
 function functionParams(over: Record<string, unknown> = {}): Record<string, unknown> {
@@ -251,9 +298,35 @@ function admittedDigest(params: Record<string, unknown>): string {
 function localPrincipal(): string {
   return `local-operator:${process.getuid?.() ?? ""}:s1`;
 }
+/** A Beads export row as withoutBeadsNotes reads one: its id and status, each an own string member, beside a note. */
+const ROW: Record<string, JsonValue> = { id: "wb-x1", status: "open", notes: "a work-item note" };
+const ROW_KEPT: Record<string, JsonValue> = { id: "wb-x1", status: "open" };
+const OWN_NOTE = "the caller's own note";
+/**
+ * RF13b's forms (owner ruling U8: withoutBeadsNotes is location-scoped): the caller input and what the host's start receives.
+ * The first four carry a Beads note at a location withoutBeadsNotes omits; the other six carry a caller's own notes member,
+ * which reaches the host as it is.
+ */
+const NOTE_FORMS: readonly (readonly [string, JsonValue, JsonValue])[] = [
+  ["omitted: the input's own notes member, beside the task fields", { task: "t", notes: "a work-item note" }, { task: "t" }],
+  ["omitted: an export row's notes member, the row held under a member", { task: "t", bead: ROW }, { task: "t", bead: ROW_KEPT }],
+  ["omitted: an export row's notes member, the row three objects deep", { task: "t", deep: { a: { row: ROW } } }, { task: "t", deep: { a: { row: ROW_KEPT } } }],
+  ["omitted: an export row's notes member, the row held in a list", { task: "t", beads: [ROW, ROW] }, { task: "t", beads: [ROW_KEPT, ROW_KEPT] }],
+  ["kept: a caller's own notes member in a record held under a member", { task: "t", nested: { notes: OWN_NOTE, keep: 1 } }, { task: "t", nested: { notes: OWN_NOTE, keep: 1 } }],
+  ["kept: a caller's own notes member two records deep", { task: "t", a: { b: { notes: OWN_NOTE } } }, { task: "t", a: { b: { notes: OWN_NOTE } } }],
+  ["kept: a caller's own notes member in a record held in a list of the input", { task: "t", items: [{ notes: OWN_NOTE, keep: 1 }] }, { task: "t", items: [{ notes: OWN_NOTE, keep: 1 }] }],
+  ["kept: a record with an id and no status", { task: "t", ref: { id: "r-1", notes: OWN_NOTE } }, { task: "t", ref: { id: "r-1", notes: OWN_NOTE } }],
+  ["kept: a record with a status and no id", { task: "t", ref: { status: "open", notes: OWN_NOTE } }, { task: "t", ref: { status: "open", notes: OWN_NOTE } }],
+  ["kept: a record whose id is not a string", { task: "t", ref: { id: 7, status: "open", notes: OWN_NOTE } }, { task: "t", ref: { id: 7, status: "open", notes: OWN_NOTE } }],
+];
+/** Every object and list of a JSON value, the value itself first ("$"), each with whether it is frozen, in walk order. */
+function frozenness(value: unknown, path = "$"): [string, boolean][] {
+  if (typeof value !== "object" || value === null) return [];
+  return [[path, Object.isFrozen(value)], ...Object.entries(value).flatMap(([key, member]) => frozenness(member, `${path}.${key}`))];
+}
 
 describe("wb-4bxo P04: the registered workflow_execute(function) branch at the registered path (V3, injected installed host)", () => {
-  it("RF01 EAT-R235 AC1 / EAT-R238 AC2: the registered workflow_execute launches the reviewed kind:function definition on the injected installed host exactly once and returns one logical invocation and its native references", async () => {
+  it("RF01 EAT-R235 AC1 / EAT-R238 AC2: the registered workflow_execute launches the reviewed kind:function definition on the injected installed host exactly once and returns one logical invocation and its native references; the host's start receives the chain's frozen grant and an AbortSignal", async () => {
     const world = await boot();
     const reply = await world.execute(functionParams());
     expect(reply.error).toBeUndefined();
@@ -271,15 +344,19 @@ describe("wb-4bxo P04: the registered workflow_execute(function) branch at the r
     expect(start?.grant.authority.identity).toEqual({ principal: localPrincipal(), sessionId: "s1" });
     expect(start?.grant.packageIdentity).toBe(PACKAGE);
     expect(start?.grant.source.identity.canonicalRoot).toBe(world.workspace);
+    expect(start?.grant.sdkRights).toEqual([]);
+    expect(Object.isFrozen(start?.grant)).toBe(true);
+    expect(start?.signal).toBeInstanceOf(AbortSignal);
     expect(world.calls.admit).toBe(1);
   }, CASE_MS);
 
-  it("RF02 EAT-R235 AC2 / EAT-R239 AC1: workflow_observe finds the launched function by the invocation id the reply returned, in the existing task store, with the admission's input digest", async () => {
+  it("RF02 EAT-R235 AC2 / EAT-R239 AC1: workflow_observe finds the launched function by the invocation id the reply returned, in the existing task store, with the admission's input digest; another session's workflow_observe does not find it", async () => {
     const world = await boot();
     const params = functionParams();
     const reply = await world.execute(params);
     const observed = await world.observe(reply.invocationId ?? "");
     expect(observed).toMatchObject({ taskId: reply.invocationId, status: "running", inputDigest: admittedDigest(params), error: null });
+    expect(await world.observe(reply.invocationId ?? "", "s2")).toBe(UNAVAILABLE);
   }, CASE_MS);
 
   it("RF03 EAT-R240 AC1-AC2 / EAT-R032: with the installed host's run parked, the reply returns launched and not-asserted before the run settles, and workflow_observe reports the settled run once it settles", async () => {
@@ -304,8 +381,8 @@ describe("wb-4bxo P04: the registered workflow_execute(function) branch at the r
     expect(JSON.stringify(observed)).not.toContain(SETTLE_FAILURE);
   }, CASE_MS);
 
-  it.each(["mechanical.development.develop.v2", "mechanical.development.other.v1", "fixture.function.v1"])(
-    "RF04 EAT-R235 AC4 / EAT-R238 A01: the function id %s outside the reviewed allowlist refuses as unsupported-definition-kind with the unreviewed-id reason and zero package, source and host calls",
+  it.each(["mechanical.development.develop.v2", "mechanical.development.other.v1", "fixture.function.v1", `${FUNCTION_ID}.beta`, FUNCTION_ID.toUpperCase()])(
+    "RF04 EAT-R235 AC4 / EAT-R238 A01: the function id %s, strictly equal to no reviewed allowlist id, refuses as unsupported-definition-kind with the unreviewed-id reason and zero package, Git and host calls",
     async id => {
       const world = await boot();
       const reply = await world.execute(functionParams({ definitionRef: { ...FUNCTION_REF, id } }));
@@ -316,7 +393,7 @@ describe("wb-4bxo P04: the registered workflow_execute(function) branch at the r
     CASE_MS,
   );
 
-  it("RF05 EAT-R237 AC1 / EAT-R155: with function hosting composed, a furnace-formula definition still refuses as unsupported-definition-kind with zero package, source and host calls, while the same request shape with kind function launches", async () => {
+  it("RF05 EAT-R237 AC1 / EAT-R155: with function hosting composed, a furnace-formula definition still refuses as unsupported-definition-kind with zero package, Git and host calls, while the same request shape with kind function launches", async () => {
     const world = await boot();
     const refused = await world.execute(functionParams({ definitionRef: { ...FUNCTION_REF, kind: "furnace-formula" } }));
     expect([refused.ok, refused.invoked]).toEqual([false, false]);
@@ -327,7 +404,7 @@ describe("wb-4bxo P04: the registered workflow_execute(function) branch at the r
     expect(world.calls.start).toBe(1);
   }, CASE_MS);
 
-  it("RF06 EAT-R238 A06: without the adopted action grant held, the function refuses at entry as launch-failed naming missing-function-action-grant, before the package barrier, with zero host calls", async () => {
+  it("RF06 EAT-R238 A06: without the adopted action grant held, the function refuses at entry as launch-failed naming missing-function-action-grant, before the package barrier, with zero package, Git and host calls", async () => {
     const world = await boot({ rights: [EXECUTE_GRANT, OBSERVE_GRANT] });
     const reply = await world.execute(functionParams());
     expect([reply.ok, reply.invoked]).toEqual([false, false]);
@@ -335,13 +412,21 @@ describe("wb-4bxo P04: the registered workflow_execute(function) branch at the r
     expect(world.calls).toEqual({ git: 0, admit: 0, current: 0, start: 0 });
   }, CASE_MS);
 
-  it("RF07 EAT-R238 A10: an untracked file in the workspace refuses as launch-failed naming dirty-base, before any host start", async () => {
+  it("RF07 EAT-R238 A10: an untracked file in the workspace refuses as launch-failed naming dirty-base after one package admission, with zero package re-reads and zero host starts", async () => {
     const world = await boot();
     writeFileSync(join(world.dir, "untracked.txt"), "edit\n");
     const reply = await world.execute(functionParams());
     expect([reply.ok, reply.invoked]).toEqual([false, false]);
     expect(reply.error).toEqual({ code: "launch-failed", message: DIRTY_BASE });
-    expect(world.calls.start).toBe(0);
+    expect([world.calls.admit, world.calls.current, world.calls.start]).toEqual([1, 0, 0]);
+  }, CASE_MS);
+
+  it("RF08: an installed package the host does not admit refuses as launch-failed naming package-unadmitted, after one package admission and before any Git read, with zero host starts", async () => {
+    const world = await boot({ packageUnadmitted: true });
+    const reply = await world.execute(functionParams());
+    expect([reply.ok, reply.invoked]).toEqual([false, false]);
+    expect(reply.error).toEqual({ code: "launch-failed", message: PACKAGE_UNADMITTED });
+    expect(world.calls).toEqual({ git: 0, admit: 1, current: 0, start: 0 });
   }, CASE_MS);
 
   it("RF09 EAT-R238 AC3: the action grant revoked in the operator's settings while the source admission waits refuses at the final boundary, with zero host starts", async () => {
@@ -356,7 +441,7 @@ describe("wb-4bxo P04: the registered workflow_execute(function) branch at the r
     expect([world.calls.admit, world.calls.start]).toEqual([1, 0]);
   }, CASE_MS);
 
-  it("RF10: under the shipped contract (FUNCTION_ACTION_CONTRACT, unadopted) every function dispatch stays frozen: launch-failed naming function-action-unadopted, with zero host calls", async () => {
+  it("RF10: under the shipped contract (FUNCTION_ACTION_CONTRACT, unadopted) the reviewed function's dispatch stays frozen: launch-failed naming function-action-unadopted, with zero package, Git and host calls", async () => {
     const world = await boot({ contract: FUNCTION_ACTION_CONTRACT });
     const reply = await world.execute(functionParams());
     expect([reply.ok, reply.invoked]).toEqual([false, false]);
@@ -386,7 +471,7 @@ describe("wb-4bxo P04: the registered workflow_execute(function) branch at the r
   it.each([
     ["held", [...RIGHTS, DETACH_GRANT]],
     ["not held", RIGHTS],
-  ] as const)("RF12: a detached function launch, workbench:detach %s, refuses as unsupported-definition-kind with the unhosted-placement reason, before the detach conjunction, with zero calls", async (_what, rights) => {
+  ] as const)("RF12: a detached function launch, workbench:detach %s, refuses as unsupported-definition-kind with the unhosted-placement reason, before the detach conjunction, with zero package, Git and host calls", async (_what, rights) => {
     const world = await boot({ rights });
     const reply = await world.execute(functionParams({ hostMode: "detached" }));
     expect([reply.ok, reply.invoked]).toEqual([false, false]);
@@ -394,8 +479,15 @@ describe("wb-4bxo P04: the registered workflow_execute(function) branch at the r
     expect(world.calls).toEqual({ git: 0, admit: 0, current: 0, start: 0 });
   }, CASE_MS);
 
-  it("RF13 EAT-R034: the host receives the request input as a JSON copy; callable-looking and authority-shaped members stay data and grant nothing", async () => {
-    const input: JsonValue = { task: "t", develop: "() => globalThis.process.exit(1)", services: { writer: "replace" }, grants: ["*"], actionGrant: ACTION };
+  it("RF13 EAT-R034: an input with no notes member reaches the host as an equal JSON copy, not the request's own object, frozen at every object and list; callable-looking and authority-shaped members stay data and grant nothing", async () => {
+    const input: JsonValue = {
+      task: "t",
+      develop: "() => globalThis.process.exit(1)",
+      services: { writer: "replace" },
+      grants: ["*"],
+      actionGrant: ACTION,
+      nested: { list: [1, { deep: "x" }, ["y"]] },
+    };
     const denied = await boot({ rights: [EXECUTE_GRANT, OBSERVE_GRANT] });
     const refused = await denied.execute(functionParams({ input }));
     expect(refused.error).toEqual({ code: "launch-failed", message: MISSING_ACTION });
@@ -409,8 +501,48 @@ describe("wb-4bxo P04: the registered workflow_execute(function) branch at the r
     const [start] = world.starts;
     expect(start?.input).toEqual(input);
     expect(start?.input).not.toBe(params.input);
+    expect(frozenness(start?.input)).toEqual([
+      ["$", true],
+      ["$.services", true],
+      ["$.grants", true],
+      ["$.nested", true],
+      ["$.nested.list", true],
+      ["$.nested.list.1", true],
+      ["$.nested.list.2", true],
+    ]);
     expect(start?.entrypoint).toBe(MECHANICAL_REVIEWED_ENTRYPOINTS[0]);
     expect(start?.grant.authority.grants).toEqual([EXECUTE_GRANT, ACTION]);
+  }, CASE_MS);
+
+  it("RF13b shape: the listed forms are four omitted Beads note locations, then six kept caller notes members", () => {
+    expect(NOTE_FORMS.map(([form]) => form.slice(0, form.indexOf(":")))).toEqual(["omitted", "omitted", "omitted", "omitted", "kept", "kept", "kept", "kept", "kept", "kept"]);
+  });
+
+  it.each(NOTE_FORMS)("RF13b EAT-R034 / EAT-R154 (owner ruling U8, location-scoped): %s; the host's start receives exactly the listed input, byte for byte as JSON, and it digests to the admission's input digest", async (_form, input, received) => {
+    const world = await boot();
+    const params = functionParams({ input });
+    const reply = await world.execute(params);
+    expect(reply.status).toBe("launched");
+    const [start] = world.starts;
+    expect(JSON.stringify(start?.input)).toBe(JSON.stringify(received));
+    expect(identityDigest("workflow-execute-input", start?.input)).toBe(admittedDigest(params));
+    expect(await world.observe(reply.invocationId ?? "")).toMatchObject({ taskId: reply.invocationId, inputDigest: admittedDigest(params) });
+  }, CASE_MS);
+
+  it("RF13c EAT-R154 (owner ruling U8): a notes member at the input's own top level holding a getter is never invoked, by the admission or the host's start, and the host's start receives the input without it", async () => {
+    let invoked = 0;
+    const input = Object.defineProperty({ task: "t" }, "notes", {
+      enumerable: true,
+      get: () => {
+        invoked += 1;
+        return "an attached work-item note";
+      },
+    });
+    const world = await boot();
+    const reply = await world.execute(functionParams({ input }));
+    expect(reply.status).toBe("launched");
+    expect(JSON.stringify(world.starts[0]?.input)).toBe(JSON.stringify({ task: "t" }));
+    expect(invoked).toBe(0);
   }, CASE_MS);
 
   it("RF14: an installed host that rejects at start launches nothing: launch-failed, and the minted invocation is not in the task store", async () => {
@@ -419,7 +551,7 @@ describe("wb-4bxo P04: the registered workflow_execute(function) branch at the r
     expect([reply.ok, reply.invoked, reply.invocationId]).toEqual([false, false, undefined]);
     expect(reply.error).toEqual({ code: "launch-failed", message: "the installed host refused to start" });
     expect(world.calls.start).toBe(1);
-    expect(await world.observe(world.starts[0]?.invocationId ?? "")).toBe("Workflow unavailable in this local operator/session/workspace scope.");
+    expect(await world.observe(world.starts[0]?.invocationId ?? "")).toBe(UNAVAILABLE);
   }, CASE_MS);
 
   it("RF15: the writer lease covers the function's whole run: a second launch on the workspace refuses as launch-failed naming writer-held while the first runs, and launches once it settles", async () => {
@@ -436,4 +568,35 @@ describe("wb-4bxo P04: the registered workflow_execute(function) branch at the r
     expect([third.ok, third.status]).toEqual([true, "launched"]);
     expect(world.calls.start).toBe(2);
   }, CASE_MS);
+
+  it("RF16: the invocation is registered in the existing task store before the host is asked to start it: inside the installed host's start, workflow_observe reads it running under the invocation id the reply returns", async () => {
+    const world = await boot({ observeAtStart: true });
+    const reply = await world.execute(functionParams());
+    expect(reply.status).toBe("launched");
+    expect(world.observedAtStart).toHaveLength(1);
+    expect(world.observedAtStart[0]).toMatchObject({ taskId: reply.invocationId, status: "running" });
+  }, CASE_MS);
+
+  it("RF17: with an SDK edge composed whose rights the session does not hold, the launch refuses at entry as launch-failed naming missing-sdk-right, with zero package, Git and host calls", async () => {
+    const world = await boot({ sdkTools: ["Read"] });
+    const reply = await world.execute(functionParams());
+    expect([reply.ok, reply.invoked]).toEqual([false, false]);
+    expect(reply.error).toEqual({ code: "launch-failed", message: MISSING_SDK_RIGHT });
+    expect(world.calls).toEqual({ git: 0, admit: 0, current: 0, start: 0 });
+  }, CASE_MS);
+
+  it("RF17b: with an SDK edge composed and its rights held, the launch proceeds and the host's grant carries exactly claude:invoke and the configured tool's right", async () => {
+    const world = await boot({ sdkTools: ["Read"], rights: [...RIGHTS, ...SDK_RIGHTS] });
+    const reply = await world.execute(functionParams());
+    expect([reply.ok, reply.status]).toEqual([true, "launched"]);
+    expect(world.calls.start).toBe(1);
+    expect(world.starts[0]?.grant.sdkRights).toEqual(SDK_RIGHTS);
+  }, CASE_MS);
+
+  it("RF18 EAT-R241 AC1 (this cut's receipt only): every PI-FUNCTION-REGISTERED in docs/workbench/receipts/wb-4bxo.md is followed at once by evidence_level: V3", () => {
+    const text = readFileSync(RECEIPT, "utf8");
+    const following = [...text.matchAll(new RegExp(`${LABEL}(.{0,${LEVEL.length}})`, "g"))].map(match => match[1]);
+    expect(following.length).toBeGreaterThan(0);
+    expect(following.filter(after => after !== LEVEL)).toEqual([]);
+  });
 });

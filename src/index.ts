@@ -2701,7 +2701,8 @@ Terse command-style prompts produce shallow, generic work.
   /**
    * workflow_execute's function branch (wb-4bxo, packet P04), composed only from SubagentsExtensionInjection.functionHosting.
    * The chain host's authority reads are this session's own on every call (the grants from settings, the local principal and the
-   * session); source admission, the installed package and the installed host's start are the hosting's.
+   * session: RF01, RF09); source admission, the installed package, the SDK edge and the installed host's start are the hosting's
+   * (RF07, RF08, RF17, RF17b).
    */
   function hostedFunctionDeps(hosting: WorkflowFunctionHosting): WorkflowFunctionDeps {
     return {
@@ -2719,10 +2720,12 @@ Terse command-style prompts produce shallow, generic work.
     };
   }
   /**
-   * One hosted function run, the chain's one effect. The invocation is registered in the existing workflow task store, scoped to
-   * the launching session, workspace and principal, before the host is asked to start it; a host that rejects at start leaves no
-   * task. Once the host started it, the Pi task reference and the host's references are reported; the task then settles with
-   * the run: completed, or failed with a fixed text that carries none of the producer's.
+   * One hosted function run, the chain's one effect (cases of test/workbench-registered-function.test.ts in brackets). The
+   * invocation is registered in the existing workflow task store, scoped to the launching session, workspace and principal
+   * [RF02], before the host is asked to start it [RF16: inside the start, workflow_observe reads it running]; a host that rejects
+   * at start leaves no task [RF14]. Once the host started it, the Pi task reference and the host's references are reported
+   * [RF01]; the task then settles with the run: completed [RF03], or failed with a fixed text that carries none of the
+   * producer's [RF03b].
    */
   async function runHostedFunction(hosting: WorkflowFunctionHosting, launch: ExecuteFunctionLaunch, started: (nativeRefs: readonly NativeRef[]) => void): Promise<void> {
     const task = createWorkflowTask({

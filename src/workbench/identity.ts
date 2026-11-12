@@ -155,7 +155,11 @@ export function identityDigest(domain: string, value: unknown): string {
 
 /** The free-form note field of a Beads export row (EAT-R154, wb-201v). */
 const BEADS_NOTE_FIELD = "notes";
+/** The typed fields that make a record a Beads export row for withoutBeadsNotes: each an own string data member. */
+const BEADS_ROW_FIELDS: readonly string[] = ["id", "status"];
 const PROTOTYPE_KEYS: readonly string[] = ["__proto__", "constructor", "prototype"];
+/** What holds a value withoutBeadsNotes copies: the request (the carried value itself), a record's member, or a list. */
+type NoteHolder = "request" | "member" | "list";
 /**
  * EAT-R154 (wb-201v; the mechanical-interoperability-audit-2026-11-06 triage, ATOMIC-REQUIREMENTS-DELTA.md compiled at the
  * Nov-6 pins pi d7666a76 and mw 97e18068): "No Pi function admission, identity or replay-basis computation MAY read
@@ -172,14 +176,25 @@ const PROTOTYPE_KEYS: readonly string[] = ["__proto__", "constructor", "prototyp
  * bound-crossing notes they list leave the decision as it is with a plain note; and a request whose note member holds a
  * getter, which is never invoked, or NaN is decided as it is without the note member. Other values and positions are NOT
  * CLAIMED.
+ *
+ * Location-scoped, never name-scoped (owner ruling U8 on wb-4bxo, 2026-11-12): the copy omits a note member only where a
+ * Beads work item's note rides in the request, and keeps every other member of that name byte for byte. The locations:
+ *  1. the carried value's own note member, when it is a record (beside the task fields of the caller input, or among the
+ *     fields of the caller policy);
+ *  2. the note member of a Beads export row at any depth: a record whose id and status are each an own string data member;
+ *  3. for the caller policy only (carrier "policy"), the note member of a record held in a list at any depth.
+ * A caller's own note member anywhere else, as in a record held under a member or, in the caller input, in a list, that is
+ * not an export row, is copied as it is. The registered function path pins both sides through workflow_execute
+ * (test/workbench-registered-function.test.ts RF13b and RF13c: the omitted locations and the kept members, the host's input
+ * digesting to the admission's input digest); the positions above are the EAT-R154 rows'.
  */
-export function withoutBeadsNotes(value: unknown): unknown {
+export function withoutBeadsNotes(value: unknown, carrier: "input" | "policy" = "input"): unknown {
   const ancestors = new Set<object>();
-  function copy(item: unknown, depth: number): unknown {
+  function copy(item: unknown, depth: number, holder: NoteHolder): unknown {
     if (typeof item !== "object" || item === null || depth > 64 || ancestors.has(item)) return item;
     ancestors.add(item);
     try {
-      return Array.isArray(item) ? copyArray(item, depth) : copyRecord(item, depth);
+      return Array.isArray(item) ? copyArray(item, depth) : copyRecord(item, depth, holder);
     } finally {
       ancestors.delete(item);
     }
@@ -190,24 +205,32 @@ export function withoutBeadsNotes(value: unknown): unknown {
     for (let index = 0; index < item.length; index++) {
       const descriptor = Object.getOwnPropertyDescriptor(item, String(index));
       if (!descriptor || !Object.hasOwn(descriptor, "value") || !descriptor.enumerable) return item;
-      values.push(copy(descriptor.value, depth + 1));
+      values.push(copy(descriptor.value, depth + 1, "list"));
     }
     return values;
   }
-  function copyRecord(item: object, depth: number): unknown {
+  function copyRecord(item: object, depth: number, holder: NoteHolder): unknown {
     const prototype = Object.getPrototypeOf(item);
     if (prototype !== Object.prototype && prototype !== null) return item;
+    const located = holder === "request" || (holder === "list" && carrier === "policy") || beadsExportRow(item);
     const record: Record<string, unknown> = {};
     for (const key of Reflect.ownKeys(item)) {
-      if (key === BEADS_NOTE_FIELD) continue;
+      if (located && key === BEADS_NOTE_FIELD) continue;
       if (typeof key !== "string" || PROTOTYPE_KEYS.includes(key)) return item;
       const descriptor = Object.getOwnPropertyDescriptor(item, key);
       if (!descriptor || !Object.hasOwn(descriptor, "value") || !descriptor.enumerable) return item;
-      record[key] = copy(descriptor.value, depth + 1);
+      record[key] = copy(descriptor.value, depth + 1, "member");
     }
     return record;
   }
-  return copy(value, 0);
+  return copy(value, 0, "request");
+}
+/** A Beads export row for withoutBeadsNotes: each of BEADS_ROW_FIELDS is an own string data member, read without invoking a getter. */
+function beadsExportRow(item: object): boolean {
+  return BEADS_ROW_FIELDS.every(key => {
+    const descriptor = Object.getOwnPropertyDescriptor(item, key);
+    return descriptor !== undefined && Object.hasOwn(descriptor, "value") && typeof descriptor.value === "string";
+  });
 }
 function fileDigest(path: string): string {
   return `sha256:${createHash("sha256").update(readFileSync(path)).digest("hex")}`;
