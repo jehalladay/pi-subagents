@@ -88,7 +88,8 @@
  *   stack-shaped frame reaches the reply as exactly invalid-target, the code holds none of that text and the message is the
  *   adapter's fixed text; every member of the exported closed vocabulary FURNACE_CONTROL_REFUSAL_CODES, constructed at
  *   category validation with message "m" and no policy, is its refusal's own code and the list this file expects is that
- *   vocabulary. Each value C2 lists outside it, constructed the same way, carries no own code, and a refusal with it reaches
+ *   vocabulary. Each value C2 lists outside it, constructed the same way, has an own `code` descriptor whose value is
+ *   undefined (C2 reads that field; control-tool.ts:255 reads the same field), and a refusal with it reaches
  *   the reply as executor-refused (at the other categories and the deny policies, C6 and C7 read both only in their string
  *   forms: refusal #6 U1, narrowed under R-B812): the OUTSIDE values below (caller
  *   text, near-miss spellings of a member in
@@ -185,7 +186,7 @@
  * two members are cured by code - G77-A by the reading-reply pins, G77-B by C5 - and refusal #5's U1 by code: the gate's
  * G133-B3 reds C6, C7 and C8, its G133-B1 and its unrun G133-B2 red C7 and C8. Refusal #6's U1 and F2 are cured by
  * narrowing under R-B812: the furnace-control.ts own-code words and C2, C4, C6 and C7 here claim no more than C6's and C7's
- * string forms and C4's records hold, and the furnace_observe comment (src/index.ts) claims the reply only as the
+ * string forms, C4's records and C2's undefined-valued own `code` descriptor read hold, and the furnace_observe comment (src/index.ts) claims the reply only as the
  * reading-reply pins hold it; stronger words are the structural-exit child wb-s8lt's. The sanitized-reading words of this
  * file stand at the guard text (M:78415); every mode outside the pinned rows is one of the NOT CLAIMED scope sentences above.
  */
@@ -957,7 +958,7 @@ describe("wb-qg19 the registered control tool's constructor over the production 
     );
     const values: readonly unknown[] = [...OUTSIDE, ...prototypeKeys];
     const refusals = values.map(value => new FurnaceControlRefusal("validation", value as FurnaceControlRefusalCode, "m"));
-    expect(refusals.map(refusal => Object.getOwnPropertyDescriptor(refusal, "code")?.value), "no listed outside value is an own code").toStrictEqual(
+    expect(refusals.map(refusal => Object.getOwnPropertyDescriptor(refusal, "code")?.value), "no listed outside value has an own `code` descriptor value").toStrictEqual(
       values.map(() => undefined),
     );
     const replied: unknown[] = [];
