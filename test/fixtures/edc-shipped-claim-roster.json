@@ -106,6 +106,7 @@
       "named-reference": "Evidence&nbsp;directed integration ships.\n",
       "markdown-escape": "EDC\\_integration ships.\n"
     },
+    "sameBlockPage": "- Neighbors: one judged list item.\n  EDC integration ships in Pi today.\n",
     "walkControl": {
       "": [
         "AGENTS.md",
@@ -814,6 +815,9 @@
             "mentions": [
               "docs/workbench/receipts/wb-e9rw.md|text#15|edc"
             ],
+            "mentionTexts": {
+              "docs/workbench/receipts/wb-e9rw.md|text#15|edc": "Neighbors: every default-tier test file that imports or reads src/workbench/claude-host.ts or a helper that does, plus the receipts, sanitizer-corpus and source-hygiene suites, 61 files from 20:35:22Z (load1 202 at the start): Test Files 54 passed, 7 failed (61); Tests 6 failed, 5796 passed, 18 skipped. All seven failures were timeouts, with no AssertionError: six cases at the 5000 ms default in census files that read the bead export, and the scratch census's 60 s walk hook. Re-run on their own from 20:38:10Z (load1 354), four of the seven passed, and rf-committing-render-posture-census then passed alone (20:42:01Z). Two still timed out at load1 380 to 430: edc-demand-channel-census (one case at 5000 ms, reading the bead export's record; it reads no file of this cut) and scratch-census (its beforeAll walk past the 60 s budget; 156 passed, 8 skipped). That walk reads every test/ file, this cut's new one included, which holds no mkdtemp or tmpdir token."
+            },
             "planted": {
               "plant": [
                 "heading|edc",
@@ -975,7 +979,10 @@
                   "markdown-escape|paragraph#0|edc"
                 ]
               }
-            }
+            },
+            "sameBlock": [
+              "text#0|edc|Neighbors: one judged list item.\nEDC integration ships in Pi today."
+            ]
           }
         },
         {
