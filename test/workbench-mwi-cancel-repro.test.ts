@@ -14,6 +14,15 @@
  *    mutant: "Count only final successes and hide the original query."
  * The bead is evidence-first (BEAD-PLAN B-cancel-repro): it lands a bounded experiment and a pending status, never a
  * production fix. A witnessed red authorizes a separate repair proposal and does not close slice PI-4.
+ * That repair is wb-e9rw (EAT-R213, EAT-R214 and EAT-R253 of mechanical-native-interoperability-2026-11-09, with EAT-R413
+ * of mechanical-interop-integrity-2026-11-10 as the gate leg; receipt docs/workbench/receipts/wb-e9rw.md): the host
+ * registers the agent's controller before `await config.beforeDispatch?.()` and re-checks it after the barrier, so the
+ * per-agent control taken while parked now stops the attempt there. The four live cells R015-SPAWN, R015-RESUME,
+ * R016-SPAWN and R016-RESUME, and their four PLAN_ROWS, now pin the repaired readings, each judged failed-reproduction
+ * (the oracle met). The readings this experiment measured before the repair are kept as written (EAT-R253 AC1: "the
+ * pre-repair failing output is preserved"): PARKED_SKIP_SPAWN, PARKED_SKIP_RESUME, PARKED_RETRY_SPAWN and
+ * PARKED_RETRY_RESUME, which no live run reads any more; PRE-REPAIR pins each one's observed-violation verdict, and the
+ * judge rows and grids are built on the first three of them as before.
  *
  * The experiment is test/helpers/parked-dispatch-experiment.ts: the real runWorkflow over the real
  * createClaudeWorkflowHost, with the host's own beforeDispatch option as the barrier and the fixture query seam as the
@@ -27,7 +36,8 @@
  * NOT CLAIMED.
  * - Live cells. Each runs one plan, pins the whole reading as measured at this tree, then pins its verdict: R015-SPAWN,
  *   R015-RESUME, R015-NO-BARRIER, R015-RUN-ABORT, R015-NO-CONTROL, R016-SPAWN, R016-RESUME and R016-HIDDEN-ORIGINAL (which
- *   also pins that the live retry reading with its original start count set to 0 is refused as uncounted-sdk-start).
+ *   also pins that the pre-repair retry reading, PARKED_RETRY_SPAWN, with its original start count set to 0 is refused as
+ *   uncounted-sdk-start).
  *   PLAN-DOMAIN does the same for each of the 24 ParkedPlan values (3 controls x 2 startups x 2 routes x 2 barriers),
  *   run with every field given and, for the 18 plans holding a default (route "per-agent", barrier "parked"), again
  *   with those fields omitted (42 plan inputs, counted); PLAN-DOMAIN-SHAPE pins that its table holds exactly those 24
@@ -129,7 +139,10 @@
  *   Comments are not read. Whether a run of the experiment arms a timer, and a name or module specifier that a source
  *   builds while it runs, are NOT CLAIMED.
  * - Named judge rows. Each row is a reading written out beside the verdict it must get: R015-SEAM, R015-SEAM-ROWS,
- *   R015-ORACLE, R015-ORACLE-ROWS, R016-ORACLE and R016-ORACLE-ROWS.
+ *   R015-ORACLE, R015-ORACLE-ROWS, R016-ORACLE and R016-ORACLE-ROWS. PRE-REPAIR, which runs no plan, judges the four
+ *   pre-repair readings, each observed-violation with its breaches, and pins that each differs from its repaired live
+ *   reading only in the fields the repair acts on (the target's starts, the call log, the host settlements, the final
+ *   row and the script value).
  * - Judge grids: R015-SEAM-GRID, R015-ORACLE-GRID and R016-ORACLE-GRID. Each grid is the product of the axis lists that
  *   its builder's comment names (seamGrid, skipOracleGrid, retryOracleGrid), and each of the 17 NOISE profiles is also
  *   applied to every reading of that product. GRID-NOISE pins that application on each grid (wb-7ak9): each reading's
@@ -277,6 +290,11 @@ const WORKFLOW_ABORTED = "Workflow aborted.";
 /** claude-host.ts: every path that reports an SDK query the host stopped. */
 const CANCELLED = "Claude SDK query was cancelled.";
 
+/**
+ * The four readings the live cells measured before the wb-e9rw repair (wb-9v02's tree), kept as written: no live run
+ * reads them any more (EAT-R253 AC1, "the pre-repair failing output is preserved"). PRE-REPAIR pins each one's verdict;
+ * the judge rows and grids below are built on the first three.
+ */
 const PARKED_SKIP_SPAWN: ParkedObservation = {
   plan: { control: "skip", startup: "spawn", route: "per-agent", barrier: "parked" },
   parkedAtControl: true,
@@ -321,6 +339,99 @@ const PARKED_RETRY_SPAWN: ParkedObservation = {
   sdkCallsRecorded: 2,
   hostSettlements: [
     { ok: true, skipped: false },
+    { ok: true, skipped: false },
+  ],
+  finalRow: { state: "done", skipped: false, attempt: 2, reason: "user-retry" },
+  runStatus: "completed",
+  scriptValue: "answer 1",
+};
+
+const PARKED_RETRY_RESUME: ParkedObservation = {
+  plan: { control: "retry", startup: "resume", route: "per-agent", barrier: "parked" },
+  parkedAtControl: true,
+  queriesBeforeControl: 1,
+  controlAccepted: true,
+  hostAbortsWhileParked: 1,
+  runAborted: false,
+  authorizations: { setup: 1, original: 1, replacement: 1, extra: 0 },
+  sdkStarts: { setup: 1, original: 1, replacement: 1, extra: 0 },
+  sdkCallsRecorded: 3,
+  hostSettlements: [
+    { ok: true, skipped: false },
+    { ok: true, skipped: false },
+  ],
+  finalRow: { state: "done", skipped: false, attempt: 2, reason: "user-retry" },
+  runStatus: "completed",
+  scriptValue: "answer 2",
+};
+
+/**
+ * The four live cells' readings with the wb-e9rw repair in the host: the control taken while parked stops the original
+ * attempt at the barrier (no SDK start), and the host settles it skipped as a cancelled query.
+ */
+const REPAIRED_SKIP_SPAWN: ParkedObservation = {
+  plan: { control: "skip", startup: "spawn", route: "per-agent", barrier: "parked" },
+  parkedAtControl: true,
+  queriesBeforeControl: 0,
+  controlAccepted: true,
+  hostAbortsWhileParked: 1,
+  runAborted: false,
+  authorizations: { setup: 0, original: 1, replacement: 0, extra: 0 },
+  sdkStarts: { setup: 0, original: 0, replacement: 0, extra: 0 },
+  sdkCallsRecorded: 0,
+  hostSettlements: [{ ok: false, skipped: true, error: CANCELLED }],
+  finalRow: { state: "error", skipped: true, attempt: 1, reason: null },
+  runStatus: "completed",
+  scriptValue: null,
+};
+
+const REPAIRED_SKIP_RESUME: ParkedObservation = {
+  plan: { control: "skip", startup: "resume", route: "per-agent", barrier: "parked" },
+  parkedAtControl: true,
+  queriesBeforeControl: 1,
+  controlAccepted: true,
+  hostAbortsWhileParked: 1,
+  runAborted: false,
+  authorizations: { setup: 1, original: 1, replacement: 0, extra: 0 },
+  sdkStarts: { setup: 1, original: 0, replacement: 0, extra: 0 },
+  sdkCallsRecorded: 1,
+  hostSettlements: [{ ok: false, skipped: true, error: CANCELLED }],
+  finalRow: { state: "error", skipped: true, attempt: 1, reason: null },
+  runStatus: "completed",
+  scriptValue: null,
+};
+
+const REPAIRED_RETRY_SPAWN: ParkedObservation = {
+  plan: { control: "retry", startup: "spawn", route: "per-agent", barrier: "parked" },
+  parkedAtControl: true,
+  queriesBeforeControl: 0,
+  controlAccepted: true,
+  hostAbortsWhileParked: 1,
+  runAborted: false,
+  authorizations: { setup: 0, original: 1, replacement: 1, extra: 0 },
+  sdkStarts: { setup: 0, original: 0, replacement: 1, extra: 0 },
+  sdkCallsRecorded: 1,
+  hostSettlements: [
+    { ok: false, skipped: true, error: CANCELLED },
+    { ok: true, skipped: false },
+  ],
+  finalRow: { state: "done", skipped: false, attempt: 2, reason: "user-retry" },
+  runStatus: "completed",
+  scriptValue: "answer 0",
+};
+
+const REPAIRED_RETRY_RESUME: ParkedObservation = {
+  plan: { control: "retry", startup: "resume", route: "per-agent", barrier: "parked" },
+  parkedAtControl: true,
+  queriesBeforeControl: 1,
+  controlAccepted: true,
+  hostAbortsWhileParked: 1,
+  runAborted: false,
+  authorizations: { setup: 1, original: 1, replacement: 1, extra: 0 },
+  sdkStarts: { setup: 1, original: 0, replacement: 1, extra: 0 },
+  sdkCallsRecorded: 2,
+  hostSettlements: [
+    { ok: false, skipped: true, error: CANCELLED },
     { ok: true, skipped: false },
   ],
   finalRow: { state: "done", skipped: false, attempt: 2, reason: "user-retry" },
@@ -1351,24 +1462,20 @@ const PLANTED_FORMS = [
 ].join("\n");
 
 describe("EAT-R015 a runtime skip issued while the host's beforeDispatch is parked (wb-9v02)", () => {
-  it("R015-SPAWN fresh spawn: the seam validates, and the skip is lost: one SDK start, settled done, the script got the answer", async () => {
+  it("R015-SPAWN fresh spawn: the seam validates, and the skip is honored at the barrier: no SDK start, settled skipped, the script got null", async () => {
     const observation = await runParkedDispatchExperiment({ control: "skip", startup: "spawn" });
 
-    expect(observation).toEqual(PARKED_SKIP_SPAWN);
-    expect(judgeParkedObservation(observation)).toEqual({
-      kind: "observed-violation",
-      breaches: ["sdk-started-after-skip", "not-settled-skipped", "script-received-a-value"],
-    });
+    expect(observation).toEqual(REPAIRED_SKIP_SPAWN);
+    // The repaired reading is the oracle reading R015-ORACLE was written against, field for field.
+    expect(observation).toEqual(SKIP_ORACLE);
+    expect(judgeParkedObservation(observation)).toEqual({ kind: "failed-reproduction" });
   });
 
-  it("R015-RESUME resume startup: the seam validates, and the skip is lost the same way on the resumed row", async () => {
+  it("R015-RESUME resume startup: the seam validates, and the skip is honored the same way on the resumed row", async () => {
     const observation = await runParkedDispatchExperiment({ control: "skip", startup: "resume" });
 
-    expect(observation).toEqual(PARKED_SKIP_RESUME);
-    expect(judgeParkedObservation(observation)).toEqual({
-      kind: "observed-violation",
-      breaches: ["sdk-started-after-skip", "not-settled-skipped", "script-received-a-value"],
-    });
+    expect(observation).toEqual(REPAIRED_SKIP_RESUME);
+    expect(judgeParkedObservation(observation)).toEqual({ kind: "failed-reproduction" });
   });
 
   it("R015-NO-BARRIER mutant: a beforeDispatch that returns at once leaves nothing parked, and the experiment refuses the reading", async () => {
@@ -1558,47 +1665,60 @@ describe("EAT-R015 a runtime skip issued while the host's beforeDispatch is park
 });
 
 describe("EAT-R016 a per-agent retry issued while the host's beforeDispatch is parked (wb-9v02)", () => {
-  it("R016-SPAWN fresh spawn: the original attempt still starts its SDK query, then one replacement runs as attempt 2", async () => {
+  it("R016-SPAWN fresh spawn: the original attempt starts no SDK query, then one replacement runs as attempt 2", async () => {
     const observation = await runParkedDispatchExperiment({ control: "retry", startup: "spawn" });
 
-    expect(observation).toEqual(PARKED_RETRY_SPAWN);
-    expect(judgeParkedObservation(observation)).toEqual({ kind: "observed-violation", breaches: ["original-started-after-retry"] });
+    expect(observation).toEqual(REPAIRED_RETRY_SPAWN);
+    expect(judgeParkedObservation(observation)).toEqual({ kind: "failed-reproduction" });
   });
 
-  it("R016-RESUME resume startup: the resumed row's original attempt still starts its SDK query, then one replacement runs as attempt 2 and the script receives its answer", async () => {
+  it("R016-RESUME resume startup: the resumed row's original attempt starts no SDK query, then one replacement runs as attempt 2 and the script receives its answer", async () => {
     const observation = await runParkedDispatchExperiment({ control: "retry", startup: "resume" });
 
-    expect(observation).toEqual({
-      plan: { control: "retry", startup: "resume", route: "per-agent", barrier: "parked" },
-      parkedAtControl: true,
-      queriesBeforeControl: 1,
-      controlAccepted: true,
-      hostAbortsWhileParked: 1,
-      runAborted: false,
-      authorizations: { setup: 1, original: 1, replacement: 1, extra: 0 },
-      sdkStarts: { setup: 1, original: 1, replacement: 1, extra: 0 },
-      sdkCallsRecorded: 3,
-      hostSettlements: [
-        { ok: true, skipped: false },
-        { ok: true, skipped: false },
-      ],
-      finalRow: { state: "done", skipped: false, attempt: 2, reason: "user-retry" },
-      runStatus: "completed",
-      scriptValue: "answer 2",
-    });
-    expect(judgeParkedObservation(observation)).toEqual({ kind: "observed-violation", breaches: ["original-started-after-retry"] });
+    expect(observation).toEqual(REPAIRED_RETRY_RESUME);
+    expect(judgeParkedObservation(observation)).toEqual({ kind: "failed-reproduction" });
   });
 
-  it("R016-HIDDEN-ORIGINAL mutant: counting only the final success hides the original query, and the experiment refuses the reading", async () => {
+  it("R016-HIDDEN-ORIGINAL mutant: on the pre-repair retry reading, counting only the final success hides the original query, and the experiment refuses the reading; the repaired live reading counts its one replacement query", async () => {
     const observation = await runParkedDispatchExperiment({ control: "retry", startup: "spawn" });
-    expect(observation).toEqual(PARKED_RETRY_SPAWN);
-    expect(judgeParkedObservation(observation)).toEqual({ kind: "observed-violation", breaches: ["original-started-after-retry"] });
-    // The fixture SDK's own call log saw both queries; the per-attempt count must account for each of them.
-    expect(observation.sdkCallsRecorded).toBe(2);
-    expect(observation.sdkStarts.original).toBe(1);
+    expect(observation).toEqual(REPAIRED_RETRY_SPAWN);
+    // The fixture SDK's own call log saw the one replacement query, and the per-attempt count accounts for it.
+    expect(observation.sdkCallsRecorded).toBe(1);
+    expect(observation.sdkStarts).toEqual({ setup: 0, original: 0, replacement: 1, extra: 0 });
 
-    const finalSuccessOnly: ParkedObservation = { ...observation, sdkStarts: { ...observation.sdkStarts, original: 0 } };
+    // Before the repair the original query started too; hiding it leaves a start the per-attempt counts do not account for.
+    expect(judgeParkedObservation(PARKED_RETRY_SPAWN)).toEqual({ kind: "observed-violation", breaches: ["original-started-after-retry"] });
+    expect(PARKED_RETRY_SPAWN.sdkCallsRecorded).toBe(2);
+    expect(PARKED_RETRY_SPAWN.sdkStarts.original).toBe(1);
+    const finalSuccessOnly: ParkedObservation = { ...PARKED_RETRY_SPAWN, sdkStarts: { ...PARKED_RETRY_SPAWN.sdkStarts, original: 0 } };
     expect(judgeParkedObservation(finalSuccessOnly)).toEqual({ kind: "invalid-experiment", reasons: ["uncounted-sdk-start"] });
+  });
+
+  it("PRE-REPAIR the four readings the live cells measured before the wb-e9rw repair, kept as written, are each judged observed-violation with the breaches the repair cured", () => {
+    const skipBreaches = ["sdk-started-after-skip", "not-settled-skipped", "script-received-a-value"];
+    expect(
+      [PARKED_SKIP_SPAWN, PARKED_SKIP_RESUME, PARKED_RETRY_SPAWN, PARKED_RETRY_RESUME].map(reading => [planId(reading.plan), judgeParkedObservation(reading)]),
+    ).toEqual([
+      ["skip/spawn/per-agent/parked", { kind: "observed-violation", breaches: skipBreaches }],
+      ["skip/resume/per-agent/parked", { kind: "observed-violation", breaches: skipBreaches }],
+      ["retry/spawn/per-agent/parked", { kind: "observed-violation", breaches: ["original-started-after-retry"] }],
+      ["retry/resume/per-agent/parked", { kind: "observed-violation", breaches: ["original-started-after-retry"] }],
+    ]);
+    // Each pre-repair reading and its repaired live reading differ only where the repair acts: the target's starts, the
+    // call log, the host settlements, the final row and the script value.
+    const pairs: ReadonlyArray<readonly [ParkedObservation, ParkedObservation]> = [
+      [PARKED_SKIP_SPAWN, REPAIRED_SKIP_SPAWN],
+      [PARKED_SKIP_RESUME, REPAIRED_SKIP_RESUME],
+      [PARKED_RETRY_SPAWN, REPAIRED_RETRY_SPAWN],
+      [PARKED_RETRY_RESUME, REPAIRED_RETRY_RESUME],
+    ];
+    const repairFields: readonly string[] = ["sdkStarts", "sdkCallsRecorded", "hostSettlements", "finalRow", "scriptValue"];
+    for (const [before, after] of pairs) {
+      const changed = (Object.keys(before) as Array<keyof ParkedObservation>).filter(key => JSON.stringify(before[key]) !== JSON.stringify(after[key]));
+      expect(changed.filter(key => !repairFields.includes(key))).toEqual([]);
+      expect(changed).toContain("sdkStarts");
+      expect([before.sdkStarts.original, after.sdkStarts.original]).toEqual([1, 0]);
+    }
   });
 
   it("R016-ORACLE named rows: the oracle reading, with no replacement start, at resume and with no host settlements, meets the retry oracle, and each row that varies it names its breaches", () => {
@@ -2080,10 +2200,10 @@ const PLAN_ROWS: readonly PlanRow[] = [
     reading: {
       plan: { control: "skip", startup: "spawn", route: "per-agent", barrier: "parked" },
       parkedAtControl: true, queriesBeforeControl: 0, controlAccepted: true, hostAbortsWhileParked: 1, runAborted: false,
-      authorizations: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkCallsRecorded: 1,
-      hostSettlements: [{ ok: true, skipped: false }], finalRow: { state: "done", skipped: false, attempt: 1, reason: null }, runStatus: "completed", scriptValue: "answer 0",
+      authorizations: { setup: 0, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 0, original: 0, replacement: 0, extra: 0 }, sdkCallsRecorded: 0,
+      hostSettlements: [{ ok: false, skipped: true, error: CANCELLED }], finalRow: { state: "error", skipped: true, attempt: 1, reason: null }, runStatus: "completed", scriptValue: null,
     },
-    verdict: { kind: "observed-violation", breaches: ["sdk-started-after-skip", "not-settled-skipped", "script-received-a-value"] },
+    verdict: { kind: "failed-reproduction" },
   },
   {
     reading: {
@@ -2116,10 +2236,10 @@ const PLAN_ROWS: readonly PlanRow[] = [
     reading: {
       plan: { control: "skip", startup: "resume", route: "per-agent", barrier: "parked" },
       parkedAtControl: true, queriesBeforeControl: 1, controlAccepted: true, hostAbortsWhileParked: 1, runAborted: false,
-      authorizations: { setup: 1, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 1, original: 1, replacement: 0, extra: 0 }, sdkCallsRecorded: 2,
-      hostSettlements: [{ ok: true, skipped: false }], finalRow: { state: "done", skipped: false, attempt: 1, reason: null }, runStatus: "completed", scriptValue: "answer 1",
+      authorizations: { setup: 1, original: 1, replacement: 0, extra: 0 }, sdkStarts: { setup: 1, original: 0, replacement: 0, extra: 0 }, sdkCallsRecorded: 1,
+      hostSettlements: [{ ok: false, skipped: true, error: CANCELLED }], finalRow: { state: "error", skipped: true, attempt: 1, reason: null }, runStatus: "completed", scriptValue: null,
     },
-    verdict: { kind: "observed-violation", breaches: ["sdk-started-after-skip", "not-settled-skipped", "script-received-a-value"] },
+    verdict: { kind: "failed-reproduction" },
   },
   {
     reading: {
@@ -2152,10 +2272,10 @@ const PLAN_ROWS: readonly PlanRow[] = [
     reading: {
       plan: { control: "retry", startup: "spawn", route: "per-agent", barrier: "parked" },
       parkedAtControl: true, queriesBeforeControl: 0, controlAccepted: true, hostAbortsWhileParked: 1, runAborted: false,
-      authorizations: { setup: 0, original: 1, replacement: 1, extra: 0 }, sdkStarts: { setup: 0, original: 1, replacement: 1, extra: 0 }, sdkCallsRecorded: 2,
-      hostSettlements: [{ ok: true, skipped: false }, { ok: true, skipped: false }], finalRow: { state: "done", skipped: false, attempt: 2, reason: "user-retry" }, runStatus: "completed", scriptValue: "answer 1",
+      authorizations: { setup: 0, original: 1, replacement: 1, extra: 0 }, sdkStarts: { setup: 0, original: 0, replacement: 1, extra: 0 }, sdkCallsRecorded: 1,
+      hostSettlements: [{ ok: false, skipped: true, error: CANCELLED }, { ok: true, skipped: false }], finalRow: { state: "done", skipped: false, attempt: 2, reason: "user-retry" }, runStatus: "completed", scriptValue: "answer 0",
     },
-    verdict: { kind: "observed-violation", breaches: ["original-started-after-retry"] },
+    verdict: { kind: "failed-reproduction" },
   },
   {
     reading: {
@@ -2188,10 +2308,10 @@ const PLAN_ROWS: readonly PlanRow[] = [
     reading: {
       plan: { control: "retry", startup: "resume", route: "per-agent", barrier: "parked" },
       parkedAtControl: true, queriesBeforeControl: 1, controlAccepted: true, hostAbortsWhileParked: 1, runAborted: false,
-      authorizations: { setup: 1, original: 1, replacement: 1, extra: 0 }, sdkStarts: { setup: 1, original: 1, replacement: 1, extra: 0 }, sdkCallsRecorded: 3,
-      hostSettlements: [{ ok: true, skipped: false }, { ok: true, skipped: false }], finalRow: { state: "done", skipped: false, attempt: 2, reason: "user-retry" }, runStatus: "completed", scriptValue: "answer 2",
+      authorizations: { setup: 1, original: 1, replacement: 1, extra: 0 }, sdkStarts: { setup: 1, original: 0, replacement: 1, extra: 0 }, sdkCallsRecorded: 2,
+      hostSettlements: [{ ok: false, skipped: true, error: CANCELLED }, { ok: true, skipped: false }], finalRow: { state: "done", skipped: false, attempt: 2, reason: "user-retry" }, runStatus: "completed", scriptValue: "answer 1",
     },
-    verdict: { kind: "observed-violation", breaches: ["original-started-after-retry"] },
+    verdict: { kind: "failed-reproduction" },
   },
   {
     reading: {
