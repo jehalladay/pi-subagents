@@ -155,7 +155,12 @@ export function identityDigest(domain: string, value: unknown): string {
 
 /** The free-form note field of a Beads export row (EAT-R154, wb-201v). */
 const BEADS_NOTE_FIELD = "notes";
-/** The typed fields that make a record a Beads export row for withoutBeadsNotes: each an own string data member. */
+/**
+ * The structured fields that make a record a Beads export row for withoutBeadsNotes (the matcher the owner ruling M:78175
+ * approves): an id and a status, both strings. Pinned through workflow_execute by test/workbench-registered-function.test.ts
+ * RF13b: a record whose id and status are strings, the empty string included, omits its note member; a record with no status,
+ * no id, a non-string id, or a string id and a non-string status keeps it. An id or status held by a getter is NOT CLAIMED.
+ */
 const BEADS_ROW_FIELDS: readonly string[] = ["id", "status"];
 const PROTOTYPE_KEYS: readonly string[] = ["__proto__", "constructor", "prototype"];
 /** What holds a value withoutBeadsNotes copies: the request (the carried value itself), a record's member, or a list. */
@@ -177,16 +182,22 @@ type NoteHolder = "request" | "member" | "list";
  * getter, which is never invoked, or NaN is decided as it is without the note member. Other values and positions are NOT
  * CLAIMED.
  *
- * Location-scoped, never name-scoped (owner ruling U8 on wb-4bxo, 2026-11-12): the copy omits a note member only where a
- * Beads work item's note rides in the request, and keeps every other member of that name byte for byte. The locations:
- *  1. the carried value's own note member, when it is a record (beside the task fields of the caller input, or among the
- *     fields of the caller policy);
- *  2. the note member of a Beads export row at any depth: a record whose id and status are each an own string data member;
- *  3. for the caller policy only (carrier "policy"), the note member of a record held in a list at any depth.
- * A caller's own note member anywhere else, as in a record held under a member or, in the caller input, in a list, that is
- * not an export row, is copied as it is. The registered function path pins both sides through workflow_execute
- * (test/workbench-registered-function.test.ts RF13b and RF13c: the omitted locations and the kept members, the host's input
- * digesting to the admission's input digest); the positions above are the EAT-R154 rows'.
+ * Location-scoped, never name-scoped (owner ruling U8 on wb-4bxo, 2026-11-12, M:78175): the copy omits a note member only where
+ * a Beads work item's note rides in the request. The code reads three locations: (1) the carried value's own note member, when
+ * the carried value is a record (beside the task fields of the caller input, or among the fields of the caller policy); (2) the
+ * note member of a Beads export row (a record BEADS_ROW_FIELDS matches) the copy reaches; (3) for the caller policy only
+ * (carrier "policy"), the note member of a record held in a list. What the registered function path pins of the caller input,
+ * through workflow_execute (test/workbench-registered-function.test.ts RF13b, the host's input equal byte for byte to the
+ * listed result and digesting to the admission's input digest): omitted, location 1 beside the task fields, and location 2 for
+ * a row under a member, three objects deep, in a list under a member, in an input that is itself a list, with the empty string
+ * as its id and status, and 63 records deep; kept as it is, a caller's own note member in a record under a member, two records
+ * deep, in a record in a list under a member, in a record in a list within a list, in a record an input that is itself a list
+ * holds, and in the four records BEADS_ROW_FIELDS does not match. RF13c pins that the omitted note, held by a getter, is never
+ * invoked at the caller input's own note member and at three location-2 forms (under a member, three objects deep, in a list).
+ * The caller policy's locations are the EAT-R154 rows' above. Residual (the owner-approved matcher): a caller's own record
+ * whose id and status are both strings is read as an export row, so its note member is omitted; RF13b's row under a member is
+ * its quiet row. Other forms are NOT CLAIMED, among them a record with a getter, a symbol or a non-enumerable member, or a
+ * non-plain prototype.
  */
 export function withoutBeadsNotes(value: unknown, carrier: "input" | "policy" = "input"): unknown {
   const ancestors = new Set<object>();
@@ -225,7 +236,7 @@ export function withoutBeadsNotes(value: unknown, carrier: "input" | "policy" = 
   }
   return copy(value, 0, "request");
 }
-/** A Beads export row for withoutBeadsNotes: each of BEADS_ROW_FIELDS is an own string data member, read without invoking a getter. */
+/** Whether withoutBeadsNotes reads a record as a Beads export row: each of BEADS_ROW_FIELDS holds a string (RF13b's forms pin it). */
 function beadsExportRow(item: object): boolean {
   return BEADS_ROW_FIELDS.every(key => {
     const descriptor = Object.getOwnPropertyDescriptor(item, key);

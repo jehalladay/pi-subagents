@@ -34,26 +34,47 @@
  *            terminal state" (RF03); EAT-R033 "Disabling Mechanical hosting MUST preserve script workflow behavior" (RF11, RF11b:
  *            no hosting composed, a function definition still refuses as before); EAT-R034 "worker inputs contain only
  *            serializable data and cannot install or replace callbacks" (RF13, RF13b, RF13c).
- * Owner ruling U8 (2026-11-12, on the bead): withoutBeadsNotes is location-scoped, never name-scoped. RF13b lists four Beads
- * note locations the host's input omits (the input's own notes member, and an export row's under a member, three objects deep
- * and in a list) and six forms of a caller's own notes member it keeps byte for byte (in a record under a member, two records
- * deep, in a record in a list of the input, and in records lacking a string id or a string status), the host's input digesting
- * to the admission's input digest in each; RF13c pins that a notes getter at the input's own top level is never invoked.
- * Beyond the requirement rows: under the shipped contract a function dispatch stays frozen (RF10); a detached function launch is
- * not hosted (RF12); a host that rejects at start launches nothing and leaves no task (RF14); the chain's writer lease covers the
- * function's whole run, not only its start (RF15); the invocation is in the task store when the host's start runs (RF16); with
- * an SDK edge composed and its rights held, the host's grant carries exactly those rights (RF17b). Matching a reviewed id is
- * strict equality: an id that only extends the reviewed id, or names it in another letter case, is unreviewed (RF04). Refusals
- * keep the shipped code vocabulary: an unreviewed id or placement is unsupported-definition-kind with its own fixed reason
- * (RF04, RF12), and a composed-chain refusal is launch-failed whose reason is the deciding layer's own code then that layer's
+ * Census form (cut #3, refusal #2 of wb-4bxo: rule 19(c) froze the shape, so the claims below are enumerated, rule 14): each
+ * claim names its pinned cases, a known escape family within a claim is a NAMED RESIDUAL with its quiet row, and a mode outside
+ * the pinned set is NOT CLAIMED by this suite.
+ * Owner ruling U8 (2026-11-12, M:78175, on the bead): withoutBeadsNotes is location-scoped, never name-scoped. Pinned set
+ * (RF13b, its shape row pinning the sixteen forms in order): seven inputs whose Beads note the host's input omits - the input's
+ * own notes member beside the task fields, and the notes member of an export row (a record whose id and status are both
+ * strings) held under a member, three objects deep, in a list under a member, in an input that is itself a list, with the empty
+ * string as its id and status, and 63 records deep (the row's own members at depth 64) - and nine inputs whose caller's own
+ * notes member reaches the host byte for byte: in a record under a member, two records deep, in a record in a list under a
+ * member, in a record in a list within a list, in a record an input that is itself a list holds, and in a record with an id and
+ * no status, a status and no id, a non-string id, or a string id and a non-string status. In each the host's input equals the
+ * listed result as JSON, byte for byte, and digests to the admission's input digest. RF13c pins that the omitted note, held by
+ * a getter, is never invoked at four of those forms: the input's own top level, and an export row under a member, three objects
+ * deep and in a list. RESIDUAL R1 (named family; the structured-field matcher the owner approved, M:78175): a caller's own
+ * record whose id and status are both strings is read as an export row, so its notes member is omitted; its quiet row is
+ * RF13b's form 'omitted: an export row's notes member, the row held under a member', which reds if that omission stops. Notes
+ * members at forms RF13b does not list, getters at forms RF13c does not list, and the caller policy's locations (the
+ * function-authority suite's EAT-R154 rows) are NOT CLAIMED by this suite.
+ * Beyond the requirement rows: under the shipped contract a function dispatch stays frozen (RF10); a detached function launch
+ * is not hosted (RF12); a host that rejects at start launches nothing and leaves no task (RF14); the chain's writer lease
+ * covers the function's whole run, not only its start (RF15); the invocation is in the task store when the host's start runs
+ * (RF16); with an SDK edge composed and its rights held, the host's grant carries exactly those rights (RF17b). Reviewed-id
+ * match (the class guard of record M:78521, bound at refusal #2 under rule 19(d) on the reviewed-id match words; cut #3 states
+ * the match as this pinned set and claims no comparison beyond it): the reviewed id launches (RF01, and RF04b's control after
+ * its refusals), and each of 18 listed ids that differ from it refuses as unsupported-definition-kind with the unreviewed-id
+ * reason and zero package, Git and host calls. RF04: another version, another segment, an unrelated id, the id extended after
+ * its end, the id upper-cased. RF04b (its shape row pinning the thirteen families in order): the id extended before its start,
+ * its first letter upper-cased, the id cut to its first three, two and one segments, cut by its last character, its last three,
+ * two and one segments, padded with a space before it or after it, its separators replaced, and its first letter in its
+ * fullwidth compatibility form (which NFKC maps back). An id outside these families is NOT CLAIMED by this suite. Refusals keep
+ * the shipped code vocabulary: an unreviewed id or placement is unsupported-definition-kind with its own fixed reason (RF04,
+ * RF04b, RF12), and a composed-chain refusal is launch-failed whose reason is the deciding layer's own code then that layer's
  * fixed reason, each case pinning the exact reason: authority (RF06, RF09, RF10), the SDK edge (RF17), the installed package
  * (RF08) and source admission (RF07, RF15).
  *
  * NOT CLAIMED by this suite: a real installed MechanicalWorkflows package or its native outcome (P07, V4); any Pi session
  * composing function hosting from settings (no setting enables it; RF11b pins the refusal where none is composed); an adopted
  * action spelling (the fixture contract binds the TEST FIXTURE spelling fixture-fn:develop-write, as the P03 suite does; the
- * shipped FUNCTION_ACTION_CONTRACT stays unadopted, RF10); notes members at forms RF13b does not list (the caller policy's
- * locations, its list rule among them, are the function-authority suite's EAT-R154 rows); the projection of the original
+ * shipped FUNCTION_ACTION_CONTRACT stays unadopted, RF10); notes members at forms RF13b does not list and getters at forms RF13c
+ * does not list (the caller policy's locations, its list rule among them, are the function-authority suite's EAT-R154 rows);
+ * definition ids outside the RF04 and RF04b families; the projection of the original
  * Mechanical outcome (P05);
  * controls, cancellation and journal (P06); and the A01-A14 sweep (P08).
  */
@@ -184,10 +205,11 @@ interface WorldOptions {
 }
 
 let sandbox: Hermetic | undefined;
+/** The sandbox removal's own bound: the refusal #2 gate measured 13 to 41 s for it under load (F7), past vitest's 10 s default. */
 afterEach(() => {
   sandbox?.restore();
   sandbox = undefined;
-});
+}, CASE_MS);
 
 function writeSettings(dir: string, rights: readonly string[]): void {
   writeFileSync(join(dir, ".pi", "subagents.json"), JSON.stringify({ workflowsEnabled: true, workbench: { workflowAgentBackend: "claude", capabilityGrants: [...rights] } }));
@@ -302,22 +324,63 @@ function localPrincipal(): string {
 const ROW: Record<string, JsonValue> = { id: "wb-x1", status: "open", notes: "a work-item note" };
 const ROW_KEPT: Record<string, JsonValue> = { id: "wb-x1", status: "open" };
 const OWN_NOTE = "the caller's own note";
+/** A value held `levels` records deep, each record holding the next under the member a. */
+function heldDeep(levels: number, value: JsonValue): JsonValue {
+  let held = value;
+  for (let level = 0; level < levels; level++) held = { a: held };
+  return held;
+}
 /**
  * RF13b's forms (owner ruling U8: withoutBeadsNotes is location-scoped): the caller input and what the host's start receives.
- * The first four carry a Beads note at a location withoutBeadsNotes omits; the other six carry a caller's own notes member,
- * which reaches the host as it is.
+ * The first seven carry a Beads note at a location withoutBeadsNotes omits; the other nine carry a caller's own notes member,
+ * which reaches the host as it is. The deepest form holds its row 63 records deep (the input's member deep, then 62 more), so
+ * the row's own members sit at depth 64 (canonicalJson in identity.ts encodes no deeper).
  */
 const NOTE_FORMS: readonly (readonly [string, JsonValue, JsonValue])[] = [
   ["omitted: the input's own notes member, beside the task fields", { task: "t", notes: "a work-item note" }, { task: "t" }],
   ["omitted: an export row's notes member, the row held under a member", { task: "t", bead: ROW }, { task: "t", bead: ROW_KEPT }],
   ["omitted: an export row's notes member, the row three objects deep", { task: "t", deep: { a: { row: ROW } } }, { task: "t", deep: { a: { row: ROW_KEPT } } }],
   ["omitted: an export row's notes member, the row held in a list", { task: "t", beads: [ROW, ROW] }, { task: "t", beads: [ROW_KEPT, ROW_KEPT] }],
+  ["omitted: an export row's notes member, the row held in an input that is itself a list", [ROW], [ROW_KEPT]],
+  ["omitted: an export row's notes member, the row's id and status the empty string", { task: "t", bead: { id: "", status: "", notes: "a work-item note" } }, { task: "t", bead: { id: "", status: "" } }],
+  ["omitted: an export row's notes member, the row 63 records deep", { task: "t", deep: heldDeep(62, ROW) }, { task: "t", deep: heldDeep(62, ROW_KEPT) }],
   ["kept: a caller's own notes member in a record held under a member", { task: "t", nested: { notes: OWN_NOTE, keep: 1 } }, { task: "t", nested: { notes: OWN_NOTE, keep: 1 } }],
   ["kept: a caller's own notes member two records deep", { task: "t", a: { b: { notes: OWN_NOTE } } }, { task: "t", a: { b: { notes: OWN_NOTE } } }],
   ["kept: a caller's own notes member in a record held in a list of the input", { task: "t", items: [{ notes: OWN_NOTE, keep: 1 }] }, { task: "t", items: [{ notes: OWN_NOTE, keep: 1 }] }],
   ["kept: a record with an id and no status", { task: "t", ref: { id: "r-1", notes: OWN_NOTE } }, { task: "t", ref: { id: "r-1", notes: OWN_NOTE } }],
   ["kept: a record with a status and no id", { task: "t", ref: { status: "open", notes: OWN_NOTE } }, { task: "t", ref: { status: "open", notes: OWN_NOTE } }],
   ["kept: a record whose id is not a string", { task: "t", ref: { id: 7, status: "open", notes: OWN_NOTE } }, { task: "t", ref: { id: 7, status: "open", notes: OWN_NOTE } }],
+  ["kept: a record whose id is a string and whose status is not", { task: "t", ref: { id: "r-1", status: 3, notes: OWN_NOTE } }, { task: "t", ref: { id: "r-1", status: 3, notes: OWN_NOTE } }],
+  ["kept: a caller's own notes member in a record an input that is itself a list holds", [{ notes: OWN_NOTE, keep: 1 }], [{ notes: OWN_NOTE, keep: 1 }]],
+  ["kept: a caller's own notes member in a record held in a list within a list of the input", { task: "t", grid: [[{ notes: OWN_NOTE, keep: 1 }]] }, { task: "t", grid: [[{ notes: OWN_NOTE, keep: 1 }]] }],
+];
+/**
+ * RF13c's export-row forms: where an export row whose notes member is a getter is placed in the input, and what the host's
+ * start receives (the row without its notes member).
+ */
+const GETTER_ROW_FORMS: readonly (readonly [string, (row: object) => unknown, JsonValue])[] = [
+  ["held under a member", row => ({ task: "t", bead: row }), { task: "t", bead: ROW_KEPT }],
+  ["three objects deep", row => ({ task: "t", deep: { a: { row } } }), { task: "t", deep: { a: { row: ROW_KEPT } } }],
+  ["held in a list", row => ({ task: "t", beads: [row] }), { task: "t", beads: [ROW_KEPT] }],
+];
+/**
+ * RF04b's families: ids that differ from the reviewed id FUNCTION_ID, each refused as unreviewed. The truncations and suffixes
+ * cut FUNCTION_ID at its segment boundaries; the fullwidth form replaces its first letter m with U+FF4D, which NFKC maps back.
+ */
+const NEAR_MISS_IDS: readonly (readonly [string, string])[] = [
+  ["extended before its start", "x.mechanical.development.develop.v1"],
+  ["its first letter upper-cased", "Mechanical.development.develop.v1"],
+  ["cut to its first three segments", "mechanical.development.develop"],
+  ["cut to its first two segments", "mechanical.development"],
+  ["cut to its first segment", "mechanical"],
+  ["cut by its last character", "mechanical.development.develop.v"],
+  ["its last three segments", "development.develop.v1"],
+  ["its last two segments", "develop.v1"],
+  ["its last segment", "v1"],
+  ["padded with a space before it", " mechanical.development.develop.v1"],
+  ["padded with a space after it", "mechanical.development.develop.v1 "],
+  ["its separators replaced", "mechanical-development-develop-v1"],
+  ["its first letter in its fullwidth compatibility form", `${String.fromCodePoint(0xff4d)}echanical.development.develop.v1`],
 ];
 /** Every object and list of a JSON value, the value itself first ("$"), each with whether it is frozen, in walk order. */
 function frozenness(value: unknown, path = "$"): [string, boolean][] {
@@ -382,7 +445,7 @@ describe("wb-4bxo P04: the registered workflow_execute(function) branch at the r
   }, CASE_MS);
 
   it.each(["mechanical.development.develop.v2", "mechanical.development.other.v1", "fixture.function.v1", `${FUNCTION_ID}.beta`, FUNCTION_ID.toUpperCase()])(
-    "RF04 EAT-R235 AC4 / EAT-R238 A01: the function id %s, strictly equal to no reviewed allowlist id, refuses as unsupported-definition-kind with the unreviewed-id reason and zero package, Git and host calls",
+    "RF04 EAT-R235 AC4 / EAT-R238 A01: the function id %s, not the reviewed id, refuses as unsupported-definition-kind with the unreviewed-id reason and zero package, Git and host calls",
     async id => {
       const world = await boot();
       const reply = await world.execute(functionParams({ definitionRef: { ...FUNCTION_REF, id } }));
@@ -392,6 +455,40 @@ describe("wb-4bxo P04: the registered workflow_execute(function) branch at the r
     },
     CASE_MS,
   );
+
+  it("RF04b shape: the near-miss families are the thirteen listed, in order, and none of their ids is the reviewed id", () => {
+    expect(NEAR_MISS_IDS.map(([family]) => family)).toEqual([
+      "extended before its start",
+      "its first letter upper-cased",
+      "cut to its first three segments",
+      "cut to its first two segments",
+      "cut to its first segment",
+      "cut by its last character",
+      "its last three segments",
+      "its last two segments",
+      "its last segment",
+      "padded with a space before it",
+      "padded with a space after it",
+      "its separators replaced",
+      "its first letter in its fullwidth compatibility form",
+    ]);
+    expect(NEAR_MISS_IDS.filter(([, id]) => MECHANICAL_REVIEWED_ENTRYPOINTS.some(entry => entry.id === id))).toEqual([]);
+    expect(NEAR_MISS_IDS[12]?.[1].normalize("NFKC")).toBe(FUNCTION_ID);
+  });
+
+  it("RF04b EAT-R235 AC4 / EAT-R238 A01: each near-miss family's id refuses as unsupported-definition-kind with the unreviewed-id reason and zero package, Git and host calls, and the reviewed id then launches in the same session", async () => {
+    const world = await boot();
+    const replies: unknown[] = [];
+    for (const [family, id] of NEAR_MISS_IDS) {
+      const reply = await world.execute(functionParams({ definitionRef: { ...FUNCTION_REF, id } }));
+      replies.push([family, reply.ok, reply.invoked, reply.status, reply.invocationId, reply.error]);
+    }
+    expect(replies).toEqual(NEAR_MISS_IDS.map(([family]) => [family, false, false, "refused", undefined, { code: "unsupported-definition-kind", message: NOT_REVIEWED }]));
+    expect(world.calls).toEqual({ git: 0, admit: 0, current: 0, start: 0 });
+    const launched = await world.execute(functionParams());
+    expect([launched.ok, launched.status]).toEqual([true, "launched"]);
+    expect(world.calls.start).toBe(1);
+  }, CASE_MS);
 
   it("RF05 EAT-R237 AC1 / EAT-R155: with function hosting composed, a furnace-formula definition still refuses as unsupported-definition-kind with zero package, Git and host calls, while the same request shape with kind function launches", async () => {
     const world = await boot();
@@ -514,8 +611,43 @@ describe("wb-4bxo P04: the registered workflow_execute(function) branch at the r
     expect(start?.grant.authority.grants).toEqual([EXECUTE_GRANT, ACTION]);
   }, CASE_MS);
 
-  it("RF13b shape: the listed forms are four omitted Beads note locations, then six kept caller notes members", () => {
-    expect(NOTE_FORMS.map(([form]) => form.slice(0, form.indexOf(":")))).toEqual(["omitted", "omitted", "omitted", "omitted", "kept", "kept", "kept", "kept", "kept", "kept"]);
+  it("RF13b shape: the listed forms are seven omitted Beads note locations, then nine kept caller notes members, in order", () => {
+    expect(NOTE_FORMS.map(([form]) => form.slice(0, form.indexOf(":")))).toEqual([
+      "omitted",
+      "omitted",
+      "omitted",
+      "omitted",
+      "omitted",
+      "omitted",
+      "omitted",
+      "kept",
+      "kept",
+      "kept",
+      "kept",
+      "kept",
+      "kept",
+      "kept",
+      "kept",
+      "kept",
+    ]);
+    expect(NOTE_FORMS.map(([form]) => form)).toEqual([
+      "omitted: the input's own notes member, beside the task fields",
+      "omitted: an export row's notes member, the row held under a member",
+      "omitted: an export row's notes member, the row three objects deep",
+      "omitted: an export row's notes member, the row held in a list",
+      "omitted: an export row's notes member, the row held in an input that is itself a list",
+      "omitted: an export row's notes member, the row's id and status the empty string",
+      "omitted: an export row's notes member, the row 63 records deep",
+      "kept: a caller's own notes member in a record held under a member",
+      "kept: a caller's own notes member two records deep",
+      "kept: a caller's own notes member in a record held in a list of the input",
+      "kept: a record with an id and no status",
+      "kept: a record with a status and no id",
+      "kept: a record whose id is not a string",
+      "kept: a record whose id is a string and whose status is not",
+      "kept: a caller's own notes member in a record an input that is itself a list holds",
+      "kept: a caller's own notes member in a record held in a list within a list of the input",
+    ]);
   });
 
   it.each(NOTE_FORMS)("RF13b EAT-R034 / EAT-R154 (owner ruling U8, location-scoped): %s; the host's start receives exactly the listed input, byte for byte as JSON, and it digests to the admission's input digest", async (_form, input, received) => {
@@ -542,6 +674,22 @@ describe("wb-4bxo P04: the registered workflow_execute(function) branch at the r
     const reply = await world.execute(functionParams({ input }));
     expect(reply.status).toBe("launched");
     expect(JSON.stringify(world.starts[0]?.input)).toBe(JSON.stringify({ task: "t" }));
+    expect(invoked).toBe(0);
+  }, CASE_MS);
+
+  it.each(GETTER_ROW_FORMS)("RF13c EAT-R154 (owner ruling U8): an export row %s whose notes member holds a getter: the getter is never invoked, by the admission or the host's start, and the host's start receives the row without it", async (_form, place, received) => {
+    let invoked = 0;
+    const row = Object.defineProperty({ id: "wb-x1", status: "open" }, "notes", {
+      enumerable: true,
+      get: () => {
+        invoked += 1;
+        return "an attached work-item note";
+      },
+    });
+    const world = await boot();
+    const reply = await world.execute(functionParams({ input: place(row) }));
+    expect(reply.status).toBe("launched");
+    expect(JSON.stringify(world.starts[0]?.input)).toBe(JSON.stringify(received));
     expect(invoked).toBe(0);
   }, CASE_MS);
 

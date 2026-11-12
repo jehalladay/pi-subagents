@@ -41,9 +41,13 @@
  * held to the cases of test/workbench-registered-function.test.ts named beside it, all driven through the tool objects
  * src/index.ts registers with one injected installed host (evidence level V3, injected callbacks; never MechanicalWorkflows'
  * native exit of the same label):
- *  1. the definition id names a reviewed entrypoint of MECHANICAL_REVIEWED_ENTRYPOINTS by strict equality, so an id that only
- *     extends a reviewed id or names it in another letter case matches none; else unsupported-definition-kind with its own
- *     fixed reason and no package, Git or host call (RF04);
+ *  1. the definition id names a reviewed entrypoint of MECHANICAL_REVIEWED_ENTRYPOINTS, else unsupported-definition-kind with
+ *     its own fixed reason and no package, Git or host call; pinned as the reviewed id launching (RF01) and 18 listed ids that
+ *     differ from it refusing (RF04: another version, segment or id, the id extended after its end, the id upper-cased; RF04b:
+ *     the id extended before its start, its first letter upper-cased, cut to its first three, two and one segments or by its
+ *     last character, its last three, two and one segments, padded with a space before or after it, its separators replaced,
+ *     its first letter in its fullwidth compatibility form); an id outside those families is NOT CLAIMED (the class guard of
+ *     record M:78521 binds the reviewed-id match words, so they name only this pinned set);
  *  2. only an embedded launch is hosted, with or without workbench:detach held, else unsupported-definition-kind with its own
  *     fixed reason and no package, Git or host call (RF12);
  *  3. dispatchFunctionChain (function-dispatch-chain.ts) judges entry authority, the SDK edge's rights, the installed package,
@@ -54,10 +58,10 @@
  *     host reports its native references, while the run, and with it the chain's writer lease, continues until it settles
  *     (RF01, RF03, RF15); the host's start receives the chain's frozen grant (RF01; with an SDK edge, its rights, RF17b) and the
  *     input decideExecute admitted for a function definition: the request input through withoutBeadsNotes (identity.ts,
- *     EAT-R154, location-scoped under the owner ruling U8), which omits a Beads note at the locations RF13b lists and never
- *     invokes it (RF13c) while a caller's own notes member at the other forms RF13b lists reaches the host byte for byte,
- *     the host's input digesting to the admission's input digest (RF13b), as a JSON copy frozen at every object and list
- *     (RF13); a host that rejects at start replies launch-failed (RF14).
+ *     EAT-R154, location-scoped under the owner ruling U8), which omits the Beads note at the seven omitted forms RF13b lists,
+ *     without invoking it at the four forms RF13c lists, while a caller's own notes member at the nine kept forms RF13b lists
+ *     reaches the host byte for byte, the host's input digesting to the admission's input digest (RF13b), as a JSON copy
+ *     frozen at every object and list (RF13); a host that rejects at start replies launch-failed (RF14).
  * The branch adds no refusal code to the reply: ExecuteErrorCode keeps its members, and a function refusal/recovery code
  * mapping is the joint P00 vocabulary ruling (MII EAT-R419), NOT CLAIMED here.
  * NOT CLAIMED here: an adopted action spelling (FUNCTION_ACTION_CONTRACT stays unadopted, so under the shipped contract the
