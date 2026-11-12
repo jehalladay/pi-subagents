@@ -48,14 +48,34 @@
  *   whose id carries one, still get the sanitized reading as the reply, with no zero-width unit left in its text.
  *   Falsifier: a reply that is not the reading passed through sanitizeWorkbenchJsonText (an unsanitized JSON.stringify
  *   keeps the unit; the catch reply carries no contract).
+ * - B11 (EAT-R346 beside the trunk reply; wb-qg19 refusal #3 U1): an Attempt page whose request id carries U+0001, a C0
+ *   control the projection's text rule refuses in an ownership confirmation (the row's premise, asserted first on a bare
+ *   ObservationProjection), still gets the sanitized reading as the reply (its contract and Run id, and the page request id it
+ *   carries at source.requestIds.attempts is a string without that unit); the Attempt is a node of the booted projection that
+ *   owns nothing (its stop is denied no-confirmed-ownership, never cross-scope), the Run owns nothing (its stop is denied
+ *   no-confirmed-ownership) and no stop command is sent. Falsifier: a catch that rethrows a refused ownership edge (the gate's
+ *   member G-B) answers with the catch reply instead of the reading, and a reply on that path that skips the sanitizer
+ *   (JSON.stringify of the reading) keeps the unit in that page request id.
+ * - B12 (EAT-R346 beside the trunk reply; wb-qg19 refusal #3 U2): a Run whose Attempt page returns two Attempts, the second
+ *   with an id of 308 code units, still gets the sanitized reading as the reply; the first Attempt is a node of the booted
+ *   projection that owns nothing (its stop is denied no-confirmed-ownership, never cross-scope), the Run owns nothing (its
+ *   stop is denied no-confirmed-ownership) and no stop command is sent. Falsifier: a topology checked whole before its first
+ *   write (the gate's member G-A throws before any write when one snapshot id is past 256 code units) leaves the first
+ *   Attempt unobserved, so its stop is denied cross-scope.
  * - C1 (EAT-R347 c1, the constructor leg): unsupported-verb, invalid-target, foreign-workspace, permit-consumed and
  *   aborted-before-issue each reach the reply as their own exact error code with the adapter's category, and none sends a
  *   native call beyond the first issue of the consumed permit. Falsifier: the trunk class (executor-refused for all five).
- * - C2 (EAT-R347 c2): an invalid target whose id carries caller text, a credential-shaped fake and a stack-shaped frame reaches
- *   the reply as exactly invalid-target, the code holds none of that text and the message is the adapter's fixed text; every
- *   member of the exported closed vocabulary FURNACE_CONTROL_REFUSAL_CODES is its refusal's own code, the list this file
- *   expects is that vocabulary, and a refusal outside it carries no own code, so the tool reports executor-refused.
- *   Falsifier: a code copied from caller text, or a vocabulary drift between src and this file.
+ * - C2 (EAT-R347 c2; wb-qg19 refusal #3 U3): an invalid target whose id carries caller text, a credential-shaped fake and a
+ *   stack-shaped frame reaches the reply as exactly invalid-target, the code holds none of that text and the message is the
+ *   adapter's fixed text; every member of the exported closed vocabulary FURNACE_CONTROL_REFUSAL_CODES is its refusal's own
+ *   code and the list this file expects is that vocabulary. Each value C2 lists outside it carries no own code, and a refusal
+ *   with it reaches the reply as executor-refused: the OUTSIDE values below (caller text, near-miss spellings of a member in
+ *   letter case, a leading or trailing space and an underscore, the empty string, the core's codes executor-refused,
+ *   cross-scope and no-confirmed-ownership, and an object whose string form is a member) and every own key of
+ *   Object.prototype as the runtime lists it (toString, constructor, hasOwnProperty, __proto__ and valueOf among them).
+ *   Falsifier: a code copied from caller text, a vocabulary drift between src and this file, or a membership test that reads
+ *   the prototype chain (the gate's member G-F, `value in REFUSAL_CODES`), folds letter case, trims spaces or drops the
+ *   string check.
  * - C3 (EAT-R348, the bound): an adapter summary whose echo and uncertainty strings are hostile and oversized keeps the whole
  *   reply within 8192 bytes, each echo string within 128 and each uncertainty label within 64 code units, with the fake
  *   credential redacted and no unsafe unit left. Falsifier: an unbounded or unsanitized fold of the adapter readings.
@@ -74,8 +94,11 @@
  * outgoing ownership edge, furnace_observe admits only frn-run-* Run ids observed in the session workspace and every call
  * mints a fresh permit, so the booted tool reaches none of them (C1 pins them through the constructor). Whether a refusal
  * reports invoked false (EAT-R335) and the furnace_observe reply dialect (EAT-R349, wb-752.13) are NOT CLAIMED by this file:
- * B9 and B10 read only that the reply is the sanitized reading (its contract, its Run id and, for B10, no zero-width unit),
- * and the reply to any reading those rows and B1-B8 do not observe is NOT CLAIMED by this file. A Run whose Attempt page
+ * B9 to B12 read only that the reply is the sanitized reading (its contract, its Run id and, for B10, no zero-width unit; for
+ * B11, its page request id without the C0 unit),
+ * and the reply to any reading those rows and B1-B8 do not observe is NOT CLAIMED by this file. Which topology writes stand
+ * when a later one is refused is NOT CLAIMED by this file beyond B11's Attempt and B12's first Attempt, and a value outside
+ * the closed vocabulary that C2 does not list is NOT CLAIMED by this file. A Run whose Attempt page
  * returns more than two Attempts is NOT CLAIMED by this file's booted rows (the census
  * test/workbench-furnace-world-model-preservation-census.test.ts S1 pins the two loops' statements whole).
  * receipt-refused and the live tier's mirror executor (test/workbench-furnace-control-live.test.ts) are NOT CLAIMED by this file.
@@ -107,6 +130,8 @@ const ATTEMPT_2 = "frn-atm-qg19fx2";
 /** An Attempt id of 308 code units: past the projection's 256-unit id bound (src/workbench/observation.ts assertRef). */
 const LONG_ATTEMPT = `frn-atm-${"a".repeat(300)}`;
 const ZWSP = String.fromCodePoint(0x200b);
+/** U+0001, a C0 control: the projection's text rule refuses it in an ownership confirmation (src/workbench/observation.ts). */
+const C0 = String.fromCodePoint(0x1);
 /** The reading's contract (src/workbench/furnace-observer.ts FURNACE_EXTERNAL_OBSERVATION_CONTRACT). */
 const CONTRACT = "furnace.external-observation/v1";
 const ATTEMPTS_REQUEST = "pi-qg19-attempts";
@@ -119,6 +144,11 @@ const INVALID_TARGET_TEXT = "Furnace control target is not a native Furnace iden
 /** The closed refusal vocabulary this file expects; C2 holds it equal to the exported one. */
 const CODES: readonly FurnaceControlRefusalCode[] = [
   "denied-decision", "unvetted-decision", "permit-consumed", "unsupported-verb", "invalid-target", "invalid-deps", "foreign-workspace", "aborted-before-issue",
+];
+/** C2's values outside that vocabulary (each carries no own code); C2 adds every own key of Object.prototype as the runtime lists it. */
+const OUTSIDE: readonly unknown[] = [
+  "caller text at Object.<anonymous>", "INVALID-TARGET", " invalid-target", "invalid-target ", "invalid_target", "", "executor-refused", "cross-scope",
+  "no-confirmed-ownership", { toString: () => "invalid-target" },
 ];
 
 interface Reply {
@@ -162,6 +192,15 @@ function readingOf(text: string): unknown {
   } catch {
     return `NOT A READING: ${text.slice(0, 160)}`;
   }
+}
+
+/** The Attempt page request id a furnace_observe reply carries (source.requestIds.attempts), when it is a string. */
+function pageRequestOf(text: string): string | undefined {
+  const parsed: unknown = JSON.parse(text);
+  const source: unknown = typeof parsed === "object" && parsed !== null ? Reflect.get(parsed, "source") : undefined;
+  const ids: unknown = typeof source === "object" && source !== null ? Reflect.get(source, "requestIds") : undefined;
+  const attempts: unknown = typeof ids === "object" && ids !== null ? Reflect.get(ids, "attempts") : undefined;
+  return typeof attempts === "string" ? attempts : undefined;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -497,6 +536,38 @@ describe("wb-qg19 the booted Furnace observe -> control path (EAT-R346..R348)", 
     expect(readingOf(reply), "the reply is the sanitized reading").toStrictEqual([CONTRACT, RUN]);
     expect(reply.includes(ZWSP), "with no zero-width unit left").toBe(false);
   }, BOOTED_MS);
+
+  it("B11 an Attempt page request id carrying U+0001: the reply is still the reading, the Attempt stands and the Run owns nothing", async () => {
+    const pageRequest = `pi-qg19${C0}attempts`;
+    const bare: ObservationScope = { workspace: "/qg19-premise", principal: "local-operator:1000:s1" };
+    const run: NativeRef = { provider: "furnace", type: "run", id: RUN, scope: bare.workspace };
+    const attempt: NativeRef = { provider: "furnace", type: "attempt", id: ATTEMPT, scope: bare.workspace };
+    expect(() => new ObservationProjection().relate({
+      scope: bare, from: run, to: attempt, kind: "ownership", provenance: { source: "furnace", observedAt: "2026-01-01T00:00:00Z", nativeConfirmationRef: pageRequest },
+    }), "the premise: the projection's text rule refuses that ownership confirmation").toThrow("Observation ownership confirmation is empty, unsafe or exceeds payload limit.");
+    booted = await boot(GRANTS);
+    fake.play(observedRun(booted.workspace, [ATTEMPT], pageRequest));
+    const reply = await booted.observe();
+    expect(readingOf(reply), "the reply is the sanitized reading").toStrictEqual([CONTRACT, RUN]);
+    const kept = pageRequestOf(reply);
+    expect([typeof kept, kept?.includes(C0)], "its page request id is a string without the C0 unit").toStrictEqual(["string", false]);
+    const attemptStop = await booted.control(stopOf(booted.workspace, "attempt", ATTEMPT), { id: "qg19-attempt" });
+    expect(attemptStop.error?.code, "the Attempt is a node of the booted projection that owns nothing").toBe("no-confirmed-ownership");
+    const runStop = await booted.control(stopOf(booted.workspace), { id: "qg19-run" });
+    expect(runStop.error?.code, "the Run owns nothing").toBe("no-confirmed-ownership");
+    expect(stopsOf(fake), "and no stop command is sent").toStrictEqual([]);
+  }, BOOTED_MS);
+
+  it("B12 two Attempts, the second of 308 code units: the reply is still the reading, the first Attempt stands and the Run owns nothing", async () => {
+    booted = await boot(GRANTS);
+    fake.play(observedRun(booted.workspace, [ATTEMPT, LONG_ATTEMPT]));
+    expect(readingOf(await booted.observe()), "the reply is the sanitized reading").toStrictEqual([CONTRACT, RUN]);
+    const first = await booted.control(stopOf(booted.workspace, "attempt", ATTEMPT), { id: "qg19-attempt-1" });
+    expect(first.error?.code, "the first Attempt is a node of the booted projection that owns nothing").toBe("no-confirmed-ownership");
+    const runStop = await booted.control(stopOf(booted.workspace), { id: "qg19-run" });
+    expect(runStop.error?.code, "the Run owns nothing").toBe("no-confirmed-ownership");
+    expect(stopsOf(fake), "and no stop command is sent").toStrictEqual([]);
+  }, BOOTED_MS);
 });
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -608,7 +679,7 @@ describe("wb-qg19 the registered control tool's constructor over the production 
     expect(reused.calls, "the consumed permit issued its verb once").toStrictEqual([`run stop ${RUN_TARGET.id}`]);
   });
 
-  it("C2 the error code is the closed refusal itself, never caller text or a stack, and the vocabulary is src's", async () => {
+  it("C2 the error code is the closed refusal itself, never caller text, a stack or a listed outside value, and the vocabulary is src's", async () => {
     const hostile: NativeRef = { provider: "furnace", type: "run", id: "-x qg19 caller text Bearer FAKE-qg19-token at Object.<anonymous> (/tmp/zz.js:1:1)", scope: WS };
     const seam = counted();
     const { reply } = await constructed([hostile], leg(seam.client))(hostile);
@@ -619,10 +690,18 @@ describe("wb-qg19 the registered control tool's constructor over the production 
       const refusal = new FurnaceControlRefusal("validation", code, "m");
       expect(Object.getOwnPropertyDescriptor(refusal, "code")?.value, `${code} is its own code`).toBe(code);
     }
-    const outside = new FurnaceControlRefusal("validation", "caller text at Object.<anonymous>" as FurnaceControlRefusalCode, "m");
-    expect(Object.getOwnPropertyDescriptor(outside, "code")?.value, "a refusal outside the vocabulary carries no code").toBeUndefined();
-    const generic = constructed([RUN_TARGET], async () => { throw outside; });
-    expect((await generic(RUN_TARGET)).reply.error?.code, "so the tool reports the generic refusal").toBe("executor-refused");
+    const prototypeKeys = Object.getOwnPropertyNames(Object.prototype);
+    expect(prototypeKeys, "the runtime's own Object.prototype keys, the gate witness's five among them").toEqual(
+      expect.arrayContaining(["toString", "constructor", "hasOwnProperty", "__proto__", "valueOf"]),
+    );
+    const values: readonly unknown[] = [...OUTSIDE, ...prototypeKeys];
+    const refusals = values.map(value => new FurnaceControlRefusal("validation", value as FurnaceControlRefusalCode, "m"));
+    expect(refusals.map(refusal => Object.getOwnPropertyDescriptor(refusal, "code")?.value), "no listed outside value is an own code").toStrictEqual(
+      values.map(() => undefined),
+    );
+    const replied: unknown[] = [];
+    for (const refusal of refusals) replied.push((await constructed([RUN_TARGET], async () => { throw refusal; })(RUN_TARGET)).reply.error?.code);
+    expect(replied, "so the tool reports the generic refusal for each").toStrictEqual(values.map(() => "executor-refused"));
   });
 
   it("C3 hostile, oversized adapter readings are bounded and sanitized inside the reply's byte budget", async () => {

@@ -3009,8 +3009,8 @@ Terse command-style prompts produce shallow, generic work.
         try {
           const reading = await observer.snapshot();
           // wb-qg19 (EAT-R346): the Run, each returned Attempt and the Attempt page's native-confirmed Run -> Attempt ownership edges.
-          // When the observer cannot confirm that topology, or the projection refuses one of its writes (the writes before it
-          // stand), the catch refreshes the Run snapshot, so the reply below is still the sanitized reading (refusal #1 U1).
+          // For the readings test/workbench-pi-furnace-control.test.ts B9, B11 and B12 drive into this catch, the reply below is
+          // still the sanitized reading (refusal #1 U1; refusal #3 U1, U2); this comment claims no other reading.
           try {
             const topology = observer.projectionTopology(reading);
             for (const snapshot of topology.snapshots) projection.refresh(snapshot);
