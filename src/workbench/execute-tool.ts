@@ -239,10 +239,12 @@ export function createWorkflowExecuteTool(deps: WorkflowExecuteDeps) {
         outcome = refusal.outcome;
       };
       outcome = { status: "refused", reason: "launch refused" };
-      if (admission.hostMode === "detached" && !rights.includes(DETACH_GRANT)) {
-        refuse("missing-detach-grant", `detached hostMode requires both ${EXECUTE_GRANT} and ${DETACH_GRANT}; execute alone never reaches a detached launch`);
-      } else if (admission.definition.kind !== "script") {
+      // EAT-R337 criterion 1 (claim C118): at the request forms the EAT-R337 criterion 1 cases of test/workbench-execute-tool.test.ts list, the kind is
+      // judged before the detach conjunction: a function or furnace-formula definition refuses unsupported-definition-kind, never missing-detach-grant; other forms are NOT CLAIMED.
+      if (admission.definition.kind !== "script") {
         refuse("unsupported-definition-kind", "only script definitions launch in this host");
+      } else if (admission.hostMode === "detached" && !rights.includes(DETACH_GRANT)) {
+        refuse("missing-detach-grant", `detached hostMode requires both ${EXECUTE_GRANT} and ${DETACH_GRANT}; execute alone never reaches a detached launch`);
       } else {
         let source: WorkflowSource | undefined;
         try {
