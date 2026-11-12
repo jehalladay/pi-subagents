@@ -456,6 +456,10 @@ export interface SubagentsExtensionInjection {
 
 /** The fixed error text of a hosted function run that settled with a rejection: none of the producer's text reaches the store. */
 const FUNCTION_RUN_FAILED = "the installed host settled the function's run with a failure";
+/** The fixed refusal of a hosted function launch whose intent row did not reach its journal (wb-mwsy): the host is not started. */
+const FUNCTION_INTENT_UNWRITTEN = "the invocation intent row did not reach the journal; the installed host was not started";
+/** The effect class of a hosted function run's journal rows: the chain's grant is a source write. */
+const FUNCTION_EFFECT_CLASS = "write";
 
 /**
  * The evidence reference a Claude stream observation lists for its session's last message: the F1 identity-ref closure of
@@ -2757,8 +2761,60 @@ Terse command-style prompts produce shallow, generic work.
         package: hosting.package,
         ...(hosting.sdk !== undefined ? { sdk: hosting.sdk } : {}),
       }),
-      run: (_toolCtx, launch, started) => runHostedFunction(hosting, launch, started),
+      run: (toolCtx, launch, started) => runHostedFunction(toolCtx, hosting, launch, started),
     };
+  }
+  /**
+   * The journal of one hosted function invocation (wb-mwsy, MNI packet P06: EAT-R250, extending EAT-R041 and EAT-R042; the cases
+   * of test/workbench-function-intent-journal.test.ts in brackets): <invocation id>.workflow.jsonl in the session's task
+   * directory, the file name and directory a script run's journal uses, appended through journalAppender, which reads a
+   * dispatched marker back before it answers true. A task directory that cannot be made answers false for every row [FJ01].
+   * runHostedFunction appends the intent row before the host is asked to start the run, and the start is not called when that
+   * row does not reach the file [FJ01]; the dispatched row once the start answered [FJ04]; the settled row once the run's
+   * settlement resolved [FJ05]. A start or a settlement that rejects appends no row, so the last row stays a marker [FJ03, FJ06].
+   */
+  function functionJournal(toolCtx: ExtensionContext, launch: ExecuteFunctionLaunch): (entry: WorkflowJournalEntry) => boolean {
+    try {
+      return journalAppender(join(sessionTaskDir(toolCtx.cwd, launch.scope.sessionId), `${launch.invocationId}.workflow.jsonl`));
+    } catch {
+      return () => false;
+    }
+  }
+  /** The intent the launch is decided under (journal.ts WorkflowJournalIntent), read from the chain's frozen grant [FJ02]. */
+  function functionIntent(launch: ExecuteFunctionLaunch): NonNullable<WorkflowJournalEntry["intent"]> {
+    const { authority, source, sdkRights, packageIdentity } = launch.grant;
+    return {
+      invocationId: launch.invocationId,
+      definitionId: launch.definition.id,
+      definitionDigest: launch.definition.artifactDigest,
+      inputDigest: launch.inputDigest,
+      principal: authority.identity.principal,
+      sessionId: authority.identity.sessionId,
+      grants: [...authority.grants],
+      sdkRights: [...sdkRights],
+      operatorId: source.operatorId,
+      sourceIdentity: source.identity.digest,
+      packageIdentity,
+    };
+  }
+  /**
+   * One row of the invocation's journal, at position 0 under one key (the admission's digest of the call's input), capability
+   * (the reviewed entrypoint id) and effect class: the intent row is a dispatched marker carrying the intent, the dispatched row
+   * a marker carrying the host's native references, and the settled row reads ok and carries them, with no marker.
+   */
+  function functionJournalRow(launch: ExecuteFunctionLaunch, phase: "intent" | "dispatched" | "settled", nativeRefs: readonly NativeRef[] = []): WorkflowJournalEntry {
+    const row: WorkflowJournalEntry = {
+      index: 0,
+      key: launch.inputDigest,
+      ok: phase === "settled",
+      kind: "node",
+      capabilityId: launch.entrypoint.id,
+      effectClass: FUNCTION_EFFECT_CLASS,
+    };
+    if (phase !== "settled") row.dispatched = true;
+    if (phase === "intent") row.intent = functionIntent(launch);
+    else row.nativeRefs = [...nativeRefs];
+    return row;
   }
   /**
    * One hosted function run, the chain's one effect (cases of test/workbench-registered-function.test.ts in brackets). The
@@ -2771,7 +2827,10 @@ Terse command-style prompts produce shallow, generic work.
    * objects, settled values and rejection reasons that the cases of test/workbench-function-outcome-projection.test.ts pin
    * (RO01-RO05, as that file's header lists them); for any other this comment claims nothing.
    */
-  async function runHostedFunction(hosting: WorkflowFunctionHosting, launch: ExecuteFunctionLaunch, started: (nativeRefs: readonly NativeRef[]) => void): Promise<void> {
+  async function runHostedFunction(toolCtx: ExtensionContext, hosting: WorkflowFunctionHosting, launch: ExecuteFunctionLaunch, started: (nativeRefs: readonly NativeRef[]) => void): Promise<void> {
+    // The intent row first (functionJournal): no task exists and the host is not started unless it reached the journal.
+    const journal = functionJournal(toolCtx, launch);
+    if (!journal(functionJournalRow(launch, "intent"))) throw new Error(FUNCTION_INTENT_UNWRITTEN);
     const task = createWorkflowTask({
       id: launch.invocationId, script: "", args: launch.input, toolCallId: launch.toolCallId,
       meta: { name: launch.entrypoint.id, description: "Mechanical function (reviewed entrypoint)" },
@@ -2793,6 +2852,7 @@ Terse command-style prompts produce shallow, generic work.
       fleet.update();
       throw error;
     }
+    journal(functionJournalRow(launch, "dispatched", hosted.nativeRefs));
     started([{ provider: "pi-workflow", type: "task", id: task.id, ...referenceScope(launch.scope.workspace) }, ...hosted.nativeRefs]);
     let failed = false;
     let settled: unknown;
@@ -2801,6 +2861,7 @@ Terse command-style prompts produce shallow, generic work.
     } catch {
       failed = true;
     }
+    if (!failed) journal(functionJournalRow(launch, "settled", hosted.nativeRefs));
     if (task.status === "running") {
       task.status = failed ? "failed" : "completed";
       if (failed) task.error = FUNCTION_RUN_FAILED;
