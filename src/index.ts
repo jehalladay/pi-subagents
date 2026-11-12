@@ -77,7 +77,14 @@ import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflow
 import { executeDetachedControl } from "./workbench/detached-control.js";
 import { DetachedObserveWiring } from "./workbench/detached-wiring.js";
 import { createWorkbenchEvidenceStore } from "./workbench/evidence-wiring.js";
-import { createWorkflowExecuteTool, type ExecuteLaunch } from "./workbench/execute-tool.js";
+import {
+  createWorkflowExecuteTool,
+  type ExecuteFunctionLaunch,
+  type ExecuteLaunch,
+  type FunctionHostStarted,
+  type WorkflowFunctionDeps,
+  type WorkflowFunctionHosting,
+} from "./workbench/execute-tool.js";
 import { createRetainedForgeControlExecutor, retainForgeOperation } from "./workbench/forge-control-retention.js";
 import { type ForgeObservedHead, type ForgeOperationObserver, observeForgeGateRun } from "./workbench/forge-operation-observer.js";
 import { executeFurnaceControl } from "./workbench/furnace-control.js";
@@ -103,10 +110,10 @@ import {
 import { decideWorkflowCollision, FOREIGN_WORKFLOW_TOOL_NAMES } from "./workflow/collisions.js";
 import { WORKFLOW_ENTRY_TYPE, type WorkflowEntryData, workflowEntryData } from "./workflow/entry.js";
 import { createWorkflowHost } from "./workflow/host.js";
-import { appendJournal, readJournal, type WorkflowJournalEntry } from "./workflow/journal.js";
+import type { WorkflowJournalEntry } from "./workflow/journal.js";
 import { extractMeta, type WorkflowMeta, workflowCallName } from "./workflow/meta.js";
 import { type ClaudeNativeObservation, elapsedMs, type WorkflowAgentEntry } from "./workflow/progress.js";
-import { consumeOverridesAtResume } from "./workflow/reconcile.js";
+import { admitResumeJournal, journalAppender, spendOverridesAtResume } from "./workflow/resume-admission.js";
 import { runWorkflow } from "./workflow/runtime.js";
 import { resolveWorkflowScript } from "./workflow/saved.js";
 import { completeWorkflowTask, createWorkflowTask, describeResumeJournal, failWorkflowTask, formatWorkflowNotification, resolveResumeTarget, updateWorkflowProgressBatch, type WorkflowTask, workflowResultText, workflowRunId } from "./workflow/task.js";
@@ -435,12 +442,20 @@ export function observedPackageHead(root: string): ForgeObservedHead | undefined
  * alone, so in a Pi session every field is absent and the factory behaves exactly as it always has. The injection exists for the
  * native-load notify suites (test/helpers/native-load-notify.ts, which drives the DIRECT-CALLER SITES row of
  * test/workbench-sanitizer-corpus.test.ts and test/workbench-native-load-notify.test.ts): they reach the real notify path with a
- * load that fails with their own text and replace no module. It is not a second loader.
+ * load that fails with their own text and replace no module. It is not a second loader. The function hosting field (wb-4bxo,
+ * packet P04) is how a host composes workflow_execute's function branch: test/workbench-registered-function.test.ts drives the
+ * registered tools with one injected installed host through it. No Pi session sets it, so a Pi session composes no function
+ * hosting and workflow_execute refuses every function definition as unsupported-definition-kind, as it did before the branch.
  */
 export interface SubagentsExtensionInjection {
   /** What registerWorkbenchTools awaits before the Workbench tools register; native-modules.ts loadWorkbenchNative when absent. */
   readonly loadWorkbenchNative?: () => Promise<unknown>;
+  /** workflow_execute's function hosting (execute-tool.ts WorkflowFunctionHosting); absent in a Pi session. */
+  readonly functionHosting?: WorkflowFunctionHosting;
 }
+
+/** The fixed error text of a hosted function run that settled with a rejection: none of the producer's text reaches the store. */
+const FUNCTION_RUN_FAILED = "the installed host settled the function's run with a failure";
 
 /**
  * The evidence reference a Claude stream observation lists for its session's last message: the F1 identity-ref closure of
@@ -1269,6 +1284,7 @@ export default function (pi: ExtensionAPI, injected: SubagentsExtensionInjection
     for (const task of workflowTasks.values()) task.abortController.abort();
     workflowTasks.clear();
     claudeControlRetention.dispose();
+    recoveredWorkflowTasks.clear();
     // Forge operations this process started: dispose releases their retentions and closes the owned connections (no cancel verb).
     await Promise.all([...liveForgeOperations.values()].map(operation => operation.dispose().catch(() => undefined)));
     liveForgeOperations.clear();
@@ -2511,7 +2527,7 @@ Terse command-style prompts produce shallow, generic work.
   /**
    * wb-v30k (EAT-R371): the RF root registryFor binds for a configured setting, resolved by realpath(3) (realpathSync.native
    * reads a symlink before a later '..' segment, where fs.realpathSync applies path.resolve first). Claimed only for the
-   * settings pinned in test/workbench-rf-workspace-binding.test.ts: its B1 spellings bind their realpath, and its B4 settings
+   * settings pinned in the wb-v30k workspace-binding suite: its B1 spellings bind their realpath, and its B4 settings
    * (a realpath that fails with ENOENT, ENOTDIR, ELOOP or ENAMETOOLONG, or one carrying 0x01 or DEL) bind as written; no other
    * form is claimed.
    */
@@ -2527,7 +2543,7 @@ Terse command-style prompts produce shallow, generic work.
     const scope = realpathSync(cwd);
     // wb-973.4: the swarm's RF workspace (validated setting) replaces the scope for the RF capability only; absent keeps the scope.
     // wb-v30k (EAT-R371): the setting is read again on each call and bound by canonicalRfRoot, and a scope's registry is rebuilt
-    // when the RF root it was built with differs. Claimed only for the changes pinned in test/workbench-rf-workspace-binding.test.ts
+    // when the RF root it was built with differs. Claimed only for the changes pinned in the wb-v30k workspace-binding suite
     // B2a-B2c (setting text rewrites, and a symlink setting retargeted under unchanged text); no other change is claimed.
     const configured = loadSettings(cwd).workbench?.reactivefiberWorkspaceRoot;
     const reactivefiberWorkspaceRoot = configured === undefined ? undefined : canonicalRfRoot(configured);
@@ -2551,6 +2567,45 @@ Terse command-style prompts produce shallow, generic work.
   }
   function grants(ctx: ExtensionContext): readonly string[] {
     return loadSettings(ctx.cwd).workbench?.capabilityGrants ?? [];
+  }
+  /**
+   * A run this process holds no record of, recovered from this session's own task directory (wb-q0on, EAT-R357): the
+   * script the host persisted at launch and the journal beside it, under the same run id. Bound to the session and
+   * workspace of `ctx` and to the run-id shape, so a model-supplied id can name no other directory.
+   */
+  function recoverWorkflowRun(ctx: ExtensionContext, runId: string): { journalPath: string; scriptPath: string } | undefined {
+    if (!/^wf_[a-z0-9-]{6,}$/.test(runId)) return undefined;
+    try {
+      const dir = sessionTaskDir(ctx.cwd, ctx.sessionManager.getSessionId());
+      const scriptPath = join(dir, `${runId}.workflow.js`);
+      if (!existsSync(scriptPath)) return undefined;
+      return { scriptPath, journalPath: join(dir, `${runId}.workflow.jsonl`) };
+    } catch {
+      return undefined;
+    }
+  }
+  /**
+   * Recovered runs as workflow_reconcile reads them, one record per journal so the evidence receipts it holds on a
+   * task survive between its calls. Never in workflowTasks: no surface lists a run this process did not start.
+   */
+  const recoveredWorkflowTasks = new Map<string, WorkflowTask>();
+  function recoveredWorkflowTask(ctx: ExtensionContext, runId: string): WorkflowTask | undefined {
+    const found = recoverWorkflowRun(ctx, runId);
+    if (found === undefined) return undefined;
+    const cached = recoveredWorkflowTasks.get(found.journalPath);
+    if (cached !== undefined) return cached;
+    let script: string;
+    try {
+      script = readFileSync(found.scriptPath, "utf-8");
+    } catch {
+      return undefined;
+    }
+    const task = createWorkflowTask({ id: runId, script, scriptPath: found.scriptPath, journalPath: found.journalPath });
+    // Not live here: the process that ran it is gone, so nothing in this one can still be running it.
+    task.status = "killed";
+    task.observationScope = { ...observerScope(ctx), sessionId: ctx.sessionManager.getSessionId() };
+    recoveredWorkflowTasks.set(found.journalPath, task);
+    return task;
   }
   /** The gate.run root: an absolute path resolving to the bound workspace or a package inside it; anything else is undefined, never repaired. */
   function forgeRunRoot(target: string, workspace: string): string | undefined {
@@ -2683,6 +2738,71 @@ Terse command-style prompts produce shallow, generic work.
     // Background, like SubagentWorkflow: the reference comes back now and completion is read through workflow_observe.
     void runWorkflowTask(ctx, task).then(() => notifyWorkflowFinished(task));
     return [{ provider: "pi-workflow", type: "task", id: runId, ...referenceScope(launch.scope.workspace) }];
+  }
+  /**
+   * workflow_execute's function branch (wb-4bxo, packet P04), composed only from SubagentsExtensionInjection.functionHosting.
+   * The chain host's authority reads are this session's own on every call (the grants from settings, the local principal and the
+   * session: RF01, RF09); source admission, the installed package, the SDK edge and the installed host's start are the hosting's
+   * (RF07, RF08, RF17, RF17b).
+   */
+  function hostedFunctionDeps(hosting: WorkflowFunctionHosting): WorkflowFunctionDeps {
+    return {
+      contract: hosting.contract,
+      chainHost: toolCtx => ({
+        authority: {
+          grants: () => grants(toolCtx),
+          identity: () => ({ principal: localPrincipal(toolCtx), sessionId: toolCtx.sessionManager.getSessionId() }),
+        },
+        source: hosting.source,
+        package: hosting.package,
+        ...(hosting.sdk !== undefined ? { sdk: hosting.sdk } : {}),
+      }),
+      run: (_toolCtx, launch, started) => runHostedFunction(hosting, launch, started),
+    };
+  }
+  /**
+   * One hosted function run, the chain's one effect (cases of test/workbench-registered-function.test.ts in brackets). The
+   * invocation is registered in the existing workflow task store, scoped to the launching session, workspace and principal
+   * [RF02], before the host is asked to start it [RF16: inside the start, workflow_observe reads it running]; a host that rejects
+   * at start leaves no task [RF14]. Once the host started it, the Pi task reference and the host's references are reported
+   * [RF01]; the task then settles with the run: completed [RF03], or failed with a fixed text that carries none of the
+   * producer's [RF03b].
+   */
+  async function runHostedFunction(hosting: WorkflowFunctionHosting, launch: ExecuteFunctionLaunch, started: (nativeRefs: readonly NativeRef[]) => void): Promise<void> {
+    const task = createWorkflowTask({
+      id: launch.invocationId, script: "", args: launch.input, toolCallId: launch.toolCallId,
+      meta: { name: launch.entrypoint.id, description: "Mechanical function (reviewed entrypoint)" },
+    });
+    task.inputDigest = launch.inputDigest;
+    task.observationScope = Object.freeze({ ...launch.scope });
+    workflowTasks.set(task.id, task);
+    widget.update();
+    fleet.update();
+    let hosted: FunctionHostStarted;
+    try {
+      hosted = await hosting.start(Object.freeze({
+        invocationId: launch.invocationId, entrypoint: launch.entrypoint, definition: launch.definition, input: launch.input,
+        grant: launch.grant, signal: task.abortController.signal,
+      }));
+    } catch (error) {
+      workflowTasks.delete(task.id);
+      widget.update();
+      fleet.update();
+      throw error;
+    }
+    started([{ provider: "pi-workflow", type: "task", id: task.id, ...referenceScope(launch.scope.workspace) }, ...hosted.nativeRefs]);
+    let failed = false;
+    try {
+      await hosted.settled;
+    } catch {
+      failed = true;
+    }
+    if (task.status === "running") {
+      task.status = failed ? "failed" : "completed";
+      if (failed) task.error = FUNCTION_RUN_FAILED;
+    }
+    task.endTime = Date.now();
+    notifyWorkflowFinished(task);
   }
   /**
    * The Claude half of a registered detached launch, its Claude config and its grants, for both producers (wb-wupg, MWI
@@ -3045,11 +3165,15 @@ Terse command-style prompts produce shallow, generic work.
           task.observationScope.workspace !== scope.workspace || task.observationScope.principal !== scope.principal)
           return textResult("Workflow unavailable in this local operator/session/workspace scope.");
         // Node labels come from the script and `error` from whatever it threw; both are redacted and stripped by the shared serializer.
+        // A failed run's typed capability diagnostic rides beside its error, only when it has one (wb-q0on, EAT-R364).
+        const diagnostic = task.capabilityError;
+        const capability = diagnostic === undefined ? {} : { capabilityError: { category: diagnostic.category, message: diagnostic.message,
+          ...(diagnostic.path !== undefined ? { path: diagnostic.path } : {}), ...(diagnostic.constraint !== undefined ? { constraint: diagnostic.constraint } : {}) } };
         const envelopes = [
           { taskId: task.id, status: task.status, identity: task.identityReceipt?.identity ?? null, inputDigest: task.inputDigest ?? null,
-            workspaceSourceState: task.workspaceSourceState ?? "unknown", error: task.error ?? null },
+            workspaceSourceState: task.workspaceSourceState ?? "unknown", error: task.error ?? null, ...capability },
           // A tight maxBytes cannot carry the digests and the error text: say so instead of dropping them silently.
-          { taskId: task.id, status: task.status, envelopeOmitted: ["identity", "inputDigest", "workspaceSourceState", "error"] },
+          { taskId: task.id, status: task.status, envelopeOmitted: ["identity", "inputDigest", "workspaceSourceState", "error", ...(diagnostic === undefined ? [] : ["capabilityError"])] },
         ];
         // maxBytes bounds the WHOLE reply, so it is checked as requested, before the task envelope is subtracted from it (gate F2).
         if (params.maxBytes !== undefined && (!Number.isSafeInteger(params.maxBytes) || params.maxBytes < OBSERVE_MIN_MAX_BYTES || params.maxBytes > OBSERVE_MAX_MAX_BYTES))
@@ -3077,6 +3201,7 @@ Terse command-style prompts produce shallow, generic work.
     }));
     pi.registerTool(createWorkflowReconcileTool({
       tasks: workflowTasks,
+      recover: (taskId, toolCtx) => recoveredWorkflowTask(toolCtx, taskId),
       registryFor,
       grants,
       observerScope,
@@ -3096,6 +3221,7 @@ Terse command-style prompts produce shallow, generic work.
       resolveSource: (definition, cwd) => inspectWorkflowSource({ scriptPath: definition.id }, cwd),
       launchEmbedded: launchEmbeddedWorkflow,
       launchDetached: launchDetachedWorkflow,
+      ...(injected.functionHosting !== undefined ? { functions: hostedFunctionDeps(injected.functionHosting) } : {}),
     }));
     // workflow_control (wb-cra): the explicit native control tool over the pure decision core (control.ts) and the
     // adapter legs. Grants, principal, workspace and session come from host context on every call; the target, the
@@ -3341,7 +3467,7 @@ Terse command-style prompts produce shallow, generic work.
         journal: {
           ...(task.replay !== undefined ? { entries: task.replay } : {}),
           ...(task.journalPath !== undefined
-            ? { append: (entry: WorkflowJournalEntry) => appendJournal(task.journalPath!, entry) }
+            ? { append: journalAppender(task.journalPath) }
             : {}),
         },
       });
@@ -3479,7 +3605,9 @@ Terse command-style prompts produce shallow, generic work.
     },
 
     execute: async (toolCallId, params, _signal, _onUpdate, ctx) => {
-      const resumeFrom = resolveResumeTarget(params.resumeFromRunId, workflowTasks);
+      // A run this process holds no record of is looked up in this session's own task directory only: a restart of the
+      // same session and workspace finds it (wb-q0on, EAT-R357); another session or workspace never does.
+      const resumeFrom = resolveResumeTarget(params.resumeFromRunId, workflowTasks, runId => recoverWorkflowRun(ctx, runId));
       if (resumeFrom !== undefined && !resumeFrom.ok) return textResult(resumeFrom.message);
 
       // A resume with no source of its own re-runs what that run ran. The
@@ -3505,6 +3633,20 @@ Terse command-style prompts produce shallow, generic work.
       }
 
       const runId = workflowRunId();
+      // The source journal is admitted before anything of the new run exists (wb-q0on): classified from its raw bytes
+      // first (EAT-R360), refused while a recovered run's dispatch is unsettled (EAT-R357), and every live operator
+      // override spent and read back before anything runs (EAT-R359) — the runtime receives the entries as read
+      // (unspent) and may re-run once, while any second resume finds the authorization already consumed, so a
+      // prompt-injected repetition of one authorization is impossible. Each refusal is typed and dispatches nothing.
+      let replay: WorkflowJournalEntry[] | undefined;
+      if (resumeFrom !== undefined) {
+        const admitted = admitResumeJournal(resumeFrom.journalPath, { runId: resumeFrom.runId, recovered: resumeFrom.recovered === true });
+        if (!admitted.ok) return textResult(admitted.message);
+        const spend = spendOverridesAtResume(resumeFrom.journalPath, admitted.entries, { byRunId: runId, at: new Date().toISOString() });
+        if (!spend.ok) return textResult(spend.message);
+        replay = admitted.entries;
+      }
+
       // Every invocation lands on disk next to the agent transcripts, so
       // iterating is edit-the-file-then-rerun-with-scriptPath rather than
       // re-emitting the whole source. The journal sits beside it under the same
@@ -3520,17 +3662,6 @@ Terse command-style prompts produce shallow, generic work.
         savedPath = undefined;
         journalPath = undefined;
         console.warn(`[pi-subagents] could not persist workflow script: ${err instanceof Error ? err.message : String(err)}`);
-      }
-
-      const replay = resumeFrom !== undefined ? readJournal(resumeFrom.journalPath) : undefined;
-      // Spend every live operator override in the SOURCE journal before anything
-      // runs: the runtime receives the entries as read (unspent) and may re-run
-      // once, while any second resume finds the authorization already consumed —
-      // a prompt-injected repetition of one authorization is impossible.
-      if (replay !== undefined && resumeFrom !== undefined) {
-        for (const spent of consumeOverridesAtResume(replay, { byRunId: runId, at: new Date().toISOString() })) {
-          appendJournal(resumeFrom.journalPath, spent);
-        }
       }
 
       const task = createWorkflowTask({

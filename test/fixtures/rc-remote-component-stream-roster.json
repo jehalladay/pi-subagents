@@ -89,6 +89,8 @@
       "vendor": 3
     },
     "computedLoads": [
+      "qa/workbench/detached-reattach-receipt.mjs: import() pathToFileURL(join(ROOT, RUNNER_ENTRIES.host)).href",
+      "qa/workbench/detached-reattach-receipt.mjs: import() pathToFileURL(join(ROOT, RUNNER_ENTRIES.extension)).href",
       "qa/workbench/headless-census-child.mjs: import() entryUrl",
       "qa/workbench/headless-census-child.mjs: import() distUrl(\"workflow/runtime.js\")",
       "qa/workbench/headless-census-child.mjs: import() distUrl(\"workbench/capability-registry.js\")",
@@ -567,6 +569,8 @@
             "carrierHits": [],
             "jsonCommands": [],
             "computed": [
+              "qa/workbench/detached-reattach-receipt.mjs: import() pathToFileURL(join(ROOT, RUNNER_ENTRIES.host)).href",
+              "qa/workbench/detached-reattach-receipt.mjs: import() pathToFileURL(join(ROOT, RUNNER_ENTRIES.extension)).href",
               "qa/workbench/headless-census-child.mjs: import() entryUrl",
               "qa/workbench/headless-census-child.mjs: import() distUrl(\"workflow/runtime.js\")",
               "qa/workbench/headless-census-child.mjs: import() distUrl(\"workbench/capability-registry.js\")",
