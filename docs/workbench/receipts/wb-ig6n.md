@@ -87,7 +87,9 @@
 - NOT_REACHED source-unavailable: E1, E2: decided after the kind refusal, which answers these rows' function definitions first
 - NOT_REACHED definition-digest-mismatch: E1, E2: decided after the kind refusal, which answers these rows' function definitions first
 - NOT_REACHED definition-schema-mismatch: E1, E2: decided after the kind refusal, which answers these rows' function definitions first
+- NOT_REACHED definition-syntax-invalid: E1, E2: decided after the kind refusal, which answers these rows' function definitions first
 - NOT_REACHED launch-failed: E1, E2: decided after the kind refusal, which answers these rows' function definitions first
+- Amended 2026-11-12 by wb-dhmx (the structural-exit child of wb-9btr, ruling M:78806, which carries wb-9btr cut #4): that cut's EAT-R323 compile check adds definition-syntax-invalid to ExecuteLaunchRefusal, so wb-dhmx inserted the NOT_REACHED definition-syntax-invalid line above, after definition-schema-mismatch in ExecuteLaunchRefusal's declaration order, and removed no line. No row reaches it: the compile check runs on the script path once the saved source is resolved, and the kind refusal answers E1 and E2 first. Measured: 22 passed (22) on trunk 902308be; Tests 2 failed | 20 passed (22) on wb-9btr cut #4 and on wb-dhmx's merged tree before this amendment (A3 and the records case); 22 passed (22) after it.
 - Pure builder rows (V1; a repeated-character run is written as its character and length):
 - BUILDER_ROW B1 {"grants":["workbench:execute"],"definition":{},"outcome":{"status":"accepted"},"maxBytes":null,"status":"accepted","truncated":false}
 - BUILDER_ROW B2 {"grants":["workbench:execute"],"definition":{},"outcome":{"status":"launched","nativeRefs":[{"provider":"pi-workflow","type":"task","id":"wf_ig6nlaunched"}]},"maxBytes":null,"status":"launched","truncated":false}
