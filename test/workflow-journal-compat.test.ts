@@ -726,6 +726,10 @@ describe("AC5: pure, read-only, and pinned to journal.ts", () => {
     const everyField: Required<WorkflowJournalEntry> = {
       index: 0, key: "k", ok: true, text: "t", resumed: true, kind: "node", capabilityId: "record.read",
       effectClass: "read", basis: "b", nativeRefs: [], dispatched: true, reconcile: ACK,
+      intent: {
+        invocationId: "i", definitionId: "d", definitionDigest: "dd", inputDigest: "id", principal: "p", sessionId: "s",
+        grants: [], sdkRights: [], operatorId: "o", sourceIdentity: "si", packageIdentity: "pi",
+      },
     };
     const everyKind: Record<NonNullable<WorkflowJournalEntry["kind"]>, true> = { node: true, acknowledge: true, override: true };
 

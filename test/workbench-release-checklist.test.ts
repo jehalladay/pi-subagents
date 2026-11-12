@@ -283,7 +283,7 @@ describe("CLI contract", () => {
   it("places the block whole at the package-smoke boundary, not the shared end of file (16:56Z whole-block rule)", () => {
     const toml = readFileSync(join(repo, "forge.toml"), "utf8");
     const block = '[build.commands.release-checklist]\ncommand = "node qa/workbench/release-checklist-receipt.mjs"\ntimeout = 600\n';
-    const smoke = '[build.commands.package-smoke]\ncommand = "bash qa/workbench/package-smoke.sh"\ntimeout = 120\n\n';
+    const smoke = '[build.commands.package-smoke]\ncommand = "bash qa/workbench/package-smoke.sh"\ntimeout = 300\n\n';
     expect(toml).toContain(`${smoke}${block}\n[build.commands.install-smoke]`);
     expect(toml.split("[build.commands.release-checklist]").length - 1).toBe(1);
     const start = toml.indexOf("[build.commands.release-checklist]");

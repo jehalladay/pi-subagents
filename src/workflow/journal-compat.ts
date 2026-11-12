@@ -43,7 +43,7 @@
 import { WORKFLOW_SCRIPT_SCHEMA_VERSION } from "../workbench/identity.js";
 import type { NativeRef } from "../workbench/observation.js";
 import { sanitizeWorkbenchText } from "../workbench/redaction.js";
-import type { WorkflowJournalEntry } from "./journal.js";
+import type { WorkflowJournalEntry, WorkflowJournalIntent } from "./journal.js";
 import { entryDigestOf, isReconcileRecord, producerOf, type ReconcileRecord } from "./reconcile.js";
 
 /* ------------------------------------------------------------------------- *
@@ -64,6 +64,7 @@ export const JOURNAL_ENTRY_FIELDS = [
   "nativeRefs",
   "dispatched",
   "reconcile",
+  "intent",
 ] as const;
 
 /** The entry kinds journal.ts reads. A row with no kind at all is a settled agent. */
@@ -89,6 +90,7 @@ interface AcceptedJournalEntry {
   nativeRefs?: readonly NativeRef[];
   dispatched?: true;
   reconcile?: ReconcileRecord;
+  intent?: WorkflowJournalIntent;
 }
 
 type Same<A, B> = [A] extends [B] ? ([B] extends [A] ? true : false) : false;
@@ -286,6 +288,7 @@ const EXPECTED: Readonly<Record<JournalEntryField, string>> = {
   nativeRefs: "a list of native references (provider, type and id strings, optional string scope) when present",
   dispatched: "true on a node entry when present",
   reconcile: "a valid operator decision record on an acknowledge or override row, and absent elsewhere",
+  intent: "a function intent record (its string members, and string lists for grants and sdkRights) on a node entry when present",
 };
 
 type Parsed =
@@ -339,6 +342,28 @@ function isNativeRefList(value: unknown): value is readonly NativeRef[] {
   return Array.isArray(value) && value.every(isNativeRef);
 }
 
+function isStringList(value: unknown): value is readonly string[] {
+  return Array.isArray(value) && value.every((item) => typeof item === "string");
+}
+
+/** journal.ts isIntent. */
+function isIntent(value: unknown): value is WorkflowJournalIntent {
+  return (
+    plainObject(value) &&
+    typeof value.invocationId === "string" &&
+    typeof value.definitionId === "string" &&
+    typeof value.definitionDigest === "string" &&
+    typeof value.inputDigest === "string" &&
+    typeof value.principal === "string" &&
+    typeof value.sessionId === "string" &&
+    isStringList(value.grants) &&
+    isStringList(value.sdkRights) &&
+    typeof value.operatorId === "string" &&
+    typeof value.sourceIdentity === "string" &&
+    typeof value.packageIdentity === "string"
+  );
+}
+
 function refused(reason: JournalUnsupportedReason, field: JournalEntryField | null, detail: string): RefusedLine {
   return { kept: false, reason, field, detail };
 }
@@ -373,7 +398,7 @@ function parseEntry(value: unknown): Parsed {
   if (!plainObject(value)) {
     return refused("not-an-object", null, `the line is JSON ${jsonTypeOf(value)}, not an entry object`);
   }
-  const { index, key, ok, text, resumed, kind, capabilityId, effectClass, basis, nativeRefs, dispatched, reconcile } = value;
+  const { index, key, ok, text, resumed, kind, capabilityId, effectClass, basis, nativeRefs, dispatched, reconcile, intent } = value;
   const entryKind = JOURNAL_ENTRY_KINDS.find((known) => known === kind);
   if (kind !== undefined && entryKind === undefined) {
     return typeof kind === "string"
@@ -394,6 +419,11 @@ function parseEntry(value: unknown): Parsed {
   if (basis !== undefined && typeof basis !== "string") return invalid("basis");
   if (nativeRefs !== undefined && !isNativeRefList(nativeRefs)) return invalid("nativeRefs");
   if (dispatched !== undefined && (dispatched !== true || entryKind !== "node")) return invalid("dispatched");
+  let functionIntent: WorkflowJournalIntent | undefined;
+  if (intent !== undefined) {
+    if (entryKind !== "node" || !isIntent(intent)) return invalid("intent");
+    functionIntent = intent;
+  }
   if (entryKind === "node" && capabilityId === undefined) {
     return refused(
       "node-without-capability",
@@ -450,7 +480,7 @@ function parseEntry(value: unknown): Parsed {
     kept: true,
     entry: {
       index, key, ok, text, resumed, kind: entryKind, capabilityId, effectClass, basis, nativeRefs,
-      dispatched: dispatched === true ? true : undefined, reconcile: record,
+      dispatched: dispatched === true ? true : undefined, reconcile: record, intent: functionIntent,
     },
     ignoredFields,
     foreignSchemaVersion,

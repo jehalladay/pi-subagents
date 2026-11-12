@@ -21,7 +21,7 @@ const readRepo = (path: string): string => readFileSync(join(ROOT, path), "utf8"
 /** The one case the helper suite's FIND-1 anchor file holds; its report-mode twin is the helper suite's p-smoke row. */
 const SMOKE: CasePin = { file: "test/workbench-census-helper-smoke.test.ts", title: "FIND-1 smoke anchor: the helper judges this case on the real default gate", tier: DEFAULT_GATE_TIER };
 const GATE_LINE = 'gate = ["lint", "typing", "build", "test", "census", "workbench-shell", "package-smoke"]';
-const CENSUS_BLOCK = '[build.commands.census]\ncommand = "npm run test:census"\ntimeout = 300\nafter = ["test"]\nconsumes = ["test"]\n';
+const CENSUS_BLOCK = '[build.commands.census]\ncommand = "npm run test:census"\ntimeout = 900\nafter = ["test"]\nconsumes = ["test"]\n';
 const TEST_SCRIPT = "vitest run --reporter=default --reporter=json --outputFile=.forge/vitest-report.json --includeTaskLocation --expect.requireAssertions";
 const PRETEST = "node -e \"require('fs').rmSync('.forge/vitest-report.json',{force:true})\"";
 

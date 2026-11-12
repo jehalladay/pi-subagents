@@ -939,7 +939,8 @@
      "basis",
      "nativeRefs",
      "dispatched",
-     "reconcile"
+     "reconcile",
+     "intent"
     ]
    },
    "witnessMembers": [],
