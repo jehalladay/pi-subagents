@@ -120,6 +120,9 @@ const CARRIERS: Readonly<Record<string, string>> = {
   "result-envelope/v1": "workbench/forge-operation-observer.ts",
   // wb-w8fk: MechanicalWorkflows' proposed host binding contract (a producer proposal, not adopted), spelled once by its Pi consumer.
   "mechanical.pi-host/v1": "workbench/mechanical-host-binding.ts",
+  // wb-yk1k (EAT-R399): the provisional schema of a writer reservation record (until EAT-R398 ratifies the token), spelled once
+  // by the reservation-store form of WriterLeases. Cut #1 landed it at L1132 without this row; cut #2 adds the row.
+  "pi.writer-reservation/v1": "workbench/source-admission.ts",
 };
 
 /**
