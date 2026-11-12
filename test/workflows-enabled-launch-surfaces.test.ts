@@ -18,19 +18,26 @@
  *       D3 workflow_detached action launch: the reply is WORKFLOWS_DISABLED_REASON, and no invocation directory;
  *       D4 SubagentWorkflow: pinned-off, the tool is not registered; stood-down, the registered tool replies
  *          WORKFLOWS_DISABLED_REASON and no <run>.workflow.js is written;
- *       D5 --subagents-workflow-file: the startup notice says workflows are off and ends with the setting's pointer, and
- *          no workflow entry is appended.
+ *       D5 --subagents-workflow-file: the startup notice says workflows are off and ends with the setting's pointer, and,
+ *          read FLAG_SETTLE_MS after session start, none of the flag path's own start witnesses is there: no fleet list
+ *          row (the flag path registers the run's task first), no 'Running workflow' notice (it reports that right before
+ *          it runs the task), no workflow entry appended and no workflow-result message sent (a run's completion records).
  *     Falsifier: deleting a door's switch check (D1, D2: the workflowsEnabled dep in src/workbench/execute-tool.ts or its
  *     wiring in src/index.ts; D3 and D4 stood-down: their checks in src/index.ts; D4 pinned-off: the registration gate;
- *     D5: the flag's guard).
+ *     D5: the flag's guard, or only its return, so the off notice is reported and the run still starts).
  *   CONTROL-ON, CONTROL-AUTO: with the switch pinned on (CONTROL-ON), and with no setting and no other workflow tool
  *     (CONTROL-AUTO), SubagentWorkflow and the D1 launch both launch, each writes its <run>.workflow.js witness file, and
  *     each one's completion notification reads status completed and carries its return value (RESULT_MARKER; EAT-R485
  *     criterion 3); the unset state is the one the stood-down cases start from, so their refusals come from the switch
  *     and not from the boot. Falsifier: a completion that drops its return value (SubagentWorkflow's own, or every run's
  *     while the switch is unpinned), or SubagentWorkflow or the D1 launch refusing in either on state.
- *   INSPECT-<pinned-off|stood-down>: workflow_detached inspect still reaches the native inspect read under the switch
- *     (pinned with an invocation no host holds, so the snapshot reads observation unknown), never the refusal.
+ *   INSPECT-<pinned-off|stood-down>: under the switch, workflow_detached inspect of an invocation no launch reserved
+ *     answers the native inspect reading and is never the refusal: the reply carries the native no-such-invocation members
+ *     (observation unknown, source local-client-transport, transportLoss no-such-invocation), every member but observedAt
+ *     equals what connectDetachedWorkflow(<agent dir resolved>/workbench-detached, id).inspect() returns for the same id,
+ *     observedAt is an ISO stamp read inside the call, and no invocation directory is reserved. Falsifier: an inspect that
+ *     answers the refusal, or a reply that is not that reading (a hand-built {contract, invocationId, observation} snapshot,
+ *     always or only while the switch reads off).
  *   SHELL-1, SHELL-2, SHELL-3 (each in both hostModes): createWorkflowExecuteTool with a workflowsEnabled dep
  *     reading false refuses as workflows-disabled with execute and detach held, before resolveSource and before either
  *     launcher; the dep is read on every call (false, then true: refused, then launched); and for an admitted kind
@@ -44,15 +51,16 @@
  *     every src/**.ts file read as a TypeScript syntax tree (calls of runWorkflowTask, and calls of launchDetachedWorkflow,
  *     bare or as a member, keyed by file and enclosing function, tool name or defineTool variable) are the DOORS sites, one
  *     row per site. Falsifier: a door row removed from every literal here, or a launch call site added to src.
- * NOT CLAIMED by this census: inspect of a live existing run (no host is launched here); the real detached launches with
- * the switch on (SHELL-2 drives a stub launcher only; test/workbench-detached-grants.test.ts launches both); the
- * --subagents-workflow-file run with the switch on; the switch's order against the detach-grant conjunction (no case
- * holds workbench:execute alone in hostMode detached with the switch off); the /agents → Settings → Workflows toggle as
- * the way the switch turns off mid-session (it sets the same switch the stood-down cases read, but no case drives it); runs
- * already in flight when the switch turns off; a launch surface of another extension. Skipping the FROZEN case itself is
- * NOT CLAIMED by this census.
+ * NOT CLAIMED by this census: inspect of a live existing run (no host is launched here); which code path produced an
+ * inspect reply equal to the native reading (a call into connectDetachedWorkflow, or a copy of that whole reading); the
+ * real detached launches with the switch on (SHELL-2 drives a stub launcher only;
+ * test/workbench-detached-grants.test.ts launches both); the --subagents-workflow-file run with the switch on; the
+ * switch's order against the detach-grant conjunction (no case holds workbench:execute alone in hostMode detached with
+ * the switch off); the /agents → Settings → Workflows toggle as the way the switch turns off mid-session (it sets the
+ * same switch the stood-down cases read, but no case drives it); runs already in flight when the switch turns off; a
+ * launch surface of another extension. Skipping the FROZEN case itself is NOT CLAIMED by this census.
  */
-import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, realpathSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { type ExtensionContext, getAgentDir } from "@earendil-works/pi-coding-agent";
@@ -63,6 +71,7 @@ import { sessionTaskDir } from "../src/output-file.js";
 import { inspectWorkflowSource, type WorkflowSource } from "../src/workbench/designer.js";
 import { EXECUTE_GRANT } from "../src/workbench/execute.js";
 import { createWorkflowExecuteTool, DETACH_GRANT, type ExecuteLaunch, WORKFLOWS_DISABLED_REASON, type WorkflowExecuteDeps } from "../src/workbench/execute-tool.js";
+import { connectDetachedWorkflow } from "../src/workbench/hosts/local-detached.js";
 import { WORKFLOW_SCRIPT_SCHEMA_VERSION } from "../src/workbench/identity.js";
 import type { NativeRef } from "../src/workbench/observation.js";
 import { WORKFLOW_ENTRY_TYPE } from "../src/workflow/entry.js";
@@ -78,6 +87,17 @@ const RESULT_MARKER = "r485-golden-result";
 const PURE_SCRIPT = `export const meta={name:"r485-pure",description:"returns a value and calls no agent"}; return "${RESULT_MARKER}";`;
 const UNREGISTERED = "(not registered)";
 const FLAG_REFUSAL_HEAD = `--${WORKFLOW_FILE_FLAG} ignored: workflows are off.`;
+/** The notice the flag path reports immediately before it runs the task it registered (src/index.ts runWorkflowFlag). */
+const FLAG_RUN_NOTICE_HEAD = "Running workflow ";
+/** The below-editor fleet list widget key: a registered run is a row of it, so the list registers once a run exists. */
+const FLEET_WIDGET = "fleet";
+/**
+ * How long a D5 case waits after session start before it reads its start witness. A flag run of the pure script that
+ * the guard let through appends its workflow entry and sends its workflow-result message within about 500 ms of session
+ * start (measured at load1 730); the notice and the fleet list row it writes first are there at once.
+ */
+const FLAG_SETTLE_MS = 1_000;
+const INSPECT_ID = "r485-inspect-none";
 
 const OFF_STATES = ["pinned-off", "stood-down"] as const;
 type OffState = (typeof OFF_STATES)[number];
@@ -112,6 +132,8 @@ interface Notification {
 let sandbox: Hermetic | undefined;
 
 const detachedRoot = (): string => join(getAgentDir(), "workbench-detached");
+/** The root src/index.ts detachedBase() hands the native detached host: the agent dir resolved, then workbench-detached. */
+const nativeDetachedRoot = (): string => join(realpathSync(getAgentDir()), "workbench-detached");
 /** Invocation directories reserved in this sandbox: the detached launcher reserves one before it spawns a host. */
 function reservedInvocations(): string[] {
   return existsSync(detachedRoot()) ? readdirSync(detachedRoot()).sort() : [];
@@ -166,10 +188,11 @@ async function boot(state: BootState, opts: { flag?: boolean } = {}) {
     booted.pi.getAllTools.mockReturnValue([{ name: "Workflow", description: "another extension's workflow tool", sourceInfo: { source: "r485-other-ext", path: "/x/other.ts" } }]);
   }
   const notify = vi.fn();
+  const setWidget = vi.fn();
   const context: ExtensionContext = ctx({
     hasUI: true,
     cwd: dir,
-    ui: { setStatus: vi.fn(), setWidget: vi.fn(), notify, addAutocompleteProvider: vi.fn(), onTerminalInput: vi.fn(() => vi.fn()) },
+    ui: { setStatus: vi.fn(), setWidget, notify, addAutocompleteProvider: vi.fn(), onTerminalInput: vi.fn(() => vi.fn()) },
   });
   await booted.lifecycle.get("session_start")?.({}, context);
   const tool = (name: string): RegisteredTool => {
@@ -182,7 +205,11 @@ async function boot(state: BootState, opts: { flag?: boolean } = {}) {
   const notices = (): string[] => notify.mock.calls.map(call => String(call[0]));
   const workflowEntries = (): number => appendEntry.mock.calls.filter(call => call[0] === WORKFLOW_ENTRY_TYPE).length;
   const notifications = (): Notification[] => sendMessage.mock.calls.map(call => call[0] as Notification);
-  return { booted, context, dir, scriptPath, tool, notices, workflowEntries, notifications };
+  /** The fleet list widget registrations (a run this session registered is a row of that list). */
+  const fleetRegistrations = (): number => setWidget.mock.calls.filter(call => call[0] === FLEET_WIDGET && call[1] !== undefined).length;
+  /** The workflow-result messages a settled flag run sends to the model. */
+  const workflowResults = (): number => sendMessage.mock.calls.filter(call => (call[0] as { customType?: string }).customType === "workflow-result").length;
+  return { booted, context, dir, scriptPath, tool, notices, workflowEntries, notifications, fleetRegistrations, workflowResults };
 }
 type Booted = Awaited<ReturnType<typeof boot>>;
 
@@ -224,8 +251,19 @@ async function knock(door: Door, state: OffState): Promise<Knock> {
     }
     case "D5": {
       await flush();
+      await new Promise(resolve => setTimeout(resolve, FLAG_SETTLE_MS));
       const notice = b.notices().find(text => text.startsWith(`--${WORKFLOW_FILE_FLAG}`)) ?? "(no notice)";
-      return { answer: notice, started: Array.from({ length: b.workflowEntries() }, (_, index) => `workflow entry ${index + 1}`) };
+      // The flag path's own start witnesses, in the order it writes them: the run's row in the fleet list (it registers the
+      // task first), the 'Running workflow' notice it reports right before it runs the task, then the run's completion
+      // records, a workflow entry and a workflow-result message.
+      const count = (label: string, n: number): string[] => Array.from({ length: n }, (_, index) => `${label} ${index + 1}`);
+      const started = [
+        ...count("fleet list row", b.fleetRegistrations()),
+        ...b.notices().filter(text => text.startsWith(FLAG_RUN_NOTICE_HEAD)),
+        ...count("workflow entry", b.workflowEntries()),
+        ...count("workflow-result message", b.workflowResults()),
+      ];
+      return { answer: notice, started };
     }
   }
 }
@@ -284,13 +322,26 @@ describe("EAT-R485 CONTROL cases: with workflowsEnabled pinned true, or unset wi
   }, 60_000);
 });
 
-describe("EAT-R485 INSPECT cases: under the switch, workflow_detached inspect is not a launch and reaches the native inspect read", () => {
-  it.each(OFF_STATES)("INSPECT-%s: workflow_detached inspect reaches the native inspect read, never the refusal", async state => {
+describe("EAT-R485 INSPECT cases: under the switch, workflow_detached inspect of an invocation no launch reserved answers the native inspect reading, reserves nothing and is never the refusal", () => {
+  it.each(OFF_STATES)("INSPECT-%s: workflow_detached inspect of an unreserved invocation answers the native no-such-invocation reading member for member, never the refusal", async state => {
     const b = await boot(state);
-    const result = await b.tool("workflow_detached").execute("r485-inspect", { action: "inspect", invocationId: "r485-inspect-none" }, undefined, undefined, b.context);
+    const before = Date.now();
+    const result = await b.tool("workflow_detached").execute("r485-inspect", { action: "inspect", invocationId: INSPECT_ID }, undefined, undefined, b.context);
+    const after = Date.now();
     const text = textOf(result);
     expect(text).not.toBe(WORKFLOWS_DISABLED_REASON);
-    expect(JSON.parse(text)).toMatchObject({ contract: "workbench.local-detached/v1", invocationId: "r485-inspect-none", observation: "unknown" });
+    const { observedAt, ...members } = JSON.parse(text) as Record<string, unknown>;
+    // The native read's own no-such-invocation members (src/workbench/hosts/local-detached.ts inspect).
+    expect(members).toMatchObject({ contract: "workbench.local-detached/v1", invocationId: INSPECT_ID, observation: "unknown", source: "local-client-transport", transportLoss: "no-such-invocation" });
+    // Every member equals the reading the native read itself returns for the same id under the same root; observedAt is
+    // the clock read the tool's own inspect took, inside the call.
+    const { observedAt: nativeObservedAt, ...nativeMembers } = (await connectDetachedWorkflow(nativeDetachedRoot(), INSPECT_ID).inspect()) as unknown as Record<string, unknown>;
+    expect(members).toEqual(nativeMembers);
+    expect(typeof nativeObservedAt).toBe("string");
+    expect(typeof observedAt).toBe("string");
+    const stamp = Date.parse(String(observedAt));
+    expect(new Date(stamp).toISOString()).toBe(observedAt);
+    expect(stamp >= before && stamp <= after, `observedAt ${String(observedAt)} inside the call [${new Date(before).toISOString()}, ${new Date(after).toISOString()}]`).toBe(true);
     expect(reservedInvocations()).toEqual([]);
   }, 60_000);
 });
@@ -426,7 +477,7 @@ it("FROZEN: the census suites, their registered cases in run mode, the DOORS row
   expect(suites.map(suite => suite.name)).toEqual([
     "EAT-R485 DOOR cases: the five src launch doors, every launch grant held and workflowsEnabled off at boot or at run time, refuse and start nothing",
     "EAT-R485 CONTROL cases: with workflowsEnabled pinned true, or unset with no other workflow tool, SubagentWorkflow and the embedded workflow_execute launch both launch and complete with their return value",
-    "EAT-R485 INSPECT cases: under the switch, workflow_detached inspect is not a launch and reaches the native inspect read",
+    "EAT-R485 INSPECT cases: under the switch, workflow_detached inspect of an invocation no launch reserved answers the native inspect reading, reserves nothing and is never the refusal",
     "EAT-R485 SHELL cases: the workflow_execute shell reads its workflowsEnabled dep on every call, before the kind refusal, resolveSource and either launcher",
     "EAT-R485 WORDS case: the refusal names workflowsEnabled, its settings file and its menu in the --subagents-workflow-file notice's own words",
   ]);
@@ -449,8 +500,8 @@ it("FROZEN: the census suites, their registered cases in run mode, the DOORS row
       "CONTROL-AUTO: no setting and no other workflow tool, SubagentWorkflow and the embedded workflow_execute launch both launch, write their witness files and complete with their return value",
     ],
     [
-      "INSPECT-pinned-off: workflow_detached inspect reaches the native inspect read, never the refusal",
-      "INSPECT-stood-down: workflow_detached inspect reaches the native inspect read, never the refusal",
+      "INSPECT-pinned-off: workflow_detached inspect of an unreserved invocation answers the native no-such-invocation reading member for member, never the refusal",
+      "INSPECT-stood-down: workflow_detached inspect of an unreserved invocation answers the native no-such-invocation reading member for member, never the refusal",
     ],
     [
       "SHELL-1: hostMode embedded, execute and detach held, the switch off: workflows-disabled before resolveSource and either launcher",
