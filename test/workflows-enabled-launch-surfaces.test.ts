@@ -17,30 +17,20 @@
  *       D4 SubagentWorkflow: pinned-off, the tool is not registered; stood-down, the registered tool replies
  *          WORKFLOWS_DISABLED_REASON;
  *       D5 --subagents-workflow-file: the startup notice says workflows are off and ends with the setting's pointer;
- *     then, SETTLE_MS (one second) after the door's call (D5: after session start, where the flag path runs), it reads
- *     the START WITNESSES, every one of them for every door, and none is there. First the RUN WITNESSES (the
- *     RUN_WITNESSES table):
- *       task minted: a call of createWorkflowTask (src/workflow/task.ts), which mints the task an in-process run is
- *          started under; runWorkflow call: a call of runWorkflow (src/workflow/runtime.ts), where an in-process run of a
- *          workflow script starts it; both counted by call-through spies installed before the extension boots;
- *       fleet row, run notice, run record: a fleet list widget registration (the flag path registers the run's task
- *          first), a 'Running workflow' notice (it reports that right before it runs the task), a workflow entry appended
- *          or a workflow-result message sent (a run's completion records);
- *     then what a launcher writes first:
- *       persisted script: a <run>.workflow.js in the session task directory (an embedded launch's first write);
- *       reserved invocation: an invocation directory under <agent dir>/workbench-detached (the detached launcher
- *          reserves one before it spawns a host).
+ *     then, SETTLE_MS (one second) after the door's call (D5: after session start), it reads the START WITNESSES, every
+ *     one of them for every door, and each reads nothing. The START WITNESSES: the six RUN_WITNESSES readers (task
+ *     minted, runWorkflow call, fleet list row, run notice, workflow entry, workflow-result message), then the
+ *     persisted scripts and the reserved invocations.
  *     Falsifier: deleting a door's switch check (D1, D2: the workflowsEnabled dep in src/workbench/execute-tool.ts or its
  *     wiring in src/index.ts; D3 and D4 stood-down: their checks in src/index.ts; D4 pinned-off: the registration gate;
  *     D5: the flag's guard, or only its return, so the off notice is reported and the run still starts, whether or not
- *     it then writes its fleet row, run notice and run records: its minted task and its runWorkflow call are read either
- *     way).
+ *     it then writes its fleet row, run notice and run records).
  *   FLAG-ON: with the switch pinned on, the --subagents-workflow-file run mints one task, calls runWorkflow once,
  *     registers a fleet list row, reports 'Running workflow r485-pure' and records one workflow entry and one
- *     workflow-result message that carries its return value (RESULT_MARKER), and every RUN WITNESS sees that run, the
- *     RUN_WITNESSES readers reading one entry per record counted: the D5 cases' run witnesses, read on a flag run that does
- *     start. Falsifier: a witness that does not see a flag run (a spy on another export, a fleet key, notice head or
- *     message type the flag path does not write, a reader dropped from the table), or a flag run that skips one of them.
+ *     workflow-result message that carries its return value (RESULT_MARKER); on that settled run each RUN_WITNESSES
+ *     reader reads at least one entry, and the readers' entries total the six counts the case reads directly. Falsifier:
+ *     a reader dropped from the table, or one that reads nothing on that run, or a flag run that skips one of the
+ *     counted records.
  *   CONTROL-ON, CONTROL-AUTO: with the switch pinned on (CONTROL-ON), and with no setting and no other workflow tool
  *     (CONTROL-AUTO), SubagentWorkflow and the D1 launch both launch, each writes its <run>.workflow.js witness file, and
  *     each one's completion notification reads status completed and carries its return value (RESULT_MARKER; EAT-R485
@@ -75,7 +65,9 @@
  * --subagents-workflow-file run with the switch unset and no other workflow tool (FLAG-ON boots it pinned on only); a
  * start no START WITNESS can see (a run whose task createWorkflowTask does not mint and whose script never reaches
  * runWorkflow, or a detached host whose launcher reserves no invocation directory) or one later than SETTLE_MS after
- * the door's call; which START WITNESS a given door's own start would write; the switch's order against the
+ * the door's call; which START WITNESS a given door's own start would write; a count-preserving swap of a START WITNESS
+ * reader or of a call-through spy (a reader or spy moved to another record, file or export that reads as many entries
+ * on every case here); the switch's order against the
  * detach-grant conjunction (no case holds workbench:execute alone in hostMode detached with the switch off); the
  * /agents → Settings → Workflows toggle as the way the switch turns off mid-session (it sets the same switch the
  * stood-down cases read, but no case drives it); runs already in flight when the switch turns off; a launch surface of
@@ -110,16 +102,11 @@ const RESULT_MARKER = "r485-golden-result";
 const PURE_SCRIPT = `export const meta={name:"r485-pure",description:"returns a value and calls no agent"}; return "${RESULT_MARKER}";`;
 const UNREGISTERED = "(not registered)";
 const FLAG_REFUSAL_HEAD = `--${WORKFLOW_FILE_FLAG} ignored: workflows are off.`;
-/** The notice the flag path reports immediately before it runs the task it registered (src/index.ts runWorkflowFlag). */
+/** The head of the flag run's 'Running workflow' notice. */
 const FLAG_RUN_NOTICE_HEAD = "Running workflow ";
-/** The below-editor fleet list widget key: a registered run is a row of it, so the list registers once a run exists. */
+/** The fleet list widget key. */
 const FLEET_WIDGET = "fleet";
-/**
- * How long a DOOR case waits after the door's call (D5: after session start, where the flag path runs) before it reads
- * the start witnesses. A flag run of the pure script that the guard let through appends its workflow entry and sends its
- * workflow-result message within about 500 ms of session start (measured at load1 730), so its runWorkflow call comes
- * earlier still; the task it mints, its notice and its fleet list row are there at once.
- */
+/** How long a DOOR case waits after the door's call (D5: after session start) before it reads the start witnesses. */
 const SETTLE_MS = 1_000;
 const INSPECT_ID = "r485-inspect-none";
 
@@ -156,21 +143,17 @@ interface Notification {
 let sandbox: Hermetic | undefined;
 
 const detachedRoot = (): string => join(getAgentDir(), "workbench-detached");
-/** The root src/index.ts detachedBase() hands the native detached host: the agent dir resolved, then workbench-detached. */
+/** The root the INSPECT cases hand connectDetachedWorkflow: the agent dir resolved, then workbench-detached. */
 const nativeDetachedRoot = (): string => join(realpathSync(getAgentDir()), "workbench-detached");
-/** Invocation directories reserved in this sandbox: the detached launcher reserves one before it spawns a host. */
+/** Invocation directories reserved in this sandbox. */
 function reservedInvocations(): string[] {
   return existsSync(detachedRoot()) ? readdirSync(detachedRoot()).sort() : [];
 }
-/**
- * The scripts the session's launches persisted: an embedded launch writes <run>.workflow.js before it schedules anything,
- * into the session task directory src's sessionTaskDir names for the sandbox (the path the sibling task-output readers
- * read; the sandbox's removeScratch removes that session tree with the sandbox).
- */
+/** The scripts the session's launches persisted: the <run>.workflow.js files in the session task directory src's sessionTaskDir names for the sandbox. */
 function persistedScripts(cwd: string): string[] {
   return readdirSync(sessionTaskDir(cwd, SESSION)).filter(name => name.endsWith(".workflow.js")).sort();
 }
-/** A host a broken switch let start (the real code starts none) is stopped before its sandbox goes, best effort. */
+/** A host a broken switch let start is stopped before its sandbox goes, best effort. */
 function stopStrayHosts(): void {
   for (const id of reservedInvocations()) {
     const receiptPath = join(detachedRoot(), id, "receipt.json");
@@ -205,9 +188,7 @@ async function boot(state: BootState, opts: { flag?: boolean } = {}) {
   const dir = sandbox.dir;
   const scriptPath = join(dir, "pure.js");
   writeFileSync(scriptPath, PURE_SCRIPT);
-  // Call-through spies on the two exports every in-process run passes through: createWorkflowTask mints the task a run is
-  // started under, and runWorkflow starts its script. Installed before the extension boots, so a run the flag path starts
-  // at session start is counted too; vi.spyOn calls through, and afterEach's vi.restoreAllMocks() removes them.
+  // Call-through spies: vi.spyOn calls through, and afterEach's vi.restoreAllMocks() removes them.
   const minted = vi.spyOn(taskModule, "createWorkflowTask");
   const runs = vi.spyOn(runtimeModule, "runWorkflow");
   const booted = makePi(opts.flag ? { [WORKFLOW_FILE_FLAG]: scriptPath } : {});
@@ -234,30 +215,26 @@ async function boot(state: BootState, opts: { flag?: boolean } = {}) {
   const notices = (): string[] => notify.mock.calls.map(call => String(call[0]));
   const workflowEntries = (): number => appendEntry.mock.calls.filter(call => call[0] === WORKFLOW_ENTRY_TYPE).length;
   const notifications = (): Notification[] => sendMessage.mock.calls.map(call => call[0] as Notification);
-  /** The fleet list widget registrations (a run this session registered is a row of that list). */
+  /** The fleet list widget registrations. */
   const fleetRegistrations = (): number => setWidget.mock.calls.filter(call => call[0] === FLEET_WIDGET && call[1] !== undefined).length;
-  /** The workflow-result messages a settled flag run sends to the model. */
+  /** The workflow-result messages. */
   const resultMessages = (): { content?: string }[] =>
     sendMessage.mock.calls.map(call => call[0] as { customType?: string; content?: string }).filter(message => message.customType === "workflow-result");
   const workflowResults = (): number => resultMessages().length;
-  /** The tasks minted and the runWorkflow calls made since this boot began (the call-through spies above). */
+  /** The call counts of the two spies above. */
   const tasksMinted = (): number => minted.mock.calls.length;
   const runWorkflowCalls = (): number => runs.mock.calls.length;
   return { booted, context, dir, scriptPath, tool, notices, workflowEntries, notifications, fleetRegistrations, resultMessages, workflowResults, tasksMinted, runWorkflowCalls };
 }
 type Booted = Awaited<ReturnType<typeof boot>>;
 
-/** A run witness: its name (FROZEN pins the list) and its reader, which returns one entry per record a run left. */
+/** A run witness: its name (FROZEN pins the list) and its reader. */
 interface RunWitness {
   witness: string;
   read(b: Booted): string[];
 }
 const counted = (label: string, n: number): string[] => Array.from({ length: n }, (_, index) => `${label} ${index + 1}`);
-/**
- * The RUN WITNESSES: what an in-process run leaves (the task createWorkflowTask mints for it, its runWorkflow call), then
- * the flag path's records in the order it writes them (the run's fleet list row, its 'Running workflow' notice, then a
- * run's completion records: a workflow entry and a workflow-result message). FLAG-ON reads every one on a flag run.
- */
+/** The RUN WITNESSES; FLAG-ON reads every one on a flag run. */
 const RUN_WITNESSES: readonly RunWitness[] = [
   { witness: "task minted", read: b => counted("task minted", b.tasksMinted()) },
   { witness: "runWorkflow call", read: b => counted("runWorkflow call", b.runWorkflowCalls()) },
@@ -267,7 +244,7 @@ const RUN_WITNESSES: readonly RunWitness[] = [
   { witness: "workflow-result message", read: b => counted("workflow-result message", b.workflowResults()) },
 ];
 const runWitnesses = (b: Booted): string[] => RUN_WITNESSES.flatMap(entry => entry.read(b));
-/** The START WITNESSES every DOOR case reads: the RUN WITNESSES, then what a launcher writes first. */
+/** The START WITNESSES every DOOR case reads: the RUN WITNESSES, the persisted scripts and the reserved invocations. */
 const startWitnesses = (b: Booted): string[] => [...runWitnesses(b), ...persistedScripts(b.dir), ...reservedInvocations()];
 
 async function executeReply(b: Booted, hostMode: "embedded" | "detached"): Promise<{ text: string; reply: ExecuteReply }> {
@@ -285,7 +262,7 @@ interface Knock {
   text?: string;
   started: readonly string[];
 }
-/** The door's own answer (D5: the flag path ran at session start, inside boot, and answers with its startup notice). */
+/** The door's own answer (D5: its startup notice). */
 async function answerOf(b: Booted, door: Door): Promise<Omit<Knock, "started">> {
   switch (door.id) {
     case "D1":
@@ -379,8 +356,8 @@ describe("EAT-R485 FLAG-ON case: with workflowsEnabled pinned true, the --subage
     expect(runNotices).toHaveLength(1);
     expect(runNotices[0]?.startsWith(`${FLAG_RUN_NOTICE_HEAD}r485-pure`)).toBe(true);
     expect(b.resultMessages()[0]?.content).toContain(RESULT_MARKER);
-    // Every RUN WITNESS the DOOR cases read sees this run, and the entries they read are exactly the records counted above:
-    // a reader dropped from the table, or one that reads nothing, reds here.
+    // Each RUN_WITNESSES reader reads at least one entry on this run, and the readers' entries total the six counts read
+    // above: a reader dropped from the table, or one that reads nothing, reds here.
     expect(RUN_WITNESSES.filter(entry => entry.read(b).length > 0).map(entry => entry.witness)).toEqual([
       "task minted",
       "runWorkflow call",
@@ -404,8 +381,8 @@ describe("EAT-R485 INSPECT cases: under the switch, workflow_detached inspect of
     const { observedAt, ...members } = JSON.parse(text) as Record<string, unknown>;
     // The native read's own no-such-invocation members (src/workbench/hosts/local-detached.ts inspect).
     expect(members).toMatchObject({ contract: "workbench.local-detached/v1", invocationId: INSPECT_ID, observation: "unknown", source: "local-client-transport", transportLoss: "no-such-invocation" });
-    // Every member equals the reading the native read itself returns for the same id under the same root; observedAt is
-    // the clock read the tool's own inspect took, inside the call.
+    // Every member but observedAt equals what connectDetachedWorkflow(<agent dir resolved>/workbench-detached, id).inspect()
+    // returns for the same id; observedAt is an ISO stamp read inside the call.
     const { observedAt: nativeObservedAt, ...nativeMembers } = (await connectDetachedWorkflow(nativeDetachedRoot(), INSPECT_ID).inspect()) as unknown as Record<string, unknown>;
     expect(members).toEqual(nativeMembers);
     expect(typeof nativeObservedAt).toBe("string");
@@ -519,7 +496,7 @@ function enclosingSite(node: ts.Node): string {
   }
   return "(module)";
 }
-/** Calls that start a run: runWorkflowTask (every embedded run), and launchDetachedWorkflow, bare or as a member. */
+/** Calls that start a run: runWorkflowTask, and launchDetachedWorkflow, bare or as a member. */
 function isLaunchCall(callee: ts.Expression): boolean {
   if (ts.isIdentifier(callee)) return callee.text === "runWorkflowTask" || callee.text === "launchDetachedWorkflow";
   return ts.isPropertyAccessExpression(callee) && callee.name.text === "launchDetachedWorkflow";
