@@ -20,9 +20,17 @@
  * lines hold the same sentences.
  * NOT CLAIMED: the sentences of NOT_CLAIMED below (a successful function launch reply, which no base row reaches; other
  * definition kinds, requests, grants, host modes and outcomes; member values beyond the pinned types; criteria 2-4 of
- * EAT-R441; the two script-path suites criterion 1 names, which this cut leaves unedited; EAT-R412, R419, R426, R461 and
- * R465). The receipt's "- NOT CLAIMED " lines hold the same sentences.
+ * EAT-R441; the two script-path suites criterion 1 names, which wb-ig6n's cut #1 left unedited; EAT-R412, R419, R426,
+ * R461 and R465). The receipt's "- NOT CLAIMED " lines hold the same sentences.
  * NAMED RESIDUALS: none.
+ *
+ * wb-djk5 cut #4 (DX P05, EAT-R337 criterion 1, claim C118) moved row E3 with the order that criterion sets:
+ * src/workbench/execute-tool.ts judges the definition kind before the detach conjunction, so the reviewed function in
+ * hostMode detached under [workbench:execute] alone refuses as unsupported-definition-kind, not missing-detach-grant (the
+ * criterion's own clause: the pinned order row moves with the chosen cure). With it, missing-detach-grant joins
+ * NOT_REACHED and the kind-refusal rows read each EXECUTE_HOST_MODES mode and no other (E2 and E3 are both detached).
+ * Receipts are append-only (R539), so the receipt's 2026-11-11 entry keeps its E3 line as written; J1 reads the entry
+ * ENTRY_HEADING opens (the 2026-11-12 entry wb-djk5 appended).
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -37,8 +45,8 @@ import { ctx, type Hermetic, hermeticDir, makePi } from "./helpers/boot-extensio
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const RECEIPT = "docs/workbench/receipts/wb-ig6n.md";
-/** The receipt entry this cut adds; J1 reads the receipt lines of this entry only. */
-const ENTRY_HEADING = "## 2026-11-11 receipt: EAT-R441 criterion 1 ";
+/** The receipt entry J1 reads (appended by wb-djk5 cut #4 with the EAT-R337 criterion 1 order); J1 reads the receipt lines of this entry only. */
+const ENTRY_HEADING = "## 2026-11-12 receipt: EAT-R441 criterion 1 rows under the EAT-R337 criterion 1 order ";
 /** The module that declares the envelope the model reads (WorkflowExecuteEnvelope) and the launch refusal codes. */
 const ENVELOPE_MODULE = "src/workbench/execute-tool.ts";
 /** The pure admission and reply builder module (WorkflowExecuteReply, ExecuteRefusalPolicy, LaunchStatus). */
@@ -177,7 +185,7 @@ const ROWS: readonly EnvelopeRow[] = [
     code: "unsupported-definition-kind",
   },
   { id: "E2", label: "the reviewed function (hostMode detached) under [workbench:execute, workbench:detach]", grants: [EXECUTE, DETACH], params: request({ hostMode: "detached" }), members: BOUNDARY_MEMBERS, code: "unsupported-definition-kind" },
-  { id: "E3", label: "the reviewed function (hostMode detached) under [workbench:execute]", grants: [EXECUTE], params: request({ hostMode: "detached" }), members: BOUNDARY_MEMBERS, code: "missing-detach-grant" },
+  { id: "E3", label: "the reviewed function (hostMode detached) under [workbench:execute]", grants: [EXECUTE], params: request({ hostMode: "detached" }), members: BOUNDARY_MEMBERS, code: "unsupported-definition-kind" },
   { id: "E4", label: "the reviewed function (hostMode embedded) under no grant", grants: [], params: request(), members: ADMISSION_MEMBERS, code: "missing-execute-grant" },
   { id: "E5", label: "the reviewed function with artifactDigest main under [workbench:execute]", grants: [EXECUTE], params: request({}, { artifactDigest: "main" }), members: ADMISSION_MEMBERS, code: "non-digest-definition" },
   { id: "E6", label: "the reviewed function with hostMode remote under [workbench:execute]", grants: [EXECUTE], params: request({ hostMode: "remote" }), members: ADMISSION_MEMBERS, code: "unknown-host-mode" },
@@ -187,10 +195,13 @@ const ROWS: readonly EnvelopeRow[] = [
 /**
  * The ExecuteErrorCode members no ROWS entry reaches, with the case that shows why. The kind refusal (execute-tool.ts,
  * unsupported-definition-kind) is decided before the saved source is resolved, so E1 and E2, whose definition id names no
- * saved source, answer unsupported-definition-kind; N1 shows the settings loader rejects an unreadable grant list first.
+ * saved source, answer unsupported-definition-kind; it is also decided before the detach conjunction (EAT-R337 criterion
+ * 1), so E3, which holds workbench:execute alone in hostMode detached, answers it too and no row reaches
+ * missing-detach-grant; N1 shows the settings loader rejects an unreadable grant list first.
  */
 const NOT_REACHED: Readonly<Record<string, string>> = {
   "unknown-permission-data": "N1: the settings loader rejects each UNREADABLE_GRANTS list before decideExecute reads permission data",
+  "missing-detach-grant": "E3: decided after the kind refusal, which answers this row's function definition first",
   "source-unavailable": "E1, E2: decided after the kind refusal, which answers these rows' function definitions first",
   "definition-digest-mismatch": "E1, E2: decided after the kind refusal, which answers these rows' function definitions first",
   "definition-schema-mismatch": "E1, E2: decided after the kind refusal, which answers these rows' function definitions first",
@@ -321,7 +332,7 @@ const CLAIMS: readonly Claim[] = [
   {
     id: "C5",
     sentence:
-      "The ROWS codes and the NOT_REACHED codes together equal, without overlap, the ExecuteRefusalPolicy and ExecuteLaunchRefusal members that make up ExecuteErrorCode (TypeScript parse), the unsupported-definition-kind rows carry every EXECUTE_HOST_MODES mode once, and under each UNREADABLE_GRANTS list the registered workflow_execute rejects with the settings loader's error instead of replying.",
+      "The ROWS codes and the NOT_REACHED codes together equal, without overlap, the ExecuteRefusalPolicy and ExecuteLaunchRefusal members that make up ExecuteErrorCode (TypeScript parse), the unsupported-definition-kind rows carry every EXECUTE_HOST_MODES mode and no other mode, and under each UNREADABLE_GRANTS list the registered workflow_execute rejects with the settings loader's error instead of replying.",
     pins: ["A3", "N1"],
   },
   {
@@ -350,12 +361,12 @@ const CLAIMS: readonly Claim[] = [
 ];
 /** Scope sentences: what this census does not read; the receipt's "- NOT CLAIMED " lines hold the same. */
 const NOT_CLAIMED = [
-  "A successful function launch reply through the registered workflow_execute is NOT CLAIMED by this census: at base ce180d8 execute-tool.ts answers the admitted function definitions of rows E1 and E2 with the kind refusal, so no row reaches one.",
+  "A successful function launch reply through the registered workflow_execute is NOT CLAIMED by this census: execute-tool.ts answers the admitted function definitions of rows E1, E2 and E3 with the kind refusal, so no row reaches one.",
   "Script and furnace-formula definitions are NOT CLAIMED by this census.",
   "Requests, host grants, host modes, launch outcomes and byte caps other than the rows' are NOT CLAIMED by this census.",
   "Member values beyond the pinned types envelopeFindings checks, any value of policy, and the invocationId, nativeRefsOmitted, truncated and truncation members on a registered-tool reply (no row reaches them at the registered tool's 8192-byte cap) are NOT CLAIMED by this census.",
   "EAT-R441 criterion 2 (carried by wb-0ls3), criterion 3 (accepted, BLOCKED on G-RATIFY) and criterion 4 (needs a successful launch) are NOT CLAIMED by this census.",
-  "That workbench-surface-census.test.ts and workbench-execute-tool.test.ts stay green unedited is NOT CLAIMED by this census: this cut leaves both files unedited and the receipt records their green run.",
+  "That workbench-surface-census.test.ts and workbench-execute-tool.test.ts stay green unedited is NOT CLAIMED by this census: wb-ig6n's cut #1 left both files unedited and the receipt's 2026-11-11 entry records their green run.",
   "EAT-R412, R419, R426, R461 and R465 are NOT CLAIMED by this census; the packet remainder stays owed.",
 ] as const;
 
@@ -363,7 +374,7 @@ const NOT_CLAIMED = [
 const ROWS_SHAPE = [
   "E1:unsupported-definition-kind:12",
   "E2:unsupported-definition-kind:11",
-  "E3:missing-detach-grant:11",
+  "E3:unsupported-definition-kind:11",
   "E4:missing-execute-grant:8",
   "E5:non-digest-definition:8",
   "E6:unknown-host-mode:8",
@@ -372,7 +383,7 @@ const ROWS_SHAPE = [
 ] as const;
 const BUILDER_SHAPE = ["B1:accepted:false", "B2:launched:false", "B3:refused:false", "B4:refused:false", "B5:launched:true"] as const;
 const CLAIMS_SHAPE = ["C1:8", "C2:5", "C3:1", "C4:1", "C5:2", "C6:1", "C7:1", "C8:1", "C9:2"] as const;
-const NOT_REACHED_SHAPE = ["unknown-permission-data:N1", "source-unavailable:E1", "definition-digest-mismatch:E1", "definition-schema-mismatch:E1", "launch-failed:E1"] as const;
+const NOT_REACHED_SHAPE = ["unknown-permission-data:N1", "missing-detach-grant:E3", "source-unavailable:E1", "definition-digest-mismatch:E1", "definition-schema-mismatch:E1", "launch-failed:E1"] as const;
 
 /** A row as the receipt's lines hold it: its id, then its request and expectation as JSON. */
 const rowText = (row: EnvelopeRow): string => `${row.id} ${JSON.stringify({ grants: row.grants, params: row.params, members: row.members, code: row.code })}`;
@@ -484,7 +495,7 @@ const SETTINGS_TITLE = "C5 N1: under each UNREADABLE_GRANTS list the registered 
 const BARE_TITLE = "C8 K2: bareContractTokens reports tool-reply/v1 outside workbench.tool-reply/v1 and nothing inside it";
 const MEMBERS_TITLE = "C3 A1: PINNED_MEMBERS and REQUIRED_MEMBERS equal WorkflowExecuteEnvelope's members in src/workbench/execute-tool.ts and the Statement's, with no next member";
 const BUILDER_ANCHOR_TITLE = "C4 A2: WorkflowExecuteReply in src/workbench/execute.ts declares a required boolean truncated and contractVersion typed by EXECUTE_CONTRACT_VERSION = workbench.execute/v1";
-const CODES_TITLE = "C5 A3: the ROWS codes and NOT_REACHED equal ExecuteErrorCode's members without overlap, and the kind-refusal rows carry each EXECUTE_HOST_MODES mode once";
+const CODES_TITLE = "C5 A3: the ROWS codes and NOT_REACHED equal ExecuteErrorCode's members without overlap, and the kind-refusal rows carry each EXECUTE_HOST_MODES mode and no other";
 const STATUSES_TITLE = "C6 A4: the untruncated admitted BUILDER_ROWS outcomes carry each LaunchStatus member once, with one refused decision and both truncated values";
 const RECORDS_TITLE = "C9 R1: every test of this file is ROSTER's, registered once in order, in run mode, not inverted, every case before this one reached its end with its pinned count, and each row case left its row's MEASURED witness";
 
@@ -493,7 +504,7 @@ const ROSTER = [
   "C9 J1: ROWS, BUILDER_ROWS, CLAIMS and NOT_REACHED equal their frozen shapes, each claim's pins name its own cases, the census text equals this receipt entry's lines, and every collected test is ROSTER's in run mode, not inverted",
   "C1 E1: the registered workflow_execute answers the reviewed function mechanical.development.develop.v1 (hostMode embedded, JSON policy {note}) under [workbench:execute] with one text part that parses as the pinned envelope (contract workbench.tool-reply/v1, tool workflow_execute, no next, no bare tool-reply/v1), 12 members, error unsupported-definition-kind",
   "C1 E2: the registered workflow_execute answers the reviewed function (hostMode detached) under [workbench:execute, workbench:detach] with one text part that parses as the pinned envelope (contract workbench.tool-reply/v1, tool workflow_execute, no next, no bare tool-reply/v1), 11 members, error unsupported-definition-kind",
-  "C1 E3: the registered workflow_execute answers the reviewed function (hostMode detached) under [workbench:execute] with one text part that parses as the pinned envelope (contract workbench.tool-reply/v1, tool workflow_execute, no next, no bare tool-reply/v1), 11 members, error missing-detach-grant",
+  "C1 E3: the registered workflow_execute answers the reviewed function (hostMode detached) under [workbench:execute] with one text part that parses as the pinned envelope (contract workbench.tool-reply/v1, tool workflow_execute, no next, no bare tool-reply/v1), 11 members, error unsupported-definition-kind",
   "C1 E4: the registered workflow_execute answers the reviewed function (hostMode embedded) under no grant with one text part that parses as the pinned envelope (contract workbench.tool-reply/v1, tool workflow_execute, no next, no bare tool-reply/v1), 8 members, error missing-execute-grant",
   "C1 E5: the registered workflow_execute answers the reviewed function with artifactDigest main under [workbench:execute] with one text part that parses as the pinned envelope (contract workbench.tool-reply/v1, tool workflow_execute, no next, no bare tool-reply/v1), 8 members, error non-digest-definition",
   "C1 E6: the registered workflow_execute answers the reviewed function with hostMode remote under [workbench:execute] with one text part that parses as the pinned envelope (contract workbench.tool-reply/v1, tool workflow_execute, no next, no bare tool-reply/v1), 8 members, error unknown-host-mode",
@@ -509,7 +520,7 @@ const ROSTER = [
   "C8 K2: bareContractTokens reports tool-reply/v1 outside workbench.tool-reply/v1 and nothing inside it",
   "C3 A1: PINNED_MEMBERS and REQUIRED_MEMBERS equal WorkflowExecuteEnvelope's members in src/workbench/execute-tool.ts and the Statement's, with no next member",
   "C4 A2: WorkflowExecuteReply in src/workbench/execute.ts declares a required boolean truncated and contractVersion typed by EXECUTE_CONTRACT_VERSION = workbench.execute/v1",
-  "C5 A3: the ROWS codes and NOT_REACHED equal ExecuteErrorCode's members without overlap, and the kind-refusal rows carry each EXECUTE_HOST_MODES mode once",
+  "C5 A3: the ROWS codes and NOT_REACHED equal ExecuteErrorCode's members without overlap, and the kind-refusal rows carry each EXECUTE_HOST_MODES mode and no other",
   "C6 A4: the untruncated admitted BUILDER_ROWS outcomes carry each LaunchStatus member once, with one refused decision and both truncated values",
   "C9 R1: every test of this file is ROSTER's, registered once in order, in run mode, not inverted, every case before this one reached its end with its pinned count, and each row case left its row's MEASURED witness",
 ] as const;
@@ -598,8 +609,9 @@ describe("wb-ig6n EAT-R441 criterion 1: the envelope of the registered workflow_
     }
     expect(sorted(CLAIMS.flatMap(claim => claim.pins)), "every case of the roster is pinned by exactly one claim").toEqual(sorted(ROSTER.map(title => title.split(" ")[1]?.replace(":", "") ?? "")));
     const all = read(RECEIPT).split("\n");
-    expect(all.filter(line => line.startsWith(ENTRY_HEADING)), "the receipt holds this cut's entry heading once").toHaveLength(1);
-    // This cut's entry only: from its heading to the next entry heading, so a later appended entry never joins the comparison.
+    expect(all.filter(line => line.startsWith(ENTRY_HEADING)), "the receipt holds the judged entry's heading once").toHaveLength(1);
+    // The judged entry only: from its heading to the next entry heading, so the 2026-11-11 entry above it (append-only,
+    // R539) and any later appended entry never join the comparison.
     const start = all.findIndex(line => line.startsWith(ENTRY_HEADING));
     const next = all.findIndex((line, index) => index > start && line.startsWith("## "));
     const lines = all.slice(start, next < 0 ? undefined : next);
@@ -737,7 +749,7 @@ describe("wb-ig6n EAT-R441 criterion 1: the envelope of the registered workflow_
     expect(reached.filter(code => unreached.includes(code)), "no code is both reached and not reached").toEqual([]);
     expect(sorted([...reached, ...unreached]), "ROWS and NOT_REACHED cover ExecuteErrorCode exactly").toEqual(sorted(codes));
     const kindModes = ROWS.filter(row => row.code === "unsupported-definition-kind").map(row => String(row.params.hostMode));
-    expect(sorted(kindModes), "the kind-refusal rows carry every EXECUTE_HOST_MODES mode once").toEqual(sorted(EXECUTE_HOST_MODES));
+    expect(sorted([...new Set(kindModes)]), "the kind-refusal rows carry every EXECUTE_HOST_MODES mode and no other").toEqual(sorted(EXECUTE_HOST_MODES));
     expect(EXECUTE_HOST_MODES, "the unknown-host-mode row's mode is outside EXECUTE_HOST_MODES").not.toContain("remote");
     REACHED.push(endOf("A3"));
   });
