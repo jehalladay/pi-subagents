@@ -79,7 +79,10 @@
  * not reach the file. A second marker, carrying the host's native references,
  * follows once that start answered, and the settled row once the run's
  * settlement resolved. A start or a settlement that rejects appends no row,
- * so the last row stays a marker.
+ * so the last row stays a marker. The cases of
+ * test/workbench-function-intent-journal.test.ts pin these words: the rows
+ * (FJ01-FJ06, FJ10), the read-back (FJ14), and what the two readers keep and
+ * drop of an intent (FJ07, FJ11-FJ13).
  */
 
 import { createHash } from "node:crypto";

@@ -2765,13 +2765,14 @@ Terse command-style prompts produce shallow, generic work.
     };
   }
   /**
-   * The journal of one hosted function invocation (wb-mwsy, MNI packet P06: EAT-R250, extending EAT-R041 and EAT-R042; the cases
-   * of test/workbench-function-intent-journal.test.ts in brackets): <invocation id>.workflow.jsonl in the session's task
-   * directory, the file name and directory a script run's journal uses, appended through journalAppender, which reads a
-   * dispatched marker back before it answers true. A task directory that cannot be made answers false for every row [FJ01].
-   * runHostedFunction appends the intent row before the host is asked to start the run, and the start is not called when that
-   * row does not reach the file [FJ01]; the dispatched row once the start answered [FJ04]; the settled row once the run's
-   * settlement resolved [FJ05]. A start or a settlement that rejects appends no row, so the last row stays a marker [FJ03, FJ06].
+   * The journal of one hosted function invocation (wb-mwsy, MNI packet P06: EAT-R250 criteria 1 and 2, extending EAT-R041 and
+   * EAT-R042; the cases of test/workbench-function-intent-journal.test.ts in brackets): <invocation id>.workflow.jsonl in the
+   * session's task directory, appended through journalAppender, which reads a dispatched marker back before it answers true
+   * [FJ14: a row appended that cannot be read back answers false]. A task directory that cannot be made answers false, so the
+   * intent row does not reach the file [FJ01, FJ09]. runHostedFunction appends the intent row before the host is asked to start
+   * the run, and the start is not called when that row does not reach the file [FJ01, FJ14]; the dispatched row once the start
+   * answered [FJ04]; the settled row once the run's settlement resolved [FJ05]. A start or a settlement that rejects appends no
+   * row, so the last row stays a marker [FJ03, FJ06].
    */
   function functionJournal(toolCtx: ExtensionContext, launch: ExecuteFunctionLaunch): (entry: WorkflowJournalEntry) => boolean {
     try {
@@ -2780,7 +2781,7 @@ Terse command-style prompts produce shallow, generic work.
       return () => false;
     }
   }
-  /** The intent the launch is decided under (journal.ts WorkflowJournalIntent), read from the chain's frozen grant [FJ02]. */
+  /** The intent the launch is decided under (journal.ts WorkflowJournalIntent), read from the chain's frozen grant [FJ02, FJ10]. */
   function functionIntent(launch: ExecuteFunctionLaunch): NonNullable<WorkflowJournalEntry["intent"]> {
     const { authority, source, sdkRights, packageIdentity } = launch.grant;
     return {
