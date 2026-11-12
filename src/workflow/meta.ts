@@ -3,10 +3,16 @@
  * JavaScript AST identifies the real exported declaration (not comment/string
  * decoys); only pure literal syntax is decoded. The script still runs in its
  * worker realm, with the actual export keyword replaced by equal-length spaces.
+ *
+ * The same stance covers the body's syntax (wb-9btr, EAT-R323): workflowSyntaxFault
+ * compiles the program the worker would compile and never runs it, so a launch
+ * tool can refuse a script that cannot compile, at its line and column, before
+ * anything is scheduled.
  */
 import { Script } from "node:vm";
 import ts from "typescript";
 import { sanitizeWorkbenchText } from "../workbench/redaction.js";
+import { workflowProgramText } from "./worker-source.js";
 
 /** A phase declared up front, so the UI can show it before any agent runs. */
 export interface WorkflowPhaseMeta {
@@ -155,6 +161,64 @@ export function extractMeta(source: string): MetaExtraction {
   const body = `${source.slice(0, exportAt)}${" ".repeat(6)}${source.slice(exportAt + 6)}`;
 
   return { meta, body };
+}
+
+/**
+ * Appended to the error of a script that reached for a Node API its realm does not have (wb-9btr, EAT-R322 criterion 2):
+ * a ReferenceError on a Node global, a dynamic import(), or an import statement.
+ */
+export const NO_NODE_API_HINT =
+  "Workflow scripts run without Node APIs (no require, import, process, fetch or timers): do file, network and shell work inside agent() calls and pass inputs through args.";
+
+/** V8's compile messages for an import a classic script cannot hold. */
+const IMPORT_SYNTAX = /^Cannot use (?:import statement|'import\.meta') outside a module$/;
+/** The line terminators V8 counts. */
+const LINE_TERMINATOR = /\r\n|[\n\r\u2028\u2029]/;
+
+/** Where a script body stops compiling, as the worker's own compile would report it (wb-9btr, EAT-R323, EAT-R322 criterion 3). */
+export interface WorkflowSyntaxFault {
+  /** V8's message, with {@link NO_NODE_API_HINT} appended when the body holds an import. */
+  readonly message: string;
+  /** 1-based line in the author's script, the worker's `lineOffset` applied; absent only when V8 gave no source position. */
+  readonly line?: number;
+  /** 1-based column, from the caret V8 sets under the source line. */
+  readonly column?: number;
+  /** V8 stopped past the body's last line: the script ends inside an unclosed block, call, literal or comment. */
+  readonly pastEnd?: true;
+}
+
+/**
+ * Compiles a runnable body (extractMeta's `body`) exactly as the worker compiles it, through workflowProgramText, and NEVER
+ * runs it: constructing a Script parses and compiles, and nothing here calls a run method. Returns undefined when the body
+ * compiles. The location comes from the arrow Node puts on a compile error's stack: `workflow.js:<line>` (the offset already
+ * applied), the source line, then a caret under the column. test/workflow-script-syntax-refusal.test.ts pins it: R323-S1
+ * (located), R323-S2 (never run).
+ */
+export function workflowSyntaxFault(body: string): WorkflowSyntaxFault | undefined {
+  try {
+    new Script(workflowProgramText(body), { filename: "workflow.js", lineOffset: -1 });
+    return undefined;
+  } catch (error) {
+    const raw = error instanceof Error ? error.message : String(error);
+    const message = IMPORT_SYNTAX.test(raw) ? `${raw} ${NO_NODE_API_HINT}` : raw;
+    const [at, , caret] = (error instanceof Error && typeof error.stack === "string" ? error.stack : "").split("\n");
+    const line = /^workflow\.js:(\d+)$/.exec(at ?? "")?.[1];
+    if (line === undefined) return { message };
+    const column = caret?.indexOf("^") ?? -1;
+    return {
+      message,
+      line: Number(line),
+      ...(column >= 0 ? { column: column + 1 } : {}),
+      ...(Number(line) > body.split(LINE_TERMINATOR).length ? { pastEnd: true as const } : {}),
+    };
+  }
+}
+
+/** A fault as one compiler-style display line, `workflow.js:<line>:<column>: <message>`, through the shared helper's label layout (R323-D1). */
+export function describeWorkflowSyntaxFault(fault: WorkflowSyntaxFault): string {
+  const at = fault.line === undefined ? "workflow.js" : `workflow.js:${fault.line}${fault.column === undefined ? "" : `:${fault.column}`}`;
+  const past = fault.pastEnd ? " (past the last line: the script ends inside an unclosed block, call, literal or comment)" : "";
+  return sanitizeWorkbenchText(`${at}${past}: ${fault.message}`, undefined, "label");
 }
 
 /**

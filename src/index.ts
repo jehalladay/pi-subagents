@@ -111,7 +111,7 @@ import { decideWorkflowCollision, FOREIGN_WORKFLOW_TOOL_NAMES } from "./workflow
 import { WORKFLOW_ENTRY_TYPE, type WorkflowEntryData, workflowEntryData } from "./workflow/entry.js";
 import { createWorkflowHost } from "./workflow/host.js";
 import type { WorkflowJournalEntry } from "./workflow/journal.js";
-import { extractMeta, type WorkflowMeta, workflowCallName } from "./workflow/meta.js";
+import { describeWorkflowSyntaxFault, extractMeta, type WorkflowMeta, workflowCallName, workflowSyntaxFault } from "./workflow/meta.js";
 import { type ClaudeNativeObservation, elapsedMs, type WorkflowAgentEntry } from "./workflow/progress.js";
 import { admitResumeJournal, journalAppender, spendOverridesAtResume } from "./workflow/resume-admission.js";
 import { runWorkflow } from "./workflow/runtime.js";
@@ -3626,10 +3626,22 @@ Terse command-style prompts produce shallow, generic work.
       // the model can fix immediately, and reporting it as a background run
       // that failed a second later would just cost a turn.
       let meta: WorkflowMeta;
+      let body: string;
       try {
-        meta = extractMeta(resolved.script).meta;
+        ({ meta, body } = extractMeta(resolved.script));
       } catch (err) {
         return textResult(err instanceof Error ? err.message : String(err));
+      }
+      // Compiled the way the worker will compile it, and never run (wb-9btr, EAT-R323): a script that cannot compile is
+      // the same authoring error, refused here with its line and column instead of a background run that fails a turn later.
+      // test/workflow-script-syntax-refusal.test.ts R323-W1 pins the refusal and R323-D1 its display form.
+      const syntaxFault = workflowSyntaxFault(body);
+      if (syntaxFault !== undefined) {
+        return textResult(sanitizeWorkbenchText(
+          `Workflow "${sanitizeWorkbenchText(meta.name, 200, "label")}" was not started: its script does not compile.\n${describeWorkflowSyntaxFault(syntaxFault)}\nFix the script and call SubagentWorkflow again.`,
+          WORKBENCH_TEXT_LIMIT,
+          "lines",
+        ));
       }
 
       const runId = workflowRunId();
