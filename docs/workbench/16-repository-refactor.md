@@ -77,8 +77,10 @@ Pre-existing upstream paths under `src/` and `test/` (outside `src/workbench` an
 | path | recorded at | note |
 | --- | --- | --- |
 | `src/agent-manager.ts` | e76448e | +19 -1 lines against the baseline |
+| `src/agent-runner.ts` | b1b9848 | +23 -5 lines against the baseline |
 | `src/index.ts` | b44f1ce | +482 -18 lines against the baseline |
 | `src/memory.ts` | cc63071 | +1 -1 lines against the baseline |
+| `src/schedule.ts` | bf75f99 | +71 -5 lines against the baseline |
 | `src/settings.ts` | b44f1ce | +79 -1 lines against the baseline |
 | `src/types.ts` | e76448e | +6 -2 lines against the baseline |
 | `src/ui/fleet-list.ts` | cc63071 | +12 -1 lines against the baseline |

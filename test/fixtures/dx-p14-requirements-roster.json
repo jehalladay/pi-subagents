@@ -1,0 +1,180 @@
+{
+ "bead": "wb-mo89",
+ "note": "Vendored verbatim with read-only git show by the cutting seat (ws-01, g10-work-s339, 2026-11-11). Each requirement block runs from its \"## EAT-R\" heading through its \"- Maps-to:\" line; each gate row is the one gate-registry table line of TDD-MATRIX.md that names the gate. sha256 is the SHA-256 of a block's lines joined by LF, or of the gate row line.",
+ "source": {
+  "branch": "master",
+  "commit": "0a5ac3a3c5eb32aa462e708b700c2578ea3a17a4",
+  "path": "docs/workbench/programs/pi-system-dx-triage-2026-11-11/requirements/.work/req-r-followon.md",
+  "blob": "3242beebe4bdfcc6b08d4a708d0e09bf7efbe4d1",
+  "fileSha256": "0ed199331491ce6c51e13154d568fed6e999dfe68aeb15857419f93970002a7c"
+ },
+ "requirements": [
+  {
+   "id": "EAT-R478",
+   "lines": "116-128",
+   "sha256": "380b357c8ef14a2e157a1146d470fab3cdc7a0a9f2e578707153784c0516909a",
+   "text": [
+    "## EAT-R478 \u2014 Acquire outside-machine same-cut enforcement evidence",
+    "",
+    "- Type: VERIFICATION",
+    "- Authority: EVIDENCE_ACQUISITION",
+    "- Statement: Any certification of outside-machine enforcement of the same-cut rule MUST carry a source-bound enforcement configuration and invocation receipt for a seam-changing cut.",
+    "- Rationale: C120 ESTABLISHED establishes repository detection-surface gaps; outside-machine enforcement is an embedded UNDETERMINED leg, not an established absence. This row acquires that leg only; R387 owns repository status and changed-path enforcement. Scope: ce180d82, 2026-11-11; later-tip results require re-adjudication.",
+    "- Acceptance criteria:",
+    "  1. Assert a receipt names the external enforcement configuration revision, exact base/head, changed seam paths, validator argv/exit and same-cut skill/doc decision; compare the cut to qa/workbench/mwi-release.mjs and probes/interop/mwi-release.wb-ocie-landing-1037.out rather than trusting a prose assurance.",
+    "  2. Assert a disposable seam-only cut and a matching same-cut documentation control are distinguishable in that external receipt; absent configuration or producer invocation evidence records BLOCKED on G-EXTERNAL-ENFORCEMENT, never PASS or evidence of absence.",
+    "- Probe oracle: qa/workbench/mwi-release.mjs; probes/interop/mwi-release.wb-ocie-landing-1037.out and mwi-release.wb-s8rm-landing-1043.out; required source-bound external configuration/invocation receipt (absent)",
+    "- Evidence tier target: V0 (NOT_RUN; normalized lower-tier controls in TDD-MATRIX.md).",
+    "- Conditions / unknowns: G-EXTERNAL-ENFORCEMENT BLOCKED: outside-machine configuration and producer invocation receipt are not named at the pin. No external machine or production changes are authorized.",
+    "- Maps-to: interop same-cut acquisition; R387 status/enforcement basis; extend no implementation scope."
+   ]
+  },
+  {
+   "id": "EAT-R479",
+   "lines": "130-142",
+   "sha256": "eb80ef59d01e5fe483844bb73f16cc1dfd56ea8dddd50e41f98340ed52199ae0",
+   "text": [
+    "## EAT-R479 \u2014 Acquire live Forge reconcile binding evidence",
+    "",
+    "- Type: VERIFICATION",
+    "- Authority: EVIDENCE_ACQUISITION",
+    "- Statement: Forge reconciliation binding certification MUST be based on a captured live gate.status envelope bound to the exact journaled operation reference.",
+    "- Rationale: C142 ESTABLISHED covers real HX/RF binding defects and the unknown-producer dead end; its Forge leg was explicitly NOT_RUN/UNDETERMINED. Acquiring a Forge envelope does not repair or certify those distinct binding defects. Scope: ce180d82, 2026-11-11; later-tip results require re-adjudication.",
+    "- Acceptance criteria:",
+    "  1. Assert an extension of probes/journal/p12-real-cli-evidence.probe.ts drives a real Forge gate on a disposable fixture and records the gate.status envelope operation_id, requested journal reference, nativeRef and receipt binding class with producer version/argv/exit.",
+    "  2. Assert the matched-operation and unrelated-operation controls yield distinguishable binding outcomes, and an unrelated status envelope cannot license producer-confirmed effect settlement; missing executable, fixture or operation envelope records BLOCKED on G-FORGE.",
+    "- Probe oracle: probes/journal/p12-real-cli-evidence.probe.ts and out/p12-real-cli-evidence.json; probes/observe/t/d-forge-readback.probe.test.ts live fixture; qa/workbench/forge-gate-status-probe.mjs",
+    "- Evidence tier target: V6 (NOT_RUN; normalized lower-tier controls in TDD-MATRIX.md).",
+    "- Conditions / unknowns: G-FORGE AVAILABLE/NOT_RUN; effect row may be planted and must be labeled as such (C145: no shipped effectful producer). Never claim production replay safety from the planted row.",
+    "- Maps-to: journal/Forge acquisition; R357 replay identity controls and R473 same-operation readback; C142 binding implementation residual retained."
+   ]
+  },
+  {
+   "id": "EAT-R480",
+   "lines": "144-156",
+   "sha256": "f74594e41d78dc432d845cfa982f368e5d23753e802b8e6bcf8796e4bf3a4a54",
+   "text": [
+    "## EAT-R480 \u2014 Acquire authorized fork registry media rendering evidence",
+    "",
+    "- Type: VERIFICATION",
+    "- Authority: EVIDENCE_ACQUISITION",
+    "- Statement: A claim about the fork artifact registry page media MUST be supported by a captured render of the identified authorized fork artifact.",
+    "- Rationale: C216 PLAUSIBLE predicts upstream media on a future fork registry page from manifest URLs; no remote rendering was measured. The premise remains PLAUSIBLE regardless of the force of this evidence requirement. Scope: ce180d82, 2026-11-11; later-tip results require re-adjudication.",
+    "- Acceptance criteria:",
+    "  1. Assert the acquisition records the artifact identity/version, manifest media URLs, page URL, capture date and rendered image/video source, with the npm-view identity receipt shape in probes/packaging/npm-view-published.json as a control for upstream-versus-fork distinction.",
+    "  2. Assert the capture actually belongs to the authorized fork artifact rather than the upstream package; if no approved published artifact or authenticated rendering capture exists, record BLOCKED on G-FORK-MEDIA and retain PLAUSIBLE, never substitute a local HTML mock or publish a package to manufacture the oracle.",
+    "- Probe oracle: probes/packaging/npm-view-published.json; package.json manifest pi.video/pi.image; required authorized fork registry-page render receipt (absent)",
+    "- Evidence tier target: V2 (NOT_RUN; normalized lower-tier controls in TDD-MATRIX.md).",
+    "- Conditions / unknowns: G-FORK-MEDIA BLOCKED: approved published fork identity and its remote render capture are absent. G-NPM AVAILABLE alone does not satisfy the gate. No publication, upload or impersonating registry mock is authorized.",
+    "- Maps-to: packaging media acquisition; R376 install identity; wb-cax distribution policy dependency only."
+   ]
+  },
+  {
+   "id": "EAT-R481",
+   "lines": "158-171",
+   "sha256": "edcac7bb5dfc1cc05bb3ae9a5a5bf1f1683a6c700a61a9a5909f9a4ff8b5bffb",
+   "text": [
+    "## EAT-R481 \u2014 Acquire native-tier portability evidence outside the developer layout",
+    "",
+    "- Type: VERIFICATION",
+    "- Authority: EVIDENCE_ACQUISITION",
+    "- Statement: Native-read tier portability certification MUST include a receipt from an independent host layout without the original developer-home executable paths.",
+    "- Rationale: C241 SUPPORTED is a code-read developer-layout dependency with a reproduced wrong Forge default-target sub-leg; the tier has passed only where that absolute HX path exists. Cross-host portability remains unmeasured. Scope: ce180d82, 2026-11-11; later-tip results require re-adjudication.",
+    "- Acceptance criteria:",
+    "  1. Assert test/workbench-ecosystem-native.test.ts via the native-read command defined in forge.toml runs from an independently installed checkout using that host's declared PATH/HYPERUNIX_HX and records resolved binaries, versions, cwd and test result without /home/jehallad being available.",
+    "  2. Assert qa/workbench/forge-gate-status-probe.mjs on that checkout records its own repository target (or explicitly refuses a missing required target), not the two-directories-above default; compare probes/providers/qa-forge-gate-status-default.out and qa-forge-gate-status-pin.out.",
+    "  3. Assert missing second-host access or native executables records BLOCKED on G-CROSS-HOST with the exact missing host/runtime, not a mock pass or inference from this host's eight passing tests.",
+    "- Probe oracle: test/workbench-ecosystem-native.test.ts; forge.toml native-read; qa/workbench/forge-gate-status-probe.mjs; probes/providers/vitest-native-read.log and qa-forge-gate-status-{default,pin}.out",
+    "- Evidence tier target: V6 (NOT_RUN; normalized lower-tier controls in TDD-MATRIX.md).",
+    "- Conditions / unknowns: G-CROSS-HOST BLOCKED: no independent-host layout/runtime receipt is present. Portable PATH lookup and Forge target implementation remain residual, not silently fixed by this acquisition.",
+    "- Maps-to: providers native portability; wb-lri/wb-5uh test-tier dependencies; no host provisioning or remote changes authorized."
+   ]
+  },
+  {
+   "id": "EAT-R482",
+   "lines": "173-186",
+   "sha256": "0bf43e29b6306169c07ba1bc86509e2fee3d2f6ad1ef508fd4a64d9d7ef6b0f0",
+   "text": [
+    "## EAT-R482 \u2014 Acquire RF descendant-pipe settlement evidence",
+    "",
+    "- Type: VERIFICATION",
+    "- Authority: EVIDENCE_ACQUISITION",
+    "- Statement: RF deadline lifecycle certification MUST include a process-tree receipt for a child whose grandchild retains the stdout pipe.",
+    "- Rationale: C245 ESTABLISHED establishes allowlisted environment and direct-child reaping/slot release; its first trial observed retained inFlight while a grandchild held the pipe. Descendant custody and final settlement are not closed by that direct-child positive. Scope: ce180d82, 2026-11-11; later-tip results require re-adjudication.",
+    "- Acceptance criteria:",
+    "  1. Assert an extension of probes/providers/h05-rf-deadline.mjs uses a disposable RF stand-in that leaves an identified grandchild holding stdout, recording parent/child/grandchild pids, deadline time, pipe closure and registry inFlight until final settlement or an explicitly timed out observation window.",
+    "  2. Assert the no-grandchild positive repeats the direct-child disappearance and inFlight:0 of probes/providers/h05b-run.out, while the held-pipe variant cannot be certified solely because the direct child disappeared; retain probes/providers/h05-run.out as the caveat baseline.",
+    "  3. Assert the receipt distinguishes producer/fixture identity and owned descendants from unrelated processes; if the controlled descendant fixture or process-tree readback is absent, record BLOCKED on G-DESCENDANT-PIPE, never infer descendants were reaped.",
+    "- Probe oracle: probes/providers/h05-rf-deadline.mjs; probes/providers/h05-run.out and h05b-run.out; controlled descendant process/pipe/slot readback",
+    "- Evidence tier target: V5 (NOT_RUN; normalized lower-tier controls in TDD-MATRIX.md).",
+    "- Conditions / unknowns: G-DESCENDANT-PIPE BLOCKED until the instrumented descendant fixture and final process-tree/pipe receipt exist. R372/R389 direct-child/environment positives remain scoped. No global process sweep or kill authority.",
+    "- Maps-to: providers/RF lifecycle acquisition; R372/R389 bounded deadline/confinement controls; wb-x32 dependency."
+   ]
+  },
+  {
+   "id": "EAT-R483",
+   "lines": "188-200",
+   "sha256": "474fde22427cf44e6b49efca62fe35a9a1b9eabcfa7aa5dba21918579f5aef9c",
+   "text": [
+    "## EAT-R483 \u2014 Require explicit loopback binding for RF-spawned Dolt servers",
+    "",
+    "- Type: NEGATIVE_REGRESSION",
+    "- Authority: RISK_CONTROL",
+    "- Statement: Every rf-spawned dolt sql-server launch MUST supply an explicit host flag binding it to 127.0.0.1.",
+    "- Rationale: C238 ESTABLISHED records the persistent daemon side effect but did not examine bind addresses. The owner-directed receipt probes/reqset-rollup/c238-bind-address.txt (2026-11-11T07:32:01Z, named host) resolves that leg: all four observed Dolt server listeners were 127.0.0.1 and each real process argv supplied -H/--host 127.0.0.1. This is a regression guard under RISK_CONTROL, not a claim about every other host or an acquisition unknown. Scope: ce180d82, 2026-11-11; later-tip results require re-adjudication.",
+    "- Acceptance criteria:",
+    "  1. Assert on a disposable Dolt-backed RF workspace using the probes/providers/h09-rf-dolt-daemon.out journey that the rf-spawned process argv contains -H 127.0.0.1 or --host 127.0.0.1 (including an equivalent explicit --host=127.0.0.1 form), and independent socket readback shows that process listening only at loopback; use probes/reqset-rollup/c238-bind-address.txt as the positive baseline.",
+    "  2. Assert a launcher-contract test over captured argv refuses omission of the host flag and wildcard/nonloopback values; do not start the unsafe mutants as real servers or treat an implicit default as equivalent to an explicit flag.",
+    "- Probe oracle: probes/reqset-rollup/c238-bind-address.txt; probes/providers/h09-rf-dolt-daemon.out; rf-spawned argv capture plus PID-bound ss socket readback",
+    "- Evidence tier target: V6 (NOT_RUN; normalized lower-tier controls in TDD-MATRIX.md).",
+    "- Conditions / unknowns: Bind-address unknown RESOLVED at the receipt host/date; regression acceptance NOT_RUN. G-RF AVAILABLE. Daemon side-effect disclosure, notice and reclamation policy remain C238 implementation residual; no cleanup, network exposure or persistent production daemon modification authorized.",
+    "- Maps-to: providers/RF spawn safety; wb-x32 dependency; closed wb-pfxo.8 is lineage only, not a target."
+   ]
+  }
+ ],
+ "gateSource": {
+  "branch": "master",
+  "commit": "0a5ac3a3c5eb32aa462e708b700c2578ea3a17a4",
+  "path": "docs/workbench/programs/pi-system-dx-triage-2026-11-11/requirements/TDD-MATRIX.md",
+  "blob": "c4b7631324c05e9977d435f644e9c421d414c4a0",
+  "fileSha256": "e3f6e39d9d634df5adef1b23304b5d7e1bae5f2587f4fd5b77cc7be834c11601"
+ },
+ "gates": [
+  {
+   "id": "G-EXTERNAL-ENFORCEMENT",
+   "line": 46,
+   "sha256": "85a6e6ed14aecd948ff23751e4aa7dbc57cf3cabb95272a04b10d1630f77c6a2",
+   "text": "| G-EXTERNAL-ENFORCEMENT | evidence that the same-cut rule is enforced outside the repository (C120 UNDETERMINED leg) | **BLOCKED** | an outside-machine enforcement artifact (none named at the pin); repository enforcement is the only detection surface |"
+  },
+  {
+   "id": "G-FORGE",
+   "line": 39,
+   "sha256": "077d87f6906eaf6f7a4fab078a200895e38b7fc05628ceb074e55b7d196743aa",
+   "text": "| G-FORGE | real `forge` CLI | AVAILABLE \u2014 forge 0.2.1 | \u2014 |"
+  },
+  {
+   "id": "G-FORK-MEDIA",
+   "line": 48,
+   "sha256": "cc1e1c82e9b35fb929fb8c43733f4cd44194397fc2ede389f6a23f84e4ca2735",
+   "text": "| G-FORK-MEDIA | Authorized published fork identity and remote registry media render | **BLOCKED** | approved fork artifact identity and actual remote render capture; npm view alone is insufficient; no publication authorized |"
+  },
+  {
+   "id": "G-CROSS-HOST",
+   "line": 49,
+   "sha256": "f78ee380746b7dba2897cf8b0fcf51a9da74f04285cbab0b3f087209b5401239",
+   "text": "| G-CROSS-HOST | Independent-host native-read/Forge-target receipt | **BLOCKED** | independent layout without original developer-home binaries, executable/runtime pins and receipt; no host provisioning authorized |"
+  },
+  {
+   "id": "G-DESCENDANT-PIPE",
+   "line": 50,
+   "sha256": "79196bc83930ce36b3e5dc9e9969a6f1696af2338f463e3448f3a3227fb79acd",
+   "text": "| G-DESCENDANT-PIPE | Controlled RF descendant stdout-pipe lifecycle receipt | **BLOCKED** | instrumented descendant fixture and final process-tree/pipe/slot readback; direct-child disappearance is insufficient |"
+  },
+  {
+   "id": "G-RF",
+   "line": 38,
+   "sha256": "a357b6c25364518004e699cc7e38e42e30de5e881d9a9c8230db7c86a4854b7f",
+   "text": "| G-RF | real `rf` CLI | AVAILABLE \u2014 `/home/jehallad/.local/bin/rf` 0.1.883, 89 leaves / 81 reachable, mismatch:false (`rf --json --version` receipt `reqset-audit/rf-version.json`) | \u2014 (dolt 2.2.4 present for `--backend dolt` legs) |"
+  }
+ ]
+}
