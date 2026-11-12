@@ -1680,7 +1680,7 @@ describe("not wired: each enumerated workflow_execute request naming a function 
     ["embedded", [EXECUTE_GRANT], "unsupported-definition-kind"],
     ["embedded", [EXECUTE_GRANT, DETACH_GRANT], "unsupported-definition-kind"],
     ["detached", [EXECUTE_GRANT, DETACH_GRANT], "unsupported-definition-kind"],
-    ["detached", [EXECUTE_GRANT], "missing-detach-grant"],
+    ["detached", [EXECUTE_GRANT], "unsupported-definition-kind"],
     ["embedded", [], "missing-execute-grant"],
     ["embedded", [DETACH_GRANT], "missing-execute-grant"],
     ["detached", [], "missing-execute-grant"],
