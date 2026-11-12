@@ -24,7 +24,7 @@ import { defineTool, type ExtensionContext } from "@earendil-works/pi-coding-age
 import { Type } from "typebox";
 import type { WorkflowTask } from "../workflow/task.js";
 import { CapabilityError, type JsonValue } from "./capability-registry.js";
-import { type ControlDecision, decideControl, type NativeControlReceipt, type NativeControlRequest } from "./control.js";
+import { type ControlDecision, decideControl, NATIVE_CONTROL_ACTIONS, type NativeControlReceipt, type NativeControlRequest } from "./control.js";
 import { buildControlReply } from "./control-reply.js";
 import type { ObservationProjection, ObservationScope } from "./observation.js";
 import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText } from "./redaction.js";
@@ -133,12 +133,15 @@ export function recordControlReceipt(deps: Pick<WorkflowControlDeps, "projection
   task.controlAudit = audit;
 }
 
+/** Every exact control grant the core's verb table admits, in table order: the tool description names each one (EAT-R334). */
+const CONTROL_GRANTS: readonly string[] = Object.entries(NATIVE_CONTROL_ACTIONS).flatMap(([provider, verbs]) => verbs.map(verb => `control:${provider}.${verb}`));
+
 export function createWorkflowControlTool(deps: WorkflowControlDeps) {
   return defineTool({
     name: "workflow_control",
     label: "Control native workflow",
     description:
-      "Explicit native control action (stop/interrupt/cancel/shutdown and provider-specific verbs) on an observed, owned target. Requires the exact control:<provider>.<action> grant; a destructive action also requires confirmed: true (explicit operator confirmation). Returns requested/acknowledged/result distinct and never asserts completion — the producer's own answer, read through workflow_observe, is the only completion evidence.",
+      `Explicit native control action on an observed, owned target. Each provider takes only its own verbs, each under its exact grant: ${CONTROL_GRANTS.join(", ")}. A destructive action also requires confirmed: true (explicit operator confirmation). When a call lacks an allowed verb, its grant or that confirmation, the refusal names what is missing (allowedActions, requiredGrant or requiredParams). Returns requested/acknowledged/result distinct and never asserts completion — the producer's own answer, read through workflow_observe, is the only completion evidence.`,
     parameters: Type.Object({
       target: Type.Object({
         provider: Type.String({ minLength: 1, maxLength: 64 }),
@@ -147,7 +150,7 @@ export function createWorkflowControlTool(deps: WorkflowControlDeps) {
         scope: Type.Optional(Type.String({ minLength: 1, maxLength: 1024 })),
       }),
       action: Type.String({ minLength: 1, maxLength: 32 }),
-      confirmed: Type.Optional(Type.Boolean()),
+      confirmed: Type.Optional(Type.Boolean({ description: "Explicit operator confirmation; a destructive action is refused unless this is true. Default: absent (not confirmed)." })),
     }),
     execute: async (id, params, signal, _onUpdate, ctx) => {
       // Impurity 1: host-bound authority, re-read on every call. Params never contribute authority.
@@ -171,7 +174,8 @@ export function createWorkflowControlTool(deps: WorkflowControlDeps) {
       // Impurity 2: the decision, against the session's own projection, at dispatch time.
       const decision = decideControl(request, { projection: deps.projection, now: deps.now });
       if (decision.decision === "denied") {
-        const denial = buildControlReply(decision, { maxBytes: CONTROL_REPLY_BYTES });
+        // The refused request's provider and action, read by the builder only as verb-table keys to teach the next call.
+        const denial = buildControlReply(decision, { maxBytes: CONTROL_REPLY_BYTES, request: { provider: request.target.provider, action: request.action } });
         return reply({
           ok: false, invoked: false, status: "refused", control: denial.reply, truncated: denial.truncated,
           error: { code: decision.policy, category: decision.category, message: decision.reason },

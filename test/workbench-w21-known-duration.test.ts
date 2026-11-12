@@ -25,7 +25,12 @@
  * inspector-retained-memory (wb-9x5.3), which reads no clock in its measured path (a post-GC heap receipt): N/A, and the
  * N/A is pinned by a parse-aware no-clock read rather than stated. tool-reply (wb-9x5.5) landed after the re-cut
  * (c4904e7) and joins at this respin as the second lander of entry 8: its timed observeInvocation call, one ramp per
- * (cap, selectors) series, the gate's TR-K1/TR-G1.
+ * (cap, selectors) series, the gate's TR-K1/TR-G1. A TWELFTH, graph-view-grouped (wb-9x5.10), landed later and joins the same
+ * way: its timed buildGraphView (cold) and builder.build (cache hit, neighborhood change) calls, one ramp per pass for each.
+ *
+ * A THIRTEENTH, inspector-four-view-layout (wb-9x5.11), lands in the same consolidated wb-9x5.11 cut as the twelfth (R-B767
+ * adopts the wb-9x5.10 cut) with its own case below: one layoutInspector ramp at the exact call index of every sample (the core
+ * times nothing else and makes no untimed layout call).
  *
  * wb-19q (wb-oq3 F1/F4) adds the liveness and header censuses: every case registers its bench in the module-level
  * `ran` set as its LAST statement and an afterAll holds the set against the CLI census, a parse-time row rejects
@@ -37,8 +42,10 @@ import ts from "typescript";
 import { afterAll, describe, expect, it } from "vitest";
 import { runAttentionBench } from "../qa/workbench/attention-grouped-bench.mjs";
 import { PASS_IDS, runCapSaturationBench } from "../qa/workbench/cap-saturation.mjs";
+import { runGraphViewBench } from "../qa/workbench/graph-view-grouped-bench.mjs";
 import { buildGroupedFixture, runGroupedBench } from "../qa/workbench/grouped-fixture.mjs";
 import { runEvidenceRetainedBench } from "../qa/workbench/inspector-evidence-retained-bench.mjs";
+import { ACTIONS as FOUR_VIEW_ACTIONS, runFourViewLayoutBench } from "../qa/workbench/inspector-four-view-layout-core.mjs";
 import { runLineDiffBench } from "../qa/workbench/line-diff-bench.mjs";
 import { buildFixture, measureRecovery } from "../qa/workbench/observation-recovery-receipt.mjs";
 import { runReducerSelectorBench } from "../qa/workbench/reducer-selector-bench.mjs";
@@ -47,7 +54,9 @@ import { BYTE_CAPS, runToolReplyBench, SHAPE_NAMES } from "../qa/workbench/tool-
 import { PASS_SPECS, runTopologyBench } from "../qa/workbench/topology-slice-grouped-bench.mjs";
 import { initialInspectorState, inspectorEvidenceTarget, layoutInspector, reduceInspectorKey } from "../src/ui/workflow-inspector.js";
 import { ATTENTION_TRACE_REASONS, selectAttention } from "../src/workbench/attention.js";
+import { CapabilityError } from "../src/workbench/capability-registry.js";
 import { EvidenceStore } from "../src/workbench/evidence-loader.js";
+import { buildGraphView, createGraphViewBuilder, type GraphViewRequest } from "../src/workbench/graph-view.js";
 import { type ObservationEvent, ObservationProjection } from "../src/workbench/observation.js";
 import { observeInvocation } from "../src/workbench/observe-query.js";
 import { buildTimelineLanes } from "../src/workbench/timeline.js";
@@ -555,6 +564,115 @@ describe("W21 known duration: timeline-grouped-bench (runTimelineBench in qa/wor
   }, 120_000);
 });
 
+describe("W21 known duration: graph-view-grouped-bench (its timed buildGraphView and builder.build calls; wb-9x5.10)", () => {
+  interface GraphRegime {
+    samples: number;
+    build: Record<string, Quantiles>;
+    outliers: Array<{ ms: number }>;
+  }
+  interface GraphPass {
+    regimes: Record<"cold" | "cache-hit" | "neighborhood-change", GraphRegime>;
+  }
+  interface GraphViewFunctions {
+    buildGraphView: typeof buildGraphView;
+    createGraphViewBuilder: typeof createGraphViewBuilder;
+  }
+  const graphRun = runGraphViewBench as (input: {
+    Projection: typeof ObservationProjection;
+    graphView: GraphViewFunctions;
+    fixture: Fixture;
+    host: Host;
+  }) => { passes: Record<string, GraphPass> };
+  type Call = { shape: "focus" | "page"; limit: number };
+  const callOf = (request: GraphViewRequest): Call => ({ shape: request.focus === undefined ? "page" : "focus", limit: request.viewport.limit });
+  /** The recorded call indices a receipt series covers, from its name: overall, <shape> or <shape>-v<viewport limit>. */
+  const indicesOf = (name: string, calls: readonly Call[]): number[] => {
+    const split = /^(focus|page)(?:-v(\d+))?$/.exec(name);
+    const keep = (call: Call): boolean =>
+      name === "overall" || (split !== null && call.shape === split[1] && (split[2] === undefined || call.limit === Number(split[2])));
+    return calls.flatMap((call, index) => (keep(call) ? [index] : []));
+  };
+
+  it("holds every regime's series at the exact ramp of its own timed graph-view calls, and the outliers at the top ranks, in both passes", () => {
+    // Per pass (keyed by the counting reader the bench hands both functions): one ramp for the cold buildGraphView calls and one
+    // for the timed builder.build calls, which are each builder's SECOND build (its first is the untimed warm-up and waits nothing).
+    interface Recorded {
+      cold: Ramp;
+      built: Ramp;
+      coldCalls: Call[];
+      builtCalls: Call[];
+    }
+    const passes = new Map<object, Recorded>();
+    const passOf = (reader: object): Recorded => {
+      let pass = passes.get(reader);
+      if (pass === undefined) {
+        pass = { cold: new Ramp(500, 2_500), built: new Ramp(500, 2_500), coldCalls: [], builtCalls: [] };
+        passes.set(reader, pass);
+      }
+      return pass;
+    };
+    let warmups = 0;
+    const graphView: GraphViewFunctions = {
+      buildGraphView: (reader, request) => {
+        const pass = passOf(reader);
+        pass.coldCalls.push(callOf(request));
+        pass.cold.wait();
+        return buildGraphView(reader, request);
+      },
+      createGraphViewBuilder: reader => {
+        const inner = createGraphViewBuilder(reader);
+        const pass = passOf(reader);
+        let builds = 0;
+        return {
+          build: request => {
+            builds += 1;
+            if (builds === 2) {
+              pass.builtCalls.push(callOf(request));
+              pass.built.wait();
+            } else warmups += 1;
+            return inner.build(request);
+          },
+          get lastBuild() {
+            return inner.lastBuild;
+          },
+        };
+      },
+    };
+    const receipt = graphRun({ Projection: ObservationProjection, graphView, fixture: build(SMALL), host: HOST });
+    const recorded = [...passes.values()];
+    const results = Object.entries(receipt.passes);
+    expect(recorded).toHaveLength(results.length);
+    let checked = 0;
+    for (const [at, [label, pass]] of results.entries()) {
+      const { cold, built, coldCalls, builtCalls } = recorded[at];
+      const n = pass.regimes.cold.samples;
+      expect(coldCalls, label).toHaveLength(n);
+      // Every cache-hit sample runs before every neighborhood-change sample: timed builder call i < n is a hit, n + j a change.
+      expect(builtCalls, label).toHaveLength(2 * n);
+      const regimes: Array<[string, GraphRegime, Ramp, readonly Call[], number]> = [
+        ["cold", pass.regimes.cold, cold, coldCalls, 0],
+        ["cache-hit", pass.regimes["cache-hit"], built, builtCalls.slice(0, n), 0],
+        ["neighborhood-change", pass.regimes["neighborhood-change"], built, builtCalls.slice(n), n],
+      ];
+      for (const [regime, summary, ramp, calls, offset] of regimes) {
+        expect(summary.samples, `${label}/${regime}`).toBe(n);
+        for (const [name, entry] of Object.entries(summary.build)) {
+          const indices = indicesOf(name, calls);
+          expect(indices, `${label}/${regime}/${name} calls`).toHaveLength(entry.samples);
+          expectRankFloors(`${label}/${regime}/${name}`, entry, j => ramp.at(offset + indices[j]));
+          checked += 1;
+        }
+        // The kept outliers are the top order statistics: the i-th slowest of n is at least the (n - 1 - i)-th smallest wait.
+        for (const [i, sample] of summary.outliers.entries()) expectSpan(`${label}/${regime} outliers[${i}]`, sample.ms, ramp.at(offset + n - 1 - i));
+      }
+    }
+    // Two passes, three regimes, seven series each: overall, the two request shapes, and each shape at both viewports.
+    expect(checked).toBe(results.length * 3 * 7);
+    expect(warmups).toBe(results.reduce((sum, [, pass]) => sum + 2 * pass.regimes.cold.samples, 0));
+    ran.add("graph-view-grouped-bench");
+  }, 120_000);
+});
+
 describe("W21 known duration: observation-recovery-bench (measureRecovery in qa/workbench/observation-recovery-receipt.mjs)", () => {
   interface Measurement {
     ingest: { offered: number };
@@ -999,6 +1117,65 @@ describe("W21 known duration: inspector-retained-memory-bench reads no clock in 
   });
 });
 
+describe("W21 known duration: inspector-four-view-layout-bench (runFourViewLayoutBench in qa/workbench/inspector-four-view-layout-core.mjs)", () => {
+  type Series = { layout: Quantiles; byView: Record<string, Quantiles>; bySize: Record<string, Quantiles> };
+  const fourViewRun = runFourViewLayoutBench as unknown as (input: {
+    Projection: typeof ObservationProjection;
+    inspector: Inspector;
+    readSides: Record<string, unknown>;
+    fixture: Fixture;
+    host: Host;
+    sampling: { viewSwitches: number; selectionMoves: number; scrollSteps: number; resizes: number };
+  }) => { actions: Record<string, Series>; views: Record<string, Quantiles> };
+  // Each action reaches every view at both sizes: runs cycle the sizes, then the views.
+  const SAMPLING = { viewSwitches: 8, selectionMoves: 64, scrollSteps: 80, resizes: 40 };
+
+  it("holds every action, action/view, action/size and view series at the exact ramp of its own layoutInspector calls", () => {
+    // Every layoutInspector call the core makes is one timed sample in sample order (no untimed layout call exists), so call k
+    // is the k-th sample: actions in ACTIONS order, each block as long as its sampling count. Each call records its view and size.
+    const ramp = new Ramp(1_000, 2_500);
+    const calls: Array<{ view: string; size: string }> = [];
+    const inspector: Inspector = {
+      ...INSPECTOR,
+      layoutInspector: (...args: Parameters<typeof layoutInspector>): string[] => {
+        calls.push({ view: args[1].view, size: `${args[2].width}x${args[2].rows}` });
+        ramp.wait();
+        return layoutInspector(...args);
+      },
+    };
+    const readSides = { createGraphViewBuilder, buildTimelineLanes, selectAttention, selectLinkedTopology, CapabilityError };
+    const receipt = fourViewRun({ Projection: ObservationProjection, inspector, readSides, fixture: build({ seed: 11, nodes: 600, depth: 3, ticks: 8 }), host: HOST, sampling: SAMPLING });
+    const counts = [SAMPLING.viewSwitches, SAMPLING.selectionMoves, SAMPLING.scrollSteps, SAMPLING.resizes];
+    expect(calls).toHaveLength(counts.reduce((sum, n) => sum + n, 0));
+    const actions = FOUR_VIEW_ACTIONS as readonly string[];
+    let start = 0;
+    let checked = 0;
+    for (const [at, action] of actions.entries()) {
+      const own = Array.from({ length: counts[at] }, (_, k) => start + k);
+      start += counts[at];
+      const series = receipt.actions[action];
+      expectRankFloors(`${action}.layout`, series.layout, j => ramp.at(own[j]));
+      checked++;
+      for (const [group, field] of [["byView", "view"], ["bySize", "size"]] as const) {
+        for (const [name, value] of Object.entries(series[group])) {
+          const indices = own.filter(index => calls[index][field] === name);
+          expect(indices, `${action}.${group}.${name} calls`).toHaveLength(value.samples);
+          expectRankFloors(`${action}.${group}.${name}`, value, j => ramp.at(indices[j]));
+          checked++;
+        }
+      }
+    }
+    for (const [view, value] of Object.entries(receipt.views)) {
+      const indices = calls.flatMap((call, index) => (call.view === view ? [index] : []));
+      expect(indices, `views.${view} calls`).toHaveLength(value.samples);
+      expectRankFloors(`views.${view}`, value, j => ramp.at(indices[j]));
+      checked++;
+    }
+    expect(checked).toBe(actions.length * (1 + 4 + 2) + 4);
+    ran.add("inspector-four-view-layout-bench");
+  }, 120_000);
+});
+
 describe("W21 known duration: the census of cases (gate U1/U1d: one case per W21 bench CLI on the tree)", () => {
   it("every W21 bench CLI on the tree has exactly one case in this file, titled after it", () => {
     const self = parseRepo("test/workbench-w21-known-duration.test.ts", ts.ScriptKind.TS);
@@ -1009,7 +1186,7 @@ describe("W21 known duration: the census of cases (gate U1/U1d: one case per W21
       if (title !== undefined && (ts.isStringLiteral(title) || ts.isNoSubstitutionTemplateLiteral(title))) titles.push(title.text);
     });
     const clis = w21BenchClis();
-    expect(clis).toHaveLength(11);
+    expect(clis).toHaveLength(13);
     for (const cli of clis) {
       const name = cli.slice("qa/workbench/".length, -".mjs".length);
       const cases = titles.filter(title => title === `W21 known duration: ${name}` || title.startsWith(`W21 known duration: ${name} `));

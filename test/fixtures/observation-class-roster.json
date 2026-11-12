@@ -572,7 +572,7 @@
       "pins": [
         {
           "id": "R1",
-          "title": "R1 R-HOST-OPERATION: the HX adapter echoes the operation the host names as its display grouping, and no src module calls either topology adapter",
+          "title": "R1 R-HOST-OPERATION: the HX adapter echoes the operation the host names as its display grouping; its one src caller is the observation-class Claude host and no src module calls the Claude topology adapter",
           "witness": {
             "echoed": [
               {
@@ -581,7 +581,12 @@
                 "nativeConfirmation": false
               }
             ],
-            "srcCallers": []
+            "srcCallers": [
+              "src/workbench/claude-host.ts"
+            ],
+            "observationCallers": [
+              "src/workbench/claude-host.ts"
+            ]
           }
         },
         {

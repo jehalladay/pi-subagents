@@ -5,11 +5,22 @@
  * content is assembled, runs the core (syntax compile without execution), and shapes the answer as compact sanitized
  * JSON under a byte cap. It never executes, edits or promotes source, never registers a Pi tool and never reads the
  * filesystem. Errors, warnings and uncertain conditions stay three distinct arrays, each count carrying its scope.
+ * Supplied inputs and bindings are judged by the designer's checkWorkflowInputs and checkWorkflowBindings (wb-xeej): a
+ * definite failure is a typed validation refusal, and a check that cannot be made stays an uncertain request item.
  */
 import { createHash } from "node:crypto";
 import type { CapabilityErrorCategory, CapabilityRegistry } from "./capability-registry.js";
 import { CapabilityError } from "./capability-registry.js";
-import { type DesignerDiagnostic, validateWorkflowSource, type WorkflowSource, type WorkflowValidation } from "./designer.js";
+import {
+  checkWorkflowBindings,
+  checkWorkflowInputs,
+  type DesignerDiagnostic,
+  validateWorkflowSource,
+  type WorkflowBindingsVerdict,
+  type WorkflowInputsVerdict,
+  type WorkflowSource,
+  type WorkflowValidation,
+} from "./designer.js";
 import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText } from "./redaction.js";
 
 export const VALIDATE_REPLY_CONTRACT_VERSION = "workbench.validate-reply/v1";
@@ -34,9 +45,9 @@ export interface WorkflowValidateRequest {
   /** The artifact digest the caller was shown for sourceRef (sha256:<64 hex>). */
   digest: string;
   mode?: "static";
-  /** Accepted for the tool signature; the designer core has no input-schema check, so a supplied value is reported as uncertain. */
+  /** Judged against the source's declared meta.inputSchema (checkWorkflowInputs); reported as uncertain only when the source declares none. */
   inputs?: unknown;
-  /** Accepted for the tool signature; the designer core takes its bindings from the registry snapshot only. */
+  /** Capability id to descriptor version, compared with the authorized registry snapshot (checkWorkflowBindings); deployment bindings still come only from that snapshot. */
   bindings?: unknown;
 }
 
@@ -53,7 +64,7 @@ export interface BuildWorkflowValidateReplyInput {
 }
 
 export type ValidateRefusalCode = "UNKNOWN_PERMISSION_DATA" | "MISSING_DESIGN_GRANT" | "UNSUPPORTED_MODE" | "SOURCE_REF_MISMATCH" | "DIGEST_MALFORMED" | "DIGEST_MISMATCH"
-  | "SOURCE_BYTES_MISMATCH";
+  | "SOURCE_BYTES_MISMATCH" | "INPUTS_SCHEMA_MISMATCH" | "INPUT_SCHEMA_UNUSABLE" | "BINDINGS_MALFORMED" | "BINDINGS_MISMATCH";
 
 export interface ValidateRefusalReply {
   readonly contractVersion: typeof VALIDATE_REPLY_CONTRACT_VERSION;
@@ -109,6 +120,10 @@ const REFUSALS: Readonly<Record<ValidateRefusalCode, { category: CapabilityError
   DIGEST_MALFORMED: { category: "validation", reason: "digest must be sha256:<64 lowercase hex>" },
   DIGEST_MISMATCH: { category: "validation", reason: "submitted digest does not match the validated source identity" },
   SOURCE_BYTES_MISMATCH: { category: "validation", reason: "source bytes do not match their pinned definition digest" },
+  INPUTS_SCHEMA_MISMATCH: { category: "validation", reason: "supplied inputs do not match the source's declared meta.inputSchema" },
+  INPUT_SCHEMA_UNUSABLE: { category: "validation", reason: "the source's declared meta.inputSchema is not a JSON Schema this host can check" },
+  BINDINGS_MALFORMED: { category: "validation", reason: "bindings must be an object mapping capability ids to version strings" },
+  BINDINGS_MISMATCH: { category: "validation", reason: "a supplied binding names a version the authorized registry snapshot does not bind" },
 });
 
 const SCOPES = Object.freeze({
@@ -157,11 +172,29 @@ function diagnosticItem({ code, message, dimension, line, column }: DesignerDiag
     ...(line !== undefined ? { line } : {}), ...(column !== undefined ? { column } : {}),
   };
 }
-function requestUncertain(request: WorkflowValidateRequest): ValidateReplyItem[] {
+/** The designer's verdicts on the supplied request arguments; a member is absent when its argument was not supplied. */
+interface RequestChecks { readonly inputs?: WorkflowInputsVerdict; readonly bindings?: WorkflowBindingsVerdict }
+
+function requestChecks(input: BuildWorkflowValidateReplyInput, grants: readonly string[]): RequestChecks {
+  const { request, source, registry } = input;
+  return {
+    ...(request.inputs !== undefined ? { inputs: checkWorkflowInputs(source, request.inputs) } : {}),
+    ...(request.bindings !== undefined ? { bindings: checkWorkflowBindings(request.bindings, { ...(registry ? { registry } : {}), grants }) } : {}),
+  };
+}
+/** A definite argument failure refuses, inputs before bindings; an argument that could not be checked does not. */
+function argumentRefusal(checks: RequestChecks): ValidateRefusalReply | undefined {
+  if (checks.inputs === "mismatch") return refuse("INPUTS_SCHEMA_MISMATCH");
+  if (checks.inputs === "unusable") return refuse("INPUT_SCHEMA_UNUSABLE");
+  if (checks.bindings === "malformed") return refuse("BINDINGS_MALFORMED");
+  if (checks.bindings === "mismatch") return refuse("BINDINGS_MISMATCH");
+  return undefined;
+}
+function requestUncertain(checks: RequestChecks): ValidateReplyItem[] {
   const items: ValidateReplyItem[] = [];
-  if (request.inputs !== undefined) items.push({ scope: "request", code: "INPUTS_UNCHECKED", message: "Supplied inputs were not validated: the designer core has no input-schema check." });
-  if (request.bindings !== undefined) {
-    items.push({ scope: "request", code: "BINDINGS_UNCHECKED_ARGUMENT", message: "Supplied bindings were not validated: deployment bindings come only from the registry snapshot." });
+  if (checks.inputs === "undeclared") items.push({ scope: "request", code: "INPUTS_UNCHECKED", message: "Supplied inputs were not validated: the source declares no readable meta.inputSchema." });
+  if (checks.bindings === "unestablished") {
+    items.push({ scope: "request", code: "BINDINGS_UNCHECKED_ARGUMENT", message: "Supplied bindings were not validated: a named capability is not discoverable in the authorized registry snapshot, or no snapshot was supplied." });
   }
   return items;
 }
@@ -179,7 +212,7 @@ interface Parts {
 }
 interface Keep { errors: number; warnings: number; uncertain: number; calls: number }
 
-function assemble(input: BuildWorkflowValidateReplyInput, grants: readonly string[]): Parts {
+function assemble(input: BuildWorkflowValidateReplyInput, grants: readonly string[], checks: RequestChecks): Parts {
   const validate = input.validate ?? validateWorkflowSource;
   const core = validate(input.source, { ...(input.registry ? { registry: input.registry } : {}), grants });
   const errors = core.diagnostics.filter(item => item.severity === "error").map(diagnosticItem);
@@ -189,7 +222,7 @@ function assemble(input: BuildWorkflowValidateReplyInput, grants: readonly strin
     ...core.projection.unknown.map(({ reason, location }): ValidateReplyItem => ({
       scope: "projection", code: "DYNAMIC_OR_OPAQUE", message: sanitizeWorkbenchText(reason, 500), line: location.line, column: location.column,
     })),
-    ...requestUncertain(input.request),
+    ...requestUncertain(checks),
   ];
   // Never upgrade: an error or an invalid core is invalid, and an uncertain condition is never a pass.
   const verdict = errors.length > 0 || core.status === "invalid" || core.syntax === "invalid" ? "invalid" : uncertain.length > 0 || core.status === "uncertain" ? "uncertain" : "valid";
@@ -280,17 +313,21 @@ function fitToCap(parts: Parts, maxBytes: number): { reply: ValidateCompletedRep
 /**
  * Synchronous and side-effect free apart from the injected designer core, which only reads the supplied source
  * snapshot. Rules apply in order and the first refusal wins; a refusal carries a fixed typed reason and never echoes
- * caller text, and the core is not entered at all.
+ * caller text, and the core is not entered at all. The argument checks run only after the source identity holds, and
+ * read only the verified source bytes and the registry snapshot the grants discover.
  */
 export function buildWorkflowValidateReply(input: BuildWorkflowValidateReplyInput): BuiltWorkflowValidateReply {
   const maxBytes = checkedCap(input.maxBytes);
   const grants = grantList(input.grants);
   const refusal = refusalFor(input, grants);
-  if (refusal || !grants) {
-    const reply = refusal ?? refuse("UNKNOWN_PERMISSION_DATA");
-    const text = serialize(reply);
-    return Object.freeze({ text, reply, bytes: size(text), truncated: false });
-  }
-  const { reply, text } = fitToCap(assemble(input, grants), maxBytes);
+  if (refusal || !grants) return refused(refusal ?? refuse("UNKNOWN_PERMISSION_DATA"));
+  const checks = requestChecks(input, grants);
+  const argument = argumentRefusal(checks);
+  if (argument) return refused(argument);
+  const { reply, text } = fitToCap(assemble(input, grants, checks), maxBytes);
   return Object.freeze({ text, reply, bytes: size(text), truncated: reply.truncation !== undefined });
+}
+function refused(reply: ValidateRefusalReply): BuiltWorkflowValidateReply {
+  const text = serialize(reply);
+  return Object.freeze({ text, reply, bytes: size(text), truncated: false });
 }

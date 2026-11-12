@@ -402,6 +402,7 @@
        "src/workbench/process-env.ts: spawn environment",
        "src/workbench/providers/reactivefiber.ts: producer (reading = envelope verbatim)",
        "src/workbench/reactivefiber-observer.ts: projection",
+       "src/workbench/reactivefiber-wiring.ts: projection (host-seam observe-wiring: applies the observer's topology to the live projection)",
        "src/workflow/reconcile.ts: reconcile read roster"
       ]
      }
@@ -409,7 +410,7 @@
     {
      "id": "B2",
      "witness": {
-      "planes": 12,
+      "planes": 13,
       "sites": [
        "src/workbench/reactivefiber-observer.ts#previewSnapshot:createHash: payload reference: rf-output:sha256 of output.text, stored as nativePayloadRef, never a key",
        "src/workbench/reconcile-decision.ts#decideReconcile:createHash#1: acknowledgement id: entry digest, determination, principal, cited receipt ids",

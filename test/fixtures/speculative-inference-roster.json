@@ -837,6 +837,9 @@
               "src/workbench/detached-observer.ts <- src/workbench/hosts/local-detached.ts: DetachedReceipt",
               "src/workbench/detached-observer.ts <- src/workbench/hosts/local-detached.ts: DetachedSnapshot",
               "src/workbench/detached-observer.ts <- src/workbench/hosts/local-detached.ts: LocalOperator",
+              "src/workbench/detached-wiring.ts <- src/workbench/hosts/local-detached.ts: DetachedReceipt",
+              "src/workbench/detached-wiring.ts <- src/workbench/hosts/local-detached.ts: DetachedSnapshot",
+              "src/workbench/detached-wiring.ts <- src/workbench/hosts/local-detached.ts: LocalOperator",
               "src/workflow/host.ts <- src/agent-manager.ts: AgentManager"
             ],
             "knowersReaching": [
@@ -890,6 +893,9 @@
               "launchDetachedWorkflow": [
                 "src/workbench/hosts/local-detached.ts"
               ],
+              "localOperator": [
+                "src/workbench/hosts/local-detached.ts"
+              ],
               "openForgeOperationConnection": [
                 "src/workbench/providers/forge.ts"
               ],
@@ -907,6 +913,7 @@
                 "createClaudeObserver",
                 "createClaudeWorkflowHost",
                 "launchDetachedWorkflow",
+                "localOperator",
                 "openForgeOperationConnection",
                 "readClaudeTranscript",
                 "registerNativeProviders"

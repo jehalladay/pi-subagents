@@ -36,8 +36,9 @@
  * Disclosed limits (never claimed as covered): an assertion reached only through a helper the helper's body leg does
  * not follow; the receipts themselves (no real measurement, scale, timing or live pass is claimed from a title being
  * present); wb-9x5.14's evidence-retained bench measures EvidenceStore retention and is deliberately NOT bound to
- * "projection memory"; the open four-view navigation and resize receipt (wb-9x5.11) leaves "render/navigate/resize"
- * across the four views a visible gap.
+ * "projection memory". The four-view navigation and resize receipt (wb-9x5.11) landed and its half was flipped consciously in
+ * that cut: "render/navigate/resize" across the four views and the per-view visible rows bind to its own guard cases, and its
+ * receipt half, like every bench receipt, is recorded and never counted as covered.
  */
 import { readFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
@@ -88,11 +89,11 @@ const TIMELINE = "test/workbench-timeline-grouped-bench.test.ts";
 const ATTENTION = "test/workbench-attention-grouped-bench.test.ts";
 const TOOLREPLY = "test/workbench-tool-reply-bench.test.ts";
 const RETAINED = "test/workbench-retained-memory.test.ts";
+const FOUR_VIEW = "test/workbench-inspector-four-view-layout-bench.test.ts";
 
 const pin = (file: string, title: string): Pin => ({ file, title });
 const guard = (id: string, pins: readonly Pin[]): Half => ({ id, tier: "default-gate", pins });
 const registration = (id: string, pins: readonly Pin[]): Half => ({ id, tier: "default-gate", pins });
-const unpinned = (id: string, reason: string): Half => ({ id, tier: "default-gate", pins: [], reason });
 /** The receipt half of a bench: produced only by its own forge command outside gate = [...], vouched by no report this leg reads. */
 const receipt = (id: string, command: string): Half => ({
   id,
@@ -110,6 +111,13 @@ const TIMELINE_REGISTERS = pin(TIMELINE, "registers timeline-grouped-bench as on
 const ATTENTION_REGISTERS = pin(ATTENTION, "registers attention-grouped-bench as a Forge command outside the default gate, leaving the other blocks alone");
 const TOOLREPLY_REGISTERS = pin(TOOLREPLY, "registers tool-reply-bench as a Forge command outside the default gate");
 const RETAINED_REGISTERS = pin(RETAINED, "registers one Forge command with --expose-gc outside the default gate");
+const FOUR_VIEW_REGISTERS = pin(FOUR_VIEW, "registers inspector-four-view-layout-bench as one additive Forge command outside the default gate");
+/** The four-view cases the wb-9x5.11 flip binds (the former four-view-resize gap): per action, view and size, and every reflow checked. */
+const FOUR_VIEW_RESIZE_PINS: readonly Pin[] = [
+  pin(FOUR_VIEW, "reports p50/p95/max for every action, per view and per size, in all four views at 80x24 (two panes) and 120x40 (three panes)"),
+  pin(FOUR_VIEW, "checks every 80x24<->120x40 reflow against its rendered frame and the state handed in, focused and unfocused in every view"),
+];
+const FOUR_VIEW_ROWS_PIN = pin(FOUR_VIEW, "reports visible rendered rows versus total nodes per view: never more rows than the terminal, never every retained row read");
 
 const FIXTURE_TEXT = `Construct deterministic fixture with >=1000 nodes, >=100000 events, 1${EN_DASH}100 active changes per tick, 5 nested groups depth, partial graph links, long Unicode paths and large transcript payload refs. Measure:`;
 const MEASURE_ITEMS: readonly string[] = [
@@ -240,10 +248,9 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
       guard("lane-model", [pin(TIMELINE, "reports p50/p95/max overall and per (zoom, columns), plus the five slowest samples with their request")]),
       registration("registration-lane-model", [TIMELINE_REGISTERS]),
       receipt("receipt-lane-model", "timeline-grouped-bench"),
-      unpinned(
-        "four-view-resize",
-        "The four-view navigation and resize layout-time receipt is the open bead wb-9x5.11 (status open at the cut base, trunk 5244f1c); the pass-B and lane-model halves above bind only what landed, so render, navigate and resize across the four views stay a visible gap until it lands and a seat flips this half consciously (the pin-flip pattern).",
-      ),
+      guard("four-view-resize", FOUR_VIEW_RESIZE_PINS),
+      registration("registration-four-view", [FOUR_VIEW_REGISTERS]),
+      receipt("receipt-four-view", "inspector-four-view-layout-bench"),
     ],
   },
   {
@@ -254,6 +261,9 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
       guard("guard", [pin(GROUPED, "reports pass A as honest FIFO truncation: retained versus offered under default caps, no navigation claim")]),
       registration("registration", [GROUPED_REGISTERS]),
       receipt("receipt", "inspector-grouped-bench"),
+      guard("four-view", [FOUR_VIEW_ROWS_PIN]),
+      registration("registration-four-view", [FOUR_VIEW_REGISTERS]),
+      receipt("receipt-four-view", "inspector-four-view-layout-bench"),
     ],
   },
   {
@@ -405,8 +415,9 @@ const UNPINNED_HALVES: readonly string[] = [
   "measure:reducer-and-selector-time/receipt",
   "measure:layout-render-navigate-resize/receipt-pass-b",
   "measure:layout-render-navigate-resize/receipt-lane-model",
-  "measure:layout-render-navigate-resize/four-view-resize",
+  "measure:layout-render-navigate-resize/receipt-four-view",
   "measure:visible-rows-vs-total/receipt",
+  "measure:visible-rows-vs-total/receipt-four-view",
   "measure:terminal-bytes/receipt",
   "measure:recover-latency/receipt",
   "measure:pi-tool-response-size/receipt",
@@ -501,7 +512,7 @@ describe("wb-9x5.17 docs/workbench/14 performance-benchmark census (report mode)
     }
   });
 
-  it("AC3: the unpinned halves are listed so none is ever counted as passed; each bench receipt names its command and the open four-view gap names wb-9x5.11", () => {
+  it("AC3: the unpinned halves are listed so none is ever counted as passed; each bench receipt names its command and the four-view gap wb-9x5.11 left is pinned now", () => {
     const listed = TABLE.flatMap(row => row.halves.filter(half => half.reason !== undefined).map(half => `${row.row}/${half.id}`));
     expect(listed).toEqual(UNPINNED_HALVES);
     for (const { row, half } of BENCH_RECEIPTS) {
@@ -509,9 +520,23 @@ describe("wb-9x5.17 docs/workbench/14 performance-benchmark census (report mode)
       expect(half.reason, `row ${row.row}/${half.id}`).toContain(`[build.commands.${half.command}]`);
       expect(half.reason, `row ${row.row}/${half.id}`).toContain("never counted as covered");
     }
+    // The wb-9x5.11 flip, consciously: the former gap is a guard half on exactly these cases, and visible rows gains its own.
     const fourView = TABLE.find(row => row.row === "measure:layout-render-navigate-resize")?.halves.find(half => half.id === "four-view-resize");
-    expect(fourView?.reason).toContain("wb-9x5.11");
+    expect(fourView?.reason).toBeUndefined();
     expect(fourView?.tier).toBe("default-gate");
+    expect(fourView?.pins).toEqual([
+      { file: FOUR_VIEW, title: "reports p50/p95/max for every action, per view and per size, in all four views at 80x24 (two panes) and 120x40 (three panes)" },
+      { file: FOUR_VIEW, title: "checks every 80x24<->120x40 reflow against its rendered frame and the state handed in, focused and unfocused in every view" },
+    ]);
+    // Outside anchor (CT5/CT6): the row's clause renders verbatim in docs/14 (AC1), and the flipped half must cover both of its
+    // measurement words, a p50/p95/max series case for "p50/p95" and a reflow case for "resize", so dropping either pin from every
+    // literal of this file reds here unless docs/14 itself changes, which AC1 refuses.
+    const layoutClause = TABLE.find(row => row.row === "measure:layout-render-navigate-resize")?.clause ?? "";
+    expect(layoutClause).toBe("p50/p95 layout render/navigate/resize time");
+    expect(fourView?.pins.some(entry => entry.title.includes("p50/p95/max"))).toBe(layoutClause.includes("p50/p95"));
+    expect(fourView?.pins.some(entry => entry.title.includes("reflow"))).toBe(layoutClause.includes("resize"));
+    const visibleRows = TABLE.find(row => row.row === "measure:visible-rows-vs-total")?.halves.find(half => half.id === "four-view");
+    expect(visibleRows?.pins).toEqual([{ file: FOUR_VIEW, title: "reports visible rendered rows versus total nodes per view: never more rows than the terminal, never every retained row read" }]);
     expect(BENCH_RECEIPTS.map(({ half }) => half.command).sort()).toEqual(
       [
         "observation-recovery-bench",
@@ -532,6 +557,8 @@ describe("wb-9x5.17 docs/workbench/14 performance-benchmark census (report mode)
         "reducer-selector-bench",
         "line-diff-bench",
         "inspector-grouped-bench",
+        "inspector-four-view-layout-bench",
+        "inspector-four-view-layout-bench",
       ].sort(),
     );
   });

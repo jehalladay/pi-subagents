@@ -10,8 +10,10 @@
  * acknowledged phase echoes the host's own accepted answer, the result carries terminalConfirmed=false verbatim, and
  * the real cancelled terminal is read only from a later inspect snapshot, never minted from the reply.
  *
- * The strict booted-tool reading is declared UNREALISED citing wb-79k.3 (HELD): nothing in src ingests detached
- * readings into the live projection, so the booted workflow_control denies local-detached targets cross-scope.
+ * The strict booted-tool reading is declared UNREALISED on this tier, citing wb-79k.3: since wb-79k.3 src projects a
+ * workflow_detached inspect reading into the session projection, so the booted workflow_control admits an owned local-detached
+ * target, but the Pi launcher pins launch permissions to inspect+execute and the host refuses the cancel. That booted reading is
+ * measured in the default tier (test/workbench-detached-observe-wiring.test.ts DW10), never on this tier.
  *
  * Runs ONLY from its own forge command (vitest.detached-control-live.config.ts); excluded from the default gate.
  * Honest unavailability: a missing dist, a non-Linux/setuid operator or an over-budget scratch base fails naming the
@@ -734,11 +736,11 @@ describe("live local-detached adverse cancellation journey (wb-0kg.8)", () => {
     expect(projectionEventsMatchReply).toBe(true);
   }, 180_000);
 
-  it("J-F + teardown: the strict booted-tool reading is declared UNREALISED (wb-79k.3); every host leaves by the shutdown verb; the receipt is emitted and clean", async () => {
+  it("J-F + teardown: the strict booted-tool reading is declared UNREALISED on this tier (wb-79k.3); every host leaves by the shutdown verb; the receipt is emitted and clean", async () => {
     journeys["strict-booted-tool"] = {
       realised: false,
       detail:
-        "UNREALISED (wb-79k.3 HELD): no src ingestion of detached readings — the src/index.ts projection writers are furnace_observe and the embedded workflow only, so the booted workflow_control denies local-detached targets cross-scope; the Pi launcher additionally pins launch permissions to inspect+execute and reports a host-instance ref where the reader states host-process.",
+        "UNREALISED on this tier (wb-79k.3 now projects a workflow_detached inspect reading in src): this tier drives a harness projection, not the booted tool. Booted (test/workbench-detached-observe-wiring.test.ts DW10): the Pi launcher pins inspect+execute, so the host refuses the cancel workflow_control admits; it reports a host-instance ref where the reader states host-process.",
     };
     expect(String(journeys["strict-booted-tool"].detail)).toContain(STRICT_BOOTED_CITATION);
     seamPhase = "teardown";
