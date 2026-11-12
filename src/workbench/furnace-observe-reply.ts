@@ -7,16 +7,18 @@
  * returned"). The Run snapshot furnace_observe writes now carries trace.invocationId (FurnaceObserverOptions.traceRun: the Run
  * ID), the ID the observer's Attempt snapshots already carry, and furnace_observe refreshes those Attempt snapshots and their
  * native-confirmed ownership edges too, so the Run's own viewport holds the Run and the Attempts its page returned. The host
- * (src/index.ts) makes those writes and hands this module the viewport as a read function; this module never reaches the
- * projection itself.
+ * (src/index.ts) makes every projection write and hands this module the viewport as a read function; this module never
+ * reaches the projection itself (FurnaceObservedAttempts holds native refs only, never the projection).
  *
  * Dialect: every reply is one envelope whose contract is TOOL_REPLY_CONTRACT_VERSION (imported, never re-spelled) for the
  * tool furnace_observe. A success carries the reading's producer provenance (source), the reading's own freshness facts
  * (snapshot), the native Run facts (run), the Attempt page's counts (attempts) and the log references (logs) beside the
  * landed workbench.observe/v1 reply over the Run viewport (observe); the FurnaceReading object itself, its contract
- * included, is never carried. A refusal is a ToolReplyError with a closed code. An attach failure also carries the Run
- * viewport as it stands after projection.markStale (lastKnown), so a node that was running reads last-known-running +
- * stale, never current, and saved data is retrievable without being made current.
+ * included, is never carried. A refusal is a ToolReplyError with a closed code. On an attach failure the host marks the
+ * Run's ref stale and then every Attempt ref an earlier read of that Run refreshed (FurnaceObservedAttempts), so no row a
+ * prior read refreshed stays current; the failure reply carries the Run viewport as it then stands (lastKnown), so a row
+ * that was running reads last-known-running + stale, never current, and saved data is retrievable without being made
+ * current.
  *
  * Hygiene: every string reaches the model through sanitizeWorkbenchJsonText (redaction.ts), the one shared serializer; the
  * observe reply is already a fixed point of it. Refusal messages are bounded by sanitizeWorkbenchText(message, 160, "text").
@@ -30,6 +32,7 @@
  */
 import { CapabilityError } from "./capability-registry.js";
 import type { FurnaceReading } from "./furnace-observer.js";
+import type { NativeRef } from "./observation.js";
 import { OBSERVE_CURSOR_MAX_BYTES, OBSERVE_DEFAULT_MAX_BYTES, OBSERVE_MAX_LIMIT, OBSERVE_MAX_MAX_BYTES, OBSERVE_MIN_MAX_BYTES, type ObserveReply } from "./observe-query.js";
 import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText } from "./redaction.js";
 import { TOOL_REPLY_CONTRACT_VERSION, type ToolReplyError } from "./tool-replies.js";
@@ -80,6 +83,39 @@ export interface FurnaceObserveView {
   readonly runId: string;
   readonly maxBytes?: number;
   readonly read: (maxBytes: number) => ObserveReply;
+}
+
+/** The most Attempt refs one FurnaceObservedAttempts keeps across Runs: the session projection's own node cap (src/index.ts). */
+export const FURNACE_OBSERVED_ATTEMPTS_MAX = 2_000;
+
+/**
+ * The Attempt refs furnace_observe refreshed into the session projection, by native Run ID. furnace_observe is the one
+ * writer of Furnace Attempt rows (it alone refreshes FurnaceObserver.projectionTopology's Attempt snapshots), so these are the
+ * Attempt rows of the Run's viewport. When a Run's read fails the host marks each one stale beside the Run (docs/workbench/09
+ * "Freshness and ambiguity": a disconnected Furnace stream never leaves a previously running row current). Each ref is kept
+ * once per Run, in first-seen order; past `max` refs (FURNACE_OBSERVED_ATTEMPTS_MAX by default) the oldest is forgotten, as
+ * the projection itself evicts past its node cap.
+ */
+export class FurnaceObservedAttempts {
+  private readonly entries = new Map<string, { readonly runId: string; readonly ref: NativeRef }>();
+
+  constructor(private readonly max: number = FURNACE_OBSERVED_ATTEMPTS_MAX) {}
+
+  /** Records the Attempt refs one successful read of runId refreshed. */
+  record(runId: string, refs: readonly NativeRef[]): void {
+    for (const ref of refs) {
+      const key = JSON.stringify([runId, ref.provider, ref.type, ref.id, ref.scope ?? null]);
+      if (this.entries.has(key)) continue;
+      this.entries.set(key, { runId, ref: { ...ref } });
+      const oldest = this.entries.keys().next();
+      if (this.entries.size > this.max && oldest.done !== true) this.entries.delete(oldest.value);
+    }
+  }
+
+  /** The Attempt refs recorded for runId, in first-seen order (copies). */
+  refs(runId: string): NativeRef[] {
+    return [...this.entries.values()].filter(entry => entry.runId === runId).map(entry => ({ ...entry.ref }));
+  }
 }
 
 const utf8 = (text: string): number => Buffer.byteLength(text, "utf8");

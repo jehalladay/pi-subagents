@@ -81,7 +81,7 @@ import { createWorkflowExecuteTool, type ExecuteLaunch } from "./workbench/execu
 import { createRetainedForgeControlExecutor, retainForgeOperation } from "./workbench/forge-control-retention.js";
 import { type ForgeObservedHead, type ForgeOperationObserver, observeForgeGateRun } from "./workbench/forge-operation-observer.js";
 import { executeFurnaceControl } from "./workbench/furnace-control.js";
-import { furnaceObserveFailure, furnaceObserveRefusal, furnaceObserveReply, furnaceObserveRequestRefusal } from "./workbench/furnace-observe-reply.js";
+import { FurnaceObservedAttempts, furnaceObserveFailure, furnaceObserveRefusal, furnaceObserveReply, furnaceObserveRequestRefusal } from "./workbench/furnace-observe-reply.js";
 import { FurnaceObserver } from "./workbench/furnace-observer.js";
 import { captureInvocationIdentity, type IdentityCaptureInput, identityDigest, verifyInvocationIdentity, WORKFLOW_SCRIPT_SCHEMA_VERSION } from "./workbench/identity.js";
 import { loadWorkbenchNative, workbenchNative } from "./workbench/native-modules.js";
@@ -2480,6 +2480,11 @@ Terse command-style prompts produce shallow, generic work.
   const workflowTasks = new Map<string, WorkflowTask>();
   const projection = new ObservationProjection({ maxEvents: 4_096, maxNodes: 2_000, maxEdges: 4_000, maxQuery: WORKBENCH_PROJECTION_MAX_QUERY });
   /**
+   * wb-752.13: the Attempt refs furnace_observe refreshed into the projection above, by native Run ID, so a failed read of a
+   * Run marks each of them stale beside the Run (docs/09 "Freshness and ambiguity"); it holds refs only, never the projection.
+   */
+  const furnaceObservedAttempts = new FurnaceObservedAttempts();
+  /**
    * wb-79k.3 (W13/VC-7): the local-detached observe-wiring of this process. Both launch seams hand it the receipt their launch
    * returned and workflow_detached's inspect hands it the reading it took; it applies that reading to the projection above
    * under host-owned context only, and it is handed values, never a client, so it sends nothing of its own.
@@ -3023,11 +3028,15 @@ Terse command-style prompts produce shallow, generic work.
           projection.refresh(observer.projectionSnapshot(reading));
           // The Attempt rows and their native-confirmed Run->Attempt ownership edges (the topology's Run snapshot is the one above).
           const topology = observer.projectionTopology(reading);
+          furnaceObservedAttempts.record(params.runId, topology.snapshots.slice(1).map(snapshot => snapshot.source));
           for (const attempt of topology.snapshots.slice(1)) projection.refresh(attempt);
           for (const relation of topology.relations) projection.relate(relation);
           return textResult(furnaceObserveReply(view, reading));
         } catch (error) {
           projection.markStale({ scope, ref: {provider:"furnace",type:"run",id:params.runId,scope:scope.workspace} });
+          // wb-752.13 (docs/09 "Freshness and ambiguity"): the Attempt rows earlier reads of this Run refreshed are no more
+          // confirmed than the Run, so each is marked stale too and none stays current after the failed read.
+          for (const ref of furnaceObservedAttempts.refs(params.runId)) projection.markStale({ scope, ref });
           return textResult(furnaceObserveFailure(view, error));
         }
         finally { observer.close(); }

@@ -36,13 +36,25 @@
  * encrypt clause. U5: every reason is digest-frozen. U6: the leg's import set is frozen to its six modules (none of them
  * spawns a process), and row 5's reason names the check that verifies its tier.
  *
+ * wb-752.13 restatement (2026-11-12, cut #2 of the furnace_observe convergence bead, curing its refusal #1 item U2): row 4's
+ * furnace_observe half is flipped to pinned in the commit that lands its first case, as row 4's former reason directed ("Flip
+ * that half to pinned in the same commit that lands its first case"). Its pin is the registered-tool case C2R of
+ * test/workbench-furnace-observe-reply.test.ts: after an answered read, a failing read marks the Run and its Attempt row
+ * stale and every failing reply's lastKnown freshness summary reads "2 last-known-running + stale (active, not current); 2
+ * stale / 0 unknown" with no row current. Row 4 is therefore pinned with three pins and no reason; EXPECTED_SHAPE,
+ * EXPECTED_JUDGED, EXPECTED_JUDGED_ROWS and EXPECTED_ROW_DIGESTS carry the new row, AC3 holds sentence 4 out of the open set
+ * with that pin named, and H7's promotion falsifier moves to row 5, the next partial row. AC3b reads the test tree, outside
+ * this file's literals: the default-include suites (test/**\/*.test.ts) whose text holds sentence 4 verbatim are exactly row
+ * 4's pin files, so removing the furnace_observe pin from every literal here (rule 16 CT6) still reds, through the reply
+ * suite's own quote of the sentence.
+ *
  * Disclosed limits (never claimed as covered): everything the helper's named residuals leave open; a skip reached
  * through a construct outside the helper's roster fails closed there (options-unknown / context-unknown), it is not
  * judged here. A sentence (or half) with no case is recorded partial or unpinned with its reason and is never counted
  * as passed.
  */
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
@@ -135,7 +147,7 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
     section: "Freshness and ambiguity",
     quote: "Pi tool summaries must communicate that nuance.",
     tier: "default-gate",
-    status: "partial",
+    status: "pinned",
     pins: [
       {
         file: "test/workbench-observe-query.test.ts",
@@ -145,9 +157,11 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
         file: "test/workbench-pi-observe.test.ts",
         title: "B2/F4: a node left running reports last-known-running + stale in the freshness summary and no node is current",
       },
+      {
+        file: "test/workbench-furnace-observe-reply.test.ts",
+        title: "C2R: the registered furnace_observe marks the Run and its Attempt row stale when a read after an answered one fails, and every failing reply's lastKnown summary reads last-known-running + stale with no row current",
+      },
     ],
-    reason:
-      "The pure reply builder (wb-752.2, closed) is pinned by its O2 case, and the workflow_observe Pi tool wiring (wb-752.9, closed, landed at landing 149) by its B2/F4 case, which quotes sentences 3 and 4 and asserts the tool reply's freshness summary carries last-known-running + stale. The furnace_observe Pi tool half is unpinned: its convergence bead wb-752.13 is open at the re-cut base, and no default-gate case asserts a stale summary for furnace_observe (test/workbench-security-pi-tools.test.ts and test/workbench-pi-furnace-observer.test.ts hold no stale assertion). Flip that half to pinned in the same commit that lands its first case.",
   },
   {
     n: 5,
@@ -204,7 +218,7 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
 ]);
 
 /** Rule 16: the frozen row/pin-level shape, "<sentence>:<status>:<pins>" per row in docs order. */
-const EXPECTED_SHAPE: readonly string[] = ["1:partial:3", "2:pinned:2", "3:pinned:2", "4:partial:2", "5:partial:2", "6:partial:5", "7:pinned:2", "8:pinned:3"];
+const EXPECTED_SHAPE: readonly string[] = ["1:partial:3", "2:pinned:2", "3:pinned:2", "4:pinned:3", "5:partial:2", "6:partial:5", "7:pinned:2", "8:pinned:3"];
 /** Rule 16: every judged case's frozen key, "<sentence>|<file>|<title>", in table order. */
 const EXPECTED_JUDGED: readonly string[] = [
   "1|test/workbench-observation.test.ts|deduplicates IDs, rejects old sequence updates, and treats a cursor gap as stale until snapshot",
@@ -216,6 +230,7 @@ const EXPECTED_JUDGED: readonly string[] = [
   "3|test/workbench-observation.test.ts|disconnect invalidates known nodes; reconnect alone cannot restore current without snapshot",
   "4|test/workbench-observe-query.test.ts|O2 speaks last-known-running + stale after a Furnace disconnect and keeps native status text beside the tone",
   "4|test/workbench-pi-observe.test.ts|B2/F4: a node left running reports last-known-running + stale in the freshness summary and no node is current",
+  "4|test/workbench-furnace-observe-reply.test.ts|C2R: the registered furnace_observe marks the Run and its Attempt row stale when a read after an answered one fails, and every failing reply's lastKnown summary reads last-known-running + stale with no row current",
   "5|test/workbench-observation-perf.test.ts|retains only a hot window, indexes 1000 nodes across 100k events, and selects one without folding history",
   "5|test/workbench-observation-recovery-receipt.test.ts|keeps the only maxNodes literal inside the bench-only pass object, so the default pass never raises a cap",
   "6|test/workbench-hyperunix-observer.test.ts|H6: row, claim and certificate bodies never surface, and 40 certificates cap evidence at 32 references",
@@ -230,9 +245,9 @@ const EXPECTED_JUDGED: readonly string[] = [
   "8|test/workbench-reconcile-decision.test.ts|denies cross-scope with the observe tool's exact text for a missing task and a foreign scope alike",
 ];
 /** Rule 16 / U2: the set the AC2 it.each runs, "<sentence>:<pins>" in table order; a row with no pin never rides it. */
-const EXPECTED_JUDGED_ROWS: readonly string[] = ["1:3", "2:2", "3:2", "4:2", "5:2", "6:5", "7:2", "8:3"];
+const EXPECTED_JUDGED_ROWS: readonly string[] = ["1:3", "2:2", "3:2", "4:3", "5:2", "6:5", "7:2", "8:3"];
 /** Rule 16 / U5: each row's section, quote, tier, status, reason and pins, as the first 12 hex of their sha256. */
-const EXPECTED_ROW_DIGESTS: readonly string[] = ["1:78ec6d1ed5e4", "2:a4222ac6219c", "3:85b06ae97ff1", "4:8e52ffa59d29", "5:cc3123ff719f", "6:63c9a5c7a246", "7:a3f4bcbf0884", "8:8f534987aafb"];
+const EXPECTED_ROW_DIGESTS: readonly string[] = ["1:78ec6d1ed5e4", "2:a4222ac6219c", "3:85b06ae97ff1", "4:862470be924e", "5:cc3123ff719f", "6:63c9a5c7a246", "7:a3f4bcbf0884", "8:8f534987aafb"];
 
 const readRepo = (path: string): string => readFileSync(join(ROOT, path), "utf8");
 const sectionRows = (section: Section, rows: readonly Row[] = ROWS): readonly Row[] => rows.filter(row => row.section === section);
@@ -364,12 +379,27 @@ describe("wb-752.14 docs/09 freshness-and-retention census (report mode)", () =>
 
   it("AC3: the sentences that are only partly pinned are listed with their reasons so none is ever counted as fully passed", () => {
     const open = ROWS.filter(row => row.status !== "pinned");
-    expect(open.map(row => row.n)).toEqual([1, 4, 5, 6]);
+    expect(open.map(row => row.n)).toEqual([1, 5, 6]);
     expect(open.find(row => row.n === 1)?.reason).toContain("sourceCursor");
-    expect(open.find(row => row.n === 4)?.reason).toContain("wb-752.13");
-    expect(open.find(row => row.n === 4)?.reason).toContain("furnace_observe");
+    // wb-752.13 (cut #2, U2): sentence 4's furnace_observe half is pinned by that bead's registered-tool case, so the row left
+    // the open set; it is held pinned by exactly its three pins, the furnace_observe one last.
+    const four = ROWS.find(row => row.n === 4);
+    expect([four?.status, four?.reason, four?.pins.map(pin => pin.file)]).toEqual(["pinned", undefined, ["test/workbench-observe-query.test.ts", "test/workbench-pi-observe.test.ts", "test/workbench-furnace-observe-reply.test.ts"]]);
+    expect(four?.pins.at(-1)?.title).toMatch(/^C2R: the registered furnace_observe .*last-known-running \+ stale/);
     expect(open.find(row => row.n === 5)?.reason).toContain("disk cache");
     expect(open.find(row => row.n === 6)?.reason).toContain("encrypt");
+  });
+
+  it("AC3b: the default-include suites that quote sentence 4 verbatim are exactly row 4's pin files (wb-752.13 cut #2: an anchor read from the test tree, outside this file's literals)", () => {
+    const four = ROWS.find(row => row.n === 4);
+    expect(four?.quote).toBe("Pi tool summaries must communicate that nuance.");
+    if (four === undefined) return;
+    const quoting = readdirSync(join(ROOT, "test"), { encoding: "utf8", recursive: true })
+      .filter(name => name.endsWith(".test.ts"))
+      .map(name => `test/${name}`)
+      .filter(file => readRepo(file).includes(four.quote))
+      .sort();
+    expect(quoting, "every suite quoting sentence 4 is one of its pin files, and every pin file quotes it").toEqual([...new Set(four.pins.map(pin => pin.file))].sort());
   });
 
   it.each(JUDGED_ROWS)("AC2 sentence $n: every pinned case is collected once, passed and asserting in the default gate's own report", JUDGING, row => {
@@ -503,9 +533,10 @@ describe("wb-752.14 rule 16: hollowing the table or narrowing the judged set red
   });
 
   it("H7: promoting a partial row to pinned (dropping its reason) changes the shape literal, the open set and the digest", () => {
-    const mutated = withRow(4, row => ({ n: row.n, section: row.section, quote: row.quote, tier: row.tier, status: "pinned", pins: row.pins }));
+    // wb-752.13 (cut #2): row 4 is pinned now, so the promotion is applied to row 5, the next partial row.
+    const mutated = withRow(5, row => ({ n: row.n, section: row.section, quote: row.quote, tier: row.tier, status: "pinned", pins: row.pins }));
     expect(mutated.map(shapeOf)).not.toEqual(EXPECTED_SHAPE);
-    expect(mutated.filter(row => row.status !== "pinned").map(row => row.n)).not.toEqual([1, 4, 5, 6]);
+    expect(mutated.filter(row => row.status !== "pinned").map(row => row.n)).not.toEqual([1, 5, 6]);
     expect(mutated.map(digestOf)).not.toEqual(EXPECTED_ROW_DIGESTS);
   });
 });
