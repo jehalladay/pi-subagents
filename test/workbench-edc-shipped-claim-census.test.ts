@@ -34,8 +34,14 @@
  * controls, with no mention. RE-MEASURED at the wb-vnfe cut (seat ws-04, run g10-work-s340, 2026-11-12, on trunk 253b1b0a): one
  * mention, docs/workbench/receipts/wb-e9rw.md|text#15|edc, the receipt's Neighbors list item naming the census file
  * edc-demand-channel-census, whose word fold reads the acronym; judged (the tripwire's second step): a test file's name in a
- * timeout disclosure, not a claim that EDC integration ships. The roster's B2 witness records exactly that mention, so any other
- * mention on a claim page, or this one moved to another block, still reds B2.
+ * timeout disclosure, not a claim that EDC integration ships. The roster's B2 witness records exactly that mention and, in
+ * mentionTexts, the whole text that block reads (wb-vnfe cut #2, refusal #1's U3), so any other mention on a claim page, this
+ * one moved to another block, or a sentence added inside that block (the gate's P-EDC-SAME-BLOCK plant, "EDC integration ships
+ * in Pi today." as a continuation line of the Neighbors item, which keeps the block key) still reds B2. B2's sameBlock control
+ * reads SAME_BLOCK_PAGE, a list item whose continuation line names the acronym, through the same page judgment and records
+ * the text its one block reads, so a judgment that records only part of a block (its first line, say) reds B2 as well. An edit
+ * that leaves what the block reads unchanged (markup the page reading never shows, such as a link destination) is NOT CLAIMED by
+ * this census.
  *
  * THE VOCABULARY: both stems are derived from the title's charter path (docs/programs/<slug>-<date>.md, slug
  * evidence-directed-computation): its INITIALS, the acronym the title spells (edc, read as a whole word or its plural "edcs"), and
@@ -365,6 +371,8 @@ const PAGE_CONTROLS: Readonly<Record<string, string>> = {
   "named-reference": "Evidence&nbsp;directed integration ships.\n",
   "markdown-escape": "EDC\\_integration ships.\n",
 };
+/** B2's same-block control (wb-vnfe cut #2, U3): one list item whose continuation line names the acronym, the gate's plant shape. */
+const SAME_BLOCK_PAGE = "- Neighbors: one judged list item.\n  EDC integration ships in Pi today.\n";
 /** The page walk's own control: a synthetic tree, one entry per name of a directory (a trailing "/" a directory, a trailing "@"
  * a symlink): a root holding one top-level claim page as a file, the other as a directory, a markdown file that is no claim page and
  * docs/ (wb-kv0y cut #2), and below docs/ a page of every MARKDOWN_PAGE spelling, pages one and two directories down, a symlink
@@ -813,12 +821,13 @@ function blocksOf(page: string): Block[] {
   for (const token of new Lexer({ gfm: true }).lex(page)) visit(token);
   return blocks;
 }
-/** One judged text or claim block that names a stem: its position (a module's 0-based line, a page's block index), its kind and
- * its stems. */
+/** One judged text or claim block that names a stem: its position (a module's 0-based line, a page's block index), its kind, its
+ * stems and the text the judgment read (B2 records a page mention's text: wb-vnfe cut #2). */
 interface Found {
   readonly at: number;
   readonly kind: string;
   readonly stems: string;
+  readonly text: string;
 }
 /** One file judged (wb-kv0y): the file, the count of what its judgment read (a module's judged texts, a page's claim blocks), its
  * span (a module's lines, a page's claim blocks: the positions a plant's extent is counted in) and what it found, all from one
@@ -843,7 +852,7 @@ function judgePage(page: string, location: string): JudgedPage {
     words: blocks.reduce((total, block) => total + wordCount(block.text), 0),
     found: blocks.flatMap((block, index) => {
       const stems = stemsIn(block.text);
-      return stems.length > 0 ? [{ at: index, kind: block.kind, stems: stems.join("+") }] : [];
+      return stems.length > 0 ? [{ at: index, kind: block.kind, stems: stems.join("+"), text: block.text }] : [];
     }),
   };
 }
@@ -1068,7 +1077,7 @@ function judgeModule(text: string, module: string): Judged {
     span: lines,
     found: texts.flatMap(entry => {
       const stems = stemsIn(entry.text);
-      return stems.length > 0 ? [{ at: entry.at, kind: entry.kind, stems: stems.join("+") }] : [];
+      return stems.length > 0 ? [{ at: entry.at, kind: entry.kind, stems: stems.join("+"), text: entry.text }] : [];
     }),
   };
 }
@@ -1320,6 +1329,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       untracked: read.filter(page => !tracked.includes(page)),
       unread: tracked.filter(page => !read.includes(page)),
       mentions: judged.flatMap(entry => pageMentionsOf(entry.file, entry.own)),
+      mentionTexts: Object.fromEntries(judged.flatMap(entry => entry.own.map((found): [string, string] => [`${entry.file}|${found.kind}#${found.at}|${found.stems}`, found.text]))),
+      sameBlock: judgePage(SAME_BLOCK_PAGE, "same-block").found.map(found => `${found.kind}#${found.at}|${found.stems}|${found.text}`),
       planted: plantedVerdict({
         files: pages,
         planted,
@@ -1423,6 +1434,7 @@ describe("wb-pyel.4 EDC shipped-claim census (SDK-EVIDENCE-DIRECTED-COMPUTATION-
         requiredDescriptors: REQUIRED_DESCRIPTORS,
         surfaces: SURFACES,
         pageControls: PAGE_CONTROLS,
+        sameBlockPage: SAME_BLOCK_PAGE,
         walkControl: WALK_CONTROL,
         planted: PLANTED_DESCRIPTOR,
         manifestControls: MANIFEST_CONTROLS,

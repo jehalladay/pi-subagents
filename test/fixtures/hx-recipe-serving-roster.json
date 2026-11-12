@@ -1524,14 +1524,36 @@
       "quotedRefusals": [
        {
         "at": "docs/workbench/receipts/wb-lri.md:18",
+        "text": "Leg provider-pinned (the same request pinned through GitView to the base revision, the SDK's only revision binding): refused with exit 2 (usage_refused), HX-CLI-USAGE-ERROR, reason view-binding-pending: hx find under --view git:04eeeaaf6cfb1db030ac3b1362e589c050d81f2a, requirements HX-VIEW-003, HX-VIEW-008 and HX-VIEW-013, zero frames: the demand is not answered from the live tree.",
         "quotes": true,
         "without": "none"
        },
        {
         "at": "docs/workbench/receipts/wb-lri.md:130",
+        "text": " legs.provider-pinned.diagnostics.0.reason \"view-binding-pending: hx find under --view git:04eeeaaf6cfb1db030ac3b1362e589c050d81f2a\" ",
         "quotes": true,
         "without": "none"
        }
+      ],
+      "quotePlants": [
+       "docs/workbench/receipts/wb-lri.md:18 recipe step before: served",
+       "docs/workbench/receipts/wb-lri.md:18 recipe step after: served",
+       "docs/workbench/receipts/wb-lri.md:18 hx command before: served",
+       "docs/workbench/receipts/wb-lri.md:18 hx command after: served",
+       "docs/workbench/receipts/wb-lri.md:18 served mention before: negated",
+       "docs/workbench/receipts/wb-lri.md:18 served mention after: negated",
+       "docs/workbench/receipts/wb-lri.md:18 served word before: none",
+       "docs/workbench/receipts/wb-lri.md:18 served word after: none",
+       "docs/workbench/receipts/wb-lri.md:18 quote dropped line: quote lost",
+       "docs/workbench/receipts/wb-lri.md:130 recipe step before: served",
+       "docs/workbench/receipts/wb-lri.md:130 recipe step after: served",
+       "docs/workbench/receipts/wb-lri.md:130 hx command before: served",
+       "docs/workbench/receipts/wb-lri.md:130 hx command after: served",
+       "docs/workbench/receipts/wb-lri.md:130 served mention before: served",
+       "docs/workbench/receipts/wb-lri.md:130 served mention after: served",
+       "docs/workbench/receipts/wb-lri.md:130 served word before: none",
+       "docs/workbench/receipts/wb-lri.md:130 served word after: none",
+       "docs/workbench/receipts/wb-lri.md:130 quote dropped line: quote lost"
       ]
      }
     },
