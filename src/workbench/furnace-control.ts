@@ -106,12 +106,19 @@ function isRefusalCode(value: unknown): value is FurnaceControlRefusalCode {
 /** A typed refusal raised before the native verb is issued; a refusal never follows a native call. */
 export class FurnaceControlRefusal extends CapabilityError {
   /**
-   * The refusal as the model-facing error code (wb-qg19, EAT-R347): workflow_control reads a CapabilityError's own `code`
-   * (control-tool.ts), so this typed refusal reaches the model as itself instead of the generic executor-refused. That
-   * reading covers an adapter refusal only when the adapter sets the code: ClaudeControlRefusal and ForgeControlRefusal set
-   * none, so the claude-agent-sdk and forge legs' typed refusals still reach the model as executor-refused (outside EAT-R347).
-   * Each member of the closed vocabulary is its own code; each value outside it that test/workbench-pi-furnace-control.test.ts
-   * C2 lists leaves the code undefined, and no other value is claimed here.
+   * The refusal as the model-facing error code (wb-qg19, EAT-R347). workflow_control's executor catch (control-tool.ts) can
+   * reply with a thrown CapabilityError's own `code` instead of the generic executor-refused; that reading and this class's
+   * own code are claimed exactly as test/workbench-pi-furnace-control.test.ts observes them, and for no other refusal,
+   * message, policy, target or call. C6 constructs, with one message, each member of the closed vocabulary and each value
+   * outside it that C2 lists, at each CapabilityErrorCategory, with no policy and with each ControlDenyPolicy: each member is
+   * its own code and each listed outside value leaves the code undefined. C7 throws each of C6's refusals from its leg
+   * through the registered constructor: the reply carries ok false, the refusal's category and, as its error code, the
+   * member itself or executor-refused. C8 and C9 hand this adapter, from a leg through the registered constructor, the core's
+   * denial under each ControlDenyPolicy, a hand-built denial, a frozen copy of a permit, a frozen copy of an issued permit
+   * and invalid dependencies: the refusal raised and the reply both carry the code and category the row names. C1, C2, C5
+   * and the booted B4 observe the refusals named there. C4 observes the claude-agent-sdk and forge legs' typed refusals it
+   * raises (ClaudeControlRefusal foreign-session, ForgeControlRefusal unsupported-verb): neither carries an own `code`, and
+   * each reaches the reply as executor-refused (outside EAT-R347).
    */
   readonly code: FurnaceControlRefusalCode | undefined;
   constructor(category: CapabilityErrorCategory, readonly refusal: FurnaceControlRefusalCode, message: string, readonly policy?: string) {

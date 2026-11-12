@@ -86,9 +86,11 @@
  *   native call beyond the first issue of the consumed permit. Falsifier: the trunk class (executor-refused for all five).
  * - C2 (EAT-R347 c2; wb-qg19 refusal #3 U3): an invalid target whose id carries caller text, a credential-shaped fake and a
  *   stack-shaped frame reaches the reply as exactly invalid-target, the code holds none of that text and the message is the
- *   adapter's fixed text; every member of the exported closed vocabulary FURNACE_CONTROL_REFUSAL_CODES is its refusal's own
- *   code and the list this file expects is that vocabulary. Each value C2 lists outside it carries no own code, and a refusal
- *   with it reaches the reply as executor-refused: the OUTSIDE values below (caller text, near-miss spellings of a member in
+ *   adapter's fixed text; every member of the exported closed vocabulary FURNACE_CONTROL_REFUSAL_CODES, constructed at
+ *   category validation with message "m" and no policy, is its refusal's own code and the list this file expects is that
+ *   vocabulary. Each value C2 lists outside it, constructed the same way, carries no own code, and a refusal with it reaches
+ *   the reply as executor-refused (C6 and C7 hold both at every category and deny policy): the OUTSIDE values below (caller
+ *   text, near-miss spellings of a member in
  *   letter case, a leading or trailing space and an underscore, the empty string, the core's codes executor-refused,
  *   cross-scope and no-confirmed-ownership, and an object whose string form is a member) and every own key of
  *   Object.prototype as the runtime lists it (toString, constructor, hasOwnProperty, __proto__ and valueOf among them).
@@ -98,19 +100,51 @@
  * - C3 (EAT-R348, the bound): an adapter summary whose echo and uncertainty strings are hostile and oversized keeps the whole
  *   reply within 8192 bytes, each echo string within 128 and each uncertainty label within 64 code units, with the fake
  *   credential redacted and no unsafe unit left. Falsifier: an unbounded or unsanitized fold of the adapter readings.
- * - C4 (EAT-R347's boundary; wb-qg19 refusal #1 U3): the own-code reading covers an adapter refusal only when the adapter
- *   sets the code. The claude-agent-sdk leg as src/index.ts writes it, over a seam bound to another session, and the
- *   production forge leg (createRetainedForgeControlExecutor) over a retained operation, answer their typed refusals
- *   (ClaudeControlRefusal foreign-session, ForgeControlRefusal unsupported-verb) with no own code, so the reply's code is
- *   executor-refused for both: those two adapters do not set the own code this file's Furnace refusal sets. Falsifier: an
- *   own code on either refusal class (that leg's code then reaches the reply, and this row and the furnace-control.ts
+ * - C4 (EAT-R347's boundary; wb-qg19 refusal #1 U3): the claude-agent-sdk leg as src/index.ts writes it, over a seam bound
+ *   to another session, and the production forge leg (createRetainedForgeControlExecutor) over a retained operation, raise
+ *   their typed refusals (ClaudeControlRefusal foreign-session, ForgeControlRefusal unsupported-verb) with no own `code`
+ *   property - the row records each thrown refusal's class and its own code descriptor, none for both - and the reply's
+ *   code is executor-refused for both: those two refusals do not carry the own code this file's Furnace refusal carries.
+ *   Other refusals of those two adapters are NOT CLAIMED by this file. Falsifier: an own code on either refusal class, of
+ *   any value (the descriptor then reads it, a string one reaches the reply too, and this row and the furnace-control.ts
  *   comment move together).
- * - C5 (EAT-R347 c1, every member; wb-qg19 refusal #4 U2, cured by code): each member of the closed vocabulary (this file's
- *   CODES, which C2 holds equal to FURNACE_CONTROL_REFUSAL_CODES), thrown as a FurnaceControlRefusal of category validation by
- *   a leg through the registered constructor, reaches the reply with ok false, that member as its error code and category
- *   validation - so denied-decision, unvetted-decision and invalid-deps, which C1 and the booted rows do not reach, reach the
- *   reply in a row as well. Falsifier: control-tool.ts's executor catch answering any one own code as executor-refused (the
- *   gate's member G77-B drops invalid-deps; the seat dropped each of the eight in turn).
+ * - C5 (EAT-R347 c1, every member at category validation; refusal #4 U2's named member G77-B, cured by code): each member of
+ *   the closed vocabulary (this file's CODES, which C2 holds equal to FURNACE_CONTROL_REFUSAL_CODES), thrown as a
+ *   FurnaceControlRefusal of category validation with message "m" and no policy by a leg through the registered constructor,
+ *   reaches the reply with ok false, that member as its error code and category validation. Its category is validation only:
+ *   the other categories, the deny policies and the adapter's own refusals are C6 to C9's. Falsifier: control-tool.ts's
+ *   executor catch answering any one own code as executor-refused (the gate's member G77-B drops invalid-deps; the seat
+ *   dropped each of the eight in turn).
+ * - C6 (EAT-R347 c2, the class at every category; wb-qg19 refusal #5 U1): the grid of constructions - each member of CODES
+ *   and each value C2 lists outside the vocabulary (OUTSIDE, then every own key of Object.prototype as the runtime lists it),
+ *   each at each of the five CapabilityErrorCategory values (CATEGORY_SET, a Record over src's type) with no policy and with
+ *   each of the eight ControlDenyPolicy values (DENY_POLICY_SET, the same over src's type), all with message "m": each member
+ *   is the construction's own code and each listed outside value leaves it undefined, the grid's shape (5 categories, 8
+ *   policies, 45 constructions of each value) asserted first. Falsifiers: the gate's member G133-B3 (FurnaceControlRefusal
+ *   leaves the code undefined for denied-decision at category authorization) and the seat's members M6-CAT-UE, M6-CAT-UN,
+ *   M6-POLICY, M6-POLICY-NCO and M6-OUTSIDE-AUTHZ (the delivery note's battery).
+ * - C7 (EAT-R347 c1, the reply at every category; wb-qg19 refusal #5 U1): each of C6's constructions, thrown by a leg through
+ *   one registered constructor over RUN_TARGET (a call id per construction), reaches the reply with ok false, the
+ *   construction's category as its error category and, as its error code, the member itself or executor-refused for a listed
+ *   outside value. Falsifiers: the gate's members G133-B1 (the executor catch answers denied-decision at category
+ *   authorization as executor-refused) and G133-B2 (it answers any own code of a refusal carrying a string policy as
+ *   executor-refused), and the seat's members M7-CAT-UE, M7-CAT-UN, M7-POLICY-OC and M7-OUTSIDE-AUTHZ.
+ * - C8 (EAT-R347 c1, the production denial at both levels; wb-qg19 refusal #5 U1, the shapes of the gate witness W133): for
+ *   each ControlDenyPolicy, a leg through the registered constructor has decideControl deny the permitted request it is
+ *   handed with that policy (the request change DENIALS names; the premise asserted: the core's denial carries that policy
+ *   and DENIALS' category - authorization for unknown-permission-data, observer-only, missing-exact-grant, cross-scope and
+ *   no-confirmed-ownership, validation for malformed-request, unknown-action and operator-confirmation), hands that denial
+ *   to executeFurnaceControl and records the refusal it raises: its own code is denied-decision and its category the
+ *   core's; the reply carries ok false, denied-decision and that category, and no native call is sent. Falsifiers: G133-B1
+ *   and G133-B3 (each reds the five authorization rows), G133-B2 (every row) and the seat's members M8-DENY-CAT and
+ *   M8-DENY-CODE.
+ * - C9 (EAT-R347 c1, the adapter's other unminted and dependency refusals): a leg through the registered constructor hands
+ *   executeFurnaceControl, row by row, a frozen hand-built denial whose category and policy are caller text, a frozen copy
+ *   of the permit it was handed, a frozen copy of that permit after issuing the permit itself once, and the permit with a
+ *   zero timeout: the adapter raises denied-decision at category authorization, then unvetted-decision, permit-consumed and
+ *   invalid-deps at category validation, each as its refusal's own code, and each reply carries ok false, that code and that
+ *   category; only the issued permit sends a native call (one). Falsifiers: the seat's members M9-LOOKALIKE-CAT,
+ *   M9-CONSUMED and M9-DEPS-CAT.
  *
  * NOT CLAIMED (scope sentences; no residual semantics, no follow-up bead): the V6 legs of EAT-R346 and EAT-R348 (a real
  * Furnace Run and Attempt, native runs.get, the native store byte oracle, control-live uncertain receipt rows) are NOT CLAIMED
@@ -118,8 +152,13 @@
  * permit-consumed are NOT CLAIMED by this file's booted rows: the core admits only `stop` for furnace, an Attempt node has no
  * outgoing ownership edge, furnace_observe admits only frn-run-* Run ids observed in the session workspace and every call
  * mints a fresh permit, so the booted tool reaches none of them (C1 pins them through the constructor). Through the booted
- * tool, denied-decision, unvetted-decision and invalid-deps are NOT CLAIMED by this file's booted rows either (C5 reads each
- * through the registered constructor). Whether a refusal
+ * tool, denied-decision, unvetted-decision and invalid-deps are NOT CLAIMED by this file's booted rows either (C5 to C9 read
+ * each through the registered constructor). Beyond the adapter's own refusals that C1, C2, C8, C9 and B4 read, a
+ * FurnaceControlRefusal constructed with another message than C6's or with a policy outside the ControlDenyPolicy
+ * vocabulary, and one thrown over another target or call than C5's and C7's, are NOT CLAIMED by this file; the status,
+ * invoked and message members of C5 to C9's replies and the policy and message of the refusals C8 and C9 record are NOT
+ * CLAIMED by this file, and an adapter refusal that C1, C2, C8, C9 and B4 do not raise is NOT CLAIMED by this file. Whether
+ * a refusal
  * reports invoked false (EAT-R335) and the furnace_observe reply dialect (EAT-R349, wb-752.13) are NOT CLAIMED by this file:
  * B8 to B12 read only that the reply is the sanitized reading (the reading-reply pins (1) to (4) above and, for B10, no
  * zero-width unit; for B11, its page request id without the C0 unit, as the sanitizer answers it), so what the reading itself
@@ -134,24 +173,28 @@
  * test/workbench-furnace-world-model-preservation-census.test.ts S1 pins the two loops' statements whole).
  * receipt-refused and the live tier's mirror executor (test/workbench-furnace-control-live.test.ts) are NOT CLAIMED by this file.
  *
- * RESIDUALS (rule-14 enumerate-the-resolvable form, cut #5; shape frozen at refusal #2, second-stage cap M:78735): none known
- * within the claims above. Refusal #4's two members are cured by code - G77-A by the reading-reply pins, G77-B by C5 - and the
- * sanitized-reading words stand frozen at the guard text (M:78415); every mode outside the pinned rows is one of the NOT
- * CLAIMED scope sentences above.
+ * RESIDUALS (rule-14 enumerate-the-resolvable form, cut #6; shape frozen at refusal #2, second-stage cap M:78735, guard
+ * R-B805 on the furnace-control.ts own-code words): none known within the claims above. Refusal #4's two members are cured by
+ * code - G77-A by the reading-reply pins, G77-B by C5 - and refusal #5's U1 by code: the gate's G133-B3 reds C6, C7 and
+ * C8, its G133-B1 and its unrun G133-B2 red C7 and C8, and the furnace-control.ts own-code words are narrowed to exactly
+ * what C1, C2, C4 to C9 and B4 observe. The sanitized-reading words stand frozen at the guard text (M:78415); every mode outside the pinned rows is one
+ * of the NOT CLAIMED scope sentences above.
  */
 import { chmodSync, existsSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import { delimiter, join } from "node:path";
 import { type CallOptions, Furnace } from "@furnace/sdk";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import subagentsExtension from "../src/index.js";
+import type { CapabilityErrorCategory } from "../src/workbench/capability-registry.js";
 import { executeClaudeControl } from "../src/workbench/claude-control.js";
-import type { ControlDecision, NativeControlRequest } from "../src/workbench/control.js";
+import { type ControlDecision, type ControlDenyPolicy, decideControl, type NativeControlRequest } from "../src/workbench/control.js";
 import { type ControlExecutionSummary, type ControlExecutor, createWorkflowControlTool } from "../src/workbench/control-tool.js";
 import { createRetainedForgeControlExecutor, releaseForgeOperation, retainForgeOperation } from "../src/workbench/forge-control-retention.js";
 import {
   executeFurnaceControl,
   FURNACE_CONTROL_REFUSAL_CODES,
   type FurnaceControlClient,
+  type FurnaceControlDeps,
   FurnaceControlRefusal,
   type FurnaceControlRefusalCode,
 } from "../src/workbench/furnace-control.js";
@@ -188,6 +231,15 @@ const OUTSIDE: readonly unknown[] = [
   "caller text at Object.<anonymous>", "INVALID-TARGET", " invalid-target", "invalid-target ", "invalid_target", "", "executor-refused", "cross-scope",
   "no-confirmed-ownership", { toString: () => "invalid-target" },
 ];
+/** Every CapabilityErrorCategory (src/workbench/capability-registry.ts): the Record type refuses a missing and an extra key alike. */
+const CATEGORY_SET: Readonly<Record<CapabilityErrorCategory, true>> = { validation: true, authorization: true, unavailable: true, transport: true, "uncertain-effect": true };
+const CATEGORIES = Object.keys(CATEGORY_SET) as CapabilityErrorCategory[];
+/** Every ControlDenyPolicy (src/workbench/control.ts), complete the same way, in the core's rule order. */
+const DENY_POLICY_SET: Readonly<Record<ControlDenyPolicy, true>> = {
+  "unknown-permission-data": true, "observer-only": true, "malformed-request": true, "unknown-action": true, "missing-exact-grant": true, "cross-scope": true,
+  "no-confirmed-ownership": true, "operator-confirmation": true,
+};
+const DENY_POLICIES = Object.keys(DENY_POLICY_SET) as ControlDenyPolicy[];
 
 interface Reply {
   ok: boolean;
@@ -778,6 +830,77 @@ async function viaLeg(target: NativeRef, action: string, executor: ControlExecut
   return JSON.parse(textOf(result)) as Reply;
 }
 
+/** One construction of C6's grid: a value handed to FurnaceControlRefusal as its refusal, at one category, with no policy or one core deny policy. */
+interface Construction {
+  readonly value: unknown;
+  readonly label: string;
+  /** A member of CODES (its own code), rather than a value C2 lists outside the vocabulary (no own code). */
+  readonly owns: boolean;
+  readonly category: CapabilityErrorCategory;
+  readonly policy: ControlDenyPolicy | undefined;
+}
+/**
+ * C6 and C7's grid: each member of CODES and each value C2 lists outside the vocabulary (OUTSIDE, then every own key of
+ * Object.prototype as the runtime lists it), at each category, with no policy and with each core deny policy, all with the
+ * one message "m".
+ */
+function constructions(): readonly Construction[] {
+  const outside = [...OUTSIDE, ...Object.getOwnPropertyNames(Object.prototype)];
+  const values = [
+    ...CODES.map(code => ({ value: code as unknown, label: code, owns: true })),
+    ...outside.map(value => ({ value, label: typeof value === "string" ? JSON.stringify(value) : "an object whose string form is invalid-target", owns: false })),
+  ];
+  return values.flatMap(({ value, label, owns }) => CATEGORIES.flatMap(category => [undefined, ...DENY_POLICIES].map(policy => ({ value, label, owns, category, policy }))));
+}
+const constructedRefusal = ({ value, category, policy }: Construction): FurnaceControlRefusal =>
+  new FurnaceControlRefusal(category, value as FurnaceControlRefusalCode, "m", policy);
+const shapeOf = ({ label, category, policy }: Construction): string => `${label} at ${category}, policy ${policy ?? "none"}`;
+/** The production adapter's dependencies as the furnace leg passes them (src/index.ts), over `client`. */
+function adapterDeps(client: FurnaceControlClient, request: NativeControlRequest, signal?: AbortSignal): FurnaceControlDeps {
+  return { client, workspaceRoot: request.scope.workspace, now: () => new Date().toISOString(), timeoutMs: 10_000, ...(signal !== undefined ? { signal } : {}) };
+}
+type Prepared = { readonly handed: unknown; readonly deps: FurnaceControlDeps };
+/**
+ * A leg that hands the production adapter what `prepare` makes of the permitted decision it is handed, records the refusal
+ * the adapter raises (its own code and category) in `seen`, and throws that refusal on to the registered constructor.
+ */
+function adapterLeg(client: FurnaceControlClient, seen: unknown[], prepare: (permit: ControlDecision, request: NativeControlRequest, deps: FurnaceControlDeps) => Promise<Prepared>): ControlExecutor {
+  return async (decision: ControlDecision, request: NativeControlRequest, signal?: AbortSignal): Promise<ControlExecutionSummary> => {
+    const { handed, deps } = await prepare(decision, request, adapterDeps(client, request, signal));
+    try {
+      await executeFurnaceControl(handed as ControlDecision, deps);
+    } catch (error) {
+      seen.push(error instanceof FurnaceControlRefusal ? [Object.getOwnPropertyDescriptor(error, "code")?.value, error.category] : `NOT A REFUSAL: ${String(error)}`);
+      throw error;
+    }
+    throw new Error("wb-qg19: the adapter raised no refusal");
+  };
+}
+/** RUN_TARGET observed in SCOPE with no ownership edge from it: the core denies its stop no-confirmed-ownership. */
+function observedWithoutEdge(): ObservationProjection {
+  const projection = new ObservationProjection();
+  projection.refresh({ source: RUN_TARGET, scope: SCOPE, capturedAt: AT, observedAt: AT, kind: "furnace.run.snapshot", trace: { invocationId: OWNER },
+    node: { title: "furnace run", type: "workflow", statusText: "active", statusTone: "active" } });
+  return projection;
+}
+const coreNow = (): string => new Date().toISOString();
+/**
+ * For each core deny policy, the change to the permitted request a leg is handed that makes decideControl
+ * (src/workbench/control.ts) deny it with that policy, and the category the core denies it with.
+ */
+const DENIALS: Readonly<Record<ControlDenyPolicy, { readonly category: CapabilityErrorCategory; readonly deny: (request: NativeControlRequest) => ControlDecision }>> = {
+  "unknown-permission-data": { category: "authorization", deny: request => decideControl({ ...request, grants: ["NOT A GRANT"] }, { projection: seeded([RUN_TARGET]), now: coreNow }) },
+  "observer-only": { category: "authorization", deny: request => decideControl({ ...request, grants: ["furnace:inspect"] }, { projection: seeded([RUN_TARGET]), now: coreNow }) },
+  "malformed-request": { category: "validation", deny: request => decideControl({ ...request, requestedAt: "not an instant" }, { projection: seeded([RUN_TARGET]), now: coreNow }) },
+  "unknown-action": { category: "validation", deny: request => decideControl({ ...request, action: "qg19-explode" }, { projection: seeded([RUN_TARGET]), now: coreNow }) },
+  "missing-exact-grant": { category: "authorization", deny: request => decideControl({ ...request, grants: ["control:furnace.pause"] }, { projection: seeded([RUN_TARGET]), now: coreNow }) },
+  "cross-scope": { category: "authorization", deny: request => decideControl(request, { projection: new ObservationProjection(), now: coreNow }) },
+  "no-confirmed-ownership": { category: "authorization", deny: request => decideControl(request, { projection: observedWithoutEdge(), now: coreNow }) },
+  "operator-confirmation": { category: "validation", deny: ({ params: _params, ...request }) => decideControl(request, { projection: seeded([RUN_TARGET]), now: coreNow }) },
+};
+/** C7's 1350-odd calls through one constructed tool stay inside this bound at load (each call alone takes about a millisecond). */
+const GRID_MS = 120_000;
+
 describe("wb-qg19 the registered control tool's constructor over the production Furnace adapter (EAT-R347, EAT-R348 bound)", () => {
   it("C1 each typed refusal the booted tool cannot reach keeps its own exact code and category, and issues nothing", async () => {
     const work: NativeRef = { provider: "furnace", type: "work", id: "frn-work-qg19", scope: WS };
@@ -855,6 +978,16 @@ describe("wb-qg19 the registered control tool's constructor over the production 
   });
 
   it("C4 the claude-agent-sdk and forge legs' typed refusals carry no own code, so they reach the reply as executor-refused", async () => {
+    const thrown: unknown[] = [];
+    /** The leg unchanged, recording the class and the own code descriptor of what it throws. */
+    const recorded = (executor: ControlExecutor): ControlExecutor => async (decision, request, signal) => {
+      try {
+        return await executor(decision, request, signal);
+      } catch (error) {
+        thrown.push([typeof error === "object" && error !== null ? error.constructor.name : typeof error, Object.getOwnPropertyDescriptor(error, "code")]);
+        throw error;
+      }
+    };
     const session: NativeRef = { provider: "claude-agent-sdk", type: "session", id: "qg19-session", scope: WS };
     const claudeLeg: ControlExecutor = async (decision: ControlDecision, _request: NativeControlRequest, signal?: AbortSignal): Promise<ControlExecutionSummary> => {
       const execution = await executeClaudeControl(decision, {
@@ -863,16 +996,19 @@ describe("wb-qg19 the registered control tool's constructor over the production 
       });
       return { receipt: execution.receipt, status: execution.status };
     };
-    const claude = await viaLeg(session, "interrupt", claudeLeg);
+    const claude = await viaLeg(session, "interrupt", recorded(claudeLeg));
     const gate: NativeRef = { provider: "forge", type: "gate", id: "qg19-forge-op", scope: WS };
     const cancel = async (): Promise<never> => {
       throw new Error("wb-qg19: no Forge cancel is expected");
     };
     const release = retainForgeOperation(gate.id, { operations: { cancel }, connection: { capabilities: null }, workspaceRoot: WS });
     try {
-      const forge = await viaLeg(gate, "cancel", createRetainedForgeControlExecutor(() => new Date().toISOString()));
+      const forge = await viaLeg(gate, "cancel", recorded(createRetainedForgeControlExecutor(() => new Date().toISOString())));
       expect([claude.ok, claude.error?.code, forge.ok, forge.error?.code], "each typed refusal reaches the reply as the generic code").toStrictEqual([
         false, "executor-refused", false, "executor-refused",
+      ]);
+      expect(thrown, "each leg threw its typed refusal with no own code property").toStrictEqual([
+        ["ClaudeControlRefusal", undefined], ["ForgeControlRefusal", undefined],
       ]);
     } finally {
       release();
@@ -886,5 +1022,77 @@ describe("wb-qg19 the registered control tool's constructor over the production 
       throw refusal;
     })(RUN_TARGET);
     expect([reply.ok, reply.error?.code, reply.error?.category], `${code} reaches the reply as itself`).toStrictEqual([false, code, "validation"]);
+  });
+
+  it("C6 each member, constructed at each category with no policy and with each core deny policy, is its own code, and each value C2 lists outside it owns none", () => {
+    const grid = constructions();
+    const values = CODES.length + OUTSIDE.length + Object.getOwnPropertyNames(Object.prototype).length;
+    expect([CATEGORIES.length, DENY_POLICIES.length, grid.length], "5 categories and 8 core deny policies: 45 constructions of each value").toStrictEqual([5, 8, values * 45]);
+    expect(grid.map(shape => `${shapeOf(shape)}: ${String(Object.getOwnPropertyDescriptor(constructedRefusal(shape), "code")?.value)}`), "own codes").toStrictEqual(
+      grid.map(shape => `${shapeOf(shape)}: ${shape.owns ? String(shape.value) : "undefined"}`),
+    );
+  });
+
+  it("C7 each of C6's refusals, thrown by a leg through the registered constructor, reaches the reply with ok false, its category and its own code or executor-refused", async () => {
+    const grid = constructions();
+    const staged: FurnaceControlRefusal[] = [];
+    const run = constructed([RUN_TARGET], async () => {
+      const refusal = staged.pop();
+      if (refusal === undefined) throw new Error("wb-qg19: no refusal is staged");
+      throw refusal;
+    });
+    const replied: string[] = [];
+    for (const [index, shape] of grid.entries()) {
+      staged.push(constructedRefusal(shape));
+      const { reply } = await run(RUN_TARGET, { id: `qg19-c7-${index}` });
+      replied.push(`${shapeOf(shape)}: ${reply.ok} ${reply.error?.code} ${reply.error?.category}`);
+    }
+    expect(replied, "each member as itself, each listed outside value as executor-refused, each at its own category").toStrictEqual(
+      grid.map(shape => `${shapeOf(shape)}: false ${shape.owns ? String(shape.value) : "executor-refused"} ${shape.category}`),
+    );
+  }, GRID_MS);
+
+  it.each(DENY_POLICIES)("C8 the core's %s denial, handed to the production adapter by a leg through the registered constructor, is denied-decision at the core's category on the refusal and in the reply", async policy => {
+    const seam = counted();
+    const seen: unknown[] = [];
+    const { category, deny } = DENIALS[policy];
+    const denying = adapterLeg(seam.client, seen, async (_permit, request, deps) => {
+      const denial = deny(request);
+      seen.push(denial.decision === "denied" ? [denial.decision, denial.category, denial.policy] : [denial.decision]);
+      return { handed: denial, deps };
+    });
+    const { reply } = await constructed([RUN_TARGET], denying)(RUN_TARGET);
+    expect(seen, "the premise (the core's denial: its policy and category), then the adapter's refusal (its own code and category)").toStrictEqual([
+      ["denied", category, policy], ["denied-decision", category],
+    ]);
+    expect([reply.ok, reply.error?.code, reply.error?.category], "the reply carries that refusal's own code and category").toStrictEqual([false, "denied-decision", category]);
+    expect(seam.calls, "no native call").toStrictEqual([]);
+  });
+
+  it("C9 a hand-built denial, a frozen copy of a permit, a frozen copy of an issued permit and invalid dependencies, handed to the production adapter by a leg, reach the reply as the adapter's refusal", async () => {
+    const rows: ReadonlyArray<readonly [string, (permit: ControlDecision, request: NativeControlRequest, deps: FurnaceControlDeps) => Promise<Prepared>]> = [
+      ["a hand-built denial", async (_permit, _request, deps) => ({
+        handed: Object.freeze({ decision: "denied", category: "qg19 caller category", reason: "qg19 caller reason", policy: "qg19 caller policy" }), deps,
+      })],
+      ["a frozen copy of a permit", async (permit, _request, deps) => ({ handed: Object.freeze({ ...permit }), deps })],
+      ["a frozen copy of an issued permit", async (permit, _request, deps) => {
+        await executeFurnaceControl(permit, deps);
+        return { handed: Object.freeze({ ...permit }), deps };
+      }],
+      ["invalid dependencies", async (permit, _request, deps) => ({ handed: permit, deps: { ...deps, timeoutMs: 0 } })],
+    ];
+    const observed: unknown[] = [];
+    for (const [row, prepare] of rows) {
+      const seam = counted();
+      const seen: unknown[] = [];
+      const { reply } = await constructed([RUN_TARGET], adapterLeg(seam.client, seen, prepare))(RUN_TARGET);
+      observed.push([row, ...seen, reply.ok, reply.error?.code, reply.error?.category, seam.calls.length]);
+    }
+    expect(observed, "each row: the adapter's refusal (own code, category), the reply's ok, code and category, and the native calls sent").toStrictEqual([
+      ["a hand-built denial", ["denied-decision", "authorization"], false, "denied-decision", "authorization", 0],
+      ["a frozen copy of a permit", ["unvetted-decision", "validation"], false, "unvetted-decision", "validation", 0],
+      ["a frozen copy of an issued permit", ["permit-consumed", "validation"], false, "permit-consumed", "validation", 1],
+      ["invalid dependencies", ["invalid-deps", "validation"], false, "invalid-deps", "validation", 0],
+    ]);
   });
 });
