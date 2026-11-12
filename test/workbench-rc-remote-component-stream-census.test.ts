@@ -239,8 +239,10 @@ const ROOT_FLOORS: Readonly<Record<string, number>> = {
   vendor: 3,
 };
 /** Every computed load at base f8afbef (BOUND VALUES), each judged by hand: Pi's own dist modules (the headless census child, the
- * live operator receipt); the detached host's trusted local provider (a digest-pinned module path from the reviewed launch
- * manifest) and its dependency pinner (each relative source literal of that provider, checked just before it is resolved); a
+ * live operator receipt, and the live inspector receipt wb-6ze.15 adds - its frame sanitizer, its credential probe's Claude host
+ * and workflow runtime, each resolved below the runner's own checkout, and the sanitizer once more in its crash handler); the
+ * detached host's trusted local provider (a digest-pinned module path from the reviewed launch manifest) and its dependency
+ * pinner (each relative source literal of that provider, checked just before it is resolved); a
  * module beside an installed package (the isolated-provider e2e); a hollowed copy of the EDC static-reach readers helper the
  * wb-pyel.9 census writes to scratch (its KILLS case); a scratch module the git-stamp test writes. None is the
  * distribution. A new one is a red until it is judged and added here and to the roster. */
@@ -248,6 +250,10 @@ const COMPUTED_LOADS = [
   "qa/workbench/headless-census-child.mjs: import() entryUrl",
   'qa/workbench/headless-census-child.mjs: import() distUrl("workflow/runtime.js")',
   'qa/workbench/headless-census-child.mjs: import() distUrl("workbench/capability-registry.js")',
+  'qa/workbench/live-inspector-receipt.mjs: import() pathToFileURL(join(repoRoot, "dist", "workbench", "redaction.js")).href',
+  'qa/workbench/live-inspector-receipt.mjs: import() pathToFileURL(join(repoRoot, "dist", "workbench", "claude-host.js")).href',
+  'qa/workbench/live-inspector-receipt.mjs: import() pathToFileURL(join(repoRoot, "dist", "workflow", "runtime.js")).href',
+  'qa/workbench/live-inspector-receipt.mjs: import() new URL("../../dist/workbench/redaction.js", import.meta.url).href',
   'qa/workbench/live-operator-receipt.mjs: import() join(repoRoot, "dist", "workbench", "claude-host.js")',
   'qa/workbench/live-operator-receipt.mjs: import() join(repoRoot, "dist", "workflow", "runtime.js")',
   "src/workbench/hosts/local-detached.ts: createRequire().resolve() specifier.text",

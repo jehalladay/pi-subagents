@@ -24,8 +24,18 @@ export default defineConfig({
     // focused test silently shrank the whole run while the gate stayed green
     // (measured by the wb-752.10 gate seat; pinned by test/workbench-gate-allow-only.test.ts).
     allowOnly: false,
-    exclude: ["test/workbench-native-client.test.ts", "test/workbench-pi-node-client.test.ts", "test/workbench-ecosystem-native.test.ts", "test/workbench-native-ecosystem.test.ts", "test/workbench-native-rf-preview.test.ts", "test/workbench-external-furnace.test.ts", "test/workbench-furnace-real-active.test.ts", "test/workbench-pi-furnace-real-client.test.ts", "test/workbench-claude-pi-live.test.ts", "test/workbench-furnace-hosted-real.test.ts", "test/workbench-native-rf-tsx-preview.test.ts", "test/workbench-forge-control-live.test.ts", "test/workbench-detached-control-live.test.ts", "test/workbench-furnace-control-live.test.ts", "test/workbench-claude-control-live.test.ts"],
+    exclude: ["test/workbench-native-client.test.ts", "test/workbench-pi-node-client.test.ts", "test/workbench-ecosystem-native.test.ts", "test/workbench-native-ecosystem.test.ts", "test/workbench-native-rf-preview.test.ts", "test/workbench-external-furnace.test.ts", "test/workbench-furnace-real-active.test.ts", "test/workbench-pi-furnace-real-client.test.ts", "test/workbench-claude-pi-live.test.ts", "test/workbench-furnace-hosted-real.test.ts", "test/workbench-native-rf-tsx-preview.test.ts", "test/workbench-forge-control-live.test.ts", "test/workbench-detached-control-live.test.ts", "test/workbench-furnace-control-live.test.ts", "test/workbench-claude-control-live.test.ts", "test/workbench-forge-verify-live.test.ts"],
     server: { deps: { inline: [/@earendil-works\/pi-/] } },
+    // Worker cap (owner cut 2026-11-11, the 15h gate-drought bottleneck): vitest's
+    // default forks one worker per core minus one (63 here), so every concurrent
+    // full-tier run on this shared 64-core host multiplied into hundreds of test
+    // processes (measured: load1 397, 60 live vitest processes, every complete
+    // gate for 15 h killed on the wall clock with 0 AssertionErrors). 16 bounds
+    // one run to a quarter of the host, so the cap-4 gate slots sum to the core
+    // count instead of 16x oversubscription. Appended BELOW the line-pinned
+    // regions (:4-13 single-instance guarantee, setupFiles census line) so no
+    // pinned line number shifts.
+    maxWorkers: 16,
     // Local reporting only — deliberately no `thresholds`, and not wired into
     // CI. src/index.ts is mostly the /agents wizard, which is TUI flow with
     // almost no logic and is not worth a fake-TUI harness; any global floor

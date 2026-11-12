@@ -787,3 +787,27 @@ describe("E7 purity", () => {
     expect(module).not.toMatch(/registerTool|defineTool/);
   });
 });
+
+/**
+ * wb-69g.12: the owner-ruled M14/M15 killers of the wb-69g.5 gate (F4, U3 split to the groom bundle). M14 and M15 remove
+ * identityText from the admitted reply's and the refused reply's invocation reference. Probe Q3 of that gate is a
+ * host-minted reference the admission accepts as clean text (no control, escape or bidi unit), so the reply's own
+ * sanitizer is the only step between it and the display. The cases assert the rendered OUTPUT, never which helper ran.
+ */
+describe("wb-69g.12 M14/M15: a redactable invocation reference renders redacted in the admitted and the refused reply (probe Q3)", () => {
+  const Q3 = "Bearer abc123def456";
+  it("M14 admitted: the Q3 reference is admitted verbatim and the launched reply renders it as [REDACTED]", () => {
+    const decision = decideExecute(request(), host({ invocationId: Q3 }));
+    expect(admitted(decision).invocationId).toBe(Q3);
+    const built = reply(LAUNCHED, decision);
+    expect([built.status, built.invocationId]).toStrictEqual(["launched", "[REDACTED]"]);
+    expect(JSON.stringify(built)).not.toContain("abc123def456");
+  });
+  it("M15 refused: the Q3 reference rides the missing-grant refusal verbatim and the refused reply renders it as [REDACTED]", () => {
+    const decision = decideExecute(request(), host({ grants: [], invocationId: Q3 }));
+    expect(decision).toMatchObject({ decision: "refused", policy: "missing-execute-grant", invocationId: Q3 });
+    const built = reply(undefined, decision);
+    expect([built.status, built.invocationId]).toStrictEqual(["refused", "[REDACTED]"]);
+    expect(JSON.stringify(built)).not.toContain("abc123def456");
+  });
+});

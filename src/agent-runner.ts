@@ -27,7 +27,7 @@ import { createNestedSubagentTools, getMaxSubagentDepth, type NestedAgentManager
 import { buildAgentPrompt, type PromptExtras } from "./prompts.js";
 import { preloadSkills } from "./skill-loader.js";
 import { createStructuredCapture, createStructuredOutputTool, structuredRetryPrompt } from "./structured-output.js";
-import type { SubagentType, ThinkingLevel } from "./types.js";
+import type { AgentConfig, SubagentType, ThinkingLevel } from "./types.js";
 import type { LifetimeUsage } from "./usage.js";
 import type { CompiledSchema } from "./workflow/json-schema.js";
 
@@ -600,6 +600,17 @@ function forwardAbortSignal(session: AgentSession, signal?: AbortSignal): () => 
   return () => signal.removeEventListener("abort", onAbort);
 }
 
+/**
+ * Pi's skills index as its prompt builder renders it: the `<available_skills>` block
+ * of the Agent Skills integration format, each tag on a line of its own.
+ */
+const SKILLS_INDEX = /^<available_skills>$[\s\S]*?^<\/available_skills>$/m;
+
+/** Whether a rendered prompt already carries pi's skills index. */
+function carriesSkillsIndex(prompt: string): boolean {
+  return SKILLS_INDEX.test(prompt);
+}
+
 function resolveConfiguredSessionDir(sessionDir: string | undefined, cwd: string): string | undefined {
   if (!sessionDir) return undefined;
   if (sessionDir === "~" || sessionDir.startsWith("~/")) return resolve(homedir(), sessionDir.slice(2));
@@ -671,20 +682,27 @@ export async function runAgent(
   }
 
   // Build system prompt from agent config
-  let systemPrompt: string;
+  let promptConfig: AgentConfig;
   if (agentConfig) {
-    systemPrompt = buildAgentPrompt(agentConfig, effectiveCwd, env, parentSystemPrompt, extras);
+    promptConfig = agentConfig;
   } else {
     // Unknown type fallback: spread the canonical general-purpose config (defensive —
     // unreachable in practice since index.ts resolves unknown types before calling runAgent).
     const fallback = DEFAULT_AGENTS.get("general-purpose");
     if (!fallback) throw new Error(`No fallback config available for unknown type "${type}"`);
-    systemPrompt = buildAgentPrompt({ ...fallback, name: type }, effectiveCwd, env, parentSystemPrompt, extras);
+    promptConfig = { ...fallback, name: type };
   }
+  const systemPrompt = buildAgentPrompt(promptConfig, effectiveCwd, env, parentSystemPrompt, extras);
 
   // When skills is string[], we've already preloaded them into the prompt.
   // Still pass noSkills: true since we don't need the skill loader to load them again.
-  const noSkills = skills === false || Array.isArray(skills);
+  // An append-mode prompt embeds the parent's rendered prompt verbatim, and that prompt
+  // already carries pi's skills index whenever the parent loaded skills: loading them
+  // again would append a second copy of the same index to this child (EAT-R318). The
+  // inherited copy is kept as is, so the parent prompt stays a byte-identical prefix,
+  // and the loader skips skills, as the mention clone does for its inherited prompt.
+  const inheritsSkillsIndex = promptConfig.promptMode === "append" && carriesSkillsIndex(parentSystemPrompt);
+  const noSkills = skills === false || Array.isArray(skills) || inheritsSkillsIndex;
 
   const agentDir = getAgentDir();
 

@@ -98,9 +98,9 @@ Agent({
 Schedule formats:
 
 - **Cron** — 6-field (`second minute hour day-of-month month day-of-week`), e.g. `"0 0 9 * * 1"` for 9am every Monday, `"0 */15 * * * *"` for every 15 minutes.
-- **Interval** — `"5m"`, `"1h"`, `"30s"`, `"2d"`. Fires repeatedly at that interval.
-- **One-shot relative** — `"+10m"`, `"+2h"`, `"+1d"`. Fires once at that future time.
-- **One-shot absolute** — full ISO timestamp, e.g. `"2026-12-25T09:00:00.000Z"`.
+- **Interval** — `"5m"`, `"1h"`, `"30s"`, `"2d"`. Fires repeatedly at that interval, which must be 1000..2147483647 ms (1 second to about 24.8 days, the longest wait Node's timers hold): `"24d"` is accepted, `"25d"` and `"0m"` are refused. Use a cron expression for a longer period.
+- **One-shot relative** — `"+10m"`, `"+2h"`, `"+1d"`. Fires once at that future time; the delay must be 1000..2147483647 ms (1 second to about 24.8 days).
+- **One-shot absolute** — full ISO timestamp, e.g. `"2026-12-25T09:00:00.000Z"`, at most 2147483647 ms (about 24.8 days) ahead; a time already past or further ahead is refused.
 
 When a schedule fires, the spawn runs in background and its completion notification arrives in the conversation through the same `subagent-notification` followUp path as a manually-spawned background agent — your parent agent reasons about the result the same way.
 

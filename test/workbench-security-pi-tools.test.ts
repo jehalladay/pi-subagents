@@ -235,15 +235,24 @@ describe("remaining registered tool display boundaries", () => {
       const launched = await pi.tools.get("SubagentWorkflow").execute("compare", { scriptPath }, undefined, undefined, context);
       ids.push(launched.details.taskId as string);
     }
-    // A deliberately partial comparison: this row checks the source and diagnostic strings at the
-    // result boundary, so cohort, perMetric and claim are left out of the fixture.
-    vi.spyOn(designer, "compareWorkflowRuns").mockReturnValueOnce({
+    // This row checks the source and diagnostic strings at the result boundary. wb-h8f.7: the tool answers with the bounded
+    // builder's reply, which renders only a whole comparison core result, so the fixture now carries the core's remaining
+    // members as empty or neutral values; the deliberately partial comparison this row used to pass is refused typed and
+    // echoes none of its strings, which the second half reads.
+    const partial = {
       status: "unknown", diagnostics: [{ code: "COMPARISON_UNKNOWN", message: `${risk} api_key=${SECRET}`, severity: "warning" }],
       sourceDigests: { reference: [risk], candidate: [risk] }, metrics: [], causalClaim: false, criticalPath: "unestablished", limitations: [],
-    } as unknown as designer.WorkflowComparison);
+    };
+    vi.spyOn(designer, "compareWorkflowRuns")
+      .mockReturnValueOnce({ ...partial, cohort: { matched: false, basis: [], confounds: [] }, perMetric: [], claim: "none" } as unknown as designer.WorkflowComparison)
+      .mockReturnValueOnce(partial as unknown as designer.WorkflowComparison);
     const response = await invoke(pi.tools.get("workflow_compare"), context, { referenceTask: ids[0], candidateTask: ids[1] });
-    expect(JSON.parse(response).causalClaim).toBe(false);
+    expect(JSON.parse(response).limits.causalClaim).toBe(false);
     clean(response);
+    const refused = await invoke(pi.tools.get("workflow_compare"), context, { referenceTask: ids[0], candidateTask: ids[1] });
+    expect(JSON.parse(refused).error.code).toBe("MALFORMED_COMPARISON");
+    expect(refused).not.toContain(SECRET);
+    expect(refused).not.toContain(injection);
     await waitFor(() => ids.every(id => pi.pi.sendMessage.mock.calls.some(([item]: [unknown]) => JSON.stringify(item).includes(id))));
   });
 });

@@ -271,8 +271,9 @@ const PROBES: Array<{ tool: string; params: Params; zeroGrant: string; sameWhenU
   { tool: "workflow_reconcile", params: { taskId: "wf_abcdef123456", action: "inspect" }, zeroGrant: "Permission denied: workbench:observe grant required." },
   // Exact control:<provider>.<action> grants (not in mode D's list) gate this tool; the decision core's observer-only denial
   // is identical for every caller without a control grant and names no target state, so mode D asserts only that it is not
-  // a permission denial. The denial renders before any adapter or native path is reached.
-  { tool: "workflow_control", sameWhenUngranted: true, params: { target: { provider: "furnace", type: "run", id: "frn-run-census" }, action: "stop", confirmed: true }, zeroGrant: '{"contract":"workbench.tool-reply/v1","tool":"workflow_control","ok":false,"invoked":false,"status":"refused","completion":"not-asserted","control":{"status":"denied","category":"authorization","policy":"observer-only","effect":"none","reason":"Observer grants never control; no control grant is present."},"truncated":false,"error":{"code":"observer-only","category":"authorization","message":"observer-only"}}' },
+  // a permission denial. The denial renders before any adapter or native path is reached. Since wb-5xdi (EAT-R334) it also
+  // names the exact grant the requested provider.action needs, composed from the core's verb table, never from target state.
+  { tool: "workflow_control", sameWhenUngranted: true, params: { target: { provider: "furnace", type: "run", id: "frn-run-census" }, action: "stop", confirmed: true }, zeroGrant: '{"contract":"workbench.tool-reply/v1","tool":"workflow_control","ok":false,"invoked":false,"status":"refused","completion":"not-asserted","control":{"status":"denied","category":"authorization","policy":"observer-only","effect":"none","reason":"Observer grants never control; no control grant is present.","requiredGrant":"control:furnace.stop"},"truncated":false,"error":{"code":"observer-only","category":"authorization","message":"observer-only"}}' },
 ];
 const DENIAL = /Permission denied|grant required/i;
 

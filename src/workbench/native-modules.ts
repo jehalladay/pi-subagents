@@ -18,7 +18,7 @@ import type { Furnace } from "@furnace/sdk";
 import type { CapabilityRegistry } from "./capability-registry.js";
 import type { createClaudeWorkflowHost } from "./claude-host.js";
 import type { createClaudeObserver, readClaudeTranscript } from "./claude-transcript.js";
-import type { connectDetachedWorkflow, launchDetachedWorkflow } from "./hosts/local-detached.js";
+import type { connectDetachedWorkflow, launchDetachedWorkflow, localOperator } from "./hosts/local-detached.js";
 import type { openForgeOperationConnection } from "./providers/forge.js";
 
 /** Host-validated options for native provider registration (wb-973.4, SCG-R4). */
@@ -37,6 +37,8 @@ export interface WorkbenchNativeModules {
   readonly readClaudeTranscript: typeof readClaudeTranscript;
   readonly connectDetachedWorkflow: typeof connectDetachedWorkflow;
   readonly launchDetachedWorkflow: typeof launchDetachedWorkflow;
+  /** The detached host's current local operator (wb-79k.3): the operator the detached observe-wiring states ownership for. */
+  readonly localOperator: typeof localOperator;
   /** One pinned, owned Forge app-server connection for an operation this host starts and observes (wb-a3s). */
   readonly openForgeOperationConnection: typeof openForgeOperationConnection;
   /**
@@ -88,6 +90,9 @@ async function importAll(): Promise<WorkbenchNativeModules> {
     },
     get launchDetachedWorkflow() {
       return detached.launchDetachedWorkflow;
+    },
+    get localOperator() {
+      return detached.localOperator;
     },
     get openForgeOperationConnection() {
       return forge.openForgeOperationConnection;

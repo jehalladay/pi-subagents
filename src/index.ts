@@ -38,7 +38,7 @@ import { getMaxSubagentDepth, setMaxSubagentDepth } from "./nested-tools.js";
 import { createOutputFilePath, ensureOutputFile, getOutputTranscriptDefault, sessionTaskDir, setOutputTranscriptDefault, streamToOutputFile, writeInitialEntry } from "./output-file.js";
 import { SubagentScheduler } from "./schedule.js";
 import { resolveStorePath, ScheduleStore } from "./schedule-store.js";
-import { applyAndEmitLoaded, loadSettings, type SubagentsSettings, saveAndEmitChanged, type ToolDescriptionMode, type WorkbenchSettings } from "./settings.js";
+import { applyAndEmitLoaded, isCleanAbsolutePath, loadSettings, type SubagentsSettings, saveAndEmitChanged, type ToolDescriptionMode, type WorkbenchSettings } from "./settings.js";
 import { getForegroundOutcomeNote, getStatusNote, partialOutputSuffix } from "./status-note.js";
 import { type AgentConfig, type AgentInvocation, type AgentMentionMode, type AgentRecord, type JoinMode, type NotificationDetails, type SubagentType, type ViewerMarkdownMode, type WidgetMode } from "./types.js";
 import { createMentionProvider, mentionRoster, type TypeInfo } from "./ui/agent-mention.js";
@@ -70,9 +70,11 @@ import { type CapabilityDescriptor, CapabilityError, type CapabilityErrorCategor
 import { executeClaudeControl } from "./workbench/claude-control.js";
 import { createClaudeControlObserver, createClaudeControlRetention } from "./workbench/claude-control-observer.js";
 import type { ClaudeCallIdentity } from "./workbench/claude-host.js";
+import { buildWorkflowCompareReply, COMPARE_REPLY_MAX_DIMENSIONS } from "./workbench/compare-tool.js";
 import { type ControlExecutionSummary, type ControlExecutor, createWorkflowControlTool } from "./workbench/control-tool.js";
 import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflowSource } from "./workbench/designer.js";
 import { executeDetachedControl } from "./workbench/detached-control.js";
+import { DetachedObserveWiring } from "./workbench/detached-wiring.js";
 import { createWorkbenchEvidenceStore } from "./workbench/evidence-wiring.js";
 import { createWorkflowExecuteTool, type ExecuteLaunch } from "./workbench/execute-tool.js";
 import { createRetainedForgeControlExecutor, retainForgeOperation } from "./workbench/forge-control-retention.js";
@@ -83,6 +85,7 @@ import { captureInvocationIdentity, type IdentityCaptureInput, identityDigest, v
 import { loadWorkbenchNative, workbenchNative } from "./workbench/native-modules.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type Presentation } from "./workbench/observation.js";
 import { OBSERVE_CURSOR_MAX_BYTES, OBSERVE_DEFAULT_MAX_BYTES, OBSERVE_MAX_LIMIT, OBSERVE_MAX_MAX_BYTES, OBSERVE_MIN_MAX_BYTES, observeInvocation } from "./workbench/observe-query.js";
+import { nativeReactiveFiberNodeObserver } from "./workbench/reactivefiber-wiring.js";
 import { createWorkflowReconcileTool } from "./workbench/reconcile-tool.js";
 import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText, WORKBENCH_TEXT_LIMIT } from "./workbench/redaction.js";
 import { type ClaudeReplayDependencies, claudeUserConfigDir, instructionDependency, providerDependency, sourceDependency } from "./workbench/replay-dependencies.js";
@@ -115,6 +118,17 @@ import { escapeXml } from "./xml.js";
 /** Tool execute return value for a text response. */
 function textResult(msg: string, details?: AgentDetails) {
   return { content: [{ type: "text" as const, text: msg }], details: details as any };
+}
+
+/**
+ * The same reply for a refusal or a failed run, with pi's tool-result error flag
+ * set (EAT-R311). Unflagged, pi paints it in the success tint and anything keyed
+ * on the flag (retry, telemetry) counts the refusal as a success. `details` still
+ * reaches the renderer, and the nested variants of these tools flag theirs the
+ * same way (nested-tools.ts), so both levels agree.
+ */
+function errorResult(msg: string, details?: AgentDetails) {
+  return { ...textResult(msg, details), isError: true };
 }
 
 export function renderRunningAgentStatus(
@@ -1590,7 +1604,7 @@ export default function (pi: ExtensionAPI, injected: SubagentsExtensionInjection
       Type.String({
         description:
           'Opt-in only — fire later instead of now. Omit to run immediately (the default, almost always correct). ' +
-          'Formats: 6-field cron ("0 0 9 * * 1" = 9am Mon), interval ("5m"/"1h"), one-shot ("+10m" or ISO). ' +
+          'Formats: 6-field cron ("0 0 9 * * 1" = 9am Mon), interval ("5m"/"1h"), one-shot ("+10m" or ISO). Intervals and one-shot delays must be 1000..2147483647 ms (1s to about 24.8 days); use cron for longer periods. ' +
           'Forces run_in_background; incompatible with inherit_context and resume. Returns job ID.',
       }),
     ),
@@ -1823,7 +1837,10 @@ Terse command-style prompts produce shallow, generic work.
       // Pi reports pre-execution failures (extension block, abort, argument
       // validation) as `{ content: [reason], details: {} }` with isError set —
       // no status to render, so show the reason instead of inventing one (#199).
-      if (renderContext.isError || !details?.status) {
+      // The one flagged result that does carry real status is this tool's own
+      // failed run (EAT-R311 flags `Agent failed: …`): it keeps the error card
+      // below rather than dumping its salvaged partial output into the row.
+      if (!details?.status || (renderContext.isError && details.status !== "error")) {
         return new Text(text, 0, 0);
       }
 
@@ -1930,7 +1947,7 @@ Terse command-style prompts produce shallow, generic work.
       // but the parameter is required by the schema — so gating it here would
       // make a live agent unresumable the moment its type is deleted, disabled,
       // or gains a case-clashing sibling. Only a real spawn is gated.
-      if (!dispatch.ok && !params.resume) return textResult(dispatch.message);
+      if (!dispatch.ok && !params.resume) return errorResult(dispatch.message);
       const subagentType = dispatch.ok ? dispatch.type : rawType;
       // What the caller actually asked for, named once: `fellBackFrom` is "" for
       // a blank request, so reading it inline invites the `??`-vs-`||` slip that
@@ -1960,7 +1977,7 @@ Terse command-style prompts produce shallow, generic work.
       if (resolvedConfig.modelInput) {
         const resolved = resolveModel(resolvedConfig.modelInput, ctx.modelRegistry);
         if (typeof resolved === "string") {
-          if (resolvedConfig.modelFromParams) return textResult(resolved);
+          if (resolvedConfig.modelFromParams) return errorResult(resolved);
           // config-specified: silent fallback to parent
         } else {
           model = resolved;
@@ -1978,7 +1995,7 @@ Terse command-style prompts produce shallow, generic work.
         agentLabel: customConfig?.displayName ?? subagentType,
         modelInput: resolvedConfig.modelInput,
       });
-      if (scopeVerdict.kind === "error") return textResult(scopeVerdict.message);
+      if (scopeVerdict.kind === "error") return errorResult(scopeVerdict.message);
       if (scopeVerdict.kind === "warn") ctx.ui.notify(scopeVerdict.message, "warning");
 
       const thinking = resolvedConfig.thinking;
@@ -2075,19 +2092,19 @@ Terse command-style prompts produce shallow, generic work.
       // ---- Schedule: register a job, don't spawn now ----
       if (params.schedule) {
         if (!isSchedulingEnabled()) {
-          return textResult("Scheduling is disabled in this project. Enable via /agents → Settings → Scheduling.");
+          return errorResult("Scheduling is disabled in this project. Enable via /agents → Settings → Scheduling.");
         }
         if (params.resume) {
-          return textResult("Cannot combine `schedule` with `resume` — schedules create fresh agents.");
+          return errorResult("Cannot combine `schedule` with `resume` — schedules create fresh agents.");
         }
         if (params.inherit_context) {
-          return textResult("Cannot combine `schedule` with `inherit_context` — there is no parent conversation at fire time.");
+          return errorResult("Cannot combine `schedule` with `inherit_context` — there is no parent conversation at fire time.");
         }
         if (params.run_in_background === false) {
-          return textResult("Cannot combine `schedule` with `run_in_background: false` — scheduled jobs always run in background.");
+          return errorResult("Cannot combine `schedule` with `run_in_background: false` — scheduled jobs always run in background.");
         }
         if (!scheduler.isActive()) {
-          return textResult("Scheduler is not active in this session yet. Try again after the session has fully started.");
+          return errorResult("Scheduler is not active in this session yet. Try again after the session has fully started.");
         }
         try {
           const job = scheduler.addJob({
@@ -2111,7 +2128,7 @@ Terse command-style prompts produce shallow, generic work.
             `Manage via /agents → Scheduled jobs.`,
           );
         } catch (err) {
-          return textResult(err instanceof Error ? err.message : String(err));
+          return errorResult(err instanceof Error ? err.message : String(err));
         }
       }
 
@@ -2119,10 +2136,10 @@ Terse command-style prompts produce shallow, generic work.
       if (params.resume) {
         const existing = manager.getRecord(params.resume);
         if (!existing || !isTopLevelAgent(existing)) {
-          return textResult(`Agent not found: "${params.resume}". It may have been cleaned up.`);
+          return errorResult(`Agent not found: "${params.resume}". It may have been cleaned up.`);
         }
         if (!existing.session) {
-          return textResult(`Agent "${params.resume}" has no active session to resume.`);
+          return errorResult(`Agent "${params.resume}" has no active session to resume.`);
         }
 
         // Background resume: detached run that notifies on completion, mirroring
@@ -2137,7 +2154,7 @@ Terse command-style prompts produce shallow, generic work.
           // live run's abort controller); say why here, where the model can act
           // on it, instead of letting it read as a generic failure.
           if (existing.status === "running" || existing.status === "queued") {
-            return textResult(
+            return errorResult(
               `Agent "${params.resume}" is still ${existing.status} — it can only be resumed once its current run finishes.\n` +
               `Use steer_subagent to send it a message mid-run, or get_subagent_result to wait for it.`,
             );
@@ -2149,7 +2166,7 @@ Terse command-style prompts produce shallow, generic work.
             toolCallId,
           });
           if (!record) {
-            return textResult(`Failed to resume agent "${params.resume}".`);
+            return errorResult(`Failed to resume agent "${params.resume}".`);
           }
 
           const isQueued = record.status === "queued";
@@ -2167,12 +2184,12 @@ Terse command-style prompts produce shallow, generic work.
 
         const record = await manager.resume(params.resume, params.prompt, signal);
         if (!record) {
-          return textResult(`Failed to resume agent "${params.resume}".`);
+          return errorResult(`Failed to resume agent "${params.resume}".`);
         }
         // A failed resume surfaces the error, plus any partial output THIS
         // resume produced (never the previous turn's answer, #144).
         if (record.status === "error") {
-          return textResult(`Agent failed: ${record.error}${partialOutputSuffix(record)}`, buildDetails(detailBaseFor(record), record));
+          return errorResult(`Agent failed: ${record.error}${partialOutputSuffix(record)}`, buildDetails(detailBaseFor(record), record));
         }
         return textResult(
           record.result?.trim() || "No output.",
@@ -2398,7 +2415,7 @@ Terse command-style prompts produce shallow, generic work.
 
       if (record.status === "error") {
         // Error headline + any partial output the run produced before failing.
-        return textResult(`${fallbackNote}Agent failed: ${record.error}${partialOutputSuffix(record)}`, details);
+        return errorResult(`${fallbackNote}Agent failed: ${record.error}${partialOutputSuffix(record)}`, details);
       }
 
       const durationMs = (record.completedAt ?? Date.now()) - record.startedAt;
@@ -2460,6 +2477,12 @@ Terse command-style prompts produce shallow, generic work.
   const workflowTasks = new Map<string, WorkflowTask>();
   const projection = new ObservationProjection({ maxEvents: 4_096, maxNodes: 2_000, maxEdges: 4_000, maxQuery: WORKBENCH_PROJECTION_MAX_QUERY });
   /**
+   * wb-79k.3 (W13/VC-7): the local-detached observe-wiring of this process. Both launch seams hand it the receipt their launch
+   * returned and workflow_detached's inspect hands it the reading it took; it applies that reading to the projection above
+   * under host-owned context only, and it is handed values, never a client, so it sends nothing of its own.
+   */
+  const detachedObservation = new DetachedObserveWiring();
+  /**
    * forge_gate_run (wb-a3s): the Forge operations THIS process started and still observes, keyed by the server's operation
    * id. Each owns its connection; session_shutdown disposes them, which reaps the spawned app-servers — process ownership at
    * teardown, never a control verb.
@@ -2481,21 +2504,40 @@ Terse command-style prompts produce shallow, generic work.
    * the terminal; the observer's control hooks settle from here, and session_shutdown disposes it.
    */
   const claudeControlRetention = createClaudeControlRetention({ projection, tasks: workflowTasks, now: () => new Date().toISOString() });
-  const registries = new Map<string, CapabilityRegistry>();
+  /** Each scope's registry, beside the RF root it was built with (wb-v30k, EAT-R371). */
+  const registries = new Map<string, { readonly registry: CapabilityRegistry; readonly rfRoot: string | undefined }>();
   let workbenchToolsRegistered = false;
+  /**
+   * wb-v30k (EAT-R371): the RF root registryFor binds for a configured setting, resolved by realpath(3) (realpathSync.native
+   * reads a symlink before a later '..' segment, where fs.realpathSync applies path.resolve first). Claimed only for the
+   * settings pinned in test/workbench-rf-workspace-binding.test.ts: its B1 spellings bind their realpath, and its B4 settings
+   * (a realpath that fails with ENOENT, ENOTDIR, ELOOP or ENAMETOOLONG, or one carrying 0x01 or DEL) bind as written; no other
+   * form is claimed.
+   */
+  function canonicalRfRoot(configured: string): string {
+    try {
+      const real = realpathSync.native(configured);
+      return isCleanAbsolutePath(real) ? real : configured;
+    } catch {
+      return configured;
+    }
+  }
   function registryFor(cwd: string): CapabilityRegistry {
     const scope = realpathSync(cwd);
-    let registry = registries.get(scope);
-    if (!registry) {
-      registry = new CapabilityRegistry();
-      // Only reached behind the validated feature config, after the native
-      // modules loaded (wb-cax.10); the registration order is the one the
-      // identity capture has always digested.
-      // wb-973.4: the swarm's RF workspace (validated setting) replaces the scope for the RF capability only; absent keeps the scope.
-      const reactivefiberWorkspaceRoot = loadSettings(cwd).workbench?.reactivefiberWorkspaceRoot;
-      workbenchNative().registerNativeProviders(registry, scope, reactivefiberWorkspaceRoot === undefined ? undefined : { reactivefiberWorkspaceRoot });
-      registries.set(scope, registry);
-    }
+    // wb-973.4: the swarm's RF workspace (validated setting) replaces the scope for the RF capability only; absent keeps the scope.
+    // wb-v30k (EAT-R371): the setting is read again on each call and bound by canonicalRfRoot, and a scope's registry is rebuilt
+    // when the RF root it was built with differs. Claimed only for the changes pinned in test/workbench-rf-workspace-binding.test.ts
+    // B2a-B2c (setting text rewrites, and a symlink setting retargeted under unchanged text); no other change is claimed.
+    const configured = loadSettings(cwd).workbench?.reactivefiberWorkspaceRoot;
+    const reactivefiberWorkspaceRoot = configured === undefined ? undefined : canonicalRfRoot(configured);
+    const bound = registries.get(scope);
+    if (bound !== undefined && bound.rfRoot === reactivefiberWorkspaceRoot) return bound.registry;
+    const registry = new CapabilityRegistry();
+    // Only reached behind the validated feature config, after the native
+    // modules loaded (wb-cax.10); the registration order is the one the
+    // identity capture has always digested.
+    workbenchNative().registerNativeProviders(registry, scope, reactivefiberWorkspaceRoot === undefined ? undefined : { reactivefiberWorkspaceRoot });
+    registries.set(scope, { registry, rfRoot: reactivefiberWorkspaceRoot });
     return registry;
   }
   // The local OS user and Pi session identify a local operator, not remote
@@ -2662,16 +2704,33 @@ Terse command-style prompts produce shallow, generic work.
       grants: [...required].filter(grant => held.includes(grant)),
     };
   }
+  /**
+   * The extension-owned detached base of the registered launch paths (wb-r1bz, EAT-R341): join(<agent dir>,
+   * "workbench-detached") with the agent directory resolved to its real path first, so a HOME spelled through a symlink
+   * (/home/<user> -> /local/home/<user>) reaches the launcher's unchanged owner, mode and ancestor checks as the canonical
+   * path it names. Only the agent directory is resolved: the base and everything under it reach those checks as spelled,
+   * so a base replaced by a symlink still refuses. An agent directory whose realpath fails with ENOENT (it does not exist)
+   * or ELOOP (a symlink loop) stays as spelled, for the launcher's own checks to refuse.
+   */
+  function detachedBase(): string {
+    const agentDir = getAgentDir();
+    let resolved = agentDir;
+    try {
+      resolved = realpathSync(agentDir);
+    } catch {}
+    return join(resolved, "workbench-detached");
+  }
   async function launchDetachedWorkflow(ctx: ExtensionContext, launch: ExecuteLaunch): Promise<readonly NativeRef[]> {
     const settings = sourceSettings(ctx);
     const claude = settings?.workflowAgentBackend === "claude" ? detachedClaudeLaunch(ctx, settings) : undefined;
     // The review assertion is the operator's own: a digest-pinned saved source launched under the execute+detach conjunction.
     const receipt = await workbenchNative().launchDetachedWorkflow({
-      directory: join(getAgentDir(), "workbench-detached"), invocationId: launch.invocationId, scriptPath: launch.source.sourceRef,
+      directory: detachedBase(), invocationId: launch.invocationId, scriptPath: launch.source.sourceRef,
       cwd: ctx.cwd, input: launch.input, trustedScript: true, backend: claude ? "claude" : "deterministic",
       providers: [], grants: claude?.grants ?? [], permissions: ["inspect", "execute"], sourceFiles: [launch.source.sourceRef],
       ...(claude ? { claude: claude.claude } : {}),
     });
+    detachedObservation.launched(receipt);
     return [
       { provider: "local-detached", type: "invocation", id: receipt.invocationId, ...referenceScope(receipt.invocationDirectory) },
       { provider: "local-detached", type: "host-instance", id: receipt.hostInstanceId },
@@ -2785,7 +2844,7 @@ Terse command-style prompts produce shallow, generic work.
     pi.registerTool(defineTool({
       name: "workflow_validate",
       label: "Validate workflow source",
-      description: `Read and validate saved workflow syntax, literal metadata and possible calls without executing or editing source. Requires workbench:design. Name the source by name or scriptPath, or by the sourceRef a catalog lists; a digest (sha256:<64 lowercase hex>) beside sourceRef pins its exact bytes, and a source that does not match is refused, never validated. mode is "static" only: syntax is compiled, never executed. inputs and bindings are accepted and reported as uncertain. The reply is ${TOOL_REPLY_CONTRACT_VERSION}: errors, warnings and uncertain conditions in three arrays with offered and returned counts, and a byte-cap marker when the reply was cut.`,
+      description: `Read and validate saved workflow syntax, literal metadata and possible calls without executing or editing source. Requires workbench:design. Name the source by name or scriptPath, or by the sourceRef a catalog lists; a digest (sha256:<64 lowercase hex>) beside sourceRef pins its exact bytes, and a source that does not match is refused, never validated. mode is "static" only: syntax is compiled, never executed. inputs are checked against the source's declared meta.inputSchema: a mismatch, or a declared schema this host cannot check, is a typed refusal, and a source that declares none reports them as uncertain. bindings map capability ids to versions and are compared with the authorized registry snapshot: a malformed map or a version the snapshot does not bind is a typed refusal, and a capability the snapshot does not show is reported as uncertain. The reply is ${TOOL_REPLY_CONTRACT_VERSION}: errors, warnings and uncertain conditions in three arrays with offered and returned counts, and a byte-cap marker when the reply was cut.`,
       parameters: Type.Object({
         name: Type.Optional(Type.String()),
         scriptPath: Type.Optional(Type.String()),
@@ -2834,11 +2893,18 @@ Terse command-style prompts produce shallow, generic work.
         } catch (error) { return textResult(sanitizeWorkbenchText(error instanceof Error ? error.message : String(error))); }
       },
     }));
+    // wb-h8f.7: the bounded compare-tool.ts reply over today's compareWorkflowRuns result, with the grant snapshot from
+    // grants(ctx) and the native references this handler's projection read collected; grants, scope and principal stay
+    // host-owned, and the design+observe refusal and the scope refusal keep today's bytes in today's order.
     pi.registerTool(defineTool({
       name: "workflow_compare",
       label: "Compare workflow evidence",
-      description: "Compare captured workflow source/config/input cohorts without claiming causal gains or complete native metrics. Requires workbench:design and workbench:observe.",
-      parameters: Type.Object({ referenceTask: Type.String(), candidateTask: Type.String() }),
+      description: `Compare captured workflow source/config/input cohorts without claiming causal gains or complete native metrics. Requires workbench:design and workbench:observe. Name the reference and candidate tasks; dimensions selects metrics by name. The reply is ${TOOL_REPLY_CONTRACT_VERSION}: source, config and basis alignment rows with every confound, the comparison protocol's pins, measured metrics with their run counts or declined rows with their reasons, the raw native references of both tasks, offered and returned counts, and a byte-cap marker when the reply was cut.`,
+      parameters: Type.Object({
+        referenceTask: Type.String(),
+        candidateTask: Type.String(),
+        dimensions: Type.Optional(Type.Array(Type.String(), { maxItems: COMPARE_REPLY_MAX_DIMENSIONS })),
+      }),
       execute: async (_id, params, _signal, _onUpdate, ctx) => {
         const rights = grants(ctx);
         if (!rights.includes("workbench:design") || !rights.includes("workbench:observe")) return textResult("Permission denied: design and observe grants required.");
@@ -2854,7 +2920,12 @@ Terse command-style prompts produce shallow, generic work.
             metrics: [],
           });
         }
-        return textResult(sanitizeWorkbenchJsonText(compareWorkflowRuns([runs[0]], [runs[1]])));
+        return textResult(buildWorkflowCompareReply({
+          comparison: compareWorkflowRuns([runs[0]], [runs[1]]),
+          grants: rights,
+          ...(params.dimensions !== undefined ? { dimensions: params.dimensions } : {}),
+          nativeRefs: { reference: runs[0].nativeRefs, candidate: runs[1].nativeRefs },
+        }).text);
       },
     }));
     pi.registerTool(defineTool({
@@ -2915,9 +2986,20 @@ Terse command-style prompts produce shallow, generic work.
       parameters: Type.Object({ action: Type.Union([Type.Literal("launch"),Type.Literal("inspect")]), invocationId:Type.String({minLength:1,maxLength:100}), scriptPath:Type.Optional(Type.String()), trustedScript:Type.Optional(Type.Boolean()), backend:Type.Optional(Type.Union([Type.Literal("deterministic"),Type.Literal("claude")])) }),
       execute: async (_id, params, _signal, _onUpdate, ctx) => {
         if (!grants(ctx).includes(params.action === "launch" ? "workbench:detach" : "workbench:observe")) return textResult("Permission denied: explicit detached launch or observe grant required.");
-        const directory=join(getAgentDir(),"workbench-detached");
+        const directory=detachedBase();
         try {
-          if (params.action === "inspect") return textResult(sanitizeWorkbenchJsonText(await workbenchNative().connectDetachedWorkflow(directory,params.invocationId).inspect(), 4096));
+          if (params.action === "inspect") {
+            const snapshot = await workbenchNative().connectDetachedWorkflow(directory,params.invocationId).inspect();
+            // wb-79k.3 (W13/VC-7): the reading this inspect took reaches the session's live projection, under this session's scope,
+            // the detached host's local operator and the host clock. Observation only: the reply stays the inspect snapshot.
+            try {
+              detachedObservation.observe({ projection, scope: observerScope(ctx), operator: () => workbenchNative().localOperator(), now: () => new Date().toISOString() },
+                params.invocationId, snapshot);
+            } catch {
+              // The wiring answers its own refusals; a scope read that throws projects nothing and never changes the reply.
+            }
+            return textResult(sanitizeWorkbenchJsonText(snapshot, 4096));
+          }
           if (params.trustedScript !== true || !params.scriptPath) return textResult("Launch requires an explicitly reviewed trusted scriptPath.");
           const source=inspectWorkflowSource({scriptPath:params.scriptPath},ctx.cwd);
           const claude=params.backend === "claude" ? detachedClaudeLaunch(ctx,sourceSettings(ctx)) : undefined;
@@ -2925,6 +3007,7 @@ Terse command-style prompts produce shallow, generic work.
             backend:params.backend ?? "deterministic",providers:[],grants:claude?.grants ?? [],permissions:["inspect","execute"],sourceFiles:[source.sourceRef],
             ...(claude ? {claude:claude.claude} : {}),
           });
+          detachedObservation.launched(receipt);
           return textResult(sanitizeWorkbenchJsonText(receipt, 4096));
         } catch (error) { return textResult(sanitizeWorkbenchText(error instanceof Error ? error.message : String(error))); }
       },
@@ -3203,6 +3286,11 @@ Terse command-style prompts produce shallow, generic work.
               principal: { id: scope.principal, role: "local-operator" },
               beforeDispatch,
               replayDependencies,
+              // wb-79k.1: the live projection a returned hyperunix.find value is observed into, under this run's scope and the host clock.
+              observation: {
+                refresh: snapshot => projection.refresh(snapshot), relate: statement => projection.relate(statement),
+                scope, now: () => new Date().toISOString(),
+              },
               onMessage: (message, call) => {
                 if (message.type === "system" && message.subtype === "init") {
                   const live = liveClaudeQueries.get(liveClaudeKey(task.id, call));
@@ -3218,6 +3306,14 @@ Terse command-style prompts produce shallow, generic work.
                 if (live?.sessionId !== undefined && liveClaudeSessions.get(live.sessionId) === key) liveClaudeSessions.delete(live.sessionId);
                 liveClaudeQueries.delete(key);
               },
+              // wb-79k.2 (W13/VC-2): a ReactiveFiber preview a node() call answers with reaches this run's live projection
+              // through the observe-wiring, under host-owned context only. registryFor registers the native providers, so
+              // every reading here came through the real registered CLI path; a refused reading leaves one workflow_log line.
+              onNodeValue: nativeReactiveFiberNodeObserver({
+                projection, scope, invocationId: task.id, now: () => new Date().toISOString(),
+                ...(settings.reactivefiberWorkspaceRoot !== undefined ? { authorizedRfRoot: settings.reactivefiberWorkspaceRoot } : {}),
+                log: message => updateWorkflowProgressBatch(task, [{ type: "workflow_log", message }]),
+              }),
             })
           : createWorkflowHost({
               pi, ctx, manager, signal: task.abortController.signal,
@@ -3655,7 +3751,7 @@ Terse command-style prompts produce shallow, generic work.
     execute: async (_toolCallId, params, signal, _onUpdate, _ctx) => {
       const record = resolveAgentRef(params.agent_id);
       if (!record || !isTopLevelAgent(record)) {
-        return textResult(`Agent not found: "${params.agent_id}". It may have been cleaned up.`);
+        return errorResult(`Agent not found: "${params.agent_id}". It may have been cleaned up.`);
       }
 
       // Wait for completion if requested. Cancellation stops only this tool
@@ -3714,7 +3810,8 @@ Terse command-style prompts produce shallow, generic work.
         }
       }
 
-      return textResult(output);
+      // A failed run is reported as one (EAT-R311), as the nested variant does.
+      return record.status === "error" ? errorResult(output) : textResult(output);
     },
   }));
 
@@ -3738,10 +3835,10 @@ Terse command-style prompts produce shallow, generic work.
     execute: async (_toolCallId, params, _signal, _onUpdate, _ctx) => {
       const record = resolveAgentRef(params.agent_id);
       if (!record || !isTopLevelAgent(record)) {
-        return textResult(`Agent not found: "${params.agent_id}". It may have been cleaned up.`);
+        return errorResult(`Agent not found: "${params.agent_id}". It may have been cleaned up.`);
       }
       if (record.status !== "running") {
-        return textResult(`Agent "${params.agent_id}" is not running (status: ${record.status}). Cannot steer a non-running agent.`);
+        return errorResult(`Agent "${params.agent_id}" is not running (status: ${record.status}). Cannot steer a non-running agent.`);
       }
       if (!record.session) {
         // Session not ready yet — queue the steer for delivery once initialized
@@ -3770,7 +3867,7 @@ Terse command-style prompts produce shallow, generic work.
           `Current state: ${stateParts.join(" · ")}`,
         );
       } catch (err) {
-        return textResult(`Failed to steer agent: ${err instanceof Error ? err.message : String(err)}`);
+        return errorResult(`Failed to steer agent: ${err instanceof Error ? err.message : String(err)}`);
       }
     },
   }));

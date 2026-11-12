@@ -3146,6 +3146,7 @@
        "src/README.md"
       ],
       "rfCensus": [
+       "src/workbench/mechanical-host-binding.ts | StringLiteral < ArrayLiteralExpression < AsExpression < CallExpression Object.freeze #0 | \"rf-committed-v1\"",
        "src/workbench/process-env.ts | StringLiteral < ArrayLiteralExpression < CallExpression Object.freeze #0 | \"RF_WORKSPACE\"",
        "src/workbench/process-env.ts | StringLiteral < ArrayLiteralExpression < CallExpression Object.freeze #0 | \"SWARM_RF_WORKSPACE\"",
        "src/workbench/providers/reactivefiber.ts | RegularExpressionLiteral < PropertyAccessExpression < CallExpression /^RF_[A-Z0-9_]+$/.test callee | \"^RF_[A-Z0-9_]+$\"",
@@ -3187,10 +3188,12 @@
        "src/workbench/reactivefiber-observer.ts | TemplateHead < TemplateExpression < CallExpression notes.push #0 | \"producer release from result.provenance.cli_version: rf@\"",
        "src/workbench/reactivefiber-observer.ts | TemplateHead < TemplateExpression < CallExpression refs.push #0 | \"rf-engine:\"",
        "src/workbench/reactivefiber-observer.ts | TemplateHead < TemplateExpression < CallExpression shown #0 | \"RF context preview \"",
-       "src/workbench/reactivefiber-observer.ts | TemplateHead < TemplateExpression < PropertyAssignment nativePayloadRef | \"rf-output:sha256:\""
+       "src/workbench/reactivefiber-observer.ts | TemplateHead < TemplateExpression < PropertyAssignment nativePayloadRef | \"rf-output:sha256:\"",
+       "src/workbench/reactivefiber-wiring.ts | StringLiteral < PropertyAssignment seam | \"rf-cli\""
       ],
       "sdkCensus": [
        "src/index.ts | StringLiteral < ArrayLiteralExpression < PropertyAssignment grants | \"discover:reactivefiber.render.preview\"",
+       "src/index.ts | StringLiteral < ImportDeclaration | \"./workbench/reactivefiber-wiring.js\"",
        "src/settings.ts | StringLiteral < ArrayLiteralExpression < NewExpression Set #0 | \"reactivefiberWorkspaceRoot\"",
        "src/settings.ts | StringLiteral < NewExpression Error #0 | \"workbench.reactivefiberWorkspaceRoot must be an absolute path without control characters.\"",
        "src/workbench/hosts/local-detached.ts | StringLiteral < CaseClause | \"reactivefiber\"",
@@ -3216,6 +3219,9 @@
        "src/workbench/reactivefiber-observer.ts | StringLiteral < PropertyAssignment source | \"reactivefiber\"",
        "src/workbench/reactivefiber-observer.ts | StringLiteral < VariableDeclaration REACTIVEFIBER_OBSERVATION_CONTRACT | \"workbench.reactivefiber-observation/v1\"",
        "src/workbench/reactivefiber-observer.ts | TemplateHead < TemplateExpression < NewExpression CapabilityError #1 | \"ReactiveFiber topology refused: \"",
+       "src/workbench/reactivefiber-wiring.ts | StringLiteral < BinaryExpression < IfStatement | \"reactivefiber\"",
+       "src/workbench/reactivefiber-wiring.ts | StringLiteral < ImportDeclaration | \"./reactivefiber-observer.js\"",
+       "src/workbench/reactivefiber-wiring.ts | TemplateHead < TemplateExpression < CallExpression sanitizeWorkbenchText #0 | \"ReactiveFiber preview of node call \"",
        "src/workflow/reconcile.ts | StringLiteral < ArrayLiteralExpression < CallExpression Object.freeze #0 | \"reactivefiber.render.preview\""
       ],
       "launchRoster": [
