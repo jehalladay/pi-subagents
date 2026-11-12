@@ -340,7 +340,7 @@
                 "src/workbench/capability-registry.ts:discover: this.providers read",
                 "src/workbench/capability-registry.ts:catalogSnapshot: this.providers read",
                 "src/workbench/capability-registry.ts:effectClassOf: this.providers read",
-                "src/workbench/capability-registry.ts:dispatch: this.providers read",
+                "src/workbench/capability-registry.ts:preflight: this.providers read",
                 "src/workbench/hosts/local-detached.ts:validateRequest: \"providers\" literal",
                 "src/workbench/hosts/local-detached.ts:validateRequest: request.providers read",
                 "src/workbench/hosts/local-detached.ts:registryFor: request.providers read",
