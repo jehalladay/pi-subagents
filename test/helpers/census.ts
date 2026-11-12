@@ -5645,7 +5645,7 @@ const BUILD_SCRIPT = "node -e \"require('fs').rmSync('dist',{recursive:true,forc
  */
 export const RETRY_ADMITTED_CHAINS: readonly { readonly chain: readonly string[]; readonly why: string }[] = [
   {
-    chain: [`forge.toml [build.commands] build = ${JSON.stringify("npm run build")}`, `package.json scripts.build = ${JSON.stringify(BUILD_SCRIPT)}`],
+    chain: [`forge.toml [build.commands.build] command = ${JSON.stringify("npm run build")}`, `package.json scripts.build = ${JSON.stringify(BUILD_SCRIPT)}`],
     why: "a node -e literal that removes dist, then tsc: neither runs vitest",
   },
 ];
