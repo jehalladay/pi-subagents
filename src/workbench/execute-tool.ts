@@ -48,8 +48,9 @@
  *     last character, its last three, two and one segments, padded with a space before or after it, its separators replaced,
  *     its first letter in its fullwidth compatibility form); an id outside those families is NOT CLAIMED (the class guard of
  *     record M:78521 binds the reviewed-id match words, so they name only this pinned set);
- *  2. only an embedded launch is hosted, with or without workbench:detach held, else unsupported-definition-kind with its own
- *     fixed reason and no package, Git or host call (RF12);
+ *  2. where the hosting composes no detached start, only an embedded launch is hosted, with or without workbench:detach held,
+ *     else unsupported-definition-kind with its own fixed reason and no package, Git or host call (RF12); where it composes one,
+ *     a detached launch takes the detached branch below;
  *  3. dispatchFunctionChain (function-dispatch-chain.ts) judges entry authority, the SDK edge's rights, the installed package,
  *     source admission and the final boundary; a refusal there replies launch-failed, its reason the deciding layer's own code
  *     then that layer's fixed reason, and starts nothing: authority (RF06 and RF10 at entry, RF09 at the final boundary), the
@@ -62,6 +63,26 @@
  *     without invoking it at the four forms RF13c lists, while a caller's own notes member at the nine kept forms RF13b lists
  *     reaches the host byte for byte, the host's input digesting to the admission's input digest (RF13b), as a JSON copy
  *     frozen at every object and list (RF13); a host that rejects at start replies launch-failed (RF14).
+ * The detached branch (wb-zswl, MNI packet P11: MWI EAT-R064 of docs/workbench/programs/mechanical-workflows-interop-2026-11-04/
+ * triage/requirements/ATOMIC-REQUIREMENTS.md at 0b25e14e) exists only where the hosting composes a detached start
+ * (WorkflowFunctionDeps.runDetached; src/index.ts takes it from WorkflowFunctionHosting.startDetached), each claim held to the
+ * cases of test/workbench-detached-function.test.ts named beside it, driven through the same registered tool object with one
+ * injected installed host (evidence level V3, injected callbacks):
+ *  D1. the reviewed definition's detached launch refuses missing-detach-grant with its own fixed reason and no package, Git or
+ *      host call when the grant read this call began with does not hold workbench:detach: under the embedded grants (DF01),
+ *      with workbench:detach named only in the request's policy or input, and with workbench:detached or workbench:detac held
+ *      in its place (DF05);
+ *  D2. with workbench:detach held, an SDK edge whose claude:invoke right is not held refuses at entry as launch-failed naming
+ *      missing-sdk-right (DF06); the final boundary's own grant read must hold workbench:detach too, else missing-detach-grant
+ *      and no detached start (DF04);
+ *  D3. the effect is the detached host's run: its start is called once and the embedded start not at all (DF02), with one
+ *      frozen request of FunctionHostDetachedStart's six members, the input a JSON copy frozen at every object and list and the
+ *      grant the chain's frozen one with exactly the configured SDK rights (DF03); the reply carries the detached host's native
+ *      references alone (DF02); the intent row reaches the journal before the detached start and the dispatched row once it
+ *      answered (DF08); and the chain's writer lease is held until the detached host's settlement (DF07).
+ * NOT CLAIMED for the detached branch: the detached host's instance identity, transport, reattach and lost-handshake recovery
+ * (MWI EAT-R065 to EAT-R067; MNI EAT-R295, EAT-R296); observation of a detached function launch; a detached start or settlement
+ * that rejects; the writer lease after this Pi session ends.
  * The branch adds no refusal code to the reply: ExecuteErrorCode keeps its members, and a function refusal/recovery code
  * mapping is the joint P00 vocabulary ruling (MII EAT-R419), NOT CLAIMED here.
  * NOT CLAIMED here: an adopted action spelling (FUNCTION_ACTION_CONTRACT stays unadopted, so under the shipped contract the
@@ -165,6 +186,12 @@ export interface WorkflowFunctionDeps {
    * accepted the work, and settles only when the run settles, so the chain's writer lease covers the whole run.
    */
   run(ctx: ExtensionContext, launch: ExecuteFunctionLaunch, started: (nativeRefs: readonly NativeRef[]) => void): Promise<void>;
+  /**
+   * The chain's one effect for hostMode detached (wb-zswl): the detached host's run, which reports that host's native references
+   * through started() once it accepted the work (DF02) and settles with that host's settlement (DF07). Absent, a detached function
+   * launch refuses as unsupported-definition-kind (RF12).
+   */
+  readonly runDetached?: (ctx: ExtensionContext, launch: ExecuteFunctionLaunch, started: (nativeRefs: readonly NativeRef[]) => void) => Promise<void>;
 }
 /** What the installed host is asked to start: the reviewed entry, the definition, the input as frozen JSON data, the chain's frozen grant and an AbortSignal. */
 export interface FunctionHostStart {
@@ -180,6 +207,18 @@ export interface FunctionHostStarted {
   readonly nativeRefs: readonly NativeRef[];
   readonly settled: Promise<unknown>;
 }
+/**
+ * What the same-machine detached host is asked to start (wb-zswl): the reviewed entry, the definition, the input as frozen JSON
+ * data, the admission's input digest and the chain's frozen grant, and no AbortSignal of this Pi session.
+ */
+export interface FunctionHostDetachedStart {
+  readonly invocationId: string;
+  readonly entrypoint: Readonly<MechanicalReviewedEntrypoint>;
+  readonly definition: Readonly<DefinitionRef>;
+  readonly input: JsonValue;
+  readonly inputDigest: string;
+  readonly grant: FunctionChainGrant;
+}
 /** Function hosting a host composes for workflow_execute (packet P04); the model never names any part of it. */
 export interface WorkflowFunctionHosting {
   readonly contract: FunctionActionContract;
@@ -187,6 +226,8 @@ export interface WorkflowFunctionHosting {
   readonly package: FunctionPackageHost;
   readonly sdk?: FunctionSdkHost;
   start(request: FunctionHostStart): Promise<FunctionHostStarted>;
+  /** The same-machine detached host's start (wb-zswl); absent, a detached function launch refuses as unsupported-definition-kind (RF12). */
+  readonly startDetached?: (request: FunctionHostDetachedStart) => Promise<FunctionHostStarted>;
 }
 
 export interface WorkflowExecuteDeps {
@@ -258,9 +299,14 @@ function chainRefusal(refused: FunctionChainRefused): string {
   return `${refused.refusal.code}: ${refused.refusal.reason}`;
 }
 type FunctionLaunchResult = { readonly nativeRefs: readonly NativeRef[] } | { readonly code: ExecuteLaunchRefusal; readonly reason: string };
+/** The detached branch's fixed reason for a grant read without workbench:detach, at entry (DF01, DF05) or at the final boundary (DF04). */
+const FUNCTION_DETACH_REASON = `a detached function launch requires ${DETACH_GRANT} beside ${EXECUTE_GRANT} and the function action grant`;
+/** The detached effect's refusal when the final boundary's grant read does not hold workbench:detach; launchFunction maps it (DF04). */
+class DetachNotHeld extends Error {}
 /**
- * The function branch's steps 1 to 4 (module header). The chain runs on after the reply: its writer lease is held until the
- * function's run settles, and a rejection after the host started is the run's own record (src/index.ts records it on the task).
+ * The function branch's steps 1 to 4 and the detached branch's D1 to D3 (module header). The chain runs on after the reply: its
+ * writer lease is held until the function's run settles, and a rejection after the host started is the run's own record (for an
+ * embedded run src/index.ts records it on the task; for a detached run that record is NOT CLAIMED here).
  */
 async function launchFunction(
   functions: WorkflowFunctionDeps,
@@ -269,28 +315,50 @@ async function launchFunction(
   admission: ExecuteAdmission,
   input: unknown,
   scope: ExecuteFunctionLaunch["scope"],
+  rights: readonly string[],
 ): Promise<FunctionLaunchResult> {
   const { definition, invocationId } = admission;
   const entrypoint = MECHANICAL_REVIEWED_ENTRYPOINTS.find(entry => entry.id === definition.id);
   if (entrypoint === undefined) return { code: "unsupported-definition-kind", reason: "the definition names no reviewed Mechanical entrypoint" };
-  if (admission.hostMode !== "embedded") return { code: "unsupported-definition-kind", reason: "only an embedded function launch is hosted" };
+  const runDetached = admission.hostMode === "detached" ? functions.runDetached : undefined;
+  if (admission.hostMode !== "embedded" && runDetached === undefined) return { code: "unsupported-definition-kind", reason: "only an embedded function launch is hosted" };
+  if (runDetached !== undefined && !rights.includes(DETACH_GRANT)) return { code: "missing-detach-grant", reason: FUNCTION_DETACH_REASON };
   const data = frozenJson(withoutBeadsNotes(input));
   let report: (nativeRefs: readonly NativeRef[]) => void = () => undefined;
   const started = new Promise<readonly NativeRef[]>(resolve => {
     report = resolve;
   });
+  const composed = functions.chainHost(ctx);
+  // A detached launch judges workbench:detach on the final boundary's own grant read too: the chain's last read before its effect.
+  let lastGrants: readonly string[] | undefined;
+  const host: FunctionChainHost =
+    runDetached === undefined
+      ? composed
+      : {
+          ...composed,
+          authority: {
+            identity: () => composed.authority.identity(),
+            grants: () => {
+              lastGrants = composed.authority.grants();
+              return lastGrants;
+            },
+          },
+        };
   try {
-    const chain = dispatchFunctionChain({ admission, contract: functions.contract, workspace: scope.workspace }, functions.chainHost(ctx), grant =>
-      functions.run(ctx, Object.freeze({ invocationId, toolCallId, definition, entrypoint, input: data, inputDigest: admission.inputDigest, grant, scope }), nativeRefs =>
-        report(nativeRefs),
-      ),
-    );
+    const chain = dispatchFunctionChain({ admission, contract: functions.contract, workspace: scope.workspace }, host, grant => {
+      const launch: ExecuteFunctionLaunch = Object.freeze({ invocationId, toolCallId, definition, entrypoint, input: data, inputDigest: admission.inputDigest, grant, scope });
+      if (runDetached === undefined) return functions.run(ctx, launch, nativeRefs => report(nativeRefs));
+      const held: unknown = lastGrants;
+      if (!Array.isArray(held) || !held.includes(DETACH_GRANT)) return Promise.reject(new DetachNotHeld());
+      return runDetached(ctx, launch, nativeRefs => report(nativeRefs));
+    });
     chain.catch(() => undefined);
     const first = await Promise.race([started.then(nativeRefs => ({ nativeRefs })), chain.then(outcome => ({ outcome }))]);
     if ("nativeRefs" in first) return first;
     if (first.outcome.status === "refused") return { code: "launch-failed", reason: chainRefusal(first.outcome) };
     return { code: "launch-failed", reason: "the installed host settled the run without reporting a native reference" };
   } catch (error) {
+    if (error instanceof DetachNotHeld) return { code: "missing-detach-grant", reason: FUNCTION_DETACH_REASON };
     return { code: "launch-failed", reason: message(error) };
   }
 }
@@ -384,7 +452,7 @@ export function createWorkflowExecuteTool(deps: WorkflowExecuteDeps) {
       // The function branch (module header): only where hosting is composed, decided before the detach conjunction and the script path.
       if (admission.definition.kind === "function" && deps.functions !== undefined) {
         const launchScope = Object.freeze({ workspace: scope.workspace, principal: scope.principal, sessionId: deps.sessionIdOf(ctx) });
-        const launched = await launchFunction(deps.functions, ctx, toolCallId, admission, params.input, launchScope);
+        const launched = await launchFunction(deps.functions, ctx, toolCallId, admission, params.input, launchScope, rights);
         const result: { outcome: LaunchOutcome; code: ExecuteLaunchRefusal | undefined } =
           "nativeRefs" in launched ? { outcome: { status: "launched", nativeRefs: launched.nativeRefs }, code: undefined } : refusedLaunch(launched.code, launched.reason);
         return textResult(sanitizeWorkbenchJsonText(envelope(buildWorkflowExecuteReply(decision, result.outcome, maxBytes), result.code, maxBytes, scope.workspace), maxBytes));

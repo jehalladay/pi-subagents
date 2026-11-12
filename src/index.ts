@@ -81,6 +81,7 @@ import {
   createWorkflowExecuteTool,
   type ExecuteFunctionLaunch,
   type ExecuteLaunch,
+  type FunctionHostDetachedStart,
   type FunctionHostStarted,
   type WorkflowFunctionDeps,
   type WorkflowFunctionHosting,
@@ -2747,9 +2748,11 @@ Terse command-style prompts produce shallow, generic work.
    * workflow_execute's function branch (wb-4bxo, packet P04), composed only from SubagentsExtensionInjection.functionHosting.
    * The chain host's authority reads are this session's own on every call (the grants from settings, the local principal and the
    * session: RF01, RF09); source admission, the installed package, the SDK edge and the installed host's start are the hosting's
-   * (RF07, RF08, RF17, RF17b).
+   * (RF07, RF08, RF17, RF17b). The detached run is composed only where the hosting sets startDetached (wb-zswl: DF02; RF12 where
+   * it does not).
    */
   function hostedFunctionDeps(hosting: WorkflowFunctionHosting): WorkflowFunctionDeps {
+    const startDetached = hosting.startDetached;
     return {
       contract: hosting.contract,
       chainHost: toolCtx => ({
@@ -2762,6 +2765,12 @@ Terse command-style prompts produce shallow, generic work.
         ...(hosting.sdk !== undefined ? { sdk: hosting.sdk } : {}),
       }),
       run: (toolCtx, launch, started) => runHostedFunction(toolCtx, hosting, launch, started),
+      ...(startDetached !== undefined
+        ? {
+            runDetached: (toolCtx: ExtensionContext, launch: ExecuteFunctionLaunch, started: (nativeRefs: readonly NativeRef[]) => void) =>
+              runDetachedFunction(toolCtx, request => startDetached.call(hosting, request), launch, started),
+          }
+        : {}),
     };
   }
   /**
@@ -2870,6 +2879,34 @@ Terse command-style prompts produce shallow, generic work.
     }
     task.endTime = Date.now();
     notifyWorkflowFinished(task);
+  }
+  /**
+   * One detached function run, the chain's one effect for hostMode detached (wb-zswl, MWI EAT-R064; the cases of
+   * test/workbench-detached-function.test.ts in brackets). The intent row reaches the invocation's journal before the detached
+   * host is asked to start [DF08]; its start receives one frozen request and no AbortSignal of this session [DF03]; once it
+   * answered, the dispatched row carries its native references [DF08] and they alone are reported [DF02]; this effect settles with
+   * the detached host's settlement, so the chain's writer lease is held until then [DF07].
+   */
+  async function runDetachedFunction(
+    toolCtx: ExtensionContext,
+    start: (request: FunctionHostDetachedStart) => Promise<FunctionHostStarted>,
+    launch: ExecuteFunctionLaunch,
+    started: (nativeRefs: readonly NativeRef[]) => void,
+  ): Promise<void> {
+    const journal = functionJournal(toolCtx, launch);
+    if (!journal(functionJournalRow(launch, "intent"))) throw new Error(FUNCTION_INTENT_UNWRITTEN);
+    const hosted = await start(Object.freeze({
+      invocationId: launch.invocationId, entrypoint: launch.entrypoint, definition: launch.definition, input: launch.input,
+      inputDigest: launch.inputDigest, grant: launch.grant,
+    }));
+    journal(functionJournalRow(launch, "dispatched", hosted.nativeRefs));
+    started(hosted.nativeRefs);
+    try {
+      await hosted.settled;
+    } catch {
+      return;
+    }
+    journal(functionJournalRow(launch, "settled", hosted.nativeRefs));
   }
   /**
    * The Claude half of a registered detached launch, its Claude config and its grants, for both producers (wb-wupg, MWI
