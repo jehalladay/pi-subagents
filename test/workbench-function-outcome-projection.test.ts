@@ -24,25 +24,42 @@
  *        host's native reference, and workflow_observe reads no mechanicalOutcome while the run is open; once the run settles
  *        with that variant's outcome object, workflow_observe by the reply's invocation id reads the task's own envelope (status
  *        completed, error null) and mechanicalOutcome { domain <the kind>, payload <the complete outcome object: every member, the
- *        nested evidence references among them> }, and no member of the outcome object stands in the task envelope -> as stated.
- *   RO02 the payload is the copy taken when the run settled: the producer replacing a member of its outcome object and adding
- *        one afterwards reaches neither the domain nor the payload -> unchanged.
- *   RO03 <form> (five cases): a run that settles with RF03's settle value {outcome: "fixture"}, a kind word outside the four, the
- *        bare string verified_candidate, null, or a list holding a verified_candidate outcome reads status completed, carries no
- *        mechanicalOutcome member and names none of the four kind words anywhere in the reply -> as stated (no invented domain).
+ *        nested evidence references among them> }, and no member name of the outcome object is a member name of the task
+ *        envelope -> as stated.
+ *   RO02 <change> (nine cases, CHANGES): the payload is the copy taken when the run settled. The producer making one of these
+ *        nine changes to the outcome object it settled with, afterwards, reaches neither the domain nor the payload: on its
+ *        verification_failed outcome, replacing the kind member, adding a top-level member, deleting the top-level verification
+ *        member, replacing verification.verdict (two levels deep), replacing candidate.evidence.id (three levels deep, the
+ *        fixture's deepest level), adding a member to verification (two levels deep), deleting verification.diagnostic (two
+ *        levels deep); on its needs_evidence outcome, appending a file to the nested list scope.files and replacing that list's
+ *        first file. Each case first asserts that its change reached the producer's own object -> unchanged.
+ *   RO03 <form> (fourteen cases, NOT_OUTCOMES): a run that settles with one of these fourteen values reads status completed,
+ *        carries no mechanicalOutcome member and names none of the four kind words anywhere in the reply -> as stated (no
+ *        invented domain): RF03's settle value {outcome: "fixture"}; an outcome object whose kind member is not exactly one of
+ *        the four words, in eight spellings - verified (a word outside the four), candidate (a part of verified_candidate),
+ *        verification_failed_v2 (verification_failed extended), NEEDS_EVIDENCE (upper case), Verified_Candidate (mixed case),
+ *        indeterminate after a leading space, indeterminate before a trailing newline, and the one-member list
+ *        [verified_candidate] (no word); the bare string verified_candidate; null; and a list holding the verified_candidate
+ *        outcome as its only member, as the first of two members, or as the last of two members.
  *   RO04 the byte cap names what it drops: a needs_evidence outcome whose scope lists 120 files reads complete at the default
  *        cap; at maxBytes 2048 the reply is the task envelope without it, envelopeOmitted naming mechanicalOutcome after the four
  *        members it names already -> as stated.
- *   RO05 a run whose settlement rejects, with an outcome-shaped reason, reads status failed with the fixed error text and carries
- *        no mechanicalOutcome member: a rejection is never read as an outcome -> as stated.
+ *   RO05 <reason> (five cases, REJECTIONS): a run whose settlement rejects with one of these five reasons reads status failed
+ *        with the fixed error text, carries no mechanicalOutcome member and names none of the four kind words anywhere in the
+ *        reply -> as stated (none of these five rejections is read as an outcome): each of the four outcome objects, one case per
+ *        variant, and an Error whose cause is the needs_evidence outcome object.
  *
  * NOT CLAIMED by this suite: EAT-R243 (its B02-B04 oracles: operation/ref retention as an axis of its own, agent/Forge never
  * dispatched, no PASS-equivalent field anywhere), EAT-R244 (separate axes, explicit unknown markers, the versioned-envelope
  * schema check, the K030 record), EAT-R245 (gate credit and freshness), EAT-R246 (reopening after the initiating turn), EAT-R247
  * (bounded model-facing output beyond RO04, the UI glyph), EAT-R248 (gaps), EAT-R249 (profiles), and EAT-R037 to EAT-R040 and
- * EAT-R156 to EAT-R158 beyond what RO01 pins; a settled value outside RO03's five forms; an outcome string the shared sanitizer
- * bounds or redacts (past its 2000-character bound, or credential-shaped), which reads as the sanitizer renders it; a run stopped
- * through workflow_control before it settles; a real installed MechanicalWorkflows package or its native outcome (P07, V4).
+ * EAT-R156 to EAT-R158 beyond what RO01 pins; a change to the producer's object other than RO02's nine (to a prototype, an
+ * accessor, a member deeper than the fixture holds, or one made before the run settles); a settled value outside RO03's fourteen
+ * (another kind spelling, a kind member of another type, a list of another shape, a value JSON cannot copy); a rejection reason
+ * outside RO05's five (a string, a list, an Error carrying an outcome other than as its cause); an outcome string the shared
+ * sanitizer bounds or redacts (past its 2000-character bound, or credential-shaped), which reads as the sanitizer renders it; a
+ * run stopped through workflow_control before it settles; a real installed MechanicalWorkflows package or its native outcome (P07,
+ * V4).
  */
 import { execFileSync } from "node:child_process";
 import { readFileSync, realpathSync, writeFileSync } from "node:fs";
@@ -93,13 +110,69 @@ const outcomeOf = (kind: string): Readonly<Record<string, JsonValue>> => {
   if (outcome === undefined) throw new Error(`no ${kind} row`);
   return outcome;
 };
-/** Settled values that are no outcome, each with its label. */
-const NOT_OUTCOMES: [string, unknown][] = [
-  ["RF03's settle value", { outcome: "fixture" }],
-  ["a kind word outside the four", { ...outcomeOf("verified_candidate"), kind: "verified" }],
-  ["the bare string verified_candidate", "verified_candidate"],
-  ["null", null],
-  ["a list holding a verified_candidate outcome", [outcomeOf("verified_candidate")]],
+/** The record a held outcome object keeps under name, for a change to reach into; a member that is no record throws. */
+function recordAt(value: Record<string, JsonValue>, name: string): Record<string, JsonValue> {
+  const member = value[name];
+  if (typeof member !== "object" || member === null || Array.isArray(member)) throw new Error(`the ${name} member is no record`);
+  return member;
+}
+/** The list a held outcome object keeps under name, for a change to reach into; a member that is no list throws. */
+function listAt(value: Record<string, JsonValue>, name: string): JsonValue[] {
+  const member = value[name];
+  if (!Array.isArray(member)) throw new Error(`the ${name} member is no list`);
+  return member;
+}
+/** RO02's nine changes to the outcome object the producer settled with, made after the run settled: label, variant, change. */
+const CHANGES: [string, string, (held: Record<string, JsonValue>) => void][] = [
+  ["replacing the kind member", "verification_failed", held => {
+    held.kind = "verified_candidate";
+  }],
+  ["adding a top-level member", "verification_failed", held => {
+    held.added = "after the run settled";
+  }],
+  ["deleting the top-level verification member", "verification_failed", held => {
+    delete held.verification;
+  }],
+  ["replacing verification.verdict, two levels deep,", "verification_failed", held => {
+    recordAt(held, "verification").verdict = "passed";
+  }],
+  ["replacing candidate.evidence.id, three levels deep,", "verification_failed", held => {
+    recordAt(recordAt(held, "candidate"), "evidence").id = "changed-after-settle";
+  }],
+  ["adding a member to verification, two levels deep,", "verification_failed", held => {
+    recordAt(held, "verification").added = "after the run settled";
+  }],
+  ["deleting verification.diagnostic, two levels deep,", "verification_failed", held => {
+    delete recordAt(held, "verification").diagnostic;
+  }],
+  ["appending a file to the nested list scope.files", "needs_evidence", held => {
+    listAt(recordAt(held, "scope"), "files").push("added-after-settle.md");
+  }],
+  ["replacing the first file of the nested list scope.files", "needs_evidence", held => {
+    listAt(recordAt(held, "scope"), "files")[0] = "changed-after-settle.md";
+  }],
+];
+/** RO03's fourteen settled values that are no outcome, each with its label and a builder of the value. */
+const NOT_OUTCOMES: [string, () => unknown][] = [
+  ["RF03's settle value", () => ({ outcome: "fixture" })],
+  ["an outcome object whose kind is verified, a word outside the four", () => ({ ...outcomeOf("verified_candidate"), kind: "verified" })],
+  ["an outcome object whose kind is candidate, a part of verified_candidate", () => ({ ...outcomeOf("verified_candidate"), kind: "candidate" })],
+  ["an outcome object whose kind is verification_failed_v2, verification_failed extended", () => ({ ...outcomeOf("verification_failed"), kind: "verification_failed_v2" })],
+  ["an outcome object whose kind is NEEDS_EVIDENCE, needs_evidence in upper case", () => ({ ...outcomeOf("needs_evidence"), kind: "NEEDS_EVIDENCE" })],
+  ["an outcome object whose kind is Verified_Candidate, verified_candidate in mixed case", () => ({ ...outcomeOf("verified_candidate"), kind: "Verified_Candidate" })],
+  ["an outcome object whose kind is indeterminate after a leading space", () => ({ ...outcomeOf("indeterminate"), kind: " indeterminate" })],
+  ["an outcome object whose kind is indeterminate before a trailing newline", () => ({ ...outcomeOf("indeterminate"), kind: "indeterminate\n" })],
+  ["an outcome object whose kind is the one-member list [verified_candidate], no word", () => ({ ...outcomeOf("verified_candidate"), kind: ["verified_candidate"] })],
+  ["the bare string verified_candidate", () => "verified_candidate"],
+  ["null", () => null],
+  ["a one-member list holding the verified_candidate outcome", () => [outcomeOf("verified_candidate")]],
+  ["a two-member list holding the verified_candidate outcome first", () => [outcomeOf("verified_candidate"), { note: "a second member" }]],
+  ["a two-member list holding the verified_candidate outcome last", () => [{ note: "a first member" }, outcomeOf("verified_candidate")]],
+];
+/** RO05's five rejection reasons, each with its label and a builder: the four outcome objects, and an Error whose cause is one. */
+const REJECTIONS: [string, () => unknown][] = [
+  ...KINDS.map((kind): [string, () => unknown] => [`the ${kind} outcome object`, () => structuredClone(outcomeOf(kind))]),
+  ["an Error whose cause is the needs_evidence outcome object", () => new Error("the host failed the run", { cause: structuredClone(outcomeOf("needs_evidence")) })],
 ];
 /** A needs_evidence outcome too large for a 2048-byte reply beside the task envelope. */
 const LARGE: Readonly<Record<string, JsonValue>> = {
@@ -260,25 +333,29 @@ describe("wb-9a1o: a hosted function's original Mechanical outcome through workf
     CASE_MS,
   );
 
-  it("RO02: the payload is the copy taken when the run settled; the producer changing its outcome object afterwards reaches neither the domain nor the payload", async () => {
-    const world = await boot();
-    const outcome = outcomeOf("verification_failed");
-    const { id, settled } = await world.launch();
-    const held: Record<string, JsonValue> = structuredClone(outcome);
-    settled.resolve(held);
-    await flush();
-    held.kind = "verified_candidate";
-    held.added = "after the run settled";
-    const { observed } = await world.observe(id);
-    expect(observed.mechanicalOutcome).toEqual({ domain: "verification_failed", payload: outcome });
-  }, CASE_MS);
+  it.each(CHANGES)(
+    "RO02: the payload is the copy taken when the run settled - the producer %s of its %s outcome object afterwards reaches neither the domain nor the payload",
+    async (_label, kind, change) => {
+      const world = await boot();
+      const outcome = outcomeOf(kind);
+      const { id, settled } = await world.launch();
+      const held: Record<string, JsonValue> = structuredClone(outcome);
+      settled.resolve(held);
+      await flush();
+      change(held);
+      expect(held, "the change reached the producer's own object").not.toEqual(outcome);
+      const { observed } = await world.observe(id);
+      expect(observed.mechanicalOutcome).toEqual({ domain: kind, payload: outcome });
+    },
+    CASE_MS,
+  );
 
   it.each(NOT_OUTCOMES)(
     "RO03: a run that settles with %s reads status completed with no mechanicalOutcome member, and its reply names none of the four kind words",
     async (_label, value) => {
       const world = await boot();
       const { id, settled } = await world.launch();
-      settled.resolve(value);
+      settled.resolve(value());
       await flush();
       const { text, observed } = await world.observe(id);
       expect(observed).toMatchObject({ taskId: id, status: "completed", error: null });
@@ -302,14 +379,18 @@ describe("wb-9a1o: a hosted function's original Mechanical outcome through workf
     expect(tight.observed.envelopeOmitted).toEqual(["identity", "inputDigest", "workspaceSourceState", "error", "mechanicalOutcome"]);
   }, CASE_MS);
 
-  it("RO05: a run whose settlement rejects with an outcome-shaped reason reads failed with the fixed error text and carries no mechanicalOutcome member", async () => {
-    const world = await boot();
-    const { id, settled } = await world.launch();
-    settled.reject(structuredClone(outcomeOf("verified_candidate")));
-    await flush();
-    const { text, observed } = await world.observe(id);
-    expect(observed).toMatchObject({ taskId: id, status: "failed", error: RUN_FAILED });
-    expect(observed).not.toHaveProperty("mechanicalOutcome");
-    for (const kind of KINDS) expect(text, `the reply names ${kind}`).not.toContain(kind);
-  }, CASE_MS);
+  it.each(REJECTIONS)(
+    "RO05: a run whose settlement rejects with %s as its reason reads failed with the fixed error text, carries no mechanicalOutcome member, and its reply names none of the four kind words",
+    async (_label, reason) => {
+      const world = await boot();
+      const { id, settled } = await world.launch();
+      settled.reject(reason());
+      await flush();
+      const { text, observed } = await world.observe(id);
+      expect(observed).toMatchObject({ taskId: id, status: "failed", error: RUN_FAILED });
+      expect(observed).not.toHaveProperty("mechanicalOutcome");
+      for (const kind of KINDS) expect(text, `the reply names ${kind}`).not.toContain(kind);
+    },
+    CASE_MS,
+  );
 });
