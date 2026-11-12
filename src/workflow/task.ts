@@ -15,13 +15,14 @@
  */
 
 import { randomUUID } from "node:crypto";
+import type { CapabilityDiagnostic } from "../workbench/capability-registry.js";
 import type { NativeControlReceipt } from "../workbench/control.js";
 import type { InvocationSnapshot } from "../workbench/identity.js";
 import { sanitizeWorkbenchText } from "../workbench/redaction.js";
 import { escapeXml } from "../xml.js";
 import type { WorkflowJournalEntry } from "./journal.js";
 import type { WorkflowMeta } from "./meta.js";
-import { collapse, elapsedMs, stats, type WorkflowAgentEntry, type WorkflowEntry, type WorkflowRunStatus } from "./progress.js";
+import { collapse, elapsedMs, type ReplayDecline, replayDeclineText, stats, type WorkflowAgentEntry, type WorkflowEntry, type WorkflowRunStatus } from "./progress.js";
 import { type EvidenceReceipt, entryDigestOf, indexReconciliations, type NodeReconcileProvenance } from "./reconcile.js";
 import type { WorkflowControl, WorkflowRunResult } from "./runtime.js";
 
@@ -108,6 +109,10 @@ export interface WorkflowTask {
   /** The script's return value, once the run produced one. */
   value?: unknown;
   error?: string;
+  /** The run's typed capability diagnostic, when it failed on one (wb-q0on, EAT-R364): category, message, input path. */
+  capabilityError?: CapabilityDiagnostic;
+  /** The first reason this resumed run could not replay a recorded call (EAT-R361). */
+  replayDecline?: ReplayDecline;
 }
 
 const taskAgents = new WeakMap<WorkflowTask, Map<number, WorkflowAgentEntry>>();
@@ -228,6 +233,13 @@ export function completeWorkflowTask(task: WorkflowTask, result: WorkflowRunResu
   task.reconciledNodeCount = result.reconciledNodeCount;
   task.value = result.value;
   task.error = result.error;
+  // Copied field by field from the typed shape, so the task holds the runtime's diagnostic and nothing else (EAT-R364).
+  task.capabilityError = result.capabilityError === undefined ? undefined : {
+    name: "CapabilityError", category: result.capabilityError.category, message: result.capabilityError.message,
+    ...(result.capabilityError.path !== undefined ? { path: result.capabilityError.path } : {}),
+    ...(result.capabilityError.constraint !== undefined ? { constraint: result.capabilityError.constraint } : {}),
+  };
+  task.replayDecline = result.replayDecline;
   task.endTime = Date.now();
 }
 
@@ -262,7 +274,12 @@ export function describeResumeJournal(from: string, entries: readonly WorkflowJo
   const untyped = nodes.filter(entry => entry.effectClass === undefined).length;
   const count = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
   const replayable = [agents > 0 ? count(agents, "recorded agent call") : undefined, reads > 0 ? count(reads, "node read") : undefined].filter((part): part is string => part !== undefined);
-  const parts = [`Resuming ${from}: ${replayable.length > 0 ? `${replayable.join(" and ")} available to replay` : "nothing available to replay"}`];
+  // Candidates, never promised hits (wb-q0on, EAT-R361): each replays only while its position, call and host basis
+  // still match, and the run's log names the first that does not.
+  const candidates = agents + reads;
+  const parts = [`Resuming ${from}: ${replayable.length > 0
+    ? `${replayable.join(" and ")} ${candidates === 1 ? "is a replay candidate" : "are replay candidates"} (each replays only while its position, call and host basis still match; the run's log names the first that does not)`
+    : "no recorded call to replay"}`];
   if (effects.length > 0) {
     const producers = [...new Set(effects.map(entry => (entry.capabilityId ?? "unknown").split(/[.-]/)[0]))].sort();
     parts.push(`${count(effects.length, "journaled effect")} (${producers.join(", ")}) will stop the resume at its position until reconciled with the producer`);
@@ -291,6 +308,9 @@ export function describeResumeJournal(from: string, entries: readonly WorkflowJo
   if (overridePositions.length > 0) parts.push(`${overridePositions.length} operator ${overridePositions.length === 1 ? "override" : "overrides"} (${positions(overridePositions)}) re-run once`);
   if (absentPositions.length > 0) parts.push(`${absentPositions.length} acknowledged as effect-absent (${positions(absentPositions)}) still stop the resume until overridden`);
   if (untyped > 0) parts.push(`${count(untyped, "node call")} without effect metadata will stop the resume at its position (fail-closed: an unclassified call is an uncertain effect)`);
+  // A node position whose last row is a dispatch marker: nothing recorded how the call settled (EAT-R357).
+  const unsettled = nodes.filter(entry => entry.dispatched === true).map(entry => entry.index);
+  if (unsettled.length > 0) parts.push(`${count(unsettled.length, "dispatched call")} with no settled record (${positions(unsettled)}) may have taken effect`);
   return `${parts.join("; ")}.`;
 }
 
@@ -301,6 +321,18 @@ export function workflowResultText(task: WorkflowTask): string {
   return JSON.stringify(task.value, null, 2);
 }
 
+/** Why a resume was refused, as a closed vocabulary a caller can branch on (wb-q0on, EAT-R357..EAT-R362). */
+export type ResumeRefusalCode =
+  | "unknown-run"
+  | "still-live"
+  | "no-journal"
+  | "journal-unsupported"
+  | "recovered-unsettled"
+  | "spend-not-persisted";
+
+/** A run id as the host issues it; anything else is never looked up, in memory or on disk. */
+const RUN_ID = /^wf_[a-z0-9-]{6,}$/;
+
 /**
  * Resolve a `resumeFromRunId` against the runs this session has seen.
  *
@@ -309,22 +341,36 @@ export function workflowResultText(task: WorkflowTask): string {
  * nothing to replay — reporting that as "resumed" would be a lie the caller
  * could not see through. An unknown id is an error rather than a cold start,
  * because a caller that asked to resume is expecting not to pay.
+ *
+ * `recover` looks a run up on disk when this process holds no record of it —
+ * a run from before a restart of the same session and workspace (wb-q0on,
+ * EAT-R357). The caller binds it to the host-scoped task directory; the id
+ * alone, checked against the run-id shape first, is all a model supplies, so
+ * no path of its choosing is ever read. A recovered run is never live here:
+ * this process did not start it.
+ *
+ * A paused run is still live: its held agents start again the moment it is
+ * resumed, so it is refused exactly as a running one is (EAT-R362).
  */
 export function resolveResumeTarget(
   runId: string | undefined,
   tasks: ReadonlyMap<string, WorkflowTask>,
+  recover?: (runId: string) => { journalPath: string; scriptPath: string } | undefined,
 ):
   | undefined
-  | { ok: true; runId: string; journalPath: string; scriptPath: string }
-  | { ok: false; message: string } {
+  | { ok: true; runId: string; journalPath: string; scriptPath: string; recovered?: true }
+  | { ok: false; code: ResumeRefusalCode; message: string } {
   const id = runId?.trim();
   if (id === undefined || id === "") return undefined;
 
   const prior = tasks.get(id);
   if (prior === undefined) {
+    const recovered = RUN_ID.test(id) ? recover?.(id) : undefined;
+    if (recovered !== undefined) return { ok: true, runId: id, journalPath: recovered.journalPath, scriptPath: recovered.scriptPath, recovered: true };
     const known = [...tasks.keys()];
     return {
       ok: false,
+      code: "unknown-run",
       message:
         `No workflow run "${id}" in this session. ` +
         (known.length > 0
@@ -335,11 +381,19 @@ export function resolveResumeTarget(
   if (prior.status === "running") {
     return {
       ok: false,
+      code: "still-live",
       message: `Workflow "${id}" is still running. Stop it from /agents → Workflows before resuming it.`,
     };
   }
+  if (prior.status === "paused") {
+    return {
+      ok: false,
+      code: "still-live",
+      message: `Resume refused (still-live): workflow "${id}" is paused, and a paused run is still live — its held agents start again when it is unpaused. Stop it from /agents → Workflows before resuming from its journal.`,
+    };
+  }
   if (prior.journalPath === undefined) {
-    return { ok: false, message: `Workflow "${id}" has no journal to resume from.` };
+    return { ok: false, code: "no-journal", message: `Workflow "${id}" has no journal to resume from.` };
   }
   return {
     ok: true,
@@ -361,6 +415,21 @@ export function pendingReconciliations(task: Pick<WorkflowTask, "workflowProgres
     .filter((reconcile): reconcile is PendingReconcile => reconcile !== undefined && reconcile.state === "pending");
 }
 
+/** The reason bound of a <capability-error> line: the status line carries the whole error, this line its typed half. */
+const CAPABILITY_REASON_LIMIT = 300;
+/** The path and constraint bound of a <capability-error> line. */
+const CAPABILITY_DETAIL_LIMIT = 120;
+
+/**
+ * One line naming a failed run's typed capability diagnostic (wb-q0on, EAT-R364): category, bounded reason and, for an
+ * input-schema refusal, the first failing path and its constraint, each through the shared sanitizer's text layout.
+ */
+function capabilityErrorLine(diagnostic: CapabilityDiagnostic): string {
+  const path = diagnostic.path === undefined ? "" : ` · path ${diagnostic.path === "" ? "(input)" : sanitizeWorkbenchText(diagnostic.path, CAPABILITY_DETAIL_LIMIT, "text")}`;
+  const constraint = diagnostic.constraint === undefined ? "" : ` · constraint ${sanitizeWorkbenchText(diagnostic.constraint, CAPABILITY_DETAIL_LIMIT, "text")}`;
+  return `category ${sanitizeWorkbenchText(diagnostic.category, CAPABILITY_DETAIL_LIMIT, "text")}${path}${constraint} · reason ${sanitizeWorkbenchText(diagnostic.message, CAPABILITY_REASON_LIMIT, "text")}`;
+}
+
 export function formatWorkflowNotification(task: WorkflowTask, now = Date.now()): string {
   const totals = stats(task.workflowProgress, task.agentCount);
   const status =
@@ -374,6 +443,7 @@ export function formatWorkflowNotification(task: WorkflowTask, now = Date.now())
     task.toolCallId ? `<tool-use-id>${escapeXml(task.toolCallId)}</tool-use-id>` : null,
     task.scriptPath ? `<script>${escapeXml(task.scriptPath)}</script>` : null,
     `<status>${escapeXml(status)}</status>`,
+    task.capabilityError !== undefined ? `<capability-error>${escapeXml(capabilityErrorLine(task.capabilityError))}</capability-error>` : null,
     `<summary>Workflow "${escapeXml(task.workflowName ?? task.id)}" ${task.status} — ${totals.done}/${totals.total} agents${
       task.replayedCount > 0 ? `, ${task.replayedCount} replayed from ${escapeXml(task.resumedFrom ?? "an earlier run")}` : ""
     }${
@@ -381,6 +451,8 @@ export function formatWorkflowNotification(task: WorkflowTask, now = Date.now())
     }${
       task.reconciledNodeCount > 0 ? `, ${task.reconciledNodeCount} ${task.reconciledNodeCount === 1 ? "node" : "nodes"} reconciled by operator` : ""
     }</summary>`,
+    // The first reason the resume could not replay a recorded call, as the run's log said it (EAT-R361).
+    task.replayDecline !== undefined ? `<replay-decline>${escapeXml(replayDeclineText(task.replayDecline))}</replay-decline>` : null,
     // One typed line per position a resume cannot pass without an operator
     // decision; producer and journal strings are sanitized, then XML-escaped.
     ...pendingReconciliations(task).map(pending => {
