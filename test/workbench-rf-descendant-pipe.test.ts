@@ -15,7 +15,8 @@
  * sampled every SAMPLE_MS until the slot settled (then on to the grandchild's exit) or the observation window expired.
  * Each trial is judged by judgeDescendantTrial (qa/workbench/dx-p14-acquisition-judge.mjs) and printed as one
  * RF_DESCENDANT_PIPE_RECEIPT line on the process stdout. Every process signalled here is one this suite's fixture started
- * and recorded by pid; there is no process sweep.
+ * and recorded by pid; there is no process sweep. R482-C3-BLOCKED reads the trial judge on exactly the planted trials its
+ * title lists; the judge's reading of any other trial is NOT CLAIMED by this census.
  */
 import { spawn, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -47,13 +48,15 @@ interface ProcessReading {
   readonly ppid: number | undefined;
   readonly stdout: string | undefined;
   readonly stderr?: string | undefined;
-  /** For the grandchild: whether its /proc exe was the sleep binary when its fds were read. */
+  /** Whether its /proc exe was the sleep binary when its fds were read. */
   readonly execd?: boolean;
 }
 /**
- * One sample, read in causal order: the slot, then this process's end of the stdout socketpair, then whether the grandchild
- * still holds its end as fd 1, then liveness. A settled slot follows the read end's closure, which follows the last
- * holder's release, so within one sample a later reading never shows an earlier state than the reading before it.
+ * One sample, read latest stage first: the slot, then this process's end of the stdout socketpair, then the grandchild's
+ * liveness, then whether the grandchild still holds its end as fd 1, then the direct child's liveness. The slot settles
+ * after the read end closes, the read end closes after the last holder releases its end, and a process releases its fds
+ * before /proc shows it gone; so a transition that falls between two readings of one sample can show the earlier stage
+ * as already done, never the later stage as done before the earlier one.
  */
 interface Sample {
   readonly at: number;
@@ -181,8 +184,9 @@ async function trial(variant: Variant): Promise<Trial> {
   }
   const [childPid = -1, grandchildPid] = logged;
   if (grandchildPid !== undefined) started.push(grandchildPid);
-  // The stand-in logs $! as soon as it forks, before the forked shell has applied 2>/dev/null and exec'd its sleep; the
-  // readback waits (bounded by the deadline) until the grandchild's /proc exe is the sleep binary, so its fds are final.
+  // The stand-in writes its pid line while printf's stdout is redirected to the log, and logs $! before the forked shell
+  // applies 2>/dev/null and execs its sleep. Wait (bounded by the deadline) until both processes have exec'd sleep before
+  // reading either fd table, so the captured stdout and stderr links are their final post-redirection values.
   const sleepBinary = realpathSync(SLEEP);
   const execd = (pid: number): boolean => {
     try {
@@ -191,8 +195,11 @@ async function trial(variant: Variant): Promise<Trial> {
       return false;
     }
   };
-  while (grandchildPid !== undefined && !execd(grandchildPid) && now() < DEADLINE_MS) await pause(5);
-  const child: ProcessReading = { pid: childPid, ppid: statOf(childPid)?.ppid, stdout: fdLink(childPid, 1) };
+  while ((!execd(childPid) || (grandchildPid !== undefined && !execd(grandchildPid))) && now() < DEADLINE_MS) await pause(5);
+  // A child that has not exec'd its sleep may still have printf's log redirect on fd 1, so its stdout is recorded only
+  // after the exec (absent otherwise, which the judge reads BLOCKED).
+  const childExecd = execd(childPid);
+  const child: ProcessReading = { pid: childPid, ppid: statOf(childPid)?.ppid, stdout: childExecd ? fdLink(childPid, 1) : undefined, execd: childExecd };
   const grandchild: ProcessReading | undefined = grandchildPid === undefined ? undefined : { pid: grandchildPid, ppid: statOf(grandchildPid)?.ppid, stdout: fdLink(grandchildPid, 1), stderr: fdLink(grandchildPid, 2), execd: execd(grandchildPid) };
   const decoy: ProcessReading = { pid: decoyPid, ppid: statOf(decoyPid)?.ppid, stdout: fdLink(decoyPid, 1) };
   const readEndLink = peerSocket(child.stdout);
@@ -217,8 +224,9 @@ async function trial(variant: Variant): Promise<Trial> {
     const at = now();
     const inFlight = registry.admission().inFlight;
     const readEndHeld = selfHolds(readEndLink);
+    const grandchildAlive = grandchildPid !== undefined && alive(grandchildPid);
     const grandchildHoldsStdout = grandchildPid !== undefined && child.stdout !== undefined && fdLink(grandchildPid, 1) === child.stdout;
-    const sample: Sample = { at, inFlight, readEndHeld, grandchildHoldsStdout, grandchildAlive: grandchildPid !== undefined && alive(grandchildPid), childAlive: alive(childPid) };
+    const sample: Sample = { at, inFlight, readEndHeld, grandchildHoldsStdout, grandchildAlive, childAlive: alive(childPid) };
     samples.push(sample);
     if (childGoneAt === undefined && !sample.childAlive) childGoneAt = at;
     if (grandchildPid !== undefined && grandchildReleasedAt === undefined && !sample.grandchildHoldsStdout) grandchildReleasedAt = at;
@@ -282,6 +290,7 @@ describe("EAT-R482 RF descendant-pipe settlement (G-DESCENDANT-PIPE)", () => {
     expect(run.procfs).toBe(true);
     expect(run.standInSha256).toMatch(/^[0-9a-f]{64}$/);
     expect(run.child.ppid).toBe(process.pid);
+    expect(run.child.execd).toBe(true);
     expect(run.child.stdout).toMatch(/^socket:\[\d+\]$/);
     expect(run.grandchild?.ppid).toBe(run.child.pid);
     expect(run.grandchild?.execd).toBe(true);
@@ -295,18 +304,27 @@ describe("EAT-R482 RF descendant-pipe settlement (G-DESCENDANT-PIPE)", () => {
     expect(ownedDescendants(run)).toEqual([run.grandchild?.pid]);
   }, 60_000);
 
-  it("R482-C3-BLOCKED: the trial judge reads BLOCKED on G-DESCENDANT-PIPE, naming what is absent, for no trial, a trial without process-tree readback, a held-pipe trial without its grandchild, a trial without the read-end readback, a trial without samples and one without the child's disappearance time; a complete trial with no settlement reads window-expired, never settled", () => {
+  it("R482-C3-BLOCKED: the trial judge reads BLOCKED on G-DESCENDANT-PIPE, naming what is absent, for no trial, a trial without process-tree readback, a held-pipe trial without its grandchild or with a grandchild missing its pid or its stdout readback, a trial whose direct child is missing its pid or its stdout readback, a trial without the read-end readback, a trial without samples, and one without its deadline time, the child's disappearance time or its grace window; a no-grandchild trial without a grandchild is measured; a complete trial with no settlement and no sample at the grace point reads window-expired with inFlightAtGrace null, never settled; on planted trials it reads inFlightAtGrace from a sample exactly at the grace point, and a settled trial 500 ms after the child's disappearance and 10 ms after the pipe's closure", () => {
     const blocked = (missing: string[]) => ({ status: "BLOCKED", requirement: "EAT-R482", gate: "G-DESCENDANT-PIPE", missing });
     const base = {
       variant: "held-pipe", procfs: true, child: { pid: 10, stdout: "socket:[1]" }, grandchild: { pid: 11, stdout: "socket:[1]" }, readEnd: { link: "socket:[2]", held: true },
       samples: [{ at: 0, inFlight: 1 }], deadlineAt: 2000, childGoneAt: 2010, graceMs: GRACE_MS,
     };
-    expect(judgeDescendantTrial(base)).toMatchObject({ status: "measured", settled: false, windowExpired: true });
+    expect(judgeDescendantTrial(base)).toMatchObject({ status: "measured", inFlightAtGrace: null, settled: false, windowExpired: true });
+    expect(judgeDescendantTrial({ ...base, variant: "no-grandchild", grandchild: undefined })).toMatchObject({ status: "measured", variant: "no-grandchild" });
     expect(judgeDescendantTrial(undefined)).toEqual(blocked(["instrumented descendant fixture", "process-tree readback"]));
     expect(judgeDescendantTrial({ ...base, procfs: false })).toEqual(blocked(["process-tree readback"]));
     expect(judgeDescendantTrial({ ...base, grandchild: undefined })).toEqual(blocked(["grandchild pid and stdout readback"]));
+    expect(judgeDescendantTrial({ ...base, grandchild: { pid: 11 } })).toEqual(blocked(["grandchild pid and stdout readback"]));
+    expect(judgeDescendantTrial({ ...base, grandchild: { stdout: "socket:[1]" } })).toEqual(blocked(["grandchild pid and stdout readback"]));
     expect(judgeDescendantTrial({ ...base, readEnd: { link: undefined, held: false } })).toEqual(blocked(["read-end readback"]));
     expect(judgeDescendantTrial({ ...base, samples: [] })).toEqual(blocked(["registry inFlight samples"]));
     expect(judgeDescendantTrial({ ...base, childGoneAt: undefined })).toEqual(blocked(["direct child disappearance time"]));
+    expect(judgeDescendantTrial({ ...base, deadlineAt: undefined })).toEqual(blocked(["deadline time"]));
+    expect(judgeDescendantTrial({ ...base, graceMs: undefined })).toEqual(blocked(["grace window"]));
+    expect(judgeDescendantTrial({ ...base, child: { pid: 10 } })).toEqual(blocked(["direct child pid and stdout readback"]));
+    expect(judgeDescendantTrial({ ...base, child: { stdout: "socket:[1]" } })).toEqual(blocked(["direct child pid and stdout readback"]));
+    expect(judgeDescendantTrial({ ...base, samples: [{ at: 3010, inFlight: 1 }, { at: 3011, inFlight: 0 }], childGoneAt: 2010, settledAt: 3011, pipeClosedAt: 3011 })).toMatchObject({ status: "measured", inFlightAtGrace: 1 });
+    expect(judgeDescendantTrial({ ...base, samples: [{ at: 3500, inFlight: 0 }], deadlineAt: 2000, childGoneAt: 2500, settledAt: 3000, pipeClosedAt: 2990 })).toMatchObject({ status: "measured", settled: true, windowExpired: false, settledAfterChildGoneMs: 500, settledAfterPipeClosedMs: 10 });
   });
 });

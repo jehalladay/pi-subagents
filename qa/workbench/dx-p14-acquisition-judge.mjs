@@ -10,7 +10,11 @@
  * Statuses. A gate judge returns 'BLOCKED' on its named gate, with every missing item named, whenever an artifact its
  * acceptance needs is absent, and 'measured' only when that evidence is present and complete; no judge here returns PASS,
  * and a BLOCKED reading is never evidence of absence. The EAT-R483 launcher contract returns 'explicit-loopback' or
- * 'refused' with a reason (or 'not-sql-server' for an argv that is not a dolt sql-server launch).
+ * 'refused' with a reason (or 'not-sql-server' for an argv with no sql-server argument after argv[0]).
+ *
+ * Census scope. The comments below describe what each function computes. The census
+ * (test/workbench-dx-p14-acquisition.test.ts and test/workbench-rf-descendant-pipe.test.ts) reads each judge only on the
+ * inputs its case titles name; a judge's reading of any other input is NOT CLAIMED by this census.
  */
 
 /** The committed record's schema, the probe that writes it and where it is committed. */
@@ -37,8 +41,9 @@ export const WILDCARD_HOSTS = Object.freeze(['0.0.0.0', '::', '[::]', '*']);
 /**
  * EAT-R483 criterion 2, the launcher contract over a captured argv: the three explicit host-flag forms the requirement
  * names (`-H 127.0.0.1`, `--host 127.0.0.1`, `--host=127.0.0.1`) are the only accepted spellings. Every host flag in the
- * argv must carry 127.0.0.1; an omitted flag, a flag with no value, a wildcard value, any other value and an unrecognized
- * host-flag spelling are refused (fail closed: an implicit default is never read as an explicit flag).
+ * argv must carry exactly the string 127.0.0.1; an omitted flag, a flag with no value, a wildcard value, any other value
+ * and an unrecognized host-flag spelling are refused (fail closed: an implicit default is never read as an explicit flag).
+ * An argv with sql-server anywhere after argv[0] is judged as a launch, global flags before it included.
  * @param {readonly string[]} argv a captured process argv; argv[0] is the executable
  * @returns {{ verdict: 'not-sql-server' } | { verdict: 'explicit-loopback', flags: Array<{ form: string, value: string }> } | { verdict: 'refused', reason: 'unrecognized-host-form' | 'missing-host-value' | 'no-explicit-host-flag' | 'wildcard-host' | 'host-not-127.0.0.1', flags: Array<{ form: string, value: string | null }> }}
  */
@@ -95,8 +100,9 @@ export function parseSsListeners(text) {
 }
 
 /**
- * EAT-R483 criterion 1, the independent socket readback for one process: its listening sockets must exist, every one must
- * be bound at 127.0.0.1, and one must be the port the server ledger recorded.
+ * EAT-R483 criterion 1, the independent socket readback for one process: its listening sockets (every listener whose
+ * process column names the pid, whichever position the pid holds there) must exist, every one must be bound at an address
+ * that is exactly the string 127.0.0.1, wherever it is listed, and one must be the port the server ledger recorded.
  * @param {{ pid: number, port: number, listeners: ReadonlyArray<{ address: string, port: number, pids: readonly number[] }> }} reading
  * @returns {{ verdict: 'loopback-only' | 'refused', reason?: 'no-listener-for-pid' | 'listener-not-127.0.0.1' | 'ledger-port-not-listening', addresses: string[] }}
  */
@@ -129,10 +135,11 @@ const object = (value) => value !== null && typeof value === 'object' && !Array.
 
 /**
  * EAT-R478: an outside-machine enforcement receipt for a seam-changing cut. Each field acceptance criterion 1 names must be
- * present (the external configuration revision, the exact base and head, the changed seam paths, the validator argv and
- * exit, and the same-cut skill/doc decision), and criterion 2's two controls (a disposable seam-only cut and a matching
- * same-cut documentation control) must each carry a validator verdict. Absent or partial evidence is BLOCKED on
- * G-EXTERNAL-ENFORCEMENT, naming what is missing; complete evidence is measured, with whether the controls' verdicts differ.
+ * present (the external configuration revision, the exact base and head, each a 40-character lower-case hex commit sha,
+ * the changed seam paths, the validator argv and exit, and the same-cut skill/doc decision), and criterion 2's two controls
+ * (a disposable seam-only cut and a matching same-cut documentation control) must each carry a validator verdict. Absent
+ * or partial evidence is BLOCKED on G-EXTERNAL-ENFORCEMENT, naming what is missing; complete evidence is measured, with
+ * controlsDistinguishable true when the two control verdict strings differ and false when they are equal.
  * @param {unknown} evidence
  */
 export function judgeExternalEnforcement(evidence) {
@@ -235,11 +242,14 @@ export function judgeForgeLeg(leg) {
 }
 
 /**
- * EAT-R482: one descendant-pipe trial. BLOCKED on G-DESCENDANT-PIPE when the controlled descendant fixture, the
- * process-tree readback or the readback of the reading process's own end of the stdout stream is absent (never an
- * inference that descendants were reaped or that the stream closed). Otherwise measured: the registry's
- * inFlight at the first sample at least `graceMs` after the direct child disappeared, when the slot settled (or that the
- * observation window expired first), and how long settlement followed the child's disappearance and the pipe's closure.
+ * EAT-R482: one descendant-pipe trial. BLOCKED on G-DESCENDANT-PIPE, naming each absent item, when the controlled
+ * descendant fixture, the process-tree readback, the direct child's pid and stdout readback, a held-pipe trial's grandchild
+ * pid and stdout readback, the readback of the reading process's own end of the stdout stream, the registry inFlight
+ * samples, the deadline time, the direct child's disappearance time or the grace window is absent (never an inference
+ * that descendants were reaped or that the stream closed). Otherwise measured: the registry's inFlight at the first sample
+ * at least `graceMs` after the direct child disappeared (null when no sample reaches that point), when the slot settled
+ * (or that the observation window expired first), and how long settlement followed the child's disappearance and the
+ * pipe's closure.
  * @param {unknown} trial
  */
 export function judgeDescendantTrial(trial) {

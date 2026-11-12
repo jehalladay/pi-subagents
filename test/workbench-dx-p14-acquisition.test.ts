@@ -7,9 +7,11 @@
  *    qa/workbench/dx-p14-acquisition-probe.mjs and tied to its bytes by SHA-256, re-judged here through
  *    qa/workbench/dx-p14-acquisition-judge.mjs and, for EAT-R479's binding, through src (nativeEvidence,
  *    mintEvidenceReceipt and decideReconcile);
- *  - the judges themselves, against receipts planted in this file (never the record of record): each gate judge names
- *    the missing item for each omission its case lists and measures the complete planted evidence, and EAT-R483's
- *    launcher contract is judged over the captured-argv literals the R483-C2 cases list.
+ *  - the judges themselves, against receipts planted in this file (never the record of record): each gate judge is read
+ *    on exactly the planted inputs its case title lists (each omission, malformed shape and alternative receipt named
+ *    there) and measures the complete planted evidence, and EAT-R483's launcher contract and listener judge are judged
+ *    over the captured-argv and ss-line literals the R483-C2 and R483-C1-LISTENER-REFUSALS cases list. A judge's reading
+ *    of any input no case title here names is NOT CLAIMED by this census.
  * Regenerating the record needs forge, rf and dolt on PATH: npm run build && node qa/workbench/dx-p14-acquisition-probe.mjs
  * --write qa/workbench/receipts/wb-mo89-dx-p14-acquisition-probe.json.
  */
@@ -107,9 +109,10 @@ describe("wb-mo89 committed acquisition record", () => {
     expect(committed.probe).toEqual({ script: PROBE_SCRIPT, scriptSha256: sha256(readFileSync(join(REPO, PROBE_SCRIPT))) });
   });
 
-  it("RECORD-NO-HOST-PATH: no string in the committed record contains /home/, /local/, /tmp/, /workplace/, /opt/ or /usr/", () => {
+  it("RECORD-NO-HOST-PATH: no member name and no string value in the committed record contains /home/, /local/, /tmp/, /workplace/, /opt/ or /usr/", () => {
     const strings: string[] = [];
-    JSON.parse(repoText(RECORD_PATH), (_key, value: unknown) => {
+    JSON.parse(repoText(RECORD_PATH), (key, value: unknown) => {
+      strings.push(key);
       if (typeof value === "string") strings.push(value);
       return value;
     });
@@ -138,7 +141,7 @@ describe("EAT-R478 outside-machine same-cut enforcement (G-EXTERNAL-ENFORCEMENT)
     expect(judgeExternalEnforcement(external.evidence)).toEqual(expected);
   });
 
-  it("R478-C1-FIELDS: against a receipt planted here, the judge names each criterion-1 field and each criterion-2 control verdict one omission at a time, and measures the complete receipt with its controls distinguishable exactly when their verdicts differ", () => {
+  it("R478-C1-FIELDS: against a receipt planted here, the judge names each criterion-1 field and each criterion-2 control verdict one omission at a time, names exact base for a 7-, 8-, 39- or 41-hex or an upper-case 40-hex base and exact head for an absent, a symbolic (HEAD) or a 39-hex head, and measures the complete receipt with its controls distinguishable for the verdict pairs (refused, admitted) and (admitted, refused) and not distinguishable for (admitted, admitted) and (refused, refused)", () => {
     const complete = {
       configRevision: "enforcement-config@planted",
       base: "1".repeat(40),
@@ -150,6 +153,19 @@ describe("EAT-R478 outside-machine same-cut enforcement (G-EXTERNAL-ENFORCEMENT)
     };
     expect(judgeExternalEnforcement(complete)).toEqual({ status: "measured", requirement: "EAT-R478", controlsDistinguishable: true });
     expect(judgeExternalEnforcement({ ...complete, controls: { seamOnly: { verdict: "admitted" }, sameCutDoc: { verdict: "admitted" } } })).toEqual({ status: "measured", requirement: "EAT-R478", controlsDistinguishable: false });
+    expect(judgeExternalEnforcement({ ...complete, controls: { seamOnly: { verdict: "admitted" }, sameCutDoc: { verdict: "refused" } } })).toEqual({ status: "measured", requirement: "EAT-R478", controlsDistinguishable: true });
+    expect(judgeExternalEnforcement({ ...complete, controls: { seamOnly: { verdict: "refused" }, sameCutDoc: { verdict: "refused" } } })).toEqual({ status: "measured", requirement: "EAT-R478", controlsDistinguishable: false });
+    const shapes: Array<[string, Json, string]> = [
+      ["base 8-hex", { ...complete, base: "12345678" }, "exact base"],
+      ["base 39-hex", { ...complete, base: "1".repeat(39) }, "exact base"],
+      ["base 41-hex", { ...complete, base: "1".repeat(41) }, "exact base"],
+      ["base upper-case 40-hex", { ...complete, base: "A".repeat(40) }, "exact base"],
+      ["head HEAD", { ...complete, head: "HEAD" }, "exact head"],
+      ["head 39-hex", { ...complete, head: "2".repeat(39) }, "exact head"],
+    ];
+    for (const [shape, evidence, named] of shapes) {
+      expect(judgeExternalEnforcement(evidence), shape).toEqual({ status: "BLOCKED", requirement: "EAT-R478", gate: "G-EXTERNAL-ENFORCEMENT", missing: [named] });
+    }
     const omissions: Array<[string, Json, string]> = [
       ["configRevision", { ...complete, configRevision: "" }, "external enforcement configuration revision"],
       ["base", { ...complete, base: "1234567" }, "exact base"],
@@ -260,6 +276,9 @@ describe("EAT-R479 live Forge reconcile binding (G-FORGE)", () => {
       expect(runOperations).not.toContain(operation);
     }
     expect(new Set(readOperations).size).toBe(2);
+    const readCommands = reads.map(read => String(object(object(object(read.reading).source).ids).command_id));
+    for (const command of readCommands) expect(runs.map(run => run.commandId)).not.toContain(command);
+    expect(new Set(readCommands).size).toBe(2);
   });
 
   it("R479-C1-NATIVEREF: src nativeEvidence reads each committed reading's native reference as forge/operation/<that reading's own operation_id>", () => {
@@ -288,13 +307,21 @@ describe("EAT-R479 live Forge reconcile binding (G-FORGE)", () => {
     expect([bare.receipt.binding, bare.outcome]).toEqual(["operator-asserted", "ack:operator-asserted"]);
   });
 
-  it("R479-C2-BLOCKED: the forge-leg judge reads BLOCKED on G-FORGE naming the executable, the gate runs and the operation envelope for no leg, and naming the one missing item for the committed leg with an empty producer, with one gate run, and with readings that carry no operation id", () => {
+  it("R479-C2-BLOCKED: the forge-leg judge reads BLOCKED on G-FORGE naming the executable, the gate runs and the operation envelope for no leg, and naming the one missing item for the committed leg with an empty producer, with a producer lacking its SHA-256 or its version, with one gate run, with a gate run lacking its operation id or its process exit, with no readings, with readings that carry no operation id, and with only its second reading lacking the operation id", () => {
     const forge = leg("EAT-R479");
     const blocked = (missing: string[]) => ({ status: "BLOCKED", requirement: "EAT-R479", gate: "G-FORGE", missing });
     expect(judgeForgeLeg(null)).toEqual(blocked(["forge executable", "disposable fixture gate runs", "gate.status operation envelope"]));
     expect(judgeForgeLeg({ ...forge, producer: {} })).toEqual(blocked(["forge executable"]));
+    expect(judgeForgeLeg({ ...forge, producer: { ...object(forge.producer), executableSha256: undefined } })).toEqual(blocked(["forge executable"]));
+    expect(judgeForgeLeg({ ...forge, producer: { ...object(forge.producer), version: undefined } })).toEqual(blocked(["forge executable"]));
     expect(judgeForgeLeg({ ...forge, gateRuns: list(forge.gateRuns).slice(0, 1) })).toEqual(blocked(["disposable fixture gate runs"]));
+    expect(judgeForgeLeg({ ...forge, gateRuns: list(forge.gateRuns).map((run, index) => (index === 0 ? { ...object(run), operationId: undefined } : run)) })).toEqual(blocked(["disposable fixture gate runs"]));
+    expect(judgeForgeLeg({ ...forge, gateRuns: list(forge.gateRuns).map((run, index) => (index === 0 ? { ...object(run), processExit: null } : run)) })).toEqual(blocked(["disposable fixture gate runs"]));
+    expect(judgeForgeLeg({ ...forge, statusReads: [] })).toEqual(blocked(["gate.status operation envelope"]));
     expect(judgeForgeLeg({ ...forge, statusReads: list(forge.statusReads).map(read => ({ ...object(read), reading: { contract: FORGE_GATE_STATUS_CONTRACT, source: {} } })) })).toEqual(blocked(["gate.status operation envelope"]));
+    const oneMissing = JSON.parse(JSON.stringify(list(forge.statusReads))) as Array<{ reading: { source: Json } }>;
+    delete oneMissing[1]?.reading.source.operation_id;
+    expect(judgeForgeLeg({ ...forge, statusReads: oneMissing })).toEqual(blocked(["gate.status operation envelope"]));
   });
 });
 
@@ -316,7 +343,7 @@ describe("EAT-R480 authorized fork registry media (G-FORK-MEDIA)", () => {
     expect(judgeForkMedia(media.evidence)).toEqual(expected);
   });
 
-  it("R480-C1-FIELDS: against a capture planted here, the judge names each criterion-1 field one omission at a time, reads a capture of the upstream package BLOCKED, and measures a complete capture of the named fork identity", () => {
+  it("R480-C1-FIELDS: against a capture planted here, the judge names each criterion-1 field one omission at a time, reads BLOCKED a capture of the upstream package (with the fork or the upstream identity named as the authorized one) and a capture of a third package, and measures a complete capture of the named fork identity", () => {
     const complete = {
       authorizedForkIdentity: "@planted/fork-artifact",
       upstreamIdentity: "@planted/upstream-artifact",
@@ -330,6 +357,8 @@ describe("EAT-R480 authorized fork registry media (G-FORK-MEDIA)", () => {
     expect(judgeForkMedia(complete)).toEqual({ status: "measured", requirement: "EAT-R480", belongsToFork: true });
     expect(judgeForkMedia(null)).toEqual(blocked(["approved fork artifact identity", "remote registry-page render capture"]));
     expect(judgeForkMedia({ ...complete, capturedArtifact: { name: "@planted/upstream-artifact", version: "0.0.1" } })).toEqual(blocked(["a capture of the authorized fork artifact (the capture names another package)"]));
+    expect(judgeForkMedia({ ...complete, capturedArtifact: { name: "@planted/other-artifact", version: "0.0.1" } })).toEqual(blocked(["a capture of the authorized fork artifact (the capture names another package)"]));
+    expect(judgeForkMedia({ ...complete, authorizedForkIdentity: "@planted/upstream-artifact", capturedArtifact: { name: "@planted/upstream-artifact", version: "0.0.1" } })).toEqual(blocked(["a capture of the authorized fork artifact (the capture names another package)"]));
     const omissions: Array<[string, Json, string]> = [
       ["authorizedForkIdentity", { ...complete, authorizedForkIdentity: null }, "approved fork artifact identity"],
       ["capturedArtifact", { ...complete, capturedArtifact: { name: "@planted/fork-artifact" } }, "captured artifact identity and version"],
@@ -354,7 +383,7 @@ describe("EAT-R481 native-tier portability outside the developer layout (G-CROSS
     expect(judgeCrossHost(host.evidence)).toEqual(expected);
   });
 
-  it("R481-C1-FIELDS: against an independent-host receipt planted here, the judge names each field one omission at a time, reads a receipt with a binary under the developer home BLOCKED, and measures the complete receipt", () => {
+  it("R481-C1-FIELDS: against an independent-host receipt planted here, the judge names each field one omission at a time, reads BLOCKED a receipt whose only or second binary resolves under the developer home and one whose second binary has no version, and measures the complete receipt", () => {
     const complete = {
       developerHomeAvailable: false,
       path: "/opt/planted/bin",
@@ -367,6 +396,8 @@ describe("EAT-R481 native-tier portability outside the developer layout (G-CROSS
     const blocked = (missing: string[]) => ({ status: "BLOCKED", requirement: "EAT-R481", gate: "G-CROSS-HOST", missing });
     expect(judgeCrossHost(complete)).toEqual({ status: "measured", requirement: "EAT-R481", testExit: 0 });
     expect(judgeCrossHost({ ...complete, forgeTarget: { refusedMissing: true } })).toEqual({ status: "measured", requirement: "EAT-R481", testExit: 0 });
+    expect(judgeCrossHost({ ...complete, binaries: [{ name: "hx", version: "1", underDeveloperHome: false }, { name: "rf", version: "1", underDeveloperHome: true }] })).toEqual(blocked(["binaries resolved outside the developer home"]));
+    expect(judgeCrossHost({ ...complete, binaries: [{ name: "hx", version: "1", underDeveloperHome: false }, { name: "rf", version: null, underDeveloperHome: false }] })).toEqual(blocked(["resolved binaries and versions"]));
     expect(judgeCrossHost(null)).toEqual(blocked(["an independent host layout without the developer home", "that host's native-read receipt"]));
     const omissions: Array<[string, Json, string]> = [
       ["developerHomeAvailable", { ...complete, developerHomeAvailable: true }, "a host where the developer home is not available"],
@@ -440,14 +471,15 @@ describe("EAT-R483 explicit loopback binding for rf-spawned Dolt servers (G-RF)"
     expect(C238_BASELINE.map(argv => judgeDoltServerArgv(argv).verdict)).toEqual(["explicit-loopback", "explicit-loopback", "explicit-loopback", "explicit-loopback"]);
   });
 
-  it("R483-C2-FORMS: the launcher contract accepts each of the three explicit forms -H 127.0.0.1, --host 127.0.0.1 and --host=127.0.0.1 as one explicit-loopback flag, and reads dolt version (not a sql-server launch) as not-sql-server", () => {
+  it("R483-C2-FORMS: the launcher contract accepts each of the three explicit forms -H 127.0.0.1, --host 127.0.0.1 and --host=127.0.0.1 as one explicit-loopback flag, reads dolt version (not a sql-server launch) as not-sql-server, and judges dolt --data-dir /srv/planted sql-server --host 0.0.0.0 (a global flag before sql-server) as a launch refused wildcard-host", () => {
     expect(judgeDoltServerArgv(launch("-H", "127.0.0.1"))).toEqual({ verdict: "explicit-loopback", flags: [{ form: "-H", value: "127.0.0.1" }] });
     expect(judgeDoltServerArgv(launch("--host", "127.0.0.1"))).toEqual({ verdict: "explicit-loopback", flags: [{ form: "--host", value: "127.0.0.1" }] });
     expect(judgeDoltServerArgv(launch("--host=127.0.0.1"))).toEqual({ verdict: "explicit-loopback", flags: [{ form: "--host=", value: "127.0.0.1" }] });
     expect(judgeDoltServerArgv(["dolt", "version"])).toEqual({ verdict: "not-sql-server" });
+    expect(judgeDoltServerArgv(["dolt", "--data-dir", "/srv/planted", "sql-server", "--host", "0.0.0.0"])).toMatchObject({ verdict: "refused", reason: "wildcard-host" });
   });
 
-  it("R483-C2-REFUSALS: over captured argv the launcher contract refuses, each with its reason: no host flag; a trailing --host, -H before another flag and an empty --host=; 0.0.0.0, ::, [::] and * in each of the three forms; 10.0.0.5, 192.168.1.20, dolt.example.invalid, localhost, ::1 and 127.0.0.2; a second host flag carrying 0.0.0.0 or 10.0.0.5 beside 127.0.0.1; and the spellings -H127.0.0.1, -H=127.0.0.1 and --hostname", () => {
+  it("R483-C2-REFUSALS: over captured argv the launcher contract refuses, each with its reason: no host flag; a trailing --host, -H before another flag and an empty --host=; 0.0.0.0, ::, [::] and * in each of the three forms; 10.0.0.5, 192.168.1.20, dolt.example.invalid, localhost, ::1, 127.0.0.2 and 127.0.0.10; a second host flag carrying 0.0.0.0 or 10.0.0.5 beside 127.0.0.1; and the spellings -H127.0.0.1, -H=127.0.0.1 and --hostname", () => {
     const reason = (argv: readonly string[]): string => {
       const judged = judgeDoltServerArgv(argv);
       return judged.verdict === "refused" ? judged.reason : judged.verdict;
@@ -459,7 +491,7 @@ describe("EAT-R483 explicit loopback binding for rf-spawned Dolt servers (G-RF)"
     for (const wildcard of ["0.0.0.0", "::", "[::]", "*"]) {
       expect([reason(launch("-H", wildcard)), reason(launch("--host", wildcard)), reason(launch(`--host=${wildcard}`))], wildcard).toEqual(["wildcard-host", "wildcard-host", "wildcard-host"]);
     }
-    for (const other of ["10.0.0.5", "192.168.1.20", "dolt.example.invalid", "localhost", "::1", "127.0.0.2"]) {
+    for (const other of ["10.0.0.5", "192.168.1.20", "dolt.example.invalid", "localhost", "::1", "127.0.0.2", "127.0.0.10"]) {
       expect(reason(launch("--host", other)), other).toBe("host-not-127.0.0.1");
     }
     expect(reason(launch("-H", "127.0.0.1", "--host", "0.0.0.0"))).toBe("wildcard-host");
@@ -467,12 +499,16 @@ describe("EAT-R483 explicit loopback binding for rf-spawned Dolt servers (G-RF)"
     for (const spelling of ["-H127.0.0.1", "-H=127.0.0.1", "--hostname"]) expect(reason(launch(spelling)), spelling).toBe("unrecognized-host-form");
   });
 
-  it("R483-C1-LISTENER-REFUSALS: over literal ss lines the listener judge accepts one 127.0.0.1 listener on the ledger port and refuses a pid with no listener, a listener at 0.0.0.0, [::] or 127.0.0.2, and a ledger port the pid does not listen on", () => {
+  it("R483-C1-LISTENER-REFUSALS: over literal ss lines the listener judge accepts one 127.0.0.1 listener on the ledger port and refuses a pid with no listener, a 0.0.0.0 listener listed after or before a 127.0.0.1 one, a 0.0.0.0 listener whose users column names another process before this pid, a listener at [::], 127.0.0.2 or 127.0.0.10, and a ledger port the pid does not listen on", () => {
     const ss = (address: string, port: number, pid: number): string => `LISTEN 0      4096   ${address}:${port}   0.0.0.0:*    users:(("dolt",pid=${pid},fd=17))`;
     const judge = (lines: string[], port = 41687) => judgeLoopbackListeners({ pid: 4242, port, listeners: parseSsListeners(lines.join("\n")) });
     expect(judge([ss("127.0.0.1", 41687, 4242)])).toEqual({ verdict: "loopback-only", addresses: ["127.0.0.1:41687"] });
     expect(judge([ss("127.0.0.1", 41687, 4343)])).toEqual({ verdict: "refused", reason: "no-listener-for-pid", addresses: [] });
     expect(judge([ss("127.0.0.1", 41687, 4242), ss("0.0.0.0", 41688, 4242)])).toEqual({ verdict: "refused", reason: "listener-not-127.0.0.1", addresses: ["127.0.0.1:41687", "0.0.0.0:41688"] });
+    expect(judge([ss("0.0.0.0", 41688, 4242), ss("127.0.0.1", 41687, 4242)])).toEqual({ verdict: "refused", reason: "listener-not-127.0.0.1", addresses: ["0.0.0.0:41688", "127.0.0.1:41687"] });
+    const shared = `LISTEN 0      4096   0.0.0.0:41688   0.0.0.0:*    users:(("sh",pid=9,fd=3),("dolt",pid=4242,fd=18))`;
+    expect(judge([ss("127.0.0.1", 41687, 4242), shared])).toEqual({ verdict: "refused", reason: "listener-not-127.0.0.1", addresses: ["127.0.0.1:41687", "0.0.0.0:41688"] });
+    expect(judge([ss("127.0.0.10", 41687, 4242)])).toEqual({ verdict: "refused", reason: "listener-not-127.0.0.1", addresses: ["127.0.0.10:41687"] });
     expect(judge([ss("[::]", 41687, 4242)])).toEqual({ verdict: "refused", reason: "listener-not-127.0.0.1", addresses: ["[::]:41687"] });
     expect(judge([ss("127.0.0.2", 41687, 4242)])).toEqual({ verdict: "refused", reason: "listener-not-127.0.0.1", addresses: ["127.0.0.2:41687"] });
     expect(judge([ss("127.0.0.1", 41687, 4242)], 41690)).toEqual({ verdict: "refused", reason: "ledger-port-not-listening", addresses: ["127.0.0.1:41687"] });
