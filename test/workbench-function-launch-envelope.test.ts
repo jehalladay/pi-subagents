@@ -31,6 +31,11 @@
  * NOT_REACHED and the kind-refusal rows read each EXECUTE_HOST_MODES mode and no other (E2 and E3 are both detached).
  * Receipts are append-only (R539), so the receipt's 2026-11-11 entry keeps its E3 line as written; J1 reads the entry
  * ENTRY_HEADING opens (the 2026-11-12 entry wb-djk5 appended).
+ *
+ * wb-dhmx (the structural-exit child of wb-9btr, ruling M:78806) carries wb-9btr cut #4, whose EAT-R323 compile check adds
+ * definition-syntax-invalid to ExecuteLaunchRefusal. No row reaches it: src/workbench/execute-tool.ts compiles a saved source
+ * only on the script path, after the kind refusal, so it joins NOT_REACHED with E1 and E2, as source-unavailable and the other
+ * script-path codes do. The judged entry gains its NOT_REACHED line and an amendment line saying so; no line of it is removed.
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -205,6 +210,9 @@ const NOT_REACHED: Readonly<Record<string, string>> = {
   "source-unavailable": "E1, E2: decided after the kind refusal, which answers these rows' function definitions first",
   "definition-digest-mismatch": "E1, E2: decided after the kind refusal, which answers these rows' function definitions first",
   "definition-schema-mismatch": "E1, E2: decided after the kind refusal, which answers these rows' function definitions first",
+  // wb-dhmx (wb-9btr EAT-R323): the compile check runs on the script path once the saved source is resolved, so the kind refusal
+  // answers E1 and E2 before it.
+  "definition-syntax-invalid": "E1, E2: decided after the kind refusal, which answers these rows' function definitions first",
   "launch-failed": "E1, E2: decided after the kind refusal, which answers these rows' function definitions first",
 };
 /** N1: unreadable grant lists, each written as the sandbox settings file's workbench.capabilityGrants. */
@@ -383,7 +391,7 @@ const ROWS_SHAPE = [
 ] as const;
 const BUILDER_SHAPE = ["B1:accepted:false", "B2:launched:false", "B3:refused:false", "B4:refused:false", "B5:launched:true"] as const;
 const CLAIMS_SHAPE = ["C1:8", "C2:5", "C3:1", "C4:1", "C5:2", "C6:1", "C7:1", "C8:1", "C9:2"] as const;
-const NOT_REACHED_SHAPE = ["unknown-permission-data:N1", "missing-detach-grant:E3", "source-unavailable:E1", "definition-digest-mismatch:E1", "definition-schema-mismatch:E1", "launch-failed:E1"] as const;
+const NOT_REACHED_SHAPE = ["unknown-permission-data:N1", "missing-detach-grant:E3", "source-unavailable:E1", "definition-digest-mismatch:E1", "definition-schema-mismatch:E1", "definition-syntax-invalid:E1", "launch-failed:E1"] as const;
 
 /** A row as the receipt's lines hold it: its id, then its request and expectation as JSON. */
 const rowText = (row: EnvelopeRow): string => `${row.id} ${JSON.stringify({ grants: row.grants, params: row.params, members: row.members, code: row.code })}`;

@@ -2,7 +2,8 @@
  * wb-9btr ([DX P03] of the pi-system-dx-triage-2026-11-11 program, which lives on origin/master at 0a5ac3a3 and not in this
  * trunk's tree; its requirement rows are in that program's req-r-lx shard): EAT-R323 (a syntactically invalid definition is
  * refused at launch) and EAT-R322 criteria 2 and 3. Cut #2 cures refusal #1's U1, U2 and U3, cut #3 cures refusal #2's U1 and U2,
- * and cut #4 cures refusal #3's U1 (docs/workbench/receipts/wb-9btr.md).
+ * cut #4 cures refusal #3's U1, and the structural-exit child wb-dhmx cures refusal #4's U1 for its five label members
+ * (docs/workbench/receipts/wb-9btr.md).
  * The criterion lines these cases pin, quoted:
  *   EAT-R323 (1) "workflow_execute refuses the broken definition synchronously with typed code `definition-syntax-invalid`
  *                carrying the line (no ok:true, no background run created)."
@@ -43,16 +44,20 @@
  * receipt's rendered SYNTAX_CASES item, this paragraph's reading of the receipt through marked's lexer, the reader's "read as the
  * page renders" and the receipt's cut #3 sentence on that reading. Cut #4 keeps the reading on the rendered item in the rule-14
  * enumerate-the-resolvable form: those words claim exactly the modes HIDING_MODES pins, and the named residual below carries a
- * pinned quiet row.
+ * pinned quiet row. The structural-exit child wb-dhmx (refusal #4, ruling M:78806; the claim shape stays frozen) keeps those words
+ * and makes them true for the five label members refusal #4 found: HIDING_MODES pins each one as a label mode, and THE READER
+ * matches the label in the item's shown text whatever follows it, white space before the label aside.
  * THE READER: R0 lexes the receipt with marked (gfm), the lexer test/workbench-receipts-convention.test.ts reads its page with. The
  * page must hold no html token anywhere (block, inline, nested or in a table cell) and no link reference definition anywhere
  * (marked's links map, and def tokens at any depth), no character outside printable ASCII (a line end aside) and no character
- * reference in its shown text; exactly one list item may show text that begins "SYNTAX_CASES " (its text read at any depth, a
- * heading, code or an image's alt text included); and that item may hold only paragraph text made of text, escape and code-span
- * tokens. R0 refuses any other page by naming what it found, and reads the
+ * reference in its shown text; exactly one list item may show text that begins "SYNTAX_CASES" (its text read at any depth, a
+ * heading, code or an image's alt text included, white space before the label aside), whatever follows the label: a space, a soft
+ * or hard line break, a nested list, a colon or a period; and that item may hold only paragraph text made of text, escape and
+ * code-span tokens. R0 refuses any other page by naming what it found, and reads the
  * shapes from the item's text with white space collapsed as the page collapses it, each spelled `<id>` <line>:<column>, then
  * pastEnd where it applies.
- * HIDING_MODES (rule 16 frozen shape; the receipt's HIDING_MODES item, read the same way, is its anchor outside this file): each
+ * HIDING_MODES (rule 16 frozen shape; the receipt's HIDING_MODES item, then its LABEL_MODES item for the six rows the wb-dhmx
+ * entry adds, each read the same way, are its anchor outside this file): each
  * mode plants one edit on the receipt's text in memory, and R0 holds the reading the reader returns for each planted page. These
  * pinned modes are each refused by name: html-comment (the item inside an HTML comment), html-in-table-cell (an HTML comment in a
  * table cell), definition-in-item and definition-at-end (a link reference definition inside the item holding its sixth shape, or
@@ -62,10 +67,18 @@
  * spelled as a character reference or as a look-alike character), second-item (a second item showing SYNTAX_CASES in bold),
  * heading-item, code-item and image-label (a second item showing SYNTAX_CASES as a heading, as code or as an image's alt text),
  * label-by-reference and label-look-alike (a second item whose label is spelled with a character reference or a look-alike
- * letter) and bullet-removed (the item's bullet removed). The pinned mode soft-line-break (a soft line break inside the sixth shape) reads the
- * six shapes, as the page shows them.
+ * letter) and bullet-removed (the item's bullet removed), and, added by wb-dhmx, label-soft-break, label-nested-list,
+ * label-hard-break, label-colon and label-period (a second item whose label is followed by a soft line break, a nested list, a
+ * hard line break, a colon or a period: refusal #4's C1, C3, C6, C2 and C7) and label-leading-space (a second item whose label is
+ * a code span that starts with a space). Each of the five member rows names its member, and R0 holds
+ * it to its witness: its page holds a second labelled item that a selection by the item's raw text beginning "SYNTAX_CASES " does
+ * not count and THE READER does, and no two of the five plant the same page. The pinned mode soft-line-break (a soft line break
+ * inside the sixth shape) reads the six shapes, as the page shows them.
  * NAMED RESIDUAL plain-text-shape (not claimed): a shape written outside the spelling above, in plain text, is not read as a
  * shape. Its quiet row is HIDING_MODES's plain-text-shape row, which pins today's reading of a page that adds one (the six shapes).
+ * NAMED RESIDUAL non-item-label (not claimed; refusal #4's F6): a block outside every list item whose shown text begins
+ * "SYNTAX_CASES" (a paragraph, a heading or a table row) is not counted, since THE READER counts list items only. Its quiet row is
+ * HIDING_MODES's label-paragraph row, which pins today's reading of a page that ends with such a paragraph (the six shapes).
  * R0 also holds REACHED: R323-S1, R323-E1, R323-W1 and R322-V2 each record every shape, in table order, and R323-S3 its two, after
  * the last assertion its loop makes for that shape.
  * THE RUN PIN, test/workflow-script-syntax-refusal.census.ts (census tier): it reads the gate's own test report and reds unless the
@@ -256,11 +269,18 @@ function visibleText(tokens: readonly Token[]): string {
   }
   return out;
 }
+/**
+ * Whether a list item is labelled (refusal #4, U1): its shown text begins with the label, white space before the label aside and
+ * whatever follows it - a space, a soft or hard line break, a nested list, a colon or a period - so the label is read as the page
+ * shows it, not as the label and one space.
+ */
+const labelled = (item: Tokens.ListItem, label: string): boolean => visibleText(item.tokens).trimStart().startsWith(label);
 const CHARACTER_REFERENCE = /&(?:#\d+|#[xX][0-9a-fA-F]+|[A-Za-z][A-Za-z0-9]*);/;
 type ItemReading = { readonly text: string } | { readonly refusal: string };
 /**
- * The page's one list item whose shown text begins `${label} `, read as marked's page shows it (refusal #3, U1; the reader the
- * header states): a refusal naming what the page or the item holds outside the reader's grammar (raw html, a link reference
+ * The page's one list item whose shown text begins with `label` (labelled: white space before the label aside, whatever follows
+ * it), read as marked's page shows it (refusal #3, U1; refusal #4, U1; the reader the header states): a refusal naming what the
+ * page or the item holds outside the reader's grammar (raw html, a link reference
  * definition, a character outside printable ASCII or a character reference in shown text anywhere on the page; not one such
  * item; a block or inline token in the item other than paragraph text, escapes and code spans), or the item's text with each code
  * span in backticks (the receipt's spelling) and white space collapsed as the page collapses it.
@@ -277,7 +297,7 @@ function receiptItem(markdown: string, label: string): ItemReading {
   if (outside !== undefined) return { refusal: `character U+${(outside.codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0")}` };
   // A reference in shown text renders as its character; inside a code span or code block it renders as written.
   if (tokens.some(token => isText(token) && (token.tokens === undefined || token.tokens.length === 0) && CHARACTER_REFERENCE.test(token.text))) return { refusal: "reference" };
-  const items = tokens.filter(isListItem).filter(item => visibleText(item.tokens).startsWith(`${label} `));
+  const items = tokens.filter(isListItem).filter(item => labelled(item, label));
   if (items.length !== 1) return { refusal: `items ${items.length}` };
   let text = "";
   for (const block of items[0].tokens) {
@@ -314,6 +334,8 @@ interface HidingMode {
   readonly id: string;
   /** A named residual's quiet row (rule 19(d)): it pins today's reading of an escape the census does not claim. */
   readonly residual?: true;
+  /** The refusal #4 member a label row pins (C1, C3, C6, C2 or C7): R0 holds its page to one a raw-text selection misses. */
+  readonly member?: string;
   /** The planted page, from the receipt's text and its SYNTAX_CASES item's line. */
   readonly plant: (page: string, line: string) => string;
 }
@@ -343,6 +365,13 @@ const HIDING_MODES: readonly HidingMode[] = [
   { id: "bullet-removed", plant: (page, line) => rewrite(page, line, `\n${line.slice(2)}\n`) },
   { id: "soft-line-break", plant: sixthAs("; `block left open`\n  4:2 pastEnd.") },
   { id: "plain-text-shape", residual: true, plant: sixthAs("; `block left open` 4:2 pastEnd; seventh shape 9:9.") },
+  { id: "label-soft-break", member: "C1", plant: (page, line) => rewrite(page, line, `${line}\n- SYNTAX_CASES\n  (a second list): \`missing paren on line 6\` 6:17.`) },
+  { id: "label-nested-list", member: "C3", plant: (page, line) => rewrite(page, line, `${line}\n- SYNTAX_CASES\n  - \`missing paren on line 6\` 6:17`) },
+  { id: "label-hard-break", member: "C6", plant: (page, line) => rewrite(page, line, `${line}\n- SYNTAX_CASES\\\n  (a second list): \`missing paren on line 6\` 6:17.`) },
+  { id: "label-colon", member: "C2", plant: (page, line) => rewrite(page, line, `${line}\n- SYNTAX_CASES: \`missing paren on line 6\` 6:17.`) },
+  { id: "label-period", member: "C7", plant: (page, line) => rewrite(page, line, `${line}\n- SYNTAX_CASES. \`missing paren on line 6\` 6:17.`) },
+  { id: "label-leading-space", plant: (page, line) => rewrite(page, line, `${line}\n- \` SYNTAX_CASES\` (a second list): \`missing paren on line 6\` 6:17.`) },
+  { id: "label-paragraph", residual: true, plant: page => `${page}\nSYNTAX_CASES (a second list): \`missing paren on line 6\` 6:17.\n` },
 ];
 /** HIDING_MODES's frozen readings (rule 16), in table order. */
 const FROZEN_READINGS: readonly string[] = [
@@ -370,23 +399,46 @@ const FROZEN_READINGS: readonly string[] = [
   "bullet-removed refused items 0",
   "soft-line-break reads the six shapes",
   "plain-text-shape (residual) reads the six shapes",
+  "label-soft-break (C1) refused items 2",
+  "label-nested-list (C3) refused items 2",
+  "label-hard-break (C6) refused items 2",
+  "label-colon (C2) refused items 2",
+  "label-period (C7) refused items 2",
+  "label-leading-space refused items 2",
+  "label-paragraph (residual) reads the six shapes",
 ];
-/** Each mode's reading of its planted page, as R0 and the receipt spell it: the mode id, (residual) for a quiet row, then the reading. */
+/** Each mode's reading of its planted page, as R0 and the receipt spell it: the mode id, (residual) for a quiet row or the member a label row pins, then the reading. */
 function hidingReadings(page: string, line: string, six: readonly string[]): string[] {
   return HIDING_MODES.map(mode => {
     const planted = mode.plant(page, line);
     const read = planted === page ? { refusal: "plant did not take" } : receiptItem(planted, "SYNTAX_CASES");
     const shapes = "refusal" in read ? [] : shapesIn(read.text);
     const reading = "refusal" in read ? `refused ${read.refusal}` : JSON.stringify(shapes) === JSON.stringify(six) ? "reads the six shapes" : `reads ${shapes.length} shapes`;
-    return `${mode.id}${mode.residual ? " (residual)" : ""} ${reading}`;
+    return `${mode.id}${mode.residual ? " (residual)" : ""}${mode.member === undefined ? "" : ` (${mode.member})`} ${reading}`;
   });
 }
-/** HIDING_MODES's anchor outside this file: the receipt's HIDING_MODES item, read like SYNTAX_CASES's, one "`<id>` <reading>" per mode. */
-function receiptHidingModes(page: string): string[] {
-  const read = receiptItem(page, "HIDING_MODES");
-  if ("refusal" in read) return [`${RECEIPT} refused: ${read.refusal}`];
+/**
+ * The list items of a page that two selections count, as "raw <n>, shown <n>": a selection by the item's raw text beginning
+ * `SYNTAX_CASES ` (cut #3's, which each refusal #4 member escapes) and this reader's (labelled, the predicate receiptItem calls).
+ */
+function labelCounts(markdown: string): string {
+  const items = lexed(new Lexer({ gfm: true }).lex(markdown)).filter(isListItem);
+  return `raw ${items.filter(item => item.text.startsWith("SYNTAX_CASES ")).length}, shown ${items.filter(item => labelled(item, "SYNTAX_CASES")).length}`;
+}
+/** The receipt's item with this label, read like SYNTAX_CASES's, as its list of "`<id>` <reading>" entries, one per mode. */
+function receiptModeList(page: string, label: string): string[] {
+  const read = receiptItem(page, label);
+  if ("refusal" in read) return [`${RECEIPT} refused at ${label}: ${read.refusal}`];
   const list = read.text.slice(read.text.indexOf("): ") + 3).replace(/\.$/, "");
   return list.split("; ").map(entry => entry.replace(/^`([^`]+)`/, "$1"));
+}
+/**
+ * HIDING_MODES's anchor outside this file: the receipt's HIDING_MODES item (the cut #4 entry, the first twenty-four rows), then
+ * its LABEL_MODES item (the wb-dhmx entry, the six rows that child adds at the table's end; the receipt is append-only, so the
+ * added rows have their own item).
+ */
+function receiptHidingModes(page: string): string[] {
+  return [...receiptModeList(page, "HIDING_MODES"), ...receiptModeList(page, "LABEL_MODES")];
 }
 /** The census-tier run pin, this file's anchor for a skip of every registration here at once; R0 holds its bytes. */
 const RUN_PIN = "test/workflow-script-syntax-refusal.census.ts";
@@ -738,7 +790,16 @@ it("R0 census over ROWS, registered last at file scope: the header's claims bloc
   ).toEqual([true]);
   const readings = hidingReadings(page, itemLines[0] ?? "", shapes);
   expect(readings, "HIDING_MODES (rule 16 frozen shape): each planted page reads as pinned, the residual's quiet row included").toEqual(FROZEN_READINGS);
-  expect(receiptHidingModes(page), "the receipt's HIDING_MODES item lists each mode with its reading, the table's anchor outside this file").toEqual(readings);
+  expect(receiptHidingModes(page), "the receipt's HIDING_MODES item, then its LABEL_MODES item, list each mode with its reading, the table's anchor outside this file").toEqual(readings);
+  // The member rows (refusal #4's C1, C3, C6, C2 and C7, wb-dhmx): each plants its own second item, one a raw-text selection misses.
+  const members = HIDING_MODES.filter(mode => mode.member !== undefined);
+  expect(members.map(mode => mode.member), "the label rows pin refusal #4's five members, in the bead's order").toEqual(["C1", "C3", "C6", "C2", "C7"]);
+  const memberPages = members.map(mode => mode.plant(page, itemLines[0] ?? ""));
+  expect(
+    members.map((mode, index) => `${mode.id} (${mode.member}): ${labelCounts(memberPages[index] ?? "")}`),
+    "each member row's page holds a second labelled item that the raw-text selection does not count and this reader does",
+  ).toEqual(members.map(mode => `${mode.id} (${mode.member}): raw 1, shown 2`));
+  expect(new Set(memberPages).size, "no two member rows plant the same page").toBe(members.length);
   const ids = SYNTAX_CASES.map(c => c.id);
   expect(Object.fromEntries(EACH_SHAPE_CASES.map(id => [id, reachedBy(id)])), "each case claiming every SYNTAX_CASES shape reached every one, in table order, after the last assertion its loop makes for it").toEqual(Object.fromEntries(EACH_SHAPE_CASES.map(id => [id, ids])));
   expect(reachedBy("R323-S3"), "R323-S3 reached the two shapes it runs through the worker").toEqual(["missing paren on line 6", "Date redeclared over the prelude"]);
