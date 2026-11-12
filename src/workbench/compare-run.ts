@@ -7,8 +7,10 @@
  * reaches a comparison through this builder, and a page with no workflow root yields no row at all (docs/workbench/11
  * "Missing native measured metrics yields unknown, not a claimed optimization").
  *
- * Every read is one synchronous pass over the first COMPARE_PAGE_LIMIT nodes of the invocation, so the rows, their
- * freshness and the native references that bind them describe the same page. Freshness is the page's own, never assumed:
+ * The builder reads the projection once per invocation: the first COMPARE_PAGE_LIMIT nodes of the invocation, a page the
+ * latency selector, the freshness read and the native references all take, so the rows, their freshness and the native
+ * references that bind them describe the same page (the registered workflow_compare reads each task once, wb-h8f.7).
+ * Freshness is the page's own, never assumed:
  * current only when every examined node is current (a read-current snapshot), stale when any is stale, else unknown.
  * Native references are the page's non-host references, as the registered workflow_compare read them before this
  * builder, so a row whose source is a host node is never receipt-bound and the comparison withholds it.
@@ -38,7 +40,8 @@ export function nativeCompareRun(projection: Pick<ObservationProjection, "query"
   const page = projection.query({ scope, invocationId, limit: COMPARE_PAGE_LIMIT });
   // The projection binds scope and invocation itself; the latency selector re-checks both, and so does the freshness read.
   const examined = page.nodes.filter(node => node.scope.workspace === scope.workspace && node.scope.principal === scope.principal && node.invocationId === invocationId);
-  const report = selectLatencyDecomposition(projection, { scope, invocationId, limit: COMPARE_PAGE_LIMIT });
+  // The selector takes this same page, never a second read of the projection.
+  const report = selectLatencyDecomposition({ query: () => page }, { scope, invocationId, limit: COMPARE_PAGE_LIMIT });
   return {
     snapshot: input.snapshot,
     inputDigest: input.inputDigest,
