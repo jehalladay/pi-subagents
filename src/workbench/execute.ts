@@ -154,8 +154,8 @@ function grantList(value: unknown): string[] | undefined {
  * reference, digest-pinned definition, hostMode allowlist, policy, input, then authority. The definition is checked
  * before any grant is consulted, so an unpinned reference is never authorized. Reasons never echo caller text. For a
  * function definition, at the request forms the EAT-R154 rows of test/workbench-function-authority.test.ts list, the
- * policy and input rules judge the request's policy and input through withoutBeadsNotes; other request forms are NOT
- * CLAIMED.
+ * policy and input rules judge the request's policy and input through withoutBeadsNotes, each as its own carrier (the
+ * policy's locations include a record held in a list; the input's do not); other request forms are NOT CLAIMED.
  */
 export function decideExecute(request: WorkflowExecuteRequest, host: ExecuteHostContext): ExecuteDecision {
   const invocationId = plainObject(host) && cleanText(host.invocationId) ? host.invocationId : undefined;
@@ -182,15 +182,15 @@ export function decideExecute(request: WorkflowExecuteRequest, host: ExecuteHost
     return refuse("unknown-host-mode", "validation", "unknown hostMode", invocationId);
   }
   const mode = hostMode.value as ExecuteHostMode;
-  const judged = (value: unknown): unknown => (kind === "function" ? withoutBeadsNotes(value) : value);
+  const judged = (value: unknown, carrier: "input" | "policy"): unknown => (kind === "function" ? withoutBeadsNotes(value, carrier) : value);
   let policyCopy: JsonValue | undefined;
   if (policy.value !== undefined) {
-    const policyValue = judged(policy.value);
+    const policyValue = judged(policy.value, "policy");
     const text = plainObject(policyValue) ? boundedJson(policyValue, POLICY_BYTES) : undefined;
     if (text === undefined) return refuse("malformed-policy", "validation", "malformed execute policy", invocationId);
     policyCopy = deepFreeze(JSON.parse(text) as JsonValue);
   }
-  const inputText = boundedJson(judged(input.value), INPUT_BYTES);
+  const inputText = boundedJson(judged(input.value, "input"), INPUT_BYTES);
   if (inputText === undefined) return malformed();
   const grants = grantList(host.grants);
   if (!grants) return refuse("unknown-permission-data", "authorization", "unknown permission data", invocationId);
