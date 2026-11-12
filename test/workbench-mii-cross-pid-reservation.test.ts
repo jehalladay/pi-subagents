@@ -1,5 +1,5 @@
 /**
- * wb-yk1k (MII P03+ packet), cut #2 (the respin of cut #1 after its refusal #1): EAT-R399 criterion 1 only, and two
+ * wb-yk1k (MII P03+ packet), cut #3 (the respin of cut #2 after refusal #2): EAT-R399 criterion 1 only, and two
  * in-process cases of the reservation-store form, R399-STORE-VALIDATION and R399-RECORD-NAMING, that pin forms the
  * comments of src/workbench/source-admission.ts state. Requirement text:
  * docs/workbench/programs/mechanical-interop-integrity-2026-11-10/requirements/ATOMIC-REQUIREMENTS.md at Pi master 347d58ea
@@ -47,14 +47,18 @@
  *   R399-C1-SHAPE: test/fixtures/mii-r399-requirement.json, the anchor outside this file's literals, vendors EAT-R399's
  *     lines 250-272 at 347d58ea: its id and line label are EAT-R399 and 250-272, its text is 23 lines, the first opening
  *     with "## EAT-R399 ", and the SHA-256 of those lines, each followed by a line feed, is VENDORED_LINES_SHA256, the
- *     digest of lines 250-272 of the page at 347d58ea that this cut recorded (git show 347d58ea:<page> | sed -n 250,272p);
- *     this header names the fixture's page and commit ("Requirement text: <requirements.path> at Pi master <the first 8 hex
- *     digits of commit>"); the statement, criterion 1 and negative mutant this header quotes equal the vendored lines, each
- *     under its own label and the line number the fixture gives that line (the statement under "The statement, line 254:",
- *     criterion 1 under "Criterion 1, line 259:" and the negative mutant under "The negative mutant, line 262:"), and the
- *     header's "Line 263 names the planned evidence label" is followed by the label the vendored V-tier line names;
- *     ALIAS_KINDS equals the alias kinds the vendored criterion 1 names (direct, symlink and dot); and ALIAS_PAIRS equals
- *     the frozen list direct+symlink, direct+dot, symlink+dot, which is each unordered pair of those kinds once.
+ *     digest of lines 250-272 of the page at 347d58ea that cut #2 recorded (git show 347d58ea:<page> | sed -n 250,272p).
+ *     In this header's prose (headerProse: the lines of this comment, each without its comment prefix and trimmed, the
+ *     empty ones dropped, joined by single spaces), QUOTE_LABEL matches exactly the three labels openingParagraph composes
+ *     from the fixture, in order, one naming the statement, one criterion 1 and one the negative mutant, each with the
+ *     line number the fixture gives that line; PAGE_WORDS and EVIDENCE_WORDS each match once; and the vendored statement,
+ *     criterion 1 and negative mutant each occur in the prose in double quotes once. Read after those counts, the prose
+ *     before its first " The trial. " holds six double quote marks and equals the paragraph openingParagraph composes:
+ *     SCOPE_SENTENCE, then the sentence naming the fixture's requirements.path and the first 8 hex digits of its commit,
+ *     then each of the three vendored lines in double quotes right after its label, then the sentence giving the V-tier
+ *     line's number and the evidence label that line names. ALIAS_KINDS equals the alias kinds the vendored criterion 1
+ *     names (direct, symlink and dot); and ALIAS_PAIRS equals the frozen list direct+symlink, direct+dot, symlink+dot,
+ *     which is each unordered pair of those kinds once.
  *   R399-STORE-VALIDATION: the REAL WriterLeases in this process, over a fresh store. The constructor throws a validation
  *     CapabilityError with the message "A writer reservation store names an absolute directory." for the options null,
  *     { store: "relative-store" }, { store: 7 } and { store: the store's path followed by U+000A }. A registry over the
@@ -71,8 +75,11 @@
  *     hex SHA-256 of the UTF-8 bytes of one of the two realpaths followed by ".json".
  *   ROSTER: the tests this file registers are exactly the ROSTER titles, in order, each in run mode and none marked to fail,
  *     ROSTER registered last; the leading ids of their titles are exactly the ids that open this PINNED READER SET's
- *     bullets, read from this file's own source; and every R399 case id the source of src/workbench/source-admission.ts
- *     cites is one of those ids.
+ *     bullets, read from this file's own source; every R399 case id the source of src/workbench/source-admission.ts
+ *     cites is one of those ids; each declaration line SRC_CITATIONS names occurs in that source once, as a whole line;
+ *     and the R399 case ids the source cites, in source order, are exactly the ids SRC_CITATIONS lists, each declaration's
+ *     ids cited, in order, by the JSDoc comment that ends on the line right before it (the comments of WriterLeases, its
+ *     constructor, acquire and reservationPath).
  * NOT CLAIMED by this census: EAT-R399 criteria 2 and 3 (a fresh process reading the persisted owner, generation and
  * custody state; a second registry in one process; the receipt's store facts; restart; acquisition-store failure). When
  * and how a reservation is released (EAT-R400, EAT-R403) is NOT CLAIMED by this census. The bead's other rows (EAT-R400
@@ -82,7 +89,10 @@
  * system other than the scratch directory's are NOT CLAIMED by this census. Which child wins a race, and how close
  * together the two requests run, are NOT CLAIMED by this census. Power-loss durability is NOT CLAIMED by this census.
  * Any options, store, root or invocation that R399-STORE-VALIDATION does not plant, and the name of the record file of
- * any root R399-RECORD-NAMING does not plant, are NOT CLAIMED by this census.
+ * any root R399-RECORD-NAMING does not plant, are NOT CLAIMED by this census. Outside this header's opening paragraph,
+ * any label that QUOTE_LABEL does not match, with any quote after it other than the vendored statement, criterion 1 and
+ * negative mutant, and any page, commit or evidence label named in words that PAGE_WORDS and EVIDENCE_WORDS do not match,
+ * are NOT CLAIMED by this census.
  * RESIDUAL: none claimed.
  */
 import { type ChildProcess, execFileSync, spawn } from "node:child_process";
@@ -126,6 +136,30 @@ const ROOT_VALIDATION = "A writer reservation names a workspace root that resolv
  * wb-yk1k cut #2 from git show 347d58ea914bdcbdb979a162dcbcd224225ef072:<requirements.path> | sed -n 250,272p.
  */
 const VENDORED_LINES_SHA256 = "e8d65ac05b6bafa4dbc508e8e59110d00db1d50310b14963b862b96748f42d89";
+/** This header's first sentence: R399-C1-SHAPE composes the header's opening paragraph from it and the fixture. */
+const SCOPE_SENTENCE =
+  "wb-yk1k (MII P03+ packet), cut #3 (the respin of cut #2 after refusal #2): EAT-R399 criterion 1 only, and two in-process cases of the reservation-store form, R399-STORE-VALIDATION and R399-RECORD-NAMING, that pin forms the comments of src/workbench/source-admission.ts state.";
+/**
+ * R399-C1-SHAPE's label form: the statement, criterion <n> or the negative mutant, then a comma, the word line, a number and a
+ * colon, in any letter case. The opening paragraph quotes each vendored line right after one such label.
+ */
+const QUOTE_LABEL = /(?:the statement|criterion \d+|the negative mutant), line \d+:/gi;
+/** R399-C1-SHAPE's opening words of the page-and-commit sentence, in any letter case. */
+const PAGE_WORDS = /requirement text:/gi;
+/** R399-C1-SHAPE's words of the evidence-label sentence, in any letter case. */
+const EVIDENCE_WORDS = /names the planned evidence label/gi;
+/** An R399 case id as src/workbench/source-admission.ts cites one. */
+const R399_CASE_ID = /(?<![\w-])R399-[A-Z0-9]+(?:-[A-Z0-9]+)*/g;
+/**
+ * The R399 case ids src/workbench/source-admission.ts cites, in source order: each declaration line, and the ids the JSDoc
+ * comment that ends right before it cites, in order (ROSTER).
+ */
+const SRC_CITATIONS: readonly (readonly [string, readonly string[]])[] = [
+  ["export class WriterLeases {", ["R399-C1-STORE", "R399-C1-ADMISSION", "R399-STORE-VALIDATION", "R399-RECORD-NAMING"]],
+  ["  constructor(options?: WriterReservationStore) {", ["R399-STORE-VALIDATION"]],
+  ["  acquire(canonicalRoot: string, invocationId: string): WriterLease | undefined {", ["R399-STORE-VALIDATION"]],
+  ["function reservationPath(store: string, canonicalRoot: string): string {", ["R399-RECORD-NAMING"]],
+];
 
 /** The criterion's alias kinds, each spelled for ws by spellingOf. */
 const ALIAS_KINDS = ["direct", "symlink", "dot"] as const;
@@ -142,10 +176,10 @@ const ROSTER = [
   "R399-C1-STORE two children over one store, released together, acquire ws through each pair of its direct, symlink and dot spellings: exactly one gets a lease naming the realpath and its own invocation, the other gets undefined, and holder read in the parent names that invocation through every spelling",
   "R399-C1-ADMISSION two children running admitSourceWrite over one store, released together, on each pair of ws's spellings: exactly one enters its dispatch with a lease naming the realpath, the other refuses writer-held without entering, and the entered write then dispatches",
   "R399-C1-DETECTOR the same admission race, released together, with new WriterLeases() in each child, the named mutant's per-process registry, enters both dispatches, so the race reads two writers when two exist",
-  "R399-C1-SHAPE the fixture's lines hash to the digest recorded from EAT-R399's lines 250-272 at 347d58ea, and this header names the fixture's page and commit and quotes its statement, criterion 1 and negative mutant each under its own label and fixture line number; ALIAS_KINDS are the alias kinds the vendored criterion 1 names, and ALIAS_PAIRS is the frozen list, each unordered pair of them once",
+  "R399-C1-SHAPE the fixture's lines hash to the digest recorded from EAT-R399's lines 250-272 at 347d58ea; in this header's prose QUOTE_LABEL matches only the three labels composed from the fixture, PAGE_WORDS and EVIDENCE_WORDS match once each, the three vendored quotes occur once each, and the opening paragraph holds six double quote marks and equals openingParagraph's; ALIAS_KINDS are criterion 1's alias kinds and ALIAS_PAIRS their frozen unordered pairs",
   "R399-STORE-VALIDATION with a store, the constructor and acquire throw their validation CapabilityErrors with their exact messages for the options, roots and invocations this case plants, and the store then holds no file",
   "R399-RECORD-NAMING one registry over one store acquires two sibling roots, one through a symlink: each lease names its realpath, holder names each invocation, and the store holds exactly the two record files named by the SHA-256 of each realpath",
-  "ROSTER the registered tests of this file are exactly these, in order, each run and none marked to fail, ROSTER last, their leading ids are the ids of this file's PINNED READER SET bullets, and every R399 case id src/workbench/source-admission.ts cites is one of them",
+  "ROSTER the registered tests of this file are exactly these, in order, each run and none marked to fail, ROSTER last, their leading ids are the ids of this file's PINNED READER SET bullets, and the R399 case ids src/workbench/source-admission.ts cites are among them and, in source order, exactly those SRC_CITATIONS lists, each cited by the JSDoc comment right before the declaration it is listed with",
 ] as const;
 
 /** The child: the real source-admission.ts module, one request on GO, held until FINISH. */
@@ -398,6 +432,48 @@ function headerProse(): string {
     .join(" ");
 }
 
+/** How many times needle occurs in text. */
+function occurrences(text: string, needle: string): number {
+  return text.split(needle).length - 1;
+}
+
+/** The fixture's vendored line that starts with prefix: the page line number the fixture gives it, and its text after prefix. */
+function vendoredLine(prefix: string): { readonly line: number; readonly text: string } {
+  const { lines, text } = REQUIREMENT.requirement;
+  const at = text.findIndex(entry => entry.startsWith(prefix));
+  return { line: Number(lines.split("-")[0]) + at, text: at < 0 ? "" : (text[at] ?? "").slice(prefix.length) };
+}
+
+/**
+ * The opening paragraph of this header as R399-C1-SHAPE composes it from SCOPE_SENTENCE and the fixture: SCOPE_SENTENCE; the
+ * sentence naming the fixture's page and the first 8 hex digits of its commit; the vendored statement, criterion 1 and
+ * negative mutant, each in double quotes right after its label, which names it and the line number the fixture gives that
+ * line; and the sentence giving the V-tier line's number and the evidence label that line names. Its labels and quotes too.
+ */
+function openingParagraph(): { readonly text: string; readonly labels: readonly string[]; readonly quotes: readonly string[] } {
+  const quoted = [
+    ["The statement", vendoredLine("- Statement: ")],
+    ["Criterion 1", vendoredLine("  1. ")],
+    ["The negative mutant", vendoredLine("- Negative mutant: ")],
+  ] as const;
+  const vTier = vendoredLine("- V-tier: ");
+  const evidenceLabel = /`([A-Z0-9-]+)`/.exec(vTier.text)?.[1] ?? "";
+  const paragraph = [
+    SCOPE_SENTENCE,
+    `Requirement text: ${REQUIREMENT.requirements.path} at Pi master ${REQUIREMENT.commit.slice(0, 8)} (the program pages are master-only).`,
+    ...quoted.map(([role, { line, text }]) => `${role}, line ${line}: "${text}"`),
+    `Line ${vTier.line} names the planned evidence label ${evidenceLabel}; this file is that label's criterion 1 leg, at evidence tier V1 only.`,
+  ].join(" ");
+  return { text: paragraph, labels: quoted.map(([role, { line }]) => `${role}, line ${line}:`), quotes: quoted.map(([, { text }]) => text) };
+}
+
+/** The R399 case ids, in order, cited by the JSDoc comment of source that ends on the line right before declaration's line. */
+function citationsBefore(source: string, declaration: string): string[] {
+  const end = source.indexOf(`*/\n${declaration}\n`);
+  if (end < 0) return [];
+  return source.slice(source.lastIndexOf("/**", end), end).match(R399_CASE_ID) ?? [];
+}
+
 function titleId(title: string): string {
   return title.split(" ")[0] ?? "";
 }
@@ -497,23 +573,16 @@ describe("EAT-R399 criterion 1: two processes over one configured store hold one
     const { id, lines, text } = REQUIREMENT.requirement;
     expect(sha256(text.map(line => `${line}\n`).join(""))).toBe(VENDORED_LINES_SHA256);
     expect([id, lines, text.length, text[0]?.startsWith(`## ${id} `)]).toEqual(["EAT-R399", "250-272", 23, true]);
-    const firstLine = Number(lines.split("-")[0]);
-    const lineOf = (prefix: string): number => firstLine + text.findIndex(line => line.startsWith(prefix));
-    const vendored = (prefix: string): string => text.find(line => line.startsWith(prefix))?.slice(prefix.length) ?? "";
-    const statement = vendored("- Statement: ");
-    const criterion = vendored("  1. ");
-    const mutant = vendored("- Negative mutant: ");
+    const opening = openingParagraph();
+    for (const quote of opening.quotes) expect(quote.length, quote).toBeGreaterThan(40);
     const header = headerProse();
-    for (const quote of [statement, criterion, mutant]) {
-      expect(quote.length, quote).toBeGreaterThan(40);
-      expect(header, quote).toContain(`"${quote}"`);
-    }
-    expect(header).toContain(`The statement, line ${lineOf("- Statement: ")}: "${statement}"`);
-    expect(header).toContain(`Criterion 1, line ${lineOf("  1. ")}: "${criterion}"`);
-    expect(header).toContain(`The negative mutant, line ${lineOf("- Negative mutant: ")}: "${mutant}"`);
-    const evidenceLabel = /`([A-Z0-9-]+)`/.exec(vendored("- V-tier: "))?.[1] ?? "";
-    expect(header).toContain(`Line ${lineOf("- V-tier: ")} names the planned evidence label ${evidenceLabel};`);
-    expect(header).toContain(`Requirement text: ${REQUIREMENT.requirements.path} at Pi master ${REQUIREMENT.commit.slice(0, 8)} `);
+    expect([...header.matchAll(QUOTE_LABEL)].map(match => match[0])).toEqual(opening.labels);
+    expect([header.match(PAGE_WORDS), header.match(EVIDENCE_WORDS)]).toEqual([["Requirement text:"], ["names the planned evidence label"]]);
+    expect(opening.quotes.map(quote => occurrences(header, `"${quote}"`))).toEqual([1, 1, 1]);
+    const paragraph = header.slice(0, header.indexOf(" The trial. "));
+    expect(occurrences(paragraph, '"')).toBe(6);
+    expect(paragraph).toBe(opening.text);
+    const [, criterion = ""] = opening.quotes;
     const kinds = /through ([a-z]+(?:\/[a-z]+)+) aliases/.exec(criterion)?.[1]?.split("/") ?? [];
     expect([...ALIAS_KINDS]).toEqual(kinds);
     const pairs = ALIAS_PAIRS.map(pair => pair.join("+"));
@@ -571,6 +640,10 @@ it(ROSTER[6], ({ task }) => {
   expect(registered.filter(entry => entry.mode !== "run" || entry.fails).map(entry => entry.name)).toEqual([]);
   expect(registered.findIndex(entry => entry.self)).toBe(registered.length - 1);
   expect(registered.map(entry => titleId(entry.name))).toEqual(headerIds());
-  const cited = [...new Set(readFileSync(MODULE, "utf8").match(/(?<![\w-])R399-[A-Z0-9]+(?:-[A-Z0-9]+)*/g) ?? [])];
+  const source = readFileSync(MODULE, "utf8");
+  const cited = source.match(R399_CASE_ID) ?? [];
   expect(cited.filter(caseId => !headerIds().includes(caseId))).toEqual([]);
+  expect(SRC_CITATIONS.map(([declaration]) => occurrences(source, `\n${declaration}\n`))).toEqual(SRC_CITATIONS.map(() => 1));
+  expect(SRC_CITATIONS.map(([declaration]) => citationsBefore(source, declaration))).toEqual(SRC_CITATIONS.map(([, ids]) => ids));
+  expect(cited).toEqual(SRC_CITATIONS.flatMap(([, ids]) => ids));
 });

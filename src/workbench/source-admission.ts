@@ -434,7 +434,7 @@ export class WriteBoundaryAuthority {
  * nothing. admitSourceWrite keys the lease by the canonical root it measured, never by the caller's spelling of the workspace.
  * Those forms are the registry's without a store (new WriterLeases()).
  *
- * EAT-R399, wb-yk1k (criterion 1 only, evidence tier V1; cut #1 and its respin, cut #2): new WriterLeases({ store }) keeps
+ * EAT-R399, wb-yk1k (criterion 1 only, evidence tier V1; cut #1 and its respins #2 and #3): new WriterLeases({ store }) keeps
  * the registry's leases in store, an existing directory the host configures, instead of in the registry. By its code:
  * acquire resolves the root it is given by realpath and links a fully written staged record to that canonical root's record
  * file in the store (see reservationPath), answering undefined when the link finds a record there; holder reads the record
@@ -471,9 +471,8 @@ export class WriterLeases {
   /**
    * Throws a validation CapabilityError, "A writer lease names a canonical workspace root and an invocation.", unless
    * canonicalRoot is absolute clean text and invocationId is clean text, and, with a store, throws one with the message "A
-   * writer reservation names a workspace root that resolves." when realpath does not resolve canonicalRoot; with a store,
-   * either throw comes before any record is written. R024-VALIDATION pins the first throw without a store, in the forms it
-   * plants. With a store,
+   * writer reservation names a workspace root that resolves." when realpath does not resolve canonicalRoot.
+   * R024-VALIDATION pins the first throw without a store, in the forms it plants. With a store,
    * R399-STORE-VALIDATION pins the first for the relative root "authorized/ws", an absolute root followed by U+000A and
    * the invocations "" and "text" U+000A "next", and the second for a missing directory and a symlink to it, the store
    * then holding no file; what any other root or invocation meets with a store is NOT CLAIMED.
