@@ -1,7 +1,8 @@
 /**
  * wb-9btr ([DX P03] of the pi-system-dx-triage-2026-11-11 program, which lives on origin/master at 0a5ac3a3 and not in this
  * trunk's tree; its requirement rows are in that program's req-r-lx shard): EAT-R323 (a syntactically invalid definition is
- * refused at launch) and EAT-R322 criteria 2 and 3. Cut #2 cures refusal #1's U1, U2 and U3 (docs/workbench/receipts/wb-9btr.md).
+ * refused at launch) and EAT-R322 criteria 2 and 3. Cut #2 cures refusal #1's U1, U2 and U3, and cut #3 cures refusal #2's U1 and
+ * U2 (docs/workbench/receipts/wb-9btr.md).
  * The criterion lines these cases pin, quoted:
  *   EAT-R323 (1) "workflow_execute refuses the broken definition synchronously with typed code `definition-syntax-invalid`
  *                carrying the line (no ok:true, no background run created)."
@@ -13,8 +14,8 @@
  *                no-registry message names `workbench.workflowAgentBackend: "claude"`."
  *   EAT-R322 (3) "workflow_validate's SCRIPT_SYNTAX diagnostic carries the same line/column."
  *
- * Claims, each over exactly the cases it names; R0 is the census that holds this header, the registered cases and the src comments
- * to the rows of ROWS:
+ * Claims, each over exactly the cases it names. THE CLAIMS BLOCK is every line after this paragraph's last line, up to the next
+ * blank comment line; R0 holds that block line for line, the registered cases and the src comments to the rows of ROWS:
  * workflow_execute refuses each SYNTAX_CASES shape, saved as a meta-valid script definition, in both hostModes with error code definition-syntax-invalid and the shape's line and column, launching nothing; the registered tool refuses the line-6 shape the same way and persists or notifies nothing (R323-E1, R323-E2).
  * SubagentWorkflow refuses each SYNTAX_CASES shape before scheduling: the reply names the shape's line and column and carries no task id, and no run script or notification follows (R323-W1).
  * The SubagentWorkflow reply, the workflow_execute reason and the describer show the R323-D1 fixture only in the shared sanitizer's display form: its ESC sequence, right-to-left override and zero-width space do not survive, and its Bearer-shaped fake value reads [REDACTED] (R323-D1).
@@ -28,13 +29,18 @@
  * not inverted, and run (pass or fail) before R0. A pinned case given a skip option, skipped at run time through its test context,
  * wrapped in a comment, deleted (a title spelled inside a string registers nothing), inverted with the fails option, or held in a
  * describe that is skipped (by its skip option or by skipIf(true)) therefore reds R0. R0 also holds the frozen shape of ROWS (rule
- * 16), the header's claim lines to the row sentences, each sentence to its pins, and the src comments of the seven touched modules
- * to exactly the pinned set (the anchor outside this file's literals). The file-end judge (afterAll) reds unless R0 ran to its last
- * statement, so R0 skipped at collection or at run time, inverted with a hollow body, returning early or deleted reds the file
- * whenever another case of it runs. Run this file whole: R0 judges the run of every case, so a run filtered by name reds R0 or the
- * file-end judge by design.
+ * 16); the claims block to the row sentences, line for line and in order, so a line added to the block, dropped from it or changed
+ * in it reds R0 whatever the line ends with; the header lines that end in a case citation and a period to the row sentences as
+ * well; the case ids the header names outside the claims block to the five the REACHED sentence below names, in its order; each
+ * sentence to its pins; and the src comments of the seven touched modules to exactly the pinned set (the anchor outside this
+ * file's literals). The file-end judge (afterAll) reds unless R0 ran to its last statement, so R0 skipped at collection or at run
+ * time, inverted with a hollow body, returning before its end marker or deleted reds the file whenever another case of it runs.
+ * Run this file whole: R0 judges the run of every case, so a run filtered by name reds R0 or the file-end judge by design.
  * SYNTAX_CASES (rule 16 frozen shape and each-liveness): R0 holds the table's six shapes (each id with its line:column and pastEnd) to
- * a frozen literal and to the receipt's SYNTAX_CASES line (docs/workbench/receipts/wb-9btr.md, the anchor outside this file), and
+ * a frozen literal and to the receipt's one rendered SYNTAX_CASES list item (docs/workbench/receipts/wb-9btr.md, the anchor outside
+ * this file). R0 reads the receipt through marked's lexer, the reading of test/workbench-receipts-convention.test.ts: the receipt
+ * must lex with no html token anywhere (block, inline or nested), since raw HTML, a comment included, can hide a line from the
+ * rendered page while the raw text still holds it, and exactly one of its list items may begin "SYNTAX_CASES ". R0 also
  * holds REACHED: R323-S1, R323-E1, R323-W1 and R322-V2 each record every shape, in table order, and R323-S3 its two, after the last
  * assertion each makes for that shape.
  * THE RUN PIN, test/workflow-script-syntax-refusal.census.ts (census tier): it reads the gate's own test report and reds unless the
@@ -44,10 +50,13 @@
  *
  * Scope sentences (no residual, no follow-up):
  * What a case asserts is NOT CLAIMED by the census: a case hollowed while it still registers, runs and passes stays green there (the delivery note's mutant battery measures the bodies).
+ * A SYNTAX_CASES row's source text is NOT CLAIMED by the census: R0 freezes each row's id, line:column and pastEnd, so a source rewritten to another mistake that keeps all three and V8's message stays green; the ids describe the sources as written.
+ * Header prose outside the claims block that names no case id is NOT CLAIMED by the census: outside that block R0 reads only the lines that end in a case citation and a period, and the case ids named.
  * A retry option on a case is NOT CLAIMED by this census.
  * The run pin reads only the default test tier's report in the complete gate's census step; a targeted run of this file, and an edit that takes the run pin out of the census tier together with a skip of every registration here, are NOT CLAIMED by this file.
  * EAT-R322 criterion 1 (a workflow.js location on every runtime error text) is NOT CLAIMED by this file.
  * The other launch paths (workflow_detached's launch action, the --subagents-workflow-file flag, a nested workflow() child, a resume) are NOT CLAIMED by this file.
+ * The NODE_API_GLOBALS names beyond require, process, fetch and setTimeout, the compile check's import.meta hint, workflow_execute on a source whose meta does not extract, and the designer's SCRIPT_SYNTAX message display are NOT CLAIMED by this file (the receipt describes them under What changed).
  * EAT-R321, EAT-R324, EAT-R325, EAT-R326 and EAT-R327 are NOT CLAIMED by this file.
  */
 import { createHash } from "node:crypto";
@@ -55,6 +64,7 @@ import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { ExtensionContext } from "@earendil-works/pi-coding-agent";
+import { Lexer, type Token, type Tokens } from "marked";
 import { afterAll, afterEach, describe, expect, it, type RunnerTask, vi } from "vitest";
 import subagentsExtension from "../src/index.js";
 import { sessionTaskDir } from "../src/output-file.js";
@@ -71,6 +81,20 @@ import { ctx, hermeticDir, makePi } from "./helpers/boot-extension.js";
 
 const SELF = readFileSync(fileURLToPath(import.meta.url), "utf8");
 const HEADER = SELF.slice(0, SELF.indexOf("\nimport "));
+/** The one header line that ends with this opens THE CLAIMS BLOCK. */
+const CLAIMS_ANCHOR = " to the rows of ROWS:";
+/**
+ * THE CLAIMS BLOCK as a slice of the header (refusal #2, U1): the comment lines after the one line that ends CLAIMS_ANCHOR, up to
+ * the next blank comment line, each with its " * " prefix removed; outside holds every other header line. A missing or repeated
+ * anchor, or no blank line after it, reads as one refusal line and an empty outside, so the block never reads as empty and passes.
+ */
+function claimsBlock(lines: readonly string[]): { readonly block: readonly string[]; readonly outside: readonly string[] } {
+  const anchors = lines.flatMap((line, index) => (line.endsWith(CLAIMS_ANCHOR) ? [index] : []));
+  if (anchors.length !== 1) return { block: [`the header holds ${anchors.length} lines ending "${CLAIMS_ANCHOR}", not one`], outside: [] };
+  const end = lines.findIndex((line, index) => index > anchors[0] && line === " *");
+  if (end === -1) return { block: ["no blank comment line closes the claims block"], outside: [] };
+  return { block: lines.slice(anchors[0] + 1, end).map(line => line.replace(/^ \* /, "")), outside: [...lines.slice(0, anchors[0] + 1), ...lines.slice(end)] };
+}
 
 /** The repository root: R0 reads the src modules whose comments cite these cases. */
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
@@ -166,16 +190,34 @@ const REACHED: string[] = [];
 const reachedBy = (caseId: string): string[] => REACHED.filter(entry => entry.startsWith(`${caseId}:`)).map(entry => entry.slice(caseId.length + 1));
 /** A shape as R0 freezes it and the receipt lists it: id@line:column, with +pastEnd for the end-of-script shape. */
 const shapeOf = (c: SyntaxCase): string => `${c.id}@${c.line}:${c.column}${c.pastEnd ? "+pastEnd" : ""}`;
-/** SYNTAX_CASES's anchor outside this file: the receipt's one SYNTAX_CASES line, each shape spelled `<id>` <line>:<column>, then pastEnd where it applies. */
 const RECEIPT = "docs/workbench/receipts/wb-9btr.md";
+const isList = (token: Token): token is Tokens.List => token.type === "list";
+const isListItem = (token: Token): token is Tokens.ListItem => token.type === "list_item";
+/** Every token of a lexed page, block, inline and nested, list items included (the walk of htmlTokens in test/workbench-receipts-convention.test.ts). */
+function lexed(tokens: readonly Token[]): Token[] {
+  const found: Token[] = [];
+  for (const token of tokens) {
+    found.push(token);
+    if (isList(token)) for (const item of token.items) found.push(item, ...lexed(item.tokens));
+    else if ("tokens" in token && Array.isArray(token.tokens)) found.push(...lexed(token.tokens));
+  }
+  return found;
+}
+/**
+ * SYNTAX_CASES's anchor outside this file, read as the page renders (refusal #2, U2): the receipt lexed by marked with no html token
+ * anywhere, then its one list item that begins "SYNTAX_CASES ", each shape spelled `<id>` <line>:<column>, then pastEnd where it applies.
+ */
 function receiptShapes(): string[] {
-  const lines = readFileSync(join(ROOT, RECEIPT), "utf8").split("\n").filter(line => line.startsWith("- SYNTAX_CASES "));
-  if (lines.length !== 1) return [`${RECEIPT} holds ${lines.length} SYNTAX_CASES lines, not one`];
-  return [...lines[0].matchAll(/`([^`]+)` (\d+):(\d+)( pastEnd)?/g)].map(match => `${match[1]}@${match[2]}:${match[3]}${match[4] ? "+pastEnd" : ""}`);
+  const tokens = lexed(new Lexer({ gfm: true }).lex(readFileSync(join(ROOT, RECEIPT), "utf8")));
+  const html = tokens.filter(token => token.type === "html");
+  if (html.length > 0) return [`${RECEIPT} holds ${html.length} html token(s), which can hide a line from the rendered page: ${JSON.stringify(html[0].raw.slice(0, 80))}`];
+  const items = tokens.filter(isListItem).filter(item => item.text.startsWith("SYNTAX_CASES "));
+  if (items.length !== 1) return [`${RECEIPT} renders ${items.length} SYNTAX_CASES list items, not one`];
+  return [...items[0].text.matchAll(/`([^`]+)` (\d+):(\d+)( pastEnd)?/g)].map(match => `${match[1]}@${match[2]}:${match[3]}${match[4] ? "+pastEnd" : ""}`);
 }
 /** The census-tier run pin, this file's anchor for a skip of every registration here at once; R0 holds its bytes. */
 const RUN_PIN = "test/workflow-script-syntax-refusal.census.ts";
-const RUN_PIN_SHA256 = "38b643e5de31313f0cdba1806e05835585c92a2b4aed6d862d2a8b3c35a76232";
+const RUN_PIN_SHA256 = "c933e0fc1c91ca2ff89c52bfb82e0754bbcafab8285b4a35982f586941684e92";
 /** R0's last statement records it here, and the file-end judge holds it. */
 const CENSUS_END: string[] = [];
 
@@ -492,10 +534,14 @@ describe("wb-9btr EAT-R323 + EAT-R322 (2)(3): a script that does not compile is 
 });
 
 // R0 sits at file scope, registered last and outside the describe, so a skip that reaches every pinned case still leaves R0 to read it.
-it("R0 census over ROWS, registered last at file scope: the header claims exactly the row sentences, each row pins its cases, the src comments cite exactly that set, every other test vitest registered here is one pinned case that ran before R0 in run mode and not inverted, SYNTAX_CASES holds the six shapes the receipt lists and every each-shape case reached them, and the run pin's bytes are held", ({ task }) => {
+it("R0 census over ROWS, registered last at file scope: the header's claims block is exactly the row sentences, each row pins its cases, the src comments cite exactly that set, every other test vitest registered here is one pinned case that ran before R0 in run mode and not inverted, SYNTAX_CASES holds the six shapes the receipt's rendered SYNTAX_CASES item lists and every each-shape case reached them, and the run pin's bytes are held", ({ task }) => {
   expect(ROWS.map(row => `${row.id}:${row.pins.length}`), "frozen shape (rule 16)").toEqual(["EAT-R323(1):2", "EAT-R323(2):1", "display:1", "EAT-R323(3):3", "EAT-R322(3):2", "EAT-R322(2):3"]);
+  // THE CLAIMS BLOCK, slice-equal (refusal #2, U1): a line added to it, dropped from it or changed in it reds here, whatever it ends with.
+  const header = claimsBlock(HEADER.split("\n"));
+  expect(header.block, "the claims block (the header lines after the one ending 'to the rows of ROWS:', up to the next blank comment line) is exactly the row sentences, line for line, in order").toEqual(ROWS.map(row => row.sentence));
   const claimLines = HEADER.split("\n").map(line => line.replace(/^ \* /, "")).filter(line => /\((?:R32[23]-[A-Z]\d, )*R32[23]-[A-Z]\d\)\.$/.test(line));
-  expect(claimLines, "the header's claim lines are exactly the row sentences, in order").toEqual(ROWS.map(row => row.sentence));
+  expect(claimLines, "the header lines that end in a case citation and a period are exactly the row sentences, in order").toEqual(ROWS.map(row => row.sentence));
+  expect(header.outside.flatMap(line => line.match(CASE_ID) ?? []), "outside the claims block the header names only the REACHED sentence's case ids, in its order").toEqual([...EACH_SHAPE_CASES, "R323-S3"]);
   for (const row of ROWS) expect(/\(([^()]+)\)\.$/.exec(row.sentence)?.[1].split(", "), `${row.id}'s sentence cites exactly its pins`).toEqual([...row.pins]);
   const pinned = ROWS.flatMap(row => row.pins).sort();
   const cited = new Set(CITING_SRC.flatMap(path => readFileSync(join(ROOT, path), "utf8").match(CASE_ID) ?? []));
@@ -509,7 +555,7 @@ it("R0 census over ROWS, registered last at file scope: the header claims exactl
   // SYNTAX_CASES: the frozen shape and the receipt's line (refusal #1, U2), then each-liveness over the table.
   const shapes = SYNTAX_CASES.map(shapeOf);
   expect(shapes, "SYNTAX_CASES's frozen shape (rule 16): six shapes, each id with its line:column, the last past the end").toEqual(["missing paren on line 6@6:17", "TS annotation on line 4@4:7", "import statement on line 2@2:1", "Date redeclared over the prelude@2:7", "tab-indented line 3@3:15", "block left open@4:2+pastEnd"]);
-  expect(receiptShapes(), "the receipt's SYNTAX_CASES line lists exactly these shapes, the table's anchor outside this file").toEqual(shapes);
+  expect(receiptShapes(), "the receipt, lexed with no html token, renders one SYNTAX_CASES list item, and it lists exactly these shapes, the table's anchor outside this file").toEqual(shapes);
   const ids = SYNTAX_CASES.map(c => c.id);
   expect(Object.fromEntries(EACH_SHAPE_CASES.map(id => [id, reachedBy(id)])), "each case claiming every SYNTAX_CASES shape reached every one, in table order, after its last assertion for it").toEqual(Object.fromEntries(EACH_SHAPE_CASES.map(id => [id, ids])));
   expect(reachedBy("R323-S3"), "R323-S3 reached the two shapes it runs through the worker").toEqual(["missing paren on line 6", "Date redeclared over the prelude"]);
@@ -519,5 +565,5 @@ it("R0 census over ROWS, registered last at file scope: the header claims exactl
 
 // The file-end judge: R0 ran to its last statement.
 afterAll(() => {
-  expect(CENSUS_END, "R0 ran to its last statement (a red R0 reds here too; R0 skipped at collection or at run time, inverted with a hollow body, returning early or deleted reds only here)").toEqual(["R0"]);
+  expect(CENSUS_END, "R0 ran to its last statement (a red R0 reds here too; R0 skipped at collection or at run time, inverted with a hollow body, returning before its end marker or deleted reds only here)").toEqual(["R0"]);
 });
