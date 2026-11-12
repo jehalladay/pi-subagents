@@ -7459,10 +7459,10 @@ const STATES_RELATE = "it references the class only in the statement type relate
  */
 export const NON_RENDER: Readonly<Record<string, NonRenderReader>> = {
   "src/index.ts": {
-    value: ["ingest", "markStale", "query", "refresh", "relate"],
+    value: ["ingest", "markStale", "refresh", "relate"],
     type: [],
     reason:
-      "the extension entry: it builds the session projection, admits observations in tool handlers and in its workflow-lifecycle emitter, relates in furnace_observe the native-confirmed Furnace Run -> Attempt ownership edges the Furnace adapter states for its reading (wb-qg19), reads it in a tool handler (workflow_compare), hands the dialog seam its deps, hands the Claude host's node seam its refresh and relate (wb-79k.1: a returned hyperunix.find value's snapshot and grouping edge) and hands the detached observe-wiring the projection in workflow_detached's inspect (wb-79k.3)",
+      "the extension entry: it builds the session projection, admits observations in tool handlers and in its workflow-lifecycle emitter, hands it to the comparison receipt builder in a tool handler (workflow_compare), hands the dialog seam its deps, hands the Claude host's node seam its refresh and relate (wb-79k.1: a returned hyperunix.find value's snapshot and grouping edge) and hands the detached observe-wiring the projection in workflow_detached's inspect (wb-79k.3)",
   },
   "src/workbench/beads-observer.ts": { value: [], type: ["relate"], reason: `the Beads adapter: ${STATES_RELATE}` },
   "src/workbench/claude-control-observer.ts": { value: ["query", "relate"], type: [], reason: "the Claude control observer: on an SDK init it reads the session node and states the session's ownership" },
@@ -7474,6 +7474,7 @@ export const NON_RENDER: Readonly<Record<string, NonRenderReader>> = {
       "the MechanicalWorkflows collective-event boundary (wb-4ap.15): ingestCollectiveEvent admits an accepted collective.event.v1 envelope through its sink's ingest - a typed writer, Pick<ObservationProjection, \"ingest\">, the one READER WALK names - and returns the hypothesis statements its caller applies with relate, whose type and ingest's result type it spells; no src module imports it",
     writers: ["ingest"],
   },
+  "src/workbench/compare-run.ts": { value: ["query"], type: [], reason: "the comparison receipt builder (wb-rz62): on a workflow_compare call it reads one invocation's page and that page's latency decomposition for one receipt, never on a redraw" },
   "src/workbench/control-tool.ts": { value: ["ingest", "query"], type: [], reason: "the control tool's receipt recorder: on a control call it reads the target node and records the receipt phase as an event of it" },
   "src/workbench/control.ts": { value: ["query", "relations"], type: [], reason: "decideControl: the decision a control request runs, reading the target node and its relations" },
   "src/workbench/detached-control.ts": {
