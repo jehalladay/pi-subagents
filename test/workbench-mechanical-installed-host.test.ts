@@ -4,32 +4,40 @@
  *
  * Requirements (pi-subagents master 53ac7f35, docs/workbench/programs/mechanical-interop-integrity-2026-11-10/requirements/
  * ATOMIC-REQUIREMENTS.md); every case is titled by the requirement and acceptance criterion it pins:
- *  EAT-R421 AC1 "when the adapter is pointed at it with the allowlist digests, then `import()` resolves
- *   `@mechanical/development-rig/host` from that installed root (assert the resolved module URL is under the consumer root)".
- *   AC2 "Given the same configuration with the rig tarball's digest changed by one byte, or a descriptor byte changed with the
- *   ref digest unchanged, then the adapter refuses before `import()` with the typed category and DETECT-ZERO (a) reads 0; the
- *   untouched positive control reads 1." AC3 "Given a `NODE_PATH`/checkout-resolvable `@mechanical/development-rig` outside
+ *  EAT-R421 AC1 "(assert the resolved module URL is under the consumer root)" (R421-1 pins the file: URL the importer is
+ *   handed; the criterion's "`import()` resolves `@mechanical/development-rig/host` from that installed root" is NOT CLAIMED
+ *   by this file, since the recording importer imports nothing). AC2 "Given the same configuration with the rig tarball's
+ *   digest changed by one byte, or a descriptor byte changed with the ref digest unchanged, then the adapter refuses before
+ *   `import()` with the typed category and DETECT-ZERO (a) reads 0; the untouched positive control reads 1." (R421-2 plants it
+ *   in a stand-in consumer: one byte of the stand-in tarball or of the descriptor flipped, its entry digest unchanged.) AC3 "Given a `NODE_PATH`/checkout-resolvable `@mechanical/development-rig` outside
  *   the installed root, then the adapter never resolves it (assert the importer seam was handed a `file:` URL under the
  *   installed root, never a bare specifier)."
- *  EAT-R422 AC1 "when `dist/index.js` (rig) or a transitive library file is mutated after extraction with the tarball
- *   untouched, then the adapter refuses `installed-content-mismatch` and DETECT-ZERO (a),(b) read 0; the untouched control
- *   imports once." AC2 "Given a runtime file present on disk but absent from the admitted manifest (an added file), then the
+ *  EAT-R422 AC1 "is mutated after extraction with the tarball untouched, then the adapter refuses
+ *   `installed-content-mismatch`" and "the untouched control imports once" (R422-1 mutates the stand-in rig's host module
+ *   dist/host.js and the library's entry file dist/index.js and reads DETECT-ZERO (a) at 0; the criterion's "`dist/index.js`
+ *   (rig)", its "transitive library file" and DETECT-ZERO (b) are NOT CLAIMED by this file). AC2 "Given a runtime file present on disk but absent from the admitted manifest (an added file), then the
  *   adapter refuses; given a manifest entry with no file, then it refuses with a distinct typed reason (not ENOENT)." AC3
  *   "Given a symlink introduced under the installed root pointing outside it, then the adapter refuses before import (path
- *   confinement is re-asserted at the final load, not only at measure time)."
+ *   confinement is re-asserted at the final load, not only at measure time)." (R422-3 and R422-4 plant the links under the
+ *   scope directory node_modules/@mechanical; a link elsewhere under the consumer root is NOT CLAIMED by this file.)
  *  EAT-R423 AC2 "Given an installed host whose `HOST_API_VERSION` differs from the ratified literal, then admission refuses"
- *   (the refusal arm). AC3 "assert the module namespace is read by the allowlisted name only; an injected `input.export` is
- *   ignored". AC4 "falling back to the legacy export when COMPOSED-EXPORT is absent turns criterion 1 red; the correct
- *   behaviour is a typed refusal `runtime-unavailable`."
+ *   (the refusal arm; R423-2 compares with MECHANICAL_HOST_BINDING_CONTRACT, whose ratification is NOT CLAIMED by this
+ *   file). AC3 "an injected `input.export` is ignored" (R423-1 plants it as a stray export member of the options, and pins the
+ *   namespace read by exactly two names, HOST_API_VERSION and the entry's export name, so the criterion's "read by the
+ *   allowlisted name only" is NOT CLAIMED by this file as worded). AC4 "the correct behaviour is a typed refusal
+ *   `runtime-unavailable`" (R423-3; the criterion's "turns criterion 1 red" is NOT CLAIMED by this file, which pins no
+ *   criterion 1 case).
  *  EAT-R425 AC1 "Given an installed consumer with no SDKs, when a function request is admitted for a native-labelled run, then
  *   the admission record carries `sdk.claude: null`, `sdk.forge: null`, the refusal is `runtime-unavailable`" (R425-1 pins the
  *   refusal's field, sdk.claude or sdk.forge; the refusal carries no specifier text, so the criterion's "naming the missing
  *   specifier" is NOT CLAIMED by this file). AC2 "Given the SDKs are installed in the consumer root, then the admission record
  *   carries their resolved version strings and resolution paths under the consumer root, and a test asserts the paths are not
- *   under either repository checkout." AC3 "Given `process.version` is v22.x under a Pi host declaring >=24, then admission
- *   refuses `runtime-unavailable`" and "given v24.x it proceeds (positive control)" (R425-3 pins the measured version in the
- *   refusal's recorded identity; the reason is the closed token runtime-unavailable, so the criterion's "with the measured
- *   version in the reason" is NOT CLAIMED by this file).
+ *   under" the Pi checkout (R425-2; the criterion's "either repository checkout" is NOT CLAIMED by this file, since no case
+ *   reads the MechanicalWorkflows checkout). AC3 "Given `process.version` is v22.x under a Pi host declaring >=24, then
+ *   admission refuses `runtime-unavailable`" and "given v24.x it proceeds (positive control)" (R425-3 plants v22.23.2 for v22.x
+ *   and v24.20.0 for v24.x, and pins the measured version in the refusal's recorded identity; the reason is the closed token
+ *   runtime-unavailable, so the criterion's "with the measured version in the reason" is NOT CLAIMED by this file, and neither
+ *   is any v24.x spelling but v24.20.0: R425-3 plants v24, v24.20 and v24.20.0-nightly, each refused).
  *
  * PINNED READER SET (each case below by its id; the assertion target is the reading "<field> <reason> imports=<n>" or
  * "admitted imports=<n>", where imports is DETECT-ZERO (a), the call count of a recording importer that imports nothing and
@@ -54,7 +62,12 @@
  * composed export's dispatch and call count (EAT-R423 AC1, BLOCKED: no composed export at MechanicalWorkflows 69cb016d);
  * DETECT-ZERO (b) to (e), the four callbacks, SDK sessions, Forge requests and child processes (the adapter dispatches
  * nothing, so no positive control for them exists here); EAT-R424 (the binding, G-RATIFY); a real SDK resolution on a native
- * run (EAT-R425 V4); and the forms the module header lists as NOT CLAIMED.
+ * run (EAT-R425 V4); and the forms the module header lists as NOT CLAIMED. Each case claims only the forms it plants, as its
+ * title and the module header list them; a form no case plants is NOT CLAIMED by this file.
+ *
+ * FORM (respin cut #3, the enumerate-the-resolvable form): the module header's RESIDUALS name the known forms the adapter
+ * reads otherwise than its wording suggests, each with its quiet row in a case of this file (R-OPTIONS-NOT-OBJECT in
+ * R-ENTRY-1, R-STRAY-SCOPE-FILE in R425-5); a form found later joins that list, it is not a claim.
  *
  * Display paths added: none (the adapter returns closed-vocabulary diagnostics and a measured identity record; it composes no
  * label or reply text).
@@ -78,6 +91,8 @@ import {
   type MechanicalInstalledHostOptions,
   type MechanicalInstalledHostResolution,
   type MechanicalResolvedInstalledHost,
+  type MechanicalRuntimeIdentity,
+  type MechanicalSdkIdentity,
   measureMechanicalInstalledContent,
   resolveMechanicalInstalledHost,
 } from "../src/workbench/mechanical-installed-host.js";
@@ -113,6 +128,9 @@ const flipOneByte = (path: string): void => {
   bytes[at] = (bytes[at] ?? 0) ^ 0x01;
   writeFileSync(path, bytes);
 };
+
+/** JSON text whose string member holds the byte 0xff, which is not UTF-8: the given head, that byte, then the given tail. */
+const notUtf8 = (head: string, tail: string): Uint8Array => Buffer.concat([Buffer.from(head, "utf8"), Buffer.from([0xff]), Buffer.from(tail, "utf8")]);
 
 /** The rig's package.json as MechanicalWorkflows 69cb016d ships its export map. */
 const RIG_PACKAGE: Readonly<Record<string, unknown>> = Object.freeze({
@@ -198,6 +216,33 @@ const plantConsumer = (shape: PlantShape = {}): ConsumerPlant => {
     },
   };
 };
+
+/** The manifest lines of one scope package in the suite's own reading, "<path inside the package> <digest>" in path order. */
+const linesOf = (content: Readonly<Record<string, string>>, directory: string): string =>
+  Object.entries(content)
+    .filter(([path]) => path.startsWith(`${directory}/`))
+    .map(([path, digest]) => `${path.slice(directory.length + 1)} ${digest}\n`)
+    .join("");
+/** The identity the suite's own reader expects of a standard plant (both scope packages at 0.1.0), with the given SDK members. */
+const identityOf = (plant: ConsumerPlant, sdk: MechanicalRuntimeIdentity["sdk"]): MechanicalRuntimeIdentity => {
+  const content = contentOf(plant.root);
+  return {
+    node: plant.options.runtime.nodeVersion ?? process.version,
+    sdkUse: plant.options.runtime.sdkUse,
+    tarballDigest: plant.options.entry.tarballDigest,
+    packages: [
+      { directory: "development-rig", name: "@mechanical/development-rig", version: "0.1.0", contentDigest: digestOf(linesOf(content, "development-rig")) },
+      { directory: "workflows-development", name: "@mechanical/workflows-development", version: "0.1.0", contentDigest: digestOf(linesOf(content, "workflows-development")) },
+    ],
+    sdk,
+  };
+};
+/** The identity the adapter records for one SDK planted by plantConsumer. */
+const sdkOf = (plant: ConsumerPlant, field: keyof typeof MECHANICAL_HOST_SDKS): MechanicalSdkIdentity => ({
+  specifier: MECHANICAL_HOST_SDKS[field],
+  version: field === "sdk.claude" ? "0.3.300" : "0.1.0",
+  resolutionPath: join(realpathSync(plant.root), "node_modules", ...MECHANICAL_HOST_SDKS[field].split("/")),
+});
 
 interface Recording {
   readonly importModule: (url: string) => Promise<unknown>;
@@ -313,7 +358,7 @@ describe("wb-zwx5 EAT-R421: the installed rig host is read only from the digest-
     expect(await admitReading(descriptor.options)).toBe("descriptor descriptor-mismatch imports=0");
   });
 
-  it("R421-3 AC3 a decoy rig outside the consumer root that NODE_PATH names is never handed to the importer, and a rig directory or node_modules linked to that checkout refuses before any import", async () => {
+  it("R421-3 AC3 a decoy rig outside the consumer root that NODE_PATH names is never handed to the importer; a rig directory or node_modules linked to that checkout, and the scope directory linked to the consumer root itself, each refuse before any import", async () => {
     const checkout = scratch();
     writeScope(join(checkout, "node_modules", "@mechanical"), "decoy", `${JSON.stringify(RIG_PACKAGE)}\n`);
     const plant = plantConsumer();
@@ -338,13 +383,27 @@ describe("wb-zwx5 EAT-R421: the installed rig host is read only from the digest-
     rmSync(join(linkedModules.root, "node_modules"), { recursive: true });
     symlinkSync(join(checkout, "node_modules"), join(linkedModules.root, "node_modules"));
     expect(await admitReading(linkedModules.options)).toBe("installed outside-root imports=0");
+    const scopeAtRoot = plantConsumer();
+    const scopeDirectory = join(scopeAtRoot.root, "node_modules", "@mechanical");
+    rmSync(scopeDirectory, { recursive: true });
+    symlinkSync(scopeAtRoot.root, scopeDirectory);
+    expect(await admitReading(scopeAtRoot.options)).toBe("installed outside-root imports=0");
   });
 
-  it("R421-4 a tarball outside the consumer root, a directory in its place, a missing tarball, a missing descriptor, a descriptor named through a link and a FIFO in the descriptor's place each refuse before any import", async () => {
+  it("R421-4 a tarball in another directory, at the consumer root itself or at its parent directory refuses outside-root; a directory in its place, a missing tarball, a missing descriptor, a descriptor named through a link and a FIFO in the descriptor's place each refuse before any import; a descriptor outside the consumer root is admitted", async () => {
     const outside = plantConsumer();
     const elsewhere = join(scratch(), "rig.tgz");
     writeFileSync(elsewhere, readFileSync(outside.tarballPath));
     expect(await admitReading({ ...outside.options, tarballPath: elsewhere })).toBe("tarball outside-root imports=0");
+    const atRoot = plantConsumer();
+    expect(await admitReading({ ...atRoot.options, tarballPath: atRoot.root })).toBe("tarball outside-root imports=0");
+    const parent = scratch();
+    const atParent = plantConsumer({ root: join(parent, "consumer") });
+    expect(await admitReading({ ...atParent.options, tarballPath: parent })).toBe("tarball outside-root imports=0");
+    const outsideDescriptor = plantConsumer();
+    const reviewed = join(scratch(), "development.v1.json");
+    writeFileSync(reviewed, DESCRIPTOR_BYTES);
+    expect(await admitReading({ ...outsideDescriptor.options, descriptorPath: reviewed })).toBe("admitted imports=1");
     const directory = plantConsumer();
     rmSync(directory.tarballPath);
     mkdirSync(directory.tarballPath);
@@ -366,7 +425,7 @@ describe("wb-zwx5 EAT-R421: the installed rig host is read only from the digest-
     expect(await admitReading(fifo.options)).toBe("descriptor not-a-file imports=0");
   });
 
-  it("R421-5 an export map that is null or lacks ./host, with a target outside the package, naming no measured file, under another package name, or not JSON refuses export-map-invalid; string and default-only targets are admitted, and import wins over a differing default", async () => {
+  it("R421-5 refuses export-map-invalid for exports null, a string or without ./host; ./host null or types-only; a target not led by ./ (dist/host.js, ~/dist/host.js), escaping the package (../escape.js, ./../ into the library) or naming no measured file (a string, or an import beside a measured default); another package name; a package.json not JSON; admits a string, a default-only target, an import beside a differing default (handed over) and a default beside a non-string import", async () => {
     const mapped = (exportsMember: unknown, name = "@mechanical/development-rig"): string => `${JSON.stringify({ ...RIG_PACKAGE, name, exports: exportsMember })}\n`;
     const refusedForms: readonly string[] = [
       mapped({ "./package.json": "./package.json" }),
@@ -376,6 +435,10 @@ describe("wb-zwx5 EAT-R421: the installed rig host is read only from the digest-
       mapped({ "./host": "./dist/absent.js" }),
       mapped({ "./host": { types: "./dist/host.d.ts" } }),
       mapped("./dist/host.js"),
+      mapped({ "./host": null }),
+      mapped({ "./host": "~/dist/host.js" }),
+      mapped({ "./host": "./../workflows-development/dist/index.js" }),
+      mapped({ "./host": { import: "./dist/absent.js", default: "./dist/host.js" } }),
       mapped({ "./host": "./dist/host.js" }, "@mechanical/development-rig-fork"),
       "{ not json\n",
     ];
@@ -395,6 +458,10 @@ describe("wb-zwx5 EAT-R421: the installed rig host is read only from the digest-
     const importFirstRecording = recordingImporter();
     expect(await admitReading(importFirstOptions, importFirstRecording)).toBe("admitted imports=1");
     expect(importFirstRecording.urls).toEqual([hostUrlOf(importFirst.root)]);
+    const nonStringImport = plantConsumer({ rigPackage: mapped({ "./host": { import: 7, default: "./dist/host.js" } }) });
+    const nonStringRecording = recordingImporter();
+    expect(await admitReading(nonStringImport.options, nonStringRecording)).toBe("admitted imports=1");
+    expect(nonStringRecording.urls).toEqual([hostUrlOf(nonStringImport.root)]);
   });
 });
 
@@ -419,6 +486,9 @@ describe("wb-zwx5 EAT-R422: the installed runtime files are verified against the
     const reading = await admitReading(missing.options);
     expect(reading).toBe("installed installed-file-missing imports=0");
     expect(reading).not.toContain("unreadable");
+    const inheritedName = plantConsumer();
+    write(join(inheritedName.root, "node_modules", "@mechanical", "constructor"), "a file named like an inherited member\n");
+    expect(await admitReading(inheritedName.options)).toBe("installed installed-file-unlisted imports=0");
   });
 
   it("R422-3 AC3 a link under the scope to a file outside the consumer root or inside it refuses installed-link, and a FIFO refuses not-a-file, each before any import", async () => {
@@ -513,7 +583,7 @@ describe("wb-zwx5 EAT-R423: the namespace is read by the allowlisted names only,
     expect(getterRuns).toBe(0);
   });
 
-  it("R423-3 AC4 a host without the composed export but with the legacy one, with a string in its place, with an accessor there, or with it only inherited refuses runtime-unavailable, the legacy export never read and the accessor never run", async () => {
+  it("R423-3 AC4 a host without the composed export but with the legacy one, with a string in its place, with an accessor there, or with it only inherited, and an entry naming the one-letter export x the host lacks, each refuse runtime-unavailable, the legacy export never read and the accessor never run", async () => {
     let getterRuns = 0;
     const forms: readonly ((members: Record<string, unknown>) => Record<string, unknown>)[] = [
       ({ [COMPOSED]: _absent, ...members }) => members,
@@ -536,6 +606,10 @@ describe("wb-zwx5 EAT-R423: the namespace is read by the allowlisted names only,
       expect(recording.calls).toEqual([]);
     }
     expect(getterRuns).toBe(0);
+    const oneLetter = plantConsumer();
+    const oneLetterRecording = recordingImporter();
+    expect(await admitReading({ ...oneLetter.options, entry: { ...oneLetter.options.entry, composedExport: "x" } }, oneLetterRecording)).toBe("loaded runtime-unavailable imports=1");
+    expect(oneLetterRecording.reads).toEqual(["HOST_API_VERSION", "x"]);
   });
 
   it("R423-4 an entry naming the legacy export as its export refuses entry-malformed before any import", async () => {
@@ -545,13 +619,15 @@ describe("wb-zwx5 EAT-R423: the namespace is read by the allowlisted names only,
 });
 
 describe("wb-zwx5 EAT-R425: the runtime identity is recorded at admission and an incompatible runtime refuses", () => {
-  it("R425-1 AC1 a native-labelled run refuses runtime-unavailable at sdk.claude, recording it null, for a Claude SDK absent, linked outside the consumer root, naming another package, with a non-plain version, unparseable or JSON null, and at sdk.forge with only the Claude SDK", async () => {
-    const none = await resolveMechanicalInstalledHost(plantConsumer({ sdkUse: "native" }).options);
+  it("R425-1 AC1 a native-labelled run refuses runtime-unavailable at sdk.claude, the refusal carrying the identity it measured with sdk.claude null, for a Claude SDK absent, linked to a directory outside the consumer root or to the root itself, naming another package, with the version latest, 1.2, 0.3.300+build.5 or an array, with its package.json a link to a manifest inside or outside the root, unparseable, not UTF-8 or JSON null; and at sdk.forge with only the Claude SDK", async () => {
+    const nonePlant = plantConsumer({ sdkUse: "native" });
+    const none = await resolveMechanicalInstalledHost(nonePlant.options);
     expect(readingOf(none)).toBe("sdk.claude runtime-unavailable");
-    expect(none.ok ? undefined : none.identity?.sdk).toEqual({ claude: null, forge: null });
-    const claudeOnly = await resolveMechanicalInstalledHost(plantConsumer({ sdkUse: "native", sdks: ["sdk.claude"] }).options);
+    expect(none.ok ? undefined : none.identity).toEqual(identityOf(nonePlant, { claude: null, forge: null }));
+    const claudeOnlyPlant = plantConsumer({ sdkUse: "native", sdks: ["sdk.claude"] });
+    const claudeOnly = await resolveMechanicalInstalledHost(claudeOnlyPlant.options);
     expect(readingOf(claudeOnly)).toBe("sdk.forge runtime-unavailable");
-    expect(claudeOnly.ok ? undefined : claudeOnly.identity?.sdk.forge).toBeNull();
+    expect(claudeOnly.ok ? undefined : claudeOnly.identity).toEqual(identityOf(claudeOnlyPlant, { claude: sdkOf(claudeOnlyPlant, "sdk.claude"), forge: null }));
     expect(await admitReading(plantConsumer({ sdkUse: "native" }).options)).toBe("sdk.claude runtime-unavailable imports=0");
 
     const claudeSpecifier = MECHANICAL_HOST_SDKS["sdk.claude"];
@@ -562,30 +638,51 @@ describe("wb-zwx5 EAT-R425: the runtime identity is recorded at admission and an
       (text: string) =>
       (plant: ConsumerPlant): void =>
         write(join(claudeDirectory(plant), "package.json"), text);
+    const linkedManifest =
+      (target: (plant: ConsumerPlant) => string) =>
+      (plant: ConsumerPlant): void => {
+        const manifest = join(claudeDirectory(plant), "package.json");
+        rmSync(manifest);
+        symlinkSync(target(plant), manifest);
+      };
     const claudeForms: readonly ((plant: ConsumerPlant) => void)[] = [
       plant => {
         rmSync(claudeDirectory(plant), { recursive: true });
         symlinkSync(outside, claudeDirectory(plant));
       },
+      plant => {
+        write(join(plant.root, "package.json"), `${JSON.stringify({ name: claudeSpecifier, version: "0.3.300" })}\n`);
+        rmSync(claudeDirectory(plant), { recursive: true });
+        symlinkSync(plant.root, claudeDirectory(plant));
+      },
       manifestText(`${JSON.stringify({ name: "@anthropic-ai/other", version: "0.3.300" })}\n`),
       manifestText(`${JSON.stringify({ name: claudeSpecifier, version: "latest" })}\n`),
+      manifestText(`${JSON.stringify({ name: claudeSpecifier, version: "1.2" })}\n`),
+      manifestText(`${JSON.stringify({ name: claudeSpecifier, version: "0.3.300+build.5" })}\n`),
+      manifestText(`${JSON.stringify({ name: claudeSpecifier, version: ["0.3.300"] })}\n`),
+      linkedManifest(plant => {
+        const inside = join(plant.root, "manifests", "claude.json");
+        write(inside, `${JSON.stringify({ name: claudeSpecifier, version: "0.3.300" })}\n`);
+        return inside;
+      }),
+      linkedManifest(() => join(outside, "package.json")),
       manifestText("{ not json\n"),
+      plant => write(join(claudeDirectory(plant), "package.json"), notUtf8(`{"name":"${claudeSpecifier}","version":"0.3.300","note":"`, `"}\n`)),
       manifestText("null\n"),
     ];
     for (const form of claudeForms) {
       const invalid = plantConsumer({ sdkUse: "native", sdks: ["sdk.claude", "sdk.forge"] });
       form(invalid);
       const outcome = await resolveMechanicalInstalledHost(invalid.options);
-      expect([readingOf(outcome), outcome.ok ? "admitted" : outcome.identity?.sdk.claude, outcome.ok ? "admitted" : outcome.identity?.sdk.forge?.specifier]).toEqual([
+      expect([readingOf(outcome), outcome.ok ? "admitted" : outcome.identity]).toEqual([
         "sdk.claude runtime-unavailable",
-        null,
-        MECHANICAL_HOST_SDKS["sdk.forge"],
+        identityOf(invalid, { claude: null, forge: sdkOf(invalid, "sdk.forge") }),
       ]);
       expect(await admitReading(invalid.options)).toBe("sdk.claude runtime-unavailable imports=0");
     }
   });
 
-  it("R425-2 AC2 a native-labelled run with both SDKs in the consumer root records each version and its realpath under the consumer root, not under the Pi checkout", async () => {
+  it("R425-2 AC2 a native-labelled run with both SDKs in the consumer root records each version and its realpath under the consumer root, not under the Pi checkout, each SDK record frozen", async () => {
     const plant = plantConsumer({ sdkUse: "native", sdks: ["sdk.claude", "sdk.forge"] });
     const resolved = await resolvedOf(plant.options);
     const root = realpathSync(plant.root);
@@ -596,20 +693,25 @@ describe("wb-zwx5 EAT-R425: the runtime identity is recorded at admission and an
     for (const sdk of [resolved.identity.sdk.claude, resolved.identity.sdk.forge]) {
       expect(sdk?.resolutionPath.startsWith(`${root}/`)).toBe(true);
       expect(sdk?.resolutionPath.startsWith(`${PI_CHECKOUT}/`)).toBe(false);
+      expect(Object.isFrozen(sdk)).toBe(true);
     }
     expect(await admitReading(plant.options)).toBe("admitted imports=1");
   });
 
-  it("R425-3 AC3 node v22.23.2, v25.0.0 and a bare v24 refuse runtime-unavailable at node carrying the measured version; v24.20.0 is admitted; an absent nodeVersion records process.version", async () => {
-    for (const nodeVersion of ["v22.23.2", "v25.0.0", "v24"]) {
-      const outcome = await resolveMechanicalInstalledHost(plantConsumer({ nodeVersion }).options);
+  it("R425-3 AC3 node v22.23.2, v25.0.0, a bare v24, v24.20, v24.20.0-nightly and v24.20.0 after a space each refuse runtime-unavailable at node, the refusal carrying the identity it measured with that version; v24.20.0 is admitted; an absent or undefined nodeVersion records process.version", async () => {
+    for (const nodeVersion of ["v22.23.2", "v25.0.0", "v24", "v24.20", "v24.20.0-nightly", " v24.20.0"]) {
+      const refusedPlant = plantConsumer({ nodeVersion });
+      const outcome = await resolveMechanicalInstalledHost(refusedPlant.options);
       expect(readingOf(outcome)).toBe("node runtime-unavailable");
-      expect(outcome.ok ? undefined : outcome.identity?.node).toBe(nodeVersion);
+      expect(outcome.ok ? undefined : outcome.identity).toEqual(identityOf(refusedPlant, { claude: null, forge: null }));
     }
     expect(await admitReading(plantConsumer({ nodeVersion: "v24.20.0" }).options)).toBe("admitted imports=1");
     const plant = plantConsumer();
-    const defaulted = await resolveMechanicalInstalledHost({ ...plant.options, runtime: { sdkUse: "fixture" } });
-    expect(defaulted.ok ? defaulted.resolved.identity.node : defaulted.identity?.node).toBe(process.version);
+    const runtimes: readonly MechanicalInstalledHostOptions["runtime"][] = [{ sdkUse: "fixture" }, { sdkUse: "fixture", nodeVersion: undefined }];
+    for (const runtime of runtimes) {
+      const defaulted = await resolveMechanicalInstalledHost({ ...plant.options, runtime });
+      expect(defaulted.ok ? defaulted.resolved.identity.node : defaulted.identity?.node).toBe(process.version);
+    }
     expect(MECHANICAL_HOST_NODE_MAJOR).toBe(24);
   });
 
@@ -619,33 +721,36 @@ describe("wb-zwx5 EAT-R425: the runtime identity is recorded at admission and an
     expect(resolved.identity.sdk).toEqual({ claude: null, forge: null });
   });
 
-  it("R425-5 the identity records the node version judged, the tarball digest and each scope package's name, version and manifest-line digest; a foreign name, the versions next and 1.2, or an unparseable package.json record null, and 0.2.0-rc.1 is kept", async () => {
+  it("R425-5 the identity, frozen throughout, records the node version judged, the tarball digest and each scope package's name, version and manifest-line digest, its lines in UTF-16 code-unit order; a foreign name, the versions next, 1.2, 0.1.0+build.5, ^0.1.0, 0.1.0- and an array, an unparseable package.json and one that is not UTF-8 record null; 0.2.0-rc.1 and 0.2.0-rc-1 are kept; quiet row of R-STRAY-SCOPE-FILE", async () => {
     const plant = plantConsumer();
     const resolved = await resolvedOf(plant.options);
     const content = contentOf(plant.root);
-    const linesOf = (directory: string): string =>
-      Object.entries(content)
-        .filter(([path]) => path.startsWith(`${directory}/`))
-        .map(([path, digest]) => `${path.slice(directory.length + 1)} ${digest}\n`)
-        .join("");
     expect(resolved.identity).toEqual({
       node: "v24.20.0",
       sdkUse: "fixture",
       tarballDigest: plant.options.entry.tarballDigest,
       packages: [
-        { directory: "development-rig", name: "@mechanical/development-rig", version: "0.1.0", contentDigest: digestOf(linesOf("development-rig")) },
-        { directory: "workflows-development", name: "@mechanical/workflows-development", version: "0.1.0", contentDigest: digestOf(linesOf("workflows-development")) },
+        { directory: "development-rig", name: "@mechanical/development-rig", version: "0.1.0", contentDigest: digestOf(linesOf(content, "development-rig")) },
+        { directory: "workflows-development", name: "@mechanical/workflows-development", version: "0.1.0", contentDigest: digestOf(linesOf(content, "workflows-development")) },
       ],
       sdk: { claude: null, forge: null },
     });
+    const { identity } = resolved;
+    expect([resolved, identity, identity.packages, ...identity.packages, identity.sdk].map(record => Object.isFrozen(record))).toEqual([true, true, true, true, true, true]);
 
     const library = "@mechanical/workflows-development";
-    const libraryForms: readonly (readonly [string, { readonly name: string | null; readonly version: string | null }])[] = [
+    const libraryForms: readonly (readonly [string | Uint8Array, { readonly name: string | null; readonly version: string | null }])[] = [
       [`${JSON.stringify({ name: "@other/workflows-development", version: "0.1.0" })}\n`, { name: null, version: "0.1.0" }],
       [`${JSON.stringify({ name: library, version: "next" })}\n`, { name: library, version: null }],
       [`${JSON.stringify({ name: library, version: "1.2" })}\n`, { name: library, version: null }],
+      [`${JSON.stringify({ name: library, version: "0.1.0+build.5" })}\n`, { name: library, version: null }],
+      [`${JSON.stringify({ name: library, version: "^0.1.0" })}\n`, { name: library, version: null }],
+      [`${JSON.stringify({ name: library, version: "0.1.0-" })}\n`, { name: library, version: null }],
+      [`${JSON.stringify({ name: library, version: ["0.1.0"] })}\n`, { name: library, version: null }],
       [`${JSON.stringify({ name: library, version: "0.2.0-rc.1" })}\n`, { name: library, version: "0.2.0-rc.1" }],
+      [`${JSON.stringify({ name: library, version: "0.2.0-rc-1" })}\n`, { name: library, version: "0.2.0-rc-1" }],
       ["{ not json\n", { name: null, version: null }],
+      [notUtf8(`{"name":"${library}","version":"0.1.0","note":"`, `"}\n`), { name: null, version: null }],
     ];
     const identities: unknown[] = [];
     for (const [text] of libraryForms) {
@@ -657,11 +762,27 @@ describe("wb-zwx5 EAT-R425: the runtime identity is recorded at admission and an
       identities.push(entry === undefined ? readingOf(outcome) : { name: entry.name, version: entry.version });
     }
     expect(identities).toEqual(libraryForms.map(([, expected]) => expected));
+
+    const highBmp = `${String.fromCodePoint(0xff01)}.js`;
+    const astral = `${String.fromCodePoint(0x1f600)}.js`;
+    expect([[highBmp, astral].sort(), Buffer.compare(Buffer.from(highBmp, "utf8"), Buffer.from(astral, "utf8"))], "the two orders differ for these names").toEqual([[astral, highBmp], -1]);
+    const ordered = plantConsumer();
+    write(join(ordered.library, "dist", highBmp), "export const high = 1;\n");
+    write(join(ordered.library, "dist", astral), "export const astral = 1;\n");
+    const orderedContent = contentOf(ordered.root);
+    const orderedResolved = await resolvedOf({ ...ordered.options, entry: { ...ordered.options.entry, content: orderedContent } });
+    expect(orderedResolved.identity.packages[1]?.contentDigest).toBe(digestOf(linesOf(orderedContent, "workflows-development")));
+
+    const stray = plantConsumer();
+    write(join(stray.root, "node_modules", "@mechanical", "NOTES.txt"), "a regular file directly under the scope directory\n");
+    const strayResolved = await resolvedOf({ ...stray.options, entry: { ...stray.options.entry, content: contentOf(stray.root) } });
+    expect(strayResolved.identity.packages.map(entry => entry.directory)).toEqual(["NOTES.txt", "development-rig", "workflows-development"]);
+    expect(strayResolved.identity.packages[0]).toEqual({ directory: "NOTES.txt", name: null, version: null, contentDigest: digestOf("") });
   });
 });
 
 describe("wb-zwx5: the entry, the order, the load-time checks and the vocabulary", () => {
-  it("R-ENTRY-1 malformed entries refuse with frozen entry-malformed diagnostics and malformed runtime facts with frozen runtime-malformed diagnostics, each before import", async () => {
+  it("R-ENTRY-1 an entry absent, with a tarball digest unprefixed or a descriptor digest upper-case, an export name empty, hyphenated, led by a digit or an array, or a content manifest empty, an empty array, an array with a member, null, keyed by a malformed path or holding a short digest refuses entry-malformed, and runtime facts absent, unlabelled, mislabelled or with a numeric nodeVersion refuse runtime-malformed, each frozen and before import; quiet row of R-OPTIONS-NOT-OBJECT", async () => {
     const plant = plantConsumer();
     const { entry } = plant.options;
     const entries: readonly unknown[] = [
@@ -670,9 +791,12 @@ describe("wb-zwx5: the entry, the order, the load-time checks and the vocabulary
       { ...entry, descriptorDigest: entry.descriptorDigest.toUpperCase() },
       { ...entry, composedExport: "" },
       { ...entry, composedExport: "not-an-identifier" },
+      { ...entry, composedExport: "1invokeAuthorizedDevelopmentHost" },
       { ...entry, composedExport: [COMPOSED] },
       { ...entry, content: {} },
       { ...entry, content: [] },
+      { ...entry, content: [entry.tarballDigest] },
+      { ...entry, content: null },
       { ...entry, content: { "../escape.js": entry.tarballDigest } },
       { ...entry, content: { "/abs.js": entry.tarballDigest } },
       { ...entry, content: { "a//b.js": entry.tarballDigest } },
@@ -688,6 +812,7 @@ describe("wb-zwx5: the entry, the order, the load-time checks and the vocabulary
     const runtimeReadings: string[] = [];
     for (const runtime of runtimes) runtimeReadings.push(await admitReading({ ...plant.options, runtime: runtime as MechanicalInstalledHostOptions["runtime"] }));
     expect(runtimeReadings).toEqual(runtimes.map(() => "runtime runtime-malformed imports=0"));
+    await expect(resolveMechanicalInstalledHost(undefined as never)).rejects.toThrow(TypeError);
   });
 
   it("R-ORDER-1 the first failing step answers: entry, runtime, consumer, tarball, descriptor, installed (a link, then a missing, an unlisted and a changed file), exports, node, then the SDKs", async () => {
