@@ -1,0 +1,479 @@
+{
+  "schema": "workbench.dx-p14-acquisition-probe/v1",
+  "bead": "wb-mo89",
+  "program": "pi-system-dx-triage-2026-11-11",
+  "requirementsSource": {
+    "commit": "0a5ac3a3c5eb32aa462e708b700c2578ea3a17a4",
+    "path": "docs/workbench/programs/pi-system-dx-triage-2026-11-11/requirements/.work/req-r-followon.md"
+  },
+  "utc": "2026-11-11T21:04:17.554Z",
+  "probe": {
+    "script": "qa/workbench/dx-p14-acquisition-probe.mjs",
+    "scriptSha256": "51ec910a93edf88fadf2e349483c60f4d0f93312314b4abc672fc3add1c4e381"
+  },
+  "legs": {
+    "EAT-R478": {
+      "requirement": "EAT-R478",
+      "gate": "G-EXTERNAL-ENFORCEMENT",
+      "evidence": null,
+      "searched": "nothing outside this repository: no outside-machine enforcement configuration or producer invocation receipt is named at the pin, and no external machine read is authorized",
+      "repositoryComparator": {
+        "path": "qa/workbench/mwi-release.mjs"
+      },
+      "verdict": {
+        "status": "BLOCKED",
+        "requirement": "EAT-R478",
+        "gate": "G-EXTERNAL-ENFORCEMENT",
+        "missing": [
+          "outside-machine enforcement configuration",
+          "producer invocation receipt"
+        ]
+      }
+    },
+    "EAT-R479": {
+      "requirement": "EAT-R479",
+      "gate": "G-FORGE",
+      "producer": {
+        "name": "forge",
+        "version": "0.2.1",
+        "revision": "304bd5e0ac4b",
+        "variant": "python-reference",
+        "executableSha256": "d6d02348051cf7308b50c05223c80a9a8e6431d6c0a481c8977041ca87e27ee1"
+      },
+      "fixture": {
+        "package": "dx-p14-reconcile-binding",
+        "gateStep": "node -e \"process.exit(0)\"",
+        "root": "<fixture>"
+      },
+      "gateRuns": [
+        {
+          "ordinal": 1,
+          "argv": [
+            "forge",
+            "build",
+            "--json"
+          ],
+          "processExit": 0,
+          "envelopeStatus": "success",
+          "gateVerdict": "PASS",
+          "operationId": "op-d7f3f25a8e484df7951ed0d7ab824ed5",
+          "commandId": "cmd_a6959c7c667b"
+        },
+        {
+          "ordinal": 2,
+          "argv": [
+            "forge",
+            "build",
+            "--json"
+          ],
+          "processExit": 0,
+          "envelopeStatus": "success",
+          "gateVerdict": "PASS",
+          "operationId": "op-1ddedceab3d342c997f6120db083d01f",
+          "commandId": "cmd_9be15ee1ad87"
+        }
+      ],
+      "statusReads": [
+        {
+          "ordinal": 1,
+          "capabilityId": "forge.gate.status",
+          "input": {
+            "target": "<fixture>"
+          },
+          "grants": [
+            "forge:inspect"
+          ],
+          "transport": {
+            "launch": [
+              "forge",
+              "app-server",
+              "--stdio"
+            ],
+            "method": "gate.status",
+            "params": {
+              "root": "<fixture>"
+            },
+            "serverExit": "not observed: the SDK owns and reaps the app-server process (ServerConnection.close)"
+          },
+          "reading": {
+            "contract": "forge.gate.status/v1",
+            "protocolMethod": "gate.status",
+            "source": {
+              "operation_id": "op-99456c750ce84006b9086531d5c4d975",
+              "status": "success",
+              "ids": {
+                "command_id": "cmd_cfd91c9856c3"
+              },
+              "envelope": {
+                "reason_code": "FORGE_OK",
+                "provenance": {
+                  "version": "0.2.1",
+                  "revision": "304bd5e0ac4b",
+                  "variant": "python-reference"
+                }
+              },
+              "data": {
+                "packages": [
+                  {
+                    "ref": "code:dx-p14-reconcile-binding",
+                    "last_result": "success",
+                    "last_result_state": {
+                      "freshness": "UNKNOWN",
+                      "source_ref": [
+                        "file:.forge/logs/commands.jsonl#cmd_9be15ee1ad87",
+                        "forge.toml#build.gate.steps"
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "ordinal": 2,
+          "capabilityId": "forge.gate.status",
+          "input": {
+            "target": "<fixture>"
+          },
+          "grants": [
+            "forge:inspect"
+          ],
+          "transport": {
+            "launch": [
+              "forge",
+              "app-server",
+              "--stdio"
+            ],
+            "method": "gate.status",
+            "params": {
+              "root": "<fixture>"
+            },
+            "serverExit": "not observed: the SDK owns and reaps the app-server process (ServerConnection.close)"
+          },
+          "reading": {
+            "contract": "forge.gate.status/v1",
+            "protocolMethod": "gate.status",
+            "source": {
+              "operation_id": "op-35c04519b04f4b50aaa93c347c807f76",
+              "status": "success",
+              "ids": {
+                "command_id": "cmd_6fd077e65ace"
+              },
+              "envelope": {
+                "reason_code": "FORGE_OK",
+                "provenance": {
+                  "version": "0.2.1",
+                  "revision": "304bd5e0ac4b",
+                  "variant": "python-reference"
+                }
+              },
+              "data": {
+                "packages": [
+                  {
+                    "ref": "code:dx-p14-reconcile-binding",
+                    "last_result": "success",
+                    "last_result_state": {
+                      "freshness": "UNKNOWN",
+                      "source_ref": [
+                        "file:.forge/logs/commands.jsonl#cmd_9be15ee1ad87",
+                        "forge.toml#build.gate.steps"
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "verdict": {
+        "status": "measured",
+        "requirement": "EAT-R479"
+      }
+    },
+    "EAT-R480": {
+      "requirement": "EAT-R480",
+      "gate": "G-FORK-MEDIA",
+      "evidence": {
+        "manifestIdentity": {
+          "name": "@tintinweb/pi-subagents",
+          "version": "0.20.0"
+        },
+        "upstreamIdentity": "@tintinweb/pi-subagents",
+        "authorizedForkIdentity": null,
+        "manifestMediaUrlForm": "sha256 of the manifest pi.image and pi.video URLs, in that order",
+        "manifestMediaUrls": [
+          "sha256:633d755849a73fce452a3137adf2b31d212b378cd0ca96f8a6f93087f3f3dd5c",
+          "sha256:11140379519489eb0c3e56e8ad980b70ef8a868169f98315a51e3dafe89c9e11"
+        ],
+        "capturedArtifact": null,
+        "pageUrl": null,
+        "captureDate": null,
+        "renderedSources": []
+      },
+      "searched": "package.json only: no network read, no registry page fetch, no publication and no local page mock",
+      "verdict": {
+        "status": "BLOCKED",
+        "requirement": "EAT-R480",
+        "gate": "G-FORK-MEDIA",
+        "missing": [
+          "approved fork artifact identity",
+          "captured artifact identity and version",
+          "registry page URL",
+          "capture date",
+          "rendered image/video source"
+        ],
+        "grade": "PLAUSIBLE"
+      }
+    },
+    "EAT-R481": {
+      "requirement": "EAT-R481",
+      "gate": "G-CROSS-HOST",
+      "host": "this seat (the developer layout); host paths are not recorded",
+      "evidence": {
+        "developerHomeAvailable": true,
+        "path": null,
+        "hyperunixHx": null,
+        "binaries": [
+          {
+            "name": "hx",
+            "version": null,
+            "underDeveloperHome": true
+          },
+          {
+            "name": "rf",
+            "version": null,
+            "underDeveloperHome": true
+          },
+          {
+            "name": "forge",
+            "version": null,
+            "underDeveloperHome": true
+          }
+        ],
+        "cwd": null,
+        "testResult": null,
+        "forgeTarget": null
+      },
+      "staticReads": {
+        "forgeGateStatusProbe": {
+          "path": "qa/workbench/forge-gate-status-probe.mjs",
+          "defaultTargetExpression": "new URL(\"../../../../\", import.meta.url)"
+        }
+      },
+      "verdict": {
+        "status": "BLOCKED",
+        "requirement": "EAT-R481",
+        "gate": "G-CROSS-HOST",
+        "missing": [
+          "a host where the developer home is not available",
+          "the host's declared PATH",
+          "the host's declared HYPERUNIX_HX",
+          "resolved binaries and versions",
+          "cwd",
+          "native-read test result",
+          "the gate-status probe's own repository target or its refusal"
+        ]
+      }
+    },
+    "EAT-R483": {
+      "requirement": "EAT-R483",
+      "gate": "G-RF",
+      "producer": {
+        "rf": {
+          "version": "0.1.883",
+          "executableSha256": "4a685dd46e2a73a2ad010afb97531465a481b308efe710c77c9927a7d7a6494d"
+        },
+        "dolt": {
+          "version": "dolt version 2.2.4",
+          "executableSha256": "58c85753d3db4c266ecfec206fc518666bc3a6c9c5c64b3e96a329911cf03b5b"
+        }
+      },
+      "workspace": {
+        "root": "<workspace>",
+        "init": {
+          "argv": [
+            "rf",
+            "init",
+            "--backend",
+            "dolt",
+            "--json",
+            "--no-input",
+            "<workspace>"
+          ],
+          "processExit": 0,
+          "ok": true
+        }
+      },
+      "ledgerBefore": {
+        "argv": [
+          "rf",
+          "storage",
+          "local-servers",
+          "--root",
+          "<workspace>",
+          "--json"
+        ],
+        "processExit": 0,
+        "ok": true,
+        "totals": {
+          "servers": 0,
+          "orphaned": 0,
+          "unrecorded": 0,
+          "idle": 0,
+          "active": 0,
+          "unproven": 0,
+          "stale": 0,
+          "rss_bytes": 0,
+          "orphaned_rss_bytes": 0
+        },
+        "servers": []
+      },
+      "render": {
+        "capabilityId": "reactivefiber.render.preview",
+        "input": {
+          "model": "claude-opus-5",
+          "task": "Summarize workbench integration"
+        },
+        "grants": [
+          "reactivefiber:render"
+        ],
+        "outcome": "returned",
+        "contract": "reactivefiber.render.preview/v1",
+        "ok": true,
+        "command": "context.render",
+        "ephemeral": true,
+        "durationMs": 8124
+      },
+      "ledgerAfter": {
+        "argv": [
+          "rf",
+          "storage",
+          "local-servers",
+          "--root",
+          "<workspace>",
+          "--json"
+        ],
+        "processExit": 0,
+        "ok": true,
+        "totals": {
+          "servers": 1,
+          "orphaned": 0,
+          "unrecorded": 0,
+          "idle": 0,
+          "active": 1,
+          "unproven": 0,
+          "stale": 0,
+          "rss_bytes": 137183232,
+          "orphaned_rss_bytes": 0
+        },
+        "servers": [
+          {
+            "server_id": "e5fecc434bc3221f088a1617e74ffa3f",
+            "provenance": "launched",
+            "pid": 3961497,
+            "port": 43973,
+            "class": "active",
+            "proven": true,
+            "listener_owned": true,
+            "workspaceRootIsProbeRoot": true,
+            "rf_version": "0.1.883"
+          }
+        ]
+      },
+      "server": {
+        "pid": 3961497,
+        "port": 43973,
+        "ppid": 1,
+        "executableSha256": "58c85753d3db4c266ecfec206fc518666bc3a6c9c5c64b3e96a329911cf03b5b",
+        "executableIsDoltOnPath": true,
+        "argv": [
+          "dolt",
+          "sql-server",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "43973",
+          "--data-dir",
+          "<workspace>/.reactive-fiber/dolt/data",
+          "--loglevel",
+          "warning"
+        ],
+        "argvRedaction": "argv[0] is the executable basename; the workspace root reads <workspace>",
+        "ss": {
+          "argv": [
+            "ss",
+            "-ltnpH"
+          ],
+          "processExit": 0
+        },
+        "listeners": [
+          {
+            "address": "127.0.0.1",
+            "port": 43973,
+            "pids": [
+              3961497
+            ]
+          }
+        ],
+        "verdicts": {
+          "argv": {
+            "verdict": "explicit-loopback",
+            "flags": [
+              {
+                "form": "--host",
+                "value": "127.0.0.1"
+              }
+            ]
+          },
+          "listeners": {
+            "verdict": "loopback-only",
+            "addresses": [
+              "127.0.0.1:43973"
+            ]
+          }
+        }
+      },
+      "stop": {
+        "argv": [
+          "rf",
+          "storage",
+          "local-servers",
+          "--root",
+          "<workspace>",
+          "--stop",
+          "--yes",
+          "--json"
+        ],
+        "processExit": 0,
+        "ok": true
+      },
+      "pidGoneAfterStop": true,
+      "ledgerFinal": {
+        "argv": [
+          "rf",
+          "storage",
+          "local-servers",
+          "--root",
+          "<workspace>",
+          "--json"
+        ],
+        "processExit": 0,
+        "ok": true,
+        "totals": {
+          "servers": 0,
+          "orphaned": 0,
+          "unrecorded": 0,
+          "idle": 0,
+          "active": 0,
+          "unproven": 0,
+          "stale": 0,
+          "rss_bytes": 0,
+          "orphaned_rss_bytes": 0
+        },
+        "servers": []
+      }
+    }
+  }
+}
