@@ -23,7 +23,7 @@ import { dispatchPools, type HostAdmission, type HostAdmissionLease, type HostAd
 import { type JournalKeyInput, journalKey, nodeJournalKey, type WorkflowJournalEntry } from "./journal.js";
 import { type CompiledSchema, compileJsonSchema } from "./json-schema.js";
 import { extractMeta, type WorkflowMeta } from "./meta.js";
-import type { WorkflowAgentEntry, WorkflowEntry, WorkflowNodeEntry } from "./progress.js";
+import { REPLAY_DECLINE_TEXT_LIMIT, type ReplayDecline, replayDeclineText, type WorkflowAgentEntry, type WorkflowEntry, type WorkflowNodeEntry } from "./progress.js";
 import {
   type AcknowledgeRow,
   acknowledgementValue,
@@ -284,8 +284,27 @@ export interface WorkflowHost {
    * none, byte-for-byte as before.
    */
   readonly replayBasis?: string;
+  /**
+   * Why this host declines settled replay, when {@link replaySafe} is false: bounded text the run's replay decline
+   * carries (wb-q0on, EAT-R361), e.g. which replay dependency reading is measured-unavailable. Absent, the decline
+   * says only that the host declines replay.
+   */
+  readonly replayUnsafeReason?: string;
+  /**
+   * The first policy dimension that differs between this host's {@link replayBasis} and a basis an entry was recorded
+   * under, named for a replay decline (EAT-R361), or undefined when this host cannot tell (an opaque or absent recorded
+   * basis). Never the basis text itself.
+   */
+  describeBasisChange?(recorded: string | undefined): string | undefined;
   /** Host-only capability dispatch. The worker never receives a provider client. */
   callNode?(request: WorkflowNodeRequest): Promise<unknown>;
+  /**
+   * Host-side admission of a node call before anything is recorded or dispatched (wb-q0on, EAT-R358): throws the
+   * CapabilityError the host's own dispatch would raise before any provider runs (an unknown capability, a missing
+   * invocation grant, an input the capability's schema refuses), so the runtime journals no dispatch marker for a
+   * call that never reached a provider. Optional: a host without it is admitted at dispatch, as before.
+   */
+  admitNode?(request: { capabilityId: string; input: JsonValue }): void;
   /**
    * The effect class this host's registry declares for a capability, stamped
    * into the node's journal entry so a later resume can admit a "read" replay
@@ -443,6 +462,8 @@ export interface WorkflowRunResult {
   error?: string;
   /** Typed node transport/validation diagnostic, never a native domain verdict. */
   capabilityError?: CapabilityDiagnostic;
+  /** The first reason this resumed run could not replay a recorded call (EAT-R361); absent when nothing was declined. */
+  replayDecline?: ReplayDecline;
   /** The append-only log, in emission order; under {@link RunWorkflowOptions.telemetry}, its newest entries within telemetry.progressBytes. */
   progress: WorkflowEntry[];
   /** Agents scheduled, including those that failed. */
@@ -608,6 +629,35 @@ type WorkerMessage =
   | { type: "progress"; entries: WorkflowEntry[] }
   | { type: "complete"; resultJson?: string }
   | { type: "error"; message: string; stack?: string; capabilityError?: CapabilityDiagnostic };
+
+const CAPABILITY_CATEGORIES: ReadonlySet<string> = new Set(["validation", "authorization", "unavailable", "transport", "uncertain-effect"]);
+
+/**
+ * The typed diagnostic a failed node call answers with: the error's own category (transport for anything untyped), the
+ * shown message and, for an input-schema refusal, its path and constraint (wb-q0on, EAT-R363).
+ */
+function nodeDiagnostic(error: unknown, message: string): CapabilityDiagnostic {
+  if (!(error instanceof CapabilityError)) return { name: "CapabilityError", category: "transport", message };
+  return {
+    name: "CapabilityError", category: error.category, message,
+    ...(error.detail !== undefined ? { path: error.detail.path, constraint: error.detail.constraint } : {}),
+  };
+}
+
+/**
+ * A worker error frame's diagnostic, rebuilt field by field from its declared shape (wb-zin, wb-q0on): a known category
+ * and string message, plus a string path and constraint when the frame carries them; any other frame is untyped.
+ */
+function frameDiagnostic(diagnostic: unknown): CapabilityDiagnostic | undefined {
+  if (!diagnostic || typeof diagnostic !== "object") return undefined;
+  const frame = diagnostic as Record<string, unknown>;
+  if (frame.name !== "CapabilityError" || typeof frame.category !== "string" || !CAPABILITY_CATEGORIES.has(frame.category) || typeof frame.message !== "string") return undefined;
+  return {
+    name: "CapabilityError", category: frame.category as CapabilityDiagnostic["category"], message: frame.message,
+    ...(typeof frame.path === "string" ? { path: frame.path } : {}),
+    ...(typeof frame.constraint === "string" ? { constraint: frame.constraint } : {}),
+  };
+}
 
 /** Everything below 0x20 except tab, newline and carriage return, plus DEL. */
 const CONTROL_CHARACTERS = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/;
@@ -925,6 +975,30 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
   let replayedCount = 0;
   let replayedNodeCount = 0;
   let reconciledNodeCount = 0;
+  /**
+   * The first reason this resume could not replay a recorded call (wb-q0on, EAT-R361), and whether its log line went
+   * out. Noted where the prefix ends; said once, in the run's log, before the call it costs is dispatched.
+   */
+  let replayDecline: ReplayDecline | undefined;
+  let declineAnnounced = false;
+  /** Why the prefix is declined before any call reaches it, when a host or journal declines it whole. */
+  const declinedWhole: Pick<ReplayDecline, "reason" | "detail"> | undefined =
+    agentJournal.length === 0 || prefixIntact ? undefined
+    : host.replaySafe === false
+      ? { reason: "replay-unsafe", ...(typeof host.replayUnsafeReason === "string" ? { detail: sanitizeWorkbenchText(host.replayUnsafeReason, REPLAY_DECLINE_TEXT_LIMIT, "label") } : {}) }
+      : journalResumes ? { reason: "resumed-journal" } : undefined;
+  const noteDecline = (decline: ReplayDecline): void => {
+    replayDecline ??= decline;
+  };
+  /** The changed basis dimension a host names, sanitized and bounded, never the basis; a throwing describer names none. */
+  const changedDimension = (recorded: string | undefined): string | undefined => {
+    try {
+      const named = host.describeBasisChange?.(recorded);
+      return typeof named === "string" ? sanitizeWorkbenchText(named, REPLAY_DECLINE_TEXT_LIMIT, "label") : undefined;
+    } catch {
+      return undefined;
+    }
+  };
 
   /* --- live control ---------------------------------------------------- */
 
@@ -1004,13 +1078,26 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
 
   /** The journal entry to reuse at `index`, or undefined to run it live. */
   function replayAt(index: number, key: string): WorkflowJournalEntry | undefined {
-    if (!prefixIntact) return undefined;
+    if (!prefixIntact) {
+      if (declinedWhole !== undefined) noteDecline({ ...declinedWhole, kind: "agent", position: index });
+      return undefined;
+    }
     const entry = agentJournal[index];
     // `basis` is the host policy the answer was produced under. A mismatch is
     // a different contract rather than a different call, but it ends the
     // prefix the same way — nothing recorded under the old policy is reusable.
     if (entry === undefined || entry.index !== index || entry.key !== key || !entry.ok || entry.basis !== hostBasis) {
       prefixIntact = false;
+      // Past the last recorded agent nothing was declined: the whole recorded prefix replayed (EAT-R361).
+      if (entry !== undefined) {
+        if (entry.index !== index) noteDecline({ reason: "not-recorded", kind: "agent", position: index });
+        else if (entry.key !== key) noteDecline({ reason: "call-changed", kind: "agent", position: index });
+        else if (!entry.ok) noteDecline({ reason: "failed-entry", kind: "agent", position: index });
+        else {
+          const dimension = changedDimension(entry.basis);
+          noteDecline({ reason: "basis-changed", kind: "agent", position: index, ...(dimension !== undefined ? { dimension } : {}) });
+        }
+      }
       return undefined;
     }
     return entry;
@@ -1039,6 +1126,12 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       if (retained !== undefined) for (const entry of entries) retained.offer(entry);
       else progress.push(...entries);
       options.onProgress?.(entries);
+    };
+    /** Says the first replay decline once, in the run's own log, before the call it costs is dispatched (EAT-R361). */
+    const announceDecline = (): void => {
+      if (replayDecline === undefined || declineAnnounced) return;
+      declineAnnounced = true;
+      emit([{ type: "workflow_log", message: replayDeclineText(replayDecline) }]);
     };
 
     const respond = (callId: number, ok: boolean, value?: unknown, error?: string, fatal?: boolean, capabilityError?: CapabilityDiagnostic) => {
@@ -1074,6 +1167,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       const settle = () => resolve({
         ...result, meta, progress: retained !== undefined ? retained.entries() : progress,
         agentCount, replayedCount, replayedNodeCount, reconciledNodeCount,
+        ...(replayDecline !== undefined ? { replayDecline } : {}),
         ...(retained !== undefined ? { telemetry: { progress: retained.counts() } } : {}),
       });
       void worker.terminate().then(settle, settle);
@@ -1214,8 +1308,11 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         if (!recheck.ok) {
           prefixIntact = false;
           replayed = undefined;
+          noteDecline({ reason: "schema-recheck", kind: "agent", position: index });
         }
       }
+      // Before anything below can spawn: the first decline is said ahead of the first call it costs (EAT-R361).
+      if (replayed === undefined) announceDecline();
       if (replayed !== undefined) {
         replayedCount++;
         const replayedText = replayed.text ?? "";
@@ -1602,11 +1699,13 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         if (recorded.dispatched === true) {
           // wb-5x0.1: the marker a non-read call writes before its provider
           // acts, superseded by nothing. Whatever its class, nothing recorded
-          // how the call settled, so whether its effect happened is unknown.
+          // how the call settled, so whether its effect happened is unknown —
+          // which is why a fresh run is advised only conditionally (wb-q0on,
+          // EAT-R357): it would dispatch the call again.
           const cause = recorded.effectClass === undefined ? "with no effect class" : `with effect class "${recorded.effectClass}"`;
           refusal = {
             entry: recorded,
-            hint: `node(${recordedCapability}) at position ${index} was dispatched by the resumed run ${cause} (producer "${producer}") and has no settled record, so whether its effect happened is unknown. A dispatched SDK effect is never re-executed or silently replayed. ${tail}`,
+            hint: `node(${recordedCapability}) at position ${index} was dispatched by the resumed run ${cause} (producer "${producer}") and has no settled record, so whether its effect happened is unknown. A dispatched SDK effect is never re-executed or silently replayed. Reconcile with ${producer} before resuming: inspect its native evidence and acknowledge or override the position explicitly with workflow_reconcile (position ${index}). A fresh run without resumeFromRunId would dispatch the call again, so start one only once the producer's evidence shows it did not take effect.`,
           };
         } else if (recorded.effectClass === undefined) {
           // Fail closed (wb-tu1): an entry nobody classified — an older journal,
@@ -1744,7 +1843,9 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         // The world after an acknowledged effect is uncertain for everything
         // downstream: the settlement replaces the answer, not the uncertainty,
         // so the replayable prefix ends here exactly as it does for a live call.
+        if (prefixIntact && agentCount < agentJournal.length) noteDecline({ reason: "acknowledged-node", kind: "node", position: index });
         prefixIntact = false;
+        announceDecline();
         reconciledNodeCount++;
         const at = Date.now();
         const record = admission.acknowledgement.reconcile;
@@ -1766,7 +1867,10 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       }
 
       // A live node() may change the world; every later agent must run live.
+      // Recorded agents not yet reached are declined here, and said so (EAT-R361).
+      if (prefixIntact && agentCount < agentJournal.length) noteDecline({ reason: "live-node", kind: "node", position: index });
       prefixIntact = false;
+      announceDecline();
       const override = admission.kind === "override-live" ? admission.override : undefined;
       const effectMark = currentEffect !== undefined ? ({ effectClass: currentEffect } as const) : {};
       await nodeSemaphore.acquire();
@@ -1826,7 +1930,23 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
           ...(nativeId !== undefined ? { nativeId } : {}) });
       };
       try {
-        const input = validatedCapabilityJson(payload.input, `node(${payload.capabilityId}) input`);
+        // Admission before any record (wb-q0on, EAT-R358): the JSON boundary and the host's own pre-dispatch checks
+        // (an unknown capability, a missing invocation grant, an input the schema refuses) run before the dispatched
+        // marker below, so a call no provider ever received leaves no dispatch on record for a resume to refuse on.
+        // Nothing ran, so nothing new is journaled at all; an override's original effect row is carried forward, as
+        // when its marker cannot be written, so a resume of this run still stops at the position.
+        let input: JsonValue;
+        try {
+          input = validatedCapabilityJson(payload.input, `node(${payload.capabilityId}) input`);
+          host.admitNode?.({ capabilityId: payload.capabilityId, input });
+        } catch (error) {
+          const detail = error instanceof Error ? error.message : String(error);
+          emit([{ ...base, startedAt, lastProgressAt: Date.now(), durationMs: Math.round(performance.now() - startedMono), state: "error", error: detail }]);
+          if (admission.kind === "override-live") appendRow({ ...admission.entry });
+          openNodes.delete(callId);
+          respond(callId, false, undefined, detail, true, nodeDiagnostic(error, detail));
+          return;
+        }
         // The tripwire exists from dispatch, not from settlement (wb-5x0.1): a
         // non-read call — an unclassified one included, as at admission — goes
         // on record BEFORE its provider can act, so a kill between the effect
@@ -1918,7 +2038,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         // parallel()'s ordinary item-failure semantics. A failed node is a
         // failed *workflow*, so the caller must see the typed diagnostic.
         openNodes.delete(callId);
-        respond(callId, false, undefined, detail, true, { name: "CapabilityError", category: error instanceof CapabilityError ? error.category : "transport", message: detail });
+        respond(callId, false, undefined, detail, true, nodeDiagnostic(error, detail));
       } finally {
         nodeSemaphore.release();
         lease?.release();
@@ -2049,8 +2169,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
           // flow into the run result, and a capabilityError is carried only in
           // its declared shape (wb-zin).
           const detail = typeof message.message === "string" ? message.message : "Workflow worker reported a malformed error frame.";
-          const diagnostic = message.capabilityError;
-          const capabilityError = diagnostic && typeof diagnostic === "object" && diagnostic.name === "CapabilityError" && typeof diagnostic.category === "string" && typeof diagnostic.message === "string" ? diagnostic : undefined;
+          const capabilityError = frameDiagnostic(message.capabilityError);
           finish({ status: "failed", error: detail, ...(capabilityError ? { capabilityError } : {}) });
           break;
         }
