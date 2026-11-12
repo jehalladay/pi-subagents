@@ -1583,12 +1583,11 @@
       "value": [
         "ingest",
         "markStale",
-        "query",
         "refresh",
         "relate"
       ],
       "type": [],
-      "reason": "the extension entry: it builds the session projection, admits observations in tool handlers and in its workflow-lifecycle emitter, reads it in a tool handler (workflow_compare), hands the dialog seam its deps, hands the Claude host's node seam its refresh and relate (wb-79k.1: a returned hyperunix.find value's snapshot and grouping edge) and hands the detached observe-wiring the projection in workflow_detached's inspect (wb-79k.3)"
+      "reason": "the extension entry: it builds the session projection, admits observations in tool handlers and in its workflow-lifecycle emitter, hands it to the comparison receipt builder in a tool handler (workflow_compare), hands the dialog seam its deps, hands the Claude host's node seam its refresh and relate (wb-79k.1: a returned hyperunix.find value's snapshot and grouping edge) and hands the detached observe-wiring the projection in workflow_detached's inspect (wb-79k.3)"
     },
     "src/workbench/beads-observer.ts": {
       "value": [],
@@ -1624,6 +1623,13 @@
       "writers": [
         "ingest"
       ]
+    },
+    "src/workbench/compare-run.ts": {
+      "value": [
+        "query"
+      ],
+      "type": [],
+      "reason": "the comparison receipt builder (wb-rz62): on a workflow_compare call it reads one invocation's page and that page's latency decomposition for one receipt, never on a redraw"
     },
     "src/workbench/control-tool.ts": {
       "value": [
