@@ -87,6 +87,10 @@ timeout = 120
 command = "./node_modules/.bin/vitest run test/workbench-designer.test.ts"
 timeout = 120
 
+[build.commands.design-compare-vc6-live]
+command = "node qa/workbench/live-design-compare-vc6.mjs"
+timeout = 900
+
 [build.commands.inspector-client]
 command = "node qa/workbench/inspector-smoke.mjs"
 timeout = 120
