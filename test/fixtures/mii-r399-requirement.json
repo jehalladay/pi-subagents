@@ -1,0 +1,37 @@
+{
+  "program": "mechanical-interop-integrity-2026-11-10",
+  "commit": "347d58ea914bdcbdb979a162dcbcd224225ef072",
+  "requirements": {
+    "path": "docs/workbench/programs/mechanical-interop-integrity-2026-11-10/requirements/ATOMIC-REQUIREMENTS.md",
+    "blob": "a8a9bf091e2658a9eb698a023bd9bdb7076fa0e5"
+  },
+  "requirement": {
+    "id": "EAT-R399",
+    "lines": "250-272",
+    "text": [
+      "## EAT-R399 — Persist one authoritative cross-process root reservation",
+      "",
+      "- Type: BEHAVIORAL",
+      "- Authority: RISK_CONTROL",
+      "- Statement: Admitted Mechanical function writers on one supported machine MUST acquire ownership through one durable authoritative reservation store keyed by canonical root.",
+      "- Rationale: C016/C042/C117 are ESTABLISHED: WriterLeases is per-instance memory, no production caller instantiates it, and dispatch-settlement release is only a seam. C116/C120/C156/C158/C193 are NON-EPISTEMIC. This creates function-writer exclusion, not a repair of a claimed production script lease or a distributed guarantee. Audited basis: C016 ESTABLISHED; C042 ESTABLISHED; C117 ESTABLISHED; C116 NON-EPISTEMIC; C120 NON-EPISTEMIC; C156 NON-EPISTEMIC; C158 NON-EPISTEMIC; C193 NON-EPISTEMIC. All empirical statements retain the environment pins above.",
+      "- Epistemic basis: C016 ESTABLISHED; C042 ESTABLISHED; C117 ESTABLISHED; C116 NON-EPISTEMIC; C120 NON-EPISTEMIC; C156 NON-EPISTEMIC; C158 NON-EPISTEMIC; C193 NON-EPISTEMIC.",
+      "- Derived from / remediation: C016, C042, C117, C116, C120, C156, C158, C193; M013, M044, M112, M113, M116, M160, M162, M202.",
+      "- Executable acceptance criteria:",
+      "  1. Start two independent Pi processes with the same configured authoritative store, simultaneously requesting one realpath through direct/symlink/dot aliases. Exactly one acquires the writer reservation; the other receives writer-held (or the ratified bounded queue state), with aggregate writer count one.",
+      "  2. A fresh third process reads the persisted canonical root, invocation, owner, generation and custody state without access to the first process memory. Creating a second local adapter instance does not create an independent lease namespace.",
+      "  3. Record the store path, schema, locking primitive and tested filesystem in the receipt. Restart does not discard the reservation; acquisition-store failure produces no writer.",
+      "- Negative mutant: Replace the authoritative store with new WriterLeases per process; the dual-process alias test must detect two writers.",
+      "- V-tier: V1, V3, V5; `G07-CROSS-PID-RESERVATION` (planned label from the draft); target detail: V1, V3, V5; planned evidence artifact `G07-CROSS-PID-RESERVATION (planned)`.",
+      "- Conditions / unresolved gates: Requires EAT-R398. Same-machine participating Mechanical functions only; no use of S3 Mountpoint for lock/journal random writes.",
+      "- Maps-to: MII P02; wb-2ukh (in_progress; re-read at filing).",
+      "- Extends: EAT-R232, EAT-R269; OK — audited lineage retained.",
+      "- Predecessor lineage: Extends MNI EAT-R232 on live MNI P03 wb-2ukh; wb-s8rm is a closed historical seam carrier.",
+      "- Linked rows: EAT-R448, EAT-R464.",
+      "- Verifies: none (behaviour/contract or independent decision row).",
+      "- Verified-by: EAT-R448, EAT-R464.",
+      "- L0: TRACEABLE; acceptance NOT_RUN.",
+      "- Gate status (unexecuted): **NOT_RUN** — Pi-only substrate; token fields final only after EAT-R398 is ratified"
+    ]
+  }
+}
