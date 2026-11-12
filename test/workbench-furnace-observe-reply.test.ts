@@ -7,7 +7,7 @@
  *   window, aggregates, freshness, anomaly evidence." (C1, C1F, C3R)
  * - 09 "Freshness and ambiguity": "A disconnected Furnace event stream must not make a previously RUNNING node permanently
  *   authoritative RUNNING; it becomes last-known-running + stale. Pi tool summaries must communicate that nuance." (C2, C2P,
- *   C2R)
+ *   C2R, C2E, C2W; the residual R-RECORDER-CAP's quiet row C2Q)
  * - 11: "Use compact structured schema, discover more capability detail on demand" (C3, C5M, C8, the byte cap)
  * - 09 "Acceptance/negative controls" item 10: "Large/secret payload does not leak into Pi tool result or screen by default."
  *   (C4)
@@ -44,6 +44,20 @@
  *   Attempt row's ref, each under the call's scope, and each failing reply's lastKnown rows read run:stale:active and
  *   attempt:stale:active (none current) with the summary "2 last-known-running + stale (active, not current); 2 stale / 0
  *   unknown".
+ * - C2E: target the registered furnace_observe, one call answered (a Run of three running Attempts, frn-atm-1..3) and one
+ *   failing; observed: the answered read serves the Run row and the three Attempt rows current; on the failing call
+ *   ObservationProjection.prototype.markStale was called exactly four times, the Run's ref and then each Attempt row's ref in
+ *   page order, each under the call's scope; its lastKnown rows read stale (the Run and frn-atm-1..3) and active, none
+ *   current, with the summary "4 last-known-running + stale (active, not current); 4 stale / 0 unknown".
+ * - C2W: target the registered furnace_observe, two calls answered (the first pages frn-atm-2 and frn-atm-3, the second
+ *   frn-atm-1 alone) and one failing; observed: markStale on the failing call exactly the Run's ref and then frn-atm-2,
+ *   frn-atm-3 and frn-atm-1 (first-seen order, which is not the IDs' sorted order), each under the call's scope, and the
+ *   failing reply's lastKnown holds those four rows, each stale, with the four-row summary above.
+ * - C2Q (the quiet row of residual R-RECORDER-CAP below): target src/index.ts's text, then FurnaceObservedAttempts capped at 2
+ *   after three Attempt refs of one Run, the host's two stale steps (the test's markedStale copy, which C2E and C2W pin to the
+ *   host) and furnaceObserveFailure; observed: the host constructs its one recorder as `new FurnaceObservedAttempts()` (the
+ *   module default cap, FURNACE_OBSERVED_ATTEMPTS_MAX, which C2P reads as 2000), the capped recorder holds frn-atm-2 and
+ *   frn-atm-3, and lastKnown reads the Run, frn-atm-2 and frn-atm-3 stale and frn-atm-1 current (exactly one current row).
  * - C3: target furnaceObserveReply over 20-Attempt fixtures written in ASCII, quote-escaped and non-ASCII shapes, at every
  *   cap of CAPS; observed: the UTF-8 byte length (TextEncoder) of each success reply, and of the typed invalid-request refusal
  *   a cap too small for the viewport gets, is at most its cap, and each success reply states its truncation
@@ -80,12 +94,34 @@
  *   order, written out here), every fact it does not omit is carried and none it omits is, and the omission sets seen as the
  *   cap grows are exactly all five facts, four, three, two, one (logs) and none.
  *
+ * CLASS GUARD OF RECORD (refusal #2 of wb-752.13, g10-gate-s295 seat gate-prep-92; rule 19 shape frozen, so this suite is
+ * authored in the rule-14 enumerate-the-resolvable form for it): the failure-reply freshness claim that no row a prior read
+ * refreshed stays current after a failed read of the Run (docs/workbench/09 "Freshness and ambiguity"). This suite claims
+ * exactly its pinned set: on a failed read the host marks the Run's ref and then every Attempt ref FurnaceObservedAttempts
+ * holds for the Run - one Attempt (C2R), every Attempt of one answered read in page order (C2E) and the Attempts of every
+ * earlier answered read in first-seen order (C2W), each under the call's scope - and the recorder's own semantics (C2P); the
+ * failure reply's lastKnown then reads those rows stale, none current (C2, C2R, C2E, C2W). Its one known unpinned mode is the
+ * named residual below.
+ *
+ * RESIDUAL (named family + pinned quiet row): R-RECORDER-CAP - FurnaceObservedAttempts keeps at most
+ * FURNACE_OBSERVED_ATTEMPTS_MAX refs across Runs (2000, the session projection's node cap; C2P; the host's one recorder takes
+ * that default, C2Q) and forgets the oldest first-seen first, while the projection admits a row it evicted again last; so
+ * after a session recorded more refs than the cap, a forgotten ref is not marked by a failed read and its row, if the
+ * projection still holds it, reads current in lastKnown. Quiet row: C2Q (this file), which reds if that row stops reading
+ * current.
+ *
  * NOT CLAIMED (scope sentences): the real furnace binary's own envelopes (every native read here is the counting fake or an
  * in-memory client) is NOT CLAIMED by this census; Beads Work linkage (not in this cut: docs/workbench/receipts/wb-752.13.md
  * names the landed census it conflicts with) is NOT CLAIMED by this census; what FurnaceObserver reads from a Run and what the
  * shared sanitizers do (both sides of every comparison use them) are NOT CLAIMED by this census; the freshness of an Attempt
- * row that a later answered read no longer returns (it keeps the freshness of its last refresh) is NOT CLAIMED by this census.
+ * row that a later answered read no longer returns (it keeps the freshness of its last refresh) is NOT CLAIMED by this census;
+ * the rows a read under another scope refreshed (another workspace or principal: markStale invalidates only the call's own
+ * scope) are NOT CLAIMED by this census; Furnace Attempt rows a writer other than furnace_observe refreshes into a Run's
+ * viewport are NOT CLAIMED by this census.
  */
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import subagentsExtension from "../src/index.js";
 import { BEADS_WORK_CONTRACT } from "../src/workbench/beads-observer.js";
@@ -114,6 +150,7 @@ import { installScratchLeakGuard } from "./helpers/scratch.js";
 installScratchLeakGuard();
 
 const CASE_TIMEOUT_MS = 120_000;
+const REPO = join(dirname(fileURLToPath(import.meta.url)), "..");
 const WORKSPACE = "/fixture/external-ws";
 const SCOPE: ObservationScope = { workspace: WORKSPACE, principal: "fixture" };
 const LIMITS = { maxPolls: 1, intervalMs: 1000, maxElapsedMs: 30_000, attemptLimit: 20, logBytes: 512, callTimeoutMs: 10_000 } as const;
@@ -124,6 +161,8 @@ const CAPS = [1024, 1025, 1100, 1300, 1600, 2048, 3000, 4096, 8192, 16_384, 32_7
 const PROBE = "abc123def456";
 /** The freshness summary of a Run row and one Attempt row, both running and both stale (observe-query's own wording). */
 const TWO_STALE = "2 last-known-running + stale (active, not current); 2 stale / 0 unknown";
+/** The same summary for a Run row and three Attempt rows, all running and all stale. */
+const FOUR_STALE = "4 last-known-running + stale (active, not current); 4 stale / 0 unknown";
 /** The order a tighter cap omits the success facts in, written out (C8 reads the builder against it, not against its constant). */
 const OMISSION_ORDER: readonly string[] = ["logs", "attempts", "run", "snapshot", "source"];
 
@@ -141,6 +180,12 @@ const rowsOf = (reply: Json, key: "observe" | "lastKnown"): string[] =>
   (((reply[key] as Json | undefined)?.nodes as Json[] | undefined) ?? []).map(node => `${(node.nativeRef as Json).type}:${node.freshness}:${(node.presentation as Json).statusTone}`);
 /** The native IDs of a reply's observe rows, in order. */
 const idsOf = (reply: Json): string[] => (((reply.observe as Json).nodes as Json[] | undefined) ?? []).map(node => String((node.nativeRef as Json).id));
+/** A reply's rows under key, each "<native type>:<native ID>:<freshness>", in order. */
+const idRowsOf = (reply: Json, key: "observe" | "lastKnown"): string[] =>
+  (((reply[key] as Json | undefined)?.nodes as Json[] | undefined) ?? []).map(node => `${(node.nativeRef as Json).type}:${(node.nativeRef as Json).id}:${node.freshness}`);
+/** One ObservationProjection.prototype.markStale call, "<scope workspace>|<provider>:<type>:<native ID>:<ref scope>". */
+const staleCallOf = (input: { readonly scope: ObservationScope; readonly ref: NativeRef }): string =>
+  `${input.scope.workspace}|${input.ref.provider}:${input.ref.type}:${input.ref.id}:${input.ref.scope ?? ""}`;
 
 function attempts(count: number, shape: (index: number) => Partial<FixtureAttempt> = () => ({})): FixtureAttempt[] {
   return Array.from({ length: count }, (_, index) => ({ attempt_id: `frn-atm-${index + 1}`, work_id: `bd-work-${index + 1}`, state: "running", started_at: "2026-01-01T00:00:01Z", ...shape(index) }));
@@ -336,6 +381,79 @@ describe("furnace_observe reply (wb-752.13)", () => {
         expect(((reply.lastKnown as Json).freshness as Json).summary).toBe(TWO_STALE);
       }
     });
+  });
+
+  it("C2E: the registered furnace_observe marks the Run's ref and then each of the three Attempt rows one answered read refreshed stale, in page order, when the next read fails, and that reply's lastKnown reads all four rows stale and running, none current", { timeout: CASE_TIMEOUT_MS }, async () => {
+    await withFake(["furnace:inspect"], async (boot, fake) => {
+      fake.play(furnaceAnswers({ runId: RUN_ID, workspace: boot.workspace, attempts: attempts(3) }));
+      const answered = parse(textOfResult(await boot.call({ runId: RUN_ID })));
+      expect(idRowsOf(answered, "observe"), "the answered read: the Run row and its three Attempt rows, all current").toStrictEqual([
+        `run:${RUN_ID}:current`,
+        "attempt:frn-atm-1:current",
+        "attempt:frn-atm-2:current",
+        "attempt:frn-atm-3:current",
+      ]);
+      fake.play(furnaceMissing());
+      const markStale = vi.spyOn(ObservationProjection.prototype, "markStale");
+      const failed = parse(textOfResult(await boot.call({ runId: RUN_ID })));
+      expect(markStale.mock.calls.map(([input]) => staleCallOf(input)), "the Run's ref, then every Attempt row's, in page order, each under the call's scope").toStrictEqual([
+        `${boot.workspace}|furnace:run:${RUN_ID}:${boot.workspace}`,
+        ...["frn-atm-1", "frn-atm-2", "frn-atm-3"].map(id => `${boot.workspace}|furnace:attempt:${id}:${boot.workspace}`),
+      ]);
+      expect([(failed.error as Json).code, idRowsOf(failed, "lastKnown")], "every lastKnown row reads stale").toStrictEqual([
+        "unavailable",
+        [`run:${RUN_ID}:stale`, "attempt:frn-atm-1:stale", "attempt:frn-atm-2:stale", "attempt:frn-atm-3:stale"],
+      ]);
+      expect([rowsOf(failed, "lastKnown"), ((failed.lastKnown as Json).freshness as Json).summary], "each still running, none current").toStrictEqual([
+        ["run:stale:active", "attempt:stale:active", "attempt:stale:active", "attempt:stale:active"],
+        FOUR_STALE,
+      ]);
+    });
+  });
+
+  it("C2W: the registered furnace_observe marks stale the Attempt rows of every earlier answered read of the Run, in first-seen order, an earlier page's rows included, when the next read fails", { timeout: CASE_TIMEOUT_MS }, async () => {
+    await withFake(["furnace:inspect"], async (boot, fake) => {
+      // First-seen order (frn-atm-2, frn-atm-3, then frn-atm-1) is not the IDs' sorted order, so the call order below reads it.
+      fake.play(furnaceAnswers({ runId: RUN_ID, workspace: boot.workspace, attempts: attempts(3).slice(1) }));
+      expect(idsOf(parse(textOfResult(await boot.call({ runId: RUN_ID })))), "the first answered read pages frn-atm-2 and frn-atm-3").toStrictEqual([RUN_ID, "frn-atm-2", "frn-atm-3"]);
+      fake.play(furnaceAnswers({ runId: RUN_ID, workspace: boot.workspace, attempts: attempts(1) }));
+      const second = parse(textOfResult(await boot.call({ runId: RUN_ID })));
+      expect([second.ok, (second.attempts as Json).returned], "the second answered read pages frn-atm-1 alone").toStrictEqual([true, 1]);
+      fake.play(furnaceMissing());
+      const markStale = vi.spyOn(ObservationProjection.prototype, "markStale");
+      const failed = parse(textOfResult(await boot.call({ runId: RUN_ID })));
+      expect(markStale.mock.calls.map(([input]) => staleCallOf(input)), "the Run's ref, then each Attempt ref either read refreshed, in first-seen order").toStrictEqual([
+        `${boot.workspace}|furnace:run:${RUN_ID}:${boot.workspace}`,
+        ...["frn-atm-2", "frn-atm-3", "frn-atm-1"].map(id => `${boot.workspace}|furnace:attempt:${id}:${boot.workspace}`),
+      ]);
+      const lastKnown = idRowsOf(failed, "lastKnown");
+      expect([(failed.error as Json).code, [...lastKnown].sort()], "all four rows, each stale").toStrictEqual([
+        "unavailable",
+        ["attempt:frn-atm-1:stale", "attempt:frn-atm-2:stale", "attempt:frn-atm-3:stale", `run:${RUN_ID}:stale`],
+      ]);
+      expect(((failed.lastKnown as Json).freshness as Json).summary, "none current, each still running").toBe(FOUR_STALE);
+    });
+  });
+
+  it("C2Q: residual R-RECORDER-CAP's quiet row - the host's one recorder takes the default cap, and an Attempt ref a capped FurnaceObservedAttempts forgot is not marked by the host's two stale steps, so its row, still in the projection, reads current in lastKnown beside the stale rest", { timeout: CASE_TIMEOUT_MS }, async () => {
+    const host = readFileSync(join(REPO, "src", "index.ts"), "utf8");
+    expect(host.match(/new FurnaceObservedAttempts\([^)]*\)/g), "the host constructs one recorder, at the module default cap").toStrictEqual(["new FurnaceObservedAttempts()"]);
+    const run: FixtureRun = { runId: RUN_ID, workspace: WORKSPACE, attempts: attempts(3) };
+    const { projection } = await viewed(run);
+    const capped = new FurnaceObservedAttempts(2);
+    capped.record(RUN_ID, ["frn-atm-1", "frn-atm-2", "frn-atm-3"].map(attemptRef));
+    expect(capped.refs(RUN_ID).map(ref => ref.id), "past its cap the recorder forgot the oldest ref").toStrictEqual(["frn-atm-2", "frn-atm-3"]);
+    const failing = new FurnaceObserver(memoryFurnace(run, () => Object.assign(new Error("private native detail"), { code: "run_not_found" })), { workspaceRoot: WORKSPACE, runId: RUN_ID, scope: SCOPE, limits: LIMITS, traceRun: true });
+    const error = await failing.snapshot().then(() => undefined, (rejected: unknown) => rejected);
+    markedStale(projection, capped);
+    const reply = parse(furnaceObserveFailure(viewOf(projection), error));
+    expect(idRowsOf(reply, "lastKnown"), "the forgotten ref's row stays current: the residual's page").toStrictEqual([
+      `run:${RUN_ID}:stale`,
+      "attempt:frn-atm-1:current",
+      "attempt:frn-atm-2:stale",
+      "attempt:frn-atm-3:stale",
+    ]);
+    expect(((reply.lastKnown as Json).freshness as Json).current, "exactly one row reads current").toBe(1);
   });
 
   it("C3: every success reply text, and the invalid-request refusal a cap too small for the viewport gets, fits its cap in UTF-8 bytes, ASCII, quote-escaped and non-ASCII alike, and states what it left out", { timeout: CASE_TIMEOUT_MS }, async () => {

@@ -58,10 +58,13 @@
  *    hosted-agent report: the session adapter states only its fixed ownership, causation and grouping edges for a visual-debugging
  *    sample whose label and tool names carry the claim, a report member riding the sample is read nowhere, and src's relate() call
  *    sites are exactly the three ownership adapters, each spelling ownership only, the two HX relay sites wb-79k.1 added (the
- *    Claude host's node seam, src/workbench/claude-host.ts, and the closure src/index.ts hands it) and the wb-79k.2 ReactiveFiber
- *    observe-wiring (src/workbench/reactivefiber-wiring.ts), which spell no relation kind of their own and relay the HX and the RF
- *    reader adapters, each of whose one stated kind is display grouping (src/index.ts ingests the hosted agents' nodes and relates
- *    only through that closure). B4 the
+ *    Claude host's node seam, src/workbench/claude-host.ts, and the closure src/index.ts hands it), the wb-79k.2 ReactiveFiber
+ *    observe-wiring (src/workbench/reactivefiber-wiring.ts) and the wb-752.13 furnace_observe relay (src/index.ts's second relate()
+ *    site), none of which spells a relation kind of its own: the HX relay sites and the RF observe-wiring relay the HX and the RF
+ *    reader adapters, each of whose one stated kind is display grouping, and the furnace_observe relay relays the Run->Attempt
+ *    edges FurnaceObserver.projectionTopology states, whose adapter (src/workbench/furnace-observer.ts) states ownership only, an
+ *    edge relate() admits only with the owner's own native confirmation (B1) (src/index.ts ingests the hosted agents' nodes and
+ *    relates them only through that closure; its one other relate() site is the furnace_observe relay). B4 the
  *    witness rule, armed (witnessViolations) for the first mapping reader: the honest reader passes every claim, and reading
  *    identity from a debug id, a screenshot, id equality, an agent report or a partial witness fails, as do synthesizing the
  *    revision, dropping or rewriting the witness, and ignoring a witness that names another target. B5 every bound reader meets B4
@@ -128,11 +131,13 @@
  * outside every scanned root, and both spell the vocabulary (Q6, reading the export through the owner filing alone); R-STATED-EDGE
  * relate() asks a witness only of ownership, so a producer-stated dependency, causation or grouping edge from a debug ref to a
  * FiberOptics ref is admitted on its source alone and read authoritative - not an identity edge (no identity class exists), and no
- * Pi producer states one: besides the ownership adapters, src relates only through the HX relay sites, which state the HX adapter's
- * display grouping from the invoking operation to its query node, and the RF observe-wiring, which states the RF adapter's display
- * grouping from the invoking node call to its preview node (B3) (Q7); R-FOREIGN-READER graph-view validates no kind, so a
- * reader other than the session projection serving the claim row would draw an edge of class identity; src hands graph-view, the
- * slice and the agent's read only the session projection, whose one writer refuses the kind (B1) (Q8).
+ * Pi producer states one: besides the ownership adapters and the furnace_observe relay, which relays FurnaceObserver's
+ * native-confirmed ownership from a Run to each Attempt of its page, src relates only through the HX relay sites, which state the
+ * HX adapter's display grouping from the invoking operation to its query node, and the RF observe-wiring, which states the RF
+ * adapter's display grouping from the invoking node call to its preview node (B3) (Q7); R-FOREIGN-READER graph-view validates no
+ * kind, so a reader other than the session projection serving the claim row would draw an edge of class identity; src hands
+ * graph-view, the slice and the agent's reads (workflow_observe's and, since wb-752.13, furnace_observe's) only the session
+ * projection, whose one writer refuses the kind (B1) (Q8).
  * SCOPE: C1's judge reads no negation or tense: a unit stating the prohibition reds too (OVER-READ, disclosed: no Pi doc couples the
  * families today, and a page that must will re-measure this census). The producer facts are measured at the pin; Pi vendors no
  * producer file, so a producer change is seen only when the roster is re-measured. The FiberOptics, React DevTools and screenshot
@@ -338,6 +343,10 @@ function keysAndStrings(value: unknown): string[] {
 }
 /** wb-79k.1: the src relate() call sites that relay the HX adapter's statements (the Claude host's node seam and the closure src/index.ts hands it). */
 const HX_RELAY_SITES: readonly string[] = ["src/index.ts", "src/workbench/claude-host.ts"];
+/** wb-752.13: furnace_observe's relate() site, src/index.ts's second beside the HX closure, relays FurnaceObserver.projectionTopology's
+ * Run->Attempt edges; the adapter whose kind it relays. */
+const FURNACE_RELAY_SITE = "src/index.ts";
+const FURNACE_RELAY_ADAPTER = "src/workbench/furnace-observer.ts";
 /** The relation kinds a source spells as `kind: "<kind>"`, each once, sorted. */
 const kindsIn = (text: string): string[] =>
   [...new Set([...text.matchAll(/kind: ?["'](dependency|causation|ownership|grouping|hypothesis)["']/g)].map(match => match[1] ?? ""))].sort();
@@ -1082,8 +1091,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(keysAndStrings(reported).some(text => text.includes(REPORT_MARKER)), "the report member is read nowhere").toBe(false);
     // wb-79k.1: the HX relay sites relate the HX adapter's own statements and spell no relation kind. wb-79k.2: the host seam's
     // ReactiveFiber observe-wiring is one more relay - it relates the RF reader adapter's frozen relations and states no kind of its
-    // own. Each relayed adapter states exactly one kind, a display grouping: never ownership, never a mapping. Every other site is an
-    // ownership adapter.
+    // own. Each relayed adapter states exactly one kind, a display grouping: never ownership, never a mapping. wb-752.13:
+    // furnace_observe's relay is src/index.ts's second site - it relates FurnaceObserver.projectionTopology's Run->Attempt edges and
+    // states no kind of its own; that adapter states ownership only, which relate() admits only natively confirmed (B1). Every other
+    // site is an ownership adapter.
     const adapters = Object.entries(writeSites).filter(([file]) => !HX_RELAY_SITES.includes(file) && file !== OBSERVE_WIRING);
     expect(adapters.every(([, site]) => site.kinds.length === 1 && site.kinds[0] === "ownership"), "every adapter's relate() call site states ownership only").toBe(true);
     expect(HX_RELAY_SITES.map(file => writeSites[file]?.kinds ?? null), "each HX relay site relates and spells no relation kind of its own").toEqual(HX_RELAY_SITES.map(() => []));
@@ -1091,6 +1102,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const hxAdapterKinds = kindsIn(textOf(join(REPO, "src", "workbench", "hyperunix-observer.ts")));
     expect(hxAdapterKinds, "the one adapter the HX relay sites relate states display grouping only").toEqual(["grouping"]);
     expect(kindsIn(textOf(join(REPO, OBSERVE_WIRING_ADAPTER))), "the adapter the RF observe-wiring relays states one display-grouping kind").toEqual(["grouping"]);
+    expect(writeSites[FURNACE_RELAY_SITE], "src/index.ts relates through the HX closure and the furnace_observe relay and states no kind of its own").toEqual({ calls: 2, kinds: [] });
+    const furnaceAdapterKinds = kindsIn(textOf(join(REPO, FURNACE_RELAY_ADAPTER)));
+    expect(furnaceAdapterKinds, "the adapter the furnace_observe relay relates states ownership only").toEqual(["ownership"]);
     return json({
       relations,
       refs: topology.snapshots.map(snapshot => refName(snapshot.source)).sort(),
@@ -1099,6 +1113,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       writeSites,
       indexRelates: (textOf(join(REPO, "src", "index.ts")).match(/\.relate\(/g) ?? []).length,
       hxAdapterKinds,
+      furnaceAdapterKinds,
     });
   },
   B4: async () => {
