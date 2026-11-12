@@ -32,7 +32,8 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const readRepo = (path: string): string => readFileSync(join(ROOT, path), "utf8");
 /** forge.toml:13 after the flip: the typing step's command, and the whole line byte-exact (Row A). */
 const TYPING_VALUE = "npm run typecheck && npm run typecheck:test";
-const TYPING_LINE = `typing = "${TYPING_VALUE}"`;
+/** The typing step moved from the inline key to a [build.commands.typing] table at L1133 (timeout 900, owner M:76958). */
+const TYPING_LINE = `command = "${TYPING_VALUE}"`;
 /** forge.toml:9; this flip adds no step (the fifteenth sibling of the gate-literal pin). */
 const GATE_LINE = 'gate = ["lint", "typing", "build", "test", "census", "workbench-shell", "package-smoke"]';
 const TSC = join(ROOT, "node_modules", "typescript", "bin", "tsc");
@@ -52,9 +53,9 @@ interface TsConfig {
 const toml = readRepo("forge.toml");
 const scripts: Readonly<Partial<Record<string, string>>> = (JSON.parse(readRepo("package.json")) as PackageJson).scripts ?? {};
 
-/** The value of forge.toml's one `typing = "..."` line, or undefined when no such line exists. */
+/** The command of forge.toml's one `[build.commands.typing]` table, or undefined when no such table exists. */
 function typingValue(text: string): string | undefined {
-  return /^typing = "([^"\n]+)"$/m.exec(text)?.[1];
+  return /^\[build\.commands\.typing\]\ncommand = "([^"\n]+)"$/m.exec(text)?.[1];
 }
 
 /**
@@ -80,8 +81,9 @@ function resolveTscConfigs(command: string, depth = 0): string[] {
 }
 
 describe("wb-zsv: the gate's typing step covers test/** (forge.toml:13 resolved through package.json to the tsconfig files)", () => {
-  it("Row A: forge.toml carries exactly one typing line, and it chains typecheck with typecheck:test, byte-exact", () => {
-    expect(toml.match(/^typing = /gm)).toHaveLength(1);
+  it("Row A: forge.toml carries exactly one [build.commands.typing] table, and its command chains typecheck with typecheck:test, byte-exact", () => {
+    expect(toml.match(/^\[build\.commands\.typing\]$/gm)).toHaveLength(1);
+    expect(toml.match(/^typing = /gm)).toBeNull();
     expect(typingValue(toml)).toBe(TYPING_VALUE);
     expect(toml).toContain(`\n${TYPING_LINE}\n`);
   });
