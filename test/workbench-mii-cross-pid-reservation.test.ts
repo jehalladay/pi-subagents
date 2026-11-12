@@ -1,5 +1,5 @@
 /**
- * wb-yk1k (MII P03+ packet), cut #3 (the respin of cut #2 after refusal #2): EAT-R399 criterion 1 only, and two
+ * wb-yk1k (MII P03+ packet), cut #4 (the respin of cut #3 after refusal #3): EAT-R399 criterion 1 only, and two
  * in-process cases of the reservation-store form, R399-STORE-VALIDATION and R399-RECORD-NAMING, that pin forms the
  * comments of src/workbench/source-admission.ts state. Requirement text:
  * docs/workbench/programs/mechanical-interop-integrity-2026-11-10/requirements/ATOMIC-REQUIREMENTS.md at Pi master 347d58ea
@@ -48,11 +48,19 @@
  *     lines 250-272 at 347d58ea: its id and line label are EAT-R399 and 250-272, its text is 23 lines, the first opening
  *     with "## EAT-R399 ", and the SHA-256 of those lines, each followed by a line feed, is VENDORED_LINES_SHA256, the
  *     digest of lines 250-272 of the page at 347d58ea that cut #2 recorded (git show 347d58ea:<page> | sed -n 250,272p).
- *     In this header's prose (headerProse: the lines of this comment, each without its comment prefix and trimmed, the
- *     empty ones dropped, joined by single spaces), QUOTE_LABEL matches exactly the three labels openingParagraph composes
+ *     This header is this file's lines before its first import line (headerLines), read before any count below: its
+ *     first and last lines are HEADER_EDGES, the comment opener alone and the comment close alone; every line between
+ *     them is a space and an asterisk, alone or followed by a space, and holds no comment close; every line is printable
+ *     ASCII (U+0020 to U+007E); and SECTION_WORDS matches the lower-case copies of exactly three of its lines, capturing,
+ *     in order, "pinned reader set", "not claimed by this census:" and "residual:", the first of those lines being
+ *     the heading PINNED_HEADING and the third RESIDUAL_LINE, the line right before the close. In this header's prose
+ *     (headerProse: its lines between the first and the last, each without its comment prefix and trimmed, the empty
+ *     ones dropped, joined by single spaces), QUOTE_LABEL matches exactly the three labels openingParagraph composes
  *     from the fixture, in order, one naming the statement, one criterion 1 and one the negative mutant, each with the
- *     line number the fixture gives that line; PAGE_WORDS and EVIDENCE_WORDS each match once; and the vendored statement,
- *     criterion 1 and negative mutant each occur in the prose in double quotes once. Read after those counts, the prose
+ *     line number the fixture gives that line; PAGE_WORDS and EVIDENCE_WORDS each match once; in the prose's upper-case
+ *     copy and in its lower-case copy, QUOTE_LABEL, PAGE_WORDS and EVIDENCE_WORDS match 3, 1 and 1 times; and the
+ *     vendored statement, criterion 1 and negative mutant each occur in the prose in double quotes once. Read after
+ *     those counts, the prose
  *     before its first " The trial. " holds six double quote marks and equals the paragraph openingParagraph composes:
  *     SCOPE_SENTENCE, then the sentence naming the fixture's requirements.path and the first 8 hex digits of its commit,
  *     then each of the three vendored lines in double quotes right after its label, then the sentence giving the V-tier
@@ -75,11 +83,15 @@
  *     hex SHA-256 of the UTF-8 bytes of one of the two realpaths followed by ".json".
  *   ROSTER: the tests this file registers are exactly the ROSTER titles, in order, each in run mode and none marked to fail,
  *     ROSTER registered last; the leading ids of their titles are exactly the ids that open this PINNED READER SET's
- *     bullets, read from this file's own source; every R399 case id the source of src/workbench/source-admission.ts
- *     cites is one of those ids; each declaration line SRC_CITATIONS names occurs in that source once, as a whole line;
- *     and the R399 case ids the source cites, in source order, are exactly the ids SRC_CITATIONS lists, each declaration's
- *     ids cited, in order, by the JSDoc comment that ends on the line right before it (the comments of WriterLeases, its
- *     constructor, acquire and reservationPath).
+ *     bullets (pinnedLines: this header's lines after PINNED_HEADING and before the first that opens with
+ *     NOT_CLAIMED_OPENER, none if either line is missing or that one comes first), each of those lines matching
+ *     BULLET_ID, a bullet's first line (after the comment prefix, three spaces, a case id of capitals, digits and
+ *     hyphens, a colon, a space and a non-space), or BULLET_NEXT, one of its next lines (after the comment prefix, five
+ *     spaces and a non-space), and no other line of this header matches BULLET_ID; every R399 case id the source of
+ *     src/workbench/source-admission.ts cites is one of those ids; each declaration line SRC_CITATIONS names occurs in
+ *     that source once, as a whole line; and the R399 case ids the source cites, in source order, are exactly the ids
+ *     SRC_CITATIONS lists, each declaration's ids cited, in order, by the JSDoc comment that ends on the line right before
+ *     it (the comments of WriterLeases, its constructor, acquire and reservationPath).
  * NOT CLAIMED by this census: EAT-R399 criteria 2 and 3 (a fresh process reading the persisted owner, generation and
  * custody state; a second registry in one process; the receipt's store facts; restart; acquisition-store failure). When
  * and how a reservation is released (EAT-R400, EAT-R403) is NOT CLAIMED by this census. The bead's other rows (EAT-R400
@@ -92,7 +104,7 @@
  * any root R399-RECORD-NAMING does not plant, are NOT CLAIMED by this census. Outside this header's opening paragraph,
  * any label that QUOTE_LABEL does not match, with any quote after it other than the vendored statement, criterion 1 and
  * negative mutant, and any page, commit or evidence label named in words that PAGE_WORDS and EVIDENCE_WORDS do not match,
- * are NOT CLAIMED by this census.
+ * are NOT CLAIMED by this census. This file's comments after this header are NOT CLAIMED by this census.
  * RESIDUAL: none claimed.
  */
 import { type ChildProcess, execFileSync, spawn } from "node:child_process";
@@ -131,6 +143,20 @@ const REPORTS: readonly string[] = ["ENTERED", "RESULT"];
 const STORE_VALIDATION = "A writer reservation store names an absolute directory.";
 const LEASE_VALIDATION = "A writer lease names a canonical workspace root and an invocation.";
 const ROOT_VALIDATION = "A writer reservation names a workspace root that resolves.";
+/** R399-C1-SHAPE's view of this header: its first and last lines, the comment opener alone and the comment close alone. */
+const HEADER_EDGES = ["/**", " */"] as const;
+/** The line of this header that heads its PINNED READER SET (R399-C1-SHAPE, pinnedLines). */
+const PINNED_HEADING = " * PINNED READER SET (case id: reader, what it asserts):";
+/** What the line that opens this header's NOT CLAIMED paragraph opens with (pinnedLines). */
+const NOT_CLAIMED_OPENER = " * NOT CLAIMED by this census:";
+/** This header's line right before its close (R399-C1-SHAPE). */
+const RESIDUAL_LINE = " * RESIDUAL: none claimed.";
+/** The words that open a section of this header, after the comment prefix and any spaces, read in a line's lower-case copy. */
+const SECTION_WORDS = /^ \* +(pinned reader set|not claimed by this census:|residual:)/;
+/** A bullet's first line in this header's PINNED READER SET: three spaces, its case id, a colon, a space and a non-space. */
+const BULLET_ID = /^ \* {3}([A-Z0-9-]+): \S/;
+/** One of a bullet's next lines in this header's PINNED READER SET: five spaces and a non-space. */
+const BULLET_NEXT = /^ \* {5}\S/;
 /**
  * The SHA-256 of lines 250-272 of the vendored page at the vendored commit, each line followed by a line feed, recorded by
  * wb-yk1k cut #2 from git show 347d58ea914bdcbdb979a162dcbcd224225ef072:<requirements.path> | sed -n 250,272p.
@@ -138,7 +164,7 @@ const ROOT_VALIDATION = "A writer reservation names a workspace root that resolv
 const VENDORED_LINES_SHA256 = "e8d65ac05b6bafa4dbc508e8e59110d00db1d50310b14963b862b96748f42d89";
 /** This header's first sentence: R399-C1-SHAPE composes the header's opening paragraph from it and the fixture. */
 const SCOPE_SENTENCE =
-  "wb-yk1k (MII P03+ packet), cut #3 (the respin of cut #2 after refusal #2): EAT-R399 criterion 1 only, and two in-process cases of the reservation-store form, R399-STORE-VALIDATION and R399-RECORD-NAMING, that pin forms the comments of src/workbench/source-admission.ts state.";
+  "wb-yk1k (MII P03+ packet), cut #4 (the respin of cut #3 after refusal #3): EAT-R399 criterion 1 only, and two in-process cases of the reservation-store form, R399-STORE-VALIDATION and R399-RECORD-NAMING, that pin forms the comments of src/workbench/source-admission.ts state.";
 /**
  * R399-C1-SHAPE's label form: the statement, criterion <n> or the negative mutant, then a comma, the word line, a number and a
  * colon, in any letter case. The opening paragraph quotes each vendored line right after one such label.
@@ -176,10 +202,10 @@ const ROSTER = [
   "R399-C1-STORE two children over one store, released together, acquire ws through each pair of its direct, symlink and dot spellings: exactly one gets a lease naming the realpath and its own invocation, the other gets undefined, and holder read in the parent names that invocation through every spelling",
   "R399-C1-ADMISSION two children running admitSourceWrite over one store, released together, on each pair of ws's spellings: exactly one enters its dispatch with a lease naming the realpath, the other refuses writer-held without entering, and the entered write then dispatches",
   "R399-C1-DETECTOR the same admission race, released together, with new WriterLeases() in each child, the named mutant's per-process registry, enters both dispatches, so the race reads two writers when two exist",
-  "R399-C1-SHAPE the fixture's lines hash to the digest recorded from EAT-R399's lines 250-272 at 347d58ea; in this header's prose QUOTE_LABEL matches only the three labels composed from the fixture, PAGE_WORDS and EVIDENCE_WORDS match once each, the three vendored quotes occur once each, and the opening paragraph holds six double quote marks and equals openingParagraph's; ALIAS_KINDS are criterion 1's alias kinds and ALIAS_PAIRS their frozen unordered pairs",
+  "R399-C1-SHAPE the fixture's lines hash to the digest recorded from EAT-R399's lines 250-272 at 347d58ea; this header, the file's lines before its first import line, is one comment of printable ASCII lines in which the section words open its PINNED READER SET heading, its NOT CLAIMED paragraph and RESIDUAL_LINE, the line before its close, once each and in that order; in its prose QUOTE_LABEL matches only the three labels composed from the fixture, PAGE_WORDS and EVIDENCE_WORDS match once each, also in its upper- and lower-case copies, the three vendored quotes occur once each, and the opening paragraph holds six double quote marks and equals openingParagraph's; ALIAS_KINDS are criterion 1's alias kinds and ALIAS_PAIRS their frozen unordered pairs",
   "R399-STORE-VALIDATION with a store, the constructor and acquire throw their validation CapabilityErrors with their exact messages for the options, roots and invocations this case plants, and the store then holds no file",
   "R399-RECORD-NAMING one registry over one store acquires two sibling roots, one through a symlink: each lease names its realpath, holder names each invocation, and the store holds exactly the two record files named by the SHA-256 of each realpath",
-  "ROSTER the registered tests of this file are exactly these, in order, each run and none marked to fail, ROSTER last, their leading ids are the ids of this file's PINNED READER SET bullets, and the R399 case ids src/workbench/source-admission.ts cites are among them and, in source order, exactly those SRC_CITATIONS lists, each cited by the JSDoc comment right before the declaration it is listed with",
+  "ROSTER the registered tests of this file are exactly these, in order, each run and none marked to fail, ROSTER last, their leading ids are the ids of this header's PINNED READER SET bullets, every line of that section a bullet's first line or one of its next lines and no other header line a bullet's first, and the R399 case ids src/workbench/source-admission.ts cites are among them and, in source order, exactly those SRC_CITATIONS lists, each cited by the JSDoc comment right before the declaration it is listed with",
 ] as const;
 
 /** The child: the real source-admission.ts module, one request on GO, held until FINISH. */
@@ -414,19 +440,29 @@ function enteredCount(reading: RaceReading): number {
   return reading.events.flat().filter(event => event.tag === "ENTERED").length;
 }
 
-/** This file's PINNED READER SET bullet ids, in order, read from its own header. */
-function headerIds(): string[] {
+/** This header as R399-C1-SHAPE and ROSTER read it: this file's lines before its first import line, as written. */
+function headerLines(): string[] {
   const source = readFileSync(THIS_FILE, "utf8");
-  const header = source.slice(source.indexOf("PINNED READER SET"), source.indexOf("NOT CLAIMED by this census"));
-  return [...header.matchAll(/^ \* {3}([A-Z0-9-]+):/gm)].map(match => match[1] ?? "");
+  return source.slice(0, source.indexOf("\nimport ")).split("\n");
 }
 
-/** This file's header comment as prose: each line without its comment prefix, joined by single spaces. */
+/** This header's PINNED READER SET lines: its lines after PINNED_HEADING and before the first that opens with NOT_CLAIMED_OPENER, none if either is missing or that one comes first. */
+function pinnedLines(): string[] {
+  const lines = headerLines();
+  const from = lines.indexOf(PINNED_HEADING);
+  const to = lines.findIndex(line => line.startsWith(NOT_CLAIMED_OPENER));
+  return from < 0 || to < from ? [] : lines.slice(from + 1, to);
+}
+
+/** The case ids that open this header's PINNED READER SET bullets, in order. */
+function headerIds(): string[] {
+  return pinnedLines().flatMap(line => BULLET_ID.exec(line)?.[1] ?? []);
+}
+
+/** This header as prose: its lines between the first and the last, each without its comment prefix and trimmed, the empty ones dropped, joined by single spaces. */
 function headerProse(): string {
-  const source = readFileSync(THIS_FILE, "utf8");
-  return source
-    .slice(0, source.indexOf("*/"))
-    .split("\n")
+  return headerLines()
+    .slice(1, -1)
     .map(line => line.replace(/^\s*\/?\*+\s?/, "").trim())
     .filter(line => line !== "")
     .join(" ");
@@ -575,9 +611,19 @@ describe("EAT-R399 criterion 1: two processes over one configured store hold one
     expect([id, lines, text.length, text[0]?.startsWith(`## ${id} `)]).toEqual(["EAT-R399", "250-272", 23, true]);
     const opening = openingParagraph();
     for (const quote of opening.quotes) expect(quote.length, quote).toBeGreaterThan(40);
+    const view = headerLines();
+    expect([view[0], view.at(-1)]).toEqual([...HEADER_EDGES]);
+    expect(view.slice(1, -1).filter(line => !(line === " *" || line.startsWith(" * ")) || line.includes("*/"))).toEqual([]);
+    expect(view.filter(line => !/^[\x20-\x7e]*$/.test(line))).toEqual([]);
+    expect(view.flatMap(line => SECTION_WORDS.exec(line.toLowerCase())?.[1] ?? [])).toEqual(["pinned reader set", "not claimed by this census:", "residual:"]);
+    expect([view.indexOf(PINNED_HEADING) > 0, view.at(-2)]).toEqual([true, RESIDUAL_LINE]);
     const header = headerProse();
     expect([...header.matchAll(QUOTE_LABEL)].map(match => match[0])).toEqual(opening.labels);
     expect([header.match(PAGE_WORDS), header.match(EVIDENCE_WORDS)]).toEqual([["Requirement text:"], ["names the planned evidence label"]]);
+    expect([header.toUpperCase(), header.toLowerCase()].map(copy => [QUOTE_LABEL, PAGE_WORDS, EVIDENCE_WORDS].map(pattern => copy.match(pattern)?.length ?? 0))).toEqual([
+      [3, 1, 1],
+      [3, 1, 1],
+    ]);
     expect(opening.quotes.map(quote => occurrences(header, `"${quote}"`))).toEqual([1, 1, 1]);
     const paragraph = header.slice(0, header.indexOf(" The trial. "));
     expect(occurrences(paragraph, '"')).toBe(6);
@@ -639,6 +685,8 @@ it(ROSTER[6], ({ task }) => {
   expect(registered.map(entry => entry.name)).toEqual([...ROSTER]);
   expect(registered.filter(entry => entry.mode !== "run" || entry.fails).map(entry => entry.name)).toEqual([]);
   expect(registered.findIndex(entry => entry.self)).toBe(registered.length - 1);
+  expect(pinnedLines().filter(line => !(BULLET_ID.test(line) || BULLET_NEXT.test(line)))).toEqual([]);
+  expect(headerLines().filter(line => BULLET_ID.test(line))).toEqual(pinnedLines().filter(line => BULLET_ID.test(line)));
   expect(registered.map(entry => titleId(entry.name))).toEqual(headerIds());
   const source = readFileSync(MODULE, "utf8");
   const cited = source.match(R399_CASE_ID) ?? [];
