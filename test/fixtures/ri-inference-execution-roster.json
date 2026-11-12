@@ -136,7 +136,8 @@
        "src/workbench/redaction.ts:redactWorkbenchText",
        "src/workbench/redaction.ts:sanitizeWorkbenchText",
        "src/workbench/redaction.ts:stripUnsafeText",
-       "typebox/value:Check"
+       "typebox/value:Check",
+       "typebox/value:Errors"
       ],
       "elsewhere": {
        "src/workbench/capability-registry.ts": [
