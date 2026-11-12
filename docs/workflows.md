@@ -320,7 +320,7 @@ A run's concurrency limit is its own, independent of the session's `maxConcurren
 
 ## Recipes
 
-The orchestration patterns themselves — adversarial verification, judge panels, loop-until-dry — live in exactly one place: the tool description the model reads on every turn. It already knows them. So these are not instructions for writing scripts by hand; they are **what to ask for**, and what the resulting script looks like so you can recognize it in the file.
+The orchestration patterns themselves — adversarial verification, judge panels, loop-until-dry — are taught by the full tool description the model reads on every turn, so by default it already knows them; under `toolDescriptionMode: "compact"` it gets a shorter description without them, and [Orchestration patterns](#orchestration-patterns) below lists them. So these are not instructions for writing scripts by hand; they are **what to ask for**, and what the resulting script looks like so you can recognize it in the file.
 
 ### Fan out over a list you don't have yet
 
@@ -369,6 +369,29 @@ See [`review-panel.js`](../examples/workflows/review-panel.js).
 Recognize it by `await workflow('repo-map', { … })`. Reach for it to reuse something already saved, not to structure one script — inline composition is cheaper.
 
 See [`compose.js`](../examples/workflows/compose.js).
+
+### Orchestration patterns
+
+The full `SubagentWorkflow` description teaches the shapes below on every turn. Under `toolDescriptionMode: "compact"` the model gets a shorter description (the script API, the caps and one example) that leaves them out, so they are kept here as the full description words them. The Review line's "example below" is the full description's own review example.
+
+Common single-phase workflows you can chain across turns:
+
+- **Understand** — parallel readers over relevant subsystems → structured map
+- **Design** — judge panel of N independent approaches → scored synthesis
+- **Review** — dimensions → find → adversarially verify (example below)
+- **Research** — multi-modal sweep → deep-read → synthesize
+- **Migrate** — discover sites → transform each (worktree isolation) → verify
+
+Quality patterns — common shapes; pick by task and compose freely:
+
+- Adversarial verify: spawn N independent skeptics per finding, each prompted to REFUTE. Kill if ≥majority refute. Prevents plausible-but-wrong findings from surviving.
+- Verify by running, not by asking: when a claim is testable, `gate` it rather than asking another model whether it holds.
+- Perspective-diverse verify: when a finding can fail in more than one way, give each verifier a distinct lens (correctness, security, perf, does-it-reproduce) instead of N identical refuters — diversity catches failure modes redundancy can't.
+- Judge panel: generate N independent attempts from different angles (e.g. MVP-first, risk-first, user-first), score with parallel judges, synthesize from the winner while grafting the best ideas from runners-up. Beats one-attempt-iterated when the solution space is wide.
+- Loop-until-dry: for unknown-size discovery (bugs, issues, edge cases), keep spawning finders until K consecutive rounds return nothing new. Simple counters (while count < N) miss the tail.
+- Multi-modal sweep: parallel agents each searching a different way (by-container, by-content, by-entity, by-time). Each is blind to what the others surface; useful when one search angle won't find everything.
+- Completeness critic: a final agent that asks "what's missing — modality not run, claim unverified, source unread?" What it finds becomes the next round of work.
+- No silent caps: if a workflow bounds coverage (top-N, no-retry, sampling), `log()` what was dropped — silent truncation reads as "covered everything" when it didn't.
 
 ## Troubleshooting
 

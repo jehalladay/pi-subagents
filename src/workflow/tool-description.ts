@@ -202,3 +202,46 @@ Use this tool for multi-step orchestration where control flow should be determin
 ## Resume
 
 The tool result includes a runId. To resume after a pause, kill, or script edit, relaunch with SubagentWorkflow({scriptPath, resumeFromRunId}) — the longest unchanged prefix of agent() calls returns cached results instantly; the first edited/new call and everything after it runs live. Same script + same args → every recorded call is a replay candidate, replayed while the host's replay basis still matches; when one cannot be, the run's log says why ("replay declined at …"). It is a prefix and not a lookup: a later call that still matches is not reused once an earlier one has changed. A journaled failure ends the prefix, so resuming a run that died at agent 5 retries exactly agent 5. Same session only, and the run must have finished — stop it from /agents → Workflows first. Before diagnosing why a completed workflow returned an empty or unexpected result, Read the run's \`<run id>.workflow.jsonl\` beside its script — it records each agent's actual return value; do not assume cached results are non-empty. Date.now()/Math.random()/new Date() are unavailable in scripts (they would break this) — stamp results after the workflow returns, or pass timestamps via args.`;
+
+/**
+ * The compact `SubagentWorkflow` description, registered in place of the full one when `toolDescriptionMode` is "compact"
+ * (EAT-R326, wb-9btr cut #5). It has no upstream counterpart: the full description above stays the Claude Code port, and this one
+ * keeps the script API list, the caps and one worked example under 4 KiB for small/local models, leaving the orchestration
+ * patterns to docs/workflows.md ("Orchestration patterns"). It carries no `{{placeholder}}`: a live agent list would grow it with
+ * every custom agent, so `agentType` points at the Agent tool's own list instead. "custom" mode keeps the full description here.
+ * test/workflow-compact-tool-description.test.ts pins it: R326-B1, R326-B2, R326-A1, R326-A2, R326-C1, R326-E1, R326-P1, R326-R1.
+ */
+export const compactWorkflowToolDescription = `Run a workflow script that orchestrates many subagents deterministically. It runs in the background: this tool returns a task ID at once and you are notified when the workflow completes, so do not poll or sleep. /agents -> Workflows shows live progress.
+
+ONLY call it when the user explicitly opted into multi-agent orchestration: they asked for a workflow in their own words, invoked a skill or command that calls SubagentWorkflow, or named a saved workflow. Otherwise use the Agent tool, or describe the workflow and its rough cost and ask first.
+
+Pass the source inline as \`script\`. Each run saves it to a file and returns the path: to iterate, edit that file and call again with \`scriptPath\`. A reusable script lives in .pi/workflows/<name>.js (or .agents/workflows/, or <agent dir>/workflows/); run it with \`name\`. With \`resumeFromRunId\` (a finished run of this session) the run's unchanged leading agent() calls return their recorded results; the first changed or failed call and everything after it runs live.
+
+The script is plain JavaScript, not TypeScript, run as an async function body (use await and return). It must begin with \`export const meta = { name, description }\` written as a pure literal (optional: whenToUse, phases: [{ title }]). Date.now(), Math.random() and argless new Date() throw (they break resume), as do eval and Function(); there is no filesystem, network or Node.js API. The return value must be JSON-shaped.
+
+Globals:
+- agent(prompt, opts?) spawns a subagent and resolves to its final text, or with opts.schema (a JSON Schema) to the validated object; null if the agent fails or is skipped, so filter with .filter(Boolean). opts: label, phase, schema, model, effort ('minimal' | 'low' | 'medium' | 'high' | 'xhigh' | 'max'), isolation: 'worktree', agentType (a type the Agent tool lists), gate (a shell command that must exit 0 after the agent). opts.resume: '<label>' continues that child and cannot be combined with agentType, model, effort, isolation, gate or schema. Any other option is rejected by name.
+- pipeline(items, ...stages) runs each item through every stage with no barrier; a stage gets (prevResult, item, index), and one that throws drops its item to null. Prefer it.
+- parallel(thunks) is a barrier: it awaits every thunk; a thunk that throws resolves to null, while a fatal run error such as a cap breach propagates.
+- phase(title) starts a progress group.
+- log(message) writes a progress line.
+- console.log/info/warn/error/debug write progress lines too.
+- args is the tool's \`args\`, verbatim.
+- budget is {total: null, spent(), remaining()}.
+- meta is the meta literal.
+- workflow(nameOrRef, args?) runs a saved workflow, or {scriptPath}, inline and returns its value; one level deep.
+- node(id, input, options?) calls a host-authorized provider, only with workbench.workflowAgentBackend: "claude".
+- CapabilityError is the class a typed node() refusal throws; its category names the kind.
+
+Caps: concurrent agent() calls are capped at min(16, available CPUs - 2); total agents are capped at 1000 per run; at most 4096 items per parallel()/pipeline() call; 256 nested workflow() calls per run; an inline script up to 524288 characters.
+
+Example:
+  export const meta = { name: 'review-files', description: 'Review each file, then try to refute each finding' }
+  const SCHEMA = { type: 'object', properties: { findings: { type: 'array', items: { type: 'string' } } }, required: ['findings'] }
+  const reviewed = await pipeline(args.files,
+    file => agent(\`List real bugs in \${file}.\`, { label: \`review:\${file}\`, schema: SCHEMA }),
+    review => parallel((review ? review.findings : []).map((f, i) => () =>
+      agent(\`Try to refute: \${f}\`, { label: \`refute:\${i}\`, effort: 'low' }))))
+  return reviewed.filter(Boolean)
+
+Orchestration patterns (barriers, verification, judge panels, loop-until-dry and more) are in docs/workflows.md of the @tintinweb/pi-subagents package.`;
