@@ -308,8 +308,10 @@
  *     as holding the scope. A path form or text form T1 does not hold is NOT CLAIMED, and so is whether the bound text sits in a
  *     string literal. Today it binds
  *     src/workbench/mechanical-descriptor.ts (the mechanical-workflows-interop B-descriptor boundary, EAT-R010) to the reviewed
- *     package's name in double quotes, the one text in which its fixed allowlist spells the package; T1's import reading holds
- *     that no src module loads an @mechanical/ name.
+ *     package's name in double quotes, the one text in which its fixed allowlist spells the package, and
+ *     src/workbench/mechanical-installed-host.ts (wb-zwx5, the installed-host adapter of mechanical-interop-integrity-2026-11-10,
+ *     EAT-R421) to the rig package's name in double quotes, the one text in which it spells the package; T1's import reading
+ *     holds that no src module loads an @mechanical/ name.
  *   FC-FIELD (B1's witness): fieldNames reads, with B's own field tests, each identifier or #private name, each string literal
  *     or template without substitution wherever it sits, and each id member of every planted src module (closedHits, through
  *     liveFieldNames over that one module, in its pin's failClosed after the src files), so every unread construction form over a
@@ -1585,6 +1587,7 @@ function fieldNames(module: Module): string[] {
  */
 const MW_SCOPE_MODULES: readonly { readonly module: string; readonly literal: string }[] = [
   { module: "src/workbench/mechanical-descriptor.ts", literal: '"@mechanical/workflows-development"' },
+  { module: "src/workbench/mechanical-installed-host.ts", literal: '"@mechanical/development-rig"' },
 ];
 /** Code points the cut #3 forms plant that are not printable ASCII, built from their numbers (never written raw). */
 const SCOPE_SOFT_HYPHEN = String.fromCodePoint(0xad);
