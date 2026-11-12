@@ -100,6 +100,29 @@ export const RF_CHILD_ENV_ALLOWLIST: readonly string[] = Object.freeze([
   "TZ",
 ]);
 
+/**
+ * The environment handed to the Beads CLI child: the single launch in src/workbench/providers/beads.ts (wb-lkz7, the
+ * show-only Beads work client). It is a subset of the detached host's list. The child finds its store from its working
+ * directory, the workspace root, so no BEADS_* or BD_* variable is named: a store-location or actor variable in Pi's own
+ * environment (BEADS_DIR, say) never points the read at another store.
+ *
+ * Every name is operational and none is credential-shaped: PATH resolves the binary; HOME and the XDG config, cache and
+ * data directories hold the CLI's own configuration; TMPDIR is its temporary directory; LANG, LC_ALL, LC_CTYPE and TZ keep
+ * its text and timestamps in the host's locale. test/workbench-beads-wiring.test.ts pins it by exact members.
+ */
+export const BEADS_CHILD_ENV_ALLOWLIST: readonly string[] = Object.freeze([
+  "PATH",
+  "HOME",
+  "TMPDIR",
+  "LANG",
+  "LC_ALL",
+  "LC_CTYPE",
+  "TZ",
+  "XDG_CONFIG_HOME",
+  "XDG_CACHE_HOME",
+  "XDG_DATA_HOME",
+]);
+
 /** Proxy variables: allowlisted by name, but a URL carrying userinfo is a credential by content. */
 const PROXY_VARIABLES: ReadonlySet<string> = new Set(["HTTP_PROXY", "HTTPS_PROXY", "http_proxy", "https_proxy"]);
 

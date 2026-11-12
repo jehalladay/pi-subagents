@@ -30,6 +30,9 @@
  * reading alone, and either runs the native verb once or returns a typed refusal (REFUSAL_CODES, a closed set) that the seat counts;
  * each MUTANTS member relaxes one condition and breaks at least one case of its clause. A Pi module that acts on a claimed task (a
  * claim site B1 flags or a reader importer B3 flags) binds itself in BEAD_EXECUTORS (empty today) and must meet every case (C3).
+ * wb-lkz7 (the B3 question ruling M:78809 carved to it: admit a show-only observation importer of the reader, or keep Beads out
+ * of the reply path) ADMITS one: src/workbench/providers/beads.ts, listed in OBSERVATION_IMPORTERS. An importer in that list is
+ * held by B3 to the show read verb alone and, like every file, by B1 to no claim; it is not a BEAD_EXECUTORS binding.
  * The rows:
  *  A, the execution-time re-read, (a). A1 closed after the claim (with and without a close reason): refused `closed`, no native
  *    verb, one counted refusal. A2 blocked by an open dependency after the claim (a new open blocker, a closed blocker reopened, a
@@ -52,10 +55,12 @@
  *    control program; a module B1 flags must be bound in BEAD_EXECUTORS and every binding must name one (empty both ways
  *    today). B2 the
  *    reader holds no readiness: its source keeps no module-scope let or var and writes no module-scope container, and two reads of
- *    one id issue two shows whose readings follow their own envelopes and stamps. B3 no file under IMPORT_ROOTS, code or not,
- *    imports the reader (an exact set, empty today: a specifier read in the raw text - a JSON file's also in the strings its parser
- *    cooks - and, in a code file, as its cooked value by the TypeScript parser, and named as Node's loader reads a URL) or spells a
- *    bd readiness read (READ_VERBS) outside it (read as B1 reads a file: raw, and cooked in a code or a JSON file), with matcher
+ *    one id issue two shows whose readings follow their own envelopes and stamps. B3 the files under IMPORT_ROOTS, code or not,
+ *    that import the reader are exactly OBSERVATION_IMPORTERS (empty until wb-lkz7, one since: a specifier read in the raw text -
+ *    a JSON file's also in the strings its parser cooks - and, in a code file, as its cooked value by the TypeScript parser, and
+ *    named as Node's loader reads a URL), the files that spell a bd readiness read (READ_VERBS) outside it are exactly that list
+ *    too, and each listed importer's reads name the show verb and no other read verb (read as B1 reads a file: raw, and cooked in
+ *    a code or a JSON file; the verb reading has a control spelling two verbs), with matcher
  *    controls (non-code files among them, extensionless scripts too), a floor and an anchor for the non-code files the walk reads
  *    (IMPORT_NON_CODE), the walk's extensionless control (it reaches B1's Beads-hooks anchor, a file with no extension) and
  *    positive floors (the import matcher finds the reader's own import of redaction.ts; the read judge reads the seam's own bd
@@ -383,6 +388,10 @@ const IMPORT_NON_CODE = {
   ],
 } as const;
 const READER_MODULE = "src/workbench/beads-observer.ts";
+/** The observation importers of the reader B3 admits (wb-lkz7, the B3 answer): src/workbench/providers/beads.ts, the show-only
+ * Beads work client and its Attempt work wiring. B3 holds the reader's importers, and the files spelling a readiness read outside
+ * the reader, to exactly this list, and each member's reads to the show verb alone. */
+const OBSERVATION_IMPORTERS: readonly string[] = ["src/workbench/providers/beads.ts"];
 /** The instruction documents that teach a generic claim for this repository's own store (R-INSTRUCTION). */
 const INSTRUCTION_FILES: readonly string[] = ["AGENTS.md", ".agents/skills/beads/SKILL.md", ".beads/README.md"];
 /** The VC-4 tier's launcher: it starts a Furnace Run in a disposable store (R-CONTROLLER). */
@@ -1610,6 +1619,7 @@ function constantsOf(): JsonValue {
     importNonCode: IMPORT_NON_CODE,
     seamInterface: SEAM_INTERFACE,
     readerModule: READER_MODULE,
+    observationImporters: OBSERVATION_IMPORTERS,
     instructionFiles: INSTRUCTION_FILES,
     vc4Launcher: VC4_LAUNCHER,
     residuals: RESIDUALS,
@@ -1984,8 +1994,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       ].map(text => fileImportsOf(text, "module.ts").filter(specifier => namesModule(specifier, "beads-observer")).length),
     };
     const bound = BEAD_EXECUTORS.map(binding => binding.module);
-    expect(importers, "a file under the import roots importing the Beads reader").toEqual([]);
-    expect(importers.filter(module => !bound.includes(module)), "an importer not bound in BEAD_EXECUTORS").toEqual([]);
+    expect(importers, "the files under the import roots importing the Beads reader are the admitted observation importers").toEqual([...OBSERVATION_IMPORTERS]);
+    expect(importers.filter(module => !bound.includes(module) && !OBSERVATION_IMPORTERS.includes(module)), "an importer neither bound in BEAD_EXECUTORS nor admitted").toEqual([]);
     expect(floor, "the same matcher finds the reader's own import of redaction.ts").toContain(READER_MODULE);
     expect(controls.flagged.every(count => count === 1) && controls.quiet.every(count => count === 0), "the import matcher's controls").toBe(true);
     // The import matcher's parser controls (wb-dcsb F2 and F3): the gate's G1-G7 - a specifier spelled through a unicode or hex
@@ -2057,7 +2067,14 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       ].map(text => bdReadsIn(text).length),
       quiet: ["bd init --non-interactive --prefix fx", "bd codex-hook SessionStart", "showReady(list)"].map(text => bdReadsIn(text).length),
     };
-    expect(bypass, "a file reading bd readiness outside the seam").toEqual([]);
+    expect(bypass, "the files reading bd readiness outside the seam are the admitted observation importers").toEqual([...OBSERVATION_IMPORTERS]);
+    // wb-lkz7: the read verbs each admitted importer's reads name (every reading of the file, raw and cooked); a control text
+    // naming two verbs reads both, so the verb reading is not vacuous.
+    const verbsOf = (reads: readonly string[]): string[] => [...new Set(reads.flatMap(read => read.split(" ").slice(1).filter(word => READ_VERBS.includes(word))))].sort();
+    const admittedReads = Object.fromEntries(OBSERVATION_IMPORTERS.map(module => [module, verbsOf(readsIn(textOf(join(REPO, module)), module))]));
+    const admittedControl = verbsOf(bdReadsIn("bd show fx-run.1 --json, then bd ready --json"));
+    expect(admittedReads, "each admitted observation importer's reads name the show verb alone").toStrictEqual(Object.fromEntries(OBSERVATION_IMPORTERS.map(module => [module, ["show"]])));
+    expect(admittedControl, "the verb reading reads both verbs of its control").toEqual(["ready", "show"]);
     expect(seamReads, "the same judge reads the seam's own bd show").toBe(true);
     expect(readControls.flagged.every(count => count > 0) && readControls.quiet.every(count => count === 0), "the read judge's controls").toBe(true);
     // The read judge's cooked controls (wb-dcsb, the F2 class at B3's second judge): an escaped bd word or read verb in a code file
@@ -2130,7 +2147,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       kinds: { md: true, json: true, sh: true },
       extensionless: true,
     });
-    return json({ importers, bound, readerImportsRedaction: floor.includes(READER_MODULE), controls, parserImports, bypass, seamReads, readControls, cookedReads, nonCode, nonCodeWalk });
+    return json({ importers, bound, readerImportsRedaction: floor.includes(READER_MODULE), controls, parserImports, bypass, admittedReads, admittedControl, seamReads, readControls, cookedReads, nonCode, nonCodeWalk });
   },
   B4: async () => {
     const step = judgeStep(ROSTER.generation.claimStep.text);

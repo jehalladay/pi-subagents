@@ -2947,6 +2947,7 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "src/workbench/forge-operation-observer.ts:3+0",
       "src/workbench/furnace-observer.ts:0+1",
       "src/workbench/hyperunix-observer.ts:0+1",
+      "src/workbench/providers/beads.ts:3+0",
       "src/workbench/reactivefiber-observer.ts:0+1",
       "src/workbench/reactivefiber-wiring.ts:2+0",
     ]);

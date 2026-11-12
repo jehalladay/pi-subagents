@@ -61,7 +61,9 @@
  *    Claude host's node seam, src/workbench/claude-host.ts, and the closure src/index.ts hands it) and the wb-79k.2 ReactiveFiber
  *    observe-wiring (src/workbench/reactivefiber-wiring.ts), which spell no relation kind of their own and relay the HX and the RF
  *    reader adapters, each of whose one stated kind is display grouping (src/index.ts ingests the hosted agents' nodes and relates
- *    only through that closure). B4 the
+ *    only through that closure), and the wb-lkz7 Beads wiring (src/workbench/providers/beads.ts), which relays the Beads reader
+ *    adapter's statements, whose kinds are dependency and grouping, and states one kind of its own, causation, from a Furnace
+ *    Attempt to the Work its record names. B4 the
  *    witness rule, armed (witnessViolations) for the first mapping reader: the honest reader passes every claim, and reading
  *    identity from a debug id, a screenshot, id equality, an agent report or a partial witness fails, as do synthesizing the
  *    revision, dropping or rewriting the witness, and ignoring a witness that names another target. B5 every bound reader meets B4
@@ -172,6 +174,10 @@ const ROSTER_PATH = join(HERE, "fixtures", "fiber-debug-identity-roster.json");
 /** wb-79k.2: the relate() site that relays the ReactiveFiber reader adapter's relations, and the adapter whose kinds it relays. */
 const OBSERVE_WIRING = "src/workbench/reactivefiber-wiring.ts";
 const OBSERVE_WIRING_ADAPTER = "src/workbench/reactivefiber-observer.ts";
+/** wb-lkz7: the relate() site that relays the Beads reader adapter's relations and states one kind of its own, causation, from a
+ * Furnace Attempt to the Work its record names (native-confirmed by that work id): never ownership, never a mapping. */
+const BEADS_WIRING = "src/workbench/providers/beads.ts";
+const BEADS_WIRING_ADAPTER = "src/workbench/beads-observer.ts";
 const BEAD = "wb-4nut.1";
 /** ReactiveFiberTSXSDK at the program-triage pin (the bead's citation). */
 const PROGRAM_PIN = "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df";
@@ -1084,10 +1090,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     // ReactiveFiber observe-wiring is one more relay - it relates the RF reader adapter's frozen relations and states no kind of its
     // own. Each relayed adapter states exactly one kind, a display grouping: never ownership, never a mapping. Every other site is an
     // ownership adapter.
-    const adapters = Object.entries(writeSites).filter(([file]) => !HX_RELAY_SITES.includes(file) && file !== OBSERVE_WIRING);
+    const adapters = Object.entries(writeSites).filter(([file]) => !HX_RELAY_SITES.includes(file) && file !== OBSERVE_WIRING && file !== BEADS_WIRING);
     expect(adapters.every(([, site]) => site.kinds.length === 1 && site.kinds[0] === "ownership"), "every adapter's relate() call site states ownership only").toBe(true);
     expect(HX_RELAY_SITES.map(file => writeSites[file]?.kinds ?? null), "each HX relay site relates and spells no relation kind of its own").toEqual(HX_RELAY_SITES.map(() => []));
     expect(writeSites[OBSERVE_WIRING], "the RF observe-wiring relates the reader adapter's edges and states no kind of its own").toEqual({ calls: 1, kinds: [] });
+    expect(writeSites[BEADS_WIRING], "the Beads wiring relays the Beads adapter's edges and states one causation kind of its own").toEqual({ calls: 2, kinds: ["causation"] });
+    expect(kindsIn(textOf(join(REPO, BEADS_WIRING_ADAPTER))), "the adapter the Beads wiring relays states dependency and grouping").toEqual(["dependency", "grouping"]);
     const hxAdapterKinds = kindsIn(textOf(join(REPO, "src", "workbench", "hyperunix-observer.ts")));
     expect(hxAdapterKinds, "the one adapter the HX relay sites relate states display grouping only").toEqual(["grouping"]);
     expect(kindsIn(textOf(join(REPO, OBSERVE_WIRING_ADAPTER))), "the adapter the RF observe-wiring relays states one display-grouping kind").toEqual(["grouping"]);

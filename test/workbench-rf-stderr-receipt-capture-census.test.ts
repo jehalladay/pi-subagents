@@ -2424,10 +2424,11 @@ const CLEAN_LISTENERS = { ...CLEAN_STREAM, outcome: "transport: RF preview cance
 const WITNESS: Readonly<Record<PinId, unknown>> = {
   C1: {
     launchSites: [`${PROVIDER}:nativeReactiveFiberRender:spawn`],
-    launchInventory: ["execFileSync:git", "execFileSync:git", "execFileSync:git", "spawn:<opaque process.execPath>", "spawn:rf"],
+    launchInventory: ["execFileSync:git", "execFileSync:git", "execFileSync:git", "spawn:<opaque process.execPath>", "spawn:bd", "spawn:rf"],
     moduleSites: [
       "src/index.ts:<module>:import:node:child_process",
       "src/workbench/hosts/local-detached.ts:<module>:import:node:child_process",
+      "src/workbench/providers/beads.ts:<module>:import:node:child_process",
       `${PROVIDER}:<module>:import:node:child_process`,
     ],
     opaqueLoads: [OPAQUE_LOAD_TODAY],

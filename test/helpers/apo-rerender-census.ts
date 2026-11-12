@@ -7503,6 +7503,11 @@ export const NON_RENDER: Readonly<Record<string, NonRenderReader>> = {
   "src/workbench/forge-operation-observer.ts": { value: ["markStale", "refresh", "relate"], type: [], reason: "the Forge operation observer: as an operation starts and settles it admits its snapshots, its relation and its staleness" },
   "src/workbench/furnace-observer.ts": { value: [], type: ["relate"], reason: `the Furnace adapter: ${STATES_RELATE}` },
   "src/workbench/hyperunix-observer.ts": { value: [], type: ["relate"], reason: `the HyperUnix adapter: ${STATES_RELATE}` },
+  "src/workbench/providers/beads.ts": {
+    value: ["markStale", "refresh", "relate"],
+    type: [],
+    reason: "the show-only Beads work client and its Attempt work wiring (wb-lkz7): on an observeAttemptWork call it admits each reading's Work snapshot and the relations the Beads adapter states, relates each named Attempt to its Work node and marks a failed read's Work ref stale, never on a redraw; no src module imports it",
+  },
   "src/workbench/reactivefiber-observer.ts": { value: [], type: ["relate"], reason: `the ReactiveFiber adapter: ${STATES_RELATE}` },
   "src/workbench/reactivefiber-wiring.ts": {
     value: ["refresh", "relate"],

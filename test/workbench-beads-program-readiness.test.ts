@@ -441,7 +441,8 @@ let running: string | undefined;
 /** Every reading a pin's body took, as its sorted ready set, in call order: row B's witnesses are held to them (wb-k888). */
 const READINGS = new Map<string, string[][]>();
 /** The host's binding of the work reader is wb-752.6's readBeadsWork: the module imports no Beads reader (the landed wb-kku9.3
- * claim re-check census holds that reader's importers under src, qa and examples to an empty set), so the host passes it in. */
+ * claim re-check census holds that reader's importers under src, qa and examples to the observation importers it admits, one
+ * since wb-lkz7, src/workbench/providers/beads.ts), so the host passes it in. */
 const read = async (
   client: BeadsProgramClient,
   program: BeadsProgram,

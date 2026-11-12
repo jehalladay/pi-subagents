@@ -23,8 +23,10 @@
  *    Furnace SDK; no observation-class module imports an authority module or builds an authority construct; five holders
  *    import both kinds, and in all of src only five scopes reference an observation-class binding and an authority binding
  *    together - composition and seam declarations, each pinned with its exact binding sets and none holding an authority
- *    construct (a holder module's own exports count as authority bindings). No src module calls bd: the one
- *    bd seam is BeadsReadClient, whose one member is show.
+ *    construct (a holder module's own exports count as authority bindings). No src module calls bd but the one admitted
+ *    tracker reader (TRACKER_READERS; one since wb-lkz7, src/workbench/providers/beads.ts, an authority module, the eighteenth):
+ *    the one bd seam is BeadsReadClient, whose one member is show, and the wb-kku9.3 census's B3 holds that reader to the show
+ *    verb.
  *  - evidence-loader.ts and evidence-wiring.ts hold 0 rank, tier or authorit (authority, authoritative) spellings in any
  *    letter case, in code, strings or comments.
  *  - collect.sh is no file of this repository (R4): the flywheel machine's bin/collect.sh, outside Pi-subagents (standing rule
@@ -218,6 +220,10 @@ const BD = ["b", "d"].join("");
 const AUTHORITY_PROVIDERS: readonly string[] = ["beads", BD, "forge", "furnace", "git"];
 /** The commands whose exec call is an authority construct: Git (a basis) and the Beads tracker. */
 const AUTHORITY_COMMANDS: readonly string[] = ["git", BD];
+/** The src modules admitted to exec the tracker (wb-lkz7, the wb-kku9.3 census's B3 answer): the show-only Beads work client,
+ * whose one verb that census's B3 pins. A tracker exec in any other module is a violation (C1), and C3 holds the execs to this
+ * list. */
+const TRACKER_READERS: readonly string[] = ["src/workbench/providers/beads.ts"];
 /** The child-process entry points Pi calls by name (node:child_process and the extension API's pi.exec). */
 const EXEC_CALLEES: readonly string[] = ["exec", "execFile", "execFileSync", "execSync", "fork", "spawn", "spawnSync"];
 /** The SDKs whose values are observations (Claude results and transcripts, HX answers) and the SDKs of two authorities. */
@@ -322,7 +328,7 @@ const PIN_TITLES: Readonly<Record<string, string>> = {
   B2: "B2: evidence-loader.ts and evidence-wiring.ts hold no rank, tier or authority token",
   C1: "C1: the module graph: the observation class, the authority modules and the five holders are the measured rosters and no edge joins the first two outside the holders",
   C2: "C2: the only src scopes that read an observation-class binding beside an authority binding or construct are the five pinned composition scopes",
-  C3: "C3: no src module execs the tracker or spells a tracker close or update, and the tracker seam has show alone",
+  C3: "C3: no src module but the admitted tracker reader execs the tracker, none spells a tracker close or update, and the tracker seam has show alone",
   D1: "D1: docs/07 § Agent provider renders the observation-class sentence exactly once",
   D2: "D2: docs/07 § HyperUnix provider renders the HX answer sentence exactly once",
   D3: "D3: the docs07 provider-rules census quotes both sentences and binds this file",
@@ -665,7 +671,7 @@ function analyze(modules: readonly SourceModule[]): Analysis {
   }
   const trackerExecs = parsed.filter(module => module.constructs.some(construct => construct.kind === `exec:${BD}`)).map(module => module.path);
   const trackerWriteSpellings = parsed.filter(module => module.writeSpellings > 0).map(module => module.path);
-  for (const path of trackerExecs) violations.push(`tracker-exec ${path}`);
+  for (const path of trackerExecs) if (!TRACKER_READERS.includes(path)) violations.push(`tracker-exec ${path}`);
   for (const path of trackerWriteSpellings) violations.push(`tracker-write-spelling ${path}`);
   return {
     modules: parsed.length,
@@ -1429,7 +1435,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       gitExecModules: sorted(srcModules().map(parseModule).filter(module => module.constructs.some(construct => construct.kind === "exec:git")).map(module => module.path)),
       trackerSeamMembers: client === undefined ? [] : client.members.map(member => nameOf(member.name)),
     };
-    expect(witness.trackerExecs).toEqual([]);
+    expect(witness.trackerExecs, "the modules that exec the tracker are the admitted tracker readers").toEqual([...TRACKER_READERS]);
     expect(witness.trackerWriteSpellings).toEqual([]);
     expect(witness.trackerSeamMembers).toEqual(["show"]);
     return witness;

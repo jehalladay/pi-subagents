@@ -67,8 +67,9 @@
  *    possible-duplicate risk; effect-confirmed on the failed read alone is refused; R-IN-FLIGHT-SETTLED's row decides once
  *    more while a stubborn stand-in is still alive and reads the same acknowledgement.
  *  D, ACCEPTANCE[3], the negative guards. D1: the two preview descriptor literals are byte-stable (digests of their source
- *    text) and both registrations serve the same descriptor. D2: src's one SIGTERM-SIGKILL(500 ms) custody sits in
- *    nativeReactiveFiberRender, whose one spawn runs renderArgv (always --no-commit) and whose only callers are the preview's;
+ *    text) and both registrations serve the same descriptor. D2: src's one SIGTERM-SIGKILL(500 ms) rf custody sits in
+ *    nativeReactiveFiberRender (the one other custody in src, since wb-lkz7, is the Beads show client's: showOnce in
+ *    src/workbench/providers/beads.ts, over its bd child, no rf call), whose one spawn runs renderArgv (always --no-commit) and whose only callers are the preview's;
  *    the custody reaps a stand-in that ignores SIGTERM, spawned with --no-commit and no key. D3: hosts/local-detached.ts keeps
  *    NATIVE_GRANTS and NATIVE_CAPABILITIES as read grants and read capabilities, its reactivefiber case registers the preview
  *    alone, and the preview holds exactly NATIVE_GRANTS.reactivefiber. D4: the rule refuses a committing render holding no
@@ -2446,7 +2447,8 @@ const ROWS: readonly Row[] = [
           const [child] = spawnsOf(log);
           await until(() => child !== undefined && !alive(child.pid), "the custody to reap the stand-in");
           const reaped = { category: refusal.category, spawns: spawnsOf(log).length, argv: tailOf(child), alive: child === undefined ? null : alive(child.pid) };
-          expect(custody.map((site) => site.fn)).toStrictEqual(["nativeReactiveFiberRender", "nativeReactiveFiberRender"]);
+          // wb-lkz7: the Beads show client's own custody over its bd child (showOnce) is the one custody in src outside the preview's.
+          expect(custody.map((site) => site.fn)).toStrictEqual(["showOnce", "showOnce", "nativeReactiveFiberRender", "nativeReactiveFiberRender"]);
           expect(reaped.argv).toContain("--no-commit");
           expect(reaped.argv).not.toContain("--idempotency-key");
           return { custody, spawns, renderArgv, callers: [...callers].sort(), reaped };
@@ -2569,7 +2571,7 @@ const WITNESS: Readonly<Record<string, JsonValue>> = {
     served: {"native": "43a84a5710536d5e", "injected": "0a31595c97763f04"},
   },
   D2: {
-    custody: [{"file": "src/workbench/providers/reactivefiber.ts", "fn": "nativeReactiveFiberRender", "signal": "SIGTERM", "delayMs": null}, {"file": "src/workbench/providers/reactivefiber.ts", "fn": "nativeReactiveFiberRender", "signal": "SIGKILL", "delayMs": 500}],
+    custody: [{"file": "src/workbench/providers/beads.ts", "fn": "showOnce", "signal": "SIGKILL", "delayMs": null}, {"file": "src/workbench/providers/beads.ts", "fn": "showOnce", "signal": "SIGTERM", "delayMs": null}, {"file": "src/workbench/providers/reactivefiber.ts", "fn": "nativeReactiveFiberRender", "signal": "SIGTERM", "delayMs": null}, {"file": "src/workbench/providers/reactivefiber.ts", "fn": "nativeReactiveFiberRender", "signal": "SIGKILL", "delayMs": 500}],
     spawns: [{"fn": "nativeReactiveFiberRender", "binary": "rf", "argvFrom": "renderArgv"}],
     renderArgv: ["--workspace", "context", "render", "--no-commit", "--no-input", "--json"],
     callers: ["src/workbench/providers/reactivefiber.ts#nativeReactiveFiberPreview", "src/workbench/providers/reactivefiber.ts#registerNativeReactiveFiberRender"],

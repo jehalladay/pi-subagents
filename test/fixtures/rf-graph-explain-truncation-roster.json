@@ -985,6 +985,7 @@
       "importers": [
        "src/index.ts",
        "src/workbench/hosts/local-detached.ts",
+       "src/workbench/providers/beads.ts",
        "src/workbench/providers/reactivefiber.ts"
       ],
       "sites": [
@@ -992,6 +993,7 @@
        "src/index.ts|literal|atRoot|execFileSync|git|none",
        "src/index.ts|literal|revision|execFileSync|git|none",
        "src/workbench/hosts/local-detached.ts|opaque|launchDetachedWorkflow|spawn|process.execPath|none",
+       "src/workbench/providers/beads.ts|literal|nodeLaunch|spawn|bd|unknown",
        "src/workbench/providers/reactivefiber.ts|rf|nativeReactiveFiberRender|spawn|rf|none"
       ],
       "rf": [
@@ -1001,6 +1003,7 @@
       "loads": [
        "src/index.ts|<module>|import",
        "src/workbench/hosts/local-detached.ts|<module>|import",
+       "src/workbench/providers/beads.ts|<module>|import",
        "src/workbench/providers/reactivefiber.ts|<module>|import"
       ],
       "unbound": [],

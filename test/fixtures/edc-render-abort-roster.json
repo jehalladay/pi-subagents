@@ -882,6 +882,7 @@
             ],
             "stand_ins": [
               "rf",
+              "bd",
               "cmd",
               "forge",
               "git",
@@ -1020,6 +1021,11 @@
                 "module": "src/workbench/hosts/local-detached.ts",
                 "callee": "spawn",
                 "command": "<expression>"
+              },
+              {
+                "callee": "spawn",
+                "command": "bd",
+                "module": "src/workbench/providers/beads.ts"
               },
               {
                 "module": "src/workbench/providers/forge.ts",

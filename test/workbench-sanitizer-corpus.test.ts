@@ -51,6 +51,7 @@ import { selectLatencyDecomposition } from "../src/workbench/latency.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type ObservedNode, type Relation } from "../src/workbench/observation.js";
 import { type ObserveReader, observeInvocation } from "../src/workbench/observe-query.js";
 import { proposeWorkflowPatch } from "../src/workbench/patch-proposal.js";
+import { BEADS_INSPECT_GRANT, observeAttemptWork } from "../src/workbench/providers/beads.js";
 import { type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
 import { mintEvidenceReceipt } from "../src/workbench/reconcile-decision.js";
 import { redactWorkbenchText, sanitizeWorkbenchJson, sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText } from "../src/workbench/redaction.js";
@@ -584,6 +585,24 @@ async function beadsTexts(raw: string): Promise<string[]> {
   return [...strings(reading), ...strings(projectBeadsWork(reading, BEADS_SCOPE))];
 }
 
+/** wb-lkz7 F6: the corpus through the wiring's public entry point, observeAttemptWork, for each label a reading projects: one
+ * work carries the probe as its title, a second as its status, issue type and dependency type and status; the texts are every
+ * string the projection then holds (nodes and edges). A probe the reader refuses (a label empty after sanitizing) projects
+ * nothing, so it reaches no text. */
+async function beadsWiringTexts(raw: string): Promise<string[]> {
+  const issues: Readonly<Record<string, Record<string, unknown>>> = {
+    "wb-f6a": { id: "wb-f6a", title: raw, status: "open", issue_type: "task", priority: 2, dependencies: [] },
+    "wb-f6b": { id: "wb-f6b", title: "wb-f6b", status: raw, issue_type: raw, priority: 2, dependencies: [{ id: "wb-f6c", dependency_type: raw, status: raw }] },
+  };
+  const client: BeadsReadClient = { show: async id => ({ exit: 0, stdout: JSON.stringify([issues[id]]), stderr: "" }) };
+  const projection = new ObservationProjection();
+  await observeAttemptWork({
+    projection, scope: BEADS_SCOPE, grants: [BEADS_INSPECT_GRANT], client, now: () => "2026-11-12T19:00:00.000Z",
+    attempts: Object.keys(issues).map(workId => ({ attempt: { provider: "furnace", type: "attempt", id: `frn-atm-${workId}`, scope: BEADS_SCOPE.workspace }, workId })),
+  });
+  return [...strings(projection.query({ scope: BEADS_SCOPE, limit: 100 }).nodes), ...strings(projection.relations({ scope: BEADS_SCOPE, limit: 100 }))];
+}
+
 async function furnaceEvidenceTexts(raw: string): Promise<string[]> {
   const data: LogsReadDto = {
     run_id: "frn-run-evidence-1", attempt_id: "frn-atm-evidence-1-2", stream: "stderr", complete: true, limit: 4096, returned: 120,
@@ -988,6 +1007,7 @@ const SITES: readonly Site[] = [
   { site: "site 8 furnace-hosted.ts safeText (FurnaceHostedExecutor.start)", texts: hostedTexts },
   { site: "site 9 patch-proposal.ts displayText (proposeWorkflowPatch)", texts: patchTexts },
   { site: "site 10 beads-observer.ts cleanText (readBeadsWork, projectBeadsWork)", texts: beadsTexts },
+  { site: "wb-lkz7 providers/beads.ts observeAttemptWork (the projected Work title and status, through the wiring)", texts: beadsWiringTexts },
   { site: "site 13 control-reply.ts buildControlReply (requested target id, acknowledged and result echo refs)", texts: controlReplyTexts },
   { site: "site 15 furnace-evidence.ts sanitize (readFurnaceAttemptLogEvidence)", texts: furnaceEvidenceTexts },
   { site: "site 16 evidence-loader.ts safeChunks (EvidenceStore)", texts: storeTexts },
@@ -1069,6 +1089,17 @@ describe("wb-79k.2 reactivefiber-observer row is not vacuous", () => {
     const texts = (await row?.texts(plain)) ?? [];
     expect(texts).toContain(`producer release from result.provenance.cli_version: rf@${plain}`);
     expect(texts).toContain(`observations: 1 row, 1 not observed (${plain}): partial`);
+    expect(texts.filter(text => text.includes(plain))).toHaveLength(2);
+  });
+});
+
+describe("wb-lkz7 Beads wiring row is not vacuous", () => {
+  it("the SITES row drives observeAttemptWork, and a plain probe reaches the projected Work title and status, and nowhere else", async () => {
+    const row = SITES.find(entry => entry.site.startsWith("wb-lkz7 providers/beads.ts observeAttemptWork"));
+    expect(row?.texts).toBe(beadsWiringTexts);
+    const plain = "wb-lkz7-plain-probe";
+    const texts = (await row?.texts(plain)) ?? [];
+    expect(texts.filter(text => text === plain)).toHaveLength(2);
     expect(texts.filter(text => text.includes(plain))).toHaveLength(2);
   });
 });

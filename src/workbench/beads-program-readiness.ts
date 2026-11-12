@@ -10,8 +10,9 @@
  *   status. The ready listing is never the source: it reads blockers, and a premise is `related`.
  * - The work reader is injected, never imported: the host binds wb-752.6's reader (readBeadsWork) as `readWork`, and this
  *   module hands it the same issue-read seam and a host-bound request for each child, so the readiness facts stay that
- *   reader's own. The claim re-check census (wb-kku9.3) holds that reader's importers under src, qa and examples to an empty
- *   set and the native read verbs to the reader's own text, so a host that binds it is the importer that census judges. A
+ *   reader's own. The claim re-check census (wb-kku9.3) holds that reader's importers under src, qa and examples, and the
+ *   native read verbs outside the reader's own text, to the observation importers it admits (one since wb-lkz7:
+ *   src/workbench/providers/beads.ts), so a host that binds it is an importer that census judges. A
  *   reading that names another id or another workspace is a malformed reading of the store: its child reads
  *   STORE_UNREACHABLE.
  * - The program's beads are its epics and their dependents. A child is a parent-child dependent of an epic carrying a `wp:`

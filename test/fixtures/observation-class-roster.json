@@ -182,6 +182,7 @@
               "src/workbench/furnace-observer.ts",
               "src/workbench/hosts/furnace-hosted.ts",
               "src/workbench/native-modules.ts",
+              "src/workbench/providers/beads.ts",
               "src/workbench/providers/forge.ts",
               "src/workbench/providers/furnace.ts",
               "src/worktree.ts"
@@ -271,9 +272,11 @@
         },
         {
           "id": "C3",
-          "title": "C3: no src module execs the tracker or spells a tracker close or update, and the tracker seam has show alone",
+          "title": "C3: no src module but the admitted tracker reader execs the tracker, none spells a tracker close or update, and the tracker seam has show alone",
           "witness": {
-            "trackerExecs": [],
+            "trackerExecs": [
+              "src/workbench/providers/beads.ts"
+            ],
             "trackerWriteSpellings": [],
             "gitExecModules": [
               "src/env.ts",

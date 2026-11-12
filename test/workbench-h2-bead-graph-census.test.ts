@@ -1280,7 +1280,8 @@ function programClient(store: readonly StoreBead[]): { readonly client: BeadsPro
   return { client, accessed };
 }
 /** readBeadsProgramReadiness over a modeled store, host-bound to a fixture workspace; the host binds readBeadsWork as its work
- * reader (the module imports no Beads reader: the wb-kku9.3 claim re-check census holds that reader's importers empty). */
+ * reader (the module imports no Beads reader: the wb-kku9.3 claim re-check census holds that reader's importers to the
+ * observation importers it admits, one since wb-lkz7). */
 async function readProgram(client: BeadsProgramClient, gates: Readonly<Record<string, string>>): Promise<BeadsProgramReadiness> {
   if (running !== undefined) DRIVES.set(PROGRAM_READER, new Set([...(DRIVES.get(PROGRAM_READER) ?? []), running]));
   const workspaceRoot = "/fixture/rftsx";

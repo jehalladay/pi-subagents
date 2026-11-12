@@ -1714,6 +1714,15 @@
       ],
       "reason": "the HyperUnix adapter: it references the class only in the statement type relate accepts (Parameters<ObservationProjection['relate']>[0]), never in a value position; the host admits what it states"
     },
+    "src/workbench/providers/beads.ts": {
+      "value": [
+        "markStale",
+        "refresh",
+        "relate"
+      ],
+      "type": [],
+      "reason": "the show-only Beads work client and its Attempt work wiring (wb-lkz7): on an observeAttemptWork call it admits each reading's Work snapshot and the relations the Beads adapter states, relates each named Attempt to its Work node and marks a failed read's Work ref stale, never on a redraw; no src module imports it"
+    },
     "src/workbench/reactivefiber-observer.ts": {
       "value": [],
       "type": [
