@@ -32,6 +32,17 @@ import { makeScratch, removeScratch } from "./helpers/scratch.js";
 // run under full-suite CPU contention can exceed vitest's 5s default.
 vi.setConfig({ testTimeout: 30_000 });
 
+// The hold case is the one faux case that pays for TWO print-mode runs back to
+// back (the no-hold control and its orphaned child, then the held subject and
+// its child). The 30 s above is not its cost: it timed out there with no failed
+// assertion on the complete tier and in an isolated probe (load1 ~500), and
+// again run alone in a fresh checkout (load1 ~400), while warm runs measured
+// 9-16 s (wb-vnfe). Its own budget is four times that bound - above both runs'
+// default runner guards (30 s each) plus setup/teardown slack, so a stalled
+// turn still fails on the runner's descriptive error rather than a generic
+// vitest timeout, which leaks the run's scratch dirs.
+const HOLD_CASE_TIMEOUT_MS = 120_000;
+
 const LIVE = /^(1|true|yes)$/i.test(process.env.PI_E2E_LIVE ?? "");
 
 describe.skipIf(LIVE)("subagents print-mode e2e (scripted faux, real pi-mono)", () => {
@@ -119,7 +130,9 @@ describe.skipIf(LIVE)("subagents print-mode e2e (scripted faux, real pi-mono)", 
     expect(run.modelCalls).toBeGreaterThanOrEqual(3);
   });
 
-  it("the hold condition is load-bearing: it keeps a BACKGROUND child alive (vs abandoned without it)", async () => {
+  it("the hold condition is load-bearing: it keeps a BACKGROUND child alive (vs abandoned without it)", async ({ task }) => {
+    // wb-vnfe: this case's budget is its own, never the file-level testTimeout above.
+    expect(task.timeout, "the hold case's own vitest budget, in ms").toBeGreaterThanOrEqual(120_000);
     // The child takes a beat to "think" (a real delay in its faux turn). That
     // delay is what makes the contrast causal and deterministic:
     //   - WITHOUT the hold, the parent's turn ends and the runner tears down
@@ -159,7 +172,7 @@ describe.skipIf(LIVE)("subagents print-mode e2e (scripted faux, real pi-mono)", 
     expect(abandonedCalls).toBe(2); // parent tool-call + summary; child never streamed
     expect(run.modelCalls).toBeGreaterThan(abandonedCalls);
     expect(run.modelCalls).toBeGreaterThanOrEqual(3);
-  });
+  }, HOLD_CASE_TIMEOUT_MS);
 
   it("spawns a FRONTMATTER-defined (.pi/agents/*.md) agent and its prompt reaches the child", async () => {
     // A project agent whose body is a distinctive system prompt. Proving the

@@ -31,7 +31,11 @@
  * mention; and at the wb-6jao cut (seat ws-01, run g10-work-s182, 2026-11-02, on trunk f5cb912): the same 81 pages and 117
  * modules (git ls-files: 79 markdown pages below docs/ plus README.md and CHANGELOG.md; 117 .ts modules below src), each read
  * once through THE PLANTED READING, whose page plant now also carries the named character reference and the backslash escape
- * controls, with no mention.
+ * controls, with no mention. RE-MEASURED at the wb-vnfe cut (seat ws-04, run g10-work-s340, 2026-11-12, on trunk 253b1b0a): one
+ * mention, docs/workbench/receipts/wb-e9rw.md|text#15|edc, the receipt's Neighbors list item naming the census file
+ * edc-demand-channel-census, whose word fold reads the acronym; judged (the tripwire's second step): a test file's name in a
+ * timeout disclosure, not a claim that EDC integration ships. The roster's B2 witness records exactly that mention, so any other
+ * mention on a claim page, or this one moved to another block, still reds B2.
  *
  * THE VOCABULARY: both stems are derived from the title's charter path (docs/programs/<slug>-<date>.md, slug
  * evidence-directed-computation): its INITIALS, the acronym the title spells (edc, read as a whole word or its plural "edcs"), and

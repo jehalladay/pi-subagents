@@ -811,7 +811,9 @@
             "wordsBelowFloor": false,
             "untracked": [],
             "unread": [],
-            "mentions": [],
+            "mentions": [
+              "docs/workbench/receipts/wb-e9rw.md|text#15|edc"
+            ],
             "planted": {
               "plant": [
                 "heading|edc",
