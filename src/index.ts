@@ -76,7 +76,7 @@ import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflow
 import { executeDetachedControl } from "./workbench/detached-control.js";
 import { DetachedObserveWiring } from "./workbench/detached-wiring.js";
 import { createWorkbenchEvidenceStore } from "./workbench/evidence-wiring.js";
-import { createWorkflowExecuteTool, type ExecuteLaunch } from "./workbench/execute-tool.js";
+import { createWorkflowExecuteTool, type ExecuteLaunch, WORKFLOWS_DISABLED_REASON } from "./workbench/execute-tool.js";
 import { createRetainedForgeControlExecutor, retainForgeOperation } from "./workbench/forge-control-retention.js";
 import { type ForgeObservedHead, type ForgeOperationObserver, observeForgeGateRun } from "./workbench/forge-operation-observer.js";
 import { executeFurnaceControl } from "./workbench/furnace-control.js";
@@ -2986,6 +2986,8 @@ Terse command-style prompts produce shallow, generic work.
       parameters: Type.Object({ action: Type.Union([Type.Literal("launch"),Type.Literal("inspect")]), invocationId:Type.String({minLength:1,maxLength:100}), scriptPath:Type.Optional(Type.String()), trustedScript:Type.Optional(Type.Boolean()), backend:Type.Optional(Type.Union([Type.Literal("deterministic"),Type.Literal("claude")])) }),
       execute: async (_id, params, _signal, _onUpdate, ctx) => {
         if (!grants(ctx).includes(params.action === "launch" ? "workbench:detach" : "workbench:observe")) return textResult("Permission denied: explicit detached launch or observe grant required.");
+        // EAT-R485: the master switch closes the launch; inspect only reads a run that exists, so it stays open.
+        if (params.action === "launch" && !isWorkflowsEnabled()) return textResult(sanitizeWorkbenchText(WORKFLOWS_DISABLED_REASON, WORKBENCH_TEXT_LIMIT, "text"));
         const directory=detachedBase();
         try {
           if (params.action === "inspect") {
@@ -3098,6 +3100,7 @@ Terse command-style prompts produce shallow, generic work.
       resolveSource: (definition, cwd) => inspectWorkflowSource({ scriptPath: definition.id }, cwd),
       launchEmbedded: launchEmbeddedWorkflow,
       launchDetached: launchDetachedWorkflow,
+      workflowsEnabled: isWorkflowsEnabled,
     }));
     // workflow_control (wb-cra): the explicit native control tool over the pure decision core (control.ts) and the
     // adapter legs. Grants, principal, workspace and session come from host context on every call; the target, the
@@ -3483,6 +3486,9 @@ Terse command-style prompts produce shallow, generic work.
     execute: async (toolCallId, params, _signal, _onUpdate, ctx) => {
       const resumeFrom = resolveResumeTarget(params.resumeFromRunId, workflowTasks);
       if (resumeFrom !== undefined && !resumeFrom.ok) return textResult(resumeFrom.message);
+      // EAT-R485: registered while the switch was on, this tool still reads it on every call, so a session that turned
+      // it off since (standing down for another extension's workflow tool, or the settings toggle) launches nothing.
+      if (!isWorkflowsEnabled()) return textResult(sanitizeWorkbenchText(WORKFLOWS_DISABLED_REASON, WORKBENCH_TEXT_LIMIT, "text"));
 
       // A resume with no source of its own re-runs what that run ran. The
       // common case is an edited script, but "run that again, cheaply" should

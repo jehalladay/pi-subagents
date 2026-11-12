@@ -55,6 +55,13 @@ import { TOOL_REPLY_CONTRACT_VERSION } from "./tool-replies.js";
 
 /** The second half of the detached conjunction; the first is EXECUTE_GRANT from the pure module. */
 export const DETACH_GRANT = "workbench:detach";
+/**
+ * The refusal every scripted-workflow launch door of this extension gives while its master switch (workflowsEnabled) reads
+ * off (EAT-R485): it names the setting and the two places to turn it on, in the --subagents-workflow-file notice's own
+ * words, and nothing of the caller's request.
+ */
+export const WORKFLOWS_DISABLED_REASON =
+  'Workflows are off in this session, so nothing was launched. Turn them on in /agents → Settings → Workflows, or set `"workflowsEnabled": true` in .pi/subagents.json.';
 /** Host-set byte cap of the model-facing text: inside the pure module's accepted interval, never below its floor. */
 const DEFAULT_REPLY_BYTES = 8192;
 const MIN_REPLY_BYTES = 2048;
@@ -64,6 +71,7 @@ const IDENTITY_TRIM_NOTES: readonly string[] = ["native reference text trimmed",
 
 /** Typed host-boundary refusals, beside the pure module's ExecuteRefusalPolicy. */
 export type ExecuteLaunchRefusal =
+  | "workflows-disabled"
   | "missing-detach-grant"
   | "unsupported-definition-kind"
   | "source-unavailable"
@@ -99,6 +107,12 @@ export interface WorkflowExecuteDeps {
   launchEmbedded(ctx: ExtensionContext, launch: ExecuteLaunch): Promise<readonly NativeRef[]>;
   /** Launches the same-machine detached host; resolves to the native references the host reports. */
   launchDetached(ctx: ExtensionContext, launch: ExecuteLaunch): Promise<readonly NativeRef[]>;
+  /**
+   * The host's master switch for scripted workflows (EAT-R485), read on every call like the grants: false refuses an
+   * admitted request as workflows-disabled in either hostMode, before the saved source is read and before either launcher
+   * runs, whatever the grants. A host without such a switch leaves it out.
+   */
+  workflowsEnabled?(ctx: ExtensionContext): boolean;
   /** Host-set cap for the model-facing text; clamped into the pure module's accepted interval. */
   replyMaxBytes?: number;
 }
@@ -202,6 +216,11 @@ export function createWorkflowExecuteTool(deps: WorkflowExecuteDeps) {
       const decision: ExecuteDecision = decideExecute(request, { grants: rights, invocationId });
       if (decision.decision === "refused") {
         return textResult(sanitizeWorkbenchJsonText(envelope(buildWorkflowExecuteReply(decision, undefined, maxBytes), undefined, maxBytes, scope.workspace), maxBytes));
+      }
+      // EAT-R485: the master switch closes this launch door in both hostModes; nothing is read or launched past it.
+      if (deps.workflowsEnabled !== undefined && !deps.workflowsEnabled(ctx)) {
+        const disabled = refusedLaunch("workflows-disabled", WORKFLOWS_DISABLED_REASON);
+        return textResult(sanitizeWorkbenchJsonText(envelope(buildWorkflowExecuteReply(decision, disabled.outcome, maxBytes), disabled.code, maxBytes, scope.workspace), maxBytes));
       }
       const { admission } = decision;
       let launchCode: ExecuteLaunchRefusal | undefined;
