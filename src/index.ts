@@ -2767,8 +2767,9 @@ Terse command-style prompts produce shallow, generic work.
    * at start leaves no task [RF14]. Once the host started it, the Pi task reference and the host's references are reported
    * [RF01]; the task then settles with the run: completed [RF03], or failed with a fixed text that carries none of the
    * producer's [RF03b]. A run that settles with one of the four original Mechanical outcomes keeps it on the task as its
-   * mechanicalOutcome, beside the completed status and never in place of it, and a rejection is never read as one (wb-9a1o,
-   * packet P05, EAT-R242: the cases of test/workbench-function-outcome-projection.test.ts).
+   * mechanicalOutcome, beside the completed status (wb-9a1o, packet P05, EAT-R242). What it keeps is claimed only for the outcome
+   * objects, settled values and rejection reasons that the cases of test/workbench-function-outcome-projection.test.ts pin
+   * (RO01-RO05, as that file's header lists them); for any other this comment claims nothing.
    */
   async function runHostedFunction(hosting: WorkflowFunctionHosting, launch: ExecuteFunctionLaunch, started: (nativeRefs: readonly NativeRef[]) => void): Promise<void> {
     const task = createWorkflowTask({
