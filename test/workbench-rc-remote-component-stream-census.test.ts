@@ -240,13 +240,17 @@ const ROOT_FLOORS: Readonly<Record<string, number>> = {
 };
 /** Every computed load at base f8afbef (BOUND VALUES), each judged by hand: Pi's own dist modules (the headless census child, the
  * live operator receipt, and the live inspector receipt wb-6ze.15 adds - its frame sanitizer, its credential probe's Claude host
- * and workflow runtime, each resolved below the runner's own checkout, and the sanitizer once more in its crash handler); the
+ * and workflow runtime, each resolved below the runner's own checkout, and the sanitizer once more in its crash handler; and the
+ * detached reattach receipt wb-0kg.3 adds - its launch client's compiled detached host and its inspect client's compiled
+ * extension entry, the two RUNNER_ENTRIES paths, each resolved below the receipt's own checkout, judged at the wb-x1b9 cure); the
  * detached host's trusted local provider (a digest-pinned module path from the reviewed launch manifest) and its dependency
  * pinner (each relative source literal of that provider, checked just before it is resolved); a
  * module beside an installed package (the isolated-provider e2e); a hollowed copy of the EDC static-reach readers helper the
  * wb-pyel.9 census writes to scratch (its KILLS case); a scratch module the git-stamp test writes. None is the
  * distribution. A new one is a red until it is judged and added here and to the roster. */
 const COMPUTED_LOADS = [
+  "qa/workbench/detached-reattach-receipt.mjs: import() pathToFileURL(join(ROOT, RUNNER_ENTRIES.host)).href",
+  "qa/workbench/detached-reattach-receipt.mjs: import() pathToFileURL(join(ROOT, RUNNER_ENTRIES.extension)).href",
   "qa/workbench/headless-census-child.mjs: import() entryUrl",
   'qa/workbench/headless-census-child.mjs: import() distUrl("workflow/runtime.js")',
   'qa/workbench/headless-census-child.mjs: import() distUrl("workbench/capability-registry.js")',

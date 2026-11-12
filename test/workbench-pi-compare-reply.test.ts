@@ -37,7 +37,9 @@
  * Seams: the native references are real. A stub `rf` first on a PATH scoped to this file answers the workflow's
  * reactivefiber.render.preview node with the full-shape offline envelope (test/helpers/rf-render-fixture.ts), a fresh rfo_
  * operation id per spawn, so the real node pipeline admits a real "reactivefiber" operation node into the session projection,
- * beside the node call's own "pi-workflow" node. Spies on designer.compareWorkflowRuns and ObservationProjection.prototype.query
+ * beside the node call's own "pi-workflow" node; since wb-79k.3 wired the RF node() reading into the live projection at the
+ * Claude host seam, the RF observer adds a "context-preview" reference to the same operation, scoped to the workspace, so a
+ * read holds exactly that reactivefiber pair (PCR-C2-NATIVE-REFS; wb-x1b9). Spies on designer.compareWorkflowRuns and ObservationProjection.prototype.query
  * call through to record what the host computed and read, except where a case substitutes the core's result (the R17, cap and
  * echo rows): there the result is the REAL core over fixture receipts, or the real result with one field changed.
  *
@@ -504,13 +506,24 @@ describe("wb-h8f.7 workflow_compare over real captured tasks (C1-C4, R17)", () =
     const recorded = record();
     const reply = completed(await compareText(booted, pair()));
     const reads = recorded.reads();
+    const workspace = realpathSync(booted.dir);
     for (const read of reads) {
       expect(read.refs.some(ref => ref.provider === "pi-workflow"), `${read.invocationId} read a pi-workflow node`).toBe(true);
       expect(shownRefs(read).length, `${read.invocationId} read a native node`).toBeGreaterThan(0);
-      for (const ref of shownRefs(read)) expect(ref).toMatchObject({ provider: "reactivefiber", type: "operation" });
+      // wb-x1b9 (trunk cure): since wb-79k.3 wired the RF node() reading into the live projection at the Claude host seam, a read
+      // holds its node's one rf operation twice - the node pipeline's operation reference and the RF observer's context-preview
+      // reference, scoped to the workspace - and no other native reference.
+      const operation = shownRefs(read).find(ref => ref.type === "operation")?.id ?? "";
+      expect(operation, `${read.invocationId} read its node's rf operation`).toMatch(/^rfo_/);
+      expect([...shownRefs(read)].sort((a, b) => a.type.localeCompare(b.type)), `${read.invocationId} read exactly the operation pair`).toEqual([
+        { provider: "reactivefiber", type: "context-preview", id: operation, scope: workspace },
+        { provider: "reactivefiber", type: "operation", id: operation },
+      ]);
     }
     expect(reply.nativeRefs).toEqual({ reference: shownRefs(reads[0]), candidate: shownRefs(reads[1]) });
-    expect(new Set([...(reply.nativeRefs?.reference ?? []), ...(reply.nativeRefs?.candidate ?? [])].map(ref => ref.id)).size).toBe(shownRefs(reads[0]).length + shownRefs(reads[1]).length);
+    const returned = [...(reply.nativeRefs?.reference ?? []), ...(reply.nativeRefs?.candidate ?? [])];
+    expect(new Set(returned.map(ref => `${ref.type}/${ref.id}`)).size, "no reference repeats").toBe(shownRefs(reads[0]).length + shownRefs(reads[1]).length);
+    expect(new Set(returned.map(ref => ref.id)).size, "the two reads name two operations").toBe(reads.length);
     const total = shownRefs(reads[0]).length + shownRefs(reads[1]).length;
     expect(reply.counts.nativeRefs).toEqual({ offered: total, returned: total });
     expect(readFileSync(spawnLog, "utf8").trim().split("\n").length).toBeGreaterThanOrEqual(3);
