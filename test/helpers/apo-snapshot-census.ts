@@ -165,7 +165,7 @@ export const SEAMS: readonly Seam[] = [
     file: "src/workbench/capability-registry.ts",
     kind: "class",
     name: "CapabilityRegistry",
-    read: ["admission", "catalogSnapshot", "discover", "effectClassOf"],
+    read: ["admission", "catalogSnapshot", "discover", "effectClassOf", "precheck"],
     effect: ["inspect", "invoke", "register"],
   },
   { file: "src/workbench/capability-registry.ts", kind: "interface", name: "CapabilityProvider", read: ["descriptor"], effect: ["inspect", "invoke"] },

@@ -371,17 +371,21 @@ export function buildPhaseGroups(
  * `agentCount` is the number the runtime has *scheduled*, which can exceed the
  * number that has emitted an entry — a fan-out reports its size before its
  * agents start, so the total does not visibly climb as they trickle in.
+ *
+ * Counted per logical agent, its latest entry, never per entry: the log
+ * re-emits an agent at every state change (start, progress, done), so a raw
+ * count read a finished three-agent run as 3/9 (wb-q0on, EAT-R365).
  */
 export function stats(progress: readonly WorkflowEntry[], agentCount = 0): WorkflowStats {
-  let seen = 0;
   let done = 0;
   let failed = 0;
   let started = 0;
   let anyLive = false;
 
-  for (const entry of progress) {
-    if (entry.type !== "workflow_agent") continue;
-    seen++;
+  const latest = new Map<number, WorkflowAgentEntry>();
+  for (const entry of progress) if (entry.type === "workflow_agent") latest.set(entry.index, entry);
+  const seen = latest.size;
+  for (const entry of latest.values()) {
     if (entry.state === "done") {
       done++;
       started++;
@@ -408,6 +412,67 @@ export function stats(progress: readonly WorkflowEntry[], agentCount = 0): Workf
     // ever stop deriving from `seen`; no test can reach it as written.
     complete: !anyLive && seen > 0 && done + failed >= total,
   };
+}
+
+/** Why a resume could not hand back a recorded call (wb-q0on, EAT-R361); the first one a run meets ends its prefix. */
+export type ReplayDeclineReason =
+  /** The host declines settled replay outright (WorkflowHost.replaySafe false), e.g. an unmeasured dependency reading. */
+  | "replay-unsafe"
+  /** The journal carries an agent({ resume }) continuation, so the whole agent cache is declined (journal.ts). */
+  | "resumed-journal"
+  /** No entry was recorded at this position although the journal holds later ones (a lost or skipped row). */
+  | "not-recorded"
+  /** The call differs from the recorded one: prompt, label, model, type, effort, isolation, gate, resume or schema. */
+  | "call-changed"
+  /** The recorded call failed; a failure is retried live, never replayed. */
+  | "failed-entry"
+  /** The entry was recorded under another host policy basis. */
+  | "basis-changed"
+  /** The recorded answer no longer satisfies the call's schema. */
+  | "schema-recheck"
+  /** A live node() call ended the replayable prefix before every recorded agent was reached. */
+  | "live-node"
+  /** An operator-acknowledged node() settlement ended the replayable prefix before every recorded agent was reached. */
+  | "acknowledged-node";
+
+/** The first replay decline of a resumed run: its typed reason and where it happened. Never a recorded or live payload. */
+export interface ReplayDecline {
+  readonly reason: ReplayDeclineReason;
+  /** Whose position: an agent call, or the node call that ended the prefix. */
+  readonly kind: "agent" | "node";
+  readonly position: number;
+  /** The changed basis dimension, for basis-changed, when the host names one (WorkflowHost.describeBasisChange). */
+  readonly dimension?: string;
+  /** The host's own reason, for replay-unsafe (WorkflowHost.replayUnsafeReason), sanitized and bounded. */
+  readonly detail?: string;
+}
+
+/** The bound of a replay decline's host reason and dimension. */
+export const REPLAY_DECLINE_TEXT_LIMIT = 160;
+
+const DECLINE_WORDS: Readonly<Record<ReplayDeclineReason, string>> = {
+  "replay-unsafe": "the host declines settled replay",
+  "resumed-journal": "the journal carries an agent({ resume }) continuation, so no recorded agent is replayed",
+  "not-recorded": "nothing was recorded at this position",
+  "call-changed": "the call differs from the recorded one (prompt, label, model, type, effort, isolation, gate, resume or schema)",
+  "failed-entry": "the recorded call failed, and a failure is retried live",
+  "basis-changed": "the call was recorded under another host policy basis",
+  "schema-recheck": "the recorded answer no longer satisfies the call's schema",
+  "live-node": "a live node() call ended the replayable prefix",
+  "acknowledged-node": "an operator-acknowledged node() settlement ended the replayable prefix",
+};
+
+/**
+ * One line for a replay decline, for the run's log and the task notification: typed reason, position, the changed
+ * dimension or the host's reason, never a payload. Bounded by construction (a fixed vocabulary plus two bounded fields).
+ */
+export function replayDeclineText(decline: ReplayDecline): string {
+  const where = `${decline.kind} position ${decline.position}`;
+  const dimension = decline.reason === "basis-changed"
+    ? `; dimension ${decline.dimension !== undefined ? sanitizeWorkbenchText(decline.dimension, REPLAY_DECLINE_TEXT_LIMIT, "label") : "unknown"}`
+    : "";
+  const detail = decline.detail !== undefined ? ` (${sanitizeWorkbenchText(decline.detail, REPLAY_DECLINE_TEXT_LIMIT, "label")})` : "";
+  return `replay declined at ${where}: ${decline.reason}, ${DECLINE_WORDS[decline.reason]}${detail}${dimension}; this call and every later one run live.`;
 }
 
 /** Elapsed run time, excluding any time spent paused. */
