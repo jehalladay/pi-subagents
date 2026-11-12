@@ -39,7 +39,8 @@
  * - C2P: target FurnaceObservedAttempts over two reads of one Run and one read of another; observed: the Run's refs once each
  *   in first-seen order, the other Run's refs only under its own ID, none for a Run never read, refs handed out as copies,
  *   and past its cap (3 here, 2000 by default) the oldest ref forgotten first. C2P's two reads record no ref again after
- *   another read and record its capped refs under one Run: C2O and C2X pin those.
+ *   another read and record its capped refs under one Run: C2O and C2X pin those. Every ref C2P records shares one provider,
+ *   type and scope, and no ID is recorded for two Runs.
  * - C2O: target FurnaceObservedAttempts over three reads of one Run (frn-atm-1 and frn-atm-2, then frn-atm-3, then frn-atm-2
  *   again), then a recorder capped at 2 over frn-atm-a and frn-atm-b, frn-atm-a again and frn-atm-c; observed: the refs
  *   frn-atm-1, frn-atm-2, frn-atm-3 (a ref recorded again after another read keeps its first-seen slot), and the capped
@@ -118,17 +119,28 @@
  *   cap grows are exactly all five facts, four, three, two, one (logs) and none.
  *
  * CLASS GUARD OF RECORD (refusal #2 of wb-752.13, g10-gate-s295 seat gate-prep-92; rule 19 shape frozen, so this suite is
- * authored in the rule-14 enumerate-the-resolvable form for it): the failure-reply freshness claim that no row a prior read
- * refreshed stays current after a failed read of the Run (docs/workbench/09 "Freshness and ambiguity"). This suite claims
- * exactly its pinned set: on a failed read the host marks the Run's ref and then every Attempt ref FurnaceObservedAttempts
- * holds for the Run - one Attempt (C2R), every Attempt of one answered read in page order (C2E), the Attempts of every
- * earlier answered read in first-seen order (C2W), a ref a later read returned again included (C2F), each under the call's
- * scope - and no other row (C2H); the recorder's own semantics are C2P, C2O and C2X; the failure reply's lastKnown then reads
- * the marked rows stale, none current (C2, C2R, C2E, C2W, C2F). Its one known unpinned mode is the named residual below.
+ * authored in the rule-14 enumerate-the-resolvable form for it): the failure-reply freshness claim for a failed read of the Run
+ * (docs/workbench/09 "Freshness and ambiguity"), stated since cut #5 as exactly what its pins hold (NARROWED AT CUT #5 below).
+ * This suite claims exactly its pinned sessions: answered reads of one Run, each paging one to three running Attempts whose
+ * refs share one provider, type and scope (the fixture workspace's), at most three distinct Attempt refs in all and none of
+ * them returned by another Run's read, then a failed read that is the counting fake's run_not_found answer (in C2 the in-memory
+ * client's run_not_found rejection, with the host's two stale steps restated by markedStale). In those sessions the failed read
+ * marks the Run's ref and then each Attempt ref those reads returned - one Attempt (C2R), the three of one answered read in
+ * page order (C2E), those of two answered reads in first-seen order (C2W), a ref a later read returned again in its first-seen
+ * place (C2F) - each under the call's scope, and no other row (C2H); the failure reply's lastKnown then reads every marked row
+ * stale, none of them current (C2, C2R, C2E, C2W, C2F). The recorder's own semantics, over refs of one provider, type and scope
+ * whose IDs no two Runs share, are C2P, C2O and C2X. Beside the pinned sessions the census names one residual family with
+ * pinned quiet rows, R-RECORDER-CAP below.
  * ORDER AND CAP SCOPE (refusal #3 of wb-752.13, g10-gate-s295 seat gate-prep-154, items U1 and U2): the recorder's first-seen
  * order is pinned where a ref is recorded again after another read, in the module (C2O; the gate's mutant P3, under which a
  * ref recorded again moves to the last slot, reds it) and through the registered tool (C2F; P3 reds it), and its cap counts
  * refs across Runs (C2X; the gate's mutant P4, a cap counted per Run, reds it).
+ * NARROWED AT CUT #5 (refusal #4 of wb-752.13, g10-gate-s294 seat gate-prep-253, items U1 and U2 with finding F1; the rule-19
+ * second-stage cap engaged there, orchestrator ruling R-B813, and the stronger words left this bead for the exit child
+ * wb-zcj6): the gate's mutants Q3 (the recorder's key without the Run ID: an Attempt ref recorded for a second Run is held
+ * under the first only), Q4 (the key without the scope) and Q8 (the host records the Run viewport's Attempt rows) each fall in
+ * a mode below that this census does not claim, as do two seat mutants of cut #5 (a host that marks only the first three refs
+ * the recorder hands back; a host that marks the Attempt rows only after an unavailable failure).
  *
  * RESIDUAL (named family + pinned quiet rows): R-RECORDER-CAP - FurnaceObservedAttempts keeps at most
  * FURNACE_OBSERVED_ATTEMPTS_MAX refs counted across Runs (C2X; 2000, C2P, the maxNodes of the host's one session projection,
@@ -146,10 +158,17 @@
  * shared sanitizers do (both sides of every comparison use them) are NOT CLAIMED by this census; the freshness of an Attempt
  * row that a later answered read no longer returns (it keeps the freshness of its last refresh) is NOT CLAIMED by this census;
  * the rows a read under another scope refreshed (another workspace or principal: markStale invalidates only the call's own
- * scope) are NOT CLAIMED by this census; beyond C2H's page (a failed read does not mark them), Furnace Attempt rows a writer
- * other than furnace_observe refreshes into a Run's viewport (C2H's frn-atm-3 row is one) are NOT CLAIMED by this census; the
- * session projection's own eviction and admission order (src/workbench/observation.ts: whether it still holds a row the
- * recorder forgot) is NOT CLAIMED by this census.
+ * scope) are NOT CLAIMED by this census; Furnace Attempt rows a writer other than furnace_observe refreshes into a Run's
+ * viewport, beyond C2H's one row (written after the Run's last answered read; the failed read does not mark it), are NOT
+ * CLAIMED by this census (one written before an answered read among them); the session projection's own eviction and admission
+ * order (src/workbench/observation.ts: whether it still holds a row the recorder forgot) is NOT CLAIMED by this census; an
+ * Attempt ref that an answered read of another Run returned as well (which Run's failed read marks it, and whether its row
+ * stays current) is NOT CLAIMED by this census; refs of one Run that share an ID and differ in scope, provider or type (whether
+ * the recorder holds each) are NOT CLAIMED by this census; whether a failed read marks every ref of a session whose answered
+ * reads of the Run returned more than three distinct Attempt refs is NOT CLAIMED by this census (residual R-RECORDER-CAP's
+ * quiet rows pin only that a ref the recorder does not hold is not marked); a failed read of another kind than the
+ * run_not_found answer (a status answer for another workspace, no answer at all, a timeout or an aborted call) is NOT CLAIMED
+ * by this census.
  */
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -377,7 +396,7 @@ describe("furnace_observe reply (wb-752.13)", () => {
     expect(JSON.stringify(reply)).not.toContain("private native detail");
   });
 
-  it("C2P: FurnaceObservedAttempts hands back every Attempt ref recorded for a Run, once each in first-seen order across reads, never another Run's, as copies, and forgets the oldest past its cap", () => {
+  it("C2P: FurnaceObservedAttempts hands back the Attempt refs recorded for a Run - refs of one provider, type and scope, no ID recorded for two Runs - once each in first-seen order across reads, never another Run's, as copies, and forgets the oldest past its cap", () => {
     const observed = new FurnaceObservedAttempts();
     observed.record(RUN_ID, [attemptRef("frn-atm-1"), attemptRef("frn-atm-2")]);
     observed.record("frn-run-other-fixture", [attemptRef("frn-atm-other")]);
@@ -468,7 +487,7 @@ describe("furnace_observe reply (wb-752.13)", () => {
     });
   });
 
-  it("C2W: the registered furnace_observe marks stale the Attempt rows of every earlier answered read of the Run, in first-seen order, an earlier page's rows included, when the next read fails", { timeout: CASE_TIMEOUT_MS }, async () => {
+  it("C2W: the registered furnace_observe marks stale the Attempt rows of both earlier answered reads of the Run, in first-seen order, an earlier page's rows included, when the next read fails", { timeout: CASE_TIMEOUT_MS }, async () => {
     await withFake(["furnace:inspect"], async (boot, fake) => {
       // First-seen order (frn-atm-2, frn-atm-3, then frn-atm-1) is not the IDs' sorted order, so the call order below reads it.
       fake.play(furnaceAnswers({ runId: RUN_ID, workspace: boot.workspace, attempts: attempts(3).slice(1) }));

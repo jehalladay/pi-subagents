@@ -15,12 +15,14 @@
  * (snapshot), the native Run facts (run), the Attempt page's counts (attempts) and the log references (logs) beside the
  * landed workbench.observe/v1 reply over the Run viewport (observe); the FurnaceReading object itself, its contract
  * included, is never carried. A refusal is a ToolReplyError with a closed code. On an attach failure the host marks the
- * Run's ref stale and then each Attempt ref FurnaceObservedAttempts holds for that Run - every Attempt of every earlier
- * answered read of it, in first-seen order, up to the recorder's cap - under the call's scope, so none of those rows stays
- * current; the failure reply carries the Run viewport as it then stands (lastKnown), so a marked row that was running reads
- * last-known-running + stale, never current, and saved data is retrievable without being made current. A ref the recorder
- * forgot past its cap is not marked, and its row, when the projection still holds it, stays current (residual
- * R-RECORDER-CAP, pinned by its quiet row in test/workbench-furnace-observe-reply.test.ts).
+ * Run's ref stale and then Attempt refs FurnaceObservedAttempts hands back for that Run, under the call's scope, and the
+ * failure reply carries the Run viewport as it then stands (lastKnown), so a marked row that was running reads
+ * last-known-running + stale, never current, and saved data is retrievable without being made current.
+ * test/workbench-furnace-observe-reply.test.ts pins the sessions in which that leaves no row those reads refreshed current,
+ * and its header names the modes it does not claim (an Attempt ref two Runs' reads both returned, refs of one ID under two
+ * scopes, more than three Attempt refs of a Run, a failed read of another kind than the counting fake's run_not_found
+ * answer). A ref the recorder forgot past its cap is not marked, and its row, when the projection still holds it, stays
+ * current (residual R-RECORDER-CAP, pinned by its quiet rows in that suite).
  *
  * Hygiene: every string reaches the model through sanitizeWorkbenchJsonText (redaction.ts), the one shared serializer; the
  * observe reply is already a fixed point of it. Refusal messages are bounded by sanitizeWorkbenchText(message, 160, "text").
@@ -91,21 +93,23 @@ export interface FurnaceObserveView {
 export const FURNACE_OBSERVED_ATTEMPTS_MAX = 2_000;
 
 /**
- * The Attempt refs furnace_observe refreshed into the session projection, by native Run ID: the Attempt rows it wrote into a
- * Run's viewport from FurnaceObserver.projectionTopology's Attempt snapshots (a Furnace Attempt row another writer refreshes is
- * not recorded here). When a Run's read fails the host marks each ref held for that Run stale beside the Run (docs/workbench/09
- * "Freshness and ambiguity": a disconnected Furnace stream must not leave a previously running row current). Each ref is kept
- * once per Run, in first-seen order (a ref recorded again keeps its first slot); past `max` refs across Runs
- * (FURNACE_OBSERVED_ATTEMPTS_MAX by default, the session projection's node cap) the oldest is forgotten first. The two caps do
- * not evict in lockstep - the projection admits a row it evicted again last, while a ref recorded again keeps its first slot
- * here - so a ref forgotten here can name a row the projection still holds (residual R-RECORDER-CAP).
+ * A record, per Run, of Attempt refs furnace_observe's answered reads returned, kept so that when a Run's read fails the host
+ * can mark refs held for that Run stale beside the Run (docs/workbench/09 "Freshness and ambiguity": a disconnected Furnace
+ * stream must not leave a previously running row current). Over refs of one provider, type and scope whose IDs no two Runs
+ * share, test/workbench-furnace-observe-reply.test.ts pins (C2P, C2O, C2X) that refs(runId) hands back each ref recorded for
+ * that Run once, in first-seen order (a ref recorded again keeps its first slot), never another Run's, as copies, and that
+ * past `max` refs across Runs (FURNACE_OBSERVED_ATTEMPTS_MAX by default, the session projection's node cap) the oldest is
+ * forgotten first; an Attempt ref two Runs' reads both returned, refs of one ID under two scopes, providers or types, and the
+ * Attempt rows another writer refreshes into a Run's viewport (beyond the suite's C2H row) are NOT CLAIMED there. The two
+ * caps do not evict in lockstep - the projection admits a row it evicted again last, while a ref recorded again keeps its
+ * first slot here - so a ref forgotten here can name a row the projection still holds (residual R-RECORDER-CAP).
  */
 export class FurnaceObservedAttempts {
   private readonly entries = new Map<string, { readonly runId: string; readonly ref: NativeRef }>();
 
   constructor(private readonly max: number = FURNACE_OBSERVED_ATTEMPTS_MAX) {}
 
-  /** Records the Attempt refs one successful read of runId refreshed. */
+  /** Records each Attempt ref one successful read of runId refreshed whose key it does not hold yet. */
   record(runId: string, refs: readonly NativeRef[]): void {
     for (const ref of refs) {
       const key = JSON.stringify([runId, ref.provider, ref.type, ref.id, ref.scope ?? null]);
@@ -116,7 +120,7 @@ export class FurnaceObservedAttempts {
     }
   }
 
-  /** The Attempt refs recorded for runId, in first-seen order (copies). */
+  /** The Attempt refs held for runId, in first-seen order (copies). */
   refs(runId: string): NativeRef[] {
     return [...this.entries.values()].filter(entry => entry.runId === runId).map(entry => ({ ...entry.ref }));
   }

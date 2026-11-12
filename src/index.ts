@@ -2499,10 +2499,12 @@ Terse command-style prompts produce shallow, generic work.
   const workflowTasks = new Map<string, WorkflowTask>();
   const projection = new ObservationProjection({ maxEvents: 4_096, maxNodes: 2_000, maxEdges: 4_000, maxQuery: WORKBENCH_PROJECTION_MAX_QUERY });
   /**
-   * wb-752.13: the Attempt refs each answered furnace_observe read refreshed into the projection above, by native Run ID, so a
-   * failed read of a Run marks each ref held for that Run stale beside the Run (docs/09 "Freshness and ambiguity"); it holds refs
-   * only, never the projection, and at most FURNACE_OBSERVED_ATTEMPTS_MAX of them across Runs (the oldest first-seen is
-   * forgotten first, and a forgotten ref is not marked: residual R-RECORDER-CAP, test/workbench-furnace-observe-reply.test.ts).
+   * wb-752.13: a record, per Run, of Attempt refs answered furnace_observe reads refreshed into the projection above, so a
+   * failed read of a Run can mark refs held for that Run stale beside the Run (docs/09 "Freshness and ambiguity";
+   * test/workbench-furnace-observe-reply.test.ts states the sessions it pins this for and the modes it does not claim, an
+   * Attempt two Runs' reads both returned among them); it holds refs only, never the projection, and at most
+   * FURNACE_OBSERVED_ATTEMPTS_MAX of them across Runs (the oldest first-seen is forgotten first, and a forgotten ref is not
+   * marked: residual R-RECORDER-CAP).
    */
   const furnaceObservedAttempts = new FurnaceObservedAttempts();
   /**
@@ -3184,8 +3186,8 @@ Terse command-style prompts produce shallow, generic work.
         } catch (error) {
           projection.markStale({ scope, ref: {provider:"furnace",type:"run",id:params.runId,scope:scope.workspace} });
           // wb-752.13 (docs/09 "Freshness and ambiguity"): the Attempt rows earlier answered reads of this Run refreshed are no
-          // more confirmed than the Run, so each ref the recorder holds for the Run - every Attempt of every such read, in
-          // first-seen order, up to its cap - is marked stale too, under this call's scope.
+          // more confirmed than the Run, so the refs the recorder hands back for the Run are marked stale too, in that order,
+          // under this call's scope (test/workbench-furnace-observe-reply.test.ts states the sessions it pins this for).
           for (const ref of furnaceObservedAttempts.refs(params.runId)) projection.markStale({ scope, ref });
           return textResult(furnaceObserveFailure(view, error));
         }
