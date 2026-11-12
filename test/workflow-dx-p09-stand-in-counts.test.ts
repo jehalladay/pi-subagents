@@ -1,5 +1,6 @@
 /**
- * workflow-dx-p09-stand-in-counts.test.ts — wb-q0on: the invocation counts of EAT-R357, EAT-R359 and EAT-R362 (program
+ * workflow-dx-p09-stand-in-counts.test.ts — wb-q0on: the invocation counts of EAT-R357, EAT-R359 and EAT-R362, and the
+ * EAT-R358 override carry-forward (program
  * pi-system-dx-triage-2026-11-11, requirements/.work/req-r-ops.md) measured on an effect STAND-IN. No shipped
  * capability is non-read, so no registered path reaches an effect (C145); the counts are read here, on a write FIXTURE
  * registered in a REAL CapabilityRegistry behind the REAL Claude host, under the runtime's own admission. Operator
@@ -13,6 +14,10 @@
  *    invokes the stand-in once and a second resume, over the journal as it then reads, invokes it zero more times.
  *  - R359-C1-SPEND: on a read-only journal spendOverridesAtResume refuses typed spend-not-persisted and leaves the
  *    journal bytes unchanged.
+ *  - R358-C2-CARRY: a resume whose spent override reaches a host that refuses the call before dispatch (the invoke grant
+ *    withheld) settles failed typed authorization, invokes the stand-in zero times, journals no dispatched marker and
+ *    carries the original effect row forward verbatim, and a resume over what that run journaled refuses typed
+ *    uncertain-effect, again with zero invocations.
  *  - R362-C1-UNIT: resolveResumeTarget refuses running and paused sources typed still-live and admits completed and
  *    killed ones.
  *  - R357-C3-UNIT: resolveResumeTarget hands its disk-recovery callback only an id of the run-id shape: a path-shaped id
@@ -51,14 +56,14 @@ const SCRIPT = 'export const meta={name:"dx-p09-stand-in",description:"node"}; r
 const STAND_IN = "furnace.run.start";
 const KEY = nodeJournalKey(STAND_IN, JSON.stringify(NODE_INPUT));
 
-function standIn() {
+function standIn(grants: readonly string[] = ["fixture:write"]) {
   const invocations: unknown[] = [];
   const registry = new CapabilityRegistry();
   registry.register({
     descriptor: { id: STAND_IN, version: "1.0.0", description: "write STAND-IN, no real effect", inputSchema: { type: "object" }, effectClass: "write", permissions: ["fixture:write"], supportedModes: ["invoke"] },
     async invoke(input) { invocations.push(input); return { written: true }; },
   });
-  const host = createClaudeWorkflowHost({ cwd: process.cwd(), capabilities: registry, grants: ["fixture:write"], invocationId: "dx-p09-stand-in", principal: { id: "local-operator:fixture", role: "local-operator" } });
+  const host = createClaudeWorkflowHost({ cwd: process.cwd(), capabilities: registry, grants, invocationId: "dx-p09-stand-in", principal: { id: "local-operator:fixture", role: "local-operator" } });
   return { host, invocations };
 }
 
@@ -128,6 +133,30 @@ describe("EAT-R359: one authorized re-run per spent override", () => {
     const spend = spendOverridesAtResume(journalPath, readJournal(journalPath), { byRunId: "wf_standin003", at: new Date().toISOString() });
     expect(spend).toMatchObject({ ok: false, code: "spend-not-persisted" });
     expect(readFileSync(journalPath, "utf-8")).toBe(before);
+  }, 60_000);
+});
+
+describe("EAT-R358: a spent override refused before dispatch carries its effect row forward", () => {
+  it("R358-C2-CARRY: the refused call journals no marker, carries the original effect row forward, and the next resume stops at it", async () => {
+    const { journalPath } = await overriddenJournal();
+    const { host, invocations } = standIn([]);
+    const first = readJournal(journalPath);
+    const effectRow = first.find(entry => entry.kind === "node" && entry.index === 0 && entry.ok);
+    expect(effectRow).toEqual({ index: 0, key: KEY, ok: true, kind: "node", capabilityId: STAND_IN, effectClass: "write" });
+    expect(spendOverridesAtResume(journalPath, first, { byRunId: "wf_standin004", at: new Date().toISOString() })).toMatchObject({ ok: true, spent: 1 });
+    const journaled: WorkflowJournalEntry[] = [];
+    const resumed = await runWorkflow({ script: SCRIPT, host, journal: { entries: first, append: entry => { journaled.push(entry); return true; } } });
+    expect(resumed.status).toBe("failed");
+    expect(resumed.capabilityError?.category).toBe("authorization");
+    expect(invocations).toEqual([]);
+    expect(journaled.filter(entry => entry.dispatched === true)).toEqual([]);
+    expect(journaled.filter(entry => entry.kind === "node")).toEqual([effectRow]);
+
+    const granted = standIn();
+    const again = await runWorkflow({ script: SCRIPT, host: granted.host, journal: { entries: journaled, append: () => true } });
+    expect(again.status).toBe("failed");
+    expect(again.capabilityError?.category).toBe("uncertain-effect");
+    expect(granted.invocations).toEqual([]);
   }, 60_000);
 });
 
