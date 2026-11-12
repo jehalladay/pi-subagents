@@ -36,18 +36,20 @@
  *   Attempts, each of the two is a node of the booted projection that owns nothing: both Attempt stops are denied
  *   no-confirmed-ownership, never cross-scope. Falsifier: a refresh loop handed less than the topology's whole snapshot list
  *   (the gate's member G1, topology.snapshots.slice(0, 2)) leaves the second Attempt unobserved, so its stop is denied
- *   cross-scope.
+ *   cross-scope. Its reply also passes the reading-reply pins (below).
  * - B9 (EAT-R346 beside the trunk reply; wb-qg19 refusal #1 U1): for each of two readings whose topology cannot be taken, an
  *   Attempt page whose request id is the empty string (the vendored SDK accepts any string request id, and the observer
  *   cannot confirm Run ownership from it) and an Attempt id of 308 code units (past the projection's 256-unit id bound),
  *   furnace_observe still replies with the sanitized reading (its contract furnace.external-observation/v1 and its Run id),
  *   the Run is a node of the booted projection that owns nothing (a Run stop is denied no-confirmed-ownership, never
  *   cross-scope) and no stop command is sent. Falsifier: the topology and both loops inside the data reply's try with no
- *   fallback (cut #1 883d4339) answer both readings with the catch reply instead of the reading.
+ *   fallback (cut #1 883d4339) answer both readings with the catch reply instead of the reading; and (refusal #4 U1, cured
+ *   by code) a catch that answers with a reading-shaped text built without the reading (the gate's member G77-A) fails the
+ *   reading-reply pins (below).
  * - B10 (the same reply, zero-width readings): an Attempt page whose request id carries a zero-width space, and an Attempt
  *   whose id carries one, still get the sanitized reading as the reply, with no zero-width unit left in its text.
  *   Falsifier: a reply that is not the reading passed through sanitizeWorkbenchJsonText (an unsanitized JSON.stringify
- *   keeps the unit; the catch reply carries no contract).
+ *   keeps the unit; the catch reply carries no contract; a reading-shaped text fails the reading-reply pins below).
  * - B11 (EAT-R346 beside the trunk reply; wb-qg19 refusal #3 U1): an Attempt page whose request id carries U+0001, a C0
  *   control the projection's text rule refuses in an ownership confirmation (the row's premise, asserted first on a bare
  *   ObservationProjection), still gets the sanitized reading as the reply (its contract and Run id, and the page request id it
@@ -55,13 +57,30 @@
  *   owns nothing (its stop is denied no-confirmed-ownership, never cross-scope), the Run owns nothing (its stop is denied
  *   no-confirmed-ownership) and no stop command is sent. Falsifier: a catch that rethrows a refused ownership edge (the gate's
  *   member G-B) answers with the catch reply instead of the reading, and a reply on that path that skips the sanitizer
- *   (JSON.stringify of the reading) keeps the unit in that page request id.
+ *   (JSON.stringify of the reading) keeps the unit in that page request id. Pinned beside it (refusal #4 U1, cured by
+ *   code): the reading-reply pins (below), and the page request id the reply carries is the page's own request id as
+ *   sanitizeWorkbenchJsonText answers it (a reading-shaped text built without the reading, the gate's member G77-A, carries
+ *   its own constant there).
  * - B12 (EAT-R346 beside the trunk reply; wb-qg19 refusal #3 U2): a Run whose Attempt page returns two Attempts, the second
  *   with an id of 308 code units, still gets the sanitized reading as the reply; the first Attempt is a node of the booted
  *   projection that owns nothing (its stop is denied no-confirmed-ownership, never cross-scope), the Run owns nothing (its
  *   stop is denied no-confirmed-ownership) and no stop command is sent. Falsifier: a topology checked whole before its first
  *   write (the gate's member G-A throws before any write when one snapshot id is past 256 code units) leaves the first
- *   Attempt unobserved, so its stop is denied cross-scope.
+ *   Attempt unobserved, so its stop is denied cross-scope; and (refusal #4 U1, cured by code) the gate's member G77-A fails
+ *   the reading-reply pins (below).
+ * - The reading-reply pins (B8 to B12; wb-qg19 refusal #4 U1, cured by code under the frozen words, M:78735): the assertion
+ *   targets those rows' "the reply is the reading" and "the sanitized reading" words are pinned to. (1) The reply carries
+ *   contract furnace.external-observation/v1 and source.runId, and the fields only a reading of the fake's pages carries:
+ *   source.beadsRunId bd-qg19 and run.state active from the run status page, and attempts.returned equal to the Attempts the
+ *   page returns. (2) Its capturedAt, observedAt and lastConfirmedAt are one ISO instant (the Date#toISOString form), taken
+ *   between the call's start and its end. (3) The reply text is byte-equal to sanitizeWorkbenchJsonText of the reading a
+ *   FurnaceObserver (src/workbench/furnace-observer.ts) built here takes of the same fake pages through the vendored SDK
+ *   client, with the reply's own three instants written over that reference reading's. (4) The call sent the fake one read -
+ *   run status, attempt list and logs, once each - so the reply comes from that read and no second one. Falsifiers: (1) a
+ *   reading-shaped text built from the contract and the tool's own runId parameter (the gate's member G77-A: red in B9 and
+ *   B12 at this pin, and in B11 at its page request id pin before it); (2) an instant that is not the call's; (3) any other
+ *   field, member order or sanitizer output that differs from the reading's sanitized text; (4) a catch that reads the Run
+ *   again for its reply.
  * - C1 (EAT-R347 c1, the constructor leg): unsupported-verb, invalid-target, foreign-workspace, permit-consumed and
  *   aborted-before-issue each reach the reply as their own exact error code with the adapter's category, and none sends a
  *   native call beyond the first issue of the consumed permit. Falsifier: the trunk class (executor-refused for all five).
@@ -86,26 +105,43 @@
  *   executor-refused for both: those two adapters do not set the own code this file's Furnace refusal sets. Falsifier: an
  *   own code on either refusal class (that leg's code then reaches the reply, and this row and the furnace-control.ts
  *   comment move together).
+ * - C5 (EAT-R347 c1, every member; wb-qg19 refusal #4 U2, cured by code): each member of the closed vocabulary (this file's
+ *   CODES, which C2 holds equal to FURNACE_CONTROL_REFUSAL_CODES), thrown as a FurnaceControlRefusal of category validation by
+ *   a leg through the registered constructor, reaches the reply with ok false, that member as its error code and category
+ *   validation - so denied-decision, unvetted-decision and invalid-deps, which C1 and the booted rows do not reach, reach the
+ *   reply in a row as well. Falsifier: control-tool.ts's executor catch answering any one own code as executor-refused (the
+ *   gate's member G77-B drops invalid-deps; the seat dropped each of the eight in turn).
  *
  * NOT CLAIMED (scope sentences; no residual semantics, no follow-up bead): the V6 legs of EAT-R346 and EAT-R348 (a real
  * Furnace Run and Attempt, native runs.get, the native store byte oracle, control-live uncertain receipt rows) are NOT CLAIMED
  * by this file - it runs no real furnace. Through the booted tool, unsupported-verb, invalid-target, foreign-workspace and
  * permit-consumed are NOT CLAIMED by this file's booted rows: the core admits only `stop` for furnace, an Attempt node has no
  * outgoing ownership edge, furnace_observe admits only frn-run-* Run ids observed in the session workspace and every call
- * mints a fresh permit, so the booted tool reaches none of them (C1 pins them through the constructor). Whether a refusal
+ * mints a fresh permit, so the booted tool reaches none of them (C1 pins them through the constructor). Through the booted
+ * tool, denied-decision, unvetted-decision and invalid-deps are NOT CLAIMED by this file's booted rows either (C5 reads each
+ * through the registered constructor). Whether a refusal
  * reports invoked false (EAT-R335) and the furnace_observe reply dialect (EAT-R349, wb-752.13) are NOT CLAIMED by this file:
- * B9 to B12 read only that the reply is the sanitized reading (its contract, its Run id and, for B10, no zero-width unit; for
- * B11, its page request id without the C0 unit),
+ * B8 to B12 read only that the reply is the sanitized reading (the reading-reply pins (1) to (4) above and, for B10, no
+ * zero-width unit; for B11, its page request id without the C0 unit, as the sanitizer answers it), so what the reading itself
+ * holds beyond the fields pin (1) names is NOT CLAIMED by this file (pin (3)'s reference is src's own FurnaceObserver); pin
+ * (2) reads the reply's instants only as one instant taken during the call, so that it is the very instant the observer
+ * stamped on the reading, rather than another one taken during the same call, is NOT CLAIMED by this file; pin (3) reads the
+ * reply's text, so which call path produced a text byte-equal to the sanitizer's answer is NOT CLAIMED by this file;
  * and the reply to any reading those rows and B1-B8 do not observe is NOT CLAIMED by this file. Which topology writes stand
  * when a later one is refused is NOT CLAIMED by this file beyond B11's Attempt and B12's first Attempt, and a value outside
  * the closed vocabulary that C2 does not list is NOT CLAIMED by this file. A Run whose Attempt page
  * returns more than two Attempts is NOT CLAIMED by this file's booted rows (the census
  * test/workbench-furnace-world-model-preservation-census.test.ts S1 pins the two loops' statements whole).
  * receipt-refused and the live tier's mirror executor (test/workbench-furnace-control-live.test.ts) are NOT CLAIMED by this file.
+ *
+ * RESIDUALS (rule-14 enumerate-the-resolvable form, cut #5; shape frozen at refusal #2, second-stage cap M:78735): none known
+ * within the claims above. Refusal #4's two members are cured by code - G77-A by the reading-reply pins, G77-B by C5 - and the
+ * sanitized-reading words stand frozen at the guard text (M:78415); every mode outside the pinned rows is one of the NOT
+ * CLAIMED scope sentences above.
  */
 import { chmodSync, existsSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import { delimiter, join } from "node:path";
-import type { CallOptions } from "@furnace/sdk";
+import { type CallOptions, Furnace } from "@furnace/sdk";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import subagentsExtension from "../src/index.js";
 import { executeClaudeControl } from "../src/workbench/claude-control.js";
@@ -119,7 +155,9 @@ import {
   FurnaceControlRefusal,
   type FurnaceControlRefusalCode,
 } from "../src/workbench/furnace-control.js";
+import { FurnaceObserver } from "../src/workbench/furnace-observer.js";
 import { type NativeRef, ObservationProjection, type ObservationScope } from "../src/workbench/observation.js";
+import { sanitizeWorkbenchJsonText } from "../src/workbench/redaction.js";
 import type { WorkflowTask } from "../src/workflow/task.js";
 import { ctx, hermeticDir, makePi } from "./helpers/boot-extension.js";
 import { makeScratch, removeScratch } from "./helpers/scratch.js";
@@ -201,6 +239,77 @@ function pageRequestOf(text: string): string | undefined {
   const ids: unknown = typeof source === "object" && source !== null ? Reflect.get(source, "requestIds") : undefined;
   const attempts: unknown = typeof ids === "object" && ids !== null ? Reflect.get(ids, "attempts") : undefined;
   return typeof attempts === "string" ? attempts : undefined;
+}
+
+/** The value at `path` inside a parsed JSON value, or undefined when a step on the way is not an object. */
+function member(value: unknown, ...path: readonly string[]): unknown {
+  let current: unknown = value;
+  for (const key of path) current = typeof current === "object" && current !== null ? Reflect.get(current, key) : undefined;
+  return current;
+}
+/** A reply text parsed, or undefined when it is not JSON. */
+function parsedOf(text: string): unknown {
+  try {
+    return JSON.parse(text);
+  } catch {
+    return undefined;
+  }
+}
+/**
+ * THE READING REPLY (1): the reply's contract and Run id, and the fields only a reading of the fake's pages carries - the
+ * Beads Run id and Run state from the run status page, and the Attempt page's returned count.
+ */
+function readingFieldsOf(text: string): unknown {
+  const parsed = parsedOf(text);
+  if (parsed === undefined) return `NOT A READING: ${text.slice(0, 160)}`;
+  return [member(parsed, "contract"), member(parsed, "source", "runId"), member(parsed, "source", "beadsRunId"), member(parsed, "run", "state"), member(parsed, "attempts", "returned")];
+}
+/** An ISO instant as Date#toISOString writes one. */
+const ISO_INSTANT = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
+/**
+ * THE READING REPLY (2): whether the reply's three instants are one instant, and whether that instant is an ISO instant lying
+ * between `before` and `after`.
+ */
+function instantsOf(text: string, before: string, after: string): unknown {
+  const parsed = parsedOf(text);
+  const instants = [member(parsed, "capturedAt"), member(parsed, "observedAt"), member(parsed, "lastConfirmedAt")];
+  const first = instants[0];
+  return [instants.every(instant => instant === first), typeof first === "string" && ISO_INSTANT.test(first) && before <= first && first <= after];
+}
+/** The reference observer's limits: one poll, and the Attempt, log and call bounds its reads stay inside. */
+const OBSERVE_LIMITS = { maxPolls: 1, intervalMs: 1000, maxElapsedMs: 30_000, attemptLimit: 20, logBytes: 512, callTimeoutMs: 10_000 } as const;
+/**
+ * THE READING REPLY (3): sanitizeWorkbenchJsonText of the reading a FurnaceObserver (src/workbench/furnace-observer.ts) takes
+ * of the fake's current pages through the vendored SDK client, with `reply`'s own three instants written over that reference
+ * reading's (an instant is the host clock at its own read; every other byte is what (3) compares).
+ */
+async function referenceReplyFor(workspace: string, reply: string): Promise<string> {
+  const observer = new FurnaceObserver(new Furnace({ binary: "furnace", cwd: workspace, timeoutMs: 10_000 }), {
+    workspaceRoot: workspace, runId: RUN, scope: { workspace, principal: "local-operator:qg19-reference" }, limits: { ...OBSERVE_LIMITS },
+  });
+  try {
+    const reference = await observer.snapshot();
+    const parsed = parsedOf(reply);
+    return sanitizeWorkbenchJsonText({
+      ...reference, capturedAt: member(parsed, "capturedAt"), observedAt: member(parsed, "observedAt"), lastConfirmedAt: member(parsed, "lastConfirmedAt"),
+    });
+  } finally {
+    observer.close();
+  }
+}
+/** One furnace_observe reply with the host instants just before and just after the call, and the reads the call sent. */
+interface Observed {
+  readonly reply: string;
+  readonly before: string;
+  readonly after: string;
+  readonly reads: readonly string[];
+}
+/** THE READING REPLY, (1) to (4), for a reply of the fake's current pages, whose Attempt page returns `attempts` Attempts. */
+async function expectReadingReply(workspace: string, observed: Observed, attempts: number): Promise<void> {
+  expect(readingFieldsOf(observed.reply), "(1) its contract and Run id, and the fields only the reading of the fake's pages carries").toStrictEqual([CONTRACT, RUN, "bd-qg19", "active", attempts]);
+  expect(instantsOf(observed.reply, observed.before, observed.after), "(2) its three instants are one ISO instant taken during the call").toStrictEqual([true, true]);
+  expect(observed.reads, "(4) from the one read the call sent: run status, attempt list and logs, once each").toStrictEqual(["run status", "attempt list", "logs"]);
+  expect(observed.reply, "(3) byte-equal to the sanitized text of the reading a FurnaceObserver takes of the same pages").toBe(await referenceReplyFor(workspace, observed.reply));
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -363,6 +472,14 @@ async function boot(grants: readonly string[]): Promise<Booted> {
 const stopOf = (workspace: string, type = "run", id = RUN, scope: string = workspace): Record<string, unknown> => ({
   target: { provider: "furnace", type, id, scope }, action: "stop", confirmed: true,
 });
+/** One booted furnace_observe call with the host instants just before and just after it, and the reads it sent the fake. */
+async function observedBy(booted: Booted, fake: FakeFurnace): Promise<Observed> {
+  const prior = fake.calls().length;
+  const before = new Date().toISOString();
+  const reply = await booted.observe();
+  const after = new Date().toISOString();
+  return { reply, before, after, reads: fake.calls().slice(prior).filter(call => call.done !== true).map(call => call.key) };
+}
 
 describe("wb-qg19 the booted Furnace observe -> control path (EAT-R346..R348)", () => {
   let fake: FakeFurnace;
@@ -505,7 +622,9 @@ describe("wb-qg19 the booted Furnace observe -> control path (EAT-R346..R348)", 
   it("B8 after one furnace_observe of a Run with two Attempts, each returned Attempt is a node of the booted projection", async () => {
     booted = await boot(GRANTS);
     fake.play(observedRun(booted.workspace, [ATTEMPT, ATTEMPT_2]));
-    expect(readingOf(await booted.observe()), "the reply is the reading").toStrictEqual([CONTRACT, RUN]);
+    const seen = await observedBy(booted, fake);
+    expect(readingOf(seen.reply), "the reply is the reading").toStrictEqual([CONTRACT, RUN]);
+    await expectReadingReply(booted.workspace, seen, 2);
     const first = await booted.control(stopOf(booted.workspace, "attempt", ATTEMPT), { id: "qg19-attempt-1" });
     const second = await booted.control(stopOf(booted.workspace, "attempt", ATTEMPT_2), { id: "qg19-attempt-2" });
     expect([first.error?.code, second.error?.code], "each Attempt is a node that owns nothing").toStrictEqual(["no-confirmed-ownership", "no-confirmed-ownership"]);
@@ -519,7 +638,9 @@ describe("wb-qg19 the booted Furnace observe -> control path (EAT-R346..R348)", 
   it.each(UNTAKEN)("B9 $row: furnace_observe still replies with the reading and the Run is observed", async ({ attempts, attemptsRequest }) => {
     booted = await boot(GRANTS);
     fake.play(observedRun(booted.workspace, attempts, attemptsRequest));
-    expect(readingOf(await booted.observe()), "the reply is the sanitized reading").toStrictEqual([CONTRACT, RUN]);
+    const seen = await observedBy(booted, fake);
+    expect(readingOf(seen.reply), "the reply is the sanitized reading").toStrictEqual([CONTRACT, RUN]);
+    await expectReadingReply(booted.workspace, seen, attempts.length);
     const run = await booted.control(stopOf(booted.workspace));
     expect(run.error?.code, "the Run is a node of the booted projection that owns nothing").toBe("no-confirmed-ownership");
     expect(stopsOf(fake), "and no stop command is sent").toStrictEqual([]);
@@ -532,9 +653,11 @@ describe("wb-qg19 the booted Furnace observe -> control path (EAT-R346..R348)", 
   it.each(ZERO_WIDTH)("B10 $row carrying a zero-width space: the reply is still the sanitized reading", async ({ attempts, attemptsRequest }) => {
     booted = await boot(GRANTS);
     fake.play(observedRun(booted.workspace, attempts, attemptsRequest));
-    const reply = await booted.observe();
+    const seen = await observedBy(booted, fake);
+    const reply = seen.reply;
     expect(readingOf(reply), "the reply is the sanitized reading").toStrictEqual([CONTRACT, RUN]);
     expect(reply.includes(ZWSP), "with no zero-width unit left").toBe(false);
+    await expectReadingReply(booted.workspace, seen, attempts.length);
   }, BOOTED_MS);
 
   it("B11 an Attempt page request id carrying U+0001: the reply is still the reading, the Attempt stands and the Run owns nothing", async () => {
@@ -547,10 +670,14 @@ describe("wb-qg19 the booted Furnace observe -> control path (EAT-R346..R348)", 
     }), "the premise: the projection's text rule refuses that ownership confirmation").toThrow("Observation ownership confirmation is empty, unsafe or exceeds payload limit.");
     booted = await boot(GRANTS);
     fake.play(observedRun(booted.workspace, [ATTEMPT], pageRequest));
-    const reply = await booted.observe();
+    const seen = await observedBy(booted, fake);
+    const reply = seen.reply;
     expect(readingOf(reply), "the reply is the sanitized reading").toStrictEqual([CONTRACT, RUN]);
     const kept = pageRequestOf(reply);
     expect([typeof kept, kept?.includes(C0)], "its page request id is a string without the C0 unit").toStrictEqual(["string", false]);
+    const sanitizedPage = member(parsedOf(sanitizeWorkbenchJsonText({ attempts: pageRequest })), "attempts");
+    expect([kept, typeof sanitizedPage === "string" && sanitizedPage.includes(C0)], "it is the page's own request id as sanitizeWorkbenchJsonText answers it").toStrictEqual([sanitizedPage, false]);
+    await expectReadingReply(booted.workspace, seen, 1);
     const attemptStop = await booted.control(stopOf(booted.workspace, "attempt", ATTEMPT), { id: "qg19-attempt" });
     expect(attemptStop.error?.code, "the Attempt is a node of the booted projection that owns nothing").toBe("no-confirmed-ownership");
     const runStop = await booted.control(stopOf(booted.workspace), { id: "qg19-run" });
@@ -561,7 +688,9 @@ describe("wb-qg19 the booted Furnace observe -> control path (EAT-R346..R348)", 
   it("B12 two Attempts, the second of 308 code units: the reply is still the reading, the first Attempt stands and the Run owns nothing", async () => {
     booted = await boot(GRANTS);
     fake.play(observedRun(booted.workspace, [ATTEMPT, LONG_ATTEMPT]));
-    expect(readingOf(await booted.observe()), "the reply is the sanitized reading").toStrictEqual([CONTRACT, RUN]);
+    const seen = await observedBy(booted, fake);
+    expect(readingOf(seen.reply), "the reply is the sanitized reading").toStrictEqual([CONTRACT, RUN]);
+    await expectReadingReply(booted.workspace, seen, 2);
     const first = await booted.control(stopOf(booted.workspace, "attempt", ATTEMPT), { id: "qg19-attempt-1" });
     expect(first.error?.code, "the first Attempt is a node of the booted projection that owns nothing").toBe("no-confirmed-ownership");
     const runStop = await booted.control(stopOf(booted.workspace), { id: "qg19-run" });
@@ -749,5 +878,13 @@ describe("wb-qg19 the registered control tool's constructor over the production 
       release();
       releaseForgeOperation(gate.id);
     }
+  });
+
+  it.each([...CODES])("C5 %s, thrown by a leg through the registered constructor, reaches the reply's error code as itself", async code => {
+    const refusal = new FurnaceControlRefusal("validation", code, "m");
+    const { reply } = await constructed([RUN_TARGET], async () => {
+      throw refusal;
+    })(RUN_TARGET);
+    expect([reply.ok, reply.error?.code, reply.error?.category], `${code} reaches the reply as itself`).toStrictEqual([false, code, "validation"]);
   });
 });
