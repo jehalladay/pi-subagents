@@ -92,7 +92,7 @@ import { FurnaceObservedAttempts, furnaceObserveFailure, furnaceObserveRefusal, 
 import { FurnaceObserver } from "./workbench/furnace-observer.js";
 import { captureInvocationIdentity, type IdentityCaptureInput, identityDigest, verifyInvocationIdentity, WORKFLOW_SCRIPT_SCHEMA_VERSION } from "./workbench/identity.js";
 import { loadWorkbenchNative, workbenchNative } from "./workbench/native-modules.js";
-import { type NativeRef, ObservationProjection, type ObservationScope, type Presentation } from "./workbench/observation.js";
+import { type NativeRef, ObservationProjection, type ObservationScope, type Presentation, projectMechanicalOutcome } from "./workbench/observation.js";
 import { OBSERVE_CURSOR_MAX_BYTES, OBSERVE_DEFAULT_MAX_BYTES, OBSERVE_MAX_LIMIT, OBSERVE_MAX_MAX_BYTES, OBSERVE_MIN_MAX_BYTES, observeInvocation } from "./workbench/observe-query.js";
 import { nativeReactiveFiberNodeObserver } from "./workbench/reactivefiber-wiring.js";
 import { createWorkflowReconcileTool } from "./workbench/reconcile-tool.js";
@@ -2774,7 +2774,9 @@ Terse command-style prompts produce shallow, generic work.
    * [RF02], before the host is asked to start it [RF16: inside the start, workflow_observe reads it running]; a host that rejects
    * at start leaves no task [RF14]. Once the host started it, the Pi task reference and the host's references are reported
    * [RF01]; the task then settles with the run: completed [RF03], or failed with a fixed text that carries none of the
-   * producer's [RF03b].
+   * producer's [RF03b]. A run that settles with one of the four original Mechanical outcomes keeps it on the task as its
+   * mechanicalOutcome, beside the completed status and never in place of it, and a rejection is never read as one (wb-9a1o,
+   * packet P05, EAT-R242: the cases of test/workbench-function-outcome-projection.test.ts).
    */
   async function runHostedFunction(hosting: WorkflowFunctionHosting, launch: ExecuteFunctionLaunch, started: (nativeRefs: readonly NativeRef[]) => void): Promise<void> {
     const task = createWorkflowTask({
@@ -2800,14 +2802,17 @@ Terse command-style prompts produce shallow, generic work.
     }
     started([{ provider: "pi-workflow", type: "task", id: task.id, ...referenceScope(launch.scope.workspace) }, ...hosted.nativeRefs]);
     let failed = false;
+    let settled: unknown;
     try {
-      await hosted.settled;
+      settled = await hosted.settled;
     } catch {
       failed = true;
     }
     if (task.status === "running") {
       task.status = failed ? "failed" : "completed";
       if (failed) task.error = FUNCTION_RUN_FAILED;
+      const outcome = failed ? undefined : projectMechanicalOutcome(settled);
+      if (outcome !== undefined) task.mechanicalOutcome = outcome;
     }
     task.endTime = Date.now();
     notifyWorkflowFinished(task);
@@ -3197,11 +3202,15 @@ Terse command-style prompts produce shallow, generic work.
         const diagnostic = task.capabilityError;
         const capability = diagnostic === undefined ? {} : { capabilityError: { category: diagnostic.category, message: diagnostic.message,
           ...(diagnostic.path !== undefined ? { path: diagnostic.path } : {}), ...(diagnostic.constraint !== undefined ? { constraint: diagnostic.constraint } : {}) } };
+        // A hosted function's original Mechanical outcome rides as a member of its own beside the task's envelope (wb-9a1o, EAT-R242).
+        const outcome = task.mechanicalOutcome;
+        const mechanical = outcome === undefined ? {} : { mechanicalOutcome: outcome };
         const envelopes = [
           { taskId: task.id, status: task.status, identity: task.identityReceipt?.identity ?? null, inputDigest: task.inputDigest ?? null,
-            workspaceSourceState: task.workspaceSourceState ?? "unknown", error: task.error ?? null, ...capability },
-          // A tight maxBytes cannot carry the digests and the error text: say so instead of dropping them silently.
-          { taskId: task.id, status: task.status, envelopeOmitted: ["identity", "inputDigest", "workspaceSourceState", "error", ...(diagnostic === undefined ? [] : ["capabilityError"])] },
+            workspaceSourceState: task.workspaceSourceState ?? "unknown", error: task.error ?? null, ...capability, ...mechanical },
+          // A tight maxBytes cannot carry the digests, the error text or the outcome: say so instead of dropping them silently.
+          { taskId: task.id, status: task.status, envelopeOmitted: ["identity", "inputDigest", "workspaceSourceState", "error", ...(diagnostic === undefined ? [] : ["capabilityError"]),
+            ...(outcome === undefined ? [] : ["mechanicalOutcome"])] },
         ];
         // maxBytes bounds the WHOLE reply, so it is checked as requested, before the task envelope is subtracted from it (gate F2).
         if (params.maxBytes !== undefined && (!Number.isSafeInteger(params.maxBytes) || params.maxBytes < OBSERVE_MIN_MAX_BYTES || params.maxBytes > OBSERVE_MAX_MAX_BYTES))
