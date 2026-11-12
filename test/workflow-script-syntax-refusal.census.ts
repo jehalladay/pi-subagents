@@ -1,6 +1,6 @@
 /**
  * wb-9btr cut #2, refusal #1's U1 ("Fail closed on a file-level skip"): the RUN PIN of test/workflow-script-syntax-refusal.test.ts.
- * Cut #3 (refusal #2) narrows R0's title words, so R0's frozen title below moves with them.
+ * Cut #3 (refusal #2) narrows R0's title words, so R0's frozen title below moves with them; cut #4 (refusal #3) moves it again.
  * It is a census-tier leg (vitest.census.config.ts, include test/**\/*.census.ts): it reads vitest's JSON report of the gate's own
  * test step (DEFAULT_TIER_REPORT, written by `npm run test`) and runs no case of the census file, and the .census.ts suffix keeps
  * it out of the report it reads. It is that file's anchor outside itself for the one mode the file's own cases cannot see: every
@@ -43,7 +43,7 @@ const CASES: readonly (readonly [readonly string[], string])[] = [
   [[SUITE], "R322-H1 a ReferenceError on require, process, fetch or setTimeout, a dynamic import and an import statement end with the no-Node-APIs hint"],
   [[SUITE], "R322-H2 a ReferenceError on another name, a TypeError and a thrown Error quoting the Node wording carry no hint"],
   [[SUITE], "R322-H3 node() on a host without a capability registry names workbench.workflowAgentBackend: \"claude\""],
-  [[], "R0 census over ROWS, registered last at file scope: the header's claims block is exactly the row sentences, each row pins its cases, the src comments cite exactly that set, every other test vitest registered here is one pinned case that ran before R0 in run mode and not inverted, SYNTAX_CASES holds the six shapes the receipt's rendered SYNTAX_CASES item lists and every each-shape case reached them, and the run pin's bytes are held"],
+  [[], "R0 census over ROWS, registered last at file scope: the header's claims block is exactly the row sentences, each row pins its cases, the src comments cite exactly that set, every other test vitest registered here is one pinned case that ran before R0 in run mode and not inverted, SYNTAX_CASES holds the six shapes the receipt's rendered SYNTAX_CASES item spells and every each-shape case reached them, each HIDING_MODES page reads as pinned, and the run pin's bytes are held"],
 ];
 
 interface ReportCase {
