@@ -43,11 +43,13 @@
  *
  * Git is read through host.git (a SourceGitReader), and every argv the module passes it starts with --no-optional-locks -c
  * core.fsmonitor=false -c core.untrackedCache=false. Not wired yet: workflow_execute still refuses a function definition
- * (execute-tool.ts, unsupported-definition-kind) until the dispatch bead composes this seam. One WriterLeases registry binds the
- * writers of one host process.
+ * (execute-tool.ts, unsupported-definition-kind) until the dispatch bead composes this seam. A WriterLeases registry without a
+ * store binds the writers of one host process; registries in two processes configured with one reservation store hold one
+ * lease between them for one canonical root, in the forms test/workbench-mii-cross-pid-reservation.test.ts pins (EAT-R399;
+ * see WriterLeases).
  */
-import { createHash } from "node:crypto";
-import { lstatSync, readFileSync, realpathSync } from "node:fs";
+import { createHash, randomBytes } from "node:crypto";
+import { closeSync, fsyncSync, linkSync, lstatSync, openSync, readFileSync, realpathSync, unlinkSync, writeSync } from "node:fs";
 import { isAbsolute, join, relative, resolve, sep } from "node:path";
 import { CapabilityError, type JsonValue } from "./capability-registry.js";
 import { identityDigest } from "./identity.js";
@@ -426,13 +428,41 @@ export class WriteBoundaryAuthority {
  * Whether the leases of any other pair of roots are independent is NOT CLAIMED. release frees a root only for the very object
  * acquire returned while it still holds that root, so a released lease, or a copy naming the same root and invocation, frees
  * nothing. admitSourceWrite keys the lease by the canonical root it measured, never by the caller's spelling of the workspace.
+ * Those forms are the registry's without a store (new WriterLeases()).
+ *
+ * EAT-R399, wb-yk1k cut #1 (criterion 1 only, evidence tier V1): new WriterLeases({ store }) keeps the registry's leases in
+ * store, an existing directory the host configures, instead of in the registry. By its code: acquire resolves the root it is
+ * given by realpath and links a fully written staged record to that canonical root's record file in the store (named by the
+ * SHA-256 of the root), answering undefined when the link finds a record there; holder reads the record of the root's
+ * realpath; and release removes the record for a lease this registry minted while the record still names that lease's
+ * generation. The record's fields (the schema pi.writer-reservation/v1, the canonical root, the invocation, the owner's pid,
+ * a random generation and the custody state held) are provisional until EAT-R398 ratifies the token. What
+ * test/workbench-mii-cross-pid-reservation.test.ts pins of this form: two child processes over one store, each requesting ws
+ * through one spelling of a pair of its direct, symlink and dot spellings, get one lease between them, naming the realpath,
+ * and holder read through a third registry over the store names its invocation; run through admitSourceWrite, one dispatch
+ * is entered and the other admission refuses writer-held. NOT CLAIMED by that suite: release in this form, a fresh process
+ * reading the owner, generation or custody, a second registry in one process, restart, a store that fails, more processes
+ * or spellings, and power loss.
  */
 export class WriterLeases {
   readonly #held = new Map<string, WriterLease>();
+  readonly #store: string | undefined;
+  /** With a store: the generation of each lease this registry minted and has not released. */
+  readonly #generations = new WeakMap<WriterLease, string>();
 
-  /** Throws a validation CapabilityError unless canonicalRoot is absolute clean text and invocationId is clean text. */
+  /** Throws a validation CapabilityError unless options, when given, names its store as absolute clean text. */
+  constructor(options?: WriterReservationStore) {
+    if (options !== undefined && (!plainObject(options) || !absolutePath(options.store))) throw new CapabilityError("validation", "A writer reservation store names an absolute directory.");
+    this.#store = options?.store;
+  }
+
+  /**
+   * Throws a validation CapabilityError unless canonicalRoot is absolute clean text and invocationId is clean text, and, with a
+   * store, unless canonicalRoot resolves by realpath.
+   */
   acquire(canonicalRoot: string, invocationId: string): WriterLease | undefined {
     if (!absolutePath(canonicalRoot) || !cleanText(invocationId)) throw new CapabilityError("validation", "A writer lease names a canonical workspace root and an invocation.");
+    if (this.#store !== undefined) return this.#reserve(this.#store, canonicalRoot, invocationId);
     if (this.#held.has(canonicalRoot)) return undefined;
     const lease: WriterLease = Object.freeze({ canonicalRoot, invocationId });
     this.#held.set(canonicalRoot, lease);
@@ -441,6 +471,7 @@ export class WriterLeases {
 
   /** True when it freed the root. */
   release(lease: WriterLease): boolean {
+    if (this.#store !== undefined) return this.#unreserve(this.#store, lease);
     if (this.#held.get(lease.canonicalRoot) !== lease) return false;
     this.#held.delete(lease.canonicalRoot);
     return true;
@@ -448,8 +479,121 @@ export class WriterLeases {
 
   /** The invocation id of the lease that holds canonicalRoot, or undefined when no lease holds it, for the roots the suite asks about. */
   holder(canonicalRoot: string): string | undefined {
+    if (this.#store !== undefined) {
+      const canonical = realpathOf(canonicalRoot);
+      const record = canonical === undefined ? undefined : readReservation(reservationPath(this.#store, canonical));
+      return record !== undefined && record.canonicalRoot === canonical ? record.invocationId : undefined;
+    }
     return this.#held.get(canonicalRoot)?.invocationId;
   }
+
+  #reserve(store: string, root: string, invocationId: string): WriterLease | undefined {
+    const canonicalRoot = realpathOf(root);
+    if (canonicalRoot === undefined) throw new CapabilityError("validation", "A writer reservation names a workspace root that resolves.");
+    const generation = randomBytes(16).toString("hex");
+    const record: WriterReservationRecord = { schema: WRITER_RESERVATION_SCHEMA, canonicalRoot, invocationId, owner: { pid: process.pid }, generation, custody: "held" };
+    const path = reservationPath(store, canonicalRoot);
+    const staged = `${path}.${process.pid}.${generation}.staged`;
+    const descriptor = openSync(staged, "wx", 0o600);
+    try {
+      writeRecord(descriptor, record);
+      if (!linkExclusive(staged, path)) return undefined;
+    } finally {
+      discard(staged);
+    }
+    const lease: WriterLease = Object.freeze({ canonicalRoot, invocationId });
+    this.#generations.set(lease, generation);
+    return lease;
+  }
+
+  #unreserve(store: string, lease: WriterLease): boolean {
+    const generation = this.#generations.get(lease);
+    if (generation === undefined) return false;
+    this.#generations.delete(lease);
+    const path = reservationPath(store, lease.canonicalRoot);
+    if (readReservation(path)?.generation !== generation) return false;
+    try {
+      unlinkSync(path);
+      return true;
+    } catch (error) {
+      if (errnoCode(error) === "ENOENT") return false;
+      throw error;
+    }
+  }
+}
+
+/** What a host passes new WriterLeases to keep the registry's leases in a reservation store (EAT-R399). */
+export interface WriterReservationStore {
+  /** The absolute path of the existing directory every participating registry on the machine is configured with. */
+  readonly store: string;
+}
+
+/** The schema of a reservation record: this cut's provisional form, until EAT-R398 ratifies the token fields. */
+const WRITER_RESERVATION_SCHEMA = "pi.writer-reservation/v1";
+
+/** One reservation record: its canonical root, the holding invocation, the owning process, its generation and custody. */
+interface WriterReservationRecord {
+  readonly schema: typeof WRITER_RESERVATION_SCHEMA;
+  readonly canonicalRoot: string;
+  readonly invocationId: string;
+  readonly owner: { readonly pid: number };
+  readonly generation: string;
+  readonly custody: "held";
+}
+
+/** The record file of a canonical root in a store: the SHA-256 of the root's UTF-8 bytes in hex, then ".json". */
+function reservationPath(store: string, canonicalRoot: string): string {
+  return join(store, `${createHash("sha256").update(canonicalRoot, "utf8").digest("hex")}.json`);
+}
+
+/** Writes the record's JSON line to the open staged file, flushes it to the file system and closes it. */
+function writeRecord(descriptor: number, record: WriterReservationRecord): void {
+  try {
+    writeSync(descriptor, `${JSON.stringify(record)}\n`);
+    fsyncSync(descriptor);
+  } finally {
+    closeSync(descriptor);
+  }
+}
+
+/** Links staged to path: true when path did not exist, false when it did (EEXIST); any other failure throws. */
+function linkExclusive(staged: string, path: string): boolean {
+  try {
+    linkSync(staged, path);
+    return true;
+  } catch (error) {
+    if (errnoCode(error) === "EEXIST") return false;
+    throw error;
+  }
+}
+
+/** Removes a staged copy. A copy that stays behind holds no root: only a record file named "<digest>.json" does. */
+function discard(path: string): void {
+  try {
+    unlinkSync(path);
+  } catch {
+    // Nothing to undo: the staged copy is not a reservation record.
+  }
+}
+
+/** The record at path, when it reads as one; undefined when it is missing, unreadable or not a record. */
+function readReservation(path: string): Pick<WriterReservationRecord, "canonicalRoot" | "invocationId" | "generation"> | undefined {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(readFileSync(path, "utf8"));
+  } catch {
+    return undefined;
+  }
+  if (!plainObject(parsed)) return undefined;
+  const { schema, canonicalRoot, invocationId, generation } = parsed;
+  if (schema !== WRITER_RESERVATION_SCHEMA || typeof canonicalRoot !== "string" || typeof invocationId !== "string" || typeof generation !== "string") return undefined;
+  return { canonicalRoot, invocationId, generation };
+}
+
+/** The code of a Node.js system error, when error carries one. */
+function errnoCode(error: unknown): string | undefined {
+  if (typeof error !== "object" || error === null || !("code" in error)) return undefined;
+  return typeof error.code === "string" ? error.code : undefined;
 }
 
 /**
