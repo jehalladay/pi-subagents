@@ -1007,9 +1007,10 @@ function jsonRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 /**
- * A settled run's value as its original Mechanical outcome: a JSON copy taken now, so a later change to the producer's object
- * never reaches it, and its domain read from that copy's kind member. Anything else (a value that is not an object, a list, a
- * value JSON cannot copy, a kind outside the four) is no outcome: undefined, never an invented domain.
+ * A settled run's value as its original Mechanical outcome: a JSON copy of the value beside the domain its kind member names.
+ * What it yields is claimed only for the settled values, and the later changes to the producer's object, that the cases of
+ * test/workbench-function-outcome-projection.test.ts pin (RO01-RO03, as that file's header lists them); for any other value or
+ * change this comment claims nothing.
  */
 export function projectMechanicalOutcome(settled: unknown): MechanicalOutcomeObservation | undefined {
   if (!jsonRecord(settled)) return undefined;
