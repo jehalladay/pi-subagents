@@ -77,7 +77,14 @@ import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflow
 import { executeDetachedControl } from "./workbench/detached-control.js";
 import { DetachedObserveWiring } from "./workbench/detached-wiring.js";
 import { createWorkbenchEvidenceStore } from "./workbench/evidence-wiring.js";
-import { createWorkflowExecuteTool, type ExecuteLaunch } from "./workbench/execute-tool.js";
+import {
+  createWorkflowExecuteTool,
+  type ExecuteFunctionLaunch,
+  type ExecuteLaunch,
+  type FunctionHostStarted,
+  type WorkflowFunctionDeps,
+  type WorkflowFunctionHosting,
+} from "./workbench/execute-tool.js";
 import { createRetainedForgeControlExecutor, retainForgeOperation } from "./workbench/forge-control-retention.js";
 import { type ForgeObservedHead, type ForgeOperationObserver, observeForgeGateRun } from "./workbench/forge-operation-observer.js";
 import { executeFurnaceControl } from "./workbench/furnace-control.js";
@@ -435,12 +442,20 @@ export function observedPackageHead(root: string): ForgeObservedHead | undefined
  * alone, so in a Pi session every field is absent and the factory behaves exactly as it always has. The injection exists for the
  * native-load notify suites (test/helpers/native-load-notify.ts, which drives the DIRECT-CALLER SITES row of
  * test/workbench-sanitizer-corpus.test.ts and test/workbench-native-load-notify.test.ts): they reach the real notify path with a
- * load that fails with their own text and replace no module. It is not a second loader.
+ * load that fails with their own text and replace no module. It is not a second loader. The function hosting field (wb-4bxo,
+ * packet P04) is how a host composes workflow_execute's function branch: test/workbench-registered-function.test.ts drives the
+ * registered tools with one injected installed host through it. No Pi session sets it, so a Pi session composes no function
+ * hosting and workflow_execute refuses every function definition as unsupported-definition-kind, as it did before the branch.
  */
 export interface SubagentsExtensionInjection {
   /** What registerWorkbenchTools awaits before the Workbench tools register; native-modules.ts loadWorkbenchNative when absent. */
   readonly loadWorkbenchNative?: () => Promise<unknown>;
+  /** workflow_execute's function hosting (execute-tool.ts WorkflowFunctionHosting); absent in a Pi session. */
+  readonly functionHosting?: WorkflowFunctionHosting;
 }
+
+/** The fixed error text of a hosted function run that settled with a rejection: none of the producer's text reaches the store. */
+const FUNCTION_RUN_FAILED = "the installed host settled the function's run with a failure";
 
 /**
  * The evidence reference a Claude stream observation lists for its session's last message: the F1 identity-ref closure of
@@ -2725,6 +2740,71 @@ Terse command-style prompts produce shallow, generic work.
     return [{ provider: "pi-workflow", type: "task", id: runId, ...referenceScope(launch.scope.workspace) }];
   }
   /**
+   * workflow_execute's function branch (wb-4bxo, packet P04), composed only from SubagentsExtensionInjection.functionHosting.
+   * The chain host's authority reads are this session's own on every call (the grants from settings, the local principal and the
+   * session: RF01, RF09); source admission, the installed package, the SDK edge and the installed host's start are the hosting's
+   * (RF07, RF08, RF17, RF17b).
+   */
+  function hostedFunctionDeps(hosting: WorkflowFunctionHosting): WorkflowFunctionDeps {
+    return {
+      contract: hosting.contract,
+      chainHost: toolCtx => ({
+        authority: {
+          grants: () => grants(toolCtx),
+          identity: () => ({ principal: localPrincipal(toolCtx), sessionId: toolCtx.sessionManager.getSessionId() }),
+        },
+        source: hosting.source,
+        package: hosting.package,
+        ...(hosting.sdk !== undefined ? { sdk: hosting.sdk } : {}),
+      }),
+      run: (_toolCtx, launch, started) => runHostedFunction(hosting, launch, started),
+    };
+  }
+  /**
+   * One hosted function run, the chain's one effect (cases of test/workbench-registered-function.test.ts in brackets). The
+   * invocation is registered in the existing workflow task store, scoped to the launching session, workspace and principal
+   * [RF02], before the host is asked to start it [RF16: inside the start, workflow_observe reads it running]; a host that rejects
+   * at start leaves no task [RF14]. Once the host started it, the Pi task reference and the host's references are reported
+   * [RF01]; the task then settles with the run: completed [RF03], or failed with a fixed text that carries none of the
+   * producer's [RF03b].
+   */
+  async function runHostedFunction(hosting: WorkflowFunctionHosting, launch: ExecuteFunctionLaunch, started: (nativeRefs: readonly NativeRef[]) => void): Promise<void> {
+    const task = createWorkflowTask({
+      id: launch.invocationId, script: "", args: launch.input, toolCallId: launch.toolCallId,
+      meta: { name: launch.entrypoint.id, description: "Mechanical function (reviewed entrypoint)" },
+    });
+    task.inputDigest = launch.inputDigest;
+    task.observationScope = Object.freeze({ ...launch.scope });
+    workflowTasks.set(task.id, task);
+    widget.update();
+    fleet.update();
+    let hosted: FunctionHostStarted;
+    try {
+      hosted = await hosting.start(Object.freeze({
+        invocationId: launch.invocationId, entrypoint: launch.entrypoint, definition: launch.definition, input: launch.input,
+        grant: launch.grant, signal: task.abortController.signal,
+      }));
+    } catch (error) {
+      workflowTasks.delete(task.id);
+      widget.update();
+      fleet.update();
+      throw error;
+    }
+    started([{ provider: "pi-workflow", type: "task", id: task.id, ...referenceScope(launch.scope.workspace) }, ...hosted.nativeRefs]);
+    let failed = false;
+    try {
+      await hosted.settled;
+    } catch {
+      failed = true;
+    }
+    if (task.status === "running") {
+      task.status = failed ? "failed" : "completed";
+      if (failed) task.error = FUNCTION_RUN_FAILED;
+    }
+    task.endTime = Date.now();
+    notifyWorkflowFinished(task);
+  }
+  /**
    * The Claude half of a registered detached launch, its Claude config and its grants, for both producers (wb-wupg, MWI
    * EAT-R012/EAT-R013). What it returns is claimed only for the settings, held rights and launches that
    * test/workbench-detached-grants.test.ts pins through both producers, as that file's header lists them; for any other
@@ -3141,6 +3221,7 @@ Terse command-style prompts produce shallow, generic work.
       resolveSource: (definition, cwd) => inspectWorkflowSource({ scriptPath: definition.id }, cwd),
       launchEmbedded: launchEmbeddedWorkflow,
       launchDetached: launchDetachedWorkflow,
+      ...(injected.functionHosting !== undefined ? { functions: hostedFunctionDeps(injected.functionHosting) } : {}),
     }));
     // workflow_control (wb-cra): the explicit native control tool over the pure decision core (control.ts) and the
     // adapter legs. Grants, principal, workspace and session come from host context on every call; the target, the
