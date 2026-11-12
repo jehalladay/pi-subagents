@@ -103,10 +103,10 @@ import {
 import { decideWorkflowCollision, FOREIGN_WORKFLOW_TOOL_NAMES } from "./workflow/collisions.js";
 import { WORKFLOW_ENTRY_TYPE, type WorkflowEntryData, workflowEntryData } from "./workflow/entry.js";
 import { createWorkflowHost } from "./workflow/host.js";
-import { appendJournal, readJournal, type WorkflowJournalEntry } from "./workflow/journal.js";
+import type { WorkflowJournalEntry } from "./workflow/journal.js";
 import { describeWorkflowSyntaxFault, extractMeta, type WorkflowMeta, workflowCallName, workflowSyntaxFault } from "./workflow/meta.js";
 import { type ClaudeNativeObservation, elapsedMs, type WorkflowAgentEntry } from "./workflow/progress.js";
-import { consumeOverridesAtResume } from "./workflow/reconcile.js";
+import { admitResumeJournal, journalAppender, spendOverridesAtResume } from "./workflow/resume-admission.js";
 import { runWorkflow } from "./workflow/runtime.js";
 import { resolveWorkflowScript } from "./workflow/saved.js";
 import { completeWorkflowTask, createWorkflowTask, describeResumeJournal, failWorkflowTask, formatWorkflowNotification, resolveResumeTarget, updateWorkflowProgressBatch, type WorkflowTask, workflowResultText, workflowRunId } from "./workflow/task.js";
@@ -1269,6 +1269,7 @@ export default function (pi: ExtensionAPI, injected: SubagentsExtensionInjection
     for (const task of workflowTasks.values()) task.abortController.abort();
     workflowTasks.clear();
     claudeControlRetention.dispose();
+    recoveredWorkflowTasks.clear();
     // Forge operations this process started: dispose releases their retentions and closes the owned connections (no cancel verb).
     await Promise.all([...liveForgeOperations.values()].map(operation => operation.dispose().catch(() => undefined)));
     liveForgeOperations.clear();
@@ -2552,6 +2553,45 @@ Terse command-style prompts produce shallow, generic work.
   function grants(ctx: ExtensionContext): readonly string[] {
     return loadSettings(ctx.cwd).workbench?.capabilityGrants ?? [];
   }
+  /**
+   * A run this process holds no record of, recovered from this session's own task directory (wb-q0on, EAT-R357): the
+   * script the host persisted at launch and the journal beside it, under the same run id. Bound to the session and
+   * workspace of `ctx` and to the run-id shape, so a model-supplied id can name no other directory.
+   */
+  function recoverWorkflowRun(ctx: ExtensionContext, runId: string): { journalPath: string; scriptPath: string } | undefined {
+    if (!/^wf_[a-z0-9-]{6,}$/.test(runId)) return undefined;
+    try {
+      const dir = sessionTaskDir(ctx.cwd, ctx.sessionManager.getSessionId());
+      const scriptPath = join(dir, `${runId}.workflow.js`);
+      if (!existsSync(scriptPath)) return undefined;
+      return { scriptPath, journalPath: join(dir, `${runId}.workflow.jsonl`) };
+    } catch {
+      return undefined;
+    }
+  }
+  /**
+   * Recovered runs as workflow_reconcile reads them, one record per journal so the evidence receipts it holds on a
+   * task survive between its calls. Never in workflowTasks: no surface lists a run this process did not start.
+   */
+  const recoveredWorkflowTasks = new Map<string, WorkflowTask>();
+  function recoveredWorkflowTask(ctx: ExtensionContext, runId: string): WorkflowTask | undefined {
+    const found = recoverWorkflowRun(ctx, runId);
+    if (found === undefined) return undefined;
+    const cached = recoveredWorkflowTasks.get(found.journalPath);
+    if (cached !== undefined) return cached;
+    let script: string;
+    try {
+      script = readFileSync(found.scriptPath, "utf-8");
+    } catch {
+      return undefined;
+    }
+    const task = createWorkflowTask({ id: runId, script, scriptPath: found.scriptPath, journalPath: found.journalPath });
+    // Not live here: the process that ran it is gone, so nothing in this one can still be running it.
+    task.status = "killed";
+    task.observationScope = { ...observerScope(ctx), sessionId: ctx.sessionManager.getSessionId() };
+    recoveredWorkflowTasks.set(found.journalPath, task);
+    return task;
+  }
   /** The gate.run root: an absolute path resolving to the bound workspace or a package inside it; anything else is undefined, never repaired. */
   function forgeRunRoot(target: string, workspace: string): string | undefined {
     if (!isAbsolute(target)) return undefined;
@@ -3045,11 +3085,15 @@ Terse command-style prompts produce shallow, generic work.
           task.observationScope.workspace !== scope.workspace || task.observationScope.principal !== scope.principal)
           return textResult("Workflow unavailable in this local operator/session/workspace scope.");
         // Node labels come from the script and `error` from whatever it threw; both are redacted and stripped by the shared serializer.
+        // A failed run's typed capability diagnostic rides beside its error, only when it has one (wb-q0on, EAT-R364).
+        const diagnostic = task.capabilityError;
+        const capability = diagnostic === undefined ? {} : { capabilityError: { category: diagnostic.category, message: diagnostic.message,
+          ...(diagnostic.path !== undefined ? { path: diagnostic.path } : {}), ...(diagnostic.constraint !== undefined ? { constraint: diagnostic.constraint } : {}) } };
         const envelopes = [
           { taskId: task.id, status: task.status, identity: task.identityReceipt?.identity ?? null, inputDigest: task.inputDigest ?? null,
-            workspaceSourceState: task.workspaceSourceState ?? "unknown", error: task.error ?? null },
+            workspaceSourceState: task.workspaceSourceState ?? "unknown", error: task.error ?? null, ...capability },
           // A tight maxBytes cannot carry the digests and the error text: say so instead of dropping them silently.
-          { taskId: task.id, status: task.status, envelopeOmitted: ["identity", "inputDigest", "workspaceSourceState", "error"] },
+          { taskId: task.id, status: task.status, envelopeOmitted: ["identity", "inputDigest", "workspaceSourceState", "error", ...(diagnostic === undefined ? [] : ["capabilityError"])] },
         ];
         // maxBytes bounds the WHOLE reply, so it is checked as requested, before the task envelope is subtracted from it (gate F2).
         if (params.maxBytes !== undefined && (!Number.isSafeInteger(params.maxBytes) || params.maxBytes < OBSERVE_MIN_MAX_BYTES || params.maxBytes > OBSERVE_MAX_MAX_BYTES))
@@ -3077,6 +3121,7 @@ Terse command-style prompts produce shallow, generic work.
     }));
     pi.registerTool(createWorkflowReconcileTool({
       tasks: workflowTasks,
+      recover: (taskId, toolCtx) => recoveredWorkflowTask(toolCtx, taskId),
       registryFor,
       grants,
       observerScope,
@@ -3341,7 +3386,7 @@ Terse command-style prompts produce shallow, generic work.
         journal: {
           ...(task.replay !== undefined ? { entries: task.replay } : {}),
           ...(task.journalPath !== undefined
-            ? { append: (entry: WorkflowJournalEntry) => appendJournal(task.journalPath!, entry) }
+            ? { append: journalAppender(task.journalPath) }
             : {}),
         },
       });
@@ -3479,7 +3524,9 @@ Terse command-style prompts produce shallow, generic work.
     },
 
     execute: async (toolCallId, params, _signal, _onUpdate, ctx) => {
-      const resumeFrom = resolveResumeTarget(params.resumeFromRunId, workflowTasks);
+      // A run this process holds no record of is looked up in this session's own task directory only: a restart of the
+      // same session and workspace finds it (wb-q0on, EAT-R357); another session or workspace never does.
+      const resumeFrom = resolveResumeTarget(params.resumeFromRunId, workflowTasks, runId => recoverWorkflowRun(ctx, runId));
       if (resumeFrom !== undefined && !resumeFrom.ok) return textResult(resumeFrom.message);
 
       // A resume with no source of its own re-runs what that run ran. The
@@ -3517,6 +3564,20 @@ Terse command-style prompts produce shallow, generic work.
       }
 
       const runId = workflowRunId();
+      // The source journal is admitted before anything of the new run exists (wb-q0on): classified from its raw bytes
+      // first (EAT-R360), refused while a recovered run's dispatch is unsettled (EAT-R357), and every live operator
+      // override spent and read back before anything runs (EAT-R359) — the runtime receives the entries as read
+      // (unspent) and may re-run once, while any second resume finds the authorization already consumed, so a
+      // prompt-injected repetition of one authorization is impossible. Each refusal is typed and dispatches nothing.
+      let replay: WorkflowJournalEntry[] | undefined;
+      if (resumeFrom !== undefined) {
+        const admitted = admitResumeJournal(resumeFrom.journalPath, { runId: resumeFrom.runId, recovered: resumeFrom.recovered === true });
+        if (!admitted.ok) return textResult(admitted.message);
+        const spend = spendOverridesAtResume(resumeFrom.journalPath, admitted.entries, { byRunId: runId, at: new Date().toISOString() });
+        if (!spend.ok) return textResult(spend.message);
+        replay = admitted.entries;
+      }
+
       // Every invocation lands on disk next to the agent transcripts, so
       // iterating is edit-the-file-then-rerun-with-scriptPath rather than
       // re-emitting the whole source. The journal sits beside it under the same
@@ -3532,17 +3593,6 @@ Terse command-style prompts produce shallow, generic work.
         savedPath = undefined;
         journalPath = undefined;
         console.warn(`[pi-subagents] could not persist workflow script: ${err instanceof Error ? err.message : String(err)}`);
-      }
-
-      const replay = resumeFrom !== undefined ? readJournal(resumeFrom.journalPath) : undefined;
-      // Spend every live operator override in the SOURCE journal before anything
-      // runs: the runtime receives the entries as read (unspent) and may re-run
-      // once, while any second resume finds the authorization already consumed —
-      // a prompt-injected repetition of one authorization is impossible.
-      if (replay !== undefined && resumeFrom !== undefined) {
-        for (const spent of consumeOverridesAtResume(replay, { byRunId: runId, at: new Date().toISOString() })) {
-          appendJournal(resumeFrom.journalPath, spent);
-        }
       }
 
       const task = createWorkflowTask({
