@@ -2,7 +2,11 @@
  * source-admission.ts: host-owned write admission against a measured source identity (wb-s8rm, the B-source bead of the
  * mechanical-workflows-interop-2026-11-04 program, slice PI-1, requirements EAT-R022..EAT-R027; the program is design-only and
  * its function host does not exist yet). The header of test/workbench-mechanical-source-admission.test.ts names the case that
- * pins each form these comments state, the residual family whose quiet rows it pins, and the forms it does not claim.
+ * pins each form these comments state, the residual family whose quiet rows it pins, and the forms it does not claim, except
+ * for the reservation-store form of WriterLeases (EAT-R399, wb-yk1k: new WriterLeases({ store }), the constructor's options,
+ * acquire, holder and release with a store, and reservationPath), whose pinning cases and NOT CLAIMED forms the header of
+ * test/workbench-mii-cross-pid-reservation.test.ts names; the WriterLeases comment and the comments of its constructor, of
+ * acquire and of reservationPath cite those cases by id.
  *
  * admitSourceWrite(request, host, dispatch) calls dispatch at most once, with the one grant it mints, after the rules below
  * pass; a request that fails one of them in a form a suite header entry plants through admitSourceWrite gets that rule's
@@ -430,19 +434,21 @@ export class WriteBoundaryAuthority {
  * nothing. admitSourceWrite keys the lease by the canonical root it measured, never by the caller's spelling of the workspace.
  * Those forms are the registry's without a store (new WriterLeases()).
  *
- * EAT-R399, wb-yk1k cut #1 (criterion 1 only, evidence tier V1): new WriterLeases({ store }) keeps the registry's leases in
- * store, an existing directory the host configures, instead of in the registry. By its code: acquire resolves the root it is
- * given by realpath and links a fully written staged record to that canonical root's record file in the store (named by the
- * SHA-256 of the root), answering undefined when the link finds a record there; holder reads the record of the root's
- * realpath; and release removes the record for a lease this registry minted while the record still names that lease's
- * generation. The record's fields (the schema pi.writer-reservation/v1, the canonical root, the invocation, the owner's pid,
- * a random generation and the custody state held) are provisional until EAT-R398 ratifies the token. What
+ * EAT-R399, wb-yk1k (criterion 1 only, evidence tier V1; cut #1 and its respin, cut #2): new WriterLeases({ store }) keeps
+ * the registry's leases in store, an existing directory the host configures, instead of in the registry. By its code:
+ * acquire resolves the root it is given by realpath and links a fully written staged record to that canonical root's record
+ * file in the store (see reservationPath), answering undefined when the link finds a record there; holder reads the record
+ * of the root's realpath; and release removes the record for a lease this registry minted while the record still names that
+ * lease's generation. The record's fields (the schema pi.writer-reservation/v1, the canonical root, the invocation, the
+ * owner's pid, a random generation and the custody state held) are provisional until EAT-R398 ratifies the token. What
  * test/workbench-mii-cross-pid-reservation.test.ts pins of this form: two child processes over one store, each requesting ws
  * through one spelling of a pair of its direct, symlink and dot spellings, get one lease between them, naming the realpath,
- * and holder read through a third registry over the store names its invocation; run through admitSourceWrite, one dispatch
- * is entered and the other admission refuses writer-held. NOT CLAIMED by that suite: release in this form, a fresh process
- * reading the owner, generation or custody, a second registry in one process, restart, a store that fails, more processes
- * or spellings, and power loss.
+ * and holder read through a third registry over the store names its invocation (R399-C1-STORE); run through
+ * admitSourceWrite, one dispatch is entered and the other admission refuses writer-held (R399-C1-ADMISSION); the validation
+ * the constructor's and acquire's comments state, in the forms R399-STORE-VALIDATION plants; and the record file names
+ * reservationPath states, for the two roots R399-RECORD-NAMING plants. NOT CLAIMED by that suite: release in this form, a
+ * fresh process reading the owner, generation or custody, a second registry in one process, restart, a store that fails,
+ * more processes or spellings, and power loss.
  */
 export class WriterLeases {
   readonly #held = new Map<string, WriterLease>();
@@ -450,15 +456,27 @@ export class WriterLeases {
   /** With a store: the generation of each lease this registry minted and has not released. */
   readonly #generations = new WeakMap<WriterLease, string>();
 
-  /** Throws a validation CapabilityError unless options, when given, names its store as absolute clean text. */
+  /**
+   * Throws a validation CapabilityError, "A writer reservation store names an absolute directory.", unless options, when
+   * given, is a plain object whose store is absolute clean text. R399-STORE-VALIDATION pins the throw for the options null,
+   * { store: "relative-store" }, { store: 7 } and a store whose absolute path is followed by U+000A, and the store cases of
+   * that suite construct their registries with { store: <an absolute directory> } without a throw; what any other options
+   * meet is NOT CLAIMED.
+   */
   constructor(options?: WriterReservationStore) {
     if (options !== undefined && (!plainObject(options) || !absolutePath(options.store))) throw new CapabilityError("validation", "A writer reservation store names an absolute directory.");
     this.#store = options?.store;
   }
 
   /**
-   * Throws a validation CapabilityError unless canonicalRoot is absolute clean text and invocationId is clean text, and, with a
-   * store, unless canonicalRoot resolves by realpath.
+   * Throws a validation CapabilityError, "A writer lease names a canonical workspace root and an invocation.", unless
+   * canonicalRoot is absolute clean text and invocationId is clean text, and, with a store, throws one with the message "A
+   * writer reservation names a workspace root that resolves." when realpath does not resolve canonicalRoot; with a store,
+   * either throw comes before any record is written. R024-VALIDATION pins the first throw without a store, in the forms it
+   * plants. With a store,
+   * R399-STORE-VALIDATION pins the first for the relative root "authorized/ws", an absolute root followed by U+000A and
+   * the invocations "" and "text" U+000A "next", and the second for a missing directory and a symlink to it, the store
+   * then holding no file; what any other root or invocation meets with a store is NOT CLAIMED.
    */
   acquire(canonicalRoot: string, invocationId: string): WriterLease | undefined {
     if (!absolutePath(canonicalRoot) || !cleanText(invocationId)) throw new CapabilityError("validation", "A writer lease names a canonical workspace root and an invocation.");
@@ -541,7 +559,12 @@ interface WriterReservationRecord {
   readonly custody: "held";
 }
 
-/** The record file of a canonical root in a store: the SHA-256 of the root's UTF-8 bytes in hex, then ".json". */
+/**
+ * The record file of a canonical root in a store: the SHA-256 of the root's UTF-8 bytes in lowercase hex, then ".json".
+ * R399-RECORD-NAMING pins these names for the two sibling roots it plants in one store (ra, acquired by its direct path,
+ * and a directory whose name holds U+00E9, acquired through a symlink to it); the name of any other root's record is NOT
+ * CLAIMED.
+ */
 function reservationPath(store: string, canonicalRoot: string): string {
   return join(store, `${createHash("sha256").update(canonicalRoot, "utf8").digest("hex")}.json`);
 }
