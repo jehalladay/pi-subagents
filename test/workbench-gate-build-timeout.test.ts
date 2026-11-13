@@ -7,24 +7,44 @@
  * retry census's admitted chain in the census helper (RETRY_ADMITTED_CHAINS), to the table spelling that resolveTier gives
  * a table step.
  *
- * PINNED READER SET (every case this file registers, by id and title; B0 holds this list equal to the registered cases):
- * - [B0] the header's pinned reader set names exactly the cases this file registers, in order, by id and title
- * - [B1] forge.toml declares the build step as one [build.commands.build] table holding exactly command = "npm run build" and timeout = 900, with no table between it and the [build.commands] table
- * - [B2] the bare build key is gone: the [build.commands] table holds the lint key alone, and no line of forge.toml starts with build =
- * - [B3] guards: forge.toml keeps one gate line listing the seven steps in order, the typing table and the test table with their commands and timeouts
+ * B1, B2 and B3 read forge.toml as text lines: a header line is a line that starts with [, the [<name>] header line is
+ * a line that is [<name>] verbatim, and the lines under a header line are the non-blank lines after it up to the next
+ * header line. B4 reads forge.toml through resolveTier's parser.
+ *
+ * PINNED READER SET (list lines of the form * - [B<n>] <title>, by id and title in registration order; B0 holds these
+ * list lines equal to the cases registered by a line of the form it(<quote>[B<n>] <title><quote>, () => { at two-space
+ * indentation):
+ * - [B0] the header's pinned reader set lists, in order, by id and title, exactly the cases registered by a line of the form it(<quote>[B<n>] <title><quote>, () => { at two-space indentation
+ * - [B1] exactly one line of forge.toml is [build.commands.build] verbatim, it is the next header line after the [build.commands] header line, and the lines under it are exactly command = "npm run build" and timeout = 900
+ * - [B2] the lines under the [build.commands] header line are exactly lint = "npm run lint", and no line of forge.toml starts with build followed by optional whitespace and =
+ * - [B3] guards: the lines of forge.toml that start with `gate = ` are exactly the one line GATE_LINE (the seven steps in order), the lines under the [build.commands.typing] header line are exactly command = "npm run typecheck && npm run typecheck:test" and timeout = 900, and the lines under the [build.commands.test] header line are exactly command = "npm run test" and timeout = 3600
  * - [B4] resolveTier(ROOT, "build") spells the table chain through package.json scripts.build, and RETRY_ADMITTED_CHAINS holds that one chain and no other
  *
- * Falsifiers: B1 reds when the table is absent or repeated, when its command or timeout changes, when a key is added to it,
- * or when another table is placed between it and [build.commands]; B2 reds when the bare key returns or [build.commands]
- * gains a key; B3 reds when the gate line, the typing table or the test table changes; B4 reds when the census helper's
- * admitted chain keeps the bare-key spelling, gains a second entry, or no longer matches package.json scripts.build; B0
- * reds when a case is renamed or dropped without its line here, or a line here is hollowed.
+ * Falsifiers: B1 reds when no line or more than one line is [build.commands.build] verbatim, when another header line
+ * comes between the [build.commands] header line and it, or when a line under it is changed, added or removed; B2 reds
+ * when a line under the [build.commands] header line is changed, added or removed (the bare build key returning there
+ * included), when no line or more than one line is [build.commands] verbatim, or when a line of forge.toml starts with
+ * build followed by optional whitespace and =; B3 reds when a line that starts with `gate = ` differs from GATE_LINE,
+ * is added or is removed, when a line under the typing or the test header line is changed, added or removed, or when no
+ * line or more than one line is [build.commands.typing] or [build.commands.test] verbatim; B4 reds when the census
+ * helper's admitted chain keeps the bare-key spelling, gains a second entry, or no longer matches package.json
+ * scripts.build, and when a header line [ build.commands.build ] (TOML's spaced spelling of the same table) follows the
+ * build table, since the parser resolveTier uses refuses a table declared twice and resolveTier then returns an empty
+ * chain; B0 reds when it reads no registration, or when the list lines and the registrations it reads stop matching one
+ * for one in order (a registration renamed, added, dropped or reordered without the same change to the list lines, or a
+ * list line changed, added, dropped or reordered without the same change to the registrations).
  *
  * NOT CLAIMED: how forge enforces the timeout on the gate host is NOT CLAIMED by this file; the next post-landing tier row
  * on a trunk holding this cut is that record. That 900 s suffices at every host load is NOT CLAIMED by this file. The
  * retry census's whole reading of the build step (its kind) is NOT CLAIMED by this file; the landed tree row of
  * test/workbench-retry-census.test.ts reads it. That no other landed reader spells the bare build key is NOT CLAIMED by
- * this file.
+ * this file. Sub-table headers of the build, typing and test tables ([build.commands.build.<x>],
+ * [build.commands.typing.<x>], [build.commands.test.<x>]), which TOML reads as keys of those tables, are NOT CLAIMED by
+ * this file: B1 and B3 read the lines under each header line, not the parsed tables. A repeat of the build table in any
+ * spelling other than [build.commands.build] verbatim (B1) and [ build.commands.build ] after the table (B4) is NOT
+ * CLAIMED by this file. A case registered in any other shape than the one B0 reads (through test(), at another
+ * indentation such as inside a nested describe, with an async or parameterised body, with a title that lacks a [B<n>]
+ * id, or with the title or the body opener on another line) is NOT CLAIMED by this file.
  */
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -44,7 +64,7 @@ interface PackageJson {
 
 const toml = readRepo("forge.toml");
 
-/** The non-blank lines of forge.toml's [<name>] table, in order, or undefined unless exactly one such header exists. */
+/** The non-blank lines under forge.toml's [<name>] header line, in order, up to the next line that starts with [, or undefined unless exactly one line is [<name>] verbatim. */
 function tableLines(text: string, name: string): string[] | undefined {
   const lines = text.split("\n");
   const headers = lines.flatMap((line, index) => (line === `[${name}]` ? [index] : []));
@@ -55,7 +75,7 @@ function tableLines(text: string, name: string): string[] | undefined {
 }
 
 describe("wb-z0ib: the gate's build step is a [build.commands.build] table with timeout 900", () => {
-  it("[B0] the header's pinned reader set names exactly the cases this file registers, in order, by id and title", () => {
+  it("[B0] the header's pinned reader set lists, in order, by id and title, exactly the cases registered by a line of the form it(<quote>[B<n>] <title><quote>, () => { at two-space indentation", () => {
     const source = readFileSync(SELF, "utf8");
     const header = source.slice(0, source.indexOf("*/"));
     const listed = [...header.matchAll(/^ \* - (\[B\d+\] .+)$/gm)].map((match) => match[1]);
@@ -64,19 +84,19 @@ describe("wb-z0ib: the gate's build step is a [build.commands.build] table with 
     expect(listed).toEqual(registered);
   });
 
-  it('[B1] forge.toml declares the build step as one [build.commands.build] table holding exactly command = "npm run build" and timeout = 900, with no table between it and the [build.commands] table', () => {
+  it('[B1] exactly one line of forge.toml is [build.commands.build] verbatim, it is the next header line after the [build.commands] header line, and the lines under it are exactly command = "npm run build" and timeout = 900', () => {
     expect(toml.match(/^\[build\.commands\.build\]$/gm)).toHaveLength(1);
     expect(tableLines(toml, "build.commands.build")).toEqual(['command = "npm run build"', "timeout = 900"]);
     const headers = toml.split("\n").filter((line) => line.startsWith("["));
     expect(headers.indexOf("[build.commands.build]")).toBe(headers.indexOf("[build.commands]") + 1);
   });
 
-  it("[B2] the bare build key is gone: the [build.commands] table holds the lint key alone, and no line of forge.toml starts with build =", () => {
+  it('[B2] the lines under the [build.commands] header line are exactly lint = "npm run lint", and no line of forge.toml starts with build followed by optional whitespace and =', () => {
     expect(tableLines(toml, "build.commands")).toEqual(['lint = "npm run lint"']);
     expect(toml).not.toMatch(/^build\s*=/m);
   });
 
-  it("[B3] guards: forge.toml keeps one gate line listing the seven steps in order, the typing table and the test table with their commands and timeouts", () => {
+  it('[B3] guards: the lines of forge.toml that start with `gate = ` are exactly the one line GATE_LINE (the seven steps in order), the lines under the [build.commands.typing] header line are exactly command = "npm run typecheck && npm run typecheck:test" and timeout = 900, and the lines under the [build.commands.test] header line are exactly command = "npm run test" and timeout = 3600', () => {
     expect(toml.match(/^gate = .*$/gm)).toEqual([GATE_LINE]);
     expect(tableLines(toml, "build.commands.typing")).toEqual(['command = "npm run typecheck && npm run typecheck:test"', "timeout = 900"]);
     expect(tableLines(toml, "build.commands.test")).toEqual(['command = "npm run test"', "timeout = 3600"]);
