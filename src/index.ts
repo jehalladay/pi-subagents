@@ -82,6 +82,7 @@ import {
   type ExecuteFunctionLaunch,
   type ExecuteLaunch,
   type FunctionHostStarted,
+  WORKFLOWS_DISABLED_REASON,
   type WorkflowFunctionDeps,
   type WorkflowFunctionHosting,
 } from "./workbench/execute-tool.js";
@@ -3171,6 +3172,8 @@ Terse command-style prompts produce shallow, generic work.
       parameters: Type.Object({ action: Type.Union([Type.Literal("launch"),Type.Literal("inspect")]), invocationId:Type.String({minLength:1,maxLength:100}), scriptPath:Type.Optional(Type.String()), trustedScript:Type.Optional(Type.Boolean()), backend:Type.Optional(Type.Union([Type.Literal("deterministic"),Type.Literal("claude")])) }),
       execute: async (_id, params, _signal, _onUpdate, ctx) => {
         if (!grants(ctx).includes(params.action === "launch" ? "workbench:detach" : "workbench:observe")) return textResult("Permission denied: explicit detached launch or observe grant required.");
+        // EAT-R485: the master switch closes the launch; inspect only reads a run that exists, so it stays open.
+        if (params.action === "launch" && !isWorkflowsEnabled()) return textResult(sanitizeWorkbenchText(WORKFLOWS_DISABLED_REASON, WORKBENCH_TEXT_LIMIT, "text"));
         const directory=detachedBase();
         try {
           if (params.action === "inspect") {
@@ -3293,6 +3296,7 @@ Terse command-style prompts produce shallow, generic work.
       launchEmbedded: launchEmbeddedWorkflow,
       launchDetached: launchDetachedWorkflow,
       ...(injected.functionHosting !== undefined ? { functions: hostedFunctionDeps(injected.functionHosting) } : {}),
+      workflowsEnabled: isWorkflowsEnabled,
     }));
     // workflow_control (wb-cra): the explicit native control tool over the pure decision core (control.ts) and the
     // adapter legs. Grants, principal, workspace and session come from host context on every call; the target, the
@@ -3680,6 +3684,9 @@ Terse command-style prompts produce shallow, generic work.
       // same session and workspace finds it (wb-q0on, EAT-R357); another session or workspace never does.
       const resumeFrom = resolveResumeTarget(params.resumeFromRunId, workflowTasks, runId => recoverWorkflowRun(ctx, runId));
       if (resumeFrom !== undefined && !resumeFrom.ok) return textResult(resumeFrom.message);
+      // EAT-R485: registered while the switch was on, this tool still reads it on every call, so a session that turned
+      // it off since (standing down for another extension's workflow tool, or the settings toggle) launches nothing.
+      if (!isWorkflowsEnabled()) return textResult(sanitizeWorkbenchText(WORKFLOWS_DISABLED_REASON, WORKBENCH_TEXT_LIMIT, "text"));
 
       // A resume with no source of its own re-runs what that run ran. The
       // common case is an edited script, but "run that again, cheaply" should
